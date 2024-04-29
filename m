@@ -1,199 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-18774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 489188B55D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 12:51:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18E918B55DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 12:53:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 533F7B21CFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 10:51:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE0CB1F22D0C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 10:53:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F5373B1AB;
-	Mon, 29 Apr 2024 10:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A65B13987C;
+	Mon, 29 Apr 2024 10:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="A/QSWlVy"
+	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="GNODwKgZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0D93A28E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 10:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5224139AF1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 10:52:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714387907; cv=none; b=CshMKcKzZLqIsRPYo4jddbQhykhCAEi7kV6v7nlzDQEbFk3qXD8zC1wfXM5HfEM2vVP1ZNx36D/9YGj+XpsJLFSGnk1YCZ5FduDo2EIRV4ndLWXlvK3BLqGfB5TmF2a0rYwT0+qRrGXrjuiHGqnlFjoZ14p6cB1uzE9lQw15MgA=
+	t=1714387971; cv=none; b=p+v1/O2YHm9gOUUxfKmpK4AdLNj7+beX899L+6Du0obpJrHLZ81u3QZ7IeRe4oRgGIb4mIt1K/6bin4d+MLLJETSoypK+02bFrNy675KpNx2ICz+Cq1UBl2zy62wbf+FXVtxkQXyiLPL9VVv3gufsVqc6jbN9JrKrv8ceofx+aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714387907; c=relaxed/simple;
-	bh=4OFQmfmBaaiVFMtf3n+9BGYMCu4VhD/PO1uFErhL+cg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lMh59pEgxBkJCR08Qu9VcjuHvbm7xnPU4G+UimA3CQw+I7keC0pKkvRq5RqUb/g98+CL8PxtA905nLOo8DuquDs06jRcE/du13zl3s6MaqDWKyqVrzmOxE7MmUUjpmJccPFqXmhoDwsqiDS13ToVwrFPSGy0NuBAxe7+SR+3kys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=A/QSWlVy; arc=none smtp.client-ip=209.85.222.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-7e043f577c5so2121511241.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 03:51:45 -0700 (PDT)
+	s=arc-20240116; t=1714387971; c=relaxed/simple;
+	bh=o8wOtjyB4H1XLEyLHIcG4C34RaapqzbqcWqjwmC6atY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iIDGlISfIgltNc+AHIN0GGf1YDwVSAPuw/B3j3ciyKKu+dKuHw70mZen8xyPYAy7+y2s1gywxUSL8CgcUo6lqp404M2wf1JLUialdF/iEGRRnlsjM+rI0DV5FFgHuJlh/O/TOLtazLzPxqvbcyJLuQ41pYKqhKTc0iwexng4A+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=GNODwKgZ; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41adf155cffso31666135e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 03:52:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714387904; x=1714992704; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BXhEnLpZuSACRtLpCaCHyHe6X1epB7qL3alOjAjU9x8=;
-        b=A/QSWlVyyX8g7NZFwagC3u0WSl7hW/jd1RkYaLlcWYaENhoNhqUp/l6TCyMnBi9+7M
-         oW85Xz2VRyg/faeQSd5dBqplqPkB/JLs06qaj0d9BfFsZujRwBBHMM5vtyxbrz3LPQKN
-         ysYtjdQPP7zgN/GzqQKWMcqGYhv8EyqmfxFPk=
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1714387967; x=1714992767; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/fgJIL5pu/9arRZ3qBAu3NHtnfRP0VZyCjshY2QEahY=;
+        b=GNODwKgZ8qxgDyBjqNpbV6crvy/5yO6L5GzuaBGENOTv19bIbGLeGmhR87AOaHmvKM
+         dd1/YKV71GmPeKRwXSI6nF4VMWw5CBmuf3j9N9oCNCNvf1f8SP7WVx3rCbRDTQbQtUs2
+         1lbT5/t1+DIUFO5oUv/KKX8GkiHFUDP8hEYMEyr+tE8KkLBpglCMkCpKXgA5ZXOO5/og
+         9mofVD9Un0J28W0xHP5k76qkXjA9+ad6j+KmaPBwEongRrrhdq5fgIEHYoiwpAxobhkb
+         PfdWwWHiYB/8idL8GyaJOZ335lU/CIW+115Dxq5MODWSd6WOO3Nc/ko42nSzZ2gAWLPV
+         LuSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714387904; x=1714992704;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BXhEnLpZuSACRtLpCaCHyHe6X1epB7qL3alOjAjU9x8=;
-        b=gb3TWgj8kEJhO58XANQtB3dbWOdEYYjaRYLe2AjZPMEhUDs9gBu+ZeHBJyqfCyq3hR
-         YRCSMslO7qK8+9DE+u3GHlVEEdNXz0fE4WACLvlN2QeN1eCFHFLk96Eq/6ZjQKBcM9sR
-         3hLEEG3+CgPDf7AFRN3Z79j8GQGFFKn7XP55v7uuo4bBcpTw9n4jJNjS63J1HUMGnE43
-         WAUjD7ju+Nk4BaSiaqJR8ArrK+fDbXgZbHu2BAR1La8gW8aWYLAAR4anI7awfYFuKr1X
-         IAwv948FoW0uo3ZaoDFBUSmpass13OjCSQN2xwdS7JazAGz2t2o+S9/dj7bbcBqyqVWB
-         v/jQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXf6v87/BeIAOLA3thHT1Wyi/An2XjMWgCiS1kiEjFWoWF5ebc5hpYmBA7Ow8/rMskTQQi/gGQMSZdXdt3MtMspUj7mJCkvl+SGedIeKA==
-X-Gm-Message-State: AOJu0YzqZEoDL8ximvF4GPSRtheKn7zdwt5N2H3OI9cM8B/6upzLvWBL
-	AkGTcAw3UG77geXyghohCUmYw5sGB+Qd9ryyKOUvIsQpnm6WYY/dLuL9wqwKwWB9MO3g6NrR/r0
-	=
-X-Google-Smtp-Source: AGHT+IHdhp2SqzpXDrfCZctvJsPYCO7XzLOZ0x6URHfHhXvhCudbY/BDQucVHz3VVtFptfs7+gyWdg==
-X-Received: by 2002:a67:ed45:0:b0:47a:40df:e799 with SMTP id m5-20020a67ed45000000b0047a40dfe799mr6403854vsp.5.1714387903261;
-        Mon, 29 Apr 2024 03:51:43 -0700 (PDT)
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
-        by smtp.gmail.com with ESMTPSA id jt26-20020a056130511a00b007e613f6fac2sm3839743uab.8.2024.04.29.03.51.42
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1714387967; x=1714992767;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/fgJIL5pu/9arRZ3qBAu3NHtnfRP0VZyCjshY2QEahY=;
+        b=KUwB4rURLEaVwYqSs7CXXniADQ1LNG3ygS5cuJ7QR5OGbrqpSVpxjvMDJ3Sx7my78T
+         lRpdqPo+r2z5aEf2KXk8NA2FW22Muns+sQOSh34WdyO4qe/sBsbqOiZ8dpcHmSSGJ8K1
+         isKOgQw2tfg0PSy7R4s/Zn34wzP0LC0AqZoHco6RMoldEk5wNAIxfpgo8S4Nr4S2bakX
+         AsXjGBZoXkvdt9ZVDQfqdEliLrSAPm86YKeWQKYcaVB1GTedb7l4KZ3WSF+g+7lZ5UCo
+         HQ2Ux3rotxAIsVZom30Bk5/yYXVBUeNZ0C95utqNa5o1d8aJakYg0X5QNvhdNWmHm/US
+         rG+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXNPEWlJS6qm5JzogipsE1sSV7T3lqNUDMVsYYFnG7VmwQ851pG//0HZGn2i47d8nSyP8JG1BURO4g1xTlzWeIni7S6FkSdxdqpcGYbWA==
+X-Gm-Message-State: AOJu0Ywcj10VRqv4YzQwYNVCGHmcHlQPwdQyDOgwllCEcxMTofXad5Mu
+	zhvFWWUsC0iTrQ95V2na8WixoR+SonIynhIxYetlIipOPI6EZUNeiWQ5dBZ1lFY=
+X-Google-Smtp-Source: AGHT+IHr/wzLkphA1zzTirAeTnU83OYcBlmoMRkY4gcRgafVZK8SRhnGsx09GRSLiXv2nSUK4zoAbA==
+X-Received: by 2002:a05:600c:1f94:b0:41b:83bc:e9ba with SMTP id je20-20020a05600c1f9400b0041b83bce9bamr7105320wmb.23.1714387967438;
+        Mon, 29 Apr 2024 03:52:47 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id e8-20020a05600c4e4800b0041bf7da4200sm7095641wmq.33.2024.04.29.03.52.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Apr 2024 03:51:42 -0700 (PDT)
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-47bb81424adso2239180137.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 03:51:42 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXptQNbQOKFK+zWFF3kl4iYC27+QeUOkHWtrtN7/FkI4scsfh87BtGi0ZoyR1hmQGq7ATLZo/ROknnuHWCYwPpe4bSQptH/WzjiOG+MrQ==
-X-Received: by 2002:a05:6214:27cd:b0:6a0:4d4f:9428 with SMTP id
- ge13-20020a05621427cd00b006a04d4f9428mr14947200qvb.32.1714387880813; Mon, 29
- Apr 2024 03:51:20 -0700 (PDT)
+        Mon, 29 Apr 2024 03:52:46 -0700 (PDT)
+Message-ID: <0703c962-727f-439c-ba56-ff70288f7224@nexus-software.ie>
+Date: Mon, 29 Apr 2024 11:52:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240419-fix-cocci-v2-0-2119e692309c@chromium.org>
- <20240419-fix-cocci-v2-9-2119e692309c@chromium.org> <40b9c015-8ccf-4313-800a-ecae9aa8cc27@xs4all.nl>
- <ZilMu614pUAzEGTa@kekkonen.localdomain> <20240424184603.GA6282@pendragon.ideasonboard.com>
-In-Reply-To: <20240424184603.GA6282@pendragon.ideasonboard.com>
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 29 Apr 2024 12:51:08 +0200
-X-Gmail-Original-Message-ID: <CANiDSCucvz=dQYDguzBZ-f95ZP84zuhvoKnmEYoJqAs1YnZ3ZA@mail.gmail.com>
-Message-ID: <CANiDSCucvz=dQYDguzBZ-f95ZP84zuhvoKnmEYoJqAs1YnZ3ZA@mail.gmail.com>
-Subject: Re: [PATCH v2 09/26] media: v4l: async: refactor v4l2_async_create_ancillary_links
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, Hans Verkuil <hverkuil@xs4all.nl>, 
-	Martin Tuma <martin.tuma@digiteqautomotive.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Hugues Fruchet <hugues.fruchet@foss.st.com>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai <wens@csie.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Sowjanya Komatineni <skomatineni@nvidia.com>, Luca Ceresoli <luca.ceresoli@bootlin.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Sergey Kozlov <serjk@netup.ru>, 
-	Abylay Ospan <aospan@netup.ru>, Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, 
-	Dmitry Osipenko <digetx@gmail.com>, Benjamin Mugnier <benjamin.mugnier@foss.st.com>, 
-	Sylvain Petinot <sylvain.petinot@foss.st.com>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/15] i2c: qcom-geni: use 'time_left' variable with
+ wait_for_completion_timeout()
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>, linux-i2c@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Andi Shyti
+ <andi.shyti@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240427203611.3750-1-wsa+renesas@sang-engineering.com>
+ <20240427203611.3750-13-wsa+renesas@sang-engineering.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20240427203611.3750-13-wsa+renesas@sang-engineering.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Hans
-
-Your proposal is what I sent for v1:
-https://lore.kernel.org/linux-media/20240415-fix-cocci-v1-9-477afb23728b@chromium.org/
-
-I have no strong opinion for any of the two, please feel free to land
-whatever version you prefer.
-
-
-Regards
-
-On Wed, 24 Apr 2024 at 20:46, Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
->
-> On Wed, Apr 24, 2024 at 06:17:31PM +0000, Sakari Ailus wrote:
-> > On Wed, Apr 24, 2024 at 12:55:20PM +0200, Hans Verkuil wrote:
-> > > On 19/04/2024 11:47, Ricardo Ribalda wrote:
-> > > > Return 0 without checking IS_ERR or PTR_ERR if CONFIG_MEDIA_CONTROLLER
-> > > > is not enabled.
-> > > >
-> > > > This makes cocci happier:
-> > > >
-> > > > drivers/media/v4l2-core/v4l2-async.c:331:23-30: ERROR: PTR_ERR applied after initialization to constant on line 319
-> > > >
-> > > > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> > > > ---
-> > > >  drivers/media/v4l2-core/v4l2-async.c | 7 +++----
-> > > >  1 file changed, 3 insertions(+), 4 deletions(-)
-> > > >
-> > > > diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
-> > > > index 4bb073587817..915a9f3ea93c 100644
-> > > > --- a/drivers/media/v4l2-core/v4l2-async.c
-> > > > +++ b/drivers/media/v4l2-core/v4l2-async.c
-> > > > @@ -316,9 +316,10 @@ v4l2_async_nf_try_all_subdevs(struct v4l2_async_notifier *notifier);
-> > > >  static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
-> > > >                                        struct v4l2_subdev *sd)
-> > > >  {
-> > > > - struct media_link *link = NULL;
-> > > > + struct media_link *link;
-> > > >
-> > > > -#if IS_ENABLED(CONFIG_MEDIA_CONTROLLER)
-> > > > + if (!IS_ENABLED(CONFIG_MEDIA_CONTROLLER))
-> > > > +         return 0;
-> > > >
-> > > >   if (sd->entity.function != MEDIA_ENT_F_LENS &&
-> > > >       sd->entity.function != MEDIA_ENT_F_FLASH)
-> > > > @@ -326,8 +327,6 @@ static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
-> > > >
-> > > >   link = media_create_ancillary_link(&n->sd->entity, &sd->entity);
-> > > >
-> > > > -#endif
-> > > > -
-> > > >   return IS_ERR(link) ? PTR_ERR(link) : 0;
-> > > >  }
-> > >
-> > > I think I would prefer:
-> > >
-> > > static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
-> > >                                          struct v4l2_subdev *sd)
-> > > {
-> > > #if IS_ENABLED(CONFIG_MEDIA_CONTROLLER)
-> > >     struct media_link *link;
-> > >
-> > >     ...
-> > >
-> > >     return IS_ERR(link) ? PTR_ERR(link) : 0;
-> > > #else
-> > >     return 0;
-> > > #endif
-> > > }
-> > >
-> >
-> > Me, too.
->
-> I actually prefer Ricardo's proposal :-)
->
-> --
-> Regards,
->
-> Laurent Pinchart
-
-
-
--- 
-Ricardo Ribalda
+On 27/04/2024 21:36, Wolfram Sang wrote:
+> There is a confusing pattern in the kernel to use a variable named 'timeout' to
+> store the result of wait_for_completion_timeout() causing patterns like:
+> 
+> 	timeout = wait_for_completion_timeout(...)
+> 	if (!timeout) return -ETIMEDOUT;
+> 
+> with all kinds of permutations. Use 'time_left' as a variable to make the code
+> self explaining.
+> 
+> Fix to the proper variable type 'unsigned long' while here.
+> 
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> ---
+>   drivers/i2c/busses/i2c-qcom-geni.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 090b4846ed62..0a8b95ce35f7 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -586,7 +586,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+>   {
+>   	struct dma_slave_config config = {};
+>   	struct gpi_i2c_config peripheral = {};
+> -	int i, ret = 0, timeout;
+> +	int i, ret = 0;
+> +	unsigned long time_left;
+>   	dma_addr_t tx_addr, rx_addr;
+>   	void *tx_buf = NULL, *rx_buf = NULL;
+>   	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
+> @@ -629,8 +630,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+>   
+>   		dma_async_issue_pending(gi2c->tx_c);
+>   
+> -		timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+> -		if (!timeout)
+> +		time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+> +		if (!time_left)
+>   			gi2c->err = -ETIMEDOUT;
+>   
+>   		if (gi2c->err) {
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
