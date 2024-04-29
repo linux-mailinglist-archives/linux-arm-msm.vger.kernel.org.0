@@ -1,75 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-18767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0D7F8B540A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 11:15:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BE678B5533
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 12:25:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D27471C216C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 09:15:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02CAAB21E25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 10:25:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 556FC3D970;
-	Mon, 29 Apr 2024 09:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B65303BBEE;
+	Mon, 29 Apr 2024 10:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UglhMCpM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aqzI1y+a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21033D56D;
-	Mon, 29 Apr 2024 09:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A0039FE0;
+	Mon, 29 Apr 2024 10:25:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714382050; cv=none; b=ZUFgqAq6xpbbpOeP0jXn7kUBoWWsTdogPjer5HCGQ9EvVHoLmcvr5GeXsCh19d3Kbl6G+Z633baUgsPDtVgouleL7A/mOQFNoL5Twu4KI4xxw2j5cMwX6kxuGENVdwsRl9LTOv95h/AqPw2fNyKhtvsUejht5R98H+/a3jGWzsI=
+	t=1714386325; cv=none; b=jdWq/MH6be/idckBjXbfpz0Zmets7JOPtEt5rqSKarskH5oU0opRKUAAbZtiauqXkWOnfqJRqbhL0W9a3szdIsWePxQ9XhESQQoApBkdCEQ2JwNBX47d0cNZ25RKiblZVIUFhjnbFt2OvjwHPYX3EgGQZ2pbM055UNtN6mlyGI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714382050; c=relaxed/simple;
-	bh=tWU2BU/VIih2YxAqvdx1kb5sfcozOkwpSjAqB11L+t8=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qrveq1zA9yoZ+y2adCuxJqs48dpQhX4lRCzesk8Bh1QlFSED3DiB+CxVQQlDjqIv6UvTCKIHuxqNCecDoCB12Jgx9uqdale20bN88wceb8rswi37O7HlNtxetUxQ6tNzeih/RxWnEgM2Mg/bedNXSXH6gd8Gf5txzsHkZuTr5p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UglhMCpM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43T93VeB005503;
-	Mon, 29 Apr 2024 09:14:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=GRKvny6x6M4OyXmACjGVGBDoz6g3KofbC8eaFeoyW5A=; b=Ug
-	lhMCpM+cL7Ml59PQgD3zcvs8l3sXLD7AwXLsnxEGp9XuJglWu5tvSCJ8T9p0dOk4
-	gl4nMiccrBxwpecyTQMJIEh81qIiXbI9G6WDBv285UxFYJPIr+SfGBr9dbr80sej
-	LMu/cEs310v3IovKXqHtiCLg4zAwbFeTcSUAB7tBHjWtv2D5Bx+NU8foHsooSxHS
-	Ud6c8546ADQlMr4Wtbq70V6oNdCGP4052AyGgbq6bxDfbLUX1iR4OH3vgLQVX8Jc
-	zb/h+Zg2DxRfmqp7WdjP+EuUN1qXdN9UTIGmQbmNf1eKv82CkevtAeepH80HIFMz
-	SNQeaa4aHUUIoKv7uJlg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xt8jm00x6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Apr 2024 09:14:05 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43T9E4bD008748
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Apr 2024 09:14:04 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 29 Apr 2024 02:13:59 -0700
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <quic_varada@quicinc.com>,
-        <quic_anusha@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>
-Subject: [PATCH v10 6/6] arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
-Date: Mon, 29 Apr 2024 14:43:14 +0530
-Message-ID: <20240429091314.761900-7-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240429091314.761900-1-quic_varada@quicinc.com>
-References: <20240429091314.761900-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1714386325; c=relaxed/simple;
+	bh=BSxkbBdK70uPefLrVg5yOQ3KIh93f8UTGSR+QBBryx8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WtmxQZ3T/tQXTSU6KfpQrHDu2v/OA+xaRifeLpmtQt/Ps+FW5lYqKD4WO09G6RXPJwcBwpUnMS+oV2PHtpLgOBfujt7URJjPKAgng9XNNJwyy36De1TESyEiy3XknSJSu4FIJ0+xwOU3AdO7D8tuboYRrWpKorFG0eUC4oyAAQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aqzI1y+a; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1714386324; x=1745922324;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=BSxkbBdK70uPefLrVg5yOQ3KIh93f8UTGSR+QBBryx8=;
+  b=aqzI1y+am4cWxn35amY488YPHxcRTap9ln9e8KynCSnw+LjO82izM2ZK
+   dhikF9pgx0zZXAFdl+13EcETboxch9Sz0xMwA9SWLYcBSXxjb7b5zg87U
+   Z75tji9vCYEt/5yAsZKBOmUPaVuC3m3vaZj+nP+lJQ1JQwnY3hi/gbPyx
+   aVFinCaNraC+sNV5LQGPl427sPW5ld3OfAjmY/67j5WKy4tzzb/JNPIg6
+   Nj0r5BO2g/VKEpj//1ZH+CJ74J4F2K8NeFPLPFV+aAZaRj8s4FaQJLbXE
+   ivZNc+GH7WaihiZ21b6NVmo2k3xvhGBpZlsuByWwQ6C4BGrQyYfGzkGEK
+   Q==;
+X-CSE-ConnectionGUID: clveFvorRWmyUxyB3Igtkw==
+X-CSE-MsgGUID: VHK1JHxTSySIhAVRYRcfCg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11057"; a="13827905"
+X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; 
+   d="scan'208";a="13827905"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2024 03:25:21 -0700
+X-CSE-ConnectionGUID: eTitjhPcTPOhtWqwOYqo5Q==
+X-CSE-MsgGUID: kiuwJZZ9SPKgOBlYns0TzA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,239,1708416000"; 
+   d="scan'208";a="26475172"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orviesa006.jf.intel.com with ESMTP; 29 Apr 2024 03:25:13 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+	id 827C115B; Mon, 29 Apr 2024 13:25:11 +0300 (EEST)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	linux-omap@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-amlogic@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org
+Cc: Vignesh Raghavendra <vigneshr@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Yue Wang <yue.wang@Amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Xiaowei Song <songxiaowei@hisilicon.com>,
+	Binghui Wang <wangbinghui@hisilicon.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>
+Subject: [PATCH v3 0/5] PCI: controller: Move to agnostic GPIO API
+Date: Mon, 29 Apr 2024 13:23:17 +0300
+Message-ID: <20240429102510.2665280-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.43.0.rc1.1336.g36b5255a03ac
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,59 +107,37 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JtSJuynIpJGxJwZ9GRAatKXFoLJOcqns
-X-Proofpoint-ORIG-GUID: JtSJuynIpJGxJwZ9GRAatKXFoLJOcqns
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-29_06,2024-04-26_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- phishscore=0 priorityscore=1501 mlxscore=0 adultscore=0 malwarescore=0
- mlxlogscore=997 spamscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2404290057
 
-IPQ SoCs dont involve RPM in managing NoC related clocks and
-there is no NoC scaling. Linux itself handles these clocks.
-However, these should not be exposed as just clocks and align
-with other Qualcomm SoCs that handle these clocks from a
-interconnect provider.
+While at it, remove of_gpio.h leftover from some of the drivers.
 
-Hence include icc provider capability to the gcc node so that
-peripherals can use the interconnect facility to enable these
-clocks.
+In v3:
+- added precursor patch 1 to avoid build errors (LKP)
+- used GPIOD_OUT_LOW instead of GPIOD_ASIS (Mani)
+- added tags (Mani, Frank)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+In v2:
+- combined previously sent patches into a series (Manivannan)
+- added tags (Rob, Manivannan)
+- converted iMX.6 driver (Manivannan)
+- dropped leftover in aadvark drivers (Manivannan)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index c5abadf94975..0aba4c60e850 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -8,6 +8,7 @@
- 
- #include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-+#include <dt-bindings/interconnect/qcom,ipq9574.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
- #include <dt-bindings/clock/qcom,ipq9574-nsscc.h>
-@@ -457,6 +458,7 @@ gcc: clock-controller@1800000 {
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-+			#interconnect-cells = <1>;
- 		};
- 
- 		tcsr_mutex: hwlock@1905000 {
+Andy Shevchenko (5):
+  PCI: dra7xx: Add missing header inclusion
+  PCI: aardvark: Remove unused of_gpio.h
+  PCI: dwc: Remove unused of_gpio.h
+  PCI: imx6: Convert to agnostic GPIO API
+  PCI: kirin: Convert to agnostic GPIO API
+
+ drivers/pci/controller/dwc/pci-dra7xx.c    |   2 +-
+ drivers/pci/controller/dwc/pci-imx6.c      |  37 +++-----
+ drivers/pci/controller/dwc/pci-meson.c     |   1 -
+ drivers/pci/controller/dwc/pcie-kirin.c    | 105 +++++++--------------
+ drivers/pci/controller/dwc/pcie-qcom.c     |   1 -
+ drivers/pci/controller/dwc/pcie-tegra194.c |   2 -
+ drivers/pci/controller/pci-aardvark.c      |   1 -
+ 7 files changed, 50 insertions(+), 99 deletions(-)
+
 -- 
-2.34.1
+2.43.0.rc1.1336.g36b5255a03ac
 
 
