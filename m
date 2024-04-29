@@ -1,176 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-18848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72F7E8B648F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 23:26:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 403238B6604
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 01:06:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 964A51C21A90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 21:26:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71C921C21BF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 23:06:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1AD518410F;
-	Mon, 29 Apr 2024 21:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED6E31420BC;
+	Mon, 29 Apr 2024 23:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ma4fsmPq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zWWhImlz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BB4184100
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 21:26:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BBE7441F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 23:06:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714426005; cv=none; b=l8/PNFivS6nCoFbyPecW3E0LqkwWhU//TmXmPeMY41X4uPpWwrmYoFPrkenO6eZTeWl3FSRInJp7RoulpWaEegvw5uDZh2y2r85Nc64ZiH3XGx/m0rvQzP3Z7kBvuAfNFE+b4RRYj1mqdXoBnahd7rh3nhem3/atbCCZP4i/AyY=
+	t=1714431997; cv=none; b=OCYCxyclmnFyJ1GBuBnZqvRyJLPciT+xf+enBiPAzV7du6yYx6aiChA8wM4L3eLNe5xx3ZeoAPuBf+vcAMqlIQqtGBH24I7IEkW7D4kJ1bsaqLnGe8Jw3oyCtgsvztRn56lN7ZaHCAL+cpX93dV/i1+JI9m36I3PRVQAA3NiL6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714426005; c=relaxed/simple;
-	bh=Dr1C3G4pbGiXPC5Ti/nKd6k7VSHbUcwlgdfOmEAfcuw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rojOCqe2xxcw1B/VY5k8VHrs8B+vdAsD3FgA3rB4gSxNKIsF200YUdAsq06hpxBWoEhqVziJM65o185G6C3VLRZnIULWc7ZaPigY5RXb00NKDXHTHmkwYvcsqsxpxEsVSfKerOcVxxSLxMU4ZrG4577qrUXISVX7qsvF5TX1EjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ma4fsmPq; arc=none smtp.client-ip=209.85.219.180
+	s=arc-20240116; t=1714431997; c=relaxed/simple;
+	bh=oCpzsnULxIgSn6f6NyIWzCzj4/D2x7S7p/X3jeHAGOo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e2VdQW1DgqAfd9sENOsZNrQOYK5jP8xRTWVWQA2417bSZH9MrZdAJvqAm2H/QksuOc/vHS1rxatGOv84zdjpChMt9ugiT2RAzc9Kyr2McNXjtQJLwTpsPO15FxZMg144iyMlO7mC1xN4QxPN0xBUthSWOtbKmbrI3AdFDK8QG0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zWWhImlz; arc=none smtp.client-ip=209.85.221.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-dbed0710c74so4680980276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 14:26:43 -0700 (PDT)
+Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-34c8592b8dbso2774912f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 16:06:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714426003; x=1715030803; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QU/Tws1Y+aFFVGVLoOklo9JtVUD/v/fzs2lzZlQCwNQ=;
-        b=ma4fsmPqofCCJJ9JwoRipkbZJBsYoXJ6OJhIx+xK7xV6qkhkYhy9H8I4Wwm1V5xSGa
-         OaZlx9gJbSLwB21m+AjcPPa+f9I2/z2WFaS5RsRkLaNL9Rrkm242cOpVWDJ38PGPf93v
-         Qu80w3KEPHe5KxE7JFiTiCEExdleXOB+BT5E4eyB/2geEMxXPlEF82BDWHDiCdl75i7P
-         r/1mqb05Vkra5AF91J2XX2rUbXwXwJPUzVsmWJkZp7Zo/O523xZGd57ue2TDEEZPFUEO
-         fH4XN1i+5OVucg5EaJHUduAbRzg8D7HCJil7vTSWDx+7b4QLnQe8Iu/hP9Cg61nyNYla
-         +grg==
+        d=linaro.org; s=google; t=1714431994; x=1715036794; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Y9Wc1VRWdSj/kw6OxjVRGGw4/2n20BQdC0iB/qkj8dg=;
+        b=zWWhImlzXZjQmWla9wIXBCooFCJDbmLFMy7op2Wc8hoDsHj3i/qCfnrfvvOx8MM14Y
+         6ayFOyZAWWEYM8FlRLy4gbVhQJGibdwPo5lINr88DZg4s+QcYX7NhBl91RZlq3VI1cu7
+         8PIAf6mwVKzi7/AcUcUlXxqqRC9dKI7Lm4HKKWuLgnKC4tsobq8YsYYf4KUw6rv70Ebf
+         ORhItLOh8nwLOLr/ZzkQGQAwqEw3tTUkwtrmeUWLEKHQJfEzMNO6rteu+b6lqsP5kvz8
+         i0oS/VGko/IwLY2DsifvcqicxcZ4nw3OolLb7SVKzRaNoaM1aMGkMI81PqpHNyQoWB39
+         miNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714426003; x=1715030803;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QU/Tws1Y+aFFVGVLoOklo9JtVUD/v/fzs2lzZlQCwNQ=;
-        b=ME6w4zekwhpYjmCn26BX81bpYR/EozyQ9i03bsVgjOeskID8akpZ5dWvDHl/r2xW+r
-         NDp0xF5rdSzJn2zH+6V+lNmizH+2wM/0zyuozA/InSN59v0gCC9wi99sHPBOwwaW93Gi
-         CEtP498vHVDa6N6cMH8PQXbezSnC7D2TZefWspD3hyibvsFptD+vMcQKWnIVOZwYHx4k
-         AphKMKWwoGECbBQ0mrPT8Dd5dQO6x4G+BCyE19fxb9XusLOcQosyNpzhPTD/exxlZd3w
-         a+9g13w1vOFL+A5UbbpUSKZUrvU0PIAHTp5sa3eU1suKmbuL/UbL0Gi5kYKuGOnXUcuX
-         2Q6A==
-X-Forwarded-Encrypted: i=1; AJvYcCWnFvMCjKPWtGFjNZtL4EsWj/k6encLOdtzUBntcDY0Z8piNNz9u5QyoVukjckHOhX+DZJohkci7cEcPoPxz8eaw2Wc4rhqidKcv+K/kA==
-X-Gm-Message-State: AOJu0Yx/LRsVi3GfTeT7P2qSrgcJJTeHfzobGRAj09ydh3LTlfQOZ/fq
-	UtmR5rq4tFEj8/X3uKZ/54Mw52LYULQFVbbMsr8yq0ZaZY6gdgUhlrSOKeSX+3LDDUVad2xxEWn
-	ehSz25NwwS7PuYAtczYJbGRoZyIVuQ4Uz2IjwIw==
-X-Google-Smtp-Source: AGHT+IGKK3YXyDU+4ECuqi3EgUuBK4bT+CVyxZ6dH/j0Bz4fVxCMiVvjkF3hOLG0ZcsUc7l0RWVJyvbD7ONlUCh2d6s=
-X-Received: by 2002:a25:b910:0:b0:dcc:6112:f90d with SMTP id
- x16-20020a25b910000000b00dcc6112f90dmr10901148ybj.62.1714426003134; Mon, 29
- Apr 2024 14:26:43 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714431994; x=1715036794;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y9Wc1VRWdSj/kw6OxjVRGGw4/2n20BQdC0iB/qkj8dg=;
+        b=Wkzetn+kfuatJhMjCTqKkzqgjjorfc+nrmGVEFRzfR3l2xjM+oGAT0OeVMSSmJZhqm
+         ZENxlwNUx2BqRJEeGSbknFfzLX41Zw5oXlqqkz8WgN7/QtGtsOCn6nU6ijUkSFBAC8vl
+         hv2OiE8rX35vCxN3x/luGOckIIvqOJq1tNbRRXg1UChF34zQ8IJXGHin/BVwOVk0Y+YP
+         a+oZDWgkmf0mOgcEPCgGNiC7y41IihUR+AjcfGFiXPZqhjUDmv0SoftsXuLgaAVdBla3
+         mAA8+NRtE7pPkw80kBCZH5Wne/OdEcOMOyHYH1jQTCzZMdQ3U1sFRLzTM37ksyar9zWZ
+         qfTA==
+X-Gm-Message-State: AOJu0YyAtGjmlUE1O7nKur4rIjHHLv/uVHeoWAT6rlatYLwuDOBxnLOQ
+	zw6IANOoOHiEzmuyfNC8qNOwSTwZxiT0J921RzaYng9CJQ8D4MHtlGYYnoAARBw=
+X-Google-Smtp-Source: AGHT+IHCWKrgaTKGrhkqF26FTfzxhgQB+moXIvDSb8J8J/IOshycaSS5Xrsj1BsiFf+7Gnj7wtoHtg==
+X-Received: by 2002:adf:ee0c:0:b0:34a:2a90:c45 with SMTP id y12-20020adfee0c000000b0034a2a900c45mr8641646wrn.31.1714431993724;
+        Mon, 29 Apr 2024 16:06:33 -0700 (PDT)
+Received: from [192.168.0.102] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id r30-20020adfb1de000000b00343e392829dsm30873168wra.97.2024.04.29.16.06.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Apr 2024 16:06:33 -0700 (PDT)
+Message-ID: <32b3c158-8709-42c0-9e6e-81ccdd0e7ab5@linaro.org>
+Date: Tue, 30 Apr 2024 00:06:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1713523152.git.robin.murphy@arm.com> <bebea331c1d688b34d9862eefd5ede47503961b8.1713523152.git.robin.murphy@arm.com>
- <Zi_LV28TR-P-PzXi@eriador.lumag.spb.ru>
-In-Reply-To: <Zi_LV28TR-P-PzXi@eriador.lumag.spb.ru>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 30 Apr 2024 00:26:31 +0300
-Message-ID: <CAA8EJprL8NbNfOvp17hrHoVNkKBpD39xfeu+STm6m9VObF2n9Q@mail.gmail.com>
-Subject: Re: [PATCH v4 6/7] iommu/dma: Centralise iommu_setup_dma_ops()
-To: Robin Murphy <robin.murphy@arm.com>, 
-	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Joerg Roedel <joro@8bytes.org>, Christoph Hellwig <hch@lst.de>, Vineet Gupta <vgupta@kernel.org>, 
-	Russell King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Huacai Chen <chenhuacai@kernel.org>, WANG Xuerui <kernel@xen0n.name>, 
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>, Paul Walmsley <paul.walmsley@sifive.com>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Hanjun Guo <guohanjun@huawei.com>, 
-	Sudeep Holla <sudeep.holla@arm.com>, "K. Y. Srinivasan" <kys@microsoft.com>, 
-	Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>, 
-	Dexuan Cui <decui@microsoft.com>, Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>, 
-	David Woodhouse <dwmw2@infradead.org>, Lu Baolu <baolu.lu@linux.intel.com>, 
-	Niklas Schnelle <schnelle@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>, 
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Frank Rowand <frowand.list@gmail.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Jason Gunthorpe <jgg@ziepe.ca>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-acpi@vger.kernel.org, 
-	iommu@lists.linux.dev, devicetree@vger.kernel.org, 
-	Jason Gunthorpe <jgg@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/3] dt-bindings: media: add qcom,msm8998-venus
+To: Marc Gonzalez <mgonzalez@freebox.fr>,
+ Bjorn Andersson <andersson@kernel.org>, Jeffrey Hugo
+ <quic_jhugo@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: MSM <linux-arm-msm@vger.kernel.org>,
+ linux-media <linux-media@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+References: <2b21b160-a530-486a-9404-c5bf8863ffed@freebox.fr>
+ <4ea494cf-134e-4380-aea1-4c166a626561@freebox.fr>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <4ea494cf-134e-4380-aea1-4c166a626561@freebox.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 29 Apr 2024 at 19:31, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Fri, Apr 19, 2024 at 05:54:45PM +0100, Robin Murphy wrote:
-> > It's somewhat hard to see, but arm64's arch_setup_dma_ops() should only
-> > ever call iommu_setup_dma_ops() after a successful iommu_probe_device(),
-> > which means there should be no harm in achieving the same order of
-> > operations by running it off the back of iommu_probe_device() itself.
-> > This then puts it in line with the x86 and s390 .probe_finalize bodges,
-> > letting us pull it all into the main flow properly. As a bonus this lets
-> > us fold in and de-scope the PCI workaround setup as well.
-> >
-> > At this point we can also then pull the call up inside the group mutex,
-> > and avoid having to think about whether iommu_group_store_type() could
-> > theoretically race and free the domain if iommu_setup_dma_ops() ran just
-> > *before* iommu_device_use_default_domain() claims it... Furthermore we
-> > replace one .probe_finalize call completely, since the only remaining
-> > implementations are now one which only needs to run once for the initial
-> > boot-time probe, and two which themselves render that path unreachable.
-> >
-> > This leaves us a big step closer to realistically being able to unpick
-> > the variety of different things that iommu_setup_dma_ops() has been
-> > muddling together, and further streamline iommu-dma into core API flows
-> > in future.
-> >
-> > Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com> # For Intel IOMMU
-> > Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> > Tested-by: Hanjun Guo <guohanjun@huawei.com>
-> > Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-> > ---
-> > v2: Shuffle around to make sure the iommu_group_do_probe_finalize() case
-> >     is covered as well, with bonus side-effects as above.
-> > v3: *Really* do that, remembering the other two probe_finalize sites too.
-> > ---
-> >  arch/arm64/mm/dma-mapping.c  |  2 --
-> >  drivers/iommu/amd/iommu.c    |  8 --------
-> >  drivers/iommu/dma-iommu.c    | 18 ++++++------------
-> >  drivers/iommu/dma-iommu.h    | 14 ++++++--------
-> >  drivers/iommu/intel/iommu.c  |  7 -------
-> >  drivers/iommu/iommu.c        | 20 +++++++-------------
-> >  drivers/iommu/s390-iommu.c   |  6 ------
-> >  drivers/iommu/virtio-iommu.c | 10 ----------
-> >  include/linux/iommu.h        |  7 -------
-> >  9 files changed, 19 insertions(+), 73 deletions(-)
->
-> This patch breaks UFS on Qualcomm SC8180X Primus platform:
->
->
-> [    3.846856] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0x1032db3e0, fsynr=0x130000, cbfrsynra=0x300, cb=4
-> [    3.846880] ufshcd-qcom 1d84000.ufshc: ufshcd_check_errors: saved_err 0x20000 saved_uic_err 0x0
-> [    3.846929] host_regs: 00000000: 1587031f 00000000 00000300 00000000
-> [    3.846935] host_regs: 00000010: 01000000 00010217 00000000 00000000
-> [    3.846941] host_regs: 00000020: 00000000 00070ef5 00000000 00000000
-> [    3.846946] host_regs: 00000030: 0000000f 00000001 00000000 00000000
-> [    3.846951] host_regs: 00000040: 00000000 00000000 00000000 00000000
-> [    3.846956] host_regs: 00000050: 032db000 00000001 00000000 00000000
-> [    3.846962] host_regs: 00000060: 00000000 80000000 00000000 00000000
-> [    3.846967] host_regs: 00000070: 032dd000 00000001 00000000 00000000
-> [    3.846972] host_regs: 00000080: 00000000 00000000 00000000 00000000
-> [    3.846977] host_regs: 00000090: 00000016 00000000 00000000 0000000c
-> [    3.847074] ufshcd-qcom 1d84000.ufshc: ufshcd_err_handler started; HBA state eh_fatal; powered 1; shutting down 0; saved_err = 131072; saved_uic_err = 0; force_reset = 0
-> [    4.406550] ufshcd-qcom 1d84000.ufshc: ufshcd_verify_dev_init: NOP OUT failed -11
-> [    4.417953] ufshcd-qcom 1d84000.ufshc: ufshcd_async_scan failed: -11
+On 29/04/2024 17:15, Marc Gonzalez wrote:
+> Add YAML binding for Qualcomm MSM8998 Venus HW video encode and decode.
+> (Based on qcom,msm8996-venus.yaml)
+> 
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> ---
+>   Documentation/devicetree/bindings/media/qcom,msm8998-venus.yaml | 155 ++++++++++++++++++++++++++++
+>   1 file changed, 155 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8998-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8998-venus.yaml
+> new file mode 100644
+> index 0000000000000..86a20954cb354
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8998-venus.yaml
+> @@ -0,0 +1,155 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,msm8998-venus.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm MSM8998 Venus video encode and decode accelerators
+> +
+> +maintainers:
+> +  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-Just to confirm: reverting f091e93306e0 ("dma-mapping: Simplify
-arch_setup_dma_ops()") and b67483b3c44e ("iommu/dma: Centralise
-iommu_setup_dma_ops()" fixes the issue for me. Please ping me if you'd
-like me to test a fix.
+You should list yourself as maintaining a file you add upstream, plus 
+I'm pretty sure that's not Stan's current email address.
 
+However, looking at this I think you should just add a new compat to 
+Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml since 
+the rest of the file is 1:1
 
--- 
-With best wishes
-Dmitry
+---
+bod
 
