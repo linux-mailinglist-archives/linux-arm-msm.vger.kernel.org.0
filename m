@@ -1,238 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-18756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8E7B8B51DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 08:57:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BFC08B523B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 09:21:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99E1E1C20DC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 06:57:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 045BC1F219B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Apr 2024 07:21:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA229125AE;
-	Mon, 29 Apr 2024 06:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EAC615E8C;
+	Mon, 29 Apr 2024 07:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="OJtApqpI";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="GNFMWpF+";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="OJtApqpI";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="GNFMWpF+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gC/uRCyV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CD7D530;
-	Mon, 29 Apr 2024 06:57:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7470B15AF9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 07:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714373827; cv=none; b=HTg8oxnaY1YQEo2QjmsL6Mkv6kIK5ISagP8jkXjnrni5/kzhR+GSYKMXFM2Umg8dtx9A/TuEcMJddZKilniJQdesLHOD810SPld7z9Px5n+xUfI4tEFa6bnSqzwFGvtFUhYR5I08zovYAEVoc8+ugxgwkwb7hhhRwb90Fu3CfFs=
+	t=1714375277; cv=none; b=iiG6A7kwu+rU8zIa0033RCqzZ3x+RYe8AfBxH0t/1mABzYemnwQmmvvE+8L1PDP1l8YGvMv0SkwegIOOAvM0DNGDZzp7TKVBnv2/wTyQ+FIC4XRabRpVA9sQ0RBG6hWK2o7wOHV2XVb2qr6NyZKbGCIp3eqidGsO6lYTd348ikE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714373827; c=relaxed/simple;
-	bh=09FThBTM6Hwa/xsabgjmzwu4MaDIcTHSgg/+eqvr7L8=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W7+L4VNe3vFj/2MIY2PNPUc1j+Wd1dy5Cc8C9qlyh9hDbPaMKPObXLEq5YUsM4KqwwTvKJgqE+6q7ivwoNWcKPLDhIC0Hk3fplTv6tz1ESy5eVqd3gSzhkkaKrY3F67uQCeMnHqALAXMy+t2c5e4QOQEV89gVkMTAudz4pnrix8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=OJtApqpI; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=GNFMWpF+; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=OJtApqpI; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=GNFMWpF+; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 73D4D229E1;
-	Mon, 29 Apr 2024 06:57:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1714373821; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=foSFvja1xtZKhFfCb1ELz3yeDCDBi6VORfN0RMsU5pA=;
-	b=OJtApqpIPGDK99iFXGxcMgAEKKSpnM04GzeAMgKa2KYTtHV2N5fgr5FwKZcqya773HSXu6
-	51Yuz6es2QA/gM88Razf4OefFkQliUzDjRexy4Q5ImYaQlh0Z1SWxn5VN348qvzftAkX1H
-	xMYJpgUYptBOswYZmmf2ysYF9QoScuI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1714373821;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=foSFvja1xtZKhFfCb1ELz3yeDCDBi6VORfN0RMsU5pA=;
-	b=GNFMWpF+hD8jdZO3NGTur7+AX8P0TG8hhl97FjQtoFv8BAptI92Y6TI4srZUqvpGhG56FQ
-	OaByZXcdFnunNzDQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1714373821; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=foSFvja1xtZKhFfCb1ELz3yeDCDBi6VORfN0RMsU5pA=;
-	b=OJtApqpIPGDK99iFXGxcMgAEKKSpnM04GzeAMgKa2KYTtHV2N5fgr5FwKZcqya773HSXu6
-	51Yuz6es2QA/gM88Razf4OefFkQliUzDjRexy4Q5ImYaQlh0Z1SWxn5VN348qvzftAkX1H
-	xMYJpgUYptBOswYZmmf2ysYF9QoScuI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1714373821;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=foSFvja1xtZKhFfCb1ELz3yeDCDBi6VORfN0RMsU5pA=;
-	b=GNFMWpF+hD8jdZO3NGTur7+AX8P0TG8hhl97FjQtoFv8BAptI92Y6TI4srZUqvpGhG56FQ
-	OaByZXcdFnunNzDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D1700138A7;
-	Mon, 29 Apr 2024 06:57:00 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id gBRzMbxEL2YQbQAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Mon, 29 Apr 2024 06:57:00 +0000
-Date: Mon, 29 Apr 2024 08:57:12 +0200
-Message-ID: <87o79s1ws7.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: "Rajashekar Kuruva (Temp)" <quic_kuruva@quicinc.com>
-Cc: <srinivas.kandagatla@linaro.org>,
-	<mathias.nyman@intel.com>,
-	<perex@perex.cz>,
-	<conor+dt@kernel.org>,
-	<corbet@lwn.net>,
-	<lgirdwood@gmail.com>,
-	<andersson@kernel.org>,
-	<krzysztof.kozlowski+dt@linaro.org>,
-	<gregkh@linuxfoundation.org>,
-	<Thinh.Nguyen@synopsys.com>,
-	<broonie@kernel.org>,
-	<bgoswami@quicinc.com>,
-	<tiwai@suse.com>,
-	<robh@kernel.org>,
-	<konrad.dybcio@linaro.org>,
-	<linux-kernel@vger.kernel.org>,
-	<devicetree@vger.kernel.org>,
-	<linux-sound@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>,
-	<alsa-devel@alsa-project.org>
-Subject: Re: [PATCH] [RFC PATCH] ALSA: usb-audio: endpoint: Prevent NULL pointer deference in snd_usb_endpoint_close
-In-Reply-To: <64ed9496-577c-4f31-b061-9f3dcaca4b26@quicinc.com>
-References: <20240426122511.547755-1-quic_kuruva@quicinc.com>
-	<877cgks399.wl-tiwai@suse.de>
-	<64ed9496-577c-4f31-b061-9f3dcaca4b26@quicinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1714375277; c=relaxed/simple;
+	bh=cBTnCY3KBtBRr30AjNsz8q6YkNKmPKiRnzFhas2NNX8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oumkLDdjXDK0vuwvFJAFA6nEkZzynJxeVwFGFhHcqCehenQ0u/kjL29/h4AAFXLjz/usBaQnMhVt7AjNLoBqBahLRDznLmBrmAtLGQLbMRGEUpdfeV560MmCWPe29LOUjtSThDxKCqm2zq7mbvU6PcVSafflEvCnQC6Jnm9s8pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gC/uRCyV; arc=none smtp.client-ip=209.85.222.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-7f032da81e4so14780241.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Apr 2024 00:21:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1714375274; x=1714980074; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=k4CtgL63N0Lb5Fc/VSdHeoMgN9WVz1qLr0PmEGVLiVA=;
+        b=gC/uRCyVHPA41Q9BN/kaZQ5YtCu0u2XpOeeKu/jKzziCuUWdYrcVW4tdlxF8XQWSLG
+         mza6/y9Kfn+Ve1S035X48zQ5joAVFhiIA2ZylBg5omEh5UsVoA2fIFG7CqahJdy0b/dl
+         C8gIMaKq9z+aZyFjvQkAkEXZSsTYCr/f9tno8ctNdrV0Lkx7V1ky+p/E7ACEMOdm12/K
+         soQVKWgiJkckUjiiWmzheBvvcdmcJWa+AzmhGwctOvbp3fDxbPsQmIg5NS4F2ME/W/UB
+         UVdgH/aVPH6PUE2J9Rwxp3VsOeD0d2XJf82j6dVKa271WIb23vBSZ9TWYErLj8DuLpG8
+         TaGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714375274; x=1714980074;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k4CtgL63N0Lb5Fc/VSdHeoMgN9WVz1qLr0PmEGVLiVA=;
+        b=eRIV9H3aZBaRjbKsmTPDIanExPWcX/rZj3ojkhHO+YrnquDz5DJPoPyic9DC0LVCM6
+         kiXGrquNi/6IpUokKi18lHHc6DxhkY2bm/FOahdPdGMDQFxkrpsYv8M5qiO8+ALSFi94
+         odFRrKI2S0eOADGm6yQ42iX3SxiDQU6MO1muZIEDmnewjOKSqgqdb6iUTf6R7P0/s8K1
+         nKCDCZ6X3USEcGmlvaQjW9CsmmiGMiX1guKOBg408ndCafD8DiJTIT7D7hqat/2klIcI
+         zusjUEQQCE9OLJ3m0rlGV5UfX+Oz7MO4uoOrvFjd7AAe9C13LIIzGHUzQkTCpdOORFLp
+         acXQ==
+X-Gm-Message-State: AOJu0YxOwa7UWRX0aP0+KQw9RgyQ26WQ7XBMLQRrkZYu/Bb8vnl+S9d9
+	b67bhwGrb+HXiVDqVGms/Z/jG2jRExfHWzTk+59MSgke5iuw19HS+xJauGCilHfb8vHHVxUXanj
+	z19Z4C7A6yOeu+Oiauc/RP0gEKY5pobYwtYePdQ==
+X-Google-Smtp-Source: AGHT+IFTQhCi6zGH8UpHY/Gea7P61K+intVrtnp1dSZHdoHSbR6jH1Glk906JzDo6d3r6zm3BQ4dpX/TSHx7GI4x8ZA=
+X-Received: by 2002:a67:ee09:0:b0:47b:d49b:c59 with SMTP id
+ f9-20020a67ee09000000b0047bd49b0c59mr8661651vsp.10.1714375274307; Mon, 29 Apr
+ 2024 00:21:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Score: -1.80
-X-Spam-Level: 
-X-Spamd-Result: default: False [-1.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	TAGGED_RCPT(0.00)[dt];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[linaro.org,intel.com,perex.cz,kernel.org,lwn.net,gmail.com,linuxfoundation.org,synopsys.com,quicinc.com,suse.com,vger.kernel.org,alsa-project.org];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	TO_DN_SOME(0.00)[]
+MIME-Version: 1.0
+References: <20240403043416.3800259-1-sumit.garg@linaro.org>
+ <CAFA6WYNxTPgiq6WLQaKGMTenuKe51SXXhgGYkdyRibghXAMfnA@mail.gmail.com> <CAFA6WYPk6E8JM8z62Skxq454WwPFYQ9EDx7FD--inqe7YoNJkg@mail.gmail.com>
+In-Reply-To: <CAFA6WYPk6E8JM8z62Skxq454WwPFYQ9EDx7FD--inqe7YoNJkg@mail.gmail.com>
+From: Sumit Garg <sumit.garg@linaro.org>
+Date: Mon, 29 Apr 2024 12:51:03 +0530
+Message-ID: <CAFA6WYNbQLz2Gio6dS2MbDT7hgNWmq27K2ng218cbYmGvQ+VhA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC
+ board DTS
+To: andersson@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	stephan@gerhold.net, caleb.connolly@linaro.org, neil.armstrong@linaro.org, 
+	dmitry.baryshkov@linaro.org, laetitia.mariottini@se.com, 
+	pascal.eberhard@se.com, abdou.saker@se.com, jimmy.lalande@se.com, 
+	benjamin.missey@non.se.com, daniel.thompson@linaro.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 29 Apr 2024 08:23:27 +0200,
-Rajashekar Kuruva (Temp) wrote:
-> 
-> 
-> On 4/26/2024 6:13 PM, Takashi Iwai wrote:
-> > On Fri, 26 Apr 2024 14:25:11 +0200,
-> > Rajashekar kuruva wrote:
-> >> When multiple plug-in and plug-out events occur,
-> >> there is a risk of encountering a NULL pointer dereference
-> >> leading to a kernel panic during a headset use-case.
-> >> this issue arises in the snd_usb_endpoint_close function
-> > Such a scenario can't happen: ep->iface_ref is changed only in
-> > chip->mutex lock, hence it can't be NULL there.
-> > 
-> > 
-> > thanks,
-> > 
-> > Takashi
-> 
-> Hi Takashi,
-> 
-> Actually we are facing NULL pointer deference while running headset
-> case when i checked call trace the last running function is
-> snd_usb_endpoint_close where iface_ref and clock_ref both are 0x0
-> 
-> [75703.933104][T10585] Unable to handle kernel NULL pointer
-> dereference at virtual address 0000000000000004
-> [75703.933113][T10585] [RB/E]rb_sreason_str_set: sreason_str set NULL
-> pointer dereference
-> [75703.933116][T10585] Mem abort info:
-> [75703.933117][T10585]   ESR = 0x0000000096000005
-> [75703.933119][T10585]   EC = 0x25: DABT (current EL), IL = 32 bits
-> [75703.933120][T10585]   SET = 0, FnV = 0
-> [75703.933121][T10585]   EA = 0, S1PTW = 0
-> [75703.933123][T10585]   FSC = 0x05: level 1 translation fault
-> [75703.933124][T10585] Data abort info:
-> [75703.933124][T10585]   ISV = 0, ISS = 0x00000005
-> [75703.933125][T10585]   CM = 0, WnR = 0
-> …
-> [75703.933676][T10585] CPU: 3 PID: 10585 Comm: kworker/u17:0 Tainted:
-> G S      W  OE 6.1.43-android14-11-ga2fa77d36d26-ab11204829 #1
-> [75703.933697][T10585] pstate: 62400005 (nZCv daif +PAN -UAO +TCO -DIT
-> -SSBS BTYPE=--)
-> [75703.933700][T10585] pc : snd_usb_endpoint_close+0x30/0x104
-> [75703.933721][T10585] lr : snd_usb_endpoint_close+0x28/0x104
-> [75703.933724][T10585] sp : ffffffc04b2bb740
-> [75703.933725][T10585] x29: ffffffc04b2bb740 x28: ffffff8024e3ba78
-> x27: ffffffd266e91da0
-> [75703.933728][T10585] x26: ffffffc04b2bb7a8 x25: ffffff89bec5be00
-> x24: 00000000ffffffea
-> [75703.933730][T10585] x23: 0000000000000002 x22: ffffff885d568008
-> x21: ffffff8024e3ba78
-> [75703.933732][T10585] x20: ffffff885d568000 x19: ffffff8024e3bb18
-> x18: ffffffd26db2d140
-> [75703.933734][T10585] x17: 00000000f01b0818 x16: 00000000f01b0818
-> x15: 0000000000000008
-> [75703.933736][T10585] x14: ffffff8a3e2b5780 x13: ffffff8a3e2b5780
-> x12: ffffffd26cbd2770
-> [75703.933738][T10585] x11: 0000000000000001 x10: ffffff8984320000 x9
-> : 4f43b86e946b4e00
-> [75703.933740][T10585] x8 : 0000000000000000 x7 : 0000000000000001 x6
-> : fffffffdef8e8b70
-> [75703.933742][T10585] x5 : 0000000000000001 x4 : 0000000000000000 x3
-> : ffffff8024e3bb28
-> [75703.933743][T10585] x2 : 00000001011fa7c9 x1 : ffffffc04b2bb680 x0
-> : 0000000000000000
-> [75703.933746][T10585] Call trace:
-> [75703.933747][T10585]  snd_usb_endpoint_close+0x30/0x104
+On Fri, 19 Apr 2024 at 20:57, Sumit Garg <sumit.garg@linaro.org> wrote:
+>
+> On Tue, 9 Apr 2024 at 23:24, Sumit Garg <sumit.garg@linaro.org> wrote:
+> >
+> > Hi Bjorn, Konrad,
+> >
+> > On Wed, 3 Apr 2024 at 10:04, Sumit Garg <sumit.garg@linaro.org> wrote:
+> > >
+> > > Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
+> > > Box Core board based on the Qualcomm APQ8016E SoC. For more information
+> > > refer to the product page [1].
+> > >
+> > > One of the major difference from db410c is serial port where HMIBSC board
+> > > uses UART1 as the debug console with a default RS232 mode (UART1 mode mux
+> > > configured via gpio99 and gpio100).
+> > >
+> > > Support for Schneider Electric HMIBSC. Features:
+> > > - Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
+> > > - 1GiB RAM
+> > > - 8GiB eMMC, SD slot
+> > > - WiFi and Bluetooth
+> > > - 2x Host, 1x Device USB port
+> > > - HDMI
+> > > - Discrete TPM2 chip over SPI
+> > > - USB ethernet adaptors (soldered)
+> > >
+> > > This series is a v2 since v1 of this DTS file has been reviewed on the
+> > > U-Boot mailing list [2].
+> > >
+> > > Changes in v5:
+> > > - Addressed another nitpick from Stephen.
+> > > - Collected Stephen's review tag.
+> > > - Warnings reported by Rob's DT check bot aren't related to HMIBSC
+> > >   board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
+> > >   still not converted to YAML format.
+> > >
+> >
+> > I haven't seen any further comments on this series, can you help to pick it up?
+>
+> Gentle reminder.
+>
 
-Who is actually calling snd_usb_endpoint_close()?
-I guess that's rather a bug in the call pattern, not the code in
-USB-audio driver itself.
+Is there anything missing on my part to get this accepted? It has
+already gone through the review cycle with v5 posted for about a month
+now.
 
-snd_usb_endpoint_close() is supposed to be called only for a really
-opened endpoint.  So, if any, it's rather a race (or a bug) in the
-caller side, and it should be addressed there instead.
+-Sumit
 
-
-thanks,
-
-Takashi
+>
+> >
+> > > Changes in v4:
+> > > - Dropped IRQ_TYPE_EDGE_FALLING for pm8916_resin given the expectations
+> > >   of Linux kernel driver. Instead depend on systemd workaround suggested
+> > >   by Caleb to get expected HMIBSC reset behaviour.
+> > > - Incorporated further DT coding style comments from Stephen.
+> > > - Warnings reported by Rob's DT check bot aren't related to HMIBSC
+> > >   board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
+> > >   still not converted to YAML format.
+> > >
+> > > Changes in v3:
+> > > - Picked up tags.
+> > > - Fixed further DT schema warnings.
+> > > - Configure resin/power button interrupt as falling edge.
+> > > - Incorporate DTS coding style comments from Krzysztof and Konrad.
+> > >
+> > > Changes in v2:
+> > > - Fix DT schema warnings.
+> > > - Incorporate suggestions from Stephan.
+> > > - Document UART1 mode GPIOs based mux.
+> > >
+> > > [1] https://www.se.com/us/en/product/HMIBSCEA53D1L0T/iiot-edge-box-core-harmony-ipc-emmc-dc-linux-tpm/
+> > > [2] https://patchwork.ozlabs.org/project/uboot/patch/20240311111027.44577-6-sumit.garg@linaro.org/
+> > >
+> > > Sumit Garg (3):
+> > >   dt-bindings: vendor-prefixes: Add Schneider Electric
+> > >   dt-bindings: arm: qcom: Add Schneider Electric HMIBSC board
+> > >   arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
+> > >
+> > >  .../devicetree/bindings/arm/qcom.yaml         |   1 +
+> > >  .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+> > >  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> > >  .../dts/qcom/apq8016-schneider-hmibsc.dts     | 491 ++++++++++++++++++
+> > >  4 files changed, 495 insertions(+)
+> > >  create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+> > >
+> > > --
+> > > 2.34.1
+> > >
 
