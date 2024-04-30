@@ -1,214 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-18920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E7AF8B6F5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:15:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD7618B6F61
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:16:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBDEB1F243ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 10:15:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CB5C1C20B8C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 10:16:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26841129E75;
-	Tue, 30 Apr 2024 10:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B10D7129E62;
+	Tue, 30 Apr 2024 10:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dix4eoYc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ta/lCLDZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36E9129A70
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 10:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FB2129A70
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 10:16:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714472115; cv=none; b=h8l/9ElP69uwmd8GzhCV2oUoDqWhwPyBlxFzcuq1SgVjhZuQqeOY//qikuGPHMxcG5VxzcvBN7gBJRRCR6VIa6WDSKpwOipjK2OBhPTFXqfv8Nk0ZQC/36F5QNFeOUhR4e3dRbDULuJt4pTMK1ZaAS64RjVJHVPxgJZlTAtPcmY=
+	t=1714472169; cv=none; b=DrA7L7ivuMrFFf2bTsZegTvbSYCpH4YdnIGpyrtksKkHUIx4JWiOJbwt5DcF8RAfU4twu+FQdJlj8h0YllO9YibKcRFIftWLwhlauUCSp7YaDYJCq+a2PfqHQr0QtAcNQ8aVzJWMH9j87yHPtQ+ShZsumURgHqN4Rjo7Xlmy6dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714472115; c=relaxed/simple;
-	bh=EA/n+63aRQ+LX6Bo2tyrIJSDq4Fz8cHbko3pkS/8djE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UYbTmnnc4yjL2JfOaizo/53XNpNIdg5DAqVl6N0dWmsxWKnXe/npvbMRGkkYEy/P1npHHK2YrgP1aKrARbARM6vH30bBT/0fSgxArxILqFURaK4WL23M39jasR9PAsyQbkMKUwbsFxiE3HWk+0ULQsdrpYE+IZqKlGaCNmYJslA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dix4eoYc; arc=none smtp.client-ip=209.85.167.42
+	s=arc-20240116; t=1714472169; c=relaxed/simple;
+	bh=3i/mZ1H0MCHiah5K0FmqCuU7zvPu+ffZG9xaTvoixZ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cd3U9ZLyUA7GkGT6gUGv/negOI2niHVfs2DPpSdidPPjuRJkrdwMOA2LW2fXothNkWm3KenwTMgh/fX84Ldmx7VV+qetmvnV2AMwhwyt8Xdt5zxXzHWhXPTofmsahXxBRcGsOMMuH51gqDqxk9n+Dki6nicucnxFdT2Up8fpSV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ta/lCLDZ; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-51bafbe7509so7718429e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 03:15:11 -0700 (PDT)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a587831809eso655966566b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 03:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714472110; x=1715076910; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dIx1dFfAcpeKO8TErHh7vGY1lorqPiA5UlnTCSzH2HY=;
-        b=dix4eoYceTuyNB0FmVZtNw7MZVkMVzEfZpqPiZRw2VFI2A51tbeMYdjtIMWE+YzxP6
-         e3Pkz6nv+bXy6MHWO+xqRe1K9soCMDfFfpsIze/WJqkLReQC/ViULkDh/DBvid5OMEUQ
-         Njw9X7jgXgkns75gBlkiS7PgUt1Y+0BWPF5hkbbD59VOcp4U+4Fuc2FcZoH+yDkDv46g
-         pKBNUP3SVpPKx+7/qTbYJM0st3JKTkYu2l+UdMiU/V86A6E6pt1BJDHulUTAwkwdCnEe
-         ZDkvIomw9LHc5b9l1mMrkdnz2EN3IEAz7GEkJkNUAZUrgdKDCj1xZVmS8HhuRMpRPTOr
-         noew==
+        d=linaro.org; s=google; t=1714472166; x=1715076966; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=QS5G9xaEDMP1Wf2wf2lTz5Y1Lqg/xMjisBHDdDnaE70=;
+        b=Ta/lCLDZbzsZfwAiTjbBR6e1WWEN1cieYW0K/4cj8w0Eti3e623ekAjZE9FBPNT4se
+         XSznzuF7KxUYsyNmLwm5sl5XCqeu+pG2IR7C/jbIqJvNP2eKyHfwJ4zsmcnlLDZ1OdPQ
+         EvqCFTjjwv3OEKcIZzb+AVQ5KVB7qGaPxMKnNMJZgdqGXkUh77pyHfytCh666bWKtVoi
+         HYdeCxrhSDg9Zl5SwxtsM9ZQGkmHMMTGjXYoy0mBc72+Ognkvv9bNlA+r3qkxdWPq5tQ
+         L5xVBctEoLh2n2h/ZFJ4G4zipStm3bZdiFcjNF6+DBp+cT/JY+wvdCfKigltcN3RxFHl
+         RZcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714472110; x=1715076910;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1714472166; x=1715076966;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dIx1dFfAcpeKO8TErHh7vGY1lorqPiA5UlnTCSzH2HY=;
-        b=c7NVPpLmgEMX3WQ0eNfXsoO4NtcPYEGZynRSDvLqvnGN2nu41OVpreVGxA2oUZQGBg
-         4Vil+QG+Ektk6tEu5u0DDW56ccN5XTnNW93lXUMflPiwkCb9w/9Oocx3Lwh+/9zlM7l8
-         EERAf/OvMa9tMXhiYkBsVoK5YQfGP8nK6C5eMq+MOmo3CqV58NG6Li7lHfDkOD3LFOP6
-         hCpFarAV9B73xP4uGoLrqiyaHV2siResrl3IncpALjFzEd9rol8My5WGb3sch/S/BNj1
-         rMlpl449zVu0haueMNlUPWtvwqrqeGn52OkRve+5efc7Q9DbK3i3cD3zjj8uFXcPebTi
-         xsrA==
-X-Forwarded-Encrypted: i=1; AJvYcCXpCyUtzShXdTLplRKgxqCUJeGG1ezufGRjZ0Y1ISEI60lPdcVoq3V+FD8MMiMspJF6nuM47I3rcXbWzJAG2cVIn8KEXX3DJbAYRC6pcQ==
-X-Gm-Message-State: AOJu0YwmEvOv/xOyD9Dt3u0LnKFSL7Sxl95VrGaxa1tC2qZxlnPUzgiH
-	2r0DLhnYcsk/NqYKOdl5ZhV0yiz3oiOchohZg++nGLLeQz5MpCcUJJM5hjDqMvw=
-X-Google-Smtp-Source: AGHT+IEeZGVbkW3UvagFGYDQZ5bMmN4VdL24N9F8cduZig7xQbulffwe9LBCfuUp6MPaqlZqlp0YPw==
-X-Received: by 2002:ac2:4945:0:b0:516:cf23:588 with SMTP id o5-20020ac24945000000b00516cf230588mr10156881lfi.27.1714472109993;
-        Tue, 30 Apr 2024 03:15:09 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id g29-20020a0565123b9d00b0051d807addd7sm884156lfv.60.2024.04.30.03.15.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Apr 2024 03:15:09 -0700 (PDT)
-Date: Tue, 30 Apr 2024 13:15:08 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vignesh Raman <vignesh.raman@collabora.com>
-Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com, 
-	helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch, robdclark@gmail.com, 
-	david.heidelberg@collabora.com, guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com, 
-	mcanal@igalia.com, linux-mediatek@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org, 
-	virtualization@lists.linux-foundation.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 5/5] drm/ci: update xfails for the new testlist
-Message-ID: <hon4klkoaouuxhtvm3qb3qstsrdcibihksyrmvxkt3taijl6wb@ubitr6namryw>
-References: <20240430091121.508099-1-vignesh.raman@collabora.com>
- <20240430091121.508099-6-vignesh.raman@collabora.com>
+        bh=QS5G9xaEDMP1Wf2wf2lTz5Y1Lqg/xMjisBHDdDnaE70=;
+        b=FNnY9EjbullMkTlcPElYjiYFQ/IgCg+UE70AhgOuKHUbraBiYc2kRaIsqyvfFQwm/9
+         wt58BJfcYOm887gOmfZsAsU6BNfOm0bLd0LvfLj0wK0EP+qDsu9srlQ7YqM3tdUVh3xX
+         sUhZ6TEiPCyqqJWHi6RhE7YrqokgBtekgGEY6vKvNgXtB/N7jWOmwA7PWQI42UhUPlLb
+         AisKcwYZdz9//GIkL8vkPE8qKH7EE/Kb9T99TFR+QfROZycNBPEiuD3Wkbb0xfxDTVaA
+         FfSXLPQblCbFgM1zdUdubVUrzFW4B6kQz5Yg3vIjvz/AX3xJ4mZH7fzJ5u5owh2ge99M
+         tDEw==
+X-Gm-Message-State: AOJu0YxNGC/Jg7If49fYqquE7HB52VJ2gsxqjbStRDwwfAIiQKI1s2Gc
+	9m0MpxM+Q0wLG+Xz/UCLj6wSpuY5Ytk7piYTW4A/qeGbgc30igImZxtDi8dabLE=
+X-Google-Smtp-Source: AGHT+IFTQzO4IP7DsoWJGmXYcGmzFlWbU7upz7g/BF+jQcsWEWQO26vjyLvd7/vBO2qWRMKtvEnULQ==
+X-Received: by 2002:a17:906:3b0f:b0:a55:b3d8:a0c8 with SMTP id g15-20020a1709063b0f00b00a55b3d8a0c8mr9078587ejf.42.1714472166334;
+        Tue, 30 Apr 2024 03:16:06 -0700 (PDT)
+Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id bv19-20020a170906b1d300b00a58eabf6082sm3734438ejb.199.2024.04.30.03.16.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 03:16:06 -0700 (PDT)
+Message-ID: <6bf981a3-2613-4b5e-aa5f-3a83f9bfaf47@linaro.org>
+Date: Tue, 30 Apr 2024 12:16:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240430091121.508099-6-vignesh.raman@collabora.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/3] dt-bindings: media: add qcom,msm8998-venus
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Marc Gonzalez <mgonzalez@freebox.fr>, Bjorn Andersson
+ <andersson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>,
+ linux-media <linux-media@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+References: <2b21b160-a530-486a-9404-c5bf8863ffed@freebox.fr>
+ <4ea494cf-134e-4380-aea1-4c166a626561@freebox.fr>
+ <9655f9ca-91e5-42c5-9a08-cb342179dc4c@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <9655f9ca-91e5-42c5-9a08-cb342179dc4c@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 30, 2024 at 02:41:21PM +0530, Vignesh Raman wrote:
-> Now the testlist is used from IGT build, so update
-> xfails with the new testlist.
+On 30.04.2024 9:54 AM, Krzysztof Kozlowski wrote:
+> On 29/04/2024 18:15, Marc Gonzalez wrote:
+>> Add YAML binding for Qualcomm MSM8998 Venus HW video encode and decode.
+>> (Based on qcom,msm8996-venus.yaml)
+>>
+>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>> ---
+
+[...]
+
+>> +
+>> +    required:
+>> +      - compatible
+>> +      - clocks
+>> +      - clock-names
+>> +      - power-domains
+>> +
+>> +    additionalProperties: false
 > 
-> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
-> ---
->  .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt | 47 +++++++----
->  .../drm/ci/xfails/amdgpu-stoney-flakes.txt    |  8 +-
->  .../gpu/drm/ci/xfails/amdgpu-stoney-skips.txt | 15 ++++
->  drivers/gpu/drm/ci/xfails/i915-amly-fails.txt | 22 ++++-
->  .../gpu/drm/ci/xfails/i915-amly-flakes.txt    |  8 ++
->  drivers/gpu/drm/ci/xfails/i915-amly-skips.txt |  8 ++
->  drivers/gpu/drm/ci/xfails/i915-apl-fails.txt  | 45 +++++-----
->  drivers/gpu/drm/ci/xfails/i915-apl-flakes.txt |  5 ++
->  drivers/gpu/drm/ci/xfails/i915-apl-skips.txt  | 12 +++
->  drivers/gpu/drm/ci/xfails/i915-cml-fails.txt  | 26 +++++-
->  drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt |  6 ++
->  drivers/gpu/drm/ci/xfails/i915-cml-skips.txt  |  8 ++
->  drivers/gpu/drm/ci/xfails/i915-glk-fails.txt  | 28 +++++--
->  drivers/gpu/drm/ci/xfails/i915-glk-skips.txt  | 12 +++
->  drivers/gpu/drm/ci/xfails/i915-kbl-fails.txt  | 39 ++++-----
->  drivers/gpu/drm/ci/xfails/i915-kbl-flakes.txt | 10 ++-
->  drivers/gpu/drm/ci/xfails/i915-kbl-skips.txt  | 21 +++++
->  drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt  | 75 +++++++++--------
->  drivers/gpu/drm/ci/xfails/i915-tgl-skips.txt  | 13 +++
->  drivers/gpu/drm/ci/xfails/i915-whl-fails.txt  | 46 +++++------
->  drivers/gpu/drm/ci/xfails/i915-whl-skips.txt  |  8 ++
->  .../drm/ci/xfails/mediatek-mt8173-fails.txt   | 47 +++--------
->  .../drm/ci/xfails/mediatek-mt8183-fails.txt   | 17 +---
->  .../drm/ci/xfails/mediatek-mt8183-flakes.txt  |  5 ++
->  .../gpu/drm/ci/xfails/meson-g12b-fails.txt    | 20 +----
->  .../gpu/drm/ci/xfails/meson-g12b-flakes.txt   |  5 ++
->  .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   | 26 ++----
->  .../gpu/drm/ci/xfails/msm-apq8016-flakes.txt  |  5 ++
->  .../gpu/drm/ci/xfails/msm-apq8096-fails.txt   |  5 +-
->  .../gpu/drm/ci/xfails/msm-apq8096-flakes.txt  |  5 ++
->  .../gpu/drm/ci/xfails/msm-apq8096-skips.txt   | 67 +++++++++++++++
->  .../msm-sc7180-trogdor-kingoftown-fails.txt   | 34 ++++----
->  .../msm-sc7180-trogdor-kingoftown-flakes.txt  |  5 ++
->  ...sm-sc7180-trogdor-lazor-limozeen-fails.txt | 34 ++++----
->  ...m-sc7180-trogdor-lazor-limozeen-flakes.txt |  5 ++
->  .../gpu/drm/ci/xfails/msm-sdm845-fails.txt    | 75 ++++-------------
->  .../gpu/drm/ci/xfails/msm-sdm845-flakes.txt   | 26 ++----
->  .../drm/ci/xfails/rockchip-rk3288-fails.txt   | 54 ------------
->  .../drm/ci/xfails/rockchip-rk3399-fails.txt   | 80 ++----------------
->  .../drm/ci/xfails/rockchip-rk3399-flakes.txt  |  7 --
->  .../drm/ci/xfails/virtio_gpu-none-fails.txt   | 82 +++++++++++++------
->  .../drm/ci/xfails/virtio_gpu-none-skips.txt   |  3 +
->  42 files changed, 574 insertions(+), 495 deletions(-)
->  create mode 100644 drivers/gpu/drm/ci/xfails/i915-amly-flakes.txt
->  create mode 100644 drivers/gpu/drm/ci/xfails/i915-apl-flakes.txt
->  create mode 100644 drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt
->  create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8183-flakes.txt
->  create mode 100644 drivers/gpu/drm/ci/xfails/meson-g12b-flakes.txt
->  create mode 100644 drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
->  create mode 100644 drivers/gpu/drm/ci/xfails/msm-apq8096-flakes.txt
->  create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
->  create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-flakes.txt
->  delete mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt
->  delete mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3399-flakes.txt
+> In nested blocks, put it after the type:object, for readability.
 > 
+>> +
+> 
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[skipped]
+https://lore.kernel.org/linux-arm-msm/ba40de82-b308-67b1-5751-bb2d95f2b8a5@linaro.org/
 
-> diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-> index 44a5c62dedad..96e9faf0e607 100644
-> --- a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-> +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-> @@ -1,19 +1,9 @@
-> +core_setmaster_vs_auth,Fail
-> +device_reset,Fail
-> +dumb_buffer,Fail
+We've since established that the video-encoder/decoder subnodes are bogus
 
-This doesn't look correct, core tests should be passing.
-
->  kms_3d,Fail
-> -kms_addfb_basic@addfb25-bad-modifier,Fail
-> -kms_cursor_legacy@all-pipes-forked-bo,Fail
-> -kms_cursor_legacy@all-pipes-forked-move,Fail
-> -kms_cursor_legacy@all-pipes-single-bo,Fail
-> -kms_cursor_legacy@all-pipes-single-move,Fail
-> -kms_cursor_legacy@all-pipes-torture-bo,Fail
-> -kms_cursor_legacy@all-pipes-torture-move,Fail
-> -kms_cursor_legacy@pipe-A-forked-bo,Fail
-> -kms_cursor_legacy@pipe-A-forked-move,Fail
-> -kms_cursor_legacy@pipe-A-single-bo,Fail
-> -kms_cursor_legacy@pipe-A-single-move,Fail
-> -kms_cursor_legacy@pipe-A-torture-bo,Fail
-> -kms_cursor_legacy@pipe-A-torture-move,Fail
-> -kms_force_connector_basic@force-edid,Fail
-> -kms_hdmi_inject@inject-4k,Fail
-> -kms_selftest@drm_format,Timeout
-> -kms_selftest@drm_format_helper,Timeout
-
-Fine, kms_cursor_legacy tests were migrated to -flakes. But what
-happened with the rest of the failures?
-
-> -msm_mapping@ring,Fail
-> +kms_force_connector_basic,Fail
-> +kms_lease,Fail
-> +msm_mapping,Fail
-> +msm_submit,Fail
-> +tools_test,Fail
-> diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
-> new file mode 100644
-> index 000000000000..3cc361b3d3b3
-> --- /dev/null
-> +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
-> @@ -0,0 +1,5 @@
-> +# Board Name: apq8016-sbc-usb-host
-> +# Bug Report: TBD
-> +# IGT Version: 1.28-gd2af13d9f
-> +# Linux Version: 6.9.0-rc4
-> +kms_cursor_legacy
-
-It looks like one of the scripts has lost subtest granularity. It should
-be fixed before the patchset can be merged.
-
--- 
-With best wishes
-Dmitry
+Konrad
 
