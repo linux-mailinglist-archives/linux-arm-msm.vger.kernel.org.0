@@ -1,140 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-18968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2C078B7BB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 17:35:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E71418B7BE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 17:39:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 788961F25E7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 15:35:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B19D3B25F0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 15:36:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B59D143752;
-	Tue, 30 Apr 2024 15:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57F90174EC8;
+	Tue, 30 Apr 2024 15:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zw+5rQP8"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="yVChQl8k"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEF8BE49;
-	Tue, 30 Apr 2024 15:33:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BD413D26D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 15:35:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714491239; cv=none; b=QoNdZWcKUEmJdri+5kO+rHfA5fUvNvazM7Bguv1vprtkTm5aMFnkbgnfRsIrOqVRxNn0hwctvhmwVXOGUeOZqrVWSnDeeu7VyPHn8BRbn6pmkyMQ8K/pw46y8c49s2g856iHlN83Gj986hLYkYjxTQrPi31NmLM0LArprMeBmuU=
+	t=1714491318; cv=none; b=pZ/i5F5FL60cWX9j+Xg5Ri+SOwx0HWgUucv+D1K0LYNF15UMfXVjSaQA61aLFl55l+30buAKEfKg8jwJhArBH/Y+ndXS3549xxGs9D7qapcf8MHuSR+fSt8NiqQqkRv5RXNR4UPDTxH1XtqCGpvW4E4J2nKW5sOyQRydPjgtAnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714491239; c=relaxed/simple;
-	bh=0nKOSqddvGT0eIzhrYrSf2cuROkUOtP462KXoXDfiAQ=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=VjwobZlZIxBlF9TkJzCF+1oV1LMxOXVyIvpZD3eplVaU5AtWE1DY5AhCKzdd/pZ/dHd/IBb27PLZBiKwsoQvJSnSdoMHH2SbuiGoRce1vY/OZWnRSQNLGS7G8WkEitMPd/1GJ+3i4GZSTkMeXeKmiWzy1zChs+0Mu89yxw+51/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zw+5rQP8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25634C2BBFC;
-	Tue, 30 Apr 2024 15:33:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714491238;
-	bh=0nKOSqddvGT0eIzhrYrSf2cuROkUOtP462KXoXDfiAQ=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=Zw+5rQP8zvFsqUni8xFlGIIG1SCowz9j3RQy+tvbqNL4hmO5YuB+iK2x9H7suVZxc
-	 SGVHCnK+fz//7PgLdx4XvWFJfm3//ZzI/ytxPmYAmTlbCGYzoLUMTxcgyBK5RSVrcj
-	 kDqAzx9xg1g3Qhl+nVpQYN+vhF3WNUAB6FiCEnHlZYI0LtmxJGv5WcAcs+TFde18I4
-	 w3UxTbs7Ilh07dWrl3ohCwVYUh+ItzFw7lNi2VKDalYaLCoYz3gOQMEBV/15oQbpCN
-	 MhZh/IkhxI9S6+pR1XT3iFtM0Ci/kwktM5jQn5osRWkpeXvNKfnmUgmY+VQXlOOfVx
-	 dhSB3rarNs/KQ==
-Date: Tue, 30 Apr 2024 10:33:55 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1714491318; c=relaxed/simple;
+	bh=Oo58CEMdtjetSnRagHS5J1GNGo1JKVIA0feYLcxotvM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iJOEHUalBVGck/WecrMcE1VWnYorpwNlc5d1kfmcfLGMFaeqbM6b3iQkvYQiDYNRGwFY4tYSUUdaEO8OTvny1U1EN4vHIwD/++7uZ8vleXev6HCA6OiilSqvu/sY620QNkgvx5e+QYlb1uGTgKTQf6WL3MSCs/9jHtbzs275q/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=yVChQl8k; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-41bab13ca4eso29083695e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 08:35:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714491314; x=1715096114; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=aPqZJAxEGjY0ShetcfKjBOSOoETPGEikwkHIAxvShII=;
+        b=yVChQl8kQX5YhdbCbz58y4fql36/fZIZg3th4jhtmO3hCMW/IPT5qHHa+wyiXonvNT
+         HPYvdK+pR4BhfGeH84iLQ6Yp/QgKJgFZTCHae1An0Bsf99M+LfeWOqv5DEj4s0OFnHWL
+         7X13bj6giaY1E7T/3PN/3egy6ZobpmR7jqyOGGCof25HqumyhaHvwOpq+MHQZcxO9aiE
+         MjEixO/2QrpXracxuSPAdS3WBlp72nrulg2JY1C1dfk/QIels8NV4QhmbVX9d0m08kKJ
+         ufOX1E6F+U31imputM+B7gAfA8cZjeEc4CpevyDEaAjsEOBc7tLfYJHeJMCpMbg5REn4
+         e0Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714491314; x=1715096114;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aPqZJAxEGjY0ShetcfKjBOSOoETPGEikwkHIAxvShII=;
+        b=ZEzc/3gnogDntf1t8pWxpVVkqaspoG+66nIgkfXqClEIkSWcjJ3nBHnSgAWWndnI6T
+         NtQpPxaQ/2N7Ee0txVxsxPzJlpJ3w6gfdv/1gCzWMrAv6w0Sj3k0H6v23jlGfXBFp7wp
+         CKc+GfZmHodvJKtDQGCkZT7kLoFHmF3Z7N+agge+6PLwIExQ98DFKqkAQc0DaRkdnydb
+         1wa7sOlYeVAHkjJTtRkOFGA8YQisB1fWtKWUXThqyRZLYe2yzCewCtVjHq99ZEUK8a4z
+         eviWrXaxZr8Op/gg3KU7nqBJvpbCoxja0s0sCHpW28YlxiTz1ANUN55TSs/T2/NYeaKL
+         irzQ==
+X-Gm-Message-State: AOJu0YwbyYIBzTQyxcBCCP7DWkN+INOpvSi5Jb4RPPLhJnEePL1iswTe
+	xnHi4DajFPNYmMC9eIr7dRSHoofhKVBhAh+U6XY2v+38tezfld3Eau4bcMMemkg=
+X-Google-Smtp-Source: AGHT+IEdaQNPB55tn+0T4Z0bhsq7wMMGI/91idvS14Pc55qu5JeJj2jVjNfX8746ehWLCdzdHLUxaQ==
+X-Received: by 2002:a05:600c:35c4:b0:418:f5a9:b91c with SMTP id r4-20020a05600c35c400b00418f5a9b91cmr9667253wmq.33.1714491314716;
+        Tue, 30 Apr 2024 08:35:14 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id h13-20020a05600c314d00b0041ac4aafd3dsm27045674wmo.12.2024.04.30.08.35.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 08:35:14 -0700 (PDT)
+Message-ID: <9844c940-21b1-42af-9448-62a2d5ffadb7@freebox.fr>
+Date: Tue, 30 Apr 2024 17:34:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Conor Dooley <conor+dt@kernel.org>, quic_jackp@quicinc.com, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Johan Hovold <johan@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, devicetree@vger.kernel.org, 
- quic_ppratap@quicinc.com, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20240429162048.2133512-1-quic_kriskura@quicinc.com>
-References: <20240429162048.2133512-1-quic_kriskura@quicinc.com>
-Message-Id: <171449016553.3484108.5214033788092698309.robh@kernel.org>
-Subject: Re: [PATCH v16 0/2] Add DT support for Multiport controller on
- SC8280XP
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH v2 3/3] media: venus: add msm8998 support
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+To: Bjorn Andersson <andersson@kernel.org>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>,
+ linux-media <linux-media@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+References: <ff646f97-68e3-4fef-9b56-2bd98f0cbe7d@freebox.fr>
+Content-Language: en-US
+In-Reply-To: <ff646f97-68e3-4fef-9b56-2bd98f0cbe7d@freebox.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+From: Pierre-Hugues Husson <phhusson@freebox.fr>
 
-On Mon, 29 Apr 2024 21:50:46 +0530, Krishna Kurapati wrote:
-> Series [1] introduces binding and driver support for DWC3 Multiport
-> controllers. This series adds support for tertiary controller of SC8280
-> and enabled multiport controller for SA8295P-ADP platform.
-> 
-> Till v13 [2] the DT was pushed along with driver code. Separated the DT
-> changes from driver update and pushing it as this series. The first two
-> versions were marked as v1 and v2. Marked this as v16 to avoid missing
-> of change log till v13.
-> 
-> Changes in v16:
-> Marked it as v16 rather than v3 since till v13, there were DT changes
-> sent along with driver code but were separated and this version is
-> supposed to be v16.
-> Fixed interrupt triggers from EDGE_RISING to EDGE_BOTH.
-> 
-> Link to v15:
-> https://lore.kernel.org/all/20240213082724.1789096-1-quic_kriskura@quicinc.com/
-> 
-> Changes in v15:
-> SA8540 Ride related code changes have been dropped and will pushed later
-> due to unavailability of hardware with either Andrew or me for testing the
-> gpio hog changes suggested in v1.
-> Implemented vbus boost regulators as fixed regulators instead of modelling
-> their enable pins as pinctrl nodes.
-> 
-> Link to v14:
-> https://lore.kernel.org/all/20240206114745.1388491-1-quic_kriskura@quicinc.com/
-> 
-> [1]: https://lore.kernel.org/all/20240420044901.884098-1-quic_kriskura@quicinc.com/
-> [2]: https://lore.kernel.org/all/20231007154806.605-1-quic_kriskura@quicinc.com/#r
-> 
-> Krishna Kurapati (2):
->   arm64: dts: qcom: sc8280xp: Add USB DWC3 Multiport controller
->   arm64: dts: qcom: sa8295p: Enable tertiary controller and its 4 USB
->     ports
-> 
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 83 ++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi   | 82 +++++++++++++++++++++++
->  2 files changed, 165 insertions(+)
-> 
-> --
-> 2.34.1
-> 
-> 
-> 
+Add the missing bits for msm8998 support.
 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+---
+ drivers/media/platform/qcom/venus/core.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/sa8295p-adp.dtb' for 20240429162048.2133512-1-quic_kriskura@quicinc.com:
-
-arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: usb@a4f8800: interrupt-names: ['pwr_event_1', 'pwr_event_2', 'pwr_event_3', 'pwr_event_4', 'hs_phy_1', 'hs_phy_2', 'hs_phy_3', 'hs_phy_4', 'dp_hs_phy_1', 'dm_hs_phy_1', 'dp_hs_phy_2', 'dm_hs_phy_2', 'dp_hs_phy_3', 'dm_hs_phy_3', 'dp_hs_phy_4', 'dm_hs_phy_4', 'ss_phy_1', 'ss_phy_2'] is too long
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/sa8295p-adp.dtb: usb@a4f8800: interrupts-extended: [[1, 0, 130, 4], [1, 0, 135, 4], [1, 0, 857, 4], [1, 0, 856, 4], [1, 0, 131, 4], [1, 0, 136, 4], [1, 0, 860, 4], [1, 0, 859, 4], [118, 127, 3], [118, 126, 3], [118, 129, 3], [118, 128, 3], [118, 131, 3], [118, 130, 3], [118, 133, 3], [118, 132, 3], [118, 16, 4], [118, 17, 4]] is too long
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index ce206b7097541..42e0c580e093d 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -587,6 +587,47 @@ static const struct venus_resources msm8996_res = {
+ 	.fwname = "qcom/venus-4.2/venus.mbn",
+ };
+ 
++static const struct freq_tbl msm8998_freq_table[] = {
++	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
++	{  972000, 520000000 },	/* 4k UHD @ 30 */
++	{  489600, 346666667 },	/* 1080p @ 60 */
++	{  244800, 150000000 },	/* 1080p @ 30 */
++	{  108000,  75000000 },	/* 720p @ 30 */
++};
++
++/*
++ * https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
++ */
++static const struct reg_val msm8998_reg_preset[] = {
++	{ 0x80124, 0x00000003 },
++	{ 0x80550, 0x01111111 },
++	{ 0x80560, 0x01111111 },
++	{ 0x80568, 0x01111111 },
++	{ 0x80570, 0x01111111 },
++	{ 0x80580, 0x01111111 },
++	{ 0x80588, 0x01111111 },
++	{ 0xe2010, 0x00000000 },
++};
++
++static const struct venus_resources msm8998_res = {
++	.freq_tbl = msm8998_freq_table,
++	.freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
++	.reg_tbl = msm8998_reg_preset,
++	.reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
++	.clks = { "core", "iface", "bus", "mbus" },
++	.clks_num = 4,
++	.vcodec0_clks = { "core" },
++	.vcodec1_clks = { "core" },
++	.vcodec_clks_num = 1,
++	.max_load = 2563200,
++	.hfi_version = HFI_VERSION_3XX,
++	.vmem_id = VIDC_RESOURCE_NONE,
++	.vmem_size = 0,
++	.vmem_addr = 0,
++	.dma_mask = 0xddc00000 - 1,
++	.fwname = "qcom/venus-4.4/venus.mbn",
++};
++
+ static const struct freq_tbl sdm660_freq_table[] = {
+ 	{ 979200, 518400000 },
+ 	{ 489600, 441600000 },
+@@ -893,6 +934,7 @@ static const struct venus_resources sc7280_res = {
+ static const struct of_device_id venus_dt_match[] = {
+ 	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+ 	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
++	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
+ 	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+ 	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+ 	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
+-- 
+2.34.1
 
 
