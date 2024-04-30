@@ -1,171 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-18959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD6D68B79FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 16:37:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 312D98B79F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 16:36:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 893CA2895C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:37:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2C301F2579E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:36:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E95A1190679;
-	Tue, 30 Apr 2024 14:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06FCC190661;
+	Tue, 30 Apr 2024 14:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XM+HBCLx"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="fnF+KE64"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A1819066D;
-	Tue, 30 Apr 2024 14:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30E2184123;
+	Tue, 30 Apr 2024 14:31:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714487468; cv=none; b=atWI4IBFDfquRn0Kt5zJP0kl9UeGvqv3aIHCnu+EDZkghSoHUFgi6c9bwT09Oe+Rqb5qX+JPIPG6ER73K38T2Yq71Vch3i+BLc/KpwzeYKOtZZfWidVAcLgFjWzZS2xC6wbwQVwE/PHTwuyXKMKLhNg8ojsLPLED4jkYW2Cwjkg=
+	t=1714487466; cv=none; b=NoS1+nd/D0Qgs0qmrV6TH8uPDCc007dy3iiMSNMsiTyerbRCcG31O1CaXOVeMD2Y2vCvbGH3vFScDGEMNa3OONrxsVYDt1N345kbk7dCWhAXpQlGphkBql0drdMPqqtYqrxFWlr4aChxG6/i4Xy5WtCbIKeHB0Q8YP3oJIGCfLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714487468; c=relaxed/simple;
-	bh=2Sb2dB3plDhDej922dw23WRBHWFAdzbIPgxjOHua/24=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gESG2MVLIxn5hV5/fOpC2h0ggHXIpCCHSbngSdzQzHaz9/UxuEwrSWfB4u6hUCWUDgPZpiekE5dErrVo3X6JsSR/zQpIWjZ0urUlM2OSS/sA+PlDeZP0KrhVFpEccg4i8UeFjnWsIxXnmp0gORC63Kdf+lvBf6p0j6qpZuAEzhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XM+HBCLx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43UDrMOG005699;
-	Tue, 30 Apr 2024 14:31:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=eAL7wCtJct7LcH/+jakyDHDf4kvWFw1lEsDJyiJ4HBM=; b=XM
-	+HBCLxcKY8fGftaqvwx8q1FUkS5AgoDjndP1KUuiX9RjEOtJs8F0Opr6QSbRguOO
-	eZJti2rC+2Jw+kv2HLQBh8+s/U5NV6LN2vGcqeOsKP6pPY4/4MeWcR3R78ZOJvWJ
-	2HBtpmAR2KIil28Qzphz1ZeS8e/qyz2fzOamKs8jyz4w4Ae0fA87jU483fRHtGv1
-	NjBNYRnyZpp0cl671/+Nt/l00LKjPl3WOE5fUlc1ZdwhEQuoR0QGfdE4BY+D7QWD
-	+1HLTchE+BJRuJic6MQtA6W0O2VpL1VFXXdNSm9scVebyrQkv54OuVTkxpeex3I/
-	6UBfVGq6/wURhadaojBA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtvf7h1em-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 14:31:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43UEV2Km031090
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 14:31:02 GMT
-Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 30 Apr 2024 07:30:56 -0700
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Satya
- Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        Ajit Pandey
-	<quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>
-Subject: [PATCH V3 8/8] arm64: dts: qcom: sm8650: Add video and camera clock controllers
-Date: Tue, 30 Apr 2024 19:57:57 +0530
-Message-ID: <20240430142757.16872-9-quic_jkona@quicinc.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240430142757.16872-1-quic_jkona@quicinc.com>
-References: <20240430142757.16872-1-quic_jkona@quicinc.com>
+	s=arc-20240116; t=1714487466; c=relaxed/simple;
+	bh=3XxuFTJHx7IRFFfMGWFpLCJovHBAjWZA+TX+nlB1vak=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JdQ0zNauddY6ECIegewGUlzAsKIwCB20RuwLG0V783WgsQI6gYM8wb2Ft0szA11CUJbFMt486XiDxPJiUxpmD+NCjHiHQQmAAWtwM0g0/mJXuz6ht/SSPjSuWoD3HwNjgy5qBzWld421oU4q9QY0RsO0aEDsMQcWawMwdi/yy5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=fnF+KE64; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1714487461;
+	bh=3XxuFTJHx7IRFFfMGWFpLCJovHBAjWZA+TX+nlB1vak=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fnF+KE64XgK2xqU27gvvQJPDM98GUFUXst+F8BgFTA1YMY198FgoKsUNTwADuMFAj
+	 cGzjHmpvZYhZuUYKhYP7uJcmqhzWhv7xGOsgx7ueQJWziye90uOaNdKSSTPIx3kxhF
+	 vU1U/2RUkDEmrIS2RmldgFzDmBatlo8z+HgHHFbDg5wdsz4IdSCieGUJ/euhz81oNV
+	 4dWGCADImwICDan9O3V4SN64lyesPtRxUdPHrenu7NxTVIxXrAKURCr2kAjPAZEDE8
+	 YwXPQrPbKvRHpvlG1iWfE+DEwKCTP7kGYsc42VVIEtXU+Zi2G6iaPKB16ZIfgY7hjh
+	 yUzys/nSHM1iA==
+Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: koike)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 305883781116;
+	Tue, 30 Apr 2024 14:30:55 +0000 (UTC)
+Message-ID: <35b6b4c1-cc36-4c1b-8f6f-9cca0bd5917c@collabora.com>
+Date: Tue, 30 Apr 2024 11:30:54 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pGqyF1Q2sqQTZdukAZD23eVTk023Kl3l
-X-Proofpoint-ORIG-GUID: pGqyF1Q2sqQTZdukAZD23eVTk023Kl3l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-30_08,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
- phishscore=0 mlxscore=0 adultscore=0 bulkscore=0 clxscore=1015
- suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404300103
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/5] drm/ci: uprev mesa version
+To: Vignesh Raman <vignesh.raman@collabora.com>,
+ dri-devel@lists.freedesktop.org
+Cc: daniels@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
+ robdclark@gmail.com, david.heidelberg@collabora.com,
+ guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+ dmitry.baryshkov@linaro.org, mcanal@igalia.com,
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, amd-gfx@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ virtualization@lists.linux-foundation.org, linux-kernel@vger.kernel.org
+References: <20240430091121.508099-1-vignesh.raman@collabora.com>
+ <20240430091121.508099-2-vignesh.raman@collabora.com>
+Content-Language: en-US
+From: Helen Koike <helen.koike@collabora.com>
+In-Reply-To: <20240430091121.508099-2-vignesh.raman@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add device nodes for video and camera clock controllers on Qualcomm
-SM8650 platform.
 
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 8e0c1841f748..18f955ec588b 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -4,10 +4,12 @@
-  */
- 
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sm8650-camcc.h>
- #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
- #include <dt-bindings/clock/qcom,sm8650-gcc.h>
- #include <dt-bindings/clock/qcom,sm8650-gpucc.h>
- #include <dt-bindings/clock/qcom,sm8650-tcsr.h>
-+#include <dt-bindings/clock/qcom,sm8650-videocc.h>
- #include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/firmware/qcom,scm.h>
- #include <dt-bindings/gpio/gpio.h>
-@@ -3309,6 +3311,30 @@ opp-202000000 {
- 			};
- 		};
- 
-+		videocc: clock-controller@aaf0000 {
-+			compatible = "qcom,sm8650-videocc";
-+			reg = <0 0x0aaf0000 0 0x10000>;
-+			clocks = <&bi_tcxo_div2>,
-+				 <&gcc GCC_VIDEO_AHB_CLK>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,sm8650-camcc";
-+			reg = <0 0x0ade0000 0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&bi_tcxo_div2>,
-+				 <&bi_tcxo_ao_div2>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		mdss: display-subsystem@ae00000 {
- 			compatible = "qcom,sm8650-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
--- 
-2.43.0
+On 30/04/2024 06:11, Vignesh Raman wrote:
+> zlib.net is not allowing tarball download anymore and results
+> in below error in kernel+rootfs_arm32 container build,
+> urllib.error.HTTPError: HTTP Error 403: Forbidden
+> urllib.error.HTTPError: HTTP Error 415: Unsupported Media Type
+> 
+> Uprev mesa to latest version which includes a fix for this issue.
+> https://gitlab.freedesktop.org/mesa/mesa/-/commit/908f444e
+> 
+> Also copy helper scripts to install, so that the ci jobs can
+> use these scripts for logging.
+> 
+> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
 
+Acked-by: Helen Koike <helen.koike@collabora.com>
+
+> ---
+>   drivers/gpu/drm/ci/build.sh       |  1 +
+>   drivers/gpu/drm/ci/container.yml  | 12 ++++--------
+>   drivers/gpu/drm/ci/gitlab-ci.yml  | 11 ++++++++---
+>   drivers/gpu/drm/ci/image-tags.yml |  3 ++-
+>   drivers/gpu/drm/ci/test.yml       |  2 ++
+>   5 files changed, 17 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
+> index 106f2d40d222..8a3baa003904 100644
+> --- a/drivers/gpu/drm/ci/build.sh
+> +++ b/drivers/gpu/drm/ci/build.sh
+> @@ -128,6 +128,7 @@ fi
+>   # Pass needed files to the test stage
+>   mkdir -p install
+>   cp -rfv .gitlab-ci/* install/.
+> +cp -rfv ci/*  install/.
+>   cp -rfv install/common install/ci-common
+>   cp -rfv drivers/gpu/drm/ci/* install/.
+>   
+> diff --git a/drivers/gpu/drm/ci/container.yml b/drivers/gpu/drm/ci/container.yml
+> index 9764e7921a4f..d6edf3635b23 100644
+> --- a/drivers/gpu/drm/ci/container.yml
+> +++ b/drivers/gpu/drm/ci/container.yml
+> @@ -36,15 +36,15 @@ debian/android_build:
+>     rules:
+>       - when: never
+>   
+> -debian/x86_64_test-android:
+> +.debian/x86_64_test-android:
+>     rules:
+>       - when: never
+>   
+> -windows_build_vs2019:
+> +windows_build_msvc:
+>     rules:
+>       - when: never
+>   
+> -windows_test_vs2019:
+> +windows_test_msvc:
+>     rules:
+>       - when: never
+>   
+> @@ -56,10 +56,6 @@ rustfmt:
+>      rules:
+>       - when: never
+>   
+> -windows_vs2019:
+> -   rules:
+> -    - when: never
+> -
+> -clang-format:
+> +windows_msvc:
+>      rules:
+>       - when: never
+> \ No newline at end of file
+> diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
+> index 084e3ff8e3f4..9bf5190604a7 100644
+> --- a/drivers/gpu/drm/ci/gitlab-ci.yml
+> +++ b/drivers/gpu/drm/ci/gitlab-ci.yml
+> @@ -1,6 +1,6 @@
+>   variables:
+>     DRM_CI_PROJECT_PATH: &drm-ci-project-path mesa/mesa
+> -  DRM_CI_COMMIT_SHA: &drm-ci-commit-sha 9d162de9a05155e1c4041857a5848842749164cf
+> +  DRM_CI_COMMIT_SHA: &drm-ci-commit-sha e5f133ccc426a197c48a4e88f5377f943f078180
+>   
+>     UPSTREAM_REPO: git://anongit.freedesktop.org/drm/drm
+>     TARGET_BRANCH: drm-next
+> @@ -26,10 +26,13 @@ variables:
+>     JOB_ARTIFACTS_BASE: ${PIPELINE_ARTIFACTS_BASE}/${CI_JOB_ID}
+>     # default kernel for rootfs before injecting the current kernel tree
+>     KERNEL_REPO: "gfx-ci/linux"
+> -  KERNEL_TAG: "v6.6.4-for-mesa-ci-e4f4c500f7fb"
+> +  KERNEL_TAG: "v6.6.21-mesa-19fc"
+>     KERNEL_IMAGE_BASE: https://${S3_HOST}/mesa-lava/${KERNEL_REPO}/${KERNEL_TAG}
+>     LAVA_TAGS: subset-1-gfx
+>     LAVA_JOB_PRIORITY: 30
+> +  ARTIFACTS_BASE_URL: https://${CI_PROJECT_ROOT_NAMESPACE}.${CI_PAGES_DOMAIN}/-/${CI_PROJECT_NAME}/-/jobs/${CI_JOB_ID}/artifacts
+> +  # Python scripts for structured logger
+> +  PYTHONPATH: "$PYTHONPATH:$CI_PROJECT_DIR/install"
+>   
+>   default:
+>     before_script:
+> @@ -46,6 +49,7 @@ default:
+>       - cd $CI_PROJECT_DIR
+>       - curl --output - $DRM_CI_PROJECT_URL/-/archive/$DRM_CI_COMMIT_SHA/mesa-$DRM_CI_COMMIT_SHA.tar.gz | tar -xz
+>       - mv mesa-$DRM_CI_COMMIT_SHA/.gitlab-ci* .
+> +    - mv mesa-$DRM_CI_COMMIT_SHA/bin/ci .
+>       - rm -rf mesa-$DRM_CI_COMMIT_SHA/
+>       - echo -e "\e[0Ksection_end:$(date +%s):drm_ci_download_section\r\e[0K"
+>   
+> @@ -98,6 +102,7 @@ include:
+>   stages:
+>     - sanity
+>     - container
+> +  - code-validation
+>     - git-archive
+>     - build
+>     - amdgpu
+> @@ -107,7 +112,6 @@ stages:
+>     - msm
+>     - rockchip
+>     - virtio-gpu
+> -  - lint
+>   
+>   # YAML anchors for rule conditions
+>   # --------------------------------
+> @@ -218,6 +222,7 @@ make git archive:
+>     script:
+>       # Remove drm-ci files we just added
+>       - rm -rf .gitlab-ci.*
+> +    - rm -rf ci
+>   
+>       # Compactify the .git directory
+>       - git gc --aggressive
+> diff --git a/drivers/gpu/drm/ci/image-tags.yml b/drivers/gpu/drm/ci/image-tags.yml
+> index 7ab4f2514da8..d8f72b82c938 100644
+> --- a/drivers/gpu/drm/ci/image-tags.yml
+> +++ b/drivers/gpu/drm/ci/image-tags.yml
+> @@ -1,5 +1,5 @@
+>   variables:
+> -   CONTAINER_TAG: "2023-10-11-mesa-uprev"
+> +   CONTAINER_TAG: "2024-04-22-mesa-uprev"
+>      DEBIAN_X86_64_BUILD_BASE_IMAGE: "debian/x86_64_build-base"
+>      DEBIAN_BASE_TAG: "${CONTAINER_TAG}"
+>   
+> @@ -7,6 +7,7 @@ variables:
+>      DEBIAN_BUILD_TAG: "2023-10-08-config"
+>   
+>      KERNEL_ROOTFS_TAG: "2023-10-06-amd"
+> +   PKG_REPO_REV: "3cc12a2a"
+>   
+>      DEBIAN_X86_64_TEST_BASE_IMAGE: "debian/x86_64_test-base"
+>      DEBIAN_X86_64_TEST_IMAGE_GL_PATH: "debian/x86_64_test-gl"
+> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+> index 8bc63912fddb..612c9ede3507 100644
+> --- a/drivers/gpu/drm/ci/test.yml
+> +++ b/drivers/gpu/drm/ci/test.yml
+> @@ -150,6 +150,8 @@ msm:sdm845:
+>       BM_KERNEL: https://${PIPELINE_ARTIFACTS_BASE}/arm64/cheza-kernel
+>       GPU_VERSION: sdm845
+>       RUNNER_TAG: google-freedreno-cheza
+> +    DEVICE_TYPE: sdm845-cheza-r3
+> +    FARM: google
+>     script:
+>       - ./install/bare-metal/cros-servo.sh
+>   
 
