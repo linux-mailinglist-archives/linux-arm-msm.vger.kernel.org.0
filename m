@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-18945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92C8F8B7586
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:15:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D461F8B75A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:24:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E48A1F24BD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:15:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D7125B2240B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:24:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7420E13D62E;
-	Tue, 30 Apr 2024 12:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83EEE1428EA;
+	Tue, 30 Apr 2024 12:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XxqfuUbq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xflb2RUJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0313134412
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 12:15:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A99114038A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 12:23:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714479341; cv=none; b=AuGMfbnG3HnTwEuNU30JEsAtOCVPoUJ9NU2Dz9MLG3EsyCXcAbGBo6HLn2TkZvj8M6+tpLNvC/22iwmLTuSb2fl5eN76eMRq4f6dgzFY3YxILedBXWPL5vCVd95Pws9fHvmDIqtjDpp45A03F8HxXAcg1UFfEyPHzhPrSTpZ89Q=
+	t=1714479841; cv=none; b=AngrGULxF0plDoCixQ4C0t+NiKbQzi7iddgzJ9fcgs1bF+yknkGwuODPwMjvTfiy+XReuJ8x/ns9xzkYOBI1ECjbbt79Jho63GqSk0PhVmTQ+MqD8HVaIqeksSlA+nHR/wLbnavSNTbaldfWpr4JaZOHyX0AL3k1l4KFqIgj3u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714479341; c=relaxed/simple;
-	bh=HYgAGgg95uxY3rUpbJokNIWTJqd/TL6F2P1lkeA1tug=;
+	s=arc-20240116; t=1714479841; c=relaxed/simple;
+	bh=M/fuDa4TAzKrY/SjEcNRdbZHf4Z3egbSsIA7E94Rks0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Azmr3t220VGWL9XicndI2H5ZGm7VmPvpgmPoMK4V4CBx7wLPtLU1ot3J/glUPozCI8bNXHpQFHipvloTOHF2155PL2cX96sHw1/U6MjuMSefsEk5oKf4nidorRDi2RuBYTCefb4fQRAuikY8ELzxZ3XcLNe3Qw50ah9rlmGzc8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XxqfuUbq; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:Content-Type; b=DosRpJlvJ/p2+0c6NSJ+bwvh6Jgd6hAGOO70K1V1Ek6d4G5uril2Gr51k/oxyK9/vKIXzsS8TNWNKFe/8nx9RYiJphQJ0UWYQh098KaqnApOBakYV3GPwSt6GCRmVMQAMDfVNG4OFkUckO0eSQ2ARcuerxqd2oL9SHIgj5pXODU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xflb2RUJ; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-56e37503115so6037391a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 05:15:39 -0700 (PDT)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5709cb80b03so5759017a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 05:23:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714479338; x=1715084138; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1714479836; x=1715084636; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=HcZRGGRQNN6JFN01bYHR/sF88Y20eFPOUJv7CvIs2yU=;
-        b=XxqfuUbqq/j80iJfswyAxueWhRfRSUDusRwtjfhLNAib+KxSqBvhOmKedENKHejdVZ
-         SMTmbHIpd9vVYsoe93m8XWpEkVXhSrWueDJ5GZXGQytwdIMlEMV5WXel1ktUKbvRdQT3
-         8rtC+/22G7OWydukc88+WVA13Y0d+Mq59suSltZtvln++MCoiPmvNPTmiSpY+NShQz35
-         DnCC9FiEI8915xSUekvq+Bhv5S2siWVSv8IQ2c8kt10IKD3TZUAoKRFIUx+c2GY0hoY8
-         NG9dEiHm537T8xsh9xfrdJNhY6U/l/zGciZYH6i7uYoujHzUPeEGIuSWOtmAUrVuytQk
-         KkNQ==
+        bh=q9pjVXVco1U/cWiglm8CxhJD4WMHoae/pXQiNWOvnas=;
+        b=xflb2RUJPzgzptSswtIBXcVfeLSs3D/PkgTqoPfuTutBlfcpezyf3JDgW+QMpwT718
+         owAX85RSnAx7xjrFhV1lJCqcR0VBtQ1LUT70JG0Pv0aozlazxCKbKOi7jUaP9BpiDOCh
+         LNy8kOJ00T3A03DWmBddv+lr1hjKbtKbw8Gooxh6bf+kjbi6kGaBQ1BUOkZ1SvsNGjiI
+         xhgfB/wtg8+22OVLPQPpVwKwkbtXDUH2kLZ8Ws6udvqGkASGbrQgVQwNKEzTbyb9MNqD
+         Tbe+1zYlyUgb6cFc3brGDWS8lhtrgE/6ZEHdrKdZpiVoDJQOYKtlU77O6goWql0NA/MP
+         kdPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714479338; x=1715084138;
+        d=1e100.net; s=20230601; t=1714479836; x=1715084636;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HcZRGGRQNN6JFN01bYHR/sF88Y20eFPOUJv7CvIs2yU=;
-        b=QEwi2x292q5x8n23hfwWi0CX5s2dgYKgy9U73dHEyaWqOqlBvyw3P5xRB0q7yQxyTB
-         t/NCbc23iGRMOMxV1YXMqa1+HJdK2pBOBT8W46pOYwz0y4TLtzJ+z++PddmBIcnSXVPn
-         yAHex4o+sgOKeO9qZ6vDBsDA2vwrBJL7LXv9iWr+SDyY7zUqgHl3FGQMnooe2YemTA3e
-         RzUM3E0NjWCf4bRyqtBHCulL394wYclyZcAfZ1isXvNWhRn0TR9KaMgXG3/r6Nncp7rQ
-         XM08ZoHE9o+0q64y+wYapd9m6nBgahQ+Fn7fdfx0EsfSHvRlASCvcGoJ+/iwNb9B5qEJ
-         P7BA==
-X-Forwarded-Encrypted: i=1; AJvYcCW0b0ZUioW4Co5sSC1goM0KCivRF4llJk+NykAfVbcyknmpjoWRya/Snk4lPzIOUWG+DSngEmxDaTjalssL844t4yL2dMeHtec1Joq1JQ==
-X-Gm-Message-State: AOJu0YwWlAUceFRdmMG7mZG/B816ZuS8Fyk3F/FsF3eZrdZbmPilZ9IV
-	jcbsSB+H3lS2HDSWE8i88UgfsMFC9gGODtdI+iyWEeuvBogobi62M6VKM2I5qI0=
-X-Google-Smtp-Source: AGHT+IHYivGwREaww/1+g3Qx78tYtFlcfzl/pCUZp8c8sEZma9Vm5ZHTkpWY5HF/p/o1P5FOeqXHqg==
-X-Received: by 2002:a50:d65a:0:b0:566:4aa9:7143 with SMTP id c26-20020a50d65a000000b005664aa97143mr2163344edj.14.1714479338031;
-        Tue, 30 Apr 2024 05:15:38 -0700 (PDT)
+        bh=q9pjVXVco1U/cWiglm8CxhJD4WMHoae/pXQiNWOvnas=;
+        b=GcRjO86e+mGyKM3qxSxPpyyNdL/n5rMj0pi5GhKWts8n4dP6fBn7hQfphUNiqsa06r
+         flpD0/nqvSYBzmkPX2QE8tIVFVRxOBb96xHkDF700sICUaoSlE9xOFCwTA4QFeSLF7V1
+         Z4wy2sU4KaGZCUl0DeYoGPrJtIo7sGXXePtLJ5uODQmr+YefoN2Nu/VtdSk3cof5lhr9
+         wPQW0k6+unqx5NvsFjOw3vz96BwnM41YZizAZc2LWPH/AhRqHA+oit4bqMnBHlxgCXNk
+         ZdhWUesAT78uBwqtcDBJaEtsRw/dTIVAL9UKDyppwzXTpsQfAAGjgB76WZH0QYSUnLpb
+         qMTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXPABJHjV4PSu+JOeSe1LB6qeF5mLfbmslB725oyUbgZWC2Sr21oit4VYpdUHRrIFsH3ai+AzIBm/+7LQf+pFr62xK/f1s3C19I28NgNQ==
+X-Gm-Message-State: AOJu0YyVjHj15gSNx4ueKmfwHhUkA6DmXXP2qfyDKlyjKbTNefm/4nSL
+	2Et658ccHNreAy4kfbotT6kH9mQtB2V8J9ET6XguX9B6m+ikzzrDkp/JmDMZYEuFBtNpUstfU32
+	V3ws=
+X-Google-Smtp-Source: AGHT+IFRl5o5P3FNRrHDdOT/8k6oUKp6QFhP/pB5nIAIkyzqp1/5FDouny6Z+ogGHJgpEKQU5HpEQA==
+X-Received: by 2002:aa7:c3d9:0:b0:572:9b20:fd with SMTP id l25-20020aa7c3d9000000b005729b2000fdmr956990edr.31.1714479836546;
+        Tue, 30 Apr 2024 05:23:56 -0700 (PDT)
 Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id i32-20020a0564020f2000b005723bcad44bsm6231057eda.41.2024.04.30.05.15.34
+        by smtp.gmail.com with ESMTPSA id bq22-20020a056402215600b005722ce89ae2sm7404659edb.38.2024.04.30.05.23.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 05:15:37 -0700 (PDT)
-Message-ID: <5a595993-04a2-4055-b8ba-806fdd266812@linaro.org>
-Date: Tue, 30 Apr 2024 14:15:34 +0200
+        Tue, 30 Apr 2024 05:23:56 -0700 (PDT)
+Message-ID: <ebc8813c-74eb-49d1-b8d0-a6f1821f711a@linaro.org>
+Date: Tue, 30 Apr 2024 14:23:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,26 +78,38 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/5] sched: Rename arch_update_thermal_pressure into
- arch_update_hw_pressure
-To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: linux@armlinux.org.uk, catalin.marinas@arm.com, will@kernel.org,
- sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org,
- agross@kernel.org, andersson@kernel.org, mingo@redhat.com,
- peterz@infradead.org, juri.lelli@redhat.com, dietmar.eggemann@arm.com,
- rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
- bristot@redhat.com, vschneid@redhat.com, lukasz.luba@arm.com,
- rui.zhang@intel.com, mhiramat@kernel.org, daniel.lezcano@linaro.org,
- amit.kachhap@gmail.com, corbet@lwn.net, gregkh@linuxfoundation.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-trace-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- Qais Yousef <qyousef@layalina.io>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20240326091616.3696851-1-vincent.guittot@linaro.org>
- <20240326091616.3696851-5-vincent.guittot@linaro.org>
- <95760e2b-ec38-4f04-8f86-e4f935d24a83@linaro.org>
- <CAKfTPtDhVfpvO46YWmMnVhJmiKUbNJt7d2cvmyXfPJ4g1YZkXg@mail.gmail.com>
+Subject: Re: [PATCH v4 6/7] iommu/dma: Centralise iommu_setup_dma_ops()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Robin Murphy <robin.murphy@arm.com>,
+ "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Joerg Roedel <joro@8bytes.org>, Christoph Hellwig <hch@lst.de>,
+ Vineet Gupta <vgupta@kernel.org>, Russell King <linux@armlinux.org.uk>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Huacai Chen <chenhuacai@kernel.org>, WANG Xuerui <kernel@xen0n.name>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, Hanjun Guo
+ <guohanjun@huawei.com>, Sudeep Holla <sudeep.holla@arm.com>,
+ "K. Y. Srinivasan" <kys@microsoft.com>,
+ Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Dexuan Cui <decui@microsoft.com>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ David Woodhouse <dwmw2@infradead.org>, Lu Baolu <baolu.lu@linux.intel.com>,
+ Niklas Schnelle <schnelle@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, Jason Gunthorpe <jgg@ziepe.ca>,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-acpi@vger.kernel.org, iommu@lists.linux.dev,
+ devicetree@vger.kernel.org, Jason Gunthorpe <jgg@nvidia.com>
+References: <cover.1713523152.git.robin.murphy@arm.com>
+ <bebea331c1d688b34d9862eefd5ede47503961b8.1713523152.git.robin.murphy@arm.com>
+ <Zi_LV28TR-P-PzXi@eriador.lumag.spb.ru>
+ <CAA8EJprL8NbNfOvp17hrHoVNkKBpD39xfeu+STm6m9VObF2n9Q@mail.gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -134,48 +147,102 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAKfTPtDhVfpvO46YWmMnVhJmiKUbNJt7d2cvmyXfPJ4g1YZkXg@mail.gmail.com>
+In-Reply-To: <CAA8EJprL8NbNfOvp17hrHoVNkKBpD39xfeu+STm6m9VObF2n9Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30.04.2024 2:00 PM, Vincent Guittot wrote:
-> H Konrad,
-> 
-> On Tue, 30 Apr 2024 at 13:23, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On 29.04.2024 11:26 PM, Dmitry Baryshkov wrote:
+> On Mon, 29 Apr 2024 at 19:31, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
 >>
->> On 26.03.2024 10:16 AM, Vincent Guittot wrote:
->>> Now that cpufreq provides a pressure value to the scheduler, rename
->>> arch_update_thermal_pressure into HW pressure to reflect that it returns
->>> a pressure applied by HW (i.e. with a high frequency change) and not
->>> always related to thermal mitigation but also generated by max current
->>> limitation as an example. Such high frequency signal needs filtering to be
->>> smoothed and provide an value that reflects the average available capacity
->>> into the scheduler time scale.
+>> On Fri, Apr 19, 2024 at 05:54:45PM +0100, Robin Murphy wrote:
+>>> It's somewhat hard to see, but arm64's arch_setup_dma_ops() should only
+>>> ever call iommu_setup_dma_ops() after a successful iommu_probe_device(),
+>>> which means there should be no harm in achieving the same order of
+>>> operations by running it off the back of iommu_probe_device() itself.
+>>> This then puts it in line with the x86 and s390 .probe_finalize bodges,
+>>> letting us pull it all into the main flow properly. As a bonus this lets
+>>> us fold in and de-scope the PCI workaround setup as well.
 >>>
->>> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
->>> Reviewed-by: Qais Yousef <qyousef@layalina.io>
->>> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
->>> Tested-by: Lukasz Luba <lukasz.luba@arm.com>
+>>> At this point we can also then pull the call up inside the group mutex,
+>>> and avoid having to think about whether iommu_group_store_type() could
+>>> theoretically race and free the domain if iommu_setup_dma_ops() ran just
+>>> *before* iommu_device_use_default_domain() claims it... Furthermore we
+>>> replace one .probe_finalize call completely, since the only remaining
+>>> implementations are now one which only needs to run once for the initial
+>>> boot-time probe, and two which themselves render that path unreachable.
+>>>
+>>> This leaves us a big step closer to realistically being able to unpick
+>>> the variety of different things that iommu_setup_dma_ops() has been
+>>> muddling together, and further streamline iommu-dma into core API flows
+>>> in future.
+>>>
+>>> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com> # For Intel IOMMU
+>>> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+>>> Tested-by: Hanjun Guo <guohanjun@huawei.com>
+>>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 >>> ---
+>>> v2: Shuffle around to make sure the iommu_group_do_probe_finalize() case
+>>>     is covered as well, with bonus side-effects as above.
+>>> v3: *Really* do that, remembering the other two probe_finalize sites too.
+>>> ---
+>>>  arch/arm64/mm/dma-mapping.c  |  2 --
+>>>  drivers/iommu/amd/iommu.c    |  8 --------
+>>>  drivers/iommu/dma-iommu.c    | 18 ++++++------------
+>>>  drivers/iommu/dma-iommu.h    | 14 ++++++--------
+>>>  drivers/iommu/intel/iommu.c  |  7 -------
+>>>  drivers/iommu/iommu.c        | 20 +++++++-------------
+>>>  drivers/iommu/s390-iommu.c   |  6 ------
+>>>  drivers/iommu/virtio-iommu.c | 10 ----------
+>>>  include/linux/iommu.h        |  7 -------
+>>>  9 files changed, 19 insertions(+), 73 deletions(-)
 >>
->> Hi, I'm not quite sure how, but this commit specifically breaks booting
->> on Qualcomm platforms with EAS..
-> 
-> This is the fix:
-> https://lore.kernel.org/lkml/20240425073709.379016-1-vincent.guittot@linaro.org/
-
-Yep, works now!
-
-> 
+>> This patch breaks UFS on Qualcomm SC8180X Primus platform:
 >>
->> https://pastebin.com/raw/1Uh7u81x
+>>
+>> [    3.846856] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0x1032db3e0, fsynr=0x130000, cbfrsynra=0x300, cb=4
+>> [    3.846880] ufshcd-qcom 1d84000.ufshc: ufshcd_check_errors: saved_err 0x20000 saved_uic_err 0x0
+>> [    3.846929] host_regs: 00000000: 1587031f 00000000 00000300 00000000
+>> [    3.846935] host_regs: 00000010: 01000000 00010217 00000000 00000000
+>> [    3.846941] host_regs: 00000020: 00000000 00070ef5 00000000 00000000
+>> [    3.846946] host_regs: 00000030: 0000000f 00000001 00000000 00000000
+>> [    3.846951] host_regs: 00000040: 00000000 00000000 00000000 00000000
+>> [    3.846956] host_regs: 00000050: 032db000 00000001 00000000 00000000
+>> [    3.846962] host_regs: 00000060: 00000000 80000000 00000000 00000000
+>> [    3.846967] host_regs: 00000070: 032dd000 00000001 00000000 00000000
+>> [    3.846972] host_regs: 00000080: 00000000 00000000 00000000 00000000
+>> [    3.846977] host_regs: 00000090: 00000016 00000000 00000000 0000000c
+>> [    3.847074] ufshcd-qcom 1d84000.ufshc: ufshcd_err_handler started; HBA state eh_fatal; powered 1; shutting down 0; saved_err = 131072; saved_uic_err = 0; force_reset = 0
+>> [    4.406550] ufshcd-qcom 1d84000.ufshc: ufshcd_verify_dev_init: NOP OUT failed -11
+>> [    4.417953] ufshcd-qcom 1d84000.ufshc: ufshcd_async_scan failed: -11
 > 
-> Which platform is it ?
-> I tested it on dragonboard rb3 and it booted and run tests  even w/o the fix
+> Just to confirm: reverting f091e93306e0 ("dma-mapping: Simplify
+> arch_setup_dma_ops()") and b67483b3c44e ("iommu/dma: Centralise
+> iommu_setup_dma_ops()" fixes the issue for me. Please ping me if you'd
+> like me to test a fix.
 
-As the log suggests, SM8550 QRD
+This also triggers a different issue (that also comes down to "ufs bad") on
+another QC platform (SM8550):
 
-Thanks for your prompt response!
+[    4.282098] scsi host0: ufshcd
+[    4.315970] ufshcd-qcom 1d84000.ufs: ufshcd_check_errors: saved_err 0x20000 saved_uic_err 0x0
+[    4.330155] host_regs: 00000000: 3587031f 00000000 00000400 00000000
+[    4.343955] host_regs: 00000010: 01000000 00010217 00000000 00000000
+[    4.356027] host_regs: 00000020: 00000000 00070ef5 00000000 00000000
+[    4.370136] host_regs: 00000030: 0000000f 00000003 00000000 00000000
+[    4.376662] host_regs: 00000040: 00000000 00000000 00000000 00000000
+[    4.383192] host_regs: 00000050: 85109000 00000008 00000000 00000000
+[    4.389719] host_regs: 00000060: 00000000 80000000 00000000 00000000
+[    4.396245] host_regs: 00000070: 8510a000 00000008 00000000 00000000
+[    4.402773] host_regs: 00000080: 00000000 00000000 00000000 00000000
+[    4.409298] host_regs: 00000090: 00000016 00000000 00000000 0000000c
+[    4.415900] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0x8851093e0, fsynr=0x3b0001, cbfrsynra=0x60, cb=2
+[    4.416135] ufshcd-qcom 1d84000.ufs: ufshcd_err_handler started; HBA state eh_fatal; powered 1; shutting down 0; saved_err = 131072; saved_uic_err = 0; force_reset = 0
+[    4.951750] ufshcd-qcom 1d84000.ufs: ufshcd_verify_dev_init: NOP OUT failed -11
+[    4.960644] ufshcd-qcom 1d84000.ufs: ufshcd_async_scan failed: -11
+
+Reverting the commits Dmitry mentioned also fixes this.
 
 Konrad
+
 
