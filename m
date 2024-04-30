@@ -1,397 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-18949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B46698B7752
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 15:38:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F1CF8B793A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 16:26:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6B971C208E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 13:38:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9D1F1F22C04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:26:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F823171E45;
-	Tue, 30 Apr 2024 13:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69A8B17B4E2;
+	Tue, 30 Apr 2024 14:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="W0E+2ny+"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="P4xY72de"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C498171678;
-	Tue, 30 Apr 2024 13:38:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F06179953
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 14:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714484331; cv=none; b=JrjOxwzkqlJeF5O11rryjSyhyCTY4/XKRkBJqC5pWpf9lzLRX1lE7+gWMm+C9b9KWDKLpR0N0Lw2hIL+p8T8gcEsxrcYsibyxn1Nu8m28LZ2QmV5Z86+6Nso4QRcHE3hT157YwWiul8Y2BWs+76GMHVQbAAjL8/BQqQGM6HD+Ew=
+	t=1714486480; cv=none; b=rx2IsHvwP3pw9s4V3/X3xTjWSJKXjQv3JRrWQ1wVP9bM2nH0O3oNDz0PU7jxqUuWygkXNHFpRTWimKbFdcLTo9r1G5wOFNcDw7VfZn4Zzlnu8PJVO7QlsxrYxRc8iDQ+uinYC1r/H204pcZVFeXmPtDqAT8CdsMgsKRhHlrkjXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714484331; c=relaxed/simple;
-	bh=mO+dhWGAB5hNdHMRm8RNEWiQsl/fSWldi+JeNPslrAE=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kiJfy423f6eM3V93Bok6/7dPor4I2/FFVkk1BC8I/FXiK4+uu/UncFf204bDW2nvQ6xnXvJItmvFrY4M94vdAIvqX8dOh5UKT3g1Nb4gDPPDHq3dMBbFDR4be//0Rm6MNfMvJaalffFTWZdbaGm+xYK0IQT1bSrAPI/so7Q5Gb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=W0E+2ny+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43UC8bWw027011;
-	Tue, 30 Apr 2024 13:38:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=96duwTqpWozDGSxy1qFvA
-	FKHc4Hh17ESTt+z44KvZ4s=; b=W0E+2ny+Gbu+l+pMSG39Rr2sMfj3rGjNZnBUE
-	vbdjmyxZ1u2fo8zkTMckNfBzwoc+C4rAqqOilwICMPA09Z14VXzuDZdBUC9jM9yi
-	PsroleEyHCzM8MZQmi+NJV3rUf/2kH65+m3VrVyfu01nn0yx9P00DrNgENsH26Td
-	9pZRtATiBBA6F/cRnVXZRJJ4X3uXgsW5HemBcyWN1kIIoSPQ7ONv82pmNN1XQmxp
-	z7MHifgGyjQfZsFvDBXPqf7aFU/xC36KkpQJSVV+Ferq5EeABWqJ0S/X8VZuj+Li
-	y9FdxJbJMz5xEAv3qqoAKjR5R3eeSd+p9EQfwf4mbCm4RJh8Q==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtfys3m4j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 13:38:45 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43UDcioM025055
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 13:38:44 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 30 Apr 2024 06:38:44 -0700
-Date: Tue, 30 Apr 2024 06:38:42 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mathieu.poirier@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
-Subject: Re: [PATCH v9 1/3] soc: qcom: Add qcom_rproc_minidump module
-Message-ID: <ZjD0Yr72qv0ul3jK@hu-bjorande-lv.qualcomm.com>
-References: <1711462394-21540-1-git-send-email-quic_mojha@quicinc.com>
+	s=arc-20240116; t=1714486480; c=relaxed/simple;
+	bh=NTGwvE5oTPK+qiXk3TYvQc1vlA1cbXpr4kZtSuS3KHs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ET2vooFZSg3rNSWhGNh+ewMaes4UMLCvhcpWVw5DVSH2Hv7BBTllFc2Q+tjQdsBf/yUpXzAy4/e57ThiTOn2iZ9PIKqSuLx50jeBqVjaWI1s5VTkiogXzsEDS85Z1iOILYysrTjpE1SWkA4IMUDeHngHwGGNAfFLEcukwo3vF64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=P4xY72de; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-41bab13ca80so28605905e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 07:14:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714486476; x=1715091276; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BuJcMbRLUf82KUepIk3TKbpGuDateTsBvHpdeo4lhoI=;
+        b=P4xY72deNjVVS7ep4BrZDZDyA6HVMHfAZIcQj2/rnZJrH2NrxfI/Bfr0wBGU5EJCB+
+         yuNSZZEH0d/49yex4ngCqoQMAlImIe/mbkkdb18ymKJp6s5TQKEwKD95gHVgNsKv9BRE
+         QdjXkQsKi2+thDYKk915sqn69DEQJEbWCrDbCpfQTpaZzoDlFmowwjE0u0tlV4Udm/Fb
+         dVccPFl0WjCsvYGMm+XH5OwtJvxi9/i2KUtqFnRqyoBgcgRV+ovg51waH+1Fw/7PnlT9
+         WRvd5Lkpp/2/IinSmD6cyetxTfpdG4wN404zDTMykz8lxp9USNz6nz+3EPEHtAmXbf7j
+         foXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714486476; x=1715091276;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BuJcMbRLUf82KUepIk3TKbpGuDateTsBvHpdeo4lhoI=;
+        b=TSOjMG+5hTxGUdHKZvrIUUdPViswxWFO3tZz9N2N0JnU3ZXIokonSmW+CoH4LdZF6L
+         XJXk5VcyswtLP4X+pRPPUMoLePs5yUadMwKkWQmElQTpEEmpcyfD2D9S1BK8TLZxNdtg
+         62JvUjJUvkGwrHfBMHiv/zlQtabO2JB1fpPjH4GA/NEAkI1xHnK4fW4mUYk5HmoPTZji
+         EvbAGTdKSq9pKyijWh0fLp7OS2/p7vkMH0N++DQkLYlVsWdokAzprNCNclZPhxlfSpcG
+         N5k15xR5NXpfPNuNo2y7BtRrfodzzNO8oG820poFYd15DkzC+j4TGOM3oaVdK1Ck5mGr
+         e+JQ==
+X-Gm-Message-State: AOJu0YyggkN4eojDLs9hzpm97U1E/zc2Uf+iFPlI+LwZMP+qMaV09Hj2
+	E5tTNYM+tzimfj8dX+O8BuZEUZXZq9M+u6E7UpEaVxhEvoaK9plfjic7Wg4l2MM=
+X-Google-Smtp-Source: AGHT+IFSKfcPM3rOfZybfP+Et3c+Dhy8Xi6uL2xbCb0wZeTmqyvosgGFBcPatPn7+KZSJ7rK2K+kNQ==
+X-Received: by 2002:a05:600c:314a:b0:418:fb6f:5f59 with SMTP id h10-20020a05600c314a00b00418fb6f5f59mr12386080wmo.2.1714486476081;
+        Tue, 30 Apr 2024 07:14:36 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id l2-20020a05600c4f0200b0041be78ae1f0sm12292455wmq.2.2024.04.30.07.14.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 07:14:35 -0700 (PDT)
+Message-ID: <b206f776-f402-43b0-8db3-1b16474b3bc8@freebox.fr>
+Date: Tue, 30 Apr 2024 16:14:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1711462394-21540-1-git-send-email-quic_mojha@quicinc.com>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8A930RImmklqcmasu4LqKbEmw7FEMwTd
-X-Proofpoint-ORIG-GUID: 8A930RImmklqcmasu4LqKbEmw7FEMwTd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-30_07,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- spamscore=0 mlxscore=0 clxscore=1015 suspectscore=0 mlxlogscore=999
- lowpriorityscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404300096
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/3] media: venus: add MSM8998 support
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Jeffrey Hugo
+ <quic_jhugo@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: MSM <linux-arm-msm@vger.kernel.org>,
+ linux-media <linux-media@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+References: <2b21b160-a530-486a-9404-c5bf8863ffed@freebox.fr>
+ <31072144-8880-483f-880b-8c8ca73b2003@freebox.fr>
+ <c805843b-041c-4546-8bf8-ce2a0c71a470@linaro.org>
+Content-Language: en-US
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <c805843b-041c-4546-8bf8-ce2a0c71a470@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 26, 2024 at 07:43:12PM +0530, Mukesh Ojha wrote:
-> Add qcom_rproc_minidump module in a preparation to remove
-> minidump specific code from driver/remoteproc/qcom_common.c
-> and provide needed exported API, this as well helps to
-> abstract minidump specific data layout from qualcomm's
-> remoteproc driver.
-> 
-> It is just a copying of qcom_minidump() functionality from
-> driver/remoteproc/qcom_common.c into a separate file under
-> qcom_rproc_minidump().
-> 
+On 30/04/2024 01:19, Bryan O'Donoghue wrote:
 
-I'd prefer to see this enter the git history as one patch, extracting
-this logic from the remoteproc into its own driver - rather than as
-presented here give a sense that it's a new thing added. (I'll take care
-of the maintainer sync...)
-
-I also would prefer for this to include a problem description,
-documenting why this is done.
-
-
-I've not compared patch 1 and 3, but I'd also like a statement in the
-commit message telling if there are any changes, or if the functions are
-cleanly moved from one place to another.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
-> Changes in v9:
->  - Added source file driver/remoteproc/qcom_common.c copyright
->    to qcom_rproc_minidump.c 
->  - Dissociated it from minidump series as this can go separately
->    and minidump can put it dependency for the data structure files.
+> On 29/04/2024 17:19, Marc Gonzalez wrote:
+>
+>> From: Pierre-Hugues Husson <phhusson@freebox.fr>
+>>
+>> Add the missing bits for MSM8998 support.
+>>
+>> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>> ---
+>>   drivers/media/platform/qcom/venus/core.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 42 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+>> index ce206b7097541..42e0c580e093d 100644
+>> --- a/drivers/media/platform/qcom/venus/core.c
+>> +++ b/drivers/media/platform/qcom/venus/core.c
+>> @@ -587,6 +587,47 @@ static const struct venus_resources msm8996_res = {
+>>   	.fwname = "qcom/venus-4.2/venus.mbn",
+>>   };
+>>   
+>> +static const struct freq_tbl msm8998_freq_table[] = {
+>> +	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
+>> +	{  972000, 520000000 },	/* 4k UHD @ 30 */
+>> +	{  489600, 346666667 },	/* 1080p @ 60 */
+>> +	{  244800, 150000000 },	/* 1080p @ 30 */
+>> +	{  108000,  75000000 },	/* 720p @ 30 */
+>> +};
+>> +
+>> +/*
+>> + * https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
 > 
-> Nothing much changed in these three patches from previous version,
-> However, giving the link of their older versions.
+> Nice touch.
 > 
-> v8: https://lore.kernel.org/lkml/20240131105734.13090-1-quic_mojha@quicinc.com/
-> v7: https://lore.kernel.org/lkml/20240109153200.12848-1-quic_mojha@quicinc.com/
-> v6: https://lore.kernel.org/lkml/1700864395-1479-1-git-send-email-quic_mojha@quicinc.com/
-> v5: https://lore.kernel.org/lkml/1694429639-21484-1-git-send-email-quic_mojha@quicinc.com/
-> v4: https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_mojha@quicinc.com/
-> 
->  drivers/soc/qcom/Kconfig                  |  10 +++
->  drivers/soc/qcom/Makefile                 |   1 +
->  drivers/soc/qcom/qcom_minidump_internal.h |  64 +++++++++++++++++
->  drivers/soc/qcom/qcom_rproc_minidump.c    | 115 ++++++++++++++++++++++++++++++
->  include/soc/qcom/qcom_minidump.h          |  23 ++++++
->  5 files changed, 213 insertions(+)
->  create mode 100644 drivers/soc/qcom/qcom_minidump_internal.h
->  create mode 100644 drivers/soc/qcom/qcom_rproc_minidump.c
->  create mode 100644 include/soc/qcom/qcom_minidump.h
-> 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 5af33b0e3470..ed23e0275c22 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -277,4 +277,14 @@ config QCOM_PBS
->  	  This module provides the APIs to the client drivers that wants to send the
->  	  PBS trigger event to the PBS RAM.
->  
-> +config QCOM_RPROC_MINIDUMP
-> +	tristate "QCOM Remoteproc Minidump Support"
-> +	depends on ARCH_QCOM || COMPILE_TEST
-> +	depends on QCOM_SMEM
-> +	help
-> +	  Enablement of core Minidump feature is controlled from boot firmware
-> +	  side, so if it is enabled from firmware, this config allow Linux to
-> +	  query predefined Minidump segments associated with the remote processor
-> +	  and check its validity and end up collecting the dump on remote processor
-> +	  crash during its recovery.
->  endmenu
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index ca0bece0dfff..44664589263d 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -36,3 +36,4 @@ obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
->  qcom_ice-objs			+= ice.o
->  obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
->  obj-$(CONFIG_QCOM_PBS) +=	qcom-pbs.o
-> +obj-$(CONFIG_QCOM_RPROC_MINIDUMP)	+= qcom_rproc_minidump.o
-> diff --git a/drivers/soc/qcom/qcom_minidump_internal.h b/drivers/soc/qcom/qcom_minidump_internal.h
-> new file mode 100644
-> index 000000000000..71709235b196
-> --- /dev/null
-> +++ b/drivers/soc/qcom/qcom_minidump_internal.h
-> @@ -0,0 +1,64 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _QCOM_MINIDUMP_INTERNAL_H_
-> +#define _QCOM_MINIDUMP_INTERNAL_H_
-> +
-> +#define MAX_NUM_OF_SS           10
-> +#define MAX_REGION_NAME_LENGTH  16
-> +#define SBL_MINIDUMP_SMEM_ID	602
-> +#define MINIDUMP_REGION_VALID	   ('V' << 24 | 'A' << 16 | 'L' << 8 | 'I' << 0)
-> +#define MINIDUMP_SS_ENCR_DONE	   ('D' << 24 | 'O' << 16 | 'N' << 8 | 'E' << 0)
-> +#define MINIDUMP_SS_ENABLED	   ('E' << 24 | 'N' << 16 | 'B' << 8 | 'L' << 0)
-> +
-> +/**
-> + * struct minidump_region - Minidump region
-> + * @name		: Name of the region to be dumped
-> + * @seq_num:		: Use to differentiate regions with same name.
-> + * @valid		: This entry to be dumped (if set to 1)
-> + * @address		: Physical address of region to be dumped
-> + * @size		: Size of the region
-> + */
-> +struct minidump_region {
-> +	char	name[MAX_REGION_NAME_LENGTH];
-> +	__le32	seq_num;
-> +	__le32	valid;
-> +	__le64	address;
-> +	__le64	size;
-> +};
-> +
-> +/**
-> + * struct minidump_subsystem - Subsystem's SMEM Table of content
-> + * @status : Subsystem toc init status
-> + * @enabled : if set to 1, this region would be copied during coredump
-> + * @encryption_status: Encryption status for this subsystem
-> + * @encryption_required : Decides to encrypt the subsystem regions or not
-> + * @region_count : Number of regions added in this subsystem toc
-> + * @regions_baseptr : regions base pointer of the subsystem
-> + */
-> +struct minidump_subsystem {
-> +	__le32	status;
-> +	__le32	enabled;
-> +	__le32	encryption_status;
-> +	__le32	encryption_required;
-> +	__le32	region_count;
-> +	__le64	regions_baseptr;
-> +};
-> +
-> +/**
-> + * struct minidump_global_toc - Global Table of Content
-> + * @status : Global Minidump init status
-> + * @md_revision : Minidump revision
-> + * @enabled : Minidump enable status
-> + * @subsystems : Array of subsystems toc
-> + */
-> +struct minidump_global_toc {
-> +	__le32				status;
-> +	__le32				md_revision;
-> +	__le32				enabled;
-> +	struct minidump_subsystem	subsystems[MAX_NUM_OF_SS];
-> +};
-> +
-> +#endif /* _QCOM_MINIDUMP_INTERNAL_H_ */
-> diff --git a/drivers/soc/qcom/qcom_rproc_minidump.c b/drivers/soc/qcom/qcom_rproc_minidump.c
-> new file mode 100644
-> index 000000000000..c41714dedbfb
-> --- /dev/null
-> +++ b/drivers/soc/qcom/qcom_rproc_minidump.c
-> @@ -0,0 +1,115 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (C) 2016 Linaro Ltd
-> + * Copyright (C) 2015 Sony Mobile Communications Inc
-> + * Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/remoteproc.h>
-> +#include <linux/soc/qcom/smem.h>
-> +#include <linux/string.h>
-> +#include <soc/qcom/qcom_minidump.h>
-> +
-> +#include "qcom_minidump_internal.h"
-> +
-> +static void qcom_minidump_cleanup(struct rproc *rproc)
-> +{
-> +	struct rproc_dump_segment *entry, *tmp;
-> +
-> +	list_for_each_entry_safe(entry, tmp, &rproc->dump_segments, node) {
-> +		list_del(&entry->node);
-> +		kfree(entry->priv);
-> +		kfree(entry);
-> +	}
-> +}
-> +
-> +static int qcom_add_minidump_segments(struct rproc *rproc, struct minidump_subsystem *subsystem,
-> +			void (*rproc_dumpfn_t)(struct rproc *rproc, struct rproc_dump_segment *segment,
-> +				void *dest, size_t offset, size_t size))
-> +{
-> +	struct minidump_region __iomem *ptr;
-> +	struct minidump_region region;
-> +	int seg_cnt, i;
-> +	dma_addr_t da;
-> +	size_t size;
-> +	char *name;
-> +
-> +	if (WARN_ON(!list_empty(&rproc->dump_segments))) {
-> +		dev_err(&rproc->dev, "dump segment list already populated\n");
-> +		return -EUCLEAN;
-> +	}
-> +
-> +	seg_cnt = le32_to_cpu(subsystem->region_count);
-> +	ptr = ioremap((unsigned long)le64_to_cpu(subsystem->regions_baseptr),
-> +		      seg_cnt * sizeof(struct minidump_region));
-> +	if (!ptr)
-> +		return -EFAULT;
-> +
-> +	for (i = 0; i < seg_cnt; i++) {
-> +		memcpy_fromio(&region, ptr + i, sizeof(region));
-> +		if (le32_to_cpu(region.valid) == MINIDUMP_REGION_VALID) {
-> +			name = kstrndup(region.name, MAX_REGION_NAME_LENGTH - 1, GFP_KERNEL);
-> +			if (!name) {
-> +				iounmap(ptr);
-> +				return -ENOMEM;
-> +			}
-> +			da = le64_to_cpu(region.address);
-> +			size = le64_to_cpu(region.size);
-> +			rproc_coredump_add_custom_segment(rproc, da, size, rproc_dumpfn_t, name);
-> +		}
-> +	}
-> +
-> +	iounmap(ptr);
-> +	return 0;
-> +}
-> +
-> +void qcom_rproc_minidump(struct rproc *rproc, unsigned int minidump_id,
-> +		void (*rproc_dumpfn_t)(struct rproc *rproc,
-> +		struct rproc_dump_segment *segment, void *dest, size_t offset,
-> +		size_t size))
-> +{
-> +	int ret;
-> +	struct minidump_subsystem *subsystem;
-> +	struct minidump_global_toc *toc;
-> +
-> +	/* Get Global minidump ToC*/
-> +	toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, NULL);
-> +
-> +	/* check if global table pointer exists and init is set */
-> +	if (IS_ERR(toc) || !toc->status) {
-> +		dev_err(&rproc->dev, "Minidump TOC not found in SMEM\n");
-> +		return;
-> +	}
-> +
-> +	/* Get subsystem table of contents using the minidump id */
-> +	subsystem = &toc->subsystems[minidump_id];
-> +
-> +	/**
-> +	 * Collect minidump if SS ToC is valid and segment table
-> +	 * is initialized in memory and encryption status is set.
-> +	 */
-> +	if (subsystem->regions_baseptr == 0 ||
-> +	    le32_to_cpu(subsystem->status) != 1 ||
-> +	    le32_to_cpu(subsystem->enabled) != MINIDUMP_SS_ENABLED ||
-> +	    le32_to_cpu(subsystem->encryption_status) != MINIDUMP_SS_ENCR_DONE) {
-> +		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
-> +		return;
-> +	}
-> +
-> +	ret = qcom_add_minidump_segments(rproc, subsystem, rproc_dumpfn_t);
-> +	if (ret) {
-> +		dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
-> +		goto clean_minidump;
-> +	}
-> +	rproc_coredump_using_sections(rproc);
-> +clean_minidump:
-> +	qcom_minidump_cleanup(rproc);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_rproc_minidump);
-> +
-> +MODULE_DESCRIPTION("Qualcomm remoteproc minidump(smem) helper module");
-> +MODULE_LICENSE("GPL");
-> diff --git a/include/soc/qcom/qcom_minidump.h b/include/soc/qcom/qcom_minidump.h
-> new file mode 100644
-> index 000000000000..cd87caef919d
-> --- /dev/null
-> +++ b/include/soc/qcom/qcom_minidump.h
-> @@ -0,0 +1,23 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _QCOM_MINIDUMP_H_
-> +#define _QCOM_MINIDUMP_H_
-> +
-> +struct rproc;
-> +struct rproc_dump_segment;
-> +
-> +#if IS_ENABLED(CONFIG_QCOM_RPROC_MINIDUMP)
-> +void qcom_rproc_minidump(struct rproc *rproc, unsigned int minidump_id,
-> +		   void (*rproc_dumpfn_t)(struct rproc *rproc,
-> +		   struct rproc_dump_segment *segment, void *dest, size_t offset,
-> +		   size_t size));
-> +#else
-> +static inline void qcom_rproc_minidump(struct rproc *rproc, unsigned int minidump_id,
-> +		   void (*rproc_dumpfn_t)(struct rproc *rproc,
-> +		   struct rproc_dump_segment *segment, void *dest, size_t offset,
-> +		   size_t size)) { }
-> +#endif /* CONFIG_QCOM_RPROC_MINIDUMP */
-> +#endif /* _QCOM_MINIDUMP_H_ */
-> -- 
-> 2.7.4
-> 
+> Does encoding/decoding work on -next sans interconnect support ? I think 
+> we discussed on IRC it does but I'll ask again just to confirm.
+
+(We have no use-case for encoding.)
+Decoding works, of course.
+I would not submit a broken feature :)
+
+(vp9 2560x1440 59.940fps) decodes at x2  (122s for 240s)
+(vp9  854x480  29.970fps) decodes at x15 ( 16s for 240s)
+
+I find the performance quite decent.
+Though I would have expected a larger performance ratio:
+2560x1440 59.940fps = 221 Mpixel/s
+ 854x480  29.970fps =  12 Mpixel/s
+
+If 1440p decodes at x2, 480p should decode at x30 ?
+Or maybe the bottleneck is elsewhere :)
+
+Regards
+
 
