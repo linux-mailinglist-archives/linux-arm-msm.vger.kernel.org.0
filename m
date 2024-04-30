@@ -1,188 +1,319 @@
-Return-Path: <linux-arm-msm+bounces-18991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 113228B8053
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 21:10:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 380D28B8076
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 21:22:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED1591C226AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 19:10:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EC52283AF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 19:22:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07B2B194C70;
-	Tue, 30 Apr 2024 19:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7F20194C77;
+	Tue, 30 Apr 2024 19:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B9IS6J9X"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AYvPCvZV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6390C172BD7;
-	Tue, 30 Apr 2024 19:10:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61AB7710B;
+	Tue, 30 Apr 2024 19:21:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714504239; cv=none; b=jiydydyn/Y5b+QKY/3DR7ixhFLwY8l0ce4ZVG1u6Lc0pxTgMWKlRWe/cU8VNpkmLCiNd4zExuAxID0JyjSQDVo/WRYBntNUi0bglHmiTJhkf+eKtgpfeoQBbIEqrOsPt5jgeK2Jwww6ebf+RN0yCZ4nadPOP9ECPgWSm9ErwqKM=
+	t=1714504918; cv=none; b=GhB1KB4YVIgs55myH/9li3tJXwPrdRrpycmUQ+yFfErmiMgMt7djooiKXsTpSzVgVpT2mLWz4y0L5T+mD9SJ9C8Ey/krMhPTpOrP7unJmhlZFek3M2IhlecwQbdz9FFdL0tPuAXUfo3TsxelL2Jr6qnCFtQ426MqT4jD6K2NmM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714504239; c=relaxed/simple;
-	bh=OCDOHM9FrUXf71gdI+BpH35InCDk4my/AE7spgjXRRs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=MZPb13Ei7Ax9MYx4tHsJkh2Tzq7c5X8vJvyRIo+u3mHG9rYZiD+IrGbdCOHoRkOV2xgwCB1zQ4x0chpRQdHnV08kw1Qsnk3/5denq2dpfrX9wIGgM0RdBLRflBfpuLGp/CV0xUpHPR0JGbRu2sUSIx9oUQGZKKRX3e/8xSjTYD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B9IS6J9X; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43UDiEmM028868;
-	Tue, 30 Apr 2024 19:10:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=6Dqu70Mx0g9EBKr268I4btbMishqqyi4Ir+N7pWhkYc=; b=B9
-	IS6J9XmKX4DuODhqlAmcfEM62vOjD6oQKDFjlDF+ec3zbESDysfS9ofvOx31JVUZ
-	LDm/HYiPZhS/yv7fJ6whejIdPRWnymE5NLnPqMpQQa6aQApkPmFCi8qLm09jyzmv
-	pkMpts9uQGZa728z7Rg7ZEPBw4jHkOpZOApjLcRJ888ELXdAn1f3vhpmbOAq/vav
-	4mHspeDVPHwTFnddU8gZ0RwvDq8dRsdRAA8bwmOEX5pCFsVNrlLDziUiW4vka571
-	eu3oWhAlltbjdQyeBVcSqDQhQIbO7NdNQhG+Xdt72JhBWI5e1+XYdJLavOkRAfRr
-	nnlVSHzwH0xqySzha0bw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xthgvuyp7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 19:10:29 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43UJAR2G024458
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 19:10:27 GMT
-Received: from [10.110.59.215] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 30 Apr
- 2024 12:10:27 -0700
-Message-ID: <256161ea-a298-541e-42d9-990df2f3f006@quicinc.com>
-Date: Tue, 30 Apr 2024 12:10:26 -0700
+	s=arc-20240116; t=1714504918; c=relaxed/simple;
+	bh=9uH838bGBhtsxWjwYC5ZUO6ofF47IyznjlfHd2isjAQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KsbgG7YHTXoIrRgbi+ALielPa0FRiwBonAOfySUuByXPgsV4ZhShrD9cbdBofn1JTVfCyMO9R68MsetAQuiCoMeh9fFGeifbgqwA6Vjk/bJ3cefjdjd0eW1momfSw9sTnfN4CZnVE5yKRdGpDspGYBOv7Nn4+HlbsC96yGyJSHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AYvPCvZV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148FAC2BBFC;
+	Tue, 30 Apr 2024 19:21:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714504918;
+	bh=9uH838bGBhtsxWjwYC5ZUO6ofF47IyznjlfHd2isjAQ=;
+	h=From:List-Id:To:Cc:Subject:Date:From;
+	b=AYvPCvZVa5oChSnb7EODSOuLmauguENJCLdrz/Xhhs0mz0aSaS37EeP/txvzdNao2
+	 lNDLsR8yZQugbmt2rgkB9yMXJZIYI0pPQ6+OtxeRu8iAfrO6HMBFxQqCHOmDIhQy1F
+	 EGal4bJL5Zt0a8epkruq+P9YEhVJ1jlvi/OkDdiHIEvLbRXDTHgiQlCQPxr5V7YvCr
+	 dru9YzwPcZXKguy+a0CXptr1yPW8KmFQ6lk4RsSVQGsD3Vy59vLqh+gKStWxMMAgTs
+	 4EftAS4aON7u4xGm10KIxzqLctfkTbvhInKb9FYJ7+N2koEbh/NiEqdrwMT/eq9BRH
+	 p/3Bj9CfwDYFQ==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: soc@kernel.org,
+	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Khuong Dinh <khuong@os.amperecomputing.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Robert Richter <rric@kernel.org>,
+	Chanho Min <chanho.min@lge.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: linux-arm-kernel@lists.infradead.org,
+	linux-actions@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	openbmc@lists.ozlabs.org,
+	linux-tegra@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH] arm64: dts: Add/fix /memory node unit-addresses
+Date: Tue, 30 Apr 2024 14:18:54 -0500
+Message-ID: <20240430191856.874600-2-robh@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v7 6/6] remoteproc: qcom: enable in-kernel PD mapper
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        "Mathieu
- Poirier" <mathieu.poirier@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        "Johan
- Hovold" <johan+linaro@kernel.org>,
-        Xilin Wu <wuxilin123@gmail.com>,
-        "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>
-References: <20240424-qcom-pd-mapper-v7-0-05f7fc646e0f@linaro.org>
- <20240424-qcom-pd-mapper-v7-6-05f7fc646e0f@linaro.org>
- <f1ee1fc0-64cb-5610-db92-3a06d477e8b8@quicinc.com>
- <CAA8EJpoDuKyy2_7Lwih6gLW3UO4sduV6Fun6RSzJg6RHSHgMsQ@mail.gmail.com>
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <CAA8EJpoDuKyy2_7Lwih6gLW3UO4sduV6Fun6RSzJg6RHSHgMsQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1ZNo0XrL8Z5_WB9kGUd_O0h6h4NCf8Kg
-X-Proofpoint-GUID: 1ZNo0XrL8Z5_WB9kGUd_O0h6h4NCf8Kg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-30_12,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- adultscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
- mlxlogscore=999 priorityscore=1501 phishscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404300137
+Content-Transfer-Encoding: 8bit
 
+'/memory' nodes always have a 'reg' property, and therefore should have
+a unit-address with just plain hex (i.e. no commas). Fix all the arm64
+'/memory' nodes.
 
+It's possible that some bootloader depends on /memory (arm32 ATAG to DT
+code does for example). If so, the memory node should be commented with
+that requirement.
 
-On 4/26/2024 6:36 PM, Dmitry Baryshkov wrote:
-> On Sat, 27 Apr 2024 at 04:03, Chris Lew <quic_clew@quicinc.com> wrote:
->>
->>
->>
->> On 4/24/2024 2:28 AM, Dmitry Baryshkov wrote:
->>> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
->>> index 1d24c9b656a8..02d0c626b03b 100644
->>> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
->>> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
->>> @@ -23,6 +23,7 @@
->>>    #include <linux/remoteproc.h>
->>>    #include <linux/reset.h>
->>>    #include <linux/soc/qcom/mdt_loader.h>
->>> +#include <linux/soc/qcom/pd_mapper.h>
->>>    #include <linux/soc/qcom/smem.h>
->>>    #include <linux/soc/qcom/smem_state.h>
->>>
->>> @@ -375,10 +376,14 @@ static int adsp_start(struct rproc *rproc)
->>>        int ret;
->>>        unsigned int val;
->>>
->>> -     ret = qcom_q6v5_prepare(&adsp->q6v5);
->>> +     ret = qcom_pdm_get();
->>>        if (ret)
->>>                return ret;
->>
->> Would it make sense to try and model this as a rproc subdev? This
->> section of the remoteproc code seems to be focused on making specific
->> calls to setup and enable hardware resources, where as pd mapper is
->> software.
->>
->> sysmon and ssr are also purely software and they are modeled as subdevs
->> in qcom_common. I'm not an expert on remoteproc organization but this
->> was just a thought.
-> 
-> Well, the issue is that the pd-mapper is a global, not a per-remoteproc instance
-> 
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+---
+SoC maintainers, please take this directly.
 
-Both sysmon and ssr have some kind of global states that they manage 
-too. Each subdev functionality tends to be a mix of per-remoteproc 
-instance management and global state management.
+arm32 is much worse, but the platforms using ATAG to DT code can't be 
+changed and I don't know which ones those are.
 
-If pd-mapper was completely global, pd-mapper would be able to 
-instantiate by itself. Instead, instantiation is dependent on each 
-remoteproc instance properly getting and putting references.
+ arch/arm64/boot/dts/actions/s700-cubieboard7.dts       | 2 +-
+ arch/arm64/boot/dts/apm/apm-merlin.dts                 | 2 +-
+ arch/arm64/boot/dts/apm/apm-mustang.dts                | 2 +-
+ arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts    | 2 +-
+ arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts    | 2 +-
+ arch/arm64/boot/dts/cavium/thunder2-99xx.dts           | 2 +-
+ arch/arm64/boot/dts/lg/lg1312-ref.dts                  | 2 +-
+ arch/arm64/boot/dts/lg/lg1313-ref.dts                  | 2 +-
+ arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts    | 2 +-
+ arch/arm64/boot/dts/nvidia/tegra210-smaug.dts          | 2 +-
+ arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi             | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi           | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3368-r88.dts            | 2 +-
+ arch/arm64/boot/dts/sprd/sp9860g-1h10.dts              | 2 +-
+ 15 files changed, 15 insertions(+), 15 deletions(-)
 
-The pdm subdev could manage the references to pd-mapper for that 
-remoteproc instance.
+diff --git a/arch/arm64/boot/dts/actions/s700-cubieboard7.dts b/arch/arm64/boot/dts/actions/s700-cubieboard7.dts
+index 63e375cd9eb4..bd54b5165129 100644
+--- a/arch/arm64/boot/dts/actions/s700-cubieboard7.dts
++++ b/arch/arm64/boot/dts/actions/s700-cubieboard7.dts
+@@ -24,7 +24,7 @@ memory@0 {
+ 		reg = <0x0 0x0 0x0 0x80000000>;
+ 	};
+ 
+-	memory@1,e0000000 {
++	memory@1e0000000 {
+ 		device_type = "memory";
+ 		reg = <0x1 0xe0000000 0x0 0x0>;
+ 	};
+diff --git a/arch/arm64/boot/dts/apm/apm-merlin.dts b/arch/arm64/boot/dts/apm/apm-merlin.dts
+index 2e8069002ec1..6e05cf1a3df6 100644
+--- a/arch/arm64/boot/dts/apm/apm-merlin.dts
++++ b/arch/arm64/boot/dts/apm/apm-merlin.dts
+@@ -15,7 +15,7 @@ / {
+ 
+ 	chosen { };
+ 
+-	memory {
++	memory@100000000 {
+ 		device_type = "memory";
+ 		reg = < 0x1 0x00000000 0x0 0x80000000 >;
+ 	};
+diff --git a/arch/arm64/boot/dts/apm/apm-mustang.dts b/arch/arm64/boot/dts/apm/apm-mustang.dts
+index 033e10e12b18..e7644cddf06f 100644
+--- a/arch/arm64/boot/dts/apm/apm-mustang.dts
++++ b/arch/arm64/boot/dts/apm/apm-mustang.dts
+@@ -15,7 +15,7 @@ / {
+ 
+ 	chosen { };
+ 
+-	memory {
++	memory@100000000 {
+ 		device_type = "memory";
+ 		reg = < 0x1 0x00000000 0x0 0x80000000 >; /* Updated by bootloader */
+ 	};
+diff --git a/arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts b/arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts
+index dec5a110f1e8..f43cfe66b6af 100644
+--- a/arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts
++++ b/arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts
+@@ -50,7 +50,7 @@ chosen {
+ 		bootargs = "earlycon=uart8250,mmio32,0x66130000";
+ 	};
+ 
+-	memory {
++	memory@80000000 {
+ 		device_type = "memory";
+ 		reg = <0x00000000 0x80000000 0x00000000 0x40000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts b/arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts
+index 1d314f17bbdd..c50df1d02797 100644
+--- a/arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts
++++ b/arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts
+@@ -47,7 +47,7 @@ chosen {
+ 		bootargs = "earlycon=uart8250,mmio32,0x66130000";
+ 	};
+ 
+-	memory {
++	memory@80000000 {
+ 		device_type = "memory";
+ 		reg = <0x00000000 0x80000000 0x00000001 0x00000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/cavium/thunder2-99xx.dts b/arch/arm64/boot/dts/cavium/thunder2-99xx.dts
+index d005e1e79c3d..89fc4107a0c4 100644
+--- a/arch/arm64/boot/dts/cavium/thunder2-99xx.dts
++++ b/arch/arm64/boot/dts/cavium/thunder2-99xx.dts
+@@ -14,7 +14,7 @@ / {
+ 	model = "Cavium ThunderX2 CN99XX";
+ 	compatible = "cavium,thunderx2-cn9900", "brcm,vulcan-soc";
+ 
+-	memory {
++	memory@80000000 {
+ 		device_type = "memory";
+ 		reg = <0x00000000 0x80000000 0x0 0x80000000>,  /* 2G @ 2G  */
+ 		      <0x00000008 0x80000000 0x0 0x80000000>;  /* 2G @ 34G */
+diff --git a/arch/arm64/boot/dts/lg/lg1312-ref.dts b/arch/arm64/boot/dts/lg/lg1312-ref.dts
+index 260a2c5b19e5..cdd10f138098 100644
+--- a/arch/arm64/boot/dts/lg/lg1312-ref.dts
++++ b/arch/arm64/boot/dts/lg/lg1312-ref.dts
+@@ -22,7 +22,7 @@ aliases {
+ 		serial2 = &uart2;
+ 	};
+ 
+-	memory {
++	memory@0 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x00000000 0x20000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/lg/lg1313-ref.dts b/arch/arm64/boot/dts/lg/lg1313-ref.dts
+index e89ae853788a..6ace977ff4cf 100644
+--- a/arch/arm64/boot/dts/lg/lg1313-ref.dts
++++ b/arch/arm64/boot/dts/lg/lg1313-ref.dts
+@@ -22,7 +22,7 @@ aliases {
+ 		serial2 = &uart2;
+ 	};
+ 
+-	memory {
++	memory@0 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x00000000 0x20000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+index a5ab2bc0f835..eeceb5b292a8 100644
+--- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
++++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+@@ -16,7 +16,7 @@ chosen {
+ 		stdout-path = &serial0;
+ 	};
+ 
+-	memory {
++	memory@0 {
+ 		reg = <0x0 0x0 0x0 0x40000000>;
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+index 9ebb7369256e..2e5b6b2c1f56 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
++++ b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
+@@ -25,7 +25,7 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
+-	memory {
++	memory@80000000 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x80000000 0x0 0xc0000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+index 1b8379ba87f9..34e2f80514a3 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
+@@ -16,7 +16,7 @@ chosen {
+ 		stdout-path = "serial0";
+ 	};
+ 
+-	memory {
++	memory@40000000 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x40000000 0x0 0x20000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi b/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi
+index b48b98c13705..e5c0dbf794ae 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi
+@@ -17,7 +17,7 @@ chosen {
+ 		stdout-path = "serial2:115200n8";
+ 	};
+ 
+-	memory {
++	memory@0 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x0 0x0 0x40000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
+index dcee2e28916f..23ae2d9de382 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
+@@ -21,7 +21,7 @@ chosen {
+ 		stdout-path = "serial2:115200n8";
+ 	};
+ 
+-	memory {
++	memory@0 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x0 0x0 0x80000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
+index b16b7ca02379..7f14206d53c3 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
+@@ -21,7 +21,7 @@ chosen {
+ 		stdout-path = "serial2:115200n8";
+ 	};
+ 
+-	memory {
++	memory@0 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x0 0x0 0x40000000>;
+ 	};
+diff --git a/arch/arm64/boot/dts/sprd/sp9860g-1h10.dts b/arch/arm64/boot/dts/sprd/sp9860g-1h10.dts
+index 6b95fd94cee3..5724cac87e53 100644
+--- a/arch/arm64/boot/dts/sprd/sp9860g-1h10.dts
++++ b/arch/arm64/boot/dts/sprd/sp9860g-1h10.dts
+@@ -24,7 +24,7 @@ aliases {
+ 		spi0 = &adi_bus;
+ 	};
+ 
+-	memory{
++	memory@80000000 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x80000000 0 0x60000000>,
+ 		      <0x1 0x80000000 0 0x60000000>;
+-- 
+2.43.0
 
-On the other hand, I think Bjorn recommended this could be moved to 
-probe time in v4. The v4 version was doing the reinitialization-dance, 
-but I think the recommendation could still apply to this version.
-
->>
->> Thanks!
->> Chris
->>
->>>
->>> +     ret = qcom_q6v5_prepare(&adsp->q6v5);
->>> +     if (ret)
->>> +             goto put_pdm;
->>> +
->>>        ret = adsp_map_carveout(rproc);
->>>        if (ret) {
->>>                dev_err(adsp->dev, "ADSP smmu mapping failed\n");
->>> @@ -446,6 +451,8 @@ static int adsp_start(struct rproc *rproc)
->>>        adsp_unmap_carveout(rproc);
->>>    disable_irqs:
->>>        qcom_q6v5_unprepare(&adsp->q6v5);
->>> +put_pdm:
->>> +     qcom_pdm_release();
->>>
->>>        return ret;
->>>    }
->>
-> 
-> 
 
