@@ -1,73 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-18915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF3F08B6F08
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:04:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBD9E8B6F0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:05:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C1781C22D60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 10:04:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A10EA281D36
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 10:05:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1B46129E86;
-	Tue, 30 Apr 2024 10:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 692121292F2;
+	Tue, 30 Apr 2024 10:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PkR/kM3S"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a/vVu+Cs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A4B1292D4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 10:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB491292D4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 10:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714471471; cv=none; b=tGqyIYmm0xxPfclo/ur9y9t2dEslo3FfHH5yHUgdKC32e1+WYgZ91z/LRyApv8IrmyKUeVA7qTrF2tdmdzihZmjNGyXcqES4lJTnb6WshrhCSlONDjvNU02idhUw5hOS6ueDPg1BJDMIZ9RZNeXW7xih7aGDL1+nwW7Eq/q78hA=
+	t=1714471539; cv=none; b=N+z7P1bMX3u4FCJYJ4RdALRIrubLXZkSb/Fq6OdkgE4Od4DFCPF3vdWz9CYU0+P0n7lmXnVGrr72U22DhQtHATc8POiNtvcDTCSGZbRpVQUs/HBt3RJIw0Q/FvMvV/PVyK5mb5id/0J9hE4KKkDp3xU7XHMhxoOoOrv5OwwNFO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714471471; c=relaxed/simple;
-	bh=70tjl/t+y31qBGGxj67RCvNPYFeKBlJU8GQtLI9F0wg=;
+	s=arc-20240116; t=1714471539; c=relaxed/simple;
+	bh=yjnf9AHRZqMRj34Tm4uXwc28cPM6Ap6BSJeHaNIbUF0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h96Nv/2rv61lN4fh+L50p+eFCTQe/fZfSv7Uk1y/85uLxR/q7HDOjsllM4PhdT6v+nLJJl2nWzl7aUxF4E0gMiz1uJdjpyjGDzkgjTxkA9mA+nmwMbFjiZ0f1RjR9oajuogLkiwQDLMyUaiSgv+Z3Z1O1nMkIkX9UMUD9hjcSko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PkR/kM3S; arc=none smtp.client-ip=209.85.208.173
+	 In-Reply-To:Content-Type; b=Jsjr/GcNsRxp6Cv03X+hRUwYzFNtJNn/+q/ZtQMjKJfNdkm7z5P4LESTNKI9fFGiiHRJDXFvERaPMimP+KkzhsZydkM6u8Oa21kWU0icTaMbx9GJNvo70INlxqamepj/GhansbZ9ytDT9bGWrA0TvyAjbS0EjewndkmGwPJnAGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a/vVu+Cs; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2dd7e56009cso71216321fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 03:04:29 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51aa6a8e49aso6745793e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 03:05:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714471468; x=1715076268; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oNbpOQ1a+q3TAWw2QizynJeLtbghbQgetkDUAr5pKuk=;
-        b=PkR/kM3SlDj6xASP4byVDtejWVkzg620PGEJ65MRfGll8T9KIzTgVPFuIx1WHoffja
-         0mp2sr/TIrXCEgJvZPUvoRIUTutd+vqnMbj62Tb5mY/HJnS9S8/W1h+SqbBcH/3NsDwj
-         LIuF6zApi7sV5ZHETvPp95u/zKgeKyUSsWBPoDN2clyOlAi0Qnw/AUfSla7wJuItnB5Z
-         7uIBeePCLhkHH/1KF81beUD/U5U1PNEmIiBtWa5/yNA7j7X6xfQPuBfK2LlDtDt+KUa3
-         4rSPmyBcL/d8a1t/WWd8UploOUe1Ed+n1jhCdLCY++cGsY2FsJVyyFxwzRLlMSvEBZoh
-         dEIA==
+        d=linaro.org; s=google; t=1714471536; x=1715076336; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=0c2r4ftfYh1i1ily+9Iyry9v4Wnv2g5Jvj7DDy6gfK4=;
+        b=a/vVu+Cs50feEULZioEi+k+nDxq02qErhxZqTgON5eMER9w942bejdaUHXsCveG8ie
+         O5bVgldlx+lOIQNZQxcUhTWbkVNpxcMdmKZC095ssw2WRwqWV8X0DaNVudL1dUUwqdp3
+         r2EAsjKIQJrM2ZXQRUH41e9sffrtlzG9H4XpFQdmFpFWj9f9wrbVbe6HZNAU9bfPC6pJ
+         6Rz++k2oPsfT7RU6WQznZnuMyBMAv0ZJN2h43gQV7XoITu+8QYY3cHf2LgCssKrnpcSy
+         9y7TBFvFvkih5MOSAuhQfZ591VnpQSR1QcDnN1HYy6Et0SgiCth7ZlYZzOihkQB/OFYy
+         J7eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714471468; x=1715076268;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oNbpOQ1a+q3TAWw2QizynJeLtbghbQgetkDUAr5pKuk=;
-        b=l9D8+lt0tUAkGr/qF4rW1wdDlVb0ZfS7xG4kOHahEUGa9GUHoJTd+L5VRtGWynOIdk
-         FK1NqXJ0aD5Py55qrw8JDouXv/XQoYrXvr4oU8DPsK8VaHgN+Mu0x6HtwDRjTPGPGCY7
-         oYmaw6AfP0i0589U4F42WcztsUyvxO/Aj1VxUPEWGcb/3vWm//Qjz4+e7EhJWyfMOgZp
-         PfICKSt+qAsk/oRXCSUdnvWGqdWzQa2Fd1nGUYUUL88+Q+htf7hOU1Xfw7ZgwaISNraa
-         AQZGU3Q8YVMx4ygyJbPYpDb6TinDxL3kQcLMgIfA3v4QyDfrh3XW93wHtVbAYJLmRk5C
-         ALzQ==
-X-Gm-Message-State: AOJu0YyMK3sMNhOkfMJCsqECpoDd2bmtk6eDChRhaBFIIkop3nsWwwkt
-	WLQNoygWYRhrWdnz85IXHCJMvwfgfEEuTKp+ZiF12e34vW6I8NzDzMGzfKltsZQ=
-X-Google-Smtp-Source: AGHT+IEj6F4+pDMUd+ckim8PxDLKUD1EKTYKgEo7xSovwiNNKQuznC4XWB6mZTLCr0hYG/6wU6NYhw==
-X-Received: by 2002:a2e:b891:0:b0:2da:d2b8:ffb0 with SMTP id r17-20020a2eb891000000b002dad2b8ffb0mr11004144ljp.41.1714471468257;
-        Tue, 30 Apr 2024 03:04:28 -0700 (PDT)
-Received: from [192.168.0.102] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id bd20-20020a05600c1f1400b0041bdb409fa1sm12156306wmb.21.2024.04.30.03.04.27
+        d=1e100.net; s=20230601; t=1714471536; x=1715076336;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0c2r4ftfYh1i1ily+9Iyry9v4Wnv2g5Jvj7DDy6gfK4=;
+        b=oxYUTKDU+A2kdCJ4iHTsg0kTih6WHJ5D4O8QFWd9KErmg0kAC+GfEXZV/7dFo9IKAW
+         FwyucI/hn7HN7RHWV5mnHvPIgX8bUF7e/Pwjm07GnL3NMfix3Ekat9YnNbLqI0N0T/qC
+         x13ihPnaFUEk3pD1J0cnKuEiDPtXZemoNYzNT2oNYLSoztuaG4F9aMatFDLji1fYKSe4
+         Gv/ix7yHgQwXgHlFwHNtqMhvY1kallM0gj577+rcv44y0TzuaYp03ePWEINTum2+BLsO
+         ++zPuV+sAsiFDSr0p4obiBrAobT8qGSEvIwQMvg559AuSLXXt8WZxo3XD3urMUAlUweN
+         8iAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWpbKjbn8aZka9OORrLK9TsSfPf+VN6eGXkFrei3ScFosqa0O5Ih3Wmlxirem7fBa67k0a9agfLM/P5kWM98ie/zaaEfDxxQQNfhLKv5w==
+X-Gm-Message-State: AOJu0YwxAMA+yVpT5u+RK/yHhhE1WqJ7DL/rGsHkYJ5Jh8LndrBDcrxz
+	gU2hN9z/+Eouk95kQk5GPhXgPV89+CR0mF+qr6qO4YmAu7x3G5WV7wPzAUUTOes=
+X-Google-Smtp-Source: AGHT+IGwoRnxtInvigRnSf3xrL3fTWc2gzyovUQB8J5oNTSn7LjfiqRATlNm+qPBQg6sV5IYrs/Wlg==
+X-Received: by 2002:ac2:5586:0:b0:51c:cfae:afd0 with SMTP id v6-20020ac25586000000b0051ccfaeafd0mr7262972lfg.21.1714471535866;
+        Tue, 30 Apr 2024 03:05:35 -0700 (PDT)
+Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id bv19-20020a170906b1d300b00a58eabf6082sm3724816ejb.199.2024.04.30.03.05.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 03:04:27 -0700 (PDT)
-Message-ID: <e2aea885-99d5-4aa3-beb0-4dfb80553d6a@linaro.org>
-Date: Tue, 30 Apr 2024 11:04:27 +0100
+        Tue, 30 Apr 2024 03:05:35 -0700 (PDT)
+Message-ID: <27f4f3dd-9375-40cf-8c8f-1c4edf66e31b@linaro.org>
+Date: Tue, 30 Apr 2024 12:05:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,42 +77,123 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] clk: qcom: mmcc-msm8998: fix venus clock issue
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Marc Gonzalez <mgonzalez@freebox.fr>, Bjorn Andersson
- <andersson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: MSM <linux-arm-msm@vger.kernel.org>, linux-clk
- <linux-clk@vger.kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Douglas Anderson <dianders@chromium.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-References: <ff4e2e34-a677-4c39-8c29-83655c5512ae@freebox.fr>
- <171424646121.1448451.7219465997551736348.b4-ty@kernel.org>
- <c595791a-bf36-481d-a2f5-aa99ec28a4b7@freebox.fr>
- <1bbd5175-31a3-4c4c-b2b6-6ee7c65bb17f@linaro.org>
- <312d3cbd-852e-4b93-8bef-c78827712f56@linaro.org>
- <557bd418-0e37-44b1-b622-3c824a6a7553@linaro.org>
- <b4bd6bb1-b1c3-482c-9140-24c8f9f14bff@linaro.org>
+Subject: Re: [PATCH v9 6/6] arm64: dts: qcom: ipq9574: Add icc provider
+ ability to gcc
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, djakov@kernel.org,
+ dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20240418092305.2337429-1-quic_varada@quicinc.com>
+ <20240418092305.2337429-7-quic_varada@quicinc.com>
+ <a7194edd-a2c8-46fc-bea1-f26b0960e535@linaro.org>
+ <Ziov6bWBXYXJ4Zp8@hu-varada-blr.qualcomm.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <b4bd6bb1-b1c3-482c-9140-24c8f9f14bff@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <Ziov6bWBXYXJ4Zp8@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/04/2024 11:00, Konrad Dybcio wrote:
-> ??????????
+On 25.04.2024 12:26 PM, Varadarajan Narayanan wrote:
+> On Tue, Apr 23, 2024 at 02:58:41PM +0200, Konrad Dybcio wrote:
+>>
+>>
+>> On 4/18/24 11:23, Varadarajan Narayanan wrote:
+>>> IPQ SoCs dont involve RPM in managing NoC related clocks and
+>>> there is no NoC scaling. Linux itself handles these clocks.
+>>> However, these should not be exposed as just clocks and align
+>>> with other Qualcomm SoCs that handle these clocks from a
+>>> interconnect provider.
+>>>
+>>> Hence include icc provider capability to the gcc node so that
+>>> peripherals can use the interconnect facility to enable these
+>>> clocks.
+>>>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>> ---
+>>
+>> If this is all you do to enable interconnect (which is not the case,
+>> as this patch only satisfies the bindings checker, the meaningful
+>> change happens in the previous patch) and nothing explodes, this is
+>> an apparent sign of your driver doing nothing.
 > 
-> That's what the kernel is trying to do as part of the cleanup.. Either
-> this clock is always-on or held through some hardware vote. Or the status
-> bit is wrong.
-> 
-> Just leave it be.
-> 
-> Konrad
+> It appears to do nothing because, we are just enabling the clock
+> provider to also act as interconnect provider. Only when the
+> consumers are enabled with interconnect usage, this will create
+> paths and turn on the relevant NOC clocks.
 
-That's not different to what I just said but, thanks for restating it.
+No, with sync_state it actually does "something" (sets the interconnect
+path bandwidths to zero). And *this* patch does nothing functionally,
+it only makes the dt checker happy.
 
----
-bod
+> 
+> This interconnect will be used by the PCIe and NSS blocks. When
+> those patches were posted earlier, they were put on hold until
+> interconnect driver is available.
+> 
+> Once this patch gets in, PCIe for example will make use of icc.
+> Please refer to https://lore.kernel.org/linux-arm-msm/20230519090219.15925-5-quic_devipriy@quicinc.com/.
+> 
+> The 'pcieX' nodes will include the following entries.
+> 
+> 	interconnects = <&gcc MASTER_ANOC_PCIE0 &gcc SLAVE_ANOC_PCIE0>,
+> 			<&gcc MASTER_SNOC_PCIE0 &gcc SLAVE_SNOC_PCIE0>;
+> 	interconnect-names = "pcie-mem", "cpu-pcie";
+
+Okay. What about USB that's already enabled? And BIMC/MEMNOC?
+
+> 
+>> The expected reaction to "enabling interconnect" without defining the
+>> required paths for your hardware would be a crash-on-sync_state, as all
+>> unused (from Linux's POV) resources ought to be shut down.
+>>
+>> Because you lack sync_state, the interconnects silently retain the state
+>> that they were left in (which is not deterministic), and that's precisely
+>> what we want to avoid.
+> 
+> I tried to set 'sync_state' to icc_sync_state to be invoked and
+> didn't see any crash.
+
+Have you confirmed that the registers are actually written to, and with
+correct values?
+
+Konrad
 
