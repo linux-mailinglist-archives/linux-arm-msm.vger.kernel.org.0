@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-18932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 755D08B708D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:47:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C5F4A8B70B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:49:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E342C1F241A4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 10:47:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65CC21F21EE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 10:49:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D513612C46B;
-	Tue, 30 Apr 2024 10:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FD8712C49E;
+	Tue, 30 Apr 2024 10:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qvSHSzNl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UbLVpBve"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA5812C530
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 10:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE0212C48B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 10:49:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474017; cv=none; b=Tj7NzheR/87ntacrlcFzTezNyq1jBrys5MP5+BGJz2teYgZ7HAzpcIhEhDlzVOzeZiFl7FGNK0dzRzwp7q39WSqCk52TGhtw117F2f0XMfdInyxkcKJcMTSQZFP2W0XDnV5vFzTI745ybLvuoRgETIWGVzCccF51spnN24HnTYs=
+	t=1714474147; cv=none; b=Hs9lEkMvaZctQLBvVtCxhwVAqMAQQ5eybt2LMvOpJdg/xIXQzamKUEDFTaV4vgRUG5KqLeIOVdszKOmA5RR30UgFZOjYqCx3+C78ASdjuYkV2EHOo3CTGhEFs69ROY0ZCSmTQHWaRh0WHnzTLVi7SlS2cme5ABeGoRiWm+g8k4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474017; c=relaxed/simple;
-	bh=B8tH4tHOKg8ilZvr+0aytqIZjWrAXy+IX+xPonUHaYs=;
+	s=arc-20240116; t=1714474147; c=relaxed/simple;
+	bh=KR7LI6rrvuirq0c+KmaHMvWrLRxfufK+DbJifyv82Qk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HrjWa/mqEAdYGqU7EbCXDtemmXARCnemi3vx+2H1Qz20ksffSHAdwpo6yqwAuKjTh3W/QOgyhm2I0I2SZOYgKqcVj2BigKHs3YMGS7ejWbPQgtoB5AvX8Ef6Jnea3+mPLwqlccKMUG8X995S4o5wHz0r0E5ow1j/liqPfxuPfKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qvSHSzNl; arc=none smtp.client-ip=209.85.208.53
+	 In-Reply-To:Content-Type; b=iO7p4vuWqrL+Kg4tf4w3BXBk2KFCBO/g3V+UgXhpclSxz6hJK18BR1SID7UMZKQ+3cTq5vEa17aSsdZnk4McC0WyWFK3Gh3DatUAKkKzTMUlK3GD1WOQ0tfjUqNc7Wp/3ISE7wLsIJL0pgkZIcryVJaoXiJATE7cYwpPu+6MbE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UbLVpBve; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-57258c90899so6890549a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 03:46:55 -0700 (PDT)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5723edf0ae5so5886086a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 03:49:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714474014; x=1715078814; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1714474145; x=1715078945; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IZYTIT0ZxYvFVL0Ba4inDvmHjA+bwSS4lh+A5ZZwfbg=;
-        b=qvSHSzNl8NVoagC+OlLY58nXDxoa//hSBKYC2aGwzwkHjJvvCaZTAtSvrZ9bOpQMlp
-         XrCVq1zcA+cui64ugUY4uO7uEbtqOGUmJzX/IZu+njUwD5y3vEItGkYfIhQ9TzQfpZ7z
-         EDN20mdh/lMsPAecfUSXuXFMTdzkmt28+UVogExGKaxdYiOPmpudqi/fjnczZokOEDSR
-         DQ1pjgkNVT2DOGqYZeTuw0PmFweTJz75oThYMgrWeULTodvTzjfDGCqT7Cr41f2+crOR
-         fafo0ytqlXRSiNT+v52bcRWdBx3zbd0M9kBFNXMNmRd3krOWlj+IDOIKCp/lHuJ+oSFY
-         a/AQ==
+        bh=96pQ6DWgcHMQ5/U8CMRhHuWIuxEmhkD85mjVVrXWF00=;
+        b=UbLVpBve3+r94mvVfUfWo1duE7zM7QYdhmgmHaq3nc70SaaR1GT9XyTGQvsl7iMaac
+         qSdCDaeXzyt0m+JD+fdTTFt31E42Dq8fbPVGupovwp8mbeDQBVJkzua/vMc+8jf3f4GJ
+         sJd65VtIu7HP87mUwk2H40YUZXOwCuURLkZxLlGngqwaPBmnYLLhVC68MEFL8MHmg83K
+         FTDxJqto65BoBGnDRNtFVz1PG4Zgoiz61LY0UWXPyuMV2iGTvciX40OcUyqq+Q4+c22K
+         Bxgv/1Sx7zIU+kL+2yYnBpHPz17f0AdAERNviZFArPXy/CiX3E4J1ymYoA14xMKjnMIP
+         1gHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714474014; x=1715078814;
+        d=1e100.net; s=20230601; t=1714474145; x=1715078945;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IZYTIT0ZxYvFVL0Ba4inDvmHjA+bwSS4lh+A5ZZwfbg=;
-        b=M2By+tDbPc8I2oKDggY/22hoUeEVdVYwCieKLV55HdrTYFFLf2jb8SDUbpxvNJbzCp
-         3Ob51Ob3iyf1Ldn041mp4k8ymfv4n2qJ9Sb/F8CJ1bq8sOvNrXbtddX+XWMQLAWIFwQs
-         y8utfdhk5iEYd2H5OF1qhFhDw9rwER/JiQNlV5zzG16MtyX3HivmsHGMEzsVixHdc48l
-         8kB03qEdbA4J2kjw7ECyUVGpY/O7ng4z+Ft32wJBjJGDvHuRAnMOkBxbog5l8RboebLQ
-         JFhCbV3g9j9srSJSa1XWYVo8p7huxN/hnPvKmsM+3YMGKcRJztZ8WccTflfv6nS/W4mp
-         6cZw==
-X-Forwarded-Encrypted: i=1; AJvYcCX566C/5Akf5PSdXCpX8XPdhmCCztFF/EjgmpOLRPXMDlQlIfLhg8nQZzgZhPNtaPWQfVUZhtGH89ieR7w1QsjHSKsdthFo7ej5xHWadQ==
-X-Gm-Message-State: AOJu0YzEt1AGqxmIF4xYXG8B4nIuf8uskDJXcsh15vxVeER4kt0JFnfh
-	iBCn6jSTYQZUQ/DEZjXI2d04xzfduxbNkdmx/s4JSSv0h0A1uey+pF1MUQTbxMc=
-X-Google-Smtp-Source: AGHT+IGHREn1JaANpEdDeLUVzNKKpT7XKa7oQeDihO/eWTk3yelFKyiSXlfuL8ed/Gcdg+lvCMbQaA==
-X-Received: by 2002:a50:cccc:0:b0:570:5e98:64b7 with SMTP id b12-20020a50cccc000000b005705e9864b7mr2284381edj.17.1714474014354;
-        Tue, 30 Apr 2024 03:46:54 -0700 (PDT)
+        bh=96pQ6DWgcHMQ5/U8CMRhHuWIuxEmhkD85mjVVrXWF00=;
+        b=LETAoc5yGpZrafW1ZWbrv+kMAxwjBouyUrKx4y2oCa2uNkmPbx0gVz6TA6sGDpKwHx
+         xKfq8dTmPwsHEidNlj0qWQ707C9A5IW0+/OdRd5Zq/wyaBQGw138m0MmtEE+t81mf7O2
+         YkaVwda72hk3Ep0ABHrLCfLe+FFOHWCpvhyD6K7jvWaOd82a0NIMt88saYTj5hcZ8eSQ
+         YhiwS4F6qZ86yhpGp7oNR2+c5cPZAcx5jyn3WDJHQaMWG/GmdPkjU1HKM7upQLyTAb7i
+         EnKJZbOcf9IW7tSVo7n7yJ6RgiWP1cO9ta2z52rBILo0wYLbl7sds1QvYaXh6HSoDWkl
+         48YQ==
+X-Gm-Message-State: AOJu0Yx3zUnOya9hsY9e8zaj6/A7ubzg6DeN1PAwdD3rfnGO/cqdwWMd
+	cYUxkTu/3p5qPWeQOc/ubf9ic1zAwwSTLe3h1og0TcgzHRnP3J1IkF/8zyzwMH8=
+X-Google-Smtp-Source: AGHT+IHcHgW7CGWFxNpCJDQuVnBapsMVl/Bvxuzrl9xFVKEJT4JxiWQYtybyj+kN/JkgGXn8LVTdIQ==
+X-Received: by 2002:a50:9f66:0:b0:570:5214:f62 with SMTP id b93-20020a509f66000000b0057052140f62mr7149035edf.0.1714474142756;
+        Tue, 30 Apr 2024 03:49:02 -0700 (PDT)
 Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id fe12-20020a056402390c00b0057297f5935dsm465618edb.57.2024.04.30.03.46.53
+        by smtp.gmail.com with ESMTPSA id f11-20020a056402194b00b005728a19c957sm1280572edz.26.2024.04.30.03.48.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 03:46:54 -0700 (PDT)
-Message-ID: <11bd7146-30cd-4b71-b2ca-d76875763731@linaro.org>
-Date: Tue, 30 Apr 2024 12:46:52 +0200
+        Tue, 30 Apr 2024 03:49:02 -0700 (PDT)
+Message-ID: <26b5a160-f804-4f3b-aaaa-6c4eb6d9d056@linaro.org>
+Date: Tue, 30 Apr 2024 12:48:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,15 +76,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-sm8450: set OPS_PARENT_ENABLE on
- gcc_sdcc2_apps_clk_src
-To: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Vinod Koul <vkoul@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20240427-topic-8450sdc2-v1-1-631cbb59e0e5@linaro.org>
- <2337ba58adb3fb127710bead9b8665a9.sboyd@kernel.org>
+Subject: Re: [PATCH v3 2/6] firmware: qcom_scm: Add gpu_init_regs call
+To: Connor Abbott <cwabbott0@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20240430-a750-raytracing-v3-0-7f57c5ac082d@gmail.com>
+ <20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -123,66 +126,19 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <2337ba58adb3fb127710bead9b8665a9.sboyd@kernel.org>
+In-Reply-To: <20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30.04.2024 2:21 AM, Stephen Boyd wrote:
-> Quoting Konrad Dybcio (2024-04-27 05:01:07)
->> Similar to how it works on other SoCs, the top frequency of the SDHCI2
->> core clock is generated by a separate PLL (peculiar design choice) that
->> is not guaranteed to be enabled (why does the clock framework not handle
->> this by default?).
->>
->> Add the CLK_OPS_PARENT_ENABLE flag to make sure we're not muxing the
->> RCG input to a dormant source.
+On 30.04.2024 12:43 PM, Connor Abbott wrote:
+> This will used by drm/msm to initialize GPU registers that Qualcomm's
+> firmware doesn't make writeable to the kernel.
 > 
-> The RCG2 hardware hasn't required the parent to be enabled for clk
-> operations besides for the glitch-free source switch. What scenario is
-> happening here that's requiring this flag? Is the RCG forcibly enabled
-> perhaps because the bootloader has left the root enable bit set
-> (CMD_ROOT_EN)? Or are we changing the parent while the clk framework
-> thinks the clk is off when it is actually on?
-> 
-> TL;DR: This is papering over a bigger bug.
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> ---
 
-Definitely.
-
-
-Take a look at:
-
-static const struct freq_tbl ftbl_gcc_sdcc2_apps_clk_src[] = {
-	F(400000, P_BI_TCXO, 12, 1, 4),
-	F(25000000, P_GCC_GPLL0_OUT_EVEN, 12, 0, 0),
-	F(50000000, P_GCC_GPLL0_OUT_EVEN, 6, 0, 0),
-	F(100000000, P_GCC_GPLL0_OUT_EVEN, 3, 0, 0),
-	F(202000000, P_GCC_GPLL9_OUT_MAIN, 4, 0, 0),
-	{ }
-};
-
-XO and GPLL0 are more or less always on, but GPLL9 is described to only
-be used for this specific clock for this specific frequency (perhaps it
-feeds something else on the soc but that's besides the point).
-
-Then, the parent input is changed during set_rate, but GPLL9 seems to
-never be enabled:
-
-
-@@ -3272,6 +3274,8 @@ static int gcc_sm8450_probe(struct platform_device *pdev)
-        if (IS_ERR(regmap))
-                return PTR_ERR(regmap);
- 
-+       pr_err("GPLL9 is %s at boot\n", trion_pll_is_enabled(&gcc_gpll9, regmap) ? "enabled" : "disabled");
-+
-        ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
-                                       ARRAY_SIZE(gcc_dfs_clocks));
-        if (ret)
-
-
-(+ cruft to make this callable) results in a:
-
-[    1.637318] GPLL9 is disabled at boot
-
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
