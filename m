@@ -1,72 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-18970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D7A78B7BC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 17:36:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C9958B7BC0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 17:36:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B7B31C243CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 15:36:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5903A1C2438E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 15:35:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 555F4174EC7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B91C172BA8;
 	Tue, 30 Apr 2024 15:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="gR5rHT60"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="A34xbSPz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B334B14038E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 15:35:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472BF143752
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 15:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714491318; cv=none; b=Pb0NTmZa8zrfWXzBGGYsjLmdUJstnCK95sfUdMyRGyoZ9Pvc9NSshbl7N/bMWRE8I7sK30sAq65SAtkXglvHvrSWn1Px2kTPF1DHYj3HK0Pn+XXXUml0QwDTubavtNTiblXNhds+K2aDEZpFrqv6LN0svlviGjTx8BT/HzjLXnY=
+	t=1714491318; cv=none; b=kYTgTJbkuxYcg4EopUMpN2hGaA98xaAoPgoGnDlrmkaLIapyditHOOfoOJwpjAX2YO6GRoMPll0X9LOcdK5pLTtuayZA1aotAa89o3VmkXVXjRh+NZ/WO3csp0iFgGT/tTZ7JWS4Ovvpo+lS1pa+Is0qTTkekXnprA9xT8XY1JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714491318; c=relaxed/simple;
-	bh=cnERhQN+psqBArfbsUuDM43qjdDKzTKRv36HTHjehz0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=S5rO8l3UdqXaAvWLv3ZvTK1dBI1RF98eBqxyW5RDKLXCa19t8BKbcPDNHrc1UIhNqExGuXT7+/ygxfsqzOBPV6DFa/26AGzqoWjs2NfdwV+u12kTtzRFRQn51HACiNXYHnRipzKVa7rq7HLj0Gm8lL3cHW/BTsO4/MAUDDFNzA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=gR5rHT60; arc=none smtp.client-ip=209.85.208.177
+	bh=mwnvfTHxI+WM3M5fTYL+QVR5JSOESE1VGRRnr4BsCxU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ugkgAP/1g0LFRo9vttGlk7soZiSFwwywrIEYepJWrJYr9b8yFF6UVV3arM2N4R3Dxk4gk0LqLkKeH+R+OyvwgPM7MkLC8IzCI+tJ2z2u2UdW+2YWdEuUGMJagy553jqdqDf40ckcVBF4zg9hr3LTnpAfSt9nj0/JOZ247PSRTgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=A34xbSPz; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d8a2cbe1baso77444701fa.0
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-41ba1ba55ebso30297965e9.1
         for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 08:35:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714491313; x=1715096113; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:cc:to:subject:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2c9rH3JeyvGKQdDSVVVx0PhRv40r9PE97KLjHmXfjCg=;
-        b=gR5rHT60Jj2V51q2Cp+q58BmddwhPsV6gSjHWqiKSP+WnrOIsrdnAM2z8QnmMONb98
-         W5hORwssgO2fVzaWBsEXUI7h4s69VHf0v1qCQV03PwAgQj/wYpWjbQmZVfk8lzhiZH0u
-         MbvllkJy46868rtIBIiY70/VKUra0yjPmn7eNIND3aD8FaLTeMoxpY5vHMHt97z1yuK3
-         pWoBuQo/cRQ1E9/fdJySMaZiG2GlI2TohEYgM4KUqn8EMHkDocVA0Ye9Q/vl4HBhKtn6
-         juVC4uhv9q6WFpUYTXp9+VwTGcnf8swAsngwamM8zgb9nV3qFMfVKlS9Fe919EmMfj3+
-         DP4A==
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/hovZS8BlASlfNj4coZ1dMwGGp6FnU0h8KsE6yg3+Ow=;
+        b=A34xbSPzyhC3ekLZQ/OnDkSUYjCDB0x4XUgBW5sSvyOL+rW8UJ5qU4bFcb5VcI2cLj
+         WJEm0MoHKctCLFVZysJWsY6jRvj4c1WNaw6TswVBhYCM8FIcWQjD9LoYf/4dRoP3ljKu
+         itrV6teltRmXoPx6jZrBM0jggFZpbcuIDRIVOmW306k4ut0SYZBVXfj//JQ0XMPYFgFX
+         /YyhWfMDUPgtfwCRYvR9kN5ixEGXZ0P3+ZjaqLgwEWdEKPHc7Op4YnjebrdDbUBUJlJU
+         K77rVaMycjvlNhJ0XIUaIHr4ZPFSALkhLiRXYjaNiOAGy20P4P3y/hlVg/0jigb4VUUw
+         Td/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1714491313; x=1715096113;
-        h=content-transfer-encoding:content-language:cc:to:subject:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2c9rH3JeyvGKQdDSVVVx0PhRv40r9PE97KLjHmXfjCg=;
-        b=FQ0E1s+A2K1BCkzGb8bUsbmP2+m51m6xG9TxaGMYWaYwyJJnFws7AXCp67O8p1JBN6
-         I/EleJU4JgooSDw3v2nvkBCWsPVqQzDdyK/PqU9qngOEMeN+5jYmyWAg5zpR8a4RqB/W
-         oq4j2Ks8+W7O6G3spTbX59i672i3PtOapLHyTzYcpdBnMoaHbCRI2kO7ISvUV0bBl3wK
-         n6iji6Y6nCnLJY4Oqddsmw89zZtkg/GhZADPtAR7jZ3k4Iup9DBZ4FzlarSE8LIuaOB/
-         0XXOScPWrYW/dzLqL3w8GSdQSvcZF3VwTHgj39M383eGFLqJi2c36IAs99asw90B4d8J
-         GVcQ==
-X-Gm-Message-State: AOJu0Yyx3ygvG8qerlheEjVnm2RStQWfS13BcKDRMypTjmIsbesFnW2S
-	HdWRLy8IsClr2fpKi4Zy35/L7HypqBDXDCS2LcL0Dcp6V0vrPkIcVS2Sw0O9afQ=
-X-Google-Smtp-Source: AGHT+IH4FyszgLVd5E8UC44LgcvddxJsdBSvb733jfv+WHaa2WIHic3JGHRXMCNJwvDMKXzwCmXWRw==
-X-Received: by 2002:a2e:8682:0:b0:2da:b1fc:7b8f with SMTP id l2-20020a2e8682000000b002dab1fc7b8fmr64095lji.9.1714491312626;
-        Tue, 30 Apr 2024 08:35:12 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/hovZS8BlASlfNj4coZ1dMwGGp6FnU0h8KsE6yg3+Ow=;
+        b=c4wHmy1455u2LbDGhU2j0Qk+7FDBRUgPSkhXE6FT63ON8JHrKLjJ3fhnECjLJlOYwP
+         w6YTmhIT143pKFI53zPuh3LRQILyWf01IK+wCrYHEH0X0IPsHwMV3IylkujSzHVAg85l
+         QCKZQJPQaxSAM9aTRIyvD2aGIlVEK5Q4+VDF+OqPp5ekbyC3lucVw9dzlpSJiRxAqml6
+         +BwNTtEjyv88JJaTWsbxPKj9OG7ICb/yGcpzSXyJ7SKrvPHfn71S9IHOFsQ/DpbnnAwJ
+         cBCn9MfjaEUw5I1i+USZsskbDlJaskHZwcI6pvWavYjwxhcfvYTbyB9ri8UNctJcKCZu
+         4kIg==
+X-Gm-Message-State: AOJu0YywURiW8WNx8SweUzoPSvcI1QowNlo7dEnYXofN3BvpRIIAKjcZ
+	DYV1Dlky3h+gVQ63kf7CCPKeDRzBtIovvu0XdNQkVSfxGKOklBeRTKmuRKghSWw=
+X-Google-Smtp-Source: AGHT+IF+tKSffkAZmeUiRinjn6rsXwKDIGTeuYhVOb04lxk3/+aDTHyFXmft2n3g/qbqEthfB7KQAQ==
+X-Received: by 2002:a05:600c:3b17:b0:41a:c592:64ff with SMTP id m23-20020a05600c3b1700b0041ac59264ffmr12659980wms.35.1714491313365;
+        Tue, 30 Apr 2024 08:35:13 -0700 (PDT)
 Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id h13-20020a05600c314d00b0041ac4aafd3dsm27045674wmo.12.2024.04.30.08.35.12
+        by smtp.gmail.com with ESMTPSA id h13-20020a05600c314d00b0041ac4aafd3dsm27045674wmo.12.2024.04.30.08.35.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 08:35:12 -0700 (PDT)
-Message-ID: <ff646f97-68e3-4fef-9b56-2bd98f0cbe7d@freebox.fr>
-Date: Tue, 30 Apr 2024 17:28:46 +0200
+        Tue, 30 Apr 2024 08:35:13 -0700 (PDT)
+Message-ID: <4f99f0a1-1fae-42cf-a8ea-0f859e9818b9@freebox.fr>
+Date: Tue, 30 Apr 2024 17:30:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,8 +75,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: [PATCH v2 1/3] dt-bindings: media: add qcom,msm8998-venus
 From: Marc Gonzalez <mgonzalez@freebox.fr>
-Subject: [PATCH v2 0/3] Add support for qcom msm8998-venus (HW vdec / venc)
 To: Bjorn Andersson <andersson@kernel.org>,
  Jeffrey Hugo <quic_jhugo@quicinc.com>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -88,24 +89,35 @@ Cc: MSM <linux-arm-msm@vger.kernel.org>,
  Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>
+References: <ff646f97-68e3-4fef-9b56-2bd98f0cbe7d@freebox.fr>
 Content-Language: en-US
+In-Reply-To: <ff646f97-68e3-4fef-9b56-2bd98f0cbe7d@freebox.fr>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Changes in v2
-- Add Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> for patches 2 & 3
-- Replace qcom,msm8998-venus.yaml (copy of qcom,msm8996-venus.yaml) with item in qcom,msm8996-venus.yaml
+msm8998 has the same video encode/decode accelerator as msm8996.
 
-Marc Gonzalez (3):
-  dt-bindings: media: add qcom,msm8998-venus
-  arm64: dts: qcom: msm8998: add venus node
-  media: venus: add MSM8998 support
+Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+---
+ Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
- Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml |  4 ++-
- arch/arm64/boot/dts/qcom/msm8998.dtsi                           | 48 +++++++++++++++++++++++++++++
- drivers/media/platform/qcom/venus/core.c                        | 42 +++++++++++++++++++++++++
- 3 files changed, 93 insertions(+), 1 deletion(-)
-
+diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+index 3a4d817e544e2..56c16458e3bb4 100644
+--- a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
++++ b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+@@ -18,7 +18,9 @@ allOf:
+ 
+ properties:
+   compatible:
+-    const: qcom,msm8996-venus
++    enum:
++      - qcom,msm8996-venus
++      - qcom,msm8998-venus
+ 
+   power-domains:
+     maxItems: 1
 -- 
 2.34.1
+
 
