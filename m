@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-18982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D58468B7CB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 18:22:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 168DA8B7D03
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 18:33:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 111BB1C22BEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 16:22:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C615B282D28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 16:33:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0856E17BB1C;
-	Tue, 30 Apr 2024 16:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 509B51802CB;
+	Tue, 30 Apr 2024 16:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VczB2EbF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lUyO0UYU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0D917BB07;
-	Tue, 30 Apr 2024 16:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79F617F39A;
+	Tue, 30 Apr 2024 16:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714494110; cv=none; b=fhhXsudtgDZk61fZ2fcx3EHJyKu+d4VhEjqTZUVdUy5JKucA698Duv2sg72D7XrY8HOntZj2xRUAUDob79ZGLuH9My6YMD74iVne4dWGSj/OseVFWcGJ32+bfnYsk7mueTNAx3FLY1AaGN7SbdfqFVCepxhrwvZm4RwGGjtDERQ=
+	t=1714494724; cv=none; b=Ljk4mHLPTh9A42S/pZ2yf/r7A/+s6KK1l1y2qQOqPK0CDsRG4SbD2ozS72Eas9+tRkxJxikDUm9TJe4EpF6wqZ0RwCNIBX9r4YrPrF3oAx6dX/qdI4gT5E4gDqj+ZvOngX4zf23FyKTmEhy2By/BKH+4SLj6H30UHAiZFf1Oc5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714494110; c=relaxed/simple;
-	bh=8n1Mn7XP28ZBPENUlcl7u2PCJm9TGpF55jzerEHFzqE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=ONBAailu8VQ+Fua194BOD8Txi+QjRtxbA7OlJVhIDHEl5Qo+gysuutZrkWSNf/+05ZQYMwX1xu6ucGEB7hGs81TI4KQl8qAcOrS4vGBuusQQW+L2/jHuwCXRtsbae2MX6hqHSvn9UKR1Go5pqYAl09j9KbCv3qY/lVOEEVOg+6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VczB2EbF; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1714494724; c=relaxed/simple;
+	bh=O98bq1HErgHxSK83mc85TsVLlioqfec3zXy9BF5Y4Wk=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=uoQxtOr0U/KA070tOvuyyWlYm4HWntffMi+BOCzQ80ZsiMd/R3zEb0p7Wyjzc6vJrQLN64561lADzB8R1s62Ov43TnnIEA/QRopJmid0IvMImey5kL6Y5/b9Cwn/6K7TGssMYu590LUmAFbHETOvm72vrVgLJkMXrehqpYd0ZUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lUyO0UYU; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43UAop7N022524;
-	Tue, 30 Apr 2024 16:21:44 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43U4LNHh026519;
+	Tue, 30 Apr 2024 16:31:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	qcppdkim1; bh=92woIn/dhpu7seX9GL4UPtCHaY23s9Hwlzx46BvLuKk=; b=Vc
-	zB2EbF97HoWUo7A/ManhCFZU2z0jDSdl7MFiVEdcNDqwqQdZiUjJ4tiBxMQYxB7+
-	VloZMnHMkBAK+aW5HeexQuwqt5sZQr97bcRSfM6mw8xsCB+8FvXQP5nazU4PBpec
-	88sv3f5TohhMF4SzcgVpIVLCX+oScPfOixpl3sKVgi7aNYbWYL/9nefXsbe8ot/r
-	o9WfK3+4wXVXc61e6k+fPhoACaoSWlsishTPv8thiC5oaxebWBFDDECvliY31bKm
-	lwi27il+h1Fu9XUUeejCYXwghNr5f/VbGn8jw+kXCkD1krsnSwmN8JkwBMrd5Yvm
-	btZiPeMRguFK8M5rG9ow==
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=rk7ITeWiEjcj
+	X5CJ8GhjA3nlYy+V4+DZD57m0yLv2Ik=; b=lUyO0UYUwxqvtjvnyk4Kg1C80aLc
+	hqE8ZdPsP9ZLXrgQ0u/pxsQG3ECwC/bzpikjl5YI3G1blDLwy7w1UX+rhIT0Xh0a
+	jmb6DEp8qytRqvPXvUMjskXOw/+lDRj0t1RyXcneuDvGrqoJCw/YYmh2rPHu7VZi
+	DovIbDa9KNb77hzVKYVkkCJl1H9VO5uXnuC1eBbRzXgwrHxgtiQARUGBnzKKQTk4
+	HZdDkTmcoZwch4slmXEQYdfBJUT68Jg9aVUfv/vhzqZC2s8HzjNDfKzHOgmF90zq
+	zHUQk2Zi9j4TRFres6OThdz2VNYSbv3CCWVfuDm50aRVsvPs1zVjWM9GXg==
 Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtsnm9s3m-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtfys41sn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 16:21:44 +0000 (GMT)
+	Tue, 30 Apr 2024 16:31:58 +0000 (GMT)
 Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43UGLeMK025558;
-	Tue, 30 Apr 2024 16:21:40 GMT
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 43UGVsW2003686;
+	Tue, 30 Apr 2024 16:31:54 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3xrtem1dr6-1;
-	Tue, 30 Apr 2024 16:21:40 +0000
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3xrtem1f7w-1;
+	Tue, 30 Apr 2024 16:31:54 +0000
 Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43UGLeCa025550;
-	Tue, 30 Apr 2024 16:21:40 GMT
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 43UGVs3r003680;
+	Tue, 30 Apr 2024 16:31:54 GMT
 Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 43UGLecG025549;
-	Tue, 30 Apr 2024 16:21:40 +0000
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 43UGVsxu003678;
+	Tue, 30 Apr 2024 16:31:54 +0000
 Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
-	id 075282287; Tue, 30 Apr 2024 21:51:38 +0530 (+0530)
+	id 7D30D2287; Tue, 30 Apr 2024 22:01:53 +0530 (+0530)
 From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 To: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         conor+dt@kernel.org, konrad.dybcio@linaro.org,
@@ -70,106 +69,51 @@ Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
         quic_schintav@quicinc.com, Mrinmay Sarkar <quic_msarkar@quicinc.com>,
         Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Qiang Yu <quic_qianyu@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sa8775p: Add ep pcie1 controller node
-Date: Tue, 30 Apr 2024 21:51:27 +0530
-Message-Id: <1714494089-7917-3-git-send-email-quic_msarkar@quicinc.com>
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v1 0/2] Adding iommus property and setting max link speed for PCIe
+Date: Tue, 30 Apr 2024 22:01:49 +0530
+Message-Id: <1714494711-10322-1-git-send-email-quic_msarkar@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1714494089-7917-1-git-send-email-quic_msarkar@quicinc.com>
-References: <1714494089-7917-1-git-send-email-quic_msarkar@quicinc.com>
 X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: D7fvpw_NL2ap6PNG--Mrv6i_TzhklmNP
-X-Proofpoint-ORIG-GUID: D7fvpw_NL2ap6PNG--Mrv6i_TzhklmNP
+X-Proofpoint-GUID: l__2j4wQ7hDAioliuVWmb4dRoVrokmmU
+X-Proofpoint-ORIG-GUID: l__2j4wQ7hDAioliuVWmb4dRoVrokmmU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-04-30_09,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404300117
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ spamscore=0 mlxscore=0 clxscore=1015 suspectscore=0 mlxlogscore=457
+ lowpriorityscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404300118
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 
-Add ep pcie dtsi node for pcie1 controller found on sa8775p platform.
-It supports gen4 and x4 link width. Limiting the speed to Gen3 due to
-stability issue with Gen4.
+This series adds 'iommus' DT property for PCIe RC nodes so that IOMMU
+can be used for address translation.
 
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 47 +++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+and setting pcie max link speed to gen4 that was linited to gen3 ealier.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 4084e77..9065645 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -3845,6 +3845,53 @@
- 		};
- 	};
- 
-+	pcie1_ep: pcie-ep@1c10000 {
-+		compatible = "qcom,sa8775p-pcie-ep";
-+		reg = <0x0 0x01c10000 0x0 0x3000>,
-+		      <0x0 0x60000000 0x0 0xf20>,
-+		      <0x0 0x60000f20 0x0 0xa8>,
-+		      <0x0 0x60001000 0x0 0x4000>,
-+		      <0x0 0x60200000 0x0 0x100000>,
-+		      <0x0 0x01c13000 0x0 0x1000>,
-+		      <0x0 0x60005000 0x0 0x2000>;
-+		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
-+			    "mmio", "dma";
-+
-+		clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
-+			 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-+			 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
-+			 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
-+			 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>;
-+
-+		clock-names = "aux",
-+			      "cfg",
-+			      "bus_master",
-+			      "bus_slave",
-+			      "slave_q2a";
-+
-+		interrupts = <GIC_SPI 518 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 474 IRQ_TYPE_LEVEL_HIGH>;
-+
-+		interrupt-names = "global", "doorbell", "dma";
-+
-+		interconnects = <&pcie_anoc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI1 0>,
-+				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_1 0>;
-+		interconnect-names = "pcie-mem", "cpu-pcie";
-+
-+		dma-coherent;
-+		iommus = <&pcie_smmu 0x80 0x7f>;
-+		resets = <&gcc GCC_PCIE_1_BCR>;
-+		reset-names = "core";
-+		power-domains = <&gcc PCIE_1_GDSC>;
-+		phys = <&pcie1_phy>;
-+		phy-names = "pciephy";
-+		max-link-speed = <3>; /* FIXME: Limiting the Gen speed due to stability issues */
-+		num-lanes = <4>;
-+
-+		status = "disabled";
-+	};
-+
- 	pcie1_phy: phy@1c14000 {
- 		compatible = "qcom,sa8775p-qmp-gen4x4-pcie-phy";
- 		reg = <0x0 0x1c14000 0x0 0x4000>;
+Dependency for Patch 2
+----------------------
+
+Depends on:
+https://lore.kernel.org/all/1714492540-15419-1-git-send-email-quic_msarkar@quicinc.com/
+https://lore.kernel.org/all/1714494089-7917-1-git-send-email-quic_msarkar@quicinc.com/
+
+Mrinmay Sarkar (2):
+  arm64: dts: qcom: sa8775p: Adding iommus property in pcie DT nodes
+  arm64: dts: qcom: sa8775p: Set max link speed to gen4 for ep pcie
+
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
 -- 
 2.7.4
 
