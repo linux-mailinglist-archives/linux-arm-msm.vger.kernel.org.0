@@ -1,219 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-18936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46CA78B71D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 13:01:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B860E8B71F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 13:02:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B57E1C22447
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 11:01:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9ABF1C226DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 11:02:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C67012C817;
-	Tue, 30 Apr 2024 11:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99BF912C805;
+	Tue, 30 Apr 2024 11:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g9jzemwm"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MTB81+gS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8471012B176;
-	Tue, 30 Apr 2024 11:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABD112C462;
+	Tue, 30 Apr 2024 11:02:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474889; cv=none; b=sAPb9p5hIQ7vShLAzQwh2vAYJ0+RAJknr6OgAfyrVZtvJAdTKWYrVCx/XpniQnryFE4Fk3OG0B9KrT4cM2EGJHveCmx7ayP1JbDUxzhEKzv3nM33PbLQCgzeluDf2a9M8VZzB0YGHiBswf23dg25qUCYk3OiJLvh69jIiqftxA0=
+	t=1714474952; cv=none; b=Cg3pjy03eHypY9L+33IytRi98BCiesoLwLYopIfhx+wZXQJL+k/s5MDlXmn2fOAAmfjbUjfIgqg3rbtNzVEXxZF4QuD6Ypxq1ul4a//Dqsf0kR2uxqVQWh//NNWwPT9fsjPAmMGVoyvoJFuG8pUvJRmOh4o0aR1+/N+8waFcJsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474889; c=relaxed/simple;
-	bh=b7L3j9BEHAkxTo0bCpfLzXEMvT1DErHSzv9yS4zjp54=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=sfCQtU0JtpVRSQX2ZLWUKBLm+ktKiTbFviIJch28ImofYn4jTCRGf/GV5Bf1j5G8RpfTvUc/rL7ULjwYm/LQJwGMi/fS1UfGGqFI4I/TCuGslhEQSjH4R4tvnkcsuh1tAR/2n1mcS0sS0AuRZUZkX4w8Q4ghmnflXeZQbqSvi9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g9jzemwm; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43U2voaN020937;
-	Tue, 30 Apr 2024 11:01:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=X7Rc8KFfx4MULlBzEIo2WCl6G9Jhr+x3S4V3+nxxJ0I=; b=g9
-	jzemwmF0MBxixChOcktgYpOoYgjEeXXBEAJCeFb7VX/AyAkUJCOEKHrQNap430hE
-	BIqZqNiI95eR5xXg6gPATc4euYIE54DwPLu5Q0LgVYtqiXGl9ITLA0WqLzbo0YYZ
-	vThcNilzhoaZKxHUXd1iE/bN0cZSDRjmQL/QpsPPdnAK7wcgk18no/FnN+wrz1me
-	6arn5jGiDqAQ5FU9g1GWDwR8gPsWSXVkEUSa7jeWSaljxFkgyXVioXsIF59Iz+L5
-	h5KjncCa7nCYNjQht4TDgYREkUPf+7XXHJGoGndzEEKg+lMbcxzNtWes2JLEi25U
-	dgNc9VW7s81hjj+Kap5g==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtb6058bb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 11:01:16 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43UB1FJt008836
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 11:01:15 GMT
-Received: from [10.218.10.146] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 30 Apr
- 2024 04:01:10 -0700
-Message-ID: <2679710d-46a9-8544-afff-8a406fdde918@quicinc.com>
-Date: Tue, 30 Apr 2024 16:31:06 +0530
+	s=arc-20240116; t=1714474952; c=relaxed/simple;
+	bh=WEpGkinjP85gZ1yikgGfZHLhlM9a1u3AEgisLuq7IPY=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:From:Subject:
+	 In-Reply-To:Content-Type; b=dvDw0F53e8hLvl1pGtesd2dXDauSzpM+a0MYB+CHz8BX7ETs6OF6XfNkQ5a0k7MEL/CvOQQxqTwSul1OpUTar7B6FpjWVZaAZgDIez7zTKL2IqSAYX7+aNJKPQjcuCLDlalDjtJkKLkTm77lAmH4sd5zGZavPG1kMRwLSKWOdkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MTB81+gS; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1714474951; x=1746010951;
+  h=message-id:date:mime-version:to:cc:references:from:
+   subject:in-reply-to:content-transfer-encoding;
+  bh=WEpGkinjP85gZ1yikgGfZHLhlM9a1u3AEgisLuq7IPY=;
+  b=MTB81+gSBOPHRCY/n+gU9oAE3jzVEJYmeuL9V4EOVHhR26gehE5bjIlm
+   nDnhoyvASW9mChFvo3jaxC1FxVpq9f5716mprcLyojB7deF2n5pStrqoI
+   8nTuD7lGTXzc4cyLRyAvcoe0GEkMfPLyA09I0Yh+oTY/PU9ZznCX47XyG
+   4BG6jRJ/hVeesZGa87Vh0JNVW7rIrevlWG4X7IUfWTPek9b0eAFQhIjvS
+   /bDmbJkpxlWgUy3Ui7/WlrqAl+eOF4pOWsjq9bkOs5faP9knSu1kDdE+N
+   Z51+rCpfzA+/OhvCvrkhFRDqgOIAtlDF/FfxWk0z3UkuEaPFamd8A/DxV
+   g==;
+X-CSE-ConnectionGUID: wLlspz5DSoeJZfcAAs8nDg==
+X-CSE-MsgGUID: RE/jgmcVQGmm2Vo71IS6qA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11059"; a="10049968"
+X-IronPort-AV: E=Sophos;i="6.07,242,1708416000"; 
+   d="scan'208";a="10049968"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 04:01:14 -0700
+X-CSE-ConnectionGUID: ZYP4FPMyTz+USEUyCE9qJw==
+X-CSE-MsgGUID: 7E29hnIZQbuS2emcfSjQsQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,242,1708416000"; 
+   d="scan'208";a="26845804"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by orviesa006.jf.intel.com with ESMTP; 30 Apr 2024 04:01:07 -0700
+Message-ID: <12d29c54-c005-7112-0933-d9d28f11abd6@linux.intel.com>
+Date: Tue, 30 Apr 2024 14:02:59 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V2 7/8] clk: qcom: Add GPUCC driver support for SM4450
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.13.0
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+ Thinh.Nguyen@synopsys.com, broonie@kernel.org, bgoswami@quicinc.com,
+ tiwai@suse.com, robh@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
+ <20240425215125.29761-4-quic_wcheng@quicinc.com>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh Kona" <quic_jkona@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        "Satya Priya Kakitapalli"
-	<quic_skakitap@quicinc.com>
-References: <20240416182005.75422-1-quic_ajipan@quicinc.com>
- <20240416182005.75422-8-quic_ajipan@quicinc.com>
- <CAA8EJpqwrKcgm7c57=LpxS7+CfrN2UxNg8k_46auBrdZG7vQnA@mail.gmail.com>
- <ca017ebf-c099-b436-f062-1341f765a08c@quicinc.com>
- <CAA8EJporZFsjagW5CU5AwtqDsEXTtGJmRmLRedyBTZa7249p6w@mail.gmail.com>
-From: Ajit Pandey <quic_ajipan@quicinc.com>
-In-Reply-To: <CAA8EJporZFsjagW5CU5AwtqDsEXTtGJmRmLRedyBTZa7249p6w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v20 03/41] usb: host: xhci: Repurpose event handler for
+ skipping interrupter events
+In-Reply-To: <20240425215125.29761-4-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zUIEbfvjTV0biSb-FapWKHtNTfURCUKw
-X-Proofpoint-ORIG-GUID: zUIEbfvjTV0biSb-FapWKHtNTfURCUKw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-30_04,2024-04-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 suspectscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 mlxlogscore=999 spamscore=0 phishscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404300079
 
+On 26.4.2024 0.50, Wesley Cheng wrote:
+> Depending on the interrupter use case, the OS may only be used to handle
+> the interrupter event ring clean up.  In these scenarios, event TRBs don't
+> need to be handled by the OS, so introduce an xhci interrupter flag to tag
+> if the events from an interrupter needs to be handled or not.
 
+Could you elaborate on this a bit.
 
-On 4/26/2024 3:05 PM, Dmitry Baryshkov wrote:
-> On Fri, 26 Apr 2024 at 12:20, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
->>
->>
->>
->> On 4/17/2024 11:35 AM, Dmitry Baryshkov wrote:
->>> On Tue, 16 Apr 2024 at 21:23, Ajit Pandey <quic_ajipan@quicinc.com> wrote:
->>>>
->>>> Add Graphics Clock Controller (GPUCC) support for SM4450 platform.
->>>>
->>>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
->>>> ---
->>>>    drivers/clk/qcom/Kconfig        |   9 +
->>>>    drivers/clk/qcom/Makefile       |   1 +
->>>>    drivers/clk/qcom/gpucc-sm4450.c | 805 ++++++++++++++++++++++++++++++++
->>>>    3 files changed, 815 insertions(+)
->>>>    create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
->>>
->>> [skipped]
->>>
->>>> +
->>>> +static int gpu_cc_sm4450_probe(struct platform_device *pdev)
->>>> +{
->>>> +       struct regmap *regmap;
->>>> +
->>>> +       regmap = qcom_cc_map(pdev, &gpu_cc_sm4450_desc);
->>>> +       if (IS_ERR(regmap))
->>>> +               return PTR_ERR(regmap);
->>>> +
->>>> +       clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
->>>> +       clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
->>>> +
->>>> +       /* Keep some clocks always enabled */
->>>> +       qcom_branch_set_clk_en(regmap, 0x93a4); /* GPU_CC_CB_CLK */
->>>> +       qcom_branch_set_clk_en(regmap, 0x9004); /* GPU_CC_CXO_AON_CLK */
->>>> +       qcom_branch_set_clk_en(regmap, 0x900c); /* GPU_CC_DEMET_CLK */
->>>
->>> My main concern here is the AON clocks. If we don't model
->>> gpu_cc_demet_clk as a leaf clock, then gpu_cc_demet_div_clk_src
->>> becomes a clock without children and can be disabled by Linux.
->>> Likewise not modelling gpu_cc_cxo_aon_clk removes one of the voters on
->>> gpu_cc_xo_clk_src, which can now be turned off by Linux.
->>> Our usual recommendation is to model such clocks properly and to use
->>> CLK_IS_CRITICAL or CLK_IGNORE_UNUSED to mark then as aon.
->>>
->> Thanks for review, actually if leaf (branch) clock is ON, hardware will
->> take care of enabling and keeping the parent ON. So parent clocks won't
->> get turned OFF in HW as long as branch clock is enabled.
->>
->> For clocks which are fixed rate (19.2MHz) and recommended to be kept ON
->> forever from HW design, modelling and exposing clock structure in kernel
->> will be a redundant code in kernel memory, hence as per earlier
->> suggestion in previous thread such clocks are recommended to be kept
->> enabled from probe.
-> 
-> Recommended by whom?
-> 
-> Kernel developers clearly recommend describing all the clocks so that
-> CCF has knowledge about all the clocks in the system.
+If I understood correctly the whole point of requesting a secondary xhci interrupter
+for the sideband device without ever requesting a real interrupt for it was to avoid
+waking up the cpu and calling the interrupt handler.
 
-Actually it's been recommended earlier by Stephen during initial 
-discussion on moving such critical clocks to probe to avoid redundant 
-codes in kernel memory. From then we're following similar approach in 
-other mainlined CC's drivers for fixed rate clocks which needs to kept 
-enabled always - eg: DISP_CC_XO_CLK (keeping bits enabled in probe) in 
-SM8450, SM8650 etc.
+with this flag is seems the normal xhci interrupt handler does get called for
+sideband transfer events.
 
 > 
->>>> +
->>>> +       return qcom_cc_really_probe(pdev, &gpu_cc_sm4450_desc, regmap);
->>>> +}
->>>> +
->>>> +static struct platform_driver gpu_cc_sm4450_driver = {
->>>> +       .probe = gpu_cc_sm4450_probe,
->>>> +       .driver = {
->>>> +               .name = "gpucc-sm4450",
->>>> +               .of_match_table = gpu_cc_sm4450_match_table,
->>>> +       },
->>>> +};
->>>> +
->>>> +module_platform_driver(gpu_cc_sm4450_driver);
->>>> +
->>>> +MODULE_DESCRIPTION("QTI GPUCC SM4450 Driver");
->>>> +MODULE_LICENSE("GPL");
->>>> --
->>>> 2.25.1
->>>>
->>>>
->>>
->>>
->>
->> --
->> Thanks, and Regards
->> Ajit
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
+>   drivers/usb/host/xhci-ring.c | 17 +++++++++++++----
+>   drivers/usb/host/xhci.h      |  1 +
+>   2 files changed, 14 insertions(+), 4 deletions(-)
 > 
-> 
-> 
+> diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+> index 52278afea94b..6c7a21f522cd 100644
+> --- a/drivers/usb/host/xhci-ring.c
+> +++ b/drivers/usb/host/xhci-ring.c
+> @@ -2973,14 +2973,22 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+>   }
+>   
+>   /*
+> - * This function handles one OS-owned event on the event ring. It may drop
+> - * xhci->lock between event processing (e.g. to pass up port status changes).
+> + * This function handles one OS-owned event on the event ring, or ignores one event
+> + * on interrupters which are non-OS owned. It may drop xhci->lock between event
+> + * processing (e.g. to pass up port status changes).
+>    */
+>   static int xhci_handle_event_trb(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
+>   				 union xhci_trb *event)
+>   {
+>   	u32 trb_type;
+>   
+> +	/*
+> +	 * Some interrupters do not need to handle event TRBs, as they may be
+> +	 * managed by another entity, but rely on the OS to clean up.
+> +	 */
+> +	if (ir->skip_events)
+> +		return 0;
+> +
 
--- 
-Thanks, and Regards
-Ajit
+I think we need another solution than a skip_events flag.
+
+To make secondary xhci interrupters more useful in general it would make more
+sense to add an interrupt handler function pointer to struct xhci_interrupter.
+
+Then call that function instead of xhci_handle_event_trb()
+
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -3098,8 +3098,8 @@ static int xhci_handle_events(struct xhci_hcd *xhci, struct xhci_interrupter *ir
+  
+         /* Process all OS owned event TRBs on this event ring */
+         while (unhandled_event_trb(ir->event_ring)) {
+-               err = xhci_handle_event_trb(xhci, ir, ir->event_ring->dequeue);
+-
++               if (ir->handle_event_trb)
++                       err = ir->handle_event_trb(xhci, ir, ir->event_ring->dequeue);
+                 /*
+                  * If half a segment of events have been handled in one go then
+                  * update ERDP, and force isoc trbs to interrupt more often
+
+The handler function would be passed to, and function pointer set in
+xhci_create_secondary_interrupter()
+
+For primary interrupter it would always be set to xhci_handle_event_trb()
+
+Thanks
+Mathias
+
 
