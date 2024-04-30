@@ -1,319 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-18992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 380D28B8076
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 21:22:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59CBA8B80F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 22:02:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EC52283AF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 19:22:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7842F1C23AC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 20:02:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7F20194C77;
-	Tue, 30 Apr 2024 19:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D93D7199EA1;
+	Tue, 30 Apr 2024 20:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AYvPCvZV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="knhSYUpA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61AB7710B;
-	Tue, 30 Apr 2024 19:21:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B36D199E96
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 20:02:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714504918; cv=none; b=GhB1KB4YVIgs55myH/9li3tJXwPrdRrpycmUQ+yFfErmiMgMt7djooiKXsTpSzVgVpT2mLWz4y0L5T+mD9SJ9C8Ey/krMhPTpOrP7unJmhlZFek3M2IhlecwQbdz9FFdL0tPuAXUfo3TsxelL2Jr6qnCFtQ426MqT4jD6K2NmM4=
+	t=1714507323; cv=none; b=VzR8hzOEMRbKBMUwmW89InbJ9ampVtvciveJfe2B6hXEn0KSCYS9T5LdIUwUo1KehFExKcu81pcLEDYB89XGf0WWwX4jsRuEmt74WYduGQpHPpxTj1M8ghtToRzhk+IW/j+OWs4tWJBVxsVws8tc2JhcJjdGP+nUs1fCIfpZM3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714504918; c=relaxed/simple;
-	bh=9uH838bGBhtsxWjwYC5ZUO6ofF47IyznjlfHd2isjAQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KsbgG7YHTXoIrRgbi+ALielPa0FRiwBonAOfySUuByXPgsV4ZhShrD9cbdBofn1JTVfCyMO9R68MsetAQuiCoMeh9fFGeifbgqwA6Vjk/bJ3cefjdjd0eW1momfSw9sTnfN4CZnVE5yKRdGpDspGYBOv7Nn4+HlbsC96yGyJSHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AYvPCvZV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148FAC2BBFC;
-	Tue, 30 Apr 2024 19:21:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714504918;
-	bh=9uH838bGBhtsxWjwYC5ZUO6ofF47IyznjlfHd2isjAQ=;
-	h=From:List-Id:To:Cc:Subject:Date:From;
-	b=AYvPCvZVa5oChSnb7EODSOuLmauguENJCLdrz/Xhhs0mz0aSaS37EeP/txvzdNao2
-	 lNDLsR8yZQugbmt2rgkB9yMXJZIYI0pPQ6+OtxeRu8iAfrO6HMBFxQqCHOmDIhQy1F
-	 EGal4bJL5Zt0a8epkruq+P9YEhVJ1jlvi/OkDdiHIEvLbRXDTHgiQlCQPxr5V7YvCr
-	 dru9YzwPcZXKguy+a0CXptr1yPW8KmFQ6lk4RsSVQGsD3Vy59vLqh+gKStWxMMAgTs
-	 4EftAS4aON7u4xGm10KIxzqLctfkTbvhInKb9FYJ7+N2koEbh/NiEqdrwMT/eq9BRH
-	 p/3Bj9CfwDYFQ==
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: soc@kernel.org,
-	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Khuong Dinh <khuong@os.amperecomputing.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Robert Richter <rric@kernel.org>,
-	Chanho Min <chanho.min@lge.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>,
-	Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>
-Cc: linux-arm-kernel@lists.infradead.org,
-	linux-actions@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	openbmc@lists.ozlabs.org,
-	linux-tegra@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH] arm64: dts: Add/fix /memory node unit-addresses
-Date: Tue, 30 Apr 2024 14:18:54 -0500
-Message-ID: <20240430191856.874600-2-robh@kernel.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1714507323; c=relaxed/simple;
+	bh=FN4XZtRK0P9gi48Gwo7LIStjuliRry5RBF8jsmm8jZI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EjLEbw4xaCb+5sS5mM+qVXc85aIssGIZsHNrrdTEfDA+FoP+7kOSwxg7NhM9VHT2vn4kVVJyuSN4WRCCjqGCZAC4bGYu7+6j7ZXpSU+B+P3PrBUkz3irRtBm87RHsvsAJZFMvzfZ8a4KsaWwldwJ3/nSZvRNAbMUMNN9AvD1PRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=knhSYUpA; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-51b526f0fc4so7778843e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 13:02:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1714507320; x=1715112120; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=kVY1R1hSDj9BybRi8F7BevcWL48GJ1yftHwTF1g1Te0=;
+        b=knhSYUpAAckd9dqMS3wKtLx75xhiqM2Hebdo2W1obKaveMictqMAA7TilQFAx30IIO
+         a8beY7bQHys9RzTTO5Gxm3zpHWP1UIZFw7IMXds/6soL94Pb6DU9QqFf7p+wqwRD3ryF
+         3qLtc7VnlXRGOvsUzSGoB+35QfQjdz8y8RgG1ISqvsZFDrkiqLoIe4kQPd5+nu9fge67
+         0ECl5pI8mdsLraB5i0QvWAJrjgrZZmd2uWVCO9WeiZ3fQXWjzvK1Wdp9j2LkOEdii+DF
+         HpIEfWjA5b7vLT55Bi86MXsKq+aYiSbKhz5aJxYCuqU+y++kPe5oGKSv9KV6G79U9msy
+         CLwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714507320; x=1715112120;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kVY1R1hSDj9BybRi8F7BevcWL48GJ1yftHwTF1g1Te0=;
+        b=ih8DqKustf2d5mmn3j8rQS9d7qEQkMyBdoWWpTyKMJkWvO7MP13j5T9/mzs0sDCS/M
+         6DlKhQXiRwic4gM89j9895Yb1885XCbYausH2nzVwrR3nmJwFbwnLpfYws3Ud2xvzdPl
+         nIpB/rbb05pYEzFqVRcVyQ4z47Gjk3RLKzel94ra89e4W9UxOKIejz63Ejmch8b8COfO
+         ZpaJvCar3QOMFuh6YNYZ0e60RbQwEkN45qXGjYr35PRYeo6uF6JQoHdIXf95GXf7eqgV
+         Q6FezdcD6xrk+t/AjAA8graZm9vlCONBPD1MuyCj2G9ga66151qWPDZtSatXYq7za5Ds
+         tnJw==
+X-Gm-Message-State: AOJu0Yyj/EWCcPbjmxDW5f12qXzwZnQ4MOs2aHoc1O2CNLEeQlXBBfS2
+	kW3OOWgX4s1L6j1zakDtJTKdiRFtsYk0vyxoQXgcWsYcEImLJGQmuGZeGmTSdio=
+X-Google-Smtp-Source: AGHT+IFPkr89m6eEs/CQkai3hgCL6srE2z30lROhrlCeAec8GfnC5xMtf5satxWc2lPGSwEL1Lquxw==
+X-Received: by 2002:ac2:54b3:0:b0:51d:15ef:dc10 with SMTP id w19-20020ac254b3000000b0051d15efdc10mr278416lfk.41.1714507320280;
+        Tue, 30 Apr 2024 13:02:00 -0700 (PDT)
+Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id h20-20020a170906591400b00a51d3785c7bsm15409877ejq.196.2024.04.30.13.01.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 13:01:59 -0700 (PDT)
+Message-ID: <d36c1163-a3f0-4034-a430-91986e5bbce8@linaro.org>
+Date: Tue, 30 Apr 2024 22:01:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 RESEND 5/5] venus: pm_helpers: Use
+ dev_pm_genpd_set_hwmode to switch GDSC mode on V6
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>, "Rafael J . Wysocki"
+ <rafael@kernel.org>, Kevin Hilman <khilman@kernel.org>,
+ Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Andy Gross <agross@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-pm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20240413152013.22307-1-quic_jkona@quicinc.com>
+ <20240413152013.22307-6-quic_jkona@quicinc.com>
+ <5c78ad52-524b-4ad7-b149-0e7252abc2ee@linaro.org>
+ <b96ef82c-4033-43e0-9c1e-347ffb500751@quicinc.com>
+ <a522f25f-bb38-4ae1-8f13-8e56934e5ef5@linaro.org>
+ <dbd1b86c-7b5f-4b92-ab1f-fecfe1486cfc@quicinc.com>
+ <621dbaaa-6b86-45b5-988e-a6d9c39b13d7@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <621dbaaa-6b86-45b5-988e-a6d9c39b13d7@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-'/memory' nodes always have a 'reg' property, and therefore should have
-a unit-address with just plain hex (i.e. no commas). Fix all the arm64
-'/memory' nodes.
+On 24.04.2024 11:50 AM, Bryan O'Donoghue wrote:
+> On 24/04/2024 10:45, Jagadeesh Kona wrote:
+>>
+>> Thanks Bryan for testing this series. Can you please confirm if this issue is observed in every run or only seen during the first run? Also please let me know on which platform this issue is observed?
+>>
+>> Thanks,
+>> Jagadeesh
+> 
+> rb5/sm8250
+> 
+> My observation was on a previous _boot_ the stuttering was worse. There is in the video capture three times that I count where the video halts briefly, I guess we need to vote or set an OPP so the firmware knows not to power-collapse quite so aggressively.
 
-It's possible that some bootloader depends on /memory (arm32 ATAG to DT
-code does for example). If so, the memory node should be commented with
-that requirement.
+We seem to be having some qualcomm-wide variance on perf/pwr usage on some
+odd boots.. Any chance you could try like 5 times and see if it was a fluke?
 
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
----
-SoC maintainers, please take this directly.
-
-arm32 is much worse, but the platforms using ATAG to DT code can't be 
-changed and I don't know which ones those are.
-
- arch/arm64/boot/dts/actions/s700-cubieboard7.dts       | 2 +-
- arch/arm64/boot/dts/apm/apm-merlin.dts                 | 2 +-
- arch/arm64/boot/dts/apm/apm-mustang.dts                | 2 +-
- arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts    | 2 +-
- arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts    | 2 +-
- arch/arm64/boot/dts/cavium/thunder2-99xx.dts           | 2 +-
- arch/arm64/boot/dts/lg/lg1312-ref.dts                  | 2 +-
- arch/arm64/boot/dts/lg/lg1313-ref.dts                  | 2 +-
- arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts    | 2 +-
- arch/arm64/boot/dts/nvidia/tegra210-smaug.dts          | 2 +-
- arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi             | 2 +-
- arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi           | 2 +-
- arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts | 2 +-
- arch/arm64/boot/dts/rockchip/rk3368-r88.dts            | 2 +-
- arch/arm64/boot/dts/sprd/sp9860g-1h10.dts              | 2 +-
- 15 files changed, 15 insertions(+), 15 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/actions/s700-cubieboard7.dts b/arch/arm64/boot/dts/actions/s700-cubieboard7.dts
-index 63e375cd9eb4..bd54b5165129 100644
---- a/arch/arm64/boot/dts/actions/s700-cubieboard7.dts
-+++ b/arch/arm64/boot/dts/actions/s700-cubieboard7.dts
-@@ -24,7 +24,7 @@ memory@0 {
- 		reg = <0x0 0x0 0x0 0x80000000>;
- 	};
- 
--	memory@1,e0000000 {
-+	memory@1e0000000 {
- 		device_type = "memory";
- 		reg = <0x1 0xe0000000 0x0 0x0>;
- 	};
-diff --git a/arch/arm64/boot/dts/apm/apm-merlin.dts b/arch/arm64/boot/dts/apm/apm-merlin.dts
-index 2e8069002ec1..6e05cf1a3df6 100644
---- a/arch/arm64/boot/dts/apm/apm-merlin.dts
-+++ b/arch/arm64/boot/dts/apm/apm-merlin.dts
-@@ -15,7 +15,7 @@ / {
- 
- 	chosen { };
- 
--	memory {
-+	memory@100000000 {
- 		device_type = "memory";
- 		reg = < 0x1 0x00000000 0x0 0x80000000 >;
- 	};
-diff --git a/arch/arm64/boot/dts/apm/apm-mustang.dts b/arch/arm64/boot/dts/apm/apm-mustang.dts
-index 033e10e12b18..e7644cddf06f 100644
---- a/arch/arm64/boot/dts/apm/apm-mustang.dts
-+++ b/arch/arm64/boot/dts/apm/apm-mustang.dts
-@@ -15,7 +15,7 @@ / {
- 
- 	chosen { };
- 
--	memory {
-+	memory@100000000 {
- 		device_type = "memory";
- 		reg = < 0x1 0x00000000 0x0 0x80000000 >; /* Updated by bootloader */
- 	};
-diff --git a/arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts b/arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts
-index dec5a110f1e8..f43cfe66b6af 100644
---- a/arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts
-+++ b/arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts
-@@ -50,7 +50,7 @@ chosen {
- 		bootargs = "earlycon=uart8250,mmio32,0x66130000";
- 	};
- 
--	memory {
-+	memory@80000000 {
- 		device_type = "memory";
- 		reg = <0x00000000 0x80000000 0x00000000 0x40000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts b/arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts
-index 1d314f17bbdd..c50df1d02797 100644
---- a/arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts
-+++ b/arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts
-@@ -47,7 +47,7 @@ chosen {
- 		bootargs = "earlycon=uart8250,mmio32,0x66130000";
- 	};
- 
--	memory {
-+	memory@80000000 {
- 		device_type = "memory";
- 		reg = <0x00000000 0x80000000 0x00000001 0x00000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/cavium/thunder2-99xx.dts b/arch/arm64/boot/dts/cavium/thunder2-99xx.dts
-index d005e1e79c3d..89fc4107a0c4 100644
---- a/arch/arm64/boot/dts/cavium/thunder2-99xx.dts
-+++ b/arch/arm64/boot/dts/cavium/thunder2-99xx.dts
-@@ -14,7 +14,7 @@ / {
- 	model = "Cavium ThunderX2 CN99XX";
- 	compatible = "cavium,thunderx2-cn9900", "brcm,vulcan-soc";
- 
--	memory {
-+	memory@80000000 {
- 		device_type = "memory";
- 		reg = <0x00000000 0x80000000 0x0 0x80000000>,  /* 2G @ 2G  */
- 		      <0x00000008 0x80000000 0x0 0x80000000>;  /* 2G @ 34G */
-diff --git a/arch/arm64/boot/dts/lg/lg1312-ref.dts b/arch/arm64/boot/dts/lg/lg1312-ref.dts
-index 260a2c5b19e5..cdd10f138098 100644
---- a/arch/arm64/boot/dts/lg/lg1312-ref.dts
-+++ b/arch/arm64/boot/dts/lg/lg1312-ref.dts
-@@ -22,7 +22,7 @@ aliases {
- 		serial2 = &uart2;
- 	};
- 
--	memory {
-+	memory@0 {
- 		device_type = "memory";
- 		reg = <0x0 0x00000000 0x20000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/lg/lg1313-ref.dts b/arch/arm64/boot/dts/lg/lg1313-ref.dts
-index e89ae853788a..6ace977ff4cf 100644
---- a/arch/arm64/boot/dts/lg/lg1313-ref.dts
-+++ b/arch/arm64/boot/dts/lg/lg1313-ref.dts
-@@ -22,7 +22,7 @@ aliases {
- 		serial2 = &uart2;
- 	};
- 
--	memory {
-+	memory@0 {
- 		device_type = "memory";
- 		reg = <0x0 0x00000000 0x20000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-index a5ab2bc0f835..eeceb5b292a8 100644
---- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-+++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-@@ -16,7 +16,7 @@ chosen {
- 		stdout-path = &serial0;
- 	};
- 
--	memory {
-+	memory@0 {
- 		reg = <0x0 0x0 0x0 0x40000000>;
- 	};
- };
-diff --git a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-index 9ebb7369256e..2e5b6b2c1f56 100644
---- a/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-+++ b/arch/arm64/boot/dts/nvidia/tegra210-smaug.dts
-@@ -25,7 +25,7 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
--	memory {
-+	memory@80000000 {
- 		device_type = "memory";
- 		reg = <0x0 0x80000000 0x0 0xc0000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-index 1b8379ba87f9..34e2f80514a3 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk10.dtsi
-@@ -16,7 +16,7 @@ chosen {
- 		stdout-path = "serial0";
- 	};
- 
--	memory {
-+	memory@40000000 {
- 		device_type = "memory";
- 		reg = <0x0 0x40000000 0x0 0x20000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi b/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi
-index b48b98c13705..e5c0dbf794ae 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3368-evb.dtsi
-@@ -17,7 +17,7 @@ chosen {
- 		stdout-path = "serial2:115200n8";
- 	};
- 
--	memory {
-+	memory@0 {
- 		device_type = "memory";
- 		reg = <0x0 0x0 0x0 0x40000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
-index dcee2e28916f..23ae2d9de382 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3368-orion-r68-meta.dts
-@@ -21,7 +21,7 @@ chosen {
- 		stdout-path = "serial2:115200n8";
- 	};
- 
--	memory {
-+	memory@0 {
- 		device_type = "memory";
- 		reg = <0x0 0x0 0x0 0x80000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
-index b16b7ca02379..7f14206d53c3 100644
---- a/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3368-r88.dts
-@@ -21,7 +21,7 @@ chosen {
- 		stdout-path = "serial2:115200n8";
- 	};
- 
--	memory {
-+	memory@0 {
- 		device_type = "memory";
- 		reg = <0x0 0x0 0x0 0x40000000>;
- 	};
-diff --git a/arch/arm64/boot/dts/sprd/sp9860g-1h10.dts b/arch/arm64/boot/dts/sprd/sp9860g-1h10.dts
-index 6b95fd94cee3..5724cac87e53 100644
---- a/arch/arm64/boot/dts/sprd/sp9860g-1h10.dts
-+++ b/arch/arm64/boot/dts/sprd/sp9860g-1h10.dts
-@@ -24,7 +24,7 @@ aliases {
- 		spi0 = &adi_bus;
- 	};
- 
--	memory{
-+	memory@80000000 {
- 		device_type = "memory";
- 		reg = <0x0 0x80000000 0 0x60000000>,
- 		      <0x1 0x80000000 0 0x60000000>;
--- 
-2.43.0
-
+Konrad
 
