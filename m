@@ -1,196 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-18885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9BB98B6A81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 08:31:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AF9B8B6A93
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 08:42:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 498801F253DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 06:31:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E7CB1C20E2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 06:42:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71AAF179BE;
-	Tue, 30 Apr 2024 06:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1508199B9;
+	Tue, 30 Apr 2024 06:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JW19BNTd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IivzrXl2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DD6205E25;
-	Tue, 30 Apr 2024 06:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465B418E1A;
+	Tue, 30 Apr 2024 06:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714458703; cv=none; b=bMP8hmWv4FdZAiBTs4XiARLP6O3tclp2OvvWkxKS7Y9GuXEC6bR897xZ1HBJHn0r4A+3YYPVL4d4/6fSqi8SgbMqBkQUE4nIK5FrvWTl9Q01XW3VBGKXYrPwHVqTeEx3xGvEVOAmV7Xyofjy9klH6H0I1geT+aQelhMyll4mwY4=
+	t=1714459360; cv=none; b=km364mfcBd13JDGWxApDxvCeCZhtZ3P9+ipRilOpy0zLz9Ys8jZUhp/Fioo3SYE5S1D4FVu4NS+6VR9bQXfZk9sW9shVeAO7JVrlIfuRF7R9jmy6VlfzteddaAuoArUSuksw3YRGEbHroK+7dkN2U5Slwr2yJ2cHW02UUsqziys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714458703; c=relaxed/simple;
-	bh=7JutYdlyKjRm/d6CPhcXCZiskF7ZHRoD4M0QLTajHCA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ugy0yDI3a0VBb6xrFI8CXTxFAR9KPdrUPadmMQ0hRWiSgHDzmbf/pYXDY6McKuhY4CWIGmn0M9ANvOIQZYMhdsvQA7ckNKrlQMvcopYjcHChJUM4z5lXn1HePhA9OdoBLXt/xc9xx/acrQDwdD0EzfMtTt+I2KofDUgAUL6GTMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JW19BNTd; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1714459360; c=relaxed/simple;
+	bh=ISXu6Vv96E8SabU1ktKf3xXHit2XxfdDtydhVlZBHCY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BqA4WoEe+MlwROvR9XoYN43oZgWbcaidfrHJk/myLZfYscHV5zQQjqxcAMyAbT8eP9fHRMeN1unhhISsjBQ7yYDdSMg+bjL6BR9vPi0AmzMvrJdFN1l5CB2UnW2amP6ykXVLuNls2N2qwFpzUaadZFiUZnpdUPZS6aGxd0J42Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IivzrXl2; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43U4RaBk019841;
-	Tue, 30 Apr 2024 06:31:26 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43U563qr012656;
+	Tue, 30 Apr 2024 06:42:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=/EDHGHEVWUCmdxp3Bjyh7
-	Wce+g5mQmyF9Sk2EZ1/ZSE=; b=JW19BNTdgmH04Jj119dRFlpPitsdisGC8g4iD
-	cdj7l26qhA9cvTNh1ZeQNuwlrBJD4bgiw6RnB09pNs5PxIPlsKoROng4rE13UrPW
-	DGkFkxlZtVXLgHvNaQRloS/wLMlt5Dd9G7WracQKSE7kcgelGJBaQ+iQOZt+PVxr
-	Mj5F0LBtXpjdB3IxnCwZMH9HsqHMkdbHbdlC8qxyTCHCwRA57fsIrkuhhWqi9Sj/
-	yImsDK6EUFl6FK844wer1ev/p/OJ2g+ZL8bt8ku827neEfK6Au2LJNNp9lxKP92W
-	xGxK3VmvlhuotxnIQpuefuXrlhBa6c2Wmqnhf5TWQhrQXPGiQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtd8kkmjy-1
+	from:to:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=hCbPJa+
+	Du9MIupKvXfNiAOrQEUbqQbPCWRq6zdG+Sp0=; b=IivzrXl2CemquAZ+uNnsH8S
+	wjocd6sG5oN0umxFQWY2E9CBnKUpW31cyJK/mhGFp7lbUzRoqwi2zf5WAxuuHND3
+	CnZ6FsWxAH6LMLEwzZrdv4cGPUXT1va+RAww8v5JZk8W06KpurB+yas9akNSmsow
+	SX76DoxHbIgrSInNK1JzPwetxXR0VgGOVbkOjCVOV0JCZq2oPyUHyhY0MKN/JTCK
+	IrcEgHO58K1HF8EAnOGcXbu3TqyJJzFy/GcfeI+qQiqAC/2B/KYZdIJd1uvjyDwg
+	8KmI/9zoD0VgT6PnTg0uRZ9DAANfg6VUBCL823wHNdccOZcwF5orBrxZcsxJDXA=
+	=
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtqkr8qrq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 06:31:26 +0000 (GMT)
+	Tue, 30 Apr 2024 06:42:34 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43U6VP4x008281
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43U6gXxA017971
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 06:31:25 GMT
+	Tue, 30 Apr 2024 06:42:33 GMT
 Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 29 Apr 2024 23:31:18 -0700
-Date: Tue, 30 Apr 2024 12:01:15 +0530
+ 15.2.1544.9; Mon, 29 Apr 2024 23:42:28 -0700
 From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Alex G. <mr.nuke.me@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I
-	<kishon@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen
- Boyd <sboyd@kernel.org>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH v3 6/7] phy: qcom-qmp-pcie: add support for ipq9574
- gen3x2 PHY
-Message-ID: <ZjCQM24T2XIJ6GAR@hu-varada-blr.qualcomm.com>
-References: <20240415182052.374494-1-mr.nuke.me@gmail.com>
- <20240415182052.374494-7-mr.nuke.me@gmail.com>
- <CAA8EJpqY1aDZMaeqBULEOD26UeGYbLd8RsA16jZw7zXJ7_oGPQ@mail.gmail.com>
- <6726fa2b-f5fe-10fb-6aab-f76d61f0b3cd@gmail.com>
- <4a7b1e1d-ac68-4857-8925-f90c9e123fd1@gmail.com>
- <CAA8EJppGW=qyk2P6Z_S=dp0njsCjqZaXjw8qU4MY1HOZR-N=4A@mail.gmail.com>
- <Zi88Hdx6UgBo/gti@hu-varada-blr.qualcomm.com>
- <CAA8EJpq+Bbws8yH5Xq7rHyA+-=DaCcfEcgUa5RUt2+LWQW0kKg@mail.gmail.com>
+To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_varada@quicinc.com>,
+        <quic_anusha@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <bryan.odonoghue@linaro.org>
+Subject: [PATCH v11 0/6] Add interconnect driver for IPQ9574 SoC
+Date: Tue, 30 Apr 2024 12:12:08 +0530
+Message-ID: <20240430064214.2030013-1-quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpq+Bbws8yH5Xq7rHyA+-=DaCcfEcgUa5RUt2+LWQW0kKg@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Kz9y3fLxciuZSj0DW7v68K0H1YjdIf0m
-X-Proofpoint-ORIG-GUID: Kz9y3fLxciuZSj0DW7v68K0H1YjdIf0m
+X-Proofpoint-GUID: K4mSHtwKc3gRpIigx60X3YSTb22mKfuZ
+X-Proofpoint-ORIG-GUID: K4mSHtwKc3gRpIigx60X3YSTb22mKfuZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-04-30_02,2024-04-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- adultscore=0 spamscore=0 mlxscore=0 phishscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404300046
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 mlxlogscore=999 malwarescore=0
+ phishscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404300047
 
-On Mon, Apr 29, 2024 at 01:55:32PM +0300, Dmitry Baryshkov wrote:
-> On Mon, 29 Apr 2024 at 09:20, Varadarajan Narayanan
-> <quic_varada@quicinc.com> wrote:
-> >
-> > On Wed, Apr 17, 2024 at 12:50:49AM +0300, Dmitry Baryshkov wrote:
-> > > On Wed, 17 Apr 2024 at 00:25, Alex G. <mr.nuke.me@gmail.com> wrote:
-> > > >
-> > > > Hi Dmitry,
-> > > >
-> > > > On 4/15/24 16:25, mr.nuke.me@gmail.com wrote:
-> > > > >
-> > > > >
-> > > > > On 4/15/24 15:10, Dmitry Baryshkov wrote:
-> > > > >> On Mon, 15 Apr 2024 at 21:23, Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> > > > >> wrote:
-> > > > >>>
-> > > > >>> Add support for the gen3x2 PCIe PHY on IPQ9574, ported form downstream
-> > > > >>> 5.4 kernel. Only the serdes and pcs_misc tables are new, the others
-> > > > >>> being reused from IPQ8074 and IPQ6018 PHYs.
-> > > > >>>
-> > > > >>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> > > > >>> ---
-> > > > >>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
-> > > > >>>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
-> > > > >>>   2 files changed, 149 insertions(+), 1 deletion(-)
-> > > > >>>
-> > > > >>
-> > > > >> [skipped]
-> > > > >>
-> > > > >>> @@ -2448,7 +2542,7 @@ static inline void qphy_clrbits(void __iomem
-> > > > >>> *base, u32 offset, u32 val)
-> > > > >>>
-> > > > >>>   /* list of clocks required by phy */
-> > > > >>>   static const char * const qmp_pciephy_clk_l[] = {
-> > > > >>> -       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
-> > > > >>> +       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
-> > > > >>> "anoc", "snoc"
-> > > > >>
-> > > > >> Are the NoC clocks really necessary to drive the PHY? I think they are
-> > > > >> usually connected to the controllers, not the PHYs.
-> > > > >
-> > > > > The system will hang if these clocks are not enabled. They are also
-> > > > > attached to the PHY in the QCA 5.4 downstream kernel.
-> > >
-> > > Interesting.
-> > > I see that Varadarajan is converting these clocks into interconnects.
-> > > Maybe it's better to wait for those patches to land and use
-> > > interconnects instead. I think it would better suit the
-> > > infrastructure.
-> > >
-> > > Varadarajan, could you please comment, are these interconnects
-> > > connected to the PHY too or just to the PCIe controller?
-> >
-> > Sorry for the late response. Missed this e-mail.
-> >
-> > These 2 clks are related to AXI port clk on Aggnoc/SNOC, not
-> > directly connected to PCIE wrapper, but it should be enabled to
-> > generate pcie traffic.
->
-> So, are they required for the PHY or are they required for the PCIe
-> controller only?
+MSM platforms manage NoC related clocks and scaling from RPM.
+However, in IPQ SoCs, RPM is not involved in managing NoC
+related clocks and there is no NoC scaling.
 
-These 2 clks are required for PCIe controller only.
-PCIE controller need these clks to send/receive axi pkts.
+However, there is a requirement to enable some NoC interface
+clocks for the accessing the peripherals present in the
+system. Hence add a minimalistic interconnect driver that
+establishes a path from the processor/memory to those peripherals
+and vice versa.
 
-Thanks
-Varada
+Change icc-clk driver to take master and slave ids instead
+of auto generating.
 
-> > > > They are named "anoc_lane", and "snoc_lane" in the downstream kernel.
-> > > > Would you like me to use these names instead?
-> > >
-> > > I'm fine either way.
-> > >
->
->
->
-> --
-> With best wishes
-> Dmitry
+Currently, drivers/clk/qcom/clk-cbf-8996.c is the only user of
+icc-clk. And, it had exactly one master and one slave node.
+For this the auto generated master (= 1) and slave (= 0) was
+enough.
+
+However, when drivers/clk/qcom/gcc-ipq9574.c wanted to make use
+of the icc-clk framework, it had more number of master and slave
+nodes and the auto generated ids did not suit the usage.
+
+---
+v11:	No code changes
+	Commit log changed for the first patch
+	Added Acked-By: to 3 patches
+v10:	Set gcc-ipq9574 driver's sync_state to icc_sync_state
+v9:	Squash icc-clk driver change and cbf-msm8996 change
+	Remove HWS_DATA macro
+v8:	Change icc-clk driver to take master and slave ids instead
+	of auto generating
+	Remove ICC_xxx defines from dt-bindings header
+	Define MASTER/SLAVE_xxx macros from 0 .. n
+
+v7:	Fix macro names in dt-bindings header
+	Do clock get in icc driver
+
+v6:	Removed 'Reviewed-by: Krzysztof' from dt-bindings patch
+	Remove clock get from ICC driver as suggested by Stephen Boyd
+	so that the actual peripheral can do the clock get
+	first_id -> icc_first_node_id
+	Remove tristate from INTERCONNECT_CLK
+v5:
+	Split gcc-ipq9574.c and common.c changes into separate patches
+	Introduce devm_icc_clk_register
+	Fix error handling
+v4:
+gcc-ipq9574.c
+	Use clk_hw instead of indices
+common.c
+	Do icc register in qcom_cc_probe() call stream
+common.h
+	Add icc clock info to qcom_cc_desc structure
+
+v3:
+qcom,ipq9574.h
+	Move 'first id' define to clock driver
+gcc-ipq9574.c:
+	Use indexed identifiers here to avoid confusion
+	Fix error messages and move code to common.c as it can be
+	shared with future SoCs
+
+v2:
+qcom,ipq9574.h
+	Fix license identifier
+	Rename macros
+qcom,ipq9574-gcc.yaml
+	Include interconnect-cells
+gcc-ipq9574.c
+	Update commit log
+	Remove IS_ENABLED(CONFIG_INTERCONNECT) and auto select it from Kconfig
+ipq9574.dtsi
+	Moved to separate patch
+	Include interconnect-cells to clock controller node
+drivers/clk/qcom/Kconfig:
+	Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK
+
+Varadarajan Narayanan (6):
+  interconnect: icc-clk: Specify master/slave ids
+  dt-bindings: interconnect: Add Qualcomm IPQ9574 support
+  interconnect: icc-clk: Add devm_icc_clk_register
+  clk: qcom: common: Add interconnect clocks support
+  clk: qcom: ipq9574: Use icc-clk for enabling NoC related clocks
+  arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
+
+ .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  2 +
+ drivers/clk/qcom/Kconfig                      |  2 +
+ drivers/clk/qcom/clk-cbf-8996.c               |  7 ++-
+ drivers/clk/qcom/common.c                     | 35 ++++++++++-
+ drivers/clk/qcom/common.h                     |  9 +++
+ drivers/clk/qcom/gcc-ipq9574.c                | 33 +++++++++++
+ drivers/interconnect/icc-clk.c                | 24 +++++++-
+ .../dt-bindings/interconnect/qcom,ipq9574.h   | 59 +++++++++++++++++++
+ include/linux/interconnect-clk.h              |  4 ++
+ 10 files changed, 173 insertions(+), 5 deletions(-)
+ create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+
+-- 
+2.34.1
+
 
