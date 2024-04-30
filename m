@@ -1,154 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-18950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F1CF8B793A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 16:26:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A02F8B79D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 16:34:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9D1F1F22C04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:26:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8E72288668
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:34:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69A8B17B4E2;
-	Tue, 30 Apr 2024 14:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67F57143724;
+	Tue, 30 Apr 2024 14:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="P4xY72de"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KBZjaFKF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F06179953
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 14:14:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B83714373E;
+	Tue, 30 Apr 2024 14:30:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714486480; cv=none; b=rx2IsHvwP3pw9s4V3/X3xTjWSJKXjQv3JRrWQ1wVP9bM2nH0O3oNDz0PU7jxqUuWygkXNHFpRTWimKbFdcLTo9r1G5wOFNcDw7VfZn4Zzlnu8PJVO7QlsxrYxRc8iDQ+uinYC1r/H204pcZVFeXmPtDqAT8CdsMgsKRhHlrkjXQ=
+	t=1714487426; cv=none; b=EZrDeHGNU0ug2ElsitU6VHC7dBNBj+vVBp1lvXj1V90dFSyhk/blFH7OMCO9qddqxhFVg8zTSN0O+2VKfEO/c/nHDOqHLWb2aJNZVn0yY7/96FC4A+7PQi8H9VZ6PuCKQeq7/F5DJJ9x6WeCQa++rnGv1MeHbfIm47o/HIzINS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714486480; c=relaxed/simple;
-	bh=NTGwvE5oTPK+qiXk3TYvQc1vlA1cbXpr4kZtSuS3KHs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ET2vooFZSg3rNSWhGNh+ewMaes4UMLCvhcpWVw5DVSH2Hv7BBTllFc2Q+tjQdsBf/yUpXzAy4/e57ThiTOn2iZ9PIKqSuLx50jeBqVjaWI1s5VTkiogXzsEDS85Z1iOILYysrTjpE1SWkA4IMUDeHngHwGGNAfFLEcukwo3vF64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=P4xY72de; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-41bab13ca80so28605905e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 07:14:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714486476; x=1715091276; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BuJcMbRLUf82KUepIk3TKbpGuDateTsBvHpdeo4lhoI=;
-        b=P4xY72deNjVVS7ep4BrZDZDyA6HVMHfAZIcQj2/rnZJrH2NrxfI/Bfr0wBGU5EJCB+
-         yuNSZZEH0d/49yex4ngCqoQMAlImIe/mbkkdb18ymKJp6s5TQKEwKD95gHVgNsKv9BRE
-         QdjXkQsKi2+thDYKk915sqn69DEQJEbWCrDbCpfQTpaZzoDlFmowwjE0u0tlV4Udm/Fb
-         dVccPFl0WjCsvYGMm+XH5OwtJvxi9/i2KUtqFnRqyoBgcgRV+ovg51waH+1Fw/7PnlT9
-         WRvd5Lkpp/2/IinSmD6cyetxTfpdG4wN404zDTMykz8lxp9USNz6nz+3EPEHtAmXbf7j
-         foXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714486476; x=1715091276;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BuJcMbRLUf82KUepIk3TKbpGuDateTsBvHpdeo4lhoI=;
-        b=TSOjMG+5hTxGUdHKZvrIUUdPViswxWFO3tZz9N2N0JnU3ZXIokonSmW+CoH4LdZF6L
-         XJXk5VcyswtLP4X+pRPPUMoLePs5yUadMwKkWQmElQTpEEmpcyfD2D9S1BK8TLZxNdtg
-         62JvUjJUvkGwrHfBMHiv/zlQtabO2JB1fpPjH4GA/NEAkI1xHnK4fW4mUYk5HmoPTZji
-         EvbAGTdKSq9pKyijWh0fLp7OS2/p7vkMH0N++DQkLYlVsWdokAzprNCNclZPhxlfSpcG
-         N5k15xR5NXpfPNuNo2y7BtRrfodzzNO8oG820poFYd15DkzC+j4TGOM3oaVdK1Ck5mGr
-         e+JQ==
-X-Gm-Message-State: AOJu0YyggkN4eojDLs9hzpm97U1E/zc2Uf+iFPlI+LwZMP+qMaV09Hj2
-	E5tTNYM+tzimfj8dX+O8BuZEUZXZq9M+u6E7UpEaVxhEvoaK9plfjic7Wg4l2MM=
-X-Google-Smtp-Source: AGHT+IFSKfcPM3rOfZybfP+Et3c+Dhy8Xi6uL2xbCb0wZeTmqyvosgGFBcPatPn7+KZSJ7rK2K+kNQ==
-X-Received: by 2002:a05:600c:314a:b0:418:fb6f:5f59 with SMTP id h10-20020a05600c314a00b00418fb6f5f59mr12386080wmo.2.1714486476081;
-        Tue, 30 Apr 2024 07:14:36 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id l2-20020a05600c4f0200b0041be78ae1f0sm12292455wmq.2.2024.04.30.07.14.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 07:14:35 -0700 (PDT)
-Message-ID: <b206f776-f402-43b0-8db3-1b16474b3bc8@freebox.fr>
-Date: Tue, 30 Apr 2024 16:14:35 +0200
+	s=arc-20240116; t=1714487426; c=relaxed/simple;
+	bh=Sk3EMIVGnDX+IXhJwDnotDadG2kubVXVlJSnVukq+r0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dQsQ25k4+sLXhrGCZQIazMAafIhlgBdsADWOJFuQgcIcuQ/TwnZaPNW+IFedjJ0tIcvGZ505rItoaux0hWtFRo20vbc8pN+913NSVQgvNFlhB4/n+hSxneLbdo5UPB101IuXbKq7/WQ+/7O+a7sJ2NR627JAhjoCCRlddubA9iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KBZjaFKF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43UD9gaF014746;
+	Tue, 30 Apr 2024 14:30:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=eiScpcg
+	hYJXZwIUI+wNiwCUPnWtB95AeIvA6e+mjE0Y=; b=KBZjaFKFI80ZSrJj6xeD0mK
+	NmjihOOstg/yI6N7XvncoSnLvalYy9xpUPNrzlfbOxU687cZFwf5CKhlr/oIXY1e
+	OuX6TN7OX1QSrmbE0n8XTich/K0EDTA2axsrXAf9pWzz16AUcj1ZrjYNmhdNyqM2
+	bvnUIvX76xdiYxo2hAWxxU0oi4EKvjKSl37uKWtfcD7+co/itYCRBrRcUz5GwCDi
+	DklZ8pIktjD5OdrbhES7jMgN+0pFvr9CQBfZanPRQnFyYJHMarGC3+PRkef7bHTn
+	2hGcXMOCYQqycD7gbQlosi+2bWWxaTthxCyDcMOFyQZOiiv+cmyVNx6Rb8dM6kA=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xu199063n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Apr 2024 14:30:18 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43UEUH33021137
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 Apr 2024 14:30:17 GMT
+Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 30 Apr 2024 07:30:11 -0700
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        "Satya
+ Priya Kakitapalli" <quic_skakitap@quicinc.com>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>
+Subject: [PATCH V3 0/8] Add support for videocc and camcc on SM8650
+Date: Tue, 30 Apr 2024 19:57:49 +0530
+Message-ID: <20240430142757.16872-1-quic_jkona@quicinc.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] media: venus: add MSM8998 support
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Jeffrey Hugo
- <quic_jhugo@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: MSM <linux-arm-msm@vger.kernel.org>,
- linux-media <linux-media@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-References: <2b21b160-a530-486a-9404-c5bf8863ffed@freebox.fr>
- <31072144-8880-483f-880b-8c8ca73b2003@freebox.fr>
- <c805843b-041c-4546-8bf8-ce2a0c71a470@linaro.org>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <c805843b-041c-4546-8bf8-ce2a0c71a470@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sQ-8O9UDvntGhcYPZEjeo3pDapc9qItW
+X-Proofpoint-GUID: sQ-8O9UDvntGhcYPZEjeo3pDapc9qItW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-30_08,2024-04-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
+ lowpriorityscore=0 mlxscore=0 adultscore=0 bulkscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404300102
 
-On 30/04/2024 01:19, Bryan O'Donoghue wrote:
+Add support for video and camera clock controllers on Qualcomm SM8650
+platform.
 
-> On 29/04/2024 17:19, Marc Gonzalez wrote:
->
->> From: Pierre-Hugues Husson <phhusson@freebox.fr>
->>
->> Add the missing bits for MSM8998 support.
->>
->> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
->> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
->> ---
->>   drivers/media/platform/qcom/venus/core.c | 42 ++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 42 insertions(+)
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
->> index ce206b7097541..42e0c580e093d 100644
->> --- a/drivers/media/platform/qcom/venus/core.c
->> +++ b/drivers/media/platform/qcom/venus/core.c
->> @@ -587,6 +587,47 @@ static const struct venus_resources msm8996_res = {
->>   	.fwname = "qcom/venus-4.2/venus.mbn",
->>   };
->>   
->> +static const struct freq_tbl msm8998_freq_table[] = {
->> +	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
->> +	{  972000, 520000000 },	/* 4k UHD @ 30 */
->> +	{  489600, 346666667 },	/* 1080p @ 60 */
->> +	{  244800, 150000000 },	/* 1080p @ 30 */
->> +	{  108000,  75000000 },	/* 720p @ 30 */
->> +};
->> +
->> +/*
->> + * https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
-> 
-> Nice touch.
-> 
-> Does encoding/decoding work on -next sans interconnect support ? I think 
-> we discussed on IRC it does but I'll ask again just to confirm.
+Changes in V3:
+[PATCH 1/8]: Split incorrect header file name in SM8450 videocc bindings
+             into a separate patch and added fixes tag
+[PATCH 2/8]: Added new header file for SM8650 videocc to define the extra clocks
+             and resets on top of SM8450 videocc bindings, Dropped Krzysztof
+             R-By tag due to these changes
+[PATCH 3/8]: Updated SM8550 videocc driver to use new SM8650 videocc header file,
+             added Dmitry and Konrad R-By tags
+[PATCH 4/8]: Updated offset variable name to sleep_clk_offset in probe and added
+             Dmitry R-By tag
+[PATCH 5/8]: This patch is newly added to fix the incorrect order for SC8280XP
+             camcc header file in bindings
+[PATCH 6/8]: Fixed the incorrect alphabetical order for SM8650 camcc compatible
+             and header files, added Krzysztof R-By tag and Vladimir Acked-By tags
+[PATCH 7/8]: No changes, added R-By tags received till V2 series
+[PATCH 8/8]: Dropped required-opps property in videocc and camcc nodes and
+             updated DT file to use new SM8650 videocc header file, added Vladimir R-By tag
 
-(We have no use-case for encoding.)
-Decoding works, of course.
-I would not submit a broken feature :)
+Previous series:
+V2 RESEND: https://lore.kernel.org/all/20240321092529.13362-1-quic_jkona@quicinc.com/
+V2: https://lore.kernel.org/all/20240220135121.22578-1-quic_jkona@quicinc.com/
+V1: https://lore.kernel.org/linux-kernel/20240206113145.31096-1-quic_jkona@quicinc.com/T/
 
-(vp9 2560x1440 59.940fps) decodes at x2  (122s for 240s)
-(vp9  854x480  29.970fps) decodes at x15 ( 16s for 240s)
+Jagadeesh Kona (8):
+  dt-bindings: clock: qcom: Fix SM8450 videocc incorrect header file
+    name
+  dt-bindings: clock: qcom: Add SM8650 video clock controller
+  clk: qcom: videocc-sm8550: Add support for videocc XO clk ares
+  clk: qcom: videocc-sm8550: Add SM8650 video clock controller
+  dt-bindings: clock: qcom: Fix the incorrect order of SC8280XP camcc
+    header
+  dt-bindings: clock: qcom: Add SM8650 camera clock controller
+  clk: qcom: camcc-sm8650: Add SM8650 camera clock controller driver
+  arm64: dts: qcom: sm8650: Add video and camera clock controllers
 
-I find the performance quite decent.
-Though I would have expected a larger performance ratio:
-2560x1440 59.940fps = 221 Mpixel/s
- 854x480  29.970fps =  12 Mpixel/s
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |    5 +-
+ .../bindings/clock/qcom,sm8450-videocc.yaml   |    6 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          |   26 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sm8650.c               | 3591 +++++++++++++++++
+ drivers/clk/qcom/videocc-sm8550.c             |  156 +-
+ include/dt-bindings/clock/qcom,sm8650-camcc.h |  195 +
+ .../dt-bindings/clock/qcom,sm8650-videocc.h   |   23 +
+ 9 files changed, 4004 insertions(+), 7 deletions(-)
+ create mode 100644 drivers/clk/qcom/camcc-sm8650.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8650-camcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8650-videocc.h
 
-If 1440p decodes at x2, 480p should decode at x30 ?
-Or maybe the bottleneck is elsewhere :)
-
-Regards
+-- 
+2.43.0
 
 
