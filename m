@@ -1,169 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-18937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B860E8B71F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 13:02:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E80978B72AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 13:10:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9ABF1C226DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 11:02:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 16C521C22E0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 11:10:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99BF912C805;
-	Tue, 30 Apr 2024 11:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BECAA12D748;
+	Tue, 30 Apr 2024 11:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MTB81+gS"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="P9OCNXbf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABD112C462;
-	Tue, 30 Apr 2024 11:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8674912CD90
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 11:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714474952; cv=none; b=Cg3pjy03eHypY9L+33IytRi98BCiesoLwLYopIfhx+wZXQJL+k/s5MDlXmn2fOAAmfjbUjfIgqg3rbtNzVEXxZF4QuD6Ypxq1ul4a//Dqsf0kR2uxqVQWh//NNWwPT9fsjPAmMGVoyvoJFuG8pUvJRmOh4o0aR1+/N+8waFcJsE=
+	t=1714475450; cv=none; b=IYRtUwaErL5JvSWFgzdCVnzkG9uGbx4okk6sjswiNsxrVqjmDBZprQJRgpZjl0FjysDd9O+Bb4BL1S1/9GsM3/4SKdOw7Tl3jS5pGe9jXMeKEFLL8i4HarGrFrINyol/20IckBTELYTkjVB23hP8m/zxReMjjAn9jR8HwFZcdhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714474952; c=relaxed/simple;
-	bh=WEpGkinjP85gZ1yikgGfZHLhlM9a1u3AEgisLuq7IPY=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:From:Subject:
-	 In-Reply-To:Content-Type; b=dvDw0F53e8hLvl1pGtesd2dXDauSzpM+a0MYB+CHz8BX7ETs6OF6XfNkQ5a0k7MEL/CvOQQxqTwSul1OpUTar7B6FpjWVZaAZgDIez7zTKL2IqSAYX7+aNJKPQjcuCLDlalDjtJkKLkTm77lAmH4sd5zGZavPG1kMRwLSKWOdkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MTB81+gS; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1714474951; x=1746010951;
-  h=message-id:date:mime-version:to:cc:references:from:
-   subject:in-reply-to:content-transfer-encoding;
-  bh=WEpGkinjP85gZ1yikgGfZHLhlM9a1u3AEgisLuq7IPY=;
-  b=MTB81+gSBOPHRCY/n+gU9oAE3jzVEJYmeuL9V4EOVHhR26gehE5bjIlm
-   nDnhoyvASW9mChFvo3jaxC1FxVpq9f5716mprcLyojB7deF2n5pStrqoI
-   8nTuD7lGTXzc4cyLRyAvcoe0GEkMfPLyA09I0Yh+oTY/PU9ZznCX47XyG
-   4BG6jRJ/hVeesZGa87Vh0JNVW7rIrevlWG4X7IUfWTPek9b0eAFQhIjvS
-   /bDmbJkpxlWgUy3Ui7/WlrqAl+eOF4pOWsjq9bkOs5faP9knSu1kDdE+N
-   Z51+rCpfzA+/OhvCvrkhFRDqgOIAtlDF/FfxWk0z3UkuEaPFamd8A/DxV
-   g==;
-X-CSE-ConnectionGUID: wLlspz5DSoeJZfcAAs8nDg==
-X-CSE-MsgGUID: RE/jgmcVQGmm2Vo71IS6qA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11059"; a="10049968"
-X-IronPort-AV: E=Sophos;i="6.07,242,1708416000"; 
-   d="scan'208";a="10049968"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2024 04:01:14 -0700
-X-CSE-ConnectionGUID: ZYP4FPMyTz+USEUyCE9qJw==
-X-CSE-MsgGUID: 7E29hnIZQbuS2emcfSjQsQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,242,1708416000"; 
-   d="scan'208";a="26845804"
-Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
-  by orviesa006.jf.intel.com with ESMTP; 30 Apr 2024 04:01:07 -0700
-Message-ID: <12d29c54-c005-7112-0933-d9d28f11abd6@linux.intel.com>
-Date: Tue, 30 Apr 2024 14:02:59 +0300
+	s=arc-20240116; t=1714475450; c=relaxed/simple;
+	bh=9wFxLBqV8gHEoV/6++2pbOAsb7GIV+1fcEeXcgCzTGg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DDqMnhcOG/OlDalb/pRR+qpILBElHST39mIkSt0GnEEUNAbx9/O+a0BvI1A0uo1Qtnhq3hw2ijftuO/lO1Uz69p0xKsQBfHtio2s2iX7pVdT7aiSV/D/3AFfJh7W+UI1r6S1CrQit0UnsreygH8CV1bVs3aO4V9o4P6S4tYIbfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=P9OCNXbf; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-34b64b7728cso4346217f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 04:10:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714475447; x=1715080247; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bIvWhOtQaSbhbwjiVrfaYv89apMYv7P7i1/N8DdL+Ko=;
+        b=P9OCNXbfJilgamkQT8WIaZw5A0RhnXiL9K/yVBBAMujjUEGDO+PWBA0Pbb4XehFFlQ
+         2XoW5+Sfy9KV4ptP2uEOcgDxn27h1dB/n3TgoxH0RI172XCJW7Hfh0O4rUDC5IJ9uZYu
+         UpImnl/LOZufRaTqbyP1+9uns2rClspV8ImSchM7ySv2d3OC6b0MR02HZdJzuI+BEnhO
+         9S7JBaF/p9HvqrOV6vxLkeiyV599g4DsoHrtNM6fef/7kAjzJix28dMwKgtGVR8BggfA
+         Q4KdlUXzyoQf0kcZhb6tada7VSHUSinAj9/E9BryNplz7ZHEBguZLvX1EAERqRXjU5gB
+         i5Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714475447; x=1715080247;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bIvWhOtQaSbhbwjiVrfaYv89apMYv7P7i1/N8DdL+Ko=;
+        b=ra/k9YLtt+RJ/tx+G68Qz1axZJe+lIyFIZ+YDQkFSsIZyey6EA847e7mg+du3pOi17
+         9x+EJ2fbrj5oQ/CcpYafFqSOX/rEOrQalM/3+wTpn0iCf8ze974QO9nmOUJi9x7cZZWA
+         7Z6wRqkSz/aCytUR0H+pDjIhG7zKhO0lYFH7UV5LNuzTA3oJ/xbiV+/WVRKwyQJpiUPf
+         YgPuGziSRj7mHeim0IX4dr+1NUDZKey2uUrSIuzgUdLiJOw0c6khZBxP1igs0l0TLz9W
+         YdaaQxfYxG+ql5QyHYkWldhVrBA/EBnghB6BvCJ2i7RKAG3Q5XDofY6q6Ui2KFB9AtlA
+         /S7w==
+X-Forwarded-Encrypted: i=1; AJvYcCWXdi3yTwTQXupx9XBTHbYnb4wYVpzW+QYDmYQd2e5bgq/8+Z1WQUYIph01TJppbvkZdb++YLuyx1QHoF4acAMA/6kKZ4jW+5ghbOM2VQ==
+X-Gm-Message-State: AOJu0YxsPVJpeU3Fln58uDJ3bpxeotYHCKLthsWIcrtOL3IS+MR0ZjoD
+	bUu9rWDw6k1cA1K57sQj74NobkxeuSYixYxttgnWJMGXIn5e9nUisf8zyNSJ+Cg=
+X-Google-Smtp-Source: AGHT+IGQOo0rskPzhDLRD7me8gspVxoemoUYNb/vPah60Lt9ZvK0rsJKvU9gxcYOnL3jSoqIaHMdCw==
+X-Received: by 2002:a05:6000:d49:b0:349:eb5a:3b4f with SMTP id du9-20020a0560000d4900b00349eb5a3b4fmr1980272wrb.45.1714475446694;
+        Tue, 30 Apr 2024 04:10:46 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id x5-20020a5d6b45000000b003472489d26fsm31853409wrw.19.2024.04.30.04.10.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 04:10:45 -0700 (PDT)
+Message-ID: <b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr>
+Date: Tue, 30 Apr 2024 13:10:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.13.0
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
- Thinh.Nguyen@synopsys.com, broonie@kernel.org, bgoswami@quicinc.com,
- tiwai@suse.com, robh@kernel.org, konrad.dybcio@linaro.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
- <20240425215125.29761-4-quic_wcheng@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
+ qcom,no-msa-ready-indicator prop
+To: Kalle Valo <kvalo@kernel.org>, Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,
+ ath10k <ath10k@lists.infradead.org>,
+ wireless <linux-wireless@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ MSM <linux-arm-msm@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Jami Kettunen <jamipkettunen@gmail.com>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Alexey Minnekhanov <alexeymin@postmarketos.org>
+References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
+ <54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
+ <ZjBV+th9DmnNLhnN@hu-bjorande-lv.qualcomm.com> <8734r3qysm.fsf@kernel.org>
 Content-Language: en-US
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: Re: [PATCH v20 03/41] usb: host: xhci: Repurpose event handler for
- skipping interrupter events
-In-Reply-To: <20240425215125.29761-4-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <8734r3qysm.fsf@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26.4.2024 0.50, Wesley Cheng wrote:
-> Depending on the interrupter use case, the OS may only be used to handle
-> the interrupter event ring clean up.  In these scenarios, event TRBs don't
-> need to be handled by the OS, so introduce an xhci interrupter flag to tag
-> if the events from an interrupter needs to be handled or not.
+On 30/04/2024 06:06, Kalle Valo wrote:
 
-Could you elaborate on this a bit.
-
-If I understood correctly the whole point of requesting a secondary xhci interrupter
-for the sideband device without ever requesting a real interrupt for it was to avoid
-waking up the cpu and calling the interrupt handler.
-
-with this flag is seems the normal xhci interrupt handler does get called for
-sideband transfer events.
-
+> Bjorn Andersson wrote:
 > 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->   drivers/usb/host/xhci-ring.c | 17 +++++++++++++----
->   drivers/usb/host/xhci.h      |  1 +
->   2 files changed, 14 insertions(+), 4 deletions(-)
+>> On Mon, Apr 29, 2024 at 04:04:51PM +0200, Marc Gonzalez wrote:
+>>
+>>> The ath10k driver waits for an "MSA_READY" indicator
+>>> to complete initialization. If the indicator is not
+>>> received, then the device remains unusable.
+>>>
+>>> cf. ath10k_qmi_driver_event_work()
+>>>
+>>> Several msm8998-based devices are affected by this issue.
+>>> Oddly, it seems safe to NOT wait for the indicator, and
+>>> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
+>>>
+>>> Jeff Johnson wrote:
+>>>
+>>>   The feedback I received was "it might be ok to change all ath10k qmi
+>>>   to skip waiting for msa_ready", and it was pointed out that ath11k
+>>>   (and ath12k) do not wait for it.
+>>>
+>>>   However with so many deployed devices, "might be ok" isn't a strong
+>>>   argument for changing the default behavior.
+>>>
+>>> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
+>>> work-around in the driver. However, firmware-5.bin is parsed too late.
+>>> So we are stuck with a DT property.
+>>>
+>>> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>>
+>> This says "Pierre-Hugues certifies the origin of the patch" then "Marc
+>> certifies the origin of the patch". This would have to imply that
+>> Pierre-Hugues authored the patch, but you're listed as the author...
+>>
+>> Perhaps a suitable answer to this question would be to add
+>> "Co-developed-by: Pierre-Hugues ..." above his s-o-b, which implies that
+>> the two of you jointly came up with this and both certify the origin.
 > 
-> diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-> index 52278afea94b..6c7a21f522cd 100644
-> --- a/drivers/usb/host/xhci-ring.c
-> +++ b/drivers/usb/host/xhci-ring.c
-> @@ -2973,14 +2973,22 @@ static int handle_tx_event(struct xhci_hcd *xhci,
->   }
->   
->   /*
-> - * This function handles one OS-owned event on the event ring. It may drop
-> - * xhci->lock between event processing (e.g. to pass up port status changes).
-> + * This function handles one OS-owned event on the event ring, or ignores one event
-> + * on interrupters which are non-OS owned. It may drop xhci->lock between event
-> + * processing (e.g. to pass up port status changes).
->    */
->   static int xhci_handle_event_trb(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
->   				 union xhci_trb *event)
->   {
->   	u32 trb_type;
->   
-> +	/*
-> +	 * Some interrupters do not need to handle event TRBs, as they may be
-> +	 * managed by another entity, but rely on the OS to clean up.
-> +	 */
-> +	if (ir->skip_events)
-> +		return 0;
-> +
+> BTW I can add that in the pending branch, no need to resend because of
+> this. Just need guidance from Marc.
 
-I think we need another solution than a skip_events flag.
+I typed this patch all by myself with my grubby little paws.
+You can drop PH's S-o-b.
 
-To make secondary xhci interrupters more useful in general it would make more
-sense to add an interrupt handler function pointer to struct xhci_interrupter.
+>> Other than that, I think this looks good, so please upon addressing this
+>> problem feel free to add my:
+>>
+>> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> 
+> Thanks, I'll then add this as well.
 
-Then call that function instead of xhci_handle_event_trb()
-
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3098,8 +3098,8 @@ static int xhci_handle_events(struct xhci_hcd *xhci, struct xhci_interrupter *ir
-  
-         /* Process all OS owned event TRBs on this event ring */
-         while (unhandled_event_trb(ir->event_ring)) {
--               err = xhci_handle_event_trb(xhci, ir, ir->event_ring->dequeue);
--
-+               if (ir->handle_event_trb)
-+                       err = ir->handle_event_trb(xhci, ir, ir->event_ring->dequeue);
-                 /*
-                  * If half a segment of events have been handled in one go then
-                  * update ERDP, and force isoc trbs to interrupt more often
-
-The handler function would be passed to, and function pointer set in
-xhci_create_secondary_interrupter()
-
-For primary interrupter it would always be set to xhci_handle_event_trb()
-
-Thanks
-Mathias
+Cool. Almost there :)
 
 
