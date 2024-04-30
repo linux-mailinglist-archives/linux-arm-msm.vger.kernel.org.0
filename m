@@ -1,63 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-18967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B7BA8B7A58
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 16:44:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D7A78B7BC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 17:36:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA6722841B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:44:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B7B31C243CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 15:36:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62CA017BB34;
-	Tue, 30 Apr 2024 14:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 555F4174EC7;
+	Tue, 30 Apr 2024 15:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hH8xlK/G"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="gR5rHT60"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF15B17BB1F;
-	Tue, 30 Apr 2024 14:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B334B14038E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 15:35:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714488029; cv=none; b=e0+xdvEl84VBNnF4PxbzDGn4aO/nHsNams6L0uCzJSIQQQTs+R+Ghlbar/Qag4OD10cgsVm6WZjSEAfMHnuPoAPrxClqDREkcmDGEyPzIBxNaAj/xzMhuiToR1lNIOQs3FFeucD9CcICUkG8ZYEidUkK+ji7YBWLQe6qlPrmH0I=
+	t=1714491318; cv=none; b=Pb0NTmZa8zrfWXzBGGYsjLmdUJstnCK95sfUdMyRGyoZ9Pvc9NSshbl7N/bMWRE8I7sK30sAq65SAtkXglvHvrSWn1Px2kTPF1DHYj3HK0Pn+XXXUml0QwDTubavtNTiblXNhds+K2aDEZpFrqv6LN0svlviGjTx8BT/HzjLXnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714488029; c=relaxed/simple;
-	bh=ZLYyg3Eby/SqkCmXQpij6LRgqwTOaNHWaUOq3xUfRLM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=UJ4EawRBlMPeUrvaJjJV1hPknPuPYU/rL45eS/o842Ra7WB/OboGZ4LCmTrp45T2o1Cvz/gJAJ4z13cs86PW9+HmmdWRwtJ/01FMkdutex/VzM3foOykfV3V3JeIn/kLcDi4QsSDHqzN7CF4/6CTSxR0zPbOG9PXJNRVDTfO4p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hH8xlK/G; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43U8Ju7j021323;
-	Tue, 30 Apr 2024 14:40:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=aMTMnZq0b39d3gHQNU9ilq9+qw22Sgk7JsiMtVCUndg=; b=hH
-	8xlK/GHpuY/qNLPNBL1ofS3fOkIF9Hp4D/Ar1SSAGcL0w+7BMCJwRsa2uNIorDMa
-	duuE877UhjY9urDTME0oT4UwwH3g6H5MdQE1CFLrDSZaiLgvQVyyfPjH2WKEhlre
-	x1OuDs0EzIZWsqsUnfaE8XEMfu8vKvqNh5oZdR5zMI/zXsJBlE0V1oZeZCMWUrfp
-	xgpXoY8bIGR437qeeuPZTg45COeGehHOElaC3CDMtl+U3xp6O15lKghTk5Gwe9CJ
-	W8/JxiK+xL2I9SevsF80u4iMqN0gny9SFC3gKtaYreq3UTDin9aZGjK9ZoyO6/Q/
-	ZKwaucWO+j7OE0hP7O/A==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtw1hgy4v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 14:40:17 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43UEeBeX007377
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Apr 2024 14:40:17 GMT
-Received: from [10.110.13.147] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 30 Apr
- 2024 07:40:16 -0700
-Message-ID: <3a4171ee-997c-4ff6-a550-31f66c1882f3@quicinc.com>
-Date: Tue, 30 Apr 2024 07:40:16 -0700
+	s=arc-20240116; t=1714491318; c=relaxed/simple;
+	bh=cnERhQN+psqBArfbsUuDM43qjdDKzTKRv36HTHjehz0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=S5rO8l3UdqXaAvWLv3ZvTK1dBI1RF98eBqxyW5RDKLXCa19t8BKbcPDNHrc1UIhNqExGuXT7+/ygxfsqzOBPV6DFa/26AGzqoWjs2NfdwV+u12kTtzRFRQn51HACiNXYHnRipzKVa7rq7HLj0Gm8lL3cHW/BTsO4/MAUDDFNzA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=gR5rHT60; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d8a2cbe1baso77444701fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 08:35:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714491313; x=1715096113; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:cc:to:subject:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2c9rH3JeyvGKQdDSVVVx0PhRv40r9PE97KLjHmXfjCg=;
+        b=gR5rHT60Jj2V51q2Cp+q58BmddwhPsV6gSjHWqiKSP+WnrOIsrdnAM2z8QnmMONb98
+         W5hORwssgO2fVzaWBsEXUI7h4s69VHf0v1qCQV03PwAgQj/wYpWjbQmZVfk8lzhiZH0u
+         MbvllkJy46868rtIBIiY70/VKUra0yjPmn7eNIND3aD8FaLTeMoxpY5vHMHt97z1yuK3
+         pWoBuQo/cRQ1E9/fdJySMaZiG2GlI2TohEYgM4KUqn8EMHkDocVA0Ye9Q/vl4HBhKtn6
+         juVC4uhv9q6WFpUYTXp9+VwTGcnf8swAsngwamM8zgb9nV3qFMfVKlS9Fe919EmMfj3+
+         DP4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714491313; x=1715096113;
+        h=content-transfer-encoding:content-language:cc:to:subject:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2c9rH3JeyvGKQdDSVVVx0PhRv40r9PE97KLjHmXfjCg=;
+        b=FQ0E1s+A2K1BCkzGb8bUsbmP2+m51m6xG9TxaGMYWaYwyJJnFws7AXCp67O8p1JBN6
+         I/EleJU4JgooSDw3v2nvkBCWsPVqQzDdyK/PqU9qngOEMeN+5jYmyWAg5zpR8a4RqB/W
+         oq4j2Ks8+W7O6G3spTbX59i672i3PtOapLHyTzYcpdBnMoaHbCRI2kO7ISvUV0bBl3wK
+         n6iji6Y6nCnLJY4Oqddsmw89zZtkg/GhZADPtAR7jZ3k4Iup9DBZ4FzlarSE8LIuaOB/
+         0XXOScPWrYW/dzLqL3w8GSdQSvcZF3VwTHgj39M383eGFLqJi2c36IAs99asw90B4d8J
+         GVcQ==
+X-Gm-Message-State: AOJu0Yyx3ygvG8qerlheEjVnm2RStQWfS13BcKDRMypTjmIsbesFnW2S
+	HdWRLy8IsClr2fpKi4Zy35/L7HypqBDXDCS2LcL0Dcp6V0vrPkIcVS2Sw0O9afQ=
+X-Google-Smtp-Source: AGHT+IH4FyszgLVd5E8UC44LgcvddxJsdBSvb733jfv+WHaa2WIHic3JGHRXMCNJwvDMKXzwCmXWRw==
+X-Received: by 2002:a2e:8682:0:b0:2da:b1fc:7b8f with SMTP id l2-20020a2e8682000000b002dab1fc7b8fmr64095lji.9.1714491312626;
+        Tue, 30 Apr 2024 08:35:12 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id h13-20020a05600c314d00b0041ac4aafd3dsm27045674wmo.12.2024.04.30.08.35.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Apr 2024 08:35:12 -0700 (PDT)
+Message-ID: <ff646f97-68e3-4fef-9b56-2bd98f0cbe7d@freebox.fr>
+Date: Tue, 30 Apr 2024 17:28:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,75 +74,38 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: msm8998: set
- qcom,no-msa-ready-indicator for wifi
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+Subject: [PATCH v2 0/3] Add support for qcom msm8998-venus (HW vdec / venc)
+To: Bjorn Andersson <andersson@kernel.org>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>,
+ linux-media <linux-media@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
 Content-Language: en-US
-To: Marc Gonzalez <mgonzalez@freebox.fr>, Kalle Valo <kvalo@kernel.org>,
-        ath10k <ath10k@lists.infradead.org>
-CC: wireless <linux-wireless@vger.kernel.org>,
-        DT
-	<devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
-        "Rob
- Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Pierre-Hugues Husson <phhusson@freebox.fr>,
-        Arnaud Vrac <avrac@freebox.fr>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Jami Kettunen <jamipkettunen@gmail.com>,
-        "Jeffrey
- Hugo" <quic_jhugo@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Alexey Minnekhanov
-	<alexeymin@postmarketos.org>
-References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
- <0914f96e-fcfd-4088-924a-fc1991bce75f@freebox.fr>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <0914f96e-fcfd-4088-924a-fc1991bce75f@freebox.fr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Y4WkY82h40eLCx6GFtdk9ZSIxG_--Frb
-X-Proofpoint-ORIG-GUID: Y4WkY82h40eLCx6GFtdk9ZSIxG_--Frb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-30_08,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- mlxlogscore=893 clxscore=1015 bulkscore=0 impostorscore=0 malwarescore=0
- suspectscore=0 spamscore=0 adultscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2404300104
 
-On 4/29/2024 7:07 AM, Marc Gonzalez wrote:
-> The ath10k driver waits for an "MSA_READY" indicator
-> to complete initialization. If the indicator is not
-> received, then the device remains unusable.
-> 
-> cf. ath10k_qmi_driver_event_work()
-> 
-> Several msm8998-based devices are affected by this issue.
-> Oddly, it seems safe to NOT wait for the indicator, and
-> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
-> 
-> Jeff Johnson wrote:
-> 
->   The feedback I received was "it might be ok to change all ath10k qmi
->   to skip waiting for msa_ready", and it was pointed out that ath11k
->   (and ath12k) do not wait for it.
-> 
->   However with so many deployed devices, "might be ok" isn't a strong
->   argument for changing the default behavior.
-> 
-> cf. also
-> https://wiki.postmarketos.org/wiki/Qualcomm_Snapdragon_835_(MSM8998)#WLAN
-> 
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Changes in v2
+- Add Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> for patches 2 & 3
+- Replace qcom,msm8998-venus.yaml (copy of qcom,msm8996-venus.yaml) with item in qcom,msm8996-venus.yaml
 
+Marc Gonzalez (3):
+  dt-bindings: media: add qcom,msm8998-venus
+  arm64: dts: qcom: msm8998: add venus node
+  media: venus: add MSM8998 support
+
+ Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml |  4 ++-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi                           | 48 +++++++++++++++++++++++++++++
+ drivers/media/platform/qcom/venus/core.c                        | 42 +++++++++++++++++++++++++
+ 3 files changed, 93 insertions(+), 1 deletion(-)
+
+-- 
+2.34.1
 
