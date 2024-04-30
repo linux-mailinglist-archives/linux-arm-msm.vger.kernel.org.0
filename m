@@ -1,58 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-18942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DA7C8B7521
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:01:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7E428B7522
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 14:01:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D22C61F2320E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:01:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72A03286434
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 12:01:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60AC813D28B;
-	Tue, 30 Apr 2024 12:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6EC613D288;
+	Tue, 30 Apr 2024 12:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="S30pyaCb"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="AonwpukB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875AE13D892
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 12:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED0A13D270
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 12:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714478466; cv=none; b=jXyCjRrnk22pMy4Xcy7AO7m8rkTEsMeaXKVYTkVP32Et5Gy55gjU48VJTYFTOn6TuxhFTmmGH3fHvRPe7MKTD55ht1AR+Y9CAgV6xOSJ8nkZldNm709giye9cgJIOn1BUpzdDNxHjzkIOcqKMfJbLQtxnMWE0RHpA9sxP3ajSIk=
+	t=1714478467; cv=none; b=OVovFeuqp5XDTYkgGDUoT/1CtgC5YOfrH3/ugT9kc0tA2FWsDRIq5OerVz1XvLYoyZ7Rx6osgz7OeW/ZZx/GhELfOjFGOhAZx4Fglt+7SZjOnJ53nvcc7WU67O3EtdEdxCNXGGTBehWitiqkD4Tw6Fhf3I0b290cJxLjPeUI9/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714478466; c=relaxed/simple;
-	bh=2qcLEMK1Fn+N0abKR6SrQ01XTQjI1OvqZUs/FLQLSeI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rvWifxFk5BQ4NjDVmnVWf4VzPQ4ZNfMRph2rv0MCNuz9b9bKw7FcFJvJUrG7KdmFFmKppsA13kmVU4KOoCjXP6FhNCisFTsvJz4sTn/CqCtJsYQ4xeTq75M0A3jhLIv6FUPpGu+n8gnhFFzbJN+ApdaGtaVZr2EZGn0/2yesRgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=S30pyaCb; arc=none smtp.client-ip=194.117.254.33
+	s=arc-20240116; t=1714478467; c=relaxed/simple;
+	bh=epvHPddoW8cTahPJ8pPZg8pvrnB/jzMqDAMM7RoD2Fo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VMVC9LuOvVioeY7d7hYXPBOWVbp2BEkN/lCIYY5r5HOOB38ysz4pPkFVrbTqKxpaXFj8droDxTWaPRCW0T1CP3bCWczj7538qpZlh1DVnpfuJYF4gTZV7ep+BAUfm7ByPChlSeESdBIj1LBtPeTzPEVO+S/EGqU3P5MjEYmjRfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=AonwpukB; arc=none smtp.client-ip=194.117.254.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=from:to:cc:subject:date:message-id
-	:mime-version:content-transfer-encoding; s=k1; bh=D4ut/b+eS62cUy
-	c2wWIOIQ5QpP8PK3TWPgfE/RDJDnI=; b=S30pyaCbmwexde786Jy4Fc3AJ24k2V
-	+NigbBApY1TKSe0WuS2Alkh4K9AtgY8/l00gCXqACqtmWBgd75QSy8ZjFox7v1Jh
-	xjKccZKMGutjG/KN5YcRlzdd3EUIZz9ndG35GlNowpgF19ocEzGo8tzNX0j4g9RQ
-	/25JaC+OfqitGiKG1tv2EaLy4DtrPIpzx7xkCUDBLVz7dxA2ymr3SO5fBnVlgObg
-	2ZteiSMn+CtE30JNk6hoehaQUopfYrtYo2LcYrbWPEjKWs1+PgutmHKz4/rPeiAN
-	jku8Pc4wvNza9mtMTYyQrcCHHOeWAv0Q3xLmGWn+bEiR3OQ1LQNs6Zmg==
-Received: (qmail 2623430 invoked from network); 30 Apr 2024 14:01:02 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 30 Apr 2024 14:01:02 +0200
-X-UD-Smtp-Session: l3s3148p1@kdO5H08XjpZehhrb
+	:in-reply-to:references:mime-version:content-transfer-encoding;
+	 s=k1; bh=1q2ejO6T6rBtag1x93WXJsog9Oya4RWvl6aoqimdi9U=; b=Aonwpu
+	kBL6N/oL0WSZFupxdnK9liqWdgKdzRe3nr1AgxubtB517kloaCDKmy2xlyoO6DcW
+	n1VL0dOKmnql1ki4SXySGXDkbJdwOYIOHlQuiw9WWPF8c/zF+oEUlYi6bKEvpbUE
+	JRLpwRabvYsL06cDzNcEqevjdcwrG4yaKqlr4gJTOr0l3bDhoH0nUHgToa/xT7S8
+	dmgouclEqVV3/M3eraUrWwf4g5GPSmabiQph3eJlacf13F0XhD1xGGLX0MBBM56K
+	Mi9rxOml5Iu0xyi+WS98vDYQG9qOAWKrMSSEBryQzhNz2kiMZDIlU5EmRLuJYg/s
+	tb5ad/LRGpRsRFLA==
+Received: (qmail 2623489 invoked from network); 30 Apr 2024 14:01:04 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 30 Apr 2024 14:01:04 +0200
+X-UD-Smtp-Session: l3s3148p1@y4bSH08XnJZehhrb
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: alsa-devel@alsa-project.org
 Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 0/3] slimbus: use 'time_left' instead of 'timeout' with wait_for_*() functions
-Date: Tue, 30 Apr 2024 14:00:58 +0200
-Message-ID: <20240430120102.29459-1-wsa+renesas@sang-engineering.com>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH 2/3] slimbus: qcom-ctrl: use 'time_left' variable with wait_for_completion_timeout()
+Date: Tue, 30 Apr 2024 14:01:00 +0200
+Message-ID: <20240430120102.29459-3-wsa+renesas@sang-engineering.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240430120102.29459-1-wsa+renesas@sang-engineering.com>
+References: <20240430120102.29459-1-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,36 +66,47 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 There is a confusing pattern in the kernel to use a variable named 'timeout' to
-store the result of wait_for_*() functions causing patterns like:
+store the result of wait_for_completion_timeout() causing patterns like:
 
-        timeout = wait_for_completion_timeout(...)
-        if (!timeout) return -ETIMEDOUT;
+	timeout = wait_for_completion_timeout(...)
+	if (!timeout) return -ETIMEDOUT;
 
 with all kinds of permutations. Use 'time_left' as a variable to make the code
-obvious and self explaining.
+self explaining.
 
-This is part of a tree-wide series. The rest of the patches can be found here
-(some parts may still be WIP):
+Fix to the proper variable type 'unsigned long' while here.
 
-git://git.kernel.org/pub/scm/linux/kernel/git/wsa/linux.git i2c/time_left
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+---
+ drivers/slimbus/qcom-ctrl.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Because these patches are generated, I audit them before sending. This is why I
-will send series step by step. Build bot is happy with these patches, though.
-No functional changes intended.
-
-Wolfram Sang (3):
-  slimbus: messaging: use 'time_left' variable with
-    wait_for_completion_timeout()
-  slimbus: qcom-ctrl: use 'time_left' variable with
-    wait_for_completion_timeout()
-  slimbus: qcom-ngd-ctrl: use 'time_left' variable with
-    wait_for_completion_timeout()
-
- drivers/slimbus/messaging.c     |  9 +++++----
- drivers/slimbus/qcom-ctrl.c     |  7 ++++---
- drivers/slimbus/qcom-ngd-ctrl.c | 29 ++++++++++++++++-------------
- 3 files changed, 25 insertions(+), 20 deletions(-)
-
+diff --git a/drivers/slimbus/qcom-ctrl.c b/drivers/slimbus/qcom-ctrl.c
+index 400b7b385a44..c613c7517f99 100644
+--- a/drivers/slimbus/qcom-ctrl.c
++++ b/drivers/slimbus/qcom-ctrl.c
+@@ -330,7 +330,8 @@ static int qcom_xfer_msg(struct slim_controller *sctrl,
+ 	void *pbuf = slim_alloc_txbuf(ctrl, txn, &done);
+ 	unsigned long ms = txn->rl + HZ;
+ 	u8 *puc;
+-	int ret = 0, timeout, retries = QCOM_BUF_ALLOC_RETRIES;
++	int ret = 0, retries = QCOM_BUF_ALLOC_RETRIES;
++	unsigned long time_left;
+ 	u8 la = txn->la;
+ 	u32 *head;
+ 	/* HW expects length field to be excluded */
+@@ -374,9 +375,9 @@ static int qcom_xfer_msg(struct slim_controller *sctrl,
+ 		memcpy(puc, txn->msg->wbuf, txn->msg->num_bytes);
+ 
+ 	qcom_slim_queue_tx(ctrl, head, txn->rl, MGR_TX_MSG);
+-	timeout = wait_for_completion_timeout(&done, msecs_to_jiffies(ms));
++	time_left = wait_for_completion_timeout(&done, msecs_to_jiffies(ms));
+ 
+-	if (!timeout) {
++	if (!time_left) {
+ 		dev_err(ctrl->dev, "TX timed out:MC:0x%x,mt:0x%x", txn->mc,
+ 					txn->mt);
+ 		ret = -ETIMEDOUT;
 -- 
 2.43.0
 
