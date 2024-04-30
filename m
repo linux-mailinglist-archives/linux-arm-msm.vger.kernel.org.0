@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-18939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 932718B7327
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 13:16:16 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 750588B73D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 13:24:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFD3D1C2317D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 11:16:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B66FB20C04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 11:24:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FFEB17592;
-	Tue, 30 Apr 2024 11:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C52B412D743;
+	Tue, 30 Apr 2024 11:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="Sbg5ZNGr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wteN+2xH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED0412D74F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 11:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BAE12D210
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 11:23:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714475747; cv=none; b=eM2kJ3qDy42T+kfn6Pt5q4SRo/ylGzPWxs+OM4UQE4+yG/9XNUZAFRE8v5LZ8smIujiwq35gx3QmpIC8MZ+f26Gf+SOU1F8pobaXhTc7LlkRyPR/mfmmMMlWntIVbIm6XGFGJoNIJmSpff/6F3W2M28ktFQ3rTAd6nrJlT57EDw=
+	t=1714476241; cv=none; b=XSY+KXjGWTTZW+IPdemh3fUX5RGcvRK7/uH/hLPRkvxcmvB7MabXvsdpdUfib4aosf3sEeQ2odSXqyd3Kc0raE+7fC7hdWG6jwR5TfwtYY/NeYUc/HpKNYsjKz3APEYn4DkcQEcRg2EAhNcWnXHXJP9aTq7XeAh8hZU/T2td3WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714475747; c=relaxed/simple;
-	bh=QqYTK9YTfNjwsAqsh2I4pBktmmQMA6Z0sfpg5SrkUqg=;
+	s=arc-20240116; t=1714476241; c=relaxed/simple;
+	bh=Xc/E1muDcRTkULpV7kIzSbWB3pDGQ/49fUGW3LpDLU8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eDYR5dKdO/rSBJ2qBGyLtNsjxa4H3xONB4VwuxNkFLVzM6mhwCbTx3CRHhUupPA8K5sc/9aGqHqCC0B6BgE8cseRVzEWVAg/iOEqxoqE5ssNmVVL7UEkKoihwJbEaZRFFFxZoamh+NcCU2fk7FVtxMWxW5ob7ni25C+Ng7FPmHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=Sbg5ZNGr; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-346b96f1483so3029279f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 04:15:45 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=eraxJ37BxS5AnKjZwv4JyG/knHtJDAiCCR2C8T23gf3if81O/WLGkcgGQABjMOwT2B1R8h8s3cYlL5SNjbPem/kTdKHx5gab4HXwc4gokXmZbcQL97jkSjM66etxRm+oaPHndARFJKzR1Mov5wXjY60t5SiSdi9Onx6S55e9SY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wteN+2xH; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a524ecaf215so695703166b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 04:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1714475743; x=1715080543; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fmDNtKNAUj+EAe14afk12YEoJlqoF5/CO+cJg8bHSIE=;
-        b=Sbg5ZNGrT7EgCbv25Y44+zLzPP/zQUkveCJXgMYZ6hLbN5swvAIvs+usTBcnpl1Bv6
-         Nv7HI13Vuhj6QAusSZu0j8+OP58y1l0F2S+pcfYTJBysZiqrigt7gQLKnNKgEDOaMdJm
-         SDtGiyF0K2Bb3u4zSgiwWxZ6UcNyqirSojbdQFqK9UW2CTwqS1aMQ73GfbmYuLB1uDL0
-         wwKO8WWdXPH6zQVne3UJUuMF9MU+8IYo/qOqdcc2XN0pGQOU+ywu+AmUzYIbthHp9h7r
-         M5AwMs0R0nhyXMaMhKiXC1D32w3iP39zSzi7aI0rv5CmAO8DC6fgQbiEPUCH4lM4veeA
-         5fhQ==
+        d=linaro.org; s=google; t=1714476238; x=1715081038; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=XWLp1lMkRn/z9F/qb1rRBcveVv86YGGLdJozbQqO3w4=;
+        b=wteN+2xHbalmfFAhfIYncc9nUNXG3OakploFfLqKyDj5sYIQ/2o1lJju8YtzVrq67t
+         yqG33atk6u7e9dj0XNA6S8yyN1dmmHtHJs2+HCrhMdn7AaU/LyleeU7FuSbNB8oJVmKS
+         8D8fpVzAscJEJPQpjk5gIu1u91kG3vEcdru2OtPicMawjpa85Tspdcm8WlgtLaYwNwx6
+         DobvZb7fQVrb+gp161Hu3EB9fmKTvNr7/LdXzWXMDdWdu0Kgw9QLL5bs1TGQJ83Wfknn
+         v1XUTx4gnMI/z/sx1+XpIN1Gi09NE1qFN7jbvY9a6COHxwYG3PtnMf2WyXfOoQiRvbV6
+         vODA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714475743; x=1715080543;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fmDNtKNAUj+EAe14afk12YEoJlqoF5/CO+cJg8bHSIE=;
-        b=eYR4L5ps5I//W2EJWD48bfdNLwqiMx9t+lR4ARi3ZsiHzkVnVQuZc0GFNnMcYFjotW
-         Fy/n3pLb2Cw/msjzFvFDkof7tTil5giAUMx5k7qT42dNmDCGdJfrtdUSlFippxYIf8O/
-         tUSlroYE12CZP8nwFAy2Bq5mOlcGLqsnEatNSPTHNM+SaNv3ZuuDHoUvKxGBWHdQX2MD
-         6XnmDHglviCtEIJLOp+goLEy5qXQ4G5e6ApYkWLVIuVeB5Vu0yydAtoE7Z1+l0BwhEZY
-         m1SDWqEkHfae7LqxLLb5kkLABcX22yroHbnUaI5zJQiUpK21epS5Q2EHlBRS+QwY+jRV
-         TiqA==
-X-Forwarded-Encrypted: i=1; AJvYcCU1KfEhSRP8pzV1seTPVHHljNufgkzAKfQEUng15Ykut8QdSMKLBoWnx7xbWEQChaYNcWXSaGlpKhKCJqHzPaNuGtjXczrC1pjErXzHeA==
-X-Gm-Message-State: AOJu0YzORUKkFX79InsqH6dEZQ3iiuA7e+WB4pV+AyhnEtK4ioSqBC6r
-	2UPJ6DTXJQo6p6jgRxaUGt49oiMHmf2PZBKFAL/SX4pBGQnUb3Ll6fH120Kj3AY=
-X-Google-Smtp-Source: AGHT+IHEFMtXAH/YKrNwQKlXxkPWH5Zf/6vTdgXFkM/G+vP1WzEEk5r/knMRdxIagzjU3f1WjQovVA==
-X-Received: by 2002:adf:a792:0:b0:349:bb17:6e60 with SMTP id j18-20020adfa792000000b00349bb176e60mr1941881wrc.2.1714475743585;
-        Tue, 30 Apr 2024 04:15:43 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id u4-20020a5d6ac4000000b0034c3d1e1391sm11786111wrw.42.2024.04.30.04.15.43
+        d=1e100.net; s=20230601; t=1714476238; x=1715081038;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XWLp1lMkRn/z9F/qb1rRBcveVv86YGGLdJozbQqO3w4=;
+        b=cLB0ZsXoTRxx5j+LdDhyEYqkF40dHMt8OPVOS1Mhu0/OweM2iAe2OBYROaaCeOPt54
+         yb6JraHyGF/renpkEiksUOQDRc0S9ftJrrNJ1FUOk+/VLI9gkPb+jN1ayaOROBWrLmx7
+         Jv8bye9TbMcCpkT9KjjtkDavgczcBD7rHxhYNsu4hZniP7+XkN0Py4BUL8ZSeJaBF4/1
+         hpp2+PGRAl6St1o0kzVnBvHljbFw9quhnDrKZWv0UcnfZYy5wQ1FIKicDwgMwU5+3v2c
+         dbXqj6OxniNJWWb5845Hxtk6rF8Ep1bid3W7Ny4VZf4ra1U3Hy9nYDyUPacAIhwAF88r
+         k9qw==
+X-Forwarded-Encrypted: i=1; AJvYcCVC2FdfMbNOru3/4r+WZHyWi2l+wEVzJeA/SyOh0c4kxcEUwNSY/vy/gVyR1rHIV3rBqEJtU4u5i8kEbwyeQn31kWuy5+kCHdDJw3aULQ==
+X-Gm-Message-State: AOJu0Yz1VzDNwHLqO9zsuUyeTfRHjFo5AIfqq1siWTFGn2mrLf/ZAB3x
+	ZYFGgy+APtOxUKRcRyeGPOcOnoxwWEw6GQ7DQRL6mD4oQcz3TcZ6CGjYLVbEbQI=
+X-Google-Smtp-Source: AGHT+IEDXRI6x5rnf8Dk6QVa3UjpA/rv05QLyf2+PdfnSyuNQlVzzUXFdifCUi0+BsM1CU66n5It8w==
+X-Received: by 2002:a17:906:1113:b0:a55:b7b2:2d42 with SMTP id h19-20020a170906111300b00a55b7b22d42mr8852366eja.24.1714476238348;
+        Tue, 30 Apr 2024 04:23:58 -0700 (PDT)
+Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id h6-20020a170906110600b00a5827d2f6f4sm9482718eja.115.2024.04.30.04.23.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 04:15:43 -0700 (PDT)
-Message-ID: <0a242bc1-fe8a-439b-96cb-bebdf2ada7d7@freebox.fr>
-Date: Tue, 30 Apr 2024 13:15:42 +0200
+        Tue, 30 Apr 2024 04:23:57 -0700 (PDT)
+Message-ID: <95760e2b-ec38-4f04-8f86-e4f935d24a83@linaro.org>
+Date: Tue, 30 Apr 2024 13:23:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,67 +77,84 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] wifi: ath10k: do not always wait for MSA_READY
- indicator
-To: Kalle Valo <kvalo@kernel.org>, Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,
- ath10k <ath10k@lists.infradead.org>,
- wireless <linux-wireless@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
- MSM <linux-arm-msm@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jami Kettunen <jamipkettunen@gmail.com>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Alexey Minnekhanov <alexeymin@postmarketos.org>
-References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
- <23540303-5816-45d5-a1af-5f09d645a73b@freebox.fr>
- <ZjBWUvdEI6aq4s6M@hu-bjorande-lv.qualcomm.com>
+Subject: Re: [PATCH v6 4/5] sched: Rename arch_update_thermal_pressure into
+ arch_update_hw_pressure
+To: Vincent Guittot <vincent.guittot@linaro.org>, linux@armlinux.org.uk,
+ catalin.marinas@arm.com, will@kernel.org, sudeep.holla@arm.com,
+ rafael@kernel.org, viresh.kumar@linaro.org, agross@kernel.org,
+ andersson@kernel.org, mingo@redhat.com, peterz@infradead.org,
+ juri.lelli@redhat.com, dietmar.eggemann@arm.com, rostedt@goodmis.org,
+ bsegall@google.com, mgorman@suse.de, bristot@redhat.com,
+ vschneid@redhat.com, lukasz.luba@arm.com, rui.zhang@intel.com,
+ mhiramat@kernel.org, daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+ corbet@lwn.net, gregkh@linuxfoundation.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-trace-kernel@vger.kernel.org, linux-doc@vger.kernel.org
+Cc: Qais Yousef <qyousef@layalina.io>, Bjorn Andersson
+ <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20240326091616.3696851-1-vincent.guittot@linaro.org>
+ <20240326091616.3696851-5-vincent.guittot@linaro.org>
 Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <ZjBWUvdEI6aq4s6M@hu-bjorande-lv.qualcomm.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240326091616.3696851-5-vincent.guittot@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/04/2024 04:24, Bjorn Andersson wrote:
-
-> On Mon, Apr 29, 2024 at 04:06:29PM +0200, Marc Gonzalez wrote:
->
->> The ath10k driver waits for an "MSA_READY" indicator
->> to complete initialization. If the indicator is not
->> received, then the device remains unusable.
->>
->> Several msm8998-based devices are affected by this issue.
->> Oddly, it seems safe to NOT wait for the indicator, and
->> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
->>
->> fw_version 0x100204b2
->> fw_build_timestamp 2019-09-04 03:01
->> fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HL.1.0-01202-QCAHLSWMTPLZ-1.221523.2
->>
->> Jeff Johnson wrote:
->>
->>   The feedback I received was "it might be ok to change all ath10k qmi
->>   to skip waiting for msa_ready", and it was pointed out that ath11k
->>   (and ath12k) do not wait for it.
->>
->>   However with so many deployed devices, "might be ok" isn't a strong
->>   argument for changing the default behavior.
->>
->> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
->> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+On 26.03.2024 10:16 AM, Vincent Guittot wrote:
+> Now that cpufreq provides a pressure value to the scheduler, rename
+> arch_update_thermal_pressure into HW pressure to reflect that it returns
+> a pressure applied by HW (i.e. with a high frequency change) and not
+> always related to thermal mitigation but also generated by max current
+> limitation as an example. Such high frequency signal needs filtering to be
+> smoothed and provide an value that reflects the average available capacity
+> into the scheduler time scale.
 > 
-> As with patch 1, please address the s-o-b and accept my:
-> 
-> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> Reviewed-by: Qais Yousef <qyousef@layalina.io>
+> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+> Tested-by: Lukasz Luba <lukasz.luba@arm.com>
+> ---
 
-As with patch 1,
-I typed this patch all by myself with my grubby little paws.
-You can drop PH's S-o-b.
+Hi, I'm not quite sure how, but this commit specifically breaks booting
+on Qualcomm platforms with EAS..
 
-Regards
+https://pastebin.com/raw/1Uh7u81x
 
+Konrad
 
