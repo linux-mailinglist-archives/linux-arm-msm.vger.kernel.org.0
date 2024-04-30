@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-18997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-18998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 281C58B8219
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 23:49:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 778278B821E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 23:51:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 41196B22FAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 21:49:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2AE81F23BC1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Apr 2024 21:51:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B54CF1BED74;
-	Tue, 30 Apr 2024 21:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47DBD1BED7D;
+	Tue, 30 Apr 2024 21:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FgjgPb/M"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XW8dCX+p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0F71A38DE;
-	Tue, 30 Apr 2024 21:49:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDA01BED71;
+	Tue, 30 Apr 2024 21:51:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714513754; cv=none; b=dFLs3pwH+baztwd4lbjvT0V5nS7Uhjii3Qtq20cDcveTQQJdjx1QzS7pAdnJsNfJf9sOTvGAqA5zRSzKhDITP6N0sBAwYZfsm/yldJ1WWOZiunmr6kcBrb9xXyJY29UrsYQt5Dx+wpUFRokjK8N+QtPlxzG1dgl2oZO0dgPgHDg=
+	t=1714513902; cv=none; b=ELg/wn7FrO1EYxinMFOObejYiNN5uuhwKL/ZT3Hykx6zO2jRBaRYcpkm4vfiqmMVxYFE73LF7P69g4GN6KgeG0qipI32IjDJ4Bq0v8o6grNOeWoTwhIWdwztDhcJ/mWhx3mYcnI9Dq5RiD8A1B/nWUXhni9vUCtHsdrbBlsmLnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714513754; c=relaxed/simple;
-	bh=nLG06ZSGLg7o0L3KSTvOS9psqf8/FVd6f5zM+3fNwrQ=;
+	s=arc-20240116; t=1714513902; c=relaxed/simple;
+	bh=AHo5pLY36JKBzhqxXOfYKgdr5geeUT2uUCRca3Y7Opo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ncdj0n/zR1IUyAVcyNRCWvLpLuW9VI54IrQdXuVIT2r3OrS7OSC2NFu5N/UOgv/3JcYQdNWd2rYwjhC8jOuCx2ssRgTU5jhPulJZEamJyqkAT2Ok8HOEBOMpd3whATUrvYgZrkB+KW9yFZ2CRbAqeHiq8lYkAOxqyLtvzkz/2oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FgjgPb/M; arc=none smtp.client-ip=209.85.210.170
+	 In-Reply-To:Content-Type; b=Se3IJ91C0NSNjy08lnyfjb2/RSfK386NtxDPsr8h7DUJ2n18xF/97OAoICHmkqRsPNKmMfRq157qayKbdCNw4bLJetH31XxseWZhQloTC82WCen6StMXvYyP090jqiBG9C6b2ccYla+2cx5CD6SAebAeWX+QIh997mOdiIg0+D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XW8dCX+p; arc=none smtp.client-ip=209.85.161.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6f0aeee172dso226709b3a.1;
-        Tue, 30 Apr 2024 14:49:13 -0700 (PDT)
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5ad2da2196bso3384847eaf.3;
+        Tue, 30 Apr 2024 14:51:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714513752; x=1715118552; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714513899; x=1715118699; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gQ81DFkgmFb2qWSA0tT95p3yazTu3GOFFQ2uKG4zcqU=;
-        b=FgjgPb/MFRNQ/eW2PubnFRztad6PWPoWg3X/NOF1JSKNqPMDF9RGIXb+JL+yiMjJ0n
-         i+XJ9MRVMK7nUPdC44nBETGi+/tS3XACiM1kybi7cajYZ2RPsF5pgEeoXr8qA6AmOx6D
-         shRoe+SKCxXL8u0RdLBFvvhU9gLY6h1TCz4A8sXTReI9QUl7ZAP214J2Tv05pWSLLC6Q
-         Pdh9eWGdiIlFH08bmFRqBCJQFcLONJMIvQqvCDxxYprc4vKprQ9yG+axr4+WlvxCQhJu
-         sIycF/cMzhlUPNCPooKDLFEcgOg55/zFkTmZKyJ9ScPI5AdvXcOTjRCdD4vm97U9Mk4n
-         RT0A==
+        bh=d6qd8lJvJh2hrhUBJz33E1gMQnbvjUgqj9rCB8sm/gc=;
+        b=XW8dCX+piKvfvyXazO+X93xKA7b6f3V85JpHtSNqK9TiNce9b0u6ifAiGAzxX5w6K1
+         rYLSESBVN3GwcLimGJ4wd/1mWEcJr2okcWplaAZNB4ztAAOgspFDRK8JjgIHVIWexaye
+         gGNjv21UQN2j9O53UkBjbZ12IhO/7A93G48ZZQi/hLdR+Yp6TsX8SAAJAxDqadByYbjX
+         XpPulkOeeTfyQ6i7mzTSyv0h3kNohZaPQknaQ16lmogTphynfuj/pednPe8mJnSH1Vra
+         kDCtjd3XK87hzC2Tf4glJb3jIlhwACcao3vm3KIU02pNpjaVKTKBvYDqH0pAXNwLVlSv
+         1f3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714513752; x=1715118552;
+        d=1e100.net; s=20230601; t=1714513899; x=1715118699;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gQ81DFkgmFb2qWSA0tT95p3yazTu3GOFFQ2uKG4zcqU=;
-        b=SEdHm98xg2n79aR7S/P9eCHuUTAUbnYIBSk4pUiYcZeNLYjn4rapPcSgDX6C6fBlsF
-         8CT+vI7ON1gLpTsvqceKjTvanLbR4zA8NzNTQtIxfr3AE/ZQjSGPAyalY6agWYmc5eFP
-         05a2gjFKGGEDJMNGyzLQgM3SiamlLAab3h37EknmGOlAGjg6TWWKoMdrqMC0ioWYCPgE
-         /hIYD6vGBbiOE1iJv+EFnEtBl2cjbJUaCXC8oyqWGcz5znvfob//zvHT14Kdn+x947dm
-         QboKf7FtHOKc8jMM3swMeHKe4m+ssvlG0F/2MTwXKlM/h8iOvVBk17+z7tmxd1+MBlVn
-         ZSUw==
-X-Forwarded-Encrypted: i=1; AJvYcCXYLzIJcBD30v2uO8upCIZODgC+J92evz2J9pHYHkhX+/oKJt+d+G5s08EH+6iPVrnb+Lg65SpyeBWJITkks+huPfF5ovYf7G8Q2f76IMwO0eDjYVG5CNJ6ohll0oE3AjAHodEhNbfYnuAXH0/8+QXHNoJ9pFb/EEUaOGnzbY8O7SuSkK/skYPB+syvpaFzbE5ePXdA1KbX4fFZqF39AFGHRk4roA==
-X-Gm-Message-State: AOJu0YxYjwdeX14yFIEGoWac7e61shalNwU8UK4UCy2Hfm3sskIEFYTp
-	HG0rfO8i5wN3WUb0Jz8zvE1u1UssRqSmp8Z8RdEHC2+FCqmKSEcO
-X-Google-Smtp-Source: AGHT+IHQGDfoheQSbpzkVLH56jhhZSeorElzvZNIjh/7FJfIYfrT1165Kn1yMHGcREJjEIUoAW8BJA==
-X-Received: by 2002:a05:6a00:10c6:b0:6ea:f43b:b961 with SMTP id d6-20020a056a0010c600b006eaf43bb961mr5803046pfu.6.1714513752457;
-        Tue, 30 Apr 2024 14:49:12 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id y5-20020a63fa05000000b005cf450e91d2sm21394224pgh.52.2024.04.30.14.49.09
+        bh=d6qd8lJvJh2hrhUBJz33E1gMQnbvjUgqj9rCB8sm/gc=;
+        b=HRZMG7djou66s18fN7rfDy+/UjCxFP2u/aNTzclFtxnNZec7lTml5F15tHt+7rdWGR
+         3n3JEQv3yp3Z6qVUYz/lsLYWMH56dp0DEC01fmMuMviEP0Cd0nK3m/vcwjhE2oqm+z5A
+         rjupmWTlO3F+/TIFP4P2bTXK+mwPn5/CxOh4cZWV96YI0ZMyr6pfVZCYq5LbKabEH+hc
+         cIqrDSMS2cW+gnQg5qNZo9xv6x016wS0h6TPpNz1yg2rQNUVSu4HDXM/sMXIo568By0G
+         P/PQne2NoNc6RUFcMFmFi+GMYszehriQZfMtAGqizt3+257iniG7A5H36Sg6UoGfukIo
+         t2Ww==
+X-Forwarded-Encrypted: i=1; AJvYcCXEaNfEzsmw6fQVkKCkS6Ndgm6RvM5EQBQOBJ+ofU7bQFT+UQS8K0cpGagFtp0U8cSH1Wwyhgtd7Zgh6RlxNaLk7XgeUS715EGR0bv0jRSUENUbxS8fbnmYtWhmEAoVOf2Fz+lnOXuPUol2C4afaQpTNJb47AwZdPltkPTuJXLKA+/ilrkhMwF8Ge0Wtc6Lg7abklfY0L87IU7cPX1zGdGf57C9D26zkFTCEBryUZLk987DVXrqCM7HkffqEis=
+X-Gm-Message-State: AOJu0Yy7omsQ31gHyn/GRfpQSlB7GZtrNHGN0YQasabW05anbMiRlJxL
+	34FXtI66otstxXpCfiDf0JzrZQgTLh3YRqA761UYXEemaRPbPQDMc11SqzxOUr4=
+X-Google-Smtp-Source: AGHT+IHW6bYHhn8CohYrr9D+kQrfwgZyt3rb3ReMqW6TPOXzhq+u1mceFtChWghqHxrVWoqCKD1mtA==
+X-Received: by 2002:a4a:98c7:0:b0:5af:c4b3:7c6d with SMTP id b7-20020a4a98c7000000b005afc4b37c6dmr691177ooj.5.1714513899564;
+        Tue, 30 Apr 2024 14:51:39 -0700 (PDT)
+Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id bw12-20020a056820020c00b005ace4142e7esm5575325oob.46.2024.04.30.14.51.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Apr 2024 14:49:11 -0700 (PDT)
-Message-ID: <7d412e48-a58b-479d-9333-066359d52432@gmail.com>
-Date: Tue, 30 Apr 2024 14:49:08 -0700
+        Tue, 30 Apr 2024 14:51:38 -0700 (PDT)
+Message-ID: <9d9c569b-2e9c-4fd3-9a1a-50f198bd0884@gmail.com>
+Date: Tue, 30 Apr 2024 16:51:37 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,63 +76,124 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: Add/fix /memory node unit-addresses
-To: "Rob Herring (Arm)" <robh@kernel.org>, soc@kernel.org,
- =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Khuong Dinh <khuong@os.amperecomputing.com>, Ray Jui <rjui@broadcom.com>,
- Scott Branden <sbranden@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Robert Richter <rric@kernel.org>,
- Chanho Min <chanho.min@lge.com>, Avi Fishman <avifishman70@gmail.com>,
- Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>,
- Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
- Benjamin Fair <benjaminfair@google.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Heiko Stuebner <heiko@sntech.de>,
- Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>
-Cc: linux-arm-kernel@lists.infradead.org, linux-actions@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
-References: <20240430191856.874600-2-robh@kernel.org>
+Subject: Re: [PATCH v3 6/7] phy: qcom-qmp-pcie: add support for ipq9574 gen3x2
+ PHY
+To: Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Manivannan Sadhasivam
+ <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org
+References: <20240415182052.374494-1-mr.nuke.me@gmail.com>
+ <20240415182052.374494-7-mr.nuke.me@gmail.com>
+ <CAA8EJpqY1aDZMaeqBULEOD26UeGYbLd8RsA16jZw7zXJ7_oGPQ@mail.gmail.com>
+ <6726fa2b-f5fe-10fb-6aab-f76d61f0b3cd@gmail.com>
+ <4a7b1e1d-ac68-4857-8925-f90c9e123fd1@gmail.com>
+ <CAA8EJppGW=qyk2P6Z_S=dp0njsCjqZaXjw8qU4MY1HOZR-N=4A@mail.gmail.com>
+ <Zi88Hdx6UgBo/gti@hu-varada-blr.qualcomm.com>
+ <CAA8EJpq+Bbws8yH5Xq7rHyA+-=DaCcfEcgUa5RUt2+LWQW0kKg@mail.gmail.com>
+ <ZjCQM24T2XIJ6GAR@hu-varada-blr.qualcomm.com>
 Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240430191856.874600-2-robh@kernel.org>
+From: mr.nuke.me@gmail.com
+In-Reply-To: <ZjCQM24T2XIJ6GAR@hu-varada-blr.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/30/24 12:18, Rob Herring (Arm) wrote:
-> '/memory' nodes always have a 'reg' property, and therefore should have
-> a unit-address with just plain hex (i.e. no commas). Fix all the arm64
-> '/memory' nodes.
+On 4/30/24 1:31 AM, Varadarajan Narayanan wrote:
+> On Mon, Apr 29, 2024 at 01:55:32PM +0300, Dmitry Baryshkov wrote:
+>> On Mon, 29 Apr 2024 at 09:20, Varadarajan Narayanan
+>> <quic_varada@quicinc.com> wrote:
+>>>
+>>> On Wed, Apr 17, 2024 at 12:50:49AM +0300, Dmitry Baryshkov wrote:
+>>>> On Wed, 17 Apr 2024 at 00:25, Alex G. <mr.nuke.me@gmail.com> wrote:
+>>>>>
+>>>>> Hi Dmitry,
+>>>>>
+>>>>> On 4/15/24 16:25, mr.nuke.me@gmail.com wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 4/15/24 15:10, Dmitry Baryshkov wrote:
+>>>>>>> On Mon, 15 Apr 2024 at 21:23, Alexandru Gagniuc <mr.nuke.me@gmail.com>
+>>>>>>> wrote:
+>>>>>>>>
+>>>>>>>> Add support for the gen3x2 PCIe PHY on IPQ9574, ported form downstream
+>>>>>>>> 5.4 kernel. Only the serdes and pcs_misc tables are new, the others
+>>>>>>>> being reused from IPQ8074 and IPQ6018 PHYs.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+>>>>>>>> ---
+>>>>>>>>    drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 +++++++++++++++++-
+>>>>>>>>    .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
+>>>>>>>>    2 files changed, 149 insertions(+), 1 deletion(-)
+>>>>>>>>
+>>>>>>>
+>>>>>>> [skipped]
+>>>>>>>
+>>>>>>>> @@ -2448,7 +2542,7 @@ static inline void qphy_clrbits(void __iomem
+>>>>>>>> *base, u32 offset, u32 val)
+>>>>>>>>
+>>>>>>>>    /* list of clocks required by phy */
+>>>>>>>>    static const char * const qmp_pciephy_clk_l[] = {
+>>>>>>>> -       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
+>>>>>>>> +       "aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
+>>>>>>>> "anoc", "snoc"
+>>>>>>>
+>>>>>>> Are the NoC clocks really necessary to drive the PHY? I think they are
+>>>>>>> usually connected to the controllers, not the PHYs.
+>>>>>>
+>>>>>> The system will hang if these clocks are not enabled. They are also
+>>>>>> attached to the PHY in the QCA 5.4 downstream kernel.
+>>>>
+>>>> Interesting.
+>>>> I see that Varadarajan is converting these clocks into interconnects.
+>>>> Maybe it's better to wait for those patches to land and use
+>>>> interconnects instead. I think it would better suit the
+>>>> infrastructure.
+>>>>
+>>>> Varadarajan, could you please comment, are these interconnects
+>>>> connected to the PHY too or just to the PCIe controller?
+>>>
+>>> Sorry for the late response. Missed this e-mail.
+>>>
+>>> These 2 clks are related to AXI port clk on Aggnoc/SNOC, not
+>>> directly connected to PCIE wrapper, but it should be enabled to
+>>> generate pcie traffic.
+>>
+>> So, are they required for the PHY or are they required for the PCIe
+>> controller only?
 > 
-> It's possible that some bootloader depends on /memory (arm32 ATAG to DT
-> code does for example). If so, the memory node should be commented with
-> that requirement.
-> 
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
-> SoC maintainers, please take this directly.
-> 
-> arm32 is much worse, but the platforms using ATAG to DT code can't be
-> changed and I don't know which ones those are.
-> 
->   arch/arm64/boot/dts/actions/s700-cubieboard7.dts       | 2 +-
->   arch/arm64/boot/dts/apm/apm-merlin.dts                 | 2 +-
->   arch/arm64/boot/dts/apm/apm-mustang.dts                | 2 +-
->   arch/arm64/boot/dts/broadcom/northstar2/ns2-svk.dts    | 2 +-
->   arch/arm64/boot/dts/broadcom/northstar2/ns2-xmc.dts    | 2 +-
+> These 2 clks are required for PCIe controller only.
+> PCIE controller need these clks to send/receive axi pkts.
 
-For the above two:
+Very interesting information, thank you!
 
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Dmitry, In light of this information do you want me to move these clocks 
+out of the PHY and into the PCIe controller?
 
+Alex
+
+> Thanks
+> Varada
+> 
+>>>>> They are named "anoc_lane", and "snoc_lane" in the downstream kernel.
+>>>>> Would you like me to use these names instead?
+>>>>
+>>>> I'm fine either way.
+>>>>
+>>
+>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
 
