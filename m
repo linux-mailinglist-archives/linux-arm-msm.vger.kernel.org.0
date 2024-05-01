@@ -1,130 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-19058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF7BF8B8BED
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 16:34:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C38758B8C68
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 17:01:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C093281B88
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 14:34:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7EE02281240
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 15:01:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDA4612E6A;
-	Wed,  1 May 2024 14:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GxDlY5Y1"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B73E12F390;
+	Wed,  1 May 2024 15:01:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtprelay03.ispgateway.de (smtprelay03.ispgateway.de [80.67.29.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8096E552;
-	Wed,  1 May 2024 14:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2382A5FBB1;
+	Wed,  1 May 2024 15:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.29.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714574048; cv=none; b=NEPkJDIuCiGw6qBTvEVsKwvyNXoWLfsn6R9RBBgaCvhTS3Ms5SL4X4VViERpq6ohYf6ilf+aI1DqZ4jI8FZk9JT7rhwIVtdoqh9NhNRy4NYFKNNlef/0Bet0U1lKHo+hi9xW6Yw01R/8wBoj2ctolUNBlDXPDM/9UsiAttfaN/Q=
+	t=1714575696; cv=none; b=lSQXEbJf2RDY0jyneU+bkO08P4YmLzu/F0mJcsO3RXVjOadtW/wezVJs/EoKpHOMTbBNOzd+6oFEZi43fNBEd8g0QC5KYh78wkrXkHV7cHxn7SDEfwT+chrip19KRd7lu96kOgzifnlHNTd3nQcDBuJwNzeD9ZrxEQag2BKsBZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714574048; c=relaxed/simple;
-	bh=CWxfucLjZKMuCq9KUz1Dscdcskx00ZJ/clYJpxna/Wk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f2Ra0Oj04w0Nwl0ZU/QwhEOv/l+Ww4zI9IXYIHSFBnxXrrPnSbvZnHF6mnKKhCzTHwfTeWyIDibXlH4HvQdQbWvaTmp0moSRiw9z98FWKc2WKzbAaBQZKtr1a2QBQyTBc9++i4d8ogtSJGw8kgQBNuu2zvJoVDqwY5mnJfXQLCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GxDlY5Y1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A77C072AA;
-	Wed,  1 May 2024 14:34:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714574048;
-	bh=CWxfucLjZKMuCq9KUz1Dscdcskx00ZJ/clYJpxna/Wk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GxDlY5Y1ypPthIpoAtKyaQd/ZBIcHSLBpr/2xmEoAGoXygcPxqr51/dxE+AgvpT2h
-	 desQDC+pv+ZldTvWod9pExwhM7IjD3Ryup55foKD4EKmtLb8ayHlP63eor321wLfBP
-	 YjsWuCPgsTYztYTBA7ydpIf/E5DarzDgWJJ3SuCxbZW5zJVHgr6OZ+8WhH1wQwyGP3
-	 XmKLUcYlcfl+ug5TyoX62OvbbrHC80zfCVYaPQrN5FWht2SPjZSTIL/w7cbJ6Oy9zQ
-	 z6kp4yP27xuZlcSId5Jg1Q9ow/Wm6lV8ldyR7ZLFrftpmVVbJiaJKi9LsKawzZkABE
-	 dafvfUzoG6ihQ==
-Date: Wed, 1 May 2024 15:34:01 +0100
-From: Will Deacon <will@kernel.org>
-To: Georgi Djakov <quic_c_gdjako@quicinc.com>
-Cc: robin.murphy@arm.com, joro@8bytes.org, iommu@lists.linux.dev,
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, devicetree@vger.kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org, robdclark@gmail.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
-	quic_sukadev@quicinc.com, quic_pdaly@quicinc.com,
-	quic_sudaraja@quicinc.com, djakov@kernel.org
-Subject: Re: [PATCH v8 2/7] iommu/arm-smmu-qcom-debug: Add support for TBUs
-Message-ID: <20240501143400.GA15503@willie-the-truck>
-References: <20240417133731.2055383-1-quic_c_gdjako@quicinc.com>
- <20240417133731.2055383-3-quic_c_gdjako@quicinc.com>
+	s=arc-20240116; t=1714575696; c=relaxed/simple;
+	bh=NvCi5JvUW+/oPdxAzW+ciyt2Sx1QV/dEnicrPhl7NDg=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=t2BlLAdFAWQO09n5ePpsE8dakZRvR+pvDXC0OKZik9QrLRiGZgSztyY0Tk4672Y1PukUugc4kOM31SZSW7ueminl9L5PShwUkOmk1izIvA5Zh0/oGNTulL7bqA8NlUd/sbqNxqyMtyM5WOf8Z8aZHE+2gP8Xbgz8pT2HgW2VsYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu; spf=pass smtp.mailfrom=apitzsch.eu; arc=none smtp.client-ip=80.67.29.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apitzsch.eu
+Received: from [92.206.191.65] (helo=framework.lan)
+	by smtprelay03.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <git@apitzsch.eu>)
+	id 1s2BQb-000000002oW-10Po;
+	Wed, 01 May 2024 16:59:25 +0200
+Message-ID: <c5e5f49295350ada2cdb280a77b1c877058d4d64.camel@apitzsch.eu>
+Subject: Re: [PATCH v2 2/3] leds: sy7802: Add support for Silergy SY7802
+ flash LED controller
+From: =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
+To: Lee Jones <lee@kernel.org>
+Cc: Pavel Machek <pavel@ucw.cz>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley
+ <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>, "Gustavo A. R.
+ Silva" <gustavoars@kernel.org>,  Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-leds@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-hardening@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Date: Wed, 01 May 2024 16:59:34 +0200
+In-Reply-To: <20240411124855.GJ1980182@google.com>
+References: <20240401-sy7802-v2-0-1138190a7448@apitzsch.eu>
+	 <20240401-sy7802-v2-2-1138190a7448@apitzsch.eu>
+	 <20240411124855.GJ1980182@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.1 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240417133731.2055383-3-quic_c_gdjako@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
 
-Hi Georgi,
+Hi Lee Jones,
 
-On Wed, Apr 17, 2024 at 06:37:26AM -0700, Georgi Djakov wrote:
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> index bb89d49adf8d..eff7ca94ec8d 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+thanks for the feedback. I will address your comments in the next
+version. I have a few comments/questions though, see below.
 
-...
+Best regards,
+Andr=C3=A9
 
-> +static const struct of_device_id qcom_tbu_of_match[] = {
-> +	{ .compatible = "qcom,sc7280-tbu" },
-> +	{ .compatible = "qcom,sdm845-tbu" },
-> +	{ }
-> +};
-> +
-> +static struct platform_driver qcom_tbu_driver = {
-> +	.driver = {
-> +		.name           = "qcom_tbu",
-> +		.of_match_table = qcom_tbu_of_match,
-> +	},
-> +	.probe = qcom_tbu_probe,
-> +};
-> +builtin_platform_driver(qcom_tbu_driver);
+Am Donnerstag, dem 11.04.2024 um 13:48 +0100 schrieb Lee Jones:
+> On Mon, 01 Apr 2024, Andr=C3=A9 Apitzsch via B4 Relay wrote:
+> >=20
+> > [..]
+> > +
+> > +#define SY7802_TIMEOUT_DEFAULT_US	512000U
+> > +#define SY7802_TIMEOUT_MIN_US		32000U
+> > +#define SY7802_TIMEOUT_MAX_US		1024000U
+> > +#define SY7802_TIMEOUT_STEPSIZE_US	32000U
+> > +
+> > +#define SY7802_TORCH_BRIGHTNESS_MAX 8
+> > +
+> > +#define SY7802_FLASH_BRIGHTNESS_DEFAULT	14
+> > +#define SY7802_FLASH_BRIGHTNESS_MIN	0
+> > +#define SY7802_FLASH_BRIGHTNESS_MAX	15
+> > +#define SY7802_FLASH_BRIGHTNESS_STEP	1
+>=20
+> Much nicer to read if everything was aligned.
 
-I just noticed that this breaks a modular build of the arm-smmu driver
-because we now have two init functions for the module:
+Using tab size 8, SY7802_FLASH_BRIGHTNESS_* look aligned to me. Do you
+refer to SY7802_TORCH_BRIGHTNESS_MAX here?=20
 
-  ld.lld: error: duplicate symbol: init_module
-  >>> defined at arm-smmu.c
-  >>>            drivers/iommu/arm/arm-smmu/arm-smmu.o:(init_module)
-  >>> defined at arm-smmu-qcom-debug.c
-  >>>            drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.o:(.init.text+0x4)
+>=20
+> > [..]
+> > +
+> > +	/*
+> > +	 * There is only one set of flash control logic, and this
+> > flag is used to check if 'strobe'
+>=20
+> The ',' before 'and' is superfluous.
+>=20
+> > +	 * is currently being used.
+> > +	 */
+>=20
+> Doesn't the variable name kind of imply this?
+>=20
+> > +	if (chip->fled_strobe_used) {
+> > +		dev_warn(chip->dev, "Please disable strobe first
+> > [%d]\n", chip->fled_strobe_used);
+>=20
+> "Cannot set torch brightness whilst strobe is enabled"
 
-I think you should initialise the TBU debug feature by calling into it
-manually from qcom_smmu_impl_init().
+The comment and the warn message are taken from 'leds-mt6370-flash.c'.
+But I think using the warn message you suggested the comment can be
+removed.
 
-Please can you send a patch to fix that? For now, I'll bodge it so that
-the qcom debug stuff doesn't build as a module (see below).
+>=20
+> > +		ret =3D -EBUSY;
+> > +		goto unlock;
+> > +	}
+> > +
+> > +	if (level)
+> > +		curr =3D chip->fled_torch_used | BIT(led->led_no);
+> > +	else
+> > +		curr =3D chip->fled_torch_used & ~BIT(led->led_no);
+> > +
+> > +	if (curr)
+> > +		val |=3D SY7802_MODE_TORCH;
+> > +
+> > +	/* Torch needs to be disabled first to apply new
+> > brightness */
+>=20
+> "Disable touch to apply brightness"
+>=20
+> > +	ret =3D regmap_update_bits(chip->regmap, SY7802_REG_ENABLE,
+> > SY7802_MODE_MASK,
+> > +				 SY7802_MODE_OFF);
+> > +	if (ret)
+> > +		goto unlock;
+> > +
+> > +	mask =3D led->led_no =3D=3D SY7802_LED_JOINT ?
+> > SY7802_TORCH_CURRENT_MASK_ALL :
+>=20
+> Why not just use led->led_no in place of mask?
 
-Cheers,
+I might be missing something, but I don't know how to use led->led_no
+in place of mask, when
+led->led_no is in {0,1,2} and
+mask is in {0x07, 0x38, 0x3f}.
 
-Will
+>=20
+> Easier to read if you drop SY7802_TORCH_CURRENT_MASK_ALL to its own
+> line.
+>=20
+> > +	=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SY7802_TORCH_CURRENT_MASK(led->l=
+ed_no);
+> > +
+> > [..]
+> > +
+> > +static int sy7802_probe(struct i2c_client *client)
+> > +{
+> > +	struct device *dev =3D &client->dev;
+> > +	struct sy7802 *chip;
+> > +	size_t count;
+> > +	int ret;
+> > +
+> > +	count =3D device_get_child_node_count(dev);
+> > +	if (!count || count > SY7802_MAX_LEDS)
+> > +		return dev_err_probe(dev, -EINVAL,
+> > +		=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "No child node or node count ov=
+er max led
+> > number %zu\n", count);
+>=20
+> Split them up and report on them individually or combine the error
+> message:
+>=20
+> "Invalid amount of LED nodes"
 
---->8
+This snippet was also taken from 'leds-mt6370-flash.c'.
 
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index 032bfd681307..66325210c8c9 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -376,7 +376,7 @@ config ARM_SMMU_QCOM
-
- config ARM_SMMU_QCOM_DEBUG
-        bool "ARM SMMU QCOM implementation defined debug support"
--       depends on ARM_SMMU_QCOM
-+       depends on ARM_SMMU_QCOM=y
-        help
-          Support for implementation specific debug features in ARM SMMU
-          hardware found in QTI platforms. This include support for
-
+>=20
 
