@@ -1,184 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-19003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 094138B83C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 02:33:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E4118B843C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 04:14:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B37E9284BF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 00:33:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AFBD91C22507
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 02:14:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 786FD3C2D;
-	Wed,  1 May 2024 00:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B49010957;
+	Wed,  1 May 2024 02:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D0fGt0cW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CDsNAgvz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5A3646;
-	Wed,  1 May 2024 00:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F17EEADB;
+	Wed,  1 May 2024 02:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714523619; cv=none; b=aR7QeBWL7TTQMBbON2pSxyjcnayHwBkWYNyrzSrYKmBecl199+Gzpv4e7XjXflNPRMOh5uLO0yepB/SZtcR0Zp1ybL7KGsvETQG/F1+pvrO9+LTiV0VxlThFHDHhrVqKZjDG+LhahiNMxNDxfX4K641/MReiKOMEz0llvtKc/nY=
+	t=1714529688; cv=none; b=IKsmzW3krW3Sp9lDKB/+3/TJ5+rt853thcZNRyzTUgEDwAaopqXjWVivjPZWRTMqAeigH+OZNfmzeqxGzezKpbATFKuld8d4OL5r5NvBwzZhZXVmxGTMZOPtu5tFNIDx+0B0hg33Nyh1eJA639VyJsMj41IiVB3QHz8F/Ejm8Do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714523619; c=relaxed/simple;
-	bh=3GxgYzbam8HgNyK+VdtYgp46UreAUNvtQ0s3h2WWRpU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kwusV+vIE7JcjYgm3CUKJwJRdOPAG4tHbXLOlgZZ7rXt2J58kI4k039jZsGjgGkCEvVex/zF4C0Ukyb7axrkMKxbXRIEE49cG9dXtHIkimU19pIwSIrKR9G2pW09B4fL6PacPr2e5jxOc7zuIz96NuF5itzyFEoBSM8Qt6AMYC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D0fGt0cW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43UNxo8v005742;
-	Wed, 1 May 2024 00:32:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=LRnPNBK8fB5m3Wd6M+Ba4l+Ai4vlC8s1ZRRcL3qyiV8=; b=D0
-	fGt0cWBkZIPWOJq1/d0Q52iDWMscdVnrML7zq7Mbq2eSO79vTDbgEhppVdmaZYB9
-	W07e1ZyXYOAC1U9O8EZLDsYzZ/bpdB97r9bWIItYRofzjyHE/VY7+6V/JdLo6Fcx
-	qY6g+5mkCVUTLisci98ZNdXtuwDMVR/rULDTu38jVUqwYaFijmmKAWZOdbSUYj+A
-	pYi+sHTXkQW6eM6eGzbhl6MQ8jRsvz3fHaUHJahsaQ7ouVkBfc/FbF1I3Vi+BM9X
-	h/s/nmOZbCRG4RGgMyTr+0iRCMdVjCr8fjnAXGop8Z5xU3QP8wIKGtaT/Ukm7qVz
-	v/FZnk2+9pAbCBnH4CrA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtw1hj6qf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 01 May 2024 00:32:27 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4410WQEC025873
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 1 May 2024 00:32:26 GMT
-Received: from [10.110.61.50] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 30 Apr
- 2024 17:32:25 -0700
-Message-ID: <a1115d39-b60e-a5da-5c7e-79266d6ced17@quicinc.com>
-Date: Tue, 30 Apr 2024 17:32:24 -0700
+	s=arc-20240116; t=1714529688; c=relaxed/simple;
+	bh=4Ga4byRB5JzhOWhFbukEMd0FTYKkJjneqrc6tELT6Ck=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tWMQLcSdB2twA6HMpBSl2yNh9uTHdaqsuVnC6ClSRE1DlKz+UmxDJKTMGPrVPQcvNK1xVeQAUW5tE8c3cYFQ1w3WsqamOmWHhwulICb9JA0S8Q3evv4VrIFedxQAwfztlbdE61zJ4QPDasrYC/WDFjZ+k3JZ/vIOp/6m4WeFfHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CDsNAgvz; arc=none smtp.client-ip=209.85.221.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-4defa67bc32so760944e0c.1;
+        Tue, 30 Apr 2024 19:14:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714529685; x=1715134485; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YGUCzWGwJDreMW+w/ahTCJ1HXWC5ZH4jSL81Igfy5Hg=;
+        b=CDsNAgvzOZ2QA+08gKyToMGWCBAEMt94zvCAR/SF5gsjOrLH7WJSEfb8RyAu+1s8Ax
+         iuL2/4eWLkeskSJ+NnAtZSaypFjyrFaEzKjpSQcHUi4Edmms01373tpoO9ID/eVuU1Jl
+         6NAOQNBya4iXCeqlRzbc307EQh5udCfYEl4nsXW6Fj5thtRCchTplrBSVyMIHi5KiKD4
+         YtCp1YRiATq/c+bL+CSil3t1Lmue3xlpdktC1yJxZhaFwX38bdWSnz9GqJOCNjTqAUZ6
+         ez331AHCRrD1xYYr1asf1kBYxXhAxvTvK56sFu6ynCrmoYc1D4X18DEgSlHBGfmA37l3
+         7o7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714529685; x=1715134485;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YGUCzWGwJDreMW+w/ahTCJ1HXWC5ZH4jSL81Igfy5Hg=;
+        b=fUcfZpLzDDtMUfjW/evy+z3u6zwhI8kZQk9Nf40/JEhLNFaCtLrXiCHrq3Ovk+F/Xf
+         HftmqXIKGMfMaL9xPfieUtMUUh9iXHliaQIyv8dj9EbP2IG3/wrzz5JPHiuTk1gCSr6S
+         e453BJ0E8rXHzgnH1LtTEgULvfCddKg0JiAG3pUvm9ZIO9d75WeiTBeAE7VpWDzqnq5D
+         pVU/BZeZF3QRtFByi+OzkgvxXS+2G57VCkUkbRiL3Fn26sVFCAzSe9b+3FVjYIDYBmaT
+         cNCrUhgmDzhELgLMfNGT7EYIrooArHgXS2YmaVn4xX4SpNIG6Q2Ao16MygPD2MfZwjyb
+         ds4A==
+X-Forwarded-Encrypted: i=1; AJvYcCVVhZBCYJIPFynv4tKGbydc/c75Oq14I2ZE22i7I1YjqWwmcRiQ3pYBDqOj81BcCbQugDt7p72JS7Jz8BupfzgwTsgayLzKfGk0Al5ZSj3RnvnUfo8ijcaMxhqlDSahczy9htoe8PoxrxJw3ks/HYK63Dre3dcozQVfI0fJra38PbqGUPhrt2Q=
+X-Gm-Message-State: AOJu0Yy1AlaABL7fInZJ9MmyES0LpJG/oDcgEwsA+Ci05F3NmWxf+SpJ
+	oMTJ4u5piXViavDmeCkc31eTPOSKmNTnTW/VSXKIPr8FcxBEGsJCOwFC9e0Pt9KODlIvfvjwcsr
+	W4t0KdgQkV4hzEP+MDtHEuI9VcmA=
+X-Google-Smtp-Source: AGHT+IGPPfSTCD7g9ZFYa4QpVWKMONA41O4TTEwotbnATEOHxIa8YL1v5ol82Lg81C2j7nOjgSBg7d9LZogLXZCjTkc=
+X-Received: by 2002:a05:6102:9a3:b0:47b:b9cb:c7e9 with SMTP id
+ f3-20020a05610209a300b0047bb9cbc7e9mr1608127vsb.16.1714529684527; Tue, 30 Apr
+ 2024 19:14:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v20 33/41] ASoC: usb: Create SOC USB SND jack kcontrol
-Content-Language: en-US
-To: =?UTF-8?Q?Amadeusz_S=c5=82awi=c5=84ski?=
-	<amadeuszx.slawinski@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <lgirdwood@gmail.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
- <20240425215125.29761-34-quic_wcheng@quicinc.com>
- <c8bd16e8-b204-471b-a702-36e14c8695c5@linux.intel.com>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <c8bd16e8-b204-471b-a702-36e14c8695c5@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ciB1uOnPTSzQscrGnEx8GYc3pFB6UvC6
-X-Proofpoint-ORIG-GUID: ciB1uOnPTSzQscrGnEx8GYc3pFB6UvC6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-04-30_16,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- mlxlogscore=877 clxscore=1015 bulkscore=0 impostorscore=0 malwarescore=0
- suspectscore=0 spamscore=0 adultscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2405010002
+References: <20240422164035.1045501-1-quic_sibis@quicinc.com> <20240422164035.1045501-3-quic_sibis@quicinc.com>
+In-Reply-To: <20240422164035.1045501-3-quic_sibis@quicinc.com>
+From: Jassi Brar <jassisinghbrar@gmail.com>
+Date: Tue, 30 Apr 2024 21:14:32 -0500
+Message-ID: <CABb+yY2mjc0BmvdUxZvkEvFMS30g=h5F7aHEKogfH9=W0C1a2w@mail.gmail.com>
+Subject: Re: [PATCH V4 2/5] mailbox: Add support for QTI CPUCP mailbox controller
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, quic_rgottimu@quicinc.com, 
+	quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_gkohli@quicinc.com, 
+	quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Amadeusz,
+On Mon, Apr 22, 2024 at 11:41=E2=80=AFAM Sibi Sankar <quic_sibis@quicinc.co=
+m> wrote:
+>
+> Add support for CPUSS Control Processor (CPUCP) mailbox controller,
+> this driver enables communication between AP and CPUCP by acting as
+> a doorbell between them.
+>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
 
-On 4/26/2024 6:26 AM, Amadeusz Sławiński wrote:
-> On 4/25/2024 11:51 PM, Wesley Cheng wrote:
->> Expose API for creation of a jack control for notifying of available
->> devices that are plugged in/discovered, and that support offloading.  
->> This
->> allows for control names to be standardized across implementations of USB
->> audio offloading.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
-> 
-> (...)
-> 
->>   /* SOC USB sound kcontrols */
->> +/**
->> + * snd_soc_usb_setup_offload_jack() - Create USB offloading jack
->> + * @component: USB DPCM backend DAI component
->> + * @jack: jack structure to create
->> + *
->> + * Creates a jack device for notifying userspace of the availability
->> + * of an offload capable device.
->> + *
->> + * Returns 0 on success, negative on error.
->> + *
->> + */
->> +int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
->> +                    struct snd_soc_jack *jack)
->> +{
->> +    int ret;
->> +
->> +    ret = snd_soc_card_jack_new(component->card, "USB Offload 
->> Playback Jack",
->> +                    SND_JACK_HEADPHONE, jack);
->> +    if (ret < 0) {
->> +        dev_err(component->card->dev, "Unable to add USB offload 
->> jack\n");
->> +        return ret;
->> +    }
->> +
->> +    ret = snd_soc_component_set_jack(component, jack, NULL);
->> +    if (ret) {
->> +        dev_warn(component->card->dev, "Failed to set jack: %d\n", ret);
->> +        return ret;
->> +    }
->> +
->> +    return 0;
->> +}
->> +EXPORT_SYMBOL_GPL(snd_soc_usb_setup_offload_jack);
->> +
->>   static int snd_soc_usb_get_offload_card_status(struct snd_kcontrol 
->> *kcontrol,
->>                      struct snd_ctl_elem_value *ucontrol)
->>   {
->>
-> 
-> I'm not sure if this should be handled in generic USB API, this feels 
-> like something that should be handled in specific device driver side, 
-> like all users currently do.
-> 
+Do you want to add an entry in the MAINTAINERS ?
 
-In some of the previous comments, it was mentioned that maybe it was 
-better to have more consistent/defined naming across devices that do 
-have support for audio offload.  Initially, I did have these within our 
-vendor specific ASoC platform driver also.
+> diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpu=
+cp-mbox.c
+ .....
+> +static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
+> +{
+> +       struct qcom_cpucp_mbox *cpucp =3D data;
+> +       struct mbox_chan *chan;
+> +       unsigned long flags;
+> +       u64 status;
+> +       u32 val;
+> +       int i;
+> +
+The variables flags, val and chan are better inside the for loop below.
 
-> Anyway I think there should also be some function that tears jack down, 
-> by calling:
-> snd_soc_component_set_jack(component, NULL, NULL);
-> so it can get cleaned up properly?
-
-I can add that.  I didn't realize there were some situations where maybe 
-components would want to disable the jack.  I will leave the cleanup 
-part to ASoC when the platform card is removed.
+> +       status =3D readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
+> +
+> +       for_each_set_bit(i, (unsigned long *)&status, APSS_CPUCP_IPC_CHAN=
+_SUPPORTED) {
+> +               val =3D readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i) =
++ APSS_CPUCP_MBOX_CMD_OFF);
+> +               chan =3D &cpucp->chans[i];
+> +               /* Provide mutual exclusion with changes to chan->cl */
+> +               spin_lock_irqsave(&chan->lock, flags);
+> +               if (chan->cl)
+> +                       mbox_chan_received_data(chan, &val);
+> +               writeq(BIT(i), cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR)=
+;
+> +               spin_unlock_irqrestore(&chan->lock, flags);
+> +       }
+> +
+> +       return IRQ_HANDLED;
+> +}
+> +
 
 Thanks
-Wesley Cheng
+Jassi
 
