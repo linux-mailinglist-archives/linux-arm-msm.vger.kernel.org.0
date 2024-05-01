@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-19094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 592808B909F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 22:32:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEC3D8B91E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 01:04:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 755661C21376
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 20:32:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3891B1F210D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 23:04:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0A2812F378;
-	Wed,  1 May 2024 20:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8AA616191A;
+	Wed,  1 May 2024 23:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SypZ/tLc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OtyJnr+5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185C31527B2;
-	Wed,  1 May 2024 20:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0265D1304A1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 23:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714595576; cv=none; b=kDhddhhsU5j4ZfspYTFYeh8FT9ZhrlBeSjvNNMRUYIvMoaxJHGClc1GaewcTnkrHsN8jTx3k9vrOGgQHX6CnXLlJvfB9ssJPmcLRtkA/2/bTGUWfGXqLun8FlNu/RQ20ez/ah0qPncBzlCiDzjHzvt2wqjy1ROYQbng2u4z0X6A=
+	t=1714604680; cv=none; b=jNaAkeuEks4+MoYRPhPMZiGe6BcYAImE2WkEtuJ27Eg/P+HSQ/FNpCJZZhj/gQ3s/N6mm/C0aV4nnhvMRfohM6AJrs0c/J1mrtq9lQKZHJ8bZrMVfkIa5n1vfawS0tPsg+BqTaIXINv270U1ow/G4uvR+4z4iwE72F7JkGEtNK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714595576; c=relaxed/simple;
-	bh=kHPex7wRsRdxgybsWrTwxdR3oVX9EtULevfdnKktyQI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=AU7q/ml7RPhiw92YCQPRyshKVJcvDpytPH4Icu5YBWL36RZTBNPoJ64UY0ivEZEL+uVNrqxKD/xOmlH8cG595QPVnONQ1ABmwZU5b9U+TqIvcgseGOFAV8lx49TbU/FN50lGmh4pZpDiZVobLrjXO/8B35LMov4iJworMerZ6lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SypZ/tLc; arc=none smtp.client-ip=209.85.160.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-23d39e4c0d9so739124fac.0;
-        Wed, 01 May 2024 13:32:54 -0700 (PDT)
+	s=arc-20240116; t=1714604680; c=relaxed/simple;
+	bh=czfbW3eQ2FeSXvjVG7KevGs1zXV7jhvRpXXA8pt159g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IwDw15fVllsma3kvzGKwxcwRlePYlIfIViA3HjevFWHiiinrSytEDS03OM9s94TZuPj5NaNoFMkPeTYvnWMSuFif7anSVfvHHF9MNXgpiK5ijPUiA3oxlcRoyIVHSz+/+5z2Htfz8g7jPCStK55vsbvFT1eIDZA15/jFKEV7kOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OtyJnr+5; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-34da35cd01cso1642682f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 16:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714595574; x=1715200374; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PK6bUYnjKXA3139CuZnFqKdohXzB6bNghOA877px0F0=;
-        b=SypZ/tLckei+0YnnXpuPrsPK31yfviKmoKPUfD8t0Ok/yW2Oryf1+YavXkYD/6LiCV
-         hDXkXHAbyncZSLR6IUih1rowfi3/xtMfClpoVSnnx8bCeb/GEhk+hMweFRc19z4oOIaT
-         Sif867X5o6aMxkI2Xo2y6L17RtpaJUKHTX0XCaNnmbmT6O2Nqmg4+zdq5Z+u+MXlCevE
-         gjPkhNLRb8WKm1J3kezu8NarzHThsSlDMKJibxlGvuzh46zNEA0SWTJaYI/qgJlM0KR6
-         BXhG5fNoHIw9OsBnGqFiEpPavvI6ToUBU9Af+cejUk5txMWvzxMVBiZP7Em+LX97L/3Z
-         +aVw==
+        d=linaro.org; s=google; t=1714604677; x=1715209477; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=MZf7IzxWqjKAXWgojjM+rZhudRNMkvEdO3ZPVkcbHfk=;
+        b=OtyJnr+5FQqVA+BelL/URddK4eLxbeCJeFPfv2y2pWwutCQJpgybksno3BXAPpPBvW
+         A9811tanrKP6TC50oV/5YpIG6YvMHTyI/e0f6Rxag2UaLQmbKcsQr7yhzi5cUonwQP3z
+         LiPlXM/tGkvd6fDg6jap1UfjH7SAeVBBabYYkZCsaaYnsEfLwDtKA75r1wmnNzNvQSrT
+         qKXVpFnzCCs5UNdw5TfzlOmjTN4eaZFrQsFqljoRiYCKO8QvyLwJlYvPXrQydxwo+6H+
+         jtQqKHqVVFNcP4La128TMUCAOaKFzY/GjUeo+mRYGq8l95WWwxzEfV/T73jGq2/IgoxL
+         gjAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714595574; x=1715200374;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PK6bUYnjKXA3139CuZnFqKdohXzB6bNghOA877px0F0=;
-        b=UFUkxFoSGSoI2pHQ1iToxTV7CqqERdEraojwMjBK8AgXDiJq4T7axSYcyJRCd65IOr
-         Aj7AlKW4hkpotKyQsV7uSquSV+p1ApIm/yxUOi32vte4KcdKQfDQCdggTzwv7Gj6VmkT
-         NkPhyU7yYzzbj4XFmhFWDA4yNfuoiFYPi+VeYsMVwbaDb3IvGjXL7hj5jxaHO54GVt/P
-         82f7t7kjxDL/1gWEUnIB2l7x+jxi8mIFTueZHV4vejGr+vpgSnvV/4lJmw02Cczwzz4B
-         ONecFu0DcitQ6VYjuLGeybInRwHisqCk16WWinnsprIvdyoLV9c0DrXF6fMGl2TfLzlQ
-         U5ow==
-X-Forwarded-Encrypted: i=1; AJvYcCWdKzNWpMvX0NvFJUu/SCt3mBxr9UnCEb2b33aB5ETn/b0prNJKhqnzLzHs81DaKWPwt1UDD4aSfNqhqnKGImALiCx2/3/amz7jM7EYYHlfWGyZPTOwLf6XITEhp+zsk1YU0c8RxJTqHLxdMGu1dA1QbiG2HGgZIZ0xXqq9QW8+h2kWiAN46m0qeiD3TLmD7m4grUTDzV+ZdsnR4eRKphFsWhT922PK/0e6q1qoUNHIx7iFB9r28QSKjpaBnSw=
-X-Gm-Message-State: AOJu0YyXM1T/vNmdtL7XLcyJKBqlCWm1CDrC34t/GKqPXi4HmG3CWK/1
-	Kf7nOkVI4HtChAs2o27znqHEZSfYFx4p7n2mNn94tbMOSqMZRw3/
-X-Google-Smtp-Source: AGHT+IEEi213Oim+pFQt5WqNLTilQ8NosxMtUvlAkKIuNAoYd59Y3HupxqwZGjbBQ04m8SUtsX/Msw==
-X-Received: by 2002:a05:6870:be97:b0:22f:bdb:633c with SMTP id nx23-20020a056870be9700b0022f0bdb633cmr125208oab.16.1714595574119;
-        Wed, 01 May 2024 13:32:54 -0700 (PDT)
-Received: from [192.168.7.110] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
-        by smtp.gmail.com with ESMTPSA id rb11-20020a056871618b00b0023b5791f396sm2889919oab.15.2024.05.01.13.32.52
+        d=1e100.net; s=20230601; t=1714604677; x=1715209477;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MZf7IzxWqjKAXWgojjM+rZhudRNMkvEdO3ZPVkcbHfk=;
+        b=JyCL7kCPthOolFR2DMiW20Rjz/Wo5aFWcUkiRpyBTiN9OobxIVFWbrROJPWqFXgJfD
+         BCoNhypcldcMSXeZxkfbyTv+0X+YJu9ki0KJGzgkijZfaHCqMB1BJfuqOJ0Z7DpJ4kmr
+         YcsO0qjWe4dVxqQzbrVWSf7cAF6NqZc6AAVlYMY1/zgyCRG3a9Ohafcz8lwqb9HU9snd
+         oWPT6Pdtsm37MQPySku6b8xNwC9sYIei3VwzUlD+TP5tXKNQM9lmzDSoXPlDcpbA1/Zx
+         Q6acMbdMMtWQpGeEUVxjT8OAJ4+B0K+W/279mxuzQLV7pj3kqShcpGxMrW+JckF64vgx
+         wVFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWuuxv6U3uO1i6/RTAx+UHWNnizVN8OHt0iugMf9DhNBJ4cRDU7JmWWnauUkngQl7m5EdUDpuzSDmRXuqFcPhyvo1o0tp0YPlVJGxmGyg==
+X-Gm-Message-State: AOJu0YxmhDt/OwQmBndwurqlIaXXRgqap1r3a6d3bT/NFM6qK6Z2Ygrg
+	snHKGrJ0cTJ0F1m3XKG+y8Fj+0/Z7fiu292pMyC0Qz7kCy8fG4G/BLHuvoq5cp4=
+X-Google-Smtp-Source: AGHT+IF6sKRBezo0n8XAqHLoLo/F3pJARzbazZWeweqP34YGGYMTfBsjmt+wT/0x+cFJ2ANXeFX5yw==
+X-Received: by 2002:a5d:4538:0:b0:34d:a9ff:7ebf with SMTP id j24-20020a5d4538000000b0034da9ff7ebfmr3017840wra.22.1714604677236;
+        Wed, 01 May 2024 16:04:37 -0700 (PDT)
+Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id be11-20020a1709070a4b00b00a5588a9fe66sm15257372ejc.86.2024.05.01.16.04.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 May 2024 13:32:53 -0700 (PDT)
-Message-ID: <7da9d481-1e44-4f0e-9210-fcbd95bd654f@gmail.com>
-Date: Wed, 1 May 2024 15:32:52 -0500
+        Wed, 01 May 2024 16:04:36 -0700 (PDT)
+Message-ID: <1e7f2dc7-3f28-4b68-bdf2-72ce54df1cad@linaro.org>
+Date: Thu, 2 May 2024 01:04:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,242 +77,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 RESEND 8/8] arm64: dts: qcom: ipq9574: add PCIe2 and
- PCIe3 nodes
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Manivannan Sadhasivam
- <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-clk@vger.kernel.org
-References: <20240501042847.1545145-1-mr.nuke.me@gmail.com>
- <20240501042847.1545145-9-mr.nuke.me@gmail.com>
+Subject: Re: [PATCH 05/13] arm64: dts: qcom: sc8180x: add power-domain to UFS
+ PHY
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+ Wesley Cheng <quic_wcheng@quicinc.com>, cros-qcom-dts-watchers@chromium.org,
+ Bjorn Andersson <andersson@kernel.org>, David Wronek
+ <davidwronek@gmail.com>, Andy Gross <andy.gross@linaro.org>,
+ Evan Green <evgreen@chromium.org>, Douglas Anderson <dianders@chromium.org>,
+ Iskren Chernev <me@iskren.info>, Luca Weiss <luca.weiss@fairphone.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20240501-qcom-phy-fixes-v1-0-f1fd15c33fb3@linaro.org>
+ <20240501-qcom-phy-fixes-v1-5-f1fd15c33fb3@linaro.org>
 Content-Language: en-US
-From: "Alex G." <mr.nuke.me@gmail.com>
-In-Reply-To: <20240501042847.1545145-9-mr.nuke.me@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240501-qcom-phy-fixes-v1-5-f1fd15c33fb3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-
-On 4/30/24 23:28, Alexandru Gagniuc wrote:
-> On ipq9574, there are 4 PCIe controllers. Describe the pcie2 and pcie3
-> nodes, and their PHYs in devicetree.
+On 1.05.2024 6:19 PM, Dmitry Baryshkov wrote:
+> The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
+> corresponding power-domain the the PHY node.
 > 
-> The pcie0 and pcie1 controllers use a gen3x1 PHY, which is not
-> currently supported. Hence, only pcie2 and pcie3 are described. Only
-> pcie2 was tested because my devboard only has conenctions to pcie2.
-> 
-> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+> Fixes: 8575f197b077 ("arm64: dts: qcom: Introduce the SC8180x platform")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 178 +++++++++++++++++++++++++-
->   1 file changed, 176 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 7f2e5cbf3bbb..c391886cf9ab 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -300,8 +300,8 @@ gcc: clock-controller@1800000 {
->   				 <0>,
->   				 <0>,
->   				 <0>,
-> -				 <0>,
-> -				 <0>,
-> +				 <&pcie2_phy>,
-> +				 <&pcie3_phy>,
->   				 <0>;
->   			#clock-cells = <1>;
->   			#reset-cells = <1>;
-> @@ -745,6 +745,180 @@ frame@b128000 {
->   				status = "disabled";
->   			};
->   		};
-> +
-> +		pcie2_phy: phy@8c000 {
-> +			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
-> +			reg = <0x0008c000 0x14f4>;
-> +
-> +			clocks = <&gcc GCC_PCIE2_AUX_CLK>,
-> +				 <&gcc GCC_PCIE2_AHB_CLK>,
-> +				 <&gcc GCC_PCIE2_PIPE_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg_ahb",
-> +				      "pipe";
-> +
-> +			clock-output-names = "pcie_phy2_pipe_clk";
-> +			#clock-cells = <0>;
-> +			#phy-cells = <0>;
-> +
-> +			resets = <&gcc GCC_PCIE2_PHY_BCR>,
-> +				 <&gcc GCC_PCIE2PHY_PHY_BCR>;
-> +			reset-names = "phy",
-> +				      "common";
-> +			status = "disabled";
-> +		};
-> +
-> +		pcie3_phy: phy@f4000 {
-> +			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
-> +			reg = <0x000f4000 0x14f4>;
-> +
-> +			clocks = <&gcc GCC_PCIE3_AUX_CLK>,
-> +				 <&gcc GCC_PCIE3_AHB_CLK>,
-> +				 <&gcc GCC_PCIE3_PIPE_CLK>;
-> +			clock-names = "aux",
-> +				      "cfg_ahb",
-> +				      "pipe";
-> +
-> +			clock-output-names = "pcie_phy3_pipe_clk";
-> +			#clock-cells = <0>;
-> +			#phy-cells = <0>;
-> +
-> +			resets = <&gcc GCC_PCIE3_PHY_BCR>,
-> +				 <&gcc GCC_PCIE3PHY_PHY_BCR>;
-> +			reset-names = "phy",
-> +				      "common";
-> +			status = "disabled";
-> +		};
-> +
-> +		/* TODO: Populate pcie0/pcie1 when gen3x1 phy support is added. */
-> +
-> +		pcie2: pcie@20000000 {
-> +			compatible = "qcom,pcie-ipq9574";
-> +			reg = <0x20000000 0xf1d>,
-> +			      <0x20000f20 0xa8>,
-> +			      <0x20001000 0x1000>,
-> +			      <0x00088000 0x4000>,
-> +			      <0x20100000 0x1000>;
-> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
-> +
-> +			ranges = <0x81000000 0x0 0x20200000 0x20200000 0x0 0x00100000>,
-> +				 <0x82000000 0x0 0x20300000 0x20300000 0x0 0x07d00000>;
-> +
-> +			device_type = "pci";
-> +			linux,pci-domain = <3>;
-> +			bus-range = <0x00 0xff>;
-> +			num-lanes = <2>;
-> +			max-link-speed = <3>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +
-> +			phys = <&pcie2_phy>;
-> +			phy-names = "pciephy";
-> +
-> +			interrupts = <GIC_SPI 126 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 164 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 165 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 186 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 187 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE2_AXI_M_CLK>,
-> +				 <&gcc GCC_PCIE2_AXI_S_CLK>,
-> +				 <&gcc GCC_PCIE2_AXI_S_BRIDGE_CLK>,
-> +				 <&gcc GCC_ANOC_PCIE2_2LANE_M_CLK>,
-> +				 <&gcc GCC_SNOC_PCIE2_2LANE_S_CLK>,
-> +				 <&gcc GCC_PCIE2_RCHNG_CLK>;
-> +			clock-names = "axi_m",
-> +				      "axi_s",
-> +				      "axi_bridge",
-> +				      "rchng";
 
-There is a mistake here with the clock-names :( . Will fix it in v5.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-> +
-> +			resets = <&gcc GCC_PCIE2_PIPE_ARES>,
-> +				 <&gcc GCC_PCIE2_AUX_ARES>,
-> +				 <&gcc GCC_PCIE2_CORE_STICKY_ARES>,
-> +				 <&gcc GCC_PCIE2_AXI_M_ARES>,
-> +				 <&gcc GCC_PCIE2_AXI_S_ARES>,
-> +				 <&gcc GCC_PCIE2_AXI_S_STICKY_ARES>,
-> +				 <&gcc GCC_PCIE2_AXI_M_STICKY_ARES>,
-> +				 <&gcc GCC_PCIE2_AHB_ARES>;
-> +			reset-names = "pipe",
-> +				      "aux",
-> +				      "sticky",
-> +				      "axi_m",
-> +				      "axi_s",
-> +				      "axi_s_sticky",
-> +				      "axi_m_sticky",
-> +				      "ahb";
-> +			status = "disabled";
-> +		};
-> +
-> +		pcie3: pcie@18000000 {
-> +			compatible = "qcom,pcie-ipq9574";
-> +			reg = <0x18000000 0xf1d>,
-> +			      <0x18000f20 0xa8>,
-> +			      <0x18001000 0x1000>,
-> +			      <0x000f0000 0x4000>,
-> +			      <0x18100000 0x1000>;
-> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
-> +
-> +			ranges = <0x81000000 0x0 0x18200000 0x18200000 0x0 0x00100000>,
-> +				 <0x82000000 0x0 0x18300000 0x18300000 0x0 0x07d00000>;
-> +
-> +			device_type = "pci";
-> +			linux,pci-domain = <4>;
-> +			bus-range = <0x00 0xff>;
-> +			num-lanes = <2>;
-> +			max-link-speed = <3>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +
-> +			phys = <&pcie3_phy>;
-> +			phy-names = "pciephy";
-> +
-> +			interrupts = <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi";
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 189 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 190 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 192 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 192 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE3_AXI_M_CLK>,
-> +				 <&gcc GCC_PCIE3_AXI_S_CLK>,
-> +				 <&gcc GCC_PCIE3_AXI_S_BRIDGE_CLK>,
-> +				 <&gcc GCC_ANOC_PCIE3_2LANE_M_CLK>,
-> +				 <&gcc GCC_SNOC_PCIE3_2LANE_S_CLK>,
-> +				 <&gcc GCC_PCIE3_RCHNG_CLK>;
-> +			clock-names = "axi_m",
-> +				      "axi_s",
-> +				      "axi_bridge",
-> +				      "anoc",
-> +				      "snoc",
-> +				      "rchng";
-> +
-> +			resets = <&gcc GCC_PCIE3_PIPE_ARES>,
-> +				 <&gcc GCC_PCIE3_AUX_ARES>,
-> +				 <&gcc GCC_PCIE3_CORE_STICKY_ARES>,
-> +				 <&gcc GCC_PCIE3_AXI_M_ARES>,
-> +				 <&gcc GCC_PCIE3_AXI_S_ARES>,
-> +				 <&gcc GCC_PCIE3_AXI_S_STICKY_ARES>,
-> +				 <&gcc GCC_PCIE3_AXI_M_STICKY_ARES>,
-> +				 <&gcc GCC_PCIE3_AHB_ARES>;
-> +			reset-names = "pipe",
-> +				      "aux",
-> +				      "sticky",
-> +				      "axi_m",
-> +				      "axi_s",
-> +				      "axi_s_sticky",
-> +				      "axi_m_sticky",
-> +				      "ahb";
-> +			status = "disabled";
-> +		};
->   	};
->   
->   	thermal-zones {
+however
+
+this screams for a follow-up fix to use UFS_CARD(_2)_GDSC on respective hosts
+
+Konrad
 
