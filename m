@@ -1,170 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-19060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 834168B8CD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 17:24:04 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A6EF8B8D48
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 17:37:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 109F01F260C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 15:24:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E4D4B23385
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 15:37:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10C6312FB2A;
-	Wed,  1 May 2024 15:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EF5A12F5BE;
+	Wed,  1 May 2024 15:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OtIUjcyV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AgVT7UJ4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B0412F390
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 15:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D11212F59D;
+	Wed,  1 May 2024 15:37:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714576677; cv=none; b=bZqCNl6ke27GV9ErU98N+5YdA08lJ8WjMrpXEqXvwt555wT1M7C4Br64A6jxkP1JKmRki3RAwUDF0Ig05otGiX4Am6qPujK0c51GbvH9I34A6sLtlqmi96z96QRyWL/6WZlJLTCpPJ/Ur/E4zwgh3kx8oig9lkNBaw5IH9PZEiQ=
+	t=1714577846; cv=none; b=boBzqf2JRJuAO8qe4Ghoxm3YntwdfnBRXRKe6s19jukBsgFkpfDy+lPhHNObyiIsx6ovptTK2n3uHzRfHxjQO83hKH1t3ypHgTYjeq1c0GyepxBE/u66k1ROKG7uldA58W069/+5SpDc1dUoTdTYdm5IcnzJP2lYJscW0t38FE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714576677; c=relaxed/simple;
-	bh=XwmcPuQxx2tBf5gkCDnJVQZhi17lS1CN8P7TNrDPnEk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bpc9q9PPRsQHQuV/KZatHETqoezBxaQPsMkHo9W6FR7XH4BaSFb0EHdlSoxC88wP1jjeotiQvx5ZBFTxaanPOTucqLPDctKezooiO7tnmJ4+fSa9d9unwCHbBO53imtGjG2dl7F3vLOCK4p71/L0bCCAHvZdSyuqRdeJ8JMZ/zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OtIUjcyV; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1714576674;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=w1KbR/bB5pAX4yeRaQtdilxJnSjmuR3a1duUgyjv4uo=;
-	b=OtIUjcyVG9OQ0FLoYSPZ9YBPAb/bmBSIOiMDlzqocSJa61uqHvrEqe6mpc8TBcQk/gPwx8
-	MWW7fRHVPCKnSN9aocxartyghCTGZTkR0H+LKNsUQYXV0Xq/flncteVt0IFjnXqu7AHlIU
-	8FfLmXFzNO4+0rDHpxmGFj6BrRZAGfo=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-492-ZJ5jwp8zM8qk9nbwFxy_bQ-1; Wed, 01 May 2024 11:17:52 -0400
-X-MC-Unique: ZJ5jwp8zM8qk9nbwFxy_bQ-1
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-6a097848a56so75101456d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 08:17:52 -0700 (PDT)
+	s=arc-20240116; t=1714577846; c=relaxed/simple;
+	bh=0ITTtdbueCZGJrgUVAPhbmZom/wxQK/QStVSF6LAPcI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=fQHFcFNq3Awgzcf74f1UCY79OUJU2DbDkeBzJcwA1RQ3T54wPXe0mKyFyZ0KBo4I+3ZqYo1OiVxSHXw5s0H1LPP1vsKYSEq1oGK6jOcop1mwuoJi3YwJIRe4Q5lHhzqK8JAQsbv6pFqzYUSiE4VS3zf1GMJduze3kl5L+yNf1kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AgVT7UJ4; arc=none smtp.client-ip=209.85.160.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-23d1ea835a5so675424fac.2;
+        Wed, 01 May 2024 08:37:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714577843; x=1715182643; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=34HSQZWtjbxbUcY2p0ZqE9phbqtru1lcKIiAiKLyg88=;
+        b=AgVT7UJ49zKpKZtb4b2Czf0iaqtmD0XT5b8AtI6Z0XkQ48aOC2fbSjl+g0WBbOA0wr
+         6KpTZf3xyJt26fPugjR936lmSSEjNdxfsVkKUkLaqMMcCmu1x6tS5EMLJmGfn1wV5fiO
+         Lby8TNeE+WcMPvYLiYMqhTkJjikdeYBrfc9HqcPPkZBAvu1a0SMRJ/NXYxPSLOmnYQIg
+         uREqxJ9B4OBv4tDVI9XjDt0U7Ttml115zj+QiClcc57pN7frONx3sWjlMmLYrJFOA18L
+         HyOz6jzmMP1VU1FEsrRYPd1e2fXgaRUIobB/kagQzE9HD+fv5YTt1WD+13dkSx6ulXll
+         BQRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714576672; x=1715181472;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w1KbR/bB5pAX4yeRaQtdilxJnSjmuR3a1duUgyjv4uo=;
-        b=CIApdO3wKvwjU7yYkjyvKPk//VZXJzeU1sMc4567DwVvFXwFE4Gk59zFZSqab47JQA
-         uaz368FqhoMKu3567pFv70DeYWuzDRUEwURlqTvk4m2T24ZM49X/BqD3EInfVoo7wowC
-         zmdRuOPNIoxee2Fu6nriWI2p+dhBitdl9BRCs9OQ5ES6xiSYQiS2XaVda/tZmY8wRxvy
-         CJYvhBSn0LhQGLz5Z2K1Gli8/oQXCoQP36MX5Oo6NxhM2jIf5n449C2W+Y94KgXu47ge
-         c50MCp/75hnDxK3ue1qNztfulIrGDVSjYlK2sLoM4y1wkSm4hKb3oefRMHY0Rk7qeFiS
-         qoEA==
-X-Forwarded-Encrypted: i=1; AJvYcCXykVYTEKCzNslzi6s8Ta6lTYliwhF7TFmgQBwQ2vYosuRVAGbjN3JGNTBlE34zzvTZQd3JHuzBMi7lFSxyV2iwFJgqncXkY694li7P0g==
-X-Gm-Message-State: AOJu0YxgEQQXhihDzCDoBwSCXCJptHcuBE8D46qCxEYX74oEFbWZeGOA
-	itduw+2axzrYw7me0KJSaVtOJRvKBNuIP7aETjQFdCye7muAOITbx5143hSIvvRCnQrKwolDnFp
-	li05jiGPK1GbLwa5mLfh2+ktneVEk5C49wd0WLIcb99lVVeLp7eR/uPN1q+//98w=
-X-Received: by 2002:ad4:5f4f:0:b0:6a0:c96e:c4e3 with SMTP id p15-20020ad45f4f000000b006a0c96ec4e3mr2892075qvg.4.1714576671604;
-        Wed, 01 May 2024 08:17:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUT47ffWFVAGBG1ZcXvz+ipzMXbZ+rXAl2nPyrFx392+FQjQROOPjgZNDW95PwhpUpRQj1rg==
-X-Received: by 2002:ad4:5f4f:0:b0:6a0:c96e:c4e3 with SMTP id p15-20020ad45f4f000000b006a0c96ec4e3mr2892047qvg.4.1714576671156;
-        Wed, 01 May 2024 08:17:51 -0700 (PDT)
-Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
-        by smtp.gmail.com with ESMTPSA id v7-20020a0cf907000000b006a0f4921e8esm549195qvn.119.2024.05.01.08.17.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 May 2024 08:17:50 -0700 (PDT)
-Date: Wed, 1 May 2024 10:17:49 -0500
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sa8775p: mark ethernet devices as
- DMA-coherent
-Message-ID: <tcqvggpqdegqjtnz6vklhgcu7v4wdl5ncngkujsqaxtgntsmcf@obqec5wcjtuo>
-References: <20240430-mark_ethernet_devices_dma_coherent-v2-1-24fbbdc90122@quicinc.com>
+        d=1e100.net; s=20230601; t=1714577843; x=1715182643;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=34HSQZWtjbxbUcY2p0ZqE9phbqtru1lcKIiAiKLyg88=;
+        b=ThkqwG726xzGKKDfvd4F8zUA6JJYIxjzp3xD+bPsVzcYLsFWMwwQVjqO+enzvbEdw5
+         RHb79zWBP/54ZbEDKMkCc1adNnlTy/CY04sY2n/148WdulsRKS6GaN0AodKcg0x/e0tA
+         soG7hybxaPxLyoiX4AtmySmaWR+1L2SJzWDgulHP5Hi4EDfYseRozaY49kinMNZDci9t
+         ZRX+8fjYYeSdA0IBmB7qg3C/vOouIzgnk+L2Dp8r4h3NGj9J7tY+t92zYbN341Hi+Wis
+         cGz9Y+t3JbVXUueCO68sbkJB+mSf14Tz4ZPxwl6JcNe/2kzc5CsXq3rq4L4yl4n7C0vD
+         wnqA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRaPw2YBXSlEmxwjl9DXQNz1gpcPPXDBREOi05lgbkjyV3ZbccQOm9qfvrKPxbC2g95Ns+58YoCbDgqoso7yQJdkoN0QJEf9HS02EyFnEK+q+lUoVJO623WXFbhbp5rDrIFIZbUMd1KgdKN4Q8vkUO0A3tCT06Ezf8wmhQ0EOJneg7ANWTZISj+eN7sZNqdgUFzkEEnZy6skr4j4WIB2vEcLkF07GkZPhqdw262nWbOobdcbC/n71LVIphSn4=
+X-Gm-Message-State: AOJu0YzY++MsikVrXUCBVqGLiSO2IgM2tQQXlYs2EDU8qTt2cRnxAXKO
+	cWeXBoqPpqQGxsnB9wrYONFpPd0cX0+a5eLUID3gjFkh6fWYqWBK
+X-Google-Smtp-Source: AGHT+IHdOGltmMEfyguF/4cAMA+Sgnkaw7abyq40kS29fkMPdziQpNXQgqEnnEGTcu54RFw7h8jJWw==
+X-Received: by 2002:a05:6870:b296:b0:22e:8d62:fa75 with SMTP id c22-20020a056870b29600b0022e8d62fa75mr2938064oao.44.1714577843194;
+        Wed, 01 May 2024 08:37:23 -0700 (PDT)
+Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id qw2-20020a0568706f0200b002397a883e7csm5033024oab.12.2024.05.01.08.37.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 May 2024 08:37:22 -0700 (PDT)
+Message-ID: <47665254-fe22-4369-8b10-087ca928e97f@gmail.com>
+Date: Wed, 1 May 2024 10:37:20 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240430-mark_ethernet_devices_dma_coherent-v2-1-24fbbdc90122@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 RESEND 0/8] ipq9574: Enable PCI-Express support
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Manivannan Sadhasivam
+ <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org
+References: <20240501042847.1545145-1-mr.nuke.me@gmail.com>
+ <ea1c925f-1696-4491-a792-1b9165447dad@kernel.org>
+Content-Language: en-US
+From: mr.nuke.me@gmail.com
+In-Reply-To: <ea1c925f-1696-4491-a792-1b9165447dad@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 30, 2024 at 08:45:18PM -0700, Sagar Cheluvegowda wrote:
-> Ethernet devices are cache coherent, mark it as such in the dtsi.
-> Fixes: ff499a0fbb23 ("arm64: dts: qcom: sa8775p: add the first 1Gb ethernet interface")
-> Fixes: e952348a7cc7 ("arm64: dts: qcom: sa8775p: add a node for EMAC1")
+
+
+On 5/1/24 5:22 AM, Krzysztof Kozlowski wrote:
+> On 01/05/2024 06:28, Alexandru Gagniuc wrote:
+>> There are four PCIe ports on IPQ9574, pcie0 thru pcie3. This series
+>> addresses pcie2, which is a gen3x2 port. The board I have only uses
+>> pcie2, and that's the only one enabled in this series. pcie3 is added
+>> as a special request, but is untested.
+>>
+>> I believe this makes sense as a monolithic series, as the individual
+>> pieces are not that useful by themselves.
+>>
+>> In v2, I've had some issues regarding the dt schema checks. For
+>> transparency, I used the following test invocations to test:
+>>
+>>        make dt_binding_check     DT_SCHEMA_FILES=qcom,pcie.yaml:qcom,ipq8074-qmp-pcie-phy.yaml
+>>        make dtbs_check           DT_SCHEMA_FILES=qcom,pcie.yaml:qcom,ipq8074-qmp-pcie-phy.yaml
+>>
+>> Changes since v3:
+>>   - "const"ify .hw.init fields for the PCIE pipe clocks
+>>   - Used pciephy_v5_regs_layout instead of v4 in phy-qcom-qmp-pcie.c
+>>   - Included Manivannan's patch for qcom-pcie.c clocks
+>>   - Dropped redundant comments in "ranges" and "interrupt-map" of pcie2.
+>>   - Added pcie3 and pcie3_phy dts nodes
+>>   - Moved snoc and anoc clocks to PCIe controller from PHY
+>>
 > 
-> Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-
-Nit: Fixes: and Signed-off-by: should be grouped together.. i.e.:
-
-    Ethernet devices are cache coherent, mark it as such in the dtsi.
-
-    Fixes: ff499a0fbb23 ("arm64: dts: qcom: sa8775p: add the first 1Gb ethernet interface")
-    Fixes: e952348a7cc7 ("arm64: dts: qcom: sa8775p: add a node for EMAC1")
-    Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-
-> ---
-> Changes in v2:
-> Remove internal change-id from commit message
-> - Link to v1: https://lore.kernel.org/r/20240425-mark_ethernet_devices_dma_coherent-v1-1-ad0755044e26@quicinc.com
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
+> Three postings within short time... Allow people to actually review your
+> code. Please wait 24h before posting new version. Include entire
+> feedback and all tags. Explain why you ignore/skip some tags.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 231cea1f0fa8..5ab4ca978837 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -2504,6 +2504,7 @@ ethernet1: ethernet@23000000 {
->  			phy-names = "serdes";
->  
->  			iommus = <&apps_smmu 0x140 0xf>;
-> +			dma-coherent;
->  
->  			snps,tso;
->  			snps,pbl = <32>;
-> @@ -2538,6 +2539,7 @@ ethernet0: ethernet@23040000 {
->  			phy-names = "serdes";
->  
->  			iommus = <&apps_smmu 0x120 0xf>;
-> +			dma-coherent;
+I'm sorry for the confusion. It's the same patch version, v3 being two 
+weeks old.
 
-Does the schema need updating then?
+Due to a tooling failure, the first attempt to send resulted in a 
+double-posting, and missing cover letter. It was so bad that I felt I 
+needed to re-post with the RESEND tag to clarify the intent and prevent 
+further confusion.
 
-    (dtb-checker) ahalaney@x1gen2nano ~/git/linux-next (git)-[b4970433daf5] % make CC=clang ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CHECK_DTBS=y DT_SCHEMA_FILES=/net/qcom,ethqos.yaml qcom/sa8775p-ride.dtb
-      UPD     include/config/kernel.release
-      DTC_CHK arch/arm64/boot/dts/qcom/sa8775p-ride.dtb
-    /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: ethernet@23000000: Unevaluated properties are not allowed ('dma-coherent' was unexpected)
-	    from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
-    /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: ethernet@23040000: Unevaluated properties are not allowed ('dma-coherent' was unexpected)
-	    from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
-
-You can use eb15bd5c2a69 ("dt-bindings: dmaengine: qcom: gpi: Allow dma-coherent")
-for inspiration for crafting that patch and adding it into the beginning
-of this series.
-
->  
->  			snps,tso;
->  			snps,pbl = <32>;
+Alex
 > 
-> ---
-> base-commit: a93289b830ce783955b22fbe5d1274a464c05acf
-> change-id: 20240425-mark_ethernet_devices_dma_coherent-6c6154b84165
-
-It seems you're using b4 (yay! good choice). I noticed the To/Cc list
-here seems small. b4 prep --auto-to-cc should basically use
-get_maintainers.pl and include the relevant folks. You can add on to it
-from there with b4 prep --edit-cover. Typically if someone gives you a comment
-on a patch its a good idea to Cc them on the next version (in case they weren't
-on the prior).
-
-> 
-> Best regards,
-> -- 
-> Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-> 
-> 
-
 
