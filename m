@@ -1,134 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-19002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF5CF8B83A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 02:17:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 094138B83C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 02:33:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EEBB71C21890
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 00:17:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B37E9284BF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 00:33:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45FE2819;
-	Wed,  1 May 2024 00:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 786FD3C2D;
+	Wed,  1 May 2024 00:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="e1mFR0ja"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D0fGt0cW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6481173
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 00:17:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5A3646;
+	Wed,  1 May 2024 00:33:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714522641; cv=none; b=JL57D3JH2PYoT8oVYGptyiTP7bEMeubnnVO7zxBCp0+uGg1N7/97ntp8lRyE+c2QSUodp9K52MCVh1K4g0ebIsYbQonyhWfZUhZvb582Cy8RvBNYyXnIJZYCYJBt6eWyEBhFToDzl8p0+MDFP+k199gVFD6Rg5scZEyRYWuwI9s=
+	t=1714523619; cv=none; b=aR7QeBWL7TTQMBbON2pSxyjcnayHwBkWYNyrzSrYKmBecl199+Gzpv4e7XjXflNPRMOh5uLO0yepB/SZtcR0Zp1ybL7KGsvETQG/F1+pvrO9+LTiV0VxlThFHDHhrVqKZjDG+LhahiNMxNDxfX4K641/MReiKOMEz0llvtKc/nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714522641; c=relaxed/simple;
-	bh=1ywHP957dN7QN6N91q0/xp7S+y5cWqGySegerlSjGbo=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UZwB2BzV374kbQUgnBbDKuxunIIRhXbndUXXsyrarQg5MEQAtYoHi4XFcv0byTMlL6mw+HSZT2xRkhCQ/N9497IQhHrXi1nDRvTtuq2GkNcDwKZQQpbJf4v9AHOu9Rli6I2BsCVG4inkTEiLFm13W1BL4ACmDUbpV9HOwL4IPQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=e1mFR0ja; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-78edc3e7cd9so465283685a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 17:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714522638; x=1715127438; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1ywHP957dN7QN6N91q0/xp7S+y5cWqGySegerlSjGbo=;
-        b=e1mFR0jabgWyWSAAUL/bOSqHjDXedFTVZkyjI5G14PwDfAHUkLiQYu8mygH22XkAkd
-         NaEGUFZyOnK2jOTEjv6bVM8qCWYF6qKG9kRKf3fSGUiukhVKezMmrJuPjc02mRMwoZqK
-         4HBcSa+NtowSV9UqTdGcO9mRihWNk3Pjclh08=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714522638; x=1715127438;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1ywHP957dN7QN6N91q0/xp7S+y5cWqGySegerlSjGbo=;
-        b=qYK8ceuyKvQKRjg3ZTuvBmRRPcALoVTNB4/2zbkKL1MPNmkHJYUJuTXFXn7cJ7jKhK
-         1TmV3G3i57pXTzfaf8mJtBABQUhn5K8m0ZZf6dTgbtE79zNHKkNZkL9N2Fk4u8wjaRPj
-         GD40QgYfwrgj1qCdpSV+8WcZeaOoQzCc8Kopt8YBURTcf4lRKltSzGnGE1nuOxIs94iN
-         a9bJkcBoDeIY3CDlcWofpxJHK3WKL0MZb4BrFZNd+c4J1N6th4BJDfMIO+FDuPiL5bYP
-         ZFz57bYcbBmXw8gIsEnwfFgN53rdYG/BVT/cbqCtLXxlrNUmPOSdplt6PIpyJGENORPv
-         p1OQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXW/uiB7hyk7YMFQULza71sERrZVP6QE4cimf0cPO0tFIINQKEKVrupk6zxlRexP3a+voFQWzCc/NRAdFacE+yl2ZKh4VUaEIP6ktroYA==
-X-Gm-Message-State: AOJu0Yztil970JdTGzCF3In7YpfYr6O/ihS2cLsz+8tvEhhLsE8aV9W2
-	amd4eUwSmfSryCXDI+SvzsOKyjVsAQpplVV3yKRvruJazNTrJfQrSinXE7ekbv7IiaMsJcs6TQ+
-	i2y8gbI69+cYuudObZ63snOtDNq68HR391oZR
-X-Google-Smtp-Source: AGHT+IFHbVqJvW5Quh1nKokc7DOIECNmTOz55NPM4sjfdsU1vArTv7tsX5xChcnAkiqJBSUd0f3wLcvCxkKHa97Wo0U=
-X-Received: by 2002:a05:6214:62c:b0:6a0:cd28:ffaa with SMTP id
- a12-20020a056214062c00b006a0cd28ffaamr900368qvx.25.1714522638644; Tue, 30 Apr
- 2024 17:17:18 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 30 Apr 2024 17:17:17 -0700
+	s=arc-20240116; t=1714523619; c=relaxed/simple;
+	bh=3GxgYzbam8HgNyK+VdtYgp46UreAUNvtQ0s3h2WWRpU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kwusV+vIE7JcjYgm3CUKJwJRdOPAG4tHbXLOlgZZ7rXt2J58kI4k039jZsGjgGkCEvVex/zF4C0Ukyb7axrkMKxbXRIEE49cG9dXtHIkimU19pIwSIrKR9G2pW09B4fL6PacPr2e5jxOc7zuIz96NuF5itzyFEoBSM8Qt6AMYC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D0fGt0cW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 43UNxo8v005742;
+	Wed, 1 May 2024 00:32:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=LRnPNBK8fB5m3Wd6M+Ba4l+Ai4vlC8s1ZRRcL3qyiV8=; b=D0
+	fGt0cWBkZIPWOJq1/d0Q52iDWMscdVnrML7zq7Mbq2eSO79vTDbgEhppVdmaZYB9
+	W07e1ZyXYOAC1U9O8EZLDsYzZ/bpdB97r9bWIItYRofzjyHE/VY7+6V/JdLo6Fcx
+	qY6g+5mkCVUTLisci98ZNdXtuwDMVR/rULDTu38jVUqwYaFijmmKAWZOdbSUYj+A
+	pYi+sHTXkQW6eM6eGzbhl6MQ8jRsvz3fHaUHJahsaQ7ouVkBfc/FbF1I3Vi+BM9X
+	h/s/nmOZbCRG4RGgMyTr+0iRCMdVjCr8fjnAXGop8Z5xU3QP8wIKGtaT/Ukm7qVz
+	v/FZnk2+9pAbCBnH4CrA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xtw1hj6qf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 01 May 2024 00:32:27 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4410WQEC025873
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 1 May 2024 00:32:26 GMT
+Received: from [10.110.61.50] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 30 Apr
+ 2024 17:32:25 -0700
+Message-ID: <a1115d39-b60e-a5da-5c7e-79266d6ced17@quicinc.com>
+Date: Tue, 30 Apr 2024 17:32:24 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
-References: <20240327202740.3075378-1-swboyd@chromium.org> <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Tue, 30 Apr 2024 17:17:17 -0700
-Message-ID: <CAE-0n51osUcpqqh6o9OhURLbRKjcWbRZT-5oHLi_mwfJsUngEw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Fix a black screen on sc7180 Trogdor devices
-To: Doug Anderson <dianders@chromium.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Laura Nao <laura.nao@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v20 33/41] ASoC: usb: Create SOC USB SND jack kcontrol
+Content-Language: en-US
+To: =?UTF-8?Q?Amadeusz_S=c5=82awi=c5=84ski?=
+	<amadeuszx.slawinski@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
+ <20240425215125.29761-34-quic_wcheng@quicinc.com>
+ <c8bd16e8-b204-471b-a702-36e14c8695c5@linux.intel.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <c8bd16e8-b204-471b-a702-36e14c8695c5@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ciB1uOnPTSzQscrGnEx8GYc3pFB6UvC6
+X-Proofpoint-ORIG-GUID: ciB1uOnPTSzQscrGnEx8GYc3pFB6UvC6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-04-30_16,2024-04-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ mlxlogscore=877 clxscore=1015 bulkscore=0 impostorscore=0 malwarescore=0
+ suspectscore=0 spamscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405010002
 
-Quoting Doug Anderson (2024-03-28 09:39:54)
->
-> I spent a bunch of time discussing this offline with Stephen and I'll
-> try to summarize. Hopefully this isn't too much nonsense...
->
-> 1. We'll likely land the patches downstream in ChromeOS for now while
-> we're figuring things out since we're seeing actual breakages. Whether
-> to land upstream is a question. The first patch is a bit of a hack but
-> unlikely to cause any real problems. The second patch seems correct
-> but it also feels like it's going to cause stuck clocks for a pile of
-> other SoCs because we're not adding hacks similar to the sc7180 hack
-> for all the other SoCs. I guess we could hope we get lucky or play
-> whack-a-mole? ...or we try to find a more generic solution... Dunno
-> what others think.
+Hi Amadeusz,
 
-I think we should hope to get lucky or play whack-a-mole and merge
-something like this series. If we have to we can similarly turn off RCGs
-or branches during driver probe that are using shared parents like we
-have on sc7180.
+On 4/26/2024 6:26 AM, Amadeusz Sławiński wrote:
+> On 4/25/2024 11:51 PM, Wesley Cheng wrote:
+>> Expose API for creation of a jack control for notifying of available
+>> devices that are plugged in/discovered, and that support offloading.  
+>> This
+>> allows for control names to be standardized across implementations of USB
+>> audio offloading.
+>>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> ---
+> 
+> (...)
+> 
+>>   /* SOC USB sound kcontrols */
+>> +/**
+>> + * snd_soc_usb_setup_offload_jack() - Create USB offloading jack
+>> + * @component: USB DPCM backend DAI component
+>> + * @jack: jack structure to create
+>> + *
+>> + * Creates a jack device for notifying userspace of the availability
+>> + * of an offload capable device.
+>> + *
+>> + * Returns 0 on success, negative on error.
+>> + *
+>> + */
+>> +int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
+>> +                    struct snd_soc_jack *jack)
+>> +{
+>> +    int ret;
+>> +
+>> +    ret = snd_soc_card_jack_new(component->card, "USB Offload 
+>> Playback Jack",
+>> +                    SND_JACK_HEADPHONE, jack);
+>> +    if (ret < 0) {
+>> +        dev_err(component->card->dev, "Unable to add USB offload 
+>> jack\n");
+>> +        return ret;
+>> +    }
+>> +
+>> +    ret = snd_soc_component_set_jack(component, jack, NULL);
+>> +    if (ret) {
+>> +        dev_warn(component->card->dev, "Failed to set jack: %d\n", ret);
+>> +        return ret;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +EXPORT_SYMBOL_GPL(snd_soc_usb_setup_offload_jack);
+>> +
+>>   static int snd_soc_usb_get_offload_card_status(struct snd_kcontrol 
+>> *kcontrol,
+>>                      struct snd_ctl_elem_value *ucontrol)
+>>   {
+>>
+> 
+> I'm not sure if this should be handled in generic USB API, this feels 
+> like something that should be handled in specific device driver side, 
+> like all users currently do.
+> 
 
-Put simply, the shared RCG implementation is broken because it reports
-the wrong parent for clk_ops::get_parent() and doesn't clear the force
-enable bit. With the current code we're switching the parent to XO when
-the clk is enabled the first time. That's an obvious bug that we should
-fix regardless of implementing proper clk handoff. We haven't
-implemented handoff in over a decade. Blocking this bug fix on
-implementing handoff isn't practical. Furthermore, we're relying on clk
-consumers to clear that force enable bit by enabling the clk once. That
-doesn't make any sense, although we could use that force enable bit to
-consider the RCG as enabled for clk_disable_unused.
+In some of the previous comments, it was mentioned that maybe it was 
+better to have more consistent/defined naming across devices that do 
+have support for audio offload.  Initially, I did have these within our 
+vendor specific ASoC platform driver also.
 
-An alternative approach to this series would be to force all shared RCGs
-to be parented to XO at clk registration time, and continue to clear
-that RCG force enable bit. That's sort of what Dmitry was going for
-earlier. Doing this would break anything that's relying on the clks
-staying enabled at some frequency through boot, but that isn't supported
-anyway because clk handoff isn't implemented. It avoids the problem that
-the first patch is for too because XO doesn't turn off causing a clk to
-get stuck on. I can certainly craft this patch up if folks think that's
-better.
+> Anyway I think there should also be some function that tears jack down, 
+> by calling:
+> snd_soc_component_set_jack(component, NULL, NULL);
+> so it can get cleaned up properly?
 
-To ease the transition we can make a new clk_ops for the RCG as well so
-that each SoC has to opt-in to use this behavior. Then we can be certain
-that other platforms aren't affected without being tested first. I'd
-prefer to not do that though because I fear we'll be leaving drivers in
-the broken state for some time.
+I can add that.  I didn't realize there were some situations where maybe 
+components would want to disable the jack.  I will leave the cleanup 
+part to ASoC when the platform card is removed.
+
+Thanks
+Wesley Cheng
 
