@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-19076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 709238B8E12
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 18:22:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 930048B8E15
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 18:22:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2758F283754
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 16:22:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B9C6B1C21014
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 16:22:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CFAB1339A4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBBB7134406;
 	Wed,  1 May 2024 16:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="liH3yCIL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rC0HJo1v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D521332BE
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 16:19:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47994133421
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 16:19:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714580398; cv=none; b=mjjx4Jy9HfF5y0grYdnAF3aTqgA1uv93SkIZj48gf1Xz0sBN6bEP5mLwr01yM0V0GXIQG1ZKdglfFyKr79uM3zEC0XoNX4UmSH8Tn8m3PSAdswB0krpTzZPVrG+R6eqKgq2f9zjqcMcjku7Hx9letZ33Nr6OOVsU8B9LdnAK1ps=
+	t=1714580398; cv=none; b=cKXCJlzBv9XOH/px5s5eFg2i/6+I6yqrnaU43Ntx+owg7aBiZfgH6+KVTUv9/V68uIz9lCYjdoVgVGz6JPT2lMfaLXeNXudWH0V1WjPOc2WTl9QbF9NEzc83KjK7S9tzTD5uA4RV/DuzqeAt+DKKoWLP3wgOhbjZChPxUMT6oL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714580398; c=relaxed/simple;
-	bh=ZyhemyLIYzl0yFINT+7/a2RvvKPGInbzW42JxBvs81o=;
+	bh=Bi5rhyr14KcQQ7+MOAD5H9S1njlLb5FKYBD685uF7IE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lxZmJOEphfNL3lkr2tgfrlvyMiE0DMIxeYxuQY7gBkZYK2VaGud/CEKn4u4zosnAtLGRe9pCmkBVhT4c8k01pAsKW473GW9BI5HCZT8TtSGfgnHPTjVSTDDuzlw8b27F4dHrmmzTjGNt1aqoBCE/NvKGvOCWr2xvHi2/Vci7jYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=liH3yCIL; arc=none smtp.client-ip=209.85.167.42
+	 In-Reply-To:To:Cc; b=rVGjnqn1fz6DGrEmwVl/l5MWmfpca1TpD1+PpuQfGKiRNcbxs4t1+RePbFjnl01F5oCCqL8XRA9pv+EPlFVufKWYHYPIDSE9DYQdoBBRkIk2yhqhw7l9EyR5I++EIMcc9A8eStpPyqdknJZAucnV0N+YuXC2ILV9MNwPpe1Ndzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rC0HJo1v; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-51ef64d04b1so276280e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 09:19:56 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2e0933d3b5fso38417621fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 09:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1714580395; x=1715185195; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6FF9R06GXOtRyjyQmdyGdOb96UxXSLO+caPktlD7cek=;
-        b=liH3yCILuQSrWLQ5QsWsKFlNnWE+I6QLQohs64qe80QVtN1c55Z0eoYWmG+w4yX3O8
-         1FJ66CTuwy8Nqnf+qKpyrRb8SpiG+C88VjhrcS8EFvWdTyJTH/x6IBucshfob9hlJknv
-         EzAweQBaorGmbPgfnGnhSoHqyIRvi3l9qPrz+CYtknBrlzDVQSzFj1g56iOJDUTcaFSO
-         Kib5gL/3qgfK/C7tiqC5ZMtfCBTwAQAQxno/INp2ycp7AirxhDY7X5qdw9TYXYbdWLyS
-         oBz2lm0Xe6ot5ng08UhOXtnG4Jdx7AVQukVRFBWm6bseQmpor48RTjw/ItC1fAc1zdFV
-         ecsQ==
+        bh=8qbl1bY1oXPc/BrE+BcAYxIg4JVPN7Au51+xkWvlhws=;
+        b=rC0HJo1vxz4oDhy2zl3cRFGglXj3n1mS7eHGZRxuRimBpBTJaohvMA+MOvjPodmlES
+         J5HWpeYwvCXxw8pWzBJGzGg3BVZt29LvohvQgMD2yhe5RvW8PNiwJmTZ0FwZ8xPqRCA7
+         rRvgktMbLhMUwZcqPJ88PDEvbP8TitUOTdiRzcHZs9gYpNIUwUkMwfPJO5PB1xNcaVhD
+         Q5pXF5rhZaof2J44YzEzKi6CNtyrFQkxiTYwTQRz2oU4duMon8oY9VX/lOguZgqKoeOS
+         5b4c+U3p2Cx8Dzxw7r5GVqcYy/M9dcTpCE9D+hhRoAQExRvrx2mnCU2IOzVNFBGvgzUE
+         OjUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1714580395; x=1715185195;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6FF9R06GXOtRyjyQmdyGdOb96UxXSLO+caPktlD7cek=;
-        b=LWAGTIoHxQDZG4H5lmoeWy+Kv8iJKMUoduvcuX1ZudnRExnQDpGgopohxFv3zPMC8V
-         l9JjVFJ8f1ElmY55HnFTqmUdOZGeZHIaKngVYtH/rDaAK4Xoa8w1jC9Mdp46oa2mKPln
-         mTOwWkCpVMLSDtuJU9AfY4MCH1s1+uH+vD0NsOzAM+/zLzE31uExIMMcg/pI7+xtaBDB
-         OAkDntoOi9f6ZGHeT/ZQ64AfOEu8s0G04Vogd/CqfLjBQqxx3Ed5bAuGjfhKtz3aKbkF
-         aBTL7cf/YMXLZizFDKtQc85Ebe2IxSQMfvK5Uw0uhf4qoElXekRsXnOqhf1IgVu9O7DA
-         K/Kg==
-X-Forwarded-Encrypted: i=1; AJvYcCUAKup66FZjJGQNHk3Ly4OYZNJGkFU4qIgeRIJZey03UUaeapG7tVYoobbZWiQUO+zdTmzoiwxMNrfvrnBV4RzEMi2hFfjZJh8K90ttLw==
-X-Gm-Message-State: AOJu0Ywy6dKGsplw9XNHwkVRIoYOVknE+p1mUbxgHakKFpbscv6x9jQF
-	hNxBuZKznPkOLNHEJhVazFKXbvPRE1MqiOyk1DdqfHEMb6jU0/QoHb8wr7nwy/4=
-X-Google-Smtp-Source: AGHT+IF9IIAIN0iT5QCk7eZKT8YY1J2+6/5AFhPa96FrJyx8CVhDdS2uo6xfnAyLLVjblrMc5Lo77w==
-X-Received: by 2002:a19:434b:0:b0:516:a6ff:2467 with SMTP id m11-20020a19434b000000b00516a6ff2467mr1809204lfj.0.1714580392994;
-        Wed, 01 May 2024 09:19:52 -0700 (PDT)
+        bh=8qbl1bY1oXPc/BrE+BcAYxIg4JVPN7Au51+xkWvlhws=;
+        b=c4HhOPp9OimufzJvmdzIjuA7FaISJ2oV6EV+LUceqLb+Uh9yOBB8TwWYu6J2v1XbA5
+         1W+5bZ0SimGuo6jLRVz6KN8jnXqkbAAls5vVlvtrvl/vo98DDwRqyQCKYZE+K5hjCSaA
+         M9x2cIWrUPTVT/4PiZsLJtnK/FQXf2i159LBjtk7k3rzTsgo63lAFV3jKcb/B6Q8xH5i
+         YM+NXgCWXv/5LDAGCxPh9++eQD7ZRFyJZPLdXGaB8SC2MBL18nJMA7AXqYtKoYSJuOpi
+         cN1MikCgoQvvmxflN8bnfc5zzdDNRmT/PaH/0qgW7tEgJzpwCwmVbjChT5iLZPvwwCyS
+         rTAw==
+X-Forwarded-Encrypted: i=1; AJvYcCVZRnsMF+4zWdtOs+OgkxADGo1X/fBTNaszVjbOJh/ithJCyejhhX1W75dZlYXb+SZQTqawehDRfrVzXzRaa2cM3MgkM83WiXBB1jBNqg==
+X-Gm-Message-State: AOJu0YyUFqgV7pppJGDpRKqLKGkC7W2xhES3Tbbq3p8e5mKhH7g9/bOT
+	iw1WBBTWikMK8BsoVKzP6Of2o/T/1macY87m/DPjTAUl4BLaOwgoHlTOatCKrrU=
+X-Google-Smtp-Source: AGHT+IHsMijjwWCg5z5tsLM+qCe+9yqE2j6ZSGFnxh1tYEFb+8CyeD5Rpg82R3EDRP+9OglQQR/VWQ==
+X-Received: by 2002:a05:6512:3991:b0:51d:2eba:614 with SMTP id j17-20020a056512399100b0051d2eba0614mr2448878lfu.53.1714580395645;
+        Wed, 01 May 2024 09:19:55 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d30-20020a0565123d1e00b00516d0029383sm4909306lfv.28.2024.05.01.09.19.52
+        by smtp.gmail.com with ESMTPSA id d30-20020a0565123d1e00b00516d0029383sm4909306lfv.28.2024.05.01.09.19.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 May 2024 09:19:52 -0700 (PDT)
+        Wed, 01 May 2024 09:19:55 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 01 May 2024 19:19:38 +0300
-Subject: [PATCH 12/13] arm64: dts: sda660-ifc6560: document missing USB PHY
- supplies
+Date: Wed, 01 May 2024 19:19:39 +0300
+Subject: [PATCH 13/13] arm64: dts: qcom: msm8996-xiaomi-common: drop excton
+ from the USB PHY
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240501-qcom-phy-fixes-v1-12-f1fd15c33fb3@linaro.org>
+Message-Id: <20240501-qcom-phy-fixes-v1-13-f1fd15c33fb3@linaro.org>
 References: <20240501-qcom-phy-fixes-v1-0-f1fd15c33fb3@linaro.org>
 In-Reply-To: <20240501-qcom-phy-fixes-v1-0-f1fd15c33fb3@linaro.org>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -101,75 +101,41 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Konrad Dybcio <konrad.dybcio@somainline.org>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1714;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=880;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=ZyhemyLIYzl0yFINT+7/a2RvvKPGInbzW42JxBvs81o=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmMmuaBJdyWhG85+kYvWZOj3EctnoMvwuxbEfHi
- UzocJW6VMOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZjJrmgAKCRCLPIo+Aiko
- 1U65B/40D3wYKAUWpOTQBQ/Y7MvHR4fbNmoSnTPfNnGgDNpBTYDGpXRqJTXmGEZI8/95jCR4Cab
- DSgu7xVOhkx+pctCP8Kg1QkUSYwAplpD0y6zFippmyVWkPactLwo9x5wl/PgPCJWzCk8VYHPiHt
- Aiv2sUaOxL17QsDkBeFVV/AgoW2USJ2sk1ZiCx9JsyPsotyl45s/Zfl8SaV0ghXX8xF/z2aU7TP
- s1Vui1GVVove53scROHkZXz6PD8zxdC6QwRVxNyBzPg+m/xLwnUj0ax7A6Pey1WZkp7LOkxS368
- qFIio7ruvBNFah1Vopequy6jEW2ojq2ncxxZisSe7Ss3Eiv6
+ bh=Bi5rhyr14KcQQ7+MOAD5H9S1njlLb5FKYBD685uF7IE=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmMmua/n9RREl+g5vb+gDOANKfA9kBoBl8gO6sK
+ 3bZBBDzZ5eJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZjJrmgAKCRCLPIo+Aiko
+ 1XM9B/4ymPAO5auW++iWtOUKx+7lvM+O9UCLKdBYi2MFlVxEAEY4dD9Wu+t5d1FLyExiTBUH6Df
+ LDuTXwplLk/XawajHzlKSm1GVDM4ZtN+wDT4artifItPVaJdZ1/nVPZrG6LztFBuHcWx30d0zsn
+ oO4wOUe+3mvjI1/3Bm26rTNiyajJw2klIc7LXhOQqKf1R4jnx2BBz69BvoHZJlUKr60Tg0YFyuH
+ Q6DRxDfJ95xEnKyvLb7zC/8GL2UokUK5QIVNMFR7R5U8H9e4C9OaewxPKeUi4X8L9ptnhNu8ACi
+ GT/6H8+ZUvpepneqmOxY5XwGHBY7IfVw4IAIMihGfLvudOFe
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On the IFC6560 one of the USB PHY supplies is the L10A power supply.
-However this regulator also supplies VDDA_APC1_CS, VDD_PLL2 and VDD_P11
-consumers. Touching the supply causes the board to be reset. Document
-the supply as a fixed always-on regulator.
+The USB PHYs don't use extcon connectors, drop the extcon property from
+the hsusb_phy1 node.
 
+Fixes: 46680fe9ba61 ("arm64: dts: qcom: msm8996: Add support for the Xiaomi MSM8996 platform")
+Cc: Yassine Oudjana <y.oudjana@protonmail.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-index 702ab49bbc59..60412281ab27 100644
---- a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-+++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-@@ -96,6 +96,18 @@ v5p0_boost: v5p0-boost-regulator {
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+index 5ab583be9e0a..0386636a29f0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+@@ -405,7 +405,6 @@ &usb3_dwc3 {
  
- 		vin-supply = <&vph_pwr>;
- 	};
-+
-+	/*
-+	 * this is also used for APC1 CPU power, touching it resets the board
-+	 */
-+	vreg_l10a_1p8: vreg-l10a-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_l10a_1p8";
-+		regulator-min-microvolt = <1804000>;
-+		regulator-max-microvolt = <1896000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
- };
- 
- &adsp_pil {
-@@ -220,6 +232,7 @@ &qusb2phy0 {
+ &hsusb_phy1 {
  	status = "okay";
+-	extcon = <&typec>;
  
- 	vdd-supply = <&vreg_l1b_0p925>;
-+	vdda-pll-supply = <&vreg_l10a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
- };
- 
-@@ -227,6 +240,7 @@ &qusb2phy1 {
- 	status = "okay";
- 
- 	vdd-supply = <&vreg_l1b_0p925>;
-+	vdda-pll-supply = <&vreg_l10a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
- };
- 
-@@ -464,5 +478,6 @@ &usb3_dwc3 {
- 
- &usb3_qmpphy {
- 	vdda-phy-supply = <&vreg_l1b_0p925>;
-+	vdda-pll-supply = <&vreg_l10a_1p8>;
- 	status = "okay";
- };
+ 	vdda-pll-supply = <&vreg_l12a_1p8>;
+ 	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
 
 -- 
 2.39.2
