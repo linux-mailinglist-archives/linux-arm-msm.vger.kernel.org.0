@@ -1,135 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-19084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82CB78B9003
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 21:23:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6445D8B900D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 21:31:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B40241C20DA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 19:23:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27EA8283F03
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 19:31:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C155EAF6;
-	Wed,  1 May 2024 19:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C498131726;
+	Wed,  1 May 2024 19:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kNZ/Wnwf"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dMAnDhpn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9881C287
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 19:23:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A4112FB1A
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 19:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714591406; cv=none; b=iOKhmjjbmO8VDKVArG3ROewWme+d9TftsxE9ajX3hjLX8u7kU9TzTLTk4lv4bNKNPiJooU9u0Cs6KmnrGzwY2uSgyQoLnYo+b6YNVIB6VGiDpwCpqiz/LxyHUXIubeKzGsY2VQL3Fc6be5JT62r741bbH76l5nyEpj3jTieuPCQ=
+	t=1714591858; cv=none; b=RrYcYJe846LJ35uLqB2CV2rxw109Q8QUNUBTdvw9I8QxOrgs507q6A8Q/Dev3cT/TnhaqPkF3rviLq17Yuxt3n2tn9CyBk9EM40FtjipNGdOjslJ4bL689Z2zCSBh0P2BktThFulc4cnRKB3c6pFMrgPbhKI5RAQ0P9CFre3o14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714591406; c=relaxed/simple;
-	bh=ZhyoVBBIHgstfRuGDnnjMiKeVhXKdonZKZf22uLclA0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KZuCXgtYu5VKFDXKlGgYwIk4EuGDoLjSAfYGC+VReVaQNpFjrUtbDk95wPZZs76K1ymcNIgBh51AGM+jbqZqPb09VVVILkiiwDdYMnjZ2lOPoyJPaLfzwcLQDPEF43G2qWAprKTvJaSF1UruWY8yDc1Ie6aHTQEJ3/s67u1f2bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=kNZ/Wnwf; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5aa400b917dso4562127eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 12:23:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714591402; x=1715196202; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hbubMcULTqXEpjOw1/tNxpjigRY/QT4JGEZ8U1qfXOo=;
-        b=kNZ/WnwfrGaiTPmTU6SBE5tY8UuXcFtxn1f3yd5HfTeap8Lig6jMjmv9EOaLJMcWwh
-         qecXfY5oDOHeOT8uTPAhYv9y0rSPKDAAhm92h0JHVaSKkficMMPfVXDh759ymikDOQik
-         3EK17fKnLkweWkzAzqv9yevHxOBo3gP6/Cp2A=
+	s=arc-20240116; t=1714591858; c=relaxed/simple;
+	bh=1a8IGgt0atPExNL0kQlcJPYtvH5vrk5eOtxf0vuFGSE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G7OSQ1JB3I4nlLza6wWvvBIY0n+tfGZuxQFBLTHIVfq8FOsEfxs9F/KWd8SP5NU0nFtZ3k5eyASC8MqqBlZb2eTBxTY1Jm/SvcY+Ntfei6a/882KZU82H/b1dbwYlq2SudI+co7zr0IkfyPbcU+/zAmVpVfVw/Zkg3ArqvAE2BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dMAnDhpn; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1714591856;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0DpMH3OPKUdeatip9xrDr22zswVgKLvrfLJ6qW8iRrc=;
+	b=dMAnDhpnb1wXgklkKWShvpfGGbPYAykJCXOsipGQ/UbDyDX5PgmbmPgP1IKDXiqpykAEW3
+	AnCwqgeF3BQOrJH5x0M8tuuNlMoCNFymiG76ZLwisao9q34FCdjdlRtXyPXKf87Smqadvm
+	LxMgsCX1igGhpZOHZOnV1YdA2TcxIM0=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-480-vupGt2EHN5O9nxd9K0O5qQ-1; Wed, 01 May 2024 15:30:55 -0400
+X-MC-Unique: vupGt2EHN5O9nxd9K0O5qQ-1
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-69b6fe789e9so78038556d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 12:30:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714591402; x=1715196202;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hbubMcULTqXEpjOw1/tNxpjigRY/QT4JGEZ8U1qfXOo=;
-        b=gGHqdG/1e3tED998wudx8TrNYHWORB7g0gJWqP3ruyOwOEm98ihlM2x2CWW/D0kreF
-         9C8wwSKokHxfnPC1qo7MMo2E7J7N15Lu8Lp7MvDnETJmoS/owG8WNtNjNQ37dHuO5ohW
-         XyKogYwyCWqAgrw7KO8yG1NLFWSj0cgyPi/1pxpCOeZWQxlGt8dktySnrrinJo9f8jGD
-         v5Ozo9z1qSdyXr9/aBPkYE/xwHsliwqnshA+Y7Q9zELQudefLQOHMIY9+zmXrT/T4t5t
-         IX4nSwePhHfmDABCoYjB5goce99JRZnnBA+mhbaJ7F13UPLdFtVmB59YxdYV1w6ktyFf
-         Eetw==
-X-Forwarded-Encrypted: i=1; AJvYcCVD7w/fN3grjBRDa6ZC2FS8GGxL7RxthEcRPDmofbWbBSW+KXYdVUn3RSjwy4MOf17dpknakfOPFAayUBf9y1A5xadqzNV4ie9/tDAEOw==
-X-Gm-Message-State: AOJu0Yy0F7UmvDR61ss+kDLJRs1VddsxOOr1o9gCzKrbYr+tDe3R5y7e
-	lqR5/zewsRSUoAr14Hr5ZOIWhJ1czMkuRKT6XluXTfPXguqpkAGpp7uuxvCgPIqqoWhi+EF8Go4
-	=
-X-Google-Smtp-Source: AGHT+IE+UqwlWT6jX76rWKRApkmyZ6i51iFLcsCaNKUJvIcQ4l+5X6lWHiiwZvxZS3OaxEgXhmfrmA==
-X-Received: by 2002:a05:6358:339c:b0:18d:c471:d324 with SMTP id i28-20020a056358339c00b0018dc471d324mr75749rwd.7.1714591402216;
-        Wed, 01 May 2024 12:23:22 -0700 (PDT)
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com. [209.85.160.172])
-        by smtp.gmail.com with ESMTPSA id k6-20020a0cfa46000000b006a1006ddad2sm41387qvo.131.2024.05.01.12.23.21
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 May 2024 12:23:21 -0700 (PDT)
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-43989e6ca42so2231cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 12:23:21 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWJXr+NPZ45jliAYUlFU550jCHUBzOYnm6kP+YNt577kYEAxoNZJnFtoH2EL5e/YRpNrTKx0r79VKMZArLfj6pY93NVxKNDR/gG3V/6iQ==
-X-Received: by 2002:ac8:7f03:0:b0:43a:f821:5b17 with SMTP id
- f3-20020ac87f03000000b0043af8215b17mr33651qtk.3.1714591400761; Wed, 01 May
- 2024 12:23:20 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714591854; x=1715196654;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0DpMH3OPKUdeatip9xrDr22zswVgKLvrfLJ6qW8iRrc=;
+        b=j5WFj2rrLcDwHnxL7yPUy3HGlE0C5dQ8nMbSEDugRmL+pbqiRtWx/6zFiuiHfAh+2N
+         G/IrV8iWYHNRBUjRZdsZOcp9fipOm+pvejYRiUCQCT3Rg2AyX1jKrThbJ/745rY2tw4+
+         KT+T4vvA5yICSxsRbDz+E4sNxRYzcjmY32LuuwhwB3J+cdan9sI0M1wXihjvLpjkzbw7
+         GJLsYObCPlNtTAEbsE9kjFjC9XvJTenMjaEhiMFCnMPq+R14boInp+7asbHdFGt6mgnA
+         EFQuEm8xQNjMmn0+ztLDs4aGReuFtm8q/5TmNRnxKiBA0h76brGmRNvZvulYSDlxSPFP
+         NHlg==
+X-Forwarded-Encrypted: i=1; AJvYcCU03mXO2uM0bzThZy7/Zvm2Pt+7P0D7tqOiYCB+IYj0c6gN7BRikKDD8OOSZmRVLtppTCuv/fFDyekZkVsB9W/S2/MUNDvJErKrBx5GTA==
+X-Gm-Message-State: AOJu0YwFS1/RpCIhrRoPC3fS9wLb38MgPiNftbEiusPTNshvV8KY/FC1
+	5paJ84jN6EknW4CGhZhMjzO1R3Ic5x2eJeE/L3OLgmwBHDy9o4fKnpFB2m0Bey2u/SraGFZIUyz
+	5dF1ViBHD2u45YcCsANs50HWB74BDdFaLiCTARkO0RdG0xK7j1zLdS9PBVnrBrGg=
+X-Received: by 2002:ad4:5f86:0:b0:6a0:b2bc:bc86 with SMTP id jp6-20020ad45f86000000b006a0b2bcbc86mr2846290qvb.12.1714591854521;
+        Wed, 01 May 2024 12:30:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3bWXYpLEJh92rPxL57n6U+eQww159xQ4NM+NP8YOjyTp+DBAE5EN2Ij8n9qCiPiyz//h92A==
+X-Received: by 2002:ad4:5f86:0:b0:6a0:b2bc:bc86 with SMTP id jp6-20020ad45f86000000b006a0b2bcbc86mr2846262qvb.12.1714591853943;
+        Wed, 01 May 2024 12:30:53 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
+        by smtp.gmail.com with ESMTPSA id kh14-20020a056214514e00b006a0fb776a77sm391077qvb.137.2024.05.01.12.30.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 May 2024 12:30:53 -0700 (PDT)
+Date: Wed, 1 May 2024 14:30:51 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Mukesh Ojha <quic_mojha@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH] soc: qcom: pmic_glink: Make client-lock non-sleeping
+Message-ID: <vhvuux6xxrepe5isqsbqg2hwt7k7vpjikatg27427jwsjxva3n@ywgfiptf4llx>
+References: <20240430-pmic-glink-sleep-while-atomic-v1-1-88fb493e8545@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240501-qcom-phy-fixes-v1-0-f1fd15c33fb3@linaro.org> <20240501-qcom-phy-fixes-v1-4-f1fd15c33fb3@linaro.org>
-In-Reply-To: <20240501-qcom-phy-fixes-v1-4-f1fd15c33fb3@linaro.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 1 May 2024 12:23:05 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VYKELU-xBjMUqLSASC+m+eGCxHCgueCFjxwphxggNAww@mail.gmail.com>
-Message-ID: <CAD=FV=VYKELU-xBjMUqLSASC+m+eGCxHCgueCFjxwphxggNAww@mail.gmail.com>
-Subject: Re: [PATCH 04/13] arm64: dts: qcom: sc7180: drop extra UFS PHY compat
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, David Wronek <davidwronek@gmail.com>, 
-	Andy Gross <andy.gross@linaro.org>, Evan Green <evgreen@chromium.org>, 
-	Iskren Chernev <me@iskren.info>, Luca Weiss <luca.weiss@fairphone.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Yassine Oudjana <y.oudjana@protonmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240430-pmic-glink-sleep-while-atomic-v1-1-88fb493e8545@quicinc.com>
 
-Hi,
+On Tue, Apr 30, 2024 at 08:38:57PM -0700, Bjorn Andersson wrote:
+> From: Bjorn Andersson <quic_bjorande@quicinc.com>
+> 
+> The recently introduced commit '635ce0db8956 ("soc: qcom: pmic_glink:
+> don't traverse clients list without a lock")' ensured that the clients
+> list is not modified while traversed.
+> 
+> But the callback is made from the GLINK IRQ handler and as such this
+> mutual exclusion can not be provided by a (sleepable) mutex.
+> 
+> Replace the mutex with a spinlock.
+> 
+> Fixes: 635ce0db8956 ("soc: qcom: pmic_glink: don't traverse clients list without a lock")
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-On Wed, May 1, 2024 at 9:19=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> The DT schema doesn't have a fallback compatible for
-> qcom,sc7180-qmp-ufs-phy. Drop it from the dtsi too.
->
-> Fixes: 858536d9dc94 ("arm64: dts: qcom: sc7180: Add UFS nodes")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/q=
-com/sc7180.dtsi
-> index 4774a859bd7e..52d074a4fbf3 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1582,8 +1582,7 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->                 };
->
->                 ufs_mem_phy: phy@1d87000 {
-> -                       compatible =3D "qcom,sc7180-qmp-ufs-phy",
-> -                                    "qcom,sm7150-qmp-ufs-phy";
-> +                       compatible =3D "qcom,sc7180-qmp-ufs-phy";
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-Seems OK to me. It looks like UFS support for sc7180 is new enough
-that we're not breaking any sort of compatbility by changing this.
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
