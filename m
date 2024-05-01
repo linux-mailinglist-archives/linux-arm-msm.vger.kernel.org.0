@@ -1,140 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-19004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E4118B843C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 04:14:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD4DA8B8460
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 04:28:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AFBD91C22507
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 02:14:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC70E1C228AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 02:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B49010957;
-	Wed,  1 May 2024 02:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C99310A2A;
+	Wed,  1 May 2024 02:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CDsNAgvz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FY1lm9tD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F17EEADB;
-	Wed,  1 May 2024 02:14:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0117F10A03;
+	Wed,  1 May 2024 02:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714529688; cv=none; b=IKsmzW3krW3Sp9lDKB/+3/TJ5+rt853thcZNRyzTUgEDwAaopqXjWVivjPZWRTMqAeigH+OZNfmzeqxGzezKpbATFKuld8d4OL5r5NvBwzZhZXVmxGTMZOPtu5tFNIDx+0B0hg33Nyh1eJA639VyJsMj41IiVB3QHz8F/Ejm8Do=
+	t=1714530494; cv=none; b=XRcWnj/YX8QDgZFSo449Q4rJTkrmRfr/Itp35hl0PYHTp0cl9gxf6rrgOcGoEGwunNfHDD2z4OG6OOqr+bxvA2Qj2YITFPwjjJkpaxti6G9WNIbWbRORILGtgzeuOCQjJGNXMqUolRSyl2j4U9fSARk4MmzZzo5LZVExdpSpPiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714529688; c=relaxed/simple;
-	bh=4Ga4byRB5JzhOWhFbukEMd0FTYKkJjneqrc6tELT6Ck=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tWMQLcSdB2twA6HMpBSl2yNh9uTHdaqsuVnC6ClSRE1DlKz+UmxDJKTMGPrVPQcvNK1xVeQAUW5tE8c3cYFQ1w3WsqamOmWHhwulICb9JA0S8Q3evv4VrIFedxQAwfztlbdE61zJ4QPDasrYC/WDFjZ+k3JZ/vIOp/6m4WeFfHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CDsNAgvz; arc=none smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-4defa67bc32so760944e0c.1;
-        Tue, 30 Apr 2024 19:14:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714529685; x=1715134485; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YGUCzWGwJDreMW+w/ahTCJ1HXWC5ZH4jSL81Igfy5Hg=;
-        b=CDsNAgvzOZ2QA+08gKyToMGWCBAEMt94zvCAR/SF5gsjOrLH7WJSEfb8RyAu+1s8Ax
-         iuL2/4eWLkeskSJ+NnAtZSaypFjyrFaEzKjpSQcHUi4Edmms01373tpoO9ID/eVuU1Jl
-         6NAOQNBya4iXCeqlRzbc307EQh5udCfYEl4nsXW6Fj5thtRCchTplrBSVyMIHi5KiKD4
-         YtCp1YRiATq/c+bL+CSil3t1Lmue3xlpdktC1yJxZhaFwX38bdWSnz9GqJOCNjTqAUZ6
-         ez331AHCRrD1xYYr1asf1kBYxXhAxvTvK56sFu6ynCrmoYc1D4X18DEgSlHBGfmA37l3
-         7o7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714529685; x=1715134485;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YGUCzWGwJDreMW+w/ahTCJ1HXWC5ZH4jSL81Igfy5Hg=;
-        b=fUcfZpLzDDtMUfjW/evy+z3u6zwhI8kZQk9Nf40/JEhLNFaCtLrXiCHrq3Ovk+F/Xf
-         HftmqXIKGMfMaL9xPfieUtMUUh9iXHliaQIyv8dj9EbP2IG3/wrzz5JPHiuTk1gCSr6S
-         e453BJ0E8rXHzgnH1LtTEgULvfCddKg0JiAG3pUvm9ZIO9d75WeiTBeAE7VpWDzqnq5D
-         pVU/BZeZF3QRtFByi+OzkgvxXS+2G57VCkUkbRiL3Fn26sVFCAzSe9b+3FVjYIDYBmaT
-         cNCrUhgmDzhELgLMfNGT7EYIrooArHgXS2YmaVn4xX4SpNIG6Q2Ao16MygPD2MfZwjyb
-         ds4A==
-X-Forwarded-Encrypted: i=1; AJvYcCVVhZBCYJIPFynv4tKGbydc/c75Oq14I2ZE22i7I1YjqWwmcRiQ3pYBDqOj81BcCbQugDt7p72JS7Jz8BupfzgwTsgayLzKfGk0Al5ZSj3RnvnUfo8ijcaMxhqlDSahczy9htoe8PoxrxJw3ks/HYK63Dre3dcozQVfI0fJra38PbqGUPhrt2Q=
-X-Gm-Message-State: AOJu0Yy1AlaABL7fInZJ9MmyES0LpJG/oDcgEwsA+Ci05F3NmWxf+SpJ
-	oMTJ4u5piXViavDmeCkc31eTPOSKmNTnTW/VSXKIPr8FcxBEGsJCOwFC9e0Pt9KODlIvfvjwcsr
-	W4t0KdgQkV4hzEP+MDtHEuI9VcmA=
-X-Google-Smtp-Source: AGHT+IGPPfSTCD7g9ZFYa4QpVWKMONA41O4TTEwotbnATEOHxIa8YL1v5ol82Lg81C2j7nOjgSBg7d9LZogLXZCjTkc=
-X-Received: by 2002:a05:6102:9a3:b0:47b:b9cb:c7e9 with SMTP id
- f3-20020a05610209a300b0047bb9cbc7e9mr1608127vsb.16.1714529684527; Tue, 30 Apr
- 2024 19:14:44 -0700 (PDT)
+	s=arc-20240116; t=1714530494; c=relaxed/simple;
+	bh=G5naWNCxDJ0afeVPqJ5DnKzT7LM4bzo5IsRWVf8tIEs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=XcfhQH+LKq+HSbkCPFkDRV80iGUO84CT1CrvTeYVgiBn7A32zqmboNzhTNLYhRbbRqRi7WkV0zAucGOEv1L9lfNNRHGjzFFJ9Ng1J6YnFCJJ8/nxl4jTe2DpKptbnNB8D0HZgf6YaIili4GmpIwjhiutbiTh3RKjbQgQp7jJtRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FY1lm9tD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27003C2BBFC;
+	Wed,  1 May 2024 02:28:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714530493;
+	bh=G5naWNCxDJ0afeVPqJ5DnKzT7LM4bzo5IsRWVf8tIEs=;
+	h=From:Date:Subject:To:Cc:From;
+	b=FY1lm9tDOPRNTT/PPEWl3gcGsGWtf+BQ7vJx+z0kaWRFNUJ1IX0zdKjMrKWD4yBSF
+	 AoD92TjmRwIfUAat4xKukuq0xDgtOnMKmjAcsyRpo0OxHZ4PfQ6NJExcnWcu6hi7dq
+	 6djL2Yg1CB+pkPShxZSPkbew1NfCgiyUKJnLrMXFRKx5GdNr/w2nmVU3D5luD8xjaq
+	 H3lViTCHqzWhwijBb04PAtKbLn9KSEzGQ+Ge536paH24reRQbMDECf1V05AVth8V9Q
+	 V7LVWFKleGGrfCXnQBquALknIDIVZ8j/4EDk4G7vKwxvd57GlA/kzaNh9BE0pYZPtz
+	 BAKlGxGtLzMFw==
+From: Bjorn Andersson <andersson@kernel.org>
+Date: Tue, 30 Apr 2024 19:33:12 -0700
+Subject: [PATCH] firmware: qcom: uefisecapp: Allow on sc8180x Primus and
+ Flex 5G
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240422164035.1045501-1-quic_sibis@quicinc.com> <20240422164035.1045501-3-quic_sibis@quicinc.com>
-In-Reply-To: <20240422164035.1045501-3-quic_sibis@quicinc.com>
-From: Jassi Brar <jassisinghbrar@gmail.com>
-Date: Tue, 30 Apr 2024 21:14:32 -0500
-Message-ID: <CABb+yY2mjc0BmvdUxZvkEvFMS30g=h5F7aHEKogfH9=W0C1a2w@mail.gmail.com>
-Subject: Re: [PATCH V4 2/5] mailbox: Add support for QTI CPUCP mailbox controller
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, quic_rgottimu@quicinc.com, 
-	quic_kshivnan@quicinc.com, conor+dt@kernel.org, quic_gkohli@quicinc.com, 
-	quic_nkela@quicinc.com, quic_psodagud@quicinc.com, abel.vesa@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240430-uefisecapp-allowlist-sc8180x-v1-1-1a626ea9c5f1@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAOepMWYC/x3MTQqEMAxA4atI1gbSqiBeZXAR2sxMoGhpxh8Q7
+ 26Z5QePd4FJUTGYmguK7Gq6LhWubSB8efkIaqwGT76nviPc5K0mgXNGTmk9ktoPLYxupBNJmD3
+ HKAM5qItcan3+96/5vh9mTF8rbgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Bjorn Andersson <quic_bjorande@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1090;
+ i=quic_bjorande@quicinc.com; h=from:subject:message-id;
+ bh=XbVCDXvcvfgiEaFAg0v+8KBCCPlHK+wbPdKTvD2fiFY=;
+ b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmMantaAUWYIBw+YZIRuUtFVQfDG1xZPHoX2V6u
+ AXWRWu7l3SJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZjGp7RUcYW5kZXJzc29u
+ QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcUvlRAA1y9voqz/r7HsC52K4I4scitPRgVtyiV0RItnlCe
+ GV2GE8mjdKtX7ns3iZiuz401xj/YUuN08Bt1T8usOGaAG3E4Jbvn1mKcMmcXdTqsNAiB8/npKm+
+ tlkBa9AdyEwUIT8SNie1wkpGjkpYEZHqmcrHKfO7IDVfhtzipWHloWhipcpVMATcJ6eEMm9WfB9
+ J0YwAVn+nFT0sl48XEzjCsnJq0Yath0k2ym3NTrVRIeueTMohF8ztoY62HQ/kuNBtbFSxSVbgmy
+ nSIQrYI+bVJmnkJzX76Smzs0RFd1RRGSxEqkJyPYidIT0rSKpwewkxLkCDbqCpkSWnBAROAR0KR
+ REVE+qqtNBF5V9RQ+wptoG06fo2utAG47LKfsc3F7eX3m0OHlV0O9WICg12AUYeAgleHdTyfjI/
+ WIjyhj45B1rbFWWKpnzk8ZXcPiF4XmU5kICbJhouW0ykeQEpINuiHejbi8PMTMx8a6ccI+h1DMd
+ e2YlMOFTUbDrjKXo4XHB0SWQcyck5satxr674r0uHP31aZFTbdSGC6KqEd9P0b9IYBkxHq8yZY6
+ ZFwFnTc4w04KeyNY2E3qzsVk4EsPYfBgOt+oBkmzXJ1TLN1AmMRwWEkTGZVYhS89oyihwPGnD8/
+ VMVFmWAYKfpA+/hsWqomNdw96rejZ8YuoyM2gBCiMegQ=
+X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
+ fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
 
-On Mon, Apr 22, 2024 at 11:41=E2=80=AFAM Sibi Sankar <quic_sibis@quicinc.co=
-m> wrote:
->
-> Add support for CPUSS Control Processor (CPUCP) mailbox controller,
-> this driver enables communication between AP and CPUCP by acting as
-> a doorbell between them.
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-Do you want to add an entry in the MAINTAINERS ?
+Testing indicates that qseecom and uefisecapp are working on both the
+SC8180X Primus and Lenovo Flex 5G, providing EFI variable access.
 
-> diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpu=
-cp-mbox.c
- .....
-> +static irqreturn_t qcom_cpucp_mbox_irq_fn(int irq, void *data)
-> +{
-> +       struct qcom_cpucp_mbox *cpucp =3D data;
-> +       struct mbox_chan *chan;
-> +       unsigned long flags;
-> +       u64 status;
-> +       u32 val;
-> +       int i;
-> +
-The variables flags, val and chan are better inside the for loop below.
+Add the two to the allow list.
 
-> +       status =3D readq(cpucp->rx_base + APSS_CPUCP_RX_MBOX_STAT);
-> +
-> +       for_each_set_bit(i, (unsigned long *)&status, APSS_CPUCP_IPC_CHAN=
-_SUPPORTED) {
-> +               val =3D readl(cpucp->rx_base + APSS_CPUCP_RX_MBOX_CMD(i) =
-+ APSS_CPUCP_MBOX_CMD_OFF);
-> +               chan =3D &cpucp->chans[i];
-> +               /* Provide mutual exclusion with changes to chan->cl */
-> +               spin_lock_irqsave(&chan->lock, flags);
-> +               if (chan->cl)
-> +                       mbox_chan_received_data(chan, &val);
-> +               writeq(BIT(i), cpucp->rx_base + APSS_CPUCP_RX_MBOX_CLEAR)=
-;
-> +               spin_unlock_irqrestore(&chan->lock, flags);
-> +       }
-> +
-> +       return IRQ_HANDLED;
-> +}
-> +
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ drivers/firmware/qcom/qcom_scm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Thanks
-Jassi
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 06e46267161b..68f4df7e6c3c 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1646,7 +1646,9 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
+  + any potential issues with this, only allow validated machines for now.
+  */
+ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
++	{ .compatible = "lenovo,flex-5g" },
+ 	{ .compatible = "lenovo,thinkpad-x13s", },
++	{ .compatible = "qcom,sc8180x-primus" },
+ 	{ }
+ };
+ 
+
+---
+base-commit: d04466706db5e241ee026f17b5f920e50dee26b5
+change-id: 20240430-uefisecapp-allowlist-sc8180x-0eaa2adde501
+
+Best regards,
+-- 
+Bjorn Andersson <quic_bjorande@quicinc.com>
+
 
