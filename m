@@ -1,99 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-19040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B3DF8B866F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 09:52:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7F1E8B86CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 10:21:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 76984B22470
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 07:52:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D301C1C2267A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 08:21:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 960274D9FB;
-	Wed,  1 May 2024 07:52:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BUGvPhFZ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C19504EB2E;
+	Wed,  1 May 2024 08:21:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637BF4D13F;
-	Wed,  1 May 2024 07:52:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89792EED6;
+	Wed,  1 May 2024 08:21:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714549933; cv=none; b=CGm4qwG031pu8XJLEsKrgobL4YhzjBhFgZtlX2wQPGUrVgUlIkIy+vJct/L0TYDQ8cB4F4Wt5/uK6QzO92aP1qexDAJZsV1OCuG0//bimv8iPM58qi7LchZa3vUs/rLfCFIWbCdCT4NEPHEwmvfv/+T8nknb6TzB+kjpeckjD1c=
+	t=1714551693; cv=none; b=VYqXikMNizsW2gdvsBdYVXmuulIvhlrxSdUNh/BfkjQff0a7Kq1oqWiPKuXJYbIFQoflOzF+X5G4mc8L9eVIrV7V50stxhTJ2GYY6VdfifnrSyirNr1SCG4gHrIBwHACO9KNFx/HvRuv6J+bfs9iMYxFca2a7P0s0doxgCrpo2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714549933; c=relaxed/simple;
-	bh=6DP1CpcEqv5NSAPjBMsu0vTBvBumydwSlw7nTPGBD+k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fKa/UjJXzjAGiM5BgFrz3sO5skDhpaFeZFIuR6Se9JowdnknMMiPzeXf1mElvjhppRn7y0NyxMU+sbZUA6MP4H+/wdde0XUN6fke5mlRHFQN/9aNIkWzTYdIi8TAkkOvf9xDDIj4DMuu6bFhgzvs7NPrg6g1CCAYpb0phC4Hj7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BUGvPhFZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF854C4AF18;
-	Wed,  1 May 2024 07:52:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714549932;
-	bh=6DP1CpcEqv5NSAPjBMsu0vTBvBumydwSlw7nTPGBD+k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=BUGvPhFZ5CmN0ftTHNfGyvAf5qpeJONoguTYFM1AejE+ZouPQkw/bixqXy/4VkbnI
-	 MQj07HW/M/DWSM5JMTl3Y9rCKH5zqJgxJtsobgLk+hfFfZo7fZoOCFoOsvMqGCrphY
-	 oEXnwaHuTYoBn4TI7TRVtdf4pzF6LnkSsr7JvHg56dbjjAAr7UPOUzFsRvglObQ7dj
-	 NuDCc2C0XM6WBqYfJ0Gcy64WXRf8/nMri6dSEvdiiliSt/3+M2Ig2jZa2dzgXkN+jY
-	 xBT3aETeNzzBcBObr/B1q91kZnANCms+EAOm8EqYJkHXicfUq7YLt8BFTjBUhLq6oi
-	 7QMHFzCvx2quA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1s24lC-000000001En-2z00;
-	Wed, 01 May 2024 09:52:14 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: qcs404: fix bluetooth device address
-Date: Wed,  1 May 2024 09:52:01 +0200
-Message-ID: <20240501075201.4732-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.43.2
+	s=arc-20240116; t=1714551693; c=relaxed/simple;
+	bh=X8qLkIyTCQ2AZcwKN+u61pO82R+Ot2jZEQ76Gaar5C8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M+nDvJuTQcZbIba8YofN/3BERRzUK/+F419u0o/yB4PAp2UcCtNLTBd7AcKwDHhCyamWndfIsqKDesfqMg5Aupdlj50daVU1wj0c0gxChczZHYBDirEIuDiWDz/puMpAAaNu/93Tv9qKoo0VjPHGHuo7uhMYQHCEg3oXIGlLS4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 46DF12F4;
+	Wed,  1 May 2024 01:21:56 -0700 (PDT)
+Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3CA3C3F793;
+	Wed,  1 May 2024 01:21:28 -0700 (PDT)
+Date: Wed, 1 May 2024 09:21:25 +0100
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org,
+	morten.rasmussen@arm.com, dietmar.eggemann@arm.com,
+	lukasz.luba@arm.com, pierre.gondois@arm.com,
+	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V4 2/2] cpufreq: scmi: Register for limit change
+ notifications
+Message-ID: <ZjH7hWnKFcpQ-TXH@pluto>
+References: <20240328074131.2839871-1-quic_sibis@quicinc.com>
+ <20240328074131.2839871-3-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240328074131.2839871-3-quic_sibis@quicinc.com>
 
-The 'local-bd-address' property is used to pass a unique Bluetooth
-device address from the boot firmware to the kernel and should otherwise
-be left unset so that the OS can prevent the controller from being used
-until a valid address has been provided through some other means (e.g.
-using btmgmt).
+On Thu, Mar 28, 2024 at 01:11:31PM +0530, Sibi Sankar wrote:
+> Register for limit change notifications if supported and use the throttled
+> frequency from the notification to apply HW pressure.
+> 
 
-Fixes: 60f77ae7d1c1 ("arm64: dts: qcom: qcs404-evb: Enable uart3 and add Bluetooth")
-Cc: stable@vger.kernel.org	# 5.10
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Sibi,
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-index 10655401528e..a22b4501ce1e 100644
---- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
-@@ -62,7 +62,7 @@ bluetooth {
- 		vddrf-supply = <&vreg_l1_1p3>;
- 		vddch0-supply = <&vdd_ch0_3p3>;
- 
--		local-bd-address = [ 02 00 00 00 5a ad ];
-+		local-bd-address = [ 00 00 00 00 00 00 ];
- 
- 		max-speed = <3200000>;
- 	};
--- 
-2.43.2
+a bit late on this, sorry.
+
+Just a couple of nitpicks down below.
+
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v4:
+> * Use a interim variable to show the khz calc. [Lukasz]
+> * Use driver_data to pass on the handle and scmi_dev instead of using
+>   global variables. Dropped Lukasz's Rb due to adding these minor
+>   changes.
+> 
+>  drivers/cpufreq/scmi-cpufreq.c | 44 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+> 
+> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+> index 3b4f6bfb2f4c..d946b7a08258 100644
+> --- a/drivers/cpufreq/scmi-cpufreq.c
+> +++ b/drivers/cpufreq/scmi-cpufreq.c
+> @@ -21,11 +21,18 @@
+>  #include <linux/types.h>
+>  #include <linux/units.h>
+>  
+> +struct scmi_cpufreq_driver_data {
+> +	struct scmi_device *sdev;
+> +	const struct scmi_handle *handle;
+> +};
+> +
+>  struct scmi_data {
+>  	int domain_id;
+>  	int nr_opp;
+>  	struct device *cpu_dev;
+> +	struct cpufreq_policy *policy;
+>  	cpumask_var_t opp_shared_cpus;
+> +	struct notifier_block limit_notify_nb;
+>  };
+>  
+>  static struct scmi_protocol_handle *ph;
+> @@ -174,6 +181,22 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
+>  	NULL,
+>  };
+>  
+> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
+> +{
+> +	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
+> +	struct scmi_perf_limits_report *limit_notify = data;
+> +	struct cpufreq_policy *policy = priv->policy;
+> +	unsigned int limit_freq_khz;
+> +
+> +	limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
+> +
+> +	policy->max = clamp(limit_freq_khz, policy->cpuinfo.min_freq, policy->cpuinfo.max_freq);
+> +
+> +	cpufreq_update_pressure(policy);
+> +
+> +	return NOTIFY_OK;
+> +}
+> +
+>  static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>  {
+>  	int ret, nr_opp, domain;
+> @@ -181,6 +204,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>  	struct device *cpu_dev;
+>  	struct scmi_data *priv;
+>  	struct cpufreq_frequency_table *freq_table;
+> +	struct scmi_cpufreq_driver_data *data = cpufreq_get_driver_data();
+>  
+>  	cpu_dev = get_cpu_device(policy->cpu);
+>  	if (!cpu_dev) {
+> @@ -294,6 +318,17 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>  		}
+>  	}
+>  
+> +	priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
+> +	ret = data->handle->notify_ops->devm_event_notifier_register(data->sdev, SCMI_PROTOCOL_PERF,
+> +							SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+> +							&domain,
+> +							&priv->limit_notify_nb);
+> +	if (ret)
+> +		dev_warn(cpu_dev,
+
+or &data->sdev->dev which refers to this driver ? which is more informational ? no strong opinion just a question...
+
+> +			 "failed to register for limits change notifier for domain %d\n", domain);
+> +
+> +	priv->policy = policy;
+> +
+>  	return 0;
+>  
+>  out_free_opp:
+> @@ -366,12 +401,21 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+>  	int ret;
+>  	struct device *dev = &sdev->dev;
+>  	const struct scmi_handle *handle;
+> +	struct scmi_cpufreq_driver_data *data;
+>  
+>  	handle = sdev->handle;
+
+	^^^ ....
+>  
+>  	if (!handle)
+>  		return -ENODEV;
+>  
+> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	data->sdev = sdev;
+> +	data->handle = handle;
+
+	^^^ ... you dont need to pass around handle AND sdev really
+                since you can access the handle from sdev.
+
+> +	scmi_cpufreq_driver.driver_data = data;
+
+This is slightly better, but, as said, does not solve the multi-instance issue...
+...the scmi cpufreq driver remains a driver that works only if instantiated (probed)
+once, given how the CPUFreq core handles cpufreq_driver registration itself...
+
+...just a note about something to work on in the future...NOT a concern for this series.
+
+In general,
+
+LGTM.
+
+Thanks,
+Cristian
 
 
