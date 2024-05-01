@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-19039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FFA38B8667
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 09:51:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B3DF8B866F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 09:52:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF611B22095
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 07:51:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 76984B22470
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 07:52:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 699F84D9FD;
-	Wed,  1 May 2024 07:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 960274D9FB;
+	Wed,  1 May 2024 07:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y4qFAx58"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BUGvPhFZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4684E1CE;
-	Wed,  1 May 2024 07:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637BF4D13F;
+	Wed,  1 May 2024 07:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714549860; cv=none; b=AxLOlTyLywGfTYUJi6cGSG6pWQRknqUqsyTANyA7imZ+d94Di9+qbpwmZ0CJzF4BT7dmMRIhumFWLGxqzYIByoykYkV8F23uZQ4JLdal2KWQ+hdU7aywkxF4mM3ts4WuZpyNFUbztX4DApv0ZzLSJhrHip3nFTjiSVXwD2jEG4c=
+	t=1714549933; cv=none; b=CGm4qwG031pu8XJLEsKrgobL4YhzjBhFgZtlX2wQPGUrVgUlIkIy+vJct/L0TYDQ8cB4F4Wt5/uK6QzO92aP1qexDAJZsV1OCuG0//bimv8iPM58qi7LchZa3vUs/rLfCFIWbCdCT4NEPHEwmvfv/+T8nknb6TzB+kjpeckjD1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714549860; c=relaxed/simple;
-	bh=PuomMsnDC/+v0wckS019MPx5+S2jUMgw0Wzxv4Tf6sI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I6BmWOXj6KhvyrWNd4lhHYYPsc6Xyb2eDgZ8/Ik1R2bu5tsYRNZ8hOQNd9GjZd/G593mubSR8E3S6Epdkyg8cZZEzMSRGtqUxy4J6kshhKknDKKPtAcljADSKP1Hd+MGMc+vTmyxjyEUvFbFvaKpC1d+DbPZw6y4Fz7Nv8bPTCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y4qFAx58; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FAEC4AF14;
-	Wed,  1 May 2024 07:50:59 +0000 (UTC)
+	s=arc-20240116; t=1714549933; c=relaxed/simple;
+	bh=6DP1CpcEqv5NSAPjBMsu0vTBvBumydwSlw7nTPGBD+k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fKa/UjJXzjAGiM5BgFrz3sO5skDhpaFeZFIuR6Se9JowdnknMMiPzeXf1mElvjhppRn7y0NyxMU+sbZUA6MP4H+/wdde0XUN6fke5mlRHFQN/9aNIkWzTYdIi8TAkkOvf9xDDIj4DMuu6bFhgzvs7NPrg6g1CCAYpb0phC4Hj7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BUGvPhFZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF854C4AF18;
+	Wed,  1 May 2024 07:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714549859;
-	bh=PuomMsnDC/+v0wckS019MPx5+S2jUMgw0Wzxv4Tf6sI=;
+	s=k20201202; t=1714549932;
+	bh=6DP1CpcEqv5NSAPjBMsu0vTBvBumydwSlw7nTPGBD+k=;
 	h=From:To:Cc:Subject:Date:From;
-	b=Y4qFAx58w+Ryv1rc+De0MRndV5pVfFBoo0B/ygSqAteErX+IpZOaxPIr4VavTXtvq
-	 rxVaHBk0EBMylTACRqNUX5e9bjxb1a2tNTuI+8k+LOTLngAZLUWxtuzdjlFMZ2Eub3
-	 WTuQQSEXzCEXlFEq5xhjZUb39UbjXLcQUkgnwVSElY9KWlMtVzgbS817w7JDLmrh9w
-	 RrekrJJ5AVfv8rZycgg/QBgALz58sFxyR+uzHZI4BC2l425v6ntBV+q97SDaeonYCJ
-	 kqy7PNxdroat551e9EPnYYjMfZeeteK95uNgSozhFVeDa8NbAKAe6xPQKZ/j15v5ti
-	 EzMAi5D/84ZAA==
+	b=BUGvPhFZ5CmN0ftTHNfGyvAf5qpeJONoguTYFM1AejE+ZouPQkw/bixqXy/4VkbnI
+	 MQj07HW/M/DWSM5JMTl3Y9rCKH5zqJgxJtsobgLk+hfFfZo7fZoOCFoOsvMqGCrphY
+	 oEXnwaHuTYoBn4TI7TRVtdf4pzF6LnkSsr7JvHg56dbjjAAr7UPOUzFsRvglObQ7dj
+	 NuDCc2C0XM6WBqYfJ0Gcy64WXRf8/nMri6dSEvdiiliSt/3+M2Ig2jZa2dzgXkN+jY
+	 xBT3aETeNzzBcBObr/B1q91kZnANCms+EAOm8EqYJkHXicfUq7YLt8BFTjBUhLq6oi
+	 7QMHFzCvx2quA==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1s24k1-000000001Co-0GG7;
-	Wed, 01 May 2024 09:51:01 +0200
+	id 1s24lC-000000001En-2z00;
+	Wed, 01 May 2024 09:52:14 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -53,10 +53,11 @@ Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] dt-bindings: soc: qcom,wcnss: fix bluetooth address example
-Date: Wed,  1 May 2024 09:50:05 +0200
-Message-ID: <20240501075005.4588-1-johan+linaro@kernel.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: qcs404: fix bluetooth device address
+Date: Wed,  1 May 2024 09:52:01 +0200
+Message-ID: <20240501075201.4732-1-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -68,31 +69,30 @@ Content-Transfer-Encoding: 8bit
 
 The 'local-bd-address' property is used to pass a unique Bluetooth
 device address from the boot firmware to the kernel and should otherwise
-be left unset.
+be left unset so that the OS can prevent the controller from being used
+until a valid address has been provided through some other means (e.g.
+using btmgmt).
 
-Update the example to reduce the risk that a non-zero address will be
-used by default in some devicetree.
-
+Fixes: 60f77ae7d1c1 ("arm64: dts: qcom: qcs404-evb: Enable uart3 and add Bluetooth")
+Cc: stable@vger.kernel.org	# 5.10
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs404-evb.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-index 74bb92e31554..fd6db0ca98eb 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
-@@ -116,8 +116,8 @@ examples:
+diff --git a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+index 10655401528e..a22b4501ce1e 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404-evb.dtsi
+@@ -62,7 +62,7 @@ bluetooth {
+ 		vddrf-supply = <&vreg_l1_1p3>;
+ 		vddch0-supply = <&vdd_ch0_3p3>;
  
-             bluetooth {
-                 compatible = "qcom,wcnss-bt";
--                /* BD address 00:11:22:33:44:55 */
--                local-bd-address = [ 55 44 33 22 11 00 ];
-+                /* Updated by boot firmware (little-endian order) */
-+                local-bd-address = [ 00 00 00 00 00 00 ];
-             };
+-		local-bd-address = [ 02 00 00 00 5a ad ];
++		local-bd-address = [ 00 00 00 00 00 00 ];
  
-             wifi {
+ 		max-speed = <3200000>;
+ 	};
 -- 
 2.43.2
 
