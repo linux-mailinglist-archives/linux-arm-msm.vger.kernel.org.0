@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20AF58B887D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 12:21:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A68C8B8883
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 12:22:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3C1D3B208D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 10:21:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4D775B207F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 10:22:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F0F4524DC;
-	Wed,  1 May 2024 10:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17A02535B7;
+	Wed,  1 May 2024 10:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CfoXPwpP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q2wcNKzP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB7917BB4;
-	Wed,  1 May 2024 10:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB17A52F96;
+	Wed,  1 May 2024 10:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714558869; cv=none; b=WLrju28dgtXJ6N72tfibN+Moe8iAzh3HZSlOIpd2OVP48RAaUePw9fgDr9BrBzehxhV7jfhTAevhjIafdi8ddqHKwWh2T+A/+8ZWVLvk+e38YBOj442e/G+oNMZ5jz+jzGvbH1M6FlcwOi55uqLyOOS3DV7DDUCCSKh6KlRiZIc=
+	t=1714558915; cv=none; b=N5P1hGG/Zf/FTxv2B/lF2AeuDSWOa4JLE/ztTDQalKlwKU4i7hL7MRg56ViLnUo2Q2ZExdXSkZhDgS9A1GvFar/eHReheM6h74N7P3yzVLvsXIQrnTlIRWi0uOQXvqUBU/OUb/JRFmFt/GYx3a5N6+mbucv3FU1VVGeMYGuENnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714558869; c=relaxed/simple;
-	bh=/Usv+HirsE8a2fs+ZWSs/KIozOrl43TXEG4W6dX0wXg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lKJr9rOZI2XgINxtnwMDN8zUVo6Tf1t7nMecJ/4OybStZPFApwWEE1n8JfcQiD2dmWxfcmacH0SXHhcyXQv03vhjxE8wmNBLUnW5EiMPs4JX6rRvCz/qxjdfd1caO3iVM+EmfMtaESteFUdnQ7ZqEjvSEZz3rLNV+2iDH4yqL9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CfoXPwpP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B7CC113CC;
-	Wed,  1 May 2024 10:21:05 +0000 (UTC)
+	s=arc-20240116; t=1714558915; c=relaxed/simple;
+	bh=7QxCLDHI6CTcg+OWFyUgHrtlIpIC7WCE64pmgcLmLcE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Ga9p/Ls+7XIGOv45qUYJ3YRRkUmPFWWy1Ebzr54IdgW25D6P07DjSdLyV6PZGemLakijxfsfGEcuWX8jhhSkszUPyJW0kbWGFGupHinA2XfNeX8eb23XAhvibWC9bojXDnKgZQJ+HxDsg/lHd0LpEaXupMs4ZTwZljVf4w8HhwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q2wcNKzP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D2EC113CC;
+	Wed,  1 May 2024 10:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714558868;
-	bh=/Usv+HirsE8a2fs+ZWSs/KIozOrl43TXEG4W6dX0wXg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CfoXPwpP2zCIiPIhKnNKmlbZMPXZh2fvHpWmD2TNDyWNm82k9p1Zeqtze8TsbPJeJ
-	 AbVhWFTcXe6ihW4C/qr0ufM1GQxW++hnQjOWjVzkU6JfHVwSEsX1A6xSLyx5IxciZJ
-	 YXlf8AcHl83kcLLqFjEn8xVFks3zcp3XQUL17NXWhzOZnUelGII90L/95SCg9vPVCB
-	 xg545KGNJcE8l/OQ9TktN5IO/i9nKVpU08NRWWFLUsP/HQvgTlyYQDnmz5Y5cGDs98
-	 lR0/6r4xOoss26EBjj+/ZokbfThPVSJipfnZQyi05M2tb5vYvX8XQ6LoRUOXCxgIR7
-	 Ie9OksZ26TmOg==
-Message-ID: <816b7360-91f5-40b6-b4a4-d99bb1ba253a@kernel.org>
-Date: Wed, 1 May 2024 12:21:03 +0200
+	s=k20201202; t=1714558914;
+	bh=7QxCLDHI6CTcg+OWFyUgHrtlIpIC7WCE64pmgcLmLcE=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=Q2wcNKzPGjNQ12XiaQZsS7xGWZ0Gdl4tgmxIKwTqH/qOsWxDX69B9zIaCbXp56Vqy
+	 EBsHHGrx7EWuvDITJ+s7FsQk3t/Jh5+m+mtg22HYqlj5ptBPnM+aVkES99xtP9Xbp8
+	 w1NaFb/d9hVAjv7izzbyIRE2kQ/mk16r6EBeJiEr+W8aHGeW1Td+yKRp5og9xVl6n3
+	 vgXGDKj/BdPiDaTmmwz4Y8dgwdgOV8dqHSgEu8HIRxYrVe/6rEiFFh52Ptm+BdO/il
+	 h9mA8idQmDBijMvT9+ZZzU47jdoSGDR6pOH2jLcVOZQqbkfVxqnWOUzEe6T5mc6Rs/
+	 7oCBVkuYYcSQA==
+Message-ID: <a973f67b-de7f-4e21-b6b4-3b85d056456d@kernel.org>
+Date: Wed, 1 May 2024 12:21:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: soc: qcom,wcnss: fix bluetooth address
- example
-To: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v4 RESEND 5/8] PCI: qcom: Add support for IPQ9574
+To: Alexandru Gagniuc <mr.nuke.me@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240501075005.4588-1-johan+linaro@kernel.org>
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Manivannan Sadhasivam
+ <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org
+References: <20240501042847.1545145-1-mr.nuke.me@gmail.com>
+ <20240501042847.1545145-6-mr.nuke.me@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,21 +113,32 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240501075005.4588-1-johan+linaro@kernel.org>
+In-Reply-To: <20240501042847.1545145-6-mr.nuke.me@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/05/2024 09:50, Johan Hovold wrote:
-> The 'local-bd-address' property is used to pass a unique Bluetooth
-> device address from the boot firmware to the kernel and should otherwise
-> be left unset.
+On 01/05/2024 06:28, Alexandru Gagniuc wrote:
+> IPQ9574 has four PCIe controllers: two single-lane Gen3, and two
+> dual-lane Gen3. The controllers are identical from a software
+> perspective, with the differences appearing in the PHYs.
 > 
-> Update the example to reduce the risk that a non-zero address will be
-> used by default in some devicetree.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Add a compatible for the PCIe on IPQ9574.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This is a friendly reminder during the review process.
+
+It looks like you received a tag and forgot to add it.
+
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
 
 Best regards,
 Krzysztof
