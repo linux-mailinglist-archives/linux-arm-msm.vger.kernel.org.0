@@ -1,140 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-19057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91BD58B8AF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 15:14:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF7BF8B8BED
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 16:34:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E712A1F22A91
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 13:14:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C093281B88
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 14:34:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E4C912DDAB;
-	Wed,  1 May 2024 13:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDA4612E6A;
+	Wed,  1 May 2024 14:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QQfY/NH6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GxDlY5Y1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6CE12DDA5
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 13:14:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8096E552;
+	Wed,  1 May 2024 14:34:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714569253; cv=none; b=rC+hyvyC2TexVklJjFCP7q8c17ZnSLs/b6V++BUDRHbRxRhMDDdWtw9twkbszHJgCwzqb0GuHh9wR1olS49BxyugpZHdYw+k4/AXdKIS7KtvDbaojRxcTdaSeQjkPV46JjdgKeakZ6Jx1EQhh8uadSeYFHQn6S2nq8pZB9NVKF8=
+	t=1714574048; cv=none; b=NEPkJDIuCiGw6qBTvEVsKwvyNXoWLfsn6R9RBBgaCvhTS3Ms5SL4X4VViERpq6ohYf6ilf+aI1DqZ4jI8FZk9JT7rhwIVtdoqh9NhNRy4NYFKNNlef/0Bet0U1lKHo+hi9xW6Yw01R/8wBoj2ctolUNBlDXPDM/9UsiAttfaN/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714569253; c=relaxed/simple;
-	bh=jEgju86kkZEUEWsLIY6KhIUfB0Ro+wi3O82aVd7+8K4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mvExtnEX8y1CQ1T87h/G1piTk5a1N/ytfm7nnlzVxRf+YdLVRbyvlPpQPqy5qHclk74u6yNeiuTeyVzg2zUu86qkH1LXB7VtlT6ZKSkgXMb9LU5mR+LdE1EhE2fUcsKaOL+b7c7Fn8j6wCAUQUoyCrh+ie9txvgBv533Cv8O1aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QQfY/NH6; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5708d8beec6so8482002a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 06:14:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714569250; x=1715174050; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cAEo938B55svTFKi87S7P75nYRID5Y30PIP36kBSdrs=;
-        b=QQfY/NH6GEG5DLl+vgk8XzCtLNPzCS+c58hlbJ1WckXlKrPRKT8srqyVfrRbyW1Rq2
-         bGGVj1x3e8zpUlpxZcCuNPh/sNc7zRLBmjhPDp+e3biFzRD15cCWPjZXqOrDYbWQspxY
-         GnPfueuNq9pkUqyWXSKTs2tVjix9oJoioWOBNTvl1To3MAFw937eytX+SZa+HkX4zXrc
-         J8xdBS2WpMT9WJJ9JV8w51I7FW0lno1aLqGAdOTboHwIWfIVoLxn2g/cbyFV1cpTPwrc
-         qeY59hFXT+BX2vFrb+F2K3BWwglQxZfcz6kgURFk4GwKuooGhdB197zfg1+M+JtDxAxD
-         ejRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714569250; x=1715174050;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cAEo938B55svTFKi87S7P75nYRID5Y30PIP36kBSdrs=;
-        b=W03TTNBBCWwQg+946LJSMQ1/n5Br26OMxOwYtHnUjlCu4idEmG4ZVZUmjSV7ZR3wGl
-         OQI1d2L0Qic7znmxl8HFZYKEnp8LFF4DXwvm9OZ77EkO77PJS34/aFX8CINFwWGnAux8
-         5wdVpNwOS9bCeK8SavXYmUj3ktH97G106SWPzhf94dLrV+lQjeaaOs1vBv1s8TjNIPpj
-         NxL1qW1HcwonYClgd88nAoK99crLlQnSjHu9mpyW22lothP+Glo2GuLBMt3s/y9OQDpj
-         7nO7V9wNkBD4a11x+qL+7oBiRgokVxonCwTFgKwAuysdcOibUK7NCWNhWnYvhVCiuqjf
-         yYsA==
-X-Gm-Message-State: AOJu0Yz35YqGGMT45Z9ri8UyCZ5usPmltHCdCzBoFMYnx0RNl13PUDfj
-	DEfo3gMTShQ3Y0n3QsUWGuqze7x01alqgAsujWaOVKtt1SjlkFsokoErg/F4k54=
-X-Google-Smtp-Source: AGHT+IHiS0OX7HJtlx1wK1J1hPxkGTBoUFdyOaKFMQMeW3Iz5o6HbKJVjNgIFb7CMb2XqnqMB/oEMg==
-X-Received: by 2002:a50:d701:0:b0:56c:522f:53e1 with SMTP id t1-20020a50d701000000b0056c522f53e1mr2256165edi.17.1714569249690;
-        Wed, 01 May 2024 06:14:09 -0700 (PDT)
-Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id b17-20020a056402139100b00572047bf766sm11353468edv.51.2024.05.01.06.14.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 May 2024 06:14:09 -0700 (PDT)
-Message-ID: <cb55130c-5332-4904-87d0-5fce4d4e1f19@linaro.org>
-Date: Wed, 1 May 2024 15:14:07 +0200
+	s=arc-20240116; t=1714574048; c=relaxed/simple;
+	bh=CWxfucLjZKMuCq9KUz1Dscdcskx00ZJ/clYJpxna/Wk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f2Ra0Oj04w0Nwl0ZU/QwhEOv/l+Ww4zI9IXYIHSFBnxXrrPnSbvZnHF6mnKKhCzTHwfTeWyIDibXlH4HvQdQbWvaTmp0moSRiw9z98FWKc2WKzbAaBQZKtr1a2QBQyTBc9++i4d8ogtSJGw8kgQBNuu2zvJoVDqwY5mnJfXQLCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GxDlY5Y1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A77C072AA;
+	Wed,  1 May 2024 14:34:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714574048;
+	bh=CWxfucLjZKMuCq9KUz1Dscdcskx00ZJ/clYJpxna/Wk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GxDlY5Y1ypPthIpoAtKyaQd/ZBIcHSLBpr/2xmEoAGoXygcPxqr51/dxE+AgvpT2h
+	 desQDC+pv+ZldTvWod9pExwhM7IjD3Ryup55foKD4EKmtLb8ayHlP63eor321wLfBP
+	 YjsWuCPgsTYztYTBA7ydpIf/E5DarzDgWJJ3SuCxbZW5zJVHgr6OZ+8WhH1wQwyGP3
+	 XmKLUcYlcfl+ug5TyoX62OvbbrHC80zfCVYaPQrN5FWht2SPjZSTIL/w7cbJ6Oy9zQ
+	 z6kp4yP27xuZlcSId5Jg1Q9ow/Wm6lV8ldyR7ZLFrftpmVVbJiaJKi9LsKawzZkABE
+	 dafvfUzoG6ihQ==
+Date: Wed, 1 May 2024 15:34:01 +0100
+From: Will Deacon <will@kernel.org>
+To: Georgi Djakov <quic_c_gdjako@quicinc.com>
+Cc: robin.murphy@arm.com, joro@8bytes.org, iommu@lists.linux.dev,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, devicetree@vger.kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, robdclark@gmail.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
+	quic_sukadev@quicinc.com, quic_pdaly@quicinc.com,
+	quic_sudaraja@quicinc.com, djakov@kernel.org
+Subject: Re: [PATCH v8 2/7] iommu/arm-smmu-qcom-debug: Add support for TBUs
+Message-ID: <20240501143400.GA15503@willie-the-truck>
+References: <20240417133731.2055383-1-quic_c_gdjako@quicinc.com>
+ <20240417133731.2055383-3-quic_c_gdjako@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] firmware: qcom: uefisecapp: Allow on sc8180x Primus and
- Flex 5G
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bjorn Andersson <quic_bjorande@quicinc.com>
-References: <20240430-uefisecapp-allowlist-sc8180x-v1-1-1a626ea9c5f1@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240430-uefisecapp-allowlist-sc8180x-v1-1-1a626ea9c5f1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240417133731.2055383-3-quic_c_gdjako@quicinc.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On 1.05.2024 4:33 AM, Bjorn Andersson wrote:
-> From: Bjorn Andersson <quic_bjorande@quicinc.com>
-> 
-> Testing indicates that qseecom and uefisecapp are working on both the
-> SC8180X Primus and Lenovo Flex 5G, providing EFI variable access.
-> 
-> Add the two to the allow list.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
+Hi Georgi,
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Wed, Apr 17, 2024 at 06:37:26AM -0700, Georgi Djakov wrote:
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> index bb89d49adf8d..eff7ca94ec8d 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
 
-Konrad
+...
+
+> +static const struct of_device_id qcom_tbu_of_match[] = {
+> +	{ .compatible = "qcom,sc7280-tbu" },
+> +	{ .compatible = "qcom,sdm845-tbu" },
+> +	{ }
+> +};
+> +
+> +static struct platform_driver qcom_tbu_driver = {
+> +	.driver = {
+> +		.name           = "qcom_tbu",
+> +		.of_match_table = qcom_tbu_of_match,
+> +	},
+> +	.probe = qcom_tbu_probe,
+> +};
+> +builtin_platform_driver(qcom_tbu_driver);
+
+I just noticed that this breaks a modular build of the arm-smmu driver
+because we now have two init functions for the module:
+
+  ld.lld: error: duplicate symbol: init_module
+  >>> defined at arm-smmu.c
+  >>>            drivers/iommu/arm/arm-smmu/arm-smmu.o:(init_module)
+  >>> defined at arm-smmu-qcom-debug.c
+  >>>            drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.o:(.init.text+0x4)
+
+I think you should initialise the TBU debug feature by calling into it
+manually from qcom_smmu_impl_init().
+
+Please can you send a patch to fix that? For now, I'll bodge it so that
+the qcom debug stuff doesn't build as a module (see below).
+
+Cheers,
+
+Will
+
+--->8
+
+diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+index 032bfd681307..66325210c8c9 100644
+--- a/drivers/iommu/Kconfig
++++ b/drivers/iommu/Kconfig
+@@ -376,7 +376,7 @@ config ARM_SMMU_QCOM
+
+ config ARM_SMMU_QCOM_DEBUG
+        bool "ARM SMMU QCOM implementation defined debug support"
+-       depends on ARM_SMMU_QCOM
++       depends on ARM_SMMU_QCOM=y
+        help
+          Support for implementation specific debug features in ARM SMMU
+          hardware found in QTI platforms. This include support for
+
 
