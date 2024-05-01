@@ -1,110 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-19009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 758378B8490
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 06:03:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 257C98B8494
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 06:08:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0390B22122
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 04:03:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D01211F23A02
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 04:08:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 312562941C;
-	Wed,  1 May 2024 04:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C10539AF9;
+	Wed,  1 May 2024 04:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SoZqnvTU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ocd66zqi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2B429405
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 04:03:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC8F29405;
+	Wed,  1 May 2024 04:08:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714536196; cv=none; b=kQA3Ne6JHWkPB4EVHkqeXna+zoOXZ+Iv7VDxxyYpewk8C/IRb7BkuAgbjTg8dzffmvfV2N9eO+AzLMqw7MtJNovAmNl0vJY3iLYAUL4gH1ak8POHuzCFbSrsS+RHeK2JdVyr6qKjmIIMqFWiKwdz37N+ZI3oi1CXluZ4uBT3KaM=
+	t=1714536486; cv=none; b=Fc69fDF2ber33a2aoSDDQv6oIouvyeFsEFcxapE3A0+PPF4d/5lNTGmvqqE2+YPbNASSw5S6OBbjd8yzMyyVhSz257ZtbNUHvExYEzJldyMaEk95FIBi9OUCzY7pjB6lxdE6hEGUlBKmoAYwN4i/4VE2pC7Jfe6CvEwOwI9MPAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714536196; c=relaxed/simple;
-	bh=0+M3w/Rwyk4DELz4Y5UB8syWUFAjVBlsGq8zhTnbPhM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rAHfqd9zWwZybieZAoInTl1rzclzicPmGHiWV3vmn1vQ2GrnKw59AKTOsTOM3Ks/ZT4euuE2y7lFdKpMWGU7oRLfg3bxOKdGXtKAg+EIrKObGKjqTNNGKx47/C7XXqb8ds8ZNz58NsXm7AeshxvsbUhUkvz33AzlYh/vfstDkSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SoZqnvTU; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-de46da8ced2so7356550276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Apr 2024 21:03:14 -0700 (PDT)
+	s=arc-20240116; t=1714536486; c=relaxed/simple;
+	bh=/LW5UP24d3M9gnDJHKsZY3AjzrEnrgPIA21IZxGWV+o=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=hg85xoN8iUbfK/ZAvhqDzawEq3FNpfo3tP1Vf8ZTovQHsEjH1RfL86G9tpxOLfZEq5VhnNIV4vAuqoVkxBuu1TiIT21jKyq/I1uLaP+DfaZGJkGe3khTu0jomldc6YnP1A+W6/k3+ZvqERMPsOruGtFU+n4TquvDXLGzhiW1WMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ocd66zqi; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3c7513a991cso4345129b6e.1;
+        Tue, 30 Apr 2024 21:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714536193; x=1715140993; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9DhpvDZ5jjadT8noMpFkM2fayukKhN/HBsuXQwKC1aE=;
-        b=SoZqnvTUIiYNfv7DcSmd5Ks5kDM/M4mpMFJx5eZnb9LO+Xv/6a/lTUYRjMICg5pzgZ
-         UhNAQI4SOAB7BMTCW6mRa7bBWZlozoUOZRm5tA7DiUeU1xycoNshtzW+V2BIa4Fta210
-         pcmMJiHP2mE6EtOgoDPafB97aqoc3JfejIlNYOZW2j5I1LZCP5pTTyTRc0SbfoWMQBkm
-         igpwtzZJjc7T312rV4oDxzeRVSdP+44jl74OyosEm4vSFo3+3sTFyodStkPORN6J9bRi
-         78CeObMJH2E72jnhnO/cxklQaEAzmXAlSbNTmRXh4VZoGRqzrrUmqQb6g0liyldivUeb
-         EQ9w==
+        d=gmail.com; s=20230601; t=1714536484; x=1715141284; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eQII4bd5vU3iEBUOJRNxIf3Y2tkmIxs3qzEGZCMfEv8=;
+        b=Ocd66zqifgVp9HxefgdAMCefTDJd9e2cCw8L27JdontZ8JktuR5FfT0u3wsuw+PP8J
+         N9bnhh4HMxEf+Epep8aQ4tQhKsE2yHvVtuU3jY3OOFhn5YHTHDhpa2GXxeywVgiTdtZA
+         xRFF/JXxZZ40/wpRobARQssej4QT6UIT2OdGFROfdnAE0PBhJu67LRt2pRKMAbVcpt42
+         u3o+LyCkogNknSjjMXpvFiCezF+hi0iiUeBrD9NJwNKU+mNHEqUKV8q09fjPHg1nR4FJ
+         3JY5+KySHMchLtQPtZmFQzAA+rT2C2mOz5CGn1hlF1v+MAFyp6or6zxp01VxNl21bbUo
+         rubw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714536193; x=1715140993;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9DhpvDZ5jjadT8noMpFkM2fayukKhN/HBsuXQwKC1aE=;
-        b=k2SQ7nQivjI6iM/5/QT4I5ItQlpGlbJgh+EEM2wp5B/ri673KurP4DHEqDR7PRCcQw
-         WIVkkxNXDyaTsuK5I17yxc9t/BDsZbJRWCGp9aGZIQs3u34WBjTnQzB+uCciFcdmW76f
-         zjME+ejl0HHP6ml7da9SEUKRIwStjbz9A81nMUmrpSMmUSfPluHKzpc8JU1Hn3A/Jp+w
-         lsO6nXOIIkGdIsDKxkHxBA6l6zfvIR03oIcWXDNNsH4VoKv403bZ2P4Z/qQ+f8ViYGtk
-         poRKL7dNcpBO/fSQPRwUURBkpbr7N+S2vzeY9Ce0Q1zWiWsqOERdKZqpbfdv/yQ77Gg1
-         HobQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWNWJCjR49ob+Q9UgcXpNdvxtzvzEhXKi7PtrXCXj0XvzF1yZ78IXjOD4PyfsclXF4V0kyH9gIaGYr8XLU41Ku7x4txQ4r5PJFfOAuFjQ==
-X-Gm-Message-State: AOJu0YxT5Hu5LHHW22SCpSxV+OhTRTO6kpi+5vg4URjH4MyT6agsoko/
-	AsV2EHnadFGBTEcqxpp+p2RcrUN0qtycfj2WMXPhrbnTNKKKiBqrcA0CKPGuLW03lpu0AnVKgL8
-	WJcalO0CwohVF/F4EiH/UZWdNSB7n2D8CSyWJKNPmS3Y+5hla
-X-Google-Smtp-Source: AGHT+IEGmYS844ras2vuIxsxIBNOQ1+l1V9qZ5I70U0Evly0QhJPSvITaLgH0CkbsmoeSFaLZQ0T85hDGtcJVIBKVCU=
-X-Received: by 2002:a25:bcc5:0:b0:de6:1245:c3d5 with SMTP id
- l5-20020a25bcc5000000b00de61245c3d5mr1472680ybm.60.1714536193411; Tue, 30 Apr
- 2024 21:03:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714536484; x=1715141284;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eQII4bd5vU3iEBUOJRNxIf3Y2tkmIxs3qzEGZCMfEv8=;
+        b=gCsVJ3Pfq2sWfG9qcPejQFpBsM46lQvsKmutOt3/pWKwGDn+WR9NiYvUo/j41k76Fm
+         ugue+GcuP5t4OFXWgBaAWKEywrPEA+rfzpi32KcXjqsnXyiNGaqbEnPcPOo+SRoV0RJR
+         MVSKMAxi5YMABFUStSTx5bvNb9Qzir82NUI3dzN59cz7pMcZrAM0rMw1kl31JOCXIlag
+         bwMuaWdfJFKTDnc58wpdlicDZUGJ7yIxseDAjfFsH39sLmDHcBqrmFMF3rN9kwZc8BI9
+         HkE97ef5dTRpkjT2hHiV2uclLVH80P7rYpCDh07Ii/PKWMUqMTgXTs0RSqR/SBXYIUXK
+         kMMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUqSxe2e3eYKO58oz79LyPdIlr8oRQqr9X7A0cZ4C73J7Tdn+PX7AB9IFrCirywPMe162S3fbXfAc7ecaz8veFDEauYapA1KazKuQnCGKWIE3iw/uLPsPij8MNieV5iF/QYVJGmwjdJyxcv2NQlaUHOud4MNiItC+RrRuQjhwd9syMMViE=
+X-Gm-Message-State: AOJu0Yyeuvj8UuKce++CjVFebV9OoOithA/+5EORgAyM2xldtImmZ7Dj
+	teGRS7Ulz3H3A4LCHpVhmjIipJf1BwJi3W/iprNpM8YHbiFKCx3mJffonEi+7kk=
+X-Google-Smtp-Source: AGHT+IHhxTl5k/+evzZ/7myhhtGs4Q+NGdUipnNMPy+mJqCCxGveYPCkAbK/AwpAGhGYlE5UDRtZ1Q==
+X-Received: by 2002:a05:6808:15a2:b0:3c7:3af6:1cb5 with SMTP id t34-20020a05680815a200b003c73af61cb5mr1916976oiw.46.1714536483873;
+        Tue, 30 Apr 2024 21:08:03 -0700 (PDT)
+Received: from nukework.lan (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id w2-20020a056808018200b003c8643f0e5csm1067872oic.16.2024.04.30.21.08.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Apr 2024 21:08:03 -0700 (PDT)
+From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	quic_kathirav@quicinc.com,
+	Alexandru Gagniuc <mr.nuke.me@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH v4 1/8] dt-bindings: clock: Add PCIe pipe related clocks for IPQ9574
+Date: Tue, 30 Apr 2024 23:07:43 -0500
+Message-Id: <20240501040800.1542805-2-mr.nuke.me@gmail.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240501040800.1542805-1-mr.nuke.me@gmail.com>
+References: <20240501040800.1542805-1-mr.nuke.me@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240430-pmic-glink-sleep-while-atomic-v1-1-88fb493e8545@quicinc.com>
-In-Reply-To: <20240430-pmic-glink-sleep-while-atomic-v1-1-88fb493e8545@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 1 May 2024 07:03:02 +0300
-Message-ID: <CAA8EJpqRp2-V4-zTX=52yoC8oJN4kgXb0cQJw-c08rQnfpycmw@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: pmic_glink: Make client-lock non-sleeping
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Mukesh Ojha <quic_mojha@quicinc.com>, 
-	Andrew Halaney <ahalaney@redhat.com>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, 1 May 2024 at 06:33, Bjorn Andersson <andersson@kernel.org> wrote:
->
-> From: Bjorn Andersson <quic_bjorande@quicinc.com>
->
-> The recently introduced commit '635ce0db8956 ("soc: qcom: pmic_glink:
-> don't traverse clients list without a lock")' ensured that the clients
-> list is not modified while traversed.
->
-> But the callback is made from the GLINK IRQ handler and as such this
-> mutual exclusion can not be provided by a (sleepable) mutex.
->
-> Replace the mutex with a spinlock.
->
-> Fixes: 635ce0db8956 ("soc: qcom: pmic_glink: don't traverse clients list without a lock")
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  drivers/soc/qcom/pmic_glink.c | 25 +++++++++++++++----------
->  1 file changed, 15 insertions(+), 10 deletions(-)
->
+Add defines for the missing PCIe PIPE clocks.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
+diff --git a/include/dt-bindings/clock/qcom,ipq9574-gcc.h b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+index 08fd3a37acaa..52123c5a09fa 100644
+--- a/include/dt-bindings/clock/qcom,ipq9574-gcc.h
++++ b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+@@ -216,4 +216,8 @@
+ #define GCC_CRYPTO_AHB_CLK				207
+ #define GCC_USB0_PIPE_CLK				208
+ #define GCC_USB0_SLEEP_CLK				209
++#define GCC_PCIE0_PIPE_CLK				210
++#define GCC_PCIE1_PIPE_CLK				211
++#define GCC_PCIE2_PIPE_CLK				212
++#define GCC_PCIE3_PIPE_CLK				213
+ #endif
 -- 
-With best wishes
-Dmitry
+2.40.1
+
 
