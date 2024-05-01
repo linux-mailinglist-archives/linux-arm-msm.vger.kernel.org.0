@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-19098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65DCF8B91F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 01:06:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADDFA8B91F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 01:06:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E70421F2161A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 23:06:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 97026B216AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 23:06:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29FA816191A;
-	Wed,  1 May 2024 23:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41EE2168AF4;
+	Wed,  1 May 2024 23:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ylICOARt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QiTS81zi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B1A1C68D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 23:06:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A383B2EB11
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 23:06:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714604762; cv=none; b=Fk13T3IXDyo99I4wnAJpuu8pcSBUHq3wp0OQ3FjNeV3cRVhjDU+LUIaK4oC/GbzsxkZCiov1frqyKQk2VMH1TyOFMj7EtQ4qjJqyvejKjNGY2tbAgIteH4Iwwr0wUP5IPIq/+WfLElz1IXyWzBmGTbDn9lwF6t2nm9c92iGo1aI=
+	t=1714604769; cv=none; b=JWLvvpsCGI8N1Qt4bRL82BYEy+hiayzksbn9vyGyFCxHB3kxQVZV6GS3cn8kTpxDuCyEuRgDODP+1s09reRXJVww+FVj5/xXTuK9dDP5HG3JioLmVS2uptQP9AcRhX7O8dSNMaCZTqF4oHc+NohPDoTRy+s/qPnw8wQ8K9imFwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714604762; c=relaxed/simple;
-	bh=78qQK9go7IP/03w66HUm+Z1Gk8P66woRakqNYF7YA6I=;
+	s=arc-20240116; t=1714604769; c=relaxed/simple;
+	bh=JJGZF+cN9Qp/2mu8qRfgtZ332Stss+S5Pry8UaAHYAg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YWWZkxsoZIXqMKW2itCC5lkUujEO5Qpneqoz+BjB59fg6nT9vtyWm0OSDzMONlwj1N3q7smv4XTR0VhmINOHo1JgaySB0pAWBdtYfbULsJ2AuXgOkgYJh8Kt/8lI5GQHjSCOrd/XKoYDNV9aoT35iPjtvdXTeo1Ktzc0/3Z6M0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ylICOARt; arc=none smtp.client-ip=209.85.208.180
+	 In-Reply-To:Content-Type; b=HlOQDli3ok6WYpq8jcWiq3sbks7Fc1+jwetgYYsXMB+rMVPSY0Cz5e4CvWfLL08vOnm+9jiHl8Pv0yQ2hchp86ESZ565xidZ6I5gbm3fC+0WJLiw8Q1HkxpfqWwlH2TQsL9vOYY4WCGWm1AVNadz4ioDTRbwN5mcXaDUjWvlAoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QiTS81zi; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2e0933d3b5fso42322901fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 16:06:00 -0700 (PDT)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-571ba432477so7789000a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 16:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714604759; x=1715209559; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1714604766; x=1715209566; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cRBEcA6g+erlLdoN9JCHOuy1WSfoHszt/1llYH033ko=;
-        b=ylICOARtRD6F7efcJjNLHlE1gFOJ+Tj04Q4tHXvLfknEIVC4P6yITnM7y8/WjdJq8x
-         /9lvHi6VR/ubzY1AvJf+eiL+0jcMkrKcXLhLkhnd4RnZe4DRNXhDv7B4iexCzU+ghjzs
-         NND1OlDOizkJH+/VnscRNe+a2ZKi3kj+4yW6YKiUqqWJ6iz1Wj8ru957hwQ/bEXnSD2v
-         4Cptpi8nImnKxbX8ek+p8ICQVoem4mGRGRzyJsVWQCatT7/dP5D7+YoBLehjbv6dJr4j
-         sjT5SZFzlzN32ImeyGwj9Q20qpovNLovfvcU/gMW4KhVS1lBmikYS1L1MIsudeXU8CVK
-         3hrw==
+        bh=He6LOBfEmoNHxlmonW0PrsNwkISHHv1zttQDGYfVCck=;
+        b=QiTS81ziUgFq1HH6XxFiVSB3hoY9R95jhGhHjYkb914zS4ueQjQB171n9zHJFhxXoI
+         zSDLNfVJmS/AA85hK+9svWX/rrGOel9OgYeLr+bQ19E75Z8LLffgUNsMZsOiiEPray5D
+         5oZRBU8ZzomIn+0vf2ME0/kNliZMyF0XcQ6657KCDGFZb7Y9vxdOYzPV98OYeEKsGtRG
+         dyy2Jub0C0HjhC4/moCW/ReV25jGyWCbpQhoAx1nOYYLh+8lpd49U67CCmW3RhX0TQzU
+         x13+GUQWp8xJVPhmGwpmBeN0h8eVQB1/pa6gtdvHXDgcS0q0Pha363GGRwnsozx8YvvM
+         9m5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714604759; x=1715209559;
+        d=1e100.net; s=20230601; t=1714604766; x=1715209566;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cRBEcA6g+erlLdoN9JCHOuy1WSfoHszt/1llYH033ko=;
-        b=H/+K1j5A0WsmylLjSZ89/GTgXkX0kV7vE9GtBSRwbLQPZ0oOH5adO2BIYzlS4nQufm
-         IsYQ/Sa52e8Hkkhmitcko5eoZSF+EFh0luHsjnwHYVYo0zrgRZUDvdgtwXEL5vBRIoHK
-         en2FlweSH7sXq+WuctyIvnuZBXfNIjWRaOAZHYkn0trClBrhabmjkgQXAUVnBmXpV8us
-         2IlIjnCS3Uczh5+OkjyIFJB2Q6uVz+ocWfLfheDFV+lF7Q+nVlhgOFgE06vL5wnyqoIQ
-         Qo13Jo436OkbiMZLDcwchQ0RcUbphdGlZWZLUKZgcamxqNn8mmi+JGNxEzZEsR/+bklW
-         Y/CQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU9Bn14p15jj1kHD411lsdnvlZoeWaXyVtPwj97VmP5YuNct819tJMjh5LvGrfvEEq7eC3SKl7lkIcXtQ7ZibhNnP7/jP2tmvFZaF4h+g==
-X-Gm-Message-State: AOJu0YzqtKDid1RmyfFU1hD+0nSMNdZw/c5kUM7DlRFbKnN+FAA0dves
-	tFBYZ/qVZZ8dLQW3ouZdKSBruYBC1j9Nl3ss7Z93axwCYKzBtB3VqqNrUKu5XxI=
-X-Google-Smtp-Source: AGHT+IF6OMGZZYenYi9Acf2TXo7ddbB6cUhYV16WhKLqosbbD+RcK8Qv6yX4zk8hdkhaC3hJMC0FLA==
-X-Received: by 2002:a2e:9ad1:0:b0:2e0:e470:882f with SMTP id p17-20020a2e9ad1000000b002e0e470882fmr2385088ljj.28.1714604758948;
-        Wed, 01 May 2024 16:05:58 -0700 (PDT)
+        bh=He6LOBfEmoNHxlmonW0PrsNwkISHHv1zttQDGYfVCck=;
+        b=T/3Bx3Oq9HYlFhCmIZ8VVaGtOfvyHeLbGEONreLhhPfh2tOt5KBqIBK9aBD0b+Yx2b
+         YV5zUT8aCo3D0n7GkRJPBWYrxUeBOCaTyYpeUKAd+yHrfooQ0J+vdcmyEoBgDgqunZhU
+         g0RoGWrQAb+dL1PDlR/+F4RyArFdh6r3ZN6RdA0WqtYEB/t7m70ibL+cidaGsgykmSF/
+         3YCEp5nKswGD9Jdve2r7pyCLpFSN24tsviFsVn3OLy3TTD1shKuhwvyPdqBkv0x21zQg
+         fdJhMax/MdGLbg05nWvmPQmDC3CwKgLyZg8atWBT02LXR59EOJJXXeVTi3leD2WkSZSZ
+         YKHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU8Xnjn1wkZFGuvtH52h9uGOK6KahQO46/WTAjxYk2uX2P4jDfimap4MEQsPtSAr9MruXE6IIB9XmeZ8J481gHAiIVtkvF9jFKpvpc90w==
+X-Gm-Message-State: AOJu0YxchV09JIKp8CFcn1mRGqxDyflmr45CdiIEeFSF9Dc8k1fb8SVN
+	CL5UeOH8tAgdJdhTEWHE5vp6uJ6o/8EVK32oORqsBRETKzaDOsytVfK1j4k9pSA=
+X-Google-Smtp-Source: AGHT+IFTNSRiqBZFje5Whkixfiwn1+4Tespa9UiKoGiVdzQb7M5azGqVxLQt3eDAaE9OR5K9j4RzKQ==
+X-Received: by 2002:a50:d6da:0:b0:572:7ea0:66ca with SMTP id l26-20020a50d6da000000b005727ea066camr2576473edj.36.1714604766110;
+        Wed, 01 May 2024 16:06:06 -0700 (PDT)
 Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id p6-20020a05640243c600b005725d859e4esm6083491edc.73.2024.05.01.16.05.56
+        by smtp.gmail.com with ESMTPSA id p6-20020a05640243c600b005725d859e4esm6083491edc.73.2024.05.01.16.06.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 May 2024 16:05:58 -0700 (PDT)
-Message-ID: <f936d927-4d17-4928-a1a1-7bd4d3db6e54@linaro.org>
-Date: Thu, 2 May 2024 01:05:55 +0200
+        Wed, 01 May 2024 16:06:05 -0700 (PDT)
+Message-ID: <d4502fef-d510-4aee-b913-1a74346c22ac@linaro.org>
+Date: Thu, 2 May 2024 01:06:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] arm64: dts: qcom: sm6350: add power-domain to UFS
+Subject: Re: [PATCH 09/13] arm64: dts: qcom: sm8250: add power-domain to UFS
  PHY
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
@@ -96,7 +96,7 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Krzysztof Kozlowski <krzk@kernel.org>,
  Konrad Dybcio <konrad.dybcio@somainline.org>
 References: <20240501-qcom-phy-fixes-v1-0-f1fd15c33fb3@linaro.org>
- <20240501-qcom-phy-fixes-v1-8-f1fd15c33fb3@linaro.org>
+ <20240501-qcom-phy-fixes-v1-9-f1fd15c33fb3@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -134,7 +134,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240501-qcom-phy-fixes-v1-8-f1fd15c33fb3@linaro.org>
+In-Reply-To: <20240501-qcom-phy-fixes-v1-9-f1fd15c33fb3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -142,7 +142,7 @@ On 1.05.2024 6:19 PM, Dmitry Baryshkov wrote:
 > The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
 > corresponding power-domain the the PHY node.
 > 
-> Fixes: 5a814af5fc22 ("arm64: dts: qcom: sm6350: Add UFS nodes")
+> Fixes: b7e2fba06622 ("arm64: dts: qcom: sm8250: Add UFS controller and PHY")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 
