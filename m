@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-19061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A6EF8B8D48
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 17:37:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CBFC8B8D6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 17:45:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E4D4B23385
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 15:37:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B13DF1F21C4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 15:45:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EF5A12F5BE;
-	Wed,  1 May 2024 15:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 027DF1311B1;
+	Wed,  1 May 2024 15:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AgVT7UJ4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JA9s74oB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D11212F59D;
-	Wed,  1 May 2024 15:37:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB4B12FF8E;
+	Wed,  1 May 2024 15:43:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714577846; cv=none; b=boBzqf2JRJuAO8qe4Ghoxm3YntwdfnBRXRKe6s19jukBsgFkpfDy+lPhHNObyiIsx6ovptTK2n3uHzRfHxjQO83hKH1t3ypHgTYjeq1c0GyepxBE/u66k1ROKG7uldA58W069/+5SpDc1dUoTdTYdm5IcnzJP2lYJscW0t38FE8=
+	t=1714578227; cv=none; b=nAXp5gt+KlHUTOXy00nLml/J13ccPnJjdjZUw/rKxWMIfO3yHiB4Jm7MrNQ93c9XWn37bViELOUpZCZyytdo0MXRb7IVfW7CKNdr8ZYjRZx3jsUvV9XrDx0/h6DUb5RsLYylJVitEghuLFRJ9z7gSkzhsDb17WBHspFpYg9wO4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714577846; c=relaxed/simple;
-	bh=0ITTtdbueCZGJrgUVAPhbmZom/wxQK/QStVSF6LAPcI=;
+	s=arc-20240116; t=1714578227; c=relaxed/simple;
+	bh=+j1MhO27oq6Z2k/UMaKrknwIvc97IqQ6TsLfVDaEsVA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=fQHFcFNq3Awgzcf74f1UCY79OUJU2DbDkeBzJcwA1RQ3T54wPXe0mKyFyZ0KBo4I+3ZqYo1OiVxSHXw5s0H1LPP1vsKYSEq1oGK6jOcop1mwuoJi3YwJIRe4Q5lHhzqK8JAQsbv6pFqzYUSiE4VS3zf1GMJduze3kl5L+yNf1kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AgVT7UJ4; arc=none smtp.client-ip=209.85.160.42
+	 In-Reply-To:Content-Type; b=qyqHUn9/qS8y2+Uy3jGPXY7m39VXKdc5UARjtyhMiDpzOr4jLMLC52AG6JiStD/kdGgErik428W3Jnn7MhiReOiH+zlYHXPtm2XFQTrWz0K4XkXWwam/w+b1kbercJtTYrPDLTFdJXFeAVXoPMkyQFwUPdSgKRi+ARM10yfrxbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JA9s74oB; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-23d1ea835a5so675424fac.2;
-        Wed, 01 May 2024 08:37:23 -0700 (PDT)
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6eb93ec8804so3900805a34.2;
+        Wed, 01 May 2024 08:43:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714577843; x=1715182643; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1714578225; x=1715183025; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=34HSQZWtjbxbUcY2p0ZqE9phbqtru1lcKIiAiKLyg88=;
-        b=AgVT7UJ49zKpKZtb4b2Czf0iaqtmD0XT5b8AtI6Z0XkQ48aOC2fbSjl+g0WBbOA0wr
-         6KpTZf3xyJt26fPugjR936lmSSEjNdxfsVkKUkLaqMMcCmu1x6tS5EMLJmGfn1wV5fiO
-         Lby8TNeE+WcMPvYLiYMqhTkJjikdeYBrfc9HqcPPkZBAvu1a0SMRJ/NXYxPSLOmnYQIg
-         uREqxJ9B4OBv4tDVI9XjDt0U7Ttml115zj+QiClcc57pN7frONx3sWjlMmLYrJFOA18L
-         HyOz6jzmMP1VU1FEsrRYPd1e2fXgaRUIobB/kagQzE9HD+fv5YTt1WD+13dkSx6ulXll
-         BQRw==
+        bh=WYyt1RBKP+5wqyIqwmy5cnYZMq9VEpLdANc4tFv/eOc=;
+        b=JA9s74oBcNhi3U2CLmWURFd2W5GdVotI852dwp5wy4qkLb9GyiWPWdpugf7kz7MW6E
+         uKZWDIiY0JEnRDSOqLvnNbiKOVGX9Cay0hMMkXh6CCX1JSkpSBvvXppcQMyUvVnAgt27
+         1At1IHqX60vNNwkGVfooe7HYdNu06bt0lKLKpxXhk0JsuAYDnshjylmagbYVcYr063kh
+         Eu0u4Lgl7kSgj5vpE+460LrdweO8fEAhZObQ8YQf82nENILEgeorKAKkBb+oe/sCSWic
+         i+yebGfIl0n05zCGgeH3lWtlqq1dmKJUHc5/Z+6NZFS5asC9A9AtlAoTGuzxL1H4NDg0
+         3dHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714577843; x=1715182643;
+        d=1e100.net; s=20230601; t=1714578225; x=1715183025;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=34HSQZWtjbxbUcY2p0ZqE9phbqtru1lcKIiAiKLyg88=;
-        b=ThkqwG726xzGKKDfvd4F8zUA6JJYIxjzp3xD+bPsVzcYLsFWMwwQVjqO+enzvbEdw5
-         RHb79zWBP/54ZbEDKMkCc1adNnlTy/CY04sY2n/148WdulsRKS6GaN0AodKcg0x/e0tA
-         soG7hybxaPxLyoiX4AtmySmaWR+1L2SJzWDgulHP5Hi4EDfYseRozaY49kinMNZDci9t
-         ZRX+8fjYYeSdA0IBmB7qg3C/vOouIzgnk+L2Dp8r4h3NGj9J7tY+t92zYbN341Hi+Wis
-         cGz9Y+t3JbVXUueCO68sbkJB+mSf14Tz4ZPxwl6JcNe/2kzc5CsXq3rq4L4yl4n7C0vD
-         wnqA==
-X-Forwarded-Encrypted: i=1; AJvYcCVRaPw2YBXSlEmxwjl9DXQNz1gpcPPXDBREOi05lgbkjyV3ZbccQOm9qfvrKPxbC2g95Ns+58YoCbDgqoso7yQJdkoN0QJEf9HS02EyFnEK+q+lUoVJO623WXFbhbp5rDrIFIZbUMd1KgdKN4Q8vkUO0A3tCT06Ezf8wmhQ0EOJneg7ANWTZISj+eN7sZNqdgUFzkEEnZy6skr4j4WIB2vEcLkF07GkZPhqdw262nWbOobdcbC/n71LVIphSn4=
-X-Gm-Message-State: AOJu0YzY++MsikVrXUCBVqGLiSO2IgM2tQQXlYs2EDU8qTt2cRnxAXKO
-	cWeXBoqPpqQGxsnB9wrYONFpPd0cX0+a5eLUID3gjFkh6fWYqWBK
-X-Google-Smtp-Source: AGHT+IHdOGltmMEfyguF/4cAMA+Sgnkaw7abyq40kS29fkMPdziQpNXQgqEnnEGTcu54RFw7h8jJWw==
-X-Received: by 2002:a05:6870:b296:b0:22e:8d62:fa75 with SMTP id c22-20020a056870b29600b0022e8d62fa75mr2938064oao.44.1714577843194;
-        Wed, 01 May 2024 08:37:23 -0700 (PDT)
+        bh=WYyt1RBKP+5wqyIqwmy5cnYZMq9VEpLdANc4tFv/eOc=;
+        b=M4KFwDFTu3QR1CL34FJwpH9nEk0kFOh3OdR2ET/unwrX7l0QXyXhLRQuLg+DcSrAkD
+         N5cNSFttCQa+8G6c/5CLMUkPZNbnT4ifHjfh73BJRBpYyO3KBaqp+b7Ze5hzkupiLvUx
+         r88IuXJ1OjMkLPW2ucz0peWrpnHYLnYLOZpRUqXj/LHg1amn6RGoVkImCQUSWovOXAhT
+         HFSjYuabt9el7zl+u5FSTae1m2tGWsGvyl1xiSCVQqqbs3ryFwmfGYEgUUaaeLNTF4aW
+         9Woyc+A5eVLSnnPSynau7AWGkAbbnVluqf0MY9EaVQ3iCXof9Q+fZUIHeVcf2dHuz3Oq
+         B4Rg==
+X-Forwarded-Encrypted: i=1; AJvYcCXZc/zJJK20mf4MAOolUl5RGUabcWO/oQ81cA7hQILnu0xzRammqSu71FsJCElrLt6nih/h0FVtdrl+ZjbElCF/w84Hw2efCN5kbMBWZ9uphC1bKzZhquaEsWmgQ2PLxfwIEGBPjvwJxlvppwhKwQwEIEeDUdiMKZDYrO7KGgto79QXfDvCHfqdrxQ3njUpvZz8sDGLSVY40R5D4EnIl3vi9+8gQr/7H7Vjsxh8ZCOWpR5YKUQBOSX2wxh2uck=
+X-Gm-Message-State: AOJu0YxBxuSGh2DEyXATfYyi8wVS9hwPlWTl3Qzi644LVcoTx96tiHZh
+	2NHrzS4tIIvIC/idCnjUAoAfgGp4zvUBDpdkbP3m8rJDbvzCNHw2
+X-Google-Smtp-Source: AGHT+IEVAUBi8gaQAQaPiF+BdK+POH9BTZIvS3fio856v721oE2NZNnhywEs1M2R3KrsTS8RWdtRpg==
+X-Received: by 2002:a05:6830:1284:b0:6ef:a0a4:b601 with SMTP id z4-20020a056830128400b006efa0a4b601mr1830971otp.36.1714578225542;
+        Wed, 01 May 2024 08:43:45 -0700 (PDT)
 Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
-        by smtp.gmail.com with ESMTPSA id qw2-20020a0568706f0200b002397a883e7csm5033024oab.12.2024.05.01.08.37.21
+        by smtp.gmail.com with ESMTPSA id fc12-20020a056830498c00b006ee0d82d41dsm1595872otb.71.2024.05.01.08.43.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 May 2024 08:37:22 -0700 (PDT)
-Message-ID: <47665254-fe22-4369-8b10-087ca928e97f@gmail.com>
-Date: Wed, 1 May 2024 10:37:20 -0500
+        Wed, 01 May 2024 08:43:45 -0700 (PDT)
+Message-ID: <f7176c82-3702-4667-b68b-a8b7e3ad8690@gmail.com>
+Date: Wed, 1 May 2024 10:43:43 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 RESEND 0/8] ipq9574: Enable PCI-Express support
+Subject: Re: [PATCH v4 RESEND 5/8] PCI: qcom: Add support for IPQ9574
 To: Krzysztof Kozlowski <krzk@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -93,52 +93,44 @@ To: Krzysztof Kozlowski <krzk@kernel.org>,
  linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
  linux-clk@vger.kernel.org
 References: <20240501042847.1545145-1-mr.nuke.me@gmail.com>
- <ea1c925f-1696-4491-a792-1b9165447dad@kernel.org>
+ <20240501042847.1545145-6-mr.nuke.me@gmail.com>
+ <a973f67b-de7f-4e21-b6b4-3b85d056456d@kernel.org>
 Content-Language: en-US
 From: mr.nuke.me@gmail.com
-In-Reply-To: <ea1c925f-1696-4491-a792-1b9165447dad@kernel.org>
+In-Reply-To: <a973f67b-de7f-4e21-b6b4-3b85d056456d@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 5/1/24 5:22 AM, Krzysztof Kozlowski wrote:
+On 5/1/24 5:21 AM, Krzysztof Kozlowski wrote:
 > On 01/05/2024 06:28, Alexandru Gagniuc wrote:
->> There are four PCIe ports on IPQ9574, pcie0 thru pcie3. This series
->> addresses pcie2, which is a gen3x2 port. The board I have only uses
->> pcie2, and that's the only one enabled in this series. pcie3 is added
->> as a special request, but is untested.
+>> IPQ9574 has four PCIe controllers: two single-lane Gen3, and two
+>> dual-lane Gen3. The controllers are identical from a software
+>> perspective, with the differences appearing in the PHYs.
 >>
->> I believe this makes sense as a monolithic series, as the individual
->> pieces are not that useful by themselves.
->>
->> In v2, I've had some issues regarding the dt schema checks. For
->> transparency, I used the following test invocations to test:
->>
->>        make dt_binding_check     DT_SCHEMA_FILES=qcom,pcie.yaml:qcom,ipq8074-qmp-pcie-phy.yaml
->>        make dtbs_check           DT_SCHEMA_FILES=qcom,pcie.yaml:qcom,ipq8074-qmp-pcie-phy.yaml
->>
->> Changes since v3:
->>   - "const"ify .hw.init fields for the PCIE pipe clocks
->>   - Used pciephy_v5_regs_layout instead of v4 in phy-qcom-qmp-pcie.c
->>   - Included Manivannan's patch for qcom-pcie.c clocks
->>   - Dropped redundant comments in "ranges" and "interrupt-map" of pcie2.
->>   - Added pcie3 and pcie3_phy dts nodes
->>   - Moved snoc and anoc clocks to PCIe controller from PHY
->>
+>> Add a compatible for the PCIe on IPQ9574.
 > 
-> Three postings within short time... Allow people to actually review your
-> code. Please wait 24h before posting new version. Include entire
-> feedback and all tags. Explain why you ignore/skip some tags.
+> This is a friendly reminder during the review process.
 > 
-I'm sorry for the confusion. It's the same patch version, v3 being two 
-weeks old.
+> It looks like you received a tag and forgot to add it.
+> 
+> If you do not know the process, here is a short explanation:
+> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+> versions, under or above your Signed-off-by tag. Tag is "received", when
+> provided in a message replied to you on the mailing list. Tools like b4
+> can help here. However, there's no need to repost patches *only* to add
+> the tags. The upstream maintainer will do that for tags received on the
+> version they apply.
+> 
+> https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+> 
+> If a tag was not added on purpose, please state why and what changed.
 
-Due to a tooling failure, the first attempt to send resulted in a 
-double-posting, and missing cover letter. It was so bad that I felt I 
-needed to re-post with the RESEND tag to clarify the intent and prevent 
-further confusion.
+I had an Acked-by tag from Rob for what is now patch 6/8 -- previously 
+5/7. Due to last-minute info from QUIC Inc, Dmitry and I decided to move 
+the "snoc" and "anoc" clocks out of the PHY and to the PCIe controller.
+
+This change resulted in a 6/8 patch that is substantially different from 
+what Rob acked. I felt it was inappropriate to keep the tag.
 
 Alex
-> 
 
