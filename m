@@ -1,87 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-19042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9613B8B86D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 10:26:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0975A8B86E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 10:32:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 088ED1F23956
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 08:26:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3329A1C21F27
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 08:32:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98F014F205;
-	Wed,  1 May 2024 08:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1773B4CB4E;
+	Wed,  1 May 2024 08:32:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bIbPdIrn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ECF2EED6;
-	Wed,  1 May 2024 08:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DBE14AAD;
+	Wed,  1 May 2024 08:32:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714551979; cv=none; b=KRRujS6jqRSE9P/U1SPoPQburuzqpZrIIGraPo7uopWdy9botcYbc8x0pkP345CtJ3HwQWomP3DF23ncNG5pHiBF5PtgsoxIjWTRomfqPTDnlPUw58C6PfvYHj5I+x9QY1qV5EW1vetwbhYLsMecdRyAPoybtgIiRj17Z4v0pkg=
+	t=1714552369; cv=none; b=f/HKqBDdQDOgXsQ7BdWWLf+5J6dazE1WQ5unXG9/phOqZwdDd10ha+7HUvilO13qb1Zr/3Vr9DUXRb+EEyxMgc14Gek4Aq9a9MplRyiP3OMdYKtR/s/spb8MG6F775oZCBhhZxd6WAyR3JiPOxJ0Dlisd1nm5k0XINTnOSiJdbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714551979; c=relaxed/simple;
-	bh=iYFnDq0CeKxPGYYHmDL6Q0GWpMVC+8yb5WrFiUIvPxI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FAkTt8oA+Cxam/WyVJy4E+6DmMPfKb7CwHjP1pY0ZWOaPU2YhS2ykGpgkQusPwQHufFBQAFt1okMrUJhEOWkJcZA1o4ruLCfLsRNRAyfFFHvJTrX+CKaV/5IXHV07oVjh7jiKHSXCjgR9IsjImhl6ADpzb5Z8u+QQz1/nPVSNO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7EE952F4;
-	Wed,  1 May 2024 01:26:43 -0700 (PDT)
-Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8773C3F793;
-	Wed,  1 May 2024 01:26:15 -0700 (PDT)
-Date: Wed, 1 May 2024 09:26:13 +0100
-From: Cristian Marussi <cristian.marussi@arm.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, rafael@kernel.org, viresh.kumar@linaro.org,
-	morten.rasmussen@arm.com, dietmar.eggemann@arm.com,
-	lukasz.luba@arm.com, pierre.gondois@arm.com,
-	linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V4 2/2] cpufreq: scmi: Register for limit change
- notifications
-Message-ID: <ZjH8pWppKhayvFxx@pluto>
-References: <20240328074131.2839871-1-quic_sibis@quicinc.com>
- <20240328074131.2839871-3-quic_sibis@quicinc.com>
- <ZjH7hWnKFcpQ-TXH@pluto>
+	s=arc-20240116; t=1714552369; c=relaxed/simple;
+	bh=RuXNAG1lXnKCvaqPxD3w7ZeY0eoB0xdldgqEftwwyIA=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=tJtgWeZhaUPbwc+1nXL0LOWOZW509CCLfj+aZX0m4DonxWlt8WSJQWXwLKqBTmsDxrOKct4ST59XGRm5/YNmp9X9DHWqvXF1nZm7fMJUWmO+IIDRheNpA0qHWGxBq0jv4y2uN0SS846rs7U1Fw9aKqzhUDKKwMyGwD301o9N5pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bIbPdIrn; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4415cttO012053;
+	Wed, 1 May 2024 08:32:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding:to:cc; s=qcppdkim1; bh=cZcnwkyu4CHae9
+	2lh6KDDACsglcNCH9BQvm5KKokaEM=; b=bIbPdIrnu9kAIL94mLFz7beWWkqmVH
+	8jOn1EYvDuuRBNtvdD0ALDJceqUCIsES8OgNNz8hLaRmqix6AaOsBB+dpUWxWem9
+	xKIlpE3Anz6Ji9qz4oWaHX38qnaGmlW/kJwpE/osus2lFoFcR5f0lnH6BtGVoPWM
+	h8gs0IA9685Tr/EbRn0HMVLjDb0PZFoj6yf+SCTUMYDhbmOPPidrBcu/Mww/kRDv
+	roGnlLHNTzzNNWYi2IsfC+LpdYjOv4ggy6boziHCfete10CrfeEavlte+S+5nvkh
+	10qm3UpjTe4wUiN5+8lk+rC6iBTShq6ktLUppKLczxoBMO4spv4PehtA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xu71j92w7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 01 May 2024 08:32:29 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4418WSGL008791
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 1 May 2024 08:32:28 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 1 May 2024 01:32:23 -0700
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: [PATCH v3 0/2] Add DT support for video clock controller on SM8150
+Date: Wed, 1 May 2024 14:02:17 +0530
+Message-ID: <20240501-videocc-sm8150-dt-node-v3-0-2c4bd9ef48bd@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZjH7hWnKFcpQ-TXH@pluto>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABL+MWYC/3XNQQ6CMBCF4auQrq1ppwjVlfcwLmA6yCygSrHRE
+ O5uISbGBcv/JfPNJAINTEGcskkMFDmw71OYXSawrfobSXapBSjIlVFWRnbkEWXorD4o6UbZe0e
+ yaHRh6vwITYkiHd8Havi1wpdr6pbD6If3+ifqZf2S2myRUUslK7KEBi0AwvnxZOQe9+g7saARf
+ lCu9CYECTK1LdFB5dyx+Ifmef4ANBUAogcBAAA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Taniya
+ Das" <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>
+X-Mailer: b4 0.12.4
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OroXDFL1kL9S_q2kNk2a2Sf4E2WmxpzI
+X-Proofpoint-ORIG-GUID: OroXDFL1kL9S_q2kNk2a2Sf4E2WmxpzI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-01_08,2024-04-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=708 bulkscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2404010003 definitions=main-2405010059
 
-On Wed, May 01, 2024 at 09:21:30AM +0100, Cristian Marussi wrote:
-> On Thu, Mar 28, 2024 at 01:11:31PM +0530, Sibi Sankar wrote:
-> > Register for limit change notifications if supported and use the throttled
-> > frequency from the notification to apply HW pressure.
-> > 
-> 
-> Hi Sibi,
-> 
-> a bit late on this, sorry.
-> 
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+---
+Changes in v3:
+- Adding the required-opps property back, which was removed in v2.
+- This is needed because the lowest power state for MMCX on sm8150 platform
+  is retention, but we want to enable the power domain in low_svs not retention.
+- Link to v2: https://lore.kernel.org/r/20240401-videocc-sm8150-dt-node-v2-0-3b87cd2add96@quicinc.com
 
-...forgot the tag :P
+Changes in v2:
+- As per Dmitry's comments, there is no need to update to index based
+  lookup for already existing drivers, hence keeping clock-names property.
+- Updated the videocc bindings to add AHB clock for the sm8150 platform.
+- Link to v1: https://lore.kernel.org/r/20240313-videocc-sm8150-dt-node-v1-0-ae8ec3c822c2@quicinc.com
 
-> Just a couple of nitpicks down below.
+---
+Satya Priya Kakitapalli (2):
+      dt-bindings: clock: qcom: Add AHB clock for SM8150
+      arm64: dts: qcom: sm8150: Add video clock controller node
 
-[snip]
+ .../devicetree/bindings/clock/qcom,videocc.yaml         | 17 ++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sa8155p.dtsi                   |  4 ++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi                    | 14 ++++++++++++++
+ 3 files changed, 34 insertions(+), 1 deletion(-)
+---
+base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
+change-id: 20240308-videocc-sm8150-dt-node-6f163b492f7c
 
-> In general,
-> 
-> LGTM.
-> 
+Best regards,
+-- 
+Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-
-Thanks,
-Cristian
 
