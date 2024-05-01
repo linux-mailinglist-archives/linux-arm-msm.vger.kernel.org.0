@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-19038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D40EF8B85D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 08:57:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FFA38B8667
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 09:51:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B7B01F22CB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 06:57:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF611B22095
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 07:51:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 035524D5AA;
-	Wed,  1 May 2024 06:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 699F84D9FD;
+	Wed,  1 May 2024 07:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UCb3SXEO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y4qFAx58"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB204CE0F;
-	Wed,  1 May 2024 06:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4684E1CE;
+	Wed,  1 May 2024 07:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714546659; cv=none; b=WFhgi8pEHtGMyeE2TKoyx/gT6jl/hMft4IwQXE1YctuoJJ8icWeZxsbC51XI1b7039DZApLScGn9XTYXkhekR9jUD4rfSMn+Pe1D6q5UP0arr2DJJcNkgA2+kymDYGQW4yvXE1tx/xlAiNESN2p5+YPR87XCt8rjnHWGOeXDh1w=
+	t=1714549860; cv=none; b=AxLOlTyLywGfTYUJi6cGSG6pWQRknqUqsyTANyA7imZ+d94Di9+qbpwmZ0CJzF4BT7dmMRIhumFWLGxqzYIByoykYkV8F23uZQ4JLdal2KWQ+hdU7aywkxF4mM3ts4WuZpyNFUbztX4DApv0ZzLSJhrHip3nFTjiSVXwD2jEG4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714546659; c=relaxed/simple;
-	bh=Q21OMTR+3bFPjSrdV+/UGWZc1UlXE8r/kJXDMHXrsLM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RVV8pBG3jOX6leWAZFprxq/QG6TYkDMNFzvpRwR+yhKWBZS/XdEcn5kTlNMn/mL4GaG1d4MTm4ovF7PCS/qE2YdcPoJoVduo000Z5pQt0A5QWNm1VjMdL1OUhXXcx5Gp2cBSFG0ln4LkQ504r/KW569UYo+ZIj15rOJFUx4xyYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UCb3SXEO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E6BC113CC;
-	Wed,  1 May 2024 06:57:39 +0000 (UTC)
+	s=arc-20240116; t=1714549860; c=relaxed/simple;
+	bh=PuomMsnDC/+v0wckS019MPx5+S2jUMgw0Wzxv4Tf6sI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I6BmWOXj6KhvyrWNd4lhHYYPsc6Xyb2eDgZ8/Ik1R2bu5tsYRNZ8hOQNd9GjZd/G593mubSR8E3S6Epdkyg8cZZEzMSRGtqUxy4J6kshhKknDKKPtAcljADSKP1Hd+MGMc+vTmyxjyEUvFbFvaKpC1d+DbPZw6y4Fz7Nv8bPTCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y4qFAx58; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FAEC4AF14;
+	Wed,  1 May 2024 07:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714546659;
-	bh=Q21OMTR+3bFPjSrdV+/UGWZc1UlXE8r/kJXDMHXrsLM=;
+	s=k20201202; t=1714549859;
+	bh=PuomMsnDC/+v0wckS019MPx5+S2jUMgw0Wzxv4Tf6sI=;
 	h=From:To:Cc:Subject:Date:From;
-	b=UCb3SXEOtxtPwPO8h1gNFNTaTcR4GShQg9w/pb6z6mLhVKRDvqrIasoadawmYP1hH
-	 1br81ujwHjJHtvOD4Fz/RppGGcl/EcuAhIqz53pW9adOFjRVKuMRYLpPlqH//FgKHe
-	 6W123AFJ3zxbnV5L5vYbQ1UpSHcLxD6K2bp4fkQ5FAHvTwkX1kMbLWW65YwHqD23Dw
-	 hThfbD6tkgAcG0bwIq9gG7qh1Z32MW7EMwJvspEchnPwkUvxwDlvfARUrigfwZw39q
-	 aEi1f7i4DKYL7Py9EyQy4kJB+C7MRkYfhHqO3G8pMw6u7I11kXHXJmFcOxxKBdEMXQ
-	 OnGZ6Z4bNGePA==
+	b=Y4qFAx58w+Ryv1rc+De0MRndV5pVfFBoo0B/ygSqAteErX+IpZOaxPIr4VavTXtvq
+	 rxVaHBk0EBMylTACRqNUX5e9bjxb1a2tNTuI+8k+LOTLngAZLUWxtuzdjlFMZ2Eub3
+	 WTuQQSEXzCEXlFEq5xhjZUb39UbjXLcQUkgnwVSElY9KWlMtVzgbS817w7JDLmrh9w
+	 RrekrJJ5AVfv8rZycgg/QBgALz58sFxyR+uzHZI4BC2l425v6ntBV+q97SDaeonYCJ
+	 kqy7PNxdroat551e9EPnYYjMfZeeteK95uNgSozhFVeDa8NbAKAe6xPQKZ/j15v5ti
+	 EzMAi5D/84ZAA==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1s23uO-000000000GS-499k;
-	Wed, 01 May 2024 08:57:41 +0200
+	id 1s24k1-000000001Co-0GG7;
+	Wed, 01 May 2024 09:51:01 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sc8280xp-x13s: enable USB MP and fingerprint reader
-Date: Wed,  1 May 2024 08:56:41 +0200
-Message-ID: <20240501065641.965-1-johan+linaro@kernel.org>
+Subject: [PATCH] dt-bindings: soc: qcom,wcnss: fix bluetooth address example
+Date: Wed,  1 May 2024 09:50:05 +0200
+Message-ID: <20240501075005.4588-1-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -67,153 +66,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enable the multiport USB controller to which the fingerprint reader in
-the X13s power button is connected.
+The 'local-bd-address' property is used to pass a unique Bluetooth
+device address from the boot firmware to the kernel and should otherwise
+be left unset.
+
+Update the example to reduce the risk that a non-zero address will be
+used by default in some devicetree.
 
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 85 +++++++++++++++++++
- 1 file changed, 85 insertions(+)
+ Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-Note that this patch depends on first adding the multiport controller
-node to sc8280xp.dtsi:
-
-	https://lore.kernel.org/lkml/20240429162048.2133512-2-quic_kriskura@quicinc.com/
-
-Johan
-
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 15ae94c1602d..8cf76682b437 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -414,6 +414,13 @@ vreg_s12b: smps12 {
- 			regulator-always-on;
- 		};
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
+index 74bb92e31554..fd6db0ca98eb 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml
+@@ -116,8 +116,8 @@ examples:
  
-+		vreg_l1b: ldo1 {
-+			regulator-name = "vreg_l1b";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l3b: ldo3 {
- 			regulator-name = "vreg_l3b";
- 			regulator-min-microvolt = <1200000>;
-@@ -464,6 +471,13 @@ vreg_l1c: ldo1 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
+             bluetooth {
+                 compatible = "qcom,wcnss-bt";
+-                /* BD address 00:11:22:33:44:55 */
+-                local-bd-address = [ 55 44 33 22 11 00 ];
++                /* Updated by boot firmware (little-endian order) */
++                local-bd-address = [ 00 00 00 00 00 00 ];
+             };
  
-+		vreg_l8c: ldo8 {
-+			regulator-name = "vreg_l8c";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l12c: ldo12 {
- 			regulator-name = "vreg_l12c";
- 			regulator-min-microvolt = <1800000>;
-@@ -497,6 +511,13 @@ regulators-2 {
- 		vdd-l6-l9-l10-supply = <&vreg_s12b>;
- 		vdd-l8-supply = <&vreg_s12b>;
- 
-+		vreg_l2d: ldo2 {
-+			regulator-name = "vreg_l2d";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l3d: ldo3 {
- 			regulator-name = "vreg_l3d";
- 			regulator-min-microvolt = <1200000>;
-@@ -525,12 +546,26 @@ vreg_l7d: ldo7 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l8d: ldo8 {
-+			regulator-name = "vreg_l8d";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l9d: ldo9 {
- 			regulator-name = "vreg_l9d";
- 			regulator-min-microvolt = <912000>;
- 			regulator-max-microvolt = <912000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-+
-+		vreg_l10d: ldo10 {
-+			regulator-name = "vreg_l10d";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
- 	};
- };
- 
-@@ -1168,6 +1203,56 @@ &usb_1_role_switch {
- 	remote-endpoint = <&pmic_glink_con1_hs>;
- };
- 
-+&usb_2 {
-+	status = "okay";
-+};
-+
-+&usb_2_hsphy0 {
-+	vdda-pll-supply = <&vreg_l1b>;
-+	vdda18-supply = <&vreg_l1c>;
-+	vdda33-supply = <&vreg_l7d>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2_hsphy1 {
-+	vdda-pll-supply = <&vreg_l8d>;
-+	vdda18-supply = <&vreg_l1c>;
-+	vdda33-supply = <&vreg_l7d>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2_hsphy2 {
-+	vdda-pll-supply = <&vreg_l10d>;
-+	vdda18-supply = <&vreg_l8c>;
-+	vdda33-supply = <&vreg_l2d>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2_hsphy3 {
-+	vdda-pll-supply = <&vreg_l10d>;
-+	vdda18-supply = <&vreg_l8c>;
-+	vdda33-supply = <&vreg_l2d>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2_qmpphy0 {
-+	vdda-phy-supply = <&vreg_l1b>;
-+	vdda-pll-supply = <&vreg_l4d>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2_qmpphy1 {
-+	vdda-phy-supply = <&vreg_l8d>;
-+	vdda-pll-supply = <&vreg_l4d>;
-+
-+	status = "okay";
-+};
-+
- &vamacro {
- 	pinctrl-0 = <&dmic01_default>, <&dmic23_default>;
- 	pinctrl-names = "default";
+             wifi {
 -- 
 2.43.2
 
