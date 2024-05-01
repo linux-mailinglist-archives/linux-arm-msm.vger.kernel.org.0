@@ -1,157 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-19056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB2A48B898D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 14:07:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91BD58B8AF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 15:14:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9D0C1C21D52
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 12:07:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E712A1F22A91
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 13:14:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93B5F83CB0;
-	Wed,  1 May 2024 12:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E4C912DDAB;
+	Wed,  1 May 2024 13:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a02aGNCL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QQfY/NH6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E42A83CB1
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 12:07:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6CE12DDA5
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 13:14:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714565223; cv=none; b=q4TTZl5h+THg6BYmKDZ91B94D0IAGMgrFAB8HZhhDyZ/of0f8/92OG33TDLXeYHCiqWWVPTcbzAOLYeXaV1DZGn4RS8dvYldDYtHe/FnVCakdP2nIXceK9KZrpXs+1mS+tf63hJwHsWx6/jDFdHK7giWeglPppmxUDXwq5aj7gY=
+	t=1714569253; cv=none; b=rC+hyvyC2TexVklJjFCP7q8c17ZnSLs/b6V++BUDRHbRxRhMDDdWtw9twkbszHJgCwzqb0GuHh9wR1olS49BxyugpZHdYw+k4/AXdKIS7KtvDbaojRxcTdaSeQjkPV46JjdgKeakZ6Jx1EQhh8uadSeYFHQn6S2nq8pZB9NVKF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714565223; c=relaxed/simple;
-	bh=u1dlaFlPJ+AaQyl9OQnnDFMsqcgVZH5TuPxFAlJ8bUE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UDByjUk3tptBQRIj+TElCLAAiHDKfehBRwJqEba9aE6/flNOyPSPUkgGbe6hwR6rnHjbdMhqenqhTlsAB2KSfESXQAr2D58iX56VwKaljEQD4zflRT6t8xrP4aY20hU/g0Nlz9oyGufntwExXzTfCvGWHORZdgIXWGDMVXWncR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a02aGNCL; arc=none smtp.client-ip=209.85.128.179
+	s=arc-20240116; t=1714569253; c=relaxed/simple;
+	bh=jEgju86kkZEUEWsLIY6KhIUfB0Ro+wi3O82aVd7+8K4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mvExtnEX8y1CQ1T87h/G1piTk5a1N/ytfm7nnlzVxRf+YdLVRbyvlPpQPqy5qHclk74u6yNeiuTeyVzg2zUu86qkH1LXB7VtlT6ZKSkgXMb9LU5mR+LdE1EhE2fUcsKaOL+b7c7Fn8j6wCAUQUoyCrh+ie9txvgBv533Cv8O1aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QQfY/NH6; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6150670d372so54461027b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 05:07:01 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5708d8beec6so8482002a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 06:14:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714565220; x=1715170020; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mCvDUdkZWf1z1LfPrcItKDo/SV8BQ5Ruhas6l/TQZks=;
-        b=a02aGNCLZBPsPZaT8aAzUDLNUmd7BcIv9zedqYB6qHEXSympFfIetGQESk+uZVXfx0
-         OSWboePE0B96ENxY+3mgT2uAYbeibeve48w7OFuISq+fvzvWPTmQYY9omctr/um0VRFf
-         cKrL2xwLPkx/xWUur/lh9lHjVos5s1DpoK1JnMpFbszxDiNk9VM11WubMHpSX07fN9nr
-         sm98t7X1xNEyO2t1Z1dJNgTXRpmmXA33KcCxiNktAIM1zhExV8V7N6yXKAiVw5Yfzg/e
-         6JDHzbVY2x3j7/IRNuw/riCCt/P/Q5sBtHtv/KIXUcnkkL9V/mzNMUgtQjJdvpE4LqbF
-         x3Rg==
+        d=linaro.org; s=google; t=1714569250; x=1715174050; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=cAEo938B55svTFKi87S7P75nYRID5Y30PIP36kBSdrs=;
+        b=QQfY/NH6GEG5DLl+vgk8XzCtLNPzCS+c58hlbJ1WckXlKrPRKT8srqyVfrRbyW1Rq2
+         bGGVj1x3e8zpUlpxZcCuNPh/sNc7zRLBmjhPDp+e3biFzRD15cCWPjZXqOrDYbWQspxY
+         GnPfueuNq9pkUqyWXSKTs2tVjix9oJoioWOBNTvl1To3MAFw937eytX+SZa+HkX4zXrc
+         J8xdBS2WpMT9WJJ9JV8w51I7FW0lno1aLqGAdOTboHwIWfIVoLxn2g/cbyFV1cpTPwrc
+         qeY59hFXT+BX2vFrb+F2K3BWwglQxZfcz6kgURFk4GwKuooGhdB197zfg1+M+JtDxAxD
+         ejRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714565220; x=1715170020;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mCvDUdkZWf1z1LfPrcItKDo/SV8BQ5Ruhas6l/TQZks=;
-        b=luyACOFcf6dvKTeWH53xndtt4a06gWYnKZIu7aDkxyijXgKxBUvXOgXNdaWoG2fexX
-         iV1kW9HntxTXc6hXAqGTZQsO3Wg+pslSNfcDi1dM0o8rPNVh9POKZ8JrcsyVu/BEPj4E
-         BbLuv4SNBhasLEvoby9pZPNoj9PovIw6uUxJsY//pRJfgN+EvZ5CKNAxHALAK/1onu/8
-         lNK+CRhkp/F8GVr13Lv6ole1+agRSp6hbMaHNPkfa3EbuICBOyqZeH23bWkdYuNrJnzo
-         YoiX917hGOcdrfvViiIYc3GIdFvYjtVvCPCbJVxxSOyADDV3jupOITQj1hOULqQL32/z
-         o52g==
-X-Forwarded-Encrypted: i=1; AJvYcCXWzxFZeN9/wVczeJqossRc3KQzpaBN4JlN4zYsqESgcUsiRtUES58+9opylGBfrvHqe7dM73v9G2rX8+noDI8eyuZznBk8mjqNtkUp7g==
-X-Gm-Message-State: AOJu0Yx9jVoEzlP/4pj4Fa73V9URPkL0WsCwRXPtXHLMtgC1FfM/Q+an
-	U0/yIuRiLVh5kGt0B/HSvsVOKnbCF9mseSiBVT3kpatLi3XbP1LBdpr7nh8yLgakZix7SAP+OZx
-	9fjiiJ8RHIbycl62m2um6QSiXmRc0KuXrBjbJeQ==
-X-Google-Smtp-Source: AGHT+IFHeR4+6oPbMDpIgLANFPthRRl3FtDwtWeTDKENSgiYemQbaXFo5PkJ4rVesjVGx/goWAJdI8/djjHv/AbyLf4=
-X-Received: by 2002:a25:ac07:0:b0:dcd:3663:b5e5 with SMTP id
- w7-20020a25ac07000000b00dcd3663b5e5mr1751231ybi.25.1714565220205; Wed, 01 May
- 2024 05:07:00 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1714569250; x=1715174050;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cAEo938B55svTFKi87S7P75nYRID5Y30PIP36kBSdrs=;
+        b=W03TTNBBCWwQg+946LJSMQ1/n5Br26OMxOwYtHnUjlCu4idEmG4ZVZUmjSV7ZR3wGl
+         OQI1d2L0Qic7znmxl8HFZYKEnp8LFF4DXwvm9OZ77EkO77PJS34/aFX8CINFwWGnAux8
+         5wdVpNwOS9bCeK8SavXYmUj3ktH97G106SWPzhf94dLrV+lQjeaaOs1vBv1s8TjNIPpj
+         NxL1qW1HcwonYClgd88nAoK99crLlQnSjHu9mpyW22lothP+Glo2GuLBMt3s/y9OQDpj
+         7nO7V9wNkBD4a11x+qL+7oBiRgokVxonCwTFgKwAuysdcOibUK7NCWNhWnYvhVCiuqjf
+         yYsA==
+X-Gm-Message-State: AOJu0Yz35YqGGMT45Z9ri8UyCZ5usPmltHCdCzBoFMYnx0RNl13PUDfj
+	DEfo3gMTShQ3Y0n3QsUWGuqze7x01alqgAsujWaOVKtt1SjlkFsokoErg/F4k54=
+X-Google-Smtp-Source: AGHT+IHiS0OX7HJtlx1wK1J1hPxkGTBoUFdyOaKFMQMeW3Iz5o6HbKJVjNgIFb7CMb2XqnqMB/oEMg==
+X-Received: by 2002:a50:d701:0:b0:56c:522f:53e1 with SMTP id t1-20020a50d701000000b0056c522f53e1mr2256165edi.17.1714569249690;
+        Wed, 01 May 2024 06:14:09 -0700 (PDT)
+Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id b17-20020a056402139100b00572047bf766sm11353468edv.51.2024.05.01.06.14.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 May 2024 06:14:09 -0700 (PDT)
+Message-ID: <cb55130c-5332-4904-87d0-5fce4d4e1f19@linaro.org>
+Date: Wed, 1 May 2024 15:14:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240501-videocc-sm8150-dt-node-v3-0-2c4bd9ef48bd@quicinc.com> <20240501-videocc-sm8150-dt-node-v3-1-2c4bd9ef48bd@quicinc.com>
-In-Reply-To: <20240501-videocc-sm8150-dt-node-v3-1-2c4bd9ef48bd@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 1 May 2024 15:06:48 +0300
-Message-ID: <CAA8EJpotvs3AOYO3ct=_JabBdYDops4Yfdutga9KBAbVPoZ5yw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: clock: qcom: Add AHB clock for SM8150
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] firmware: qcom: uefisecapp: Allow on sc8180x Primus and
+ Flex 5G
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Bjorn Andersson <quic_bjorande@quicinc.com>
+References: <20240430-uefisecapp-allowlist-sc8180x-v1-1-1a626ea9c5f1@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240430-uefisecapp-allowlist-sc8180x-v1-1-1a626ea9c5f1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 1 May 2024 at 11:32, Satya Priya Kakitapalli
-<quic_skakitap@quicinc.com> wrote:
->
-> SM8150 videocc needs AHB clock, so update the bindings for sm8150
-> to add the AHB clock.
->
-> Fixes: 35d26e9292e2 ("dt-bindings: clock: Add YAML schemas for the QCOM VIDEOCC clock bindings")
-
-The tag is incorrect. The mentioned commit didn't add sm8150 bindings,
-so it didn't have a bug.
-
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+On 1.05.2024 4:33 AM, Bjorn Andersson wrote:
+> From: Bjorn Andersson <quic_bjorande@quicinc.com>
+> 
+> Testing indicates that qseecom and uefisecapp are working on both the
+> SC8180X Primus and Lenovo Flex 5G, providing EFI variable access.
+> 
+> Add the two to the allow list.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  .../devicetree/bindings/clock/qcom,videocc.yaml         | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-> index 6999e36ace1b..68bac801adb0 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
-> @@ -75,7 +75,6 @@ allOf:
->            enum:
->              - qcom,sc7180-videocc
->              - qcom,sdm845-videocc
-> -            - qcom,sm8150-videocc
->      then:
->        properties:
->          clocks:
-> @@ -101,6 +100,22 @@ allOf:
->              - const: bi_tcxo
->              - const: bi_tcxo_ao
->
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          enum:
-> +            - qcom,sm8150-videocc
 
-Could you please extend the sm8250 case instead of defining a new one?
-Also could you please check if there is a clock (like ahb_clk_src)
-that uses bi_tcxo_ao instead of bi_tcxo? If so, we have to add this
-clock to the bindings even if the driver doesn't use/model it at this
-point.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-> +    then:
-> +      properties:
-> +        clocks:
-> +          items:
-> +            - description: AHB
-> +            - description: Board XO source
-> +        clock-names:
-> +          items:
-> +            - const: iface
-> +            - const: bi_tcxo
-> +
->    - if:
->        properties:
->          compatible:
->
-> --
-> 2.25.1
->
-
-
--- 
-With best wishes
-Dmitry
+Konrad
 
