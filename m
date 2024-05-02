@@ -1,244 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-19152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 607718BA3E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 01:21:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 005588BA41F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 01:37:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82EED1C22C22
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 23:21:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82D741F21F16
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 23:37:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CC741D559;
-	Thu,  2 May 2024 23:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EA00155722;
+	Thu,  2 May 2024 23:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="UQ+uQiaq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O2/n/1nn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7CB1C2AD
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 May 2024 23:20:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB98615358F;
+	Thu,  2 May 2024 23:37:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714692056; cv=none; b=ViWPLirjDfWrRt1WltQnyaexrzN7RlYZe86xcIKxFUvzSZPtgs9j8SlDSJiXJDxfQKjvfavpIFkzl/c0JrSvE5CyHOGl1IVeB++dR24/1pqZnlRwcrcXfIJJ0jGjUDVwPolZaX+p0t9DN0i+zYQjF0KSz4j+7bdwCbKH5mJKLHs=
+	t=1714693065; cv=none; b=uhF/maXTh/bfPMXgY9etLh/poCzmCKeinXElNVaBjl0ayA+DEsBfmutHvN65bedRitP3IqLU5e+el/PMSN06qhaxs4DV5y6lO7/wVrmTwaiGwhtQgLJnXlIhRm5SMRQStrlkKK0KqjRsGlJk/JrfioQm6NiFxxQWyjkDpHHV33o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714692056; c=relaxed/simple;
-	bh=/BD3wxAtMeBhjQcyimNBdRRV8wUoskv6H5KUanY3Oqw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XYs37EtPmYRbyyBT9Oqbk1sgTvL3xo43J8lyY8Wm0fFEFmEcM6eTE9XTxWzoLO79xqiD1Kk7Xsm38/BVhn3tAT5J/ZdKXmjw4F9+B7oGBjn7hlr8VoXDENod6FSJR7cXYAfPBNXrLdLPaezNE4qEIKuQwcOCyxlDRQmdEI3adis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=UQ+uQiaq; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a58772187d8so1111021266b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 May 2024 16:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1714692050; x=1715296850; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0ByVaaMKgikK9K01TQNZAeU3i4lX5j7GPcDDDxv6HGU=;
-        b=UQ+uQiaqzBmGAbh5GUQIa0DzdA4AzZaZSV9HSafIn23UneEGQmPwt+Jw6CGTxX2V4/
-         sClIYE8rDQxBFEoRcsgfQGstcY2dzliHt4SCOVPrJRJwwGAQqm0AjLBbkO4OkgHd6N31
-         J5/1wCmTJdv3j4pfpImAHDDWpcgiX5nY2tmg4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714692050; x=1715296850;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0ByVaaMKgikK9K01TQNZAeU3i4lX5j7GPcDDDxv6HGU=;
-        b=OBth59H75peHJ7GjR14niJR08iU6WXavzPyxssXqTC+m8xCkInInU43ccByFuXVoy+
-         e8KAmZuMRHrWKthwittkmM4f7mv0MdPvRFIX8NpAqBobHBuFkgR/sZG9Jvbcx2BTzlJT
-         m10IHbNVuCtSDrkXZGD6UbX/JfUjCw4jo0TLMVBS0GYiGniYIHbFYBrGVCsfHNd8zArB
-         5sgtlQpTLyMJHJECMRWBqlu+N8U02+IzmY6TL/DeqzjsC1NivX8b6ipmnl+Dv0vM5WoA
-         LqNMlIXN2cxhMNM7C9cJIapUqRvX+0G6W1hJv4cQdkS61GVJlZCFlZJIX6+8aIuF2dDV
-         EfOA==
-X-Forwarded-Encrypted: i=1; AJvYcCUgQgYi6t0XEueR2la9HVrYMactssxFNCyoKkROtVPoQ2O3Klsg02YVlQ6Gn1ZCLDFEL+LByZ7ecmj7xoaRDNlLcnrk9t5CkE6vDhdAgw==
-X-Gm-Message-State: AOJu0Yw8qNyiXWTvOqQKpjWMGi5MQhJmLabs1U64lmyDoalvVXmzCw3W
-	1tywMY3ZBVHAexZZ+8zW6ovrgfpjNubgjDPLpuD01BRQ8yvKRriCRG+TmFfXAenq+hXkpYYjMBb
-	FLQ==
-X-Google-Smtp-Source: AGHT+IErgq2foC23PH3reDZefAZ9KE5dUs3QkrKnNps3TgeWF05P7jWONWi9iAb+jxBrXdDsYbC5cw==
-X-Received: by 2002:a50:c003:0:b0:572:7c13:c7d8 with SMTP id r3-20020a50c003000000b005727c13c7d8mr539676edb.34.1714692050202;
-        Thu, 02 May 2024 16:20:50 -0700 (PDT)
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
-        by smtp.gmail.com with ESMTPSA id a4-20020aa7cf04000000b00572abf81975sm1009819edy.52.2024.05.02.16.20.49
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 May 2024 16:20:49 -0700 (PDT)
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-41b48daaaf4so17365e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 May 2024 16:20:49 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUZxqIylRHBdkWB5vW/UAeczarMZkSJGULzYqVoFIzjzRCY7AqvHr/rSD28TGmN7mCLpoWLjmIIoyERKKoy1pPYrNC625rHwZNRpdBBLg==
-X-Received: by 2002:a05:600c:190c:b0:41b:e55c:8dca with SMTP id
- 5b1f17b1804b1-41e1cf3429dmr334315e9.7.1714692048795; Thu, 02 May 2024
- 16:20:48 -0700 (PDT)
+	s=arc-20240116; t=1714693065; c=relaxed/simple;
+	bh=ScmNimVD55HCJMpU1ZPTM6tr5t4G+wAg/gscjQhbxFA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WSivMeyunEo7vEOE5+cCG4sLDze6/9zRMcT+UIymclU58t0PQNbZzez5atj9uleEdgu1NAtECYAJ+g1lJIcY67TUib+DQoamdOVtdQk5qS98pZO9DorFqlk1RlgJHybpZujtpZRI4GnbkJzGGDbS53pf1FJ4JXyNZNlNKG+coAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O2/n/1nn; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 442NKMxO019950;
+	Thu, 2 May 2024 23:37:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=yRahZediyJwd+8tFnCwYNOlw++FRljCtETICqi0KlLs=; b=O2
+	/n/1nnkgzSroG5Sq+vOV2/J4HinUGZrLvxhaAONmKDPAQOgn9WUHzYJPDSt0QYpA
+	EFUBbWzML+H3epFcUwj3FPH+XY3XjvGnlqYZZUdT05ll8lkzvQkzcQdbtVJvhIcQ
+	YJqojw/vXeRHVRMBF4PLrTuWePYkHVoANXOTSTHaHMSJBazzvDgUYC6aRbwUI5kQ
+	Wt1zKVXPuZct2q7KHJ2bBtEgVwdE5ymRVmlm+HadKZxLHG5/x+o+bsf7vNaLJzn8
+	2aNjbYa+m2DaOOVxzlxaM+jxAL9qlvYSUmeePIy/D5uN5iKmvR3EcsIgRPeTWIyT
+	qfyHgkPnafCjNKbG+rUw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xvawbhapu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 May 2024 23:37:17 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 442NbGor013135
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 2 May 2024 23:37:16 GMT
+Received: from [10.71.112.114] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 2 May 2024
+ 16:37:15 -0700
+Message-ID: <a88b41f4-7e53-e162-5a6a-2d470e29c0bb@quicinc.com>
+Date: Thu, 2 May 2024 16:37:15 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240502224703.103150-1-swboyd@chromium.org>
-In-Reply-To: <20240502224703.103150-1-swboyd@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 2 May 2024 16:20:31 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UtSiueVky6jX2DjQwS58gYU07+0em3jW0juHcDM4K0mg@mail.gmail.com>
-Message-ID: <CAD=FV=UtSiueVky6jX2DjQwS58gYU07+0em3jW0juHcDM4K0mg@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: Park shared RCGs upon registration
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, Laura Nao <laura.nao@collabora.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v20 06/41] usb: host: xhci-sideband: Expose a sideband
+ interrupter enable API
+Content-Language: en-US
+To: Mathias Nyman <mathias.nyman@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh@kernel.org>,
+        <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
+ <20240425215125.29761-7-quic_wcheng@quicinc.com>
+ <ddd682da-5cfd-db09-e316-3c54939caf90@linux.intel.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <ddd682da-5cfd-db09-e316-3c54939caf90@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: RmyOpgti89lDhFfWlfBLnFZdjZ9mBcru
+X-Proofpoint-ORIG-GUID: RmyOpgti89lDhFfWlfBLnFZdjZ9mBcru
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-02_14,2024-05-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ malwarescore=0 bulkscore=0 suspectscore=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405020159
 
-Hi,
+Hi Mathias,
 
-On Thu, May 2, 2024 at 3:47=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> w=
-rote:
->
-> There's two problems with shared RCGs.
->
-> The first problem is that they incorrectly report the parent after
-> commit 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for
-> parked RCGs"). That's because the cached CFG register value needs to be
-> populated when the clk is registered. clk_rcg2_shared_enable() writes
-> the cached CFG register value 'parked_cfg'. This value is initially zero
-> due to static initializers. If a driver calls clk_enable() before
-> setting a rate or parent, it will set the parent to '0' which is
-> (almost?) always XO, and may not reflect the parent at registration. In
-> the worst case, this switches the RCG from sourcing a fast PLL to the
-> slow crystal speed.
->
-> The second problem is that the force enable bit isn't cleared. The force
-> enable bit is only used during parking and unparking of shared RCGs.
-> Otherwise it shouldn't be set because it keeps the RCG enabled even when
-> all the branches on the output of the RCG are disabled (the hardware has
-> a feedback mechanism so that any child branches keep the RCG enabled
-> when the branch enable bit is set). This problem wastes power if the clk
-> is unused, and is harmful in the case that the clk framework disables
-> the parent of the force enabled RCG. In the latter case, the GDSC the
-> shared RCG is associated with will get wedged if the RCG's source clk is
-> disabled and the GDSC tries to enable the RCG to do "housekeeping" while
-> powering on.
->
-> Both of these problems combined with incorrect runtime PM usage in the
-> display driver lead to a black screen on Qualcomm sc7180 Trogdor
-> chromebooks. What happens is that the bootloader leaves the
-> 'disp_cc_mdss_rot_clk' enabled and the 'disp_cc_mdss_rot_clk_src' force
-> enabled and parented to 'disp_cc_pll0'. The mdss driver probes and
-> runtime suspends, disabling the mdss_gdsc which uses the
-> 'disp_cc_mdss_rot_clk_src' for "housekeeping". The
-> 'disp_cc_mdss_rot_clk' is disabled during late init because the clk is
-> unused, but the parent 'disp_cc_mdss_rot_clk_src' is still force enabled
-> because the force enable bit was never cleared. Then 'disp_cc_pll0' is
-> disabled because it is also unused. That's because the clk framework
-> believes the parent of the RCG is XO when it isn't. A child device of
-> the mdss device (e.g. DSI) runtime resumes mdss which powers on the
-> mdss_gdsc. This wedges the GDSC because 'disp_cc_mdss_rot_clk_src' is
-> parented to 'disp_cc_pll0' and that PLL is off. With the GDSC wedged,
-> mdss_runtime_resume() tries to enable 'disp_cc_mdss_mdp_clk' but it
-> can't because the GDSC has wedged all the clks associated with the GDSC
-> causing clks to stay stuck off.
->
-> This leads to the following warning seen at boot and a black screen
-> because the display driver fails to probe.
->
->  disp_cc_mdss_mdp_clk status stuck at 'off'
->  WARNING: CPU: 1 PID: 81 at drivers/clk/qcom/clk-branch.c:87 clk_branch_t=
-oggle+0x114/0x168
->  Modules linked in:
->  CPU: 1 PID: 81 Comm: kworker/u16:4 Not tainted 6.7.0-g0dd3ee311255 #1 f5=
-757d475795053fd2ad52247a070cd50dd046f2
->  Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
->  Workqueue: events_unbound deferred_probe_work_func
->  pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=3D--)
->  pc : clk_branch_toggle+0x114/0x168
->  lr : clk_branch_toggle+0x110/0x168
->  sp : ffffffc08084b670
->  pmr_save: 00000060
->  x29: ffffffc08084b680 x28: ffffff808006de00 x27: 0000000000000001
->  x26: ffffff8080dbd4f4 x25: 0000000000000000 x24: 0000000000000000
->  x23: 0000000000000000 x22: ffffffd838461198 x21: ffffffd838007997
->  x20: ffffffd837541d5c x19: 0000000000000001 x18: 0000000000000004
->  x17: 0000000000000000 x16: 0000000000000010 x15: ffffffd837070fac
->  x14: 0000000000000003 x13: 0000000000000004 x12: 0000000000000001
->  x11: c0000000ffffdfff x10: ffffffd838347aa0 x9 : 08dadf92e516c000
->  x8 : 08dadf92e516c000 x7 : 0000000000000000 x6 : 0000000000000027
->  x5 : ffffffd8385a61f2 x4 : 0000000000000000 x3 : ffffffc08084b398
->  x2 : ffffffc08084b3a0 x1 : 00000000ffffdfff x0 : 00000000fffffff0
->  Call trace:
->   clk_branch_toggle+0x114/0x168
->   clk_branch2_enable+0x24/0x30
->   clk_core_enable+0x5c/0x1c8
->   clk_enable+0x38/0x58
->   clk_bulk_enable+0x40/0xb0
->   mdss_runtime_resume+0x68/0x258
->   pm_generic_runtime_resume+0x30/0x44
->   __genpd_runtime_resume+0x30/0x80
->   genpd_runtime_resume+0x124/0x214
->   __rpm_callback+0x7c/0x15c
->   rpm_callback+0x30/0x88
->   rpm_resume+0x390/0x4d8
->   rpm_resume+0x43c/0x4d8
->   __pm_runtime_resume+0x54/0x98
->   __device_attach+0xe0/0x170
->   device_initial_probe+0x1c/0x28
->   bus_probe_device+0x48/0xa4
->   device_add+0x52c/0x6fc
->   mipi_dsi_device_register_full+0x104/0x1a8
->   devm_mipi_dsi_device_register_full+0x28/0x78
->   ti_sn_bridge_probe+0x1dc/0x2bc
->   auxiliary_bus_probe+0x4c/0x94
->   really_probe+0xf8/0x270
->   __driver_probe_device+0xa8/0x130
->   driver_probe_device+0x44/0x104
->   __device_attach_driver+0xa4/0xcc
->   bus_for_each_drv+0x94/0xe8
->   __device_attach+0xf8/0x170
->   device_initial_probe+0x1c/0x28
->   bus_probe_device+0x48/0xa4
->   deferred_probe_work_func+0x9c/0xd8
->
-> Fix these problems by parking shared RCGs at boot. This will properly
-> initialize the parked_cfg struct member so that the parent is reported
-> properly and ensure that the clk won't get stuck on or off because the
-> RCG is parented to the safe source (XO).
->
-> Fixes: 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for par=
-ked RCGs")
-> Reported-by: Stephen Boyd <sboyd@kernel.org>
-> Closes: https://lore.kernel.org/r/1290a5a0f7f584fcce722eeb2a1fd898.sboyd@=
-kernel.org
-> Closes: https://issuetracker.google.com/319956935
-> Reported-by: Laura Nao <laura.nao@collabora.com>
-> Closes: https://lore.kernel.org/r/20231218091806.7155-1-laura.nao@collabo=
-ra.com
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->
-> This is an alternative approach to [1] which doesn't require any hacks
-> to disable clks during driver probe.
->
-> [1] https://lore.kernel.org/r/20240327202740.3075378-1-swboyd@chromium.or=
-g
->
->  drivers/clk/qcom/clk-rcg2.c | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
+On 5/2/2024 4:07 AM, Mathias Nyman wrote:
+> On 26.4.2024 0.50, Wesley Cheng wrote:
+>> Some use cases maybe require that the secondary interrupter's events to
+>> be handled by the OS.  In this case, configure the IMOD and the
+>> skip_events property to enable the interrupter's events.  By default,
+>> assume that the secondary interrupter doesn't want to enable OS event
+>> handling.
+>>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> ---
+>>   drivers/usb/host/xhci-sideband.c  | 28 ++++++++++++++++++++++++++++
+>>   include/linux/usb/xhci-sideband.h |  2 ++
+>>   2 files changed, 30 insertions(+)
+>>
+>> diff --git a/drivers/usb/host/xhci-sideband.c 
+>> b/drivers/usb/host/xhci-sideband.c
+>> index 255feae33c6e..6fdae9840c11 100644
+>> --- a/drivers/usb/host/xhci-sideband.c
+>> +++ b/drivers/usb/host/xhci-sideband.c
+>> @@ -237,6 +237,30 @@ xhci_sideband_get_event_buffer(struct 
+>> xhci_sideband *sb)
+>>   }
+>>   EXPORT_SYMBOL_GPL(xhci_sideband_get_event_buffer);
+>> +/**
+>> + * xhci_sideband_enable_interrupt - enable interrupt for secondary 
+>> interrupter
+>> + * @sb: sideband instance for this usb device
+>> + * @imod_interval: number of event ring segments to allocate
+>> + *
+>> + * Enables OS owned event handling for a particular interrupter if 
+>> client
+>> + * requests for it.  In addition, set the IMOD interval for this 
+>> particular
+>> + * interrupter.
+>> + *
+>> + * Returns 0 on success, negative error otherwise
+>> + */
+>> +int xhci_sideband_enable_interrupt(struct xhci_sideband *sb, u32 
+>> imod_interval)
+>> +{
+>> +    if (!sb || !sb->ir)
+>> +        return -ENODEV;
+>> +
+>> +    xhci_set_interrupter_moderation(sb->ir, imod_interval);
+> 
+> Is there a need to adjust the moderation after initial setup?
+> 
+> If not then maybe we could pass the imod_interval as a parameter to
+> xhci_create_secondary_interrupter(), and avoid exporting
+> xhci_set_interrupter_moderation()
+> 
+> 
 
-I'm not even close to an expert on the Qualcomm clock stuff, but the
-description of what's going on here seems reasonable to me. I agree
-that getting this fixed is important, so I'd be OK with a somewhat
-weak:
+Let me preface my comments by saying that I was trying to include some 
+aspects of enabling the secondary interrupter line within the main apps 
+proc.  If this gets too confusing, I can remove these mechanisms for 
+now.  For example, as you mentioned below 
+xhci_sideband_enable_interrupt() isn't going to be used in the offload path.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+However, I decided to add it so we can have some corresponding function 
+that will utilize/set skip_events = false. (as it is "true" by default) 
+Again, I can remove this part and revisit later when we actually have a 
+use case to handle secondary interrupts on apps.
 
-...hopefully others more in the know will also review and make sure
-it's not going to break anyone's use cases.
+As for the IMOD setting, depending on what you think, I can add it as 
+part of xhci_create_secondary_interrupter()
+
+>> +    sb->ir->skip_events = false;
+>> +    xhci_enable_interrupter(sb->ir);
+>> +
+>> +    return 0;
+>> +}
+>> +EXPORT_SYMBOL_GPL(xhci_sideband_enable_interrupt);
+> 
+> I can't find the place where xhci_sideband_enable_interrupt() is called in
+> this series. How is it planned to be used?
+> 
+> Thanks
+> Mathias
+
+Thanks
+Wesley Cheng
 
