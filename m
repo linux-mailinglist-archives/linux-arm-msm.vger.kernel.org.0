@@ -1,143 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-19106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B41988B93A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 05:43:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FE1E8B943D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 07:31:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA1F31C213F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 03:43:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C9D7B20DFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 05:31:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F90A18AF4;
-	Thu,  2 May 2024 03:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AWCWmjPk"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E022D20330;
+	Thu,  2 May 2024 05:30:52 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70807171AA;
-	Thu,  2 May 2024 03:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from lgeamrelo11.lge.com (lgeamrelo11.lge.com [156.147.23.51])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63EEC200AE
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 May 2024 05:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.147.23.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714621389; cv=none; b=nX/ycGQP8560fJuDS7bjhflOq2fQ1oHJrleqWNszmLEV3XITX/H+iySUFGQPQxkYSl0taoDCcOL/adBxnr1SE+NHFU+pjvMwNYvXJQGTQ9B2DeKNsz4MDEB3tNPk5MfG1fCkhXuFgLorK5kIUQd4gt62FAl/JodR16LP6R7sLOE=
+	t=1714627852; cv=none; b=dmMDjKnswfUohi/HfOqaAI6fKfDvsBhbOf04TPIpO4PW9nQzsRT91QK4UMsGYrn0IiO+1SmF0ErTbmD3WngipoSZgMDZlK4mmIYCtn7UL54s5xeT6kMopMLvfA5N5TDzvr6bXlCuY6ZacN5ntDpqDNQVsyjZOEoyUgCFVpo6158=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714621389; c=relaxed/simple;
-	bh=tmsjShpqsEq0HAAjahxF2xhs/w2jg75Ng8GplS2wmuM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=bgBGLndnch9r6a3fX+khphnuOXWhI8MTKtdh5ePeUJGUFqMxIED3JI4AhA8ozAIpEjfaSF4uQnoOnhPGwFtB3jMNOj7jC0PQ94OaHrjxwZoLlr2M3C3cUbchVnqn5y2e5Or/r97TcC1SWUmE0TX81/x+86EmGKovo6KmmwfXLZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AWCWmjPk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4423cqWZ024441;
-	Thu, 2 May 2024 03:43:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding; s=qcppdkim1; bh=gxdEopZ/Ro0CDr4L5WL6
-	Rzvof/Wduh9C1em6P9/T0vs=; b=AWCWmjPkN7mZOiBLNxh9xZkzEXxlr7/360O7
-	9/yb4HMhHlUk34p2tWHTvwTIXjcgjwHwMsF0W7qIJyugEMoBQoNT3ijQxxgWEwp3
-	VDNO7bBPESngmYUeI3S9H4rU9J2h5VAw9UnV7VUMQPbX18nR5EBK/G4Xz1WasLDL
-	Mj0FMAmrHd8em6GRwRJc1+Vo5HK1atyIyyhiXGbIY7/Yw1Rb/rUQAH7nHo9nS/5c
-	Wud0jcWMu7Jzroe1bkEafJcQNMKbcZOJxeF1v95r8dr5XAha0spxr1U8cbt7NHDO
-	6zHr6gKeYGA2ojNB666aJGUOXOhCcQT3rFXYpTgJul3WLC4aBw==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xud76adtw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 May 2024 03:43:02 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4423gxGx005872;
-	Thu, 2 May 2024 03:42:59 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3xv1t60e4e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 May 2024 03:42:59 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4423gxDU005867;
-	Thu, 2 May 2024 03:42:59 GMT
-Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4423gxA8005862
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 May 2024 03:42:59 +0000
-Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
-	id 47C234127E; Thu,  2 May 2024 09:12:58 +0530 (+0530)
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: mturquette@baylibre.com, sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_varada@quicinc.com
-Cc: quic_mdalam@quicinc.com
-Subject: [PATCH] clk: qcom: gcc-ipq9574: Add BRANCH_HALT_VOTED flag
-Date: Thu,  2 May 2024 09:12:47 +0530
-Message-Id: <20240502034247.2621996-1-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1714627852; c=relaxed/simple;
+	bh=LI0KyEmBHwNHgJxUJ1W0VYNHp5VBTABTODCgOQ9VHow=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=F84wdDdcx9sFkk8/aFH+14mcfnMTQq07qtNuq2OPFsBvA027Gp1m1dbpnXWMlmceUGauVgCc67tCBDChBhyL1saktNtSzP1xA0ubrNy5SwjQsvyDUO4uJT3h4GSnWweF2YrzAxE/X42F2tlvKNMXE3334Wvl6dV0mLs1IeY3Ts0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lge.com; spf=pass smtp.mailfrom=lge.com; arc=none smtp.client-ip=156.147.23.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lge.com
+Received: from unknown (HELO lgeamrelo02.lge.com) (156.147.1.126)
+	by 156.147.23.51 with ESMTP; 2 May 2024 14:00:48 +0900
+X-Original-SENDERIP: 156.147.1.126
+X-Original-MAILFROM: chanho.min@lge.com
+Received: from unknown (HELO ?10.178.36.63?) (10.178.36.63)
+	by 156.147.1.126 with ESMTP; 2 May 2024 14:00:48 +0900
+X-Original-SENDERIP: 10.178.36.63
+X-Original-MAILFROM: chanho.min@lge.com
+Subject: Re: [PATCH] arm64: dts: Add/fix /memory node unit-addresses
+To: "Rob Herring (Arm)" <robh@kernel.org>, soc@kernel.org,
+ =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Khuong Dinh <khuong@os.amperecomputing.com>, Ray Jui <rjui@broadcom.com>,
+ Scott Branden <sbranden@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Robert Richter <rric@kernel.org>,
+ Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>,
+ Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Heiko Stuebner <heiko@sntech.de>,
+ Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: linux-arm-kernel@lists.infradead.org, linux-actions@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
+References: <20240430191856.874600-2-robh@kernel.org>
+From: Chanho Min <chanho.min@lge.com>
+Message-ID: <a5a4063c-9ae9-9d3d-de28-51e4220ef139@lge.com>
+Date: Thu, 2 May 2024 14:00:47 +0900
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zATVBlhobrCKXkkuarJ1tPcnhUf3XnL6
-X-Proofpoint-GUID: zATVBlhobrCKXkkuarJ1tPcnhUf3XnL6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-01_16,2024-04-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- malwarescore=0 phishscore=0 spamscore=0 priorityscore=1501 impostorscore=0
- clxscore=1011 bulkscore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2405020015
+In-Reply-To: <20240430191856.874600-2-robh@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-Add BRANCH_HALT_VOTED flag to inform clock framework
-don't check for CLK_OFF bit.
+On 5/1/24 4:18, Rob Herring (Arm) wrote:
+> '/memory' nodes always have a 'reg' property, and therefore should have
+> a unit-address with just plain hex (i.e. no commas). Fix all the arm64
+> '/memory' nodes.
+> 
+> It's possible that some bootloader depends on /memory (arm32 ATAG to DT
+> code does for example). If so, the memory node should be commented with
+> that requirement.
 
-CRYPTO_AHB_CLK_ENA and CRYPTO_AXI_CLK_ENA enable bit is
-present in other VOTE registers also, like TZ.
-If anyone else also enabled this clock, even if we turn
-off in GCC_APCS_CLOCK_BRANCH_ENA_VOTE | 0x180B004, it won't
-turn off.
+>   arch/arm64/boot/dts/lg/lg1312-ref.dts                  | 2 +-
+>   arch/arm64/boot/dts/lg/lg1313-ref.dts                  | 2 +-
 
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
- drivers/clk/qcom/gcc-ipq9574.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
-index 0a3f846695b8..f8b9a1e93bef 100644
---- a/drivers/clk/qcom/gcc-ipq9574.c
-+++ b/drivers/clk/qcom/gcc-ipq9574.c
-@@ -2140,9 +2140,10 @@ static struct clk_rcg2 pcnoc_bfdcd_clk_src = {
- 
- static struct clk_branch gcc_crypto_axi_clk = {
- 	.halt_reg = 0x16010,
-+	.halt_check = BRANCH_HALT_VOTED,
- 	.clkr = {
--		.enable_reg = 0x16010,
--		.enable_mask = BIT(0),
-+		.enable_reg = 0xb004,
-+		.enable_mask = BIT(15),
- 		.hw.init = &(const struct clk_init_data) {
- 			.name = "gcc_crypto_axi_clk",
- 			.parent_hws = (const struct clk_hw *[]) {
-@@ -2156,9 +2157,10 @@ static struct clk_branch gcc_crypto_axi_clk = {
- 
- static struct clk_branch gcc_crypto_ahb_clk = {
- 	.halt_reg = 0x16014,
-+	.halt_check = BRANCH_HALT_VOTED,
- 	.clkr = {
--		.enable_reg = 0x16014,
--		.enable_mask = BIT(0),
-+		.enable_reg = 0xb004,
-+		.enable_mask = BIT(16),
- 		.hw.init = &(const struct clk_init_data) {
- 			.name = "gcc_crypto_ahb_clk",
- 			.parent_hws = (const struct clk_hw *[]) {
--- 
-2.34.1
+Reviewed-by: Chanho Min <chanho.min@lge.com>
 
 
