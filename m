@@ -1,195 +1,294 @@
-Return-Path: <linux-arm-msm+bounces-19134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04CD38B9A37
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 13:44:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6B118B9AF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 14:33:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EA16BB216DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 11:44:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5409C1F22897
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 12:33:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C99CC6E617;
-	Thu,  2 May 2024 11:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 830A241C60;
+	Thu,  2 May 2024 12:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="En+nyEsU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bEq814YC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D1663C7
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 May 2024 11:44:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B3A1CAB8;
+	Thu,  2 May 2024 12:33:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714650279; cv=none; b=gq6ZX7GGK8D1vb+HOte+5o+Og7RlDmE0cHZvmieidqdnihn46dssfPbtfhi7nc1vXifxQFpUWL5XBw0Xw4J95oMMcuITPiMZ9G6o1WPTkoGELSy+0lDlEs+5iGxCTaICX2Umnq40A+ogB9d+K9kdfQDdhbP3nAXrTkIoxnYWW3s=
+	t=1714653227; cv=none; b=sEahviavpCepXgB7SNGcTb4iLE4RCFhXQqMMXVviJ4Auc4H7fb+4a2u+k4ENB2Epf1PoBGtSRVIJY//Xk8EKlGXqD9HBCT4Ken6SY6MYtCKJdXpMvxjd14U0lmxiOm82AItYGDbBA46HSbBWC5GPpfohXn+xsCNzeRpD2SuSWDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714650279; c=relaxed/simple;
-	bh=3B5U1op7r0DTmrEG2HdH2GbKAb31+8iCOdD7rSVpnX0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aky/9SH6VaL+QpLLF/5azCRAAvGOYpgobhbZ0VSYkr+IUHbrkDpWsY+eeUEY2kTbuduZuF3p9W6jKRVGpvdWLG8MMEJCcRBHg/WEtdEMFeff/JuMlyc05Etx90CgijDLdK3Y2Nen+S+ksq8uDHl/J96rUkt2vuQd6FjtV3D1stI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=En+nyEsU; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-de462979e00so8756863276.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 May 2024 04:44:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714650276; x=1715255076; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hs0Nc0RqDY6OiurlpPpTgb9tgJy9jZNX1Jp6pCKzxxM=;
-        b=En+nyEsUPc1JwEzc2k+SXZw9ecO8ayict3LYiA2Zoqb4JPZAPhgWobwBFAXXiCX/+4
-         nDBldw62lP9U/O0o6/7VVHSp++1CfC5j8+cTYD9cL/x+GirTXyAjbpSxqUU0rI3Hhp4S
-         zUy4vP+5/aAXlCRMVGpGCwWC1KEwCgyiZy3IST6S/YBDwQuJDagdpqppxct8nQw4dXra
-         lO+aMKeIcPAXRMWs/oWrKnOXykg3k46r8ZkDUbWgV9J2kT6n4D2OqRCZsbl4nopYFGNJ
-         IEjROQEVwzkGzqUyl3vdCxPzuYh/2J6JDO3DVACT2SQdz5dVezziZoZzVWYJ7RwJcDc7
-         GATA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714650276; x=1715255076;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hs0Nc0RqDY6OiurlpPpTgb9tgJy9jZNX1Jp6pCKzxxM=;
-        b=JWJ5TyeUp3o07TDuy8ftk3CDB21bKt/+Id8CAygdEKoVg/DFOCdaO4N5nEkW1wSLP3
-         195TEad3Tedwa3kFTxrouBVGCwEPQ9RUZQVCikBR4CKGLdrnr0Sp5QQGYuHp2stLsyw7
-         nh6t3q44aHsEnf2aBYCQ8Y+XcGQqXRMiFttLDQ6OKrMbFf0IwBOETCr29Snozkh6SotB
-         kp2O5Ht3lWKoMZUV6zQd+FUYu8QDghbhINuhOcbjukZGQ+5pLfvrQ+rkFsrLJfkcDFms
-         YThpZIDfazfz1UVumrcIz1+r1D4zZ3rjYs10enfB+7C85YWc3LNBzI7yOyVQSBTogcwr
-         uMCg==
-X-Forwarded-Encrypted: i=1; AJvYcCWiuTSHjYTdC7YhDDGoNy7etMROC4SzgsnPxdpLV/50ttBO3PqwsdZcXA7zVmHd4rGGFK5pguLAusJHJEbmb59hnfle8Zt4u3pU/V8wFg==
-X-Gm-Message-State: AOJu0YwkS+xWh3psr7NlZ7jiAhvPNRgmpNTLUbexGFhoVNFk6xEgXc+D
-	lPe6+kFBg2hBwHTqBCgu5iiflK5tLoXRjmE2sqIbxaSoJ+Vdhh3gNva3w92StJyvbAeDtm4gj8U
-	1t8L04YOg2FirzjzTVuWulOnOZ4uHFMjcmR/hCCCXftU/qwbRlohQD8PP
-X-Google-Smtp-Source: AGHT+IEFG+Ydm81rpI162xZeCq5BDZoBPUrt3LS/LIQol86OfQuy68hn7gucOlNacue4gvj7osvZue/EPKC5+EStroY=
-X-Received: by 2002:a5b:52:0:b0:de4:738b:c2ea with SMTP id e18-20020a5b0052000000b00de4738bc2eamr5728494ybp.24.1714650275853;
- Thu, 02 May 2024 04:44:35 -0700 (PDT)
+	s=arc-20240116; t=1714653227; c=relaxed/simple;
+	bh=KU1d/25dHnXkg9LRavi6LLAxYqgrX/LPaMphsUaqyag=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tNywbyQYjYx1UbXtw9iMJ2fDoAd9oCoouLP6Cx1XHG7A9E7Gcvz4fmAQ7YFj6jTYWQ308xlTa1Qb/1/i+urxKoGa+7IBoBMLIfi2awyCjAASrto4qb3jZeuBrjIsF77rRuC04DqX0b74meXhJcOgDEvXItaL7lk8kjnmLsDWdNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bEq814YC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 442BvSEk005299;
+	Thu, 2 May 2024 12:33:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=lHizHzFOmrodFfNFPzkjuWLTxyvbKXdlLj1BX/31P3c=; b=bE
+	q814YCU3ihKZunw0WeU/LX01c/r2NF5RP/x1nk95q6CPwb4bTMxI+zkYlBbtAjEJ
+	0iz3q3vnIt1O44iXyP4OovnSg1K7HCLcM/UFLvPG/4C8yjR2qDgUsrplyypulcDO
+	rNL0F2eqKaZi4KWUnr2b9/z/vj8Q0uHnp0MHZ/AYVEjxfFp+guEDUkXc7TxUd/uB
+	/ro/RAvbwsAGenpAC9PMG5XlB6tnDZoRF07l+wtTvpLoUiibxISRUSrxG+1O9wKI
+	yqjDiWh/F4A4FpLliOZS/tPds6P8LKH3Nyd6Xpeqkwjr24yA+sc3Ke0876opeYc1
+	AbnAQ/fQky9XWURlBVPQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xueu937k8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 May 2024 12:33:29 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 442CXR8B028175
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 2 May 2024 12:33:27 GMT
+Received: from hu-ugoswami-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 2 May 2024 05:33:24 -0700
+From: Udipto Goswami <quic_ugoswami@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon Vijay
+ Abraham I" <kishon@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        Udipto Goswami <quic_ugoswami@quicinc.com>
+Subject: [PATCH] phy: qcom-snps-femto-v2: Add load and voltage setting for LDO's used
+Date: Thu, 2 May 2024 18:03:12 +0530
+Message-ID: <20240502123312.31083-1-quic_ugoswami@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240502090326.21489-1-quic_kbajaj@quicinc.com>
- <CAA8EJprPLqj7GQM0vmN25U2+3kDow=NH8=-VC2N-0p92Ub3iCA@mail.gmail.com> <5134c012-60b1-4c07-9e1f-c48c3d88d404@quicinc.com>
-In-Reply-To: <5134c012-60b1-4c07-9e1f-c48c3d88d404@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 2 May 2024 14:44:24 +0300
-Message-ID: <CAA8EJppK7fMmX_cePhaK4Xy-+gfZfYZSWJDbEnVvq_60B32Rig@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Add devicetree support of USB for QDU/QRU1000
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc: Komal Bajaj <quic_kbajaj@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bjorn Andersson <quic_bjorande@quicinc.com>, quic_wcheng@quicinc.com, 
-	quic_ppratap@quicinc.com, Jack Pham <quic_jackp@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EK8oxntt2p1zrxQ0c4uJLpStPIqP59ll
+X-Proofpoint-ORIG-GUID: EK8oxntt2p1zrxQ0c4uJLpStPIqP59ll
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-02_01,2024-05-02_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ clxscore=1011 mlxscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405020077
 
-On Thu, 2 May 2024 at 12:48, Krishna Kurapati PSSNV
-<quic_kriskura@quicinc.com> wrote:
->
->
->
-> On 5/2/2024 2:39 PM, Dmitry Baryshkov wrote:
-> > On Thu, 2 May 2024 at 12:04, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
-> >>
-> >> This series adds devicetree nodes to support interconnects and usb for qdu/qru1000.
-> >> This is based on previously sent driver series[1].
-> >>
-> >> ------
-> >> Changes in v3:
-> >> * As per comments on upstream[2], to get role-switch working on QDU/QRU1000, it was recommended to
-> >>    use the actual TI switch driver. Since driver doesn't have the functionality to provide role-switch
-> >>    based on gpio, thus reverting back USB dr_mode to peripheral and removed the remote end-point nodes
-> >>    and usb-conn-gpio based role switch functionality.
-> >
-> > This is not correct. The recommendation was to describe hardware properly.
-> > Which means adding schema description, adding  ti,your-switch
-> > compatible to the usb-conn-gpio.c driver, etc.
-> >
->
-> Hi Dmitry,
->
->   Sorry for the confusion. In the comments [1],
->
-> "So the compatible string should be "ti,hd3ss3220". Which is fine to be
-> used in the platform driver. Just describe the differences in the
-> schema."
->
-> The compatible "ti,hd3ss3220" is already associated with a TI switch
-> driver [2]. But it works based on I2C. So we assumed you wanted us to
-> make changes to [2] by adding GPIO functionality (which usb-conn-gpio
-> exactly does), since the compatible you suggested matched with the TI
-> driver.
+The Femto phy depends on 0.88/ 1.8/ 3.3V regulators for its operation.
+If one of the regulators is not voted to the required minimum voltage
+for phy to operate, then High speed mode of operation will fail.
 
-First of all, please don't make assumptions. It's better to ask rather
-than making assumptions which turn up to be incorrect.
+On certain targets like (qcm6490_rb3gen2) where the minimum voltage
+of the regulator is lower than the operating voltage of the phy.
+If not voted properly, the phy supply would be limited to the min value
+of the LDO thereby rendering the phy non-operational.
 
-Compatibles describe hardware. DT describes hardware. There are no
-drivers in question (yet).
-You have TI switch on your board, so you have to use "ti,hd3ss3220" to
-describe it.
+The current implementation of the regulators in the Femto PHY is not
+setting the load and voltage for each LDO. The appropriate voltages and
+loads required for the PHY to operate should be set.
 
-Existing schema describes it as an I2C device. You have to extend the
-schema to allow non-i2c attachment. Describe GPIOs, make reg optional.
-Make this description purely from the datasheet and usb-c-connector
-point of view.
+Implement a bulk operation api to set load & voltages before doing bulk
+enable. This will ensure that the PHY remains operational under all
+conditions.
 
-> If it was to add compatible in usb-conn-gpio, then we can support OTG
-> functionality with no schema changes I believe, but the compatible
-> string might need a different name to avoid clashing with the name in [2].
+Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
+---
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 121 +++++++++++++++++-
+ 1 file changed, 114 insertions(+), 7 deletions(-)
 
-And this is the second, largely independent question. The
-usb-conn-gpio driver is a platform driver.The existing hd3ss3220.c
-driver is an I2C one. There is no clash between them.
-
-Note, unlike plain gpio-b-connector, the switch supports more pins and
-actually provides USB-C information to the host even when used in the
-dumb mode. Thus it might be better to add a separate driver that
-registers typec port and reports USB-C events.
-
->
-> [1]:
-> https://lore.kernel.org/all/CAA8EJppNZrLzT=vGS0NXnKJT_wL+bMB9jFhJ9K7b7FPgFQbcig@mail.gmail.com/
->
-> [2]:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/typec/hd3ss3220.c?h=v6.9-rc2
->
-> Regards,
-> Krishna,
->
-> >> * Link to v2: https://lore.kernel.org/linux-arm-msm/20240319091020.15137-1-quic_kbajaj@quicinc.com/
-> >>
-> >> Changes in v2:
-> >> * Changes qmpphy node name
-> >> * Changes dr_mode to otg and added USB-B port USB role switch
-> >> * Dropped maximum-speed property from usb dwc3 node
-> >> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240311120859.18489-1-quic_kbajaj@quicinc.com/
-> >>
-> >> [1] https://lore.kernel.org/linux-arm-msm/20240502082017.13777-1-quic_kbajaj@quicinc.com/
-> >> [2] https://lore.kernel.org/all/CAA8EJppNZrLzT=vGS0NXnKJT_wL+bMB9jFhJ9K7b7FPgFQbcig@mail.gmail.com/
-> >> ------
-> >>
-> >> Komal Bajaj (3):
-> >>    arm64: dts: qcom: qdu1000: Add USB3 and PHY support
-> >>    arm64: dts: qcom: qdu1000-idp: enable USB nodes
-> >>    arm64: dts: qcom: qru1000-idp: enable USB nodes
-> >>
-> >>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts |  23 +++++
-> >>   arch/arm64/boot/dts/qcom/qdu1000.dtsi    | 120 +++++++++++++++++++++++
-> >>   arch/arm64/boot/dts/qcom/qru1000-idp.dts |  23 +++++
-> >>   3 files changed, 166 insertions(+)
-> >>
-> >> --
-> >> 2.42.0
-> >>
-> >>
-> >
-> >
-
-
-
+diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+index eb0b0f61d98e..cbe9cdaa6849 100644
+--- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
++++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+@@ -78,11 +78,39 @@
+ 
+ #define LS_FS_OUTPUT_IMPEDANCE_MASK		GENMASK(3, 0)
+ 
+-static const char * const qcom_snps_hsphy_vreg_names[] = {
+-	"vdda-pll", "vdda33", "vdda18",
++
++struct qcom_snps_hsphy_regulator_data {
++	const char *name;
++	unsigned int enable_load;
++	unsigned int min_voltage;
++	unsigned int max_voltage;
++};
++
++static const struct qcom_snps_hsphy_regulator_data hsphy_vreg_l[] = {
++	{
++		.name = "vdda-pll",
++		.enable_load = 30000,
++		.min_voltage = 825000,
++		.max_voltage = 925000,
++	},
++
++	{
++		.name = "vdda18",
++		.enable_load = 19000,
++		.min_voltage = 1704000,
++		.max_voltage = 1800000
++	},
++
++	{
++		.name = "vdda33",
++		.enable_load = 16000,
++		.min_voltage = 3050000,
++		.max_voltage = 3300000
++	},
++
+ };
+ 
+-#define SNPS_HS_NUM_VREGS		ARRAY_SIZE(qcom_snps_hsphy_vreg_names)
++#define SNPS_HS_NUM_VREGS		ARRAY_SIZE(hsphy_vreg_l)
+ 
+ struct override_param {
+ 	s32	value;
+@@ -132,12 +160,90 @@ struct qcom_snps_hsphy {
+ 	struct clk_bulk_data *clks;
+ 	struct reset_control *phy_reset;
+ 	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
++	const struct qcom_snps_hsphy_regulator_data *vreg_list;
+ 
+ 	bool phy_initialized;
+ 	enum phy_mode mode;
+ 	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+ };
+ 
++static int __vdda_phy_bulk_enable_disable(struct qcom_snps_hsphy *hsphy, bool on)
++{
++	int ret = 0;
++	int i;
++
++	if (!on)
++		goto disable_vdd;
++
++	for (i = 0; i < SNPS_HS_NUM_VREGS; i++) {
++
++		ret = regulator_set_load(hsphy->vregs[i].consumer,
++					 hsphy->vreg_list[i].enable_load);
++
++		if (ret < 0) {
++			dev_err(hsphy->dev, "unable to set HPM of %s %d\n",
++						hsphy->vregs[i].supply, ret);
++			goto err_vdd;
++		}
++	}
++
++	for (i = 0; i < SNPS_HS_NUM_VREGS; i++) {
++		ret = regulator_set_voltage(hsphy->vregs[i].consumer,
++					    hsphy->vreg_list[i].min_voltage,
++					    hsphy->vreg_list[i].max_voltage);
++		if (ret) {
++			dev_err(hsphy->dev,
++				"unable to set voltage of regulator %s %d\n",
++						hsphy->vregs[i].supply, ret);
++			goto put_vdd_lpm;
++		}
++	}
++
++	ret = regulator_bulk_enable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
++	if (ret)
++		goto unconfig_vdd;
++
++	return ret;
++
++disable_vdd:
++	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
++
++unconfig_vdd:
++	for (i = 0; i < SNPS_HS_NUM_VREGS; i++) {
++		ret = regulator_set_voltage(hsphy->vregs[i].consumer, 0,
++					    hsphy->vreg_list[i].max_voltage);
++		if (ret) {
++			dev_err(hsphy->dev,
++			"unable to set voltage of regulator %s %d\n",
++					hsphy->vregs[i].supply, ret);
++		}
++	}
++
++put_vdd_lpm:
++	for (i = 0; i < SNPS_HS_NUM_VREGS; i++) {
++		ret = regulator_set_load(hsphy->vregs[i].consumer, 0);
++
++		if (ret < 0) {
++			dev_err(hsphy->dev, "unable to set LPM of %s %d\n",
++						hsphy->vregs[i].supply, ret);
++		}
++	}
++
++err_vdd:
++	return ret;
++
++}
++
++static int vdda_phy_bulk_enable(struct qcom_snps_hsphy *hsphy)
++{
++	return __vdda_phy_bulk_enable_disable(hsphy, true);
++}
++
++static int vdda_phy_bulk_disable(struct qcom_snps_hsphy *hsphy)
++{
++	return __vdda_phy_bulk_enable_disable(hsphy, false);
++}
++
+ static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
+ {
+ 	struct device *dev = hsphy->dev;
+@@ -390,7 +496,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ 
+ 	dev_vdbg(&phy->dev, "%s(): Initializing SNPS HS phy\n", __func__);
+ 
+-	ret = regulator_bulk_enable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
++	ret = vdda_phy_bulk_enable(hsphy);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -471,7 +577,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+ disable_clks:
+ 	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+ poweroff_phy:
+-	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
++	ret = vdda_phy_bulk_disable(hsphy);
+ 
+ 	return ret;
+ }
+@@ -482,7 +588,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
+ 
+ 	reset_control_assert(hsphy->phy_reset);
+ 	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+-	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
++	vdda_phy_bulk_disable(hsphy);
+ 	hsphy->phy_initialized = false;
+ 
+ 	return 0;
+@@ -592,8 +698,9 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+ 
+ 	num = ARRAY_SIZE(hsphy->vregs);
+ 	for (i = 0; i < num; i++)
+-		hsphy->vregs[i].supply = qcom_snps_hsphy_vreg_names[i];
++		hsphy->vregs[i].supply = hsphy_vreg_l[i].name;
+ 
++	hsphy->vreg_list  = hsphy_vreg_l;
+ 	ret = devm_regulator_bulk_get(dev, num, hsphy->vregs);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret,
 -- 
-With best wishes
-Dmitry
+2.17.1
+
 
