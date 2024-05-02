@@ -1,127 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-19133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5739A8B9A08
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 13:29:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04CD38B9A37
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 13:44:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 130D0284A06
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 11:29:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EA16BB216DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 11:44:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD17542044;
-	Thu,  2 May 2024 11:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C99CC6E617;
+	Thu,  2 May 2024 11:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ESlSRyPf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="En+nyEsU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8695040BF5;
-	Thu,  2 May 2024 11:29:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D1663C7
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 May 2024 11:44:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714649382; cv=none; b=BUQ2P+3TG7qJqpvHCYfZe04PGMGEKXgPXqLf2+0im6WbGkpATIY3EctSRdhnKwEZ5KdgJ4UCD9z5SKZ6AQ6SEd/I0CSALptSfnt72CFyJL0jGKTN69JzUXWNJvT1+skald+UY86dmbWetx3X4seAT90aKz9B/invZj8axBqvSQ0=
+	t=1714650279; cv=none; b=gq6ZX7GGK8D1vb+HOte+5o+Og7RlDmE0cHZvmieidqdnihn46dssfPbtfhi7nc1vXifxQFpUWL5XBw0Xw4J95oMMcuITPiMZ9G6o1WPTkoGELSy+0lDlEs+5iGxCTaICX2Umnq40A+ogB9d+K9kdfQDdhbP3nAXrTkIoxnYWW3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714649382; c=relaxed/simple;
-	bh=sFaNlOmGEeVD3nYHw0uf/YVM65vnE+n2alDOQR8Xux8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=taEJxZau7LUk6HvMkVI6mwDSUcZg6y3kj1BRc+ERTT1NZVF+3vXu31vuTA4GjrMJYiSJSKY9x0YMp/HjLkdpTN0tjiViVhPQjTAKElBsVOa/RB8f2Ric7OAIzGMZwt5gvFMzld0YGzZHgBoVws7JT72j2JdFd6NBdzXj8vxhntw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ESlSRyPf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8390CC113CC;
-	Thu,  2 May 2024 11:29:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714649382;
-	bh=sFaNlOmGEeVD3nYHw0uf/YVM65vnE+n2alDOQR8Xux8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ESlSRyPfuggpHlVgObOH64jFR9a8f9GIZCEhVT8gPmkobRlLYwAUiNRPfLbKhZwzW
-	 v7ynMJzCeC3YDHZQGy1Q/mS6f3TG5Qn8hnFAIHQSm32cuRdykxx6YOM7yco+HfAKf4
-	 SHaKiTPRAfmytRm0NPO+SKEUr04uz4iJG4jgPSVoxiiZTOrGtBPL9YTrVMvZjbNoNA
-	 hpfZSUbfu5x4dgJf3pv98nxFDT5uDOnpz3xK1za+KYGS+AiHdyoHiFFSauA8N8KIVL
-	 WWTfVYzc0t6o6VrvByrKuloKxF38CiRBT0qqJVhTi3bXJyhPvG5z1dB5AGwXshKh5j
-	 kw6XFUPZ5oEXg==
-Date: Thu, 2 May 2024 13:29:38 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-i2c@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mips@vger.kernel.org, linux-omap@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH 00/15] i2c: use 'time_left' with wait_for_*
-Message-ID: <6zrly2hk2vqljiuo3niehym74pqdgfv77fzjb63shgg4iiwhnt@zcnrqrke663b>
-References: <20240427203611.3750-1-wsa+renesas@sang-engineering.com>
+	s=arc-20240116; t=1714650279; c=relaxed/simple;
+	bh=3B5U1op7r0DTmrEG2HdH2GbKAb31+8iCOdD7rSVpnX0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aky/9SH6VaL+QpLLF/5azCRAAvGOYpgobhbZ0VSYkr+IUHbrkDpWsY+eeUEY2kTbuduZuF3p9W6jKRVGpvdWLG8MMEJCcRBHg/WEtdEMFeff/JuMlyc05Etx90CgijDLdK3Y2Nen+S+ksq8uDHl/J96rUkt2vuQd6FjtV3D1stI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=En+nyEsU; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-de462979e00so8756863276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 May 2024 04:44:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1714650276; x=1715255076; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hs0Nc0RqDY6OiurlpPpTgb9tgJy9jZNX1Jp6pCKzxxM=;
+        b=En+nyEsUPc1JwEzc2k+SXZw9ecO8ayict3LYiA2Zoqb4JPZAPhgWobwBFAXXiCX/+4
+         nDBldw62lP9U/O0o6/7VVHSp++1CfC5j8+cTYD9cL/x+GirTXyAjbpSxqUU0rI3Hhp4S
+         zUy4vP+5/aAXlCRMVGpGCwWC1KEwCgyiZy3IST6S/YBDwQuJDagdpqppxct8nQw4dXra
+         lO+aMKeIcPAXRMWs/oWrKnOXykg3k46r8ZkDUbWgV9J2kT6n4D2OqRCZsbl4nopYFGNJ
+         IEjROQEVwzkGzqUyl3vdCxPzuYh/2J6JDO3DVACT2SQdz5dVezziZoZzVWYJ7RwJcDc7
+         GATA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714650276; x=1715255076;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hs0Nc0RqDY6OiurlpPpTgb9tgJy9jZNX1Jp6pCKzxxM=;
+        b=JWJ5TyeUp3o07TDuy8ftk3CDB21bKt/+Id8CAygdEKoVg/DFOCdaO4N5nEkW1wSLP3
+         195TEad3Tedwa3kFTxrouBVGCwEPQ9RUZQVCikBR4CKGLdrnr0Sp5QQGYuHp2stLsyw7
+         nh6t3q44aHsEnf2aBYCQ8Y+XcGQqXRMiFttLDQ6OKrMbFf0IwBOETCr29Snozkh6SotB
+         kp2O5Ht3lWKoMZUV6zQd+FUYu8QDghbhINuhOcbjukZGQ+5pLfvrQ+rkFsrLJfkcDFms
+         YThpZIDfazfz1UVumrcIz1+r1D4zZ3rjYs10enfB+7C85YWc3LNBzI7yOyVQSBTogcwr
+         uMCg==
+X-Forwarded-Encrypted: i=1; AJvYcCWiuTSHjYTdC7YhDDGoNy7etMROC4SzgsnPxdpLV/50ttBO3PqwsdZcXA7zVmHd4rGGFK5pguLAusJHJEbmb59hnfle8Zt4u3pU/V8wFg==
+X-Gm-Message-State: AOJu0YwkS+xWh3psr7NlZ7jiAhvPNRgmpNTLUbexGFhoVNFk6xEgXc+D
+	lPe6+kFBg2hBwHTqBCgu5iiflK5tLoXRjmE2sqIbxaSoJ+Vdhh3gNva3w92StJyvbAeDtm4gj8U
+	1t8L04YOg2FirzjzTVuWulOnOZ4uHFMjcmR/hCCCXftU/qwbRlohQD8PP
+X-Google-Smtp-Source: AGHT+IEFG+Ydm81rpI162xZeCq5BDZoBPUrt3LS/LIQol86OfQuy68hn7gucOlNacue4gvj7osvZue/EPKC5+EStroY=
+X-Received: by 2002:a5b:52:0:b0:de4:738b:c2ea with SMTP id e18-20020a5b0052000000b00de4738bc2eamr5728494ybp.24.1714650275853;
+ Thu, 02 May 2024 04:44:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240427203611.3750-1-wsa+renesas@sang-engineering.com>
+References: <20240502090326.21489-1-quic_kbajaj@quicinc.com>
+ <CAA8EJprPLqj7GQM0vmN25U2+3kDow=NH8=-VC2N-0p92Ub3iCA@mail.gmail.com> <5134c012-60b1-4c07-9e1f-c48c3d88d404@quicinc.com>
+In-Reply-To: <5134c012-60b1-4c07-9e1f-c48c3d88d404@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 2 May 2024 14:44:24 +0300
+Message-ID: <CAA8EJppK7fMmX_cePhaK4Xy-+gfZfYZSWJDbEnVvq_60B32Rig@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Add devicetree support of USB for QDU/QRU1000
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Komal Bajaj <quic_kbajaj@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>, quic_wcheng@quicinc.com, 
+	quic_ppratap@quicinc.com, Jack Pham <quic_jackp@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Wolfram,
+On Thu, 2 May 2024 at 12:48, Krishna Kurapati PSSNV
+<quic_kriskura@quicinc.com> wrote:
+>
+>
+>
+> On 5/2/2024 2:39 PM, Dmitry Baryshkov wrote:
+> > On Thu, 2 May 2024 at 12:04, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+> >>
+> >> This series adds devicetree nodes to support interconnects and usb for qdu/qru1000.
+> >> This is based on previously sent driver series[1].
+> >>
+> >> ------
+> >> Changes in v3:
+> >> * As per comments on upstream[2], to get role-switch working on QDU/QRU1000, it was recommended to
+> >>    use the actual TI switch driver. Since driver doesn't have the functionality to provide role-switch
+> >>    based on gpio, thus reverting back USB dr_mode to peripheral and removed the remote end-point nodes
+> >>    and usb-conn-gpio based role switch functionality.
+> >
+> > This is not correct. The recommendation was to describe hardware properly.
+> > Which means adding schema description, adding  ti,your-switch
+> > compatible to the usb-conn-gpio.c driver, etc.
+> >
+>
+> Hi Dmitry,
+>
+>   Sorry for the confusion. In the comments [1],
+>
+> "So the compatible string should be "ti,hd3ss3220". Which is fine to be
+> used in the platform driver. Just describe the differences in the
+> schema."
+>
+> The compatible "ti,hd3ss3220" is already associated with a TI switch
+> driver [2]. But it works based on I2C. So we assumed you wanted us to
+> make changes to [2] by adding GPIO functionality (which usb-conn-gpio
+> exactly does), since the compatible you suggested matched with the TI
+> driver.
 
-On Sat, Apr 27, 2024 at 10:35:52PM +0200, Wolfram Sang wrote:
-> There is a confusing pattern in the kernel to use a variable named 'timeout' to
+First of all, please don't make assumptions. It's better to ask rather
+than making assumptions which turn up to be incorrect.
 
-there was a little checkpatch warning here for the line being
-over 75 characters, but I went ahead anyway and pushed the whole
-series to i2c/i2c-host.
+Compatibles describe hardware. DT describes hardware. There are no
+drivers in question (yet).
+You have TI switch on your board, so you have to use "ti,hd3ss3220" to
+describe it.
 
-Thanks,
-Andi
+Existing schema describes it as an I2C device. You have to extend the
+schema to allow non-i2c attachment. Describe GPIOs, make reg optional.
+Make this description purely from the datasheet and usb-c-connector
+point of view.
 
-> store the result of wait_for_*() causing patterns like:
-> 
->         timeout = wait_for_completion_timeout(...)
->         if (!timeout) return -ETIMEDOUT;
-> 
-> with all kinds of permutations. Use 'time_left' as a variable to make the code
-> self explaining.
-> 
-> This is the I2C part of a tree-wide series. The rest of the patches can
-> be found here (slightly WIP):
-> 
-> git://git.kernel.org/pub/scm/linux/kernel/git/wsa/linux.git i2c/time_left
-> 
-> Because these patches are generated, they need manual audit. So, I will
-> send them step by step. This is part 1 and also a call for opinions if
-> this is a desirable change. But at least in the I2C realm, I really want
-> to have it proper.
-> 
-> Build bot is happy with these patches and I also compile tested them
-> (except two). No functional changes intended.
-> 
-> Wolfram Sang (15):
->   i2c: amd-mp2-plat: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: digicolor: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: exynos5: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: hix5hd2: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: imx-lpi2c: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: omap: use 'time_left' variable with wait_for_completion_timeout()
->   i2c: st: use 'time_left' variable with wait_for_completion_timeout()
->   i2c: stm32f4: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: stm32f7: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: synquacer: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: jz4780: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: qcom-geni: use 'time_left' variable with
->     wait_for_completion_timeout()
->   i2c: rk3x: use 'time_left' variable with wait_event_timeout()
->   i2c: s3c2410: use 'time_left' variable with wait_event_timeout()
->   i2c: pxa: use 'time_left' variable with wait_event_timeout()
-> 
-> -- 
-> 2.43.0
-> 
+> If it was to add compatible in usb-conn-gpio, then we can support OTG
+> functionality with no schema changes I believe, but the compatible
+> string might need a different name to avoid clashing with the name in [2].
+
+And this is the second, largely independent question. The
+usb-conn-gpio driver is a platform driver.The existing hd3ss3220.c
+driver is an I2C one. There is no clash between them.
+
+Note, unlike plain gpio-b-connector, the switch supports more pins and
+actually provides USB-C information to the host even when used in the
+dumb mode. Thus it might be better to add a separate driver that
+registers typec port and reports USB-C events.
+
+>
+> [1]:
+> https://lore.kernel.org/all/CAA8EJppNZrLzT=vGS0NXnKJT_wL+bMB9jFhJ9K7b7FPgFQbcig@mail.gmail.com/
+>
+> [2]:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/typec/hd3ss3220.c?h=v6.9-rc2
+>
+> Regards,
+> Krishna,
+>
+> >> * Link to v2: https://lore.kernel.org/linux-arm-msm/20240319091020.15137-1-quic_kbajaj@quicinc.com/
+> >>
+> >> Changes in v2:
+> >> * Changes qmpphy node name
+> >> * Changes dr_mode to otg and added USB-B port USB role switch
+> >> * Dropped maximum-speed property from usb dwc3 node
+> >> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240311120859.18489-1-quic_kbajaj@quicinc.com/
+> >>
+> >> [1] https://lore.kernel.org/linux-arm-msm/20240502082017.13777-1-quic_kbajaj@quicinc.com/
+> >> [2] https://lore.kernel.org/all/CAA8EJppNZrLzT=vGS0NXnKJT_wL+bMB9jFhJ9K7b7FPgFQbcig@mail.gmail.com/
+> >> ------
+> >>
+> >> Komal Bajaj (3):
+> >>    arm64: dts: qcom: qdu1000: Add USB3 and PHY support
+> >>    arm64: dts: qcom: qdu1000-idp: enable USB nodes
+> >>    arm64: dts: qcom: qru1000-idp: enable USB nodes
+> >>
+> >>   arch/arm64/boot/dts/qcom/qdu1000-idp.dts |  23 +++++
+> >>   arch/arm64/boot/dts/qcom/qdu1000.dtsi    | 120 +++++++++++++++++++++++
+> >>   arch/arm64/boot/dts/qcom/qru1000-idp.dts |  23 +++++
+> >>   3 files changed, 166 insertions(+)
+> >>
+> >> --
+> >> 2.42.0
+> >>
+> >>
+> >
+> >
+
+
+
+-- 
+With best wishes
+Dmitry
 
