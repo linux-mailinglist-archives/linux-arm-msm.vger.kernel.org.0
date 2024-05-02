@@ -1,120 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-19149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B97398BA16D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 22:13:23 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF4B58BA300
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 00:08:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E86DE1C2151D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 20:13:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49963B21E5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 22:08:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA3BA180A95;
-	Thu,  2 May 2024 20:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F48E57CBD;
+	Thu,  2 May 2024 22:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="HH7Akq59"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ElpTu5xx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-17.smtpout.orange.fr [80.12.242.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC41158845;
-	Thu,  2 May 2024 20:13:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D1157C94;
+	Thu,  2 May 2024 22:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714680797; cv=none; b=BWrvYxKZ8Z/ah2SQ2Mrpr+V+1THyiUEUzX1ZBJfiV2+iswfbs42kwONckQNlHEQkEBUUzWSKZ5Kh6qHWqC/qQPeF2rIirL11QrtLv9XPFkdnhjbeRtggAIWS+57tlbBEApJsxWwq/1flaba9YtrU+9jYWEXk350Ey8ZmtxULDwM=
+	t=1714687693; cv=none; b=Z7bb7BY5+3EjKjIaWEgAl7MFOqibfItUPDASRPSU3VGmIendAZrHj1mq2knqvNdcXhRKUvqU4dSx82RyKKUv74eTR0PP8EDL7/K62Sz1sDOqsWYyzkLW18BAZQMItE5jsDNc13RRyxvmjgSDdgNpcINa2EHfoJ2Na7Axn8B50aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714680797; c=relaxed/simple;
-	bh=qFIP7k9Gs4vwTcVje7q6elE+MmAusYXcHMvSEBBntAU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CuOQLWBAyGfkSHgsQDhE32oTK3a86ffyiJ8Pugh/zhtX77Lc4dneNFOmfcuAdrxoTc11AHvMU/h58qWPYXecEuWlWiRLt9C334t1u38xg7jvJ42IBSbxO2BCaZrDncpdluV9X6Qirfjxr70zeMQjY0BPeU5vmeiypO3eqwwpiqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=HH7Akq59; arc=none smtp.client-ip=80.12.242.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from [192.168.1.37] ([86.243.17.157])
-	by smtp.orange.fr with ESMTPA
-	id 2cngsZkixUMqY2cngsWQgT; Thu, 02 May 2024 22:13:06 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1714680786;
-	bh=4hGjswma74ozpI6l2DVvyyn31CrL8ZkyXTaEf2lOVKU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=HH7Akq59Ise5EXDVdE64IqVsm/TLFHUnEWfNQuWaAiDnQobOhuhdZJe705bfi08qb
-	 IHUW6uaodfGEeDngh+D1goA7Kzzdknjt9MQ0G5RMyV6ergnVVDM4FnxuDhXbY4bBUL
-	 4OrsqJacDu67Gn2+ijqPM42G9H3LMC3YN64cPEA3XrL7g+Tn2Gkmfn/9UZ+1M5kjd6
-	 lc52oGB7Pv8/CFDnV4c8vZ+7GpC8dnx6kTVMg+iD4sVkkp/IYVD+ywNT+ZA9o/4rd1
-	 sOW7PYrOpivBJZuPEaGjqqjONA6q2m1auX7WP+0+c3wNiUXbMOqtWr+pgfeA4kqCTl
-	 aLweBxWQddaAg==
-X-ME-Helo: [192.168.1.37]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Thu, 02 May 2024 22:13:06 +0200
-X-ME-IP: 86.243.17.157
-Message-ID: <1f42371c-2fc9-46e5-b27b-3167e026e772@wanadoo.fr>
-Date: Thu, 2 May 2024 22:13:04 +0200
+	s=arc-20240116; t=1714687693; c=relaxed/simple;
+	bh=cSANErKMObf9NcEc3inF4RRCpSSxHvJpKviDOhPVmmA=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=VyURsm6NTFXqbClgvcXtz1eP9qKJh+D32j+gfBeliqcrrxSQpoC31l5NEY/Z++E5cWqPMKJtVT87VTrcGNeZjDdt3Cvu/xVV6Qe8dSj4887FrkcU1xu/JvUB4fNx2skbK+71+POpJNxvtFuQv4MNV/WonBUh1+wWMqvQT+4Vfqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ElpTu5xx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBAFC4AF1A;
+	Thu,  2 May 2024 22:08:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714687692;
+	bh=cSANErKMObf9NcEc3inF4RRCpSSxHvJpKviDOhPVmmA=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=ElpTu5xxSPMOj5k/4UL9XZWNAQS2SHdDSklZoNs99G/RM2pZjH6Fb1qZZBezlyDxp
+	 UHzERTN9Xkk2QzqSPqfIhh0bBjc0TKWraQhWvZ5Vyo+JwGol7n0P41FJhncmBm+g0d
+	 RlykMIaMrYSB5y4ZJRUy02vmMwbImrWJWBA4YFueqphO9m0EE/e9kXX5NGxCcRSGaP
+	 npwQtFCmGUiQ9ro/XuAtgeMw+aiJhvOPpKpmmSxzj0PNVoVP9t7XKn9iXC6NXhKFG9
+	 C7cM9ZVgx1w8vWLCsoTdjpfxh9JuEj3ufYEZHmXglkfC46zDwS3il4oDX1y901h2jr
+	 ZCnYKng2Nnzcw==
+Message-ID: <2e05b0e246431d9dcf28c7135fff8231.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] leds: sy7802: Add support for Silergy SY7802 flash
- LED controller
-To: git@apitzsch.eu, Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
-References: <20240401-sy7802-v2-0-1138190a7448@apitzsch.eu>
- <20240401-sy7802-v2-2-1138190a7448@apitzsch.eu>
-Content-Language: en-MW
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <20240401-sy7802-v2-2-1138190a7448@apitzsch.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240502034247.2621996-1-quic_mdalam@quicinc.com>
+References: <20240502034247.2621996-1-quic_mdalam@quicinc.com>
+Subject: Re: [PATCH] clk: qcom: gcc-ipq9574: Add BRANCH_HALT_VOTED flag
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: quic_mdalam@quicinc.com
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, mturquette@baylibre.com, quic_srichara@quicinc.com, quic_varada@quicinc.com
+Date: Thu, 02 May 2024 15:08:10 -0700
+User-Agent: alot/0.10
 
-Le 01/04/2024 à 23:23, André Apitzsch via B4 Relay a écrit :
-> From: André Apitzsch <git@apitzsch.eu>
-> 
-> Add support for SY7802 flash LED controller. It can support up to 1.8A
-> flash current.
-> 
-> Signed-off-by: André Apitzsch <git@apitzsch.eu>
+Quoting Md Sadre Alam (2024-05-01 20:42:47)
+> Add BRANCH_HALT_VOTED flag to inform clock framework
+> don't check for CLK_OFF bit.
+>=20
+> CRYPTO_AHB_CLK_ENA and CRYPTO_AXI_CLK_ENA enable bit is
+> present in other VOTE registers also, like TZ.
+> If anyone else also enabled this clock, even if we turn
+> off in GCC_APCS_CLOCK_BRANCH_ENA_VOTE | 0x180B004, it won't
+> turn off.
+
+Are you seeing problems where we need to send this patch to stable?
+
+>=20
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 > ---
->   drivers/leds/flash/Kconfig       |  11 +
->   drivers/leds/flash/Makefile      |   1 +
->   drivers/leds/flash/leds-sy7802.c | 532 +++++++++++++++++++++++++++++++++++++++
->   3 files changed, 544 insertions(+)
 
-...
+Any fixes tag?
 
-> +static int sy7802_led_register(struct device *dev, struct sy7802_led *led,
-> +			       struct device_node *np)
-> +{
-> +	struct led_init_data init_data = {};
-> +	int ret;
-> +
-> +	init_data.fwnode = of_fwnode_handle(np);
-> +
-> +	ret = devm_led_classdev_flash_register_ext(dev, &led->flash, &init_data);
-> +	if (ret) {
-> +		dev_err(dev, "Couldn't register flash %d\n", led->led_no);
-> +		return ret;
-> +	}
-> +
-> +	return ret;
+>  drivers/clk/qcom/gcc-ipq9574.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq957=
+4.c
+> index 0a3f846695b8..f8b9a1e93bef 100644
+> --- a/drivers/clk/qcom/gcc-ipq9574.c
+> +++ b/drivers/clk/qcom/gcc-ipq9574.c
+> @@ -2140,9 +2140,10 @@ static struct clk_rcg2 pcnoc_bfdcd_clk_src =3D {
+> =20
+>  static struct clk_branch gcc_crypto_axi_clk =3D {
+>         .halt_reg =3D 0x16010,
+> +       .halt_check =3D BRANCH_HALT_VOTED,
+>         .clkr =3D {
+> -               .enable_reg =3D 0x16010,
+> -               .enable_mask =3D BIT(0),
+> +               .enable_reg =3D 0xb004,
 
-Hi,
+You could be more explicit in the commit text that you're changing the
+register offset to the voting register.
 
-Nitpick: return 0;
-
-CJ
-
-> +}
-
+> +               .enable_mask =3D BIT(15),
 
