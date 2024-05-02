@@ -1,154 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-19129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 812788B9830
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 11:56:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D0B38B9873
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 12:05:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7BF4B20DA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 09:56:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E2DB1C20997
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 10:05:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C4C556750;
-	Thu,  2 May 2024 09:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1132E56B76;
+	Thu,  2 May 2024 10:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pPqyRPF+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AE8R0PEy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9AA56457;
-	Thu,  2 May 2024 09:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753C342AAB;
+	Thu,  2 May 2024 10:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714643758; cv=none; b=ib+ebqdVtzzYCjbDmO+YMNwjTm1oI0L+YCBEl7aIWZav+qRP9z8Xsh7FG6rEmDt799Dwm/i2C7QCFBivK2JrAHVRxzD/xCh/Zx/72/vZV+nh2HiBlNAj5HRhd7q4D57mlnTsukKX2NkXKAeaylv0P5Tuj48frINzHQgx8poyWU4=
+	t=1714644342; cv=none; b=rPFOLb0XajGps5k4URLqWC6HysjhppVwK0R6EWa3fs+2t0YMs8ofi6yEQ1TWDqZVlmoIY53+C/fNnLZGkuVHiB3uzK+b3I0cpL1e3ei5b+ObCwSGTKd9sADj3PUnmTOXA+iFyA7BKvVAbRWXK/rWkMYTyvfK19om8LUlb33NyII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714643758; c=relaxed/simple;
-	bh=ssWnVaIJikdkkjYTU5z1sAgnit9Q2Wj3oLCmC/RYMUA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ADiVCo5yJHkWDwuN00X8dpC5oq3grEzNp9XELSHZ5LfbPpawONAvgef/711J0M+3jPpGLcBjOB6pLoqG2ZnYISbugbhYk+C/XTvtPddsrz5sksBlx9wdilp/+8RRUq131NnZhQ8EK2CRBEMigh3kaeUAPhcXzrST1YNHBUOwEfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pPqyRPF+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38056C113CC;
-	Thu,  2 May 2024 09:55:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714643758;
-	bh=ssWnVaIJikdkkjYTU5z1sAgnit9Q2Wj3oLCmC/RYMUA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pPqyRPF+pAOtrhqdNWI0T6K7VwtOspwfVEHF7RY5RiA64Uy0x55xE4V4E5oovDBek
-	 vNhUSznMh3uibGmR8HuvWwK1CrhxW7KtLDkiHd/OThIZqAJNsTMJYA4gQlnrMxyT1v
-	 KY1uW7Gun2w2dTNa3MEJS00KZHYFw/VSuwOM14xXRcdPgiYKDcjC6UqMAPRNEDUwbr
-	 tOT9sCpQfaye42bYFm8bnenFWISkMueXnpvH/01YohjPAjYUY/PKRyBp8ajug0TiPH
-	 9oKRqg+dg0kooHFCd3q6Ivhfu+C0nB31nmWuojp0YNZ8ymiQfnMjkHPPgzVln5FS/K
-	 loL2enV9q4GRQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1s2TAW-000000002lB-0cpt;
-	Thu, 02 May 2024 11:56:00 +0200
-Date: Thu, 2 May 2024 11:56:00 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/6] dt-bindings: HID: i2c-hid: elan: add
- 'no-reset-on-power-off' property
-Message-ID: <ZjNjMBNMegmTgN5B@hovoldconsulting.com>
-References: <20240423134611.31979-1-johan+linaro@kernel.org>
- <20240423134611.31979-4-johan+linaro@kernel.org>
- <2e67e4e6-83a7-4153-b6a7-cdec0ab2c171@kernel.org>
- <Zii2CUeIyBwxzrBu@hovoldconsulting.com>
- <bde4884c-117b-4e6e-8c7b-401b8320655b@kernel.org>
+	s=arc-20240116; t=1714644342; c=relaxed/simple;
+	bh=CSMF8TVTmfpyLAZ8iFxB/1Lk5CprpPEhzH86+AomcuQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Gnbi+L9U29w9I2xy4As3wwRBbMH3hGoRRdyToVuhx7sMk1mXb6fuqpvDAuJsSt3NbAgfw4dEOYaSRXC3glGmLLUm2pWz+k85HscjPmhzinpzhwKkET79WMSnKGgD5vQlQRVzLcQXCtfOwaJwjh74/D9Uhwbt5ISndiI/ucnxp/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AE8R0PEy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4426kp2E012287;
+	Thu, 2 May 2024 10:05:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=TJq2/i5Zj8Gb1ky2H4os8IPFUg6ME1ot9K9spfIJlm4=; b=AE
+	8R0PEyAL7hWQhtx5WwtS8e1xKc+Ekg5QrNJw724SqKlqUMEzr3/H3GLwWpA9OY0F
+	cnNUx/OfcRLnNAC0E0WVZcGhPscCPiLvYkp48KiZFRQ0bP/nU7iUqgPijgYAmj+9
+	jJeIzY5oBLQbrHXNxbvYLloXmQgztyxQzwIFu6GrOF8QpxU3sY1Vi433GxpdXTmv
+	Erq55rJ3NtkzL/jW551diuVS8B6rXPGQhSS/OTcNnAZ+sZ88JPS2oE5/4us9BES+
+	UT279cDpne5xeUJB//3zpsn2EjLuMzT9tJjyWEjaiQo/XijPV7PHYAXpsEb0f2b9
+	/Dk493PV7rGYrlTpcKyA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xv41mgjgn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 May 2024 10:05:35 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 442A5YpV020501
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 2 May 2024 10:05:34 GMT
+Received: from [10.216.26.108] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 2 May 2024
+ 03:05:29 -0700
+Message-ID: <46e4000b-e588-d1b7-153e-047ed565565a@quicinc.com>
+Date: Thu, 2 May 2024 15:35:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bde4884c-117b-4e6e-8c7b-401b8320655b@kernel.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v3 1/2] dt-bindings: clock: qcom: Add AHB clock for SM8150
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Jagadeesh
+ Kona" <quic_jkona@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+References: <20240501-videocc-sm8150-dt-node-v3-0-2c4bd9ef48bd@quicinc.com>
+ <20240501-videocc-sm8150-dt-node-v3-1-2c4bd9ef48bd@quicinc.com>
+ <CAA8EJpotvs3AOYO3ct=_JabBdYDops4Yfdutga9KBAbVPoZ5yw@mail.gmail.com>
+From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
+In-Reply-To: <CAA8EJpotvs3AOYO3ct=_JabBdYDops4Yfdutga9KBAbVPoZ5yw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: M8lt5M0Jugx5xPU3ML55SjwMf0gpsb3D
+X-Proofpoint-ORIG-GUID: M8lt5M0Jugx5xPU3ML55SjwMf0gpsb3D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-01_16,2024-05-02_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015
+ priorityscore=1501 mlxscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405020062
 
-Hi Krzysztof,
 
-and sorry about the late reply. Got side-tracked.
+On 5/1/2024 5:36 PM, Dmitry Baryshkov wrote:
+> On Wed, 1 May 2024 at 11:32, Satya Priya Kakitapalli
+> <quic_skakitap@quicinc.com> wrote:
+>> SM8150 videocc needs AHB clock, so update the bindings for sm8150
+>> to add the AHB clock.
+>>
+>> Fixes: 35d26e9292e2 ("dt-bindings: clock: Add YAML schemas for the QCOM VIDEOCC clock bindings")
+> The tag is incorrect. The mentioned commit didn't add sm8150 bindings,
+> so it didn't have a bug.
 
-On Thu, Apr 25, 2024 at 11:39:24AM +0200, Krzysztof Kozlowski wrote:
-> On 24/04/2024 09:34, Johan Hovold wrote:
-> > On Tue, Apr 23, 2024 at 06:29:44PM +0200, Krzysztof Kozlowski wrote:
-> >> On 23/04/2024 15:46, Johan Hovold wrote:
-> >>> When the power supply is shared with other peripherals the reset line
-> >>> can be wired in such a way that it can remain deasserted regardless of
-> >>> whether the supply is on or not.
 
-> >>> This is important as it can be used to avoid holding the controller in
-> >>> reset for extended periods of time when it remains powered, something
-> >>> which can lead to increased power consumption. Leaving reset deasserted
-> >>> also avoids leaking current through the reset circuitry pull-up
-> >>> resistors.
-> >>>
-> >>> Add a new 'no-reset-on-power-off' devicetree property which can be used
-> >>> by the OS to determine when reset needs to be asserted on power down.
-> >>>
-> >>> Note that this property can also be used when the supply cannot be
-> >>> turned off by the OS at all.
-> > 
-> >>>    reset-gpios:
-> >>>      description: Reset GPIO; not all touchscreens using eKTH6915 hook this up.
-> >>>  
-> >>> +  no-reset-on-power-off:
- 
-> >> Anyway, the property sounds like what the OS should be doing, which is
-> >> not what we want. You basically instruct driver what to do. We want a
-> >> described hardware configuration or hardware specifics.
-> > 
-> > Right, and this was why I at first rejected a property name like this in
-> > favour of 'reset-pulled-to-supply' in my first draft. That name
-> > obviously does not work as the 'supply' suffix is already claimed, but I
-> > also realised that it doesn't really describe the hardware property that
-> > allows the reset line to remain asserted.
-> > 
-> > The key feature in this hardware design is that the reset line will not
-> > just be pulled to the supply voltage (what other voltage would it be
-> > pulled to), but that it is also pulled to ground when the supply is
-> > disabled.
-> 
-> OK, if the property was specific to the hardware, then I would propose
-> something more hardware-related, e.g. "reset-supply-tied". However :
-> 
-> > Rather than trying to encode this in the property name, I settled on the
-> > descriptive 'no-reset-on-power-off' after the seeing the prior art in
-> > 'goodix,no-reset-during-suspend' property. The latter is too specific
-> > and encodes policy, but the former could still be considered hardware
-> > description and would also apply to other designs which have the
-> > property that the reset line should be left deasserted.
-> > 
-> > One such example is when the supply can not be disabled at all (e.g. the
-> > Goodix case), but I can imagine there being more than one way to design
-> > such reset circuits.
-> 
-> It seems it is common problem. LEDs have property
-> "retain-state-shutdown", to indicate that during system shutdown we
-> should not touch them (like power off). Would some variant be applicable
-> here? First, do we talk here about power off like system shutdown or
-> runtime PM, thus suspend?
+Thanks, will correct the tag.
 
-A name like 'retain-state-shutdown' would also be too specific as what
-I'm describing here is that the reset line should be (or can be) left
-deasserted whenever the OS wants to power off the device.
 
-That could be during suspend, but more generally whenever the OS
-determines that the device does not need to be powered (e.g. when
-closing a character device).
+>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/clock/qcom,videocc.yaml         | 17 ++++++++++++++++-
+>>   1 file changed, 16 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+>> index 6999e36ace1b..68bac801adb0 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+>> @@ -75,7 +75,6 @@ allOf:
+>>             enum:
+>>               - qcom,sc7180-videocc
+>>               - qcom,sdm845-videocc
+>> -            - qcom,sm8150-videocc
+>>       then:
+>>         properties:
+>>           clocks:
+>> @@ -101,6 +100,22 @@ allOf:
+>>               - const: bi_tcxo
+>>               - const: bi_tcxo_ao
+>>
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          enum:
+>> +            - qcom,sm8150-videocc
+> Could you please extend the sm8250 case instead of defining a new one?
+> Also could you please check if there is a clock (like ahb_clk_src)
+> that uses bi_tcxo_ao instead of bi_tcxo? If so, we have to add this
+> clock to the bindings even if the driver doesn't use/model it at this
+> point.
 
-Johan
+
+There are no clocks using the bi_tcxo_ao on sm8150. Hence added separate 
+case for sm8150 instead of re-using sm8250.
+
+
+>> +    then:
+>> +      properties:
+>> +        clocks:
+>> +          items:
+>> +            - description: AHB
+>> +            - description: Board XO source
+>> +        clock-names:
+>> +          items:
+>> +            - const: iface
+>> +            - const: bi_tcxo
+>> +
+>>     - if:
+>>         properties:
+>>           compatible:
+>>
+>> --
+>> 2.25.1
+>>
+>
 
