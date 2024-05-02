@@ -1,143 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-19146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A99018B9EF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 18:54:10 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D9E58B9F1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 19:00:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB09D1C21E9F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 16:54:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C5C2BB2302C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 17:00:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4973116D9A4;
-	Thu,  2 May 2024 16:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EA4116D327;
+	Thu,  2 May 2024 17:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GzRLyXgc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pbyRwes4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1430D15E80E;
-	Thu,  2 May 2024 16:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FA728FC;
+	Thu,  2 May 2024 17:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714668845; cv=none; b=lG83rJzkONZQz0/Mpykkzr2xwwaiKbsToShcHRddP1EWB1/rYPrUY8HdA9984ZNqWRIjnxexaWqkXOYCWtORBoq4i19vhPKdOvgi+9E16eyDQiKVXoRaXNPFe4kJ1XSA1bfz6wt7i8hI1bPkKqfb4PJoRwzhJl+tjWhnMEjSVew=
+	t=1714669207; cv=none; b=BIBXqX/OTkk9XmmZjKJ62q+iMpcDOnai+lm0CRm9edA+th8BbSDD+wf5LYbbD5pCAT9mws/L6Jou5kD4rVoy71dFHH2FX4YAm8VlJBVqEjUV2KvlxA28WzPNuBEWBUw6RQEFf22Qh2yQXf9x74aERxCaXcGcP+1MPLNvU2Ug84A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714668845; c=relaxed/simple;
-	bh=OLGfIPy7WzXr5vPGBKNPCXFEJl7Vq520a+RMhrYvuO8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OZFPUYsJpQIJoipIXUDHXxxjw5F8O3NmKcaBUeHk2jqP66MWQvdVOmSGYOPFloCC7Us8VAN36IbtzysfsV23HkIoM5se8RQ53EEeTLzY5FWGeOjoq0OU5gYDBuEaiwLfksCckIZHmsZQydBtgU8PMlB9Ttyfxlmx0PkdUxJAqT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GzRLyXgc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA938C116B1;
-	Thu,  2 May 2024 16:54:00 +0000 (UTC)
+	s=arc-20240116; t=1714669207; c=relaxed/simple;
+	bh=OiDJwOanTJQJbw1DN8FqcsNA/YyYHEbYGPxLuFJsy0I=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=BqPoX1OwWrI0N4erXZ5uV5w96mComCuMa3+BlmNbKY8QpNuADOQVvcbvC/d1Ukj56+RActZi5Nmf812mkTZTS3F4RZSgdrqU5Z/XKpLtDKEk7DfRFWzkdeZlOUrSob1GZmbLpvAeF5nLvzTQecASXJ73Xu18ImjTX8YFmZniIxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pbyRwes4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25924C113CC;
+	Thu,  2 May 2024 17:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714668844;
-	bh=OLGfIPy7WzXr5vPGBKNPCXFEJl7Vq520a+RMhrYvuO8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GzRLyXgcaxa8KUf1gzDxi1g9pS3L7O2CBA0GR0/B02Xd/v5fw0790sP7bma6wJej7
-	 srExDQkAByoIChhIH4GJM29CDBpoERkPNfBz4UaE8Bo+9pbgmwKb/X3vj69wHw2cAe
-	 DofeWNyOWo+u8mRHAGY9wzt9PszhIlXK0wG/vkbLqBUxzezNSiyvKckHFDyyZtVIYP
-	 lTtmLwCzvcvRLvIHj0XiCmrmi34F6kMD86sJrz4n3UYH2jvnl89TyVLylxxSdnChB+
-	 O5awecR8RqlykXDWZH7WbfxedHmfhR7hAuY65qTnMrd8ZLppBvixHWmZmU9FI7jS1/
-	 QXOJwitZWsq3w==
-Message-ID: <963a1006-a68f-448d-807f-40c9e85e1c2a@kernel.org>
-Date: Thu, 2 May 2024 19:53:57 +0300
+	s=k20201202; t=1714669207;
+	bh=OiDJwOanTJQJbw1DN8FqcsNA/YyYHEbYGPxLuFJsy0I=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=pbyRwes4UHVWEBR/jQB9tj8jnwJRglInaCgddQklp6Oe1aUrJTZN84ObIgEBXzg4Y
+	 vbdsTPjPFBFHutKIaq4wXN+0vcslYLCPnNeuCHbdwXk0ZGDozqH8mAJr+4crBsaE1B
+	 fLZ5JuFoT9XsSPfkgaBqeIFy5Xucqc4Gpi/yVIg+mnbLKFqr2SaD62zaLPcgBJkFjO
+	 hYjw/oTGRgdArsgiNOhZGmndlfQkJMUYlKq+snr7OCmT9RlFxX6wfn6nMls+jR55mr
+	 HQ6S2EfPq6ySYT85mAm0AxohvvE/JJSK/7aYpfV1ZxhHnyuPjL5JCqnwaK20nCm1Ib
+	 roPbl3Kb51YOg==
+From: Lee Jones <lee@kernel.org>
+To: Lee Jones <lee@kernel.org>, 
+ Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org
+In-Reply-To: <8a76de25cefb533d94dfe35062bbd9a8e72f4bb9.1713971415.git.christophe.jaillet@wanadoo.fr>
+References: <8a76de25cefb533d94dfe35062bbd9a8e72f4bb9.1713971415.git.christophe.jaillet@wanadoo.fr>
+Subject: Re: (subset) [PATCH] mfd: ssbi: Remove an unused field in struct
+ ssbi
+Message-Id: <171466920590.1212584.14000886789749205606.b4-ty@kernel.org>
+Date: Thu, 02 May 2024 18:00:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 2/7] iommu/arm-smmu-qcom-debug: Add support for TBUs
-Content-Language: en-US
-To: Will Deacon <will@kernel.org>, Georgi Djakov <quic_c_gdjako@quicinc.com>
-Cc: robin.murphy@arm.com, joro@8bytes.org, iommu@lists.linux.dev,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
- robdclark@gmail.com, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- quic_cgoldswo@quicinc.com, quic_sukadev@quicinc.com, quic_pdaly@quicinc.com,
- quic_sudaraja@quicinc.com
-References: <20240417133731.2055383-1-quic_c_gdjako@quicinc.com>
- <20240417133731.2055383-3-quic_c_gdjako@quicinc.com>
- <20240501143400.GA15503@willie-the-truck>
-From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20240501143400.GA15503@willie-the-truck>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.12.4
 
-Hi Will,
+On Wed, 24 Apr 2024 17:10:29 +0200, Christophe JAILLET wrote:
+> In "struct ssbi", the 'slave' field is unused.
+> Remove it.
+> 
+> Found with cppcheck, unusedStructMember.
+> 
+> 
 
-On 1.05.24 17:34, Will Deacon wrote:
-> Hi Georgi,
-> 
-> On Wed, Apr 17, 2024 at 06:37:26AM -0700, Georgi Djakov wrote:
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
->> index bb89d49adf8d..eff7ca94ec8d 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-> 
-> ...
-> 
->> +static const struct of_device_id qcom_tbu_of_match[] = {
->> +	{ .compatible = "qcom,sc7280-tbu" },
->> +	{ .compatible = "qcom,sdm845-tbu" },
->> +	{ }
->> +};
->> +
->> +static struct platform_driver qcom_tbu_driver = {
->> +	.driver = {
->> +		.name           = "qcom_tbu",
->> +		.of_match_table = qcom_tbu_of_match,
->> +	},
->> +	.probe = qcom_tbu_probe,
->> +};
->> +builtin_platform_driver(qcom_tbu_driver);
-> 
-> I just noticed that this breaks a modular build of the arm-smmu driver
-> because we now have two init functions for the module:
-> 
->    ld.lld: error: duplicate symbol: init_module
->    >>> defined at arm-smmu.c
->    >>>            drivers/iommu/arm/arm-smmu/arm-smmu.o:(init_module)
->    >>> defined at arm-smmu-qcom-debug.c
->    >>>            drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.o:(.init.text+0x4)
-> 
-> I think you should initialise the TBU debug feature by calling into it
-> manually from qcom_smmu_impl_init().
-> 
-> Please can you send a patch to fix that? For now, I'll bodge it so that
-> the qcom debug stuff doesn't build as a module (see below).
+Applied, thanks!
 
-Тhanks for sorting that out and apologies for missing it. We are at rc6 now and
-i am afraid that i won't be able to validate my patch until next week (Easter
-holidays here). I'll definitely send the rework when I get back.
+[1/1] mfd: ssbi: Remove an unused field in struct ssbi
+      commit: daa2efd8f49cc2dd6d900e7f5f6b6077a8bdfa87
 
-BR,
-Georgi
-
-> 
-> Cheers,
-> 
-> Will
-> 
-> --->8
-> 
-> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> index 032bfd681307..66325210c8c9 100644
-> --- a/drivers/iommu/Kconfig
-> +++ b/drivers/iommu/Kconfig
-> @@ -376,7 +376,7 @@ config ARM_SMMU_QCOM
-> 
->   config ARM_SMMU_QCOM_DEBUG
->          bool "ARM SMMU QCOM implementation defined debug support"
-> -       depends on ARM_SMMU_QCOM
-> +       depends on ARM_SMMU_QCOM=y
->          help
->            Support for implementation specific debug features in ARM SMMU
->            hardware found in QTI platforms. This include support for
-> 
+--
+Lee Jones [李琼斯]
 
 
