@@ -1,130 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-19148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DDEA8BA102
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 21:19:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B97398BA16D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 22:13:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F436281A3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 19:19:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E86DE1C2151D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 20:13:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF53F17BB12;
-	Thu,  2 May 2024 19:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA3BA180A95;
+	Thu,  2 May 2024 20:13:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="HH7Akq59"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtprelay04.ispgateway.de (smtprelay04.ispgateway.de [80.67.31.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.smtpout.orange.fr (smtp-17.smtpout.orange.fr [80.12.242.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448341DDE9;
-	Thu,  2 May 2024 19:19:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.31.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC41158845;
+	Thu,  2 May 2024 20:13:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714677594; cv=none; b=etXM6TLUux7ekR63Vc8oepAiibgfSjaEDjpBPEhiDPRmyc6/RZuwFSkY6It24hH/W5/BsaXQgifmMd3Szog/J4+jxp4n0nh0kSrdzaNgoAtX/xajnfbESY0M/2GexIL9/lgQmAwS3u6ZfUb3MeanjZXDLSQ6wuoN1Z1wXhXYQN4=
+	t=1714680797; cv=none; b=BWrvYxKZ8Z/ah2SQ2Mrpr+V+1THyiUEUzX1ZBJfiV2+iswfbs42kwONckQNlHEQkEBUUzWSKZ5Kh6qHWqC/qQPeF2rIirL11QrtLv9XPFkdnhjbeRtggAIWS+57tlbBEApJsxWwq/1flaba9YtrU+9jYWEXk350Ey8ZmtxULDwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714677594; c=relaxed/simple;
-	bh=cMv9nLPugJbMDvj5g8lAQwCGg7iV1EJ33oheAeccbpA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=l4fzcCAdyEoENs2xo7PXsgSLqOFxfrU51/ZM+bOAkiZdsiy4rDN78pttx69bgpqL5sM+/qNcq6hvxlav9glhtld0ODUrIHTShpo+kAQ4oThpBHVDmi8zNbK2PhKB82X6TPBc0F4lwRQb2kvJyF1IEOk39H+ZdRO59rLTl5Tmqv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu; spf=pass smtp.mailfrom=apitzsch.eu; arc=none smtp.client-ip=80.67.31.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apitzsch.eu
-Received: from [92.206.191.65] (helo=framework.lan)
-	by smtprelay04.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <git@apitzsch.eu>)
-	id 1s2bxV-000000007N8-1Lcs;
-	Thu, 02 May 2024 21:19:09 +0200
-Message-ID: <9bb6ef63e19bf079fd881a3b78b71d7a00e4a3bb.camel@apitzsch.eu>
-Subject: Re: [PATCH v2 2/3] leds: sy7802: Add support for Silergy SY7802
- flash LED controller
-From: =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
-To: Lee Jones <lee@kernel.org>
-Cc: Pavel Machek <pavel@ucw.cz>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley
- <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>, "Gustavo A. R.
- Silva" <gustavoars@kernel.org>,  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-leds@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-hardening@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Date: Thu, 02 May 2024 21:19:13 +0200
-In-Reply-To: <20240502091017.GF5338@google.com>
-References: <20240401-sy7802-v2-0-1138190a7448@apitzsch.eu>
-	 <20240401-sy7802-v2-2-1138190a7448@apitzsch.eu>
-	 <20240411124855.GJ1980182@google.com>
-	 <c5e5f49295350ada2cdb280a77b1c877058d4d64.camel@apitzsch.eu>
-	 <20240502091017.GF5338@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.1 
+	s=arc-20240116; t=1714680797; c=relaxed/simple;
+	bh=qFIP7k9Gs4vwTcVje7q6elE+MmAusYXcHMvSEBBntAU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CuOQLWBAyGfkSHgsQDhE32oTK3a86ffyiJ8Pugh/zhtX77Lc4dneNFOmfcuAdrxoTc11AHvMU/h58qWPYXecEuWlWiRLt9C334t1u38xg7jvJ42IBSbxO2BCaZrDncpdluV9X6Qirfjxr70zeMQjY0BPeU5vmeiypO3eqwwpiqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=HH7Akq59; arc=none smtp.client-ip=80.12.242.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from [192.168.1.37] ([86.243.17.157])
+	by smtp.orange.fr with ESMTPA
+	id 2cngsZkixUMqY2cngsWQgT; Thu, 02 May 2024 22:13:06 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1714680786;
+	bh=4hGjswma74ozpI6l2DVvyyn31CrL8ZkyXTaEf2lOVKU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=HH7Akq59Ise5EXDVdE64IqVsm/TLFHUnEWfNQuWaAiDnQobOhuhdZJe705bfi08qb
+	 IHUW6uaodfGEeDngh+D1goA7Kzzdknjt9MQ0G5RMyV6ergnVVDM4FnxuDhXbY4bBUL
+	 4OrsqJacDu67Gn2+ijqPM42G9H3LMC3YN64cPEA3XrL7g+Tn2Gkmfn/9UZ+1M5kjd6
+	 lc52oGB7Pv8/CFDnV4c8vZ+7GpC8dnx6kTVMg+iD4sVkkp/IYVD+ywNT+ZA9o/4rd1
+	 sOW7PYrOpivBJZuPEaGjqqjONA6q2m1auX7WP+0+c3wNiUXbMOqtWr+pgfeA4kqCTl
+	 aLweBxWQddaAg==
+X-ME-Helo: [192.168.1.37]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Thu, 02 May 2024 22:13:06 +0200
+X-ME-IP: 86.243.17.157
+Message-ID: <1f42371c-2fc9-46e5-b27b-3167e026e772@wanadoo.fr>
+Date: Thu, 2 May 2024 22:13:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] leds: sy7802: Add support for Silergy SY7802 flash
+ LED controller
+To: git@apitzsch.eu, Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org
+References: <20240401-sy7802-v2-0-1138190a7448@apitzsch.eu>
+ <20240401-sy7802-v2-2-1138190a7448@apitzsch.eu>
+Content-Language: en-MW
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20240401-sy7802-v2-2-1138190a7448@apitzsch.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Am Donnerstag, dem 02.05.2024 um 10:10 +0100 schrieb Lee Jones:
-> On Wed, 01 May 2024, Andr=C3=A9 Apitzsch wrote:
->=20
-> > > > +		ret =3D -EBUSY;
-> > > > +		goto unlock;
-> > > > +	}
-> > > > +
-> > > > +	if (level)
-> > > > +		curr =3D chip->fled_torch_used | BIT(led-
-> > > > >led_no);
-> > > > +	else
-> > > > +		curr =3D chip->fled_torch_used & ~BIT(led-
-> > > > >led_no);
-> > > > +
-> > > > +	if (curr)
-> > > > +		val |=3D SY7802_MODE_TORCH;
-> > > > +
-> > > > +	/* Torch needs to be disabled first to apply new
-> > > > brightness */
-> > >=20
-> > > "Disable touch to apply brightness"
-> > >=20
-> > > > +	ret =3D regmap_update_bits(chip->regmap,
-> > > > SY7802_REG_ENABLE,
-> > > > SY7802_MODE_MASK,
-> > > > +				 SY7802_MODE_OFF);
-> > > > +	if (ret)
-> > > > +		goto unlock;
-> > > > +
-> > > > +	mask =3D led->led_no =3D=3D SY7802_LED_JOINT ?
-> > > > SY7802_TORCH_CURRENT_MASK_ALL :
-> > >=20
-> > > Why not just use led->led_no in place of mask?
-> >=20
-> > I might be missing something, but I don't know how to use led-
-> > >led_no
-> > in place of mask, when
-> > led->led_no is in {0,1,2} and
-> > mask is in {0x07, 0x38, 0x3f}.
->=20
-> This doesn't make much sense.
->=20
-> I guess you mean that led_no is a u8 and mask is a u32.
->=20
-> What happens if you cast led_no to u32 in the call to
-> regmap_update_bits()?
+Le 01/04/2024 à 23:23, André Apitzsch via B4 Relay a écrit :
+> From: André Apitzsch <git@apitzsch.eu>
+> 
+> Add support for SY7802 flash LED controller. It can support up to 1.8A
+> flash current.
+> 
+> Signed-off-by: André Apitzsch <git@apitzsch.eu>
+> ---
+>   drivers/leds/flash/Kconfig       |  11 +
+>   drivers/leds/flash/Makefile      |   1 +
+>   drivers/leds/flash/leds-sy7802.c | 532 +++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 544 insertions(+)
 
-Sorry, I'm still confused. Could you elaborate your original question?
+...
 
->=20
-> > > Easier to read if you drop SY7802_TORCH_CURRENT_MASK_ALL to its
-> > > own
-> > > line.
-> > >=20
-> > > > +	=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SY7802_TORCH_CURRENT_MASK(le=
-d->led_no);
-> > > > +
-> > > > [..]
-> > > >=20
->=20
+> +static int sy7802_led_register(struct device *dev, struct sy7802_led *led,
+> +			       struct device_node *np)
+> +{
+> +	struct led_init_data init_data = {};
+> +	int ret;
+> +
+> +	init_data.fwnode = of_fwnode_handle(np);
+> +
+> +	ret = devm_led_classdev_flash_register_ext(dev, &led->flash, &init_data);
+> +	if (ret) {
+> +		dev_err(dev, "Couldn't register flash %d\n", led->led_no);
+> +		return ret;
+> +	}
+> +
+> +	return ret;
+
+Hi,
+
+Nitpick: return 0;
+
+CJ
+
+> +}
 
 
