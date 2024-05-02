@@ -1,184 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-19130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D0B38B9873
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 12:05:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93A848B99B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 13:06:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E2DB1C20997
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 10:05:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FEE1285CAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 11:05:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1132E56B76;
-	Thu,  2 May 2024 10:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A083D64CE1;
+	Thu,  2 May 2024 11:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AE8R0PEy"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ftuPKS2c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753C342AAB;
-	Thu,  2 May 2024 10:05:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8F65FEF2;
+	Thu,  2 May 2024 11:05:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714644342; cv=none; b=rPFOLb0XajGps5k4URLqWC6HysjhppVwK0R6EWa3fs+2t0YMs8ofi6yEQ1TWDqZVlmoIY53+C/fNnLZGkuVHiB3uzK+b3I0cpL1e3ei5b+ObCwSGTKd9sADj3PUnmTOXA+iFyA7BKvVAbRWXK/rWkMYTyvfK19om8LUlb33NyII=
+	t=1714647941; cv=none; b=QHIcBTsMeRKPjzg2cR9KiBWyHeRIURKzkC7qdzLyhRXml0ebE36uYfo4ojmdK59CXVBNuW56CQ19lVglD4aMjnaU0eoGw4BZVgFImSTgkuRmObRdFNjVlEYfli4h1jXWxXW0pNB8W5A8/QGUszOEBGEx2jt4wPGpN8BVqnZuzOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714644342; c=relaxed/simple;
-	bh=CSMF8TVTmfpyLAZ8iFxB/1Lk5CprpPEhzH86+AomcuQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Gnbi+L9U29w9I2xy4As3wwRBbMH3hGoRRdyToVuhx7sMk1mXb6fuqpvDAuJsSt3NbAgfw4dEOYaSRXC3glGmLLUm2pWz+k85HscjPmhzinpzhwKkET79WMSnKGgD5vQlQRVzLcQXCtfOwaJwjh74/D9Uhwbt5ISndiI/ucnxp/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AE8R0PEy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4426kp2E012287;
-	Thu, 2 May 2024 10:05:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=TJq2/i5Zj8Gb1ky2H4os8IPFUg6ME1ot9K9spfIJlm4=; b=AE
-	8R0PEyAL7hWQhtx5WwtS8e1xKc+Ekg5QrNJw724SqKlqUMEzr3/H3GLwWpA9OY0F
-	cnNUx/OfcRLnNAC0E0WVZcGhPscCPiLvYkp48KiZFRQ0bP/nU7iUqgPijgYAmj+9
-	jJeIzY5oBLQbrHXNxbvYLloXmQgztyxQzwIFu6GrOF8QpxU3sY1Vi433GxpdXTmv
-	Erq55rJ3NtkzL/jW551diuVS8B6rXPGQhSS/OTcNnAZ+sZ88JPS2oE5/4us9BES+
-	UT279cDpne5xeUJB//3zpsn2EjLuMzT9tJjyWEjaiQo/XijPV7PHYAXpsEb0f2b9
-	/Dk493PV7rGYrlTpcKyA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xv41mgjgn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 May 2024 10:05:35 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 442A5YpV020501
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 2 May 2024 10:05:34 GMT
-Received: from [10.216.26.108] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 2 May 2024
- 03:05:29 -0700
-Message-ID: <46e4000b-e588-d1b7-153e-047ed565565a@quicinc.com>
-Date: Thu, 2 May 2024 15:35:25 +0530
+	s=arc-20240116; t=1714647941; c=relaxed/simple;
+	bh=EluTdDMIMNhKZ/EkpupaemH1PZsrZoO5k/Ow1fEItns=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:From:Subject:
+	 In-Reply-To:Content-Type; b=hgudez0EHh1lSeBgMrnyQ6P9F1uXbbhzXjgkjErC+XGidjJggXOQuOFhqRUe7FScZ8oNkbb02EnlTlY+cm7+T82zHuDJ80hmIVfNQhBMV3G7jIVcFvVruLygQHSbb62YEZhXn/LmQvsAYnwhp/T+Vv1L5n2kCBDEoxzyzvXvEe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ftuPKS2c; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1714647940; x=1746183940;
+  h=message-id:date:mime-version:to:cc:references:from:
+   subject:in-reply-to:content-transfer-encoding;
+  bh=EluTdDMIMNhKZ/EkpupaemH1PZsrZoO5k/Ow1fEItns=;
+  b=ftuPKS2c6s6Q6BcO03FR5MvmaWT642aql9qTd4VwhhM615excS1TAHcF
+   c9zmc2rp/d0eBS0bjC/PpknfcH5DXWZ9MzCAskdkPdyMLUx+W88fFRv8A
+   GNrGBdEeB3YFR5ywBb8QUnjYDV7ylN+kCa+mErnVhsnOAOeTw9f6dfkou
+   T8LVGsgHgUnIYaEeN/yyJMYy3wfWIO1wtlVVs5LCPc3W1CVfFTsIc2AYj
+   yj3f4C0tAdSo09qyIPsEnNGI4e+qnKQBawITc/+WQpVfk3sMjS/+7sMgL
+   SzPA72pIQdUBhv1bfnYw1btn3TkEE/U/AnrehM2eNl4AW99WmaXG1oPuC
+   Q==;
+X-CSE-ConnectionGUID: oUmZip18Tjm7AxchHOyvjA==
+X-CSE-MsgGUID: QnUiwb2NQxGOBAcRY3am0g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11061"; a="21813489"
+X-IronPort-AV: E=Sophos;i="6.07,247,1708416000"; 
+   d="scan'208";a="21813489"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2024 04:05:39 -0700
+X-CSE-ConnectionGUID: RNrykgpXQNOhcPL/BW4gnA==
+X-CSE-MsgGUID: 8wdqEQM1TVOscvvgR0xz0w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,247,1708416000"; 
+   d="scan'208";a="50280954"
+Received: from mattu-haswell.fi.intel.com (HELO [10.237.72.199]) ([10.237.72.199])
+  by fmviesa002.fm.intel.com with ESMTP; 02 May 2024 04:05:34 -0700
+Message-ID: <ddd682da-5cfd-db09-e316-3c54939caf90@linux.intel.com>
+Date: Thu, 2 May 2024 14:07:26 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: clock: qcom: Add AHB clock for SM8150
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.13.0
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh
- Kona" <quic_jkona@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
-References: <20240501-videocc-sm8150-dt-node-v3-0-2c4bd9ef48bd@quicinc.com>
- <20240501-videocc-sm8150-dt-node-v3-1-2c4bd9ef48bd@quicinc.com>
- <CAA8EJpotvs3AOYO3ct=_JabBdYDops4Yfdutga9KBAbVPoZ5yw@mail.gmail.com>
-From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-In-Reply-To: <CAA8EJpotvs3AOYO3ct=_JabBdYDops4Yfdutga9KBAbVPoZ5yw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, lgirdwood@gmail.com, andersson@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+ Thinh.Nguyen@synopsys.com, broonie@kernel.org, bgoswami@quicinc.com,
+ tiwai@suse.com, robh@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
+ <20240425215125.29761-7-quic_wcheng@quicinc.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: Re: [PATCH v20 06/41] usb: host: xhci-sideband: Expose a sideband
+ interrupter enable API
+In-Reply-To: <20240425215125.29761-7-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: M8lt5M0Jugx5xPU3ML55SjwMf0gpsb3D
-X-Proofpoint-ORIG-GUID: M8lt5M0Jugx5xPU3ML55SjwMf0gpsb3D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-01_16,2024-05-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 mlxscore=0 bulkscore=0 phishscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2405020062
+
+On 26.4.2024 0.50, Wesley Cheng wrote:
+> Some use cases maybe require that the secondary interrupter's events to
+> be handled by the OS.  In this case, configure the IMOD and the
+> skip_events property to enable the interrupter's events.  By default,
+> assume that the secondary interrupter doesn't want to enable OS event
+> handling.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
+>   drivers/usb/host/xhci-sideband.c  | 28 ++++++++++++++++++++++++++++
+>   include/linux/usb/xhci-sideband.h |  2 ++
+>   2 files changed, 30 insertions(+)
+> 
+> diff --git a/drivers/usb/host/xhci-sideband.c b/drivers/usb/host/xhci-sideband.c
+> index 255feae33c6e..6fdae9840c11 100644
+> --- a/drivers/usb/host/xhci-sideband.c
+> +++ b/drivers/usb/host/xhci-sideband.c
+> @@ -237,6 +237,30 @@ xhci_sideband_get_event_buffer(struct xhci_sideband *sb)
+>   }
+>   EXPORT_SYMBOL_GPL(xhci_sideband_get_event_buffer);
+>   
+> +/**
+> + * xhci_sideband_enable_interrupt - enable interrupt for secondary interrupter
+> + * @sb: sideband instance for this usb device
+> + * @imod_interval: number of event ring segments to allocate
+> + *
+> + * Enables OS owned event handling for a particular interrupter if client
+> + * requests for it.  In addition, set the IMOD interval for this particular
+> + * interrupter.
+> + *
+> + * Returns 0 on success, negative error otherwise
+> + */
+> +int xhci_sideband_enable_interrupt(struct xhci_sideband *sb, u32 imod_interval)
+> +{
+> +	if (!sb || !sb->ir)
+> +		return -ENODEV;
+> +
+> +	xhci_set_interrupter_moderation(sb->ir, imod_interval);
+
+Is there a need to adjust the moderation after initial setup?
+
+If not then maybe we could pass the imod_interval as a parameter to
+xhci_create_secondary_interrupter(), and avoid exporting
+xhci_set_interrupter_moderation()
 
 
-On 5/1/2024 5:36 PM, Dmitry Baryshkov wrote:
-> On Wed, 1 May 2024 at 11:32, Satya Priya Kakitapalli
-> <quic_skakitap@quicinc.com> wrote:
->> SM8150 videocc needs AHB clock, so update the bindings for sm8150
->> to add the AHB clock.
->>
->> Fixes: 35d26e9292e2 ("dt-bindings: clock: Add YAML schemas for the QCOM VIDEOCC clock bindings")
-> The tag is incorrect. The mentioned commit didn't add sm8150 bindings,
-> so it didn't have a bug.
+> +	sb->ir->skip_events = false;
+> +	xhci_enable_interrupter(sb->ir);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_enable_interrupt);
 
+I can't find the place where xhci_sideband_enable_interrupt() is called in
+this series. How is it planned to be used?
 
-Thanks, will correct the tag.
-
-
->> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->> ---
->>   .../devicetree/bindings/clock/qcom,videocc.yaml         | 17 ++++++++++++++++-
->>   1 file changed, 16 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
->> index 6999e36ace1b..68bac801adb0 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
->> @@ -75,7 +75,6 @@ allOf:
->>             enum:
->>               - qcom,sc7180-videocc
->>               - qcom,sdm845-videocc
->> -            - qcom,sm8150-videocc
->>       then:
->>         properties:
->>           clocks:
->> @@ -101,6 +100,22 @@ allOf:
->>               - const: bi_tcxo
->>               - const: bi_tcxo_ao
->>
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          enum:
->> +            - qcom,sm8150-videocc
-> Could you please extend the sm8250 case instead of defining a new one?
-> Also could you please check if there is a clock (like ahb_clk_src)
-> that uses bi_tcxo_ao instead of bi_tcxo? If so, we have to add this
-> clock to the bindings even if the driver doesn't use/model it at this
-> point.
-
-
-There are no clocks using the bi_tcxo_ao on sm8150. Hence added separate 
-case for sm8150 instead of re-using sm8250.
-
-
->> +    then:
->> +      properties:
->> +        clocks:
->> +          items:
->> +            - description: AHB
->> +            - description: Board XO source
->> +        clock-names:
->> +          items:
->> +            - const: iface
->> +            - const: bi_tcxo
->> +
->>     - if:
->>         properties:
->>           compatible:
->>
->> --
->> 2.25.1
->>
->
+Thanks
+Mathias
 
