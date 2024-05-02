@@ -1,164 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-19104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 730568B9214
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 01:13:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCE828B92B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 02:20:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 964C61C20B26
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 May 2024 23:13:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83E5E283955
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 00:20:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6772168AE2;
-	Wed,  1 May 2024 23:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61742320E;
+	Thu,  2 May 2024 00:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cEwmYYd2"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bugOooDb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F44B1649A8
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 May 2024 23:13:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC76833FD
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 May 2024 00:20:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714605232; cv=none; b=XHyCW05szwXukqoz26d5BguHmRDlruXg35mSydyivxuwhQc21Rr0pK46MpH8rNH/RCOk7+BT5W90BvliRxh1CUg8wTScybhNq7xvKT3cmd6TRIwD6fBriGW0dYB3iIbhzHvp0Of4Lko/TwNtvRxrtkngXoWrFatE64ynQV1NqSA=
+	t=1714609222; cv=none; b=pPAdxwPgbmOMEB2kE582QQvOVh4uKzlbS+WuJd7fDVgFBSmBr8StD4s94vBXos6RAGPA4YU0J9WgUGwkIf74kvA2L9aRVJVuTOLDF081zrOxJbwInLK+nTagTkvQWMlznl7l1qiWBMIm9xvfwMLuL+FuXt/Me+THPzUxshelc98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714605232; c=relaxed/simple;
-	bh=Jp5j7VAsVFbBco8tSe/QBTxiO2L2qNjnlYyph8TEINU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eVZuS66agtJm3utClr+rMDSN1dmDZJQ6QPeo1hqn9uGbkztOqX7A+jd0PzoRdwgtrGRPezJozuSsSx067z6Ki2sVkyqU56K6UDvsQctyzW+98wTeNiU3e9QO8u7GgAGieLHgVc5r3TV7VMKSwiHWxeKHKgaVB4NAEfwXgSfNL6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cEwmYYd2; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a52223e004dso787907066b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 16:13:51 -0700 (PDT)
+	s=arc-20240116; t=1714609222; c=relaxed/simple;
+	bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kyv76VG5x/6IU2yAR1TK1tuA87f1QZmL8U+umjDLqGpyVA+VJCh3hr1NOCwFp/Fna7yFz58bhliQR9fjwor1xfva1L3M9KCf6E72e7Dkt4yJfXE5rJlfxe01o3ZHbzDXtL7LgCUJF73f3bk8tR1wscG+pYdfgyZvnf8AelAlESc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bugOooDb; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-69b514d3cf4so80599736d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 May 2024 17:20:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714605230; x=1715210030; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jp5j7VAsVFbBco8tSe/QBTxiO2L2qNjnlYyph8TEINU=;
-        b=cEwmYYd2eGJgJo8DYjDWvcCGv68Hzs4IBBDJLGfc5AePnC/yv22daJGjG9GHwE3udW
-         yoURiL9o8leCa6nAv0ha07JBpthMs1aDWuh3livgDgxLxwGVbHBwHBlXrFqusx97fa5x
-         7AxLoQWnTGGMgvc7UaLaUOX65p4AMIGRAYUw5H3nZZTSxZL0OuTgc+5fOob/caZRUxun
-         srw5Vr1e4ezGkzS5oU1fNaDxXvxc7Iwz/R8ejkUyKPc05zbo476UbPbf0Ch3RNj+ls9a
-         oZlrMKCUNq/qd4D3eBo4AhvOv/Ui2WRqWegVVMNx5iccjji7CVHGUn0zri6IuPEllqsY
-         ALkw==
+        d=chromium.org; s=google; t=1714609219; x=1715214019; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
+        b=bugOooDbNCoejEADieRSHfp+9g6wkP/WY5N81ay1vzvGoq9aDajmDDrc4ebJcA7tpO
+         xqIBRAA74ziMGHE6IaKSd1sj/mPgs75ZJslJq9k3nI59loWl7hpzCBET6TrcqCndATp0
+         Lbk1EQfNSufBOQlfVmf7Lb0BrTUMmJmp03A+c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714605230; x=1715210030;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1714609219; x=1715214019;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jp5j7VAsVFbBco8tSe/QBTxiO2L2qNjnlYyph8TEINU=;
-        b=u/IoX9G2LCn+i9qZ/KLepMVa9XuiYFfJNxZErWvPbQJa2scYjYhVuOF1Tc+U0uV3Nf
-         udfelaHe8tv41U0dxOMWC44kLyfwzjLIVehN/vcdWK8FTrUgQ662YDMYxwiHrjQV+mbs
-         inf39ClhYfp19UeMU8Czmk074ab7y89VLoGhwbGuVURz/0v0mLxNGICUOcq+6r7H89Vh
-         ilA0th234BhxMGLw/OMkrtMX6avhyEGXZlfrDkEIxP4qsmq67OtOHRMWr0CIXEVWOvuQ
-         Q8YPxj82LrEsU330W9AG8f87wQzibY0mXgaU+JSSc2zQUSoMEoqomMBZ4DQY+RGwCPiO
-         gUIA==
-X-Forwarded-Encrypted: i=1; AJvYcCV4pT6+CaOdYisqAXctlIJ/7x2BbXGdI3Z7+OQp9xJz5PG91K+baafIA0o3L7KMgfUOuZjltI2GRJhUGNdZUGZkv90aA4JZWq/Is0zcuw==
-X-Gm-Message-State: AOJu0YxWTgMSsth8OKArwr8aWVbxUrkfXbAaA085UEShBhaNmD1tjx8e
-	mI5+NvvL83zZ2R8N8kkXUvO6r8UzXOX9Y7FQeHakVdxQt+QeOJ9LIRKlyze0+Ig=
-X-Google-Smtp-Source: AGHT+IExWqXN6g2T7SY8JNtnknwKEW5mG45BY2T0TJuAt/4o10r4NoWhLjn9eNQ+drkTypV8TMBiTw==
-X-Received: by 2002:a17:906:e08:b0:a55:5ff4:ff4f with SMTP id l8-20020a1709060e0800b00a555ff4ff4fmr238868eji.71.1714605229754;
-        Wed, 01 May 2024 16:13:49 -0700 (PDT)
-Received: from [192.168.114.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id u14-20020a170906b10e00b00a5534758ef7sm17073698ejy.148.2024.05.01.16.13.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 May 2024 16:13:48 -0700 (PDT)
-Message-ID: <5a9a0c90-d191-49e1-8cd5-1d45c82040ac@linaro.org>
-Date: Thu, 2 May 2024 01:13:45 +0200
+        bh=u41EwqRKzoIPMnwx3uJD5HnTN0ef2JtTmKQdCY/Erwc=;
+        b=DTiS61CsaVE9LMwQTgM9ysJVndIJ11FU/VjVpQsFTOJz3RzRFiCu5KfyyJ9InhG8U/
+         fXN4blo2WIukyuNaJNAMuvbg11y1jTELVDmPJYnZkGC9pgp+9e7Y0Pp33K6iMwiNBRrN
+         RSoCmiDT1k4ciq9dB2FVCxiwqH+GIpuNY4t22OdYLIVPZk46n3ob6ZYS/DqzvrLHDWOH
+         NhVHwrtMkV/gEJWf6KwQ1VpWncT1forYsb49n3JLZt20MWK7n8hhYegkOlpFppJuXwX0
+         c17vTsLn3TV3y9zMvXFIoQDKFSoEPv616U8tsMkj+F9wpTe9EOzkXCl01f4rQodaixH6
+         7isA==
+X-Forwarded-Encrypted: i=1; AJvYcCUhxjXkPHwyTfhxHhH1ACcbUoveL4nEtjPtFoBjNUoOPYmf+F4XHDXw6z4zZFmdIQ4+HQ28uiw0dDb47YMaLKCAGHbkkqJCKf6vwOH9KA==
+X-Gm-Message-State: AOJu0Yx1w/sGEqRDT36LyrtYo0qjJLpl2/PPLTKqOKxCkFR+HeqGiRFE
+	37/BhLu3wH+u/OuSKMnOg05rbE6EvhCwYhDnQ5CY+R1oqmolEVIDJUs0h42s3o1fFntTivf7ZaR
+	Ds8zzdoDrV4PpTd5lfZUkeKt7n3MvtVqJ+8JI
+X-Google-Smtp-Source: AGHT+IEc1eTRsFE6XeEVTYHiMbtnza7LGG/rlt3ScVq6rOvZPlhWc3Y03+hhqJKXzOZ75M3+vGyimImWhMVDRjS2H9g=
+X-Received: by 2002:ad4:5baa:0:b0:6a0:8511:98e0 with SMTP id
+ 10-20020ad45baa000000b006a0851198e0mr443958qvq.22.1714609219471; Wed, 01 May
+ 2024 17:20:19 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 1 May 2024 17:20:18 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] PCI: qcom: Add rx margining settings for 16GT/s
-To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
- agross@kernel.org, andersson@kernel.org, mani@kernel.org
-Cc: quic_msarkar@quicinc.com, quic_kraravin@quicinc.com,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Jingoo Han <jingoohan1@gmail.com>,
- Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Serge Semin <fancer.lancer@gmail.com>,
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
- Conor Dooley <conor.dooley@microchip.com>, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20240419001013.28788-1-quic_schintav@quicinc.com>
- <20240419001013.28788-4-quic_schintav@quicinc.com>
- <02ae9e6b-b652-433e-b36d-e6106d4fbcd1@linaro.org>
- <53c0e508-60fe-ee5d-cb2b-a5392c330377@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <53c0e508-60fe-ee5d-cb2b-a5392c330377@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAA8EJpqVGHqufKo1kV52RzQCNL5D92mmnCzUwKZn4o+5=wF9pQ@mail.gmail.com>
+References: <20240327202740.3075378-1-swboyd@chromium.org> <CAD=FV=VLwa0AFsrXXxKGG+hcyW+h7u7-tyg3uoDB8M_XdPti_Q@mail.gmail.com>
+ <CAE-0n51osUcpqqh6o9OhURLbRKjcWbRZT-5oHLi_mwfJsUngEw@mail.gmail.com> <CAA8EJpqVGHqufKo1kV52RzQCNL5D92mmnCzUwKZn4o+5=wF9pQ@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 1 May 2024 17:20:18 -0700
+Message-ID: <CAE-0n52knCL3DP35jg8UhTJP6wxQ5Fueq9Qa796O9hKuEFPRQg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Fix a black screen on sc7180 Trogdor devices
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Doug Anderson <dianders@chromium.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
+	Laura Nao <laura.nao@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
 
-[...]
+Quoting Dmitry Baryshkov (2024-05-01 11:11:14)
+> On Wed, 1 May 2024 at 03:17, Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > Quoting Doug Anderson (2024-03-28 09:39:54)
+> > >
+> > > I spent a bunch of time discussing this offline with Stephen and I'll
+> > > try to summarize. Hopefully this isn't too much nonsense...
+> > >
+> > > 1. We'll likely land the patches downstream in ChromeOS for now while
+> > > we're figuring things out since we're seeing actual breakages. Whether
+> > > to land upstream is a question. The first patch is a bit of a hack but
+> > > unlikely to cause any real problems. The second patch seems correct
+> > > but it also feels like it's going to cause stuck clocks for a pile of
+> > > other SoCs because we're not adding hacks similar to the sc7180 hack
+> > > for all the other SoCs. I guess we could hope we get lucky or play
+> > > whack-a-mole? ...or we try to find a more generic solution... Dunno
+> > > what others think.
+> >
+> > I think we should hope to get lucky or play whack-a-mole and merge
+> > something like this series. If we have to we can similarly turn off RCGs
+> > or branches during driver probe that are using shared parents like we
+> > have on sc7180.
+> >
+> > Put simply, the shared RCG implementation is broken because it reports
+> > the wrong parent for clk_ops::get_parent() and doesn't clear the force
+> > enable bit. With the current code we're switching the parent to XO when
+> > the clk is enabled the first time. That's an obvious bug that we should
+> > fix regardless of implementing proper clk handoff. We haven't
+> > implemented handoff in over a decade. Blocking this bug fix on
+> > implementing handoff isn't practical.
+>
+> Yes, that needs to be fixed. My approach was to drop the XO parent and
+> consider the clock to be off if it is fed by the XO.
+>
+> > Furthermore, we're relying on clk
+> > consumers to clear that force enable bit by enabling the clk once. That
+> > doesn't make any sense, although we could use that force enable bit to
+> > consider the RCG as enabled for clk_disable_unused.
+>
+> That patch seems fine to me. Will it work if we take the force-enable
+> bit into account when considering the clock to be on or off?
 
->>>   EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_eq_settings);
->>>   +void qcom_pcie_common_set_16gt_rx_margining_settings(struct dw_pcie *pci)
->>> +{
->>> +    u32 reg;
->>> +
->>> +    reg = dw_pcie_readl_dbi(pci, GEN4_LANE_MARGINING_1_OFF);
->>> +    reg = MARGINING_MAX_VOLTAGE_OFFSET(0x24) |
->>> +        MARGINING_NUM_VOLTAGE_STEPS(0x78) |
->>> +        MARGINING_MAX_TIMING_OFFSET(0x32) |
->>> +        MARGINING_NUM_TIMING_STEPS(0x10);
->>> +    dw_pcie_writel_dbi(pci, GEN4_LANE_MARGINING_1_OFF, reg);
->>
->> Since this is DW-common, why is this inside the qcom driver?
-> Though this register space is in dw-common specific, these settings are purely vendor specific . These settings are determined by systems team on vendor hardware, as these settings are used as margin to compensate signal variance due to various physical factors(like connection length, retimers etc).
+What is "that patch"?
 
-Okay, so:
+It would work to consider the rcg clk as on or off. During rcg clk
+registration if a branch child is found to be enabled we would go and
+write the force enable bit in the parent rcg. And similarly we would
+modify the rcg clk_ops to set that bit whenever the clk is enabled and
+clear it whenever it is disabled. This avoids the feedback mechanism
+from confusing us about the enable state of the rcg, at the cost of
+writing the register.
 
-1. is the register layout vendor-specific too? i.e. are the bitfields DW-common?
+It wouldn't fix the problem that we have on Trogdor though. That's
+because the display GDSC is turned off when the rotator clk is enabled
+and parented to the display PLL, which is also turned off. We have to
+either turn off the rotator clk, or switch the parent to something that
+is always on, XO, or keep the display GDSC on until the rotator clk can
+be turned off. On other SoCs we may need to turn off even more clks
+depending on which ones the display GDSC is controlling.
 
-2. will these settings work on all Qualcomm devices, regardless of SoC/board/
-retimers used etc.?
+>
+> >
+> > An alternative approach to this series would be to force all shared RCGs
+> > to be parented to XO at clk registration time, and continue to clear
+> > that RCG force enable bit. That's sort of what Dmitry was going for
+> > earlier. Doing this would break anything that's relying on the clks
+> > staying enabled at some frequency through boot, but that isn't supported
+> > anyway because clk handoff isn't implemented. It avoids the problem that
+> > the first patch is for too because XO doesn't turn off causing a clk to
+> > get stuck on. I can certainly craft this patch up if folks think that's
+> > better.
+>
+> I think this approach makes sense too (and might be preferable to
+> boot-time hacks).
+> On most of the platforms we are already resetting the MDSS as soon as
+> the mdss (root device) is being probed. Then the display is going to
+> be broken until DPU collects all the coonectors and outpus and finally
+> creates the DRM device.
 
-Konrad
+Ok. I'm leaning towards this approach now because it seems like keeping
+the clk at whatever it was set at boot isn't useful. If it becomes
+useful at some point we can implement a better handoff mechanism. I have
+some idea how to do that by using the 'clocks' DT property to find child
+clks that haven't probed yet. I'll test out this alternate approach to
+park shared clks at probe and send the patch.
+
+>
+> But I think we should fix the get_parent() too irrespectively of this.
+>
+
+Sure, but it becomes sorta moot if we force the parent to be XO.
 
