@@ -1,190 +1,335 @@
-Return-Path: <linux-arm-msm+bounces-19153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 005588BA41F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 01:37:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F262E8BA696
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 07:24:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82D741F21F16
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 May 2024 23:37:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8F8A28303B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 05:24:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EA00155722;
-	Thu,  2 May 2024 23:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95F4913958F;
+	Fri,  3 May 2024 05:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O2/n/1nn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AyiS+Pki"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB98615358F;
-	Thu,  2 May 2024 23:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933192C181;
+	Fri,  3 May 2024 05:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714693065; cv=none; b=uhF/maXTh/bfPMXgY9etLh/poCzmCKeinXElNVaBjl0ayA+DEsBfmutHvN65bedRitP3IqLU5e+el/PMSN06qhaxs4DV5y6lO7/wVrmTwaiGwhtQgLJnXlIhRm5SMRQStrlkKK0KqjRsGlJk/JrfioQm6NiFxxQWyjkDpHHV33o=
+	t=1714713847; cv=none; b=caMik5LQkTvJxVxPAtKwZlnXbACfy96A0049Y1757dNS9F/rIgSd6MA6boau28x1qRKoXPOKq1HxLBzoIJnisxJZRCo3t2VM5QNkjw77FYdmb7ZYHRLcRu1C/53Dmw6GQM0/OXukRORBFbLkqwlj8IbPD15RiuEFrrcgoOQ5iC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714693065; c=relaxed/simple;
-	bh=ScmNimVD55HCJMpU1ZPTM6tr5t4G+wAg/gscjQhbxFA=;
+	s=arc-20240116; t=1714713847; c=relaxed/simple;
+	bh=qA0ymVuG//ywc/xEbtNGOXLUl1uitJl7+WvsuwdeV7c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WSivMeyunEo7vEOE5+cCG4sLDze6/9zRMcT+UIymclU58t0PQNbZzez5atj9uleEdgu1NAtECYAJ+g1lJIcY67TUib+DQoamdOVtdQk5qS98pZO9DorFqlk1RlgJHybpZujtpZRI4GnbkJzGGDbS53pf1FJ4JXyNZNlNKG+coAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O2/n/1nn; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=PhQu6h2PXKjy6HYMnHG3mN/S5cr1DgxpkHpjZ4M82ldKCvbuErhRgX5bjemZALVQt4TlPmWIKxjg7+y7Bd1+RKDxy2nUArzWkBH9fapCNJOU12NBHAsvhH2Fwe3V+QFl6XrDNggh9Tov6goKlaDA3WJNznsfpQglX+vSJYzWFEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AyiS+Pki; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 442NKMxO019950;
-	Thu, 2 May 2024 23:37:17 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4434hH9p004580;
+	Fri, 3 May 2024 05:23:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=yRahZediyJwd+8tFnCwYNOlw++FRljCtETICqi0KlLs=; b=O2
-	/n/1nnkgzSroG5Sq+vOV2/J4HinUGZrLvxhaAONmKDPAQOgn9WUHzYJPDSt0QYpA
-	EFUBbWzML+H3epFcUwj3FPH+XY3XjvGnlqYZZUdT05ll8lkzvQkzcQdbtVJvhIcQ
-	YJqojw/vXeRHVRMBF4PLrTuWePYkHVoANXOTSTHaHMSJBazzvDgUYC6aRbwUI5kQ
-	Wt1zKVXPuZct2q7KHJ2bBtEgVwdE5ymRVmlm+HadKZxLHG5/x+o+bsf7vNaLJzn8
-	2aNjbYa+m2DaOOVxzlxaM+jxAL9qlvYSUmeePIy/D5uN5iKmvR3EcsIgRPeTWIyT
-	qfyHgkPnafCjNKbG+rUw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xvawbhapu-1
+	qcppdkim1; bh=I6xdoCHOHKehKUSxYk5VnCRqgQe/24QjHGkXEwwcr0c=; b=Ay
+	iS+Pki+B9YbmaWEvLQ3w4G/LbP6p6RyJSoxk7X2esMgZuJcqeQs0KI1HLG3tDAZy
+	oP9maPQrqWk0RE3pgWWJF2Tidnuuh25Ts6OZLcta+7P4Nzf73Aife6GmAW26NOZm
+	5MIJcnuNi73QnRvkrEpqUesCviMi8MnreY9HfIs9sVAFYrMBw39KkVIys9GTD4kK
+	ttzWGmSPOWb0M0Dbhbirv3EGs1+WcYXLrbbDER8bjECmBMh50dX+RVND7EfAUnNT
+	zyNB8MSbW6SP4fV6ddWqpkeQ7LJjRB5MNfginueQookgKtMUpCohFEtxTvp4nanN
+	25kMSZ7+pCVPZbYbauiw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xv7pxj6y5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 May 2024 23:37:17 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 442NbGor013135
+	Fri, 03 May 2024 05:23:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4435Nuh2020700
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 2 May 2024 23:37:16 GMT
-Received: from [10.71.112.114] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 3 May 2024 05:23:56 GMT
+Received: from [10.217.219.221] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 2 May 2024
- 16:37:15 -0700
-Message-ID: <a88b41f4-7e53-e162-5a6a-2d470e29c0bb@quicinc.com>
-Date: Thu, 2 May 2024 16:37:15 -0700
+ 22:23:53 -0700
+Message-ID: <2f3dd278-02b8-4939-8b75-55c342adcddf@quicinc.com>
+Date: Fri, 3 May 2024 10:53:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v20 06/41] usb: host: xhci-sideband: Expose a sideband
- interrupter enable API
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] phy: qcom-snps-femto-v2: Add load and voltage setting for
+ LDO's used
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay
+ Abraham I <kishon@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240502123312.31083-1-quic_ugoswami@quicinc.com>
+ <CAA8EJppeQTadmny=hcs4xCQDXHwXEBHXjeecvZCUVcSXmwBTgg@mail.gmail.com>
 Content-Language: en-US
-To: Mathias Nyman <mathias.nyman@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <lgirdwood@gmail.com>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
-        <bgoswami@quicinc.com>, <tiwai@suse.com>, <robh@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20240425215125.29761-1-quic_wcheng@quicinc.com>
- <20240425215125.29761-7-quic_wcheng@quicinc.com>
- <ddd682da-5cfd-db09-e316-3c54939caf90@linux.intel.com>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <ddd682da-5cfd-db09-e316-3c54939caf90@linux.intel.com>
+From: Udipto Goswami <quic_ugoswami@quicinc.com>
+In-Reply-To: <CAA8EJppeQTadmny=hcs4xCQDXHwXEBHXjeecvZCUVcSXmwBTgg@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RmyOpgti89lDhFfWlfBLnFZdjZ9mBcru
-X-Proofpoint-ORIG-GUID: RmyOpgti89lDhFfWlfBLnFZdjZ9mBcru
+X-Proofpoint-GUID: IMh8dstdDZSkJ0k__r6y4e0xJkgEhb7g
+X-Proofpoint-ORIG-GUID: IMh8dstdDZSkJ0k__r6y4e0xJkgEhb7g
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-02_14,2024-05-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- malwarescore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 adultscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2405020159
+ definitions=2024-05-03_03,2024-05-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ suspectscore=0 mlxlogscore=999 phishscore=0 lowpriorityscore=0 mlxscore=0
+ bulkscore=0 spamscore=0 malwarescore=0 impostorscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2405030035
 
-Hi Mathias,
+Hi Dmitry,
 
-On 5/2/2024 4:07 AM, Mathias Nyman wrote:
-> On 26.4.2024 0.50, Wesley Cheng wrote:
->> Some use cases maybe require that the secondary interrupter's events to
->> be handled by the OS.  In this case, configure the IMOD and the
->> skip_events property to enable the interrupter's events.  By default,
->> assume that the secondary interrupter doesn't want to enable OS event
->> handling.
+On 5/2/2024 6:42 PM, Dmitry Baryshkov wrote:
+> On Thu, 2 May 2024 at 15:33, Udipto Goswami <quic_ugoswami@quicinc.com> wrote:
 >>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> The Femto phy depends on 0.88/ 1.8/ 3.3V regulators for its operation.
+>> If one of the regulators is not voted to the required minimum voltage
+>> for phy to operate, then High speed mode of operation will fail.
+>>
+>> On certain targets like (qcm6490_rb3gen2) where the minimum voltage
+>> of the regulator is lower than the operating voltage of the phy.
+>> If not voted properly, the phy supply would be limited to the min value
+>> of the LDO thereby rendering the phy non-operational.
+>>
+>> The current implementation of the regulators in the Femto PHY is not
+>> setting the load and voltage for each LDO. The appropriate voltages and
+>> loads required for the PHY to operate should be set.
+> 
+> Please move min/max voltages to the DTS. There is no need to set them
+> from the driver.
+that also can be done.
+> 
+> Also, is there any reason why you can't use `regulator-initial-mode =
+> <RPMH_REGULATOR_MODE_HPM>;` like other boards do?
+
+
+but the regulator loads & voltages for the phy doesn't change for every 
+platform.
+Phys operational limits will still be the same for all the different 
+platforms which exists today and the upcoming ones as well if they use it.
+
+Suppose te LDO's HPM is 2000 but the phy require 6000, its not getting 
+enough power, same for reverse say 6000 in LDO's HPM and phy require 
+2000, isn't this power leakage ?
+
+This also seems to be the case with voltages as well, the phy require 
+0.88V for operation but if LDO is lower then that say 0.70, phy won't work.
+
+So instead of doing it seperately doesn't it make sense to do it in driver ?
+> 
+>>
+>> Implement a bulk operation api to set load & voltages before doing bulk
+>> enable. This will ensure that the PHY remains operational under all
+>> conditions.
+>>
+>> Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
 >> ---
->>   drivers/usb/host/xhci-sideband.c  | 28 ++++++++++++++++++++++++++++
->>   include/linux/usb/xhci-sideband.h |  2 ++
->>   2 files changed, 30 insertions(+)
+>>   drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 121 +++++++++++++++++-
+>>   1 file changed, 114 insertions(+), 7 deletions(-)
 >>
->> diff --git a/drivers/usb/host/xhci-sideband.c 
->> b/drivers/usb/host/xhci-sideband.c
->> index 255feae33c6e..6fdae9840c11 100644
->> --- a/drivers/usb/host/xhci-sideband.c
->> +++ b/drivers/usb/host/xhci-sideband.c
->> @@ -237,6 +237,30 @@ xhci_sideband_get_event_buffer(struct 
->> xhci_sideband *sb)
->>   }
->>   EXPORT_SYMBOL_GPL(xhci_sideband_get_event_buffer);
->> +/**
->> + * xhci_sideband_enable_interrupt - enable interrupt for secondary 
->> interrupter
->> + * @sb: sideband instance for this usb device
->> + * @imod_interval: number of event ring segments to allocate
->> + *
->> + * Enables OS owned event handling for a particular interrupter if 
->> client
->> + * requests for it.  In addition, set the IMOD interval for this 
->> particular
->> + * interrupter.
->> + *
->> + * Returns 0 on success, negative error otherwise
->> + */
->> +int xhci_sideband_enable_interrupt(struct xhci_sideband *sb, u32 
->> imod_interval)
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+>> index eb0b0f61d98e..cbe9cdaa6849 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+>> @@ -78,11 +78,39 @@
+>>
+>>   #define LS_FS_OUTPUT_IMPEDANCE_MASK            GENMASK(3, 0)
+>>
+>> -static const char * const qcom_snps_hsphy_vreg_names[] = {
+>> -       "vdda-pll", "vdda33", "vdda18",
+>> +
+>> +struct qcom_snps_hsphy_regulator_data {
+>> +       const char *name;
+>> +       unsigned int enable_load;
+>> +       unsigned int min_voltage;
+>> +       unsigned int max_voltage;
+>> +};
+>> +
+>> +static const struct qcom_snps_hsphy_regulator_data hsphy_vreg_l[] = {
+>> +       {
+>> +               .name = "vdda-pll",
+>> +               .enable_load = 30000,
+>> +               .min_voltage = 825000,
+>> +               .max_voltage = 925000,
+>> +       },
+>> +
+>> +       {
+>> +               .name = "vdda18",
+>> +               .enable_load = 19000,
+>> +               .min_voltage = 1704000,
+>> +               .max_voltage = 1800000
+>> +       },
+>> +
+>> +       {
+>> +               .name = "vdda33",
+>> +               .enable_load = 16000,
+>> +               .min_voltage = 3050000,
+>> +               .max_voltage = 3300000
+>> +       },
+>> +
+>>   };
+>>
+>> -#define SNPS_HS_NUM_VREGS              ARRAY_SIZE(qcom_snps_hsphy_vreg_names)
+>> +#define SNPS_HS_NUM_VREGS              ARRAY_SIZE(hsphy_vreg_l)
+>>
+>>   struct override_param {
+>>          s32     value;
+>> @@ -132,12 +160,90 @@ struct qcom_snps_hsphy {
+>>          struct clk_bulk_data *clks;
+>>          struct reset_control *phy_reset;
+>>          struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
+>> +       const struct qcom_snps_hsphy_regulator_data *vreg_list;
+>>
+>>          bool phy_initialized;
+>>          enum phy_mode mode;
+>>          struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+>>   };
+>>
+>> +static int __vdda_phy_bulk_enable_disable(struct qcom_snps_hsphy *hsphy, bool on)
+> 
+> Separate functions, please.
+sure.
+> 
 >> +{
->> +    if (!sb || !sb->ir)
->> +        return -ENODEV;
+>> +       int ret = 0;
+>> +       int i;
 >> +
->> +    xhci_set_interrupter_moderation(sb->ir, imod_interval);
-> 
-> Is there a need to adjust the moderation after initial setup?
-> 
-> If not then maybe we could pass the imod_interval as a parameter to
-> xhci_create_secondary_interrupter(), and avoid exporting
-> xhci_set_interrupter_moderation()
-> 
-> 
-
-Let me preface my comments by saying that I was trying to include some 
-aspects of enabling the secondary interrupter line within the main apps 
-proc.  If this gets too confusing, I can remove these mechanisms for 
-now.  For example, as you mentioned below 
-xhci_sideband_enable_interrupt() isn't going to be used in the offload path.
-
-However, I decided to add it so we can have some corresponding function 
-that will utilize/set skip_events = false. (as it is "true" by default) 
-Again, I can remove this part and revisit later when we actually have a 
-use case to handle secondary interrupts on apps.
-
-As for the IMOD setting, depending on what you think, I can add it as 
-part of xhci_create_secondary_interrupter()
-
->> +    sb->ir->skip_events = false;
->> +    xhci_enable_interrupter(sb->ir);
+>> +       if (!on)
+>> +               goto disable_vdd;
 >> +
->> +    return 0;
+>> +       for (i = 0; i < SNPS_HS_NUM_VREGS; i++) {
+>> +
+>> +               ret = regulator_set_load(hsphy->vregs[i].consumer,
+>> +                                        hsphy->vreg_list[i].enable_load);
+>> +
+>> +               if (ret < 0) {
+>> +                       dev_err(hsphy->dev, "unable to set HPM of %s %d\n",
+>> +                                               hsphy->vregs[i].supply, ret);
+>> +                       goto err_vdd;
+>> +               }
+>> +       }
+>> +
+>> +       for (i = 0; i < SNPS_HS_NUM_VREGS; i++) {
+>> +               ret = regulator_set_voltage(hsphy->vregs[i].consumer,
+>> +                                           hsphy->vreg_list[i].min_voltage,
+>> +                                           hsphy->vreg_list[i].max_voltage);
+>> +               if (ret) {
+>> +                       dev_err(hsphy->dev,
+>> +                               "unable to set voltage of regulator %s %d\n",
+>> +                                               hsphy->vregs[i].supply, ret);
+>> +                       goto put_vdd_lpm;
+>> +               }
+>> +       }
+>> +
+>> +       ret = regulator_bulk_enable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+>> +       if (ret)
+>> +               goto unconfig_vdd;
+>> +
+>> +       return ret;
+>> +
+>> +disable_vdd:
+>> +       regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+>> +
+>> +unconfig_vdd:
+>> +       for (i = 0; i < SNPS_HS_NUM_VREGS; i++) {
+>> +               ret = regulator_set_voltage(hsphy->vregs[i].consumer, 0,
+>> +                                           hsphy->vreg_list[i].max_voltage);
+>> +               if (ret) {
+>> +                       dev_err(hsphy->dev,
+>> +                       "unable to set voltage of regulator %s %d\n",
+>> +                                       hsphy->vregs[i].supply, ret);
+>> +               }
+>> +       }
+>> +
+>> +put_vdd_lpm:
+>> +       for (i = 0; i < SNPS_HS_NUM_VREGS; i++) {
+>> +               ret = regulator_set_load(hsphy->vregs[i].consumer, 0);
+>> +
+>> +               if (ret < 0) {
+>> +                       dev_err(hsphy->dev, "unable to set LPM of %s %d\n",
+>> +                                               hsphy->vregs[i].supply, ret);
+>> +               }
+>> +       }
+>> +
+>> +err_vdd:
+>> +       return ret;
+>> +
 >> +}
->> +EXPORT_SYMBOL_GPL(xhci_sideband_enable_interrupt);
-> 
-> I can't find the place where xhci_sideband_enable_interrupt() is called in
-> this series. How is it planned to be used?
-> 
-> Thanks
-> Mathias
+>> +
+>> +static int vdda_phy_bulk_enable(struct qcom_snps_hsphy *hsphy)
+>> +{
+>> +       return __vdda_phy_bulk_enable_disable(hsphy, true);
+>> +}
+>> +
+>> +static int vdda_phy_bulk_disable(struct qcom_snps_hsphy *hsphy)
+>> +{
+>> +       return __vdda_phy_bulk_enable_disable(hsphy, false);
+>> +}
+>> +
+>>   static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
+>>   {
+>>          struct device *dev = hsphy->dev;
+>> @@ -390,7 +496,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>>
+>>          dev_vdbg(&phy->dev, "%s(): Initializing SNPS HS phy\n", __func__);
+>>
+>> -       ret = regulator_bulk_enable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+>> +       ret = vdda_phy_bulk_enable(hsphy);
+>>          if (ret)
+>>                  return ret;
+>>
+>> @@ -471,7 +577,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>>   disable_clks:
+>>          clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+>>   poweroff_phy:
+>> -       regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+>> +       ret = vdda_phy_bulk_disable(hsphy);
+>>
+>>          return ret;
+>>   }
+>> @@ -482,7 +588,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
+>>
+>>          reset_control_assert(hsphy->phy_reset);
+>>          clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+>> -       regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+>> +       vdda_phy_bulk_disable(hsphy);
+>>          hsphy->phy_initialized = false;
+>>
+>>          return 0;
+>> @@ -592,8 +698,9 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+>>
+>>          num = ARRAY_SIZE(hsphy->vregs);
+>>          for (i = 0; i < num; i++)
+>> -               hsphy->vregs[i].supply = qcom_snps_hsphy_vreg_names[i];
+>> +               hsphy->vregs[i].supply = hsphy_vreg_l[i].name;
+>>
+>> +       hsphy->vreg_list  = hsphy_vreg_l;
+>>          ret = devm_regulator_bulk_get(dev, num, hsphy->vregs);
+>>          if (ret)
+>>                  return dev_err_probe(dev, ret,
+>> --
+>> 2.17.1
 
-Thanks
-Wesley Cheng
+-Udipto
 
