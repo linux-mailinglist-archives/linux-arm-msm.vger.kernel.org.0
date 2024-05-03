@@ -1,157 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-19155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33EF98BA6B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 07:38:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC2A48BA729
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 08:36:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF52F28216A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 05:38:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE0901C20298
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 06:36:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 543EF139CE0;
-	Fri,  3 May 2024 05:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA5BE1386D7;
+	Fri,  3 May 2024 06:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JRYkBbDX"
+	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="JgeKiXLQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F532139586;
-	Fri,  3 May 2024 05:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E75282EE
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 May 2024 06:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714714700; cv=none; b=cz2uWggIYHXtCcqpYDqENqMpIfZGa6HqE7KTZWwVjk20d/uVoUWN1zL56xFZBj+8dd92HmPgoJ80vauMaStnJ3olBLrl2eB35+HsF1IPpZPW3Af81h1UWFDOGsnbbj6GPDMISU5X6FzlSH/+/Cdjev0LDqADIdXClrFzdJotPw8=
+	t=1714718165; cv=none; b=ovAc/4IzSRVstTLoLPKUb6Rsjn1I6FJ9TUBWwkAm93h9m91dxXg13a1MpEM1oxkPqr1Ege4vf16N2dwrLOmUuVx6ZXOFrgSr/EoaC9a91xLtpHFjzcO36OcZwebqfk64o7MkmFmWy2nkG0jYsQhHBPWgZeOEJjAx8+4YD63L6U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714714700; c=relaxed/simple;
-	bh=rKKCeOF3G9JpimaU43Lw2IpoOJrnNfrZXT1xQPXth8A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CsJA7GGRBkLhW2oV1Pg5KtXXipjAvjaNPwcBOWww8gVVacoSpRngdmUop8kzmhFGtnu3QFTAbjViLVP47wP5iVsjAex7ksVJPKq3t3IVO/dgxGHi4BQVDZMXqijSbedZiM1GAR0zys/QhF8olwy9Jc0QtyUS7iPBAZd/SVXdr4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JRYkBbDX; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1714714699; x=1746250699;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rKKCeOF3G9JpimaU43Lw2IpoOJrnNfrZXT1xQPXth8A=;
-  b=JRYkBbDXPBWorQJQs4RmdDhb6Ly6khOldhDix3cpkQ6UcFW24WsW4WWl
-   aQx/ukKvMBFvKGRyy64tbIZzfLLb9TtwNLBxY2TMk6n0KSMpkQmnac3P6
-   doUsWMriLMlK6Xq75iJa/xDmB3TTeidDnl1Nnz0HxgJRHzo+o6IPg/6ar
-   LxJak5Defmy7j0v3qwUt6I3jOxBY9cyKcpbTYfWVNFAe4ZT2ZBW2tPw7p
-   kU6TVrUK4rWcBWIamIg5BC88mZAy4JWdHLGiH1ci+C83kOzg6XSpfXX/g
-   oS6qvjVWThtPXkj8btkvIIFIRdKSHfWeNi27RkdvGuHBouklELWg3NAw2
-   A==;
-X-CSE-ConnectionGUID: fTFehmlBSdKr3RpYmun82w==
-X-CSE-MsgGUID: y6r98hMaSBKNSE4jWhHSMA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11062"; a="13463445"
-X-IronPort-AV: E=Sophos;i="6.07,247,1708416000"; 
-   d="scan'208";a="13463445"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2024 22:38:18 -0700
-X-CSE-ConnectionGUID: k8feyb1gQr+mYHjcJFVckg==
-X-CSE-MsgGUID: WZxVMUhvTvuHjXpz3ZIjMw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,247,1708416000"; 
-   d="scan'208";a="27372199"
-Received: from lkp-server01.sh.intel.com (HELO e434dd42e5a1) ([10.239.97.150])
-  by fmviesa007.fm.intel.com with ESMTP; 02 May 2024 22:38:15 -0700
-Received: from kbuild by e434dd42e5a1 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1s2lcb-000BLs-1D;
-	Fri, 03 May 2024 05:38:13 +0000
-Date: Fri, 3 May 2024 13:37:49 +0800
-From: kernel test robot <lkp@intel.com>
-To: Udipto Goswami <quic_ugoswami@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Udipto Goswami <quic_ugoswami@quicinc.com>
-Subject: Re: [PATCH] phy: qcom-snps-femto-v2: Add load and voltage setting
- for LDO's used
-Message-ID: <202405031311.9f1PrPou-lkp@intel.com>
-References: <20240502123312.31083-1-quic_ugoswami@quicinc.com>
+	s=arc-20240116; t=1714718165; c=relaxed/simple;
+	bh=cd7yTrt6GWBxWkHwzMQubHiZtWWF/F5VLurzT+aYYRg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BbOKFnRMVgwwxLPpScRgIr9zHf+r1YZ1wRduG4YJ1+AhnpoHIZAUzBD+yWWUoAKrGd2pyWV6SKpggf9a/vAztOZch+kdCWgu1iS1DZN1pftyV+P8w23psVw44vtqqp1TRa8FW3ow422rB1DtQN96js3ohudy74kCgoJnP/dfULg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=JgeKiXLQ; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a58772187d8so1162837966b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 May 2024 23:36:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1714718162; x=1715322962; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HKZVfrEnHgDm/tlBdppJQIcDCasqaomHZPpbSKozHVo=;
+        b=JgeKiXLQhUseedrl2W/BOeLFvEHyHDnAKbiuloE3Ff4XJ20tRLTQ4nNN/RdCTq/i/G
+         Duu2BKrTOMDozCiqaEMbfwjbhpX8ZHOl948Gv7+iHCGr+sau0kIsi7f+VFa3MvcxoAvF
+         BhASqNLNdje19IIGObTYqSowqB06gg4Z76u8gNxuZtzrPI4E1SakjhukwljmuCNA9PSf
+         CjEaBdKexnVQra+ivvpu2EdWfftXIN/VMt4LSLqA82aBtf0b0CI9GWgz3LFbvgmnEPD4
+         MeYx/YQRQblDbYEPvncDtHBRD9Pq9jEUKa+gVG+gpjRwocE2Lk8wnXvG3bPUtNJLTqBL
+         +PDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714718162; x=1715322962;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HKZVfrEnHgDm/tlBdppJQIcDCasqaomHZPpbSKozHVo=;
+        b=uDE9g7p1zemxgxpyD5bOJBQI0tLjvrcmR1mYMHqxgqo+lhdQ/uywvEiUZ2UoCWDZdf
+         7K3+ojyNwKdlDdyNFMLpQgOsw/ph6xk/YhksP1iWSAOh1+NNCUe3j7q01S5bA1AtlUT7
+         wvIS08xRkaxcNsFCIgvQ+pS9GXs0vwbptaIwQyuFuokoykNDVRnhnR4nWsp0SI/icuBB
+         pJScY0wwM2xtiK/azLkLhUpIsJDKxJxwlpxUuqU02oFALeWq/T9HwFw7jzuihsZx6UiO
+         5pPZ2oxSF8pw01Ga55umoD4oeOyfOHNJQ15NDt16BOce/ZXdySRb9VB3MQCmL3zB0EtH
+         8WAw==
+X-Forwarded-Encrypted: i=1; AJvYcCWn6y5qA5RGWe789QALqej6vkLbxIy+xgxvsolIXcp16WrqziXMIsybHQWgH+LIK5PBzxzFMSzhVOaQ5eCUb/CsanzM/EAjgkzBraYY2g==
+X-Gm-Message-State: AOJu0YxijvqMvyi/nB4ORIzhmNeo5eEEVFrTPuvtGJSQEz3P7bvs4I67
+	HH42MQMV35D5K0Zm2nIXfLui2a50FoBIP40jdYajupwi9SBNssIFUQI021OFc478ynfIQibGd90
+	G508UpGEyCQZ6Glu2l1w8GR87QQkc+zeD3CRupQ==
+X-Google-Smtp-Source: AGHT+IHJT537wyzxsdoNYXT//WCkrfyVvA5aV6ewIY0e2q5E9nRhCBRhsDywWt1RP69zblCAg3piQ7kt3cTya8BgsNQ=
+X-Received: by 2002:a50:8e15:0:b0:56d:fb36:c388 with SMTP id
+ 21-20020a508e15000000b0056dfb36c388mr1389392edw.9.1714718162420; Thu, 02 May
+ 2024 23:36:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240502123312.31083-1-quic_ugoswami@quicinc.com>
+References: <20240307-topic-8280_nodes-v1-0-4eba20e08902@linaro.org>
+In-Reply-To: <20240307-topic-8280_nodes-v1-0-4eba20e08902@linaro.org>
+From: Steev Klimaszewski <steev@kali.org>
+Date: Fri, 3 May 2024 01:35:51 -0500
+Message-ID: <CAKXuJqii1FjG64m1=3J_P0LmeV0FKgcxXF3V7Rz4imasVmeDcQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Random 8280 bits
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Udipto,
+On Thu, Mar 7, 2024 at 2:26=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro.=
+org> wrote:
+>
+> As the series title and patch titles say
+>
+> p1 for Srini/nvmem, rest for qcom
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Konrad Dybcio (4):
+>       dt-bindings: nvmem: Add compatible for SC8280XP
+>       arm64: dts: qcom: sc8280xp: Add QFPROM node
+>       arm64: dts: qcom: sc8280xp: Add PS_HOLD restart
+>       arm64: dts: qcom: sc8280xp: Describe TCSR download mode register
+>
+>  .../devicetree/bindings/nvmem/qcom,qfprom.yaml         |  1 +
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi                 | 18 ++++++++++++=
+++++++
+>  2 files changed, 19 insertions(+)
+> ---
+> base-commit: 1843e16d2df9d98427ef8045589571749d627cf7
+> change-id: 20240307-topic-8280_nodes-da70ee866935
+>
+> Best regards,
+> --
+> Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+>
 
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on linus/master]
-[also build test WARNING on v6.9-rc6 next-20240502]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Udipto-Goswami/phy-qcom-snps-femto-v2-Add-load-and-voltage-setting-for-LDO-s-used/20240502-203521
-base:   linus/master
-patch link:    https://lore.kernel.org/r/20240502123312.31083-1-quic_ugoswami%40quicinc.com
-patch subject: [PATCH] phy: qcom-snps-femto-v2: Add load and voltage setting for LDO's used
-config: x86_64-buildonly-randconfig-003-20240503 (https://download.01.org/0day-ci/archive/20240503/202405031311.9f1PrPou-lkp@intel.com/config)
-compiler: gcc-7 (Ubuntu 7.5.0-6ubuntu2) 7.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240503/202405031311.9f1PrPou-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202405031311.9f1PrPou-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c:168: warning: Function parameter or struct member 'vreg_list' not described in 'qcom_snps_hsphy'
-
-
-vim +168 drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-
-df2217ff17a820 Krishna Kurapati    2022-09-06  136  
-51e8114f80d076 Wesley Cheng        2020-05-04  137  /**
-51e8114f80d076 Wesley Cheng        2020-05-04  138   * struct qcom_snps_hsphy - snps hs phy attributes
-51e8114f80d076 Wesley Cheng        2020-05-04  139   *
-8a0eb8f9b9a002 Adrien Thierry      2023-06-29  140   * @dev: device structure
-8a0eb8f9b9a002 Adrien Thierry      2023-06-29  141   *
-51e8114f80d076 Wesley Cheng        2020-05-04  142   * @phy: generic phy
-51e8114f80d076 Wesley Cheng        2020-05-04  143   * @base: iomapped memory space for snps hs phy
-51e8114f80d076 Wesley Cheng        2020-05-04  144   *
-8a0eb8f9b9a002 Adrien Thierry      2023-06-29  145   * @num_clks: number of clocks
-8a0eb8f9b9a002 Adrien Thierry      2023-06-29  146   * @clks: array of clocks
-51e8114f80d076 Wesley Cheng        2020-05-04  147   * @phy_reset: phy reset control
-51e8114f80d076 Wesley Cheng        2020-05-04  148   * @vregs: regulator supplies bulk data
-51e8114f80d076 Wesley Cheng        2020-05-04  149   * @phy_initialized: if PHY has been initialized correctly
-dcbec046507615 Wesley Cheng        2020-06-25  150   * @mode: contains the current mode the PHY is in
-2a881183dc5ab2 Krzysztof Kozlowski 2023-05-07  151   * @update_seq_cfg: tuning parameters for phy init
-51e8114f80d076 Wesley Cheng        2020-05-04  152   */
-51e8114f80d076 Wesley Cheng        2020-05-04  153  struct qcom_snps_hsphy {
-8a0eb8f9b9a002 Adrien Thierry      2023-06-29  154  	struct device *dev;
-8a0eb8f9b9a002 Adrien Thierry      2023-06-29  155  
-51e8114f80d076 Wesley Cheng        2020-05-04  156  	struct phy *phy;
-51e8114f80d076 Wesley Cheng        2020-05-04  157  	void __iomem *base;
-51e8114f80d076 Wesley Cheng        2020-05-04  158  
-8a0eb8f9b9a002 Adrien Thierry      2023-06-29  159  	int num_clks;
-8a0eb8f9b9a002 Adrien Thierry      2023-06-29  160  	struct clk_bulk_data *clks;
-51e8114f80d076 Wesley Cheng        2020-05-04  161  	struct reset_control *phy_reset;
-51e8114f80d076 Wesley Cheng        2020-05-04  162  	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
-4dac559b5584a2 Udipto Goswami      2024-05-02  163  	const struct qcom_snps_hsphy_regulator_data *vreg_list;
-51e8114f80d076 Wesley Cheng        2020-05-04  164  
-51e8114f80d076 Wesley Cheng        2020-05-04  165  	bool phy_initialized;
-dcbec046507615 Wesley Cheng        2020-06-25  166  	enum phy_mode mode;
-df2217ff17a820 Krishna Kurapati    2022-09-06  167  	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
-51e8114f80d076 Wesley Cheng        2020-05-04 @168  };
-51e8114f80d076 Wesley Cheng        2020-05-04  169  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+My apologies for sending this so late, since this is now in -next,
+but, I'd gotten reports of people with the X13s not shutting down when
+using "my kernel" - I finally had the chance to dig through and do
+some testing today and it seems that with this patchset applied, is
+when the X13s will no longer power off.  Telling the system to
+poweroff or shutdown simply causes a reboot instead.
 
