@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 794728BA759
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 09:04:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBEF28BA75B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 09:05:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E741F1F216BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 07:04:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0960282A23
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 07:05:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B7031465B4;
-	Fri,  3 May 2024 07:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA1931465AD;
+	Fri,  3 May 2024 07:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WZd+dOrz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SonmFwVo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED141E491;
-	Fri,  3 May 2024 07:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC6B1465A4;
+	Fri,  3 May 2024 07:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714719890; cv=none; b=pRKTrNXZl3SmsE96GHz7FGAdY5gwFvqx4Y21pXDwpvF1XM+ds4MMeW33XOs+ID6VoP64opx0XE+Maoz8/tbMv1TaZloLxhqAErWuqBPKjOBdxDMSJze4xQcRbFqRO1zYoMruLhI2fs/wx1pVTVrVOPwwZCavaPtDo+O8WYc9oY8=
+	t=1714719908; cv=none; b=K8z5VW1u52BcUn3cPZY9/Uyb/JLewPE02AjXdC5/rWiNnaXLEdJEmBEg4KBYvVxg5/bn7pIaZFjLcdMqA9OgzTuelJV52kNietcNv3COHBpkoWE2UwYwxXAv99sYC9iBW6DN771AAFX8kN4Jqq958FvyJ6l0qw30Gi5TxqVpWKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714719890; c=relaxed/simple;
-	bh=6JQx3GYwPX+yIXu/tPphMEToNzCa0NJqsCUm2S3oO5E=;
+	s=arc-20240116; t=1714719908; c=relaxed/simple;
+	bh=9UVvjI8VRIg0/RBQCUn4FCyYD7HQWj/ur9UuYMy8h0M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gHDHOOIelHd1t2zQSHEKZNU/0Pc0O6F/CCvbKXRigaphQ2odsmXoOcWKFrWqDao5CIQRzr5YzuTIyqrslR1eG0pDYpbn1usupLkhnxXcNtELG7YDD2vb8+1cw0s8YgkWzP7oNIoPdtFCw/CZAh+U2oNZ5YcG3BGKLyYfrVcARN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WZd+dOrz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9499CC116B1;
-	Fri,  3 May 2024 07:04:43 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=IKe6VZtBHJn/77LBoxMPnBRT77jvU4d23FptQ59zE5qQenFH2TnPhwLaELA4kbXDIVPh5wZh5WSNNTu8T635/gs6dO0B6WRndWxO1GigwvZIV8bFiXvyTO9SwmEgSciio37IiPzX0tOBJfYfMYg3I/2iSIyS8fcaCcF8ky45w2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SonmFwVo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74947C4AF18;
+	Fri,  3 May 2024 07:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714719890;
-	bh=6JQx3GYwPX+yIXu/tPphMEToNzCa0NJqsCUm2S3oO5E=;
+	s=k20201202; t=1714719908;
+	bh=9UVvjI8VRIg0/RBQCUn4FCyYD7HQWj/ur9UuYMy8h0M=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WZd+dOrzrTzwfM1zukliPujNy+oSoVNgSPl6HTKGKdbxM1/YFM4eBvu9ll+KcDiSx
-	 hoqfgUT+P9nG9siNwZulp6I6tDgrukYCldwDG5uv4UlwNKthU39zmYeI/RVDsM+bnw
-	 tDSoO0NdSh9JBdI29g8Dlk7FFTgcoXE42lfd4yXwASbwrWk3zaU8RewHn5S4U8t/Zh
-	 ZcP+Slne63eV5OqIojL6SO/72uclS+V8/iuWeTgXeP+Kq9cwkUteXJCbZ/EzlztpR5
-	 mbbWhfG6z6s4KuwaPs3l70ozkw+7a9IFuP/9qu0ZmitXv6lsz7y2SwzoeWtqdIJdFe
-	 zuPUSOGMWVNxQ==
-Message-ID: <882008ba-f9ee-4292-a625-14d04d40ecd7@kernel.org>
-Date: Fri, 3 May 2024 09:04:41 +0200
+	b=SonmFwVoJxTSsoxcXaCkkdzXonnwoV+frlsC0rm0lcqDNG2jhcsenwwx4zHwLfvOK
+	 zWKCLSKrmPrPwzwpkf/lE+jsGvWLsovD1tk4MyBawNj+9WscOsnUVg1h8WjampR6jv
+	 RBW9VgmJfUGq3fzyWHTgZcMeVcxSkzcZgGUyQU2Opl7l91Q+lgTudd9MQRyRFX6dBg
+	 QfixpDKCZKlzuTKXgRzMpjWJPtwSlATzSXtkahOiMHChhDwS+FL6BHKsVWQsja/7f1
+	 zVFNJFhjheAt78KwWwOuBvFuqT80pkHZr3AiFEp8GQTKN/rLaK0N1wdr9yBeNyW/9y
+	 jMdW+mDCAU70Q==
+Message-ID: <5b7334b7-e4d0-4650-a600-beb22fa6903d@kernel.org>
+Date: Fri, 3 May 2024 09:04:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/13] dt-bindings: phy: qcom,sc8280xp-qmp-ufs-phy: fix
- msm899[68] power-domains
+Subject: Re: [PATCH 03/13] dt-bindings: phy: qcom,usb-snps-femto-v2: use
+ correct fallback for sc8180x
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -69,7 +69,7 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  Konrad Dybcio <konrad.dybcio@somainline.org>
 References: <20240501-qcom-phy-fixes-v1-0-f1fd15c33fb3@linaro.org>
- <20240501-qcom-phy-fixes-v1-2-f1fd15c33fb3@linaro.org>
+ <20240501-qcom-phy-fixes-v1-3-f1fd15c33fb3@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,53 +115,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240501-qcom-phy-fixes-v1-2-f1fd15c33fb3@linaro.org>
+In-Reply-To: <20240501-qcom-phy-fixes-v1-3-f1fd15c33fb3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 01/05/2024 18:19, Dmitry Baryshkov wrote:
-> The Qualcomm MSM8996 and MSM8998 platforms don't have separate power
-> domain for the UFS PHY. Replace required:power-domains with the
-> conditional schema.
+> The qcom,sc8180x-usb-hs-phy device uses qcom,usb-snps-hs-7nm-phy
+> fallback. Correct the schema for this platform.
 > 
-> Fixes: dc5cb63592bd ("dt-bindings: phy: migrate QMP UFS PHY bindings to qcom,sc8280xp-qmp-ufs-phy.yaml")
+> Fixes: 9160fb7c39a1 ("dt-bindings: phy: qcom,usb-snps-femto-v2: use fallback compatibles")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml          | 16 +++++++++++++++-
->  1 file changed, 15 insertions(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> index 9dac6852f8cb..f9cfbd0b2de6 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> @@ -72,7 +72,6 @@ required:
->    - reg
->    - clocks
->    - clock-names
-> -  - power-domains
->    - resets
->    - reset-names
->    - vdda-phy-supply
-> @@ -130,6 +129,21 @@ allOf:
->              - const: ref
->              - const: qref
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,msm8996-qmp-ufs-phy
-> +              - qcom,msm8998-qmp-ufs-phy
-> +    then:
-> +      properties:
-> +        power-domains:
-> +          false
 
-Keep it in one line (power-domains: false)
-
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
