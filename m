@@ -1,130 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-19168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3826B8BA8B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 10:27:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 773E48BA930
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 10:47:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E26091F22AA9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 08:27:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D48EA281671
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 08:47:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60D57148FF8;
-	Fri,  3 May 2024 08:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7922414A4CF;
+	Fri,  3 May 2024 08:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WYOdN8YM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ip/ZiwKh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE204148855;
-	Fri,  3 May 2024 08:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4586E14A097;
+	Fri,  3 May 2024 08:47:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714724863; cv=none; b=rlmCHoO6yFgyRzMhBEUyEO8jLCz/gMQ+HAfkfxQSN+mIrJ1qkm/KfHlcY+/k8qxWdn4eT2GQM3TshofnkaI/bcwn3YAlX5cp33KBvuHCJQ1A7PJSA8DiFhTxvuCig98Enn6hxVyV1FGRx5inyEgB0MNa73/FE6tu7GWyxeu9e/s=
+	t=1714726065; cv=none; b=N5jgty+mNjeUvJq1vhWZ5ZSWR9nebFKROTfeUMSw7SzmZzZlblWL5jmV8vdCOx5OZUKkmC5XwQZpOvp2xMpQCr5hhXsUeryvie7SIedarPlCHlW9cuIuEKh72ALu5cASsfL9y76N6w/gGf3HYym88nah5DssjJZZIhcmOC03yGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714724863; c=relaxed/simple;
-	bh=hpXw+JDhyJ8KA6VXCSkM1PllCVjuc41BdT8/PaWBXrE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qNSX8RNYWL5igvhcnLbnq6ZtKSvFfp4zHLf48Eq8/CrYsd4XlGrSeb2kGi+98efJdx42J2y1LjfXLASE7lBVm04Mr897dcg6GRCD4W0AVRIrlPx8gL6QeJ2bUQrPTGygDGgn7mzfcX6EMWGOcC/8+RMpuxcZ7scjcE4ncJheT5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WYOdN8YM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4437QIY5014558;
-	Fri, 3 May 2024 08:27:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=AWC8U9sGRekOaFvp6EhFFk8tv5bErTGxtGrzxXaaxQ8=; b=WY
-	OdN8YMUAwk9sdSFvXRRG087IIfXlHz8QAmPej3TbUTNkBEl+OtDZVpKQfOZcw8LD
-	A4oyK8Op3qlS7fn85SHAwWx23aV3uJGPDuN9KEdrdEqnozORw/XT5ucDJkxHG6Ss
-	JxL1cSJ2/cQmenseqmZavydZawVw8mHOP2qTmcPANPN+WdzU7u/Rabxr7Tv1Dc5h
-	WZDkmKsOUyVpIVa6cpUJ3yr02XSXf1JMluQaI5A5C1PkQ6cUvPL8uKCaFUFahf1Y
-	Zv+R89AVVQySC0L8wCRZ/IVFNUfg9F3VuloMWvi7lu+dAr7DplpaRoAonotWFzka
-	n7CmnwknccxcZCmTDN7A==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xvrt4gc6m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 03 May 2024 08:27:36 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4438RZoY013426
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 3 May 2024 08:27:35 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 3 May 2024
- 01:27:32 -0700
-Message-ID: <d8b7717c-1448-7f79-ea05-3dc9cc9bb90e@quicinc.com>
-Date: Fri, 3 May 2024 13:57:29 +0530
+	s=arc-20240116; t=1714726065; c=relaxed/simple;
+	bh=A2/ehrj8UnAnTNHhbcvlCxq/D5HtiADTdCZbBYLQsgM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ifXK3PfPDDe+kKGaWvGfJB71KU7Zzk5+sKroNAcIDmJ5AefL8vbOUFgjVigtcGhJ5iJAMFgojHz6y+/RLtBnTEtt6aKgcHSWakZIq4ZAOul1WQ8gyBUnx/EirgjZLXjjF3L/W3JYxlePNzZgq3EHwFFXWtwXqT+UHV0yL3biU0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ip/ZiwKh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEE4C116B1;
+	Fri,  3 May 2024 08:47:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714726064;
+	bh=A2/ehrj8UnAnTNHhbcvlCxq/D5HtiADTdCZbBYLQsgM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ip/ZiwKhJ6wXvXlo0UOeeiCuXrUSRp6xsDaa6aHWSvseLuwBF/xIJjdTACNZSEhv7
+	 SHg8OUk0nWy58is+iuh8p5n7I76iZQtWq1QpnPPqijEGIpqxmJzvQ1Fnzm66ocKPTG
+	 IanqU1ZbV4ufF+LAAj5LCn/C2kJx4cXVqrlvpc1wTG1DqFL1rJid6DyRl0zfP9PdxV
+	 vXZHmToHlwLMWgsZXMx2xKdqhGrzyslX3MImeIU9ZR6dnip8MYun/i+eRfD/73otQm
+	 d1IL9YK2tVuiYnKTFbh/vXyl3cVDWYllWL6lY90DpQy9+PZ2UlSW07lEZWxxq8avqP
+	 Fvb1rjxu6obUA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1s2oa0-000000004pD-3b9A;
+	Fri, 03 May 2024 10:47:45 +0200
+Date: Fri, 3 May 2024 10:47:44 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/6] dt-bindings: HID: i2c-hid: elan: add
+ 'no-reset-on-power-off' property
+Message-ID: <ZjSksM07OlgpE3yO@hovoldconsulting.com>
+References: <20240423134611.31979-1-johan+linaro@kernel.org>
+ <20240423134611.31979-4-johan+linaro@kernel.org>
+ <CACRpkdYXfZwBdLSTTPbruD9qynOPuQBOZjCwA_6eE+1MUBCkgA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v9 1/3] soc: qcom: Add qcom_rproc_minidump module
-Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mathieu.poirier@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
-References: <1711462394-21540-1-git-send-email-quic_mojha@quicinc.com>
- <ZjD0Yr72qv0ul3jK@hu-bjorande-lv.qualcomm.com>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <ZjD0Yr72qv0ul3jK@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BploNm2cebPIENlZibYLiGfp3qBEFwSX
-X-Proofpoint-ORIG-GUID: BploNm2cebPIENlZibYLiGfp3qBEFwSX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-03_05,2024-05-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 adultscore=0
- mlxlogscore=999 phishscore=0 clxscore=1015 impostorscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2405030059
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACRpkdYXfZwBdLSTTPbruD9qynOPuQBOZjCwA_6eE+1MUBCkgA@mail.gmail.com>
 
+On Fri, May 03, 2024 at 09:40:43AM +0200, Linus Walleij wrote:
 
-
-On 4/30/2024 7:08 PM, Bjorn Andersson wrote:
-> On Tue, Mar 26, 2024 at 07:43:12PM +0530, Mukesh Ojha wrote:
->> Add qcom_rproc_minidump module in a preparation to remove
->> minidump specific code from driver/remoteproc/qcom_common.c
->> and provide needed exported API, this as well helps to
->> abstract minidump specific data layout from qualcomm's
->> remoteproc driver.
->>
->> It is just a copying of qcom_minidump() functionality from
->> driver/remoteproc/qcom_common.c into a separate file under
->> qcom_rproc_minidump().
->>
+> On Tue, Apr 23, 2024 at 3:46 PM Johan Hovold <johan+linaro@kernel.org> wrote:
 > 
-> I'd prefer to see this enter the git history as one patch, extracting
-> this logic from the remoteproc into its own driver - rather than as
-> presented here give a sense that it's a new thing added. (I'll take care
-> of the maintainer sync...)
+> > When the power supply is shared with other peripherals the reset line
+> > can be wired in such a way that it can remain deasserted regardless of
+> > whether the supply is on or not.
+> >
+> > This is important as it can be used to avoid holding the controller in
+> > reset for extended periods of time when it remains powered, something
+> > which can lead to increased power consumption. Leaving reset deasserted
+> > also avoids leaking current through the reset circuitry pull-up
+> > resistors.
 > 
-> I also would prefer for this to include a problem description,
-> documenting why this is done.
+> So the reset line in this case is a GPIO as seen from the context above.
 > 
+> To me that means that the line should have the GPIO_OPEN_DRAIN flag
+> set in the device tree node for reset-gpios. As it has pull-up resistors,
+> setting the line to high impedance takes the device out of reset, and
+> thus it is effectively open drain.
+
+If you look at the devicetree patch later in the series this is exactly
+what is done.
+ 
+> > Add a new 'no-reset-on-power-off' devicetree property which can be used
+> > by the OS to determine when reset needs to be asserted on power down.
 > 
-> I've not compared patch 1 and 3, but I'd also like a statement in the
-> commit message telling if there are any changes, or if the functions are
-> cleanly moved from one place to another.
+> If the above holds true, the driver can then just check for the open drain flag
+> in the reset-gpios phandle, and if that is set, conclude that it should not
+> actively drive the line low in the poweroff state.
 
+That is an alternative I considered but rejected as just knowing that
+the gpio is open-drain is not necessarily sufficient, for example, if
+the reset line is pulled to always-on rail while power to the device can
+be cut.
 
-Thanks for the review, addressed the comments here in v10.
+Perhaps no one would ever construct hardware like that, but it does not
+seem like the hardware property I'm trying to encode necessarily follows
+from having an open-drain reset line.
 
-https://lore.kernel.org/lkml/1714724287-12518-1-git-send-email-quic_mojha@quicinc.com/
+And then the OS should probably not make assumptions like that either,
+especially since getting it wrong can potentially lead to damaged
+hardware.
 
--Mukesh
+Johan
 
