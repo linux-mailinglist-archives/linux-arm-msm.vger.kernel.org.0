@@ -1,124 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-19156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC2A48BA729
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 08:36:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CF5D8BA753
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 09:04:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE0901C20298
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 06:36:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC7422828F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 07:04:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA5BE1386D7;
-	Fri,  3 May 2024 06:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71A5C1465AA;
+	Fri,  3 May 2024 07:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="JgeKiXLQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b49Yh/UA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E75282EE
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 May 2024 06:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CAD1465A4;
+	Fri,  3 May 2024 07:04:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714718165; cv=none; b=ovAc/4IzSRVstTLoLPKUb6Rsjn1I6FJ9TUBWwkAm93h9m91dxXg13a1MpEM1oxkPqr1Ege4vf16N2dwrLOmUuVx6ZXOFrgSr/EoaC9a91xLtpHFjzcO36OcZwebqfk64o7MkmFmWy2nkG0jYsQhHBPWgZeOEJjAx8+4YD63L6U4=
+	t=1714719865; cv=none; b=dn9K5zmDTYVQTNmtTvJQMFllx13mg2MIHnvvD5R+qnA5up39QMACBGgcioWYBrSLuh0B3DB5vSmeZjRUf56rKGMT75HoA9EI6Jyufa7fLH4oA4PEkLOYIQs2kJROBrYs7JsWpDT3ZS32aESvvjDfUpUoD1sDPcL0uH+OQG/r2lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714718165; c=relaxed/simple;
-	bh=cd7yTrt6GWBxWkHwzMQubHiZtWWF/F5VLurzT+aYYRg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BbOKFnRMVgwwxLPpScRgIr9zHf+r1YZ1wRduG4YJ1+AhnpoHIZAUzBD+yWWUoAKrGd2pyWV6SKpggf9a/vAztOZch+kdCWgu1iS1DZN1pftyV+P8w23psVw44vtqqp1TRa8FW3ow422rB1DtQN96js3ohudy74kCgoJnP/dfULg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=JgeKiXLQ; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a58772187d8so1162837966b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 May 2024 23:36:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1714718162; x=1715322962; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HKZVfrEnHgDm/tlBdppJQIcDCasqaomHZPpbSKozHVo=;
-        b=JgeKiXLQhUseedrl2W/BOeLFvEHyHDnAKbiuloE3Ff4XJ20tRLTQ4nNN/RdCTq/i/G
-         Duu2BKrTOMDozCiqaEMbfwjbhpX8ZHOl948Gv7+iHCGr+sau0kIsi7f+VFa3MvcxoAvF
-         BhASqNLNdje19IIGObTYqSowqB06gg4Z76u8gNxuZtzrPI4E1SakjhukwljmuCNA9PSf
-         CjEaBdKexnVQra+ivvpu2EdWfftXIN/VMt4LSLqA82aBtf0b0CI9GWgz3LFbvgmnEPD4
-         MeYx/YQRQblDbYEPvncDtHBRD9Pq9jEUKa+gVG+gpjRwocE2Lk8wnXvG3bPUtNJLTqBL
-         +PDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714718162; x=1715322962;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HKZVfrEnHgDm/tlBdppJQIcDCasqaomHZPpbSKozHVo=;
-        b=uDE9g7p1zemxgxpyD5bOJBQI0tLjvrcmR1mYMHqxgqo+lhdQ/uywvEiUZ2UoCWDZdf
-         7K3+ojyNwKdlDdyNFMLpQgOsw/ph6xk/YhksP1iWSAOh1+NNCUe3j7q01S5bA1AtlUT7
-         wvIS08xRkaxcNsFCIgvQ+pS9GXs0vwbptaIwQyuFuokoykNDVRnhnR4nWsp0SI/icuBB
-         pJScY0wwM2xtiK/azLkLhUpIsJDKxJxwlpxUuqU02oFALeWq/T9HwFw7jzuihsZx6UiO
-         5pPZ2oxSF8pw01Ga55umoD4oeOyfOHNJQ15NDt16BOce/ZXdySRb9VB3MQCmL3zB0EtH
-         8WAw==
-X-Forwarded-Encrypted: i=1; AJvYcCWn6y5qA5RGWe789QALqej6vkLbxIy+xgxvsolIXcp16WrqziXMIsybHQWgH+LIK5PBzxzFMSzhVOaQ5eCUb/CsanzM/EAjgkzBraYY2g==
-X-Gm-Message-State: AOJu0YxijvqMvyi/nB4ORIzhmNeo5eEEVFrTPuvtGJSQEz3P7bvs4I67
-	HH42MQMV35D5K0Zm2nIXfLui2a50FoBIP40jdYajupwi9SBNssIFUQI021OFc478ynfIQibGd90
-	G508UpGEyCQZ6Glu2l1w8GR87QQkc+zeD3CRupQ==
-X-Google-Smtp-Source: AGHT+IHJT537wyzxsdoNYXT//WCkrfyVvA5aV6ewIY0e2q5E9nRhCBRhsDywWt1RP69zblCAg3piQ7kt3cTya8BgsNQ=
-X-Received: by 2002:a50:8e15:0:b0:56d:fb36:c388 with SMTP id
- 21-20020a508e15000000b0056dfb36c388mr1389392edw.9.1714718162420; Thu, 02 May
- 2024 23:36:02 -0700 (PDT)
+	s=arc-20240116; t=1714719865; c=relaxed/simple;
+	bh=Pj2tBSzx2HkV5R8JIH0sU2EK9sfWM1oUJjvCcOIOUXE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QAmyFV8k/hpyi3IP8pTtAVFzjG2Eozafo2NWzwzM8NMMg40N5U6CvB5+f/M0RzrZboqYIlVRZhfXPmYVEoaOWckryt31Mviq6rm1yqszPBNffKiDuSqgx2pe74PtHc9eO6lL7afuy0hzCUQep+jfqKD1qL/e9G4HQ1hs3MW1PEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b49Yh/UA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7940C116B1;
+	Fri,  3 May 2024 07:04:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714719864;
+	bh=Pj2tBSzx2HkV5R8JIH0sU2EK9sfWM1oUJjvCcOIOUXE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=b49Yh/UAZQfyis9GyyFSY7UKGwGWgKGoZBWBGWszbjQzh3A6CecrXTaAzgyXrj1ge
+	 5u6URox/mSaSIxhup3G80edTrBucVgRQ+yaKS+TBGi2OSm1KeJzgGwSU6SK0GbpbUO
+	 UMFo78kjwnDJwCFlT0FN8XXv5NpvmsK/FkDZl190wVDwCreRUSZOJBssR6uFRyT+hE
+	 f1opekJlXmn2rJqAp7MZknXfrQq4V+YGT5bybfVkcvlWeBu0ztefO3X+40fvwoYAOL
+	 E1GASfM8A8JTLRMneF62GSgrr9mHBt/plaji2iF3m9Q9auTWwIBvqHn+fM2vvi3tqs
+	 jM+wx74cv+NyA==
+Message-ID: <543fddc4-15fe-4ba0-b86f-2218c8796272@kernel.org>
+Date: Fri, 3 May 2024 09:04:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240307-topic-8280_nodes-v1-0-4eba20e08902@linaro.org>
-In-Reply-To: <20240307-topic-8280_nodes-v1-0-4eba20e08902@linaro.org>
-From: Steev Klimaszewski <steev@kali.org>
-Date: Fri, 3 May 2024 01:35:51 -0500
-Message-ID: <CAKXuJqii1FjG64m1=3J_P0LmeV0FKgcxXF3V7Rz4imasVmeDcQ@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Random 8280 bits
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: fix
+ x1e80100-gen3x2 schema
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+ Wesley Cheng <quic_wcheng@quicinc.com>, cros-qcom-dts-watchers@chromium.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ David Wronek <davidwronek@gmail.com>, Andy Gross <andy.gross@linaro.org>,
+ Evan Green <evgreen@chromium.org>, Douglas Anderson <dianders@chromium.org>,
+ Iskren Chernev <me@iskren.info>, Luca Weiss <luca.weiss@fairphone.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20240501-qcom-phy-fixes-v1-0-f1fd15c33fb3@linaro.org>
+ <20240501-qcom-phy-fixes-v1-1-f1fd15c33fb3@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240501-qcom-phy-fixes-v1-1-f1fd15c33fb3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 7, 2024 at 2:26=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro.=
-org> wrote:
->
-> As the series title and patch titles say
->
-> p1 for Srini/nvmem, rest for qcom
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 01/05/2024 18:19, Dmitry Baryshkov wrote:
+> The qcom,x1e80100-qmp-gen3x2-pcie-phy device doesn't have second reset,
+> drop it from the clause enforcing second reset to be used.
+> 
+> Fixes: e94b29f2bd73 ("dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100 QMP PCIe PHYs")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> Konrad Dybcio (4):
->       dt-bindings: nvmem: Add compatible for SC8280XP
->       arm64: dts: qcom: sc8280xp: Add QFPROM node
->       arm64: dts: qcom: sc8280xp: Add PS_HOLD restart
->       arm64: dts: qcom: sc8280xp: Describe TCSR download mode register
->
->  .../devicetree/bindings/nvmem/qcom,qfprom.yaml         |  1 +
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi                 | 18 ++++++++++++=
-++++++
->  2 files changed, 19 insertions(+)
-> ---
-> base-commit: 1843e16d2df9d98427ef8045589571749d627cf7
-> change-id: 20240307-topic-8280_nodes-da70ee866935
->
-> Best regards,
-> --
-> Konrad Dybcio <konrad.dybcio@linaro.org>
->
->
 
-My apologies for sending this so late, since this is now in -next,
-but, I'd gotten reports of people with the X13s not shutting down when
-using "my kernel" - I finally had the chance to dig through and do
-some testing today and it seems that with this patchset applied, is
-when the X13s will no longer power off.  Telling the system to
-poweroff or shutdown simply causes a reboot instead.
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
 
