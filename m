@@ -1,109 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-19163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 058168BA7DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 09:35:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A755D8BA7FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 09:41:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2BDB61C216EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 07:35:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BE291F221F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 07:41:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 307201474AB;
-	Fri,  3 May 2024 07:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C692147C78;
+	Fri,  3 May 2024 07:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EMoxFuP/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zh/El5T1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6DE139593;
-	Fri,  3 May 2024 07:35:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CB01474CF
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 May 2024 07:40:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714721705; cv=none; b=aLfS3hptG+p+W96FiVDmXpqqAqKHIvdVnLGhd3X8HkAjKGW4qsc5wx3Y9ZkTha5OyTKdI7t7to6oB5sej+9p9IoAOdcQpKZovskHAw71yADOZCjwCroEtJVMTLWWppgN3aYymnsenLVDb3WbXRemunldoTCr1swhXlJovwwTNyM=
+	t=1714722057; cv=none; b=Tsnyfi0EpZHTxkvQSxqamdRLt+OEP88SCL3fOrJ7wfzzS7yiqAy3vDNwDx4GimfcL14gCUXoU5V914lmHvjEUpeWeqtMT67nJaucXMvw5phcGCt9FrTD2h0twbs/rP0VIueNT0fBSZYRPyO8h+QpAh5GS9KPM2HQgSSVg4rzB0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714721705; c=relaxed/simple;
-	bh=pC91j2Fk6CmGMbzSbYOZVVJ6XRNvvhHzHeGWZQeg3vk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hRhPErDBApxIqRrDEDwo71f+rZ3xBzvhxtU2AKuIK/A8is1ARtvdFBjVE9ibFRmP4lWc7y+WEixg5VLaij2gesKucglVlBx7tLsCuaNganLIRcmMgmMjmDsQ/FjcFMTdYRY2EE4RB08T7orp1sUTlUg8drNfoUVRrCghY1Y7BQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EMoxFuP/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831F9C116B1;
-	Fri,  3 May 2024 07:35:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714721704;
-	bh=pC91j2Fk6CmGMbzSbYOZVVJ6XRNvvhHzHeGWZQeg3vk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EMoxFuP/8+/tBjtlxuT32p4uAwKGR5ysEaMBdK5a794d6zYEnDCNTIfJ+3in8n4ww
-	 7xpS7babtCyPdelDpyEfi3++9S3duQ0FKEUpy16u1+gyRQC8d35XUOFsy3/3eg9otP
-	 S/LugJbaSia3gfi5Pphf2OrBcW2LFn+HLTjrrexO6KKUm7PFWv/Tyd9QC7G/SAQroG
-	 z6eNRYzg1adI/HkHmE8uVh2Iv1mUqSy72Z6va5COtp/FBs+ch0yHeVLvEG5SKfiFTj
-	 2wXbsDitdFtiY5PWoVnZJPZmpJDCZDEJ4MQ13D6BFGYVDolXPyRIU56NKG1feQQbYr
-	 Wg/Av3N9cjVTg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1s2nRh-0000000040a-1OYn;
-	Fri, 03 May 2024 09:35:05 +0200
-Date: Fri, 3 May 2024 09:35:05 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Brian Norris <computersforpeace@gmail.com>,
-	Jaiganesh Narayanan <njaigane@codeaurora.org>,
-	Doug Anderson <dianders@chromium.org>,
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] pinctrl: qcom: Fix behavior in abscense of open-drain
- support
-Message-ID: <ZjSTqfxgrox0IceO@hovoldconsulting.com>
-References: <20240424-tlmm-open-drain-v1-1-9dd2041f0532@quicinc.com>
- <CACRpkdYw8jzFH5n377G76iMqri70Tf-1Vc=P5D6ESU_U0qRXWQ@mail.gmail.com>
+	s=arc-20240116; t=1714722057; c=relaxed/simple;
+	bh=gwHqss5RZXxGpYDwG7VlRCS9SdIL5vWAxoW0cWn/H2U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OF1GWQLjf0fPhbxb2Tv/J7WcgqW5fNxtRgNenRxETu5YkhCHYSnX23DcOH+fp271mr2+9VkS4q1sP8pM6oLabzLg6cn09/Cy4Jz7/v1JDz809OCUK5dog8t8whQLV1LTEDMam+CyT9fMMXih44bkqeGJAUoak/2+x+p6N7KrSUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zh/El5T1; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-de54b28c41eso9837846276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 May 2024 00:40:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1714722055; x=1715326855; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gwHqss5RZXxGpYDwG7VlRCS9SdIL5vWAxoW0cWn/H2U=;
+        b=zh/El5T1BqVswezu0/H71E638/RyGI5sdnHS/2bzQMCFzplcs9t8Ix4upxAW6z/EUV
+         w5LJekthcxGnES/sZ/3rRtBqZh7e40rHt4QbXKYo/s+/j5n/h6Epk+G5cXV7ajlp1uEv
+         9GtHm35g67Ri9zrcT9iseNmCgE6cbx2IEBz/abpolKACCbmq8JvPktEprJW3KWI6SAqo
+         kyvcu+yRa4srcVzNMc6wZPVqeB23j9rpFhc00wzHu07li3U8Zpo43tyh8mnj9GtUZzUM
+         RwB798TbB46ibcX8t4wdTjBLQpoAs3ZFNj8QDVHcGEt/K1VJpWM+8WUL5SowskifN/An
+         GGBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714722055; x=1715326855;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gwHqss5RZXxGpYDwG7VlRCS9SdIL5vWAxoW0cWn/H2U=;
+        b=JVghPVx0AZA4jRlukXjD3TjNlQNQeJm4TJjj8YWanPDCx/Afb+WOaW+RmXx7Z46ESs
+         7sdHYtE/B2M2MlAkVYXS4nAzXgIBe1qRwfp9vNI+qmXrmM3qnT7nLWJ08TY9uN/zbBEi
+         VWK56gReCDs7FkRQWaQcxMib6i5I3O/llX4F7DCoLKKPP4/pvSG7KfZOkR9ydIew1BZE
+         MRcaEDBQb/dDfdDLD9G1zmRLF94HzaHs6KjGR1B31R5YdYoHQKybGXfkLUa5yH4+jcdC
+         UKPaNXIiA6MHf/3fv7zWAAkB1ZcZ7PZUjDdIJCAjUoa+bj9NS0Gn3Mqy2VhI5bN21BfU
+         6cdw==
+X-Forwarded-Encrypted: i=1; AJvYcCVox76NDxx3pEMw4Z5FMU/hFXDx6ZS+cRDtxvlaKOj1LtO5Ha59pFWE5Gvlye/e0YfZdcwSpGpe/n36oS+ESgOG6B81M7XBdMDt/aEflA==
+X-Gm-Message-State: AOJu0YzdvNpY7UW9akS2NLvm2j/T4veRtEK8koCXERQpycAE0Yt16H3f
+	TU+4AHvkXbGeWfPTJu7wh57rN6ZL35Y4EsEtuIrWh9YXLpTnU595v3VjqwhLblmfbB0Uf0rBGDo
+	g8uF54TC+qv7fAIZFo+95y/dDGeEWOehqVJ5SXg==
+X-Google-Smtp-Source: AGHT+IGKGwRhNfzN2iXJoJhXvjSPiHyUquPE3ouCPy0eWG0y0CwM0ThM2Op0QFyOEbDftKVb65DsDUY5yqJ+5H4Fyho=
+X-Received: by 2002:a25:b285:0:b0:de5:5919:c9e8 with SMTP id
+ k5-20020a25b285000000b00de55919c9e8mr2264670ybj.52.1714722054894; Fri, 03 May
+ 2024 00:40:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACRpkdYw8jzFH5n377G76iMqri70Tf-1Vc=P5D6ESU_U0qRXWQ@mail.gmail.com>
+References: <20240423134611.31979-1-johan+linaro@kernel.org> <20240423134611.31979-4-johan+linaro@kernel.org>
+In-Reply-To: <20240423134611.31979-4-johan+linaro@kernel.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Fri, 3 May 2024 09:40:43 +0200
+Message-ID: <CACRpkdYXfZwBdLSTTPbruD9qynOPuQBOZjCwA_6eE+1MUBCkgA@mail.gmail.com>
+Subject: Re: [PATCH 3/6] dt-bindings: HID: i2c-hid: elan: add
+ 'no-reset-on-power-off' property
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires <benjamin.tissoires@redhat.com>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Douglas Anderson <dianders@chromium.org>, linux-input@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 03, 2024 at 09:28:41AM +0200, Linus Walleij wrote:
-> On Thu, Apr 25, 2024 at 5:46 AM Bjorn Andersson
-> <quic_bjorande@quicinc.com> wrote:
-> 
-> > When a GPIO is configured as OPEN_DRAIN gpiolib will in
-> > gpiod_direction_output() attempt to configure the open-drain property of
-> > the hardware and if this fails fall back to software emulation of this
-> > state.
-> >
-> > The TLMM block in most Qualcomm platform does not implement such
-> > functionality, so this call would be expected to fail. But due to lack
-> > of checks for this condition, the zero-initialized od_bit will cause
-> > this request to silently corrupt the lowest bit in the config register
-> > (which typically is part of the bias configuration) and happily continue
-> > on.
-> >
-> > Fix this by checking if the od_bit value is unspecified and if so fail
-> > the request to avoid the unexpected state, and to make sure the software
-> > fallback actually kicks in.
-> >
-> > It is assumed for now that no implementation will come into existence
-> > with BIT(0) being the open-drain bit, simply for convenience sake.
-> >
-> > Fixes: 13355ca35cd1 ("pinctrl: qcom: ipq4019: add open drain support")
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> 
-> I tried to follow the discussion but couldn't get to a verdict on this patch,
-> should it be applied or not, and if it should be applied, should the Fixes:
-> tag be dropped or left and considered a nonurgent fix as it does not
-> affect current behaviour?
+Hi Johan,
 
-It should not be applied in its current form (e.g. as the commit message
-is incorrect). Bjorn will be sending a v2.
+thanks for your patch!
 
-Johan
+On Tue, Apr 23, 2024 at 3:46=E2=80=AFPM Johan Hovold <johan+linaro@kernel.o=
+rg> wrote:
+
+> When the power supply is shared with other peripherals the reset line
+> can be wired in such a way that it can remain deasserted regardless of
+> whether the supply is on or not.
+>
+> This is important as it can be used to avoid holding the controller in
+> reset for extended periods of time when it remains powered, something
+> which can lead to increased power consumption. Leaving reset deasserted
+> also avoids leaking current through the reset circuitry pull-up
+> resistors.
+
+So the reset line in this case is a GPIO as seen from the context above.
+
+To me that means that the line should have the GPIO_OPEN_DRAIN flag
+set in the device tree node for reset-gpios. As it has pull-up resistors,
+setting the line to high impedance takes the device out of reset, and
+thus it is effectively open drain.
+
+> Add a new 'no-reset-on-power-off' devicetree property which can be used
+> by the OS to determine when reset needs to be asserted on power down.
+
+If the above holds true, the driver can then just check for the open drain =
+flag
+in the reset-gpios phandle, and if that is set, conclude that it should not
+actively drive the line low in the poweroff state.
+
+I'd like Krzysztof's input on this though, as he's been all over the reset
+code recently and knows it better than me.
+
+Yours,
+Linus Walleij
 
