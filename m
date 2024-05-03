@@ -1,110 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-19173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3D6F8BA9D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 11:25:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BBFC8BAAB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 12:28:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5EFCB286B4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 09:25:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C81441F21DF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 10:28:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29E8514F127;
-	Fri,  3 May 2024 09:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B052B150988;
+	Fri,  3 May 2024 10:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s0wlK9a7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CVexwY3l"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC81A139CE5;
-	Fri,  3 May 2024 09:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671FD14BF85;
+	Fri,  3 May 2024 10:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714728305; cv=none; b=iYUGlD0eGUpxFEGFQmrsRnYHI+EiIjmq+wkylH7VUDLTx1/cJgGVhq5hr0aR9evaI45wH4pKkpI0wsvkLiCW7yk1wDnRjTmJg9EHPkCGDmRk/Qw0c+5xMjUxzAnR6pilz+ABnx03rQSq9vDb/xD4huVYbpDmp+qqAJIKbWiDyaQ=
+	t=1714732094; cv=none; b=g6U9v2B13qKiqDKuezJb2bopsScZ8qqaKdumrSMi7kbD4Dc68W2Pe66F7tB8Az8rUuPrQcGRx3JvBXQgt2BETE7BGxYhooXViwVzokMhYfv7gghwbOUicw1W94OPk6RkdubS/H74+0jrBbOoi1KkexmFlfYy61LUsun/R+eWw8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714728305; c=relaxed/simple;
-	bh=zK7UnGMi4p05jwvR3aEI2aFoiM1mhz4XLglPB41yM18=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ap8zv9KBxyux9t681F+g0KB5IfsULxRBSgwO8D5xj3P5MJCv4nL8m3XoffU5MvotZuceDifjlhneRLAwINfykW5y/eJnCMwxt9f+gmLDFDIiuJ+ux38sDasPYn2ZCE9KiiQ6p99D0Tgsgn5KwbQHQKKIALu1afoBu6I4bAgvyg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s0wlK9a7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAA9C116B1;
-	Fri,  3 May 2024 09:25:04 +0000 (UTC)
+	s=arc-20240116; t=1714732094; c=relaxed/simple;
+	bh=OntdBaerXi3AJ/zLXyZcNtMvP/PzL6ZafwOb4BeMmI8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PffkdFOFJaZ9ggqMuDg6SwkKmpcyCvwNIkTX4kWEmGCoPj3jkzFfSbfFrOG1S+bf1g6I8T8sU+BE1SCMv/q4kAShqhK2uhHRzxbyUQcs9dT9jSUDRAS2F6EbKLtffiBfU/DpnM4ruK3YvokqISH7QZREkCVYpKOA5XA0h4c6Fe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CVexwY3l; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C52C116B1;
+	Fri,  3 May 2024 10:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714728304;
-	bh=zK7UnGMi4p05jwvR3aEI2aFoiM1mhz4XLglPB41yM18=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=s0wlK9a72ouNQmoFhqXfgNKQI+xm31/6CJEtIYe198RlKClcGzA0e24vvV5nzjZYq
-	 6TIok9pF1J9VamFuQfUy7yg7pG2NN58/sPl8L8TFHVG8qP3Uw41zPjt+X4+iz4Fi+4
-	 QztH9oN5aKKBNLgua90geuYD2YIrv4DRX2Jvhu2enpkucIzsjI8pCPH72hHpqIp16W
-	 O4FNsfkGxcqKEId4ayl9a9X17cCHtHdCH1AkK68tw8htrMeCIjQkQc7yrwyGDQ5S8l
-	 Q5pkQazhInpMTXLXMlltCxzx+eS2Qlaq2xi+Wg4yaVoXscSsH2yj1CG6iMPDHa/mYq
-	 QmExpUd9z37aA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1s2pA8-000000005Of-0cRG;
-	Fri, 03 May 2024 11:25:04 +0200
-Date: Fri, 3 May 2024 11:25:04 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/6] dt-bindings: HID: i2c-hid: elan: add
- 'no-reset-on-power-off' property
-Message-ID: <ZjStcGBPlpygpKki@hovoldconsulting.com>
-References: <20240423134611.31979-1-johan+linaro@kernel.org>
- <20240423134611.31979-4-johan+linaro@kernel.org>
- <2e67e4e6-83a7-4153-b6a7-cdec0ab2c171@kernel.org>
- <Zii2CUeIyBwxzrBu@hovoldconsulting.com>
- <bde4884c-117b-4e6e-8c7b-401b8320655b@kernel.org>
- <ZjNjMBNMegmTgN5B@hovoldconsulting.com>
- <48ec0bb5-a06e-4f18-97c3-1370b7facea4@kernel.org>
+	s=k20201202; t=1714732094;
+	bh=OntdBaerXi3AJ/zLXyZcNtMvP/PzL6ZafwOb4BeMmI8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=CVexwY3lU9pEyrjVDtImt5My3VLqjq0O6pu4tXHAYXra+R/yyivA0NvhfTLZ09e0A
+	 cxbBIdKBwsREn30DGoNQVdBGNnjfuk75/VpipXdN/6ZvWZCfIKVtqVsOxiXD66T88L
+	 3sCcvCfpeYvNOoP9K2/otFr5CSejsUV24l3x7xiLmlJ2OYwtrX4t6Z6ZRbVrQ+yG7x
+	 8TpvvQD0STMgj41jXX4MiXNiccAK0MNa6GSxqKlDQTZ05zw2Bzltst6RLpU6SK1jGx
+	 3MalcpgYNan36bYB7hjf438rPRn0mK7fZRYgacV4KlzCbym7pY6M6KQ7QdGTsVih8M
+	 SjyAg0MIerKAg==
+Date: Fri, 3 May 2024 11:27:58 +0100
+From: Mauro Carvalho Chehab <mchehab@kernel.org>
+To: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Martin Tuma <martin.tuma@digiteqautomotive.com>, Laurent Pinchart
+ <laurent.pinchart@ideasonboard.com>, Hugues Fruchet
+ <hugues.fruchet@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+ <alexandre.torgue@foss.st.com>, Paul Kocialkowski
+ <paul.kocialkowski@bootlin.com>, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>, Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec
+ <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, Sakari
+ Ailus <sakari.ailus@linux.intel.com>, Thierry Reding
+ <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>,
+ Sowjanya Komatineni <skomatineni@nvidia.com>, Luca Ceresoli
+ <luca.ceresoli@bootlin.com>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Hans
+ Verkuil <hverkuil@xs4all.nl>, Sergey Kozlov <serjk@netup.ru>, Abylay Ospan
+ <aospan@netup.ru>, Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Dmitry
+ Osipenko <digetx@gmail.com>, Benjamin Mugnier
+ <benjamin.mugnier@foss.st.com>, Sylvain Petinot
+ <sylvain.petinot@foss.st.com>, Stanimir Varbanov
+ <stanimir.k.varbanov@gmail.com>, Vikash Garodia
+ <quic_vgarodia@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev,
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 26/26] media: dvb-frontends: tda10048: Make the range
+ of z explicit.
+Message-ID: <20240503112758.763d8d31@sal.lan>
+In-Reply-To: <20240429-fix-cocci-v3-26-3c4865f5a4b0@chromium.org>
+References: <20240429-fix-cocci-v3-0-3c4865f5a4b0@chromium.org>
+	<20240429-fix-cocci-v3-26-3c4865f5a4b0@chromium.org>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <48ec0bb5-a06e-4f18-97c3-1370b7facea4@kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, May 03, 2024 at 11:11:16AM +0200, Krzysztof Kozlowski wrote:
-> On 02/05/2024 11:56, Johan Hovold wrote:
-> > On Thu, Apr 25, 2024 at 11:39:24AM +0200, Krzysztof Kozlowski wrote:
+Em Mon, 29 Apr 2024 15:05:05 +0000
+Ricardo Ribalda <ribalda@chromium.org> escreveu:
 
-> >> It seems it is common problem. LEDs have property
-> >> "retain-state-shutdown", to indicate that during system shutdown we
-> >> should not touch them (like power off). Would some variant be applicable
-> >> here? First, do we talk here about power off like system shutdown or
-> >> runtime PM, thus suspend?
-> > 
-> > A name like 'retain-state-shutdown' would also be too specific as what
-> > I'm describing here is that the reset line should be (or can be) left
-> > deasserted whenever the OS wants to power off the device.
+> We do not expect the sample_freq to be over 613MHz.
 > 
-> I don't think it is more specific than yours. It is actually more
-> generic. First, shutdown=poweroff, so that part is the same.
+> Found by cocci:
+> drivers/media/dvb-frontends/tda10048.c:345:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_u64 instead.
+> 
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> ---
+>  drivers/media/dvb-frontends/tda10048.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/dvb-frontends/tda10048.c b/drivers/media/dvb-frontends/tda10048.c
+> index 3e725cdcc66b..1886f733dbbf 100644
+> --- a/drivers/media/dvb-frontends/tda10048.c
+> +++ b/drivers/media/dvb-frontends/tda10048.c
+> @@ -328,7 +328,8 @@ static int tda10048_set_wref(struct dvb_frontend *fe, u32 sample_freq_hz,
+>  			     u32 bw)
+>  {
+>  	struct tda10048_state *state = fe->demodulator_priv;
+> -	u64 t, z;
+> +	u32 z;
+> +	u64 t;
+>  
+>  	dprintk(1, "%s()\n", __func__);
+>  
+> @@ -341,6 +342,7 @@ static int tda10048_set_wref(struct dvb_frontend *fe, u32 sample_freq_hz,
+>  	/* t *= 2147483648 on 32bit platforms */
+>  	t *= (2048 * 1024);
+>  	t *= 1024;
+> +	/* Sample frequency is under 613MHz */
 
-My point is that 'shutdown' is a specific OS concept (i.e. turning the
-whole system off), while powering off a *device* can be done for a
-number of reasons including closing a character device, suspend and
-system-wide shutdown.
+Are you sure about that? Some DVB devices have very high frequency 
+clocks, specially if they're also used for satellite, so I can't
+be sure by just looking at the driver's code.
 
-The policy decision of when to power off a device is left up to kernel
-(e.g. if a device needs to be kept on as it is currently configured as a
-wakeup device).
+Also, we had already a bunch of regressions with "fixes" like this
+that actually broke frontend drivers.
 
-Johan
+If you're sure, please add a note at the description mentioning 
+on what part of the datasheet you got it.
+
+Otherwise, let's stick with the current code and address cocci
+warning on a different way.
+
+Regards,
+Mauro
+
+PS.: I partially applied this patch series. I left a few
+patches out of the merge to let other people review/comment
+(and/or for me to take a deeper look later on).
+
+Regards,
+Mauro
 
