@@ -1,260 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-19183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4EF18BADF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 15:43:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DFB28BAE12
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 15:52:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5336F1F225DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 13:43:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D3581F22F60
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 May 2024 13:52:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70AA61474BF;
-	Fri,  3 May 2024 13:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C3CB153BF6;
+	Fri,  3 May 2024 13:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wq94fX7j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mNAGdOLX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E2E153BCD
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 May 2024 13:43:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F478153BCE;
+	Fri,  3 May 2024 13:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714743803; cv=none; b=NXu/rTnkFJJDTmg6XXPA7OvUcG+XFt6f8bfHaMkgVIbdm4pECe7uD4GqJkLCLMx03iMRV0o8Y/sCEhg6qOdBU02DU1AfM1dfCcZixb1KqcWyzLulLsv5jv/RBIIG/SKneUUISFe3mN1AMntlZWUpNmAXu5t7dYyONbrL/LnJ3j4=
+	t=1714744370; cv=none; b=JDFyPx7/Smk2+8r/sqZGaO5ZQ8UjJI/1KICg622dBr6F/Yfrqow8v4lJj/J+oBu0HCv1VXGxyM9YqN+DwkdrAfbSr5m5Y4ygFltwr84ns9yzs+L1o9YarGrUmcBtW7llnCr8n+2GCOsgVXNy0rFygYpd7S9KAE0+NKn4YVv8Tfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714743803; c=relaxed/simple;
-	bh=/4c8RXHe1ZwfY3zxF3/XsbJWUAdPAwCtivQ4EVfABN8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jNKsD3wAZcKBWihYTw9K3xTBtoLcdVSzgfITtdHcqHx0M6uaRtuEgZVFMR+9ynLcOD205Q3XdnOFZNUR3dY8TuIwirE8bJLJJhi4E3F/xzIqApXWhqJaEo4XVqO+JolwkbKzumb+LZLI+BRiB0dYCYNQ8pLfatB54QEtbBDJONg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wq94fX7j; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-34ddc9fe4a1so1528126f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 May 2024 06:43:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714743800; x=1715348600; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A61biRqVJhTnScYcORs7EQzF8Fv421/of/urY8VoZKs=;
-        b=Wq94fX7jw84xHc3EKxMInxEk29FGQ0F8KbOWhlMqh20HO2YVqpBRrhpaFEqbD86GYY
-         2dqsp6QRO10/jORIQyV2uKxRLBPth6XWx8e3nHrm51+AIYDHBLaV64EDc6y3JMtApMjI
-         IDH5+3XcXnZWzZ54/6UisYD6sHhUtDNtCqaiLNp8HKL5MyYIzU9HU1HKurlBQOKlzaXY
-         /SQt4gw+X3p1LmeWWQioea+oVZsKzY8LvLr+aVV1148FdIjpFnCcrA1Ob48zdtJEcfgp
-         WWN487/yweoxUl5hMerrLKIkf71xMagsT/e+/TQyNof+aTDKNWAE3NZSA+5UB+WGeMyU
-         8ofg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714743800; x=1715348600;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A61biRqVJhTnScYcORs7EQzF8Fv421/of/urY8VoZKs=;
-        b=aCYP/datwqMnly0D0lSSj3Z6r3Cm4TYmfj2OJQq5HbmbrWo1bhJYncQbmTkYP39Age
-         GS3IEpMXs4+7hiWIGaZ7FQ81cfE7Ffbh1oWsta/q9YyExbAIpPkLrzYJMa1/J+N2OsrS
-         fJ1KvUvweysDtcmvmoiqubF/FTRTuIFSiyNgmz1vMHDmdQuPyriIH9/0bOtRtYl24y6s
-         vQyW1iT0qR7Bp+1j7gQPGs2EPurTZZ9S98hEKSHcsAuHycyLcJFJNFa1hLptrtPMomhD
-         F8RmCgUwdeoAde8Im9C64LR87VB2dvBvknnvLQyGP8D3KKpD84akEFvBlqGAZu441Tgu
-         sf4Q==
-X-Gm-Message-State: AOJu0YxGnplN+NcqNtOPUd82zISXVsHHZH7bXz65BljARomlD3I9tAtN
-	4y5z9vBrUX8k+oLrirN50+Eo0z9q3Qb89rUK6MOKPhzjGvTuFYaS
-X-Google-Smtp-Source: AGHT+IGeBs+/NaST6xGUoIqoV0OI2JKKgiJLp0/yciabgHI21S2gcM7i6idpB13zgcpw02hT2tYn1w==
-X-Received: by 2002:a5d:55c9:0:b0:34c:77dd:b1b5 with SMTP id i9-20020a5d55c9000000b0034c77ddb1b5mr2154598wrw.15.1714743799832;
-        Fri, 03 May 2024 06:43:19 -0700 (PDT)
-Received: from [192.168.0.20] (cpc115152-dals23-2-0-cust532.20-2.cable.virginm.net. [86.12.82.21])
-        by smtp.gmail.com with ESMTPSA id z18-20020adff1d2000000b0034df178a9acsm3782482wro.99.2024.05.03.06.43.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 May 2024 06:43:19 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Fri, 03 May 2024 14:42:34 +0100
-Subject: [PATCH 5/5] drm/msm: Add devcoredump support for a750
+	s=arc-20240116; t=1714744370; c=relaxed/simple;
+	bh=/ikARJU0dNJFx1ZbYtIVaOCPwhf9eJ3Xsa4ZMvOGqcw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cDk2++TUadwonJ38qmkLFR0bFOMvFPQm1eD/Y4zqJnOTtaYSgWlq4tq9aakJX/P5rpkOXm5ZSkXfwksoxC6Tj11TGiWLsvh9UCyzZ5AnHRYn5tmZ8PCrOIOMebY8/W92gauEAP8Qqf9LYKnFi2nLl8hj318ugKa0vqbVjyiMCmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mNAGdOLX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F46DC116B1;
+	Fri,  3 May 2024 13:52:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714744369;
+	bh=/ikARJU0dNJFx1ZbYtIVaOCPwhf9eJ3Xsa4ZMvOGqcw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mNAGdOLX5oyQ5YP0lG4U7x79x6bCeNSRq6WOS/kCDdWBqe0g555viimFTlV6qnEkS
+	 SrGffaB11PJ1xeB9DaLFEd/k9J+aB30ujqWYePQwl8fUaU5Ve+BlI9f9kpiL8bacWn
+	 St2f3ZRk4PccwEzZw1fzI2QYq5SCgZptNo9S/AhAfO5/OpKQfUkmFULupIIt8sgXSy
+	 AeiPfiromWKfpyJsmdoP8TqvTqho96uKbDWDuOh8ELWFKi6gOer9UorEfC73jXfc65
+	 xYenV/YDqOHceMrt8LVom4UH4vAeX/6lACYhPcglA9tEiYPTgkiF79+cARMk/NvSpO
+	 lMdMmkThkPavQ==
+Message-ID: <c015b3a5-2213-4ebd-b960-d97ed1fe7062@kernel.org>
+Date: Fri, 3 May 2024 16:51:04 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 6/6] arm64: dts: qcom: ipq9574: Add icc provider
+ ability to gcc
+Content-Language: en-US
+To: Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20240418092305.2337429-1-quic_varada@quicinc.com>
+ <20240418092305.2337429-7-quic_varada@quicinc.com>
+ <a7194edd-a2c8-46fc-bea1-f26b0960e535@linaro.org>
+ <Ziov6bWBXYXJ4Zp8@hu-varada-blr.qualcomm.com>
+ <27f4f3dd-9375-40cf-8c8f-1c4edf66e31b@linaro.org>
+ <ZjNdTmmXucjtRxJt@hu-varada-blr.qualcomm.com>
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <ZjNdTmmXucjtRxJt@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240503-a750-devcoredump-v1-5-04e669e2c3f7@gmail.com>
-References: <20240503-a750-devcoredump-v1-0-04e669e2c3f7@gmail.com>
-In-Reply-To: <20240503-a750-devcoredump-v1-0-04e669e2c3f7@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
- Connor Abbott <cwabbott0@gmail.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1714743792; l=6513;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=/4c8RXHe1ZwfY3zxF3/XsbJWUAdPAwCtivQ4EVfABN8=;
- b=SUWbcnHWPBpkG17Ay17aBCjwtDqiMsXLO/etk5Ic+mDelpaLqOlmcJMJKN6gR0KkhLxV4GjwA
- T5ZHwZvTuM+AeYJG+1jhOrpolN2SPjJao+1lXSVnkGmDlxmwaxUfQLd
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
 
-Add an a750 case to the various places where we choose a list of
-registers.
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 64 +++++++++++++++++++++--------
- 1 file changed, 46 insertions(+), 18 deletions(-)
+Hi Varada,
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index bb0592af41f3..77146d30bcaa 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -13,9 +13,11 @@
-  */
- #pragma GCC diagnostic push
- #pragma GCC diagnostic ignored "-Wunused-variable"
-+#pragma GCC diagnostic ignored "-Wunused-const-variable"
- 
- #include "adreno_gen7_0_0_snapshot.h"
- #include "adreno_gen7_2_0_snapshot.h"
-+#include "adreno_gen7_9_0_snapshot.h"
- 
- #pragma GCC diagnostic pop
- 
-@@ -384,21 +386,29 @@ static void a7xx_get_debugbus_blocks(struct msm_gpu *gpu,
- 		struct a6xx_gpu_state *a6xx_state)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
--	int debugbus_blocks_count, total_debugbus_blocks;
--	const u32 *debugbus_blocks;
-+	int debugbus_blocks_count, gbif_debugbus_blocks_count, total_debugbus_blocks;
-+	const u32 *debugbus_blocks, *gbif_debugbus_blocks;
- 	int i;
- 
- 	if (adreno_is_a730(adreno_gpu)) {
- 		debugbus_blocks = gen7_0_0_debugbus_blocks;
- 		debugbus_blocks_count = ARRAY_SIZE(gen7_0_0_debugbus_blocks);
--	} else {
--		BUG_ON(!adreno_is_a740_family(adreno_gpu));
-+		gbif_debugbus_blocks = a7xx_gbif_debugbus_blocks;
-+		gbif_debugbus_blocks_count = ARRAY_SIZE(a7xx_gbif_debugbus_blocks);
-+	} else if (adreno_is_a740_family(adreno_gpu)) {
- 		debugbus_blocks = gen7_2_0_debugbus_blocks;
- 		debugbus_blocks_count = ARRAY_SIZE(gen7_2_0_debugbus_blocks);
-+		gbif_debugbus_blocks = a7xx_gbif_debugbus_blocks;
-+		gbif_debugbus_blocks_count = ARRAY_SIZE(a7xx_gbif_debugbus_blocks);
-+	} else {
-+		BUG_ON(!adreno_is_a750(adreno_gpu));
-+		debugbus_blocks = gen7_9_0_debugbus_blocks;
-+		debugbus_blocks_count = ARRAY_SIZE(gen7_9_0_debugbus_blocks);
-+		gbif_debugbus_blocks = gen7_9_0_gbif_debugbus_blocks;
-+		gbif_debugbus_blocks_count = ARRAY_SIZE(gen7_9_0_gbif_debugbus_blocks);
- 	}
- 
--	total_debugbus_blocks = debugbus_blocks_count +
--		ARRAY_SIZE(a7xx_gbif_debugbus_blocks);
-+	total_debugbus_blocks = debugbus_blocks_count + gbif_debugbus_blocks_count;
- 
- 	a6xx_state->debugbus = state_kcalloc(a6xx_state, total_debugbus_blocks,
- 			sizeof(*a6xx_state->debugbus));
-@@ -410,9 +420,9 @@ static void a7xx_get_debugbus_blocks(struct msm_gpu *gpu,
- 				&a6xx_state->debugbus[i]);
- 		}
- 
--		for (i = 0; i < ARRAY_SIZE(a7xx_gbif_debugbus_blocks); i++) {
-+		for (i = 0; i < gbif_debugbus_blocks_count; i++) {
- 			a6xx_get_debugbus_block(gpu,
--				a6xx_state, &a7xx_debugbus_blocks[a7xx_gbif_debugbus_blocks[i]],
-+				a6xx_state, &a7xx_debugbus_blocks[gbif_debugbus_blocks[i]],
- 				&a6xx_state->debugbus[i + debugbus_blocks_count]);
- 		}
- 	}
-@@ -813,10 +823,13 @@ static void a7xx_get_clusters(struct msm_gpu *gpu,
- 	if (adreno_is_a730(adreno_gpu)) {
- 		clusters = gen7_0_0_clusters;
- 		clusters_size = ARRAY_SIZE(gen7_0_0_clusters);
--	} else {
--		BUG_ON(!adreno_is_a740_family(adreno_gpu));
-+	} else if (adreno_is_a740_family(adreno_gpu)) {
- 		clusters = gen7_2_0_clusters;
- 		clusters_size = ARRAY_SIZE(gen7_2_0_clusters);
-+	} else {
-+		BUG_ON(!adreno_is_a750(adreno_gpu));
-+		clusters = gen7_9_0_clusters;
-+		clusters_size = ARRAY_SIZE(gen7_9_0_clusters);
- 	}
- 
- 	a6xx_state->clusters = state_kcalloc(a6xx_state,
-@@ -948,10 +961,13 @@ static void a7xx_get_shaders(struct msm_gpu *gpu,
- 	if (adreno_is_a730(adreno_gpu)) {
- 		shader_blocks = gen7_0_0_shader_blocks;
- 		num_shader_blocks = ARRAY_SIZE(gen7_0_0_shader_blocks);
--	} else {
--		BUG_ON(!adreno_is_a740_family(adreno_gpu));
-+	} else if (adreno_is_a740_family(adreno_gpu)) {
- 		shader_blocks = gen7_2_0_shader_blocks;
- 		num_shader_blocks = ARRAY_SIZE(gen7_2_0_shader_blocks);
-+	} else {
-+		BUG_ON(!adreno_is_a750(adreno_gpu));
-+		shader_blocks = gen7_9_0_shader_blocks;
-+		num_shader_blocks = ARRAY_SIZE(gen7_9_0_shader_blocks);
- 	}
- 
- 	a6xx_state->shaders = state_kcalloc(a6xx_state,
-@@ -1337,10 +1353,13 @@ static void a7xx_get_registers(struct msm_gpu *gpu,
- 	if (adreno_is_a730(adreno_gpu)) {
- 		reglist = gen7_0_0_reg_list;
- 		pre_crashdumper_regs = gen7_0_0_pre_crashdumper_gpu_registers;
--	} else {
--		BUG_ON(!adreno_is_a740_family(adreno_gpu));
-+	} else if (adreno_is_a740_family(adreno_gpu)) {
- 		reglist = gen7_2_0_reg_list;
- 		pre_crashdumper_regs = gen7_0_0_pre_crashdumper_gpu_registers;
-+	} else {
-+		BUG_ON(!adreno_is_a750(adreno_gpu));
-+		reglist = gen7_9_0_reg_list;
-+		pre_crashdumper_regs = gen7_9_0_pre_crashdumper_gpu_registers;
- 	}
- 
- 	count = A7XX_PRE_CRASHDUMPER_SIZE + A7XX_POST_CRASHDUMPER_SIZE;
-@@ -1388,7 +1407,8 @@ static void a7xx_get_post_crashdumper_registers(struct msm_gpu *gpu,
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	const u32 *regs;
- 
--	BUG_ON(!(adreno_is_a730(adreno_gpu) || adreno_is_a740_family(adreno_gpu)));
-+	BUG_ON(!(adreno_is_a730(adreno_gpu) || adreno_is_a740_family(adreno_gpu) ||
-+		 adreno_is_a750(adreno_gpu)));
- 	regs = gen7_0_0_post_crashdumper_registers;
- 
- 	a7xx_get_ahb_gpu_registers(gpu,
-@@ -1491,10 +1511,18 @@ static void a7xx_get_indexed_registers(struct msm_gpu *gpu,
- 		struct a6xx_gpu_state *a6xx_state)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	const struct a6xx_indexed_registers *indexed_regs;
- 	int i, indexed_count, mempool_count;
- 
--	BUG_ON(!(adreno_is_a730(adreno_gpu) || adreno_is_a740_family(adreno_gpu)));
--	indexed_count = ARRAY_SIZE(a7xx_indexed_reglist);
-+	if (adreno_is_a730(adreno_gpu) || adreno_is_a740_family(adreno_gpu)) {
-+		indexed_regs = a7xx_indexed_reglist;
-+		indexed_count = ARRAY_SIZE(a7xx_indexed_reglist);
-+	} else {
-+		BUG_ON(!adreno_is_a750(adreno_gpu));
-+		indexed_regs = gen7_9_0_cp_indexed_reg_list;
-+		indexed_count = ARRAY_SIZE(gen7_9_0_cp_indexed_reg_list);
-+	}
-+
- 	mempool_count = ARRAY_SIZE(a7xx_cp_bv_mempool_indexed);
- 
- 	a6xx_state->indexed_regs = state_kcalloc(a6xx_state,
-@@ -1507,7 +1535,7 @@ static void a7xx_get_indexed_registers(struct msm_gpu *gpu,
- 
- 	/* First read the common regs */
- 	for (i = 0; i < indexed_count; i++)
--		a6xx_get_indexed_regs(gpu, a6xx_state, &a7xx_indexed_reglist[i],
-+		a6xx_get_indexed_regs(gpu, a6xx_state, &indexed_regs[i],
- 			&a6xx_state->indexed_regs[i]);
- 
- 	gpu_rmw(gpu, REG_A6XX_CP_CHICKEN_DBG, 0, BIT(2));
+Thank you for your work on this!
 
--- 
-2.31.1
+On 2.05.24 12:30, Varadarajan Narayanan wrote:
+> On Tue, Apr 30, 2024 at 12:05:29PM +0200, Konrad Dybcio wrote:
+>> On 25.04.2024 12:26 PM, Varadarajan Narayanan wrote:
+>>> On Tue, Apr 23, 2024 at 02:58:41PM +0200, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 4/18/24 11:23, Varadarajan Narayanan wrote:
+>>>>> IPQ SoCs dont involve RPM in managing NoC related clocks and
+>>>>> there is no NoC scaling. Linux itself handles these clocks.
+>>>>> However, these should not be exposed as just clocks and align
+>>>>> with other Qualcomm SoCs that handle these clocks from a
+>>>>> interconnect provider.
+>>>>>
+>>>>> Hence include icc provider capability to the gcc node so that
+>>>>> peripherals can use the interconnect facility to enable these
+>>>>> clocks.
+>>>>>
+>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>>> ---
+>>>>
+>>>> If this is all you do to enable interconnect (which is not the case,
+>>>> as this patch only satisfies the bindings checker, the meaningful
+>>>> change happens in the previous patch) and nothing explodes, this is
+>>>> an apparent sign of your driver doing nothing.
+>>>
+>>> It appears to do nothing because, we are just enabling the clock
+>>> provider to also act as interconnect provider. Only when the
+>>> consumers are enabled with interconnect usage, this will create
+>>> paths and turn on the relevant NOC clocks.
+>>
+>> No, with sync_state it actually does "something" (sets the interconnect
+>> path bandwidths to zero). And *this* patch does nothing functionally,
+>> it only makes the dt checker happy.
+> 
+> I understand.
+> 
+>>> This interconnect will be used by the PCIe and NSS blocks. When
+>>> those patches were posted earlier, they were put on hold until
+>>> interconnect driver is available.
+>>>
+>>> Once this patch gets in, PCIe for example will make use of icc.
+>>> Please refer to https://lore.kernel.org/linux-arm-msm/20230519090219.15925-5-quic_devipriy@quicinc.com/.
+>>>
+>>> The 'pcieX' nodes will include the following entries.
+>>>
+>>> 	interconnects = <&gcc MASTER_ANOC_PCIE0 &gcc SLAVE_ANOC_PCIE0>,
+>>> 			<&gcc MASTER_SNOC_PCIE0 &gcc SLAVE_SNOC_PCIE0>;
+>>> 	interconnect-names = "pcie-mem", "cpu-pcie";
+>>
+>> Okay. What about USB that's already enabled? And BIMC/MEMNOC?
+> 
+> For USB, the GCC_ANOC_USB_AXI_CLK is enabled as part of the iface
+> clock. Hence, interconnect is not specified there.
+> 
+> MEMNOC to System NOC interfaces seem to be enabled automatically.
+> Software doesn't have to turn on or program specific clocks.
+> 
+>>>> The expected reaction to "enabling interconnect" without defining the
+>>>> required paths for your hardware would be a crash-on-sync_state, as all
+>>>> unused (from Linux's POV) resources ought to be shut down.
+>>>>
+>>>> Because you lack sync_state, the interconnects silently retain the state
+>>>> that they were left in (which is not deterministic), and that's precisely
+>>>> what we want to avoid.
+>>>
+>>> I tried to set 'sync_state' to icc_sync_state to be invoked and
+>>> didn't see any crash.
+>>
+>> Have you confirmed that the registers are actually written to, and with
+>> correct values?
+> 
+> I tried the following combinations:-
+> 
+> 1. Top of tree linux-next + This patch set
+> 
+> 	* icc_sync_state called
+> 	* No crash or hang observed
+> 	* From /sys/kernel/debug/clk/clk_summary can see the
+> 	  relevant clocks are set to the expected rates (compared
+> 	  with downstream kernel)
+> 
+> 2. Top of tree linux-next + This patch set + PCIe enablement
+> 
+> 	* icc_sync_state NOT called
+
+If sync_state() is not being called, that usually means that there
+are interconnect consumers that haven't probed successfully (PCIe?)
+or their dependencies. That can be checked in /sys/class/devlink/.../status
+But i am not sure how this works for PCI devices however.
+
+You can also manually force a call to sync_state by writing "1" to
+the interconnect provider's /sys/devices/.../state_synced
+
+Anyway, the question is if PCIe and NSS work without this driver?
+If they work, is this because the clocks are turned on by default
+or by the boot loader?
+
+Then if an interconnect path (clock) gets disabled either when we
+reach a sync_state (with no bandwidth requests) or we explicitly
+call icc_set_bw() with 0 bandwidth values, i would expect that
+these PCIe and NSS devices would not function anymore (it might
+save some power etc) and if this is unexpected we should see a
+a crash or hang...
+
+Can you confirm this?
+
+Thanks,
+Georgi
+
+> 	* No crash or hang observed
+> 	* From /sys/kernel/debug/clk/clk_summary can see the
+> 	  relevant clocks are set to the expected rates (compared
+> 	  with downstream kernel)
+> 
+> Does this answer your question? Please let me know if you were
+> looking for some other information.
+> 
+> Thanks
+> Varada
+> 
 
 
