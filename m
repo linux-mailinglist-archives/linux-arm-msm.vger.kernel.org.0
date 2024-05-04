@@ -1,203 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-19215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AFE58BBD19
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2024 18:31:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E5398BBD4E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2024 18:55:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97E371C20C66
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2024 16:31:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC1551F21D17
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2024 16:55:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D77113F9D2;
-	Sat,  4 May 2024 16:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C282E5D477;
+	Sat,  4 May 2024 16:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ihz00wg0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EGu+ImQq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7511D52D;
-	Sat,  4 May 2024 16:31:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3424C3EA90
+	for <linux-arm-msm@vger.kernel.org>; Sat,  4 May 2024 16:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714840283; cv=none; b=mnrePjC5/ecajWN0jAmVvKL1ak6nOITGdz8H7aNasnpGgMGC638w7qBGAeVMi3PCuNrHRyU7u1cs+6uwqWRASk0SReqHGYfHOt8WOliA9P3lCqe5LQ2G8TokNW6AmIAcBgW6gW3FQBZHyhqG86e0O8HJscmMAc3lLB+/T27mFu0=
+	t=1714841692; cv=none; b=b/WrB2iYkIojVaXhVn1rvOeFmnSHscK/7Fg184g0IeJixf4VfF4yTxBnBNdDqtUs+kQyGLjTqR2DspgFqlF0+Yo7XZTcCRl6+Q/Glo1yBcQLtO26jrWykRrguQOHQhj3klnaPuCuyiT3ZKJYOMK4wsSlwYaoN9RarwtDcFoHn4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714840283; c=relaxed/simple;
-	bh=kzZY9lGQpdtSb8LBt6oSjwlOz7umExQkGa/hvChrAq4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=INsLOEqGlwIU6o4Pep14JJs4ZH0DmNyh1wGhS6mwzUxpHj+NUYD6BN7ldv9nIyhFofoQ+/CPUGfjbCpnfVBpLOxLtXKTxC1kJ+U/RNHVjX6pLJKRRNt62JerPY2zjOg+S9rcf+7VvG8zhMArAldDjEmSZhDMwZsvCp+J51UJb+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ihz00wg0; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1ec69e3dbcfso4835175ad.0;
-        Sat, 04 May 2024 09:31:22 -0700 (PDT)
+	s=arc-20240116; t=1714841692; c=relaxed/simple;
+	bh=zo0FuvvheiYFFNT9SiYqO5W3uBgSTGVpZYuFn4XhiwM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qjl6l08cGdAYc9ffs6KdpWQ6Y+Y3GTCW4+Fkfws9Z8w0wruAOdXjZ+FMk0K0ir8EHuqLXwNo9VY5SGRozTRXbzmjuKdfTKel1rzbDGni51d4hO5QVRoDaQq1ANuQf4dYzy7Hjoc/oc8yeWUbwgy6bVuBhpbGujcnFgjoK+7gDFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EGu+ImQq; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-de45385a1b4so584957276.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 May 2024 09:54:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714840282; x=1715445082; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BVHkSDrp78uKW0uZrcyHhFLD98BFVYL6QDF1S7ek4Xk=;
-        b=ihz00wg0QF51IunlMa6GXXRhK7bvexHyTVCAGS7sH7TaVJlQOSak8YqJHQoep1DHeV
-         aSKPEZzerT1lb13HYrlr5MLLTQXByFB4p3kvu1tcHsO4PFXzC2zmElnymn1H/feo+v1V
-         i/+Y788Pfee315UUZKV7X/V3fg9iXS/Oa6b8kgEwVs805xDP7D5uxSA8/7Rk7X8JKjPE
-         aT/etabnnM2SDThLpOlp6KYeeBhbyVigBgD9lFAh7Xerlzk3MjDnsyDsFGoWgTWyiPpE
-         Nst4jFInRz20UjFiv2ZBIzJmryYH7P+vjUlKR/5e4zs9rYO2ZMWa0NxBN1c1oqe4/Eyy
-         zw6A==
+        d=linaro.org; s=google; t=1714841689; x=1715446489; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tgIbTlJhI5M2gVvaXjd3+8gvJ0cygD+QTOHA6KrM33U=;
+        b=EGu+ImQq15C9oAXQMirzbB13CaAuAjcp36h3Ab+vThGiRCqP6NCx/SefeqBzjyBt/q
+         /C1yRaqsJ6e1BjHG33CQYR0xp8QTGYRXMQkuHPuJpviA9K5Va3/lAJIWq1hQ5JNLBey8
+         rM6Ei7/uk7oOxSVdsPZIVNzI7UCUBq9d8n8iDV7IigaGK5XMYVUuXRjTxknMxjyfOm4N
+         gRrWEEbIVtPXP/YOA0cs0Ko25/Si2rPktG4vEJaKdmJ49C/fauOXN4KU9Zs88G0MpG5W
+         +G55UO6tuc4bXANSi3feXp3JG98Pi5UvhLFVg/ayKlrTo8VHoDjyiQo0VPl3/ElU9Hoe
+         aIsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714840282; x=1715445082;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1714841689; x=1715446489;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BVHkSDrp78uKW0uZrcyHhFLD98BFVYL6QDF1S7ek4Xk=;
-        b=p+d7erpo7r6gK6xcvTkCOLMQNpAnTicIIGTcnnBOeoThIBvCAFq1RHSqwQg6z/6EsE
-         oU4g58RSnUiVphnHItlwQ2/ztgYKiEXxhWkyiMWV4pWYmAHv8D9eT2HyJNzfEWE+G/dT
-         CzY7NEFn/WDFd9e5rArH76zMniV6k0NWc0Rzl7hExjYnTWO0eylM71ZQr3uFPGLxBrYo
-         lBHQO/5T3eurTYTaOT4frSjl0BMjIpUqZHQ692WSKdBOnMPgVvddYe5fbPu3SqT4KpGk
-         EXDImMN3+Rv29BRRLbw87XClkz5NgzsNJVkPXdeLBm+J87R40A53ptnPkVnEbLxOYPlL
-         InfA==
-X-Forwarded-Encrypted: i=1; AJvYcCUMnytd8mcj2m7WBCXf/2vlNp1eHs42hPBoa+eQgF0xdqb0tRoNwmsUCXQwROYnL1VhY6i+B/YDGyBzZG4QG7Qba/BrTBbzH8z/u7kd
-X-Gm-Message-State: AOJu0YwK0hvdMJq7njEm8qA8AqkRlfAafZnWzJO8Z8WAIq2/y0S1acIW
-	fE3rPWMS/iBS0S3q6JGhfe2o0JgATGRxNX8Jh9rQYnB65elE5POFMMYO/Q==
-X-Google-Smtp-Source: AGHT+IHArHsW3DCfdQpbK2KIyCCirt6QvRblSevbGPQPn2t4LZFf5iduw2DZMI57WDH//nxVT0o+7A==
-X-Received: by 2002:a17:902:f649:b0:1e2:bf94:487 with SMTP id m9-20020a170902f64900b001e2bf940487mr7668589plg.57.1714840281493;
-        Sat, 04 May 2024 09:31:21 -0700 (PDT)
-Received: from localhost ([2601:1c0:5000:d5c:ae1c:de46:682a:206])
-        by smtp.gmail.com with ESMTPSA id jb13-20020a170903258d00b001ec4ed47ddesm5274490plb.86.2024.05.04.09.31.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 May 2024 09:31:20 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/a6xx: Cleanup indexed regs const'ness
-Date: Sat,  4 May 2024 09:31:13 -0700
-Message-ID: <20240504163114.639228-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.44.0
+        bh=tgIbTlJhI5M2gVvaXjd3+8gvJ0cygD+QTOHA6KrM33U=;
+        b=Ssl2FZ/phcJxLc7UW05v0Gni91kdbU50eKaHjhEy3H138r7rmaDyxI4j+RwbynyaTo
+         GuphGCUfuCY5H1XuYiI6gryvAeEig74KcsKbiTcJEj/T3zujJPduB2dKBBmZfFw7bifi
+         AvJ5OtpDdagSiVWIc/2EDdlyn3uDqhdydym+TwkgvnyPhSvM9F30r1sVBXAx+uXI2ACb
+         SjZbJsqVAh7LmxPluyUeepcRwyLK9p6wHHZ9zk2d4HVq8Ui1oLsuQxG2bwplmsxQhg6A
+         mi2DIew1bMiODTVddmwOKGMLkgemQFiurKLosWTT0WueqFMTCk4AE2crrau/BZ4IFhAK
+         MJSA==
+X-Forwarded-Encrypted: i=1; AJvYcCVN7vmn+G2aGx5O3ThFGy8NsIGwxU76kLJefrc82w5qfuwwHXwCCR6QIb9oRqBBtNj6qPZ1naSVJwH6vJ9loPtoTAL9UnGCbOgtVq7y6w==
+X-Gm-Message-State: AOJu0Yz/l3zCswwaP9gUb95xNHZk/qFEiX1B00FjvS4kRZVdR8jPrOo9
+	klNXZQU42f6U6/RxjYIxBrOJilrqVUxRNSXQV2wEZieaHlOXVNmD0ByUfSwHxvYwZ8s2dWvXyod
+	uy24rtB53dmqLWBXlWkzLUeJ07X2RyyKBXZcj9g==
+X-Google-Smtp-Source: AGHT+IEt9LVSBgeKJB0TGRM0UGx6hBWf+ehs1XeTfLSJzks/QJ5xn5QgePdv1YPfN2bT0VpBiqOznAyRWOlU4ZFKPcs=
+X-Received: by 2002:a25:f604:0:b0:de5:53a6:24ed with SMTP id
+ t4-20020a25f604000000b00de553a624edmr6272638ybd.50.1714841689115; Sat, 04 May
+ 2024 09:54:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240424-qc-pmic-typec-hpd-split-v4-1-f7e10d147443@linaro.org>
+ <CAA8EJppCxfrBcctaR2jOrwPuO8ZFQw9vmi-0CH_sSWBm3ts7JQ@mail.gmail.com>
+ <2024050415-retorted-gory-5fa6@gregkh> <2024050416-mandolin-gauging-9342@gregkh>
+In-Reply-To: <2024050416-mandolin-gauging-9342@gregkh>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 4 May 2024 19:54:37 +0300
+Message-ID: <CAA8EJpo6Gar5W3-2jB4YC1OzGWMauCxxJ9oeRHLgkBjRTqLktw@mail.gmail.com>
+Subject: Re: [PATCH v4] usb: typec: qcom-pmic-typec: split HPD bridge alloc
+ and registration
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Caleb Connolly <caleb.connolly@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Rob Clark <robdclark@chromium.org>
+On Sat, 4 May 2024 at 19:22, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Sat, May 04, 2024 at 05:15:45PM +0200, Greg Kroah-Hartman wrote:
+> > On Sat, May 04, 2024 at 05:23:20PM +0300, Dmitry Baryshkov wrote:
+> > > On Wed, 24 Apr 2024 at 05:16, Dmitry Baryshkov
+> > > <dmitry.baryshkov@linaro.org> wrote:
+> > > >
+> > > > If a probe function returns -EPROBE_DEFER after creating another device
+> > > > there is a change of ending up in a probe deferral loop, (see commit
+> > > > fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER"). In case
+> > > > of the qcom-pmic-typec driver the tcpm_register_port() function looks up
+> > > > external resources (USB role switch and inherently via called
+> > > > typec_register_port() USB-C muxes, switches and retimers).
+> > > >
+> > > > In order to prevent such probe-defer loops caused by qcom-pmic-typec
+> > > > driver, use the API added by Johan Hovold and move HPD bridge
+> > > > registration to the end of the probe function.
+> > > >
+> > > > The devm_drm_dp_hpd_bridge_add() is called at the end of the probe
+> > > > function after all TCPM start functions. This is done as a way to
+> > > > overcome a different problem, the DRM subsystem can not properly cope
+> > > > with the DRM bridges being destroyed once the bridge is attached. Having
+> > > > this function call at the end of the probe function prevents possible
+> > > > DRM bridge device creation followed by destruction in case one of the
+> > > > TCPM start functions returns an error.
+> > > >
+> > > > Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
+> > > > Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > > Dependency: https://lore.kernel.org/lkml/20240418145730.4605-2-johan+linaro@kernel.org/
+> > > > ---
+> > > > Changes in v4:
+> > > > - Rebased on top of Johan's patches
+> > > > - Link to v3: https://lore.kernel.org/r/20240416-qc-pmic-typec-hpd-split-v3-1-fd071e3191a1@linaro.org
+> > > >
+> > > > Changes in v3:
+> > > > - Updated commit message to explain my decisions (Johan).
+> > > > - Link to v2: https://lore.kernel.org/r/20240408-qc-pmic-typec-hpd-split-v2-1-1704f5321b73@linaro.org
+> > > >
+> > > > Changes in v2:
+> > > > - Fix commit message (Bryan)
+> > > > - Link to v1: https://lore.kernel.org/r/20240405-qc-pmic-typec-hpd-split-v1-1-363daafb3c36@linaro.org
+> > > > ---
+> > > >  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 10 ++++++++--
+> > > >  1 file changed, 8 insertions(+), 2 deletions(-)
+> > >
+> > > A stupid gracious ping. It would be nice to fix the issue in 6.10
+> >
+> > Is this a regression?  If so, what commit does it fix?  Or has it always
+> > just not worked?
+>
+> Oh wait, I need Johan's patches applied first, I was waiting for that to
+> happen, so I'll take this next week when that gets into Linus's tree,
+> sorry for the delay.
 
-These tables were made non-const in commit 3cba4a2cdff3 ("drm/msm/a6xx:
-Update ROQ size in coredump") in order to avoid powering up the GPU when
-reading back a devcoredump.  Instead let's just stash the count that is
-potentially read from hw in struct a6xx_gpu_state_obj, and make the
-tables const again.
+No problem, as long as it has a chance to land at 6.10.
+Thank you!
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 15 +++++++++------
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h |  8 ++++----
- 2 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 77146d30bcaa..0a7717a4fc2f 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -24,6 +24,7 @@
- struct a6xx_gpu_state_obj {
- 	const void *handle;
- 	u32 *data;
-+	u32 count;	/* optional, used when count potentially read from hw */
- };
- 
- struct a6xx_gpu_state {
-@@ -1437,16 +1438,18 @@ static u32 a7xx_get_cp_roq_size(struct msm_gpu *gpu)
- /* Read a block of data from an indexed register pair */
- static void a6xx_get_indexed_regs(struct msm_gpu *gpu,
- 		struct a6xx_gpu_state *a6xx_state,
--		struct a6xx_indexed_registers *indexed,
-+		const struct a6xx_indexed_registers *indexed,
- 		struct a6xx_gpu_state_obj *obj)
- {
-+	u32 count = indexed->count;
- 	int i;
- 
- 	obj->handle = (const void *) indexed;
- 	if (indexed->count_fn)
--		indexed->count = indexed->count_fn(gpu);
-+		count = indexed->count_fn(gpu);
- 
--	obj->data = state_kcalloc(a6xx_state, indexed->count, sizeof(u32));
-+	obj->data = state_kcalloc(a6xx_state, count, sizeof(u32));
-+	obj->count = count;
- 	if (!obj->data)
- 		return;
- 
-@@ -1454,7 +1457,7 @@ static void a6xx_get_indexed_regs(struct msm_gpu *gpu,
- 	gpu_write(gpu, indexed->addr, 0);
- 
- 	/* Read the data - each read increments the internal address by 1 */
--	for (i = 0; i < indexed->count; i++)
-+	for (i = 0; i < count; i++)
- 		obj->data[i] = gpu_read(gpu, indexed->data);
- }
- 
-@@ -1890,9 +1893,9 @@ static void a6xx_show_indexed_regs(struct a6xx_gpu_state_obj *obj,
- 		return;
- 
- 	print_name(p, "  - regs-name: ", indexed->name);
--	drm_printf(p, "    dwords: %d\n", indexed->count);
-+	drm_printf(p, "    dwords: %d\n", obj->count);
- 
--	print_ascii85(p, indexed->count << 2, obj->data);
-+	print_ascii85(p, obj->count << 2, obj->data);
- }
- 
- static void a6xx_show_debugbus_block(const struct a6xx_debugbus_block *block,
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-index 3b1ba514e8ee..dd4c28a8d923 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-@@ -397,7 +397,7 @@ struct a6xx_indexed_registers {
- 	u32 (*count_fn)(struct msm_gpu *gpu);
- };
- 
--static struct a6xx_indexed_registers a6xx_indexed_reglist[] = {
-+static const struct a6xx_indexed_registers a6xx_indexed_reglist[] = {
- 	{ "CP_SQE_STAT", REG_A6XX_CP_SQE_STAT_ADDR,
- 		REG_A6XX_CP_SQE_STAT_DATA, 0x33, NULL },
- 	{ "CP_DRAW_STATE", REG_A6XX_CP_DRAW_STATE_ADDR,
-@@ -408,7 +408,7 @@ static struct a6xx_indexed_registers a6xx_indexed_reglist[] = {
- 		REG_A6XX_CP_ROQ_DBG_DATA, 0, a6xx_get_cp_roq_size},
- };
- 
--static struct a6xx_indexed_registers a7xx_indexed_reglist[] = {
-+static const struct a6xx_indexed_registers a7xx_indexed_reglist[] = {
- 	{ "CP_SQE_STAT", REG_A6XX_CP_SQE_STAT_ADDR,
- 		REG_A6XX_CP_SQE_STAT_DATA, 0x33, NULL },
- 	{ "CP_DRAW_STATE", REG_A6XX_CP_DRAW_STATE_ADDR,
-@@ -433,12 +433,12 @@ static struct a6xx_indexed_registers a7xx_indexed_reglist[] = {
- 		REG_A6XX_CP_ROQ_DBG_DATA, 0, a7xx_get_cp_roq_size },
- };
- 
--static struct a6xx_indexed_registers a6xx_cp_mempool_indexed = {
-+static const struct a6xx_indexed_registers a6xx_cp_mempool_indexed = {
- 	"CP_MEMPOOL", REG_A6XX_CP_MEM_POOL_DBG_ADDR,
- 		REG_A6XX_CP_MEM_POOL_DBG_DATA, 0x2060, NULL,
- };
- 
--static struct a6xx_indexed_registers a7xx_cp_bv_mempool_indexed[] = {
-+static const struct a6xx_indexed_registers a7xx_cp_bv_mempool_indexed[] = {
- 	{ "CP_MEMPOOL", REG_A6XX_CP_MEM_POOL_DBG_ADDR,
- 		REG_A6XX_CP_MEM_POOL_DBG_DATA, 0x2100, NULL },
- 	{ "CP_BV_MEMPOOL", REG_A7XX_CP_BV_MEM_POOL_DBG_ADDR,
 -- 
-2.44.0
-
+With best wishes
+Dmitry
 
