@@ -1,293 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-19202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47DBB8BB9A6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2024 08:50:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DAA5E8BB9E9
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2024 10:01:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 501B9B21948
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2024 06:49:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B22EBB21AD6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 May 2024 08:01:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4569C4C6D;
-	Sat,  4 May 2024 06:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7847DF5B;
+	Sat,  4 May 2024 08:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dLzg0Enm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eyutCsiu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6474B23D0
-	for <linux-arm-msm@vger.kernel.org>; Sat,  4 May 2024 06:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF0128EA;
+	Sat,  4 May 2024 08:01:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714805396; cv=none; b=kr8bNYbq1G3WKJj1ORm5Lvn4eOVEsH3nMRTk2RPdkdsQjm+vL3bjd7iuOcpOmE4rJcOi8zQRDgt1BfqvbtgS9ZttmI4LgC6uwopM28Tvr9yPvG9oKNRtpcCH98nXx3Ns7QetIbQS6U5JzXL0PTh5QIsMEedqWVcWD0xIBhsL6L4=
+	t=1714809696; cv=none; b=oBoUMR+nFPxHUGK1RYZHkEtV3WDZbJK56DpaiSNfl5hTOed8W9DauExQNucYLb34cQsXbuT1TLCrx4NffCSKt9862ixlVI19GoR7oldiELzqM95Fs6X8KuBzNhpiJdhWTNPTmG13GhWIHh7Ii71CGPJWFhWfYwoTza5IJOMEa5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714805396; c=relaxed/simple;
-	bh=rx9kJq41d+LKrriX6r8ovyOqv24j2QFcPlhuxeiCtJs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y+8kh3z3cii0PJxP70qgcKJbb0xF6lQb33onU3/PDgDF3lu0Q7V/BR3E8Ckb4tifvLhMXWrlzjMpp6xRzxGN5m+XumPvfJuarLDdUSSSmLlyLpPsaJW6n7WMb6otAYbJtN8i0Gq9o925wGwZRXMVx4uOGW5FlZdmq9+NCkKIfT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dLzg0Enm; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-61b62005f38so3225577b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 May 2024 23:49:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714805393; x=1715410193; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=D3cJMKI74/BsfKZhlMzBdzwD07fKdpiipZf5wrnLnNY=;
-        b=dLzg0EnmTHhjKDecaDM4ov2NbI7D+i3KVx5oi94kjVVsu5BByXxAsdcZoMJ6LhDfcu
-         qsQYkCvfgRixNR90K147UqfNpCrF8jebNLqx5D/jWDCdZASW0SFPVDwA9oSg7XECxhf8
-         IQPsO3obqrwJAQEMvBrqVtZBud9FhIo+bzqPZ7OR4CegL98ejtGMbEWIT/sjnsSYHMBW
-         gQFOhQ6VGNosImVpkZTrW97K+LqDDC1Om/mjmlAOj4Jpd1tgLLa1gkqttnM58oFxHoJ5
-         ze9bfIkFvoTxdTaZAQQZQmcTLg3ozlKvn789+9hKuUCq7TQqxF0cj98+qR7q8EqLhuG8
-         /ZDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714805393; x=1715410193;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=D3cJMKI74/BsfKZhlMzBdzwD07fKdpiipZf5wrnLnNY=;
-        b=W5jK+zcr1F5LAGUG7NdWxtI/2dUXTJi+SwhIhJIRzupP+hC2Y5g47XZzAJVcCP44vp
-         cktUhltGdW06HO+JlgkMfOD0+DR+snAgd7dv6fTfhjpKkfQonBP3u/BMLuI061Df2Xan
-         3fn9qJynDhYLvRlBFIQ7SCwRp1jKw7745bsH3rW4jvoPumLgGoK+Whfsa5r5y7rvlEtI
-         Y09rPJuiOEzvyobRH4I7L8FUkZnA6IaW4ipg1KK2+5vzj6TTkf1CANx1OciK0cZE55mw
-         mRC0N6bQNNYwtxLDrvxyCoFMDAbyttlzf9u8QeQOuQrek0t3CXBlYZzWd6/cl0QCQpch
-         6CHg==
-X-Forwarded-Encrypted: i=1; AJvYcCUxSsS07QQMmOmAakqRdP6uM8edkU8o4VW4lnJiOxPC5r4sWAHHt4Ej1jc5khzdWnxNPgIx6mc6dMvE1anbs4sQ+FQ4BfGECR24I05dFw==
-X-Gm-Message-State: AOJu0YzQtgjg4m+eTrU6V5rJZF5yR8/q3iGvpCKo7BR69A7+3SbtDPk9
-	1Ocnn7vT6sXanBjkxwnDMuaM6Q94yAGadlY58JunpOwKDwxUqqxdNcnVirG05XiNbHQ/ZMjc7rK
-	sdLBg2Mr3YYCPVab7u+iuBSB9DmpR2+NkkBqe9Q==
-X-Google-Smtp-Source: AGHT+IH96ebzgmWajjZwH3a4VG81/DDdvIkP/nzgQ+XXTMcLaurSNGHeJ9w5TE6ZqSu5Le59NiFfQiZNAmZrA88LOqg=
-X-Received: by 2002:a05:690c:f06:b0:61b:33f7:225a with SMTP id
- dc6-20020a05690c0f0600b0061b33f7225amr5693836ywb.42.1714805393327; Fri, 03
- May 2024 23:49:53 -0700 (PDT)
+	s=arc-20240116; t=1714809696; c=relaxed/simple;
+	bh=U6WZzZKbEA0lnbJAvsjBxMcDOnhoQXC4iJmnwhPM5Z8=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tWCokYGJ3b5B6OJ/Ge2SWw+l/LlIld9sCOPw5nHCO6n/r8sA3uVhQ6fq05XZykT5LJv3gup8gEP6COsTLWCP3qFdyTP4QA5Hr8FFJfRQ0+UHGKp9Wkn4ek9tlqGdvTXKzDzQCoZT1Dhbey2GwK15b4eTI93q90FLXlAPAuuWeGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eyutCsiu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4447g9xP026432;
+	Sat, 4 May 2024 08:01:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=+6Mbl8PCq39bVOAadjMGu
+	XgFbjxOzCts41TLEvEKtks=; b=eyutCsiuI7hXftSA2MoTIrSkwLwrJcCqWJaLi
+	75MZL4J8F/RQWMytRgRLY7dJiGFuI37p5OEM0tZzb/H87fR9uhy0enQl9/YdzgbB
+	+T2iHLrHDFDKLWpEgYt4Tqfoee+JlmT7UvL2f5Tmwtkd9rOAIjDHZ6lWpo3n0CcQ
+	IClFfPypDGo7zTEFrZJAlHm8m7TiuIok1rZVdg/UiqS0ZSlWxkEewxfaZ14Re7o9
+	xkme5gVacuWoDp9WzYhEkdMSJP1lanJ5O5zoATLknN1rXTN/Ei1DYSnsaEne2hxq
+	7Xpd01DDUKArn1hi6ZLMm8xQ5col7NspmPQ6jy0AjADaga7VA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xwc1c0c1q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 04 May 2024 08:01:29 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44481Sqc028949
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 4 May 2024 08:01:28 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sat, 4 May 2024 01:01:23 -0700
+Date: Sat, 4 May 2024 13:31:19 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_anusha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v11 0/6] Add interconnect driver for IPQ9574 SoC
+Message-ID: <ZjXrTywO6+iRaEYk@hu-varada-blr.qualcomm.com>
+References: <20240430064214.2030013-1-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
- <20240416-ucsi-glink-altmode-v1-7-890db00877ac@linaro.org>
- <ZiZC/l9nOmzWx+j6@kuha.fi.intel.com> <46fktwtp3xers6tcpov3qo4zswptvajewsdltm45zbz2kmmpzp@cthu6ylttup3>
- <ZiZ8El4779l0W1Ig@kuha.fi.intel.com>
-In-Reply-To: <ZiZ8El4779l0W1Ig@kuha.fi.intel.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 4 May 2024 09:49:42 +0300
-Message-ID: <CAA8EJppMKFSbe-EZLELy+dnd4BZeg24crotH95hpCwcvoEbw5Q@mail.gmail.com>
-Subject: Re: [PATCH 7/8] usb: typec: ucsi: glink: merge pmic_glink_altmode driver
-To: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240430064214.2030013-1-quic_varada@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: opBfPShReaSeGuYFaYc3g2cxm-g4KYMV
+X-Proofpoint-ORIG-GUID: opBfPShReaSeGuYFaYc3g2cxm-g4KYMV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-04_04,2024-05-03_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 suspectscore=0 priorityscore=1501
+ malwarescore=0 mlxlogscore=999 adultscore=0 bulkscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405040057
 
-On Mon, 22 Apr 2024 at 18:02, Heikki Krogerus
-<heikki.krogerus@linux.intel.com> wrote:
->
-> Hi Dmitry,
->
-> On Mon, Apr 22, 2024 at 03:45:22PM +0300, Dmitry Baryshkov wrote:
-> > On Mon, Apr 22, 2024 at 01:59:10PM +0300, Heikki Krogerus wrote:
-> > > Hi Dmitry,
-> > >
-> > > On Tue, Apr 16, 2024 at 05:20:56AM +0300, Dmitry Baryshkov wrote:
-> > > > Move handling of USB Altmode to the ucsi_glink driver. This way the
-> > > > altmode is properly registered in the Type-C framework, the altmode
-> > > > handlers can use generic typec calls, the UCSI driver can use
-> > > > orientation information from altmode messages and vice versa, the
-> > > > altmode handlers can use GPIO-based orientation inormation from UCSI
-> > > > GLINK driver.
-> > > >
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > ---
-> > > >  drivers/soc/qcom/Makefile             |   1 -
-> > > >  drivers/soc/qcom/pmic_glink_altmode.c | 546 ----------------------------------
-> > > >  drivers/usb/typec/ucsi/ucsi_glink.c   | 495 ++++++++++++++++++++++++++++--
-> > > >  3 files changed, 475 insertions(+), 567 deletions(-)
-> > > >
-> >
-> > [skipped the patch]
-> >
-> > > > +
-> > > > +static void pmic_glink_ucsi_register_altmode(struct ucsi_connector *con)
-> > > > +{
-> > > > + static const u8 all_assignments = BIT(DP_PIN_ASSIGN_C) | BIT(DP_PIN_ASSIGN_D) |
-> > > > +                      BIT(DP_PIN_ASSIGN_E);
-> > > > + struct typec_altmode_desc desc;
-> > > > + struct typec_altmode *alt;
-> > > > +
-> > > > + mutex_lock(&con->lock);
-> > > > +
-> > > > + if (con->port_altmode[0])
-> > > > +         goto out;
-> > > > +
-> > > > + memset(&desc, 0, sizeof(desc));
-> > > > + desc.svid = USB_TYPEC_DP_SID;
-> > > > + desc.mode = USB_TYPEC_DP_MODE;
-> > > > +
-> > > > + desc.vdo = DP_CAP_CAPABILITY(DP_CAP_DFP_D);
-> > > > +
-> > > > + /* We can't rely on the firmware with the capabilities. */
-> > > > + desc.vdo |= DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
-> > > > +
-> > > > + /* Claiming that we support all pin assignments */
-> > > > + desc.vdo |= all_assignments << 8;
-> > > > + desc.vdo |= all_assignments << 16;
-> > > > +
-> > > > + alt = typec_port_register_altmode(con->port, &desc);
-> > >
-> > >         alt = ucsi_register_displayport(con, 0, 0, &desc);
-> >
-> > Note, the existing UCSI displayport AltMode driver depends on the UCSI
-> > actually handling the altomode. It needs a partner, etc.
-> >
-> > > You need to export that function, but that should not be a problem:
-> > >
-> > > diff --git a/drivers/usb/typec/ucsi/displayport.c b/drivers/usb/typec/ucsi/displayport.c
-> > > index d9d3c91125ca..f2754d7b5876 100644
-> > > --- a/drivers/usb/typec/ucsi/displayport.c
-> > > +++ b/drivers/usb/typec/ucsi/displayport.c
-> > > @@ -315,11 +315,13 @@ struct typec_altmode *ucsi_register_displayport(struct ucsi_connector *con,
-> > >         struct ucsi_dp *dp;
-> > >
-> > >         /* We can't rely on the firmware with the capabilities. */
-> > > -       desc->vdo |= DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
-> > > +       if (!desc->vdo) {
-> > > +               desc->vdo = DP_CAP_DP_SIGNALLING(0) | DP_CAP_RECEPTACLE;
-> > >
-> > > -       /* Claiming that we support all pin assignments */
-> > > -       desc->vdo |= all_assignments << 8;
-> > > -       desc->vdo |= all_assignments << 16;
-> > > +               /* Claiming that we support all pin assignments */
-> > > +               desc->vdo |= all_assignments << 8;
-> > > +               desc->vdo |= all_assignments << 16;
-> > > +       }
-> > >
-> > >         alt = typec_port_register_altmode(con->port, desc);
-> > >         if (IS_ERR(alt))
-> > > @@ -342,3 +344,4 @@ struct typec_altmode *ucsi_register_displayport(struct ucsi_connector *con,
-> > >
-> > >         return alt;
-> > >  }
-> > > +EXPORT_SYMBOL_GPL(ucsi_register_displayport);
-> > >
-> > > <snip>
-> > >
-> > > > +static void pmic_glink_ucsi_set_state(struct ucsi_connector *con,
-> > > > +                               struct pmic_glink_ucsi_port *port)
-> > > > +{
-> > > > + struct typec_displayport_data dp_data = {};
-> > > > + struct typec_altmode *altmode = NULL;
-> > > > + unsigned long flags;
-> > > > + void *data = NULL;
-> > > > + int mode;
-> > > > +
-> > > > + spin_lock_irqsave(&port->lock, flags);
-> > > > +
-> > > > + if (port->svid == USB_SID_PD) {
-> > > > +         mode = TYPEC_STATE_USB;
-> > > > + } else if (port->svid == USB_TYPEC_DP_SID && port->mode == DPAM_HPD_OUT) {
-> > > > +         mode = TYPEC_STATE_SAFE;
-> > > > + } else if (port->svid == USB_TYPEC_DP_SID) {
-> > > > +         altmode = find_altmode(con, port->svid);
-> > > > +         if (!altmode) {
-> > > > +                 dev_err(con->ucsi->dev, "altmode woth SVID 0x%04x not found\n",
-> > > > +                         port->svid);
-> > > > +                 spin_unlock_irqrestore(&port->lock, flags);
-> > > > +                 return;
-> > > > +         }
-> > > > +
-> > > > +         mode = TYPEC_MODAL_STATE(port->mode - DPAM_HPD_A);
-> > > > +
-> > > > +         dp_data.status = DP_STATUS_ENABLED;
-> > > > +         dp_data.status |= DP_STATUS_CON_DFP_D;
-> > > > +         if (port->hpd_state)
-> > > > +                 dp_data.status |= DP_STATUS_HPD_STATE;
-> > > > +         if (port->hpd_irq)
-> > > > +                 dp_data.status |= DP_STATUS_IRQ_HPD;
-> > > > +         dp_data.conf = DP_CONF_SET_PIN_ASSIGN(port->mode - DPAM_HPD_A);
-> > > > +
-> > > > +         data = &dp_data;
-> > > > + } else {
-> > > > +         dev_err(con->ucsi->dev, "Unsupported SVID 0x%04x\n", port->svid);
-> > > > +         spin_unlock_irqrestore(&port->lock, flags);
-> > > > +         return;
-> > > > + }
-> > > > +
-> > > > + spin_unlock_irqrestore(&port->lock, flags);
-> > > > +
-> > > > + if (altmode)
-> > > > +         typec_altmode_set_port(altmode, mode, data);
-> > >
-> > > So if the port altmode is using the ucsi_displayport_ops, you can
-> > > simply register the partner altmode here instead. That should
-> > > guarantee that it'll bind to the DP altmode driver which will take
-> > > care of typec_altmode_enter() etc.
-> >
-> > In our case the altmode is unfortunately completely hidden inside the
-> > firmware. It is not exported via the native UCSI interface. Even if I
-> > plug the DP dongle, there is no partner / altmode being reported by the
-> > PPM. All DP events are reported via additional GLINK messages.
->
-> I understand that there is no alt mode being reported, but I assumed
-> that there is a notification about connections.
->
-> If that's not the case, then you need to use this code path to
-> register the partner device as well I think. The partner really has to
-> be registered somehow.
->
-> > The goal is to use the core Type-C altmode handling, while keeping UCSI
-> > out of the altmode business.
-> >
-> > This allows the core to handle switches / muxes / retimers, report the
-> > altmode to the userspace via sysfs, keep the link between the DP part of
-> > the stack and the typec port, but at the same time we don't get errors
-> > from UCSI because of the PPM reporting unsupported commands, etc.
->
-> I understand, and just to be clear, I don't have a problem with
-> bypassing UCSI. But that does not mean you can skip the alt mode
-> registration.
->
-> The primary purpose of drivers/usb/typec/ucsi/displayport.c is to
-> emulate the partner DP alt mode device a little so that the actual DP
-> alt mode driver drivers/usb/typec/altmodes/displayport.c is happy. The
-> altmode driver will then make sure that all the muxes, switches and
-> what have you, are configured as they should, and more importantly,
-> make sure the DP alt mode is exposed to the user space exactly the
-> same way as it's exposed on all the other systems.
->
-> There are a couple of UCSI commands that are being used there yes, but
-> by modifying it so that those UCSI commands are executed conditionally
-> - by checking the ALT_MODE_DETAILS feature - you should be able to use
-> it also in this case.
+Bjorn,
 
-I have played with the DP AltMode driver. I got it somewhat working,
-but I think I'm facing a control issue.
-Basically, the altmode driver wants to control pin assignment on its
-own. It works with the software TCPM, as we control it.
-It works with the normal UCSI, because it still can configure pin
-config. However with PMIC GLINK implementation there is no way to
-control pin assignment from the Linux side. The firmware does that for
-us.
-What would be the recommended way to handle it? Is it okay to override
-status_update to return just the selected pin config? Or is there any
-other (better) way to handle such an issue?
-
+> On Tue, Apr 30, 2024 at 12:12:08PM +0530, Varadarajan Narayanan wrote:
+> MSM platforms manage NoC related clocks and scaling from RPM.
+> However, in IPQ SoCs, RPM is not involved in managing NoC
+> related clocks and there is no NoC scaling.
 >
-> You really need to register the partner alt mode(s) one way or the
-> other in any case, and the partner device itself you absolutely must
-> register. The user space interface needs to be consistent.
+> However, there is a requirement to enable some NoC interface
+> clocks for the accessing the peripherals present in the
+> system. Hence add a minimalistic interconnect driver that
+> establishes a path from the processor/memory to those peripherals
+> and vice versa.
+>
+> Change icc-clk driver to take master and slave ids instead
+> of auto generating.
+>
+> Currently, drivers/clk/qcom/clk-cbf-8996.c is the only user of
+> icc-clk. And, it had exactly one master and one slave node.
+> For this the auto generated master (= 1) and slave (= 0) was
+> enough.
+>
+> However, when drivers/clk/qcom/gcc-ipq9574.c wanted to make use
+> of the icc-clk framework, it had more number of master and slave
+> nodes and the auto generated ids did not suit the usage.
+>
+> ---
+> v11:	No code changes
+> 	Commit log changed for the first patch
+> 	Added Acked-By: to 3 patches
 
-For reference, the partner is being reported and registered by the
-UCSI firmware. It's only the altmode itself where I'm facing the
-issue.
+Can this be included in your driver changes for 6.10?
 
--- 
-With best wishes
-Dmitry
+Thanks
+Varada
+
+> v10:	Set gcc-ipq9574 driver's sync_state to icc_sync_state
+> v9:	Squash icc-clk driver change and cbf-msm8996 change
+> 	Remove HWS_DATA macro
+> v8:	Change icc-clk driver to take master and slave ids instead
+> 	of auto generating
+> 	Remove ICC_xxx defines from dt-bindings header
+> 	Define MASTER/SLAVE_xxx macros from 0 .. n
+>
+> v7:	Fix macro names in dt-bindings header
+> 	Do clock get in icc driver
+>
+> v6:	Removed 'Reviewed-by: Krzysztof' from dt-bindings patch
+> 	Remove clock get from ICC driver as suggested by Stephen Boyd
+> 	so that the actual peripheral can do the clock get
+> 	first_id -> icc_first_node_id
+> 	Remove tristate from INTERCONNECT_CLK
+> v5:
+> 	Split gcc-ipq9574.c and common.c changes into separate patches
+> 	Introduce devm_icc_clk_register
+> 	Fix error handling
+> v4:
+> gcc-ipq9574.c
+> 	Use clk_hw instead of indices
+> common.c
+> 	Do icc register in qcom_cc_probe() call stream
+> common.h
+> 	Add icc clock info to qcom_cc_desc structure
+>
+> v3:
+> qcom,ipq9574.h
+> 	Move 'first id' define to clock driver
+> gcc-ipq9574.c:
+> 	Use indexed identifiers here to avoid confusion
+> 	Fix error messages and move code to common.c as it can be
+> 	shared with future SoCs
+>
+> v2:
+> qcom,ipq9574.h
+> 	Fix license identifier
+> 	Rename macros
+> qcom,ipq9574-gcc.yaml
+> 	Include interconnect-cells
+> gcc-ipq9574.c
+> 	Update commit log
+> 	Remove IS_ENABLED(CONFIG_INTERCONNECT) and auto select it from Kconfig
+> ipq9574.dtsi
+> 	Moved to separate patch
+> 	Include interconnect-cells to clock controller node
+> drivers/clk/qcom/Kconfig:
+> 	Auto select CONFIG_INTERCONNECT & CONFIG_INTERCONNECT_CLK
+>
+> Varadarajan Narayanan (6):
+>   interconnect: icc-clk: Specify master/slave ids
+>   dt-bindings: interconnect: Add Qualcomm IPQ9574 support
+>   interconnect: icc-clk: Add devm_icc_clk_register
+>   clk: qcom: common: Add interconnect clocks support
+>   clk: qcom: ipq9574: Use icc-clk for enabling NoC related clocks
+>   arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
+>
+>  .../bindings/clock/qcom,ipq9574-gcc.yaml      |  3 +
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  2 +
+>  drivers/clk/qcom/Kconfig                      |  2 +
+>  drivers/clk/qcom/clk-cbf-8996.c               |  7 ++-
+>  drivers/clk/qcom/common.c                     | 35 ++++++++++-
+>  drivers/clk/qcom/common.h                     |  9 +++
+>  drivers/clk/qcom/gcc-ipq9574.c                | 33 +++++++++++
+>  drivers/interconnect/icc-clk.c                | 24 +++++++-
+>  .../dt-bindings/interconnect/qcom,ipq9574.h   | 59 +++++++++++++++++++
+>  include/linux/interconnect-clk.h              |  4 ++
+>  10 files changed, 173 insertions(+), 5 deletions(-)
+>  create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+>
+> --
+> 2.34.1
+>
 
