@@ -1,134 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-19230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A25428BC734
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 07:59:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29D7A8BC796
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 08:30:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D3002816F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 05:59:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B326B20E86
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 06:29:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2257F482D8;
-	Mon,  6 May 2024 05:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1871E4D9EC;
+	Mon,  6 May 2024 06:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T/HnHDU2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="om+cmUzm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE9347F4A;
-	Mon,  6 May 2024 05:59:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C0948CCD
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 May 2024 06:29:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714975158; cv=none; b=GzpcsioOM6ecZoiMXHmE/Q7TS2gGmVXH7SwF4//ohWuhVTg2FOBvxhKi5UwCLejOZkjyMeDsryOVpICYwpM/00Yw6H+zstdoYDmppkkoqzCqfFXgVFjn6RZ2RIlX0XZ9I2HuQNTRlQB+cRTeDXQgtmoL6RiJwdbbLn0llhBrUW8=
+	t=1714976994; cv=none; b=ZDU6pGpYL7j8m16RVdYyuERwLpFHnOtxkhnrUHiM7oBAUq//UrpTJo0rOpw8SsiMcbA3C/R1iiNthAH1+ZIsXM8wzrFRH0OSX/MXSMJ5CzOtoPSkvxLqfuZj8tN3T+6v6pdFBGiv7ROl1Bjk3Z6M9q5iU4v/CRJa7FYwW6QZB/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714975158; c=relaxed/simple;
-	bh=koI1sNIqKLDuNDuh6AXSWnfEH8YF3otZZ16U0c6dsdU=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=Z3lsrSPxxiSi4L1b2mZCOCkp8a3s6N31yU4QD85Tnrb6FOfIzHHI3f7CtMKMT/8CRnfisIxs/Be5dCIbHgNBhmTSvrlwv0OM6K3Z3tBfBw6jjof1UtD1o2HWQg3pMtdoCQ6TvfT/Yxe88st64R5eQOwKuTec7EubX9CLHBfP5Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T/HnHDU2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4464XxDo021324;
-	Mon, 6 May 2024 05:59:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=Tdi6iZl5Ie3N
-	jA5KUJfNGAiZlVUpcEl7xfcMC74VT04=; b=T/HnHDU2qFbdVzSnsFx/akia7LE/
-	xivYuAbGIJjRzrgBXPhKe2wHcc3+/AtGktMcxH92AnNMXddiu0OPwx8P5OoQzldH
-	3fDxO7hKglA1ggGwqb2llOCpESNVmcBVcSwf/8XZRTC7BnvCU0dCrCc5JQXY/XOv
-	v/cB6Br1cTakBtjn3x54cmwDWLpN2FDq0sczNfq9YeN++cH8z8Os2Ixw8+CFPyd+
-	yWewa2qmzKHqYOuVHhU0BDW/KokuI7H1t7r3WfznsWAi2Hh261k0HzIsXcS5OG4D
-	g8WGc1ltVdJUxO0NJcO4b7WDWiVanFvFQ6eUEeCX45qM3ITW2cwX9qnmBA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xwd3yark7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 May 2024 05:59:11 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4465vY2L009891;
-	Mon, 6 May 2024 05:59:07 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3xwe3k7u63-1;
-	Mon, 06 May 2024 05:59:07 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4465x729013432;
-	Mon, 6 May 2024 05:59:07 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 4465x6vc013430;
-	Mon, 06 May 2024 05:59:07 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
-	id 87322303D; Mon,  6 May 2024 11:29:05 +0530 (+0530)
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hans.verkuil@cisco.com>
-Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>, stable@vger.kernel.org
-Subject: [PATCH v3] media: venus: fix use after free in vdec_close
-Date: Mon,  6 May 2024 11:28:53 +0530
-Message-Id: <1714975133-1777-1-git-send-email-quic_dikshita@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: TohBs7UZkK2NQCEaSzKufJMQTFHVDs56
-X-Proofpoint-GUID: TohBs7UZkK2NQCEaSzKufJMQTFHVDs56
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-06_02,2024-05-03_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- malwarescore=0 phishscore=0 mlxlogscore=999 adultscore=0 clxscore=1011
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2405060035
+	s=arc-20240116; t=1714976994; c=relaxed/simple;
+	bh=w0Dlte53WJRCIvtxzCyGs12oGYGUL4gGyOsmoReVfEI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HAG+9OStVQeoHtF8dID2Kdb50GVybTE/f43pp1sJsvHEkOS+Ajkup1q7pMc6wLa/eBtK7Tsek/4qBTRUwjbn9DtH3aoCeb2IPJywcPs/c9ZEXxENZtyXQDLGZUpriNQeOJx7zyGWFQ+zyir3yoOqkV7+udv7375cXo2shvoYXKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=om+cmUzm; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-de5e74939fdso1072207276.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 May 2024 23:29:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1714976991; x=1715581791; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Dxr7JrisHMydcKRiJtSDqGEYBkrpK+VSNsF4Ji3kjUo=;
+        b=om+cmUzmadZSdvLygQNEsVcubqkz2TBf4IRc1SvS3fUxU/dSB4e338ATOZwXrp0sWI
+         0gT10ch+aNqPWiJCbnUEYSlp3XrASs5KDqrWC1u7c507LOaDtUHhIXfg2yE8hzDR0dMB
+         6trQpLqanbCUg9pW3cDcgC1yT8E0jyWLTXTeHDgmULwrlxUMDJd71DfhxX4l4OpK5Z0m
+         PgCQQ+S5vONbUxWYuLWvQBYrulrjqwrsD2GPD20nVH3zH0AhwjS7R/W2DppMSHkpPQzZ
+         G1vBvhm7FGeTwSaTmr7eP63IpVtIR2hN7IEj87wgAnUbwOKNU4aeSV+ZDc2jFczFTsa0
+         dZuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714976991; x=1715581791;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Dxr7JrisHMydcKRiJtSDqGEYBkrpK+VSNsF4Ji3kjUo=;
+        b=tCwVSDg8CWST4v6mn+XtQnHvorSbd0j/jAasuIwaQJHGFvY22Uu2hIdU0ZYBpYPCgG
+         RKTuYmx70GnlF7o/d5pJPi1uQ8YqkZzhZG8vMl/SyKGBPm2MvNsw5tn4H+XFsxvyUqOw
+         EDp9lnBTVASWlaRi5AmG643teZiUPYyWcS1CuDKnQtoAvUpQDlOPU9SHJ+EXglLBnFmw
+         zXW+OobbJCC5NY1IgZDukr7J7poVBEQy/UiNg6NFYw7DQS/XOxW1gRRS3zgG61cGxAot
+         t/uIyWVq1Q7dwzLcT0eLzNqaGfb6gY6T+XbRVqN6PCpSkcqfqIr7m6xIweqZKlAmVTJ2
+         wU6g==
+X-Forwarded-Encrypted: i=1; AJvYcCXogoh9jtJV3VOqP9GjTsziedEiH8eWdDkK+Fh4sjg1JkDYUx1KFju3RJlw7QHkEsFYykVfdgxmT/DCFUNthmJyhUqPaclA+nnIX4lebw==
+X-Gm-Message-State: AOJu0YwfMdwlq3g0N74j6zv3qX6CQfozZyCSsqNYbHVtKR53gX6FMJNc
+	nZEF+XJzHhmu2G003IONZgho3zqfP0oxL1r0XuqEilf7jFs8+PgB3pbDGxcmVwXxAOJMh0qpARH
+	OteS33TS42CTmyTWrcVnScBvYDIM3PyTv73k3Fw==
+X-Google-Smtp-Source: AGHT+IEW+Hz8JBmVo7SC235dDlRuUcsYwIn39CM402hXKIdN+c6eBtHohjS4CULU0pQZO6QvmBfh/4rgh2WLtQ/eV1U=
+X-Received: by 2002:a25:2fc2:0:b0:de4:673f:da17 with SMTP id
+ v185-20020a252fc2000000b00de4673fda17mr8576741ybv.22.1714976991283; Sun, 05
+ May 2024 23:29:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20240423134611.31979-1-johan+linaro@kernel.org>
+ <20240423134611.31979-4-johan+linaro@kernel.org> <CACRpkdYXfZwBdLSTTPbruD9qynOPuQBOZjCwA_6eE+1MUBCkgA@mail.gmail.com>
+ <ZjSksM07OlgpE3yO@hovoldconsulting.com>
+In-Reply-To: <ZjSksM07OlgpE3yO@hovoldconsulting.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Mon, 6 May 2024 08:29:40 +0200
+Message-ID: <CACRpkdYZWixc1E3=Y2j0etuDS7vNY3QcqK2Qiac_KPorr7s0Ug@mail.gmail.com>
+Subject: Re: [PATCH 3/6] dt-bindings: HID: i2c-hid: elan: add
+ 'no-reset-on-power-off' property
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>, 
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Douglas Anderson <dianders@chromium.org>, linux-input@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-There appears to be a possible use after free with vdec_close().
-The firmware will add buffer release work to the work queue through
-HFI callbacks as a normal part of decoding. Randomly closing the
-decoder device from userspace during normal decoding can incur
-a read after free for inst.
+On Fri, May 3, 2024 at 10:47=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
 
-Fix it by cancelling the work in vdec_close.
+> > If the above holds true, the driver can then just check for the open dr=
+ain flag
+> > in the reset-gpios phandle, and if that is set, conclude that it should=
+ not
+> > actively drive the line low in the poweroff state.
+>
+> That is an alternative I considered but rejected as just knowing that
+> the gpio is open-drain is not necessarily sufficient, for example, if
+> the reset line is pulled to always-on rail while power to the device can
+> be cut.
+>
+> Perhaps no one would ever construct hardware like that, but it does not
+> seem like the hardware property I'm trying to encode necessarily follows
+> from having an open-drain reset line.
+>
+> And then the OS should probably not make assumptions like that either,
+> especially since getting it wrong can potentially lead to damaged
+> hardware.
 
-Cc: stable@vger.kernel.org
-Fixes: af2c3834c ("media: venus: adding core part and helper functions")
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
----
-Changes since v2:
-- fixed email id
+OK it's a fair point.
 
-Changes since v1:
-- Added fixes and stable tags
+I was worried about over-specification of behaviour, as that always
+leads to contradictions.
 
- drivers/media/platform/qcom/venus/vdec.c | 1 +
- 1 file changed, 1 insertion(+)
++  no-reset-on-power-off:
++    type: boolean
++    description:
++      Reset line is wired so that it can be left deasserted when the power
++      supply is off.
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 29130a9..56f8a25 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1747,6 +1747,7 @@ static int vdec_close(struct file *file)
- 
- 	vdec_pm_get(inst);
- 
-+	cancel_work_sync(&inst->delayed_process_work);
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
- 	vdec_ctrl_deinit(inst);
--- 
-2.7.4
+To be nitpicky: *should* be left deasserted rather than *can* be left
+deasserted, right? If the behaviour is desirable but not strictly
+required.
 
+Yours,
+Linus Walleij
 
