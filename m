@@ -1,127 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-19241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06BC28BCD7A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 14:10:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B61178BCD9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 14:17:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0165280DC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 12:10:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4192D1F22BD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 12:17:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BF2F143891;
-	Mon,  6 May 2024 12:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7EB14389B;
+	Mon,  6 May 2024 12:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jD16USvp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qIffkB5C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38D514388D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 May 2024 12:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522FD14262C;
+	Mon,  6 May 2024 12:16:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714997438; cv=none; b=oS8yDUpOxT4a13y7Lel3h8Vyr51FHN0NdTDREfZcXRW8+LpjZ49B15b4R9i4OuRLKhIgm+EGbcE4X1HGMf60EZwWyRhc8R7fuU71il/ui17QQbfnWXCXMF/3xPK1yQyiI5CQBRT6aLkx0Y9nIgh7LeyB0W/R5etvLRUVXJl4sYA=
+	t=1714997808; cv=none; b=rXmm806uSBG5hyRwjNrad/8+e1qL2klW7IUQrT7eAqfUGtkf8D2M3LrHLt7JAVA2nWuvQkdlaFR3swzFMgzQSZw+Ogrs30rO+0xus2K+KuD3C1P09qDQ5d9KGd6ygHOruWd4N1Xzqc3AhhzMQEFCz/LViU8HUQqSglYvjYntY/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714997438; c=relaxed/simple;
-	bh=NpCD5T+l+gGXtsoL7GDErBmJ6/RrNy8hQRbP7mriCTk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HbNDGjwEBVYWpk1ExLD79jKaa/djaIw25Oattwjmu+BTy/ATVlRq0Nq7DT6cfhFUisnEq4LJwKW4O0wW+JxbmHodh+l8BG+4BoTkVhGv6NvJDwQy3KTn9RoZ/joOPcyAFEBJSjhDjTTOnsCU57A6AnOiHrUcuUg7WojV2+Soyf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jD16USvp; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-de61424f478so1855878276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 May 2024 05:10:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714997436; x=1715602236; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=83bq6sZnjWOAj2QjLu2jyQop5vm1yVH5pagOdWkdqQE=;
-        b=jD16USvphZ+hFQuuK2fEDANCQqnDoaaVEQVpWzQj5VW66fA8hloBAr3cfWcwpvzZb3
-         onMm0sVD6YQZ29cnRrkoO9vx2Q+dS5xv3OSmO/Hk8GS9b7PjxI/DPAT5Z3WpUEGo4Sz9
-         JE74lVwr8MNbSRbl3W8+0avV85YquyQmXJgybHbPxfPJo0/JmJwOC5xpkYQat7RvDG4p
-         38m9N3pHZF4eFkAnlUf8hKPrKNcV3E+8GC2SVYl9ySF3b6dHh1d/Ue7oGc3sVqgV+88o
-         ADmyRzamrJ1rw3oPTJqi8m8vc/Fg8nkwx03RYEWn0v9BdU14p/v7IOYXFo95xnFTdh8R
-         sLfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714997436; x=1715602236;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=83bq6sZnjWOAj2QjLu2jyQop5vm1yVH5pagOdWkdqQE=;
-        b=fdlVLROoVXUdBfzUaazAdmNgpwPTYN3uTrjB+t+oadJFK6CvSKKqGh2/Y62tW6wggN
-         qeJtovlgaZyxjoQ61rfqXAnw/FjgCxl3GH+xs1QnGbLuodtsVJUKjcaJumTmFtOG02GH
-         GgKV+cYhzxUA1Fb0SKm2CGuzRE5GLm3MwG+ePTKDWvQBcO2tI0ehnSLxuAqh6D4smbfE
-         4blYie+MxXLhmkJ9w3qDBr+Ox+CvVzfj8TC2Jy+DvZ7tiP+oOSX+lfqYYgylyfDwqoiD
-         IUfG0prlwHkq5M3Sb87s7HPMcDJDD8AD+ZSiF+heu6bcQmZjALTqZMDtdyOkfHKf0BAF
-         d0Tw==
-X-Forwarded-Encrypted: i=1; AJvYcCXYWJZ6qOUUfYZ57CGjd1eVGacpAYepimjORhnDCyR/BBP2I+2siPCT3wAYyywVPmoGFvVY5c/0beQiiAq0qI986kSBExgcPRWxftguhw==
-X-Gm-Message-State: AOJu0Yyn16AFnB89CQ66tx70lGD4lJcN6ThryCuJrzrqB1jEO/iO+COk
-	xFDLTm+mrcC0tXIu3YyiqUcQC0TazBIepBU6MrJ3vlNKpJ/lBlKCgrcQqxq4xWd4AeqY01x2aOZ
-	rAV3P9rMzNHs9kw/P8+kJgjAAr1Yo2RjsUERaqg==
-X-Google-Smtp-Source: AGHT+IER78l+XvV7AsX+dBbOeQ79q3sQzITzxy15JTynwXfGIedBRzHp3Bby/Y/eLvaqRahVeAP4r46dQsP2qbPRE+I=
-X-Received: by 2002:a05:6902:2011:b0:dcf:2cfe:c82e with SMTP id
- dh17-20020a056902201100b00dcf2cfec82emr11080008ybb.55.1714997435752; Mon, 06
- May 2024 05:10:35 -0700 (PDT)
+	s=arc-20240116; t=1714997808; c=relaxed/simple;
+	bh=imW+tOmQLVq8kGToLptxFdeea7wI9xfeY1vCN4uPZuw=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=JpUSGapWTb3s34TGBgv/zMOyejZ2BR09gks+Val381wmcwGpn4yqi8V9vs6FtpeQhW0oVw1pxMVzee1ZkzUNIqwE7XquOyT3otDq3pG1jqGZQUEebfPbNKZ1vzm/N33RkUB9QoyGJYVnhrKX/aRYpBpQT7cl+ci7q9MvH8loCPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qIffkB5C; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB935C116B1;
+	Mon,  6 May 2024 12:16:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1714997807;
+	bh=imW+tOmQLVq8kGToLptxFdeea7wI9xfeY1vCN4uPZuw=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=qIffkB5CzbpmgYvIlqOZw40xo0i/2sgi+EIaWIL/LDuqWYhPeMgtVXR0uJQb77FCZ
+	 Fc+luNUhSVsdItlyHjU+Y9ZOiouUgwpCUtdeggTEecnvjcMOzqrbMoyib3IzQp3yQV
+	 nsTdrAak3IUZe5De9szGwODR59R3C1Y4u8IQaRhjTZw3OuPPILRQRT9EEkbJcUJHYu
+	 iqwO7fGrg9puWWbUfX658Tqf0b/koh/V6yKK36CpjjFc0s+0skyEibCEFKliJFtGO4
+	 woQf8dAkmVFx4NTsmz0CkBws16hddpjW6CQGpqPzXxBjGsPIfVVKbyJfx4ZekDlN1h
+	 jWxiNdkZy83uQ==
+From: Kalle Valo <kvalo@kernel.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,  Jeff Johnson
+ <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
+  wireless <linux-wireless@vger.kernel.org>,  DT
+ <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
+ Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
+ <avrac@freebox.fr>,  Bjorn Andersson <andersson@kernel.org>,  Konrad
+ Dybcio <konrad.dybcio@linaro.org>,  Jami Kettunen
+ <jamipkettunen@gmail.com>,  Jeffrey Hugo <quic_jhugo@quicinc.com>,  Dmitry
+ Baryshkov <dmitry.baryshkov@linaro.org>,  Alexey Minnekhanov
+ <alexeymin@postmarketos.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
+ qcom,no-msa-ready-indicator prop
+References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
+	<54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
+	<ZjBV+th9DmnNLhnN@hu-bjorande-lv.qualcomm.com>
+	<8734r3qysm.fsf@kernel.org>
+	<b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr>
+Date: Mon, 06 May 2024 15:16:41 +0300
+In-Reply-To: <b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr> (Marc
+	Gonzalez's message of "Tue, 30 Apr 2024 13:10:45 +0200")
+Message-ID: <87fruvm8ye.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240429102510.2665280-1-andriy.shevchenko@linux.intel.com> <20240429102510.2665280-5-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20240429102510.2665280-5-andriy.shevchenko@linux.intel.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Mon, 6 May 2024 14:10:24 +0200
-Message-ID: <CACRpkdZUsA034L5GjF_-XELX9369PwNjONfsDV-_EC564R0QWg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/5] PCI: imx6: Convert to agnostic GPIO API
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Frank Li <Frank.Li@nxp.com>, 
-	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	imx@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org, 
-	Vignesh Raghavendra <vigneshr@ti.com>, Siddharth Vadapalli <s-vadapalli@ti.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Richard Zhu <hongxing.zhu@nxp.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Yue Wang <yue.wang@amlogic.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Xiaowei Song <songxiaowei@hisilicon.com>, Binghui Wang <wangbinghui@hisilicon.com>, 
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>, =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Apr 29, 2024 at 12:25=E2=80=AFPM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
+Marc Gonzalez <mgonzalez@freebox.fr> writes:
 
-> The of_gpio.h is going to be removed. In preparation of that convert
-> the driver to the agnostic API.
+> On 30/04/2024 06:06, Kalle Valo wrote:
 >
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+>> Bjorn Andersson wrote:
+>> 
+>>> On Mon, Apr 29, 2024 at 04:04:51PM +0200, Marc Gonzalez wrote:
+>>>
+>>>> The ath10k driver waits for an "MSA_READY" indicator
+>>>> to complete initialization. If the indicator is not
+>>>> received, then the device remains unusable.
+>>>>
+>>>> cf. ath10k_qmi_driver_event_work()
+>>>>
+>>>> Several msm8998-based devices are affected by this issue.
+>>>> Oddly, it seems safe to NOT wait for the indicator, and
+>>>> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
+>>>>
+>>>> Jeff Johnson wrote:
+>>>>
+>>>>   The feedback I received was "it might be ok to change all ath10k qmi
+>>>>   to skip waiting for msa_ready", and it was pointed out that ath11k
+>>>>   (and ath12k) do not wait for it.
+>>>>
+>>>>   However with so many deployed devices, "might be ok" isn't a strong
+>>>>   argument for changing the default behavior.
+>>>>
+>>>> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
+>>>> work-around in the driver. However, firmware-5.bin is parsed too late.
+>>>> So we are stuck with a DT property.
+>>>>
+>>>> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+>>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>>>
+>>> This says "Pierre-Hugues certifies the origin of the patch" then "Marc
+>>> certifies the origin of the patch". This would have to imply that
+>>> Pierre-Hugues authored the patch, but you're listed as the author...
+>>>
+>>> Perhaps a suitable answer to this question would be to add
+>>> "Co-developed-by: Pierre-Hugues ..." above his s-o-b, which implies that
+>>> the two of you jointly came up with this and both certify the origin.
+>> 
+>> BTW I can add that in the pending branch, no need to resend because of
+>> this. Just need guidance from Marc.
+>
+> I typed this patch all by myself with my grubby little paws.
+> You can drop PH's S-o-b.
+>
+>>> Other than that, I think this looks good, so please upon addressing this
+>>> problem feel free to add my:
+>>>
+>>> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>> 
+>> Thanks, I'll then add this as well.
+>
+> Cool. Almost there :)
 
-I think there is a bug here, the code is respecting the OF property
-"reset-gpio-active-high"
-but the code in drivers/gpio/gpiolib-of.h actually has a quirk for
-this so you can just
-delete all the active high handling and rely on 1 =3D asserted and 0 =3D
-deasserted when
-using GPIO descriptors.
+All I need is an ack from DT maintainers for this patch.
 
-Just delete this thing:
-imx6_pcie->gpio_active_high =3D of_property_read_bool(node,
-                                           "reset-gpio-active-high");
+DT maintainers: I think this is the best option and I can't think of any
+other solution so I would prefer to take this approach to our ath.git
+tree if it's ok for you.
 
-Yours,
-Linus Walleij
+IIRC someone suggested testing for firmware version string but I suspect
+that has the same problem as the firmware-N.bin approach: ath10k gets
+the firmware version too late. And besides it's difficult to maintain
+such a list in ath10k, it would always need kernel updates when there's
+a new firmware etc.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
