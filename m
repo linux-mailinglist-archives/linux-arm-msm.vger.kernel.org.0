@@ -1,156 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-19244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A49DA8BCDB5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 14:22:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 548AA8BCDE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 14:26:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4FC351F24F52
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 12:22:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 91618B25950
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 12:26:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65F1B143C44;
-	Mon,  6 May 2024 12:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65594143C4E;
+	Mon,  6 May 2024 12:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k0eHOyo5"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZCvgzkq2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC440143899;
-	Mon,  6 May 2024 12:22:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238D0143C44;
+	Mon,  6 May 2024 12:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714998136; cv=none; b=kNP2xCnZ9Ya1DBCYPgwtUfAWaa0B531zo78tWkCys7QW74BFuy1cs/EGGSz82iU51cB39EtfQAnOL7imkQJ+2aesba3Ube78NRfNwlnDUAZXKWtjvMBcptfsUGoHBz2dAtdOvlTr55e4FoPlV+z0HfPsMKJuVZMeioxDmvLHdW8=
+	t=1714998368; cv=none; b=Q002/L4pmiYx997PeZVbZjPnUm/aFVmisAjm4LDa/NBpSLWrLhIJHWiHWhZSGaB5EdjqiFDGyYv+kASaFwq4d7uft63vosPuw80+BVN4W0ak0iMVzb4H1fZb3nKRvSqeDAVHOPtYCMYbA2PrG5n9NnAbSnmgg3svNWbGy72MT5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714998136; c=relaxed/simple;
-	bh=vzd6/g0j/LKpzRJ0n5NOO5gT3MBm83kOUuJoCDjo1YE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BUXBf4GOJ3iXnTezLmRbNEuQQDT8ySZre2+zvttydrHJ1YCRY2nN9I60GmC9EBKxdwKBub8ex3vmnKGlAMAc4Ck2qXBjIv2eYzkU+HzpPeJf3e/Nflt6z/J+soYcYTw3vifACkNwQd9n2wGTBSkXCVIwY6An7kmyLkas0yxg+YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k0eHOyo5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 446BoaQr013364;
-	Mon, 6 May 2024 12:22:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Dia/565uBgwal8VAh3McJ3ZZl+6Ufop3qtDDWi4EWFs=; b=k0
-	eHOyo52uxrjZGsrpx3TME8nV3Nhcwhn0pIVNhxT0HIqVKi3XufocvoJGzTn2b5be
-	PUdaBhxR1Eozk8QbFHmya0pswa7pqd36rc2jjE8HuSQr82grtnyolASBoQ83olza
-	8oPBRbKEUIRIfb7AyRESl6CkpcYtPcAlPxOq4JpZrkMCmJaVtr/LaPXGABVNs5T6
-	jUNGaOq23mRXzOP5VJn+E31yMdw+7kqmv+MLbfvHseGff33/UKVkYWvHdakmKNWD
-	INvVvwDcF2JzoOTDdd6gcL38mRgnMMgfuCl9QkgCtfplR/81Em03ISEnQ/G3w7AS
-	jcU9il/4gGDiK+N5tAjA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xxt6n0n68-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 May 2024 12:22:09 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 446CM8t4002182
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 6 May 2024 12:22:08 GMT
-Received: from [10.216.21.139] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 6 May 2024
- 05:22:04 -0700
-Message-ID: <0bce5d7c-8133-f3c7-55af-c5b8f89a5371@quicinc.com>
-Date: Mon, 6 May 2024 17:52:01 +0530
+	s=arc-20240116; t=1714998368; c=relaxed/simple;
+	bh=yim39yRqN4bdpfi/yZPkyOfIHeiJsr3OoFhecZ7dSX8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RxROAHW2OjO7yC5130xPZBiVPJ6PmvkTPpp28aDbW2AYZRTMLuzFolOZ80dJil5pij4eAQGG3mDH6Gxc4uZ8Djgi6xS8WF27BSz1Pkg/1LL6TLFxSIbdWMFLsjCFhr6pZVNxROAgN0YErn20JEM1SLIKRTITCBtumUiVANxodbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZCvgzkq2; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1714998366; x=1746534366;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=yim39yRqN4bdpfi/yZPkyOfIHeiJsr3OoFhecZ7dSX8=;
+  b=ZCvgzkq2FrVYthP2jVKlAfB01bIBcwCDZcUWMke/J9PPTn6+3MnqV9hO
+   zeBEoBCM0LvLVsocgxvSzx3CDR4P2JtEbBazL/Hu0RqutrTH1wrMKQyat
+   anxDzndHigUmTiiaYQCx59a0PWm6Hx36Vt1qVeZJwsUZ5CeBEIP4hkYxS
+   Q9aV/IKi2P7es8Rtx7aqWAyW4vS53IQYbkrR4dB9RHDefxmY39wVtNNGR
+   pBR2ikBAjU2vDERWBgVHryGU0LBr4SOreplQKoQ8ICLlfu9iN5oVILQvg
+   kZaitMf1A+RPr5OC9/mOM/l7YePioDeTqMU7yGU/2VWcObQTUQL7gvRhp
+   w==;
+X-CSE-ConnectionGUID: 8A2f7UADSgi9LQWnGahorA==
+X-CSE-MsgGUID: uUZbPi9UQYe73UyGMy/jXA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="21352626"
+X-IronPort-AV: E=Sophos;i="6.07,258,1708416000"; 
+   d="scan'208";a="21352626"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2024 05:26:05 -0700
+X-CSE-ConnectionGUID: i/6U48ZHSka9s8R3PJyNXw==
+X-CSE-MsgGUID: UQissWGdTaOeNacEhtYQ9A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,258,1708416000"; 
+   d="scan'208";a="28116539"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2024 05:25:58 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1s3xPl-00000004gZr-3aNZ;
+	Mon, 06 May 2024 15:25:53 +0300
+Date: Mon, 6 May 2024 15:25:53 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Xiaowei Song <songxiaowei@hisilicon.com>,
+	Binghui Wang <wangbinghui@hisilicon.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>
+Subject: Re: [PATCH v3 4/5] PCI: imx6: Convert to agnostic GPIO API
+Message-ID: <ZjjMUSj3cZTI56wE@smile.fi.intel.com>
+References: <20240429102510.2665280-1-andriy.shevchenko@linux.intel.com>
+ <20240429102510.2665280-5-andriy.shevchenko@linux.intel.com>
+ <CACRpkdZUsA034L5GjF_-XELX9369PwNjONfsDV-_EC564R0QWg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 0/3] Add support for qcom msm8998-venus (HW vdec /
- venc)
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Marc Gonzalez
-	<mgonzalez@freebox.fr>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jeffrey Hugo
-	<quic_jhugo@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Stanimir
- Varbanov" <stanimir.k.varbanov@gmail.com>
-CC: MSM <linux-arm-msm@vger.kernel.org>,
-        linux-media
-	<linux-media@vger.kernel.org>,
-        DT <devicetree@vger.kernel.org>,
-        "Pierre-Hugues Husson" <phhusson@freebox.fr>,
-        Arnaud Vrac <avrac@freebox.fr>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-References: <ff646f97-68e3-4fef-9b56-2bd98f0cbe7d@freebox.fr>
- <f5b9c8d5-d8ed-4dd1-9cd6-fb016d84cbd5@freebox.fr>
- <12daeed1-0075-4a6c-bd02-dc70a0c0d721@linaro.org>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <12daeed1-0075-4a6c-bd02-dc70a0c0d721@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kTyPJ44fUyPfx9de_HpB-uPgdamB-N6N
-X-Proofpoint-ORIG-GUID: kTyPJ44fUyPfx9de_HpB-uPgdamB-N6N
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-06_07,2024-05-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 mlxlogscore=999
- spamscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0 mlxscore=0
- adultscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2404010003 definitions=main-2405060085
+In-Reply-To: <CACRpkdZUsA034L5GjF_-XELX9369PwNjONfsDV-_EC564R0QWg@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-
-On 5/6/2024 3:55 PM, Bryan O'Donoghue wrote:
-> On 06/05/2024 10:57, Marc Gonzalez wrote:
->> On 30/04/2024 17:28, Marc Gonzalez wrote:
->>
->>> Changes in v2
->>> - Add Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> for patches
->>> 2 & 3
->>> - Replace qcom,msm8998-venus.yaml (copy of qcom,msm8996-venus.yaml) with item
->>> in qcom,msm8996-venus.yaml
->>>
->>> Marc Gonzalez (3):
->>>    dt-bindings: media: add qcom,msm8998-venus
->>>    arm64: dts: qcom: msm8998: add venus node
->>>    media: venus: add MSM8998 support
->>>
->>>   Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml |  4 ++-
->>>   arch/arm64/boot/dts/qcom/msm8998.dtsi                           | 48
->>> +++++++++++++++++++++++++++++
->>>   drivers/media/platform/qcom/venus/core.c                        | 42
->>> +++++++++++++++++++++++++
->>>   3 files changed, 93 insertions(+), 1 deletion(-)
->>
->> Not sure what's holding up this series?
->> Can it be merged before the 6.10 merge window opens?
->> (Whose tree is it supposed to go through?)
->>
->> Been working on this feature since Feb 19 with
->> [RFC WIP PATCH] venus: add qcom,no-low-power property
->> (First try turned out to be incorrect)
->>
->> Regards
->>
+On Mon, May 06, 2024 at 02:10:24PM +0200, Linus Walleij wrote:
+> On Mon, Apr 29, 2024 at 12:25 PM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
 > 
-> Vikash, Stan.
+> > The of_gpio.h is going to be removed. In preparation of that convert
+> > the driver to the agnostic API.
+> >
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 > 
-> I think this is ready to go, can we get an Acked-by so Hans can do the merge ?
-Thanks Marc/Bryan for getting this through and getting rid of that hack
-"no-low-power".
+> I think there is a bug here, the code is respecting the OF property
+> "reset-gpio-active-high"
+> but the code in drivers/gpio/gpiolib-of.h actually has a quirk for
+> this so you can just
+> delete all the active high handling and rely on 1 = asserted and 0 =
+> deasserted when
+> using GPIO descriptors.
+> 
+> Just delete this thing:
+> imx6_pcie->gpio_active_high = of_property_read_bool(node,
+>                                            "reset-gpio-active-high");
 
-There is a minor comment in patch 3/3, otherwise looks good.
+Good catch! Thank you, I'll update it in the next version. Can you review
+the rest meanwhile?
 
-Regards,
-Vikash
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
