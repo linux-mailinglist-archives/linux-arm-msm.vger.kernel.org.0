@@ -1,237 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-19279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A9C58BD5E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 21:54:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C83C8BD663
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 22:41:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 393DE1C21104
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 19:54:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4FB211C2130B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 20:41:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EDFD15ADAE;
-	Mon,  6 May 2024 19:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA0F815DBBA;
+	Mon,  6 May 2024 20:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ejGK6bc7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gLrY7MlZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A329DDC7;
-	Mon,  6 May 2024 19:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B03115DBAB;
+	Mon,  6 May 2024 20:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715025291; cv=none; b=CiIIf3xd5chy+mrWZvIwMzRhkk1t76gckmejNq1xZ5zvOuhBRyJ+6+VNqayK7lkZ/6C8UVLaiVb7wPMVXuev3csmAcRJY21QO5AMN9pGTJibmqB1Z4ZZNpss3RdPKgh+r0Q80vPy/PRJUIqZq+hjfdVSypkTCyX3CK2TE0N8gXk=
+	t=1715028034; cv=none; b=n8HITDT6bUfcecLBzGsal0pfNpMBpt2iJHZZ7CnfsTzboyEgWvejbX0ym6kzj9Hrx3DVRPwf0K6fcsC2v+Ml7f1yjOe8pINt+w2rSuwJ3AXlmkzi2n4cLZpYdavNZ/FwttCmOhx0YQ7BSZpbGFwt7AYzWW/pu7ZN1i+G4jekbEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715025291; c=relaxed/simple;
-	bh=1SofMlPLugistZwY8l/SGHCqle5+F8AVcDMwZvAKD4A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aNEBZ4Hf2MARG2HoBA9GQgf8us7mWQgCfM10c8MomPa0KGoRG+mmVn1XWvugCW6sEsHlGbMHAeD1oq+7Bsq1WoAC0rqLf+cxFwGCZ4OUymO/6RspXe+SMjLBW+afeK9Q5SM4Cebqo9IeN3XT/u8Gy/EvJerOjZD+KnZVoNXLyIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ejGK6bc7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 446Ifeve026215;
-	Mon, 6 May 2024 19:54:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=sC84BFtLU9L/vFaY+S8V8yTDY2IAdPN3Z4iW1X9my/E=; b=ej
-	GK6bc7/RcBZ0DT5py9PekjmzxTcWTfi9YXcc3dzQKYp50pSqk/5QPQGzOoW7ZQLL
-	prR896+dUr+B+dtcfoJY9PYOlZDZPnhtCmJGMeZDXwQ/IBeUK2lS0E1vnnulRSZV
-	8uRF13MKe4GiNaHm8olecDqgskpHQfLTdJ9eGdKehzSn5MjHpuHiQNSoVns0XlwS
-	Q9Sx0/8WfGB+5o66QbvtmJP8yHGszda0ePgH/khuQb/sxIHJJWbRQJf5dKeIKkCk
-	diNJgSjLUm5ryn3T5ZIlO+DFDz9joE+cbnY0ToXGuZ6gsjYcnob4SYk6GVvYdHaJ
-	jLrV8RngzlEsdPwNno2w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xxyc2rveu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 May 2024 19:54:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 446JsVao015583
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 6 May 2024 19:54:31 GMT
-Received: from [10.110.125.244] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 6 May 2024
- 12:54:30 -0700
-Message-ID: <55ee8e86-e2eb-4c69-9692-df790454b8d6@quicinc.com>
-Date: Mon, 6 May 2024 12:54:29 -0700
+	s=arc-20240116; t=1715028034; c=relaxed/simple;
+	bh=CfAo+6bSBP0Uw6FpjwefB2GfRfaG8G24UWDS/ujqHIM=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=St/Dx7Il2UMZmRmCOgWk8sqm0s1+3DgUm6UEf5ip5Jlpfl7UCZnujMe5VppyV5OJYhRlSUX91QMMuhrcRvxitcdWZRCzAzTTxX3qlEdIEBDsr6klxHUtrfmLgP062RBzqF+4L5tjI83EJPVvkRWn9DuDWptTgjAA8RFOxYqg8+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gLrY7MlZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0E5C116B1;
+	Mon,  6 May 2024 20:40:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715028034;
+	bh=CfAo+6bSBP0Uw6FpjwefB2GfRfaG8G24UWDS/ujqHIM=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=gLrY7MlZaCdE8jWVRmlzS5QzN5ause/KkMr25cR/zW9egF6cw16xCNZXp15ExLL1i
+	 0LHzzw/dJegLCy1RkKeTK9r1yWlPEKZZ5lRLbZX2ED9vIs9O5loalczFC+s8PmEhfD
+	 00pbU9IiMcE1KwODCUABk0+On7pE4Y7HKEa/2RNBshvRYCcMevqVZ5fObPPbE34lnE
+	 J6Awg3dTEdMhizR54t9EI5n0sZrs91ZxiY8yZ2n7aZsnbb08dWoml+r2/bHOrrNp3n
+	 kN/LMOdFuKGjUrgfALD+vySsxPMCGjpjLju3K41ifsM4H2rGLU5eXm33P4BKLsOjpH
+	 +iyyixxX27X4g==
+Date: Mon, 06 May 2024 15:40:32 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: qcs6490-rb3gen2: enable hdmi bridge
-Content-Language: en-US
-To: Prahlad Valluru <quic_vvalluru@quicinc.com>, <robh@kernel.org>
-CC: <andersson@kernel.org>, <conor+dt@kernel.org>,
-        <devicetree@vger.kernel.org>, <konrad.dybcio@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_nankam@quicinc.com>
-References: <171405653305.2527744.3813895380659072690.robh@kernel.org>
- <20240426142442.7769-1-quic_vvalluru@quicinc.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240426142442.7769-1-quic_vvalluru@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RcetPsM2xG4SYpl9QMUckgmROlZI_par
-X-Proofpoint-ORIG-GUID: RcetPsM2xG4SYpl9QMUckgmROlZI_par
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-06_14,2024-05-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1011 spamscore=0
- suspectscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2405060141
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Das Srinagesh <quic_gurus@quicinc.com>, 
+ Satya Priya <quic_c_skakit@quicinc.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Stephen Boyd <swboyd@chromium.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Lee Jones <lee@kernel.org>, devicetree@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, linux-gpio@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>
+In-Reply-To: <20240506150830.23709-1-johan+linaro@kernel.org>
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+Message-Id: <171502764588.89686.5159158035724685961.robh@kernel.org>
+Subject: Re: [PATCH 00/13] arm64: dts: qcom: sc8280xp-x13s: enable pm8008
+ camera pmic
 
 
-
-On 4/26/2024 7:24 AM, Prahlad Valluru wrote:
-> From: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
+On Mon, 06 May 2024 17:08:17 +0200, Johan Hovold wrote:
+> The Qualcomm PM8008 PMIC is a so called QPNP PMIC with seven LDO
+> regulators, a temperature alarm block and two GPIO pins (which are also
+> used for interrupt signalling and reset).
 > 
-> Enable lt9611uxc bridge for qcs6490 rb3 gen2 platform.
+> Unlike previous QPNP PMICs it uses an I2C rather than SPMI interface,
+> which has implications for how interrupts are handled.
 > 
-> Signed-off-by: Prahlad Valluru <quic_vvalluru@quicinc.com>
-> ---
-
-Why is there a mismatch between your author name and signed off name?
-
-> v2: Addressed dtschema errors
-> 	- Fixed lt9611-irq
-> 	- vdd-supply error to be ignored, as it is connected to
-> 	  input supply directly, on rb3gen2
-> ---
->   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 86 ++++++++++++++++++++
->   1 file changed, 86 insertions(+)
+> A previous attempt by Qualcomm to upstream support for PM8008 stalled
+> two years ago at version 15 after a lot of back and forth discussion on
+> how best to describe this device in the devicetree. [1]
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> index a085ff5b5fb2..c14d4a4bb3ce 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -51,6 +51,18 @@
->   			};
->   		};
->   	};
-> +	
-> +	hdmi-connector {
-> +		compatible = "hdmi-connector";
-> +		label = "HDMI";
+> After reviewing the backstory on this and surveying the current SPMI
+> PMIC bindings and implementation, I opted for a new approach that does
+> not describe internal details like register offsets and interrupts in
+> the devicetree.
+> 
+> The original decision to include registers offsets and internal
+> interrupts for SPMI PMICs has led to a number of PMIC dtsi being created
+> to avoid copying lots of boiler plate declarations. This in turn causes
+> trouble when the PMIC USID address is configurable as the address is
+> included in every interrupt specifier.
+> 
+> The current SPMI bindings still do not describe the devices fully and
+> additional data is therefore already provided by drivers (e.g.
+> additional register blocks, supplies, additional interrupt specifiers).
+> 
+> The fact that PMICs which use two USIDs (addresses) are modelled as two
+> separate devices causes trouble, for example, when there are
+> dependencies between subfunctions. [2]
+> 
+> Subfunctions also do not necessarily map neatly onto the 256-register
+> block partitioning of the SPMI register space, something which has lead
+> to unresolved inconsistencies in how functions like PWM are described.
+> [3]
+> 
+> In short, it's a bit of a mess.
+> 
+> With the new style of bindings, by contrast, only essential information
+> that actually differs between machines would be included in the
+> devicetree. The bindings would also be mostly decoupled from the
+> implementation, which has started to leak out into the binding (e.g. how
+> the QPNP interrupts are handled). This also allows for extending the
+> implementation without having to update the binding, which is especially
+> important as Qualcomm does not publish any documentation (e.g. to later
+> enable regulator over-current protection).
+> 
+> Some PMICs support both I2C and SPMI interfaces (e.g. PM8010) and we
+> want to be able to reuse the same bindings regardless of the interface.
+> 
+> As a proof concept I have written a new pmc8280 driver for one of the
+> SPMI PMICs in the Lenovo ThinkPad X13s that uses the new style of
+> bindings and I've been using that one to control backlight and
+> peripheral regulators for a while now. Specifically, the gpio and
+> temperature-alarm blocks can be used with some minor updates to the
+> current drivers.
+> 
+> That work still needs a bit of polish before posting, but my working PoC
+> means that I'm confident enough that the new model will work and that we
+> can go ahead and merge regulator support for the PM8008.
+> 
+> This series is specifically needed for the camera sensors in the X13s,
+> for which camera subsystem (camss) support has now been merged for 6.10.
+> 
+> The first seven patches are preparatory and can possibly be merged
+> separately from the rest of the series. The next two patches drops the
+> broken GPIO support for PM8008 which had already been upstreamed. The
+> last four patches rework the binding and MFD driver, add support for the
+> regulators and enable the camera PMIC on the X13s.
+> 
+> Johan
+> 
+> [1] https://lore.kernel.org/all/1655200111-18357-1-git-send-email-quic_c_skakit@quicinc.com
+> [2] https://lore.kernel.org/lkml/20231003152927.15000-3-johan+linaro@kernel.org
+> [3] https://lore.kernel.org/r/20220828132648.3624126-3-bryan.odonoghue@linaro.org
+> 
+> 
+> Johan Hovold (12):
+>   dt-bindings: mfd: pm8008: add reset gpio
+>   mfd: pm8008: fix regmap irq chip initialisation
+>   mfd: pm8008: deassert reset on probe
+>   mfd: pm8008: mark regmap structures as const
+>   mfd: pm8008: use lower case hex notation
+>   mfd: pm8008: rename irq chip
+>   mfd: pm8008: drop unused driver data
+>   dt-bindings: pinctrl: qcom,pmic-gpio: drop pm8008
+>   pinctrl: qcom: spmi-gpio: drop broken pm8008 support
+>   dt-bindings: mfd: pm8008: rework binding
+>   mfd: pm8008: rework driver
+>   arm64: dts: qcom: sc8280xp-x13s: enable pm8008 camera pmic
+> 
+> Satya Priya (1):
+>   regulator: add pm8008 pmic regulator driver
+> 
+>  .../devicetree/bindings/mfd/qcom,pm8008.yaml  | 158 ++++++++-----
+>  .../bindings/pinctrl/qcom,pmic-gpio.yaml      |   3 -
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 123 ++++++++++
+>  drivers/mfd/Kconfig                           |   1 +
+>  drivers/mfd/qcom-pm8008.c                     | 163 ++++++++-----
+>  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c      |   1 -
+>  drivers/regulator/Kconfig                     |   7 +
+>  drivers/regulator/Makefile                    |   1 +
+>  drivers/regulator/qcom-pm8008-regulator.c     | 215 ++++++++++++++++++
+>  include/dt-bindings/mfd/qcom-pm8008.h         |  19 --
+>  10 files changed, 554 insertions(+), 137 deletions(-)
+>  create mode 100644 drivers/regulator/qcom-pm8008-regulator.c
+>  delete mode 100644 include/dt-bindings/mfd/qcom-pm8008.h
+> 
+> --
+> 2.43.2
+> 
+> 
+> 
 
-Is label mandatory? Doesn't seem so?
 
-Rest LGTM.
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-> +		type = "a";
-> +
-> +		port {
-> +			hdmi_con: endpoint {
-> +				remote-endpoint = <&lt9611_out>;
-> +			};
-> +		};
-> +	};
->   
->   	reserved-memory {
->   		xbl_mem: xbl@80700000 {
-> @@ -530,6 +542,45 @@
->   			   <GCC_WPSS_RSCP_CLK>;
->   };
->   
-> +&i2c0 {
-> +	clock-frequency = <400000>;
-> +	status = "okay";
-> +
-> +	lt9611_codec: hdmi-bridge@2b {
-> +		compatible = "lontium,lt9611uxc";
-> +		reg = <0x2b>;
-> +
-> +		interrupts-extended = <&tlmm 24 IRQ_TYPE_EDGE_FALLING>;
-> +		reset-gpios = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
-> +
-> +		vcc-supply = <&vreg_l11c_2p8>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&lt9611_irq_pin &lt9611_rst_pin>;
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +
-> +				lt9611_a: endpoint {
-> +					remote-endpoint = <&mdss_dsi0_out>;
-> +				};
-> +			};
-> +
-> +			port@2 {
-> +				reg = <2>;
-> +
-> +				lt9611_out: endpoint {
-> +					remote-endpoint = <&hdmi_con>;
-> +				};
-> +			};
-> +		};
-> +	};
-> +};
-> +
->   &i2c1 {
->   	status = "okay";
->   
-> @@ -602,6 +653,21 @@
->   	status = "okay";
->   };
->   
-> +&mdss_dsi {
-> +        vdda-supply = <&vreg_l6b_1p2>;
-> +        status = "okay";
-> +};
-> +
-> +&mdss_dsi0_out {
-> +        remote-endpoint = <&lt9611_a>;
-> +        data-lanes = <0 1 2 3>;
-> +};
-> +
-> +&mdss_dsi_phy {
-> +        vdds-supply = <&vreg_l10c_0p88>;
-> +        status = "okay";
-> +};
-> +
->   &qupv3_id_0 {
->   	status = "okay";
->   };
-> @@ -711,3 +777,23 @@
->   	function = "gpio";
->   	bias-disable;
->   };
-> +
-> +&pm7250b_gpios {
-> +        lt9611_rst_pin: lt9611-rst-state {
-> +                pins = "gpio2";
-> +                function = "normal";
-> +
-> +                output-high;
-> +                input-disable;
-> +                power-source = <0>;
-> +        };
-> +};
-> +
-> +&tlmm {
-> +        lt9611_irq_pin: lt9611-irq-state {
-> +                pins = "gpio24";
-> +                function = "gpio";
-> +                drive-strength = <8>;
-> +                bias-disable;
-> +        };
-> +};
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/sc8280xp-lenovo-thinkpad-x13s.dtb' for 20240506150830.23709-1-johan+linaro@kernel.org:
+
+arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: usb@a4f8800: interrupts-extended: [[1, 0, 130, 4], [1, 0, 135, 4], [1, 0, 857, 4], [1, 0, 856, 4], [1, 0, 131, 4], [1, 0, 136, 4], [1, 0, 860, 4], [1, 0, 859, 4], [136, 127, 3], [136, 126, 3], [136, 129, 3], [136, 128, 3], [136, 131, 3], [136, 130, 3], [136, 133, 3], [136, 132, 3], [136, 16, 4], [136, 17, 4]] is too long
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+
+
+
+
+
 
