@@ -1,151 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-19242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B61178BCD9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 14:17:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED8198BCDA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 14:20:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4192D1F22BD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 12:17:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 672581F249E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 May 2024 12:20:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7EB14389B;
-	Mon,  6 May 2024 12:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3EE41448EA;
+	Mon,  6 May 2024 12:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qIffkB5C"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XUSbYx4H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522FD14262C;
-	Mon,  6 May 2024 12:16:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA111448DD;
+	Mon,  6 May 2024 12:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714997808; cv=none; b=rXmm806uSBG5hyRwjNrad/8+e1qL2klW7IUQrT7eAqfUGtkf8D2M3LrHLt7JAVA2nWuvQkdlaFR3swzFMgzQSZw+Ogrs30rO+0xus2K+KuD3C1P09qDQ5d9KGd6ygHOruWd4N1Xzqc3AhhzMQEFCz/LViU8HUQqSglYvjYntY/M=
+	t=1714997991; cv=none; b=ETcYbO3qnBiptzMAX7Z1cQcxgSAQbW+8JCDLt/LbZhCKJOldP6qpiLhOtH1CqdZHJTj6l+1Bo2Wsf7PNK6AiOXTRARy+hiHpkOOUE4knCwpU12Xa8QqREX866Qat15gEsLB+fXx4I5HAbfLpkpyZgbk7vUS5iw/fajaRG2+NqC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714997808; c=relaxed/simple;
-	bh=imW+tOmQLVq8kGToLptxFdeea7wI9xfeY1vCN4uPZuw=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=JpUSGapWTb3s34TGBgv/zMOyejZ2BR09gks+Val381wmcwGpn4yqi8V9vs6FtpeQhW0oVw1pxMVzee1ZkzUNIqwE7XquOyT3otDq3pG1jqGZQUEebfPbNKZ1vzm/N33RkUB9QoyGJYVnhrKX/aRYpBpQT7cl+ci7q9MvH8loCPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qIffkB5C; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB935C116B1;
-	Mon,  6 May 2024 12:16:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714997807;
-	bh=imW+tOmQLVq8kGToLptxFdeea7wI9xfeY1vCN4uPZuw=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=qIffkB5CzbpmgYvIlqOZw40xo0i/2sgi+EIaWIL/LDuqWYhPeMgtVXR0uJQb77FCZ
-	 Fc+luNUhSVsdItlyHjU+Y9ZOiouUgwpCUtdeggTEecnvjcMOzqrbMoyib3IzQp3yQV
-	 nsTdrAak3IUZe5De9szGwODR59R3C1Y4u8IQaRhjTZw3OuPPILRQRT9EEkbJcUJHYu
-	 iqwO7fGrg9puWWbUfX658Tqf0b/koh/V6yKK36CpjjFc0s+0skyEibCEFKliJFtGO4
-	 woQf8dAkmVFx4NTsmz0CkBws16hddpjW6CQGpqPzXxBjGsPIfVVKbyJfx4ZekDlN1h
-	 jWxiNdkZy83uQ==
-From: Kalle Valo <kvalo@kernel.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,  Jeff Johnson
- <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
-  wireless <linux-wireless@vger.kernel.org>,  DT
- <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
- Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
- <avrac@freebox.fr>,  Bjorn Andersson <andersson@kernel.org>,  Konrad
- Dybcio <konrad.dybcio@linaro.org>,  Jami Kettunen
- <jamipkettunen@gmail.com>,  Jeffrey Hugo <quic_jhugo@quicinc.com>,  Dmitry
- Baryshkov <dmitry.baryshkov@linaro.org>,  Alexey Minnekhanov
- <alexeymin@postmarketos.org>
-Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
- qcom,no-msa-ready-indicator prop
-References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
-	<54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
-	<ZjBV+th9DmnNLhnN@hu-bjorande-lv.qualcomm.com>
-	<8734r3qysm.fsf@kernel.org>
-	<b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr>
-Date: Mon, 06 May 2024 15:16:41 +0300
-In-Reply-To: <b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr> (Marc
-	Gonzalez's message of "Tue, 30 Apr 2024 13:10:45 +0200")
-Message-ID: <87fruvm8ye.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1714997991; c=relaxed/simple;
+	bh=5tzxuQy/Sc130uJtXTuS6YDupNdmZuu5qUUDZ/PBHSg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kjV5PR21HLBeG9QoYsWL35IPNbjNhjketHz/z0kVBFYAXYaMVoUQ9+yWq9gzp7fwMRd7brI5TuQOobEyVwtiMlGMonCNOpOwZ/qzCO3HcsOdwwLTKF4skUMr8flaogvvz+kPipIAjf4lE2F0QS2hx5XUedmnlr72NUD3que4Izc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XUSbYx4H; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 446Bj2f2023094;
+	Mon, 6 May 2024 12:19:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=nRyyw+SZ71PHJ3tu5yZw2UYFtbgA4oG13DexLq9NL24=; b=XU
+	SbYx4H0egcYzl6kYvswf72ncVubUJ8kpO5FXzYhvtU3t66qEIQFFb0FTG0b/oolw
+	VVxT1urBtyg9muhtFhEeHt1Ay/dukqNDOHbsWA2vPUNZGw0T8MjsM9/T9A8IoJUd
+	bxRGBfnl/fJS5NAZlc2GSwZ36DhRWohv6h0syPveyM/UWcqpu1bSWkHIIbRT8cfB
+	XtqHRT+/4chQK6WBO0M0l6VgWPtBa1RW9yHsJycFrwbyWz3e2cIbIeKr+1cuzhXb
+	YFOKdcv0xJh8BHnEiORs+iT34Msb+ieGsxUbUlOVhI0X8ZCjnvMBFn4thdiG31+h
+	VFWNmtmaWzUQ7caASDew==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xwcm4kg8y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 06 May 2024 12:19:44 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 446CJga0019755
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 6 May 2024 12:19:42 GMT
+Received: from [10.216.21.139] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 6 May 2024
+ 05:19:38 -0700
+Message-ID: <3e522515-f7ba-461f-1af2-2e22b143981b@quicinc.com>
+Date: Mon, 6 May 2024 17:49:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 3/3] media: venus: add msm8998 support
+To: Marc Gonzalez <mgonzalez@freebox.fr>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Bryan O Donoghue
+	<bryan.odonoghue@linaro.org>
+CC: MSM <linux-arm-msm@vger.kernel.org>,
+        linux-media
+	<linux-media@vger.kernel.org>,
+        DT <devicetree@vger.kernel.org>,
+        "Pierre-Hugues Husson" <phhusson@freebox.fr>,
+        Arnaud Vrac <avrac@freebox.fr>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+References: <ff646f97-68e3-4fef-9b56-2bd98f0cbe7d@freebox.fr>
+ <9844c940-21b1-42af-9448-62a2d5ffadb7@freebox.fr>
+Content-Language: en-US
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <9844c940-21b1-42af-9448-62a2d5ffadb7@freebox.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: fvsPxR0PEXFhFNVtgb0P7v23boBsHB6v
+X-Proofpoint-GUID: fvsPxR0PEXFhFNVtgb0P7v23boBsHB6v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1011,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-06_07,2024-05-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ clxscore=1011 lowpriorityscore=0 bulkscore=0 mlxscore=0 adultscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=999 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405060085
 
-Marc Gonzalez <mgonzalez@freebox.fr> writes:
+Hi Marc,
 
-> On 30/04/2024 06:06, Kalle Valo wrote:
->
->> Bjorn Andersson wrote:
->> 
->>> On Mon, Apr 29, 2024 at 04:04:51PM +0200, Marc Gonzalez wrote:
->>>
->>>> The ath10k driver waits for an "MSA_READY" indicator
->>>> to complete initialization. If the indicator is not
->>>> received, then the device remains unusable.
->>>>
->>>> cf. ath10k_qmi_driver_event_work()
->>>>
->>>> Several msm8998-based devices are affected by this issue.
->>>> Oddly, it seems safe to NOT wait for the indicator, and
->>>> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
->>>>
->>>> Jeff Johnson wrote:
->>>>
->>>>   The feedback I received was "it might be ok to change all ath10k qmi
->>>>   to skip waiting for msa_ready", and it was pointed out that ath11k
->>>>   (and ath12k) do not wait for it.
->>>>
->>>>   However with so many deployed devices, "might be ok" isn't a strong
->>>>   argument for changing the default behavior.
->>>>
->>>> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
->>>> work-around in the driver. However, firmware-5.bin is parsed too late.
->>>> So we are stuck with a DT property.
->>>>
->>>> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
->>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
->>>
->>> This says "Pierre-Hugues certifies the origin of the patch" then "Marc
->>> certifies the origin of the patch". This would have to imply that
->>> Pierre-Hugues authored the patch, but you're listed as the author...
->>>
->>> Perhaps a suitable answer to this question would be to add
->>> "Co-developed-by: Pierre-Hugues ..." above his s-o-b, which implies that
->>> the two of you jointly came up with this and both certify the origin.
->> 
->> BTW I can add that in the pending branch, no need to resend because of
->> this. Just need guidance from Marc.
->
-> I typed this patch all by myself with my grubby little paws.
-> You can drop PH's S-o-b.
->
->>> Other than that, I think this looks good, so please upon addressing this
->>> problem feel free to add my:
->>>
->>> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->> 
->> Thanks, I'll then add this as well.
->
-> Cool. Almost there :)
+On 4/30/2024 9:04 PM, Marc Gonzalez wrote:
+> From: Pierre-Hugues Husson <phhusson@freebox.fr>
+> 
+> Add the missing bits for msm8998 support.
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 42 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+> index ce206b7097541..42e0c580e093d 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -587,6 +587,47 @@ static const struct venus_resources msm8996_res = {
+>  	.fwname = "qcom/venus-4.2/venus.mbn",
+>  };
+>  
+> +static const struct freq_tbl msm8998_freq_table[] = {
+> +	{ 1944000, 520000000 },	/* 4k UHD @ 60 (decode only) */
+> +	{  972000, 520000000 },	/* 4k UHD @ 30 */
+> +	{  489600, 346666667 },	/* 1080p @ 60 */
+> +	{  244800, 150000000 },	/* 1080p @ 30 */
+> +	{  108000,  75000000 },	/* 720p @ 30 */
+> +};
+Can we reuse the table from 8996 since they are exactly same ?
 
-All I need is an ack from DT maintainers for this patch.
-
-DT maintainers: I think this is the best option and I can't think of any
-other solution so I would prefer to take this approach to our ath.git
-tree if it's ok for you.
-
-IIRC someone suggested testing for firmware version string but I suspect
-that has the same problem as the firmware-N.bin approach: ath10k gets
-the firmware version too late. And besides it's difficult to maintain
-such a list in ath10k, it would always need kernel updates when there's
-a new firmware etc.
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Regards,
+Vikash
+> +
+> +/*
+> + * https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi
+> + */
+> +static const struct reg_val msm8998_reg_preset[] = {
+> +	{ 0x80124, 0x00000003 },
+> +	{ 0x80550, 0x01111111 },
+> +	{ 0x80560, 0x01111111 },
+> +	{ 0x80568, 0x01111111 },
+> +	{ 0x80570, 0x01111111 },
+> +	{ 0x80580, 0x01111111 },
+> +	{ 0x80588, 0x01111111 },
+> +	{ 0xe2010, 0x00000000 },
+> +};
+> +
+> +static const struct venus_resources msm8998_res = {
+> +	.freq_tbl = msm8998_freq_table,
+> +	.freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
+> +	.reg_tbl = msm8998_reg_preset,
+> +	.reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
+> +	.clks = { "core", "iface", "bus", "mbus" },
+> +	.clks_num = 4,
+> +	.vcodec0_clks = { "core" },
+> +	.vcodec1_clks = { "core" },
+> +	.vcodec_clks_num = 1,
+> +	.max_load = 2563200,
+> +	.hfi_version = HFI_VERSION_3XX,
+> +	.vmem_id = VIDC_RESOURCE_NONE,
+> +	.vmem_size = 0,
+> +	.vmem_addr = 0,
+> +	.dma_mask = 0xddc00000 - 1,
+> +	.fwname = "qcom/venus-4.4/venus.mbn",
+> +};
+> +
+>  static const struct freq_tbl sdm660_freq_table[] = {
+>  	{ 979200, 518400000 },
+>  	{ 489600, 441600000 },
+> @@ -893,6 +934,7 @@ static const struct venus_resources sc7280_res = {
+>  static const struct of_device_id venus_dt_match[] = {
+>  	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+>  	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+> +	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
+>  	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+>  	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+>  	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
 
