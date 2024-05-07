@@ -1,143 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-19434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6E7E8BEE95
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 23:05:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 900FE8BEECC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 23:17:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 22828B209AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 21:05:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B3AD1F221C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 21:17:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A2E07316E;
-	Tue,  7 May 2024 21:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EF9F73184;
+	Tue,  7 May 2024 21:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cYq7jawS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FX0U+vNB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEEC71B4C;
-	Tue,  7 May 2024 21:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BF654F86
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 21:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715115916; cv=none; b=pc0fEyLv0QojeMgKGE779nnHYAMj4snsXmJjsGC7mdfjDbcKpq5p4nmDpF7yHJ/5JwYcvlAhFyLlOGFG3iAJ7IikcrWHimwIZ9i4pDplE241MJD9NfRWS+rRBrRGeWdilJxaQXD5SuxUDpIwSMTh0DbsuV5W0/oD1cxIo9R+okg=
+	t=1715116626; cv=none; b=b0PH86IZ365MxSMTYZZbu1OMDWkCEkbU/sUD1ZiBuUgj80EvMoFrDb8j7vbwn+n0O+z6SooOfN5wm3CmKwJdXWKTYgdXPjkeQtZhdwt1bp+nwRcQ/rqvYvg9wDE7ez3Cd/Gy93K3hJxGsFOEl0wNEv3sx4HOg9M+dg7rrlhlS1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715115916; c=relaxed/simple;
-	bh=yL7SPd/Z+l9glPuW2PWEe52G5klrbEChtwcCMsumYCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AGjvDgUv+R4bTbeM3T1A/x9AV/x+LGN875fN5iLRsNLvHtCAJHr6z2QCHR1CMf7mCXw1iFAzMDb032Vpp8WFmuGdyttnm0hxBeFNrVr6gJJKoLfw9HWmgQIm+AM10fCYRvGErcBuKiIbOJa2hayi4QMUmY5PS09MuNglTIgS5SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cYq7jawS; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715115914; x=1746651914;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=yL7SPd/Z+l9glPuW2PWEe52G5klrbEChtwcCMsumYCU=;
-  b=cYq7jawS10DmQQNcLcflLUThlT5khwYwXJvAZiSD6G4m50wU/gQ2pNjY
-   sgEF/HWzeCL8i0JCyR5pwd/18mnIQlA6cT5mBpcq0nL9XAf7Jhq+51iyw
-   bhA9yOcO3CbBE47ybzVlmdVyqPkaPJPpfE2b1k+zxkBNL6RH75+ybzESM
-   In88r7mFtExqW6vFencxrMPJRGC9fKs2rC/kRgQreyeq1dR8NeXLV0AQL
-   tqv0QME0Fp+7Oy64HaH48QxMjmGJusivmcKPeFqtV10V/cbWWrisThXMp
-   QCuqbj4ur4P6gTmsXVfHjB6XyMgynov+fXLM8bE7+RUVxMdyHqoh7J1R2
-   A==;
-X-CSE-ConnectionGUID: YscN/smtQISMNr9B7j2iMw==
-X-CSE-MsgGUID: AeCZlkQ0QzqKGcs2YE3MRQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11066"; a="21613617"
-X-IronPort-AV: E=Sophos;i="6.08,143,1712646000"; 
-   d="scan'208";a="21613617"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2024 14:03:54 -0700
-X-CSE-ConnectionGUID: EdySXaasTj2nzIjcY31PIA==
-X-CSE-MsgGUID: u4wKf0RIRd6hD7WFn21Oig==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,143,1712646000"; 
-   d="scan'208";a="28750477"
-Received: from lkp-server01.sh.intel.com (HELO f8b243fe6e68) ([10.239.97.150])
-  by fmviesa010.fm.intel.com with ESMTP; 07 May 2024 14:03:49 -0700
-Received: from kbuild by f8b243fe6e68 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1s4RyV-0002dG-0W;
-	Tue, 07 May 2024 21:03:47 +0000
-Date: Wed, 8 May 2024 05:02:51 +0800
-From: kernel test robot <lkp@intel.com>
-To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
-	jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
-	manivannan.sadhasivam@linaro.org, andersson@kernel.org,
-	agross@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, quic_msarkar@quicinc.com,
-	quic_kraravin@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] PCI: qcom: Refactor common code
-Message-ID: <202405080444.RUQms5qs-lkp@intel.com>
-References: <20240501163610.8900-2-quic_schintav@quicinc.com>
+	s=arc-20240116; t=1715116626; c=relaxed/simple;
+	bh=Ecwjg3T8TYwyg2JlRh7RQ8tIIO5urNWWdj17N5ZVd2Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CUGLvKNZV/93RyyQOUpbPSLxFDHE8P9fCeiZrCuglOiRBadtmwLbra/KuxgcNJv7kT12TWssVbAJ7mc7QOv2a+GN7b9YS/e2wEc2NJZDqCUy+DSE+aN0syWU8iet+GJ8R32zfPMmOouP6IESo4lOHmYxNUqUPNS4jiAnI3A+52A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FX0U+vNB; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51fb14816f6so4527572e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 14:17:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715116623; x=1715721423; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JmKM6X6SN+uqrqOzykz1rBJY+bzWqLEMd29Ir34tYUg=;
+        b=FX0U+vNBG4DXc5qqtxWmyZH/y9WJbfnHuZpzqcXWDhOO0hiR1AUAUXtJIMuw5kMi4k
+         OXBP0bIQROnv3dfe4f0pEiT2Jhix1ez6U0G7g7e7CG4lnqR10jW7MAwXPAWG3Qriohso
+         tONwAOnvFKVGeA58EjQIGP3AyX7fIGVvkdZ0q+XQpNXSHjuH7Wa7m4ymNNbg66H1/JVe
+         71oH3EFxBazoXaxXP1dATFqlIER5dobOC5JEGZfhOJH2p/dm4Gq7vkpTSJ0/EsNmE4U4
+         Enbsv8FfsypIZ/EsWQ912qevbcFMk0+V5rPiuabDXyiwm5KJfEblWRjnm1y3H6fjX/0U
+         SWOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715116623; x=1715721423;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JmKM6X6SN+uqrqOzykz1rBJY+bzWqLEMd29Ir34tYUg=;
+        b=XfvTfI7tDYzzW8n6nT5pLhESmSNEVbnkxLwcE8XCls2+779EgZ1EUtpHDzUMcUmhBK
+         lD/6RfjiCHBs93QbVnTE/tL3cT8GPBEbbBCsHfzXyI9z3Fcal/is5IG9n34z3Sii8V6l
+         1ScSh26c5liuG9llZiu6GzYLQDvwOiDLNIc63dlyMF5yj1aUnIFXVMdq0egSGgtwEdsN
+         XKqNqygjpVcMzGv1gfTN34hjrx/QUWi0csvk8EIO0HeUgMPnfncdAbemNrzlQGcFU2ym
+         GOqBG2UtvpF4g7HUBSTiQ+7FZEb+TxUnuVUnie/Kli+uRazHqBPFAs2FzrZDUDGRY1xA
+         bpVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUKFq/5cq4K3OfzV2W+IIvmPsIOoXZjrZhpY9kcV4HxBx0qRwQbBr+yB6NcP4VmFiuFPIdf5aBfYtHtODCMY80YIXjTNDuLaS9zZtm/xQ==
+X-Gm-Message-State: AOJu0YxTm1/N31A8tjFo3ZXt+6qkeskAqlVW49qIVr03Uki53UWnzwl6
+	tZKW2cAqxiaDEmm+usP4hoYhb+AoNoz/QYrV6YYHBq75oUXGYDj8v3Kv1sFs/Vk=
+X-Google-Smtp-Source: AGHT+IGsDXymga87QLgW1PlqoDkL0AzaLEBDCB8pfA6cofTQrcvYSqjGPhXiFyn+uwX/y4y+GSm6mg==
+X-Received: by 2002:a05:6512:4845:b0:51d:162e:bf9e with SMTP id 2adb3069b0e04-5217c46c382mr454259e87.15.1715116622848;
+        Tue, 07 May 2024 14:17:02 -0700 (PDT)
+Received: from [172.30.204.63] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id c3-20020ac244a3000000b00515bad4cd0asm2237431lfm.155.2024.05.07.14.17.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 May 2024 14:17:02 -0700 (PDT)
+Message-ID: <aeaa72f6-b227-4b54-9836-0b8f4dba6ffb@linaro.org>
+Date: Tue, 7 May 2024 23:17:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240501163610.8900-2-quic_schintav@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: gcc-sm8450: set OPS_PARENT_ENABLE on
+ gcc_sdcc2_apps_clk_src
+To: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Vinod Koul <vkoul@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20240427-topic-8450sdc2-v1-1-631cbb59e0e5@linaro.org>
+ <2337ba58adb3fb127710bead9b8665a9.sboyd@kernel.org>
+ <11bd7146-30cd-4b71-b2ca-d76875763731@linaro.org>
+ <6ba2967c6c9d24e3f1c9b76496176010.sboyd@kernel.org>
+ <3a3c4279-a254-48d0-91ad-70b7f1e3eb77@linaro.org>
+ <7baef7a173dc4d1ecf8b0dafde565b1a.sboyd@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <7baef7a173dc4d1ecf8b0dafde565b1a.sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Shashank,
 
-kernel test robot noticed the following build warnings:
 
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus linus/master v6.9-rc7 next-20240507]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On 5/7/24 22:28, Stephen Boyd wrote:
+> Quoting Konrad Dybcio (2024-05-07 06:51:04)
+>>
+>> without PARENT_OPS_ENABLE:
+>>
+>> [    3.326891] sdhci_msm 8804000.mmc: Got CD GPIO
+>> [    3.336839] scsi host0: ufshcd
+>> [    3.337105] gcc_sdcc2_apps_clk_src is DISABLED @ set_rate
+>> [    3.346339] ------------[ cut here ]------------
+>> [    3.351093] gcc_sdcc2_apps_clk_src: rcg didn't update its configuration.
+>> [    3.351114] WARNING: CPU: 1 PID: 11 at drivers/clk/qcom/clk-rcg2.c:133 update_config+0xc8/0xd8
+>>
+>> [...]
+>>
+>> [    3.610523] gcc_sdcc2_apps_clk_src is ENABLED @ set_rate
+>>
+>>
+>> with PARENT_OPS_ENABLE:
+>>
+>> [    3.331419] sdhci_msm 8804000.mmc: Got CD GPIO
+>> [    3.336569] gcc_sdcc2_apps_clk_src is DISABLED @ set_rate
+>> [    3.344795] scsi host0: ufshcd
+>> [    3.355122] qcrypto 1dfa000.crypto: Adding to iommu group 5
+>> [    3.363567] remoteproc remoteproc0: 2400000.remoteproc is available
+>> [    3.364729] gcc_sdcc2_apps_clk_src is ENABLED @ set_rate
+>>
+>> after testing it both ways, I realized it wasn't supposed to make a
+>> difference in this regard, but I suppose I can paste both results anyway..
+>>
+> 
+> Can you share your patch that prints the message? What bit are you
+> checking in the hardware to determine if the RCG is enabled? Do you also
+> print the enable count in software?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Shashank-Babu-Chinta-Venkata/PCI-qcom-Refactor-common-code/20240502-003801
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20240501163610.8900-2-quic_schintav%40quicinc.com
-patch subject: [PATCH v4 1/3] PCI: qcom: Refactor common code
-config: mips-randconfig-r112-20240508 (https://download.01.org/0day-ci/archive/20240508/202405080444.RUQms5qs-lkp@intel.com/config)
-compiler: mips-linux-gcc (GCC) 13.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20240508/202405080444.RUQms5qs-lkp@intel.com/reproduce)
+I already reset-ed the tree state, but I added something like
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202405080444.RUQms5qs-lkp@intel.com/
+if (rcg->cmd_rcgr == the one in the declaration)
+	pr_err("gcc_sdcc2_apps_clk_src is %s\n", clk_is_enabled(hw) ? "ENABLED" : "DISABLED");
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/pci/controller/dwc/pcie-qcom-common.c:25:31: sparse: sparse: incorrect type in return expression (different base types) @@     expected struct icc_path * @@     got long @@
-   drivers/pci/controller/dwc/pcie-qcom-common.c:25:31: sparse:     expected struct icc_path *
-   drivers/pci/controller/dwc/pcie-qcom-common.c:25:31: sparse:     got long
+to drivers/clk/qcom/clk-rcg2.c : __clk_rcg2_set_rate()
 
-vim +25 drivers/pci/controller/dwc/pcie-qcom-common.c
-
-    15	
-    16	#define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
-    17			Mbps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]))
-    18	
-    19	struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path)
-    20	{
-    21		struct icc_path *icc_mem_p;
-    22	
-    23		icc_mem_p = devm_of_icc_get(pci->dev, path);
-    24		if (IS_ERR_OR_NULL(icc_mem_p))
-  > 25			return PTR_ERR(icc_mem_p);
-    26		return icc_mem_p;
-    27	}
-    28	EXPORT_SYMBOL_GPL(qcom_pcie_common_icc_get_resource);
-    29	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Konrad
 
