@@ -1,141 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-19309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C5BF8BE15C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 13:48:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C23618BE173
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 13:56:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 587DB284936
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 11:48:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F262CB23EE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 11:56:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AE2F152516;
-	Tue,  7 May 2024 11:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ABF0158A13;
+	Tue,  7 May 2024 11:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Uf9H3qsB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eiiT/8ah"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF35152534
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 11:48:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B4F157462
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 11:55:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715082518; cv=none; b=jzM3z1J6XyK9WmCim5iUt1zSY/+TcKRmo4NMKmrxMXyuBNBm8A01I3FxQEQTquG/y2pQG5eKYWjhMLMzJBpICAl1jMcbKt4O6QZ3awEObkIHeoAbSS7E+P87BPDYbkF9Gj0senbvze9P6g31cl5U1PYMVBOlaRV+nQc6Na+6Wgw=
+	t=1715082958; cv=none; b=Kkal0jk7ZaSesgbMTR6YwWlJTmG6RpxoU0dyWXPvP7eowOJWcr2GgH0bk9HjeA+W/SEw44BhzMERQGWm10EnVwfSddSMk2sOZEMfl520Q5/KwDi4GJtsYUr3VmzvtIJ1J5Eb/sLjekWcNgI7jfY/qF2C9BGzfrec003fUQ5WPPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715082518; c=relaxed/simple;
-	bh=ZvJC+HUC23cfgfMiVTigE+cAqOZWAnz9vZbxnvZ8ru0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wm+eyVc/Adjp6QeNekc/JMmTg+btoeQ5+HGhTybQzDotH78fcDA6h2s8KUvwlANN5lc6PJ3IIvDEX0CT8ne95hJyM2UrAA4LpheZCY5lLmISxFxnUDaLz0Eq8PP1GqxJuDQxq+rIIHDw8YN5mdqu/dUk+qBg9DKx1roEt4KNDug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Uf9H3qsB; arc=none smtp.client-ip=209.85.167.50
+	s=arc-20240116; t=1715082958; c=relaxed/simple;
+	bh=UEi9x9olAWyIw4Y3dEkosSNpqBSK5ax3cAPFMnIeVYU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=k4vyaSuOzDALYeF4Gk5YjV4kCVEaCOn1le+fEOt7+Hpb7fJYtEtDP7LVChCE9XrdlSX33URg7THbDhthKEOPv95MrmOOlOp6qGS/am+TpWJSWqyXI1ORoqgGPZz9u5qVsWsVsl2mdWO9fpBRY6CvkZYKkbyWjpVNT1DNZzjgkXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eiiT/8ah; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51f0f6b613dso3728815e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 04:48:34 -0700 (PDT)
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-db4364ecd6aso2978210276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 04:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715082513; x=1715687313; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=72j6zNVVvGNrYMrCouTEzvFzVcRHh6PlR7ef9XOXTgQ=;
-        b=Uf9H3qsBB1mG3WF0plN0CboxxB8ch2s0qKwTRYjag5C+BU+IlXgsKM7hYhx0tiDts2
-         qc5GbbkGrphWjfcS+9odIxupiYn3+72eaOnbOPvQApgPU0thtOqJlCDYUz1XGu+dDaAH
-         Huc5tLjXXOFf2KLEjD28m96nOAVqIW7n0/sfFcMoSK8GYpQbS0s1RNUZb1eADTOmrwuz
-         8DuYQ7U+k5T+XgM60SVoz92dVdmP3eZeZh/Rxt+VwAlk0G6GyUUTIawqDpPuhDZL7exM
-         wtfjhEQwpPR0lbTGLdPgex00KjwZGJe/yoEJtW1tBOfEVywhncSXW2k1RYA7Lg1XzDiS
-         hyew==
+        d=linaro.org; s=google; t=1715082956; x=1715687756; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+pGkFUViosNbBwj85G0vrmVhdnEjrRiE3lfdvk1nPvw=;
+        b=eiiT/8ahvrwt0g2otN4xst5wYFMpA5tOeZMIZ0FKC61oJ7g2px+6HG3Bs6n5YI32Cr
+         UtdNvCiXTX1aXrCLo5/rhwd9Pi+5jB/w+Gjc8p07s81Eyl3Wo7uPYGO/gc9vlr5ZRyaX
+         dxK92IkA8hMeYqwlmjoNliLkgI0qggJFLOiJ1L3e4+sSz9S8knvekTli/1KQm0krRUZd
+         vArTDDJwqnbr/MjcLzryEHJb6tQFcHdAGMp/fjW+uwqeMJXVOkjJ7PoEk4ITn01HpdhG
+         uy4EKh0OY0Evm9126SUuxzLlrIZu8OE8z+We7rjHY0Is3ZqIuLrNiNKfZW4dcnYFWnd1
+         WVEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715082513; x=1715687313;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=72j6zNVVvGNrYMrCouTEzvFzVcRHh6PlR7ef9XOXTgQ=;
-        b=g7QkQMaP7sc2KLYTUcO1V2/cEh8oqyNSU4BbAH0Dws/j1EolYUvcZu46zzAo2I5McI
-         +n5eK4HVgqWtly9fvYbtSJTLKV0o1UHrdVBFhz3EsBfeBnxY0N2yim2XxIBH8l7XanC2
-         9pF+Wc3ntvpEQEZrrQJCSHYhd67U1gyfR3MJtRne0mdN7LtD8tFn7KplV3tSdXIB3wZg
-         Bu732q1cbyaEqgupOW4cbNqbMijY/MYic71WZA49TcJJRT+zmGrZ+4IkfskqxwZXVWTN
-         rZZUqUDBZ6Jr4CSKYsyfIJfIUxm33zBBaGRUpnFgLwAitGxic7SO6s2xxPEzZQDzfcYm
-         sGeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV8eSWSua791HHrZwA4zO72U26K+kfpqQMyabsWqAz7jL/7ObGGYEgetW/gbyRj6pASjXMliVIQp2HmiOb5Qpkc1QKUurT1d/QRZXeF7A==
-X-Gm-Message-State: AOJu0YykAG6qO6TqThJBWJnLzepynm0JKmXYBnOCubcDm/tY4CpxTHNe
-	aQOjrirxcp1Qd/yF76pWnjapVEJgQvUtwim/EtDHeiD4/T6Z0xMTQQwflZSMMdQ=
-X-Google-Smtp-Source: AGHT+IEztQUsixU46vbtT83NzSNtDU2V2kQ90UiEWc9l8x732HZwYxqrdp6DKhIl1y8iyklIcrQtPg==
-X-Received: by 2002:a19:f713:0:b0:51d:3675:6a08 with SMTP id z19-20020a19f713000000b0051d36756a08mr7293073lfe.66.1715082513172;
-        Tue, 07 May 2024 04:48:33 -0700 (PDT)
-Received: from [172.30.205.144] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id b15-20020ac2562f000000b0051884ea2a32sm2086190lff.31.2024.05.07.04.48.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 May 2024 04:48:32 -0700 (PDT)
-Message-ID: <6dc632b0-792c-49c8-9f66-43f7a14789cc@linaro.org>
-Date: Tue, 7 May 2024 13:48:30 +0200
+        d=1e100.net; s=20230601; t=1715082956; x=1715687756;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+pGkFUViosNbBwj85G0vrmVhdnEjrRiE3lfdvk1nPvw=;
+        b=U/xQk8bi893WH3zF/idoWzWQiRuZMxWVsGhjYky1TE00+hNg+23yK9QJISLoxwW4QA
+         ohF4vjlKIn68JfsNPKXMBLCqE0paGUfqIBcp2HHFLJMP8nkureYBu63AuIp9mr7LjPXq
+         0ZMRrmr+pWJhkKZJIC0XsPeWnRVaUeCBeIrVXasFTKGw6ikJm+sCkI5gcsU/Ktx2YtbC
+         vCYqar9SUmKoRQ13RhmcQ8veUIqnQ68/sP93k5XmvtjrvccQNobdU9gLYc+ba7UzNVog
+         2Z2Ot5NsvZKcuYT2OzYSllI/MjCU5dt13O97gDNwNlar+U533peQT3Z9+r5KaqS5jUmw
+         9XNA==
+X-Forwarded-Encrypted: i=1; AJvYcCVM9CzZYldFvcN+cUzaGIMT2liyLzDlehd+ufOLIGiuQ0KWTQAYVu9AfIxEIUzIk1UPFvaY2apl+8Ngfy7NGK6faGetKqB/J7GtQYedHA==
+X-Gm-Message-State: AOJu0Yy6EXHf+ZoBXu7vC/KTODdLCNInw9Bqfg0bgr2VMvMpSqfWnwm1
+	Tmq8NQtpE7SEYmo/KrmEIwtCsGCsGOS8EPGhFhKCS9VeWoCT+gsM4L+lxDW77Rp6nrdyMp8mqhw
+	GH0PUVfusaGulT+ZmfMkTAkamAdYpuXJHQrNJGQ==
+X-Google-Smtp-Source: AGHT+IFjjy/JkHojT8EtUSY1sz+DG0YV+wEmy+k/TPQ1lX5kK3s31xaoFvKEbuasOExcuTi6OPxZ9GDQ6NlEAbyEDBY=
+X-Received: by 2002:a25:f621:0:b0:dd1:3cc1:5352 with SMTP id
+ t33-20020a25f621000000b00dd13cc15352mr11210499ybd.15.1715082956486; Tue, 07
+ May 2024 04:55:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/13] regulator: add pm8008 pmic regulator driver
-To: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
- Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Das Srinagesh <quic_gurus@quicinc.com>,
- Satya Priya <quic_c_skakit@quicinc.com>, Stephen Boyd <swboyd@chromium.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-References: <20240506150830.23709-1-johan+linaro@kernel.org>
- <20240506150830.23709-13-johan+linaro@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240506150830.23709-13-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240502123312.31083-1-quic_ugoswami@quicinc.com>
+ <CAA8EJppeQTadmny=hcs4xCQDXHwXEBHXjeecvZCUVcSXmwBTgg@mail.gmail.com> <90a5b641-af5b-4640-b2ad-85dbbab523bf@linaro.org>
+In-Reply-To: <90a5b641-af5b-4640-b2ad-85dbbab523bf@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 7 May 2024 14:55:45 +0300
+Message-ID: <CAA8EJpoWWXvJabcVqp+YSa8arQbLPC=v+XkvPZe6nwH7aaKnfQ@mail.gmail.com>
+Subject: Re: [PATCH] phy: qcom-snps-femto-v2: Add load and voltage setting for
+ LDO's used
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Udipto Goswami <quic_ugoswami@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Tue, 7 May 2024 at 14:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 5/2/24 15:12, Dmitry Baryshkov wrote:
+> > On Thu, 2 May 2024 at 15:33, Udipto Goswami <quic_ugoswami@quicinc.com> wrote:
+> >>
+> >> The Femto phy depends on 0.88/ 1.8/ 3.3V regulators for its operation.
+> >> If one of the regulators is not voted to the required minimum voltage
+> >> for phy to operate, then High speed mode of operation will fail.
+> >>
+> >> On certain targets like (qcm6490_rb3gen2) where the minimum voltage
+> >> of the regulator is lower than the operating voltage of the phy.
+> >> If not voted properly, the phy supply would be limited to the min value
+> >> of the LDO thereby rendering the phy non-operational.
+> >>
+> >> The current implementation of the regulators in the Femto PHY is not
+> >> setting the load and voltage for each LDO. The appropriate voltages and
+> >> loads required for the PHY to operate should be set.
+> >
+> > Please move min/max voltages to the DTS. There is no need to set them
+> > from the driver.
+> >
+> > Also, is there any reason why you can't use `regulator-initial-mode =
+> > <RPMH_REGULATOR_MODE_HPM>;` like other boards do?
+>
+> The point is to aggregate the values and switch to HPM if a threshold is
+> crossed (or stay in LPM otherwise)
 
+I see that other boards use regulator-initial-mode for the USB PHY
+regulators. Are we going to change all of them too?
+Also note, that while the combo QMP driver sets the loads, the pure
+USB QMP PHY driver doesn't set the loads. This way we can end up with
+the undervolted PHY.
 
-On 5/6/24 17:08, Johan Hovold wrote:
-> From: Satya Priya <quic_c_skakit@quicinc.com>
-> 
-> Qualcomm Technologies, Inc. PM8008 is an I2C-controlled PMIC containing
-> seven LDO regulators. Add a PM8008 regulator driver to support PMIC
-> regulator management via the regulator framework.
-> 
-> Note that this driver, originally submitted by Satya Priya [1], has been
-> reworked to match the new devicetree binding which no longer describes
-> each regulator as a separate device.
-> 
-> This avoids describing internal details like register offsets in the
-> devicetree and allows for extending the implementation with features
-> like over-current protection without having to update the binding.
-> 
-> Specifically note that the regulator interrupts are shared between all
-> regulators.
-> 
-> Note that the secondary regmap is looked up by name and that if the
-> driver ever needs to be generalised to support regulators provided by
-> the primary regmap (I2C address) such information could be added to a
-> driver lookup table matching on the parent compatible.
-> 
-> This also fixes the original implementation, which looked up regulators
-> by 'regulator-name' property rather than devicetree node name and which
-> prevented the regulators from being named to match board schematics.
-> 
-> [1] https://lore.kernel.org/r/1655200111-18357-8-git-send-email-quic_c_skakit@quicinc.com
-> 
-> Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-> Cc: Stephen Boyd <swboyd@chromium.org>
-> [ johan: rework probe to match new binding, amend commit message and
->           Kconfig entry]
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
-
-I'm a bit lukewarm on calling this qcom-pm8008-regulator.. But then
-qcom-i2c-regulator or qpnp-i2c-regulator may bite due to being overly
-generic.. Would you know whether this code will also be used for e.g.
-PM8010?
-
-Konrad
+-- 
+With best wishes
+Dmitry
 
