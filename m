@@ -1,140 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-19383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 834878BEA01
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 19:04:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AE178BEA41
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 19:17:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E64B7B22837
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 17:03:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5AE7D1C22FF1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 17:17:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A47E42065;
-	Tue,  7 May 2024 17:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 476A815B158;
+	Tue,  7 May 2024 17:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fp62IfUq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KRF/Ew9X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B698F72;
-	Tue,  7 May 2024 17:03:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00A4A951;
+	Tue,  7 May 2024 17:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715101397; cv=none; b=Fs+JO+13ldgryiHzWqr7Idz0K4tFl9nPllDBmsrlQVc3wu33SpuZrpAcZ/KhbpLbdiuSEHg5BGRMYOWb2fyB731/LPN+wJwS26hixagJbIj27AXa82cZyFtUjNg4hgv35OeYy0cQhv6amfWRmF52/66epUYA+9R5EA6bakmMxvg=
+	t=1715102245; cv=none; b=rSc8kV0xRfpmariT8DSAaQUjbi2EWqMR1dCnEKoQZGAxnqLTabL+XVauIK/YgvKEn/QD/dHCtLMiqUP246yjgIy1VlzwdaSB1t1M0DgW4zFKE0AebJd3NFFZXRUqA6uHsVM6hDzlxi8UY/i6GJWGaNy5TXbfl8RwaNm817P2US4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715101397; c=relaxed/simple;
-	bh=JY4JlehBy4I/fksm3Z77C48WISuUolTNAQAzgcu5WVw=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=m7Jh16jwZl2io2E4TTxNfWoF6Wd2AMNHTsVJUfkG8EJ23soDcVTy1ZxV6rKUgmT0XeTCagzcL7uScDHDUdrvSCstUTS9AO+XIXmr+Sof/VEnXdZw9qrwe05LGJwFniPwM2heMBDsdCoGMcyI/aASXyj2CykKTAIvrhmvxfGdxbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fp62IfUq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE9CC4AF18;
-	Tue,  7 May 2024 17:03:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715101396;
-	bh=JY4JlehBy4I/fksm3Z77C48WISuUolTNAQAzgcu5WVw=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=Fp62IfUqShXQVdU1revI8fTwgbnsu4WNnpZmfjuXU8QFdOUdob8A4Pfh+h74pxmnw
-	 vxlSzB3e8dJIBEdUcTdWZEFbofHH0FZ54LOcv5GV8mfBAppBrjYVzRLHVY1bqOyM0A
-	 afAwTi9FZ++FiB2uIzZKj7xVHMj4S92gqYXsPr/R7Hfw/i4/cY3tFidnfFgtp5ZHGx
-	 WJg7GgkmFZh17431vQAB9QX6DyHwOC3v07uyLGiXhX0bwXoX5giD23BLV4adigUwIb
-	 +9YLuRDccxFzSyUXDM/nl/blj1RxMuiePMOxVakHcF1PAouVEp4VeclsoipJEE7Rgf
-	 31juf237oj2Jw==
-From: Kalle Valo <kvalo@kernel.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,  Jeff Johnson
- <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
-  wireless <linux-wireless@vger.kernel.org>,  DT
- <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
- Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
- <avrac@freebox.fr>,  Bjorn Andersson <andersson@kernel.org>,  Konrad
- Dybcio <konrad.dybcio@linaro.org>,  Jami Kettunen
- <jamipkettunen@gmail.com>,  Jeffrey Hugo <quic_jhugo@quicinc.com>,  Dmitry
- Baryshkov <dmitry.baryshkov@linaro.org>,  Alexey Minnekhanov
- <alexeymin@postmarketos.org>
-Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
- qcom,no-msa-ready-indicator prop
-References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
-	<54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
-	<ZjBV+th9DmnNLhnN@hu-bjorande-lv.qualcomm.com>
-	<8734r3qysm.fsf@kernel.org>
-	<b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr>
-Date: Tue, 07 May 2024 20:03:10 +0300
-In-Reply-To: <b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr> (Marc
-	Gonzalez's message of "Tue, 30 Apr 2024 13:10:45 +0200")
-Message-ID: <874jb9mu5t.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1715102245; c=relaxed/simple;
+	bh=tt10DJ7fLHqtt+N8vHO5fh/JA2Lt8pJk91/4mSduB3I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NAkF+xt4n3ajKGH4xIg41Udjhm99HrMPh3yjvgzh9Z4/4ATnHOYPWUTitP4oGj0LS8QpSFUOaUhnkZEBNDiI/MQFGNmJ8ZfOzT/4+x8t7fF3TRjBK8ZmSACEo+SHMJv0lm3qToAG53oVJfYvqmUHNp9cb079qi8qPhr2a4RDIXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KRF/Ew9X; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a59b178b75bso604683266b.0;
+        Tue, 07 May 2024 10:17:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715102242; x=1715707042; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aU3pwl905vszgFU7HmwRESNu0Xm5cT15cD2mMAswx3s=;
+        b=KRF/Ew9X6gvX+noHrDQEK2lUttRBh279tLKA8zZEINsqXubOAFnBH+ru/CMwP24rwq
+         oCfpcqeX8i+IRb0aXuxiFgE4zGjDgQDRmK5ghMI6KpLt77TZFYQRGUP5lIEc13QyTO6r
+         HCbB4Qnp/2lDc4sTmYY+jf43WHkhSXPTDotR3qq9MEGQwPGCLlTVy3r//zyBFuMfdAfp
+         ORBuhyVnlIRroHQbs97nHWI/M7EeSye8t8b6SIa26vOYlwfPRBKe6QUUY88+lyJhohMx
+         GqFaxXpOtseC9CFcZbnV/H7REGhFDFfFxli51K2z5R0ABkFcrLnRKlTt9CS/kifRP5Ru
+         35Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715102242; x=1715707042;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aU3pwl905vszgFU7HmwRESNu0Xm5cT15cD2mMAswx3s=;
+        b=IHUCVxm3dcK39h8IOYxEuVFb9OAJqyFN0fHCjgiUhrX43lQtPFiqffLMzCIEsxMyWP
+         qgvSHH50a0EMekjobZ7aNZu/NcqTqyxkd17i0ik2GOcd8KqqCz9H0xw0o+dSoRBSzyVz
+         yvHZazeyflAAS1uRyCP6sqFOWnSHwYfNW2kwbpvDZreNZqHoc42DwS3S4cpsqh77rlui
+         mqVG3bNmE/lMGW6PdbEfVu89Hoj6RnBwRN7uhEis+KzN0b7CIKu+46OOZ8mON8oTeBwH
+         7b4Rdi5dg3ZUtsOom85GRkt6U2BqiuPnn3Wsxhe/Wq6ql+pfLLZ7mhaXD49hQ0I+SPOh
+         LpNg==
+X-Forwarded-Encrypted: i=1; AJvYcCWOVh+A+l/aMeF4FXBukRFye1L5/UtKyO2G6/IkzVjc5HdkULzoU8LIKvwwHBz1re+S1hyJGNNauWvYUlA5foHyosvti95rQMYNX5lYNrDPjGREuf93WUWw1CMUkzA8lgCIX1iL/8KO9oSpjFv+WQetAtPm20Tw62hJNf7d4qsKSS5rcV1cW55uX3T2VgtoOWQo87lygUlQq6onJwp9MNS6bkmi
+X-Gm-Message-State: AOJu0YyuJ+0SZZEDsgBcGK87TVF9sKUQqAk0zJyjyo3LMPjxL0UzSy5N
+	yW/CAbsXR5K9t5gvzrEZS0eZrPDIuzJV48HrX7CZyjHwdhp1f3rCQYK9P6wpJy4sdmzZyZoycRy
+	4v2pGc9E4TRMuNqntVIMJ0GWHczs=
+X-Google-Smtp-Source: AGHT+IG49CF7WhQZ87/VBmjtQFbVERL2rpkIsMgd7aYOztjgT0HKRzqzxOGBbKp1dCnVBrBbx7oAsUgIjRXIjMeChfU=
+X-Received: by 2002:a17:906:488:b0:a59:ae57:1663 with SMTP id
+ a640c23a62f3a-a59fb955523mr7210766b.19.1715102241777; Tue, 07 May 2024
+ 10:17:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+ <20240506150830.23709-3-johan+linaro@kernel.org> <ZjknxSsyo20b5_Tm@surfacebook.localdomain>
+ <ZjpCL_NQD7X3hasO@hovoldconsulting.com>
+In-Reply-To: <ZjpCL_NQD7X3hasO@hovoldconsulting.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Tue, 7 May 2024 20:16:45 +0300
+Message-ID: <CAHp75Vf0raEoVmvRKNxDQ7wdAOtwWYp_fQ1m8WBdnWEFGFOrYA@mail.gmail.com>
+Subject: Re: [PATCH 02/13] mfd: pm8008: fix regmap irq chip initialisation
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>, 
+	Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
+	Satya Priya <quic_c_skakit@quicinc.com>, Stephen Boyd <swboyd@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Marc Gonzalez <mgonzalez@freebox.fr> writes:
+On Tue, May 7, 2024 at 6:01=E2=80=AFPM Johan Hovold <johan@kernel.org> wrot=
+e:
+> On Mon, May 06, 2024 at 09:56:05PM +0300, Andy Shevchenko wrote:
+> > Mon, May 06, 2024 at 05:08:19PM +0200, Johan Hovold kirjoitti:
+> > > The regmap irq array is potentially shared between multiple PMICs and
 
-> On 30/04/2024 06:06, Kalle Valo wrote:
+...
+
+> > > -                   dev_err(dev, "Failed to probe irq periphs: %d\n",=
+ rc);
+> > > +                   dev_err(dev, "failed to add IRQ chip: %d\n", rc);
+> >
+> > dev_err_probe(...); ?
 >
->> Bjorn Andersson wrote:
->> 
->>> On Mon, Apr 29, 2024 at 04:04:51PM +0200, Marc Gonzalez wrote:
->>>
->>>> The ath10k driver waits for an "MSA_READY" indicator
->>>> to complete initialization. If the indicator is not
->>>> received, then the device remains unusable.
->>>>
->>>> cf. ath10k_qmi_driver_event_work()
->>>>
->>>> Several msm8998-based devices are affected by this issue.
->>>> Oddly, it seems safe to NOT wait for the indicator, and
->>>> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
->>>>
->>>> Jeff Johnson wrote:
->>>>
->>>>   The feedback I received was "it might be ok to change all ath10k qmi
->>>>   to skip waiting for msa_ready", and it was pointed out that ath11k
->>>>   (and ath12k) do not wait for it.
->>>>
->>>>   However with so many deployed devices, "might be ok" isn't a strong
->>>>   argument for changing the default behavior.
->>>>
->>>> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
->>>> work-around in the driver. However, firmware-5.bin is parsed too late.
->>>> So we are stuck with a DT property.
->>>>
->>>> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
->>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
->>>
->>> This says "Pierre-Hugues certifies the origin of the patch" then "Marc
->>> certifies the origin of the patch". This would have to imply that
->>> Pierre-Hugues authored the patch, but you're listed as the author...
->>>
->>> Perhaps a suitable answer to this question would be to add
->>> "Co-developed-by: Pierre-Hugues ..." above his s-o-b, which implies that
->>> the two of you jointly came up with this and both certify the origin.
->> 
->> BTW I can add that in the pending branch, no need to resend because of
->> this. Just need guidance from Marc.
->
-> I typed this patch all by myself with my grubby little paws.
-> You can drop PH's S-o-b.
+> This function won't return -EPROBE_DEFER,
 
-Thanks. Please check that my modifications in the pending branch are
-correct:
+This is not an argument for a long time (since documentation of
+dev_err_probe() had been amended to encourage its use for any error
+cases in probe).
 
-https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=pending&id=3aec20a8e797b28d32e75291cc070d5913bf6dab
+> and that would be a separate
+> change in any case.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=pending&id=df5b4bec31b0736a453d507762c5b3d098d5c733
+Sure, but why to add a technical debt? Perhaps a precursor cleanup patch?
 
-I can freely edit commits in the pending branch, it's just a temporary
-branch for testing.
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+--=20
+With Best Regards,
+Andy Shevchenko
 
