@@ -1,242 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-19290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2831B8BDB79
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 08:30:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2D0F8BDBB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 08:39:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1189FB2319C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 06:30:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D3E9C1C20BB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 06:39:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 678FA393;
-	Tue,  7 May 2024 06:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A43F178C7B;
+	Tue,  7 May 2024 06:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="klPOq7Bf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="idOjJyk7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9970CC9;
-	Tue,  7 May 2024 06:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7476078685;
+	Tue,  7 May 2024 06:39:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715063425; cv=none; b=Lj0BAQ3jVIDHfdBZ9oBotOjfn7WwdmWBh7D2p132+V/YKI6p7Bv4Q2WivpuUp7iRmxN8s+PhUlxziU1V2EAVdSwNPbCfiCt3T3+F7g2WkjjUn4aYCE7sM+v45uqhHf6lFD1jzTGg0e5r/cfie2rj34ckTfDBE+AdwyigWJ5HbAc=
+	t=1715063943; cv=none; b=LQlIqUqlxHWIHAU1TXm1NMHcCvQ2Qp3XLwRrf99hM4mEOXj+ybx6zNRSNOOBgxwXrjSBuK72JNaB36BTaHkaDiA0dInoWKcnJJ28P6H8aYafE+k7YtwtNa+QVNmsJQ9gtyN2ijSGfWFdF7PgQnjnxoXndFXl+N5nsu2OiZyhilI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715063425; c=relaxed/simple;
-	bh=yI1QXgpwkkvbEH1Ku7BMujWu9zmZZy/s+Vkj0FGX0Gs=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=lKMt3qXMXf/eAAoVndobYxniO9MC1VejsLOaMZjKTnnML0nop1PWK1w/PMPZ79jIx89K2KgTHvuy1twnzW4pw2/U28Ii67kKkEeyJZYp1DleElDy56ozPbu5MZyvpKf+3C8NZpixa6bdUOd1keXmSj3syTxqS0IeLnIIawKfGeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=klPOq7Bf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4475lvkK002610;
-	Tue, 7 May 2024 06:30:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=D+m2+YkQlZgk
-	Ucb7R1YJIcsm/RN8EUqn1RxqnRme4WU=; b=klPOq7Bfm+Z89TQEUWyOywGJW4ov
-	qMsom6vflRVtTuD2Pd8nV5MtnRhK7f5pU3ckYOicDlU/SD35hwCiHsOJ7JoSNUgt
-	pnBIdGPAiJPzguWCLbsK3D6FIVIg4O/jVwF1jFcE8xnoOA7fhREuO9zfb0LzfqBK
-	sNoo51b0buPMKgy5+d4avHA6NCWTLeiS7FmYeez4R+AIwAe1uZ7OyDm6Su777RsR
-	X/kNoI81eJ7v38YCVgGqQ0j5yvMOkkYpUO6bkTrPRdkVDSDccFPXCaeRMP/SOKF9
-	cWunjdhJnfsZ+AXAwfMONSfEhpw6Vpwvps/u/HjnbGk9qJpZIezdPXDMJA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xyc03gapn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 May 2024 06:30:11 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4476U8Wm031230;
-	Tue, 7 May 2024 06:30:08 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3xwe3kbws4-1;
-	Tue, 07 May 2024 06:30:08 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4476U8ds031221;
-	Tue, 7 May 2024 06:30:08 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 4476U7je031215;
-	Tue, 07 May 2024 06:30:08 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
-	id 219685000AB; Tue,  7 May 2024 12:00:06 +0530 (+0530)
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-To: andersson@kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-        quic_anupkulk@quicinc.com, quic_cchiluve@quicinc.com,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Subject: [PATCH v1] slimbus: qcom-ngd-ctrl: Add stream disable support
-Date: Tue,  7 May 2024 12:00:04 +0530
-Message-Id: <20240507063004.21853-1-quic_vdadhani@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bzMpiYyZ9pHrJJCAj_lHQ_qhkwR4rM0g
-X-Proofpoint-GUID: bzMpiYyZ9pHrJJCAj_lHQ_qhkwR4rM0g
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-07_02,2024-05-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- phishscore=0 mlxscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
- adultscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
- definitions=main-2405070044
+	s=arc-20240116; t=1715063943; c=relaxed/simple;
+	bh=6tMH+Ue0cPv8Ydx1cx5w4FvF1zoat+8A48ho3NUCMoo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VVPLj0cwfs5gG4FakercVcQMHCACdz0dV+eQfoSgpF45aX+8FlzUC/qOqqaVcvA8tosp9TBLF0qWWcKTC/rX6SYnXUcV6r0FsZc4g1HjtuIG6aoMII7+ZUyXNCwZvyjpIXJZ3RrRZTRhH6k1/PL9CKmZFwk8FrGg9GlfI1CENtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=idOjJyk7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0A0C2BBFC;
+	Tue,  7 May 2024 06:38:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715063943;
+	bh=6tMH+Ue0cPv8Ydx1cx5w4FvF1zoat+8A48ho3NUCMoo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=idOjJyk7XistPhdtgHR2vppVHaYcg60tgMCM6Rpv433nB68m+lEYCJEONyhONGL4m
+	 CBSdZ9EZIWUJkwBkc4Am6sGrfrcEPsUxKQLvRb7pM6KbNjouH+GGIBbjyFvvRntUqp
+	 i87DIPsc/zNBlctFx2uo3tdbNjcrUSTc9/5enrQ/9ykMz+Lciif3nLJSVpxPt3XIpq
+	 f2MfWhAXvopGeyfvBDM+W2PdOowU1zlS+Es9BRrufVuS1rdIYiEbHlmqpxiM12xZFZ
+	 6l3M0XDnWXnK27kQc6+8jglT23TupiK8BIKU8RuP18qdnVRHVfhwZwR9gib5gC42CY
+	 HRbXUsItpWevw==
+Message-ID: <ce331f5d-d690-474b-91aa-5257cf58884d@kernel.org>
+Date: Tue, 7 May 2024 08:38:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/13] dt-bindings: mfd: pm8008: add reset gpio
+To: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>,
+ Satya Priya <quic_c_skakit@quicinc.com>, Stephen Boyd <swboyd@chromium.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+ <20240506150830.23709-2-johan+linaro@kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240506150830.23709-2-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Currently slimbus driver doesn't support stream disable
-callback, it only supports stream enable callback.
+On 06/05/2024 17:08, Johan Hovold wrote:
+> Describe the optional reset gpio (which may not be wired up).
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
 
-In slimbus usecase, client is switching to new frequency
-with same channel and calling enable stream callback for
-new frequency but DSP subsystem is crashing as we are switching
-to new frequency with same channel without disabling stream
-for older frequency.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Ideally, before switching to another frequency, client should
-call disable stream callback and then enable stream for newer frequency.
-
-Hence add support to disable stream via qcom_slim_ngd_disable_stream().
-
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
----
- drivers/slimbus/qcom-ngd-ctrl.c | 70 +++++++++++++++++++++++++++++++++
- drivers/slimbus/slimbus.h       | 13 ++++++
- 2 files changed, 83 insertions(+)
-
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index e0b21f0f79c1..d952827d2e12 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2011-2017, The Linux Foundation. All rights reserved.
- // Copyright (c) 2018, Linaro Limited
-+// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- 
- #include <linux/irq.h>
- #include <linux/kernel.h>
-@@ -1084,6 +1085,74 @@ static int qcom_slim_ngd_enable_stream(struct slim_stream_runtime *rt)
- 	return ret;
- }
- 
-+static int qcom_slim_ngd_disable_stream(struct slim_stream_runtime *rt)
-+{
-+	struct slim_device *sdev = rt->dev;
-+	struct slim_controller *ctrl = sdev->ctrl;
-+	struct slim_val_inf msg =  {0};
-+	u8 wbuf[SLIM_MSGQ_BUF_LEN];
-+	u8 rbuf[SLIM_MSGQ_BUF_LEN];
-+	struct slim_msg_txn txn = {0,};
-+	int i, ret;
-+
-+	txn.mt = SLIM_MSG_MT_DEST_REFERRED_USER;
-+	txn.dt = SLIM_MSG_DEST_LOGICALADDR;
-+	txn.la = SLIM_LA_MGR;
-+	txn.ec = 0;
-+	txn.msg = &msg;
-+	txn.msg->num_bytes = 0;
-+	txn.msg->wbuf = wbuf;
-+	txn.msg->rbuf = rbuf;
-+
-+	for (i = 0; i < rt->num_ports; i++) {
-+		struct slim_port *port = &rt->ports[i];
-+
-+		if (txn.msg->num_bytes == 0) {
-+			wbuf[txn.msg->num_bytes++] = (u8)(SLIM_CH_REMOVE << 6)
-+							| (sdev->laddr & 0x1f);
-+
-+			ret = slim_alloc_txn_tid(ctrl, &txn);
-+			if (ret) {
-+				dev_err(&sdev->dev, "Fail to allocate TID\n");
-+				return -ENXIO;
-+			}
-+			wbuf[txn.msg->num_bytes++] = txn.tid;
-+		}
-+		wbuf[txn.msg->num_bytes++] = port->ch.id;
-+	}
-+
-+	txn.mc = SLIM_USR_MC_CHAN_CTRL;
-+	txn.rl = txn.msg->num_bytes + 4;
-+	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
-+	if (ret) {
-+		slim_free_txn_tid(ctrl, &txn);
-+		dev_err(&sdev->dev, "TX timed out:MC:0x%x,mt:0x%x ret:%d\n",
-+			txn.mc,	txn.mt, ret);
-+		return ret;
-+	}
-+
-+	txn.mc = SLIM_USR_MC_RECONFIG_NOW;
-+	txn.msg->num_bytes = 2;
-+	wbuf[1] = sdev->laddr;
-+	txn.rl = txn.msg->num_bytes + 4;
-+
-+	ret = slim_alloc_txn_tid(ctrl, &txn);
-+	if (ret) {
-+		dev_err(ctrl->dev, "Fail to allocate TID ret:%d\n", ret);
-+		return ret;
-+	}
-+
-+	wbuf[0] = txn.tid;
-+	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
-+	if (ret) {
-+		slim_free_txn_tid(ctrl, &txn);
-+		dev_err(&sdev->dev, "TX timed out:MC:0x%x,mt:0x%x ret:%d\n",
-+			txn.mc,	txn.mt, ret);
-+	}
-+
-+	return ret;
-+}
-+
- static int qcom_slim_ngd_get_laddr(struct slim_controller *ctrl,
- 				   struct slim_eaddr *ea, u8 *laddr)
- {
-@@ -1642,6 +1711,7 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
- 	ctrl->ctrl.clkgear = SLIM_MAX_CLK_GEAR;
- 	ctrl->ctrl.get_laddr = qcom_slim_ngd_get_laddr;
- 	ctrl->ctrl.enable_stream = qcom_slim_ngd_enable_stream;
-+	ctrl->ctrl.disable_stream = qcom_slim_ngd_disable_stream;
- 	ctrl->ctrl.xfer_msg = qcom_slim_ngd_xfer_msg;
- 	ctrl->ctrl.wakeup = NULL;
- 	ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
-diff --git a/drivers/slimbus/slimbus.h b/drivers/slimbus/slimbus.h
-index 00a7f112574b..21543d125614 100644
---- a/drivers/slimbus/slimbus.h
-+++ b/drivers/slimbus/slimbus.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /*
-  * Copyright (c) 2011-2017, The Linux Foundation
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _DRIVERS_SLIMBUS_H
-@@ -316,6 +317,18 @@ enum slim_transport_protocol {
- 	SLIM_PROTO_EXT_HALF_DUP,
- };
- 
-+/*
-+ * enum slim_ch_control: Channel control.
-+ * Activate will schedule channel and/or group of channels in the TDM frame.
-+ * Suspend will keep the schedule but data-transfer won't happen.
-+ * Remove will remove the channel/group from the TDM frame.
-+ */
-+enum slim_ch_control {
-+	SLIM_CH_ACTIVATE,
-+	SLIM_CH_SUSPEND,
-+	SLIM_CH_REMOVE,
-+};
-+
- /**
-  * struct slim_stream_runtime  - SLIMbus stream runtime instance
-  *
--- 
-2.17.1
+Best regards,
+Krzysztof
 
 
