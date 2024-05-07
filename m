@@ -1,203 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-19289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEC818BDB1E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 08:07:57 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2831B8BDB79
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 08:30:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95403283F17
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 06:07:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1189FB2319C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 06:30:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 614306E610;
-	Tue,  7 May 2024 06:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 678FA393;
+	Tue,  7 May 2024 06:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ipqF4hl/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="klPOq7Bf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A596D5FDA5;
-	Tue,  7 May 2024 06:07:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9970CC9;
+	Tue,  7 May 2024 06:30:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715062074; cv=none; b=B/IfhnCS3Q/Ov3rZ0/nLqNp8xNT6H55Y2/g88jYV09H2EyO7H6IuE58Z36dsAOABTy3hptcVnV9zSaV1mriD7e+Ch3r9YpVTxkhFZTOMo3PwU21v8Yb0wRbBSry83OUwt+nRF0ze4x/k+cweZY046VHQqVLry3Ny5moibF67myc=
+	t=1715063425; cv=none; b=Lj0BAQ3jVIDHfdBZ9oBotOjfn7WwdmWBh7D2p132+V/YKI6p7Bv4Q2WivpuUp7iRmxN8s+PhUlxziU1V2EAVdSwNPbCfiCt3T3+F7g2WkjjUn4aYCE7sM+v45uqhHf6lFD1jzTGg0e5r/cfie2rj34ckTfDBE+AdwyigWJ5HbAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715062074; c=relaxed/simple;
-	bh=PlQSgc+9IxLV0sJ6C1/5bvFwcWpttEUfHiGgnmdu6Dw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cUzBYdEq6OjEwqlwZuCGJBuA6F8W5dqrVs/kwK4vVk3LOGu5frBNnenmU+6Jt/OZXhMut75df8+9dI9FS1zGMvuId3mgEOL30KU2MDMvOOeuXPeApU2O0++FY/dv9YHQ4PFpCX4b84haJ4tuQq+UX1/vAHs5MVw+4LNK2iXdRhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ipqF4hl/; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1715062070;
-	bh=PlQSgc+9IxLV0sJ6C1/5bvFwcWpttEUfHiGgnmdu6Dw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ipqF4hl/Rcm2Qj/XN/NVqODYOMJ6wZnkt9fpAiy98aO/tLdRWOib8pnJYQu2KXfWq
-	 nFr9SSNAWgzhhZuIWGSvUbIYAO3FvKoBHBqvJcyZBCP/fAIb4S6dQZaDrSko8AHZqe
-	 ghJQ7o3IXG0a9eGDBLCZwXNawWI6oRa3DmJwCkCXzBbR/7dWsX3lp1irUIqgJGy56w
-	 TexPPvhiblZgrBX8xS3O/wsGBqPYX/pE8IZridNeFfqFuDPqcoxiSga7I59V3jjvEV
-	 wKTl9+sm3eXksZXwIrDdEevFXuH8R4SHwP+g9TCVBVD8PFDssxfR112SS9CSE0ZrQ2
-	 EErlUtRQ5weZw==
-Received: from [100.66.96.193] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 19B6D3782112;
-	Tue,  7 May 2024 06:07:46 +0000 (UTC)
-Message-ID: <b143f1e8-e595-4f09-b6ab-d7e5743d586e@collabora.com>
-Date: Tue, 7 May 2024 11:37:45 +0530
+	s=arc-20240116; t=1715063425; c=relaxed/simple;
+	bh=yI1QXgpwkkvbEH1Ku7BMujWu9zmZZy/s+Vkj0FGX0Gs=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=lKMt3qXMXf/eAAoVndobYxniO9MC1VejsLOaMZjKTnnML0nop1PWK1w/PMPZ79jIx89K2KgTHvuy1twnzW4pw2/U28Ii67kKkEeyJZYp1DleElDy56ozPbu5MZyvpKf+3C8NZpixa6bdUOd1keXmSj3syTxqS0IeLnIIawKfGeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=klPOq7Bf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4475lvkK002610;
+	Tue, 7 May 2024 06:30:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=D+m2+YkQlZgk
+	Ucb7R1YJIcsm/RN8EUqn1RxqnRme4WU=; b=klPOq7Bfm+Z89TQEUWyOywGJW4ov
+	qMsom6vflRVtTuD2Pd8nV5MtnRhK7f5pU3ckYOicDlU/SD35hwCiHsOJ7JoSNUgt
+	pnBIdGPAiJPzguWCLbsK3D6FIVIg4O/jVwF1jFcE8xnoOA7fhREuO9zfb0LzfqBK
+	sNoo51b0buPMKgy5+d4avHA6NCWTLeiS7FmYeez4R+AIwAe1uZ7OyDm6Su777RsR
+	X/kNoI81eJ7v38YCVgGqQ0j5yvMOkkYpUO6bkTrPRdkVDSDccFPXCaeRMP/SOKF9
+	cWunjdhJnfsZ+AXAwfMONSfEhpw6Vpwvps/u/HjnbGk9qJpZIezdPXDMJA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xyc03gapn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 May 2024 06:30:11 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4476U8Wm031230;
+	Tue, 7 May 2024 06:30:08 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3xwe3kbws4-1;
+	Tue, 07 May 2024 06:30:08 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4476U8ds031221;
+	Tue, 7 May 2024 06:30:08 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 4476U7je031215;
+	Tue, 07 May 2024 06:30:08 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id 219685000AB; Tue,  7 May 2024 12:00:06 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_anupkulk@quicinc.com, quic_cchiluve@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [PATCH v1] slimbus: qcom-ngd-ctrl: Add stream disable support
+Date: Tue,  7 May 2024 12:00:04 +0530
+Message-Id: <20240507063004.21853-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bzMpiYyZ9pHrJJCAj_lHQ_qhkwR4rM0g
+X-Proofpoint-GUID: bzMpiYyZ9pHrJJCAj_lHQ_qhkwR4rM0g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-07_02,2024-05-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ phishscore=0 mlxscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
+ adultscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2405070044
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 5/5] drm/ci: update xfails for the new testlist
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
- helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
- robdclark@gmail.com, david.heidelberg@collabora.com,
- guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
- mcanal@igalia.com, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- intel-gfx@lists.freedesktop.org, virtualization@lists.linux-foundation.org,
- linux-kernel@vger.kernel.org
-References: <20240430091121.508099-1-vignesh.raman@collabora.com>
- <20240430091121.508099-6-vignesh.raman@collabora.com>
- <hon4klkoaouuxhtvm3qb3qstsrdcibihksyrmvxkt3taijl6wb@ubitr6namryw>
-From: Vignesh Raman <vignesh.raman@collabora.com>
-In-Reply-To: <hon4klkoaouuxhtvm3qb3qstsrdcibihksyrmvxkt3taijl6wb@ubitr6namryw>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-Hi Dmitry,
+Currently slimbus driver doesn't support stream disable
+callback, it only supports stream enable callback.
 
-On 30/04/24 15:45, Dmitry Baryshkov wrote:
-> On Tue, Apr 30, 2024 at 02:41:21PM +0530, Vignesh Raman wrote:
->> Now the testlist is used from IGT build, so update
->> xfails with the new testlist.
->>
->> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
->> ---
->>   .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt | 47 +++++++----
->>   .../drm/ci/xfails/amdgpu-stoney-flakes.txt    |  8 +-
->>   .../gpu/drm/ci/xfails/amdgpu-stoney-skips.txt | 15 ++++
->>   drivers/gpu/drm/ci/xfails/i915-amly-fails.txt | 22 ++++-
->>   .../gpu/drm/ci/xfails/i915-amly-flakes.txt    |  8 ++
->>   drivers/gpu/drm/ci/xfails/i915-amly-skips.txt |  8 ++
->>   drivers/gpu/drm/ci/xfails/i915-apl-fails.txt  | 45 +++++-----
->>   drivers/gpu/drm/ci/xfails/i915-apl-flakes.txt |  5 ++
->>   drivers/gpu/drm/ci/xfails/i915-apl-skips.txt  | 12 +++
->>   drivers/gpu/drm/ci/xfails/i915-cml-fails.txt  | 26 +++++-
->>   drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt |  6 ++
->>   drivers/gpu/drm/ci/xfails/i915-cml-skips.txt  |  8 ++
->>   drivers/gpu/drm/ci/xfails/i915-glk-fails.txt  | 28 +++++--
->>   drivers/gpu/drm/ci/xfails/i915-glk-skips.txt  | 12 +++
->>   drivers/gpu/drm/ci/xfails/i915-kbl-fails.txt  | 39 ++++-----
->>   drivers/gpu/drm/ci/xfails/i915-kbl-flakes.txt | 10 ++-
->>   drivers/gpu/drm/ci/xfails/i915-kbl-skips.txt  | 21 +++++
->>   drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt  | 75 +++++++++--------
->>   drivers/gpu/drm/ci/xfails/i915-tgl-skips.txt  | 13 +++
->>   drivers/gpu/drm/ci/xfails/i915-whl-fails.txt  | 46 +++++------
->>   drivers/gpu/drm/ci/xfails/i915-whl-skips.txt  |  8 ++
->>   .../drm/ci/xfails/mediatek-mt8173-fails.txt   | 47 +++--------
->>   .../drm/ci/xfails/mediatek-mt8183-fails.txt   | 17 +---
->>   .../drm/ci/xfails/mediatek-mt8183-flakes.txt  |  5 ++
->>   .../gpu/drm/ci/xfails/meson-g12b-fails.txt    | 20 +----
->>   .../gpu/drm/ci/xfails/meson-g12b-flakes.txt   |  5 ++
->>   .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   | 26 ++----
->>   .../gpu/drm/ci/xfails/msm-apq8016-flakes.txt  |  5 ++
->>   .../gpu/drm/ci/xfails/msm-apq8096-fails.txt   |  5 +-
->>   .../gpu/drm/ci/xfails/msm-apq8096-flakes.txt  |  5 ++
->>   .../gpu/drm/ci/xfails/msm-apq8096-skips.txt   | 67 +++++++++++++++
->>   .../msm-sc7180-trogdor-kingoftown-fails.txt   | 34 ++++----
->>   .../msm-sc7180-trogdor-kingoftown-flakes.txt  |  5 ++
->>   ...sm-sc7180-trogdor-lazor-limozeen-fails.txt | 34 ++++----
->>   ...m-sc7180-trogdor-lazor-limozeen-flakes.txt |  5 ++
->>   .../gpu/drm/ci/xfails/msm-sdm845-fails.txt    | 75 ++++-------------
->>   .../gpu/drm/ci/xfails/msm-sdm845-flakes.txt   | 26 ++----
->>   .../drm/ci/xfails/rockchip-rk3288-fails.txt   | 54 ------------
->>   .../drm/ci/xfails/rockchip-rk3399-fails.txt   | 80 ++----------------
->>   .../drm/ci/xfails/rockchip-rk3399-flakes.txt  |  7 --
->>   .../drm/ci/xfails/virtio_gpu-none-fails.txt   | 82 +++++++++++++------
->>   .../drm/ci/xfails/virtio_gpu-none-skips.txt   |  3 +
->>   42 files changed, 574 insertions(+), 495 deletions(-)
->>   create mode 100644 drivers/gpu/drm/ci/xfails/i915-amly-flakes.txt
->>   create mode 100644 drivers/gpu/drm/ci/xfails/i915-apl-flakes.txt
->>   create mode 100644 drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt
->>   create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8183-flakes.txt
->>   create mode 100644 drivers/gpu/drm/ci/xfails/meson-g12b-flakes.txt
->>   create mode 100644 drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
->>   create mode 100644 drivers/gpu/drm/ci/xfails/msm-apq8096-flakes.txt
->>   create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
->>   create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-flakes.txt
->>   delete mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt
->>   delete mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3399-flakes.txt
->>
-> 
-> [skipped]
-> 
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> index 44a5c62dedad..96e9faf0e607 100644
->> --- a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
->> @@ -1,19 +1,9 @@
->> +core_setmaster_vs_auth,Fail
->> +device_reset,Fail
->> +dumb_buffer,Fail
-> 
-> This doesn't look correct, core tests should be passing.
-> 
->>   kms_3d,Fail
->> -kms_addfb_basic@addfb25-bad-modifier,Fail
->> -kms_cursor_legacy@all-pipes-forked-bo,Fail
->> -kms_cursor_legacy@all-pipes-forked-move,Fail
->> -kms_cursor_legacy@all-pipes-single-bo,Fail
->> -kms_cursor_legacy@all-pipes-single-move,Fail
->> -kms_cursor_legacy@all-pipes-torture-bo,Fail
->> -kms_cursor_legacy@all-pipes-torture-move,Fail
->> -kms_cursor_legacy@pipe-A-forked-bo,Fail
->> -kms_cursor_legacy@pipe-A-forked-move,Fail
->> -kms_cursor_legacy@pipe-A-single-bo,Fail
->> -kms_cursor_legacy@pipe-A-single-move,Fail
->> -kms_cursor_legacy@pipe-A-torture-bo,Fail
->> -kms_cursor_legacy@pipe-A-torture-move,Fail
->> -kms_force_connector_basic@force-edid,Fail
->> -kms_hdmi_inject@inject-4k,Fail
->> -kms_selftest@drm_format,Timeout
->> -kms_selftest@drm_format_helper,Timeout
-> 
-> Fine, kms_cursor_legacy tests were migrated to -flakes. But what
-> happened with the rest of the failures? >
->> -msm_mapping@ring,Fail
->> +kms_force_connector_basic,Fail
->> +kms_lease,Fail
->> +msm_mapping,Fail
->> +msm_submit,Fail
->> +tools_test,Fail
->> diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
->> new file mode 100644
->> index 000000000000..3cc361b3d3b3
->> --- /dev/null
->> +++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-flakes.txt
->> @@ -0,0 +1,5 @@
->> +# Board Name: apq8016-sbc-usb-host
->> +# Bug Report: TBD
->> +# IGT Version: 1.28-gd2af13d9f
->> +# Linux Version: 6.9.0-rc4
->> +kms_cursor_legacy
-> 
-> It looks like one of the scripts has lost subtest granularity. It should
-> be fixed before the patchset can be merged
-I will recheck these files with the script fix. Thanks.
+In slimbus usecase, client is switching to new frequency
+with same channel and calling enable stream callback for
+new frequency but DSP subsystem is crashing as we are switching
+to new frequency with same channel without disabling stream
+for older frequency.
 
-Regards,
-Vignesh
+Ideally, before switching to another frequency, client should
+call disable stream callback and then enable stream for newer frequency.
+
+Hence add support to disable stream via qcom_slim_ngd_disable_stream().
+
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+---
+ drivers/slimbus/qcom-ngd-ctrl.c | 70 +++++++++++++++++++++++++++++++++
+ drivers/slimbus/slimbus.h       | 13 ++++++
+ 2 files changed, 83 insertions(+)
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+index e0b21f0f79c1..d952827d2e12 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ // Copyright (c) 2011-2017, The Linux Foundation. All rights reserved.
+ // Copyright (c) 2018, Linaro Limited
++// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ 
+ #include <linux/irq.h>
+ #include <linux/kernel.h>
+@@ -1084,6 +1085,74 @@ static int qcom_slim_ngd_enable_stream(struct slim_stream_runtime *rt)
+ 	return ret;
+ }
+ 
++static int qcom_slim_ngd_disable_stream(struct slim_stream_runtime *rt)
++{
++	struct slim_device *sdev = rt->dev;
++	struct slim_controller *ctrl = sdev->ctrl;
++	struct slim_val_inf msg =  {0};
++	u8 wbuf[SLIM_MSGQ_BUF_LEN];
++	u8 rbuf[SLIM_MSGQ_BUF_LEN];
++	struct slim_msg_txn txn = {0,};
++	int i, ret;
++
++	txn.mt = SLIM_MSG_MT_DEST_REFERRED_USER;
++	txn.dt = SLIM_MSG_DEST_LOGICALADDR;
++	txn.la = SLIM_LA_MGR;
++	txn.ec = 0;
++	txn.msg = &msg;
++	txn.msg->num_bytes = 0;
++	txn.msg->wbuf = wbuf;
++	txn.msg->rbuf = rbuf;
++
++	for (i = 0; i < rt->num_ports; i++) {
++		struct slim_port *port = &rt->ports[i];
++
++		if (txn.msg->num_bytes == 0) {
++			wbuf[txn.msg->num_bytes++] = (u8)(SLIM_CH_REMOVE << 6)
++							| (sdev->laddr & 0x1f);
++
++			ret = slim_alloc_txn_tid(ctrl, &txn);
++			if (ret) {
++				dev_err(&sdev->dev, "Fail to allocate TID\n");
++				return -ENXIO;
++			}
++			wbuf[txn.msg->num_bytes++] = txn.tid;
++		}
++		wbuf[txn.msg->num_bytes++] = port->ch.id;
++	}
++
++	txn.mc = SLIM_USR_MC_CHAN_CTRL;
++	txn.rl = txn.msg->num_bytes + 4;
++	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
++	if (ret) {
++		slim_free_txn_tid(ctrl, &txn);
++		dev_err(&sdev->dev, "TX timed out:MC:0x%x,mt:0x%x ret:%d\n",
++			txn.mc,	txn.mt, ret);
++		return ret;
++	}
++
++	txn.mc = SLIM_USR_MC_RECONFIG_NOW;
++	txn.msg->num_bytes = 2;
++	wbuf[1] = sdev->laddr;
++	txn.rl = txn.msg->num_bytes + 4;
++
++	ret = slim_alloc_txn_tid(ctrl, &txn);
++	if (ret) {
++		dev_err(ctrl->dev, "Fail to allocate TID ret:%d\n", ret);
++		return ret;
++	}
++
++	wbuf[0] = txn.tid;
++	ret = qcom_slim_ngd_xfer_msg_sync(ctrl, &txn);
++	if (ret) {
++		slim_free_txn_tid(ctrl, &txn);
++		dev_err(&sdev->dev, "TX timed out:MC:0x%x,mt:0x%x ret:%d\n",
++			txn.mc,	txn.mt, ret);
++	}
++
++	return ret;
++}
++
+ static int qcom_slim_ngd_get_laddr(struct slim_controller *ctrl,
+ 				   struct slim_eaddr *ea, u8 *laddr)
+ {
+@@ -1642,6 +1711,7 @@ static int qcom_slim_ngd_ctrl_probe(struct platform_device *pdev)
+ 	ctrl->ctrl.clkgear = SLIM_MAX_CLK_GEAR;
+ 	ctrl->ctrl.get_laddr = qcom_slim_ngd_get_laddr;
+ 	ctrl->ctrl.enable_stream = qcom_slim_ngd_enable_stream;
++	ctrl->ctrl.disable_stream = qcom_slim_ngd_disable_stream;
+ 	ctrl->ctrl.xfer_msg = qcom_slim_ngd_xfer_msg;
+ 	ctrl->ctrl.wakeup = NULL;
+ 	ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
+diff --git a/drivers/slimbus/slimbus.h b/drivers/slimbus/slimbus.h
+index 00a7f112574b..21543d125614 100644
+--- a/drivers/slimbus/slimbus.h
++++ b/drivers/slimbus/slimbus.h
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+  * Copyright (c) 2011-2017, The Linux Foundation
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #ifndef _DRIVERS_SLIMBUS_H
+@@ -316,6 +317,18 @@ enum slim_transport_protocol {
+ 	SLIM_PROTO_EXT_HALF_DUP,
+ };
+ 
++/*
++ * enum slim_ch_control: Channel control.
++ * Activate will schedule channel and/or group of channels in the TDM frame.
++ * Suspend will keep the schedule but data-transfer won't happen.
++ * Remove will remove the channel/group from the TDM frame.
++ */
++enum slim_ch_control {
++	SLIM_CH_ACTIVATE,
++	SLIM_CH_SUSPEND,
++	SLIM_CH_REMOVE,
++};
++
+ /**
+  * struct slim_stream_runtime  - SLIMbus stream runtime instance
+  *
+-- 
+2.17.1
+
 
