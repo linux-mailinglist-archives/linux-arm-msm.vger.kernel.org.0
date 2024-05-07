@@ -1,129 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-19335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E54B78BE3F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:29:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A04A8BE483
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:43:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 222B61C23350
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 13:29:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB4EC1C23EDA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 13:43:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE58617554D;
-	Tue,  7 May 2024 13:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D5D615E5B6;
+	Tue,  7 May 2024 13:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="garPljce"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hTn6Rbfx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0DA16F0DB
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 13:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB0D15CD57
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 13:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715087929; cv=none; b=CFKxwMZ9NyRVmg4A2bM+70caibAinpkonGA3FNbvrUf6xuCCb8PyybAXri83KAlKFcF4e27wOPLu3p2beUCwxqYSScSawVIZHoL8vK2zwG4wz2Usv1wfIJf4CUOLi+UQix3uIOQWhLHzph6HH+zMjOFM/eVV3bypo6L0gj60sYI=
+	t=1715089305; cv=none; b=Qu2IgIyyRSqH3X9NOPB3Tvwqc0G8jC1UXlimcsJhgISau6EwIwzc6MQcvMWzwCITp+SS0m8eUEXK/T4qy/D3x5qeziIdJ0MA8oPtHeOuS3he2x0g9Np33TxMsIhSa/hZxUhFSo6gMibB2F+VfiEcCbi+bCOEIsGDlsiv1ke69Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715087929; c=relaxed/simple;
-	bh=xx+wxFNs3ZuqK7Hxds/mLdbM5HIFghI8UQG5DaBamLQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DAqMtgQYVK3RuQsml70ZmOQbHYT/HK0ox8OJfWF5kLFVmVrEZ978QxoDAXXxc3ozwBX46wd2H+CW9i5dbwWotiiDJPEqyLU1ftzaK1S/HROMIOvl5vNyqPOln6ozQfLa9QLDsLT8VTT3xWwdT9gKAj2+9vX0STacxtZjVSPIuWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=garPljce; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6969388c36fso15048926d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 06:18:47 -0700 (PDT)
+	s=arc-20240116; t=1715089305; c=relaxed/simple;
+	bh=U3rGI4TXjzTskPSdX5hfRfaXW8W6u8mc2k9lgqQ4Kyc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tBhkFZ8RGoa8+RcPnJG9S+a5wRjN9eoaEdkpG/fp5Qe5KPC3tl+XdKLTUx8Vkin/OEyGVtdf03D98ZTqWaw2b45BOsDdgJxYIQ43sN0E6mA5OQi8NN6zJWcISTjlJcmotIKLqrTV3GFeN1OvM5zOSEI7rqY0nWoTsbzACH1CvX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hTn6Rbfx; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2e3efa18e6aso6845141fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 06:41:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1715087926; x=1715692726; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=24yjDTHuOCF+C8SbX9O7bVVIA87jnk99ezK2b/3Gma4=;
-        b=garPljcecjdkN6g8mvA+SMMfsdgqxokHgqjgJwXYDnh+7+6pxUpSAk0DUlD95uevNs
-         TCt/3xTog5KdLlcGfUR/zheJUzVyYhjYmnE6SQaQP9+qsMZI+sQILhIXBVQG+OLCt7+I
-         RnDymbMwEyyBe148rcabRZCSHfxiCz58EKJPk=
+        d=linaro.org; s=google; t=1715089302; x=1715694102; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eBYWPKKxIxo8aRFjjK9T2hA9r6Tr0Rm6zJjBWqA8aQQ=;
+        b=hTn6RbfxugjDJ83Lc9VWNGsRvHgrKFgborM0GZE0mE1fdiNtMjJJnZhNUcYF3Lbyu5
+         /Dg0qhjwaJ7RseO7gRyPZTGkE3L+qeCJToZd2jQj9wiooptBo+a8Z4wbV6Zl5dMuX3eQ
+         pp5Ai+vbHm325mzuKIpXxctM7vOlJ2fVIKxlFgGbo7GWkkTnNNPJ/BrK+V+MOiu1eM9u
+         S7wvbOeQGLjYV0SVRjIIELTTu8b0Iyqcdrvfj25PaFhXliZ/tVh9megjfu6ujWhcISGU
+         O2pFB2fyxN6O7JwuF1PXR5bLqH/bn5Kaz9lh0wihpAUnNAD2K1OjgV0ROzavx2BeznJu
+         3JIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715087926; x=1715692726;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=24yjDTHuOCF+C8SbX9O7bVVIA87jnk99ezK2b/3Gma4=;
-        b=LmA0VkYqdJ3yO8g9OSu2SKOBjFGMPXgL4m+GW5VdsbcUFWfTvJD7hb4esbtaH7XD2p
-         MdEooP2nkXBngLSyAMVlVVjTqzOXMrFUk0OpAjsyMaEXcnByOZ1SWAKWADFnYIC8tULS
-         pVZ9gvJ0GGFv3uisUYvPAdXO+M8zxlI79Lht69dZP3mnpay+BKgySPcJrU/0jNaaQkGZ
-         DDAUYeLO5ncs2Ma2IaWVPjeAv1quIvVOXDimidpg5Z364kjm90j1aMI3YKHLFLMKK/wU
-         xOeaITkQ8OQ60Ojv53xWXE4HLCkhR+uSg454Clcq5eCepz7lVYJ5kdEZUDMZbmnisajj
-         3mrA==
-X-Forwarded-Encrypted: i=1; AJvYcCWV1eQx1zw1GZX5RAjbVny2+UcjKd3Rzn+9GvGKw7fGZa2amf4JwbR9bgghooftScVnnY5GKQ7OUjODPwAHix47x8s3ap/6iAR7GT7WZQ==
-X-Gm-Message-State: AOJu0YyPcrN3AIYZIf4t1zTFg6qOo1BIGPGTnbHtMllz8bkRujRQcvD/
-	IqexS72ke/6DfqaHLNtAxza1h+g4VXlSdS1gNGzSY7Uo9RxhSKUzY9VterBDjA==
-X-Google-Smtp-Source: AGHT+IE6WEUHWsRpAsJ5BK3gENbuRTlCVd8egHvgiFgdym5FLM6gUWkr0leru0COMDpv6wPoQvFI8w==
-X-Received: by 2002:a05:6214:d6a:b0:6a0:c903:7243 with SMTP id 10-20020a0562140d6a00b006a0c9037243mr17142784qvs.55.1715087926638;
-        Tue, 07 May 2024 06:18:46 -0700 (PDT)
-Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
-        by smtp.gmail.com with ESMTPSA id t15-20020a05621405cf00b006a0d19c3139sm4655105qvz.118.2024.05.07.06.18.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 May 2024 06:18:46 -0700 (PDT)
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Tue, 07 May 2024 13:18:44 +0000
-Subject: [PATCH 18/18] media: venus: Refactor
- hfi_buffer_alloc_mode_supported
+        d=1e100.net; s=20230601; t=1715089302; x=1715694102;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eBYWPKKxIxo8aRFjjK9T2hA9r6Tr0Rm6zJjBWqA8aQQ=;
+        b=WnidggYa0Y46ZV5b9qFaD32/M3dI8GeIt9SxBjEaJu+8GWo8qBZba7myRFlRGdMl8S
+         xLvLOxCS2H1oT4rthQ/yMAsmGLafu73lHP1Xs3dFimeJiQ46BWQGv3Rqnx6PO9dJLqha
+         GSYCF88XgTso1uDg4K3bUXYYx7eYknXVX3Mimi2v1RnXMHkC1yfuT+yTTSXI7xlxPaQ/
+         yTUqvd59c+sQb6jgU9GbJXWMtj1JZ+Flzqr8ZoWq9j6jzh5aIx3hO+bjXTbEeX8AdRpV
+         6mUeP+he0k7kVpZhToz4Qo/C3X/3/g3LtB0zks8mmSyaykBKKRH6cKp92dY+LRwRiVpy
+         hgAg==
+X-Forwarded-Encrypted: i=1; AJvYcCUMKv8zX0q9iuvAC/tAB/gDxQLTac0lcF/gWS9Pot4nntgomW9sGPkzio0Vpo2PkglGHK1QYe8Hv9Seoc4sEjjMse5pFDfGcIYX3mGdew==
+X-Gm-Message-State: AOJu0YxJlam2ypfEkQxDsDkve5p8wbOnQvu8yT3K7MT7jDqYcZr1A+Tj
+	doVHEem7GrjNgksiXbK+nRF8pmSrQNAMzzEvvyHBkHkrCjehAej6wBryIIzNfPo=
+X-Google-Smtp-Source: AGHT+IFhusLgGPzXhOPfN0j+8HODL1lRzxw67tVfNgxWdHZALf7v7+cLKSB0NTJACUQLd+5spu3LXw==
+X-Received: by 2002:a2e:7d0e:0:b0:2e1:eb38:d4b4 with SMTP id 38308e7fff4ca-2e3d9cb3781mr7358371fa.21.1715089301860;
+        Tue, 07 May 2024 06:41:41 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:c0d:408:fa88:abdb:17c2:cf24? ([2a00:f41:c0d:408:fa88:abdb:17c2:cf24])
+        by smtp.gmail.com with ESMTPSA id i16-20020a2e8650000000b002e15aec44fesm2054159ljj.96.2024.05.07.06.41.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 May 2024 06:41:41 -0700 (PDT)
+Message-ID: <163a0c01-8f9f-48e6-89dc-2b702e755622@linaro.org>
+Date: Tue, 7 May 2024 15:41:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] phy: qcom-snps-femto-v2: Add load and voltage setting for
+ LDO's used
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Udipto Goswami <quic_ugoswami@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20240502123312.31083-1-quic_ugoswami@quicinc.com>
+ <CAA8EJppeQTadmny=hcs4xCQDXHwXEBHXjeecvZCUVcSXmwBTgg@mail.gmail.com>
+ <90a5b641-af5b-4640-b2ad-85dbbab523bf@linaro.org>
+ <CAA8EJpoWWXvJabcVqp+YSa8arQbLPC=v+XkvPZe6nwH7aaKnfQ@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAA8EJpoWWXvJabcVqp+YSa8arQbLPC=v+XkvPZe6nwH7aaKnfQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240507-cocci-flexarray-v1-18-4a421c21fd06@chromium.org>
-References: <20240507-cocci-flexarray-v1-0-4a421c21fd06@chromium.org>
-In-Reply-To: <20240507-cocci-flexarray-v1-0-4a421c21fd06@chromium.org>
-To: Michael Tretter <m.tretter@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
- Michal Simek <michal.simek@amd.com>, Andy Walls <awalls@md.metrocast.net>, 
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
- Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
- Ricardo Ribalda <ribalda@chromium.org>
-X-Mailer: b4 0.12.4
 
-Replace the old style single element array at the end of the struct with
-a flex array.
 
-The code does not allocate this structure, so the size change should not
-be a problem.
 
-This fixes the following cocci warning:
-drivers/media/platform/qcom/venus/hfi_helper.h:1233:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+On 5/7/24 13:55, Dmitry Baryshkov wrote:
+> On Tue, 7 May 2024 at 14:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>>
+>>
+>> On 5/2/24 15:12, Dmitry Baryshkov wrote:
+>>> On Thu, 2 May 2024 at 15:33, Udipto Goswami <quic_ugoswami@quicinc.com> wrote:
+>>>>
+>>>> The Femto phy depends on 0.88/ 1.8/ 3.3V regulators for its operation.
+>>>> If one of the regulators is not voted to the required minimum voltage
+>>>> for phy to operate, then High speed mode of operation will fail.
+>>>>
+>>>> On certain targets like (qcm6490_rb3gen2) where the minimum voltage
+>>>> of the regulator is lower than the operating voltage of the phy.
+>>>> If not voted properly, the phy supply would be limited to the min value
+>>>> of the LDO thereby rendering the phy non-operational.
+>>>>
+>>>> The current implementation of the regulators in the Femto PHY is not
+>>>> setting the load and voltage for each LDO. The appropriate voltages and
+>>>> loads required for the PHY to operate should be set.
+>>>
+>>> Please move min/max voltages to the DTS. There is no need to set them
+>>> from the driver.
+>>>
+>>> Also, is there any reason why you can't use `regulator-initial-mode =
+>>> <RPMH_REGULATOR_MODE_HPM>;` like other boards do?
+>>
+>> The point is to aggregate the values and switch to HPM if a threshold is
+>> crossed (or stay in LPM otherwise)
+> 
+> I see that other boards use regulator-initial-mode for the USB PHY
+> regulators. Are we going to change all of them too?
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
----
- drivers/media/platform/qcom/venus/hfi_helper.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Not sure about initial mode yet.
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index dee439ea4d2e..9545c964a428 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -1230,7 +1230,7 @@ struct hfi_interlace_format_supported {
- struct hfi_buffer_alloc_mode_supported {
- 	u32 buffer_type;
- 	u32 num_entries;
--	u32 data[1];
-+	u32 data[];
- };
- 
- struct hfi_metadata_pass_through {
+> Also note, that while the combo QMP driver sets the loads, the pure
+> USB QMP PHY driver doesn't set the loads. This way we can end up with
+> the undervolted PHY.
 
--- 
-2.45.0.rc1.225.g2a3ae87e7f-goog
+Sounds like something to fix, then
 
+Konrad
 
