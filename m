@@ -1,137 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-19316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B784C8BE338
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:13:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A07E8BE3B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:22:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02D53B25485
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 13:13:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 165BB1F26AF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 13:22:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1EB315E5B6;
-	Tue,  7 May 2024 13:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AEB416ABC5;
+	Tue,  7 May 2024 13:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZbChpJAr"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ZRX3fQkb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2585915DBDD;
-	Tue,  7 May 2024 13:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5071168B06
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 13:18:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715087572; cv=none; b=YBdvhw7uimx6WbttXgr2I4/pwkE/07OpdQK6jjv44VTPIy1DX55xGF5HPXHxpYKzIx13ubuOkTgqFND5hWQAN8jlTMK2vpXZ6MfMPcmrltqJnjRPlY6v5sc43L+hBYtFUQBVfZY79tlhU2T9Tc4C4rUKfFWjdRO19X3YvkrY9r8=
+	t=1715087912; cv=none; b=W5p3P6B2I6jXCY9bXWMPs8rr6o1CsYPDKIk0l6Sydlh+vIRPj3V33ny122xV8E6lCEneXzIbRp6wigJaW6XmPGMN9/7K0LTtQALzhtCXhwiMEXAxL82WrzVUgeO8sbI/bTizRXY0vrJhhiuzDAAdTHoSDIvE5iWi39A8LfL60g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715087572; c=relaxed/simple;
-	bh=a6gSLSNzkB7vq5lvXJKxfEYqY5Zj8C4OuyJc6Y6NlXY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KrpkVfnJky6YgXfsTJwoURDCiQCAOKKQ5+HR5O1/GC8BXFef2iW8YnUe0MZYmLKaB6HaRBVLfgiyINHe43g14VWAGJkQs4HInOXUB+v22r18Vak5VNv/jsoVUmYHkJvImL4cty2Ij6nmMK/CgHX19n0nXNdc3Tl32LwZiSwCfTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZbChpJAr; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715087571; x=1746623571;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=a6gSLSNzkB7vq5lvXJKxfEYqY5Zj8C4OuyJc6Y6NlXY=;
-  b=ZbChpJArKKyAZtijh9SZK5lQT+/9D+Z3PF2ie8fJU9RldW+A5gjAGaQe
-   /Y+C2Y+6ve62ddd4yC0eZJOQjvOjXwF5i4qwK3vCx7x8foz8Rnhp5egCK
-   /5FkFpJ6rxTvYntGyU7WETqNyNY7rO4wVQ7TPwZ3JTl7fGFp8b22R9/3g
-   kFpUZGJbH7F8BvnxZpOENEwjtc2zkemH7ibSS/wywW+aNHZqIE/iOapMq
-   0lucxkxRsRzh4SzG8ej5lt6syH+EmYdNTGnSE9X7uC2WeyiYyi0j30li3
-   P2RYwZQPka8IIMNSKXKjmDxVfxxBWT4NF72DsSSsA1X14Hw2NSU6zDSfy
-   w==;
-X-CSE-ConnectionGUID: N9U1l4zQQm2ybNIbe0Jzvw==
-X-CSE-MsgGUID: kerm2+NSRcmgoLVbalMd8Q==
-X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="21483943"
-X-IronPort-AV: E=Sophos;i="6.08,261,1712646000"; 
-   d="scan'208";a="21483943"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2024 06:12:50 -0700
-X-CSE-ConnectionGUID: Fu6nYwQcTgeZWSY044wYqQ==
-X-CSE-MsgGUID: MsXTeSYhRgedCqb9bG/apQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,261,1712646000"; 
-   d="scan'208";a="28920705"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2024 06:12:42 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1s4KcY-000000052fm-0iB8;
-	Tue, 07 May 2024 16:12:38 +0300
-Date: Tue, 7 May 2024 16:12:37 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Xiaowei Song <songxiaowei@hisilicon.com>,
-	Binghui Wang <wangbinghui@hisilicon.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>
-Subject: Re: [PATCH v4 0/5] PCI: controller: Move to agnostic GPIO API
-Message-ID: <ZjooxTO3wb2ItvGv@smile.fi.intel.com>
-References: <20240506142142.4042810-1-andriy.shevchenko@linux.intel.com>
- <CACRpkda=a3X=jyZKQoOFrfgzpE2C+rZ9UC1VDnCvGL7QP4x4BA@mail.gmail.com>
+	s=arc-20240116; t=1715087912; c=relaxed/simple;
+	bh=bAi2ZdpBL5YU/Wxi/XteXVj/icGKTIMcJ8j0y8QoFIQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=FanVvclSg8Vz772G0pY3tr4PVExev4GvCZWeaE+HEtPrugP0GSHmXfr2Dtd4+wsayxhUTb8s4lpD1poWiyd7EVb7kM+F4mgKAFvlIs3OIbuv611KT7WVaQIOntSqcKfXUoPySOmwWWN8Bxubj3QGbfv0UAjgGTBCdXugB5CJZIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ZRX3fQkb; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6a0d1032362so10593676d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 06:18:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1715087909; x=1715692709; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8f9hc3zYS1+xO9Qa+U18bGlg+mDWX5tgKVnZHr3X7Vw=;
+        b=ZRX3fQkbILhVfArWs1t8tD5o2EDIYKsjfkp6aXyd4PRWnf+MYlIP4LvZgzIpNz9ppB
+         BgkXuGqoyfeyH8V/pCj63430wJ6DfP/XSGvROpioq+osGTTRXtMcHEYTVmww5MHeG+p/
+         PMDCMlI6AB4vDRweg5NzuG/llx6IuK9Pagz1s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715087909; x=1715692709;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8f9hc3zYS1+xO9Qa+U18bGlg+mDWX5tgKVnZHr3X7Vw=;
+        b=n69mDt016s3FbBYRm8p33lX4dQYSFk7HbMuWI+3Nzq7+9+jNL2AQWFSpiI92pHknYh
+         wS8SeCfb9eFAMbq2Olk+VJAi7TwbRb3ktjoZzP/uclPyKDpYHe4WrqsJWYafRYIlHQhE
+         fuSJLtCoputHV4W63JiHJAgpco9ynKOEk3CH7usXX2wYQ2QmZ3e5lxvrIFDqJa8Dny+B
+         pu2YLZfsXktRzFydo0aXOCUp9sPXy94pMjbWbufmZtJtXU9TXQSjRx60VUdpZ2Kh0Ojy
+         8U1qEIZHBwIo5uCqCMFkIGPonNpxMP3SvKlCBMSyVq7fzePEs2JqHyTPGrkEpHPlSl2g
+         VFrg==
+X-Forwarded-Encrypted: i=1; AJvYcCVkAUIj016z1eOt2WPKkH30ogA/riNLZBzKFMs9kzuV6gV+43X4UjPfWSO3gjxpsss8wwcgqzYTi1OY1gf1LuDzkwxzZm5/m8eW6+iDKw==
+X-Gm-Message-State: AOJu0YxuBxrsb92yCUcSgwbhsK4cr6p6fU7rdH0rBH9QYN4lfAtYImI2
+	QHtjaR7yNR3qknr2TtS/wuW2NGsVUrhmVmlqhcisHm7ABWOeVPwzHJhdcahciw==
+X-Google-Smtp-Source: AGHT+IEWyU2AaY4LDvGiS+okmI+kA1r/WIVU3XwN1sQPnZg87ruugUrDP1DKKW0TPSio4xfKwE/sTA==
+X-Received: by 2002:ad4:5b8d:0:b0:6a0:c8ac:de5 with SMTP id 13-20020ad45b8d000000b006a0c8ac0de5mr16242277qvp.32.1715087909722;
+        Tue, 07 May 2024 06:18:29 -0700 (PDT)
+Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
+        by smtp.gmail.com with ESMTPSA id t15-20020a05621405cf00b006a0d19c3139sm4655105qvz.118.2024.05.07.06.18.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 May 2024 06:18:29 -0700 (PDT)
+From: Ricardo Ribalda <ribalda@chromium.org>
+Subject: [PATCH 00/18] media: Fix the last set of coccinelle warnings
+Date: Tue, 07 May 2024 13:18:26 +0000
+Message-Id: <20240507-cocci-flexarray-v1-0-4a421c21fd06@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACRpkda=a3X=jyZKQoOFrfgzpE2C+rZ9UC1VDnCvGL7QP4x4BA@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACIqOmYC/x3MMQqAMAxA0atIZgupKFavIg6hphoQlRSkUry7x
+ fEN/2eIrMIRxiqD8i1RzqPA1hX4jY6VjSzF0GDTYoe98af3YsLOiVTpMQM57MmxRcdQqks5SPq
+ P0/y+H5EtvOVhAAAA
+To: Michael Tretter <m.tretter@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
+ Michal Simek <michal.simek@amd.com>, Andy Walls <awalls@md.metrocast.net>, 
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
+ Ricardo Ribalda <ribalda@chromium.org>
+X-Mailer: b4 0.12.4
 
-On Tue, May 07, 2024 at 12:03:50PM +0200, Linus Walleij wrote:
-> On Mon, May 6, 2024 at 4:22 PM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
-> 
-> > In v4:
-> > - added tag (Mani)
-> > - fixed a polarity bug in iMX.6 driver (Linus)
-> 
-> Looks good now. The series:
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+With this set we are done with all the cocci warning/errors.
 
-Thank you!
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+---
+Ricardo Ribalda (18):
+      media: allegro: nal-hevc: Refactor nal_hevc_sub_layer_hrd_parameters
+      media: xilinx: Refactor struct xvip_dma
+      media: dvb-frontend/mxl5xx: Refactor struct MBIN_FILE_T
+      media: dvb-frontend/mxl5xx: Use flex array for MBIN_SEGMENT_T
+      media: pci: cx18: Use flex arrays for struct cx18_scb
+      media: siano: Refactor struct sms_msg_data
+      media: siano: Remove unused structures
+      media: siano: Use flex arrays for sms_firmware
+      media: venus: Remove unused structs
+      media: venus: Use flex array for hfi_session_release_buffer_pkt
+      media: venus: Refactor struct hfi_uncompressed_plane_info
+      media: venus: Refactor struct hfi_session_get_property_pkt
+      media: venus: Refactor struct hfi_uncompressed_format_supported
+      media: venus: Refactor hfi_session_empty_buffer_uncompressed_plane0_pkt
+      media: venus: Refactor hfi_session_empty_buffer_compressed_pkt
+      media: venus: Refactor hfi_sys_get_property_pkt
+      media: venus: Refactor hfi_session_fill_buffer_pkt
+      media: venus: Refactor hfi_buffer_alloc_mode_supported
 
-> Perhaps the use of  _raw accessors could be avoided in 5/5 by some
-> elaborart polarity quirk but I'm no perfectionist and it can be fixed later.
+ drivers/media/common/siano/smscoreapi.c           | 10 ++---
+ drivers/media/common/siano/smscoreapi.h           | 18 +--------
+ drivers/media/common/siano/smsdvb-main.c          |  4 +-
+ drivers/media/dvb-frontends/mxl5xx.c              |  2 +-
+ drivers/media/dvb-frontends/mxl5xx_defs.h         |  4 +-
+ drivers/media/pci/cx18/cx18-scb.h                 |  2 +-
+ drivers/media/platform/allegro-dvt/allegro-core.c |  6 +--
+ drivers/media/platform/allegro-dvt/nal-hevc.c     | 11 ++----
+ drivers/media/platform/allegro-dvt/nal-hevc.h     |  6 +--
+ drivers/media/platform/qcom/venus/hfi_cmds.c      | 16 ++++----
+ drivers/media/platform/qcom/venus/hfi_cmds.h      | 46 +++++------------------
+ drivers/media/platform/qcom/venus/hfi_helper.h    | 45 ++--------------------
+ drivers/media/platform/qcom/venus/hfi_parser.c    |  2 +-
+ drivers/media/platform/qcom/venus/hfi_venus.c     |  2 +-
+ drivers/media/platform/xilinx/xilinx-dma.c        |  4 +-
+ drivers/media/platform/xilinx/xilinx-dma.h        |  2 +-
+ 16 files changed, 48 insertions(+), 132 deletions(-)
+---
+base-commit: e695668af8523b059127dfa8b261c76e7c9cde10
+change-id: 20240507-cocci-flexarray-9a807a8e108e
 
-After your comment I was thinking the same, and came to the similar conclusion,
-we might fix this later as in comparison to iMX.6 case this requires an
-additional code to be added to gpiolib-of.c.
-
+Best regards,
 -- 
-With Best Regards,
-Andy Shevchenko
-
+Ricardo Ribalda <ribalda@chromium.org>
 
 
