@@ -1,72 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-19377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 506AF8BE901
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 18:31:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F73F8BE907
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 18:31:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0696628C0DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:31:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1518F1F22304
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:31:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96BB516190C;
-	Tue,  7 May 2024 16:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 526AB16F0DB;
+	Tue,  7 May 2024 16:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="VVhua+f2"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="OIn0MpFw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898A316F82A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 16:27:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8759B16F857
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 16:27:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715099245; cv=none; b=kp8a6O7wME+LjMZBq6RjrO/+4WY9VYijv7Z1c6Mr6uHXdexO+FNRe9DiUL3+1cvbZckbaGkgKOL/n0nvG28rDfjfQuip6fPxrfU7T6VJm1vRUU5EKd9MAfoKNYf/NFNUzjimdVB5exsgochqfTexVWoiIK1kKTdMvJlLc5X4H0Q=
+	t=1715099246; cv=none; b=A48j1WSbkNVJHK9YCxiUJ92MWJlQet9HEgKgMy9BucwXHO1tIuoGFjIx+Azxiw2iXk6KUCFXXclXMtSx3pgTrLBUlRKnfw20SIpalvC4KkgbEt+wpCjk0pJsmFxuCPndHLM5vwVVDfQz+9DjBvQ3PN/h0p1a+2u+ZWnDHy2mCoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715099245; c=relaxed/simple;
-	bh=P3Bstv/vPDiw+M+/G70Utl3bAIKOevXPnXzJX41+MtM=;
+	s=arc-20240116; t=1715099246; c=relaxed/simple;
+	bh=elaKiW1ZWISf7j4z+HRijCG6vyiv0mxL1YyGQ0pIffU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oQBIYB6GeFVmL/VoZROtXHLkbrIr4EeSz/imF9yooj7zsnV4qaY6RrKPDhQxiGG0cEfxwl4TX/KjWXUiTFQ+vMbTFlBAkai4foiGfzzWWqgKO1PbAxq1GdY3oHymQOMFyzZEkpGVpcYDSxeWfJxNKif59n80ESU26Cjf62a3j+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=VVhua+f2; arc=none smtp.client-ip=209.85.160.173
+	 In-Reply-To:To:Cc; b=gBMh3hwkpjl9U+6V+qxpwQQo9MsGs/4Od1tcp8DNjfIQ1nFPa08RmfJYDOwo38IuPVUKl6xUjy1XrzX5fTh2pWe04Oat8cFZknt+e0w+DbrqzmKWMBAW+DuxpywFO3G9qRIByqS2vhOJvI4tM4Da/HikcrWZU2ONzERVys6Z6wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=OIn0MpFw; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-437610adf96so19065581cf.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 09:27:23 -0700 (PDT)
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-43ca9047bd2so41205901cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 09:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google; t=1715099243; x=1715704043; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AxOzymIGy9oIqpVIjgGXcOBfnvf3rPmoINBWnjxn4+k=;
-        b=VVhua+f2IRXtWZm+z2Ufi8G5EGsfSiIA5IyT/ME88xa87qP99xZm8fXUJXyPEJSpkZ
-         69D93gy9FlyCa2/++yv9qeL2jWnyKnVXaex1/IXCh8AYJlM5tmHUVze64Sgxg5o52nGk
-         Sdav2TsI0a2gIboyQE+C4ZRc9pzpK82o+k7jE=
+        bh=LytlgeivFEVadVFPCSFVFsEkz0aZMS5bY0SwfM06VYA=;
+        b=OIn0MpFwO8ZmXWx3zHne+FmrQbDu37RfE0cweOIbZpHViKFYa1ErcHamcD6ocJ6rof
+         P6XbcxOcAYohx+usDyueTN4qKGfayVPrRRKkgxpn0ajMB//pf+t2DnxY4iXiKhSuCgdL
+         huLY2HEiR/gFPmHz4aLeeDr0FscjTf0ho5kEQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1715099243; x=1715704043;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AxOzymIGy9oIqpVIjgGXcOBfnvf3rPmoINBWnjxn4+k=;
-        b=VbdfhrHq3q01WDL42CW3Yy3j5LzOxcDgGw5YnFkliJcooTlrBLn8jwPSZP3RrwcrV+
-         H0kOXS05R1JQPaImzuaTqP8dMUaWh5IBdqL+LFFzX+SwTrIwI+IEfqZ090rLnzbiBiTm
-         0qJi3+VXQX7gviuO2BqV84HtKXCt4H3NCOZU8QuZpXfQG/HFgYCMC+5RfVoSPZuUrl7a
-         xBdTsS93jp7oFPX2/ew53mWv2vAJHCE8DZ2WlGU9fT8sN4bQmOCHX/fNFjGAfc0Z4Den
-         lS+XN+Ja1soyCrvemQsnhg3AmZOtiWfhu+kxqg8afOvhCmpHXa4TWrmX1pSPaVISTyRD
-         wC2A==
-X-Forwarded-Encrypted: i=1; AJvYcCU11U3ZxyIBtmvdVIpKiyiWrD1wVBMrPZjOCfrCdAj4SwKy8OsIqnp3z3B/cXCzIwotWtTfSqmksQlFHZ2S3KtzBrr/3o7noVhzMLECOA==
-X-Gm-Message-State: AOJu0YyGumDh1TkSDZ3pdokio0yfY2Tx48Tw8EmMhQmqGoLGdWAyuquI
-	sIn+kTZ9CoeM7r4qfkOwhbh2mluMd6TQUi8FsJvQWuI49TqgZVt4jB7vc7Lcrg==
-X-Google-Smtp-Source: AGHT+IFMJpzLoBuvnKke7M8L8J1XyGnz4DA/DXF7pnXaUcfUvIroWGA26PbBGScPt2HZrKUNAeWChg==
-X-Received: by 2002:a05:622a:40f:b0:43a:ecfb:8a5c with SMTP id d75a77b69052e-43dbed33436mr2631381cf.40.1715099242710;
-        Tue, 07 May 2024 09:27:22 -0700 (PDT)
+        bh=LytlgeivFEVadVFPCSFVFsEkz0aZMS5bY0SwfM06VYA=;
+        b=YwMFLG9V/vwLhdSJvslfD8LjoXQ9p1BvjjVvqQ30TO6wACjaKkzIZEM8Deo+p/C2FE
+         cXa2A2czRVzoKKyFGVmMCdSJVTHQaSnNGQxtelEHXZjhnRz1bsROUEMC1PemRAEplMrx
+         0y5ebKwTSAbdo44pQ6P6dOxP0M0VHDfBRvEeu2TWXDPfNLcOR7zFdaoV8up2bo+ymlSX
+         Px4lIIaaC6GJ+4p0171tZuDQLLWzMVk5FgOPOn0SNzfDRevcTQ1acNvajVcx+WgYJM/o
+         QEIXF/9S0H67PCkgC1VzM1s0EPmCIcC8hl3WdIw15m9uqMg9jkHZbA8ghRYCKbUUhbey
+         UO1w==
+X-Forwarded-Encrypted: i=1; AJvYcCUW6tif1c7grMiHRbJyieZZVO5H4EjF7S2ImJC0+2y6itVXv2DT2QhPr65/J8I6BnJGq6XAX1ypk8s3uzYtdPn7N8t/6J/zy0GtuzHcLA==
+X-Gm-Message-State: AOJu0YwXW9Gm0VIcgM4rhaoDJA0vbaJVaCVv6IQm2nwB3k3JPioqBqlh
+	OliFi4oTIhLMX6YImIrpoCCzftEajUyRnBHC+gVoN1ikuk0XjHx79w24AquZPA==
+X-Google-Smtp-Source: AGHT+IH3mMeaAQ3dPkDbtiyOlqK0t/M43w6OxFHdMVW2XCWSC0GBNoCeALnYs1IDQynVDH2ifLt8lg==
+X-Received: by 2002:ac8:7d0a:0:b0:43b:173e:ce1b with SMTP id d75a77b69052e-43d8f7cec66mr50519711cf.32.1715099243729;
+        Tue, 07 May 2024 09:27:23 -0700 (PDT)
 Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
         by smtp.gmail.com with ESMTPSA id hf23-20020a05622a609700b0043d1fc9b7d9sm4160597qtb.48.2024.05.07.09.27.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 May 2024 09:27:22 -0700 (PDT)
+        Tue, 07 May 2024 09:27:23 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Tue, 07 May 2024 16:27:21 +0000
-Subject: [PATCH v2 16/18] media: venus: Refactor hfi_sys_get_property_pkt
+Date: Tue, 07 May 2024 16:27:22 +0000
+Subject: [PATCH v2 17/18] media: venus: Refactor
+ hfi_session_fill_buffer_pkt
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,7 +76,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240507-cocci-flexarray-v2-16-7aea262cf065@chromium.org>
+Message-Id: <20240507-cocci-flexarray-v2-17-7aea262cf065@chromium.org>
 References: <20240507-cocci-flexarray-v2-0-7aea262cf065@chromium.org>
 In-Reply-To: <20240507-cocci-flexarray-v2-0-7aea262cf065@chromium.org>
 To: Michael Tretter <m.tretter@pengutronix.de>, 
@@ -94,79 +95,44 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  Ricardo Ribalda <ribalda@chromium.org>
 X-Mailer: b4 0.12.4
 
-This struct was only used to get the version from the core. Make that
-explicit.
+The single data array data[1] is only used to save the extradata_size.
+Replace it with a single element field.
 
 This fixes the following cocci warning:
-drivers/media/platform/qcom/venus/hfi_cmds.h:77:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+drivers/media/platform/qcom/venus/hfi_cmds.h:175:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/platform/qcom/venus/hfi_cmds.c  | 6 +++---
- drivers/media/platform/qcom/venus/hfi_cmds.h  | 8 ++++----
- drivers/media/platform/qcom/venus/hfi_venus.c | 2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_cmds.c | 2 +-
+ drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 520ff8a587e6..c5123f2e76fe 100644
+index c5123f2e76fe..35423e211ddd 100644
 --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
 +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -151,12 +151,12 @@ int pkt_sys_ssr_cmd(struct hfi_sys_test_ssr_pkt *pkt, u32 trigger_type)
+@@ -331,7 +331,7 @@ int pkt_session_ftb(struct hfi_session_fill_buffer_pkt *pkt, void *cookie,
+ 	pkt->alloc_len = out_frame->alloc_len;
+ 	pkt->filled_len = out_frame->filled_len;
+ 	pkt->offset = out_frame->offset;
+-	pkt->data[0] = out_frame->extradata_size;
++	pkt->extradata_size = out_frame->extradata_size;
+ 
  	return 0;
  }
- 
--void pkt_sys_image_version(struct hfi_sys_get_property_pkt *pkt)
-+void pkt_sys_image_version(struct hfi_sys_get_version_pkt *pkt)
- {
- 	pkt->hdr.size = sizeof(*pkt);
- 	pkt->hdr.pkt_type = HFI_CMD_SYS_GET_PROPERTY;
--	pkt->num_properties = 1;
--	pkt->data[0] = HFI_PROPERTY_SYS_IMAGE_VERSION;
-+	pkt->one = 1;
-+	pkt->version = HFI_PROPERTY_SYS_IMAGE_VERSION;
- }
- 
- int pkt_session_init(struct hfi_session_init_pkt *pkt, void *cookie,
 diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-index 02e9a073d0c1..cd7902743f62 100644
+index cd7902743f62..0ccc4102ac3d 100644
 --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
 +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-@@ -71,10 +71,10 @@ struct hfi_sys_set_property_pkt {
- 	u32 data[];
- };
- 
--struct hfi_sys_get_property_pkt {
-+struct hfi_sys_get_version_pkt {
- 	struct hfi_pkt_hdr hdr;
--	u32 num_properties;
+@@ -172,7 +172,7 @@ struct hfi_session_fill_buffer_pkt {
+ 	u32 output_tag;
+ 	u32 packet_buffer;
+ 	u32 extradata_buffer;
 -	u32 data[1];
-+	u32 one;
-+	u32 version;
++	u32 extradata_size;
  };
  
- struct hfi_sys_ping_pkt {
-@@ -239,7 +239,7 @@ void pkt_sys_debug_config(struct hfi_sys_set_property_pkt *pkt, u32 mode,
- 			  u32 config);
- void pkt_sys_coverage_config(struct hfi_sys_set_property_pkt *pkt, u32 mode);
- void pkt_sys_ping(struct hfi_sys_ping_pkt *pkt, u32 cookie);
--void pkt_sys_image_version(struct hfi_sys_get_property_pkt *pkt);
-+void pkt_sys_image_version(struct hfi_sys_get_version_pkt *pkt);
- int pkt_sys_ssr_cmd(struct hfi_sys_test_ssr_pkt *pkt, u32 trigger_type);
- int pkt_session_init(struct hfi_session_init_pkt *pkt, void *cookie,
- 		     u32 session_type, u32 codec);
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index f9437b6412b9..745c2c0c0d55 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1142,7 +1142,7 @@ static int venus_core_init(struct venus_core *core)
- {
- 	struct venus_hfi_device *hdev = to_hfi_priv(core);
- 	struct device *dev = core->dev;
--	struct hfi_sys_get_property_pkt version_pkt;
-+	struct hfi_sys_get_version_pkt version_pkt;
- 	struct hfi_sys_init_pkt pkt;
- 	int ret;
- 
+ struct hfi_session_flush_pkt {
 
 -- 
 2.45.0.rc1.225.g2a3ae87e7f-goog
