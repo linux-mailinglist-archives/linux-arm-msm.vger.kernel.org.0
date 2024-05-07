@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-19422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BD4C8BED82
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 22:02:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 650FE8BED64
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 21:59:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EEF491F2305B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 20:02:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BA731F22D1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 19:59:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF55E17EB99;
-	Tue,  7 May 2024 19:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 712862101BC;
+	Tue,  7 May 2024 19:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Cqu91nKo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="omVFBCgl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D7D17EB81;
-	Tue,  7 May 2024 19:52:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F831C0DC7;
+	Tue,  7 May 2024 19:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715111532; cv=none; b=q8h0IbwrdLhQpTzGxUROt+RG6Cq2AibaMkEDxeP7Ka+BErPvg3G7dNJuANXIf3v5rAPAowzMZRtZ0abqeYx+DTd+A0wzLE1voJcZBZ92nebaebbd9kufFNE6WC4fUZPPExbSMcO9c/KPh6dEWU1PvXNlhhVlu7BRfPKmmQeDU7I=
+	t=1715111525; cv=none; b=NEEbqIxZHsuGKdhveccIuSYS3t8wEUHEIUCVmZogPKSDDjUjwsCxoPJBfL4nSdNXTdb0qLYjrBpu5GvymxHEcXcZhq8GtE8K/2mx5nhX1PUP8oc5sp6SxOYZEZjG8i5RM2Ak62Dbdl5lGJ7QSwiiuP6JKmdCSYKhmeVDkhaU/WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715111532; c=relaxed/simple;
-	bh=3oPiBOcaENitVPAvzdxQkB83ESZQWN6dJTLsMFwygx4=;
+	s=arc-20240116; t=1715111525; c=relaxed/simple;
+	bh=aohF1H5It4rN8CPl810oOMZyUSRQ4J8V9uxQDlYzYv8=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kYO3n1aflpRSIIJOOZ5hV541ewAKPyd7UwLELdhaYk9GrVT+db9KzuT5FhPj/K+kw7jD7yxMfKjcNSoIXjHff65HvwJb6BFDhKiO8jMLsG3caR5xOxp06+eKmwh37/th0doQOBBcrWLhIViVT9usIzeV6C1LFERcjWc+WYOqhwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Cqu91nKo; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=K9mAQ9UvZNz2km/0Q3FoQNtGz8TbbDxakGEe9Jd6yh+4gObDp6D+b6Q05hzREioIWF5NsIVfNePHRQFDVFdg7cf80z/QbnvGMcZ50Es8vwm3KAXWLOCQtJ69adZ3yXx1Tq0DiZcMjxIdSPPwpvT+M9NJuYs6dY/4vei5YlBZ/vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=omVFBCgl; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 447JiXl8029328;
-	Tue, 7 May 2024 19:51:38 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 447IgtMA007644;
+	Tue, 7 May 2024 19:51:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=av4iEBQ/j6FzZ117TY/T
-	91Akowl4mLc+koTA/yystYo=; b=Cqu91nKoY9AzreHV9FhuAxf2ms4nCqqiQHsC
-	s6/mRGYh90F1oi1eqFlW55SD2lf5xMOlvJyxBJ2Qslo1wF2ogDJ4KiTdmshXxjKT
-	DYkq0HCStYeF79H2gbIoJr1SDejqASemEyxbd2FdIrdBUcxsYQGcgJAw+iBFuUEc
-	ABCEDJxviF2eZSO02Y7Pbc3YvribgXbG6Rx4lEHeOOCYbmyhUNa0PKNPXLR97RcR
-	3sJBLfrvkQt8/uzw8BW7K4FsRow6eTGv/dR7ayhj0I9KqMJIg7J/f5gfZT4dwEKq
-	FYG7hF10+Tvs/Lq5twSPwo5wSPJQkLH3lIm6QMoWPU7/q3DQWg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xysg9g5x1-1
+	:mime-version:content-type; s=qcppdkim1; bh=kgKTXHdqvQUPjTSXivSj
+	9cZvpgdEpKIF8Fx5Er4rXp8=; b=omVFBCgloj8UVeZ7oeyzbeeBa1A5G4+ON2YX
+	DzLs2cj57SKVQ6yzTQZ0EWdoiX5jm6GDHytq9lsNCCly5qNqGbadYZCQWOwIhHzx
+	pSDpOuJ6lxHZrM0skz/FgxtMS8fEVaucdaK4C3sI+7sGUcmExGuQN1oIuvJgYjbW
+	cF+0V0+i4zbHth7s1OWCm+YZhKe2cddg/4SBc/E49xR/QwTYPEq5hliblYA7sfcr
+	1LgIcdezujrIAdc7kbTtZZT/TP9LGdAMEx+u2mREq9hv8zVbRAqPEkCLlje3MTGe
+	ZXCy5CiOAsvar78HZ1w8zmAeirc+wtcRL6z6vDgmfzLQvvq+7A==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xyste03yp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 May 2024 19:51:38 +0000 (GMT)
+	Tue, 07 May 2024 19:51:39 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 447Jpb35019848
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 447Jpcvt008972
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 May 2024 19:51:37 GMT
+	Tue, 7 May 2024 19:51:38 GMT
 Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
@@ -66,9 +66,9 @@ CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
         <alsa-devel@alsa-project.org>, Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH v21 36/39] ALSA: usb-audio: qcom: Use card and PCM index from QMI request
-Date: Tue, 7 May 2024 12:51:13 -0700
-Message-ID: <20240507195116.9464-37-quic_wcheng@quicinc.com>
+Subject: [PATCH v21 37/39] ASoC: usb: Rediscover USB SND devices on USB port add
+Date: Tue, 7 May 2024 12:51:14 -0700
+Message-ID: <20240507195116.9464-38-quic_wcheng@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240507195116.9464-1-quic_wcheng@quicinc.com>
 References: <20240507195116.9464-1-quic_wcheng@quicinc.com>
@@ -83,67 +83,64 @@ X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jiE1Btq8d5fpvtrLL2L7Z31wFimhwj7h
-X-Proofpoint-ORIG-GUID: jiE1Btq8d5fpvtrLL2L7Z31wFimhwj7h
+X-Proofpoint-GUID: yLJsMRKXDOWWQM2Li6pzngmsw99cjyDX
+X-Proofpoint-ORIG-GUID: yLJsMRKXDOWWQM2Li6pzngmsw99cjyDX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-07_12,2024-05-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- bulkscore=0 mlxscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 spamscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 mlxscore=0 bulkscore=0 clxscore=1015
+ mlxlogscore=999 spamscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
  definitions=main-2405070138
 
-Utilize the card and PCM index coming from the USB QMI stream request.
-This field follows what is set by the ASoC USB backend, and could
-potentially carry information about a specific device selected through the
-ASoC USB backend.  The backend also has information about the last USB
-sound device plugged in, so it can choose to select the last device plugged
-in, accordingly.
+In case the USB backend device has not been initialized/probed, USB SND
+device connections can still occur.  When the USB backend is eventually
+made available, previous USB SND device connections are not communicated to
+the USB backend.  Call snd_usb_rediscover_devices() to generate the connect
+callbacks for all USB SND devices connected.  This will allow for the USB
+backend to be updated with the current set of devices available.
+
+The chip array entries are all populated and removed while under the
+register_mutex, so going over potential race conditions:
+
+Thread#1:
+  q6usb_component_probe()
+    --> snd_soc_usb_add_port()
+      --> snd_usb_rediscover_devices()
+        --> mutex_lock(register_mutex)
+
+Thread#2
+  --> usb_audio_disconnect()
+    --> mutex_lock(register_mutex)
+
+So either thread#1 or thread#2 will complete first.  If
+
+Thread#1 completes before thread#2:
+  SOC USB will notify DPCM backend of the device connection.  Shortly
+  after, once thread#2 runs, we will get a disconnect event for the
+  connected device.
+
+Thread#2 completes before thread#1:
+  Then during snd_usb_rediscover_devices() it won't notify of any
+  connection for that particular chip index.
 
 Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
 ---
- sound/usb/qcom/qc_audio_offload.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ sound/soc/soc-usb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index 2659d8776bed..d08870f22fae 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -107,8 +107,6 @@ struct uaudio_qmi_dev {
- 	bool er_mapped;
- 	/* reference count to number of possible consumers */
- 	atomic_t qdev_in_use;
--	/* idx to last udev card number plugged in */
--	unsigned int last_card_num;
- };
+diff --git a/sound/soc/soc-usb.c b/sound/soc/soc-usb.c
+index a64bfbd91bf3..457c71d2bbd0 100644
+--- a/sound/soc/soc-usb.c
++++ b/sound/soc/soc-usb.c
+@@ -584,6 +584,8 @@ int snd_soc_usb_add_port(struct snd_soc_usb *usb)
+ 	list_add_tail(&usb->list, &usb_ctx_list);
+ 	mutex_unlock(&ctx_mutex);
  
- struct uaudio_dev {
-@@ -1256,7 +1254,7 @@ static int prepare_qmi_response(struct snd_usb_substream *subs,
- 
- 	pcm_dev_num = (req_msg->usb_token & QMI_STREAM_REQ_DEV_NUM_MASK) >> 8;
- 	xfer_buf_len = req_msg->xfer_buff_size;
--	card_num = uaudio_qdev->last_card_num;
-+	card_num = (req_msg->usb_token & QMI_STREAM_REQ_CARD_NUM_MASK) >> 16;
- 
- 	if (!uadev[card_num].ctrl_intf) {
- 		dev_err(&subs->dev->dev, "audio ctrl intf info not cached\n");
-@@ -1449,8 +1447,7 @@ static void handle_uaudio_stream_req(struct qmi_handle *handle,
- 
- 	direction = (req_msg->usb_token & QMI_STREAM_REQ_DIRECTION);
- 	pcm_dev_num = (req_msg->usb_token & QMI_STREAM_REQ_DEV_NUM_MASK) >> 8;
--	pcm_card_num = req_msg->enable ? uaudio_qdev->last_card_num :
--				ffs(uaudio_qdev->card_slot) - 1;
-+	pcm_card_num = (req_msg->usb_token & QMI_STREAM_REQ_CARD_NUM_MASK) >> 16;
- 	if (pcm_card_num >= SNDRV_CARDS) {
- 		ret = -EINVAL;
- 		goto response;
-@@ -1658,7 +1655,6 @@ static void qc_usb_audio_offload_probe(struct snd_usb_audio *chip)
- 	sdev->num_capture = usb_qmi_get_pcm_num(chip, 1);
- 	uadev[chip->card->number].sdev = sdev;
- 
--	uaudio_qdev->last_card_num = chip->card->number;
- 	snd_soc_usb_connect(usb_get_usb_backend(udev), sdev);
- 
- 	snd_usb_offload_create_ctl(chip);
++	snd_usb_rediscover_devices();
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_usb_add_port);
 
