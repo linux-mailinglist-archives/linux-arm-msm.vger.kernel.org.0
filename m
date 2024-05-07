@@ -1,101 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-19353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 981448BE67F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:49:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5AAC8BE6CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 17:01:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C9B601C23126
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 14:49:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0F55282B5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:01:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E6BA168B13;
-	Tue,  7 May 2024 14:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9281D1607B8;
+	Tue,  7 May 2024 15:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hcvRtjQi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y8AmCP22"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AA5161915;
-	Tue,  7 May 2024 14:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6068A1607B3;
+	Tue,  7 May 2024 15:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715093330; cv=none; b=uOJ6whi7n87NAkvbIkp9ZmatZIV6lN/H7uwJgQPV92LFI0TXEZ/CWOCIkznNf1zSVrbFUZTzDXq248pJnVTOpX56fiMXSf3lxqQu0CX4lUUNxyJ1OexDPnrlG0C/uuFSp0jcSZGPu+mpdvxHq0h9nEkEg4O5bJPUt3hEK+JB/NI=
+	t=1715094061; cv=none; b=WeNxcBrGGvZf8wRfmI6kdwLWkqULRson0FYIIpwSyv0XmynFEjJ2zsAJvFY3DtCnANRAQNNE/qRRilXh3rsfUDrLL0RAyYtz6JIDvVI3cTfY3ik3pm+6bu0VVvGrf7lCg/wr8WHZHyBs0mQZpcrogupRtIESIWii/dnMjiIpo0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715093330; c=relaxed/simple;
-	bh=Him/mGIj3I301yB+D6WucDHFkIiyFtUIv20skypew9M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1+7UqJH9O9+gc0fkA4ZJmihFDuWNCMdnVyuVEDgWFArK0XlWddL5uHqZTJ+xo5cQnR1AvJXrL69jFoaWqh57KoqTvX0hHixaZemYL7pR2huhi7B+g+OVGeBvEhXn3uw9rTyj4+s6+8GIkqCsOOj+oyes64YPctyxjMXTv5lf/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hcvRtjQi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E36C4DDFA;
-	Tue,  7 May 2024 14:48:50 +0000 (UTC)
+	s=arc-20240116; t=1715094061; c=relaxed/simple;
+	bh=8a2pyO1gn1Kbk1AilEdpctkENSJMzwz0LXzeDq6SO6I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ddW6kXK1c9elZMTPrsZjC9z691iCwbyOHP+/cAbwjCFFr7N5EWDRn+E0nXiS0vxPtTIwHTIxlIkdauOuIl/tXdSkN0CK9y10OHeoYqGajgYaHxiiEnKNvcgVKGeUq/VH5dEyU6TndG5UfkKhOmHJOAA7AarsjqPlaq3VZqaIZR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y8AmCP22; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF65C2BBFC;
+	Tue,  7 May 2024 15:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715093330;
-	bh=Him/mGIj3I301yB+D6WucDHFkIiyFtUIv20skypew9M=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcvRtjQifaNSUhMmdYSt45yob5sV2a/OgqGwU1EgQsClbBbqU8tyqNBOLWfHLvTk6
-	 6Rlc7J2H/mUOLZv8anlI/tFv6CHKcL6Bk8gaCpNNRG/VynA+o2R9CVB29udJbhugMr
-	 pJ2/06axKVn+qP2MfM9QSCVMfYSKABjGqNNrl145WrDwPSD3NuM+Cti96ROj5Iqvot
-	 QZ2G0hjY11AqHRbkFm4nyuWQipXXTjoCkc9Ku0flWNS+oZSenB40mX7f08WS286LAj
-	 cTVVhoGB9pseFko2pY695Uyn6oLbjGL5eTpCGusYxaTHTeMC7gYuKeAxEi2jO2OjWL
-	 Wk5AYz8lcI5Ng==
+	s=k20201202; t=1715094060;
+	bh=8a2pyO1gn1Kbk1AilEdpctkENSJMzwz0LXzeDq6SO6I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Y8AmCP226PFSr1YG4tK7kuHNHtRyXGzMaSR8rzq7qFVoJUWZvo4d4WAwq1Tog2Sft
+	 xP/tdeNq2x0Hv7QGRCdhyMdoBRJrYhBj2/vXX7OqL+NG7tIgSsct9ZaLK5RG+aLN0u
+	 S1ZO9xXZDot7EEgkLuuCj+6nJ8mCaIo97JcEHha9UFZa5E51w2UfQkBpR2P8i2JGg8
+	 6u/3g/Ohu2oy5D6j/HCNlgyZU2b8CJ7/lzuPt4nRwR39EsYibtD+Yw7yOYy2pGR3cY
+	 D+jhKdJbx7UP3Wv2qUcS7YMoLw/pJMEQcG5Oiqf5F4C+B86ih/mB3bMXg6duXGUHyA
+	 Pk7p2WYVijbJw==
 Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1s4M7g-000000003D0-3Ozv;
-	Tue, 07 May 2024 16:48:52 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	(envelope-from <johan@kernel.org>)
+	id 1s4MJT-000000003QQ-0G9L;
+	Tue, 07 May 2024 17:01:03 +0200
+Date: Tue, 7 May 2024 17:01:03 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-input@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 7/7] arm64: defconfig: enable Elan i2c-hid driver
-Date: Tue,  7 May 2024 16:48:21 +0200
-Message-ID: <20240507144821.12275-8-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240507144821.12275-1-johan+linaro@kernel.org>
-References: <20240507144821.12275-1-johan+linaro@kernel.org>
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Das Srinagesh <quic_gurus@quicinc.com>,
+	Satya Priya <quic_c_skakit@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-gpio@vger.kernel.org
+Subject: Re: [PATCH 02/13] mfd: pm8008: fix regmap irq chip initialisation
+Message-ID: <ZjpCL_NQD7X3hasO@hovoldconsulting.com>
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+ <20240506150830.23709-3-johan+linaro@kernel.org>
+ <ZjknxSsyo20b5_Tm@surfacebook.localdomain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZjknxSsyo20b5_Tm@surfacebook.localdomain>
 
-Enable the Elan i2c-hid driver which is needed for the touchscreen on
-machines like the Lenovo ThinkPad X13s.
+On Mon, May 06, 2024 at 09:56:05PM +0300, Andy Shevchenko wrote:
+> Mon, May 06, 2024 at 05:08:19PM +0200, Johan Hovold kirjoitti:
+> > The regmap irq array is potentially shared between multiple PMICs and
+> 
+> IRQ
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+I'm referring to an array of struct regmap_irq. Perhaps I can add an
+underscore.
+ 
+> > should only contain static data.
+> > 
+> > Use a custom macro to initialise also the type fields and drop the
+> > unnecessary updates on each probe.
+> 
+> ...
+> 
+> > +#define _IRQ_TYPE_ALL (IRQ_TYPE_EDGE_BOTH | IRQ_TYPE_LEVEL_HIGH | IRQ_TYPE_LEVEL_LOW)
+> 
+> This is repetition of IRQ_TYPE_DEFAULT.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index ac6fb3de1e3a..56fb9725d7c0 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1023,6 +1023,7 @@ CONFIG_SND_AUDIO_GRAPH_CARD2=m
- CONFIG_HID_MULTITOUCH=m
- CONFIG_I2C_HID_ACPI=m
- CONFIG_I2C_HID_OF=m
-+CONFIG_I2C_HID_OF_ELAN=m
- CONFIG_USB=y
- CONFIG_USB_OTG=y
- CONFIG_USB_XHCI_HCD=y
--- 
-2.43.2
+Thanks, I guess I should use IRQ_TYPE_SENSE_MASK here even.
 
+> ...
+> 
+> > -			dev_err(dev, "Failed to probe irq periphs: %d\n", rc);
+> > +			dev_err(dev, "failed to add IRQ chip: %d\n", rc);
+> 
+> dev_err_probe(...); ?
+
+This function won't return -EPROBE_DEFER, and that would be a separate
+change in any case.
+
+Johan
 
