@@ -1,129 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-19380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 426CC8BE90B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 18:32:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7A4F8BE92C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 18:36:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1B9928C0A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:32:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 06A0F1C23E3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:36:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BF4F17A92E;
-	Tue,  7 May 2024 16:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0614D79D0;
+	Tue,  7 May 2024 16:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kijo11kH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A0GSbALb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E7617108A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 16:27:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E3154BEA;
+	Tue,  7 May 2024 16:31:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715099247; cv=none; b=qJRkwjBl5swo1QSM8JTxY+FE9OCsdSA0wWE7YAGtm4Eho/X7ylwUlb7zLmyFr+encUjPZ6TGdulPqa0bPMS6NPB/L3rc8mck4WeOnrtyUiIlRiHXgDEyxB5LtgWRufFx3qFe2JWRj1KEjMfinYebHyqmcTqhRmiHyf7k4hK7HiQ=
+	t=1715099478; cv=none; b=GStC4+78v/3KuTAU7mfT6pgVEHrRWzUQUpA5m2X83CHf2WXSUN+YHnOLdwsUkdLHTNxS284qdG1comfnLcExxavRk0JahNk4mYXm1+Yjni/psilhmevxobd12M3c3itMSCcXO3kE8cgnLKB4ho6WAgAi6OKkKoq2hOEeucNO5Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715099247; c=relaxed/simple;
-	bh=xx+wxFNs3ZuqK7Hxds/mLdbM5HIFghI8UQG5DaBamLQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=D6FwvxWYF61XDaeKAVP1Exwq+Ha0RKEVflZXGUQahvhZ9COncD7cYNKorkiSP3oYcsgUlR+uV7XGref/RWJGPUDXDtWCm0qsfx1D6e2DWLnF4OvWf/H76map7h/UDMIufeTlqW3FeXjdW9s/G1z13vkR2vHhSSDm8M575yRXOoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=kijo11kH; arc=none smtp.client-ip=209.85.160.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-4365c1451d4so22803471cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 09:27:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1715099245; x=1715704045; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=24yjDTHuOCF+C8SbX9O7bVVIA87jnk99ezK2b/3Gma4=;
-        b=kijo11kHp2VAvCMSD4iUw/+pq4P4CA+f7MIsCw0/FUSb+XujX+hkKeCu264OA5aDBA
-         5wdUM8cO+wONlCxMUKFSKDh721ktw7XSngbs7+Rd90021jKDJMZvbRBUegNR6CIVvnz2
-         Rkgqrs9ZYugnUb5sh1vbaYj7t8FOMVc1EvYRk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715099245; x=1715704045;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=24yjDTHuOCF+C8SbX9O7bVVIA87jnk99ezK2b/3Gma4=;
-        b=mpQRWztkAPH8TKmdbPwTi0Biu0391DM7/dxI6rqWRF5Soe3nFVBdsXj7BQegJYU5+L
-         b8cSATai29SCvlatiiw3NPL4AQXWp0NI03PkzDUg5M/wsAm6exRoQ33PiFMtbfRs28vD
-         7gvA6o9rdb9tNNWFgsSFgMYXxSYWOKPm6Bg+gDOY4BCJOCjL7A7QMdHpBIe7hAclfe4J
-         aMpbpAuSwqDmVYO2rvm7ig+VATRSem/gFkgC5UWYeKxHA5Uk9mxlC6XXdtnFuhYV0Dym
-         jo4yaH+STbvaebd7iJesDC3q7F9o6u+qxcRuI4L7mNA1ZJPKRSbawwEp2a4GTr+kON1v
-         RBYA==
-X-Forwarded-Encrypted: i=1; AJvYcCWSbCNNLHlLucPMETnqEvl3d1QA69eoY4SIdX8uRikq8PHeklHibxQGqTPp9nDd8RQwKn/B70befgDXRUh3K0QVBW0eNrm/eODYx0g7nw==
-X-Gm-Message-State: AOJu0YyjIJnjyPyqgghu1KG6PeehsPccjUSg09GA9U9ORudBGM3BXCol
-	nsB5YAR9xgMyX6KK/i7I/aoRJKQoeOuRmudAoIYTuvZtvpmC7HT9O0PV1Oh5kQ==
-X-Google-Smtp-Source: AGHT+IFXk9TiPGkyPd47b/0bfL7TWw3sW2kfDIDAt+NnUsqL7Hhdu3EhERFFZlCigfyFh6dM5Cuiow==
-X-Received: by 2002:ac8:7e8b:0:b0:439:dfc7:aca4 with SMTP id d75a77b69052e-43dbf868fd7mr1746031cf.63.1715099244908;
-        Tue, 07 May 2024 09:27:24 -0700 (PDT)
-Received: from denia.c.googlers.com (114.152.245.35.bc.googleusercontent.com. [35.245.152.114])
-        by smtp.gmail.com with ESMTPSA id hf23-20020a05622a609700b0043d1fc9b7d9sm4160597qtb.48.2024.05.07.09.27.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 May 2024 09:27:24 -0700 (PDT)
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Tue, 07 May 2024 16:27:23 +0000
-Subject: [PATCH v2 18/18] media: venus: Refactor
- hfi_buffer_alloc_mode_supported
+	s=arc-20240116; t=1715099478; c=relaxed/simple;
+	bh=xf6vF2tLiDkxdORBNe7B9Y/dP2uQ/drLwUdwAmkrcok=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=p2FmEYJhkR2I7Ryvv6qlCf1Og4IXoW3TvUuuuvc+DiJ2IuTPCJ/M+DrJrijuDvsqGIZa6CW8KBqrukR0nPXE5tKTtbowQ+0zKtKrurSEGB4KxrEUvEK3XGjxzg8vjNEZAPhBKhxuyZ6LNs9KXl6c0Jb97sF0vdGyDpKjd72HEks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A0GSbALb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 447EQX3A024156;
+	Tue, 7 May 2024 16:31:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:in-reply-to:references; s=
+	qcppdkim1; bh=sEybrDKAPFJvrVijAN/jPDUy4nJOcnX3S0FLFrbEuEQ=; b=A0
+	GSbALbLY1tGVoTdMik5SlnMEx8oz52PpI6chAuSawAlQJAgiLDry1fLi/gF7ch6X
+	3H/xOq1d+dAXB1odkeLWXpnI5EDtVsPCPrC4W1DQFKAiuEwBCNKbnGtNThEdw2Vf
+	mdrW9lZSb06Y/OZlj/kkyB2ITfVbTqhifxGQFwyzGh4z3pojVpk5t4boXrH0/28/
+	T/BMZ/2lNFneXSYl0GvBG2UiU49c8YE8Y6a+Y9J6ICuL6PZ70IFd5M3sRTWWzGh0
+	pEgldUzyg+sI5w8eBcqFSxU9aIHGjAfhVka0GIYUV1ZZBBEZNfFfj+MQDb9A7+Db
+	j35NM5AJ+72J6PGWtYLQ==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xyp2frc56-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 May 2024 16:31:10 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 447GV7vo019583;
+	Tue, 7 May 2024 16:31:07 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3xwe3krrx3-1;
+	Tue, 07 May 2024 16:31:07 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 447GV78H019578;
+	Tue, 7 May 2024 16:31:07 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vvalluru-hyd.qualcomm.com [10.213.106.176])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 447GV6kq019576;
+	Tue, 07 May 2024 16:31:07 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 482827)
+	id 4B9A75006A2; Tue,  7 May 2024 22:01:06 +0530 (+0530)
+From: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
+To: andersson@kernel.org
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_abhinavk@quicinc.com,
+        quic_nankam@quicinc.com, quic_vvalluru@quicinc.com, robh@kernel.org
+Subject: [PATCH v3] arm64: dts: qcom: qcs6490-rb3gen2: enable hdmi bridge
+Date: Tue,  7 May 2024 22:00:45 +0530
+Message-Id: <20240507163045.28450-1-quic_vvalluru@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc>
+References: <jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DsHK6veQ039EtKq0nzYV5JB_UfF5P8jv
+X-Proofpoint-ORIG-GUID: DsHK6veQ039EtKq0nzYV5JB_UfF5P8jv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-07_09,2024-05-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 clxscore=1015 mlxlogscore=949 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
+ definitions=main-2405070112
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240507-cocci-flexarray-v2-18-7aea262cf065@chromium.org>
-References: <20240507-cocci-flexarray-v2-0-7aea262cf065@chromium.org>
-In-Reply-To: <20240507-cocci-flexarray-v2-0-7aea262cf065@chromium.org>
-To: Michael Tretter <m.tretter@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
- Michal Simek <michal.simek@amd.com>, Andy Walls <awalls@md.metrocast.net>, 
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
- Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
- Ricardo Ribalda <ribalda@chromium.org>
-X-Mailer: b4 0.12.4
 
-Replace the old style single element array at the end of the struct with
-a flex array.
+Rb3Gen2 has a lt9611uxc DSI-to-HDMI bridge on i2c0, with
+reset gpio from pm7250b gpio2 and irq gpio from tlmm gpio24.
+Bridge supplies are Vdd connected to input supply directly
+and vcc to L11c. Enable HDMI output, bridge and corresponding
+DSI output.
 
-The code does not allocate this structure, so the size change should not
-be a problem.
-
-This fixes the following cocci warning:
-drivers/media/platform/qcom/venus/hfi_helper.h:1233:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
 ---
- drivers/media/platform/qcom/venus/hfi_helper.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+v3: - Updated commit text
+    - Arranged nodes in alphabetical order
+    - Fixed signoff
+    - Fixed drive strength for lt9611_irq_pin
+    - Removed 'label' from hdmi-connector, which is optional
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index dee439ea4d2e..9545c964a428 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -1230,7 +1230,7 @@ struct hfi_interlace_format_supported {
- struct hfi_buffer_alloc_mode_supported {
- 	u32 buffer_type;
- 	u32 num_entries;
--	u32 data[1];
-+	u32 data[];
+v2: Addressed dtschema errors
+	- Fixed lt9611-irq
+	- vdd-supply error to be ignored, as it is connected to
+	  input supply directly, on rb3gen2
+---
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 85 ++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+index a085ff5b5fb2..24b0b9525ea4 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+@@ -52,6 +52,17 @@
+ 		};
+ 	};
+ 
++	hdmi-connector {
++		compatible = "hdmi-connector";
++		type = "a";
++
++		port {
++			hdmi_con: endpoint {
++				remote-endpoint = <&lt9611_out>;
++			};
++		};
++	};
++
+ 	reserved-memory {
+ 		xbl_mem: xbl@80700000 {
+ 			reg = <0x0 0x80700000 0x0 0x100000>;
+@@ -530,6 +541,45 @@
+ 			   <GCC_WPSS_RSCP_CLK>;
  };
  
- struct hfi_metadata_pass_through {
-
++&i2c0 {
++	clock-frequency = <400000>;
++	status = "okay";
++
++	lt9611_codec: hdmi-bridge@2b {
++		compatible = "lontium,lt9611uxc";
++		reg = <0x2b>;
++
++		interrupts-extended = <&tlmm 24 IRQ_TYPE_EDGE_FALLING>;
++		reset-gpios = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
++
++		vcc-supply = <&vreg_l11c_2p8>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&lt9611_irq_pin &lt9611_rst_pin>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				lt9611_a: endpoint {
++					remote-endpoint = <&mdss_dsi0_out>;
++				};
++			};
++
++			port@2 {
++				reg = <2>;
++
++				lt9611_out: endpoint {
++					remote-endpoint = <&hdmi_con>;
++				};
++			};
++		};
++	};
++};
++
+ &i2c1 {
+ 	status = "okay";
+ 
+@@ -587,6 +637,21 @@
+ 	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
+ };
+ 
++&mdss_dsi {
++	vdda-supply = <&vreg_l6b_1p2>;
++	status = "okay";
++};
++
++&mdss_dsi0_out {
++	remote-endpoint = <&lt9611_a>;
++	data-lanes = <0 1 2 3>;
++};
++
++&mdss_dsi_phy {
++	vdds-supply = <&vreg_l10c_0p88>;
++	status = "okay";
++};
++
+ &mdss_edp {
+ 	status = "okay";
+ };
+@@ -711,3 +776,23 @@
+ 	function = "gpio";
+ 	bias-disable;
+ };
++
++&pm7250b_gpios {
++	lt9611_rst_pin: lt9611-rst-state {
++		pins = "gpio2";
++		function = "normal";
++
++		output-high;
++		input-disable;
++		power-source = <0>;
++	};
++};
++
++&tlmm {
++	lt9611_irq_pin: lt9611-irq-state {
++		pins = "gpio24";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++};
 -- 
-2.45.0.rc1.225.g2a3ae87e7f-goog
+2.17.1
 
 
