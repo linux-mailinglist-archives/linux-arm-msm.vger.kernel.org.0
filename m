@@ -1,188 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-19343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AF748BE5BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:23:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CFF88BE5EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:30:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B471F1F21937
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 14:23:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9EBD81C22142
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 14:30:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45BE916ABC6;
-	Tue,  7 May 2024 14:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FB8D15B108;
+	Tue,  7 May 2024 14:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="goRq4F4r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qpzj+KH+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DFA161B43;
-	Tue,  7 May 2024 14:20:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0031DFEA;
+	Tue,  7 May 2024 14:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715091620; cv=none; b=hS2zvzYIckhWsEypdorWZj/KzKzXcN2n+HfJOuRFDM5guZS6rxbEnW81vGl1AhuBJbJppp6iobTO8zHKigfKI/gw5HOcsNlKjpG6S+rPY9GXTgXlVXvFtymnBvvmGAIit6UdTHBWGGpTPc76DSd5mTReHxR/XuQOnzNI0tixdRM=
+	t=1715092233; cv=none; b=PP28ex1PuXJPlAAsp5bqJsVphh0VXY5NLrtmCMyfoX1NMx0xSfhF5MPE8qIa4s99V4OPUi8pRxP341Uz/jSV15CIpkaSoWqXKZmGX7kLVJzyg6lAJEuJjJCRCGwtSXbv8XrmEyARf4jGKQE23EW+9eEJY+IT9VQ6H0OVakwVGmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715091620; c=relaxed/simple;
-	bh=DDbDAjCj7BTjLcg+tESqjQbB0M1djQihBUEgcUUlF9I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=a2J9CbaKg5R8wmfw4sq/JMM/9RFN5tsCQApjseXjTSRlj0AJ8xOkf6dHNgImxojx7SM42KP6NtjInaYf/b4Ru8BbD27D9ukCfmvX0K4ydxtv1rTXUkCBNnEsWsnwN3upDC4e0xh3q4pzdI4wKIZ8BlsHMTiFvLd3UxRLbA0UDrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=goRq4F4r; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4477Y6ZT010983;
-	Tue, 7 May 2024 14:20:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=LZqpWbTBUTo2OgnT+e/+lpRwCgL1AiiIIsUKRWyG85c=; b=go
-	Rq4F4r42cRm0en34THnZYj7G0FzwJueNGLQ7K107KiurcbK2ehzxjKZ5kx4md3eH
-	xEVNXhTkKEVQfJGQfsLCw9EMG0WRKNF+ytMV5t0fUgShGEkiTlRk0t8dVLHrnRvz
-	RT5BEaU2HJPE6ur9nnsXrBf94+3igvqV9nsbXJPJuV7sfoOBtnpY0MX0Mp9/zpA6
-	YTvpEzcj99LsEDJQt2LIKPEav1y4lDtRphNrecFgqY/AC3V5UDaK23aedfocuveN
-	c85TQxTpvUChSiBC3C9PiX1+dybYsbfOwv+pzjQBKuaW5850a0zaFA5njhbhzI6n
-	gU6LdU//BBS40F4trkiA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xyg0v11cw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 May 2024 14:20:13 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 447EKCej012939
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 May 2024 14:20:12 GMT
-Received: from [10.216.21.139] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 May 2024
- 07:20:08 -0700
-Message-ID: <2bf9770e-c8a6-345a-c584-f29710e944ba@quicinc.com>
-Date: Tue, 7 May 2024 19:50:04 +0530
+	s=arc-20240116; t=1715092233; c=relaxed/simple;
+	bh=o0lOuJYJuGexb0hyjD9GPEecAcOFpUWl3uozSm2KGHc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h1bgDRv0Q9H5eT8XBh+y31tlvtdeIDpeIKoJyRN/4+akE525DlgM4pR1LnXoLC2EuDARw/Zl8R1AMzwhBztgD/oIMySzd6H8sVDHFkTw84v3y3S7rT7MnUWbimh2tvpmGdV45Iai/6ESSB+Odbs1Rs4lBarAqoF4pHrW3F93XAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qpzj+KH+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A090BC2BBFC;
+	Tue,  7 May 2024 14:30:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715092232;
+	bh=o0lOuJYJuGexb0hyjD9GPEecAcOFpUWl3uozSm2KGHc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qpzj+KH+gkUheVxRL6XFPOxp8sBEtegOzZjQBdOGZoMCzi5fyRliO0IjMa1AuhFVk
+	 rvxNwMr7k8P7EjsXFUqiyjHZdCbzXYR3R8YvzXCJdLOSRdWkdLsz2a5GYW7x+G+Lrj
+	 6O5pfJQkBVI602nWS0BzXgWcMfAYDLvulliSUs4FL1tsdcsH0f+jflANFkz3ZPocPV
+	 mfJ2WWRnixUXZbuyfmamTkmjgaUMm1JymEJT/d/NXM85AOlIlzzcobciLd3lY7wE1a
+	 zG3JEyWf9Ce+hIUrwHUB0UxC8n35vz8RL/v5noKXiuyRZGumbltle+3C9CpLTaYgzV
+	 0R6jwbfWAd+sQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1s4Lpy-000000002rs-2neG;
+	Tue, 07 May 2024 16:30:34 +0200
+Date: Tue, 7 May 2024 16:30:34 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/6] dt-bindings: HID: i2c-hid: elan: add
+ 'no-reset-on-power-off' property
+Message-ID: <Zjo7CuT7UyQC57Rr@hovoldconsulting.com>
+References: <20240423134611.31979-1-johan+linaro@kernel.org>
+ <20240423134611.31979-4-johan+linaro@kernel.org>
+ <CACRpkdYXfZwBdLSTTPbruD9qynOPuQBOZjCwA_6eE+1MUBCkgA@mail.gmail.com>
+ <ZjSksM07OlgpE3yO@hovoldconsulting.com>
+ <CACRpkdYZWixc1E3=Y2j0etuDS7vNY3QcqK2Qiac_KPorr7s0Ug@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: msm8998: add venus node
-Content-Language: en-US
-To: Marc Gonzalez <mgonzalez@freebox.fr>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O Donoghue
-	<bryan.odonoghue@linaro.org>
-CC: MSM <linux-arm-msm@vger.kernel.org>,
-        linux-media
-	<linux-media@vger.kernel.org>,
-        DT <devicetree@vger.kernel.org>,
-        "Pierre-Hugues Husson" <phhusson@freebox.fr>,
-        Arnaud Vrac <avrac@freebox.fr>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-References: <1cf08b56-a247-431b-a24b-69f563f49240@freebox.fr>
- <c2fca6c7-2421-42b4-a43d-68b251daf9b4@freebox.fr>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <c2fca6c7-2421-42b4-a43d-68b251daf9b4@freebox.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZQan59eyKJtKUJPBJiN3IJ--SeKN4zXz
-X-Proofpoint-GUID: ZQan59eyKJtKUJPBJiN3IJ--SeKN4zXz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-07_08,2024-05-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
- malwarescore=0 adultscore=0 spamscore=0 phishscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2404010003 definitions=main-2405070098
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACRpkdYZWixc1E3=Y2j0etuDS7vNY3QcqK2Qiac_KPorr7s0Ug@mail.gmail.com>
 
+On Mon, May 06, 2024 at 08:29:40AM +0200, Linus Walleij wrote:
 
-On 5/7/2024 2:59 PM, Marc Gonzalez wrote:
-> From: Pierre-Hugues Husson <phhusson@freebox.fr>
+> +  no-reset-on-power-off:
+> +    type: boolean
+> +    description:
+> +      Reset line is wired so that it can be left deasserted when the power
+> +      supply is off.
 > 
-> Now that the venus clocks are fixed, we can add the DT node.
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-> ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 48 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index 5f5b90a6e2bf1..3d3b1f61c0690 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -3010,6 +3010,54 @@ mdss_dsi1_phy: phy@c996400 {
->  			};
->  		};
->  
-> +		venus: video-codec@cc00000 {
-> +			compatible = "qcom,msm8998-venus";
-> +			reg = <0x0cc00000 0xff000>;
-> +			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
-> +			power-domains = <&mmcc VIDEO_TOP_GDSC>;
-> +			clocks = <&mmcc VIDEO_CORE_CLK>,
-> +				 <&mmcc VIDEO_AHB_CLK>,
-> +				 <&mmcc VIDEO_AXI_CLK>,
-> +				 <&mmcc VIDEO_MAXI_CLK>;
-> +			clock-names = "core", "iface", "bus", "mbus";
-> +			iommus = <&mmss_smmu 0x400>,
-> +				 <&mmss_smmu 0x401>,
-> +				 <&mmss_smmu 0x40a>,
-> +				 <&mmss_smmu 0x407>,
-> +				 <&mmss_smmu 0x40e>,
-> +				 <&mmss_smmu 0x40f>,
-> +				 <&mmss_smmu 0x408>,
-> +				 <&mmss_smmu 0x409>,
-> +				 <&mmss_smmu 0x40b>,
-> +				 <&mmss_smmu 0x40c>,
-> +				 <&mmss_smmu 0x40d>,
-> +				 <&mmss_smmu 0x410>,
-> +				 <&mmss_smmu 0x421>,
-> +				 <&mmss_smmu 0x428>,
-> +				 <&mmss_smmu 0x429>,
-> +				 <&mmss_smmu 0x42b>,
-> +				 <&mmss_smmu 0x42c>,
-> +				 <&mmss_smmu 0x42d>,
-> +				 <&mmss_smmu 0x411>,
-> +				 <&mmss_smmu 0x431>;
-> +			memory-region = <&venus_mem>;
-> +			status = "disabled";
-> +
-> +			video-decoder {
-> +				compatible = "venus-decoder";
-> +				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
-> +				clock-names = "core";
-> +				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
-> +			};
-> +
-> +			video-encoder {
-> +				compatible = "venus-encoder";
-> +				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
-> +				clock-names = "core";
-> +				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
-> +			};
-> +		};
-> +
->  		mmss_smmu: iommu@cd00000 {
->  			compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
->  			reg = <0x0cd00000 0x40000>;
+> To be nitpicky: *should* be left deasserted rather than *can* be left
+> deasserted, right? If the behaviour is desirable but not strictly
+> required.
 
-Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+I considered that too, but settled on the above description as it is
+pure hardware description and leaving the decision to act on it up to
+the OS (e.g. if support is implemented).
 
-Regards,
-Vikash
+On the other hand, the "should" is already implied by the property name
+so perhaps there's no reason not to include it also in the description:
+
++  no-reset-on-power-off:
++    type: boolean
++    description:
++      Reset line is wired so that it can (and should) be left
++      deasserted when the power supply is off.
+
+And "should" (unlike "shall") still leaves room for an OS to ignore it
+at the cost of increased power consumption.
+
+Johan
 
