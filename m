@@ -1,86 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-19437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D617E8BEFC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 00:24:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C19328BF146
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 01:21:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 924AA28266B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 22:24:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CF1E286B2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 23:21:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4227078C72;
-	Tue,  7 May 2024 22:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D782B7F476;
+	Tue,  7 May 2024 23:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=toblux-com.20230601.gappssmtp.com header.i=@toblux-com.20230601.gappssmtp.com header.b="q1fCnkk/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NyJ57G1l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8969B71B3B
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 22:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AC683CD2;
+	Tue,  7 May 2024 23:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715120670; cv=none; b=pG3y6VSTx+xqhB1a3Ii86D4goBhh33l8+lhRmkTsUMQJD/V6t7KQ8iKaGLn5nNhqzYV3Z1rZ8GAs3CPfu6J9usrwI1A5dn4/4DDhCDTHSBRjlQT6MrAn+ZJTkSY3y0RlIEIzjRl4I/agvyZ1YCbNoudnrotw14eDepdCCkgt9Cs=
+	t=1715123123; cv=none; b=jQYaApNEByzKTQO35db76sBbayg+ha1ixYbFTsnQCVuyfCac3t2FAGi1gXnVDZIbkKX0EKUCCI3WIkugyf2yzJETwCMURQ/SvwL3IPa+voO9U5MmTwAx+4wc7zKLzOSlZdxO1fuJxRFJd3lTonBfgrrwL21lXlQcqo0QvEs/NcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715120670; c=relaxed/simple;
-	bh=c7UKyLTf3qgP/ZDSdlx8z8d3mhtIEJV2ZyM3UhgQ9Jc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jO1N7lqt32nIZV0gB9XV5A4jhSnCn3DClvUXuJgX8JzhoJDXeN0mxsk1f/MhSypK50ttjBRxSvCoSCPgJca57yOYnobfrLG6+dPm/JEykA+hR7pUdxNWVhpcxxLofBX0dmiDXpZuucQ16ASn2KOPP2rrEOkEdw3xmiZSxF4dVHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=toblux.com; spf=none smtp.mailfrom=toblux.com; dkim=pass (2048-bit key) header.d=toblux-com.20230601.gappssmtp.com header.i=@toblux-com.20230601.gappssmtp.com header.b=q1fCnkk/; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=toblux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=toblux.com
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-51ffff16400so5281190e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 15:24:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=toblux-com.20230601.gappssmtp.com; s=20230601; t=1715120667; x=1715725467; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6OA0/ZmfFA8NqMyU/dHLn5RSQ+cSht4+hgJiijtXHso=;
-        b=q1fCnkk/F/HfazOuz38pvmNwJrVk+9ItiSIxGlQZy54lOZQAvC4QzBLaTdmfjdiYfh
-         tw7ZkPU06JJeodI82p+yVUaY283Y/90stnUlF2f2rOYyaIHH78qJMIEOzns8fXsLodqU
-         uucMDXLHjUaZjn0Ga9+h9cr56IM3f/kHVH3McghG6DbV3BY6Fy5+kC3B2/3WBhvbUDev
-         CLlIfafIRapeY+jF7d2fY03zIipF3wi80d7XjX1355S/NYt+1vere+O8CiqeivzC21rO
-         NBtvoK4q9N6cKwwgvpkSXBoMCadMzfT+jBpFtDwamgwJV/HpZ54RDKDUt48tzHvSqkjt
-         SEzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715120667; x=1715725467;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6OA0/ZmfFA8NqMyU/dHLn5RSQ+cSht4+hgJiijtXHso=;
-        b=eUP0gS5lq+BAGRUOoLiHab1GuQO+6jge9VgivHsqy400dyviicOuULkqpN7kYHAZ1P
-         +zjC6/YQz8s79y/3pOg1ulJeINKXGKbCLdRsDoLaPsgNfCs0axXdSizwg92e4/pPbqVF
-         pAId5Vh6s8jgSqigoP8h9N4d6q7KTyyau9Tg5NDnf5MUNlrm4WEwHgeOGGvtjBpQDkkA
-         HK+FrWYGykA3DFkwQn0pRUuCiHmE0VIu5SNun328AXWbkImQ0v9LPJ+DAp8iVPP3TqlZ
-         bVtJnxYT/9JA7SUjhXBajnuDm/WIQWwNEKthRD/fCrfgKjIzEQ9VyGNmEYAM47Y0kp65
-         h/RQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVqvBJpQGVc2YgaslhOFlxD+BfDz0+oE0luO4xBivKhownPqRzQmHstXSuvfJNVmtfCgOmcKyCjEBOW+JpCSvb3/pqtMKZAgocKPr6O0g==
-X-Gm-Message-State: AOJu0Yz5snDWh/vhCN5IjF8AbZQ/vN/rMDOmw089TLYAeObV8k+Yf8KB
-	Vb/eQ0FyzIEezyJQIkEqC18sth/5TYIc9BUpDrOA0To7eSFuEbbJhy9VywdDSVo=
-X-Google-Smtp-Source: AGHT+IEDUraO0PNfs6Jj5XK7HwjpHdYJVJlbuCKQdrAa5Ui5W+qjGBeSjaKTHA1SgWej5R5ja93DGw==
-X-Received: by 2002:ac2:4a71:0:b0:519:e878:9385 with SMTP id 2adb3069b0e04-5217c5671a9mr575244e87.18.1715120666552;
-        Tue, 07 May 2024 15:24:26 -0700 (PDT)
-Received: from fedora.fritz.box (aftr-62-216-208-100.dynamic.mnet-online.de. [62.216.208.100])
-        by smtp.gmail.com with ESMTPSA id w24-20020a1709067c9800b00a59ad48a8b2sm4396056ejo.0.2024.05.07.15.24.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 May 2024 15:24:26 -0700 (PDT)
-From: Thorsten Blum <thorsten.blum@toblux.com>
-To: arnd@arndb.de
-Cc: amahesh@qti.qualcomm.com,
-	gregkh@linuxfoundation.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	srinivas.kandagatla@linaro.org,
-	thorsten.blum@toblux.com
-Subject: [PATCH v2] misc: fastrpc: Use memdup_user()
-Date: Wed,  8 May 2024 00:22:27 +0200
-Message-ID: <20240507222226.288074-2-thorsten.blum@toblux.com>
-X-Mailer: git-send-email 2.45.0
-In-Reply-To: <29b33c18-f123-4656-8507-406c87a12ec8@app.fastmail.com>
-References: <29b33c18-f123-4656-8507-406c87a12ec8@app.fastmail.com>
+	s=arc-20240116; t=1715123123; c=relaxed/simple;
+	bh=jvuUv/gpzsuOrwEs/4QwZfNNTb8zlGmd4Bztr7m2hVE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dRitLiboM584YxIcpV9vP9RL7kZuV42jbA57vCL99aGQmmTXEh9izj+9R743O8shtQjPmszCx8oKO829FVZfUNl9kPun4PCjx2G+KYPSIN20HPKE6dy6OInQQDH4YwqS3MKrenxITSAJb8/oFo7s0e21ulAWGvmjQRT+mHJPY0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NyJ57G1l; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 447Mnk35030488;
+	Tue, 7 May 2024 23:05:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=Y7avjRX
+	egUR08hpaeu4He6mA5avWecSvWCQx3d/eSM0=; b=NyJ57G1lOu7KXx4mI+eW521
+	tocoYcGPbL5xIkV0/GvcjE1K58e94AO/Gs3n3WCLAHZLHfGGqySdP9AKf5HFPflf
+	ktsR5cvZ7Ab+nSr5vcHHhQXD8VLepsv2x3zGPCyEbAJIj3Zj3qfT9XzVhN4TzGgx
+	nHAbVFfVLihj3hUIIjy08ieiJSUgbhDC20a3s0KS1XWgCp2gfhUhGTGtL6ePgurQ
+	G36+7vDcqggM61lwJIMK3JgTGC1hChs24N2s1n8A2AURBGa1wpQr5RIYe0XIe3hw
+	X2wn5x4AMWQ4/fSlxYwDwKT3ICYQmEFRaSBGqM4tIO4K02/tbgN5RzMKgioeKzg=
+	=
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xysprrej1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 May 2024 23:05:10 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 447N596w005521
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 7 May 2024 23:05:09 GMT
+Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 7 May 2024 16:05:08 -0700
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Daniel
+ Vetter" <daniel@ffwll.ch>
+CC: <dri-devel@lists.freedesktop.org>, <seanpaul@chromium.org>,
+        <swboyd@chromium.org>, <quic_jesszhan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm: remove python 3.9 dependency for compiling msm
+Date: Tue, 7 May 2024 16:04:40 -0700
+Message-ID: <20240507230440.3384949-1-quic_abhinavk@quicinc.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,52 +79,58 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DZg-dTmM5wmBFPryQnwiSe4krGJvwrJh
+X-Proofpoint-ORIG-GUID: DZg-dTmM5wmBFPryQnwiSe4krGJvwrJh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-07_15,2024-05-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ suspectscore=0 spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=999
+ bulkscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405070161
 
-Switching to memdup_user() overwrites the allocated memory only once,
-whereas kzalloc() followed by copy_from_user() initializes the allocated
-memory to zero and then immediately overwrites it.
+Since commit 5acf49119630 ("drm/msm: import gen_header.py script from Mesa"),
+compilation is broken on machines having python versions older than 3.9
+due to dependency on argparse.BooleanOptionalAction.
 
-Fixes the following Coccinelle/coccicheck warning reported by
-memdup_user.cocci:
+Switch to use simple bool for the validate flag to remove the dependency.
 
-	WARNING opportunity for memdup_user
-
-Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 5acf49119630 ("drm/msm: import gen_header.py script from Mesa")
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 ---
-Changes in v2:
-- Use u64_to_user_ptr() as suggested by Arnd Bergmann (thanks!)
-- Preserve Acked-by: tag
----
- drivers/misc/fastrpc.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/registers/gen_header.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 4c67e2c5a82e..694fc083b1bd 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1259,17 +1259,12 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 		goto err;
- 	}
+diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
+index fc3bfdc991d2..3926485bb197 100644
+--- a/drivers/gpu/drm/msm/registers/gen_header.py
++++ b/drivers/gpu/drm/msm/registers/gen_header.py
+@@ -538,7 +538,7 @@ class Parser(object):
+ 		self.variants.add(reg.domain)
  
--	name = kzalloc(init.namelen, GFP_KERNEL);
--	if (!name) {
--		err = -ENOMEM;
-+	name = memdup_user(u64_to_user_ptr(init.name), init.namelen);
-+	if (IS_ERR(name)) {
-+		err = PTR_ERR(name);
- 		goto err;
- 	}
+ 	def do_validate(self, schemafile):
+-		if self.validate == False:
++		if not self.validate:
+ 			return
  
--	if (copy_from_user(name, (void __user *)(uintptr_t)init.name, init.namelen)) {
--		err = -EFAULT;
--		goto err_name;
--	}
--
- 	if (!fl->cctx->remote_heap) {
- 		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
- 						&fl->cctx->remote_heap);
+ 		try:
+@@ -948,7 +948,8 @@ def main():
+ 	parser = argparse.ArgumentParser()
+ 	parser.add_argument('--rnn', type=str, required=True)
+ 	parser.add_argument('--xml', type=str, required=True)
+-	parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
++	parser.add_argument('--validate', default=False, action='store_true')
++	parser.add_argument('--no-validate', dest='validate', action='store_false')
+ 
+ 	subparsers = parser.add_subparsers()
+ 	subparsers.required = True
 -- 
-2.45.0
+2.44.0
 
 
