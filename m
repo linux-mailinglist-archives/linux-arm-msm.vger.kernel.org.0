@@ -1,123 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-19342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B605B8BE5BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:23:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AF748BE5BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:23:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 559421F23CD7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 14:23:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B471F1F21937
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 14:23:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F4F51607AD;
-	Tue,  7 May 2024 14:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45BE916ABC6;
+	Tue,  7 May 2024 14:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MJnI0WgV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="goRq4F4r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B57F15F408
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 14:18:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DFA161B43;
+	Tue,  7 May 2024 14:20:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715091533; cv=none; b=JTrXXgAs0V6BZyT0STRMSl4blF3N0/wKHg4Yi2UOL1vnZ9KtrWPEOJq783edaWSqZzfVAJUiKW9HAH2rqiYA0vB6/qIZQhdTBTa8TuGdOP//HCMGKTDBN+ZYoCB5Yfm+EeVcV4exfNP60NJuupgtRFrwEktGAsERfc2B3QBY/RI=
+	t=1715091620; cv=none; b=hS2zvzYIckhWsEypdorWZj/KzKzXcN2n+HfJOuRFDM5guZS6rxbEnW81vGl1AhuBJbJppp6iobTO8zHKigfKI/gw5HOcsNlKjpG6S+rPY9GXTgXlVXvFtymnBvvmGAIit6UdTHBWGGpTPc76DSd5mTReHxR/XuQOnzNI0tixdRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715091533; c=relaxed/simple;
-	bh=E9jPUsIV1FFv9HwtRXaXD20Lt/JQPRSXI3gSnwpUUkc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dGhS1mX5ifLXiPUCQj2ViWhgTMT+82iSRtyS8821wl20pRNw4nyZAi9NhdH65rs4LGIuVUmfBksNHEPUn95BpDrslT+L6prgBwThjpgv+2qYJMFChhTIlAGM5iwDfySTuPLECVKbWBLTCoCgVWDJ/M9lH79xHfn29yp25LRF2RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MJnI0WgV; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5206a5854adso2561571e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 07:18:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715091529; x=1715696329; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=V6B9/opbNGy2dF5CZyiOc2E1LTO1EkA3zCx/KbLDUB4=;
-        b=MJnI0WgVZ5azaNfgzoT6XCYsR3mQzU/ZJl/yMEQuRT56bY1NWPxQDAbJh6HFKj/bjY
-         G+vnF6FIBIOq1J7Lu/ZUSuoIqkoqahbs/M8qNP9NlBiFmKW6ocsuEcu2ySC2mjdnfbrR
-         IxH/rKx76VRzG5bsZ/964SO7Hm8SkKlvBdRTsPL+wXXYrAkrNo+p61k/bAluk/oODi+m
-         DEg30/wHFcftOeUstrS1gWNJGw5BwkHQtnbDwE3c+7CiXpCdtqCtq6dnXJWEavS8tVMt
-         lo6NqVD55ehzbDPU1SB8utFdDSWJNxeAsqcw8MkB5GXwP78Ozkg7IQRmoCU19JuS1/Jr
-         27CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715091530; x=1715696330;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V6B9/opbNGy2dF5CZyiOc2E1LTO1EkA3zCx/KbLDUB4=;
-        b=PPNn0H/vOOtfL7XMFbrfp555kqrz5OACa+X5M1NMX2/1csGGmqm7i/X30hUnCIfAm+
-         TT6jOOO6LSdcveW1I/9Hn6hZwQgV7SrfRqKro2FbPdYhJ2d7sd0s1hQQWUgqeGAd47Wl
-         6BCC9wtn/OgdY4OEy1592xJQhBe6aD69agh61Y3aYDnCuwVlH2EnXTgpqTC1RkVHf1fl
-         X7XRgE8ka2neySEn1mM1TB6TZMmJy/LHssccCXdF6+KqBK+vHVfVHsn8atsUpZ2iGes7
-         X/H7a6T6S3pfi0ZzVnUAyYejgaCeTnYu6Qm6sgVR6FaBXPOBAV1dEdESZ7ygGUdoCZnt
-         0f1A==
-X-Gm-Message-State: AOJu0YztdMLlPwoOWtDtJckuxyCU+7iEdlo1VSpbaJIJi5wd8pVQzUH8
-	eH4d6nhXsf4k6+XWXpc7+EqyGqQU559GKmD+kmmuo3PUzM/gLBNly1X3klXX1Uw=
-X-Google-Smtp-Source: AGHT+IGvfA2LnxMsAtbgMLtJQdOK715lWo1rdpwj0+KQ282HVHdI8dUi4imvbg6NqFVVZUmIGJifiw==
-X-Received: by 2002:ac2:5603:0:b0:51f:3fea:cbcf with SMTP id v3-20020ac25603000000b0051f3feacbcfmr7210675lfd.52.1715091529529;
-        Tue, 07 May 2024 07:18:49 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:c0d:408:fa88:abdb:17c2:cf24? ([2a00:f41:c0d:408:fa88:abdb:17c2:cf24])
-        by smtp.gmail.com with ESMTPSA id br39-20020a056512402700b0051da1d9c47esm2124202lfb.64.2024.05.07.07.18.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 May 2024 07:18:49 -0700 (PDT)
-Message-ID: <6d9879aa-ae84-4ed0-8b5f-5609fd0c37b9@linaro.org>
-Date: Tue, 7 May 2024 16:18:46 +0200
+	s=arc-20240116; t=1715091620; c=relaxed/simple;
+	bh=DDbDAjCj7BTjLcg+tESqjQbB0M1djQihBUEgcUUlF9I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=a2J9CbaKg5R8wmfw4sq/JMM/9RFN5tsCQApjseXjTSRlj0AJ8xOkf6dHNgImxojx7SM42KP6NtjInaYf/b4Ru8BbD27D9ukCfmvX0K4ydxtv1rTXUkCBNnEsWsnwN3upDC4e0xh3q4pzdI4wKIZ8BlsHMTiFvLd3UxRLbA0UDrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=goRq4F4r; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4477Y6ZT010983;
+	Tue, 7 May 2024 14:20:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=LZqpWbTBUTo2OgnT+e/+lpRwCgL1AiiIIsUKRWyG85c=; b=go
+	Rq4F4r42cRm0en34THnZYj7G0FzwJueNGLQ7K107KiurcbK2ehzxjKZ5kx4md3eH
+	xEVNXhTkKEVQfJGQfsLCw9EMG0WRKNF+ytMV5t0fUgShGEkiTlRk0t8dVLHrnRvz
+	RT5BEaU2HJPE6ur9nnsXrBf94+3igvqV9nsbXJPJuV7sfoOBtnpY0MX0Mp9/zpA6
+	YTvpEzcj99LsEDJQt2LIKPEav1y4lDtRphNrecFgqY/AC3V5UDaK23aedfocuveN
+	c85TQxTpvUChSiBC3C9PiX1+dybYsbfOwv+pzjQBKuaW5850a0zaFA5njhbhzI6n
+	gU6LdU//BBS40F4trkiA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xyg0v11cw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 May 2024 14:20:13 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 447EKCej012939
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 7 May 2024 14:20:12 GMT
+Received: from [10.216.21.139] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 7 May 2024
+ 07:20:08 -0700
+Message-ID: <2bf9770e-c8a6-345a-c584-f29710e944ba@quicinc.com>
+Date: Tue, 7 May 2024 19:50:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] arch: arm64: dts: sm8650-hdk: add support for the
- Display Card overlay
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20240422-topic-sm8650-upstream-hdk-v4-0-b33993eaa2e8@linaro.org>
- <20240422-topic-sm8650-upstream-hdk-v4-3-b33993eaa2e8@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: msm8998: add venus node
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240422-topic-sm8650-upstream-hdk-v4-3-b33993eaa2e8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Marc Gonzalez <mgonzalez@freebox.fr>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Bryan O Donoghue
+	<bryan.odonoghue@linaro.org>
+CC: MSM <linux-arm-msm@vger.kernel.org>,
+        linux-media
+	<linux-media@vger.kernel.org>,
+        DT <devicetree@vger.kernel.org>,
+        "Pierre-Hugues Husson" <phhusson@freebox.fr>,
+        Arnaud Vrac <avrac@freebox.fr>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+References: <1cf08b56-a247-431b-a24b-69f563f49240@freebox.fr>
+ <c2fca6c7-2421-42b4-a43d-68b251daf9b4@freebox.fr>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <c2fca6c7-2421-42b4-a43d-68b251daf9b4@freebox.fr>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZQan59eyKJtKUJPBJiN3IJ--SeKN4zXz
+X-Proofpoint-GUID: ZQan59eyKJtKUJPBJiN3IJ--SeKN4zXz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-07_08,2024-05-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ clxscore=1015 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 adultscore=0 spamscore=0 phishscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2405070098
 
 
-
-On 4/22/24 10:48, Neil Armstrong wrote:
-> With the SM8650-HDK, a Display Card kit can be connected to provide
-> a VTDR6130 display with Goodix Berlin Touch controller.
+On 5/7/2024 2:59 PM, Marc Gonzalez wrote:
+> From: Pierre-Hugues Husson <phhusson@freebox.fr>
 > 
-> In order to route the DSI lanes to the connector for the Display
-> Card kit, a switch must be changed on the board.
+> Now that the venus clocks are fixed, we can add the DT node.
 > 
-> The HDMI nodes are disabled since the DSI lanes are shared with
-> the DSI to HDMI transceiver.
-> 
-> Add support for this card as an overlay and apply it it at
-> build-time to the sm8650-hdk dtb.
-> 
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 > ---
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index 5f5b90a6e2bf1..3d3b1f61c0690 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -3010,6 +3010,54 @@ mdss_dsi1_phy: phy@c996400 {
+>  			};
+>  		};
+>  
+> +		venus: video-codec@cc00000 {
+> +			compatible = "qcom,msm8998-venus";
+> +			reg = <0x0cc00000 0xff000>;
+> +			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
+> +			power-domains = <&mmcc VIDEO_TOP_GDSC>;
+> +			clocks = <&mmcc VIDEO_CORE_CLK>,
+> +				 <&mmcc VIDEO_AHB_CLK>,
+> +				 <&mmcc VIDEO_AXI_CLK>,
+> +				 <&mmcc VIDEO_MAXI_CLK>;
+> +			clock-names = "core", "iface", "bus", "mbus";
+> +			iommus = <&mmss_smmu 0x400>,
+> +				 <&mmss_smmu 0x401>,
+> +				 <&mmss_smmu 0x40a>,
+> +				 <&mmss_smmu 0x407>,
+> +				 <&mmss_smmu 0x40e>,
+> +				 <&mmss_smmu 0x40f>,
+> +				 <&mmss_smmu 0x408>,
+> +				 <&mmss_smmu 0x409>,
+> +				 <&mmss_smmu 0x40b>,
+> +				 <&mmss_smmu 0x40c>,
+> +				 <&mmss_smmu 0x40d>,
+> +				 <&mmss_smmu 0x410>,
+> +				 <&mmss_smmu 0x421>,
+> +				 <&mmss_smmu 0x428>,
+> +				 <&mmss_smmu 0x429>,
+> +				 <&mmss_smmu 0x42b>,
+> +				 <&mmss_smmu 0x42c>,
+> +				 <&mmss_smmu 0x42d>,
+> +				 <&mmss_smmu 0x411>,
+> +				 <&mmss_smmu 0x431>;
+> +			memory-region = <&venus_mem>;
+> +			status = "disabled";
+> +
+> +			video-decoder {
+> +				compatible = "venus-decoder";
+> +				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
+> +				clock-names = "core";
+> +				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
+> +			};
+> +
+> +			video-encoder {
+> +				compatible = "venus-encoder";
+> +				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
+> +				clock-names = "core";
+> +				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
+> +			};
+> +		};
+> +
+>  		mmss_smmu: iommu@cd00000 {
+>  			compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
+>  			reg = <0x0cd00000 0x40000>;
 
-After testing this on real hardware and getting some word, it turns out
-there's an issue with what seems like the SMMU ACL settings, preventing
-the display bridge I2C controller from being accessed and ending up in
-the board being unbootable, even without directly addressing the bridge.
+Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-Not mergable as-is.
-
-Konrad
+Regards,
+Vikash
 
