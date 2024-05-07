@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-19302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4133F8BDE49
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 11:31:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D5B4B8BDE45
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 11:31:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 647281C21FB0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 09:31:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 047861C22169
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 09:31:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9F5F14F104;
-	Tue,  7 May 2024 09:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0DDB14D717;
+	Tue,  7 May 2024 09:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="YhAQC/GN"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="SsMsIuJX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF58314D70F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 09:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0D414E2E6
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 09:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715074291; cv=none; b=FHFA+FptY3AgS9QbkEkidS0eBEUp0P/JPZRWQuP0xI+gzRLAox9D0cyPP9pmMN1NnCcFxmQ+jvrk+a3Eurq+AugAUFZ0E45C3mNu0KB/xLulJ4eznociws1AUDcGYSQpsMnqlupuEmR73KKgjrCTwqcUKksrGxgU9oEZDqGebWU=
+	t=1715074290; cv=none; b=cvjNbTEYJ0iYvdFxV3eb6U8A1NSHKzXHKoc5p4JheWnTlEd2QyHiRQwffnT0QNTs3s7Wv0rn3yQVjtrxf1n+z75OwIxiUrpoqm8GYF5S20MY4hNz1Mmeokusuk9i/S0R3DsQnw+r2vf4wxxIKdbPBtIu+7mOYTbKxSsRn6jSRTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715074291; c=relaxed/simple;
-	bh=MPXbvZewmO/D2DEHW1XiJWvSM8CPq85XDTvUbnZY4DQ=;
+	s=arc-20240116; t=1715074290; c=relaxed/simple;
+	bh=m8CJb3SPjBevNO6revkMax575fM40oA2Ye3pZYO7emQ=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=YJjceGYrwxxF2ifkge6VR14Zlmvd+R8zXA36BrXf9uIrNscukUdDnuLtTW91Wsogfuw8ttear8eEqmaI6C0cwzxhmGcACdmDnFXJX+5oLji3gC+bfeyCd0XzJII38I95Oi9O2q0nTbArHb7M7Bx1n9/XKSzM+eOxclZphZ9xSLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=YhAQC/GN; arc=none smtp.client-ip=209.85.221.51
+	 In-Reply-To:Content-Type; b=QNycRe1rhLnMwEWlkxw33wqZu/AGaPIo9Aq5Kezb0ZFybEBumwpDBWOTYVQ3wCWAhw+6XyICC1T8DTrMzAB7Z1luCADupIla8blXDrousztGdMgi3RrpCl0TfdKfci7Jl6k1M3RZoo1L465TKO1F6doiSSDUecH7N22wEpI4uIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=SsMsIuJX; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-34da84cb755so2335032f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 02:31:21 -0700 (PDT)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-518931f8d23so2842064e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 02:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1715074279; x=1715679079; darn=vger.kernel.org;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1715074280; x=1715679080; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=QyXdN6gxvZfSyDlB/uI/J3a7zD0pJvSdTF4inS8BuAY=;
-        b=YhAQC/GN/jW5NaNLPJclFChPJC1mz06ncdQPUfv2SirY3NZoGnANlCoIJzr4f9xwK3
-         vKl4SFM/my9Eta98ihtW+3lpeMFkRHCkT2IiggLgpwwzFV1edIi9yx8j1KvM4iNU3+4R
-         1Le9yuaXUCgYySwsq2nF2FkgJNIyv8lJAgixWXXf+X+sXHFD7W7c1EKN7xwWzJVz5BhL
-         tZ/w3Ep8CWQ22/6nCgiEVGShRKCwGPVxGG07SPpxZRkzKdiOQYl/ek9nyWKB4/SaoElj
-         9Awovj7eKEMGt8mndhythXC+V1169yvUZGgW99DFiUEfDGZdsUp0U+NZZD76c/hK4Dgp
-         /dOQ==
+        bh=5AOYNrstidsMwkuCqD1NJg/W8IphbTWRSU868Li9K8s=;
+        b=SsMsIuJXlJsEYgTwNKE/wYU17btzHe9r1Dxfb0qqT7KtV3l+4vWwizfLUlhpBoau72
+         OjfaTzkm9MFF+XWufMwOa67KRX/ywLJjaNYLngLW7BlFaUmxRrMms2EcgVDgpDQWQCpo
+         50a5CKjfKpGnH02AGInDnrkSyUf7LVq5/I/pWTE6YNH1D3LEdWu0x8m9IaJhlwnqb05w
+         pcbwoeUgaVAmIwxwOVy0ZdKldyUCxsuZc/9nU9UhQT9BuOlyVqoqLFj8rgUn3ArleOpg
+         Oh0p/XY3T8HcIox1xoXPBHoRdl0hpNRR8rCe8khvikETMutnWsBxE/CYHnwDilrsUjYJ
+         Gf5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715074279; x=1715679079;
+        d=1e100.net; s=20230601; t=1715074280; x=1715679080;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QyXdN6gxvZfSyDlB/uI/J3a7zD0pJvSdTF4inS8BuAY=;
-        b=EhGkWc22iY5RGefTdnIZ2ay4nwuNEH85mIiWB5/ULXkOEx80tY1nxEeJCsWAArLWGp
-         QGv++8lfrwCtm6eNxNPS1NTB3zyUqh4LXdwAtWSg0evgxPrTkh7c2TsZfAx+KI3yTWFn
-         pH5aJlH937k698C3LAEAofgIxRrIYBKQDhhf5UZKW2e0LG9TDjunVlnv56jpMFdlkhpZ
-         QgG5alVG/aFD/eobESW8+P1Nvsr1YldJsMcpnzwSKsOObEvzs9QRk30mOHMTPrLB4ClE
-         L7sHYCded70GIA66AHhbC0jK3Z7Wx7Xh10fVA138PQYh2lz1Ie28C+3P44QIAd1u+dDg
-         dkwQ==
-X-Gm-Message-State: AOJu0YxO3BjN0ikiV1uUK+T2zWwuZR4zvSAQ825qJnkWxV1OWk6kVbLC
-	aIH2WPec9ryQmB+pqqqanWI18SxGMFxCxf/CfHEHOtwbnxKcCzfU3J8VXbqpu6s=
-X-Google-Smtp-Source: AGHT+IEbF4B96xPtnD9KzivYdLyGQTnX3z26aVSw5JySkazStzElYqb1R7jUdZoog7s+4m3fqc2E/Q==
-X-Received: by 2002:adf:ed8e:0:b0:34c:925d:fa77 with SMTP id c14-20020adfed8e000000b0034c925dfa77mr7102080wro.41.1715074279714;
-        Tue, 07 May 2024 02:31:19 -0700 (PDT)
+        bh=5AOYNrstidsMwkuCqD1NJg/W8IphbTWRSU868Li9K8s=;
+        b=NdNwLwYA175wbPsxbgNlLhYIWbim2Z3DNP8G1mzd3RFXlrO1NbsfMvaSbtJrz7tZDQ
+         IYF0s2Dul7G+lMhbvHSIirfh/zvv45/7MipE0zB8wMhH3Otlvj03joKsp6bRL0qg0nfW
+         stbJRSUeLxYELLbc25pzMT4+MLpXD3twWUlZxNcCvvyuKAPOoT94MBpa+9RTGNL0LKv8
+         nh7O+G51cccjMKnG3P2CjVaxawvdGt9CE7h2+8yW6cC674s5Rztx0ahbXWn9u7M5GThp
+         w8rvRmw6JYISTPxcGvblQTVC30suBt86MyQ0V9v+hR91ylT9brzHBROuu2P6CWz2bwiS
+         RYhQ==
+X-Gm-Message-State: AOJu0Yxb1Ozfi+mp0ePxauidFhRV4TLt7BvhZ46DbAPibOGt4wkqexzz
+	skxNVIRR/5HVFGgwxyeF53Sqs/jGHJumgmxZY24Zh9Aj1E8VggnojfcC9+jt7jg=
+X-Google-Smtp-Source: AGHT+IHUZLlmXsLgomTNPQ3kKEt2I9NW7E6TCcg7DuZg6C/VtUqmGuFjZozx3+25arCop7mtOGN88g==
+X-Received: by 2002:a19:5210:0:b0:51f:5a66:adce with SMTP id m16-20020a195210000000b0051f5a66adcemr7705284lfb.14.1715074280368;
+        Tue, 07 May 2024 02:31:20 -0700 (PDT)
 Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
         by smtp.gmail.com with ESMTPSA id f3-20020adfb603000000b0034dced2c5bdsm12517710wre.80.2024.05.07.02.31.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 May 2024 02:31:19 -0700 (PDT)
-Message-ID: <c2fca6c7-2421-42b4-a43d-68b251daf9b4@freebox.fr>
-Date: Tue, 7 May 2024 11:29:09 +0200
+        Tue, 07 May 2024 02:31:20 -0700 (PDT)
+Message-ID: <6df495c5-db26-431d-8ce1-8263a2a12b2f@freebox.fr>
+Date: Tue, 7 May 2024 11:30:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,7 +75,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v4 2/3] arm64: dts: qcom: msm8998: add venus node
+Subject: [PATCH v4 3/3] media: venus: add msm8998 support
 From: Marc Gonzalez <mgonzalez@freebox.fr>
 To: Bjorn Andersson <andersson@kernel.org>,
  Jeffrey Hugo <quic_jhugo@quicinc.com>,
@@ -97,74 +97,88 @@ Content-Transfer-Encoding: 7bit
 
 From: Pierre-Hugues Husson <phhusson@freebox.fr>
 
-Now that the venus clocks are fixed, we can add the DT node.
+Add the missing bits for msm8998 support.
+
+Downstream vendor code for reference:
+
+https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-vidc.dtsi#L42-53
+
+qcom,load-freq-tbl =
+	/* Encoders */
+	<972000 465000000 0x55555555>, /* 4k UHD @ 30 */
+	<489600 360000000 0x55555555>, /* 1080p @ 60 */
+	<244800 186000000 0x55555555>, /* 1080p @ 30 */
+	<108000 100000000 0x55555555>, /* 720p @ 30 */
+	/* Decoders */
+	<1944000 465000000 0xffffffff>, /* 4k UHD @ 60 */
+	< 972000 360000000 0xffffffff>, /* 4k UHD @ 30 */
+	< 489600 186000000 0xffffffff>, /* 1080p @ 60 */
+	< 244800 100000000 0xffffffff>; /* 1080p @ 30 */
 
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
 Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ drivers/media/platform/qcom/venus/core.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 5f5b90a6e2bf1..3d3b1f61c0690 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -3010,6 +3010,54 @@ mdss_dsi1_phy: phy@c996400 {
- 			};
- 		};
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index ce206b7097541..8b715cb7ab51a 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -587,6 +587,44 @@ static const struct venus_resources msm8996_res = {
+ 	.fwname = "qcom/venus-4.2/venus.mbn",
+ };
  
-+		venus: video-codec@cc00000 {
-+			compatible = "qcom,msm8998-venus";
-+			reg = <0x0cc00000 0xff000>;
-+			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
-+			power-domains = <&mmcc VIDEO_TOP_GDSC>;
-+			clocks = <&mmcc VIDEO_CORE_CLK>,
-+				 <&mmcc VIDEO_AHB_CLK>,
-+				 <&mmcc VIDEO_AXI_CLK>,
-+				 <&mmcc VIDEO_MAXI_CLK>;
-+			clock-names = "core", "iface", "bus", "mbus";
-+			iommus = <&mmss_smmu 0x400>,
-+				 <&mmss_smmu 0x401>,
-+				 <&mmss_smmu 0x40a>,
-+				 <&mmss_smmu 0x407>,
-+				 <&mmss_smmu 0x40e>,
-+				 <&mmss_smmu 0x40f>,
-+				 <&mmss_smmu 0x408>,
-+				 <&mmss_smmu 0x409>,
-+				 <&mmss_smmu 0x40b>,
-+				 <&mmss_smmu 0x40c>,
-+				 <&mmss_smmu 0x40d>,
-+				 <&mmss_smmu 0x410>,
-+				 <&mmss_smmu 0x421>,
-+				 <&mmss_smmu 0x428>,
-+				 <&mmss_smmu 0x429>,
-+				 <&mmss_smmu 0x42b>,
-+				 <&mmss_smmu 0x42c>,
-+				 <&mmss_smmu 0x42d>,
-+				 <&mmss_smmu 0x411>,
-+				 <&mmss_smmu 0x431>;
-+			memory-region = <&venus_mem>;
-+			status = "disabled";
++static const struct freq_tbl msm8998_freq_table[] = {
++	{ 1944000, 465000000 },	/* 4k UHD @ 60 (decode only) */
++	{  972000, 465000000 },	/* 4k UHD @ 30 */
++	{  489600, 360000000 },	/* 1080p @ 60 */
++	{  244800, 186000000 },	/* 1080p @ 30 */
++	{  108000, 100000000 },	/* 720p @ 30 */
++};
 +
-+			video-decoder {
-+				compatible = "venus-decoder";
-+				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
-+				clock-names = "core";
-+				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
-+			};
++static const struct reg_val msm8998_reg_preset[] = {
++	{ 0x80124, 0x00000003 },
++	{ 0x80550, 0x01111111 },
++	{ 0x80560, 0x01111111 },
++	{ 0x80568, 0x01111111 },
++	{ 0x80570, 0x01111111 },
++	{ 0x80580, 0x01111111 },
++	{ 0x80588, 0x01111111 },
++	{ 0xe2010, 0x00000000 },
++};
 +
-+			video-encoder {
-+				compatible = "venus-encoder";
-+				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
-+				clock-names = "core";
-+				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
-+			};
-+		};
++static const struct venus_resources msm8998_res = {
++	.freq_tbl = msm8998_freq_table,
++	.freq_tbl_size = ARRAY_SIZE(msm8998_freq_table),
++	.reg_tbl = msm8998_reg_preset,
++	.reg_tbl_size = ARRAY_SIZE(msm8998_reg_preset),
++	.clks = { "core", "iface", "bus", "mbus" },
++	.clks_num = 4,
++	.vcodec0_clks = { "core" },
++	.vcodec1_clks = { "core" },
++	.vcodec_clks_num = 1,
++	.max_load = 2563200,
++	.hfi_version = HFI_VERSION_3XX,
++	.vmem_id = VIDC_RESOURCE_NONE,
++	.vmem_size = 0,
++	.vmem_addr = 0,
++	.dma_mask = 0xddc00000 - 1,
++	.fwname = "qcom/venus-4.4/venus.mbn",
++};
 +
- 		mmss_smmu: iommu@cd00000 {
- 			compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
- 			reg = <0x0cd00000 0x40000>;
+ static const struct freq_tbl sdm660_freq_table[] = {
+ 	{ 979200, 518400000 },
+ 	{ 489600, 441600000 },
+@@ -893,6 +931,7 @@ static const struct venus_resources sc7280_res = {
+ static const struct of_device_id venus_dt_match[] = {
+ 	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+ 	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
++	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
+ 	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+ 	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
+ 	{ .compatible = "qcom,sdm845-venus-v2", .data = &sdm845_res_v2, },
 -- 
 2.34.1
 
