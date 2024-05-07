@@ -1,158 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-19382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 805E18BE966
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 18:42:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 834878BEA01
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 19:04:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D19E31F2352D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 16:42:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E64B7B22837
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 17:03:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7114716E883;
-	Tue,  7 May 2024 16:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A47E42065;
+	Tue,  7 May 2024 17:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sG4H8R4A"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fp62IfUq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B3B16E875
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 16:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B698F72;
+	Tue,  7 May 2024 17:03:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715099736; cv=none; b=FBatZNZfelwnbxvrqIhEJ+LS5hpvq8QKc2FuQ3p9Z4kBlZJmu3Y2lmifLF2qzkTqHj/VKerv2W8zUDxRgMXk0bjavZMaL92yj/IjX7WpzrDvjji6ij6R6hcIofkzP8k3N27beRg2/L6WaKF94zxqajKJGZE5BGJl0Pi0rGY2eus=
+	t=1715101397; cv=none; b=Fs+JO+13ldgryiHzWqr7Idz0K4tFl9nPllDBmsrlQVc3wu33SpuZrpAcZ/KhbpLbdiuSEHg5BGRMYOWb2fyB731/LPN+wJwS26hixagJbIj27AXa82cZyFtUjNg4hgv35OeYy0cQhv6amfWRmF52/66epUYA+9R5EA6bakmMxvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715099736; c=relaxed/simple;
-	bh=gonHCVTy2VNCz0Bst2JtnmVy2kVq/TO+ccZqwiI8jic=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aTpuNuu0AwxKcteU2SvrRV0gAB82i7JFwJ5EBq/4o5VRSyGmB+PkCf0+V9C21A9ylvkV1o+aacrY7QaNmY3vyfqTAn/mwyWj8EjvuszvsrotCvRTNJALnNiQKxB21uj1ka6kLkPaoJdID5cmw2U56ftu/x4BttFwRsttSf62Zfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sG4H8R4A; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-51ab4ee9df8so4108786e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 09:35:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715099733; x=1715704533; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0wxpXSgV2vu9Cg8Y1DENV2ZH05CDCilqjIzS6gLOhXA=;
-        b=sG4H8R4AFZ1L9CFe1oOdII1gp5ZNcHJvDd/HWwVChZrJEvhFrL0IBn1f0EkLj4ZKfl
-         p5S1+Zw8rILHz7SWjxNw4NKwnWtyjcXwlnciFUUiiWr6GTqFqcZfvJgAVObELHqFQXOG
-         Br50OyePth8w7AA43NFN2L4581KuKwvndZvs8xlG9xTEp4Fpo3NKpwXz866mghobcLdz
-         dGz74CWFJdbXhFBfIHGM2JvoLXYuPZIMhScI9ysU1r6avLtfLPP38Bx/zkzXpsNCL246
-         iKfeX99JDvPzfrj8N9NAzPgAnotyQ8I8Al6uUcSu1vmTXOJLtFAUIxBTiMCknNtujfDV
-         dkvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715099733; x=1715704533;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0wxpXSgV2vu9Cg8Y1DENV2ZH05CDCilqjIzS6gLOhXA=;
-        b=JfJ87ZXY1vec0koR2/OW+I8oyXhjY2gBJEB0CLi0oKKBuL8ytw+VtJRxk/qWDOMtuX
-         2NjMpMtMPyJA96TztrTHr+kIZENZzhSpaiXXgM6titjncPmTDotXttVMd/JrcXRJWXa2
-         GWvYIAZrFhC8F2lE1Z92ss6pFIbfzSzK0xl7JUEGDJvFfbbgF4O7JJv9f5/0Qwxcnw44
-         L9GGe023sO8HMwEtjGp3nxHFBejIwIX38+DXQ+NBUh0cVZsVhq/dGXWE9Gyx5DcxXLXe
-         0Xz5sk8b0tT5TU+NIAUSpCPtGCLVg7QHxtgP2DThYjhaTgw6uwKM70/dumVOnDFmU7gX
-         HsiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWm7Ku5QfedP2UImgv8G0qNZMtOHkqc73eItsJ5gbHbyZrfTGsUuQXpHpXNyFGkYzd1UuKc/1cDmHdVgvwC84tMutlIDDn5VMzTdd1Y0w==
-X-Gm-Message-State: AOJu0YzEEPjlWfkiZvj4Kjubnf/VHtNi4yav1oaZ3byt1j00+P6L0UKX
-	pWr9HBI07FkXndx8LqHAXdfqgO0L2MUq4r2ANcXwhGEXYXjnf0Kisq0hKlB0h+A=
-X-Google-Smtp-Source: AGHT+IHnJmB6YLIDzfSurogWeOre9zoUYSgzDdpa/UcayHut1a/VHi4gJBHdRBQ51rlqFxrduGSzew==
-X-Received: by 2002:a05:6512:79:b0:51b:ebe0:a91a with SMTP id 2adb3069b0e04-5217c6671a4mr40379e87.36.1715099732820;
-        Tue, 07 May 2024 09:35:32 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.206.169])
-        by smtp.gmail.com with ESMTPSA id s8-20020aa7d788000000b00562d908daf4sm6511503edq.84.2024.05.07.09.35.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 May 2024 09:35:32 -0700 (PDT)
-Message-ID: <a32fa81d-bd70-4dfa-b512-e2adce4f8c35@linaro.org>
-Date: Tue, 7 May 2024 18:35:29 +0200
+	s=arc-20240116; t=1715101397; c=relaxed/simple;
+	bh=JY4JlehBy4I/fksm3Z77C48WISuUolTNAQAzgcu5WVw=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=m7Jh16jwZl2io2E4TTxNfWoF6Wd2AMNHTsVJUfkG8EJ23soDcVTy1ZxV6rKUgmT0XeTCagzcL7uScDHDUdrvSCstUTS9AO+XIXmr+Sof/VEnXdZw9qrwe05LGJwFniPwM2heMBDsdCoGMcyI/aASXyj2CykKTAIvrhmvxfGdxbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fp62IfUq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE9CC4AF18;
+	Tue,  7 May 2024 17:03:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715101396;
+	bh=JY4JlehBy4I/fksm3Z77C48WISuUolTNAQAzgcu5WVw=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=Fp62IfUqShXQVdU1revI8fTwgbnsu4WNnpZmfjuXU8QFdOUdob8A4Pfh+h74pxmnw
+	 vxlSzB3e8dJIBEdUcTdWZEFbofHH0FZ54LOcv5GV8mfBAppBrjYVzRLHVY1bqOyM0A
+	 afAwTi9FZ++FiB2uIzZKj7xVHMj4S92gqYXsPr/R7Hfw/i4/cY3tFidnfFgtp5ZHGx
+	 WJg7GgkmFZh17431vQAB9QX6DyHwOC3v07uyLGiXhX0bwXoX5giD23BLV4adigUwIb
+	 +9YLuRDccxFzSyUXDM/nl/blj1RxMuiePMOxVakHcF1PAouVEp4VeclsoipJEE7Rgf
+	 31juf237oj2Jw==
+From: Kalle Valo <kvalo@kernel.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,  Jeff Johnson
+ <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
+  wireless <linux-wireless@vger.kernel.org>,  DT
+ <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
+ Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
+ <avrac@freebox.fr>,  Bjorn Andersson <andersson@kernel.org>,  Konrad
+ Dybcio <konrad.dybcio@linaro.org>,  Jami Kettunen
+ <jamipkettunen@gmail.com>,  Jeffrey Hugo <quic_jhugo@quicinc.com>,  Dmitry
+ Baryshkov <dmitry.baryshkov@linaro.org>,  Alexey Minnekhanov
+ <alexeymin@postmarketos.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
+ qcom,no-msa-ready-indicator prop
+References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
+	<54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
+	<ZjBV+th9DmnNLhnN@hu-bjorande-lv.qualcomm.com>
+	<8734r3qysm.fsf@kernel.org>
+	<b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr>
+Date: Tue, 07 May 2024 20:03:10 +0300
+In-Reply-To: <b6a1eadf-477d-48a8-bf39-ac3c3191e929@freebox.fr> (Marc
+	Gonzalez's message of "Tue, 30 Apr 2024 13:10:45 +0200")
+Message-ID: <874jb9mu5t.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] arm64: dts: qcom: qcs6490-rb3gen2: enable hdmi bridge
-To: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>, andersson@kernel.org
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org,
- konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_abhinavk@quicinc.com, quic_nankam@quicinc.com, robh@kernel.org
-References: <jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc>
- <20240507163045.28450-1-quic_vvalluru@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240507163045.28450-1-quic_vvalluru@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 07/05/2024 18:30, Venkata Prahlad Valluru wrote:
-> Rb3Gen2 has a lt9611uxc DSI-to-HDMI bridge on i2c0, with
-> reset gpio from pm7250b gpio2 and irq gpio from tlmm gpio24.
-> Bridge supplies are Vdd connected to input supply directly
-> and vcc to L11c. Enable HDMI output, bridge and corresponding
-> DSI output.
-> 
-> Signed-off-by: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
-> ---
-> v3: - Updated commit text
->     - Arranged nodes in alphabetical order
->     - Fixed signoff
->     - Fixed drive strength for lt9611_irq_pin
->     - Removed 'label' from hdmi-connector, which is optional
+Marc Gonzalez <mgonzalez@freebox.fr> writes:
 
-Please respond to each Bjorn comment and explain how did you implement it...
+> On 30/04/2024 06:06, Kalle Valo wrote:
+>
+>> Bjorn Andersson wrote:
+>> 
+>>> On Mon, Apr 29, 2024 at 04:04:51PM +0200, Marc Gonzalez wrote:
+>>>
+>>>> The ath10k driver waits for an "MSA_READY" indicator
+>>>> to complete initialization. If the indicator is not
+>>>> received, then the device remains unusable.
+>>>>
+>>>> cf. ath10k_qmi_driver_event_work()
+>>>>
+>>>> Several msm8998-based devices are affected by this issue.
+>>>> Oddly, it seems safe to NOT wait for the indicator, and
+>>>> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
+>>>>
+>>>> Jeff Johnson wrote:
+>>>>
+>>>>   The feedback I received was "it might be ok to change all ath10k qmi
+>>>>   to skip waiting for msa_ready", and it was pointed out that ath11k
+>>>>   (and ath12k) do not wait for it.
+>>>>
+>>>>   However with so many deployed devices, "might be ok" isn't a strong
+>>>>   argument for changing the default behavior.
+>>>>
+>>>> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
+>>>> work-around in the driver. However, firmware-5.bin is parsed too late.
+>>>> So we are stuck with a DT property.
+>>>>
+>>>> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+>>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>>>
+>>> This says "Pierre-Hugues certifies the origin of the patch" then "Marc
+>>> certifies the origin of the patch". This would have to imply that
+>>> Pierre-Hugues authored the patch, but you're listed as the author...
+>>>
+>>> Perhaps a suitable answer to this question would be to add
+>>> "Co-developed-by: Pierre-Hugues ..." above his s-o-b, which implies that
+>>> the two of you jointly came up with this and both certify the origin.
+>> 
+>> BTW I can add that in the pending branch, no need to resend because of
+>> this. Just need guidance from Marc.
+>
+> I typed this patch all by myself with my grubby little paws.
+> You can drop PH's S-o-b.
 
-Best regards,
-Krzysztof
+Thanks. Please check that my modifications in the pending branch are
+correct:
 
+https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=pending&id=3aec20a8e797b28d32e75291cc070d5913bf6dab
+
+https://git.kernel.org/pub/scm/linux/kernel/git/kvalo/ath.git/commit/?h=pending&id=df5b4bec31b0736a453d507762c5b3d098d5c733
+
+I can freely edit commits in the pending branch, it's just a temporary
+branch for testing.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
