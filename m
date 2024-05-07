@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-19336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A04A8BE483
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:43:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D42ED8BE4C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:53:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB4EC1C23EDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 13:43:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 12C1D28C403
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 13:53:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D5D615E5B6;
-	Tue,  7 May 2024 13:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95CA915EFA6;
+	Tue,  7 May 2024 13:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hTn6Rbfx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r0m/XD4n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB0D15CD57
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 13:41:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E363915ECF5
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 May 2024 13:51:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715089305; cv=none; b=Qu2IgIyyRSqH3X9NOPB3Tvwqc0G8jC1UXlimcsJhgISau6EwIwzc6MQcvMWzwCITp+SS0m8eUEXK/T4qy/D3x5qeziIdJ0MA8oPtHeOuS3he2x0g9Np33TxMsIhSa/hZxUhFSo6gMibB2F+VfiEcCbi+bCOEIsGDlsiv1ke69Lc=
+	t=1715089871; cv=none; b=td67L/2rLjefhMeYmYShjjTfZOhxJD9U1t8y3bsdA2aYh1wP9xOdvAJHG6DPAA+roHH/nvlSq0Epb1qqx9TFIAnvyDiI9tv0TcDBtX7P/v6cEYQkDl09nWbs4XPZXeLg1IUVhftelBe/0vDlNZR2Cjmdu7PWF3j2GIhRPVLRXzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715089305; c=relaxed/simple;
-	bh=U3rGI4TXjzTskPSdX5hfRfaXW8W6u8mc2k9lgqQ4Kyc=;
+	s=arc-20240116; t=1715089871; c=relaxed/simple;
+	bh=CYOMBbl8ouu83jPSzPzk5sBy7BZZRj9DTxYtalItm/g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tBhkFZ8RGoa8+RcPnJG9S+a5wRjN9eoaEdkpG/fp5Qe5KPC3tl+XdKLTUx8Vkin/OEyGVtdf03D98ZTqWaw2b45BOsDdgJxYIQ43sN0E6mA5OQi8NN6zJWcISTjlJcmotIKLqrTV3GFeN1OvM5zOSEI7rqY0nWoTsbzACH1CvX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hTn6Rbfx; arc=none smtp.client-ip=209.85.208.169
+	 In-Reply-To:Content-Type; b=CFPj/E+lI+xBfoDD6BAWqBBWddNVVa02YKSpKm8qalNZge3OX+qbr3ATrjjMsjkq2Ezmz8wdOEhhTLihCwAnSD2OERUkMAxwmF10wmS8x+LBnFhnDn25MT/55E0JuyIJ75f+Xf9xVot7/Sqhvm/Klgwr8Qausz8w9jwuNGZLftk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r0m/XD4n; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2e3efa18e6aso6845141fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 06:41:43 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2e1fa2ff499so45615661fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 May 2024 06:51:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715089302; x=1715694102; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1715089868; x=1715694668; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eBYWPKKxIxo8aRFjjK9T2hA9r6Tr0Rm6zJjBWqA8aQQ=;
-        b=hTn6RbfxugjDJ83Lc9VWNGsRvHgrKFgborM0GZE0mE1fdiNtMjJJnZhNUcYF3Lbyu5
-         /Dg0qhjwaJ7RseO7gRyPZTGkE3L+qeCJToZd2jQj9wiooptBo+a8Z4wbV6Zl5dMuX3eQ
-         pp5Ai+vbHm325mzuKIpXxctM7vOlJ2fVIKxlFgGbo7GWkkTnNNPJ/BrK+V+MOiu1eM9u
-         S7wvbOeQGLjYV0SVRjIIELTTu8b0Iyqcdrvfj25PaFhXliZ/tVh9megjfu6ujWhcISGU
-         O2pFB2fyxN6O7JwuF1PXR5bLqH/bn5Kaz9lh0wihpAUnNAD2K1OjgV0ROzavx2BeznJu
-         3JIA==
+        bh=LYgXmNSeZ5uAXbZ42Wd8TdT7DuRGzZ+iejAjgC1sq8M=;
+        b=r0m/XD4nEyxoZxQPUI1mmK+HQkh2v5jkVYTj2t0nfvge7Rkp4Dfg7yiAzV9xdshnH6
+         YAT+K3ulB++nUXZLAdE9pQtDgdd89+fobjtenSLa0RGtXwwqfZ/9VRO/foFxQS/Uot6D
+         WmhApjK/Y5Do/CoRB+4APnlc9KuHT6tk0FRFmwoHZbPifHoXdAvTYX7mS5apG06+DZUE
+         7tL7beyzWa+sRiNEAmie5xJ47VJ1X65lXN6fRlkjwO5QhahJL1rUvn9LouBFZRZgmUD+
+         phmoe5rUG/d+ZxhsB2hRZON+YPZXCFyVIGCZ8xRlyjuVutSGiFakRnkd5Ta42CP/dDvF
+         QbBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715089302; x=1715694102;
+        d=1e100.net; s=20230601; t=1715089868; x=1715694668;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eBYWPKKxIxo8aRFjjK9T2hA9r6Tr0Rm6zJjBWqA8aQQ=;
-        b=WnidggYa0Y46ZV5b9qFaD32/M3dI8GeIt9SxBjEaJu+8GWo8qBZba7myRFlRGdMl8S
-         xLvLOxCS2H1oT4rthQ/yMAsmGLafu73lHP1Xs3dFimeJiQ46BWQGv3Rqnx6PO9dJLqha
-         GSYCF88XgTso1uDg4K3bUXYYx7eYknXVX3Mimi2v1RnXMHkC1yfuT+yTTSXI7xlxPaQ/
-         yTUqvd59c+sQb6jgU9GbJXWMtj1JZ+Flzqr8ZoWq9j6jzh5aIx3hO+bjXTbEeX8AdRpV
-         6mUeP+he0k7kVpZhToz4Qo/C3X/3/g3LtB0zks8mmSyaykBKKRH6cKp92dY+LRwRiVpy
-         hgAg==
-X-Forwarded-Encrypted: i=1; AJvYcCUMKv8zX0q9iuvAC/tAB/gDxQLTac0lcF/gWS9Pot4nntgomW9sGPkzio0Vpo2PkglGHK1QYe8Hv9Seoc4sEjjMse5pFDfGcIYX3mGdew==
-X-Gm-Message-State: AOJu0YxJlam2ypfEkQxDsDkve5p8wbOnQvu8yT3K7MT7jDqYcZr1A+Tj
-	doVHEem7GrjNgksiXbK+nRF8pmSrQNAMzzEvvyHBkHkrCjehAej6wBryIIzNfPo=
-X-Google-Smtp-Source: AGHT+IFhusLgGPzXhOPfN0j+8HODL1lRzxw67tVfNgxWdHZALf7v7+cLKSB0NTJACUQLd+5spu3LXw==
-X-Received: by 2002:a2e:7d0e:0:b0:2e1:eb38:d4b4 with SMTP id 38308e7fff4ca-2e3d9cb3781mr7358371fa.21.1715089301860;
-        Tue, 07 May 2024 06:41:41 -0700 (PDT)
+        bh=LYgXmNSeZ5uAXbZ42Wd8TdT7DuRGzZ+iejAjgC1sq8M=;
+        b=lOhzotWZxm95kIM8CnWr2707BDp1v18gzpPqdCQ8/pPRy6qpUXL6AUsNrNm3cH6EWc
+         XBeo6bnyIjPQcx6Ddgb33HU0HSOga1yojMAs5Wdi1BY8MmiRN+BI4zbw68K4G9s20aEj
+         zlHa+V2rTrMSVxzC03UceY51NCiRsNC7FWrj2d+fmha+CwvNPuRNynZY4v58y4ZH2XLW
+         7IKRqpgRC4jI1y8TillbScnTtE86fN9nELD+UfOwuBCsw2A3Zax63iTqfcYO4hkKWCnr
+         ayc6XvKF+RZ7P4ZfGonuFkF2xxMu/Xv3311EkILvuPZ7236uuzIzaKnHIxw5lVLmHRQe
+         kfCA==
+X-Forwarded-Encrypted: i=1; AJvYcCU9YpTleKLpnYi4bhxJGWX6h1krfA24wwChkLqHHTdMxRghmlr/mX0Bfy2vZdZ8oezTMQN/LfC6XWz6Z3JFnPdef2NBed+0eaxaSTDywQ==
+X-Gm-Message-State: AOJu0YxzWjYxiOorIO1b+alI6SVo18cnsmwpwQnu12B354/J25xeDT6Z
+	ZApEEW9CtvJF2fw55h4RkO68uk/ZDx19Z8GAeTM7LL0KpUme686GQBlXq4LfA4w=
+X-Google-Smtp-Source: AGHT+IE5G66ioLy5Gd2DnM6KVQtr/z1w+ypEcQkiY8UjkEBgG9dAKVeYIY4NAzVBcYXBb0Fh6caMbQ==
+X-Received: by 2002:a2e:84d0:0:b0:2e2:6dd9:dd8a with SMTP id 38308e7fff4ca-2e3d811a8ebmr8385881fa.0.1715089868217;
+        Tue, 07 May 2024 06:51:08 -0700 (PDT)
 Received: from ?IPV6:2a00:f41:c0d:408:fa88:abdb:17c2:cf24? ([2a00:f41:c0d:408:fa88:abdb:17c2:cf24])
-        by smtp.gmail.com with ESMTPSA id i16-20020a2e8650000000b002e15aec44fesm2054159ljj.96.2024.05.07.06.41.39
+        by smtp.gmail.com with ESMTPSA id e3-20020a2e9e03000000b002d6daf3b41fsm1952160ljk.101.2024.05.07.06.51.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 May 2024 06:41:41 -0700 (PDT)
-Message-ID: <163a0c01-8f9f-48e6-89dc-2b702e755622@linaro.org>
-Date: Tue, 7 May 2024 15:41:38 +0200
+        Tue, 07 May 2024 06:51:07 -0700 (PDT)
+Message-ID: <3a3c4279-a254-48d0-91ad-70b7f1e3eb77@linaro.org>
+Date: Tue, 7 May 2024 15:51:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,65 +76,94 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] phy: qcom-snps-femto-v2: Add load and voltage setting for
- LDO's used
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Udipto Goswami <quic_ugoswami@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20240502123312.31083-1-quic_ugoswami@quicinc.com>
- <CAA8EJppeQTadmny=hcs4xCQDXHwXEBHXjeecvZCUVcSXmwBTgg@mail.gmail.com>
- <90a5b641-af5b-4640-b2ad-85dbbab523bf@linaro.org>
- <CAA8EJpoWWXvJabcVqp+YSa8arQbLPC=v+XkvPZe6nwH7aaKnfQ@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gcc-sm8450: set OPS_PARENT_ENABLE on
+ gcc_sdcc2_apps_clk_src
+To: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Vinod Koul <vkoul@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20240427-topic-8450sdc2-v1-1-631cbb59e0e5@linaro.org>
+ <2337ba58adb3fb127710bead9b8665a9.sboyd@kernel.org>
+ <11bd7146-30cd-4b71-b2ca-d76875763731@linaro.org>
+ <6ba2967c6c9d24e3f1c9b76496176010.sboyd@kernel.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpoWWXvJabcVqp+YSa8arQbLPC=v+XkvPZe6nwH7aaKnfQ@mail.gmail.com>
+In-Reply-To: <6ba2967c6c9d24e3f1c9b76496176010.sboyd@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 5/7/24 13:55, Dmitry Baryshkov wrote:
-> On Tue, 7 May 2024 at 14:43, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 5/2/24 15:12, Dmitry Baryshkov wrote:
->>> On Thu, 2 May 2024 at 15:33, Udipto Goswami <quic_ugoswami@quicinc.com> wrote:
+On 4/30/24 23:26, Stephen Boyd wrote:
+> Quoting Konrad Dybcio (2024-04-30 03:46:52)
+>> On 30.04.2024 2:21 AM, Stephen Boyd wrote:
+>>> Quoting Konrad Dybcio (2024-04-27 05:01:07)
+>>>> Similar to how it works on other SoCs, the top frequency of the SDHCI2
+>>>> core clock is generated by a separate PLL (peculiar design choice) that
+>>>> is not guaranteed to be enabled (why does the clock framework not handle
+>>>> this by default?).
 >>>>
->>>> The Femto phy depends on 0.88/ 1.8/ 3.3V regulators for its operation.
->>>> If one of the regulators is not voted to the required minimum voltage
->>>> for phy to operate, then High speed mode of operation will fail.
->>>>
->>>> On certain targets like (qcm6490_rb3gen2) where the minimum voltage
->>>> of the regulator is lower than the operating voltage of the phy.
->>>> If not voted properly, the phy supply would be limited to the min value
->>>> of the LDO thereby rendering the phy non-operational.
->>>>
->>>> The current implementation of the regulators in the Femto PHY is not
->>>> setting the load and voltage for each LDO. The appropriate voltages and
->>>> loads required for the PHY to operate should be set.
+>>>> Add the CLK_OPS_PARENT_ENABLE flag to make sure we're not muxing the
+>>>> RCG input to a dormant source.
 >>>
->>> Please move min/max voltages to the DTS. There is no need to set them
->>> from the driver.
+>>> The RCG2 hardware hasn't required the parent to be enabled for clk
+>>> operations besides for the glitch-free source switch. What scenario is
+>>> happening here that's requiring this flag? Is the RCG forcibly enabled
+>>> perhaps because the bootloader has left the root enable bit set
+>>> (CMD_ROOT_EN)? Or are we changing the parent while the clk framework
+>>> thinks the clk is off when it is actually on?
 >>>
->>> Also, is there any reason why you can't use `regulator-initial-mode =
->>> <RPMH_REGULATOR_MODE_HPM>;` like other boards do?
+>>> TL;DR: This is papering over a bigger bug.
 >>
->> The point is to aggregate the values and switch to HPM if a threshold is
->> crossed (or stay in LPM otherwise)
+>> Definitely.
+>>
+>>
+>> Take a look at:
+>>
+>> static const struct freq_tbl ftbl_gcc_sdcc2_apps_clk_src[] = {
+>>          F(400000, P_BI_TCXO, 12, 1, 4),
+>>          F(25000000, P_GCC_GPLL0_OUT_EVEN, 12, 0, 0),
+>>          F(50000000, P_GCC_GPLL0_OUT_EVEN, 6, 0, 0),
+>>          F(100000000, P_GCC_GPLL0_OUT_EVEN, 3, 0, 0),
+>>          F(202000000, P_GCC_GPLL9_OUT_MAIN, 4, 0, 0),
+>>          { }
+>> };
+>>
+>> XO and GPLL0 are more or less always on, but GPLL9 is described to only
+>> be used for this specific clock for this specific frequency (perhaps it
+>> feeds something else on the soc but that's besides the point).
+>>
+>> Then, the parent input is changed during set_rate, but GPLL9 seems to
+>> never be enabled:
 > 
-> I see that other boards use regulator-initial-mode for the USB PHY
-> regulators. Are we going to change all of them too?
+> Is the sdcc2 RCG enabled during the set_rate?
 
-Not sure about initial mode yet.
+without PARENT_OPS_ENABLE:
 
-> Also note, that while the combo QMP driver sets the loads, the pure
-> USB QMP PHY driver doesn't set the loads. This way we can end up with
-> the undervolted PHY.
+[    3.326891] sdhci_msm 8804000.mmc: Got CD GPIO
+[    3.336839] scsi host0: ufshcd
+[    3.337105] gcc_sdcc2_apps_clk_src is DISABLED @ set_rate
+[    3.346339] ------------[ cut here ]------------
+[    3.351093] gcc_sdcc2_apps_clk_src: rcg didn't update its configuration.
+[    3.351114] WARNING: CPU: 1 PID: 11 at drivers/clk/qcom/clk-rcg2.c:133 update_config+0xc8/0xd8
 
-Sounds like something to fix, then
+[...]
+
+[    3.610523] gcc_sdcc2_apps_clk_src is ENABLED @ set_rate
+
+
+with PARENT_OPS_ENABLE:
+
+[    3.331419] sdhci_msm 8804000.mmc: Got CD GPIO
+[    3.336569] gcc_sdcc2_apps_clk_src is DISABLED @ set_rate
+[    3.344795] scsi host0: ufshcd
+[    3.355122] qcrypto 1dfa000.crypto: Adding to iommu group 5
+[    3.363567] remoteproc remoteproc0: 2400000.remoteproc is available
+[    3.364729] gcc_sdcc2_apps_clk_src is ENABLED @ set_rate
+
+after testing it both ways, I realized it wasn't supposed to make a
+difference in this regard, but I suppose I can paste both results anyway..
 
 Konrad
 
