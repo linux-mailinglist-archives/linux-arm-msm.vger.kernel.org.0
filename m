@@ -1,72 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-19354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5AAC8BE6CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 17:01:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D539F8BE6E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 17:05:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0F55282B5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:01:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 901602837D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 15:05:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9281D1607B8;
-	Tue,  7 May 2024 15:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6634161327;
+	Tue,  7 May 2024 15:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y8AmCP22"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bPULlZ5s"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6068A1607B3;
-	Tue,  7 May 2024 15:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E29161308;
+	Tue,  7 May 2024 15:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715094061; cv=none; b=WeNxcBrGGvZf8wRfmI6kdwLWkqULRson0FYIIpwSyv0XmynFEjJ2zsAJvFY3DtCnANRAQNNE/qRRilXh3rsfUDrLL0RAyYtz6JIDvVI3cTfY3ik3pm+6bu0VVvGrf7lCg/wr8WHZHyBs0mQZpcrogupRtIESIWii/dnMjiIpo0Y=
+	t=1715094334; cv=none; b=FpwfjqNlI9tkyQRVQOpC5VhBN+WVAwf3SmSUiVnU2yB1rVjEFT0KBNlE7xZwzu7tR++3abUsPZXOUD3e4+mn0NX6S2zc+JRw+HiDQiXeSG21kFr7/FTKQIoCy0Akrsv1KPL86nKi2astFOMauMAtULgmOqzWRKi694ONExwZrvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715094061; c=relaxed/simple;
-	bh=8a2pyO1gn1Kbk1AilEdpctkENSJMzwz0LXzeDq6SO6I=;
+	s=arc-20240116; t=1715094334; c=relaxed/simple;
+	bh=VVeb/LlZcPst//x0wDQgatV0HpkM8V7tQznlTpAm+QQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ddW6kXK1c9elZMTPrsZjC9z691iCwbyOHP+/cAbwjCFFr7N5EWDRn+E0nXiS0vxPtTIwHTIxlIkdauOuIl/tXdSkN0CK9y10OHeoYqGajgYaHxiiEnKNvcgVKGeUq/VH5dEyU6TndG5UfkKhOmHJOAA7AarsjqPlaq3VZqaIZR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y8AmCP22; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF65C2BBFC;
-	Tue,  7 May 2024 15:01:00 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=cyQO1IJwfjlyNMhaNjPc0sj7DBDbjDJY/qlk8nUlr9ofdMLf1GamKPmSOtHRVeBUMV7Uw6M5U7Gqp2rWs1vGRnh77n2eIn9bl3GaqHFL9qroRDbon/bjzHDFQWyX6eQJp84HsFgntr/MMKVYeY8O2yWiNIjahxfYqazKBBEBhYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bPULlZ5s; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC53C2BBFC;
+	Tue,  7 May 2024 15:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715094060;
-	bh=8a2pyO1gn1Kbk1AilEdpctkENSJMzwz0LXzeDq6SO6I=;
+	s=k20201202; t=1715094334;
+	bh=VVeb/LlZcPst//x0wDQgatV0HpkM8V7tQznlTpAm+QQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Y8AmCP226PFSr1YG4tK7kuHNHtRyXGzMaSR8rzq7qFVoJUWZvo4d4WAwq1Tog2Sft
-	 xP/tdeNq2x0Hv7QGRCdhyMdoBRJrYhBj2/vXX7OqL+NG7tIgSsct9ZaLK5RG+aLN0u
-	 S1ZO9xXZDot7EEgkLuuCj+6nJ8mCaIo97JcEHha9UFZa5E51w2UfQkBpR2P8i2JGg8
-	 6u/3g/Ohu2oy5D6j/HCNlgyZU2b8CJ7/lzuPt4nRwR39EsYibtD+Yw7yOYy2pGR3cY
-	 D+jhKdJbx7UP3Wv2qUcS7YMoLw/pJMEQcG5Oiqf5F4C+B86ih/mB3bMXg6duXGUHyA
-	 Pk7p2WYVijbJw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1s4MJT-000000003QQ-0G9L;
-	Tue, 07 May 2024 17:01:03 +0200
-Date: Tue, 7 May 2024 17:01:03 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	b=bPULlZ5sCvp/thR6YELavA6A7tsYjvPFaihKBvsUJWSfk0t+iFaF+Abmaqz597+tk
+	 gg1bRHkd1WU2Zp6QOdAIwrooUYsWET6XA6d8khuZXsriaBrU4GyUtr3EnIN2lY/cPS
+	 pGOl7fAnP2ExrPyqoif8h+C9e3naaD8j/AlIgkvsaO623Nqy+0KWFN+trs8hAgUMbm
+	 5++IXFV3JlAhQceJJGqKgEMT7GjfA4olT7XtHWcZEPM970k+m2WLOSleJKVDOuVYqZ
+	 VaguSfHqu5t1eQM3J6q9NZxIC/YBD9ZLCSpaQh22HYR1uq26XxKp+nuceNAg9//eeL
+	 LWpznNru1d0LQ==
+Date: Tue, 7 May 2024 10:05:32 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: ath10k <ath10k@lists.infradead.org>, DT <devicetree@vger.kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Das Srinagesh <quic_gurus@quicinc.com>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH 02/13] mfd: pm8008: fix regmap irq chip initialisation
-Message-ID: <ZjpCL_NQD7X3hasO@hovoldconsulting.com>
-References: <20240506150830.23709-1-johan+linaro@kernel.org>
- <20240506150830.23709-3-johan+linaro@kernel.org>
- <ZjknxSsyo20b5_Tm@surfacebook.localdomain>
+	Pierre-Hugues Husson <phhusson@freebox.fr>,
+	Kalle Valo <kvalo@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	wireless <linux-wireless@vger.kernel.org>,
+	Jami Kettunen <jamipkettunen@gmail.com>,
+	MSM <linux-arm-msm@vger.kernel.org>, Arnaud Vrac <avrac@freebox.fr>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
+ qcom,no-msa-ready-indicator prop
+Message-ID: <171509432258.482945.17084228193857427143.robh@kernel.org>
+References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
+ <54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,39 +72,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZjknxSsyo20b5_Tm@surfacebook.localdomain>
+In-Reply-To: <54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
 
-On Mon, May 06, 2024 at 09:56:05PM +0300, Andy Shevchenko wrote:
-> Mon, May 06, 2024 at 05:08:19PM +0200, Johan Hovold kirjoitti:
-> > The regmap irq array is potentially shared between multiple PMICs and
-> 
-> IRQ
 
-I'm referring to an array of struct regmap_irq. Perhaps I can add an
-underscore.
- 
-> > should only contain static data.
-> > 
-> > Use a custom macro to initialise also the type fields and drop the
-> > unnecessary updates on each probe.
+On Mon, 29 Apr 2024 16:04:51 +0200, Marc Gonzalez wrote:
+> The ath10k driver waits for an "MSA_READY" indicator
+> to complete initialization. If the indicator is not
+> received, then the device remains unusable.
 > 
-> ...
+> cf. ath10k_qmi_driver_event_work()
 > 
-> > +#define _IRQ_TYPE_ALL (IRQ_TYPE_EDGE_BOTH | IRQ_TYPE_LEVEL_HIGH | IRQ_TYPE_LEVEL_LOW)
+> Several msm8998-based devices are affected by this issue.
+> Oddly, it seems safe to NOT wait for the indicator, and
+> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
 > 
-> This is repetition of IRQ_TYPE_DEFAULT.
+> Jeff Johnson wrote:
+> 
+>   The feedback I received was "it might be ok to change all ath10k qmi
+>   to skip waiting for msa_ready", and it was pointed out that ath11k
+>   (and ath12k) do not wait for it.
+> 
+>   However with so many deployed devices, "might be ok" isn't a strong
+>   argument for changing the default behavior.
+> 
+> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
+> work-around in the driver. However, firmware-5.bin is parsed too late.
+> So we are stuck with a DT property.
+> 
+> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> ---
+>  Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
 
-Thanks, I guess I should use IRQ_TYPE_SENSE_MASK here even.
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-> ...
-> 
-> > -			dev_err(dev, "Failed to probe irq periphs: %d\n", rc);
-> > +			dev_err(dev, "failed to add IRQ chip: %d\n", rc);
-> 
-> dev_err_probe(...); ?
-
-This function won't return -EPROBE_DEFER, and that would be a separate
-change in any case.
-
-Johan
 
