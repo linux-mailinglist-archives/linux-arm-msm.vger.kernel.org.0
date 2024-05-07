@@ -1,145 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-19433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1BED8BEE5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 22:49:01 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6E7E8BEE95
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 23:05:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6C89280C91
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 20:49:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 22828B209AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 May 2024 21:05:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C555155E6B;
-	Tue,  7 May 2024 20:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A2E07316E;
+	Tue,  7 May 2024 21:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="jHLGKIa3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kObYxWcr"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cYq7jawS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC03454FAA;
-	Tue,  7 May 2024 20:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEEC71B4C;
+	Tue,  7 May 2024 21:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715114932; cv=none; b=RswfOPwZhD71jVX5rtFQFpNW+AuP6lZ35W8EKfW3eWrEBqzbH92omItNbn8fZrS9/dqDew463rbZ7cli6HAm/Z8Smu8xS9mJ6vZLyx4ZzgLMqPSxNywDmdfIUPj+sI4ka21osWHHfeSPCZ2qL9lJYOXqJ4ue13Jwmcbf3W55fYA=
+	t=1715115916; cv=none; b=pc0fEyLv0QojeMgKGE779nnHYAMj4snsXmJjsGC7mdfjDbcKpq5p4nmDpF7yHJ/5JwYcvlAhFyLlOGFG3iAJ7IikcrWHimwIZ9i4pDplE241MJD9NfRWS+rRBrRGeWdilJxaQXD5SuxUDpIwSMTh0DbsuV5W0/oD1cxIo9R+okg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715114932; c=relaxed/simple;
-	bh=HEUFsU6+GbrvvWJ5r0D3OYRudWAEMmNWkbpg2pnlAck=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=sUHfAz5FxE00XIVobYAviz2PSX4ZMXDH4z3QIlzWxL5Tbg5yPiaybGAW1nmyi43ioS83sQWHvL/y/wz+kYTtShdxKecVFfFQEdsXkxE/8ze6k5sz08mcwjw1IFWSuYO5Y7wHZWgNd03IbGd6thlJqKerg5r89N0dEXuDicpBNaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=jHLGKIa3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kObYxWcr; arc=none smtp.client-ip=64.147.123.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id 94C0C1C0010C;
-	Tue,  7 May 2024 16:48:49 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute5.internal (MEProxy); Tue, 07 May 2024 16:48:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1715114929; x=1715201329; bh=bk57LfF5IJ
-	RUTZp8F/Afjo6cLQ7YrYnev8qqlUkN1Fs=; b=jHLGKIa3qEI3RgJasiaH9SsUaw
-	X79aOnnHvHVgkOosQFLPc0t963nlCvuO6Yc03ZS1ruBcJ8btrM3KtGhm5FxgW0Ll
-	zgA8HBjq6ioGdUnu/Ddd8+KRNY0lCeGYsZmDdULvrjAgxa2JuSpsTUx4I/shvVDy
-	w3VqVmVATXrwND1RmJWvN04/R6aVOcCdohU+3Iq9YDWEbzy3TeLH7wT5HApuDuYI
-	Pt/0hPQIYxVXD4YlvA9gvX2MZdfIPWTBngvCVprCECXA4110EDIjq5K0A1pXtYuK
-	6k635JQn+T8nEHKyjiFKlUxx8uk8hHvs9+lk9iO7QLjrIY69zC/tHlEsUaJw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1715114929; x=1715201329; bh=bk57LfF5IJRUTZp8F/Afjo6cLQ7Y
-	rYnev8qqlUkN1Fs=; b=kObYxWcrRekpOxEtvCJBSwu9WrJ3saNNzge2zGuNoBkK
-	OCyjfJ1ke1ifE84O6HIWbIQtCfLaWYOdA9eVjNm4Rh3ezbzgqIzT81Z/15epD+g5
-	9hI2FzEvaKdhx1O81buQ28ue1Obdqnhy/FvqLCFQKEOyHeDPd5kgraO0GFHSWylJ
-	0H2ReUCM8VrfN6izgNefffb9qTCNp32uyxrqKK2ek+U64enwd2iP0it6T05+PCAX
-	015josKe+GqYO0MTd2AZdQ6Y2yvZD+u0abyxgeZsAyaKKQr6dOuQBfp2VUQNYn3u
-	lzG9vKW8vbO6RC+bNlbz2O0WZZlpRfU0fOrelwouOA==
-X-ME-Sender: <xms:sJM6ZgYcnENuCjx08OQtuFu4Bn5Sk7IfKmQZT7owBLRVLRgiW6Wn9A>
-    <xme:sJM6ZrZuI1wZIqDwOXMaagJ0HkbxkbDYXSx-TGerC6uW533z3NbIs6tC0qRg4W-hn
-    iRzXXJ1gJV0p4Ck2H4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvkedgudehudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
-    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
-    htthgvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedt
-    keetffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    grrhhnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:sJM6Zq__tesrTM01qibvZ852Q1AhH79yZ3aK9WAxR3rZj_-moilUEQ>
-    <xmx:sJM6ZqqDbJwp8ksHWcC1EJhShau5KOYKIRgPRG-uLpqAvQvgTyzZEQ>
-    <xmx:sJM6ZrqPeiGf_qyhkUVH3o5Z6DtENDPwu62tAojKoNBdPcwqWkF-DQ>
-    <xmx:sJM6ZoTqrqq9BW7LwxJX_RGtBtEYjPHVNWBECyCEnXLvMSANbohagQ>
-    <xmx:sZM6ZsDEhhKTFp0mu6xGdHAFdYMxjSvfBua4b8Lwogc9Bq79pFNUjfgP>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id BB590B6008F; Tue,  7 May 2024 16:48:48 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-443-g0dc955c2a-fm-20240507.001-g0dc955c2
+	s=arc-20240116; t=1715115916; c=relaxed/simple;
+	bh=yL7SPd/Z+l9glPuW2PWEe52G5klrbEChtwcCMsumYCU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AGjvDgUv+R4bTbeM3T1A/x9AV/x+LGN875fN5iLRsNLvHtCAJHr6z2QCHR1CMf7mCXw1iFAzMDb032Vpp8WFmuGdyttnm0hxBeFNrVr6gJJKoLfw9HWmgQIm+AM10fCYRvGErcBuKiIbOJa2hayi4QMUmY5PS09MuNglTIgS5SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cYq7jawS; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1715115914; x=1746651914;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=yL7SPd/Z+l9glPuW2PWEe52G5klrbEChtwcCMsumYCU=;
+  b=cYq7jawS10DmQQNcLcflLUThlT5khwYwXJvAZiSD6G4m50wU/gQ2pNjY
+   sgEF/HWzeCL8i0JCyR5pwd/18mnIQlA6cT5mBpcq0nL9XAf7Jhq+51iyw
+   bhA9yOcO3CbBE47ybzVlmdVyqPkaPJPpfE2b1k+zxkBNL6RH75+ybzESM
+   In88r7mFtExqW6vFencxrMPJRGC9fKs2rC/kRgQreyeq1dR8NeXLV0AQL
+   tqv0QME0Fp+7Oy64HaH48QxMjmGJusivmcKPeFqtV10V/cbWWrisThXMp
+   QCuqbj4ur4P6gTmsXVfHjB6XyMgynov+fXLM8bE7+RUVxMdyHqoh7J1R2
+   A==;
+X-CSE-ConnectionGUID: YscN/smtQISMNr9B7j2iMw==
+X-CSE-MsgGUID: AeCZlkQ0QzqKGcs2YE3MRQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11066"; a="21613617"
+X-IronPort-AV: E=Sophos;i="6.08,143,1712646000"; 
+   d="scan'208";a="21613617"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2024 14:03:54 -0700
+X-CSE-ConnectionGUID: EdySXaasTj2nzIjcY31PIA==
+X-CSE-MsgGUID: u4wKf0RIRd6hD7WFn21Oig==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,143,1712646000"; 
+   d="scan'208";a="28750477"
+Received: from lkp-server01.sh.intel.com (HELO f8b243fe6e68) ([10.239.97.150])
+  by fmviesa010.fm.intel.com with ESMTP; 07 May 2024 14:03:49 -0700
+Received: from kbuild by f8b243fe6e68 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1s4RyV-0002dG-0W;
+	Tue, 07 May 2024 21:03:47 +0000
+Date: Wed, 8 May 2024 05:02:51 +0800
+From: kernel test robot <lkp@intel.com>
+To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
+	jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
+	manivannan.sadhasivam@linaro.org, andersson@kernel.org,
+	agross@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, quic_msarkar@quicinc.com,
+	quic_kraravin@quicinc.com,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/3] PCI: qcom: Refactor common code
+Message-ID: <202405080444.RUQms5qs-lkp@intel.com>
+References: <20240501163610.8900-2-quic_schintav@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <29b33c18-f123-4656-8507-406c87a12ec8@app.fastmail.com>
-In-Reply-To: <20240507201238.213396-2-thorsten.blum@toblux.com>
-References: <20240507201238.213396-2-thorsten.blum@toblux.com>
-Date: Tue, 07 May 2024 22:48:26 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Thorsten Blum" <thorsten.blum@toblux.com>,
- "Srinivas Kandagatla" <srinivas.kandagatla@linaro.org>,
- "Amol Maheshwari" <amahesh@qti.qualcomm.com>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] misc: fastrpc: Use memdup_user()
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240501163610.8900-2-quic_schintav@quicinc.com>
 
-On Tue, May 7, 2024, at 22:12, Thorsten Blum wrote:
-> Switching to memdup_user() overwrites the allocated memory only once,
-> whereas kzalloc() followed by copy_from_user() initializes the allocated
-> memory to zero and then immediately overwrites it.
->
-> Fixes the following Coccinelle/coccicheck warning reported by
-> memdup_user.cocci:
->
-> 	WARNING opportunity for memdup_user
->
-> Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
+Hi Shashank,
 
-The patch looks correct to me.
+kernel test robot noticed the following build warnings:
 
-> ---
->  drivers/misc/fastrpc.c | 11 +++--------
->  1 file changed, 3 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 4c67e2c5a82e..2857cddaf812 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1259,17 +1259,12 @@ static int 
-> fastrpc_init_create_static_process(struct fastrpc_user *fl,
->  		goto err;
->  	}
-> 
-> -	name = kzalloc(init.namelen, GFP_KERNEL);
-> -	if (!name) {
-> -		err = -ENOMEM;
-> +	name = memdup_user((void __user *)(uintptr_t)init.name, init.namelen);
-> +	if (IS_ERR(name)) {
-> +		err = PTR_ERR(name);
->  		goto err;
->  	}
+[auto build test WARNING on pci/next]
+[also build test WARNING on pci/for-linus linus/master v6.9-rc7 next-20240507]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-There is also a chance to simplify this further using u64_to_user_ptr()
-instead of the double cast if you want.
+url:    https://github.com/intel-lab-lkp/linux/commits/Shashank-Babu-Chinta-Venkata/PCI-qcom-Refactor-common-code/20240502-003801
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
+patch link:    https://lore.kernel.org/r/20240501163610.8900-2-quic_schintav%40quicinc.com
+patch subject: [PATCH v4 1/3] PCI: qcom: Refactor common code
+config: mips-randconfig-r112-20240508 (https://download.01.org/0day-ci/archive/20240508/202405080444.RUQms5qs-lkp@intel.com/config)
+compiler: mips-linux-gcc (GCC) 13.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20240508/202405080444.RUQms5qs-lkp@intel.com/reproduce)
 
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202405080444.RUQms5qs-lkp@intel.com/
 
-      Arnd
+sparse warnings: (new ones prefixed by >>)
+>> drivers/pci/controller/dwc/pcie-qcom-common.c:25:31: sparse: sparse: incorrect type in return expression (different base types) @@     expected struct icc_path * @@     got long @@
+   drivers/pci/controller/dwc/pcie-qcom-common.c:25:31: sparse:     expected struct icc_path *
+   drivers/pci/controller/dwc/pcie-qcom-common.c:25:31: sparse:     got long
 
+vim +25 drivers/pci/controller/dwc/pcie-qcom-common.c
+
+    15	
+    16	#define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
+    17			Mbps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]))
+    18	
+    19	struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path)
+    20	{
+    21		struct icc_path *icc_mem_p;
+    22	
+    23		icc_mem_p = devm_of_icc_get(pci->dev, path);
+    24		if (IS_ERR_OR_NULL(icc_mem_p))
+  > 25			return PTR_ERR(icc_mem_p);
+    26		return icc_mem_p;
+    27	}
+    28	EXPORT_SYMBOL_GPL(qcom_pcie_common_icc_get_resource);
+    29	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
