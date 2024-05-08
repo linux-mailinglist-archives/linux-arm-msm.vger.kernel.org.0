@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE2C58BF6C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 09:11:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 839B48BF709
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 09:29:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AD70284C96
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 07:11:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 403CC2854FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 07:29:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E373924B33;
-	Wed,  8 May 2024 07:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B88EC1773D;
+	Wed,  8 May 2024 07:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HKL5McdJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mFItLBxk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23DA2375F;
-	Wed,  8 May 2024 07:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A7F2C856;
+	Wed,  8 May 2024 07:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715152294; cv=none; b=daNf8OBHKqTcuf/UrM9NZOa5vbEcZZ59UfU5i89o5vLk5vAQ85XkSPB/AQxyligDfngCwzaTs+OF0Z7m5MLzO4Q7vgzdvDt29IZ7PTHs74lD+7OgEMeCeq0/6ZDoKy5l7EcfryS6FrPLhOy6m5m/6lEs79qxC5Pyj/OoFIK5+AM=
+	t=1715153368; cv=none; b=RYrESMCEuCdlV90J51gnySOCLhshCuuAzJ4Y99Ff4Fjz3fl524jQx5ROWH+rYxJia8pnFGSu0wzBcU+0o4CtJ3hchEWkMZDNwyWax8tFcVNoCwpZgspxNDZRDiXEa7fCSBfahE304nfCh4MUQKxzuWp0nHFGE+VcDXLPpCLwF68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715152294; c=relaxed/simple;
-	bh=A6IwkYlxZwQBAYDwauiL6qwBRvdPcZdYoSIAZi1fPDE=;
+	s=arc-20240116; t=1715153368; c=relaxed/simple;
+	bh=32ioLqPM7lnDwXJD99G8P6IhwH1PO1nE9mcgPc5umFs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XR1XBeCYgBUS0nx+AyvmHiOP0679IDrh5p6UHtT+bmixrXE+szE1ubAyI4NHGNIAyA6f9SR++L7dSrDY/uX0KYjfxv8lRxT8pzJ/64FK+a6hLSGlTATJn50jFUl98j8GlTtN0vr7H9zNPK0iWOJz/Df9m8SxkQ2Mcp/xGDKKk9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HKL5McdJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8CDC113CC;
-	Wed,  8 May 2024 07:11:29 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JUwp5fpsim5gWFgal2g1JTdPrXx/JMyBhdk0+zcZiQrVBqbyV0UHhmxSNEWM3vW5rbD9dnXsNME2R8HMdtxcb2WF1ru50i024/+FD5IZL62i8ED73qOJ/dwOIELN/BPGPzDNk4NsLEadKifWGdn+enXJYogUVmadDB/cTZ4g72c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mFItLBxk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2E2C4AF18;
+	Wed,  8 May 2024 07:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715152294;
-	bh=A6IwkYlxZwQBAYDwauiL6qwBRvdPcZdYoSIAZi1fPDE=;
+	s=k20201202; t=1715153368;
+	bh=32ioLqPM7lnDwXJD99G8P6IhwH1PO1nE9mcgPc5umFs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HKL5McdJni5rB/qz6t0bO3edpyRtRS/UZYYvLMGjCa5DGuoB7X1VVn/m0VmT38Hm4
-	 KR5HBl6gMLVwGYg78B6yCfOVnbkmeOXZFyKMHNcp7Uc+VlKPSTQAk4BtnbBwrq3HaH
-	 LxhSE7cHVikmR/O1InZzoFYNFKMf7f7QhILMPtiAh2SQVXpyB1v0ZqDNJIPbqAaXf6
-	 QA7Ea9zOgZVGRhuxoIzX8DcNyr2Og2/1OCAMdBTvKJzG1uIXtfQUAcTbj6Pm88q5kK
-	 uY1N+8sxrPVEsXnSpJQrqw3q7mCwtLCSXk845ROtO1k6pAPaIL1vhzSUS19DpLqBy5
-	 ikP0l8yZSMpLQ==
-Message-ID: <2e51655d-6702-4dd7-9a97-005cbd431723@kernel.org>
-Date: Wed, 8 May 2024 09:11:27 +0200
+	b=mFItLBxk0t3ORVVyP+Uw3/iq1vLTpubeQsj5frHza1Gp6X646wV1f2WM8uM4wDECP
+	 KOqsWeys1ZdIWR3duGlXMvO9i7AI+WJEwxMQ7h9BrgLAbZ6yIovQBV+saMRU1wXD3G
+	 SKPGKCBTfean3w/gA7MA42YX+8EMfRcZDFyKLJxRAgCcTaOSs0B8xKJiLXqVtFGsry
+	 ijatMDEyG9ws/DfoFHg/CMQOmk5qLq6o5LWZ+d8XIRCQA99O83uC4W7G2Aot4AKOJf
+	 isrCVR/ahVwwIXaOU5twMHdoEYcCk5pgF2QGTQpf5x4b1Irq/TT2k9xPDLwCKJCRx0
+	 R34QBFJ3OXhyQ==
+Message-ID: <a4479812-63aa-4f10-a4a0-0f0a44acb468@kernel.org>
+Date: Wed, 8 May 2024 09:29:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add QCM6490 SHIFTphone 8
-To: Caleb Connolly <caleb.connolly@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Alexander Martinz <amartinz@shiftphones.com>,
- Luca Weiss <luca.weiss@fairphone.com>,
- ~postmarketos/upstreaming@lists.sr.ht, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240508-otter-bringup-v1-0-c807d3d931f6@linaro.org>
- <20240508-otter-bringup-v1-1-c807d3d931f6@linaro.org>
+Subject: Re: [PATCH v2 3/7] dt-bindings: HID: i2c-hid: elan: add
+ 'no-reset-on-power-off' property
+To: Johan Hovold <johan+linaro@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+ Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, Linus Walleij <linus.walleij@linaro.org>,
+ Douglas Anderson <dianders@chromium.org>, linux-input@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240507144821.12275-1-johan+linaro@kernel.org>
+ <20240507144821.12275-4-johan+linaro@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,18 +109,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240508-otter-bringup-v1-1-c807d3d931f6@linaro.org>
+In-Reply-To: <20240507144821.12275-4-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/05/2024 01:28, Caleb Connolly wrote:
-> The SHIFTphone 8 (codename otter) is a smartphone based on the QCM6490
-> SoC.
+On 07/05/2024 16:48, Johan Hovold wrote:
+> When the power supply is shared with other peripherals the reset line
+> can be wired in such a way that it can remain deasserted regardless of
+> whether the supply is on or not.
 > 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
+> This is important as it can be used to avoid holding the controller in
+> reset for extended periods of time when it remains powered, something
+> which can lead to increased power consumption. Leaving reset deasserted
+> also avoids leaking current through the reset circuitry pull-up
+> resistors.
+> 
+> Add a new 'no-reset-on-power-off' devicetree property which can be used
+> by the OS to determine when reset needs to be asserted on power down.
+> 
+> Note that this property can also be used when the supply cannot be
+> turned off by the OS at all.
+> 
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
