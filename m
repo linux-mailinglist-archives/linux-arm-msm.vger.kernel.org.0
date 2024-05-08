@@ -1,215 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-19505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CCAF8BFFFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 16:31:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D62C98C0071
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 16:49:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF865289B12
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 14:31:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7595E1F242BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 14:49:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22C7C86643;
-	Wed,  8 May 2024 14:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 531C486621;
+	Wed,  8 May 2024 14:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g9QBVdh8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iTLWQFWQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E504277624;
-	Wed,  8 May 2024 14:31:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F6684A23
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 14:49:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715178686; cv=none; b=Ye1wg/NElVaOTzw41FfOiM0rARouwbdtWQC8hlS/tCFNRV+oZDyPzXQNqoaEBq7rOQBggMiG53N5az+5BhHPf+smwNhDxMyhWYJ/L5WqYxYqA2jBNEL6WRItgI1XFrEkGD2eMEzue2x9+Uvak/u6m7vsE2EfwkJnpiBEF/xOyHA=
+	t=1715179782; cv=none; b=BzOsetnrcuvmkGtHwolzlU0Ew2cA/tn/M6ODZ+0Yhx/jNXqkLsBLQFRibypXOKTiUw3aS4fymlbwyTnKOcosmXj9Z0u7EvMjJ5jy7tDxQkIxN64oqV7wGuF2xUhdA/+vHu1oH39O7BY2QWWkO53gW04iEqh8uApEoywEN3saUvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715178686; c=relaxed/simple;
-	bh=0MSmjGyNwFzrj+obrJbro+oEuYfUkHrqgs88iGFlKes=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=SVkhsLfSTMhdgYgK/D7PKZo6RQcTcv2BVPadbTHOrcZYpJ7RdvaSg4disr+0FFempxCzG3IjoNU2/0S7xsBcv0beKMzw06OoxjO2TbI3wmH3uaPIFIwt6B8LsASsN3upAnSED69fbdvq9yyjljiPrE6T0ZDb7WqDsRpsW2USOrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g9QBVdh8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D80C32781;
-	Wed,  8 May 2024 14:31:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715178685;
-	bh=0MSmjGyNwFzrj+obrJbro+oEuYfUkHrqgs88iGFlKes=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=g9QBVdh8c34K2qenlSeZ5AWfHLlXvIQaPYzcnxBqz/sYBSv5bKDZgHZdX4V5Gek2w
-	 y4s4GQJwTmLyYyJudBHkq6pebBO9FfcfAv7x1vbvbsF43Vjli2Hx2TMLbCHAYig47Z
-	 z0mND7RjWIx5OpawfUC12xOFbwUaVf6zuPACoJeYCCM7OmywcWx9y9lXbzyYOlStnT
-	 gyyi6DBKhukRM/Cqxt+Wq7WQ1hyFfFUkgi+gFD/sdObew6Xp6C6YBK+XoZNUJ2lQ7i
-	 F2b41IW5XqyKy7glB80rQD5vrR2lzAM7KuXSOlMJmwCGb8kLJ/aZ2gfsM8Z1ztfKP8
-	 yZ4bSV+Zmj13Q==
-Date: Wed, 08 May 2024 09:31:24 -0500
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1715179782; c=relaxed/simple;
+	bh=Ocni919TQBZf0OZiD0/1kuHBcTVUGhknp34N/AdEKq4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=SXdm2ak0N4NFRQelNsZU2IOf/zKNauRS+bPdt6Uw+MQCBvShQjjsxPMlSbH7546YqFhptlvqwMxW+ZqRQjkESKjgH7gB4XyjTMZq0ltR7wRYO4zeWxp3vujyhXVk+r6r+b3bo9Tf/qkw0a/lHcQppvAGwQtkYjYRQbGi/1p+15Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iTLWQFWQ; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a59c0a6415fso1047375666b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 07:49:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715179779; x=1715784579; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AiH9Gz5/tpU+BqvAmSLE/L6eOTOhQDxjd+PhAW0xXK0=;
+        b=iTLWQFWQ2+gRuHUpmmLftY5ycwplhJXCYEXhi12PabKT23jE3kQLSxQXuQc9HuYUvx
+         c6IhqnTchKGi9ZFV3gqFtuCVShoe5oV8nvyZwz5h8+nYM7qRQz/YjN2n/ow9C1ghYS4V
+         O+g5jQG7qxTRTvScRhZIX4tNaETZDMVlvFw7YGQSp5dPuoJEiz7tB00l7Pu4CCJr4ey8
+         PnwEvwmCWZmN4FyOyFxXNcYhtMNVp6++bKoD14fs/t67fmFzMDoA81cv2djlvqF5t5fR
+         nMD+jQcKcyRH93VYrGtlqsgl3qgNuhObLanMkEcAeWSvxG4b8nGNVdbobCtC2VwuZ4e4
+         hD/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715179779; x=1715784579;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AiH9Gz5/tpU+BqvAmSLE/L6eOTOhQDxjd+PhAW0xXK0=;
+        b=LpX6uZP2W6MNiGrBsNZssmh+k6QH/BxOx7P17+lsq4MJp684KTsyFzY6kZsB2bIViu
+         mLOz4xEkkPi6JwEfapkk81r6na7NLWYWcf35OBIZkEFVeITEgDhgIjSfB4JLvshaquIF
+         tTMSWJMNnx/PmPVfQWMSUaVXrL2BMzR5n13lbCevX2WJT10KU7Imrtq9+2YX6eiYGLBj
+         urviwQdIecB8wMJFc9ZDGDa5TGF5sIKKEF6pxwcttK3yQtUdjbW5FO0jnrFeQsDxkoAh
+         zk2+syeiqYHUkMd9N8ICJVZqrv0YaRHlC+7x3V9/wN9mUIOLJjHtAgNV+FG4ecJph82f
+         46ZA==
+X-Gm-Message-State: AOJu0YzIbG4g4cM4bRd1T8J/Rxh74XaV25JbmwI46Q2NrdLLxB/5DIPc
+	lNPyg5+lIpPdmlY3vM8EZZdmQc2ITYQh5HQFqBpSllRCAvIvQTU17lKwor4+m796/XEdZLTPjfy
+	A
+X-Google-Smtp-Source: AGHT+IEoj3o/BiMMYuADP9+WbkZp6AXCsIyf+R/g0W06kODCoHihCtMJknXlb70+S6DPvBdSpYjzKQ==
+X-Received: by 2002:a17:906:b7cb:b0:a59:ba18:2fb9 with SMTP id a640c23a62f3a-a59fb9211d3mr172672166b.12.1715179778614;
+        Wed, 08 May 2024 07:49:38 -0700 (PDT)
+Received: from localhost ([102.222.70.76])
+        by smtp.gmail.com with ESMTPSA id bk2-20020a170907360200b00a59de75a803sm3031538ejc.180.2024.05.08.07.49.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 May 2024 07:49:38 -0700 (PDT)
+Date: Wed, 8 May 2024 17:49:34 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: swboyd@chromium.org
+Cc: linux-arm-msm@vger.kernel.org
+Subject: [bug report] soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be
+ free
+Message-ID: <911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org, quic_nankam@quicinc.com, 
- linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com, 
- konrad.dybcio@linaro.org, Prahlad Valluru <quic_vvalluru@quicinc.com>, 
- conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
- devicetree@vger.kernel.org
-In-Reply-To: <jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc>
-References: <171405653305.2527744.3813895380659072690.robh@kernel.org>
- <20240426142442.7769-1-quic_vvalluru@quicinc.com>
- <jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc>
-Message-Id: <171517823376.1753082.4070659246393696781.robh@kernel.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: qcs6490-rb3gen2: enable hdmi
- bridge
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Hello Stephen Boyd,
 
-On Mon, 06 May 2024 18:14:10 -0500, Bjorn Andersson wrote:
-> On Fri, Apr 26, 2024 at 07:54:42PM GMT, Prahlad Valluru wrote:
-> > From: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
-> >
-> 
-> Please don't thread new versions off existing version. b4 helps you with
-> getting these things right, please check go/upstream for more details.
-> 
-> > Enable lt9611uxc bridge for qcs6490 rb3 gen2 platform.
-> >
-> 
-> Even if it's clear what this is, I would prefer if you described the
-> hardware a little bit in your commit message.
-> "Rb3Gen2 has a HDMI connector, connected to DSI via a LT on i2cX.... reset and
-> irq pins comes from x and y. Describe this."
-> 
-> > Signed-off-by: Prahlad Valluru <quic_vvalluru@quicinc.com>
-> > ---
-> > v2: Addressed dtschema errors
-> > 	- Fixed lt9611-irq
-> > 	- vdd-supply error to be ignored, as it is connected to
-> > 	  input supply directly, on rb3gen2
+Commit 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs
+slots to be free") from Jul 24, 2020 (linux-next), leads to the
+following Smatch static checker warning:
 
-The choice is either fix the dts or fix the binding. 
+	drivers/soc/qcom/rpmh-rsc.c:658 rpmh_rsc_send_data()
+	warn: mixing irqsave and irq
 
-> > ---
-> >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 86 ++++++++++++++++++++
-> >  1 file changed, 86 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > index a085ff5b5fb2..c14d4a4bb3ce 100644
-> > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > @@ -51,6 +51,18 @@
-> >  			};
-> >  		};
-> >  	};
-> > +
-> 
-> There's a stray tab here, please run checkpatch --strict on your
-> patches.
-> 
-> > +	hdmi-connector {
-> > +		compatible = "hdmi-connector";
-> > +		label = "HDMI";
-> > +		type = "a";
-> > +
-> > +		port {
-> > +			hdmi_con: endpoint {
-> > +				remote-endpoint = <&lt9611_out>;
-> > +			};
-> > +		};
-> > +	};
-> >
-> >  	reserved-memory {
-> >  		xbl_mem: xbl@80700000 {
-> > @@ -530,6 +542,45 @@
-> [..]
-> > @@ -602,6 +653,21 @@
-> >  	status = "okay";
-> >  };
-> >
-> > +&mdss_dsi {
-> 
-> We want to keep nodes sorted (by address if applicable, otherwise
-> alphabetically on node names and on labels). "mdss_dsi" < "mdss_edp".
-> 
-> So please move this up where it belongs.
-> 
-> > +        vdda-supply = <&vreg_l6b_1p2>;
-> > +        status = "okay";
-> > +};
-> > +
-> > +&mdss_dsi0_out {
-> > +        remote-endpoint = <&lt9611_a>;
-> > +        data-lanes = <0 1 2 3>;
-> > +};
-> > +
-> > +&mdss_dsi_phy {
-> > +        vdds-supply = <&vreg_l10c_0p88>;
-> > +        status = "okay";
-> > +};
-> > +
-> >  &qupv3_id_0 {
-> >  	status = "okay";
-> >  };
-> > @@ -711,3 +777,23 @@
-> >  	function = "gpio";
-> >  	bias-disable;
-> >  };
-> > +
-> > +&pm7250b_gpios {
-> > +        lt9611_rst_pin: lt9611-rst-state {
-> > +                pins = "gpio2";
-> > +                function = "normal";
-> > +
-> > +                output-high;
-> > +                input-disable;
-> > +                power-source = <0>;
-> > +        };
-> > +};
-> > +
-> > +&tlmm {
-> > +        lt9611_irq_pin: lt9611-irq-state {
-> > +                pins = "gpio24";
-> > +                function = "gpio";
-> > +                drive-strength = <8>;
-> 
-> I'd expect a 2 here, so please document why this is 8.
-> 
-> Regards,
-> Bjorn
-> 
-> > +                bias-disable;
-> > +        };
-> > +};
-> > --
-> > 2.17.1
-> >
-> 
-> 
+drivers/soc/qcom/rpmh-rsc.c
+    645 int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+    646 {
+    647         struct tcs_group *tcs;
+    648         int tcs_id;
+    649         unsigned long flags;
+    650 
+    651         tcs = get_tcs_for_msg(drv, msg);
+    652         if (IS_ERR(tcs))
+    653                 return PTR_ERR(tcs);
+    654 
+    655         spin_lock_irqsave(&drv->lock, flags);
 
+flags saves if this is called with IRQs disabled.  I don't think it is.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+    656 
+    657         /* Wait forever for a free tcs. It better be there eventually! */
+--> 658         wait_event_lock_irq(drv->tcs_wait,
+    659                             (tcs_id = claim_tcs_for_req(drv, tcs, msg)) >= 0,
+    660                             drv->lock);
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+This will enable IRQs and then disable them again.  If this were called
+with IRQs disabled then this would probably be bad.  (But again, I don't
+think it is).
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+    661 
+    662         tcs->req[tcs_id - tcs->offset] = msg;
+    663         set_bit(tcs_id, drv->tcs_in_use);
+    664         if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type != ACTIVE_TCS) {
+    665                 /*
+    666                  * Clear previously programmed WAKE commands in selected
+    667                  * repurposed TCS to avoid triggering them. tcs->slots will be
+    668                  * cleaned from rpmh_flush() by invoking rpmh_rsc_invalidate()
+    669                  */
+    670                 write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
+    671                 enable_tcs_irq(drv, tcs_id, true);
+    672         }
+    673         spin_unlock_irqrestore(&drv->lock, flags);
 
-  pip3 install dtschema --upgrade
+And then it sets it back to whatever it was when it was called.  So
+that's fine.
 
+    674 
+    675         /*
+    676          * These two can be done after the lock is released because:
+    677          * - We marked "tcs_in_use" under lock.
+    678          * - Once "tcs_in_use" has been marked nobody else could be writing
+    679          *   to these registers until the interrupt goes off.
+    680          * - The interrupt can't go off until we trigger w/ the last line
+    681          *   of __tcs_set_trigger() below.
+    682          */
+    683         __tcs_buffer_write(drv, tcs_id, 0, msg);
+    684         __tcs_set_trigger(drv, tcs_id, true);
+    685 
+    686         return 0;
+    687 }
 
-New warnings running 'make CHECK_DTBS=y qcom/qcs6490-rb3gen2.dtb' for jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc:
-
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dtb: hdmi-bridge@2b: 'vdd-supply' is a required property
-	from schema $id: http://devicetree.org/schemas/display/bridge/lontium,lt9611.yaml#
-
-
-
-
-
+regards,
+dan carpenter
 
