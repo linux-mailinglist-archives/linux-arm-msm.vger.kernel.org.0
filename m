@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-19547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75AA28C07AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 01:33:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD28C8C07AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 01:34:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CE071F22F6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 23:33:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 840EE282E6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 23:34:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9778133401;
-	Wed,  8 May 2024 23:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBB19130E5A;
+	Wed,  8 May 2024 23:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UdVmYjMt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ELB1v/qs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC7912DD8A;
-	Wed,  8 May 2024 23:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5937C1BC40;
+	Wed,  8 May 2024 23:34:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715211186; cv=none; b=p8MUKfNOn6Jq+oZaxDBO9FuCqRSTetx/uMFlG8FPrH9nyKWfzWgjGPTJ6uSBSiUFSUlv8yP29ZyIXqBEXSvd9xTRP/Dvg2wsu8ifZhUFXBo17FX4dM+ksNlUNjwHnDchd/P0UnIOe96Ohop4JuP9L4K68monUm+yj05aVE+IyqU=
+	t=1715211290; cv=none; b=fklG5W0IflmFyDCzOwk3C9zEXkjqJC0Qr1N9NMo8wn7siZv6/i/kYpAIWicCXAj5E1WGgeoP9PZySbc8nKAt4/iaAnhSa69BttCs2ifMxVdwfsRvo5JL90t+YluYmMop3gTcJbK580ySN5Dzd61CtKw+jpLmQHYzgcF96TIrzuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715211186; c=relaxed/simple;
-	bh=GEAIMwFtyg+vAQGXluqnLDgeV0lbUGMAcGTBXuU4E98=;
+	s=arc-20240116; t=1715211290; c=relaxed/simple;
+	bh=HNemVXb/OpYjkw6qwSxFgtYqSMxSdSFOgSexH+uBWTg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DvjqB6ntT0z9oZgAF/oa5FGs4hd+4gI8hA3fwXQPpEmwM6FhiUW1yuahVeUdF/Z842U+1xN3GZHj+ZeHs2B9H64KHMVuxvt44eo2+FE2BOxhTLnsOxmRRQdwStaAZoclEAcT6xNkxe8EGQEnUs0B14Hy3tekHRqh6Ld58ss5iWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UdVmYjMt; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=KOioFHiDLJQidX8LUpwPhzt6pS2rHn0bZB+sri1ctAHRuohVX46F4ipAvIHVTLsccWO9qEvB/+2etJiKpEdu7E1savPaKZEAII7wpd+Fl4y3Uj6pgtnZs6OYxBEEH8lOYnKbL0QM8mogd1w9an7v2YbpZAHirW3AcGTlIILb0zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ELB1v/qs; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 448C4Y75027303;
-	Wed, 8 May 2024 23:32:40 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 448G4E8e024341;
+	Wed, 8 May 2024 23:34:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=1iu0bePOw83173L41461NVMwojOBNpiVdvT7Bl2/o+o=; b=Ud
-	VmYjMtdvKcish+QgW9GTSAL4/oRSgvsTNSOi1FMnbLRQZYO9g+I7aqwkcsmvwBok
-	wP8QqoTdXqDqYXDNqUEud88wkGgwZnbC3wPIRlGjEFaXOg5GO/CRCJrdqcYmhRKV
-	XvcfYu2ddXjuo2/8ekSnk4M9pfYtROjbV0IjPEWAkocIrVof/refApVuQs1LdwiZ
-	hQuTZRysiXuGdjjNJCsg9cdxDRQM7Tnq+15vAxNkgy5BBcxILF/B20AgkOvMLfHE
-	BlVUl56Q5Xi/Kj114Juzz8zJNHCq/ZK0OhS5r6HkJ2p+Bbm9r+U7Jy4MecSjZn7I
-	bZtCC2koss502AfVwDkQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y0930scy5-1
+	qcppdkim1; bh=dtWu/6+BYJMadcGc6nDqhDflB2UOVBkrkN6Fgjdp0QI=; b=EL
+	B1v/qsGGCp0fOXdKXuvSA/2rKZcbcmx1hrrQcKAGQjEomTUaVU4/EgTDdQedD1Qq
+	bwzM4nYGnvKhC96w4jnoXi2JK+zUcNzKYfNZ5tDOle/olW1IIf92Gc2N17GSaCp4
+	fSYk/ikBULt7MUM6XUiQbdfetSJigNQPcBGJjG7DxiCjTZw+kpICPqkgKI3jorLc
+	cM5cwACGG5/wbWwVjAkFBCSLSCn7Uk++OfMFJnAEpGIaIVJGcNcwUj9dwJtfDcJ0
+	yHST7SzG4OkCg7AtJ9sg5v5oj/LRYLcaE4RP9sl1T92C9koGJe0/mn+r1fDX7RAP
+	fUQRdzTqHj7towrUe39Q==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y07wfsj65-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 May 2024 23:32:40 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 448NWd75032048
+	Wed, 08 May 2024 23:34:24 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 448NYMGc001242
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 May 2024 23:32:39 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 8 May 2024 23:34:22 GMT
+Received: from [10.110.126.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 May 2024
- 16:32:39 -0700
-Message-ID: <a0868c79-f93e-36f1-e1c1-7a069222ebc7@quicinc.com>
-Date: Wed, 8 May 2024 16:32:38 -0700
+ 16:34:21 -0700
+Message-ID: <0a4d7c2b-ac7d-7bd4-f97e-db60944a1d39@quicinc.com>
+Date: Wed, 8 May 2024 16:34:21 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,77 +65,119 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 1/2] drm/msm/gen_header: allow skipping the validation
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v21 09/39] ASoC: qcom: qdsp6: Introduce USB AFE port to
+ q6dsp
 Content-Language: en-US
-To: Doug Anderson <dianders@chromium.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn
- Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Helen Koike <helen.koike@collabora.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Stephen
- Rothwell <sfr@canb.auug.org.au>
-References: <20240503-fd-fix-lxml-v2-0-f80a60ce21a1@linaro.org>
- <20240503-fd-fix-lxml-v2-1-f80a60ce21a1@linaro.org>
- <CAD=FV=XnpS-=CookKxzFM8og9WCSEMxfESmfTYH811438qg4ng@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAD=FV=XnpS-=CookKxzFM8og9WCSEMxfESmfTYH811438qg4ng@mail.gmail.com>
+To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>, <krzk+dt@kernel.org>,
+        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
+        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <bagasdotme@gmail.com>, <robh@kernel.org>, <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240507195116.9464-1-quic_wcheng@quicinc.com>
+ <20240507195116.9464-10-quic_wcheng@quicinc.com>
+ <9bd1ec72-71ea-4a1c-b795-af6e7687ca07@linux.intel.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <9bd1ec72-71ea-4a1c-b795-af6e7687ca07@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MtBzCmbgcpFFUcFdwHfSfdimmt5lYR-Q
-X-Proofpoint-ORIG-GUID: MtBzCmbgcpFFUcFdwHfSfdimmt5lYR-Q
+X-Proofpoint-GUID: KE0zh6uJcMg3J7raJjI_KCNq_czRl405
+X-Proofpoint-ORIG-GUID: KE0zh6uJcMg3J7raJjI_KCNq_czRl405
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-08_09,2024-05-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 phishscore=0 mlxlogscore=981 clxscore=1015
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 phishscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 malwarescore=0 mlxlogscore=718
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
  definitions=main-2405080176
 
+Hi Pierre,
 
-
-On 5/8/2024 3:41 PM, Doug Anderson wrote:
-> Hi,
+On 5/7/2024 1:37 PM, Pierre-Louis Bossart wrote:
 > 
-> On Fri, May 3, 2024 at 11:15 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> @@ -941,6 +948,7 @@ def main():
->>          parser = argparse.ArgumentParser()
->>          parser.add_argument('--rnn', type=str, required=True)
->>          parser.add_argument('--xml', type=str, required=True)
->> +       parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
+>>   static struct snd_soc_dai_driver q6dsp_audio_fe_dais[] = {
+>> +	{
+>> +		.playback = {
+>> +			.stream_name = "USB Playback",
+>> +			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_11025 |
+>> +					SNDRV_PCM_RATE_16000 | SNDRV_PCM_RATE_22050 |
+>> +					SNDRV_PCM_RATE_32000 | SNDRV_PCM_RATE_44100 |
+>> +					SNDRV_PCM_RATE_48000 | SNDRV_PCM_RATE_96000 |
+>> +					SNDRV_PCM_RATE_192000,
+>> +			.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S16_BE |
+>> +					SNDRV_PCM_FMTBIT_U16_LE | SNDRV_PCM_FMTBIT_U16_BE |
+>> +					SNDRV_PCM_FMTBIT_S24_LE | SNDRV_PCM_FMTBIT_S24_BE |
+>> +					SNDRV_PCM_FMTBIT_U24_LE | SNDRV_PCM_FMTBIT_U24_BE,
+>> +			.channels_min = 1,
+>> +			.channels_max = 2,
+>> +			.rate_min =	8000,
+>> +			.rate_max = 192000,
+>> +		},
+>> +		.id = USB_RX,
+>> +		.name = "USB_RX",
+>> +	},
 > 
-> FWIW, the above (argparse.BooleanOptionalAction) appears to be a
-> python 3.9 thing. My own build environment happens to have python3
-> default to python 3.8 and thus I get a build error related to this. I
-> have no idea what the kernel usually assumes for a baseline, but
-> others might get build errors too. I don't even see python listed in:
+> Wait, is this saying you will have exactly one PCM device/FE DAI
+> connected to the USB BE DAI exposed in patch 11?
 > 
-> https://docs.kernel.org/process/changes.html
+>> +	SND_SOC_DAPM_MIXER("USB Mixer", SND_SOC_NOPM, 0, 0,
+>> +			   usb_mixer_controls,
+>> +			   ARRAY_SIZE(usb_mixer_controls)),
+>> +
 > 
-> ...in any case, if it's easy to change this to not require python3.9
-> that would at least help for my build environment. :-P
+> And then what is the role of the USB mixer if you only have one input?
+> 
+> I must be missing something.
 > 
 
-Yes, I had posted this y'day as I also ran into this
+Not sure if this is a QCOM specific implementation, but the way the DT 
+is defined for the USB offload path is as follows:
 
-https://patchwork.freedesktop.org/patch/593057/
+	usb-dai-link {
+		link-name = "USB Playback";
+
+		cpu {
+			sound-dai = <&q6afedai USB_RX>;
+		};
+
+		codec {
+			sound-dai = <&usbdai USB_RX>;
+		};
+
+		platform {
+			sound-dai = <&q6routing>;
+		};
+	};
+
+Based on our DT parser helper API (qcom_snd_parse_of()) this isn't going 
+to create a PCM device.  The PCM devices are created for nodes that 
+don't have a codec and platform defined:
+
+	mm1-dai-link {
+		link-name = "MultiMedia1";
+		cpu {
+			sound-dai = <&q6asmdai  	MSM_FRONTEND_DAI_MULTIMEDIA1>;
+		};
+	};
+
+The ASM path is the entity that defines the number of PCM devices that 
+is created for the QC ASoC platform card, and is where the actual PCM 
+data is sent over to the DSP.  So there could be several PCM devices 
+that can use the USB BE DAI.
+
+Thanks
+Wesley Cheng
 
 
-> -Doug
 
