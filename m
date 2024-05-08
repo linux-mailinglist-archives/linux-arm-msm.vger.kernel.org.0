@@ -1,157 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-19530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 157C58C056C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 22:17:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4BD88C05BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 22:34:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC5B81F22D4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 20:17:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D62B31C20EC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 20:34:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EF6D130AF2;
-	Wed,  8 May 2024 20:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0011D130AF7;
+	Wed,  8 May 2024 20:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G3CeZyZ4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="heGND9F5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A969A130A63;
-	Wed,  8 May 2024 20:17:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511D212A17F;
+	Wed,  8 May 2024 20:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715199422; cv=none; b=ajGpBYv1o62XaWDvovitHCvJ08ZeT8dVioa1lH2u8qcTRMFNGfCCLK3Lr6jFdHFepPWPpI6FCMthHwDkDNBucR53I0TfnMd98lixzpEMc0nCttIPXAO7+eWwDqqc+iTQjKslZ7AkoqDkhacpKLXV5z9gkEfdMNIScmuXiQvkrIA=
+	t=1715200473; cv=none; b=mvEPxaNnncBy10JVaWOrzsTmUI4goab/U2A8F4jUAXCoh27ZSJycdaL2lqzczzfioP/iF08qvOz5Xt5DQxMW/ritnwfOli0TFG9PQiCPmBMtJTKPboVw1ORg66KO88d5RrF5VoFxb3d7ekftbJldbZj+9mRNRCoowvHLsEm7N/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715199422; c=relaxed/simple;
-	bh=U09Rnr9ntnBO7MwvNoJCHqyP9+H/89CU40V7dG6FWYM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dT+VK+sWJvRGD0GJo9mY4tL0TN2L6YPen4AICLvg7hFWcrMw8AOVqwMHkM0My3skr/qKyGCL6XThUbHkOFoucdklrO4OOmsWuIAxVR7C/etilZq5PJv4kkCCnOP3FbSW/3G2e0jEatTe2K51Tn5ZSDMuCiQpD3BAk7BmtsXffWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G3CeZyZ4; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 448Ae8bk004926;
-	Wed, 8 May 2024 20:16:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=/h/CzWxCJAWdECYePSx/kcEaFq6W4rE/eXk8NJV+0HY=; b=G3
-	CeZyZ4ePRk73R5cwnSmeBM0urCxyVcmWeyXqhE8ksxx8PFJfRosXjZCP+ZyMToPN
-	uNqBaQVN5NKDYn1Dfoxe6mKwRQYhcJit7YwGf0fDPpfUVCAEWutXU2pYwv7fXVo1
-	GCpYVr/RvAJv72ihoMCpzkzPYc62Z9OHZMoQafRrIv/K40lutuUFCvNN5Ek8cuoW
-	jbTh2fT7eTfHETpiR0Ubw7N9LetZy5ZU4w1/Lnm3GrS9UO13cuTMDMyC+h+5e6uL
-	PwiYxnkOw4+sNSb2BUjPYJazkYjT1xstgNZFALufEONUoZ5sWvfiemtT0iKE8l3w
-	OfadCVyIIsNml6LKrMVQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y07u999yg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 May 2024 20:16:40 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 448KGdbW007663
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 May 2024 20:16:39 GMT
-Received: from [10.110.126.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 May 2024
- 13:16:38 -0700
-Message-ID: <106711dc-0250-4d07-254d-2829f89e0a5d@quicinc.com>
-Date: Wed, 8 May 2024 13:16:38 -0700
+	s=arc-20240116; t=1715200473; c=relaxed/simple;
+	bh=TvcqRI5iA0Z7Bk1l+OWXxKVFjors/ms85nxBW0rJi3o=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HW7sUwbPXzf4YjQ5Ib9Bg9EycNjVQ4oKMz8a50YGa0se4F30cnKgLJQ9HvZDWft/LwPl2CnM4xaY1ni62fMTxdO9bINs5B4lFX3Syl5tSpYjzckZj0oF37OAb7B6VYjTW5MCv20a5y2gE/HvCBzD94qGxfMTRAZpNPrrJzLZ4I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=heGND9F5; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a5a0013d551so14623166b.2;
+        Wed, 08 May 2024 13:34:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715200469; x=1715805269; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4D/wsR/nZF2oU4cRe7wiG2sNbWufWK+ynmZknuVoK+I=;
+        b=heGND9F5cCt8hzhsSstCs7P7peuS3mQ0KWSOCXkBO+FSL0mmhTkDEzF7bdqFfSZPrW
+         7DKu7whf8FkPmPOUacZ++xXGQcaGRy2p42aiMqGDTyudkn674EL1K2wNvO96hPNBJIWH
+         wP1MjulOXPS0XpiywaOjdQoqmxFazgYflaaDoeGWzUeFyxk4OMwLXJkDq+JTYYO+RdAx
+         c1ZaH7j1AdNYlKgP/jtroQVM/JnjDw4ZasjgurKgbAmN8Nc8tpeb3zijY+k2slGqG45d
+         MUyPLZy5XvpH81t5b51KDzrVv2wEs/dC9NP9wvgb/jyQXSqzG/zTtQMj1PV9WVU2ML2w
+         w0Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715200469; x=1715805269;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4D/wsR/nZF2oU4cRe7wiG2sNbWufWK+ynmZknuVoK+I=;
+        b=TGUySa2IHzpUiWnBBU56vhNuBQmwGDtIP5stZoavoiYq6OV8gKmxyQRCIN9MjryYhs
+         gdTHSa38Gya4obrWoTbyUE6lNAq5B3SOXL6lLsPzZlojNxHozZew9ugVPLR7V9MKKgcB
+         JNCpEFq8QXNrQrVbYCCVbeZ5O1NHzprOX9C+xkCh3H2JSt6rnIcQVpPy/B+XmgfzU2j1
+         BSBJAHz5ERBWQYKApl5gmJ613oWPibFq13Zrq44U+fwXYxN9ix7c4CFRjiqQJ3xPJnwj
+         rM6qBlPyBzpfJ7FCi0W35JaYWGvhSzTfp8CAUpnc4a2Y6cDaEjM2Lg9xbMCH9CXKa7O8
+         caiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUgUht1d7OxQyYd1O6/HU8DiroLjYCRyIviZk1ReLoKR631Tst2zK/ToavpNzFJh2/YA6SqQCINcoCVzVnNUJ4oQpl4S8TaeaRFpP5qHPPicl7vfdRWUf7WAw4M349wPk/rqHQHdaKl
+X-Gm-Message-State: AOJu0Yzk4GcBIL1hIYO04+hdU2t4qLZjPXQY7M5raSItnlDZohiA7CcD
+	rxHaqV+J2/XUfOth1UamenGc4p23GoQvokrMqqtqgpUVa3V4GAwnfaNUWGpc
+X-Google-Smtp-Source: AGHT+IGFdtRQoEDrS8EJZco1r9vOO7Jg+6Qm71hlZoviI+PSpW5TJeyzzley9AaHCQAAbfB7oOEXJw==
+X-Received: by 2002:a50:9353:0:b0:572:9d22:eb8c with SMTP id 4fb4d7f45d1cf-5731d9b62c4mr3334708a12.15.1715200469501;
+        Wed, 08 May 2024 13:34:29 -0700 (PDT)
+Received: from [169.254.60.140] (57657817.unconfigured.pool.telekom.hu. [87.101.120.23])
+        by smtp.googlemail.com with ESMTPSA id x2-20020a056402414200b00572cf08369asm7128233eda.23.2024.05.08.13.34.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 May 2024 13:34:29 -0700 (PDT)
+From: Gabor Juhos <j4g8y7@gmail.com>
+Date: Wed, 08 May 2024 22:34:14 +0200
+Subject: [PATCH] clk: qcom: clk-alpha-pll: set ALPHA_EN bit for Stromer
+ Plus PLLs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v21 07/39] ASoC: Add SOC USB APIs for adding an USB
- backend
-Content-Language: en-US
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <lgirdwood@gmail.com>, <andersson@kernel.org>, <krzk+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
-        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <bagasdotme@gmail.com>, <robh@kernel.org>, <konrad.dybcio@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20240507195116.9464-1-quic_wcheng@quicinc.com>
- <20240507195116.9464-8-quic_wcheng@quicinc.com>
- <507953f7-c4da-499b-bcd7-76be0e04b766@linux.intel.com>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <507953f7-c4da-499b-bcd7-76be0e04b766@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RJxVdkI85z4HvNEsdpbVz7wQbcrOhP3J
-X-Proofpoint-ORIG-GUID: RJxVdkI85z4HvNEsdpbVz7wQbcrOhP3J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-08_09,2024-05-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- spamscore=0 suspectscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405080149
+Message-Id: <20240508-stromer-plus-alpha-en-v1-1-6639ce01ca5b@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAMXhO2YC/x3MwQqDMAyA4VeRnA3UUofsVWSHUNM14GpJpgzEd
+ 1/x+B3+/wRjFTZ4dicoH2KylYah7yBmKm9GWZrBOx/c6Ca0r24fVqzrbkhrzYRc0FGgEB9L8lO
+ E1lblJL/7O7+u6w+44sh4ZwAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Kathiravan T <quic_kathirav@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Gabor Juhos <j4g8y7@gmail.com>
+X-Mailer: b4 0.13.0
 
-Hi Pierre,
+The clk_alpha_pll_stromer_plus_set_rate() function does not
+sets the ALPHA_EN bit in the USER_CTL register, so setting
+rates which requires using alpha mode works only if the bit
+gets set already prior calling the function.
 
-On 5/7/2024 1:26 PM, Pierre-Louis Bossart wrote:
-> 
->> +const char *snd_soc_usb_get_components_tag(bool playback)
->> +{
->> +	if (playback)
->> +		return "usbplaybackoffload: 1";
->> +	else
->> +		return "usbcaptureoffload : 1";
-> 
-> why are there different spaces and do we need spaces in the first place?
-> 
+Extend the function to set the ALPHA_EN bit in order to allow
+using fractional rates regardless whether the bit gets set
+previously or not.
 
-Will remove these spaces once we clarify if this is still needed.
+Fixes: 84da48921a97 ("clk: qcom: clk-alpha-pll: introduce stromer plus ops")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+---
+Based on 'qcom-clk-for-6.10'
+---
 
->> +int snd_soc_usb_add_port(struct snd_soc_usb *usb)
->> +{
->> +	mutex_lock(&ctx_mutex);
->> +	list_add_tail(&usb->list, &usb_ctx_list);
->> +	mutex_unlock(&ctx_mutex);
->> +
->> +	return 0;
-> 
-> make the function return void?
-> 
+---
+ drivers/clk/qcom/clk-alpha-pll.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Ack.
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index d4227909d1fe..c51647e37df8 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -2574,6 +2574,9 @@ static int clk_alpha_pll_stromer_plus_set_rate(struct clk_hw *hw,
+ 	regmap_write(pll->clkr.regmap, PLL_ALPHA_VAL_U(pll),
+ 					a >> ALPHA_BITWIDTH);
+ 
++	regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
++			   PLL_ALPHA_EN, PLL_ALPHA_EN);
++
+ 	regmap_write(pll->clkr.regmap, PLL_MODE(pll), PLL_BYPASSNL);
+ 
+ 	/* Wait five micro seconds or more */
 
->> +int snd_soc_usb_remove_port(struct snd_soc_usb *usb)
->> +{
->> +	struct snd_soc_usb *ctx, *tmp;
->> +
->> +	mutex_lock(&ctx_mutex);
->> +	list_for_each_entry_safe(ctx, tmp, &usb_ctx_list, list) {
->> +		if (ctx == usb) {
->> +			list_del(&ctx->list);
->> +			break;
->> +		}
->> +	}
->> +	mutex_unlock(&ctx_mutex);
->> +
->> +	return 0;
-> 
-> make this return void?
-> 
-> 
+---
+base-commit: 3c5b3e17b8fd1f1add5a9477306c355fab126977
+change-id: 20240508-stromer-plus-alpha-en-0a4a4c6df28c
 
-Ack.
+Best regards,
+-- 
+Gabor Juhos <j4g8y7@gmail.com>
 
-Thanks
-Wesley Cheng
 
