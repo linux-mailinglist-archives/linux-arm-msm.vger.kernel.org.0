@@ -1,195 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-19489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFE0E8BF917
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 10:54:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 110908BF97A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 11:18:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75E582861F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 08:54:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 346FD1C22569
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 09:18:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E927953807;
-	Wed,  8 May 2024 08:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D78374419;
+	Wed,  8 May 2024 09:18:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="k3384num"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2056.outbound.protection.outlook.com [40.107.236.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCDD53801
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 08:54:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715158448; cv=none; b=YB7H5QTo7huMThiZ4Rm6ubf3toP+n+cbbaDihMLiBXUlFlE1PuKTbppyieipRpmVQDZvXqVRsDwklV44xwLrbvmWiafV5xe1fY/CVk82khejFqXRleQSK+2lACIjxkbiGnEEFdRVLPjKfYOrXfsP+fnJHNIPgpfYJiK/Y6IGB5U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715158448; c=relaxed/simple;
-	bh=pflO7IhFdkN0vZOy11haWgFFUMQUG7T+bleZpLFH1m4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HUiR3wX+dO1XSx0eICLSBtgzpndmx/i1TAYcj8Snu5IcZWe4F2eK0+4hslFM5Qu+SW/zdApXEJ9jjB8+gZSZE6o20gzXqoYU9ivfV7g4MwgHGFfO8dBpCSLByQRwQPvf6cPJdjPXXy2BuGSflE9bpskc72kNI0wJ1vs2O+MpWYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mtr@pengutronix.de>)
-	id 1s4d3M-0001lz-IY; Wed, 08 May 2024 10:53:32 +0200
-Received: from [2a0a:edc0:2:b01:1d::c5] (helo=pty.whiteo.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <mtr@pengutronix.de>)
-	id 1s4d3I-000F6P-1y; Wed, 08 May 2024 10:53:28 +0200
-Received: from mtr by pty.whiteo.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <mtr@pengutronix.de>)
-	id 1s4d3H-000Z3P-36;
-	Wed, 08 May 2024 10:53:27 +0200
-Date: Wed, 8 May 2024 10:53:27 +0200
-From: Michael Tretter <m.tretter@pengutronix.de>
-To: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andy Walls <awalls@md.metrocast.net>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: Re: [PATCH v2 01/18] media: allegro: nal-hevc: Refactor
- nal_hevc_sub_layer_hrd_parameters
-Message-ID: <Zjs9h40l9gfaiOei@pengutronix.de>
-Mail-Followup-To: Michael Tretter <m.tretter@pengutronix.de>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andy Walls <awalls@md.metrocast.net>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-References: <20240507-cocci-flexarray-v2-0-7aea262cf065@chromium.org>
- <20240507-cocci-flexarray-v2-1-7aea262cf065@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932081A2C03;
+	Wed,  8 May 2024 09:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.56
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715159934; cv=fail; b=PjlWuhwB8k/cn/EAp73H0OPDzBBw56aMo1G/V2Hw7LX+NtKyztY3mk/yahu74oEm9udqLXUdVVg0xL0rRE6HUggeS4ZW6JrLfPdkvM/DDFar2IPuEiO+GSefYR8TBcghIG86TPrc7uflDZXzjNBdNLQqrdKVUPzclW+pAH0Jycg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715159934; c=relaxed/simple;
+	bh=wmwNt+vVkf5rSiy4hPWhhqYWAHMIsOykoB64/rq2smA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UOsJEMQ5evYuLCrn/zkzVjjbtZu3kPnZ8gswVLMxaiVes8kOd6wD9o+UnPTOq+DiysYB+D7oElB7csLblQFCyntE9KblyBqIC0L45qiP2Gm/sz1wPrk1mZa1NGY6CdQJ194MHE5+fvtD+vrjsOkxDVtD+bcTAVI+lfdMoctEvt0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=k3384num; arc=fail smtp.client-ip=40.107.236.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=C+6pJtXiqto3khdnhVcFK07cFc7Tp9RaFEyVfXx8rToH68R9jmxPIROSMPMIV+jjwg5T/DUtYR/d7USM00gsnZNVf7vzt8hSdRNfobYsKkt/Tjrivad4dNd5bsysiHdwoqj8RYkMonypVfyZyvHaPkO3rtHEV7MomSX6fH8gAckeKdFxGEG+IX7zv9zHFASej0yEVP97j0IlN5CjfP8VtsRsKdxDaWKKDqIa/P0tZvk3ei1H3T+pB9ESjozPELoSyBbfGUTtXpmyDHD6WZukHl0XesRSpHDyj0AzGDmJdG4zzrxgWZOrnJSuvvJsmLx7iOJMPpiwOJ8nwGEMVC1vIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NQB9/+jg1Bs2CI14TO/laXC/4HAg9S3POaQr+xhNlXE=;
+ b=aBsdj3b2D+Ni4lFKQm1QwduxEZldLaf5SAulJInpUEjWd7ozVvNAe3H6z2tBxSqq1BeM2qjYNvTbkzwSRk/wAItUBgR3geg//Eo5pIyhZV/qf1a5q8y1Lvd2qnU5MjHrRpaLADJR2QdxBOtG5kiebXf+Q1CbJvil7BDOw8+hI/MvUa9xBu3sJTn7NUTF+9xW9efybe4MqEi09MI+Vt4VRs57bGjgsmBLH7Vd1dz8uRFrT/0VJMAhRZHDHQ8HW9uVKEIjfeIWJ5Gn0qEqonD3Hx3maRtNjsL5UbPTjqJqbjUuD2qi4SqFISAzasmJfaywZPN1EBy3BqTDUqz9Z+LTpQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NQB9/+jg1Bs2CI14TO/laXC/4HAg9S3POaQr+xhNlXE=;
+ b=k3384numg5GUu339VTIKy81gveNSY7Uci48ljyvUNQNRgPPiIHanbMvJJyA0QGG5a8dY2+8EPddFW/ChJwQrqjyxEbZcJDiygz9kmmPunxx5b0ytO4C/T+3uAOILEjsknIwAyUCMQBcxH8sBraJgSpmLXTaxRZPW6cchse9owwbDcMFTSgcsEOyL7NevnGsw2aTgMhjoJAbZtoOpdeN2MSd1lR31/SpdCgU3aeXAlFHtAcmfLnsxIwg3HWHjoB1VLGjWVdeXgj522qnGO+V3+z3GVXmBlzBdbhEcX1n8Kh3yrMagl7rfVogH2zAZ/ZTMU1qzUZ8sY6q5OEr8ioNAjw==
+Received: from MW4PR04CA0288.namprd04.prod.outlook.com (2603:10b6:303:89::23)
+ by DM3PR12MB9352.namprd12.prod.outlook.com (2603:10b6:0:4a::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.39; Wed, 8 May
+ 2024 09:18:42 +0000
+Received: from CO1PEPF000042A7.namprd03.prod.outlook.com
+ (2603:10b6:303:89:cafe::5e) by MW4PR04CA0288.outlook.office365.com
+ (2603:10b6:303:89::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.42 via Frontend
+ Transport; Wed, 8 May 2024 09:18:42 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CO1PEPF000042A7.mail.protection.outlook.com (10.167.243.36) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7544.18 via Frontend Transport; Wed, 8 May 2024 09:18:42 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 8 May 2024
+ 02:18:26 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 8 May 2024
+ 02:18:25 -0700
+Received: from moonraker.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
+ Transport; Wed, 8 May 2024 02:18:23 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+	<quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+	<freedreno@lists.freedesktop.org>, <linux-tegra@vger.kernel.org>, Jon Hunter
+	<jonathanh@nvidia.com>
+Subject: [PATCH] drm/msm: Fix gen_header.py for python earlier than v3.9
+Date: Wed, 8 May 2024 10:17:51 +0100
+Message-ID: <20240508091751.336654-1-jonathanh@nvidia.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240507-cocci-flexarray-v2-1-7aea262cf065@chromium.org>
-X-Sent-From: Pengutronix Hildesheim
-X-URL: http://www.pengutronix.de/
-X-Accept-Language: de,en
-X-Accept-Content-Type: text/plain
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mtr@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-NVConfidentiality: public
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000042A7:EE_|DM3PR12MB9352:EE_
+X-MS-Office365-Filtering-Correlation-Id: eb34d998-5700-4cde-cff7-08dc6f3fdaa8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230031|36860700004|376005|1800799015|82310400017;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?XeoF4xTLUJ9PP3osw973EMcRXxHm8sHbIEYZb6CZD+UpQirkM6yTdEeKn655?=
+ =?us-ascii?Q?W2z8k6gljrS2Yud1Ti+ZcqtYJUhaUKwDW11PyDK2idrkKjg72F1ycgoR8lvc?=
+ =?us-ascii?Q?tf5O2Tqy3YqIihgvvNslJZfEQTRBApDDckdxvPBM3oJ/vZOq/jPL2gZk1CnU?=
+ =?us-ascii?Q?xahXm6BzYHRtyrXCBABavChCeyUOXIwR6bPBLQmF6trb0JQyznKVHW6+d7Rr?=
+ =?us-ascii?Q?RVN0ocX31ZAi9gznkwWdf6kiey1Ag3uLBS5fUMwTUX8pCE4O4eIMKZrdjyLd?=
+ =?us-ascii?Q?ahrWGiiHiEyYOJsr1KiUy5nNYP3RRsUPEOG+OQPfSTs5+pcZE5DSK68eTqOe?=
+ =?us-ascii?Q?X1ApilW9fFWAQcHaM9U461TQkDYLhXcay/p9hLfhlS6cIXY/6vY5+UI6YDNu?=
+ =?us-ascii?Q?eXrr57iPjp4fD5kqGArXtI31J3LLBkCEdk009HfuxGBv/pa9M+trxoV3/J4g?=
+ =?us-ascii?Q?XlYoFGsJNvMQtWWRkwHkFX7tYTEjqS6T40xu88o2HdQ6cWk6JT2m8n7nUCUM?=
+ =?us-ascii?Q?CGceLvcfygnaGJGjJWnuq8vf4g5azVRlCCTFgdhBXT2GKozFS8EWDprSViPd?=
+ =?us-ascii?Q?kwCNYrR+l+EyvtPb2SzLvImACURHJWQ4NptFA7lrwVASRh/8OtUDuCWS2I7z?=
+ =?us-ascii?Q?j1JVCh/3KQ9sOjEr5ZowUS7lhHDJ4IIOT4X5iZcyfh9PTtDtmz9m04SsSmvG?=
+ =?us-ascii?Q?MH6qGmu7G37VwKV4s+Z6skJRA0KiCiEPa9SGw13+jbhH5y11nqYhBGvhaqgx?=
+ =?us-ascii?Q?jetNvRAvvuWnRshmy502ajnizmTeDzSLOH6Z6t1QHDBiuo4bv/3ZbrlrrgQR?=
+ =?us-ascii?Q?vq6+x4bXbfYVrYwsmUAmSrMdirRtjoUoSU/Po0DoZVF4ULqzeMOLyDY8AV38?=
+ =?us-ascii?Q?Kw8q71ShJb4pTIn8ncOjIQwe29D2Q/9G9LmXOuN053piyyo3F2Q+b5kdlqCH?=
+ =?us-ascii?Q?FPUDh805kfBVM69SSsrXadZBWSK8lzZ4H/OFVXkvvPRj+Dd5hWDEbUiEUtij?=
+ =?us-ascii?Q?7EF4lXVfX5k8TjaPiIAGBgVCX9ZQxbqsmKdSQhJ1nwALPzdM4o6KFwwVuIxM?=
+ =?us-ascii?Q?lhvCWNa7M4UUartkRSasKRkHVDZ1U+vJzj1zRmae+1Yfq5YQCypDFwSxA1RB?=
+ =?us-ascii?Q?5nt1oNXy8/R+ii9kf+wTYlq1GJyj4OevNJ4qGCj3c0SEWEriQXeTR8rY8chJ?=
+ =?us-ascii?Q?QpvnWfZtAIdvSQxVaAPF/KDHu9mCFt7fGRN1ibZnmnMLcAoFWVGtqCJ6sm9v?=
+ =?us-ascii?Q?tei/mAx9USqV1zFKsviVh9OldG4raqOvIVwoqlblXFWhA3wHSsHcYPYJLP2I?=
+ =?us-ascii?Q?Z7tAmGQ8AXWvZAkHpu3zCNFpidCo885Vx++F4CHCMwYVpv0s6Z7OlW3a6pT5?=
+ =?us-ascii?Q?Qc8dWNf7foBurvpheyTp+O5yrnFA?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(36860700004)(376005)(1800799015)(82310400017);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2024 09:18:42.0324
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb34d998-5700-4cde-cff7-08dc6f3fdaa8
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000042A7.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9352
 
-On Tue, 07 May 2024 16:27:06 +0000, Ricardo Ribalda wrote:
-> Replace all the single elements arrays with the element itself.
-> 
-> Pahole shows the same padding and alignment for x86 and arm in both
-> situations.
-> 
-> This fixes this cocci warning:
-> drivers/media/platform/allegro-dvt/nal-hevc.h:102:14-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+Building the kernel with python3 versions earlier than v3.9 fails with ...
 
-Thanks for the patch.
+ Traceback (most recent call last):
+   File "drivers/gpu/drm/msm/registers/gen_header.py", line 970, in <module>
+     main()
+   File "drivers/gpu/drm/msm/registers/gen_header.py", line 951, in main
+     parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
+ AttributeError: module 'argparse' has no attribute 'BooleanOptionalAction'
 
-> 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> ---
->  drivers/media/platform/allegro-dvt/allegro-core.c |  6 +++---
->  drivers/media/platform/allegro-dvt/nal-hevc.c     | 11 +++--------
->  drivers/media/platform/allegro-dvt/nal-hevc.h     |  6 +++---
->  3 files changed, 9 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/media/platform/allegro-dvt/allegro-core.c b/drivers/media/platform/allegro-dvt/allegro-core.c
-> index da61f9beb6b4..369bd88cc0ae 100644
-> --- a/drivers/media/platform/allegro-dvt/allegro-core.c
-> +++ b/drivers/media/platform/allegro-dvt/allegro-core.c
-> @@ -1852,14 +1852,14 @@ static ssize_t allegro_hevc_write_sps(struct allegro_channel *channel,
->  	hrd->dpb_output_delay_length_minus1 = 30;
->  
->  	hrd->bit_rate_scale = ffs(channel->bitrate_peak) - 6;
-> -	hrd->vcl_hrd[0].bit_rate_value_minus1[0] =
-> +	hrd->vcl_hrd[0].bit_rate_value_minus1 =
->  		(channel->bitrate_peak >> (6 + hrd->bit_rate_scale)) - 1;
->  
->  	cpb_size = v4l2_ctrl_g_ctrl(channel->mpeg_video_cpb_size) * 1000;
->  	hrd->cpb_size_scale = ffs(cpb_size) - 4;
-> -	hrd->vcl_hrd[0].cpb_size_value_minus1[0] = (cpb_size >> (4 + hrd->cpb_size_scale)) - 1;
-> +	hrd->vcl_hrd[0].cpb_size_value_minus1 = (cpb_size >> (4 + hrd->cpb_size_scale)) - 1;
->  
-> -	hrd->vcl_hrd[0].cbr_flag[0] = !v4l2_ctrl_g_ctrl(channel->mpeg_video_frame_rc_enable);
-> +	hrd->vcl_hrd[0].cbr_flag = !v4l2_ctrl_g_ctrl(channel->mpeg_video_frame_rc_enable);
->  
->  	size = nal_hevc_write_sps(&dev->plat_dev->dev, dest, n, sps);
->  
-> diff --git a/drivers/media/platform/allegro-dvt/nal-hevc.c b/drivers/media/platform/allegro-dvt/nal-hevc.c
-> index 9cdf2756e0a3..575089522df5 100644
-> --- a/drivers/media/platform/allegro-dvt/nal-hevc.c
-> +++ b/drivers/media/platform/allegro-dvt/nal-hevc.c
-> @@ -210,14 +210,9 @@ static void nal_hevc_rbsp_vps(struct rbsp *rbsp, struct nal_hevc_vps *vps)
->  static void nal_hevc_rbsp_sub_layer_hrd_parameters(struct rbsp *rbsp,
->  						   struct nal_hevc_sub_layer_hrd_parameters *hrd)
->  {
-> -	unsigned int i;
-> -	unsigned int cpb_cnt = 1;
-> -
-> -	for (i = 0; i < cpb_cnt; i++) {
-> -		rbsp_uev(rbsp, &hrd->bit_rate_value_minus1[i]);
-> -		rbsp_uev(rbsp, &hrd->cpb_size_value_minus1[i]);
-> -		rbsp_bit(rbsp, &hrd->cbr_flag[i]);
-> -	}
-> +	rbsp_uev(rbsp, &hrd->bit_rate_value_minus1);
-> +	rbsp_uev(rbsp, &hrd->cpb_size_value_minus1);
-> +	rbsp_bit(rbsp, &hrd->cbr_flag);
->  }
->  
->  static void nal_hevc_rbsp_hrd_parameters(struct rbsp *rbsp,
-> diff --git a/drivers/media/platform/allegro-dvt/nal-hevc.h b/drivers/media/platform/allegro-dvt/nal-hevc.h
-> index eb46f12aae80..afa7a9d7d654 100644
-> --- a/drivers/media/platform/allegro-dvt/nal-hevc.h
-> +++ b/drivers/media/platform/allegro-dvt/nal-hevc.h
-> @@ -97,9 +97,9 @@ struct nal_hevc_vps {
->  };
->  
->  struct nal_hevc_sub_layer_hrd_parameters {
-> -	unsigned int bit_rate_value_minus1[1];
-> -	unsigned int cpb_size_value_minus1[1];
-> -	unsigned int cbr_flag[1];
-> +	unsigned int bit_rate_value_minus1;
-> +	unsigned int cpb_size_value_minus1;
-> +	unsigned int cbr_flag;
+The argparse attribute 'BooleanOptionalAction' is only supported for
+python v3.9 and later. Fix support for earlier python3 versions by
+explicitly defining '--validate' and '--no-validate' arguments.
 
-The struct is modeled after the specification in ITU-T H.265, which
-defines the fields as arrays. It's a limitation of the current
-implementation that only a single element is supported.
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+---
+ drivers/gpu/drm/msm/registers/gen_header.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Maybe replacing the hard coded values with a constant would be more
-appropriate to document this limitation.
+diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
+index fc3bfdc991d2..64f67d2e3f1c 100644
+--- a/drivers/gpu/drm/msm/registers/gen_header.py
++++ b/drivers/gpu/drm/msm/registers/gen_header.py
+@@ -948,7 +948,8 @@ def main():
+ 	parser = argparse.ArgumentParser()
+ 	parser.add_argument('--rnn', type=str, required=True)
+ 	parser.add_argument('--xml', type=str, required=True)
+-	parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
++	parser.add_argument('--validate', dest='validate', action='store_true')
++	parser.add_argument('--no-validate', dest='validate', action='store_false')
+ 
+ 	subparsers = parser.add_subparsers()
+ 	subparsers.required = True
+-- 
+2.34.1
 
-Michael
-
->  };
->  
->  struct nal_hevc_hrd_parameters {
-> 
-> -- 
-> 2.45.0.rc1.225.g2a3ae87e7f-goog
-> 
-> 
 
