@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE6338BF6B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 09:01:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE2C58BF6C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 09:11:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82F681F23182
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 07:01:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AD70284C96
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 07:11:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D31F2224D6;
-	Wed,  8 May 2024 07:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E373924B33;
+	Wed,  8 May 2024 07:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S7KFktG7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HKL5McdJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24DC17BCD;
-	Wed,  8 May 2024 07:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23DA2375F;
+	Wed,  8 May 2024 07:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715151671; cv=none; b=NGP7GGX4Za/rP/hSUl2sFocF4tVZymgiBu2FXgdrNKrgMVR0zz6cWPHoqOLF6RkdQ7w29wgQplygoVCIahL4FGkelPc8aFW2iKhSqC3tKysc4gMJ0izpnLW7EONWuCf1b3EY6z2xzgoPun6SJ+JgbylsHUq3ceU9JNmDPDpkytc=
+	t=1715152294; cv=none; b=daNf8OBHKqTcuf/UrM9NZOa5vbEcZZ59UfU5i89o5vLk5vAQ85XkSPB/AQxyligDfngCwzaTs+OF0Z7m5MLzO4Q7vgzdvDt29IZ7PTHs74lD+7OgEMeCeq0/6ZDoKy5l7EcfryS6FrPLhOy6m5m/6lEs79qxC5Pyj/OoFIK5+AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715151671; c=relaxed/simple;
-	bh=bDBwycGaC/PlY0kR4qyYfRKjMFSOWty57OMtRsUEpP8=;
+	s=arc-20240116; t=1715152294; c=relaxed/simple;
+	bh=A6IwkYlxZwQBAYDwauiL6qwBRvdPcZdYoSIAZi1fPDE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oGEuxs7nqT61n8VK7QQiw+8KVJsz0v7m3+eGZAxXsdBHTOZ3R/bPHggxBKF35Y6mrI+JoCZZ6bJCUWv3D4cHKENFQyfj+Daat3QiocMFNJ0NRT5hiHqfxxZmk1rmcGdy4LE4jwixAzESwQKkES8HASofDCO23h7Dm2Ks7xULGeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S7KFktG7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EB3C113CC;
-	Wed,  8 May 2024 07:01:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=XR1XBeCYgBUS0nx+AyvmHiOP0679IDrh5p6UHtT+bmixrXE+szE1ubAyI4NHGNIAyA6f9SR++L7dSrDY/uX0KYjfxv8lRxT8pzJ/64FK+a6hLSGlTATJn50jFUl98j8GlTtN0vr7H9zNPK0iWOJz/Df9m8SxkQ2Mcp/xGDKKk9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HKL5McdJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8CDC113CC;
+	Wed,  8 May 2024 07:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715151671;
-	bh=bDBwycGaC/PlY0kR4qyYfRKjMFSOWty57OMtRsUEpP8=;
+	s=k20201202; t=1715152294;
+	bh=A6IwkYlxZwQBAYDwauiL6qwBRvdPcZdYoSIAZi1fPDE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=S7KFktG7znFadJ4uNm2bTFIfNIScmGeiSnyIyvZDI/8Id/p5jxBojGxgs8cgYUhCN
-	 w08m9AsqumuxKG0SMzAZr0PO150nTx+jHvuHLvXMTxS1T1RWfGfin8Tgu8CdU+zU8m
-	 wuVeQyo51t0z3LVVtDQEljxMNZNrvDVgEktP7tcj0FZ8pK5xuxoFnayJj4XZX+uiiC
-	 VfQ4ujJxnEtDPzgyn19dyJQ/iv5BxIipo9cas6xv9GdbjPnhY1cHbrAp1lWgVL829a
-	 oruudRpalSliEaSZIDgCUSSxA7Gx3D2VG84IEpKpanD1SaesXUzien4o0cMDYAV3Sr
-	 hVnYyPUkb1dAg==
-Message-ID: <a0a89cd8-9604-4a75-a358-2974a0f70e54@kernel.org>
-Date: Wed, 8 May 2024 09:01:03 +0200
+	b=HKL5McdJni5rB/qz6t0bO3edpyRtRS/UZYYvLMGjCa5DGuoB7X1VVn/m0VmT38Hm4
+	 KR5HBl6gMLVwGYg78B6yCfOVnbkmeOXZFyKMHNcp7Uc+VlKPSTQAk4BtnbBwrq3HaH
+	 LxhSE7cHVikmR/O1InZzoFYNFKMf7f7QhILMPtiAh2SQVXpyB1v0ZqDNJIPbqAaXf6
+	 QA7Ea9zOgZVGRhuxoIzX8DcNyr2Og2/1OCAMdBTvKJzG1uIXtfQUAcTbj6Pm88q5kK
+	 uY1N+8sxrPVEsXnSpJQrqw3q7mCwtLCSXk845ROtO1k6pAPaIL1vhzSUS19DpLqBy5
+	 ikP0l8yZSMpLQ==
+Message-ID: <2e51655d-6702-4dd7-9a97-005cbd431723@kernel.org>
+Date: Wed, 8 May 2024 09:11:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] dt-bindings: net: qcom: ethernet: Allow
- dma-coherent
-To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>,
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add QCM6490 SHIFTphone 8
+To: Caleb Connolly <caleb.connolly@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Andrew Halaney <ahalaney@redhat.com>, Vinod Koul <vkoul@kernel.org>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org
-References: <20240507-mark_ethernet_devices_dma_coherent-v3-0-dbe70d0fa971@quicinc.com>
- <20240507-mark_ethernet_devices_dma_coherent-v3-2-dbe70d0fa971@quicinc.com>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Alexander Martinz <amartinz@shiftphones.com>,
+ Luca Weiss <luca.weiss@fairphone.com>,
+ ~postmarketos/upstreaming@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240508-otter-bringup-v1-0-c807d3d931f6@linaro.org>
+ <20240508-otter-bringup-v1-1-c807d3d931f6@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,31 +106,16 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240507-mark_ethernet_devices_dma_coherent-v3-2-dbe70d0fa971@quicinc.com>
+In-Reply-To: <20240508-otter-bringup-v1-1-c807d3d931f6@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/05/2024 03:31, Sagar Cheluvegowda wrote:
-> On SA8775P, Ethernet DMA controller is coherent with the CPU.
-> allow specifying that.
+On 08/05/2024 01:28, Caleb Connolly wrote:
+> The SHIFTphone 8 (codename otter) is a smartphone based on the QCM6490
+> SoC.
 > 
-> Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->  Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> index 69a337c7e345..44028987ef92 100644
-> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> @@ -66,6 +66,8 @@ properties:
->    phy-names:
->      const: serdes
->  
-> +  dma-coherent: true
-
-Do not add properties to the end of the list. That's downstream
-practice... Keep it next to iommus, for example.
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
