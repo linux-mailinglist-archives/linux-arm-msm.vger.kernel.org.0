@@ -1,134 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-19488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E34E78BF8F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 10:44:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFE0E8BF917
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 10:54:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0CFA281454
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 08:44:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75E582861F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 08:54:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2678D9476;
-	Wed,  8 May 2024 08:44:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eLlvpm0q"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E927953807;
+	Wed,  8 May 2024 08:54:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE8A28FF;
-	Wed,  8 May 2024 08:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCDD53801
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 08:54:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715157846; cv=none; b=LA8xNuBcwk08E9Ho+6n+jAmcoKZ1kH/CEfYjbRIeR0cMc0BhaRLWPGWwN17o4/VQstByk0HzeLUM9N5LcMdoevl0MdbG2auehV2YcdtvI7bRL+I8POrTG4GQsyzQ2IoTRkIngAuqumrEP6wEfiRHGOrgdwOrHEJO1zbKEbZjdA4=
+	t=1715158448; cv=none; b=YB7H5QTo7huMThiZ4Rm6ubf3toP+n+cbbaDihMLiBXUlFlE1PuKTbppyieipRpmVQDZvXqVRsDwklV44xwLrbvmWiafV5xe1fY/CVk82khejFqXRleQSK+2lACIjxkbiGnEEFdRVLPjKfYOrXfsP+fnJHNIPgpfYJiK/Y6IGB5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715157846; c=relaxed/simple;
-	bh=EIWAO/oS2DvpnpR2Kb+vwzKu0pOKwN71qpcxPw4cnbQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aOdtBQGRPTlFVXaR+j8RTqTFFwh8a1Mvp0nl9smTZU4JFpYdjSRT38jFVq/R8nR7haQ1/XYdVz6KwvJZG/vMy4WQL2MF60L61rJoruMBvg3IJzNx5JacSKFnEw/EI1imWOL4GbIgpVfYEyI8f5VIVNhcPBodPLdmb9zw5NTegR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eLlvpm0q; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715157845; x=1746693845;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=EIWAO/oS2DvpnpR2Kb+vwzKu0pOKwN71qpcxPw4cnbQ=;
-  b=eLlvpm0qUF4WC5f7Kcuh0MOBi3ZfwIAB5688XFcHKmbD4OsCU+0LMid4
-   VOVY3UYSP+p1bLXL1/smgeRifbUHyWv01YvyU5djml7IaRUefiBYAU+ey
-   HYvLnc0FvuKTPL+0kku/klf+DL3IO6EP/NB28MIrvvBe6FmSQIc2CHKny
-   7BaDPHPZoB10bdLpWrZfS/fK82bAtqNu290dJvMCRbaYCsG17wkQmbRLi
-   xtXt1Wl9XlbnAzmglrHHAu4jT1KdRHGcaFRdTsww5W67rv531VGOO/Jta
-   SxDX/nJuUsdyJRzlLa7lfgXIIEIpPbest0Chmpd59whQbOWYYk8K4kuPZ
-   g==;
-X-CSE-ConnectionGUID: HsuiSElYT6uGUXN2FcJCLg==
-X-CSE-MsgGUID: uPq76WX8TPKGSzvomrxT0Q==
-X-IronPort-AV: E=McAfee;i="6600,9927,11066"; a="22157077"
-X-IronPort-AV: E=Sophos;i="6.08,144,1712646000"; 
-   d="scan'208";a="22157077"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2024 01:44:04 -0700
-X-CSE-ConnectionGUID: BUHs8ofaQuaFaDI+23XuYg==
-X-CSE-MsgGUID: lnq/6KdBSl2/VjOScGEihQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,144,1712646000"; 
-   d="scan'208";a="52025594"
-Received: from dhhellew-desk2.ger.corp.intel.com.ger.corp.intel.com (HELO localhost) ([10.245.246.76])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2024 01:43:59 -0700
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
- freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, Abhinav
- Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, Marijn Suijten
- <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org, seanpaul@chromium.org,
- swboyd@chromium.org, quic_jesszhan@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Masahiro
- Yamada <masahiroy@kernel.org>
-Subject: Re: [PATCH] drm/msm: remove python 3.9 dependency for compiling msm
-In-Reply-To: <20240507230440.3384949-1-quic_abhinavk@quicinc.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20240507230440.3384949-1-quic_abhinavk@quicinc.com>
-Date: Wed, 08 May 2024 11:43:56 +0300
-Message-ID: <87a5l0lmlv.fsf@intel.com>
+	s=arc-20240116; t=1715158448; c=relaxed/simple;
+	bh=pflO7IhFdkN0vZOy11haWgFFUMQUG7T+bleZpLFH1m4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HUiR3wX+dO1XSx0eICLSBtgzpndmx/i1TAYcj8Snu5IcZWe4F2eK0+4hslFM5Qu+SW/zdApXEJ9jjB8+gZSZE6o20gzXqoYU9ivfV7g4MwgHGFfO8dBpCSLByQRwQPvf6cPJdjPXXy2BuGSflE9bpskc72kNI0wJ1vs2O+MpWYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <mtr@pengutronix.de>)
+	id 1s4d3M-0001lz-IY; Wed, 08 May 2024 10:53:32 +0200
+Received: from [2a0a:edc0:2:b01:1d::c5] (helo=pty.whiteo.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <mtr@pengutronix.de>)
+	id 1s4d3I-000F6P-1y; Wed, 08 May 2024 10:53:28 +0200
+Received: from mtr by pty.whiteo.stw.pengutronix.de with local (Exim 4.96)
+	(envelope-from <mtr@pengutronix.de>)
+	id 1s4d3H-000Z3P-36;
+	Wed, 08 May 2024 10:53:27 +0200
+Date: Wed, 8 May 2024 10:53:27 +0200
+From: Michael Tretter <m.tretter@pengutronix.de>
+To: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andy Walls <awalls@md.metrocast.net>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: Re: [PATCH v2 01/18] media: allegro: nal-hevc: Refactor
+ nal_hevc_sub_layer_hrd_parameters
+Message-ID: <Zjs9h40l9gfaiOei@pengutronix.de>
+Mail-Followup-To: Michael Tretter <m.tretter@pengutronix.de>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andy Walls <awalls@md.metrocast.net>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+References: <20240507-cocci-flexarray-v2-0-7aea262cf065@chromium.org>
+ <20240507-cocci-flexarray-v2-1-7aea262cf065@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240507-cocci-flexarray-v2-1-7aea262cf065@chromium.org>
+X-Sent-From: Pengutronix Hildesheim
+X-URL: http://www.pengutronix.de/
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: mtr@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On Tue, 07 May 2024, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> Since commit 5acf49119630 ("drm/msm: import gen_header.py script from Mesa"),
-> compilation is broken on machines having python versions older than 3.9
-> due to dependency on argparse.BooleanOptionalAction.
+On Tue, 07 May 2024 16:27:06 +0000, Ricardo Ribalda wrote:
+> Replace all the single elements arrays with the element itself.
+> 
+> Pahole shows the same padding and alignment for x86 and arm in both
+> situations.
+> 
+> This fixes this cocci warning:
+> drivers/media/platform/allegro-dvt/nal-hevc.h:102:14-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
 
-Is it now okay to require Python for the build? Not listed in
-Documentation/process/changes.rst.
+Thanks for the patch.
 
-BR,
-Jani.
-
-
-
->
-> Switch to use simple bool for the validate flag to remove the dependency.
->
-> Fixes: 5acf49119630 ("drm/msm: import gen_header.py script from Mesa")
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 > ---
->  drivers/gpu/drm/msm/registers/gen_header.py | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
-> index fc3bfdc991d2..3926485bb197 100644
-> --- a/drivers/gpu/drm/msm/registers/gen_header.py
-> +++ b/drivers/gpu/drm/msm/registers/gen_header.py
-> @@ -538,7 +538,7 @@ class Parser(object):
->  		self.variants.add(reg.domain)
+>  drivers/media/platform/allegro-dvt/allegro-core.c |  6 +++---
+>  drivers/media/platform/allegro-dvt/nal-hevc.c     | 11 +++--------
+>  drivers/media/platform/allegro-dvt/nal-hevc.h     |  6 +++---
+>  3 files changed, 9 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/media/platform/allegro-dvt/allegro-core.c b/drivers/media/platform/allegro-dvt/allegro-core.c
+> index da61f9beb6b4..369bd88cc0ae 100644
+> --- a/drivers/media/platform/allegro-dvt/allegro-core.c
+> +++ b/drivers/media/platform/allegro-dvt/allegro-core.c
+> @@ -1852,14 +1852,14 @@ static ssize_t allegro_hevc_write_sps(struct allegro_channel *channel,
+>  	hrd->dpb_output_delay_length_minus1 = 30;
 >  
->  	def do_validate(self, schemafile):
-> -		if self.validate == False:
-> +		if not self.validate:
->  			return
+>  	hrd->bit_rate_scale = ffs(channel->bitrate_peak) - 6;
+> -	hrd->vcl_hrd[0].bit_rate_value_minus1[0] =
+> +	hrd->vcl_hrd[0].bit_rate_value_minus1 =
+>  		(channel->bitrate_peak >> (6 + hrd->bit_rate_scale)) - 1;
 >  
->  		try:
-> @@ -948,7 +948,8 @@ def main():
->  	parser = argparse.ArgumentParser()
->  	parser.add_argument('--rnn', type=str, required=True)
->  	parser.add_argument('--xml', type=str, required=True)
-> -	parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
-> +	parser.add_argument('--validate', default=False, action='store_true')
-> +	parser.add_argument('--no-validate', dest='validate', action='store_false')
+>  	cpb_size = v4l2_ctrl_g_ctrl(channel->mpeg_video_cpb_size) * 1000;
+>  	hrd->cpb_size_scale = ffs(cpb_size) - 4;
+> -	hrd->vcl_hrd[0].cpb_size_value_minus1[0] = (cpb_size >> (4 + hrd->cpb_size_scale)) - 1;
+> +	hrd->vcl_hrd[0].cpb_size_value_minus1 = (cpb_size >> (4 + hrd->cpb_size_scale)) - 1;
 >  
->  	subparsers = parser.add_subparsers()
->  	subparsers.required = True
+> -	hrd->vcl_hrd[0].cbr_flag[0] = !v4l2_ctrl_g_ctrl(channel->mpeg_video_frame_rc_enable);
+> +	hrd->vcl_hrd[0].cbr_flag = !v4l2_ctrl_g_ctrl(channel->mpeg_video_frame_rc_enable);
+>  
+>  	size = nal_hevc_write_sps(&dev->plat_dev->dev, dest, n, sps);
+>  
+> diff --git a/drivers/media/platform/allegro-dvt/nal-hevc.c b/drivers/media/platform/allegro-dvt/nal-hevc.c
+> index 9cdf2756e0a3..575089522df5 100644
+> --- a/drivers/media/platform/allegro-dvt/nal-hevc.c
+> +++ b/drivers/media/platform/allegro-dvt/nal-hevc.c
+> @@ -210,14 +210,9 @@ static void nal_hevc_rbsp_vps(struct rbsp *rbsp, struct nal_hevc_vps *vps)
+>  static void nal_hevc_rbsp_sub_layer_hrd_parameters(struct rbsp *rbsp,
+>  						   struct nal_hevc_sub_layer_hrd_parameters *hrd)
+>  {
+> -	unsigned int i;
+> -	unsigned int cpb_cnt = 1;
+> -
+> -	for (i = 0; i < cpb_cnt; i++) {
+> -		rbsp_uev(rbsp, &hrd->bit_rate_value_minus1[i]);
+> -		rbsp_uev(rbsp, &hrd->cpb_size_value_minus1[i]);
+> -		rbsp_bit(rbsp, &hrd->cbr_flag[i]);
+> -	}
+> +	rbsp_uev(rbsp, &hrd->bit_rate_value_minus1);
+> +	rbsp_uev(rbsp, &hrd->cpb_size_value_minus1);
+> +	rbsp_bit(rbsp, &hrd->cbr_flag);
+>  }
+>  
+>  static void nal_hevc_rbsp_hrd_parameters(struct rbsp *rbsp,
+> diff --git a/drivers/media/platform/allegro-dvt/nal-hevc.h b/drivers/media/platform/allegro-dvt/nal-hevc.h
+> index eb46f12aae80..afa7a9d7d654 100644
+> --- a/drivers/media/platform/allegro-dvt/nal-hevc.h
+> +++ b/drivers/media/platform/allegro-dvt/nal-hevc.h
+> @@ -97,9 +97,9 @@ struct nal_hevc_vps {
+>  };
+>  
+>  struct nal_hevc_sub_layer_hrd_parameters {
+> -	unsigned int bit_rate_value_minus1[1];
+> -	unsigned int cpb_size_value_minus1[1];
+> -	unsigned int cbr_flag[1];
+> +	unsigned int bit_rate_value_minus1;
+> +	unsigned int cpb_size_value_minus1;
+> +	unsigned int cbr_flag;
 
--- 
-Jani Nikula, Intel
+The struct is modeled after the specification in ITU-T H.265, which
+defines the fields as arrays. It's a limitation of the current
+implementation that only a single element is supported.
+
+Maybe replacing the hard coded values with a constant would be more
+appropriate to document this limitation.
+
+Michael
+
+>  };
+>  
+>  struct nal_hevc_hrd_parameters {
+> 
+> -- 
+> 2.45.0.rc1.225.g2a3ae87e7f-goog
+> 
+> 
 
