@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-19507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 848CF8C0128
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 17:39:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 042128C01B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 18:13:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0AEE8B25613
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 15:39:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D9DB21C21944
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 16:13:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06067127B68;
-	Wed,  8 May 2024 15:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7CBC129E6D;
+	Wed,  8 May 2024 16:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DSqLRUg0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jw4txY8l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D6B54FA3;
-	Wed,  8 May 2024 15:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE705128829
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 16:12:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715182773; cv=none; b=aXo8kOMQo/YeMx9rQAolIM2GfcnuquJ3kjd3J2UkQZxpPhIaxI/6QC+hU2dRUqRcJd5MmWR5BpbV4Oi+x+GK7TxAVZ3pIjM0tdKOMSSBAo80BwbXGTWiE3eEJHXA0CDWMrn+h9ezmMuPzVYjUXCRvG6zHjRZoW3J1BYC5TW8iaU=
+	t=1715184776; cv=none; b=mdspICve1ZwNjEYXb/f+OTZzGcgpfpYNKTr9pcfYfuDHSptWWM/SRpKWrge9gYddZMARkmlmnPWe3c7UliO3KmgbG4XqpnhGgH2ci5wOgq+Z0PIbqA21dt3vi8gN5NAfFyv2OE8iKnqndvxhK67fCj4uMPVo8cDeSesh0yq8BPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715182773; c=relaxed/simple;
-	bh=/tX4Ip2L4te5oJv8mWcwPA/72l6Iwn859XOMY8Sbjtw=;
+	s=arc-20240116; t=1715184776; c=relaxed/simple;
+	bh=3RC/slltpYapY2F0z6uYYs46/YRPjHS6+iJKdyjPMSI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZpIEQuElU69rrDAyrsCVlPvfNgbarWZctU7mdGozEoAnqHlFLw3JozbG4H27WX51FocrjgSxu240cdVctE6H/EzAFWZLGuWgkjQmKBwCbfXOoltuXrFo8jVpKtiTgZrootx0L6uwmGKnYc5+F9m7G28Ffh/VG6G6entMR6U2bzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DSqLRUg0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C47BC113CC;
-	Wed,  8 May 2024 15:39:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715182773;
-	bh=/tX4Ip2L4te5oJv8mWcwPA/72l6Iwn859XOMY8Sbjtw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DSqLRUg01uUSWlMXaHbNfBBiyv58dsgTSG0SxYeD8s5kWdhsB5+jbOMfDJLlNhlfI
-	 Z2LtcY7vD3rNUq4NSKaC1MjD7Lc3yx4uLLTV1+jHa3XIEvg9SSLB5eX1H2rmhpxOep
-	 OrK4/+md9tvcuON158W2eYiuhtCjKC/0Ny7HYdzg9pHjdTEcz+b1KebJx4f1V1nzah
-	 TvGBrjMk47hRCGuyw2ACSoBfBSYbbV3ESi84JqDJ7Uftkinpsjh4iaSBsAhefQo1o+
-	 ewaIt0cey7OH4cFF2VQCEmtnTuz0/mlV5pXEGMuk9MFtKIlw5dMEGOkU8Sw274dKv1
-	 8OA+TYmwVDNWQ==
-Message-ID: <0da17f9c-29bd-443d-882a-69c339288a02@kernel.org>
-Date: Wed, 8 May 2024 17:39:26 +0200
+	 In-Reply-To:Content-Type; b=WSLb24PhLC/08iEoKLktLhesC7ifbhbWxUpqKCM7/BiSrgQwroqPwSF7s1LIgkP2P4E9gxZku7+CU6FUxGarlqkjGhJRY/x+gIyuNHwRPPCwpQRyA/4Kl50aC/Tvj8X9oawU6dcPQ/0wcBYTur28/AxqQN4vXmk4OlwCobM/elk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jw4txY8l; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-41dc9f98e8dso5996465e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 09:12:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715184773; x=1715789573; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4GjzdAdHEKtNKnAx1lGW3dqaD5snc+8WTy5ik2iGruw=;
+        b=jw4txY8lnQNVRM41kVyo00Z0nAwO/j6Dhyjv1JktTUcmmA/j6YyC5hWVI98gzIzSra
+         offBNSVRC1N8MwLFCBaARTuBjPmu2qZgqBHbNQp2wKMOqOzJm++cj/NPH2UIPpukachN
+         2h9mm7i8fupyJk/il8SXSGuP0Tz4gJcdgvU5z2PlBxlpEr6Z1L0hbxsxSkP+OWQmSiTD
+         U4fVrf67hMHsSG9iH+no3WWxWFgbE7/udcw2LfphO8UUVLgLFtiUea73kNQ5naT0IzhB
+         eJUD/RYfmVCFV2zvXUrEuNrr09Txcu/W+Ja5Tva5/vVOMMncTi8v/3HzW+v6nplnrBJq
+         nIbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715184773; x=1715789573;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4GjzdAdHEKtNKnAx1lGW3dqaD5snc+8WTy5ik2iGruw=;
+        b=DELAhtu8KCVqW9jpnZdhrBmyNWyHUUPv8cVXT07QmzWy3BdQ3CMoJ5TSIxfPnJX7ND
+         HV3k1M9zzSHgIv9wA9Xs5hKkmbxOkzozLmY2RcuxNO7zgmMSXFbrcqYIcOZfGqnUSQou
+         W4sE17P/n8WIM5jVjpYKnueVrmJpCSVXNhIrZsGuOnLaKRST8GDzTPwr7jHl7a1/WnFg
+         dBHcZszhOvfFIK5V7wRv6s66oPAFhWdGtrFO+GkiE/W2H0iAhzJNRi1G7B59xMnIcTzO
+         rTUN9ltRwuqQTrV1Ven52CMXb9xhvLc+zO88jMjl14HZWVtDrSvMcJFG+YzYGoK4W+Jm
+         lO/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXAGH+WkzHb6SE2FW0d1JKVGek7BNADwHXGX9sYL7/UAhUms5OexhEwfD/42Fw4MmqGV98pAE2l/tdUNVIBhyg14gkO9zbbLvmFUFmpMQ==
+X-Gm-Message-State: AOJu0YzFOr7LPM2XO/IhXnKj9t1uaZP6cBq5q0R9XiqLLAYJxBfqqF/i
+	qqo+XCu2e9cip1WrXMBYV1/QVYjinhEBbqb4eAalPFWqbsFEIRsew/jZkT7kvd4=
+X-Google-Smtp-Source: AGHT+IH5Yksnpu8AA/SPMXll9db6J8MO+PCbYpEJpY3+2AVAvGf2IFN2hUFiazwk32/adRLFStXFTQ==
+X-Received: by 2002:a05:600c:3585:b0:418:2ab6:7123 with SMTP id 5b1f17b1804b1-41fbcc5f63bmr1147015e9.10.1715184773147;
+        Wed, 08 May 2024 09:12:53 -0700 (PDT)
+Received: from [192.168.0.3] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id g18-20020a5d5412000000b00346bda84bf9sm15725249wrv.78.2024.05.08.09.12.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 May 2024 09:12:52 -0700 (PDT)
+Message-ID: <4468becb-dc03-4832-aa03-5f597023fcb2@linaro.org>
+Date: Wed, 8 May 2024 17:12:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,80 +76,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add QCM6490 SHIFTphone 8
-To: Caleb Connolly <caleb.connolly@linaro.org>,
- ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Alexander Martinz <amartinz@shiftphones.com>,
- Luca Weiss <luca.weiss@fairphone.com>
-References: <20240508-otter-bringup-v1-1-c807d3d931f6@linaro.org>
- <f136ac86-5005-404f-b834-e1b0a41c5758@web.de>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 03/13] mfd: pm8008: deassert reset on probe
+To: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>,
+ Satya Priya <quic_c_skakit@quicinc.com>, Stephen Boyd <swboyd@chromium.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+ <20240506150830.23709-4-johan+linaro@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <f136ac86-5005-404f-b834-e1b0a41c5758@web.de>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240506150830.23709-4-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 08/05/2024 09:37, Markus Elfring wrote:
->> The SHIFTphone 8 (codename otter) is a smartphone based on the QCM6490
->> SoC.
+On 06/05/2024 16:08, Johan Hovold wrote:
+> Request and deassert any (optional) reset gpio during probe in case it
+> has been left asserted by the boot firmware.
 > 
-> * I suggest to move the last word into the first text line.
+> Note the reset line is not asserted to avoid reverting to the default
+> I2C address in case the firmware has configured an alternate address.
 > 
-> * Please add an imperative wording for a better change description.
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/mfd/qcom-pm8008.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+> index d53c987b0d49..d0f190c2ea2b 100644
+> --- a/drivers/mfd/qcom-pm8008.c
+> +++ b/drivers/mfd/qcom-pm8008.c
+> @@ -4,6 +4,7 @@
+>    */
+>   
+>   #include <linux/bitops.h>
+> +#include <linux/gpio/consumer.h>
+>   #include <linux/i2c.h>
+>   #include <linux/interrupt.h>
+>   #include <linux/irq.h>
+> @@ -158,6 +159,7 @@ static struct regmap_config qcom_mfd_regmap_cfg = {
+>   static int pm8008_probe(struct i2c_client *client)
+>   {
+>   	struct regmap_irq_chip_data *irq_data;
+> +	struct gpio_desc *reset;
+>   	int rc;
+>   	struct device *dev;
+>   	struct regmap *regmap;
+> @@ -169,6 +171,10 @@ static int pm8008_probe(struct i2c_client *client)
+>   
+>   	i2c_set_clientdata(client, regmap);
+>   
+> +	reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
+> +	if (IS_ERR(reset))
+> +		return PTR_ERR(reset);
+> +
+>   	if (of_property_read_bool(dev->of_node, "interrupt-controller")) {
+>   		rc = devm_regmap_add_irq_chip(dev, regmap, client->irq,
+>   				IRQF_SHARED, 0, &pm8008_irq_chip, &irq_data);
 
-Feel free to ignore all comments from Markus (or implement them - up to
-you). He is banned from mailing lists and ignored by most of the
-maintainers.
+So not resetting is fine and I understand you want to retain the address 
+given by the firmware, I think that's the right thing to do.
 
-Best regards,
-Krzysztof
+You can add this now
 
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+In addition to adding a small delay suggested by Andy - a few 
+microseconds pick a number, I think you should verify the chip is out of 
+reset as we would do with many other i2c devices.
+
+A common pattern with i2c devices is take the device out of reset then 
+read back an identity register as a smoke test.
+
+Take drivers/media/i2c/ov8856.c::ov8856_identify_module() as an example.
+
+In this case, suggest reading REVID_PERPH_TYPE @ 0x104 and 
+REVID_PERPH_SUBTYPE @ 0x105
+
+REVID_PERPH_TYPE @ 0x104 == 0x51 (PMIC)
+REVID_PERPH_SUBYTE @ 0x105 == 0x2C (PM8008)
+
+You can then add my
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+---
+bod
 
