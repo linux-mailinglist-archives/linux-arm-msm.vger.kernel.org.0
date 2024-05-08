@@ -1,106 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-19475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 509418BF7C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 09:52:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 117C58BF827
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 10:09:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BF30285A80
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 07:52:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 340CE1C20DC1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 08:09:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FC022E417;
-	Wed,  8 May 2024 07:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF53A3FBAE;
+	Wed,  8 May 2024 08:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="sOUQHNNS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XhRf6AyW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FD1450FA;
-	Wed,  8 May 2024 07:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53DB4D59B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 08:09:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715154703; cv=none; b=VM8wFJB1ujQpeEJPXh+r4kzxVW1GoMXjDWEM6FHoS1w+iwksAIFhlQwVBRlYTKFK4Wma6Nzk5bSDimSBWjnWNcht5++FpX90zSJx9Lf89BPBSpI9CxSFKi7ExTsCoqqz7cRFZfunj0PVR1L4QEvkJsg9gYxm3wHSWDa5ExYaRcU=
+	t=1715155751; cv=none; b=MibxXKWvcahgKiedeqJoamqECs/Q/OOIPB00xgbqC2Qi7c5dF6q4wmuwvTJAiLIHrjfO8WMiFauxhwSo7jsaKlIbZzlSIG6eNt+ZDSd+FkdJU/lkkbCut+laQw0JQ63fAYvuPTwRDZxPOQRDc8nkaSVZ30rdO4Pa2jGjkbXI3z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715154703; c=relaxed/simple;
-	bh=A1cL+trfWd+1YzVAvl7toR22FR7A/lXoS2Ld4mzp0Qs=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=Nv04dBiXO07XsaOVuMHtyZFnjkhrq+I6ypOji2598QnHwdDqJY9Cg5Rxx+fpFgl5tnGT+JaAgMaycWn4mvJMuqrmZQyTny679RKc+Z5Xl9OYt66UtM7WlbAPel5By+87nuT4c319/j6kpjwiQQZF/l9u1JgPYE+5gEady463LW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=sOUQHNNS; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1715154690; x=1715759490; i=markus.elfring@web.de;
-	bh=A1cL+trfWd+1YzVAvl7toR22FR7A/lXoS2Ld4mzp0Qs=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=sOUQHNNSFahruIAWs+7seJXeu3bOUjNFMuyGGkmy4GOcD8jE3NiQEmDpgvI1F/Rq
-	 St4dOslJc4cV2ifTRq7ls2xvFDTHDlrhD2+oAAHQ4o2pM1dMdLZZXX6kO+rPIpzjK
-	 9S4bfjCwZUijdJqTBNB78tVW8QJErXmur+N0JrgrpXL7WqnVEZ4UedOaF4OVtvdSv
-	 PhgXGj57Ca4GyNP843+SHkalMwVmZDy53C2ZXmRkjTlhMCNPleFLqYaKLF33w9etX
-	 4VNnRaoTNHwuISQD0Pha2gT2ChSicLr92w7vWzsL3/J6SZ0O7l5NIeCHaHhdLoLBD
-	 CH2DCJgqQcQQy80KoA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.89.95]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mfc4q-1sXMGg0Vo0-00mBl9; Wed, 08
- May 2024 09:51:30 +0200
-Message-ID: <0fdad323-ff72-4e20-8fb9-65d4181b1ae0@web.de>
-Date: Wed, 8 May 2024 09:51:29 +0200
+	s=arc-20240116; t=1715155751; c=relaxed/simple;
+	bh=x2v9F1VDhB91ey8gDsIzGFW7qT7YEX73UMWKN8WTf4o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MhH4RGt1JNAOeMNbEC0tuq/xCPEQULSW48oc/PXF6NpeJ0yaydrwz+hCpduOhwHD0FFx0ZmgW/p+3XNxVX8ZQEHm9A1J3bPe5L8X2Um95g9zt+lYQLz4ZvIJdvOeDsMGIHiuDKuGRZjxuFnFeGwOI5YBEGHYD4lRE+G5eiLWL9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XhRf6AyW; arc=none smtp.client-ip=209.85.219.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-de5e74939fdso3415621276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 01:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715155749; x=1715760549; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=YyPej1pI/oVXVkHLEEGi3mJmmE4iMy2MyP2y6dxfKZ0=;
+        b=XhRf6AyWzL/+kQeMN23EWXf/rpMX3gv4W40NJmIHkJ42uMfbsfurV50JiholzzQHix
+         tOpU8O6kahS44hL4gq9xM9H7IRLtiVr6doR2+xJTVgyA8BK6zUmRa39zCbwwTEgmpoVy
+         JV1VDaQ1gaLB8m6bzy3rEvIgb6BJx5u91xlEAsFQ/U2IfcLqZTnqxMFtmDU0KT9sCCVJ
+         xXCuOXVqEIui4R8vbyMPa6p/pS0h8Tx0QYAUcX4NLwAWZhPGx73RGBdjsn9uhcE90urU
+         Pzgop5gNKQam0fXhd6ltGLbOfolwdyF3kymyf2hiMcJP5kQD5yfr2YSjxVLLWmUTJru2
+         77/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715155749; x=1715760549;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YyPej1pI/oVXVkHLEEGi3mJmmE4iMy2MyP2y6dxfKZ0=;
+        b=PxauFRmFSgbK5Qr55TckkcYAHCr3udJUmoKu/Ip7QPCzee7BZrAubo0Dx/4256vHMI
+         YRPi2UqzakoUFjO3hh3598PIaxyD6hxIWCLUgZiHGykyAt1i/YhwTcDIWdjdxOBu1LcD
+         skY3V4/W2DZ5zH9B/vxOcNPGevM9FxHgz8h4FpumlT/DJ4Q8KQRywp2hKYw2OZb5LO0G
+         v4qOne2HPCjSiIhpErFAj1bZg3iweh8hlQxL/8GG0DXX+64lDr7U2ikZQZBb/wCgS2YO
+         chsV9UDdlhqi0+1iR8lG40tIgRLPKXLsgUSD1eYWf+zzSThvaVdvh/IcZ3yb9GEhu6eA
+         qaMw==
+X-Forwarded-Encrypted: i=1; AJvYcCVyJj0LOJrOnryBNvIsc6/5V/eS0qkGbkQ94XVXy1rlpqEomgujaq5P2/AsZ8WmioPDxkGmaiV0pQwb30zYH0ozhxQyzccGgVIrjrucCQ==
+X-Gm-Message-State: AOJu0YxSOFK78bGTbrJnMCbadNqgfCK+D5r4kZRkXUnn5tLOBBgxw8cg
+	GbZHvG/i0s+pj0m8GpXjch900sV9G7aJZt3ZE7Sy5sbDfz3roT8w3CGOUtvdhW4J0ReeUlrU15w
+	5OicpUcfcjnBBHey2AuRpPIkzxmw0f8Jgu5iBpw==
+X-Google-Smtp-Source: AGHT+IG+Ka6XHmtx1m9DEXkQI65DTYddxM7NeYZJRMR7V9qR3AtwZaFiJJeSQAcC1WQ+BpJYbi2S6eFyvsVDWAZxTV8=
+X-Received: by 2002:a25:dc4c:0:b0:dcb:f7a0:b031 with SMTP id
+ 3f1490d57ef6-debb9e3d259mr2017607276.50.1715155748788; Wed, 08 May 2024
+ 01:09:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Caleb Connolly <caleb.connolly@linaro.org>,
- ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Alexander Martinz <amartinz@shiftphones.com>,
- Luca Weiss <luca.weiss@fairphone.com>
-References: <20240508-otter-bringup-v1-2-c807d3d931f6@linaro.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: add QCM6490 SHIFTphone 8
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20240508-otter-bringup-v1-2-c807d3d931f6@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zH6xSo4N3GyqA27EDnWMOXSunaYdn47GzAB4KMzYHxNZIje+UeK
- ncRl2LUHJPnjqGP6t3q1OoAG/7SmTZRNbA8vV0vH8KlwSrR2cr9MHVvoJ6VUfGd1him8Zcp
- P0DnUQBlQ0VjCxFmdo+LYb7tmowsYfWtprQ9agF/oNQTz+zOeD1tztBIp+CNviO/i8CHPEf
- A44mw4j+p6K7oJtyqDwNw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:+EdKx6qCwV0=;/dqqmM23NDee+dzZ/yCQZuHuAyh
- pAFHPaTaZe1iuEcVp3gv3AcPsTFwSP0ss5HnNCC5Edw49QMgDPesmbZB+OLsFnLyGGnUotjxF
- Tsx3HiaN92bDOBn4RfaiNGMmd1ArF4C+KGG8pZ++Gyy2nOVaI1Ueg9rqzT2MHvyM6geT/5qs8
- 70VPlXTRxE3w4fyoa8xKiP9zAsI1em3wF50uTEY9MgWhd3Ej/v82mYxjgkHMarZeT5IMqe5I/
- PJMDRGyQ4QVE8ICOmPe60GsON+xjFIRbEvGYj5tnTk2sGz6k2Jeh4pX9PiHCPpaw4uvkJvWnr
- 7XcRCxkOf3pGjItbJM+ZDpMY9RUzI2n8+2FST4KRdSiuX6O1L3te+6cUu05WEIHE5rSxUZvCN
- nK9ClzHp4OdJdg+hOXIOIn506Ytw/EXSVF83Tbvtpi+4Obj4JYFhf0NuG4SOCyesB2BuwFeIp
- 6TtcLxnxqGpiVOBvC/iUYAdsnFeU9HC1Q5sPvKDK59PfJeCqG1MRrDGZvKJxMDhwFiFiqXucy
- KaSXO/A41g2OA5YSMQz2T55lw34UiUBuNKeuHO5+HJrbtHAwgjHpcUomVc/WQAnwDtwLqe5AQ
- iJ4xCe+FuM5H2FReTKjVKVjzttwBOcNkxjiaqf4MxWpEfyCTcuLeFYy+q8eQ+7jxsmFR/yOTi
- 8+hAY+CYlzkqTjTdL6Do2ODbtwbqvmOx2LUNewUpZfaMCp44RjGHJhDAowfD+IK3r0H+3QBxg
- gcmyi2DT0amJmztMZB5YtbU2BLhVk8hp/9vq8StQjNjm/z8bweNGtF6TJ2C78/vuNl89ALgh2
- 0RwPbfdEr3NqWdbvhn1M4KyeblSTNBK/Ap2bCV/VxU1E4=
+References: <20240502090326.21489-1-quic_kbajaj@quicinc.com>
+ <CAA8EJprPLqj7GQM0vmN25U2+3kDow=NH8=-VC2N-0p92Ub3iCA@mail.gmail.com>
+ <5134c012-60b1-4c07-9e1f-c48c3d88d404@quicinc.com> <CAA8EJppK7fMmX_cePhaK4Xy-+gfZfYZSWJDbEnVvq_60B32Rig@mail.gmail.com>
+ <737b595c-3433-8ad8-ca89-7af77098f589@quicinc.com>
+In-Reply-To: <737b595c-3433-8ad8-ca89-7af77098f589@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 8 May 2024 11:08:57 +0300
+Message-ID: <CAA8EJppshtYL0O=C5FAGNRfEnxZohWjW69P9YV=gw_ira-AANQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Add devicetree support of USB for QDU/QRU1000
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>, quic_wcheng@quicinc.com, 
+	quic_ppratap@quicinc.com, Jack Pham <quic_jackp@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-=E2=80=A6
-> Initial support includes:
-=E2=80=A6
+On Wed, 8 May 2024 at 09:12, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>
+>
+>
+> On 5/2/2024 5:14 PM, Dmitry Baryshkov wrote:
+> > On Thu, 2 May 2024 at 12:48, Krishna Kurapati PSSNV
+> > <quic_kriskura@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 5/2/2024 2:39 PM, Dmitry Baryshkov wrote:
+> >>> On Thu, 2 May 2024 at 12:04, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+> >>>>
+> >>>> This series adds devicetree nodes to support interconnects and usb for qdu/qru1000.
+> >>>> This is based on previously sent driver series[1].
+> >>>>
+> >>>> ------
+> >>>> Changes in v3:
+> >>>> * As per comments on upstream[2], to get role-switch working on QDU/QRU1000, it was recommended to
+> >>>>     use the actual TI switch driver. Since driver doesn't have the functionality to provide role-switch
+> >>>>     based on gpio, thus reverting back USB dr_mode to peripheral and removed the remote end-point nodes
+> >>>>     and usb-conn-gpio based role switch functionality.
+> >>>
+> >>> This is not correct. The recommendation was to describe hardware properly.
+> >>> Which means adding schema description, adding  ti,your-switch
+> >>> compatible to the usb-conn-gpio.c driver, etc.
+> >>>
+> >>
+> >> Hi Dmitry,
+> >>
+> >>    Sorry for the confusion. In the comments [1],
+> >>
+> >> "So the compatible string should be "ti,hd3ss3220". Which is fine to be
+> >> used in the platform driver. Just describe the differences in the
+> >> schema."
+> >>
+> >> The compatible "ti,hd3ss3220" is already associated with a TI switch
+> >> driver [2]. But it works based on I2C. So we assumed you wanted us to
+> >> make changes to [2] by adding GPIO functionality (which usb-conn-gpio
+> >> exactly does), since the compatible you suggested matched with the TI
+> >> driver.
+> >
+> > First of all, please don't make assumptions. It's better to ask rather
+> > than making assumptions which turn up to be incorrect.
+> >
+> > Compatibles describe hardware. DT describes hardware. There are no
+> > drivers in question (yet).
+> > You have TI switch on your board, so you have to use "ti,hd3ss3220" to
+> > describe it.
+> >
+> > Existing schema describes it as an I2C device. You have to extend the
+> > schema to allow non-i2c attachment. Describe GPIOs, make reg optional.
+> > Make this description purely from the datasheet and usb-c-connector
+> > point of view.
+> >
+> >> If it was to add compatible in usb-conn-gpio, then we can support OTG
+> >> functionality with no schema changes I believe, but the compatible
+> >> string might need a different name to avoid clashing with the name in [2].
+> >
+> > And this is the second, largely independent question. The
+> > usb-conn-gpio driver is a platform driver.The existing hd3ss3220.c
+> > driver is an I2C one. There is no clash between them.
+> >
+> > Note, unlike plain gpio-b-connector, the switch supports more pins and
+> > actually provides USB-C information to the host even when used in the
+> > dumb mode. Thus it might be better to add a separate driver that
+> > registers typec port and reports USB-C events.
+>
+> Hi Dmitry,
+>
+> Regarding the comment:
+> "Note, unlike plain gpio-b-connector, the switch supports more pins and
+> actually provides USB-C information to the host even when used in the
+> dumb mode. Thus it might be better to add a separate driver that
+> registers typec port and reports USB-C events."
+>
+> We are also aligned with your statement of expressing the hardware
+> correctly. Since this needs quite a bit of effort to write a new driver
+> for TI switch or modifying existing TI driver to add GPIO support, can't
+> we go ahead with peripheral support only since the driver support is
+> absent currently.
 
-How do you think about to use imperative wordings for improved change desc=
-riptions?
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
-cumentation/process/submitting-patches.rst?h=3Dv6.9-rc7#n94
+I think you are again mixing things here. You don't have to use the
+existing TI driver. Instead you can start with the
+gpio-b-usb-connector driver and later push a new driver for the switch
+instead. This has nothing to do with the hardware description of the
+device.
 
-Regards,
-Markus
+>
+> We will plan to submit the patches in upcoming days for this. Since we
+> usually enable USB in peripheral mode so that USB debug (adb) will work,
+> I am thinking we can merge this and take up the OTG/host mode
+> separately. Please let me know your feedback on this.
+
+Well, granted that we are now close to the release, you can not merge
+anything. So you have about three weeks before the next patches can
+hit Bjorn's tree. I think this leaves plenty of time to develop a
+proper solution.
+
+>
+> Thanks
+> Komal
+>
+> >
+> >>
+> >> [1]:
+> >> https://lore.kernel.org/all/CAA8EJppNZrLzT=vGS0NXnKJT_wL+bMB9jFhJ9K7b7FPgFQbcig@mail.gmail.com/
+> >>
+> >> [2]:
+> >> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/typec/hd3ss3220.c?h=v6.9-rc2
+> >>
+> >> Regards,
+> >> Krishna,
+> >>
+> >>>> * Link to v2: https://lore.kernel.org/linux-arm-msm/20240319091020.15137-1-quic_kbajaj@quicinc.com/
+> >>>>
+> >>>> Changes in v2:
+> >>>> * Changes qmpphy node name
+> >>>> * Changes dr_mode to otg and added USB-B port USB role switch
+> >>>> * Dropped maximum-speed property from usb dwc3 node
+> >>>> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240311120859.18489-1-quic_kbajaj@quicinc.com/
+> >>>>
+> >>>> [1] https://lore.kernel.org/linux-arm-msm/20240502082017.13777-1-quic_kbajaj@quicinc.com/
+> >>>> [2] https://lore.kernel.org/all/CAA8EJppNZrLzT=vGS0NXnKJT_wL+bMB9jFhJ9K7b7FPgFQbcig@mail.gmail.com/
+> >>>> ------
+> >>>>
+> >>>> Komal Bajaj (3):
+> >>>>     arm64: dts: qcom: qdu1000: Add USB3 and PHY support
+> >>>>     arm64: dts: qcom: qdu1000-idp: enable USB nodes
+> >>>>     arm64: dts: qcom: qru1000-idp: enable USB nodes
+> >>>>
+> >>>>    arch/arm64/boot/dts/qcom/qdu1000-idp.dts |  23 +++++
+> >>>>    arch/arm64/boot/dts/qcom/qdu1000.dtsi    | 120 +++++++++++++++++++++++
+> >>>>    arch/arm64/boot/dts/qcom/qru1000-idp.dts |  23 +++++
+> >>>>    3 files changed, 166 insertions(+)
+> >>>>
+> >>>> --
+> >>>> 2.42.0
+> >>>>
+> >>>>
+> >>>
+> >>>
+> >
+> >
+> >
+
+
+
+-- 
+With best wishes
+Dmitry
 
