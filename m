@@ -1,169 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-19515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5C918C025E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 18:55:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC01B8C02A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 19:10:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3DF61C222F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 16:55:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52D221F23479
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 17:10:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26BEE7490;
-	Wed,  8 May 2024 16:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BD331C6AD;
+	Wed,  8 May 2024 17:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YxUXP+Tg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uf8SNRKh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC01130481;
-	Wed,  8 May 2024 16:52:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECD379F6;
+	Wed,  8 May 2024 17:10:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715187168; cv=none; b=Dp2JCQQhD6h0yWReAWxBpBowg+ZeWIId56iIStyExH0+PB9E5LYCLtbEWw8fg3h7XgmkRsM7mcXzdaFEb0qwgZ+1nwkgqlSiKO0sYj7fy6dEmNXmCzV958vaCnYf8RZLQS/ThTzPiC6FxjEnFlbQ542PzSvIH2VSpJjkbgwkBGs=
+	t=1715188208; cv=none; b=AeAgD5KgqqwciPmIt7XJFkC7Pm6NYCEwbdnUFYWnJgwSJsKGK1/3lnc5plzIcE5ePErfNaGfVfDMKiJ6x6HtxrSnzISEEuaxqO5Tozfwmg1jFpHpQDhjZhBP5tTcAZ0ElXuZszOWZHOy0MFaAUvM9bH/N6DYSyX9HBFsrBexAJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715187168; c=relaxed/simple;
-	bh=9w8Rxe0DLeYhXDz9DiLNQ5cLhLufS2s41grnltnGAiI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=esD6hN0kDfb10Aid/OwAYvrMbhM4wtOz8BZXl4AOVrgCPNJ1e4viss3L/2oW9jT4gWm+waU9GFjUB8WvcaHsrpNdmk31/d/G7BQRaS6kSDIApghyHrOFst2vtf1waRAlpOwhwzCchF/N67M2/AO5VO51R9ciXVGyZbFaFQr7Yx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YxUXP+Tg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 448Baj8e004590;
-	Wed, 8 May 2024 16:52:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=sE0LqZWV3gwZbXfblDbklDN+yoPcsfBA3AQZLjHvvno=; b=Yx
-	UXP+TgDa/sgK1FHJNFugFRrQUSWk3Q9VE83FummGCSpTFzHXD8hozee3ehRd5dy7
-	qZ+Y5FpgRBLUVRh1oUnAgXSOroqAFwtssmV3XCq9drdgmVBVjYzv3gdpCZ3SMmDR
-	w7YuPJQm3aoZjYFDkPu01aWrEZspxw5xfT04Cbym6E1zi1ChHhhlU7ZBmDzXEq+2
-	9ezBvfG6UTl0HuKFE8HK0VO11Mfr+STKjx6FKNeDJ01Sakts6Z3/whUY8qGeCYmv
-	zOvcqFPuUPxUEVwJoDUrrOCnyrTPxB+gA4hrI41QjSzmpcPdkW64ToobmUAIjJM7
-	4kz7h7VmyroyEc1r4Z/w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y08ne0sdp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 May 2024 16:52:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 448GqWiT007223
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 May 2024 16:52:32 GMT
-Received: from [10.71.109.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 May 2024
- 09:52:31 -0700
-Message-ID: <0cf9d1ba-2c4f-0863-6f51-e76ee7846471@quicinc.com>
-Date: Wed, 8 May 2024 09:52:31 -0700
+	s=arc-20240116; t=1715188208; c=relaxed/simple;
+	bh=kbeunpMSITny5luugMdBxfupTWkQtM3EwE3HVl8RXss=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ZMvZCMgl7gwebGl+4tCeVRpBCyQOir45Ta7XFkStktmLAislIJbfOl+ksddFxyri3XqCjHqx2WK4j3Ga8vT65d0YHxK6YlO8f9rBIQdMNgWe1VW2GbLgMmjVHlX0Dy3YofZr1pgriFKU1XYcXo3KlQWTjGBU314LebyLbIfxIwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uf8SNRKh; arc=none smtp.client-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-23f55e2e908so6568fac.3;
+        Wed, 08 May 2024 10:10:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715188205; x=1715793005; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wnfoPIfYoKS2yj9dWrB2Bm7sN1KAr4/Uj2UFG5/Y+uE=;
+        b=Uf8SNRKhlvQkcioFwlWuBrqJ5l1MlnW9GAhr/XGoV4AXFwEWI9awYQopsgDig1fSdQ
+         XEzRodq2BmaQ4jOtZ+6/BiCpitHYsQDGDnnIMJNhfEQUfNr4e6deyJ0Ae7/tyGLRyxyP
+         /AVU7qtGU0uSPMkcNUUOuJQ2xuaKtgHaAJOqWglh3ILvXTT1qgWICuwNsM4cw2Ylcxa3
+         VMbkn+n+XDgsPdTI7rztdjZuleR20Iw9O42TN+GooPa6hdivgiztT4muGMUuGohudeEe
+         j3kAWdLOxwcn4H5zc3jzsaPDqwHiItwlFob67kgtEXEPWs+/IXkJkpMhLoj3Qs2Hzkam
+         eXng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715188205; x=1715793005;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wnfoPIfYoKS2yj9dWrB2Bm7sN1KAr4/Uj2UFG5/Y+uE=;
+        b=gwGC610777N3CH0Py2TGbqFGoW/QO6xcBcv4upa+7nR7/nhIGOTYAPY3Z5CYjjgf0E
+         8CHbk+ejL1mnaFjtAjt6eQay+B0FxfVlRtyIKop7tFIczy5mCZ1/RcuTC05k6vvRjsPp
+         2Y4qu2F54iDEodPdgp3xZgPJhUmg7ZlpjnHY3nT7zNKbrGqVd9ni7qUl5A1+jckdMBBQ
+         fw4kSX2UscqMHRCjOShgZowmbVYruh+ioRjbB3Dh/iwJDoMQ8RwUtyjNsGF6ALy/VFFr
+         IvQ9JIa/G6+FjJnsBm8UE/XZT0UXgzzF4c5ApnAv216JKIBcBYTZxZMFQAJbXPiEHdKO
+         kyQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWAQqspI3qdLyMaVzmkmM7JC31KWNwTPtEx4pY7AaEE343SnUxJl8VV0qAXIEHt9kl9MEFSkaGl4nNKbf/WpLoaYOCe10tB7cnivYRNNsOZAhdSYFeK8oJkVuig89AtKjXiZlCBzEAlGUZHPmcJ2nU89sKr/nbPo0pNaT8gvql1228Q9a8bJ4RM8BZDXSBduLRXfK2xmNx7TIFrVMZnlknVQ1uOoikogE5Cr9j0t8t8QG1qfTalPyCahwDRRi8=
+X-Gm-Message-State: AOJu0Yx0TT5mF08YWpRkxo9rb8z9R86hEoIN6QA4/32CNzvFcECFVnP3
+	Zxws8B7zBP7uY0R0berXSpbpruL//z+dV3lpHPciu578cLK/KS61
+X-Google-Smtp-Source: AGHT+IHhy1QdaK8wxtjp6E+xo3gR/HOstaZfXmZpR7oXzX9YW0REQY+LknB+sjCBs/ondJxCa7FRbw==
+X-Received: by 2002:a05:6870:530a:b0:233:56e5:ff99 with SMTP id 586e51a60fabf-24097c7122fmr3440543fac.23.1715188204005;
+        Wed, 08 May 2024 10:10:04 -0700 (PDT)
+Received: from [192.168.7.169] (c-98-197-58-203.hsd1.tx.comcast.net. [98.197.58.203])
+        by smtp.gmail.com with ESMTPSA id pi22-20020a056871d11600b0022eae2de4ecsm3029084oac.51.2024.05.08.10.10.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 May 2024 10:10:03 -0700 (PDT)
+Message-ID: <c3f99ece-7f66-4c6f-a262-4d8894154ae9@gmail.com>
+Date: Wed, 8 May 2024 12:10:01 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm: remove python 3.9 dependency for compiling msm
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 RESEND 0/8] ipq9574: Enable PCI-Express support
+To: Devi Priya <quic_devipriy@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Manivannan Sadhasivam
+ <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org
+References: <20240501042847.1545145-1-mr.nuke.me@gmail.com>
+ <569087fe-e675-41a4-b975-2d01d95b6d3c@quicinc.com>
 Content-Language: en-US
-To: Jani Nikula <jani.nikula@linux.intel.com>,
-        <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC: <dri-devel@lists.freedesktop.org>, <seanpaul@chromium.org>,
-        <swboyd@chromium.org>, <quic_jesszhan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Masahiro
- Yamada" <masahiroy@kernel.org>
-References: <20240507230440.3384949-1-quic_abhinavk@quicinc.com>
- <87a5l0lmlv.fsf@intel.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <87a5l0lmlv.fsf@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: p0YarwhYdHPcd0vHkL1pPlx1RUwiw5wh
-X-Proofpoint-ORIG-GUID: p0YarwhYdHPcd0vHkL1pPlx1RUwiw5wh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-08_09,2024-05-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- malwarescore=0 suspectscore=0 spamscore=0 impostorscore=0 phishscore=0
- adultscore=0 clxscore=1011 lowpriorityscore=0 mlxlogscore=999 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
- definitions=main-2405080122
+From: mr.nuke.me@gmail.com
+In-Reply-To: <569087fe-e675-41a4-b975-2d01d95b6d3c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-
-On 5/8/2024 1:43 AM, Jani Nikula wrote:
-> On Tue, 07 May 2024, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->> Since commit 5acf49119630 ("drm/msm: import gen_header.py script from Mesa"),
->> compilation is broken on machines having python versions older than 3.9
->> due to dependency on argparse.BooleanOptionalAction.
-> 
-> Is it now okay to require Python for the build? Not listed in
-> Documentation/process/changes.rst.
-> 
-> BR,
-> Jani.
-> 
-
-The change to move gen_header.py to kernel is already part of the v6.10 
-pull request.
-
-This change only fixes the version dependency.
-
-But, I agree we should update the changes.rst (better late than never).
-
-Dmitry, can you pls suggest which version we want to list there?
-
-I am hoping that after this change there are no further dependencies on 
-python versions, so anything > EOL should be fine.
-
-I am leaning towards v3.8
-
+On 5/8/24 1:16 AM, Devi Priya wrote:
 > 
 > 
+> On 5/1/2024 9:58 AM, Alexandru Gagniuc wrote:
+>> There are four PCIe ports on IPQ9574, pcie0 thru pcie3. This series
+>> addresses pcie2, which is a gen3x2 port. The board I have only uses
+>> pcie2, and that's the only one enabled in this series. pcie3 is added
+>> as a special request, but is untested.
 >>
->> Switch to use simple bool for the validate flag to remove the dependency.
->>
->> Fixes: 5acf49119630 ("drm/msm: import gen_header.py script from Mesa")
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/registers/gen_header.py | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
->> index fc3bfdc991d2..3926485bb197 100644
->> --- a/drivers/gpu/drm/msm/registers/gen_header.py
->> +++ b/drivers/gpu/drm/msm/registers/gen_header.py
->> @@ -538,7 +538,7 @@ class Parser(object):
->>   		self.variants.add(reg.domain)
->>   
->>   	def do_validate(self, schemafile):
->> -		if self.validate == False:
->> +		if not self.validate:
->>   			return
->>   
->>   		try:
->> @@ -948,7 +948,8 @@ def main():
->>   	parser = argparse.ArgumentParser()
->>   	parser.add_argument('--rnn', type=str, required=True)
->>   	parser.add_argument('--xml', type=str, required=True)
->> -	parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
->> +	parser.add_argument('--validate', default=False, action='store_true')
->> +	parser.add_argument('--no-validate', dest='validate', action='store_false')
->>   
->>   	subparsers = parser.add_subparsers()
->>   	subparsers.required = True
+>> I believe this makes sense as a monolithic series, as the individual
+>> pieces are not that useful by themselves.
 > 
+> Hi Alexandru,
+> 
+> As Dmitry suggested, we are working on enabling the PCIe NOC clocks
+> via Interconnect. We will be posting the PCIe series with
+> Interconnect support [1] shortly.
+
+I am generally very hesitant to depend on unmerged series, as this can 
+cause undue delays. In this particular case, I considered that both 
+series can continue to stay independent, with the ability to convert the 
+PCIe users to the new clock scheme when the time is right.
+
+> [1] - 
+> https://lore.kernel.org/linux-arm-msm/20240430064214.2030013-1-quic_varada@quicinc.com/
+
+What changes would be needed to this series to make use of this? How 
+does one use the "interconnected" clocks?
+
+Alex
+
+> Thanks,
+> S.Devi Priya
+>>
+>> In v2, I've had some issues regarding the dt schema checks. For
+>> transparency, I used the following test invocations to test:
+>>
+>>        make dt_binding_check     
+>> DT_SCHEMA_FILES=qcom,pcie.yaml:qcom,ipq8074-qmp-pcie-phy.yaml
+>>        make dtbs_check           
+>> DT_SCHEMA_FILES=qcom,pcie.yaml:qcom,ipq8074-qmp-pcie-phy.yaml
+>>
+>> Changes since v3:
+>>   - "const"ify .hw.init fields for the PCIE pipe clocks
+>>   - Used pciephy_v5_regs_layout instead of v4 in phy-qcom-qmp-pcie.c
+>>   - Included Manivannan's patch for qcom-pcie.c clocks
+>>   - Dropped redundant comments in "ranges" and "interrupt-map" of pcie2.
+>>   - Added pcie3 and pcie3_phy dts nodes
+>>   - Moved snoc and anoc clocks to PCIe controller from PHY
+>>
+>> Changes since v2:
+>>   - reworked resets in qcom,pcie.yaml to resolve dt schema errors
+>>   - constrained "reg" in qcom,pcie.yaml
+>>   - reworked min/max intems in qcom,ipq8074-qmp-pcie-phy.yaml
+>>   - dropped msi-parent for pcie node, as it is handled by "msi" IRQ
+>>
+>> Changes since v1:
+>>   - updated new tables in phy-qcom-qmp-pcie.c to use lowercase hex 
+>> numbers
+>>   - reorganized qcom,ipq8074-qmp-pcie-phy.yaml to use a single list of 
+>> clocks
+>>   - reorganized qcom,pcie.yaml to include clocks+resets per compatible
+>>   - Renamed "pcie2_qmp_phy" label to "pcie2_phy"
+>>   - moved "ranges" property of pcie@20000000 higher up
+>>
+>> Alexandru Gagniuc (7):
+>>    dt-bindings: clock: Add PCIe pipe related clocks for IPQ9574
+>>    clk: qcom: gcc-ipq9574: Add PCIe pipe clocks
+>>    dt-bindings: PCI: qcom: Add IPQ9574 PCIe controller
+>>    PCI: qcom: Add support for IPQ9574
+>>    dt-bindings: phy: qcom,ipq8074-qmp-pcie: add ipq9574 gen3x2 PHY
+>>    phy: qcom-qmp-pcie: add support for ipq9574 gen3x2 PHY
+>>    arm64: dts: qcom: ipq9574: add PCIe2 and PCIe3 nodes
+>>
+>> Manivannan Sadhasivam (1):
+>>    PCI: qcom: Switch to devm_clk_bulk_get_all() API to get the clocks
+>>      from Devicetree
+>>
+>>   .../devicetree/bindings/pci/qcom,pcie.yaml    |  37 ++++
+>>   .../phy/qcom,ipq8074-qmp-pcie-phy.yaml        |   1 +
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 178 +++++++++++++++++-
+>>   drivers/clk/qcom/gcc-ipq9574.c                |  76 ++++++++
+>>   drivers/pci/controller/dwc/pcie-qcom.c        | 164 +++-------------
+>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 136 ++++++++++++-
+>>   .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  14 ++
+>>   include/dt-bindings/clock/qcom,ipq9574-gcc.h  |   4 +
+>>   8 files changed, 469 insertions(+), 141 deletions(-)
+>>
 
