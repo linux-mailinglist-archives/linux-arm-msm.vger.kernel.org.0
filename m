@@ -1,137 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-19449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA9938BF417
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 03:31:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C1368BF435
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 03:45:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 35471B212A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 01:31:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E6DD283883
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 01:45:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32AACAD51;
-	Wed,  8 May 2024 01:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 551538F5D;
+	Wed,  8 May 2024 01:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z7tGFu29"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gM+fwaD4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8392DDCB;
-	Wed,  8 May 2024 01:31:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC60D1A2C2C;
+	Wed,  8 May 2024 01:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715131893; cv=none; b=X5BHhPY+hWjakorY31UXIuo4qusrU0EnSLiOlHQFpq5G3KLEUNoXA5x0Hi/MUMKegV1ymU/Rgw5zXXx5iltjrBA8RLivfnO79Afocq1tyW/qlbF7QACYRDCQfhBkbKE+qmhhOBhIXEGJ13TYrFCgzDFRdmGcm4Pttiguhp3fqOI=
+	t=1715132752; cv=none; b=OR1OWbcHQ04hRVz+kL9ubD7hgYkYdvWNSoBJOWxcZnPjTKwBPyPpKYnjCDMtabYQWTuMakFtaLnCAOOXboMJrPVq4KvdBQR/s0HISkvpwrCHne96QV06hVG7o/ze6g4g1JgpFRPsSHElN4NfnyuaVZp0p4NaTlex1M/qPA9j0Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715131893; c=relaxed/simple;
-	bh=a85YE09jCnC4vp5a+eWmz0ilTRgT1T3FHBUWY9ktg3E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=eLRIKqbjW4wqgp5xjwBMZGopEYNg0ywsc2EVyKjECxZKh1P9/KrgiaRigtBNCQ/y1VcYYFjUJo+ohP1Ltj8QpjS7+H5VkZV+pNkifEzUOxBYMjyh6qNze64wHjc1uc2FA7U3p9UdtPp/tNyveZi6B/B1eNEkz2MA8BE3cqMiWbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z7tGFu29; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1715132752; c=relaxed/simple;
+	bh=4xlj5SmF8Y4YtN11odRrshnX4/XsOJ/kKNfAOIt7Q18=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aBBLzhWOhmIGeZGcL0+6Vp4uh3qyGRSM0YZWUPN5Jqe+mDlZFGv9E4WrZMa4EfOZHEXED37gHN2xOB0mlwmfDRccDCQv/gBE+akvBUCVM62IS6S0hVIJXbHOmfmJP+2hK0a4aT7Uz99EvRRB/1JuA4Bn1i1dynm4VG+44HxY8h0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gM+fwaD4; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4480WG5H003762;
-	Wed, 8 May 2024 01:31:22 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4480ifnH026818;
+	Wed, 8 May 2024 01:45:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:references:in-reply-to:to
-	:cc; s=qcppdkim1; bh=Cm0GFSAT7Pj661XFsByeZeL4jp2pj7WY1d5NO7wgNBk
-	=; b=Z7tGFu29pDdzxoOxNOhsOxBlwqyCHvPXgXH0lstGueQjzt26t8XAczTRRoP
-	sYZAsUi43UTdUHNQHwl6fxYMsywezTvWLgR+0C53bBuftIs/QJl9a/28lZ0Seiv0
-	l0c05VXB6DoxAXV2q2mTtNkorHAqmSyLL0t7Tj7Hvbl12d1huIC7LlQQjexrYxFM
-	Z7ej1TPAcgqcN3917G/oj0OZTzZWJXOjxQP9jYCwzVgcVErFF8rpqlce3B86CjiE
-	/s5lxXttNMDHfd72vRqWgKU0or6qvnOP+Erp3g1Y0ljPQ4+HiJLSXPj6/DaUzj8H
-	WEJUxW/BeT2FQeVeN4Vub34FgEw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xysph0nra-1
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=gG/Mg01aPwawcgX1ZVQCj
+	4coaePzrbjJoyz1wJasTvE=; b=gM+fwaD4tM0RjtfcYP1LWQ1VSIkhBTZNNANjy
+	Sptr9LGGs/PtP8gR2bUulFwbKfVWwD3YOYgBJdBY8+oyIDFUUgN43qdi0M2MHSHv
+	pByZCJJ/wnFTKK3Vb9eYePJjfw3luxta1AhHMALayDeigr0wRktauvnCpKKX/DVV
+	9fDDmhZZxQvbZbEk4MCLkUwIuxG4Tc0q8ZeC9mxWM82/yLpWcwXq/KL0QugtcL7U
+	6Ucs81QnVhWzBgI7HdbCsdvHrjd1B0xiL2PdQ+ePlU6bTJFliV5SSzgTianFLfVD
+	EE+eXS6A01iICRXHu0BInZm/KnWenljpuwr7bKOYosSJJeIXA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xysg9gqfa-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 May 2024 01:31:21 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4481VKm1024746
+	Wed, 08 May 2024 01:45:32 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4481jVtg012762
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 May 2024 01:31:20 GMT
-Received: from hu-scheluve-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+	Wed, 8 May 2024 01:45:31 GMT
+Received: from hu-mdtipton-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 7 May 2024 18:31:12 -0700
-From: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-Date: Tue, 7 May 2024 18:31:01 -0700
-Subject: [PATCH v3 2/2] dt-bindings: net: qcom: ethernet: Allow
- dma-coherent
+ 15.2.1544.9; Tue, 7 May 2024 18:45:31 -0700
+Date: Tue, 7 May 2024 18:45:30 -0700
+From: Mike Tipton <quic_mdtipton@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Stephan Gerhold
+	<stephan@gerhold.net>,
+        <quic_okukatla@quicinc.com>
+Subject: Re: [PATCH 4/4] interconnect: qcom: icc-rpm: Remodel how QoS
+ settings are stored
+Message-ID: <20240508014530.GB25316@hu-mdtipton-lv.qualcomm.com>
+References: <20240326-topic-rpm_icc_qos_cleanup-v1-0-357e736792be@linaro.org>
+ <20240326-topic-rpm_icc_qos_cleanup-v1-4-357e736792be@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240507-mark_ethernet_devices_dma_coherent-v3-2-dbe70d0fa971@quicinc.com>
-References: <20240507-mark_ethernet_devices_dma_coherent-v3-0-dbe70d0fa971@quicinc.com>
-In-Reply-To: <20240507-mark_ethernet_devices_dma_coherent-v3-0-dbe70d0fa971@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>,
-        Andrew Halaney
-	<ahalaney@redhat.com>, Vinod Koul <vkoul@kernel.org>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Bhupesh Sharma
-	<bhupesh.sharma@linaro.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <netdev@vger.kernel.org>,
-        Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-X-Mailer: b4 0.13.0
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240326-topic-rpm_icc_qos_cleanup-v1-4-357e736792be@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gDhp96LEdGblpd6Ze3irKuBAFf2ZBBK4
-X-Proofpoint-GUID: gDhp96LEdGblpd6Ze3irKuBAFf2ZBBK4
+X-Proofpoint-GUID: OLkM26eJWXmNATBEUBk8KNyTob3b5lWa
+X-Proofpoint-ORIG-GUID: OLkM26eJWXmNATBEUBk8KNyTob3b5lWa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-07_16,2024-05-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=731
- impostorscore=0 priorityscore=1501 bulkscore=0 phishscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 malwarescore=0 adultscore=0
- suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405080009
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ bulkscore=0 mlxscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ adultscore=0 spamscore=0 priorityscore=1501 clxscore=1011 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
+ definitions=main-2405080011
 
-On SA8775P, Ethernet DMA controller is coherent with the CPU.
-allow specifying that.
+Hi Konrad,
 
-Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
----
- Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+On Tue, Mar 26, 2024 at 08:42:35PM +0100, Konrad Dybcio wrote:
+> Currently, the QoS settings are stored in the node data, even though
+> they're a property of the bus/provider instead. Moreover, they are only
+> needed during the probe step, so they can be easily moved into struct
+> qcom_icc_desc.
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-index 69a337c7e345..44028987ef92 100644
---- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-@@ -66,6 +66,8 @@ properties:
-   phy-names:
-     const: serdes
- 
-+  dma-coherent: true
-+
- required:
-   - compatible
-   - clocks
+The QoS settings *are* fundamentally a property of the node. The nodes
+are 1:1 with the NOC ports. And the QoS settings tune the priority of
+the data coming out of those ports. So, logically speaking, the QoS data
+does belong in the node structs along with the rest of the data for that
+node and port.
 
--- 
-2.34.1
+Only a subset of NOC ports support configurable QoS, but for those ports
+that do it's a property of the port itself. Those settings impact just
+that specific port and nothing else.
 
+The current method of directly embedding the qcom_icc_qos_data struct
+into qcom_icc_node isn't optimal, since that data is irrelevant for
+ports that don't support it. So, the size could be optimized by
+converting qcom_icc_node::qos into a pointer instead. But I don't think
+we should separate the QoS settings from node struct entirely. It makes
+it very difficult to understand which QoS settings are impacting which
+port.
+
+For example...
+
+>  
+> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
+> index 788131400cd1..96c8ea8edd7a 100644
+> --- a/drivers/interconnect/qcom/msm8996.c
+> +++ b/drivers/interconnect/qcom/msm8996.c
+> @@ -43,11 +43,7 @@ static struct qcom_icc_node mas_pcie_0 = {
+>  	.buswidth = 8,
+>  	.mas_rpm_id = 65,
+>  	.slv_rpm_id = -1,
+> -	.qos.ap_owned = true,
+> -	.qos.qos_mode = NOC_QOS_MODE_FIXED,
+> -	.qos.areq_prio = 1,
+> -	.qos.prio_level = 1,
+> -	.qos.qos_port = 0,
+> +	.ap_owned = true,
+>  	.num_links = ARRAY_SIZE(mas_a0noc_common_links),
+>  	.links = mas_a0noc_common_links
+>  };
+
+[...]
+
+>  
+> +static const struct qcom_icc_qos_data a0noc_qos_data[] = {
+> +	{
+> +		.qos_port = 0,
+> +		.qos_mode = NOC_QOS_MODE_FIXED,
+> +		.areq_prio = 1,
+> +		.prio_level = 1,
+> +		.urg_fwd_en = false,
+> +		.limit_commands = false,
+> +	}, {
+
+How can I tell that these a0noc_qos_data[0] settings are for the
+mas_pcie_0 port? It's not possible from the code anymore. *We* could
+figure it out internally by looking at the NOC SWI to determine the
+qos_port index. But this should be obvious from the code itself.
+
+> +		.qos_port = 1,
+> +		.qos_mode = NOC_QOS_MODE_FIXED,
+> +		.areq_prio = 1,
+> +		.prio_level = 1,
+> +		.urg_fwd_en = false,
+> +		.limit_commands = false,
+> +	}, {
+> +		.qos_port = 2,
+> +		.qos_mode = NOC_QOS_MODE_FIXED,
+> +		.areq_prio = 1,
+> +		.prio_level = 1,
+> +		.urg_fwd_en = false,
+> +		.limit_commands = false,
+> +	},
+> +};
+> +
 
