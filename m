@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-19518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B777C8C034D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 19:38:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C532E8C0353
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 19:38:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E6A9D1C217FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 17:38:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FB56284916
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 17:38:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAB6612A17D;
-	Wed,  8 May 2024 17:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02A73129A9E;
+	Wed,  8 May 2024 17:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="GCun67eN"
+	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="TbeeZa2K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A58312AAE1
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 17:38:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3445512BF28
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 17:38:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715189898; cv=none; b=ilMiZ+VTDH17e8OyVPXRhfFJpRtRwOU/PExaMwezxxex6HxdH4wiIOrvSiLlfkEqq8yMJK22mBim9qlx2bCqb6Du0BgMGn9t7kkhaCxd0kbR0Q5Ga5nrViIhS7JRnqojVsx+UypQUtyLNqwLqnZ9RArtXUE6uKr20igAG/JXBHs=
+	t=1715189924; cv=none; b=lH3pCoFz2pb3e4SZM1si6hw7Sa4rLWGOfLXWCMWKEf+068UdrRKmO1Zm8r5A1KGFdUAjy7fKn/2nh5SdyOJHlpp/kFnLVji34uK2Y9fRZN2h+/QFxdk44ow9ZLODo6Xwj700RLqLQITJ9JqqMhHquGBwxnzwS+u9UcWFOhRvCv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715189898; c=relaxed/simple;
-	bh=ErG2ieJPaEYuaHedZhTINnKRaDaa38gXIxejZHbKqMg=;
+	s=arc-20240116; t=1715189924; c=relaxed/simple;
+	bh=5RN14ywOuFpB0z3RCdXcx1stBTRqJssspaiJ8AjqU/U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BcXE+b6EYFcl8lOMUXFIbPG3zRsXzSQuacwriLRos53AcvYdc7CTIOYqW5Wk/GDQxMjhxAu6vAU9fqfhkr/VqxhjFQdKWjD1QdGCaiGhLC1YqX1AXORZOvPtcwhK+CjHtCGoucFzAEg4g1Qc4IQkbygXPlkkObC8wOU3s0J2D4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=GCun67eN; arc=none smtp.client-ip=209.85.221.52
+	 In-Reply-To:Content-Type; b=ZIBIT/+MsbrEhH2fJR0NcEcbVZFtm8rH8KLaexbPJw1cz/QlVW4ISsM60GJ8HThClqLFplfw8C+dnV+Sm3/XIIGYLw0NpXc7Mi9WVNllE8etJ93xRKe+9HGOp3Q66v2184EoYpmOz4Qc04BC/YBpCj8cTc5Ey9XQUhYKsmLq+Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=TbeeZa2K; arc=none smtp.client-ip=209.85.208.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-34dc129accaso3468284f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 10:38:15 -0700 (PDT)
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2e3e18c23f9so121601fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 10:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1715189894; x=1715794694; darn=vger.kernel.org;
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1715189921; x=1715794721; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eWbZVpkexFeZlMx4P9mhVzhuw8y16zVOCFCMCVJku5w=;
-        b=GCun67eNTj7z8cTuff5QFDG0RM1xaB9b/cIZQ/olbKt3/6zCC81e6LpantW5twuLZB
-         AUXAPYOmQ3LuNr5+Y7Pzh2bL7a6bNl52Co9BSCJDu2UyIsH1CRSxAow6ltvbtUB4xML8
-         F5SBAnPVqGLBin92FxDe94Ae/Eaz67DC0wJQFWlceoOGFfHcPlrlCBmtfyOenmyQw2ht
-         ACFGocJzQrwvdemCucVIcOZjhLQO4IXAL4/Ri90YgeYDDeS6unnSqzPeohfFkAIi7Sgy
-         obasisgyjiUZ/0Z1B4PbqOAPiMxEjw2ohJhMNvushHhHHvx9Bqe+ZiNKBO3pnRUC8zVD
-         LQ5Q==
+        bh=RzAM9cRLAUGiOquaKixP2MGj/PQW99LYyCbfVZ7Leuo=;
+        b=TbeeZa2KAkk1cMAXE8NB+27oQdH7uBRv1p1NeI99/1oZYpvj14EK9yfELogDZv73hO
+         NV4PYTHKaQ1r67h0FR7BiMg7LeG8cAf/hqg43uMtaO61GlLvTQlyffZ9NueRzrwuhwMF
+         H2PEbXYpo5kUZdrnIwqcL/2Sj29yAm1QKj5jZjCR8MPhKESkRc4nYZPU44YquVnfzcVN
+         Q5C8KBC6D5EDIPRDsCRrYY58u+oGAlqjLMifoRLJgbM8gkw0Hdowdw12mqTmJJo3RHhk
+         kiRwqhquurYZElQ9EyRglTI3Ol3ZGyP8Xq4IcixkDp91INHsMDAb0GxzBOyMphPMGhJS
+         5fFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715189894; x=1715794694;
+        d=1e100.net; s=20230601; t=1715189921; x=1715794721;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eWbZVpkexFeZlMx4P9mhVzhuw8y16zVOCFCMCVJku5w=;
-        b=Qyamwk/RL4MBC/KNqZFiOl/5JxO+z7Mqq1FYmcZQ8uwsZ5jeVsz3SZHQlAg6lmVlAO
-         Cw4brJACgIA2/KUXQyMnynVR8TRPlpbkevW1o9tYzLX70vYSZahlzgPndWPAvSnwcrm0
-         882DPE/ERdYlecp2YtWtUEWuM+OS2Hd45gDF43rY/bTcdaAIl560Ia+9xfL9DUuPYr2Z
-         ufZNtgSuTagWX0BX9L/s4fm/Y8nPX3e7iJssRxWZYrraWdBDCq6T9B6KHRH3kGoLANR3
-         ZxPmkDEGKrZz28pzuVh1WxGq/kIsvrEwekCo2F/2PD+vYWC0p8XS4OpKH0pSkxiPLy0P
-         M9Uw==
-X-Forwarded-Encrypted: i=1; AJvYcCXP1qWem7ahHNdjg4xKIKBT4mgmXsgdRfgPP1/BPmvpAWNfoB7JTDBldKvhm06vFojP1+t3Og9LFDDVHU7lO97O1CKi5TGmnn+SbFUZ0A==
-X-Gm-Message-State: AOJu0YwpLugZdWy4UxHRlaV2Afal2FaBrMrxCrbxKsz2xI0j6YO7BmYY
-	rd9gyAiw//KySnR+dDYUZ/Z1bQMb5f7bUhk+9DW+4DAK/sxYD73su1pij1ZFhf0=
-X-Google-Smtp-Source: AGHT+IFkZvpduhl1H1+IBk45OEZkAiRGbKk490m/3Scad3SACsl6dfRNUbMbqgdvdqmEhOHLIrurfQ==
-X-Received: by 2002:a5d:4a81:0:b0:34c:6677:b7de with SMTP id ffacd0b85a97d-34fca0547edmr2445419f8f.2.1715189894357;
-        Wed, 08 May 2024 10:38:14 -0700 (PDT)
+        bh=RzAM9cRLAUGiOquaKixP2MGj/PQW99LYyCbfVZ7Leuo=;
+        b=KhQEsti0OHCKNT0gIGKepNestze5JW3oMyrbT+Q95WnLk1d6D7ApDUv6u7Ml68AKTt
+         ELbl7CxTBTTF1e69t9AQ1xX2dAQnzA2mdK7QEjp8PgfRwDcRCTIxzxUZD1yUtuDMrG//
+         2vZbYuRM5a3tlg3PcL4/1G7IrAHfqmnLZgZUmZkZyfTC1e4NSMTQiAkKL6OkGQFttjOX
+         EQAsx9ej5dKGHYxgw1Ka5ZdEa102fGd9w/ETTq/qAdmXWOjQHry83JM8hKKn21mOE+U8
+         1dhDT1F4f6vx0YE/tvYx3gT6AK3LsIhUpmCBlbLw9bn6yBLaxNQUBgRjVn4K28THE1iA
+         63QA==
+X-Forwarded-Encrypted: i=1; AJvYcCXQInGnVVDZsdjbs12SnSN7JgRVakcbqQV45y2ikM1sUpFi6Y9R3t5UgiC05sf3IRfMR+2L6MUHYefbf3U7qCDeG+y0LapDg8arjakXVA==
+X-Gm-Message-State: AOJu0YwYNMU8jtTPWnKTvYl9d1sNCMzeVj4JBdmu7iGUG56MM79FRRKV
+	YJxSwVS3FSyIJMz5M2RXzk02q2z46c/BLBUviAnaOdMmVDGKANbDO2qXx+G9iBo=
+X-Google-Smtp-Source: AGHT+IGhUVMa9+23KRykDgqW6ofschZeiShfdVYRKcGu8qiCED16khFT1oYx2uAeA8VCadBzBznK8Q==
+X-Received: by 2002:a2e:98ca:0:b0:2e2:2623:333 with SMTP id 38308e7fff4ca-2e4476afaadmr20982311fa.39.1715189921124;
+        Wed, 08 May 2024 10:38:41 -0700 (PDT)
 Received: from [192.168.0.3] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id d18-20020adfef92000000b0034c71090653sm15797198wro.57.2024.05.08.10.38.13
+        by smtp.gmail.com with ESMTPSA id dh18-20020a0560000a9200b003439d2a5f99sm15824784wrb.55.2024.05.08.10.38.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 May 2024 10:38:13 -0700 (PDT)
-Message-ID: <c7bc6fd6-d0f2-4317-b619-57ba31e0b08f@nexus-software.ie>
-Date: Wed, 8 May 2024 18:38:12 +0100
+        Wed, 08 May 2024 10:38:40 -0700 (PDT)
+Message-ID: <57f8c9fc-e1ef-4d2a-8587-9a00549450fc@nexus-software.ie>
+Date: Wed, 8 May 2024 18:38:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/13] mfd: pm8008: use lower case hex notation
+Subject: Re: [PATCH 06/13] mfd: pm8008: rename irq chip
 To: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
  Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>
@@ -88,45 +88,34 @@ Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
 References: <20240506150830.23709-1-johan+linaro@kernel.org>
- <20240506150830.23709-6-johan+linaro@kernel.org>
+ <20240506150830.23709-7-johan+linaro@kernel.org>
 Content-Language: en-US
 From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20240506150830.23709-6-johan+linaro@kernel.org>
+In-Reply-To: <20240506150830.23709-7-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 06/05/2024 16:08, Johan Hovold wrote:
-> Use lower case hex notation for consistency.
+> Drop the redundant "irq" suffix from the irq chip name.
 > 
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   drivers/mfd/qcom-pm8008.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   drivers/mfd/qcom-pm8008.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
-> index 42dd4bf039c9..f1c68b3da1b6 100644
+> index f1c68b3da1b6..a04bae52a49a 100644
 > --- a/drivers/mfd/qcom-pm8008.c
 > +++ b/drivers/mfd/qcom-pm8008.c
-> @@ -38,8 +38,8 @@ enum {
+> @@ -132,7 +132,7 @@ static int pm8008_set_type_config(unsigned int **buf, unsigned int type,
+>   }
 >   
->   #define PM8008_PERIPH_0_BASE	0x900
->   #define PM8008_PERIPH_1_BASE	0x2400
-> -#define PM8008_PERIPH_2_BASE	0xC000
-> -#define PM8008_PERIPH_3_BASE	0xC100
-> +#define PM8008_PERIPH_2_BASE	0xc000
-> +#define PM8008_PERIPH_3_BASE	0xc100
->   
->   #define PM8008_TEMP_ALARM_ADDR	PM8008_PERIPH_1_BASE
->   #define PM8008_GPIO1_ADDR	PM8008_PERIPH_2_BASE
-> @@ -153,7 +153,7 @@ static const struct regmap_irq_chip pm8008_irq_chip = {
->   static struct regmap_config qcom_mfd_regmap_cfg = {
->   	.reg_bits	= 16,
->   	.val_bits	= 8,
-> -	.max_register	= 0xFFFF,
-> +	.max_register	= 0xffff,
->   };
->   
->   static int pm8008_probe(struct i2c_client *client)
+>   static const struct regmap_irq_chip pm8008_irq_chip = {
+> -	.name			= "pm8008_irq",
+> +	.name			= "pm8008",
+>   	.main_status		= I2C_INTR_STATUS_BASE,
+>   	.num_main_regs		= 1,
+>   	.irqs			= pm8008_irqs,
 
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
