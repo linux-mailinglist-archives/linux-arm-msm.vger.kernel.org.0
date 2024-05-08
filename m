@@ -1,215 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-19532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04A198C05DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 22:52:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5D968C05FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 23:01:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F17D91F21B52
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 20:52:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48930B2179A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 21:01:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB75C131746;
-	Wed,  8 May 2024 20:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04389130A58;
+	Wed,  8 May 2024 21:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="l3ObWLnN"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="jTrJhp64"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2057.outbound.protection.outlook.com [40.107.237.57])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B70A85626;
-	Wed,  8 May 2024 20:52:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.57
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715201568; cv=fail; b=TEhQpjZDKikgoO+pcXcQRnXM9NTSy2fTjKiZpb/3VOhfTzx69S7dp98XiU8BXVitgR89AacQyx39b7EgUHCX2iXNbfj7DvW8J4mAZPXuEeZq6H1ATBTna008O5Ilnp1zBlhhPixRQQJEjJOei3BCc/WJewS1JQCIJ7CODLckLU8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715201568; c=relaxed/simple;
-	bh=1R8SnMAtqaqMvkrshS9avABoNtDIaX/nUVZ+vZYZLgY=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=dNDkxwLYkPVO/40imyLyBOFGYlLGGZgIYHlUi7gMQ7Jjy8blIRSOlI3BNKIGArUZxMWiAg5JfBxkyg866V0yuzQqMq+OUGSRQjV8vybyCB05TCNEAtpovJd9S8B5JsF/pzAbyNKd9JMCnibuj+VitfryoF7LUNFpi/9fWzw/aX4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=l3ObWLnN; arc=fail smtp.client-ip=40.107.237.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kJgX1RytGLUYQrFXyWq4wvHhwWGBEmUk/nISi4HeRGCoL+lqhvJ3ju9AyfXNbPagl2adXOvIFjjkbnmruz5ATKrgCC1xCM6qUHYGffg4M6CrriOTWLE/I6vUC39kcyILaTC78CogH95cTLU642c2j7pk3nlWtYfvRYrUWtR6MoVYZnEuoEHso3LTS/jW6PA0Wb5xUzYeDoWXHoxqNlYJTjewCxBDLCYhx5p/JAvnwT0R6FJ5VlP85ZfkKsJ9MZzdTXFYa02a/5YdA7yhXl03L7q50th/h2onhO+W0BDt/e2CGig4x/3TB67ATQOFSGivMA4LfSLX0S9QnfKiljYBDg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tGeDinUwJudWsb5GWrCseZXnIfK12L1axe4ZMfksY3g=;
- b=NlSOW6BGKCHVorXmrvNubwODZhVIvuu0zksGGtIgUN9/05JGHTyUAt3+9MOuyRlK81p1ft85ZaQR+azLaErN9AA6YQ3oL+0u/LyxYpvMLwm9jIA2gW0FmiT1tYknegbY9R5W0LsNWNp5/FcHBID3eELviOQg5jwniW6SZcp/iUw+yEiHRrZ0wMNfbhlbYa1rkZAWQTNAh4M4YGGdzxdxZ5LTc8eVnpZu9PxBCzogm9x+f+oR6R3GZa2pVlJQuPNPyvXlvVRE3Z8LID/U2MiSUsHeAefJwaQTjuOuer2z66dH6jovoDSs5V7j4wWGXwWOVEe+W9mZ5d23kE1xojK9Bg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tGeDinUwJudWsb5GWrCseZXnIfK12L1axe4ZMfksY3g=;
- b=l3ObWLnNbs2X6UrchPCNqI6Zdybmxpf/rbP6deuebrl/wJFmkgei3jrmyC6aryZ/yYhZp1lKnapY+7YwTzL4LeA/9eU5JSIOPhR4aKMMInL5T60Z0kaInLfwNEe14UE3igEALDQUM1gpNYPljgl/wjFDdhnNNxLp1JL1W3ceZeMO9GotIwAbDprirrVJ988l13seupW0M1zcs+N7azR2bLdSidCmFcvUALk6SvYbkTKhOABTfPK27VEjXlbgjAvVlLNBikfBixCfQNDlILb+OdjbcF9v65NyeNwuLLilFMCPYnXx2oR/bD4f61DrgC1HfZSm36NKYGkOxceTsCIVfA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
- SJ2PR12MB7823.namprd12.prod.outlook.com (2603:10b6:a03:4c9::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.43; Wed, 8 May
- 2024 20:52:43 +0000
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::ae68:3461:c09b:e6e3]) by CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::ae68:3461:c09b:e6e3%5]) with mapi id 15.20.7544.041; Wed, 8 May 2024
- 20:52:43 +0000
-Message-ID: <780207c9-fcf1-460e-b16a-aad60c12ac71@nvidia.com>
-Date: Wed, 8 May 2024 21:52:37 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm: Fix gen_header.py for python earlier than v3.9
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
- <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org
-References: <20240508091751.336654-1-jonathanh@nvidia.com>
- <83b6e1aa-c8ec-0bd7-2c98-20705741b76a@quicinc.com>
-From: Jon Hunter <jonathanh@nvidia.com>
-Content-Language: en-US
-In-Reply-To: <83b6e1aa-c8ec-0bd7-2c98-20705741b76a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO2P123CA0074.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:138::7) To CO6PR12MB5444.namprd12.prod.outlook.com
- (2603:10b6:5:35e::8)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DFD1CA94
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 21:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715202089; cv=none; b=iB8KoKZ8m67zGvmu2MI8mRCJef11Z1o/6EfN9IE96fLDtYZaXYacsP5ucXdsuhv2OujK+mqaC9iVxV17M7eT1jd4zdavKw4lNapsbV+OK3PyeGnF1ga1tlFJNEs/X/qrBtZ5kSydOs5CY3F4Qx+vbi1pvbeSf9Qx3Qh1vPAjmeU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715202089; c=relaxed/simple;
+	bh=qv1M3lFHloYVa1qk3LuBGHrtEvlYKmXb7zeClX8zRg8=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BclpKmFLMiqDaY5F4rEFD5mn+Q5b0KZvjyFTSfRLqsXWAZKhvEmP2aUAeuhohAGkePRG0w9YrOCHzXvJPFOqOCemNI88iLWl2eta7Q6m79bJQc7+EHkVyWS6kYZI9zNs63goEzKIEPv4gdWpAu8QOfY6k4IXv3f0kPuoU5A5I1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=jTrJhp64; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6a0f889877cso796286d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 14:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1715202087; x=1715806887; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UtFvF8dpNDhwV6JsUmEL5f4rbK/qvVLRwZ/7wNo7yfs=;
+        b=jTrJhp64j5xY5M0nDAjX/WqcKgSuSBRr6qoMcOOF5m7Ceps/noS4kr4vOrLgBUaV4Y
+         gE+r7HaQhF0aw3Ldq3ak41HsxQQ3Xy8yIITs74ygpR1dc2HHtDaf2dXFtEX1JRtyBswc
+         2Xmoyr6DE5ryXjcQaD732YwdsuAjZumpdu5jQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715202087; x=1715806887;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UtFvF8dpNDhwV6JsUmEL5f4rbK/qvVLRwZ/7wNo7yfs=;
+        b=tBdjrVZSFBYkwC2y+DNn09th8BKGswtIK3IYaULtBVPOGwzRPnglk8l8esdWM8ETb4
+         LvHtoHhLE6WmTQwhtFQQ6v0bPuTxdgBZKYTJtPhDOjNbgKgxp8KsuamU7pYuZ0b0Wx0B
+         3ma6k+L51kevd24s8bTX/L6GNTM4NKAuL0EdDigRDZzJn+C9gqodju+UPMGNcRChC5ni
+         5K6f7ICSBOOeL+7b9zo/YWuyKK3iMhpxQnP7J/P67DfiXVcW+dv5t5VBez3JDykgrbSr
+         eH0M27eRvxkP1k8b5PptGmtdxAO5oBsgiESaMntXo3mbW5TI/Nz8cvMf+Fxcw/UODZ7q
+         fVzg==
+X-Gm-Message-State: AOJu0YxArGS5xdS/utv+K6sLWUNYQQXLmvkCJZF+3Hq+I8JiEnNYJx2B
+	WoB65hFykITAOcPVzQCTjQ8sNzOf9ks5Ud0r4FYf3r28AjhXUCZNxMnEO79n9bqW+yTINTPIHVU
+	Ta5gRChGf04tB/1XHG51aET64mXn/hSCIAU8CaUvoDysHuW0=
+X-Google-Smtp-Source: AGHT+IFB/RHLHyX75z/2xTn+JrClcWKTn75RaGEVCmSmbkRqhSQPxRXT4w960126G7N3cb8b5OxQtzt4NPqrzOiy1d8=
+X-Received: by 2002:a05:6214:d62:b0:6a0:ab13:e05a with SMTP id
+ 6a1803df08f44-6a1514e4095mr52624846d6.25.1715202087392; Wed, 08 May 2024
+ 14:01:27 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 8 May 2024 17:01:26 -0400
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|SJ2PR12MB7823:EE_
-X-MS-Office365-Filtering-Correlation-Id: bdc58946-f3ef-4be1-867f-08dc6fa0ce9c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|366007|376005;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NU16MzFEWEJQaEdLUmY2RWRUTGFrMXVveWc1bkJuZUh3UWx4QTd1Qjl5TFVE?=
- =?utf-8?B?VHN0c3A0c0RMNWJnQjZGNUZMeGVqUU5BSDJoUUMwaVJmb0NLZWVRRlEzOXY2?=
- =?utf-8?B?cFNFcGlQQTRTTFlqVGJPZ2kyUVNCWnZYSDlORmh1eURPY1FoaHhhZ25uRDRS?=
- =?utf-8?B?WDkvV0Qwd3VyUE5TUU4vZm9YdVZXQlZXUjdLTnM2QWJ2SkpFTVZSZ3BzOEJG?=
- =?utf-8?B?a0hTa1gwWjlmN1NONnJqZGpLdTZ5VW9xZUFkWW9WME9FSzdFdVJlZjVSenc2?=
- =?utf-8?B?a2pQUEhZOWdKQTdCZTlWeWkyblNPYzUxWDRQU1Q2WDNzS0VwMDErL2k5cXJB?=
- =?utf-8?B?R212aWcwZWdLblh1TU5iVjlmYUpTTCtOenhJVHlTYVdhdEJ4d0VjYWptK05r?=
- =?utf-8?B?UWxpRDRPMW45VzRxME1aOWEwVkVvMVcrVXgvbmt2VHBOL09wa2NYZmExbDYw?=
- =?utf-8?B?c2MrRTFqQXk4WXlWY3l1RCt5amxXUWlwTWJQU2xOSC9PbUpxZ05lOHpKR2Nu?=
- =?utf-8?B?c1Nnai9jckNtcldTV3BySGJOamhrdVdvL2d5bGFJV2pBSGFZS2xETE8xTFN1?=
- =?utf-8?B?MUhkTDZrWTZKUGljenAvcU5KNkd5R2NCTmEzZkw5YjQ2OHcyQ3dyMXkvdFcz?=
- =?utf-8?B?eGc3b3FZMklOVTJTR2VGSHFmd1NyNzJGaU9uVUthSi80RVdnUTEvTTM0ZGxx?=
- =?utf-8?B?UlZKdkErV1hvaG1tR2RiVW9BY01lemY1eHgwcU5Jb0JpWVVERmo4TEl1d0wv?=
- =?utf-8?B?Z1VCYTRlblpSbmpMclZFWHRPbXZSZ1FKRmFtRnd4SUtXeldpeDltRzZGWnp3?=
- =?utf-8?B?TFY0d1AyeXRJejkwS0UwcTFpdjhDRTlVdTEvSklaZW15RHZzV01mVjRkNTh3?=
- =?utf-8?B?NUJSRC8xTWlOOHZiUzFIbVZyLzVQbXVkeUUrUjNSenBKcnVQSGlNVlZvV1NU?=
- =?utf-8?B?RGpLUnNuSkRZZHhScDFob2l3U25TZVJTRFljdFV0bVFkdkFpY3l4TTlHdjNa?=
- =?utf-8?B?U0xyWEkxdGw0R0JNUElBRTRNeXM1dUxyUkZkT2Y0L3FkUEhzQ2gydVRPRnd3?=
- =?utf-8?B?NVVKanQ4Z0t0bm9GRGRiUlRBWEFKMUdrdDM4NVVWMFNGUmQ5a1M0ZU5jeWxX?=
- =?utf-8?B?K0RyaGhuQk5JUmpZdGdSWVlPbHQrWjZ0QzlLZ3VxaG9sVnhQTG5Ra0RTTDNJ?=
- =?utf-8?B?WFdxSXlrV1FlZTJlRklXOXlKRGdzc2NiTGdlWllnNEtlQmxmdlVuWlBPYmlM?=
- =?utf-8?B?VEVhU3FIU25lY0dvdkp6eXVmdGMvMjBBK3BObDhlTU1qTkNTcHhpYnlVaStU?=
- =?utf-8?B?T3dSbUE1RmhCM010dXY0SytnZjlVbEFlQ25BTXlXWFZRNVlJeVMzenl3YXFw?=
- =?utf-8?B?MHNMYTNIUElVR0xlM2tLZVFHeDJLdUlyM0lLeUFTa2hnTks0ZlA1RzlOMEFJ?=
- =?utf-8?B?ZEJwckpaa3ZsVjB2VXlMWFVqcUxZTkIyaFZQQ1BMd2dza09yL29oYlN5d01B?=
- =?utf-8?B?WHlnbHJCdEt0Zm5SZ1RWY29QL3RXN1NNWHAwNWZ6Y05xQmlTcG4yais3V0wx?=
- =?utf-8?B?OStvL2pOVVRtQ29iWFYrRGp4dEFMVS9GcThtNnJkUWkwM3d6eEpNekd1MnJt?=
- =?utf-8?B?bVhSdkVXaFFYYzRGd3hibVFvdHZnMHdrbVhUSDdjTDJLQk15cFJyb0FEMERm?=
- =?utf-8?B?MWNITW8xWTN4N0ttTE1Yb1VjMllzSUp6T2U0M2x5bWREWXFSZkJxMFFBPT0=?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(366007)(376005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TU9IbXA1eFVNQ0lWb3l1YkNzbkFXMU9EamhEY2Y2bFhKM0prMVltRmt2NTdr?=
- =?utf-8?B?Qkt0WGlhM2lLVXhudzYzSm1EYXRVTnRua3hCcEJ6dXJCMWczcElFWEk3Rk9C?=
- =?utf-8?B?NnBQS29ySzczOWthd05Yb3NEZnpQNUpObkFGdTNUOW0xNFN4em5XK0s3UmRr?=
- =?utf-8?B?am9MOGlkYitobXBDOUFBRGQzaHVzdGtNa0h2VFZBclRJbjFqMlpSVUx4TENj?=
- =?utf-8?B?Y3B1UmFadzlEZ2J5UHpST3o3R25tOEVUZjBTbjhrUTVqRncxK1ZvckVXcmtN?=
- =?utf-8?B?WjVPS1BwbWFKbDVrd3ZGT3pCZW80dXRqbDlDdEZaNTdPRUNRUWJoVHVxYTNN?=
- =?utf-8?B?VEdXOGdhRC8vbnh6Rkpoc3pmL2hCYUVwTjMwLzZyRk5uNU5yT1U4RzQwaG5P?=
- =?utf-8?B?YXkwZzRIL1dmdzh1S2M5R2ZEcklVejBSNWlhM0tKa2M0amw1dm9ZRzg5UzR0?=
- =?utf-8?B?NHI0eC9TOHNYclVpN2pXNDJ6K3F5ZWpTdlBJaHgyR25WME50ek1IN0ZnU3Vm?=
- =?utf-8?B?VU1ydElLVHBJZDZQbXhsLy9tNmdyM3JySUliTG9zYVhCZldabDY1OUtLTTY3?=
- =?utf-8?B?R1BwZ3FaL1VYVjVyb0JrTkhKRG9taUJobktlY3UwSHd6aWlJL0dTNWZPbXYz?=
- =?utf-8?B?eE1kMG56UUM0UVR2RnF2TEpqK2JFT1RtcjBpMS9yQTBCTml3TDRhSGZpcjVt?=
- =?utf-8?B?czB6RlFCTytteUZwTWV4ZDlDR3hsT3hSZWwrSld1U3hCSTgxcklNd2w2M3lC?=
- =?utf-8?B?a2dDVTN2Y2dqdi9UTWxESFBqeng3M2RHeFA2a2VYQlJDVThwdnYvZVZWSUxY?=
- =?utf-8?B?YkVkdElMUmxuOFlpZUZqZ0d4MWR2WStIWStmNXVSdTF6OEtBcWZXS01oRFM0?=
- =?utf-8?B?dFhXNjdYNk9RRTFrM21hdnFObUNjZ1NCWW5ZNVByUk5uY050Q1hmcnFuSm5s?=
- =?utf-8?B?ZWhsMlF5cEErVXZkZzdVNUVneStnTU96YUFDTmw5UzYvY0wwbjVHM2NrRVpF?=
- =?utf-8?B?RHhtSGRkbW5wLy9IS1ZZN3M0R0piQkxUNDJrQnpnb3NwblJFZUFpaklwM0xq?=
- =?utf-8?B?LzFhQ3VCb2VHSDNmVWFPYVdQclJraTlCeEpVT01LOURyWmxuVm9pMm04cklm?=
- =?utf-8?B?SU5WaDRUcGZKN1IrUFhBZElJMmtvaFZNT0g0ajhVVnRCa0xaT0J5K1E5dFBr?=
- =?utf-8?B?YzVEa2NBaktJY2J4anZxT2VpZDAwWk1XRFlaOUJBbUtIZE9lWEZ0YjFuai9a?=
- =?utf-8?B?bzltdFlScHN2N0NBWm1mQWUzUGF4VEVBejRoRGg2M28vYWY1cHFPUy96Sm5Z?=
- =?utf-8?B?Q1ZUVnVOSUNMRWdpdXkzMjNEUFBuVlZ1RjVEVWtjclBDY3B1M0tCd2ZySExP?=
- =?utf-8?B?SGZzd2hMQWVLeldtQzk0bFZlZGJodDkrU2RaaEZURnlpTWlpK0NWaHhacDFl?=
- =?utf-8?B?Rmh0SVZ0Y25SOCtjZFk0WVptSTNUSzFTUXdBWFhyMXJoT2poRmpLbkkwT0dE?=
- =?utf-8?B?YmxuVHVHUHkwMFJPSGtSa3g1QmNwMkNyVE1rcnRZTUdiczdUMEo5RVM5MGx2?=
- =?utf-8?B?NTNCSHRPQk01RktrREN2QXAxeVBERG03NjRSUTJLelZyTEZva2ZhRjJsR0pX?=
- =?utf-8?B?eGR6aU1YaFUramtkWG5YdmVDZ0ZOK215UUlhUENOT1JpTFZHWmJvNmFocnlh?=
- =?utf-8?B?VE43WWVSN21kOFhxZHJJODVpUmdvVTVkd3VJdi82ejB0eFU5YXBpdWVGODQ1?=
- =?utf-8?B?RVJrSkg0MkY2VnBJSUwvU1pqQXFMR2FtTEF0MzV1MG8rditWN1dWUzI5OWxP?=
- =?utf-8?B?ZW51UlJWQW5IRi9uVCtIcFcrYkVBUmc0MXljbnNSajNaUUhvdWRERDBERmZX?=
- =?utf-8?B?c0tnVnhEK0h4bE95NitUcHJLYm9rTjdZcjZtWTBOamoyS250c2tPOHBuS3d4?=
- =?utf-8?B?TTNvYU1GRkgwL1JkNU9vZis1ekw3eXZqdjViS0IwRGZ0NVYwSFF3RjFPdGs4?=
- =?utf-8?B?QmhpVjFBcjZ0QWU3d3B2TXJJOGZHSERkNmw3cE54QkNuNGZYZGhWREhvY2pD?=
- =?utf-8?B?NDlEQnVQN1JGcDRnNmZ3UGppYzJkQjJGY2l2WHhMSTUyUndiQUQ1Q2FiUms5?=
- =?utf-8?B?VXovY2NMUG96V0ZFRU5ZMjZJSWlYcnNmSG12N1VGeWkraVdKbStoV3VQSzJC?=
- =?utf-8?Q?VGvwTXGlNshFROs3+b5UyaDjyQomNXTF8Tx/SREKZU2e?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bdc58946-f3ef-4be1-867f-08dc6fa0ce9c
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2024 20:52:43.5262
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lGYEW1qctQYhAs4UwPDb0ArVi2MrPBP/ERs6CK/BN23MrmyYBXDALhg5uLQEYKKv53H6ClfMaHyNA9u0bLi25Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB7823
+In-Reply-To: <911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain>
+References: <911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 8 May 2024 17:01:26 -0400
+Message-ID: <CAE-0n52S6gBnEY8mZ=Vrp1eiC+L3UbYxEgDA6dTnvkRU2_EEEA@mail.gmail.com>
+Subject: Re: [bug report] soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to
+ be free
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Quoting Dan Carpenter (2024-05-08 07:49:34)
+> Hello Stephen Boyd,
+>
+> Commit 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs
+> slots to be free") from Jul 24, 2020 (linux-next), leads to the
+> following Smatch static checker warning:
+>
+>         drivers/soc/qcom/rpmh-rsc.c:658 rpmh_rsc_send_data()
+>         warn: mixing irqsave and irq
+>
+> drivers/soc/qcom/rpmh-rsc.c
+>     645 int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+>     646 {
+>     647         struct tcs_group *tcs;
+>     648         int tcs_id;
+>     649         unsigned long flags;
+>     650
+>     651         tcs = get_tcs_for_msg(drv, msg);
+>     652         if (IS_ERR(tcs))
+>     653                 return PTR_ERR(tcs);
+>     654
+>     655         spin_lock_irqsave(&drv->lock, flags);
+>
+> flags saves if this is called with IRQs disabled.  I don't think it is.
+>
+>     656
+>     657         /* Wait forever for a free tcs. It better be there eventually! */
+> --> 658         wait_event_lock_irq(drv->tcs_wait,
+>     659                             (tcs_id = claim_tcs_for_req(drv, tcs, msg)) >= 0,
+>     660                             drv->lock);
+>
+> This will enable IRQs and then disable them again.  If this were called
+> with IRQs disabled then this would probably be bad.  (But again, I don't
+> think it is).
+>
+>     661
+>     662         tcs->req[tcs_id - tcs->offset] = msg;
+>     663         set_bit(tcs_id, drv->tcs_in_use);
+>     664         if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type != ACTIVE_TCS) {
+>     665                 /*
+>     666                  * Clear previously programmed WAKE commands in selected
+>     667                  * repurposed TCS to avoid triggering them. tcs->slots will be
+>     668                  * cleaned from rpmh_flush() by invoking rpmh_rsc_invalidate()
+>     669                  */
+>     670                 write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
+>     671                 enable_tcs_irq(drv, tcs_id, true);
+>     672         }
+>     673         spin_unlock_irqrestore(&drv->lock, flags);
+>
+> And then it sets it back to whatever it was when it was called.  So
+> that's fine.
+>
 
-On 08/05/2024 17:46, Abhinav Kumar wrote:
-> 
-> 
-> On 5/8/2024 2:17 AM, Jon Hunter wrote:
->> Building the kernel with python3 versions earlier than v3.9 fails with 
->> ...
->>
->>   Traceback (most recent call last):
->>     File "drivers/gpu/drm/msm/registers/gen_header.py", line 970, in 
->> <module>
->>       main()
->>     File "drivers/gpu/drm/msm/registers/gen_header.py", line 951, in main
->>       parser.add_argument('--validate', 
->> action=argparse.BooleanOptionalAction)
->>   AttributeError: module 'argparse' has no attribute 
->> 'BooleanOptionalAction'
->>
->> The argparse attribute 'BooleanOptionalAction' is only supported for
->> python v3.9 and later. Fix support for earlier python3 versions by
->> explicitly defining '--validate' and '--no-validate' arguments.
->>
->> Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
->> ---
->>   drivers/gpu/drm/msm/registers/gen_header.py | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
-> 
-> Thanks for your patch, I had sent something similar y'day.
-> 
-> If you are alright with https://patchwork.freedesktop.org/patch/593057/, 
-> we can use that one.
+I see. I think you want this sort of patch so that it is clearer that
+this can't be called with interrupts disabled? Would Smatch be happier?
 
+---8<----
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index a021dc71807b..568d0b8c52d6 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -645,13 +645,14 @@ int rpmh_rsc_send_data(struct rsc_drv *drv,
+const struct tcs_request *msg)
+ {
+ 	struct tcs_group *tcs;
+ 	int tcs_id;
+-	unsigned long flags;
++
++	might_sleep();
 
-Yes that's fine with me.
+ 	tcs = get_tcs_for_msg(drv, msg);
+ 	if (IS_ERR(tcs))
+ 		return PTR_ERR(tcs);
 
-Thanks
-Jon
+-	spin_lock_irqsave(&drv->lock, flags);
++	spin_lock_irq(&drv->lock);
 
--- 
-nvpublic
+ 	/* Wait forever for a free tcs. It better be there eventually! */
+ 	wait_event_lock_irq(drv->tcs_wait,
+@@ -669,7 +670,7 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const
+struct tcs_request *msg)
+ 		write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
+ 		enable_tcs_irq(drv, tcs_id, true);
+ 	}
+-	spin_unlock_irqrestore(&drv->lock, flags);
++	spin_unlock_irq(&drv->lock);
+
+ 	/*
+ 	 * These two can be done after the lock is released because:
 
