@@ -1,208 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-19459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0A228BF4D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 05:12:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 222798BF5A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 07:43:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 21D67B212D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 03:12:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D270928573A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 05:43:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96A2E12E74;
-	Wed,  8 May 2024 03:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E864D17BCA;
+	Wed,  8 May 2024 05:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bRTCEoFq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hurqW07R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A55E12E6C;
-	Wed,  8 May 2024 03:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B9222324;
+	Wed,  8 May 2024 05:43:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715137930; cv=none; b=i++BgRk6pqd6exR86MGMfn1ZSGfsvOqlgNmXlmNSt+peJBEse5zNrxVf558ck00BNh5ofUxMwwOPH2+P/daWZkHe5BTZqitO0VZMIC9X1Hz4MA6MF88coHDou9YRvBOfwKAWYIm5P8m07OvaixHtYeCawfsTzOXKKICKSeoEBFk=
+	t=1715146986; cv=none; b=QFpX0goh1jM7kCXtSCGg3Or/fzWssUutefubldq4WrNi6RG4aZb+Q+skMQDxkOVHtziYjR6pQozVSc0zGBgd+CheZ0si3w95E4mjM8+Tyf+/p0zhGzmxS7f5NldRK5ZlS2jI8FtUIXht3PJ+/Nd4zRdMbR02jSj67YQI/oM0W+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715137930; c=relaxed/simple;
-	bh=dojBfFEdRQ4nxloccm/HMrkGY2HBMwlLPi66aL/0V4Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BRyIEO5zHzv4+0ZhyC1Uv7guC7YcreM4kfuHErN4QNwk1DWoFw3QufC4iniXGqrOq4xEZt6VxOUIOS0AWEEzMx0DanvflX1b9D5wxnEpO06F76SEelC0U9+Ioci83Tb1vdesCn2G/tAEJSsh0SAOsK9cEnAqkQetM3UE/yPWFr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bRTCEoFq; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715137928; x=1746673928;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=dojBfFEdRQ4nxloccm/HMrkGY2HBMwlLPi66aL/0V4Q=;
-  b=bRTCEoFqWxPl2jhTsssT4xNjtJ/K6Xj/QB5VJOn+TtT6/J6CLOlA0dOO
-   5xxN6Q2CGiQSHkSL09zk07AP6QTO42T03MURCswwDMsoV4Vzr18h7A4SW
-   Q0lHQwWv/iLE6tLU4Rnvs7gxHyZVYVg6RiugH1/ge2cp62UuRiarl9yz+
-   lWyX9NdIGt8/LA7PhULKp19mjkP+tLJLxXC6SBgCiVnCqz5pb7Cexiy6W
-   Dzg2uaPgjW2ZcjVNAEeDBj4ymAcioldPe4lJkmdPe7Gev5mlJP0rfZOj0
-   HocMTZTpMHBS06Z/2Z8JRKQyh41U5bVIx1Efw8FWeAfjb5BBNP9d6k6Rz
-   w==;
-X-CSE-ConnectionGUID: ++3MTyjQSFKPFBLXWd10hQ==
-X-CSE-MsgGUID: B3N1s9aMTVewoRZcMzAbaA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11066"; a="10814129"
-X-IronPort-AV: E=Sophos;i="6.08,144,1712646000"; 
-   d="scan'208";a="10814129"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 May 2024 20:12:07 -0700
-X-CSE-ConnectionGUID: xwQBTDE0Tay2I1d6rDrH8Q==
-X-CSE-MsgGUID: 4zxaEh4FQVuxc8Z2qTzPCw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,144,1712646000"; 
-   d="scan'208";a="28720178"
-Received: from lkp-server01.sh.intel.com (HELO f8b243fe6e68) ([10.239.97.150])
-  by fmviesa009.fm.intel.com with ESMTP; 07 May 2024 20:12:03 -0700
-Received: from kbuild by f8b243fe6e68 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1s4Xiq-0002uY-13;
-	Wed, 08 May 2024 03:12:00 +0000
-Date: Wed, 8 May 2024 11:11:57 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ricardo Ribalda <ribalda@chromium.org>,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Michal Simek <monstr@monstr.eu>,
-	Andy Walls <awalls@md.metrocast.net>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, Hans Verkuil <hverkuil@xs4all.nl>,
-	Ricardo Ribalda <ribalda@chromium.org>
-Subject: Re: [PATCH 06/18] media: siano: Refactor struct sms_msg_data
-Message-ID: <202405081007.7eCrDhSN-lkp@intel.com>
-References: <20240507-cocci-flexarray-v1-6-4a421c21fd06@chromium.org>
+	s=arc-20240116; t=1715146986; c=relaxed/simple;
+	bh=9i+NqIGo7kzjRxvqTqjq200CuyPCEflocMqbaDuREtg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aTodPcZv0UhfWPkqC+rHIQbHwnGYUFe5r6wArv6wHvJMio2qCWaBOWqOFuTusAbrB1kQu/Sp1G8mzA01BaK4TESLBIY1+ph49kEbkXsdLpGfODMrvPRG2a/KOwTB4v7mAr74EbI0Ulwgs/iskpgZ3gTBNq4uvYF/Sip5Y1WnMb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hurqW07R; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4484ftXO016309;
+	Wed, 8 May 2024 05:43:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=Y0o0ERh
+	4r6DVUsthnNfeeX5HJMGS2kcD4LBvFXz5Oi8=; b=hurqW07RbiMJX/OjRD6y3wg
+	KYw/HiJ7cqLSzLBOmyNsBZcj1DuR7Wo0V8XaxfK3IsVy7jMbeY6n9TjkbRbXMbPE
+	2YMZhw092k/xpxWZGD6gS/Bwj2KZXw1EtkRqaNbbSJ7cXdOasa/99DH1SszdbmfA
+	Y+I1kHqJPNam2C75k7sLC2QSXQGYDYhPtgh1DEtI5i2QL14Q/QMPxUezsDhWzmWX
+	rC1I/HdXqijfil5mtQvSYIWuFQol1qs3H/MnSfffJLQIWuVWyA2GeEnD8Eyxv5ts
+	Ap/84J30bZnYY24Fz4n9I+fWv2cMmjA31BEPFOAMQYR3/8zHB2p5jft7MGkJ4Ng=
+	=
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xyspr10yx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 May 2024 05:43:02 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4485h0J9012567
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 May 2024 05:43:00 GMT
+Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 7 May 2024 22:42:58 -0700
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC: <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v1 0/5] Add missing features to FastRPC driver
+Date: Wed, 8 May 2024 11:12:43 +0530
+Message-ID: <20240508054250.2922-1-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240507-cocci-flexarray-v1-6-4a421c21fd06@chromium.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _Ehy7-ixZ4dNqwjw_iXm5JH488-CcRGx
+X-Proofpoint-GUID: _Ehy7-ixZ4dNqwjw_iXm5JH488-CcRGx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-08_02,2024-05-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 clxscore=1011 malwarescore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 impostorscore=0 mlxlogscore=547 bulkscore=0 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405080040
 
-Hi Ricardo,
+This patch series adds the listed features that have been missing
+in upstream fastRPC driver.
 
-kernel test robot noticed the following build errors:
+- Redesign and improve remote heap management.
+- Add static PD restart support for audio and sensors PD using
+  PDR framework.
+- Add change to support unsigned PD. Unsigned PD can be enabled
+  using userspace API:
+  https://git.codelinaro.org/linaro/qcomlt/fastrpc/-/blob/master/src/fastrpc_apps_user.c?ref_type=heads#L1173
+- Add check for untrusted applications and allow trusted processed to
+  offload to system unsigned PD.
 
-[auto build test ERROR on e695668af8523b059127dfa8b261c76e7c9cde10]
+Ekansh Gupta (5):
+  misc: fastrpc: Redesign remote heap management
+  misc: fastrpc: Add support for unsigned PD
+  misc: fastrpc: Restrict untrusted apk to spawn
+  misc: fastrpc: Add system unsigned PD support
+  misc: fastrpc: Add static PD restart support
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ricardo-Ribalda/media-allegro-nal-hevc-Refactor-nal_hevc_sub_layer_hrd_parameters/20240507-213119
-base:   e695668af8523b059127dfa8b261c76e7c9cde10
-patch link:    https://lore.kernel.org/r/20240507-cocci-flexarray-v1-6-4a421c21fd06%40chromium.org
-patch subject: [PATCH 06/18] media: siano: Refactor struct sms_msg_data
-config: mips-randconfig-r113-20240508 (https://download.01.org/0day-ci/archive/20240508/202405081007.7eCrDhSN-lkp@intel.com/config)
-compiler: clang version 19.0.0git (https://github.com/llvm/llvm-project 0ab4458df0688955620b72cc2c72a32dffad3615)
-reproduce: (https://download.01.org/0day-ci/archive/20240508/202405081007.7eCrDhSN-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202405081007.7eCrDhSN-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from drivers/media/common/siano/smsendian.c:15:
-   In file included from drivers/media/common/siano/smscoreapi.h:18:
-   In file included from include/linux/mm.h:2208:
-   include/linux/vmstat.h:522:36: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
-     522 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-         |                               ~~~~~~~~~~~ ^ ~~~
->> drivers/media/common/siano/smsendian.c:27:16: error: subscripted value is not an array, pointer, or vector
-      27 |                 msg->msg_data[0] = le32_to_cpu((__force __le32)(msg->msg_data[0]));
-         |                 ~~~~~~~~~~~~~^~
-   drivers/media/common/siano/smsendian.c:27:64: error: subscripted value is not an array, pointer, or vector
-      27 |                 msg->msg_data[0] = le32_to_cpu((__force __le32)(msg->msg_data[0]));
-         |                                                                 ~~~~~~~~~~~~~^~
-   include/linux/byteorder/generic.h:89:21: note: expanded from macro 'le32_to_cpu'
-      89 | #define le32_to_cpu __le32_to_cpu
-         |                     ^
-   include/uapi/linux/byteorder/big_endian.h:35:59: note: expanded from macro '__le32_to_cpu'
-      35 | #define __le32_to_cpu(x) __swab32((__force __u32)(__le32)(x))
-         |                                                           ^
-   include/uapi/linux/swab.h:115:54: note: expanded from macro '__swab32'
-     115 | #define __swab32(x) (__u32)__builtin_bswap32((__u32)(x))
-         |                                                      ^
-   drivers/media/common/siano/smsendian.c:36:17: error: subscripted value is not an array, pointer, or vector
-      36 |                         msg->msg_data[i] = le32_to_cpu((__force __le32)msg->msg_data[i]);
-         |                         ~~~~~~~~~~~~~^~
-   drivers/media/common/siano/smsendian.c:36:64: error: subscripted value is not an array, pointer, or vector
-      36 |                         msg->msg_data[i] = le32_to_cpu((__force __le32)msg->msg_data[i]);
-         |                                                                        ~~~~~~~~~~~~~^~
-   include/linux/byteorder/generic.h:89:21: note: expanded from macro 'le32_to_cpu'
-      89 | #define le32_to_cpu __le32_to_cpu
-         |                     ^
-   include/uapi/linux/byteorder/big_endian.h:35:59: note: expanded from macro '__le32_to_cpu'
-      35 | #define __le32_to_cpu(x) __swab32((__force __u32)(__le32)(x))
-         |                                                           ^
-   include/uapi/linux/swab.h:115:54: note: expanded from macro '__swab32'
-     115 | #define __swab32(x) (__u32)__builtin_bswap32((__u32)(x))
-         |                                                      ^
-   drivers/media/common/siano/smsendian.c:73:17: error: subscripted value is not an array, pointer, or vector
-      73 |                         msg->msg_data[i] = le32_to_cpu((__force __le32)msg->msg_data[i]);
-         |                         ~~~~~~~~~~~~~^~
-   drivers/media/common/siano/smsendian.c:73:64: error: subscripted value is not an array, pointer, or vector
-      73 |                         msg->msg_data[i] = le32_to_cpu((__force __le32)msg->msg_data[i]);
-         |                                                                        ~~~~~~~~~~~~~^~
-   include/linux/byteorder/generic.h:89:21: note: expanded from macro 'le32_to_cpu'
-      89 | #define le32_to_cpu __le32_to_cpu
-         |                     ^
-   include/uapi/linux/byteorder/big_endian.h:35:59: note: expanded from macro '__le32_to_cpu'
-      35 | #define __le32_to_cpu(x) __swab32((__force __u32)(__le32)(x))
-         |                                                           ^
-   include/uapi/linux/swab.h:115:54: note: expanded from macro '__swab32'
-     115 | #define __swab32(x) (__u32)__builtin_bswap32((__u32)(x))
-         |                                                      ^
-   1 warning and 6 errors generated.
-
-
-vim +27 drivers/media/common/siano/smsendian.c
-
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  13  
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  14  #include "smsendian.h"
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20 @15  #include "smscoreapi.h"
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  16  
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  17  void smsendian_handle_tx_message(void *buffer)
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  18  {
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  19  #ifdef __BIG_ENDIAN
-ff7ff3656465f7 drivers/media/common/siano/smsendian.c Dong Chuanjian        2022-12-26  20  	struct sms_msg_data *msg = buffer;
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  21  	int i;
-28a59df4d7cb8f drivers/media/common/siano/smsendian.c Mauro Carvalho Chehab 2013-03-21  22  	int msg_words;
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  23  
-dfef84fc135832 drivers/media/common/siano/smsendian.c Mauro Carvalho Chehab 2013-03-21  24  	switch (msg->x_msg_header.msg_type) {
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  25  	case MSG_SMS_DATA_DOWNLOAD_REQ:
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  26  	{
-e1b7f11b37def5 drivers/media/common/siano/smsendian.c Mauro Carvalho Chehab 2018-04-20 @27  		msg->msg_data[0] = le32_to_cpu((__force __le32)(msg->msg_data[0]));
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  28  		break;
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  29  	}
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  30  
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  31  	default:
-28a59df4d7cb8f drivers/media/common/siano/smsendian.c Mauro Carvalho Chehab 2013-03-21  32  		msg_words = (msg->x_msg_header.msg_length -
-dfef84fc135832 drivers/media/common/siano/smsendian.c Mauro Carvalho Chehab 2013-03-21  33  				sizeof(struct sms_msg_hdr))/4;
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  34  
-28a59df4d7cb8f drivers/media/common/siano/smsendian.c Mauro Carvalho Chehab 2013-03-21  35  		for (i = 0; i < msg_words; i++)
-e1b7f11b37def5 drivers/media/common/siano/smsendian.c Mauro Carvalho Chehab 2018-04-20  36  			msg->msg_data[i] = le32_to_cpu((__force __le32)msg->msg_data[i]);
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  37  
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  38  		break;
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  39  	}
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  40  #endif /* __BIG_ENDIAN */
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  41  }
-2c5582e58ce298 drivers/media/dvb/siano/smsendian.c    Mauro Carvalho Chehab 2009-05-14  42  EXPORT_SYMBOL_GPL(smsendian_handle_tx_message);
-cb17f9047d2c6f drivers/media/dvb/siano/smsendian.c    Uri Shkolnik          2009-04-20  43  
+ drivers/misc/Kconfig        |   1 +
+ drivers/misc/fastrpc.c      | 631 +++++++++++++++++++++++++++++-------
+ include/uapi/misc/fastrpc.h |   2 +
+ 3 files changed, 514 insertions(+), 120 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.43.0
+
 
