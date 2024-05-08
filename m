@@ -1,183 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-19490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 110908BF97A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 11:18:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B00FA8BFAD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 12:22:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 346FD1C22569
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 09:18:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 408722862B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 10:22:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D78374419;
-	Wed,  8 May 2024 09:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 351437BAE5;
+	Wed,  8 May 2024 10:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="k3384num"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XoFg03tV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2056.outbound.protection.outlook.com [40.107.236.56])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932081A2C03;
-	Wed,  8 May 2024 09:18:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.56
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715159934; cv=fail; b=PjlWuhwB8k/cn/EAp73H0OPDzBBw56aMo1G/V2Hw7LX+NtKyztY3mk/yahu74oEm9udqLXUdVVg0xL0rRE6HUggeS4ZW6JrLfPdkvM/DDFar2IPuEiO+GSefYR8TBcghIG86TPrc7uflDZXzjNBdNLQqrdKVUPzclW+pAH0Jycg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715159934; c=relaxed/simple;
-	bh=wmwNt+vVkf5rSiy4hPWhhqYWAHMIsOykoB64/rq2smA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UOsJEMQ5evYuLCrn/zkzVjjbtZu3kPnZ8gswVLMxaiVes8kOd6wD9o+UnPTOq+DiysYB+D7oElB7csLblQFCyntE9KblyBqIC0L45qiP2Gm/sz1wPrk1mZa1NGY6CdQJ194MHE5+fvtD+vrjsOkxDVtD+bcTAVI+lfdMoctEvt0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=k3384num; arc=fail smtp.client-ip=40.107.236.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=C+6pJtXiqto3khdnhVcFK07cFc7Tp9RaFEyVfXx8rToH68R9jmxPIROSMPMIV+jjwg5T/DUtYR/d7USM00gsnZNVf7vzt8hSdRNfobYsKkt/Tjrivad4dNd5bsysiHdwoqj8RYkMonypVfyZyvHaPkO3rtHEV7MomSX6fH8gAckeKdFxGEG+IX7zv9zHFASej0yEVP97j0IlN5CjfP8VtsRsKdxDaWKKDqIa/P0tZvk3ei1H3T+pB9ESjozPELoSyBbfGUTtXpmyDHD6WZukHl0XesRSpHDyj0AzGDmJdG4zzrxgWZOrnJSuvvJsmLx7iOJMPpiwOJ8nwGEMVC1vIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NQB9/+jg1Bs2CI14TO/laXC/4HAg9S3POaQr+xhNlXE=;
- b=aBsdj3b2D+Ni4lFKQm1QwduxEZldLaf5SAulJInpUEjWd7ozVvNAe3H6z2tBxSqq1BeM2qjYNvTbkzwSRk/wAItUBgR3geg//Eo5pIyhZV/qf1a5q8y1Lvd2qnU5MjHrRpaLADJR2QdxBOtG5kiebXf+Q1CbJvil7BDOw8+hI/MvUa9xBu3sJTn7NUTF+9xW9efybe4MqEi09MI+Vt4VRs57bGjgsmBLH7Vd1dz8uRFrT/0VJMAhRZHDHQ8HW9uVKEIjfeIWJ5Gn0qEqonD3Hx3maRtNjsL5UbPTjqJqbjUuD2qi4SqFISAzasmJfaywZPN1EBy3BqTDUqz9Z+LTpQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NQB9/+jg1Bs2CI14TO/laXC/4HAg9S3POaQr+xhNlXE=;
- b=k3384numg5GUu339VTIKy81gveNSY7Uci48ljyvUNQNRgPPiIHanbMvJJyA0QGG5a8dY2+8EPddFW/ChJwQrqjyxEbZcJDiygz9kmmPunxx5b0ytO4C/T+3uAOILEjsknIwAyUCMQBcxH8sBraJgSpmLXTaxRZPW6cchse9owwbDcMFTSgcsEOyL7NevnGsw2aTgMhjoJAbZtoOpdeN2MSd1lR31/SpdCgU3aeXAlFHtAcmfLnsxIwg3HWHjoB1VLGjWVdeXgj522qnGO+V3+z3GVXmBlzBdbhEcX1n8Kh3yrMagl7rfVogH2zAZ/ZTMU1qzUZ8sY6q5OEr8ioNAjw==
-Received: from MW4PR04CA0288.namprd04.prod.outlook.com (2603:10b6:303:89::23)
- by DM3PR12MB9352.namprd12.prod.outlook.com (2603:10b6:0:4a::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.39; Wed, 8 May
- 2024 09:18:42 +0000
-Received: from CO1PEPF000042A7.namprd03.prod.outlook.com
- (2603:10b6:303:89:cafe::5e) by MW4PR04CA0288.outlook.office365.com
- (2603:10b6:303:89::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.42 via Frontend
- Transport; Wed, 8 May 2024 09:18:42 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CO1PEPF000042A7.mail.protection.outlook.com (10.167.243.36) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7544.18 via Frontend Transport; Wed, 8 May 2024 09:18:42 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 8 May 2024
- 02:18:26 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 8 May 2024
- 02:18:25 -0700
-Received: from moonraker.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
- Transport; Wed, 8 May 2024 02:18:23 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
-	<quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-	<freedreno@lists.freedesktop.org>, <linux-tegra@vger.kernel.org>, Jon Hunter
-	<jonathanh@nvidia.com>
-Subject: [PATCH] drm/msm: Fix gen_header.py for python earlier than v3.9
-Date: Wed, 8 May 2024 10:17:51 +0100
-Message-ID: <20240508091751.336654-1-jonathanh@nvidia.com>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0B222089;
+	Wed,  8 May 2024 10:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715163738; cv=none; b=bOUghpcNFDzADOP5SKgXMsBJyohefX9trlL9zD3oD7Klgb56TrNbxAn2EAtya86oZy13QVRL6g0YP/zxO3VWld6jEXnPzzdembDMjBJ/39cLM2PeWXrcnyHtuav2Xj2sQB43VzrF+XNqP/wCmHVOlTSzXUMOx5fANpVSrApJxFk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715163738; c=relaxed/simple;
+	bh=yMqlgDQbR1k9mxd5Ca0Nm091c3ZfKLegfI3Mwv5E8A8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E+VuYWcMuM8uCiW3AVb+Ua1V7Dd98IDQJ+c5cQYHb/6YlJsxFGSL9NQcjWi6OLhCF3UmnpzMytf/6Zd2vwu1cDvWxOuNIfEb6wOAivzqLQVj9zg+N1CFViQ2kV19mTZPddwKns1HGEBuUBeezTzdURzLIMySDZo8jGKjakhVGc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XoFg03tV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4489Ii4H011893;
+	Wed, 8 May 2024 10:22:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:reply-to:references
+	:mime-version:content-type:in-reply-to; s=qcppdkim1; bh=RmchV14l
+	TfFXTnLMBQ0+EODlr6sLS8TQYTiV5/lRBUM=; b=XoFg03tVZHWiU1SNWXV/URiV
+	79RGhuezjY8/mbgRN1K1fdN4NFj95mtgrFefp7j9jIFRto8SwileEEQL9bXq/aKE
+	C/5W4XbHPSBqRBnA3mF1RpRBpbv3e34EccP4hlCGGoXwvrGMR2jgJcWG7X5l0x1/
+	67dxxzcW9rxu+EgzkKfftZ8QKUEhPtm//GN3a2Nx/jOiCfbMM4q9yOrp15JQHKcV
+	eoe4Ax/O/w+xVux7CIN8AonNzyjBDfOmB1ccuuVGP/Lg1BHX5RlghhBgSSsVfuNK
+	4IKjqM1hS+3GscP0ozAJDzxCV0j6DyCF8JqYZ4GCFyCP1bLEzfIgQ7pPwk1eKg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xysg41kqv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 May 2024 10:22:12 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 448AMBXI018531
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 May 2024 10:22:11 GMT
+Received: from hu-vvalluru-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 8 May 2024 03:22:07 -0700
+Date: Wed, 8 May 2024 15:52:02 +0530
+From: Prahlad Valluru <quic_vvalluru@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <robh@kernel.org>, <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_abhinavk@quicinc.com>, <quic_nankam@quicinc.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: qcs6490-rb3gen2: enable hdmi bridge
+Message-ID: <20240508102202.GA28609@hu-vvalluru-hyd.qualcomm.com>
+Reply-To: <jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc.smtp.subspace.kernel.org>
+References: <171405653305.2527744.3813895380659072690.robh@kernel.org>
+ <20240426142442.7769-1-quic_vvalluru@quicinc.com>
+ <jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-NVConfidentiality: public
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000042A7:EE_|DM3PR12MB9352:EE_
-X-MS-Office365-Filtering-Correlation-Id: eb34d998-5700-4cde-cff7-08dc6f3fdaa8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230031|36860700004|376005|1800799015|82310400017;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?XeoF4xTLUJ9PP3osw973EMcRXxHm8sHbIEYZb6CZD+UpQirkM6yTdEeKn655?=
- =?us-ascii?Q?W2z8k6gljrS2Yud1Ti+ZcqtYJUhaUKwDW11PyDK2idrkKjg72F1ycgoR8lvc?=
- =?us-ascii?Q?tf5O2Tqy3YqIihgvvNslJZfEQTRBApDDckdxvPBM3oJ/vZOq/jPL2gZk1CnU?=
- =?us-ascii?Q?xahXm6BzYHRtyrXCBABavChCeyUOXIwR6bPBLQmF6trb0JQyznKVHW6+d7Rr?=
- =?us-ascii?Q?RVN0ocX31ZAi9gznkwWdf6kiey1Ag3uLBS5fUMwTUX8pCE4O4eIMKZrdjyLd?=
- =?us-ascii?Q?ahrWGiiHiEyYOJsr1KiUy5nNYP3RRsUPEOG+OQPfSTs5+pcZE5DSK68eTqOe?=
- =?us-ascii?Q?X1ApilW9fFWAQcHaM9U461TQkDYLhXcay/p9hLfhlS6cIXY/6vY5+UI6YDNu?=
- =?us-ascii?Q?eXrr57iPjp4fD5kqGArXtI31J3LLBkCEdk009HfuxGBv/pa9M+trxoV3/J4g?=
- =?us-ascii?Q?XlYoFGsJNvMQtWWRkwHkFX7tYTEjqS6T40xu88o2HdQ6cWk6JT2m8n7nUCUM?=
- =?us-ascii?Q?CGceLvcfygnaGJGjJWnuq8vf4g5azVRlCCTFgdhBXT2GKozFS8EWDprSViPd?=
- =?us-ascii?Q?kwCNYrR+l+EyvtPb2SzLvImACURHJWQ4NptFA7lrwVASRh/8OtUDuCWS2I7z?=
- =?us-ascii?Q?j1JVCh/3KQ9sOjEr5ZowUS7lhHDJ4IIOT4X5iZcyfh9PTtDtmz9m04SsSmvG?=
- =?us-ascii?Q?MH6qGmu7G37VwKV4s+Z6skJRA0KiCiEPa9SGw13+jbhH5y11nqYhBGvhaqgx?=
- =?us-ascii?Q?jetNvRAvvuWnRshmy502ajnizmTeDzSLOH6Z6t1QHDBiuo4bv/3ZbrlrrgQR?=
- =?us-ascii?Q?vq6+x4bXbfYVrYwsmUAmSrMdirRtjoUoSU/Po0DoZVF4ULqzeMOLyDY8AV38?=
- =?us-ascii?Q?Kw8q71ShJb4pTIn8ncOjIQwe29D2Q/9G9LmXOuN053piyyo3F2Q+b5kdlqCH?=
- =?us-ascii?Q?FPUDh805kfBVM69SSsrXadZBWSK8lzZ4H/OFVXkvvPRj+Dd5hWDEbUiEUtij?=
- =?us-ascii?Q?7EF4lXVfX5k8TjaPiIAGBgVCX9ZQxbqsmKdSQhJ1nwALPzdM4o6KFwwVuIxM?=
- =?us-ascii?Q?lhvCWNa7M4UUartkRSasKRkHVDZ1U+vJzj1zRmae+1Yfq5YQCypDFwSxA1RB?=
- =?us-ascii?Q?5nt1oNXy8/R+ii9kf+wTYlq1GJyj4OevNJ4qGCj3c0SEWEriQXeTR8rY8chJ?=
- =?us-ascii?Q?QpvnWfZtAIdvSQxVaAPF/KDHu9mCFt7fGRN1ibZnmnMLcAoFWVGtqCJ6sm9v?=
- =?us-ascii?Q?tei/mAx9USqV1zFKsviVh9OldG4raqOvIVwoqlblXFWhA3wHSsHcYPYJLP2I?=
- =?us-ascii?Q?Z7tAmGQ8AXWvZAkHpu3zCNFpidCo885Vx++F4CHCMwYVpv0s6Z7OlW3a6pT5?=
- =?us-ascii?Q?Qc8dWNf7foBurvpheyTp+O5yrnFA?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(36860700004)(376005)(1800799015)(82310400017);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2024 09:18:42.0324
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb34d998-5700-4cde-cff7-08dc6f3fdaa8
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CO1PEPF000042A7.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9352
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <jr3ble6sxr5mr6cvm6ldvpyk5j4rucj3xy6vbha6ttoecte3d7@llu6qf6oasuc>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IcOT_RXig8e6yFIqWKmU2KYC5JOf3XrR
+X-Proofpoint-ORIG-GUID: IcOT_RXig8e6yFIqWKmU2KYC5JOf3XrR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-08_05,2024-05-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ spamscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0 lowpriorityscore=0
+ clxscore=1011 malwarescore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
+ definitions=main-2405080074
 
-Building the kernel with python3 versions earlier than v3.9 fails with ...
+On Mon, May 06, 2024 at 06:14:10PM -0500, Bjorn Andersson wrote:
+> On Fri, Apr 26, 2024 at 07:54:42PM GMT, Prahlad Valluru wrote:
+> > From: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
+> > 
+> 
+> Please don't thread new versions off existing version. b4 helps you with
+> getting these things right, please check go/upstream for more details.
 
- Traceback (most recent call last):
-   File "drivers/gpu/drm/msm/registers/gen_header.py", line 970, in <module>
-     main()
-   File "drivers/gpu/drm/msm/registers/gen_header.py", line 951, in main
-     parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
- AttributeError: module 'argparse' has no attribute 'BooleanOptionalAction'
+My internal gitconfig is not configured correctly. Fixed in v3.
 
-The argparse attribute 'BooleanOptionalAction' is only supported for
-python v3.9 and later. Fix support for earlier python3 versions by
-explicitly defining '--validate' and '--no-validate' arguments.
+> 
+> > Enable lt9611uxc bridge for qcs6490 rb3 gen2 platform.
+> > 
+> 
+> Even if it's clear what this is, I would prefer if you described the
+> hardware a little bit in your commit message.
+> "Rb3Gen2 has a HDMI connector, connected to DSI via a LT on i2cX.... reset and
+> irq pins comes from x and y. Describe this."
+> 
 
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
----
- drivers/gpu/drm/msm/registers/gen_header.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Agreed. Updated the commit text to include bridge details.
 
-diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
-index fc3bfdc991d2..64f67d2e3f1c 100644
---- a/drivers/gpu/drm/msm/registers/gen_header.py
-+++ b/drivers/gpu/drm/msm/registers/gen_header.py
-@@ -948,7 +948,8 @@ def main():
- 	parser = argparse.ArgumentParser()
- 	parser.add_argument('--rnn', type=str, required=True)
- 	parser.add_argument('--xml', type=str, required=True)
--	parser.add_argument('--validate', action=argparse.BooleanOptionalAction)
-+	parser.add_argument('--validate', dest='validate', action='store_true')
-+	parser.add_argument('--no-validate', dest='validate', action='store_false')
- 
- 	subparsers = parser.add_subparsers()
- 	subparsers.required = True
--- 
-2.34.1
+> > Signed-off-by: Prahlad Valluru <quic_vvalluru@quicinc.com>
+> > ---
+> > v2: Addressed dtschema errors
+> > 	- Fixed lt9611-irq
+> > 	- vdd-supply error to be ignored, as it is connected to
+> > 	  input supply directly, on rb3gen2
+> > ---
+> >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 86 ++++++++++++++++++++
+> >  1 file changed, 86 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > index a085ff5b5fb2..c14d4a4bb3ce 100644
+> > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > @@ -51,6 +51,18 @@
+> >  			};
+> >  		};
+> >  	};
+> > +	
+> 
+> There's a stray tab here, please run checkpatch --strict on your
+> patches.
 
+Fixed the checkpatch issues.
+
+> 
+> > +	hdmi-connector {
+> > +		compatible = "hdmi-connector";
+> > +		label = "HDMI";
+> > +		type = "a";
+> > +
+> > +		port {
+> > +			hdmi_con: endpoint {
+> > +				remote-endpoint = <&lt9611_out>;
+> > +			};
+> > +		};
+> > +	};
+> >  
+> >  	reserved-memory {
+> >  		xbl_mem: xbl@80700000 {
+> > @@ -530,6 +542,45 @@
+> [..]
+> > @@ -602,6 +653,21 @@
+> >  	status = "okay";
+> >  };
+> >  
+> > +&mdss_dsi {
+> 
+> We want to keep nodes sorted (by address if applicable, otherwise
+> alphabetically on node names and on labels). "mdss_dsi" < "mdss_edp".
+> 
+> So please move this up where it belongs.
+> 
+
+Moved the dsi nodes on top of edp. Didn't realise this.
+
+> > +        vdda-supply = <&vreg_l6b_1p2>;
+> > +        status = "okay";
+> > +};
+> > +
+> > +&mdss_dsi0_out {
+> > +        remote-endpoint = <&lt9611_a>;
+> > +        data-lanes = <0 1 2 3>;
+> > +};
+> > +
+> > +&mdss_dsi_phy {
+> > +        vdds-supply = <&vreg_l10c_0p88>;
+> > +        status = "okay";
+> > +};
+> > +
+> >  &qupv3_id_0 {
+> >  	status = "okay";
+> >  };
+> > @@ -711,3 +777,23 @@
+> >  	function = "gpio";
+> >  	bias-disable;
+> >  };
+> > +
+> > +&pm7250b_gpios {
+> > +        lt9611_rst_pin: lt9611-rst-state {
+> > +                pins = "gpio2";
+> > +                function = "normal";
+> > +
+> > +                output-high;
+> > +                input-disable;
+> > +                power-source = <0>;
+> > +        };
+> > +};
+> > +
+> > +&tlmm {
+> > +        lt9611_irq_pin: lt9611-irq-state {
+> > +                pins = "gpio24";
+> > +                function = "gpio";
+> > +                drive-strength = <8>;
+> 
+> I'd expect a 2 here, so please document why this is 8.
+
+Accepted. I dont see any reason to have drive strength 8. 
+
+> 
+> Regards,
+> Bjorn
+> 
+> > +                bias-disable;
+> > +        };
+> > +};
+> > -- 
+> > 2.17.1
+> > 
 
