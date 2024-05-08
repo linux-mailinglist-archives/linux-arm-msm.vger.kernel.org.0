@@ -1,173 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-19533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5D968C05FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 23:01:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CDD78C0629
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 23:19:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48930B2179A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 21:01:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 943D9B23D48
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 May 2024 21:19:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04389130A58;
-	Wed,  8 May 2024 21:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A68F131BC9;
+	Wed,  8 May 2024 21:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="jTrJhp64"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DM5i1Ki/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DFD1CA94
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 May 2024 21:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939E213119E;
+	Wed,  8 May 2024 21:19:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715202089; cv=none; b=iB8KoKZ8m67zGvmu2MI8mRCJef11Z1o/6EfN9IE96fLDtYZaXYacsP5ucXdsuhv2OujK+mqaC9iVxV17M7eT1jd4zdavKw4lNapsbV+OK3PyeGnF1ga1tlFJNEs/X/qrBtZ5kSydOs5CY3F4Qx+vbi1pvbeSf9Qx3Qh1vPAjmeU=
+	t=1715203159; cv=none; b=peaq8qkMuJ+JlTmdYUXv8903yp2TIyOMnHlHdh3HM7UkvOR7gbhJvdB5k8iUbCDABd/bWgsg4+sh/McAvcrruekH3IZkh5rdXqy1dwXMoxeLdshvcbXlMM0yFPNbbj23h1VpzxSdQ2kw0AS4f/8sFEjrVLo5pXwypV9rHfsnq6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715202089; c=relaxed/simple;
-	bh=qv1M3lFHloYVa1qk3LuBGHrtEvlYKmXb7zeClX8zRg8=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BclpKmFLMiqDaY5F4rEFD5mn+Q5b0KZvjyFTSfRLqsXWAZKhvEmP2aUAeuhohAGkePRG0w9YrOCHzXvJPFOqOCemNI88iLWl2eta7Q6m79bJQc7+EHkVyWS6kYZI9zNs63goEzKIEPv4gdWpAu8QOfY6k4IXv3f0kPuoU5A5I1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=jTrJhp64; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6a0f889877cso796286d6.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 14:01:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1715202087; x=1715806887; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UtFvF8dpNDhwV6JsUmEL5f4rbK/qvVLRwZ/7wNo7yfs=;
-        b=jTrJhp64j5xY5M0nDAjX/WqcKgSuSBRr6qoMcOOF5m7Ceps/noS4kr4vOrLgBUaV4Y
-         gE+r7HaQhF0aw3Ldq3ak41HsxQQ3Xy8yIITs74ygpR1dc2HHtDaf2dXFtEX1JRtyBswc
-         2Xmoyr6DE5ryXjcQaD732YwdsuAjZumpdu5jQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715202087; x=1715806887;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UtFvF8dpNDhwV6JsUmEL5f4rbK/qvVLRwZ/7wNo7yfs=;
-        b=tBdjrVZSFBYkwC2y+DNn09th8BKGswtIK3IYaULtBVPOGwzRPnglk8l8esdWM8ETb4
-         LvHtoHhLE6WmTQwhtFQQ6v0bPuTxdgBZKYTJtPhDOjNbgKgxp8KsuamU7pYuZ0b0Wx0B
-         3ma6k+L51kevd24s8bTX/L6GNTM4NKAuL0EdDigRDZzJn+C9gqodju+UPMGNcRChC5ni
-         5K6f7ICSBOOeL+7b9zo/YWuyKK3iMhpxQnP7J/P67DfiXVcW+dv5t5VBez3JDykgrbSr
-         eH0M27eRvxkP1k8b5PptGmtdxAO5oBsgiESaMntXo3mbW5TI/Nz8cvMf+Fxcw/UODZ7q
-         fVzg==
-X-Gm-Message-State: AOJu0YxArGS5xdS/utv+K6sLWUNYQQXLmvkCJZF+3Hq+I8JiEnNYJx2B
-	WoB65hFykITAOcPVzQCTjQ8sNzOf9ks5Ud0r4FYf3r28AjhXUCZNxMnEO79n9bqW+yTINTPIHVU
-	Ta5gRChGf04tB/1XHG51aET64mXn/hSCIAU8CaUvoDysHuW0=
-X-Google-Smtp-Source: AGHT+IFB/RHLHyX75z/2xTn+JrClcWKTn75RaGEVCmSmbkRqhSQPxRXT4w960126G7N3cb8b5OxQtzt4NPqrzOiy1d8=
-X-Received: by 2002:a05:6214:d62:b0:6a0:ab13:e05a with SMTP id
- 6a1803df08f44-6a1514e4095mr52624846d6.25.1715202087392; Wed, 08 May 2024
- 14:01:27 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 8 May 2024 17:01:26 -0400
+	s=arc-20240116; t=1715203159; c=relaxed/simple;
+	bh=YLYrpjHh3hn32bvgW3ETTt82p/27a+oZUhGKBb/WX+Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IrLxTe75P48io6SdkGDK/Kn175xo5w/NilAs9MoRkiD92UWUyyzIcpWA4bG7e73qmWD/kaWNCl74x4YNzHrJNAoiDpqsU+q4/PIayZEUcJbUvImWt4P8GrC8bmQIcm9FpYICsh6elaGnDIqFyHjVQ69xbg5erfS8x/NJDCWYlRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DM5i1Ki/; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1715203158; x=1746739158;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=YLYrpjHh3hn32bvgW3ETTt82p/27a+oZUhGKBb/WX+Y=;
+  b=DM5i1Ki//dBWvOlYVitMvOVBKiriJPR0V2Xz61lvK4qrG2FVbvLoIivq
+   +RIw7dPIhtrfyHHHpIB0Id5cBZV2j/VppiNxXW93O8QV9M95lXJGaGZIF
+   AdJiihy6kUAfZfP1MmiU7g8KWiGq/oGUGuucy1PKgFAmO0s6rfKXJnMXv
+   CSXhQQ6XpaepWv2vk4tmeejSjU+v0HJyEmrwZvxHd78XOzaqYnpDYWGpC
+   eEcJRc5k4DJ0HBT4jjoWdq+DbMPMqgrrMpl6T8y7+g3uAXa3S5o7ph8WN
+   8L6E0T7Dr7XVWFAO/YHKVQBdEqpQggNSGPoY4ajkvchKIqVJTj5vhXs0v
+   A==;
+X-CSE-ConnectionGUID: DnUQycqxSVW+FZpoUY4v7g==
+X-CSE-MsgGUID: tXPxfFo0SZGyB+mi08mH7g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11067"; a="21662614"
+X-IronPort-AV: E=Sophos;i="6.08,145,1712646000"; 
+   d="scan'208";a="21662614"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2024 14:19:18 -0700
+X-CSE-ConnectionGUID: QT7w+RkPTiy3xD8mcnJifQ==
+X-CSE-MsgGUID: EWHKRMMtRImX7RSmLSeJ1w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,145,1712646000"; 
+   d="scan'208";a="29389461"
+Received: from lkp-server01.sh.intel.com (HELO f8b243fe6e68) ([10.239.97.150])
+  by orviesa006.jf.intel.com with ESMTP; 08 May 2024 14:19:15 -0700
+Received: from kbuild by f8b243fe6e68 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1s4ogy-00047W-2c;
+	Wed, 08 May 2024 21:19:12 +0000
+Date: Thu, 9 May 2024 05:18:17 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, gregkh@linuxfoundation.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 5/5] misc: fastrpc: Add static PD restart support
+Message-ID: <202405090532.EhFuvhrs-lkp@intel.com>
+References: <20240508054250.2922-6-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain>
-References: <911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 8 May 2024 17:01:26 -0400
-Message-ID: <CAE-0n52S6gBnEY8mZ=Vrp1eiC+L3UbYxEgDA6dTnvkRU2_EEEA@mail.gmail.com>
-Subject: Re: [bug report] soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to
- be free
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240508054250.2922-6-quic_ekangupt@quicinc.com>
 
-Quoting Dan Carpenter (2024-05-08 07:49:34)
-> Hello Stephen Boyd,
->
-> Commit 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs
-> slots to be free") from Jul 24, 2020 (linux-next), leads to the
-> following Smatch static checker warning:
->
->         drivers/soc/qcom/rpmh-rsc.c:658 rpmh_rsc_send_data()
->         warn: mixing irqsave and irq
->
-> drivers/soc/qcom/rpmh-rsc.c
->     645 int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
->     646 {
->     647         struct tcs_group *tcs;
->     648         int tcs_id;
->     649         unsigned long flags;
->     650
->     651         tcs = get_tcs_for_msg(drv, msg);
->     652         if (IS_ERR(tcs))
->     653                 return PTR_ERR(tcs);
->     654
->     655         spin_lock_irqsave(&drv->lock, flags);
->
-> flags saves if this is called with IRQs disabled.  I don't think it is.
->
->     656
->     657         /* Wait forever for a free tcs. It better be there eventually! */
-> --> 658         wait_event_lock_irq(drv->tcs_wait,
->     659                             (tcs_id = claim_tcs_for_req(drv, tcs, msg)) >= 0,
->     660                             drv->lock);
->
-> This will enable IRQs and then disable them again.  If this were called
-> with IRQs disabled then this would probably be bad.  (But again, I don't
-> think it is).
->
->     661
->     662         tcs->req[tcs_id - tcs->offset] = msg;
->     663         set_bit(tcs_id, drv->tcs_in_use);
->     664         if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type != ACTIVE_TCS) {
->     665                 /*
->     666                  * Clear previously programmed WAKE commands in selected
->     667                  * repurposed TCS to avoid triggering them. tcs->slots will be
->     668                  * cleaned from rpmh_flush() by invoking rpmh_rsc_invalidate()
->     669                  */
->     670                 write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
->     671                 enable_tcs_irq(drv, tcs_id, true);
->     672         }
->     673         spin_unlock_irqrestore(&drv->lock, flags);
->
-> And then it sets it back to whatever it was when it was called.  So
-> that's fine.
->
+Hi Ekansh,
 
-I see. I think you want this sort of patch so that it is clearer that
-this can't be called with interrupts disabled? Would Smatch be happier?
+kernel test robot noticed the following build errors:
 
----8<----
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index a021dc71807b..568d0b8c52d6 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -645,13 +645,14 @@ int rpmh_rsc_send_data(struct rsc_drv *drv,
-const struct tcs_request *msg)
- {
- 	struct tcs_group *tcs;
- 	int tcs_id;
--	unsigned long flags;
-+
-+	might_sleep();
+[auto build test ERROR on char-misc/char-misc-testing]
+[also build test ERROR on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.9-rc7 next-20240508]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
- 	tcs = get_tcs_for_msg(drv, msg);
- 	if (IS_ERR(tcs))
- 		return PTR_ERR(tcs);
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Redesign-remote-heap-management/20240508-134613
+base:   char-misc/char-misc-testing
+patch link:    https://lore.kernel.org/r/20240508054250.2922-6-quic_ekangupt%40quicinc.com
+patch subject: [PATCH v1 5/5] misc: fastrpc: Add static PD restart support
+config: arm-randconfig-001-20240509 (https://download.01.org/0day-ci/archive/20240509/202405090532.EhFuvhrs-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240509/202405090532.EhFuvhrs-lkp@intel.com/reproduce)
 
--	spin_lock_irqsave(&drv->lock, flags);
-+	spin_lock_irq(&drv->lock);
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202405090532.EhFuvhrs-lkp@intel.com/
 
- 	/* Wait forever for a free tcs. It better be there eventually! */
- 	wait_event_lock_irq(drv->tcs_wait,
-@@ -669,7 +670,7 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const
-struct tcs_request *msg)
- 		write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
- 		enable_tcs_irq(drv, tcs_id, true);
- 	}
--	spin_unlock_irqrestore(&drv->lock, flags);
-+	spin_unlock_irq(&drv->lock);
+All errors (new ones prefixed by >>, old ones prefixed by <<):
 
- 	/*
- 	 * These two can be done after the lock is released because:
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/video/fbdev/goldfishfb.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt6765-img.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt6765-mipi0a.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt6797-img.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt6797-mm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt2712-img.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt2712-mfg.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt7622-eth.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt7988-apmixed.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt7988-topckgen.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt7988-infracfg.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8167-apmixedsys.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8167.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8167-aud.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8167-img.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8167-mfgcfg.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8167-vdec.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-apmixedsys.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-topckgen.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-infra_ao.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-cam.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-img.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-imp_iic_wrap.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-ipe.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-mdp.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-mm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-vdec.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8186-wpe.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8188-mfg.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8192.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8192-aud.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8192-cam.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8192-img.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8192-imp_iic_wrap.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8192-ipe.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8192-msdc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8192-venc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8365-apmixedsys.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8365.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8365-apu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8365-mfg.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/mediatek/clk-mt8365-vdec.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun20i-d1-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun50i-h6-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun50i-h6-r-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun6i-rtc-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun8i-a23-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun8i-v3s-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun9i-a80-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun9i-a80-de-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/clk/sunxi-ng/sun9i-a80-usb-ccu.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/soc/imx/soc-imx8m.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/soc/qcom/spm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/regulator/rt4831-regulator.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/tty/serial/esp32_acm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/char/hw_random/omap-rng.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/iommu/iova.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/bridge/lontium-lt9611.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/bridge/lontium-lt9611uxc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/bridge/sil-sii8620.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/gpu/drm/drm_panel_orientation_quirks.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/base/regmap/regmap-slimbus.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/base/regmap/regmap-spmi.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/base/regmap/regmap-w1.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/base/regmap/regmap-sccb.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/misc/fastrpc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/arizona.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/pcf50633-gpio.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/dax/dax.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/cdrom/cdrom.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/auxdisplay/hd44780_common.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/auxdisplay/line-display.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/phy/phy-am335x-control.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/phy/phy-am335x.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/misc/ezusb.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/host/ohci-exynos.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/serial/ch341.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/serial/mxuport.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/serial/navman.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/serial/qcaux.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/serial/usb-serial-simple.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/serial/symbolserial.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/usb/chipidea/ci_hdrc_msm.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/input/touchscreen/cyttsp_i2c_common.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/rtc/rtc-twl.o
+WARNING: modpost: drivers/media/i2c/et8ek8/et8ek8: section mismatch in reference: et8ek8_i2c_driver+0x8 (section: .data) -> et8ek8_remove (section: .exit.text)
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/i2c/uda1342.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/tuners/tda9887.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/v4l2-core/v4l2-async.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/media/v4l2-core/v4l2-fwnode.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/leds/flash/leds-rt4505.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/leds/blink/leds-bcm63138.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/fsi/fsi-master-hub.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/fsi/fsi-master-gpio.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/fsi/fsi-scom.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spmi/hisi-spmi-controller.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spmi/spmi-pmic-arb.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/iio/adc/ingenic-adc.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/iio/adc/xilinx-ams.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/iio/buffer/kfifo_buf.o
+>> ERROR: modpost: "qmi_txn_init" [drivers/soc/qcom/pdr_interface.ko] undefined!
+>> ERROR: modpost: "qmi_send_request" [drivers/soc/qcom/pdr_interface.ko] undefined!
+>> ERROR: modpost: "qmi_txn_cancel" [drivers/soc/qcom/pdr_interface.ko] undefined!
+>> ERROR: modpost: "qmi_txn_wait" [drivers/soc/qcom/pdr_interface.ko] undefined!
+>> ERROR: modpost: "qmi_add_lookup" [drivers/soc/qcom/pdr_interface.ko] undefined!
+>> ERROR: modpost: "qmi_handle_init" [drivers/soc/qcom/pdr_interface.ko] undefined!
+>> ERROR: modpost: "qmi_handle_release" [drivers/soc/qcom/pdr_interface.ko] undefined!
+>> ERROR: modpost: "qmi_response_type_v01_ei" [drivers/soc/qcom/pdr_interface.ko] undefined!
+
+Kconfig warnings: (for reference only)
+   WARNING: unmet direct dependencies detected for QCOM_PDR_HELPERS
+   Depends on [n]: NET [=n]
+   Selected by [m]:
+   - QCOM_FASTRPC [=m] && (ARCH_QCOM [=n] || COMPILE_TEST [=y]) && RPMSG [=m]
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
