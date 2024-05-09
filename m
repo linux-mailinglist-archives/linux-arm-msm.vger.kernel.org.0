@@ -1,235 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-19600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2AF68C14F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 20:42:10 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05BEC8C14F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 20:42:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 502711F2125D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 18:42:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C294B2204F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 18:42:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C5307EEF2;
-	Thu,  9 May 2024 18:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1342B7F7C7;
+	Thu,  9 May 2024 18:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L0eH3QZX"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="VezJEGLA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E453B7CF3E
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 18:41:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451B57EEF3
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 18:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715280092; cv=none; b=W+2CoNUOBTRFcwcV4GWfnw9WNvpxz2JIXupaMi7HCrqrpi+Ys5YhrDkkInM51j6OTO9UUMthda3YHafgdtYzgQ0WH+gKnw8ibMlMeBsW+CYcYswqbQOcnheSuf4evDa7s5Bb9NmMW8K5d+eBrG+NmB2R/cwAhMjU3qEkCR/4WIs=
+	t=1715280094; cv=none; b=mLmItzpXs5Sksj1pEXBVhIcexCEA9bazbx43kES++Jws6OaGQUFvlsiV4dBroVNC0hGA09/PSEqeT7HrQAFrRN9Lz5thT5TnQi7GzHNQPZJjGOUSW1Z6oPb+gdKtLBZg64RBBNhqYarbceijoBOhVG46NaulXM+dNI46sCqKWMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715280092; c=relaxed/simple;
-	bh=z6XHl5llDJyiHPA78/v4DUNEAeOPZTfmTPQPFm4H3Nk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=W77bRSqad+HkduJsEwPW3ivnGNq5/4BNidFmEGoFPJv4ysHKaoM03cvQFq6xJOVjj2sEaWi6KxpAni0+UqE/7kNx7VIAHv8w9r35eQZenbHMH7XXLQKJTLq+6pgeE19DgLFWyvw0n/ZhMSO3WrtovoAcmLAI95kV2o078thOu/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L0eH3QZX; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a59a64db066so309217466b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2024 11:41:28 -0700 (PDT)
+	s=arc-20240116; t=1715280094; c=relaxed/simple;
+	bh=7ATk15QdB/S5pmSsD6KGzazuE/GKwaK5QgCjJGDzFlA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ACZ/0LIAGBIGbpLxt6J/EzZFEFJiH7fIDLKl5M6f/zzCtorn6vszE7WCgdMcojx/BAHJ6FPhVXRQI2ZhQLDr132/hjyVlse4F1LyIvYY6dOYNYLZcji5GLe7NziIoooDj3iot4YWFmqUGfv09NDb27f1+zQ6dFbX+JhxgBSLhOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=VezJEGLA; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1e3ca546d40so9989005ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2024 11:41:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715280087; x=1715884887; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mqPEfUzcM7hu8r9fmVZs+WucUjP6utXCGhcKPrzzj8I=;
-        b=L0eH3QZXygPjvMUIMMzJ9GOIlykb2QPjVKbNV+1BAeDhhErNfrxUoktUvp+GpCIfcq
-         shAEb11u430KWbv7YLXKjEqYpmCZtQmRQuaoTH8GBhJLy/yjrY7UhdXqhIOIMdlmjMGl
-         PvIoxOmRP1tf5F12ihuBeE+/DWYgRqYed3JVfsKG0F/DhiOpSSY0Mgx+oX5KuhnQ8P7o
-         +wLPUYFTY8rB4QSkNsJDCkRv58jSwhA23JqIwtP0xdezx1PiKJ1QMM7qAcwJi2O3r+J9
-         hH4LDo8L2C6Sq1URWhfam+LaH07BSNlwX/djqrBwrFIRr7GCTvjuOQZXx/yIv80oVUL0
-         Eu0w==
+        d=chromium.org; s=google; t=1715280091; x=1715884891; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xbK4EEbe0hcgx1L+Qk+amL1rZ7gk1BOQN0FHx81DIZc=;
+        b=VezJEGLApANFh9JbDBmg7UgsEHFxvPumB3/+g1EHz/1vTD9taJpNAz29yWInuasd3h
+         p/fF9hThrvcMfGSGxtuzSrsf3xxh/mOdHDZ0RBL7RRwBydyubwlgS5vTpuFX1MhLhn2Y
+         PHldBQVRrgI6li4KTY9mla+MboxwpQsEZEfQU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715280087; x=1715884887;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1715280091; x=1715884891;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mqPEfUzcM7hu8r9fmVZs+WucUjP6utXCGhcKPrzzj8I=;
-        b=djqTIVQME3WMPXkiNl0UcEU8aB/lMxyV130tvqOlOOCyZx48aVl6EOvQJ4WuTiXiUL
-         PFZdmx8Iha2xJRgXBeVXwDpyAmGJ58otNFYygI35r9xuqU2Z5s1W+x7e/q5Hr+H/pCle
-         9zEDvS1Pe/FfJB8xfbwS0u9ex5axyqRu57ixcV/pi7o7e6qHOxGcDGffW4JOeA8JcfQS
-         ooB7Vp9QPYKCPImt/oxq4MAg+M5dmpy4S+mcV34spZbuwr5VXyDKnv8hfJ04l18Txbt1
-         a5/bAOm2k44V4UlM77WrvzIbWthQdRnqzrMOJQGqghWfnAeJM+NeQGkc3cDtOZnJ96EZ
-         DCng==
-X-Forwarded-Encrypted: i=1; AJvYcCU4OoZZ3juz5Zuu4CdIaVS/cREEiOdhykikwcIBHFfnr9dSgZGLgJ8il2ynUKikwpKu31PEBOMNjqlFaBgML6IxnwEJAl1ii7C2RWr1jg==
-X-Gm-Message-State: AOJu0YyoCEa4L9P7VnKEds5Y2Cbu6Uf+BwtPQnB8Vuqbf7ES+JaXNbAq
-	1jLDJ4IXzU6ucE2y3dIM7x3BKEykY60OSN4/BYZ3R3c/ZuitnL+9AgYhR6D7q7g=
-X-Google-Smtp-Source: AGHT+IGhx7HNcYGITxPU9mNn+ku+A6vTT7YBFccM+yXBc7Idaz4Uq4aqT5RpvZSXeN7Mp2i7aNrD6Q==
-X-Received: by 2002:a17:906:aad5:b0:a59:a9c0:57e9 with SMTP id a640c23a62f3a-a5a2d678775mr26706966b.76.1715280086983;
-        Thu, 09 May 2024 11:41:26 -0700 (PDT)
-Received: from [192.168.62.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17b01517sm99929166b.157.2024.05.09.11.41.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 May 2024 11:41:26 -0700 (PDT)
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Thu, 09 May 2024 20:41:23 +0200
-Subject: [PATCH v2] drm/msm/adreno: De-spaghettify the use of memory
- barriers
+        bh=xbK4EEbe0hcgx1L+Qk+amL1rZ7gk1BOQN0FHx81DIZc=;
+        b=B++9OLeiyaSL3kVP8K4yUXtlpC240natDCnbW0Wevok+dViY7jmz1K932xNS23l6li
+         cPL7h4GHJT0gcqon4/kLUgqJjOyuTNTRQHsvELhdFUdYbP1a1tXGI6Wa1YE+NgtIZJEJ
+         IU0PbwKoOIHTkJFIwa5p1pB+jq+5faDrR0iAwzkT068++pSKr7L0/39LcB68CApxgyQd
+         7RYykHWio3VNrdpfaJCrVGOTfNzBrU931JaUakri1B5L4UHYds+Pqaxx5bedFu/ZWIE2
+         aK5/Auw8iFUkcLsazn+hIIrKLHtBIhyXqKvf5c/daklIQS0S3qGn/OkIrfp5qDlKYLZo
+         75NQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWttHsJJSp44sjcEjsjOCu5xD3A3kjY6WilZNAakXBU4+n6bj/c1br+35FlQ5oDJczHOnEzGlNIixJjlkNb3Btw8XsMbrehFqCrnoKuQA==
+X-Gm-Message-State: AOJu0YwyjJbW6SZQ3/l0d8d99cFtr6/Ypbi03TTBMC2kiOKKb9XvOrdd
+	lnAwQDiCGd0LdgFcHuymLvB+MQKIo6dU3bdpvHLOpEvHPQYitF9Y0XqJNelySw==
+X-Google-Smtp-Source: AGHT+IEBLu7hk4BBeGG3wbznANriJSjMk4kzbAb63zB+bN0rkgoA0AZC4i4t3YoYXORKce9BUP+Htw==
+X-Received: by 2002:a17:902:efca:b0:1eb:ed2:f74c with SMTP id d9443c01a7336-1ef440596b4mr4519385ad.67.1715280091590;
+        Thu, 09 May 2024 11:41:31 -0700 (PDT)
+Received: from localhost (4.198.125.34.bc.googleusercontent.com. [34.125.198.4])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-1ef0b9d40c9sm17904075ad.49.2024.05.09.11.41.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 May 2024 11:41:31 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH] soc: qcom: rpmh-rsc: Ensure irqs aren't disabled by rpmh_rsc_send_data() callers
+Date: Thu,  9 May 2024 11:41:28 -0700
+Message-ID: <20240509184129.3924422-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.45.0.118.g7fe29c98d7-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240509-topic-adreno-v2-1-b82a9f99b345@linaro.org>
-X-B4-Tracking: v=1; b=H4sIANIYPWYC/1XMQQrCMBCF4auUWRtJo5HGlfcQF5Nk0g5oUialC
- KV3N7hS3upbvH+DSsJU4dptILRy5ZIbzKGDMGEeSXFsBqPNWVvt1FJmDgqjUC4KB3dy3pl0MRb
- aZRZK/P7m7o/mJOWllkkIfyPDf2TtVZtHH7UNfe/i7ckZpRyLjLDvH2cr00SjAAAA
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1715280085; l=5092;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=z6XHl5llDJyiHPA78/v4DUNEAeOPZTfmTPQPFm4H3Nk=;
- b=bWXRy6aulY2LTlIiaVEc91Yo7C4I8hLO+xSdtizQpxkFS48xA6mHIfG9nDAHOLmFZvLwxWUvl
- 6ts9tcSY/TPC54E2eMJRWZyg7uk7mfqLrJeSHz8/kdeQTuvUHduzFyd
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Transfer-Encoding: 8bit
 
-Memory barriers help ensure instruction ordering, NOT time and order
-of actual write arrival at other observers (e.g. memory-mapped IP).
-On architectures employing weak memory ordering, the latter can be a
-giant pain point, and it has been as part of this driver.
+Dan pointed out that Smatch is concerned about this code because it uses
+spin_lock_irqsave() and then calls wait_event_lock_irq() which enables
+irqs before going to sleep. The comment above the function says it
+should be called with interrupts enabled, but we simply hope that's true
+without really confirming that. Let's add a might_sleep() here to
+confirm that interrupts and preemption aren't disabled. Once we do that,
+we can change the lock to be non-saving, spin_lock_irq(), to clarify
+that we don't expect irqs to be disabled. If irqs are disabled by
+callers they're going to be enabled anyway in the wait_event_lock_irq()
+call which would be bad.
 
-Moreover, the gpu_/gmu_ accessors already use non-relaxed versions of
-readl/writel, which include r/w (respectively) barriers.
+This should make Smatch happier and find bad callers faster with the
+might_sleep(). We can drop the WARN_ON() in the caller because we have
+the might_sleep() now, simplifying the code.
 
-Replace the barriers with a readback that ensures the previous writes
-have exited the write buffer (as the CPU must flush the write to the
-register it's trying to read back) and subsequently remove the hack
-introduced in commit b77532803d11 ("drm/msm/a6xx: Poll for GBIF unhalt
-status in hw_init").
-
-Fixes: b77532803d11 ("drm/msm/a6xx: Poll for GBIF unhalt status in hw_init")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain
+Fixes: 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be free")
+Cc: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
-Changes in v2:
+ drivers/soc/qcom/rpmh-rsc.c | 7 ++++---
+ drivers/soc/qcom/rpmh.c     | 1 -
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-* Introduce gpu_write_flush() and use it
-* Don't accidentally break a630 by trying to write to non-existent GBIF
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  4 +---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h | 10 ++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 16 ++++------------
- drivers/gpu/drm/msm/msm_gpu.h         | 14 ++++++++++++--
- 4 files changed, 27 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 0e3dfd4c2bc8..fb2f8a03da41 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -466,9 +466,7 @@ static int a6xx_rpmh_start(struct a6xx_gmu *gmu)
- 	int ret;
- 	u32 val;
- 
--	gmu_write(gmu, REG_A6XX_GMU_RSCC_CONTROL_REQ, 1 << 1);
--	/* Wait for the register to finish posting */
--	wmb();
-+	gmu_write_flush(gmu, REG_A6XX_GMU_RSCC_CONTROL_REQ, BIT(1));
- 
- 	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_RSCC_CONTROL_ACK, val,
- 		val & (1 << 1), 100, 10000);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-index 94b6c5cab6f4..ab7f581f0d24 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-@@ -111,6 +111,16 @@ static inline void gmu_write(struct a6xx_gmu *gmu, u32 offset, u32 value)
- 	writel(value, gmu->mmio + (offset << 2));
- }
- 
-+/*
-+ * Use for timing-critical writes that must reach the hardware immediately
-+ * (to work around write buffering), e.g. for reset registers.
-+ */
-+static inline void gmu_write_flush(struct a6xx_gmu *gmu, u32 offset, u32 value)
-+{
-+	gmu_write(gmu, offset, value);
-+	gmu_read(gmu, offset);
-+}
-+
- static inline void
- gmu_write_bulk(struct a6xx_gmu *gmu, u32 offset, const u32 *data, u32 size)
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index a021dc71807b..568d0b8c52d6 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -645,13 +645,14 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
  {
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index cf0b1de1c071..ef7eaa6d5e5c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1714,21 +1714,13 @@ static int hw_init(struct msm_gpu *gpu)
+ 	struct tcs_group *tcs;
+ 	int tcs_id;
+-	unsigned long flags;
++
++	might_sleep();
  
- 	/* Clear GBIF halt in case GX domain was not collapsed */
- 	if (adreno_is_a619_holi(adreno_gpu)) {
--		gpu_write(gpu, REG_A6XX_GBIF_HALT, 0);
--		gpu_write(gpu, REG_A6XX_RBBM_GPR0_CNTL, 0);
--		/* Let's make extra sure that the GPU can access the memory.. */
--		mb();
-+		gpu_write_flush(gpu, REG_A6XX_GBIF_HALT, 0);
-+		gpu_write_flush(gpu, REG_A6XX_RBBM_GPR0_CNTL, 0);
- 	} else if (a6xx_has_gbif(adreno_gpu)) {
--		gpu_write(gpu, REG_A6XX_GBIF_HALT, 0);
--		gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 0);
--		/* Let's make extra sure that the GPU can access the memory.. */
--		mb();
-+		gpu_write_flush(gpu, REG_A6XX_GBIF_HALT, 0);
-+		gpu_write_flush(gpu, REG_A6XX_RBBM_GBIF_HALT, 0);
+ 	tcs = get_tcs_for_msg(drv, msg);
+ 	if (IS_ERR(tcs))
+ 		return PTR_ERR(tcs);
+ 
+-	spin_lock_irqsave(&drv->lock, flags);
++	spin_lock_irq(&drv->lock);
+ 
+ 	/* Wait forever for a free tcs. It better be there eventually! */
+ 	wait_event_lock_irq(drv->tcs_wait,
+@@ -669,7 +670,7 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ 		write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
+ 		enable_tcs_irq(drv, tcs_id, true);
+ 	}
+-	spin_unlock_irqrestore(&drv->lock, flags);
++	spin_unlock_irq(&drv->lock);
+ 
+ 	/*
+ 	 * These two can be done after the lock is released because:
+diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+index 9f26d7f9b9dc..8903ed956312 100644
+--- a/drivers/soc/qcom/rpmh.c
++++ b/drivers/soc/qcom/rpmh.c
+@@ -183,7 +183,6 @@ static int __rpmh_write(const struct device *dev, enum rpmh_state state,
  	}
  
--	/* Some GPUs are stubborn and take their sweet time to unhalt GBIF! */
--	if (adreno_is_a7xx(adreno_gpu) && a6xx_has_gbif(adreno_gpu))
--		spin_until(!gpu_read(gpu, REG_A6XX_GBIF_HALT_ACK));
--
- 	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_CNTL, 0);
- 
- 	if (adreno_is_a619_holi(adreno_gpu))
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index a0c1bd6d1d5b..45d00acd5b1b 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -553,14 +553,24 @@ struct msm_gpu_state {
- 	struct msm_gpu_state_bo *bos;
- };
- 
-+static inline u32 gpu_read(struct msm_gpu *gpu, u32 reg)
-+{
-+	return readl(gpu->mmio + (reg << 2));
-+}
-+
- static inline void gpu_write(struct msm_gpu *gpu, u32 reg, u32 data)
- {
- 	writel(data, gpu->mmio + (reg << 2));
- }
- 
--static inline u32 gpu_read(struct msm_gpu *gpu, u32 reg)
-+/*
-+ * Use for timing-critical writes that must reach the hardware immediately
-+ * (to work around write buffering), e.g. for reset registers.
-+ */
-+static inline void gpu_write_flush(struct msm_gpu *gpu, u32 reg, u32 data)
- {
--	return readl(gpu->mmio + (reg << 2));
-+	gpu_write(gpu, reg, data);
-+	gpu_read(gpu, reg);
- }
- 
- static inline void gpu_rmw(struct msm_gpu *gpu, u32 reg, u32 mask, u32 or)
+ 	if (state == RPMH_ACTIVE_ONLY_STATE) {
+-		WARN_ON(irqs_disabled());
+ 		ret = rpmh_rsc_send_data(ctrlr_to_drv(ctrlr), &rpm_msg->msg);
+ 	} else {
+ 		/* Clean up our call by spoofing tx_done */
 
----
-base-commit: ec2d9beb604a623a9f5308f7abcff3561e08c155
-change-id: 20240509-topic-adreno-a8939b92f625
-
-Best regards,
+base-commit: 4cece764965020c22cff7665b18a012006359095
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+https://chromeos.dev
 
 
