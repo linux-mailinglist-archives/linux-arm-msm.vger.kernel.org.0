@@ -1,154 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-19562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BDFB8C0BA0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 08:41:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 380538C0BCD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 08:58:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD6171C21409
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 06:41:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1B431F21DEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 06:58:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F0AB13AA5A;
-	Thu,  9 May 2024 06:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA443127E21;
+	Thu,  9 May 2024 06:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dvgtoNQQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PIzhSf/y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F016624
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 06:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB622624;
+	Thu,  9 May 2024 06:57:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715236888; cv=none; b=buYeyA+yOKcVhG6k0anIwizRVfgZVhNxNtaibm4hNX/ylUWBSrxY/6jxPrJNHi0em0PP+Kc6Ve4UYyrmiw2ZxIDeFfAR0OMdE9ZvdJIgJgHrU05bVxGHkBYLeEcnUg8BvU5AgDouQ0I9HjalTAVxP7gCk3CmPs2hIDbFMckMD4I=
+	t=1715237875; cv=none; b=OPGGjQ53StC8gT8aMuF1C/9r1g3QRWPVV/Tybgeiw6O7VyfOnXsjX8z2mPVgZb2sioaK26gCGoFE73PtAkJJNGGLhOC4OjgzZlQk8aj7KmqK/45gzshtiRKGVe/Qu+zn3fKvPGxuTfZL6EP+mAJL/3m3cL2VwUPTwHdaOIckp+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715236888; c=relaxed/simple;
-	bh=CwnkGcpjrMvjef4GgW+1gqjOCusZmucSZqs+q5LfbYE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eb+mstJJn14i1GMqkww9965df/9BQ6F9IzhIIQlJKNOzs2uhf8Uey2HMg82sHT6ZRHB/fW4yQOf1kl/wVrYk+t62aqB7FB05M1VSLG2EwlTDRJhaUanpG+LJq6Dd10Snfp4DuK48OnnIKOBfTVFv29HcPDV1kemJ6FHRKROjBOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dvgtoNQQ; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a59b49162aeso114596266b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 23:41:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715236885; x=1715841685; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vZKVeVQJzuk7iWpZr0x1rSny271XjmNxVGB8w8tvF7A=;
-        b=dvgtoNQQEdIPhQ18nGMqJIHmAiQV6PiREot1z0gvfQ8a1rtK7+V1BVjYhxFM0t811/
-         OzRql91GCMxM4XcZMmYUvEaBrryQfctSFM7gZxNELPyJtz5qu/IP7R8YfKvbdjSMGrsi
-         xMstGZIRoFXFP5gp3NhH0PKQn1Y6THsd4gFtSXjCOEEBAoVjSDNfRAECuRjky6NRrTqh
-         +VPk14iSPz4o2PI1c42gc7LLamXWQnRuZ9xIiYgPuI/N4X0crA5KxtWYNj3U12h4zzLr
-         mY06QpcSyPFr01Qsm2ddKVfv2ScdJgR2IzYdhmKJkmEM9YnDfRoZWIhD2zXFmshTd73G
-         AizA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715236885; x=1715841685;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vZKVeVQJzuk7iWpZr0x1rSny271XjmNxVGB8w8tvF7A=;
-        b=nuLCq7QiBhubqo12BKMJ7Gyfd+g2wxV+rMx9CVZPNpw8jowyRt/0QamhvduHOCWvnE
-         HwXk8tP7tFTBxz8fCXJyO1BQi2CKykh3aNcnA+xR4u6+FcIjiGRkpUnWYBPDvA+oJGwN
-         sPsNmnnW7wXaTuhZFKIBoX3sZ0QTkV07jNgqCyhSfHeXizMHTHYSL5ICex+8MTqKeZWo
-         ufm2nKNOQHwm1Fg5WDp4PgJL0hKrBDY3AZUBHdMV40Yt1FrCMp8Uh1FfxnAHfMsXQhhp
-         MN981p/rcBRgrIgLfITMK6G6B3rUtlbeA78VPKqi1o4/ut9yFI5DxNlX2Hg8kZTWiXnW
-         yuhg==
-X-Gm-Message-State: AOJu0YzUELzsEzLHcG70jXhj0J5YmBJsi7uTbRv3pOeOk9UgTmOkbUDZ
-	za2ISdhmw7UzvXVumWLR4Q9Bwi6DtYFgxuiR0iqrVKJWTHjrXk3XJhKlE+u11LM=
-X-Google-Smtp-Source: AGHT+IHOR+WwDxDyyFz1KqNgPYMVhkjJTkZlcmWwkFQ5Vpfm82+6y4eMYcEwfuwLj7oWwd6rzH90kw==
-X-Received: by 2002:a17:906:1958:b0:a59:aae5:5840 with SMTP id a640c23a62f3a-a59fb9dc5a1mr293940866b.75.1715236884775;
-        Wed, 08 May 2024 23:41:24 -0700 (PDT)
-Received: from localhost ([102.222.70.76])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17b17555sm39385866b.189.2024.05.08.23.41.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 May 2024 23:41:24 -0700 (PDT)
-Date: Thu, 9 May 2024 09:41:19 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org
-Subject: Re: [bug report] soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to
- be free
-Message-ID: <55258aea-af35-4ac1-8ad4-0b1f666e776c@moroto.mountain>
-References: <911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain>
- <CAE-0n52S6gBnEY8mZ=Vrp1eiC+L3UbYxEgDA6dTnvkRU2_EEEA@mail.gmail.com>
+	s=arc-20240116; t=1715237875; c=relaxed/simple;
+	bh=WDuONe+R79xUUmapcU3akWhJd6uY03dWlMO8NEpg2KY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JfCOrKjOqXiDRz8EtTpToKwZhftN1Pxs0Nce5DtTMB6Xm21JDmRy7AkyfwMUcYvP3cjJ66/Bhh0x6c8Yh1L8XjhnqnOZk1xXhxS9Sxe/az5DZUOPKiqT4xIzNG5DxgXZHO+Ilz1W861uAzbewNN481tcUjw3VvMlwDoe2qwP59w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PIzhSf/y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14848C116B1;
+	Thu,  9 May 2024 06:57:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715237875;
+	bh=WDuONe+R79xUUmapcU3akWhJd6uY03dWlMO8NEpg2KY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=PIzhSf/y1NsYhDaj9DJl0HCBPbFus7gqclqrxJWxf5Thq2nKjFznYJanyPMrrQfRx
+	 o7xYXOLoIw8tAGFUDU6jQ4/y/bg31rm2+JEYxAkF6HFaBK9wEl3mxSjI0KiPU8bYzX
+	 oawh24DbEWKLgCQuwA6tPSnTcVSJV2CS8lrhFyW9CgTFwLdOvel19kAT7Z4Gv5gdbZ
+	 Fms+GXLUM4zkDnTKWokt5lAN7BIES0WNDwKZPQy7iqATPPUyUIqlwn2Io9dFTVo6MP
+	 KIcEZYxDjS9LP7MUVkppXQwO0r0wOMwGqx0ZmspeMcKmTSMV8IkoWLRCd/vxXYJeXu
+	 yX9VUu7Mj5XEw==
+Message-ID: <21160163-4380-4d24-b25f-9caa9993bd7d@kernel.org>
+Date: Thu, 9 May 2024 08:57:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n52S6gBnEY8mZ=Vrp1eiC+L3UbYxEgDA6dTnvkRU2_EEEA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/13] dt-bindings: mfd: pm8008: rework binding
+To: Stephen Boyd <swboyd@chromium.org>, Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>,
+ Satya Priya <quic_c_skakit@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+ <20240506150830.23709-11-johan+linaro@kernel.org>
+ <fa54422f-329e-4c3e-b297-b84438f75abe@kernel.org>
+ <ZjpHWIKeFrJ1QZDj@hovoldconsulting.com>
+ <CAE-0n514vcieg4uDZUOnZFm-14_hCX7eY8Ji+nyeqgtTh=xbUg@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <CAE-0n514vcieg4uDZUOnZFm-14_hCX7eY8Ji+nyeqgtTh=xbUg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 08, 2024 at 05:01:26PM -0400, Stephen Boyd wrote:
-> Quoting Dan Carpenter (2024-05-08 07:49:34)
-> > Hello Stephen Boyd,
-> >
-> > Commit 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs
-> > slots to be free") from Jul 24, 2020 (linux-next), leads to the
-> > following Smatch static checker warning:
-> >
-> >         drivers/soc/qcom/rpmh-rsc.c:658 rpmh_rsc_send_data()
-> >         warn: mixing irqsave and irq
-> >
-> > drivers/soc/qcom/rpmh-rsc.c
-> >     645 int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
-> >     646 {
-> >     647         struct tcs_group *tcs;
-> >     648         int tcs_id;
-> >     649         unsigned long flags;
-> >     650
-> >     651         tcs = get_tcs_for_msg(drv, msg);
-> >     652         if (IS_ERR(tcs))
-> >     653                 return PTR_ERR(tcs);
-> >     654
-> >     655         spin_lock_irqsave(&drv->lock, flags);
-> >
-> > flags saves if this is called with IRQs disabled.  I don't think it is.
-> >
-> >     656
-> >     657         /* Wait forever for a free tcs. It better be there eventually! */
-> > --> 658         wait_event_lock_irq(drv->tcs_wait,
-> >     659                             (tcs_id = claim_tcs_for_req(drv, tcs, msg)) >= 0,
-> >     660                             drv->lock);
-> >
-> > This will enable IRQs and then disable them again.  If this were called
-> > with IRQs disabled then this would probably be bad.  (But again, I don't
-> > think it is).
-> >
-> >     661
-> >     662         tcs->req[tcs_id - tcs->offset] = msg;
-> >     663         set_bit(tcs_id, drv->tcs_in_use);
-> >     664         if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type != ACTIVE_TCS) {
-> >     665                 /*
-> >     666                  * Clear previously programmed WAKE commands in selected
-> >     667                  * repurposed TCS to avoid triggering them. tcs->slots will be
-> >     668                  * cleaned from rpmh_flush() by invoking rpmh_rsc_invalidate()
-> >     669                  */
-> >     670                 write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
-> >     671                 enable_tcs_irq(drv, tcs_id, true);
-> >     672         }
-> >     673         spin_unlock_irqrestore(&drv->lock, flags);
-> >
-> > And then it sets it back to whatever it was when it was called.  So
-> > that's fine.
-> >
+On 09/05/2024 00:09, Stephen Boyd wrote:
+> Quoting Johan Hovold (2024-05-07 08:23:04)
+>> On Tue, May 07, 2024 at 08:43:08AM +0200, Krzysztof Kozlowski wrote:
+>>>> -
+>>>>      maxItems: 1
+>>>>
+>>>>    interrupts:
+>>>>      maxItems: 1
+>>>>
+>>>> -    description: Parent interrupt.
+>>>> -
+>>>>    reset-gpios:
+>>>>      maxItems: 1
+>>>>
+>>>> -  "#interrupt-cells":
+>>>> +  vdd_l1_l2-supply: true
+>>>
+>>> No underscores in property names.
+>>
+>> Indeed. These names come from Qualcomm's v15, but I should have caught
+>> that. Thanks.
 > 
-> I see. I think you want this sort of patch so that it is clearer that
-> this can't be called with interrupts disabled? Would Smatch be happier?
-> 
+> Drive by comment: we have underscores to match the label on the
+> datasheet. Not sure that will sway your opinion. Only trying to provide
+> some background rationale.
 
-Ah...  Actually, yeah, wait_event_lock_irq() has a schedule() it it
-doesn't it?  I've been meaing to make Smatch track when IRQs are
-enabled/disabled so this makes me want to do that more.
+I know, but if datasheet calls this "yellow_pony_!!!#1l33t-supply" we
+still won't use datasheet names directly, so s/_/-/. That's also W=2
+warning.
 
-Anyway, thanks.  Looks good.
-
-regards,
-dan carpenter
+Best regards,
+Krzysztof
 
 
