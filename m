@@ -1,149 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-19617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C2658C17BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 22:43:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76DC68C186E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 23:34:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36D2C2815D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 20:43:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A80DD1C218D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 21:34:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CD457F7FD;
-	Thu,  9 May 2024 20:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D41C2126F2F;
+	Thu,  9 May 2024 21:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wfdHfDz5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LI9r2ZDo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B54C7FBA3
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 20:43:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D7385C5E;
+	Thu,  9 May 2024 21:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715287383; cv=none; b=Cgox6dAqWAH1oMUCUNz82GRQjdPIdwgARzMzlLL6tOis/SA/MLcg62M7gBnum+JerJ8COYtBAtv0MuMj/NKTlk0PJZfSpYUM9UEGe5D8hAZvBaf8+s9CLJYQfkTwoQZnTk+sPPED+EHgPYUvjj5JQ57StSD8XIYgHGjC9U5pvJw=
+	t=1715290473; cv=none; b=SZ6Mb/ttoZ/zOvt4iralrrWEYq5+KgJKph0cDRcVKwGUziD1tSmeFTVuJKCWbZ8QIoI7cz/ucnk4xnWJarPaOycyTTeUl43/hoHpOpFvIlcwAnYlH7pxUQKs6vFi8G8+C5WhaWKdLQl9shsLzg+RLYv7RvzABymzBN7c6M7/DrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715287383; c=relaxed/simple;
-	bh=Xuyf5D/JeLOVpt2488i7mkV8ldkhM6ZKdnpJaxNMLQw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B4ome7R38oZjEE8zqY1/yeCWcsyU3FUhQpJthicRjcf6ZJXdxYYXXmebWCud4WVSk8CkrWKKsKxx8iw10sNJCSsqm99vug7T/uS48KbizwIp9CUUNKCRtsFLzHOF/kkHN20YOB485ZMXB3uxY1evbl4h1QEy65rDIs80nwaubxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wfdHfDz5; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-de8b683f76cso1876009276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2024 13:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715287380; x=1715892180; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GyO7lOaBJGIXBBRmSEVUT3jjg2maQrneBPVuSy70JpQ=;
-        b=wfdHfDz5BFi0szady3flK7d7MdwJdlWlzsjMwbtyiSFNSXC8pubTPPQg+WcMc67RRx
-         mXPGmU+Et7MtJcttJ5crfbopZHIlsJvf/snAGpKo6rNzYmttsSo4YzY801CX2f5c0C6Z
-         hKDegbw+vCj/POQaAu4ZAbkLMP+D0+mIB7FP6fkw7qVRc6cFb5bsy4ust9RGnzrKK6zu
-         YA0DuZWV/UEfppPOfOmLHdllSn5EjE5W8udCF0pmegkp0y5Ynn8BshINJLS83VGSfvha
-         5Wu6U8ucX358SVTI4hmiTdnv3smW4PQcBd96B3jI11Ffp13zz0vWLXRiSNyh5/Zaca0t
-         TLsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715287380; x=1715892180;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GyO7lOaBJGIXBBRmSEVUT3jjg2maQrneBPVuSy70JpQ=;
-        b=LRlVKKALuF4WMoRF8JkThrjdv1mNW22ngZmqq/c/7OBBv5uRzwK5m7UM0Gs5AoMxCR
-         QT8qUsIpBwiNmw45ZsUNY4rlEYWrbMGWpuMYT46ShPOHkNYcZActf1kodHUrDaFg4nym
-         vBJ9l65ZS9icPXO37D5qMzj5qZd+sYvt98RAIt3Mn4ebGZwhQ7aV9bJy61yViEKm3Lsr
-         HWZWdMv0YfyhQNWmkd2VCu7tm7ITMYa66OWwPJuhSyhEQHemWuBsk1ouliEgmV8r/NOj
-         bt1FWGxGp4wcJllwetEt0xc8Z0xFjGI49/wySPUDK2167zQFg/3OaBLq/RsFhlCCX/cL
-         T5xQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVjcNzVcRIYnAYy6K142pXGzRJ6pURGI5doEKQYvaz13Qa5/Cv77agJsy5U6b5LYwU3E3FWrlGCsONF63rk0b7X5S8xM0+zLQOxyavcsQ==
-X-Gm-Message-State: AOJu0YyV5hTFyfvAMh8EOaMU/LXhwk3ueEEQoO5GwGX/wnQzlcr8APzl
-	UHBiVk3S6Di51GxWb5odKzVT0Sr8+7zV1IhTEpDrKOuVRQ7+/xy0FvDebnIyoJcAylg2iCmAKxm
-	pncWg5J/y8u//CjJoMZZsWuksicYDGE7jqEW0lA==
-X-Google-Smtp-Source: AGHT+IG+qfOYPvC5Bh3mUYNkbKmgsIu9m523SnqmodnTG2ySW8CcwXrwuEZ/k1V57bmNDi9Db8o7UONgcoAYL1Cwt9w=
-X-Received: by 2002:a25:102:0:b0:dc2:3a05:489 with SMTP id 3f1490d57ef6-dee4e4a7b67mr807131276.14.1715287380304;
- Thu, 09 May 2024 13:43:00 -0700 (PDT)
+	s=arc-20240116; t=1715290473; c=relaxed/simple;
+	bh=DMClA2EG4om7tUuZOout4+5pUV7yCTXmqNhHE4600xM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=csa6fCgUv9fF8ZEjNxY/qcefXwrQnJ4KZlrBrqDh5GI6doF+u+ULFrEPDoexDfaX/K4lbBSMairkAwBvtYJAO9CyCiBeivwzsja4YvWRGKl6N9hFxE39I3Pk1QRexoPpMYmc2rIL7NoCrxgdaJ/vRwNBPzCnYaepsPFgMMMJDOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LI9r2ZDo; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 449KtB8X012405;
+	Thu, 9 May 2024 21:34:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=cIukUmTAz21I3U9U4WGeVwO7Ge0VeW/gUAEvuX3Cztc=; b=LI
+	9r2ZDod4f1CfRw0lzzeck32b+xIyPiWNzUzL70jaE0GWi79OrRqe7hiTMCQnshjR
+	M+YlIEWTxolltwsRLJ54IH3eQAVAfx6gcOgoYnTbqddSIGXfr4qbfsg6nT68hFqO
+	QD+/f7xVKlSdtjj19rpQSd71bm2wPqoPodM2bvcyFL0IrobV0qXFffIAnj3Ryx4J
+	JkuENjg/HdYm0UBiz4/P7WlHIMudK0ofQWhMMPONf+EumzP5KCSW7HoT6VWYJtZN
+	zWuTKpTSAZ6kshg6Mmp5jHEUYmxIwgY55lQPpGltrPb6wjXOMB58KgHKcBKe7MS2
+	WRXOLrTOkp1Gwm7T7XUw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y09f5unjr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 09 May 2024 21:34:07 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 449LY6PO000667
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 9 May 2024 21:34:06 GMT
+Received: from [10.71.112.114] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 9 May 2024
+ 14:34:05 -0700
+Message-ID: <d0c1e6a8-3caa-3530-d49a-a8b820d19cf1@quicinc.com>
+Date: Thu, 9 May 2024 14:34:01 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240509-irq_wait-v2-1-b8b687b22cc4@gmail.com>
-In-Reply-To: <20240509-irq_wait-v2-1-b8b687b22cc4@gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 9 May 2024 23:42:49 +0300
-Message-ID: <CAA8EJpqQWN4zE7vn=dG+CNPnU=94z_of5o7NSdom6x3d7nObHA@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/dpu: fix encoder irq wait skip
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v21 09/39] ASoC: qcom: qdsp6: Introduce USB AFE port to
+ q6dsp
+To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <lgirdwood@gmail.com>, <andersson@kernel.org>, <krzk+dt@kernel.org>,
+        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
+        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <bagasdotme@gmail.com>, <robh@kernel.org>, <konrad.dybcio@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240507195116.9464-1-quic_wcheng@quicinc.com>
+ <20240507195116.9464-10-quic_wcheng@quicinc.com>
+ <9bd1ec72-71ea-4a1c-b795-af6e7687ca07@linux.intel.com>
+ <0a4d7c2b-ac7d-7bd4-f97e-db60944a1d39@quicinc.com>
+ <726e7006-30b4-4525-84c8-4fb2ef380994@linux.intel.com>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <726e7006-30b4-4525-84c8-4fb2ef380994@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ElA1DleWGwoZYGAQNwZNxyKuF9wVF_HB
+X-Proofpoint-ORIG-GUID: ElA1DleWGwoZYGAQNwZNxyKuF9wVF_HB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-09_12,2024-05-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ phishscore=0 suspectscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ mlxlogscore=576 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405090152
 
-On Thu, 9 May 2024 at 22:40, Barnab=C3=A1s Cz=C3=A9m=C3=A1n <trabarni@gmail=
-.com> wrote:
->
-> The irq_idx is unsigned so it cannot be lower than zero, better
-> to change the condition to check if it is equal with zero.
-> It could not cause any issue because a valid irq index starts from one.
->
-> Fixes: 5a9d50150c2c ("drm/msm/dpu: shift IRQ indices by 1")
-> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <trabarni@gmail.com>
+Hi Pierre,
 
-In the previous revision you have got the Reviewed-by tag, which you
-didn't include here for some reason.
+On 5/9/2024 5:54 AM, Pierre-Louis Bossart wrote:
+> 
+> 
+> 
+>>> Wait, is this saying you will have exactly one PCM device/FE DAI
+>>> connected to the USB BE DAI exposed in patch 11?
+>>>
+>>>> +    SND_SOC_DAPM_MIXER("USB Mixer", SND_SOC_NOPM, 0, 0,
+>>>> +               usb_mixer_controls,
+>>>> +               ARRAY_SIZE(usb_mixer_controls)),
+>>>> +
+>>>
+>>> And then what is the role of the USB mixer if you only have one input?
+>>>
+>>> I must be missing something.
+>>>
+>>
+>> Not sure if this is a QCOM specific implementation, but the way the DT
+>> is defined for the USB offload path is as follows:
+>>
+>>      usb-dai-link {
+>>          link-name = "USB Playback";
+>>
+>>          cpu {
+>>              sound-dai = <&q6afedai USB_RX>;
+>>          };
+>>
+>>          codec {
+>>              sound-dai = <&usbdai USB_RX>;
+>>          };
+>>
+>>          platform {
+>>              sound-dai = <&q6routing>;
+>>          };
+>>      };
+>>
+>> Based on our DT parser helper API (qcom_snd_parse_of()) this isn't going
+>> to create a PCM device.  The PCM devices are created for nodes that
+>> don't have a codec and platform defined:
+>>
+>>      mm1-dai-link {
+>>          link-name = "MultiMedia1";
+>>          cpu {
+>>              sound-dai = <&q6asmdai      MSM_FRONTEND_DAI_MULTIMEDIA1>;
+>>          };
+>>      };
+>>
+>> The ASM path is the entity that defines the number of PCM devices that
+>> is created for the QC ASoC platform card, and is where the actual PCM
+>> data is sent over to the DSP.  So there could be several PCM devices
+>> that can use the USB BE DAI.
+> 
+> ok, but then how would this work with the ALSA controls reporting which
+> PCM device can be used? I didn't see a mechanism allowing for more than
+> one offloaded device, IIRC the control reported just ONE PCM device number.
 
+With respects to the PCM devices exposed by the ASoC card, the USB Mixer 
+controls which "Multimedia" (ASM) path can be routed to the USB BE DAI.
 
-This revision is:
+The kcontrols you are mentioning are controlling which USB card and USB 
+PCM device to execute the offloading on.  As of now, at least for the 
+QCOM implementation, we support only offloading on one path/USB 
+interface.  I can't comment on how other offloading solutions look like, 
+but we pass the USB PCM and card index as part of our AFE port open 
+command (done from USB BE DAI).  This will result in a USB QMI message 
+back (from ADSP) to our USB SND offload driver, which carries all the 
+information about the selected card and PCM index to execute offloading on.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+One thing I can do is to actually make the kcontrols for selecting the 
+PCM and card devices to look at the num_supported_streams.  This would 
+at least allow for vendors that have support for more potential 
+offloading streams to select more than one.
 
-Note, there is no need to send a next iteration just for these tags.
-They usually get picked up by the patch management software (including
-the Fixes tag).
-
-
-> ---
-> Changes in v2:
-> - Add Fixes in commit message.
-> - Link to v1: https://lore.kernel.org/r/20240509-irq_wait-v1-1-41d653e378=
-4e@gmail.com
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/dr=
-m/msm/disp/dpu1/dpu_encoder.c
-> index 119f3ea50a7c..cf7d769ab3b9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -428,7 +428,7 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encode=
-r_phys *phys_enc,
->                 return -EWOULDBLOCK;
->         }
->
-> -       if (irq_idx < 0) {
-> +       if (irq_idx =3D=3D 0) {
->                 DRM_DEBUG_KMS("skip irq wait id=3D%u, callback=3D%ps\n",
->                               DRMID(phys_enc->parent), func);
->                 return 0;
->
-> ---
-> base-commit: 704ba27ac55579704ba1289392448b0c66b56258
-> change-id: 20240509-irq_wait-49444cea77e2
->
-> Best regards,
-> --
-> Barnab=C3=A1s Cz=C3=A9m=C3=A1n <trabarni@gmail.com>
->
-
-
---
-With best wishes
-Dmitry
+Thanks
+Wesley Cheng
 
