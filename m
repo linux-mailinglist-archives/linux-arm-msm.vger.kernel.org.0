@@ -1,153 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-19560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3DC08C0A71
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 06:24:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91F688C0AD3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 07:14:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30A6C1C20EBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 04:24:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 467C11F23E65
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 05:14:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25E2033982;
-	Thu,  9 May 2024 04:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 310251494B1;
+	Thu,  9 May 2024 05:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Hf+zMMq3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fgw20-7.mail.saunalahti.fi (fgw20-7.mail.saunalahti.fi [62.142.5.81])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DE813AA27
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 04:24:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.142.5.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC7912C497;
+	Thu,  9 May 2024 05:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715228697; cv=none; b=b94+lT1HkP3OSUhdtGYEXJLi/ryOYzItxgX/Yh7b6r7JL9DuJoNRPpr5cYoIPfPqjNMmR9lzBGZI19jLjZbged6z0LkJ5aqTINXjjUEdHMaD0KacVwF7TUnNPn4txk6LMUX5n3Yx0SGqj38bOVbPRCXlecrOvj+ME61JfCuyKa4=
+	t=1715231685; cv=none; b=uV9FyvvKqA5AUizKfeWXCwZpXYNciEP9Ym3uKQ0026hGoAlZMVnMrVJCNYAOIfPo1D6AcE/ZsvoynMVtms41HLPnRLRm2cqQEbowUk0UC52qbPKSDurmuRI3Rz8NJMamM76Z8zDyrkVE5VvMLRPTO4gGvVbI6NS2tk3YNhMnl34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715228697; c=relaxed/simple;
-	bh=wbluDtpkgkqI4b6uOnSnk0JaOqE8O/8A4tFQH+1zXWw=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ELme65V0e8xhztSEwUTkqmFymGm/XK9xuPjhdkJ5qH101fGPbygZaaXUbNiuDxuU4iFNQtaIZLgtXAJA2zMiwo3jK+IpYBVxXi0y3P87l+Douugslm+uTI0oXrD+rQhzjwpcTtQM+UiGBpYqaU/8bZPPWGfGSdjpArZjDInJPQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=fail smtp.mailfrom=gmail.com; arc=none smtp.client-ip=62.142.5.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=gmail.com
-Received: from localhost (88-113-25-208.elisa-laajakaista.fi [88.113.25.208])
-	by fgw23.mail.saunalahti.fi (Halon) with ESMTP
-	id 14224eb4-0dbc-11ef-b972-005056bdfda7;
-	Thu, 09 May 2024 07:24:52 +0300 (EEST)
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Thu, 9 May 2024 07:24:51 +0300
-To: Hongxing Zhu <hongxing.zhu@nxp.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <frank.li@nxp.com>,
-	Krzysztof =?utf-8?B?V2lsY3p577+977+9c2tp?= <kwilczynski@kernel.org>,
-	"linux-omap@vger.kernel.org" <linux-omap@vger.kernel.org>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"imx@lists.linux.dev" <imx@lists.linux.dev>,
-	"linux-amlogic@lists.infradead.org" <linux-amlogic@lists.infradead.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?B?V2lsY3p577+977+9c2tp?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Xiaowei Song <songxiaowei@hisilicon.com>,
-	Binghui Wang <wangbinghui@hisilicon.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH v4 4/5] PCI: imx6: Convert to agnostic GPIO API
-Message-ID: <ZjxQE8h0-BABxybu@surfacebook.localdomain>
-References: <20240506142142.4042810-1-andriy.shevchenko@linux.intel.com>
- <20240506142142.4042810-5-andriy.shevchenko@linux.intel.com>
- <AS8PR04MB867668870DD2DC029C8B98048CE62@AS8PR04MB8676.eurprd04.prod.outlook.com>
+	s=arc-20240116; t=1715231685; c=relaxed/simple;
+	bh=b9lMhPPY/o4o8wPg9WDp+6wnV+tsJL1p4/lb6iDclRg=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=UX1ym72Tc3STd+Hfe7gHD+vbNWRy9I8n2yNXE9+tg7/uOlMHtVLmtc7vatiBeKpIttYOLpbdorsrpQ8on+S9llPD0lSYix4qiXZKWKeMiAc01M1xjtkzRXZUB5OpZO0WVaJBicZP3NYw/XWbc9b5qQlNi2NJij4LBJYaC9jnjgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Hf+zMMq3; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 448KlU9n029314;
+	Thu, 9 May 2024 05:14:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id; s=qcppdkim1; bh=dNHJhwt9U3uG
+	DKgV4yBC5FWsVm2A4CVhbGkT4nmtRtE=; b=Hf+zMMq3Vw4KtifYFcYOuabanICX
+	hWfoDa8/Iheq0G6BW0VdTo/WVWYdk2dY1jQw6JzN231pUezmxq3vOiGBrmP5qvsM
+	3hkvG2fPRSl2BFxRRdd1s1tNGpLaiYvRV0SqsLOlOamcq124M4byK0IQay1k1SPu
+	ySUNIi4nv0LjH4q9xIuqCuoe2gpOl2bS5R4gjeW94382i4uwUApxb6TPRXwqFoYt
+	eSEb2aOtBojkeB7zDs5ti4w0DMuvIjZDoUm5md3TDo2ZvTSsYZ0xEyjmeSs9nDIa
+	svPNIqS/LKIU8cbv2n1mQQeAI3/tsgn6ZKPfZ87o1gJcuEhh062JU0DcSg==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y07u9a27c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 09 May 2024 05:14:37 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 4495EY85024756;
+	Thu, 9 May 2024 05:14:34 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3xwe3m39gg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Thu, 09 May 2024 05:14:34 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4495EYIB024748;
+	Thu, 9 May 2024 05:14:34 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 4495EXwB024747;
+	Thu, 09 May 2024 05:14:34 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+	id 36B5F3030; Thu,  9 May 2024 10:44:33 +0530 (+0530)
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hans.verkuil@cisco.com>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>, stable@vger.kernel.org
+Subject: [PATCH v4] media: venus: fix use after free in vdec_close
+Date: Thu,  9 May 2024 10:44:29 +0530
+Message-Id: <1715231669-16795-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yro7f_kxu2BfgGXkMNoGHzlhcZ6jCD_H
+X-Proofpoint-ORIG-GUID: yro7f_kxu2BfgGXkMNoGHzlhcZ6jCD_H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-09_01,2024-05-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ spamscore=0 suspectscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405090032
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <AS8PR04MB867668870DD2DC029C8B98048CE62@AS8PR04MB8676.eurprd04.prod.outlook.com>
 
-Thu, May 09, 2024 at 01:24:45AM +0000, Hongxing Zhu kirjoitti:
-> > -----Original Message-----
-> > From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> > Sent: 2024年5月6日 22:21
+There appears to be a possible use after free with vdec_close().
+The firmware will add buffer release work to the work queue through
+HFI callbacks as a normal part of decoding. Randomly closing the
+decoder device from userspace during normal decoding can incur
+a read after free for inst.
 
-...
+Fix it by cancelling the work in vdec_close.
 
-> > -	imx6_pcie->gpio_active_high = of_property_read_bool(node,
-> > -						"reset-gpio-active-high");
-> > -	if (gpio_is_valid(imx6_pcie->reset_gpio)) {
-> > -		ret = devm_gpio_request_one(dev, imx6_pcie->reset_gpio,
-> > -				imx6_pcie->gpio_active_high ?
-> > -					GPIOF_OUT_INIT_HIGH :
-> > -					GPIOF_OUT_INIT_LOW,
-> > -				"PCIe reset");
-> > -		if (ret) {
-> > -			dev_err(dev, "unable to get reset gpio\n");
-> > -			return ret;
-> > -		}
-> > -	} else if (imx6_pcie->reset_gpio == -EPROBE_DEFER) {
-> > -		return imx6_pcie->reset_gpio;
-> > -	}
+Cc: stable@vger.kernel.org
+Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+---
+Changes since v3:
+- Fixed style issue with fixes tag 
 
-> Please correct me if my understand is wrong.
-> The "reset-gpio-active-high" property is added for some buggy board designs.
-> On these buggy boards, the reset gpio is active high.
+Changes since v2:
+- Fixed email id
 
-This is my understanding too.
+Changes since v1:
+- Added fixes and stable tags
 
-> In the other words, the PERST# is active and remote endpoint device would
-> be in reset stat when this gpio is high on these buggy boards.
+ drivers/media/platform/qcom/venus/vdec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Yes.
-
-> I'm afraid that the PCIe would be broken on these boards, If these codes
->  are removed totally,
-
-No. Linus W. explained in the previous version review round how it's supposed
-to work.
-
-> and toggle the reset GPIO pin like below.
-> ...
-> gpio_set_value_cansleep(imx6_pcie->reset_gpio, 0);
-> msleep(100);
-> gpio_set_value_cansleep(imx6_pcie->reset_gpio, 1);
-> ...
-
-It's not the code that this patch adds. I'm not sure if I understand starting
-from here what you mean.
-
-> By the way, this reset GPIO pin should be high at end in
-> imx6_pcie_deassert_core_reset() if the imx6_pcie->gpio_active_high is zero. 
-
-This seems a terminology mixup. You probably meant "inactive".
-And this is exactly the case with this patch.
-
-If you start thinking in terms of "active"/"inactive" you will see that there
-is no contradiction and no behaviour change. The quirk itself is located in
-gpiolib-of.c..
-
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 29130a9..56f8a25 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1747,6 +1747,7 @@ static int vdec_close(struct file *file)
+ 
+ 	vdec_pm_get(inst);
+ 
++	cancel_work_sync(&inst->delayed_process_work);
+ 	v4l2_m2m_ctx_release(inst->m2m_ctx);
+ 	v4l2_m2m_release(inst->m2m_dev);
+ 	vdec_ctrl_deinit(inst);
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.7.4
 
 
