@@ -1,130 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-19594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F8578C1221
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 17:41:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97F3D8C1246
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 17:52:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 541BC1F220BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 15:41:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B79B81C21066
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 15:52:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 204EA16F26E;
-	Thu,  9 May 2024 15:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAC5216F274;
+	Thu,  9 May 2024 15:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOLUgBfi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OAIzkNm7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6004516F271
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 15:41:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368363F8E2;
+	Thu,  9 May 2024 15:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715269303; cv=none; b=WziS/GkJVCEWwylNWHvG9/TrvpY+QyHqQwjTwEo677rU6hSzBRsHrwrQNy1FcWViDU3OOrpLDCII3QP9BQoOg16C5EulbNF2RthRDlmySJTxRTTwsRF8aIsp2Lllu/h2z6jS7d6nYUc26u3e88TzsHS1Ua5kZTtaTE4ohEdceDw=
+	t=1715269956; cv=none; b=Ju3JT7JohdqA3I2NxW9Zkw2SOCy3Ssjzl8h3QSWgUKxo/1ssdEOEiJ3wFBjCqR7pYNP6QHDCVt7NccuIZlY23LOtlN/sph5KNN3nvsnulBnxkyBIb8SC3i9q4f6oHe+yqGkN5uzprIIuHwmPRlOfXLk0lgdSSLqlOqo/DHzL6f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715269303; c=relaxed/simple;
-	bh=YDTMlYTd8Jl+1LbuEOwzVy2qVGX9nsvbpTUbbqpunaM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bP1fQQf6+S1tMseWQx8neLf83J4I+3PLa1VsW+YMw0LKXwEx7Y46qSch82YJizIlyWVcR7cGg6EAzQUOFZ2f+6gfygf2VHsIWEx+ZJdb5M+vAtwarKNvaRqFVOGHPQP+Aa+8nGIQko6rf7/7Uqb7dSFCGQP7jY2lMYol9gI82yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOLUgBfi; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2e242b1dfd6so13109531fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2024 08:41:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715269299; x=1715874099; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MHCgfOjCAWuaCf+wlNyjS/SdCnZB5VMR+4B9ySlLbTk=;
-        b=TOLUgBfi++4EV1OsrHY5u6zEi7RLi/t4CeZmc8u80ggI6hlU8IAVMT0tu82ZRbVqER
-         6AkZnWRv9GkLcXCWIXJ6uq4YXDAaMQS769rzlBGEqDXV/KhJzs32l5tfXkcSo4Pq0Ddu
-         OfayXYVzJPuIlpRIiwQ9/hoGQBwa05nXpZczVpN1xxkpZMo+7wFxAvhHG6lvUL3COGRw
-         fdkUBh7rk9Wa2oXb72Q2vY5gK2EuJlIIKBOctS8m+HMdLHefsKl2vytq7Qpb1ppV21vF
-         FjOxRIPDYAGgth2ZXZ4bbEvgLhyp45g0wqLmxiaq6F3/+j8du5qlN1i8+c07JlWkQQHS
-         43KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715269299; x=1715874099;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MHCgfOjCAWuaCf+wlNyjS/SdCnZB5VMR+4B9ySlLbTk=;
-        b=mz5eH6zRHgHiRUTwFo1rQVgb914bqvK6yXcfq5+RCmxxTLXSWoty8fIdPYQTS/AXg3
-         gbf9hwh6PunA24LfKV6L2koamnlMN1c/LMPL1vKZRQc79Ddblhs8L/xh0ahoCxd557Jd
-         wbuG8BAhcJ9TNDsCVxOznN+zn0BMlFtAGTccZDvsB/Mh1XGxgE+4Ab5gIM03WWh0lsQq
-         +lkLjrE2QdKtF/aH7+mUFFlQGrKPD8NWHBZvcKsNh3IvDqUkxQuJ2XriGIiRCRbedFMK
-         O3Ncz+pnlodXi/qJswNzPnNoaB2DQ22flotPi58ml60PDsXJaD45YgVNBm7M4vM4gYiZ
-         yx7Q==
-X-Gm-Message-State: AOJu0YwqNTEYM3V91WbUmPQt2qUa63vPmkP+EBbLe35QSmrAIvJg1/Mg
-	lj5aI0aENcaJBeltLm5GIgSFoslyYkKFlAqqOUcGpf9fa72Y5LeJ
-X-Google-Smtp-Source: AGHT+IGW47YrANCiM7MAOv1YCC4wAKiyKqY/iX4tT8I3a2vjfykMHd5JV7q+HsYEiB/NPT6K68bqDQ==
-X-Received: by 2002:a05:651c:11d3:b0:2e2:f2d:b8ad with SMTP id 38308e7fff4ca-2e447084a8amr35217221fa.26.1715269299347;
-        Thu, 09 May 2024 08:41:39 -0700 (PDT)
-Received: from [192.168.0.20] (cpc115152-dals23-2-0-cust532.20-2.cable.virginm.net. [86.12.82.21])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccce1b17sm29577555e9.12.2024.05.09.08.41.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 May 2024 08:41:38 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Thu, 09 May 2024 16:41:34 +0100
-Subject: [PATCH 2/2] drm/msm: Dump correct dbgahb clusters on a750
+	s=arc-20240116; t=1715269956; c=relaxed/simple;
+	bh=y1b/BJ6+o2tx8onxvo2sdl0U/kfb+AndkI8eF0HOdWg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YBGz6HdDpHQmqTXljyhRh7lz5BwiAhquuPIHiJJsGR24e1O5WzoMy4U/k8UMfBDGG8ltHY4Yu/hmoNuoRR5WNO/s3V+Rvzv0rFr5JsPo2RRzldsFTe88Of7awxwF/Efwu6QCHHnm84xeHU/CNk0Im4cWXhQKZHJlZGB/aHY21Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OAIzkNm7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 449DtgZU002462;
+	Thu, 9 May 2024 15:52:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=4rFYxAwYD1tKxYEP9QReednAgW30V4VYCm02iCFO++A=; b=OA
+	IzkNm7SIUvvs6gRyUaSjU9l/MSihdC9Q65De8GqFoQwogEZewIuzeWeOL7XfuVs2
+	upIwMIuYPkX1n3UPc4Jr5mRj7I2wAT8Q7z/uINyE6w1pZjQQ923KDeke0ENvwBs0
+	FqiAbP5ZXKLrpxxRQxiaA1oaNeoveVVV8nYF1iFOZ4cMNoZi4To3YHLcCY0fapBH
+	OMSGiRA2OcFrPq6nVuWFTpFPWOxOuxZruMfoOiAGrwUae3/7MB6ix9pRH4CR/Hql
+	Mk2QBD3TpVq5iD/0hNuUk99/AfDtcgzFyVCJ9lAPBBtuL9PS8YIP1MDVJ2vfo3n1
+	Bf8r1DCrXMjIPa8kCmPg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y08ne34vm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 09 May 2024 15:52:10 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 449Fq927012208
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 9 May 2024 15:52:09 GMT
+Received: from [10.216.15.105] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 9 May 2024
+ 08:52:00 -0700
+Message-ID: <8b213eba-7ab6-ae9c-7683-937a9d6aaf08@quicinc.com>
+Date: Thu, 9 May 2024 21:21:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v12 6/6] PCI: qcom: Add OPP support to scale performance
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas
+	<bhelgaas@google.com>, <johan+linaro@kernel.org>,
+        <bmasney@redhat.com>, <djakov@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <vireshk@kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_parass@quicinc.com>, <krzysztof.kozlowski@linaro.org>
+References: <20240427-opp_support-v12-0-f6beb0a1f2fc@quicinc.com>
+ <20240427-opp_support-v12-6-f6beb0a1f2fc@quicinc.com>
+ <20240430052613.GD3301@thinkpad>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20240430052613.GD3301@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240509-a750-devcoredump-fixes-v1-2-60cc99e2147d@gmail.com>
-References: <20240509-a750-devcoredump-fixes-v1-0-60cc99e2147d@gmail.com>
-In-Reply-To: <20240509-a750-devcoredump-fixes-v1-0-60cc99e2147d@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
- Connor Abbott <cwabbott0@gmail.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1715269296; l=1299;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=YDTMlYTd8Jl+1LbuEOwzVy2qVGX9nsvbpTUbbqpunaM=;
- b=BKxi8bwquihpob2UmeuDEeaUfWIOAKCHgPIrTzz/DiJ4w779kGeQf/VyOcZzZ0xd9qyIt1H7j
- Y3w+RuiAezpBAIKcybt38M7n75/2t5DOEoVNJ1g+mM0TfEV2EuG1MUZ
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: e3kRQnlviW5VTpG8CYK6mD-swvONXwYd
+X-Proofpoint-ORIG-GUID: e3kRQnlviW5VTpG8CYK6mD-swvONXwYd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-09_08,2024-05-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 spamscore=0 impostorscore=0 phishscore=0
+ adultscore=0 clxscore=1011 lowpriorityscore=0 mlxlogscore=999 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
+ definitions=main-2405090107
 
-This was missed thanks to the family mixup fixed in the previous commit.
 
-Fixes: f3f8207d8aed ("drm/msm: Add devcoredump support for a750")
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index c641ee7dec78..69f3b942ce9d 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -665,10 +665,13 @@ static void a7xx_get_dbgahb_clusters(struct msm_gpu *gpu,
- 	if (adreno_gpu->info->family == ADRENO_7XX_GEN1) {
- 		dbgahb_clusters = gen7_0_0_sptp_clusters;
- 		dbgahb_clusters_size = ARRAY_SIZE(gen7_0_0_sptp_clusters);
--	} else {
--		BUG_ON(adreno_gpu->info->family > ADRENO_7XX_GEN3);
-+	} else if (adreno_gpu->info->family == ADRENO_7XX_GEN2) {
- 		dbgahb_clusters = gen7_2_0_sptp_clusters;
- 		dbgahb_clusters_size = ARRAY_SIZE(gen7_2_0_sptp_clusters);
-+	} else {
-+		BUG_ON(adreno_gpu->info->family != ADRENO_7XX_GEN3);
-+		dbgahb_clusters = gen7_9_0_sptp_clusters;
-+		dbgahb_clusters_size = ARRAY_SIZE(gen7_9_0_sptp_clusters);
- 	}
- 
- 	a6xx_state->dbgahb_clusters = state_kcalloc(a6xx_state,
-
--- 
-2.31.1
+On 4/30/2024 10:56 AM, Manivannan Sadhasivam wrote:
+> On Sat, Apr 27, 2024 at 07:22:39AM +0530, Krishna chaitanya chundru wrote:
+>> QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
+>> maintains hardware state of a regulator by performing max aggregation of
+>> the requests made by all of the clients.
+>>
+>> PCIe controller can operate on different RPMh performance state of power
+>> domain based on the speed of the link. And this performance state varies
+>> from target to target, like some controllers support GEN3 in NOM (Nominal)
+>> voltage corner, while some other supports GEN3 in low SVS (static voltage
+>> scaling).
+>>
+>> The SoC can be more power efficient if we scale the performance state
+>> based on the aggregate PCIe link bandwidth.
+>>
+>> Add Operating Performance Points (OPP) support to vote for RPMh state based
+>> on the aggregate link bandwidth.
+>>
+>> OPP can handle ICC bw voting also, so move ICC bw voting through OPP
+>> framework if OPP entries are present.
+>>
+>> As we are moving ICC voting as part of OPP, don't initialize ICC if OPP
+>> is supported.
+>>
+>> Before PCIe link is initialized vote for highest OPP in the OPP table,
+>> so that we are voting for maximum voltage corner for the link to come up
+>> in maximum supported speed.
+>>
+>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-qcom.c | 81 ++++++++++++++++++++++++++++------
+>>   1 file changed, 67 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 465d63b4be1c..40c875c518d8 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> 
+> [...]
+> 
+>> @@ -1661,6 +1711,9 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+>>   		ret = icc_disable(pcie->icc_cpu);
+>>   		if (ret)
+>>   			dev_err(dev, "Failed to disable CPU-PCIe interconnect path: %d\n", ret);
+>> +
+>> +		if (!pcie->icc_mem)
+>> +			dev_pm_opp_set_opp(pcie->pci->dev, NULL);
+> 
+> At the start of the suspend, there is a call to icc_set_bw() for PCIe-MEM path.
+> Don't you want to update it too?
+> 
+> - Mani
+>
+if opp is supported we just need to call dev_pm_opp_set_opp() only once
+which will take care for both PCIe-MEM & CPU-PCIe path.
+so we are not adding explicitly there.
+- Krishna Chaitanya.
 
 
