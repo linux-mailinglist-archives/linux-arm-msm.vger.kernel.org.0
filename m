@@ -1,137 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-19552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D20A8C084F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 02:14:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D4FF8C0868
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 02:28:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D3EB1C21089
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 00:14:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1400B21218
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 00:28:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5A1410E9;
-	Thu,  9 May 2024 00:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 773E510F7;
+	Thu,  9 May 2024 00:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kWjqrcdd"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Hw2WppAv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC6436C;
-	Thu,  9 May 2024 00:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB83610E9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 00:28:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715213639; cv=none; b=UEtE6brLHOztMh26n1CQipU0Wo5Rk9VQ6fYNCaXg6E0jeLQKPdnYBRGKf7fYDo+d8yvmE3FgyydYym6O0P81Ik56iRvFQnBnKBC8QRAu4UXWPx61d2v8mXujjxv3W4bP4ox6TMqlcctqaA3pYGGL7btw60ctidsEd6FMJzOwHYw=
+	t=1715214515; cv=none; b=V0s1eIGfcwiQmGaPAJLdW6W2Biv/ArlvqDgiPn7ZNGTCb4BoC2n9QQLV/MkvYDunfBYYbt9OBGGp2zT71sUGzck2KA7O5y8Wi2KeIXTX63dIRfEz1+sDykNiZgPttNrPRAVid8TEMKLQJOepP82dlAyoUmHE+mUlxiNvx9aJeTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715213639; c=relaxed/simple;
-	bh=XEzh2rn2ODsLiWKQlzOInwm/aVuCxyWNxiDwhdI+Uzk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Ly203Fc4O0wShNIvcFsj1zY1RNlYXnYbsu2fVCYNBDd6T1kNItZ84OCodVRWgbRfEtUitv4B6IRjzij+pUxjxTsGOMeJKmoiSH9D1KgaplY4++q7JlqL8RcbMpApgevLsVfDvu1VYA2gtBWdaf1bKJZw9ZuR2yJsdMDHja5f5RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kWjqrcdd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 448CVglG014162;
-	Thu, 9 May 2024 00:13:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=AAXVD9XaJFUX5Wr81xhDQdaAYb5w7UDfisvH2/cYKY0=; b=kW
-	jqrcdd9fuSjzWWHADFuJjfa3vwZ+V7UvEBsvScJi7Cz/s50h3OFpDyfTll7vl8Pu
-	k39ALUUdVVNBzN7nwoJxZL64/PyiSc2zbzXag81dwTZ0iymoQcHR6GtDwBFLY1Ps
-	vXP4nfqT19XZxLnJZBBKxC66yvNOIkuCOpxPSOYSqHjrlf3ZgmWOPtyXWVQV6j3t
-	x+lpCsvVD2dwBHcvTw2ZvIHAVJhEIN1d/9z9QcZlokFdapuLk28m0RLMnZ0BbpGI
-	/yZCspiHFnsI1ibupf6/eQ8C+FKTlJV5FvHsendivRwxuzxHL9MDhmA/ZfvEbWhx
-	nPiFSGfoTkPLg2s9x3+A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y09fr9c80-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 May 2024 00:13:39 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4490Dcbh020525
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 May 2024 00:13:38 GMT
-Received: from [10.110.126.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 8 May 2024
- 17:13:37 -0700
-Message-ID: <9d0ba8c8-9c8f-a45a-cf14-5d1829273cfa@quicinc.com>
-Date: Wed, 8 May 2024 17:13:37 -0700
+	s=arc-20240116; t=1715214515; c=relaxed/simple;
+	bh=V7Z93WRnPd6lnnQhJgTDhVba2h0S96dv3o2cjGDZJsw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=l2tJ6r5RsbXOBupQv9bC7sbiPAV5DLKBeZoaGRG4aWhHBJAC11OUgxDAdrOYMgeD2eLiKCYoEWbovj/e0jXlL2uv8E5NdlEETxiyV9SoT8fFEFaWwuxsLfVfMBmnSEElm70VNPLD6ysNJq1ghjwctRyBaV2KUXNVljK7C6EDFeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Hw2WppAv; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a59a387fbc9so69407766b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 17:28:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1715214512; x=1715819312; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZNeX2fBf0OvUGSKCQhqRKM/UWS2VcuqiFL3hMwMX2kY=;
+        b=Hw2WppAvAElB5auPR67X89SOWR20YKL8Z5N8Sa/QO6L6DZFAoYHb71ZRiN5p5EprYg
+         aDhqT5v/zcMAaML70Yi+f3pYdDpRuwNMR5yYl69SFqxKzbDrOlPAlc18EuDLsw1o37Ls
+         xrCtzqMysYM3EnWJta2HQ7M6A7M7LaAE7eLgs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715214512; x=1715819312;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZNeX2fBf0OvUGSKCQhqRKM/UWS2VcuqiFL3hMwMX2kY=;
+        b=KDXzXc1X9fl4ft++hAWa7nJRxOfmWPHonKaghJWZm+10d8w84HqfeJfeRG7oedTrtR
+         34xiYhv8ViBn7Xg8I/lDvE4vUFA/jFvR0gJ7KYsaWH4wNMp5Af6c8nrks6GCi09zZ4jb
+         +rFEmHtasiKy7NGSS9JHz9sMuRe3V8fwKhBLt/gVzkFhsvoNcBYFS8O/bOVW4EeMnyoE
+         8Qxmej9N9ERzEExBYW9knE2g7DH/Dy5ROKIsVyTqu5yGaL/ksfEZnaRkCTqFjub3CRLf
+         4mGVl1Zn4xJlaQl559cqbUbBQ/5UDQ4VGNqktXpVn4CSm7ewZS+0U5YggAdbj884/R8O
+         /TLw==
+X-Forwarded-Encrypted: i=1; AJvYcCXshLUV1HdV2ANFDts7ahmq5q/ynFSdCgict5a5lhcfj8Hs1xdQ4QOiFHouHIKpKgJbQGHvPl+uL0S8EW/AbOdmBjTjn5d0aRQB19Bq3g==
+X-Gm-Message-State: AOJu0Yx1DkM9dwFdJT63kS/O6G6Hpys2tXYxx6/Pls6ZXoVg9L3/usqc
+	hhRcBnhL3hFrHa7XCakf2DcElzlvssi8E/MEeky1CKFtTjx4RBLaLerC7VSjGadwAhHoG8Y5AcL
+	k+dTk
+X-Google-Smtp-Source: AGHT+IEhPbJKzpNdtONofILRXyTrcZWjwc2xfUqfnTxOFPraPZgX3bZqxGWZs9q/JAxE9bwwhw6acQ==
+X-Received: by 2002:a17:906:3284:b0:a5a:1257:bb3c with SMTP id a640c23a62f3a-a5a1257bc11mr57098866b.7.1715214512066;
+        Wed, 08 May 2024 17:28:32 -0700 (PDT)
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com. [209.85.128.51])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a1781cfb2sm15633566b.24.2024.05.08.17.28.31
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 May 2024 17:28:32 -0700 (PDT)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-41a428374b9so17805e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 May 2024 17:28:31 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWl6dYancEguDd+VR2325pTTubBnNbqPaIUfVqiX4S1wcKry1rO5Phm7Oap1TWjqC/H14XKdf2dOfD4+AE6izpQ6cOEYvEL5xzCUG5orQ==
+X-Received: by 2002:a05:600c:35d1:b0:41f:a15d:2228 with SMTP id
+ 5b1f17b1804b1-41fc26b9f66mr933245e9.0.1715214511425; Wed, 08 May 2024
+ 17:28:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v21 33/39] ASoC: usb: Fetch ASoC sound card information
-Content-Language: en-US
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <lgirdwood@gmail.com>, <andersson@kernel.org>, <krzk+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <Thinh.Nguyen@synopsys.com>,
-        <broonie@kernel.org>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <bagasdotme@gmail.com>, <robh@kernel.org>, <konrad.dybcio@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20240507195116.9464-1-quic_wcheng@quicinc.com>
- <20240507195116.9464-34-quic_wcheng@quicinc.com>
- <6fe8f489-d8a2-4951-96fa-875ac9b29d23@linux.intel.com>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <6fe8f489-d8a2-4951-96fa-875ac9b29d23@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kzMAdMNLzg3mhcRwkaYPQe_uL9MqPl7G
-X-Proofpoint-GUID: kzMAdMNLzg3mhcRwkaYPQe_uL9MqPl7G
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-08_09,2024-05-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 mlxscore=0 mlxlogscore=643 priorityscore=1501 clxscore=1015
- spamscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405090000
+References: <20240507230440.3384949-1-quic_abhinavk@quicinc.com>
+In-Reply-To: <20240507230440.3384949-1-quic_abhinavk@quicinc.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Wed, 8 May 2024 17:28:14 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xa6LJEWZwdUXvFVPQ0-qnDZroDi6tkZaLFHiarJ2gyew@mail.gmail.com>
+Message-ID: <CAD=FV=Xa6LJEWZwdUXvFVPQ0-qnDZroDi6tkZaLFHiarJ2gyew@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: remove python 3.9 dependency for compiling msm
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, seanpaul@chromium.org, 
+	swboyd@chromium.org, quic_jesszhan@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Pierre,
+Hi,
 
-On 5/7/2024 2:33 PM, Pierre-Louis Bossart wrote:
-> 
->> +/**
->> + * snd_soc_usb_device_offload_available() - Fetch BE DAI link sound card
->> + * @dev: the device to find in SOC USB
->> + *
->> + * Finds the component linked to a specific SOC USB instance, and returns
->> + * the sound card number for the platform card supporting offloading.
->> + *
->> + */
->> +int snd_soc_usb_device_offload_available(struct device *dev)
->> +{
->> +	struct snd_soc_usb *ctx;
->> +
->> +	ctx = snd_soc_find_usb_ctx(dev);
->> +	if (!ctx)
->> +		return -ENODEV;
->> +
->> +	return ctx->component->card->snd_card->number;
->> +}
-> 
-> Presumably there's a notification to help applications discard this
-> information on removal?
+On Tue, May 7, 2024 at 4:05=E2=80=AFPM Abhinav Kumar <quic_abhinavk@quicinc=
+.com> wrote:
+>
+> Since commit 5acf49119630 ("drm/msm: import gen_header.py script from Mes=
+a"),
+> compilation is broken on machines having python versions older than 3.9
+> due to dependency on argparse.BooleanOptionalAction.
+>
+> Switch to use simple bool for the validate flag to remove the dependency.
+>
+> Fixes: 5acf49119630 ("drm/msm: import gen_header.py script from Mesa")
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/registers/gen_header.py | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 
-If the platform/ASoC sound card is removed then the USB BE DAI is going 
-to be unregistered from SOC USB.  This would lead to the 
-snd_soc_find_usb_ctx() to return with -ENODEV to the USB SND offload 
-kcontrol call.
+No idea if we're supposed to allow python as a build dependency. That
+being said, I can confirm that this fixes the problem for me since I
+ran into it too [1].
 
-Thanks
-Wesley Cheng
+Tested-by: Douglas Anderson <dianders@chromium.org>
+
+[1] https://lore.kernel.org/r/CAD=3DFV=3DXnpS-=3DCookKxzFM8og9WCSEMxfESmfTY=
+H811438qg4ng@mail.gmail.com
 
