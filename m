@@ -1,149 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-19591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40D008C1172
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 16:44:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 145508C121F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 17:41:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C1F641F22A5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 14:44:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 413A81C20E49
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 15:41:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 223BB70CC9;
-	Thu,  9 May 2024 14:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 571F516F270;
+	Thu,  9 May 2024 15:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UwjjQcqq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xlk2csrv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734E13D3BC
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 14:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975D315ECD1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 15:41:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715265892; cv=none; b=G3wlTSe6+u9JVvZLzXRIcf60D+Lny42D+npeio5LZuJFEoA0erjvbBklPm2SmL/ema1/031CNB1LrDTPWQ5cZoahVNmUH5b5Vu8oZclKe2GNy3Vi+eB9F0PgtwtXiXUULcVAR3rsaF2usHFH5SBjj4qsJ/0zbgA9cjlM6bKIHSU=
+	t=1715269301; cv=none; b=hU+abVpxJwiEs73OD/oKOYwiPRJA6mpHDsKsnEWFpSxoIzsFZo3S6gvIUrJZA8mUl9JJG2iJ9zUPuc1gLYm1e3bMPcyXz7wi+f2koWSJw9pUyw6TXtMqc0a4otvZz/9kNiYDQunlFbOI6yNyN1QX63h68xhPMh16m6UfJ2qyr8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715265892; c=relaxed/simple;
-	bh=I5AJqok/mmlR9WpwnqkukvdTrAUuKkenbiOx9SXK4Fc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p9E3dteHCgcZZEy7mDRLzk/3pg4DDAWGlR18QpbxFff1EDSWSDUIUsX10cuivGgqvZWT7Y9VT4sy2otFCfp1T3ZJsATjrG3oWiTiymoxCkWJBBmfUbjv6k4qnBREHOTKX0ZTUjGgGzSCik941F9laAFezSX33SpjewoxRlO4bl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UwjjQcqq; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-61be4b9869dso8820807b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2024 07:44:50 -0700 (PDT)
+	s=arc-20240116; t=1715269301; c=relaxed/simple;
+	bh=lk4Vc8zcC7hlsGJ5GNpBh4JGJ3eQeEpSlFF5xjLcSKU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dt1ggb8HJPW0UFJG/6DMDbEJUWonZ6QhcYYgI+/tZbOC9/2KK1vX3CpdzibUkkvRTZKz2OBfu2b3SdHDYMlLM8UrMFitR7TQnqkRbdx4X07fmsZgw7J4DK3wA3AEeNuXzGdFDB0zdQysrfcILEhM9yWtwfPnFkP3+NcnuQJcNck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xlk2csrv; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51fc01b6fe7so1041439e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 May 2024 08:41:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715265889; x=1715870689; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EdKZiB2s4opqgvof2kv3i43Za9nb3C0GOrVIKiWmw0k=;
-        b=UwjjQcqqVZxQPTDMfLERflTOAIih5Vx1/lXUr17VJytFSKsGYekzxlObcg9NC2Fd0l
-         s5fZJIhCLfpl9xs73lXB6kCJOQlynaHlu7q0VrTciZCYqNzy6eglyzsPAvwzwhiG1oRZ
-         yN03bDTLnESKdb0jTqKKwYtDZx1OanFIdzCLkp0JWWaco4NXFlkVSGeBfckM97Dy2x2F
-         HGifb5CZAPTib4awLDEDQydSbkpelQAkz04jmDnBMBAkyau1FRoUN7B+Y3o0exWkEPJZ
-         ySs8JSGvfNs2bQSRPcBe9l3+dMUn9J7p1jK47lXohmiZRlXozaO+tOaL4XUc/AVh47kO
-         PEdA==
+        d=gmail.com; s=20230601; t=1715269298; x=1715874098; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7yj+NFSUX1DfXY4ApuP2si66YNbZvOFq6Ph0ohRBSS0=;
+        b=Xlk2csrvfK/2Oufw5SIn6p6mP9jyq4WaV6aIykM1SKpRcBnGpHqr11V1uSXuFfsat0
+         /Jd1zvSBkWFG58fMBx0BhNzcH8f8bX2UzHKDk1rLEFFaJXYVP7rf4yEEXQoW+ZSVW5KS
+         CU7N+Iak22rEmw4eCTDhyuZemD/pECiTDf/fmQfVgCDP8zE3F/O2K071tcI6j7fp7JLR
+         CRUwwO65smKtqs0UIVmUqV2PlKggkYn2BdYtqLzQkAHj7s/R6gHLD1KbNGl1x6j0YOrF
+         3yzKuIWHH0PgI6QFX7vh9hgnvPspXklBftjDKmMxUUQ3NHUcJd2smJ9vI5kKbfaCKox8
+         bfQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715265889; x=1715870689;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1715269298; x=1715874098;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EdKZiB2s4opqgvof2kv3i43Za9nb3C0GOrVIKiWmw0k=;
-        b=NR1a6p6PTCkmbZMKNIJ2FoYt9syNeTtRdkRxNyYnPR0y4vHYUmf9gOzFj/wSjB+lwi
-         vRT9iL2fWxo6jw5BmaUk/mQzFZvdz/NwGW3AB6XtxzhjNCN/VirpzZ6GCGwj2uiK/H97
-         ZKLxK1NA9QlaDZpWAq3CAO3Pue+C2PLhrpwhM5ryETajQS/lbZC35qSRJoGKc5T2BUQW
-         KEtUSJqa5SGv79w9JaxgkMrtW9ev98VxGmwNzejoCTTmtuUEWTAUZ9LywDlJd4Tb2bXC
-         cxKtB1vcd4HZKeHuHgbl73o8XRBZXSEDZtcnd44JkouZTS6+6nE1kYf2gaMAciSlEl4B
-         njAg==
-X-Forwarded-Encrypted: i=1; AJvYcCXMuThKGwIqWHNOay1Iu5l7Z9H+AvlmSNw8nB+suKFRV2CweQNF5GNBeRGhUxu6opG+UtM61QaGnakbPWAMweiHYL4mnJnOF5YJgToZcA==
-X-Gm-Message-State: AOJu0Yw7Otos/0iEQMx2PATUXqXERK1DeiLdQW/zuOnB+vJAuIKDkIcw
-	69LXoAAO4iJMOT4yNLq7sHE0rc+OsO/X02+VJn0lYkbiXJRheMWx9bdLB35K3CSiwjAFJ/cLa3E
-	b5ua2me/0gB0pmmuDydYz25AMjnBcwhmr8F6C4g==
-X-Google-Smtp-Source: AGHT+IGALxxw9TMatt24iHtj/HIRHztNAUbk6tLEX2rUTAXggUKpaWOX7Rx1RT45SQfhXHktooLHv52NhRf+EeDRKpM=
-X-Received: by 2002:a25:fc07:0:b0:deb:d148:8dad with SMTP id
- 3f1490d57ef6-debd148905cmr2630303276.0.1715265889347; Thu, 09 May 2024
- 07:44:49 -0700 (PDT)
+        bh=7yj+NFSUX1DfXY4ApuP2si66YNbZvOFq6Ph0ohRBSS0=;
+        b=lKQP91BAYj6v0CroIRR6XEeLIzJPScpLopAGqYSGwgyhQ1clUmAQpqsNq3qFuG/RC5
+         S8fBLvdXP7FpY2ZXbDsJmLCYbtsIoD4p9ML/RoOh3U9FInklQZYXdGPmxXfWA1CSqOWj
+         A0zOqV/UNbLz3/0TrGCGvqKkd8FADOmhRI6s3njvX/p8aaLwglLhGjUHrfGIf+QYneWx
+         fZFJl3wPNWjn0bGFvHn8CTk414YA1brdUpUoc+WrgfdisLlPutESn9Xc117ku4A/DMZ8
+         Ew5M6FRJrvt8mKPMNK/IYEXFqt2WEAi7bDJnYTaUswc6op9Gk62DWHB32I31pBhVB6CY
+         YwtA==
+X-Gm-Message-State: AOJu0Yy2zBtx3RDsy35qKusysuePE8C5eLc/p9+eubkw1FzXUqteBh6s
+	XgKpreGVpfDskrNHrMwa+I3otJvVckHHUpUPyNfOlnWROJcB/oPp
+X-Google-Smtp-Source: AGHT+IErlm4uMmWXAJPrNClZqoZxt8hNS6DUm1u/Y5/HYVdV5d33CGH5gXSjJME5IVmbmja8JzVlhQ==
+X-Received: by 2002:ac2:5bc2:0:b0:51e:eca3:e02f with SMTP id 2adb3069b0e04-5217cd4b442mr4058267e87.67.1715269297475;
+        Thu, 09 May 2024 08:41:37 -0700 (PDT)
+Received: from [192.168.0.20] (cpc115152-dals23-2-0-cust532.20-2.cable.virginm.net. [86.12.82.21])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccce1b17sm29577555e9.12.2024.05.09.08.41.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 May 2024 08:41:36 -0700 (PDT)
+From: Connor Abbott <cwabbott0@gmail.com>
+Subject: [PATCH 0/2] drm/msm: Fixes for devcoredump on a750
+Date: Thu, 09 May 2024 16:41:32 +0100
+Message-Id: <20240509-a750-devcoredump-fixes-v1-0-60cc99e2147d@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240501-qcom-phy-fixes-v1-0-f1fd15c33fb3@linaro.org>
- <20240501-qcom-phy-fixes-v1-3-f1fd15c33fb3@linaro.org> <20240509141623.GA1011543-robh@kernel.org>
-In-Reply-To: <20240509141623.GA1011543-robh@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 9 May 2024 17:44:37 +0300
-Message-ID: <CAA8EJpoyMAR9fLJLVgtHf8jSwe5d6ZYzt28LVogjrX+B-_W=hw@mail.gmail.com>
-Subject: Re: [PATCH 03/13] dt-bindings: phy: qcom,usb-snps-femto-v2: use
- correct fallback for sc8180x
-To: Rob Herring <robh@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, David Wronek <davidwronek@gmail.com>, 
-	Andy Gross <andy.gross@linaro.org>, Evan Green <evgreen@chromium.org>, 
-	Douglas Anderson <dianders@chromium.org>, Iskren Chernev <me@iskren.info>, 
-	Luca Weiss <luca.weiss@fairphone.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	Yassine Oudjana <y.oudjana@protonmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKzuPGYC/x3LQQqDMBBG4auEWXcgxk7FXqW4SMzfOouqJBgE8
+ e4Glx+Pd1BGUmR6m4MSimZd5ormYWic/PwDa6wmZ93Tiu3Zd2I5ooxLQtz+K391R2ZIH4LIqw2
+ NpzqvCXeo72c4zwvmOAtWaAAAAA==
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+ Connor Abbott <cwabbott0@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1715269296; l=718;
+ i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
+ bh=lk4Vc8zcC7hlsGJ5GNpBh4JGJ3eQeEpSlFF5xjLcSKU=;
+ b=TqXSOtIuO5iRrMEoB5Ar8HBnN9H+RUzuboyjaei9LPmRpRIed9O720d8q5mjaQp0ub3rvRX61
+ j9GEKssvrGWDYBstLnDgjWrJkSt3dVnx4o/kmMfjHBOeLLOcjPznpOV
+X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
+ pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
 
-On Thu, 9 May 2024 at 17:16, Rob Herring <robh@kernel.org> wrote:
->
-> On Wed, May 01, 2024 at 07:19:29PM +0300, Dmitry Baryshkov wrote:
-> > The qcom,sc8180x-usb-hs-phy device uses qcom,usb-snps-hs-7nm-phy
-> > fallback. Correct the schema for this platform.
-> >
-> > Fixes: 9160fb7c39a1 ("dt-bindings: phy: qcom,usb-snps-femto-v2: use fallback compatibles")
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml | 4 +---
-> >  1 file changed, 1 insertion(+), 3 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> > index 0f200e3f97a9..fce7f8a19e9c 100644
-> > --- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> > +++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
-> > @@ -15,9 +15,6 @@ description: |
-> >  properties:
-> >    compatible:
-> >      oneOf:
-> > -      - enum:
-> > -          - qcom,sc8180x-usb-hs-phy
-> > -          - qcom,usb-snps-femto-v2-phy
->
-> This is now listed as undocumented. You need to remove it from the
-> driver as well or keep it here as deprecated.
+Unfortunately the first time around I made the mistake of not checking
+the devcoredump file closely enough to make sure it had the right
+contents. This makes sure we're actually using the a750 register lists
+on a750.
 
-Ack, I'll send a separate patch, removing this compat. It has never
-been used in the DT files.
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+---
+Connor Abbott (2):
+      drm/msm: Use a7xx family directly in gpu_state
+      drm/msm: Dump correct dbgahb clusters on a750
 
->
-> >        - items:
-> >            - enum:
-> >                - qcom,sa8775p-usb-hs-phy
-> > @@ -26,6 +23,7 @@ properties:
-> >        - items:
-> >            - enum:
-> >                - qcom,sc7280-usb-hs-phy
-> > +              - qcom,sc8180x-usb-hs-phy
-> >                - qcom,sdx55-usb-hs-phy
-> >                - qcom,sdx65-usb-hs-phy
-> >                - qcom,sm6375-usb-hs-phy
-> >
-> > --
-> > 2.39.2
-> >
->
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 46 +++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 22 deletions(-)
+---
+base-commit: 5acf1f91d74433cbfffd9df962b6e45f5d3ef253
+change-id: 20240509-a750-devcoredump-fixes-e59bb5563b1a
 
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Connor Abbott <cwabbott0@gmail.com>
+
 
