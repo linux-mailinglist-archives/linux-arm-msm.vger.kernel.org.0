@@ -1,124 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-19558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B39998C099E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 04:06:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B65C8C0A62
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 06:16:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 670C11F22090
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 02:06:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D0FE8282B59
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 May 2024 04:16:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 942C013C3D0;
-	Thu,  9 May 2024 02:06:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIFk27fG"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1DB813C91F;
+	Thu,  9 May 2024 04:16:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fgw20-7.mail.saunalahti.fi (fgw20-7.mail.saunalahti.fi [62.142.5.81])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6991810A11;
-	Thu,  9 May 2024 02:06:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CC510E5
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 May 2024 04:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.142.5.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715220370; cv=none; b=rkjomwLFqlXyfEBiKmnDznvEYdm7rFYn8Cgqf8F26fzccJInNpKRqBJmDI9i0RnY+pX/pEkAi7NwL5q4Rc2qqGafUbHcRIktDRc8POx9UeNWwWyj/f2rgecIr4JKQ3nyXpwrnhHZQDv/FW3My5R9SAII7ooaGtxbzrDVL8KTHFg=
+	t=1715228201; cv=none; b=W5XpNBISzMC7bG1tel3LiaLkzTpQW7RSdrnUBfcOBwPwUMAAXC43NVxGsI358Qfl1GcO382/KJmkSubqb4m6C+RtRk+Hm2/GKC+I5wqgjIsFefdlQPmLyYcadSKCj8yNJiw1+VN4UwFdBIbbFoDmgyOHDQ9yF8JADWSreW0bEec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715220370; c=relaxed/simple;
-	bh=G7cFv9cF2cnjfjAGz44Yc56GefLQLwiyJxe2ewKnFKM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qOe82ZJ/W51ZnSDyhjcdCuqK2/FjlYdiYhZj84zZ5d/3ucT97y6gk1wcB3d163Ntm5SpDCtOTj1b3aWJoB2R7wDWbCi1M/XQKi83RG4yqMgJy4geJSjZENiW7wnPVGAOruYk2BdPafd3k8ZWu9pcM4mzo/5r0sagCWzDzCMmRDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIFk27fG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED654C4AF0A;
-	Thu,  9 May 2024 02:06:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715220369;
-	bh=G7cFv9cF2cnjfjAGz44Yc56GefLQLwiyJxe2ewKnFKM=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=HIFk27fGvuQXEVMRzZy91iuiEyQjcTGd/3F+LVE/v2tcAYAAIAHOB0SqJ5p+6mHKH
-	 Hm71icex8Xie6TrK9DbNytuDsmayLDCbM4suzT0LNOCxCYKaixYUlSbcPPW+38WOG4
-	 5BIIyPQJ2jqPkuZmA2a8o1Cc1bNlw83WRkF2afJib4mTOMObnb1aiLBEP/elcSRcoF
-	 zZ2MA4OVsXruvYEuvudWLfDPIrglzfBAUSm3ykIKQI317nBke33EjS7KzyZxIoQ+FU
-	 2WCovFUeeg0io2DLXwDvgIcYVtnAKcXsIk9Ayv5SvZ2niiC/AaVXgHT5kIMrg6mXyb
-	 L1jKwf4OL0a1w==
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-51ff65b1e14so302266e87.2;
-        Wed, 08 May 2024 19:06:08 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVa+furTq9QhUZ8ikrP68f6drVNAxUlUGhCLx4+L7o27YwFM9+ZPi7ImmGOstRiDAbZcpYqt5T83Q4pxt3hVWQ473FKIYJtbUtOSacSCVTxdnSIxzJ8RPKjkjRujgwSmmzZ8+VCefSGjWvDsQ==
-X-Gm-Message-State: AOJu0YyoTcB6B0XIKmf2pcdZ6yK9WwbU8ifxxqjHeImd3Co0+Go53Dml
-	woYrJIxrxZL6QZgO4LYmrk5YRJoGCYGC0oCQnCxLu3Pix+1zmjOqkKKidVvzZBxROeAdTrz78Vm
-	ynWM6FXd1mBELL++TlJCrjtZA+0M=
-X-Google-Smtp-Source: AGHT+IG9jgW2EhldqJEU5OYVfvoRjo0wlRA5x/+WH/NBhi4EjV49pvu6Eqy1EviqeUURrwJaBPOetOpoppVu/vQSytA=
-X-Received: by 2002:a05:6512:3a8c:b0:521:b2b5:5ab2 with SMTP id
- 2adb3069b0e04-521b2b55ab6mr2522757e87.46.1715220367602; Wed, 08 May 2024
- 19:06:07 -0700 (PDT)
+	s=arc-20240116; t=1715228201; c=relaxed/simple;
+	bh=M8OzvcYBmKGDKjXGMF5Iys8win0xxLaBpfz7DSCaZzA=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eZQctjkr0FzvQgpkJaO3RtN2a78EmK6h4edULkSrWPulhN9KdoAroAzFD7mW1WCRIF3swyAMkqxPfC0+xr4BpkbjrC0F2K+pMbz4xnMSIra/ne1W/91gjiVjTn5dtDZhUAHgEWW4+4+c3mmuvMTDnMwEYOCSNHM8lIOYc13H2Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=fail smtp.mailfrom=gmail.com; arc=none smtp.client-ip=62.142.5.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=gmail.com
+Received: from localhost (88-113-25-208.elisa-laajakaista.fi [88.113.25.208])
+	by fgw20.mail.saunalahti.fi (Halon) with ESMTP
+	id e98909e1-0dba-11ef-b3cf-005056bd6ce9;
+	Thu, 09 May 2024 07:16:31 +0300 (EEST)
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Thu, 9 May 2024 07:16:30 +0300
+To: Frank Li <Frank.li@nxp.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Xiaowei Song <songxiaowei@hisilicon.com>,
+	Binghui Wang <wangbinghui@hisilicon.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH v4 4/5] PCI: imx6: Convert to agnostic GPIO API
+Message-ID: <ZjxOHpXITE_5I4lq@surfacebook.localdomain>
+References: <20240506142142.4042810-1-andriy.shevchenko@linux.intel.com>
+ <20240506142142.4042810-5-andriy.shevchenko@linux.intel.com>
+ <Zjp/eTITvtTG8bBL@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240507230440.3384949-1-quic_abhinavk@quicinc.com> <CAD=FV=Xa6LJEWZwdUXvFVPQ0-qnDZroDi6tkZaLFHiarJ2gyew@mail.gmail.com>
-In-Reply-To: <CAD=FV=Xa6LJEWZwdUXvFVPQ0-qnDZroDi6tkZaLFHiarJ2gyew@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Thu, 9 May 2024 11:05:31 +0900
-X-Gmail-Original-Message-ID: <CAK7LNARZu1Jrqibn-PvjAa=dQwikMdWVH9d9oKwpe007JeVC6Q@mail.gmail.com>
-Message-ID: <CAK7LNARZu1Jrqibn-PvjAa=dQwikMdWVH9d9oKwpe007JeVC6Q@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: remove python 3.9 dependency for compiling msm
-To: Doug Anderson <dianders@chromium.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, freedreno@lists.freedesktop.org, 
-	Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
-	seanpaul@chromium.org, swboyd@chromium.org, quic_jesszhan@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zjp/eTITvtTG8bBL@lizhi-Precision-Tower-5810>
 
-On Thu, May 9, 2024 at 9:28=E2=80=AFAM Doug Anderson <dianders@chromium.org=
-> wrote:
->
-> Hi,
->
-> On Tue, May 7, 2024 at 4:05=E2=80=AFPM Abhinav Kumar <quic_abhinavk@quici=
-nccom> wrote:
-> >
-> > Since commit 5acf49119630 ("drm/msm: import gen_header.py script from M=
-esa"),
-> > compilation is broken on machines having python versions older than 3.9
-> > due to dependency on argparse.BooleanOptionalAction.
-> >
-> > Switch to use simple bool for the validate flag to remove the dependenc=
-y.
-> >
-> > Fixes: 5acf49119630 ("drm/msm: import gen_header.py script from Mesa")
-> > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > ---
-> >  drivers/gpu/drm/msm/registers/gen_header.py | 5 +++--
-> >  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> No idea if we're supposed to allow python as a build dependency. That
-> being said, I can confirm that this fixes the problem for me since I
-> ran into it too [1].
->
-> Tested-by: Douglas Anderson <dianders@chromium.org>
->
-> [1] https://lore.kernel.org/r/CAD=3DFV=3DXnpS-=3DCookKxzFM8og9WCSEMxfESmf=
-TYH811438qg4ng@mail.gmail.com
->
+Tue, May 07, 2024 at 03:22:33PM -0400, Frank Li kirjoitti:
+> On Mon, May 06, 2024 at 05:20:40PM +0300, Andy Shevchenko wrote:
+> > The of_gpio.h is going to be removed. In preparation of that convert
+> > the driver to the agnostic API.
+
+...
+
+> Can I include your patch in my imx6 pci improvement patches
+> https://lore.kernel.org/linux-pci/20240507-pci2_upstream-v4-0-e8c80d874057@nxp.com/T/#t
+> 
+> There is patch, which rename function from imx6 -> imx. That will avoid
+> conflict.
+
+You can, of course, but it will be not my decision to make. Ask PCI maintainers
+who is supposed to take this series.
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
-I do not like Perl.
-
-IMHO, Python should be OK if Perl is OK.
-I agree that the required version should be
-documented changes.rst, at least.
-
-
-
-
-
-
---=20
-Best Regards
-Masahiro Yamada
 
