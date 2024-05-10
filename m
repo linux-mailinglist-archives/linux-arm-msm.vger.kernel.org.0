@@ -1,55 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-19645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF64B8C21C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 12:11:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBD738C21D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 12:16:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E7B4286622
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 10:11:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 927E4B20BD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 10:16:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D923165FC7;
-	Fri, 10 May 2024 10:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667BE165FCC;
+	Fri, 10 May 2024 10:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="xJk+hOhp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nPw4Fysd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E8A168AEE;
-	Fri, 10 May 2024 10:11:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B590E161935
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2024 10:16:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715335898; cv=none; b=lrESvuR4ipJZHWyS31lMg/N4qFJtvQ/r1f2QWdNIKm4phqKm+GuJLVuF20UXhUlokqf8tyyIRILcHKSRRwqnZTc5BPe9koMwUQ/ceJYgeWFgByORoIoDQF2lLjy/hBzb9K5WX1ZAodxX/Wrq9eKo/jGFRTxlF/U6SXGBdKt2Bk0=
+	t=1715336209; cv=none; b=L29AyUYr61GXmzsPYMYb+tRUOzwRyhhVnfCBegBUDATNQXAhsfoH5Zf0stvGW2BmXqQxFxEZZDv6iPAFF3wARtaUpz/U1UQ0FpYse2nIfrSSp2ptukjA3VkYe9xTMZ0LzY4utMPH0GhqsvgDrXxiyIa2pYa2evz/FZNyNG1l1oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715335898; c=relaxed/simple;
-	bh=c1waZ+eyh/3LEv2xQyu5LjuVf0SWbog1966q3KjkEqw=;
+	s=arc-20240116; t=1715336209; c=relaxed/simple;
+	bh=yNjxjyWHRgJNT85bQ4vAEKySQ6Ttdt82uXc6uV0lmmM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YtNlyYH6Pl8Ccl0z2REiQLej2aYx7J6E6RnFYtnDFj4dZDApSKOFl59mpo1z+2dCBn1pZa6dAajN2snkGuBNSClaihqD4lEdxLVtfGKmqZr0Hn6irfRUN86gIC8uP/3Eg3Gzf8SGQNq3Lg32PvWvL3DM4VWKVYZkGQ8IgMVVfL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=xJk+hOhp; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1715335884;
-	bh=c1waZ+eyh/3LEv2xQyu5LjuVf0SWbog1966q3KjkEqw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=xJk+hOhpaV0T+ju3F8+sGmHBtzFTyVUG4277e8N/HYwbkr3BX3CzBx/+wcN2hgGpe
-	 y3AQfCENjfRWsQqdzX9NFQcE6TCs0Uotjwtt9fg9LZId1pbDM11ZYIgJo4uNpzZkdY
-	 PnTqo9/+m/7JFxbRrFDEoqFkqIJ0VZ6crTG9McyI4maP8wggHhvKx30Wg8XTzClStG
-	 9FwDc0JokaW1oDrkqv4OxNLzVAO+B3GnAKvPKu5ny7tz7dWVkxfryNJjCzGuw1FWRn
-	 SruPRMpQcZD28dXZLjtT+UObBpWlZRpJ164RAFgDp6ZALOCqDHsItLhm9U+1Qm20Vt
-	 af9aDi8aR6llA==
-Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 1D92A3782185;
-	Fri, 10 May 2024 10:11:22 +0000 (UTC)
-Message-ID: <d95cafca-bc4c-4571-a6ed-b66b6f63a579@collabora.com>
-Date: Fri, 10 May 2024 12:11:21 +0200
+	 In-Reply-To:Content-Type; b=gUdGq+cmWlwIS/ekZCSre/MNfo3EWMZvQ1MJeXyPzuUL1cD5mJSLfEx+ICSi01n215Xi4OxikbdzMs3Jc0tUC4wNS33KFCbaHdU/vcbVGG0AE0DWoFqId0XXVvL12AI9DcqY2TZVPNbtXdjeEIw+Hc5N6wFJAkJVUPAgat5rWQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nPw4Fysd; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-41ba1ba55e9so13810685e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2024 03:16:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715336206; x=1715941006; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U0zj2kv9xKmTFj3ypPKj2+zRWc3BeAYMIei8qOrVVV8=;
+        b=nPw4Fysd2GSuxd1eg5SsAugpGPRhThIHAZTLY0x8TxIHn2LL7hdIhfyQUhjH2mUFO7
+         YOzppDdHVhgjhG76X+xDGfRzz77+E9l0xeHuLkbCLpP7LuF8rgPtk1N4oriQczkEXnvA
+         1zikjoSyWvMmUZmb6GNuemYfkK9TP+gS5epuMzw7N8OYCww0sl1BtFJ44dagGlV3jp+k
+         knS5ias7um9cP9FUevyatCLMHGpyS9dN8lyee6AcWwFxK6kvV8WoCU2cHs91089joEvj
+         uvo7KmzfytfNFrcirMmvk8YulB8LipE/F1WKr6LKh0VgDRufN/3sfWzplJMqc/8G4gBM
+         b1ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715336206; x=1715941006;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U0zj2kv9xKmTFj3ypPKj2+zRWc3BeAYMIei8qOrVVV8=;
+        b=lKS1fM5Mlb5XAL7s1mkJYmuK6unSGt4JSD9in7eWPk0fqrZlLKKjD7lkWwHupJ3MI4
+         ULbQvHYodEB1lMMKVqfgIRw+AVihjwrHY0YEy7kKX0n5gGuB3wAXE0vz9H8ap31BhwJY
+         iL/00uLUSeda+Fik/kdEr5rJC5I7qhK6lY0W37MKfUDV0oxqujNkYwLQVNfk+3QNBC19
+         ql7GhM67xaf0CLL27BYRx5SIfF/vZ9bxUjRECsVFkWiMzcg7BdjbbES0TUCNKdvMSfK7
+         2GLnATocBwqJZzotK4WhjuPZMxHFfyMSaS2V7kx1xwgua8EQ42I0atQGYeH8Qe/4fc+h
+         NH/A==
+X-Gm-Message-State: AOJu0Yy4W12jgLV1nxsOcVuv/NpEwIb2y4i+be7I3EGRAkdRaaLQ+g1n
+	+ePPJYi7JMrcZHIhkrXODEj5KXZjrsxiAcHyS2e9TK9LD+5WtrOSVDO2EXAA1tE=
+X-Google-Smtp-Source: AGHT+IHl7GUHAFqGOWygcJoig1gLtm4nsxrusQn4yYtD2dzg/4FpCoDaYkaBz2EaAYp4mDAOsjGJGg==
+X-Received: by 2002:a05:600c:1f83:b0:41a:b961:9495 with SMTP id 5b1f17b1804b1-41feac49164mr16994165e9.25.1715336206037;
+        Fri, 10 May 2024 03:16:46 -0700 (PDT)
+Received: from [192.168.0.3] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-41fccce25casm58133645e9.20.2024.05.10.03.16.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 May 2024 03:16:45 -0700 (PDT)
+Message-ID: <3938d7a7-17d0-4da6-b811-23f0eed546c3@linaro.org>
+Date: Fri, 10 May 2024 11:16:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,58 +75,63 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] nvmem: Change return type of reg read/write to
- ssize_t
-To: Joy Chakraborty <joychakr@google.com>, Hector Martin <marcan@marcan.st>,
- Sven Peter <sven@svenpeter.dev>, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>,
- Vladimir Zapolskiy <vz@mleia.com>, Neil Armstrong
- <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>,
- Jerome Brunet <jbrunet@baylibre.com>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Heiko Stuebner <heiko@sntech.de>,
- Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Vincent Shih <vincent.sunplus@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>, Rafal Milecki <rafal@milecki.pl>,
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
- Masami Hiramatsu <mhiramat@kernel.org>, Michal Simek <michal.simek@amd.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, asahi@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-amlogic@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
- manugautam@google.com
-References: <20240510082929.3792559-1-joychakr@google.com>
- <20240510082929.3792559-2-joychakr@google.com>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH] soc: qcom: pmic_glink: Handle the return value of
+ pmic_glink_init
+To: Chen Ni <nichen@iscas.ac.cn>, andersson@kernel.org,
+ konrad.dybcio@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240510083156.1996783-1-nichen@iscas.ac.cn>
 Content-Language: en-US
-In-Reply-To: <20240510082929.3792559-2-joychakr@google.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240510083156.1996783-1-nichen@iscas.ac.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Il 10/05/24 10:29, Joy Chakraborty ha scritto:
-> Change return type of reg_read() and reg_write() callback to ssize_t for
-> nvmem suppliers to return number of bytes read/written to the nvmem core.
+On 10/05/2024 09:31, Chen Ni wrote:
+> As platform_driver_register() and register_rpmsg_driver() can return
+> error numbers, it should be better to check the return value and deal
+> with the exception.
 > 
-> Currently nvmem core assumes the amount of data read/written is equal
-> to what it has requested from the supplier, this return code facilitates
-> better error handling in the nvmem core.
+> Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+> ---
+>   drivers/soc/qcom/pmic_glink.c | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
 > 
-> Signed-off-by: Joy Chakraborty <joychakr@google.com>
+> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+> index 40fb09d69014..8534a9692c45 100644
+> --- a/drivers/soc/qcom/pmic_glink.c
+> +++ b/drivers/soc/qcom/pmic_glink.c
+> @@ -369,8 +369,17 @@ static struct platform_driver pmic_glink_driver = {
+>   
+>   static int pmic_glink_init(void)
+>   {
+> -	platform_driver_register(&pmic_glink_driver);
+> -	register_rpmsg_driver(&pmic_glink_rpmsg_driver);
+> +	int ret;
+> +
+> +	ret = platform_driver_register(&pmic_glink_driver);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = register_rpmsg_driver(&pmic_glink_rpmsg_driver);
+> +	if (ret < 0) {
+> +		platform_driver_unregister(&pmic_glink_driver);
+> +		return ret;
+> +	}
+>   
+>   	return 0;
+>   }
 
-For MediaTek:
+Please add a Fixes tag
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK 
+driver")
 
+Then add
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+---
+bod
 
 
