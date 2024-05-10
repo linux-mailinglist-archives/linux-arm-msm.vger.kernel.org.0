@@ -1,554 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-19711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54BB88C2901
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 19:00:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E0978C2933
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 19:26:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 769991C225AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 17:00:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2492286774
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 17:26:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40C511C6B8;
-	Fri, 10 May 2024 16:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B506117C98;
+	Fri, 10 May 2024 17:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="AT1qsOc1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GmIe+DRu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-22.smtpout.orange.fr [80.12.242.22])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD63D182BD;
-	Fri, 10 May 2024 16:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38F617C68
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2024 17:25:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715360396; cv=none; b=Kf9KC5J3OXczK1Z6JPqTvvM1rJwcF3qqS15Aa6aYgbfnJ+RrBQsw3VR2xyA+wV7RF0kJO96jIRbSJnFT+E3JNmAD9bNsf/pxBbohHM6SvyhN64FWS1U/W20l5F6MXGuB1+rnySCoKCXvESrDXhl7hQUPKViNhQIbknt8EVFqgbg=
+	t=1715361960; cv=none; b=JWUUdRY2TycO8UW4dR+mizRDXSXCnvs/7SBkvEngch8BGcSr/hsK3bqvG9QV2Y4fAG2T0I6Q+pP44jZk/P3NEz9YGtm0qWOOF/RgdVH1pMAmb+4oo6QltiAdIhDNg7DulmOUd0Z+ahaV3SZP3lRQY08auLoqkcnDWXPpyHmlPtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715360396; c=relaxed/simple;
-	bh=KRK71eh2UAdNxszgYH3Pjb6tK5qvW2r2fePyYlxqntU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mvANHQxF8x7f3LftWotSW4KCgQAcEersIfqRpMbmmFbeUTJmgb6OvIYfu+s4l9MFABDVregy1eBOAzHbLNqFGkOwrgIUeAJda5Aw4ne5fPypmQ3/dWpvwwWtirCOsFdY8VOzeEhJaCxmNtDbQZ9XQr2UzUADE2aNZsr4qeu+8Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=AT1qsOc1; arc=none smtp.client-ip=80.12.242.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from localhost.localdomain ([86.243.17.157])
-	by smtp.orange.fr with ESMTPA
-	id 5TRsss8SODfl65TRtszFVB; Fri, 10 May 2024 18:50:22 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1715359822;
-	bh=b9Lp33WR9QxnnUWJ49kfLd3rLCP3DGsE00ZFeRMS6ww=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=AT1qsOc1iZEmWn1y0f5B0yiqo6iMVLNDUNxP4DY9W6nc/oijHTC9EtYMS9/5GgJXs
-	 X8mCbPJC42T+HmifEQ76SvrF48QHnT+uxSjAuIge8RDFQ9aExet7SmTt7CzIOrxCG1
-	 JViX6p7EqCoWnu0HlCNOpcWhXmC6mDTmry+6L+6PCq5NS5PQIDFOuCWt59ygOlu7cD
-	 lfCdn6+58grrFvjkJdbS33C8zgp102+pAA2f+FMvRd+HCmaZ88ZQfow/nh/6IzLZE+
-	 vJBrHIRGpelYF2nlKMij4wtaEpg1qDJxedqEi7Oc6BWu4As1mVo89Quq+CPVnWxAlI
-	 xJT3k7EN1j98A==
-X-ME-Helo: localhost.localdomain
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Fri, 10 May 2024 18:50:22 +0200
-X-ME-IP: 86.243.17.157
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Subject: [PATCH] clk: qcom: Constify struct pll_vco
-Date: Fri, 10 May 2024 18:50:00 +0200
-Message-ID: <c3c9a75ed77a5ef2e9b72081e88225d84bba91cd.1715359776.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.45.0
+	s=arc-20240116; t=1715361960; c=relaxed/simple;
+	bh=wZeYjtuwgYcICc8dB0xr2MD2edWcT8RMosk9Qo1UWOU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ln7ZC+lQo+dEWCE8IQeU1v8hbhPxXWmGGwOuG86mwHCAQO9Ey1lCGZ+5m05Wb5sxHgn3sWGhW5J+nnarb+WCBHA7axlWIh5i5wlMowpbt30Y9r0K43oH8pm1/E2rtyjAaWa3n3Vm85StXGLt/bwRNjRl2+0ufIoCZ9ko9qfkXCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GmIe+DRu; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a59b81d087aso582803766b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2024 10:25:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715361957; x=1715966757; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vdPSQiADLpJdWcJT86VUdEp+yfjE3R3oqb+jGkEgXsM=;
+        b=GmIe+DRu4ru1EoIN3MRqXHrp5CTF2hxeZSjwEF3Ec0jY/tz7dnpA9JiYyKB59vYC1l
+         Z9mBmJux58Xsbt3azTHOFPRvPZy6e011qicckYl4F4ZtfdRTGAGZ9wafQ2wUTZWf5T3A
+         4qcSuDbEDhNh5KDGIaOSDu2QxINFTC9GU+TGYRoEVT+25p9g2NSKW7/ES5twe5aDtSVx
+         r6n63pQ6I6vX/QEr4Rjt6Qa+r6YBxh95VS0SyCT3cROoRUGJfPpDMYqCfhB08UKALQIT
+         7sAmAo1eVp7ZFhNDMAESJ8bD017ZSYrglMmKUXeDKYvATF5MS7Fz9WAEV6UdyV1I+YUk
+         wGrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715361957; x=1715966757;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vdPSQiADLpJdWcJT86VUdEp+yfjE3R3oqb+jGkEgXsM=;
+        b=YB9w4Sa2FRag8aE+pJZ3+6zvBAzKdKxj5jehBgVDDvy2sZslh7qeRltGileRMSR8hN
+         eC8eG0Ge9nsU6aZJZ7KDWH2ntLEBJ0ARxvlka9Q4RdNzcxJDjsw0zCrTgYX1fRqGlGSL
+         fwb1RAyGslATNRd+JYluFud6mCJZjYfJFK3u3/S1RssMaoNZoHlmy3CEGFvqr5FBeiHi
+         x/CTzkzQZWfgHW6D3qbJXZGKFIwscnVo4HWk0PTCuXbAqkM8eWZziaebrEgqWIU1xYIu
+         fFjNefAA47MoorvE+HyFgnDhhiTOMPNhGjM1J1EpXACW9mqsZ79alrihYV/BlNLRwcTi
+         pvCg==
+X-Gm-Message-State: AOJu0Yyj9KIzxMy5jAJUWYQhD8Hm0zR4N5Om2ITkPDxODHFrFSM8UmZY
+	irvfpFWRp9UHr0Qp/pa9c0fJP+Dj/mQa2GXBvI65FPJvxnscPe4dhQtshiuesl0=
+X-Google-Smtp-Source: AGHT+IFkrvmT40I3UyyspYoDEueQs0vfUcWLdpzdlVYfte422rI1yyUSBBpLttzzaekTIzz4I0Wfag==
+X-Received: by 2002:a50:ab0c:0:b0:572:459f:c7ab with SMTP id 4fb4d7f45d1cf-5734d6f004bmr3078565a12.28.1715361957294;
+        Fri, 10 May 2024 10:25:57 -0700 (PDT)
+Received: from [192.168.62.15] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5733becfb83sm2028668a12.46.2024.05.10.10.25.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 May 2024 10:25:56 -0700 (PDT)
+Message-ID: <7ea1f4d7-ddb9-43a1-91c0-477dfde87da1@linaro.org>
+Date: Fri, 10 May 2024 19:25:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: apss-ipq-pll: remove 'config_ctl_hi_val' from
+ Stromer pll configs
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+ Gabor Juhos <j4g8y7@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Varadarajan Narayanan
+ <quic_varada@quicinc.com>,
+ Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+References: <20240509-stromer-config-ctl-v1-1-6034e17b28d5@gmail.com>
+ <baa81202-f129-4ec2-baca-6ca8b476a37d@linaro.org>
+ <21cedacd-f454-4eb8-9b2b-33a14592a6c1@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <21cedacd-f454-4eb8-9b2b-33a14592a6c1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-pll_vco structure are never modified. They are used as .vco_table in
-"struct clk_alpha_pll".
+On 10.05.2024 6:25 PM, Kathiravan Thirumoorthy wrote:
+> 
+> 
+> On 5/10/2024 12:23 AM, Konrad Dybcio wrote:
+>> On 9.05.2024 10:08 AM, Gabor Juhos wrote:
+>>> Since the CONFIG_CTL register is only 32 bits wide in the Stromer
+>>> and Stromer Plus PLLs , the 'config_ctl_hi_val' values from the
+>>> IPQ5018 and IPQ5332 configurations are not used so remove those.
+>>>
+>>> No functional changes.
+>>>
+>>> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+>>> ---
+>>
+>> Hm, it sounds suspicious that we'd have these settings then.. Could somebody from
+>> QC please confirm that everything's alright here?
+> 
+> 
+> I checked the HW doc and yes in both IPQ5018 and IPQ5332 CONFIG_CTL_U register is not implemented. I see offset of CONFIG_CTL_U register is removed in the change[1] by Gabor.
 
-And in this structure, we have:
-	const struct pll_vco *vco_table;
+Thanks
 
-Constifying these structures moves some data to a read-only section, so
-increase overall security.
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-On a x86_64, with allmodconfig:
-Before:
-   text	   data	    bss	    dec	    hex	filename
-   9905	  47576	      0	  57481	   e089	drivers/clk/qcom/mmcc-msm8994.o
-
-After:
-   text	   data	    bss	    dec	    hex	filename
-  10033	  47440	      0	  57473	   e081	drivers/clk/qcom/mmcc-msm8994.o
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
-Compile tested only.
-
-I hope that it can be applied with this single patch because all files are
-in drivers/clk/qcom/.
----
- drivers/clk/qcom/camcc-sc8280xp.c     | 4 ++--
- drivers/clk/qcom/camcc-sm6350.c       | 2 +-
- drivers/clk/qcom/camcc-sm8250.c       | 4 ++--
- drivers/clk/qcom/dispcc-sm6125.c      | 2 +-
- drivers/clk/qcom/dispcc-sm6350.c      | 2 +-
- drivers/clk/qcom/dispcc-sm6375.c      | 2 +-
- drivers/clk/qcom/dispcc-sm8450.c      | 2 +-
- drivers/clk/qcom/dispcc-sm8550.c      | 2 +-
- drivers/clk/qcom/dispcc-sm8650.c      | 2 +-
- drivers/clk/qcom/gcc-msm8998.c        | 2 +-
- drivers/clk/qcom/gcc-sc8180x.c        | 2 +-
- drivers/clk/qcom/gcc-sm6115.c         | 6 +++---
- drivers/clk/qcom/gcc-sm6375.c         | 4 ++--
- drivers/clk/qcom/gpucc-msm8998.c      | 2 +-
- drivers/clk/qcom/gpucc-sdm660.c       | 2 +-
- drivers/clk/qcom/gpucc-sm6115.c       | 4 ++--
- drivers/clk/qcom/gpucc-sm6125.c       | 2 +-
- drivers/clk/qcom/gpucc-sm6375.c       | 2 +-
- drivers/clk/qcom/gpucc-sm8250.c       | 2 +-
- drivers/clk/qcom/gpucc-sm8350.c       | 2 +-
- drivers/clk/qcom/gpucc-sm8450.c       | 2 +-
- drivers/clk/qcom/gpucc-sm8650.c       | 2 +-
- drivers/clk/qcom/lpasscorecc-sc7180.c | 2 +-
- drivers/clk/qcom/mmcc-msm8994.c       | 4 ++--
- drivers/clk/qcom/mmcc-msm8996.c       | 6 +++---
- drivers/clk/qcom/mmcc-sdm660.c        | 4 ++--
- drivers/clk/qcom/videocc-sm8150.c     | 2 +-
- drivers/clk/qcom/videocc-sm8250.c     | 2 +-
- 28 files changed, 38 insertions(+), 38 deletions(-)
-
-diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
-index 8e26ec2def73..d8de924a878a 100644
---- a/drivers/clk/qcom/camcc-sc8280xp.c
-+++ b/drivers/clk/qcom/camcc-sc8280xp.c
-@@ -45,11 +45,11 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco lucid_vco[] = {
-+static const struct pll_vco lucid_vco[] = {
- 	{ 249600000, 1800000000, 0 },
- };
- 
--static struct pll_vco zonda_vco[] = {
-+static const struct pll_vco zonda_vco[] = {
- 	{ 595200000, 3600000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
-index e4e7b308ecf1..c6fe684aa780 100644
---- a/drivers/clk/qcom/camcc-sm6350.c
-+++ b/drivers/clk/qcom/camcc-sm6350.c
-@@ -32,7 +32,7 @@ enum {
- 	P_CAMCC_PLL3_OUT_MAIN,
- };
- 
--static struct pll_vco fabia_vco[] = {
-+static const struct pll_vco fabia_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/camcc-sm8250.c b/drivers/clk/qcom/camcc-sm8250.c
-index 9b32c56a5bc5..96103eeda586 100644
---- a/drivers/clk/qcom/camcc-sm8250.c
-+++ b/drivers/clk/qcom/camcc-sm8250.c
-@@ -32,11 +32,11 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco lucid_vco[] = {
-+static const struct pll_vco lucid_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
--static struct pll_vco zonda_vco[] = {
-+static const struct pll_vco zonda_vco[] = {
- 	{ 595200000UL, 3600000000UL, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/dispcc-sm6125.c b/drivers/clk/qcom/dispcc-sm6125.c
-index 1cc5f220a3c4..85e07731cce2 100644
---- a/drivers/clk/qcom/dispcc-sm6125.c
-+++ b/drivers/clk/qcom/dispcc-sm6125.c
-@@ -28,7 +28,7 @@ enum {
- 	P_GPLL0_OUT_MAIN,
- };
- 
--static struct pll_vco disp_cc_pll_vco[] = {
-+static const struct pll_vco disp_cc_pll_vco[] = {
- 	{ 500000000, 1000000000, 2 },
- };
- 
-diff --git a/drivers/clk/qcom/dispcc-sm6350.c b/drivers/clk/qcom/dispcc-sm6350.c
-index e4b7464c4d0e..f712cbef9456 100644
---- a/drivers/clk/qcom/dispcc-sm6350.c
-+++ b/drivers/clk/qcom/dispcc-sm6350.c
-@@ -31,7 +31,7 @@ enum {
- 	P_GCC_DISP_GPLL0_CLK,
- };
- 
--static struct pll_vco fabia_vco[] = {
-+static const struct pll_vco fabia_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/dispcc-sm6375.c b/drivers/clk/qcom/dispcc-sm6375.c
-index d81d4e3c0b0d..2d42f85f184b 100644
---- a/drivers/clk/qcom/dispcc-sm6375.c
-+++ b/drivers/clk/qcom/dispcc-sm6375.c
-@@ -35,7 +35,7 @@ enum {
- 	P_GCC_DISP_GPLL0_CLK,
- };
- 
--static struct pll_vco lucid_vco[] = {
-+static const struct pll_vco lucid_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/dispcc-sm8450.c b/drivers/clk/qcom/dispcc-sm8450.c
-index 49bb4f58c391..5d028871624e 100644
---- a/drivers/clk/qcom/dispcc-sm8450.c
-+++ b/drivers/clk/qcom/dispcc-sm8450.c
-@@ -71,7 +71,7 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco lucid_evo_vco[] = {
-+static const struct pll_vco lucid_evo_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
-index 38ecea805503..88f9347ab77c 100644
---- a/drivers/clk/qcom/dispcc-sm8550.c
-+++ b/drivers/clk/qcom/dispcc-sm8550.c
-@@ -71,7 +71,7 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco lucid_ole_vco[] = {
-+static const struct pll_vco lucid_ole_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/dispcc-sm8650.c b/drivers/clk/qcom/dispcc-sm8650.c
-index 3eb64bcad487..c0e1ea63166b 100644
---- a/drivers/clk/qcom/dispcc-sm8650.c
-+++ b/drivers/clk/qcom/dispcc-sm8650.c
-@@ -69,7 +69,7 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco lucid_ole_vco[] = {
-+static const struct pll_vco lucid_ole_vco[] = {
- 	{ 249600000, 2100000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/gcc-msm8998.c b/drivers/clk/qcom/gcc-msm8998.c
-index cad7f1c7789c..5f8c87c1793f 100644
---- a/drivers/clk/qcom/gcc-msm8998.c
-+++ b/drivers/clk/qcom/gcc-msm8998.c
-@@ -27,7 +27,7 @@
- #define GCC_MMSS_MISC	0x0902C
- #define GCC_GPU_MISC	0x71028
- 
--static struct pll_vco fabia_vco[] = {
-+static const struct pll_vco fabia_vco[] = {
- 	{ 250000000, 2000000000, 0 },
- 	{ 125000000, 1000000000, 1 },
- };
-diff --git a/drivers/clk/qcom/gcc-sc8180x.c b/drivers/clk/qcom/gcc-sc8180x.c
-index 5261bfc92b3d..ad905affd376 100644
---- a/drivers/clk/qcom/gcc-sc8180x.c
-+++ b/drivers/clk/qcom/gcc-sc8180x.c
-@@ -39,7 +39,7 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco trion_vco[] = {
-+static const struct pll_vco trion_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/gcc-sm6115.c b/drivers/clk/qcom/gcc-sm6115.c
-index 13e521cd4259..167e344ad399 100644
---- a/drivers/clk/qcom/gcc-sm6115.c
-+++ b/drivers/clk/qcom/gcc-sm6115.c
-@@ -42,15 +42,15 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco default_vco[] = {
-+static const struct pll_vco default_vco[] = {
- 	{ 500000000, 1000000000, 2 },
- };
- 
--static struct pll_vco gpll9_vco[] = {
-+static const struct pll_vco gpll9_vco[] = {
- 	{ 500000000, 1250000000, 0 },
- };
- 
--static struct pll_vco gpll10_vco[] = {
-+static const struct pll_vco gpll10_vco[] = {
- 	{ 750000000, 1500000000, 1 },
- };
- 
-diff --git a/drivers/clk/qcom/gcc-sm6375.c b/drivers/clk/qcom/gcc-sm6375.c
-index 84639d5b89bf..ac1ed2d728f9 100644
---- a/drivers/clk/qcom/gcc-sm6375.c
-+++ b/drivers/clk/qcom/gcc-sm6375.c
-@@ -50,11 +50,11 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco lucid_vco[] = {
-+static const struct pll_vco lucid_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
--static struct pll_vco zonda_vco[] = {
-+static const struct pll_vco zonda_vco[] = {
- 	{ 595200000, 3600000000UL, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/gpucc-msm8998.c b/drivers/clk/qcom/gpucc-msm8998.c
-index 9a4fdff719ec..7b1cb44e31b2 100644
---- a/drivers/clk/qcom/gpucc-msm8998.c
-+++ b/drivers/clk/qcom/gpucc-msm8998.c
-@@ -48,7 +48,7 @@ static struct clk_branch gpucc_cxo_clk = {
- 	},
- };
- 
--static struct pll_vco fabia_vco[] = {
-+static const struct pll_vco fabia_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- 	{ 125000000, 1000000000, 1 },
- };
-diff --git a/drivers/clk/qcom/gpucc-sdm660.c b/drivers/clk/qcom/gpucc-sdm660.c
-index 459f123a6720..a52d98b7cf4c 100644
---- a/drivers/clk/qcom/gpucc-sdm660.c
-+++ b/drivers/clk/qcom/gpucc-sdm660.c
-@@ -51,7 +51,7 @@ static struct clk_branch gpucc_cxo_clk = {
- 	},
- };
- 
--static struct pll_vco gpu_vco[] = {
-+static const struct pll_vco gpu_vco[] = {
- 	{ 1000000000, 2000000000, 0 },
- 	{ 500000000,  1000000000, 2 },
- 	{ 250000000,   500000000, 3 },
-diff --git a/drivers/clk/qcom/gpucc-sm6115.c b/drivers/clk/qcom/gpucc-sm6115.c
-index fb71c21c9a89..9793dd9a2596 100644
---- a/drivers/clk/qcom/gpucc-sm6115.c
-+++ b/drivers/clk/qcom/gpucc-sm6115.c
-@@ -38,11 +38,11 @@ enum {
- 	P_GPU_CC_PLL1_OUT_MAIN,
- };
- 
--static struct pll_vco default_vco[] = {
-+static const struct pll_vco default_vco[] = {
- 	{ 1000000000, 2000000000, 0 },
- };
- 
--static struct pll_vco pll1_vco[] = {
-+static const struct pll_vco pll1_vco[] = {
- 	{ 500000000, 1000000000, 2 },
- };
- 
-diff --git a/drivers/clk/qcom/gpucc-sm6125.c b/drivers/clk/qcom/gpucc-sm6125.c
-index 61959ba02f9a..b719a48fe706 100644
---- a/drivers/clk/qcom/gpucc-sm6125.c
-+++ b/drivers/clk/qcom/gpucc-sm6125.c
-@@ -36,7 +36,7 @@ enum {
- 	P_GPU_CC_PLL1_OUT_AUX2,
- };
- 
--static struct pll_vco gpu_cc_pll_vco[] = {
-+static const struct pll_vco gpu_cc_pll_vco[] = {
- 	{ 1000000000, 2000000000, 0 },
- 	{ 500000000,  1000000000, 2 },
- };
-diff --git a/drivers/clk/qcom/gpucc-sm6375.c b/drivers/clk/qcom/gpucc-sm6375.c
-index da24276a018e..4e9a30a080d3 100644
---- a/drivers/clk/qcom/gpucc-sm6375.c
-+++ b/drivers/clk/qcom/gpucc-sm6375.c
-@@ -42,7 +42,7 @@ enum {
- 	P_GPU_CC_PLL1_OUT_ODD,
- };
- 
--static struct pll_vco lucid_vco[] = {
-+static const struct pll_vco lucid_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/gpucc-sm8250.c b/drivers/clk/qcom/gpucc-sm8250.c
-index 84f7f65c8d42..012bd1380f55 100644
---- a/drivers/clk/qcom/gpucc-sm8250.c
-+++ b/drivers/clk/qcom/gpucc-sm8250.c
-@@ -32,7 +32,7 @@ enum {
- 	P_GPU_CC_PLL1_OUT_MAIN,
- };
- 
--static struct pll_vco lucid_vco[] = {
-+static const struct pll_vco lucid_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
-index 38505d1388b6..9437d316d145 100644
---- a/drivers/clk/qcom/gpucc-sm8350.c
-+++ b/drivers/clk/qcom/gpucc-sm8350.c
-@@ -33,7 +33,7 @@ enum {
- 	P_GPU_CC_PLL1_OUT_MAIN,
- };
- 
--static struct pll_vco lucid_5lpe_vco[] = {
-+static const struct pll_vco lucid_5lpe_vco[] = {
- 	{ 249600000, 1750000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/gpucc-sm8450.c b/drivers/clk/qcom/gpucc-sm8450.c
-index 1c4769b646b0..7b329a803289 100644
---- a/drivers/clk/qcom/gpucc-sm8450.c
-+++ b/drivers/clk/qcom/gpucc-sm8450.c
-@@ -36,7 +36,7 @@ enum {
- 	P_GPU_CC_PLL1_OUT_MAIN,
- };
- 
--static struct pll_vco lucid_evo_vco[] = {
-+static const struct pll_vco lucid_evo_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/gpucc-sm8650.c b/drivers/clk/qcom/gpucc-sm8650.c
-index 03307e482aca..c53306d3093f 100644
---- a/drivers/clk/qcom/gpucc-sm8650.c
-+++ b/drivers/clk/qcom/gpucc-sm8650.c
-@@ -37,7 +37,7 @@ enum {
- 	P_GPU_CC_PLL1_OUT_MAIN,
- };
- 
--static struct pll_vco lucid_ole_vco[] = {
-+static const struct pll_vco lucid_ole_vco[] = {
- 	{ 249600000, 2100000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
-index fd9cd2e3f956..8ac72d26087e 100644
---- a/drivers/clk/qcom/lpasscorecc-sc7180.c
-+++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
-@@ -27,7 +27,7 @@ enum {
- 	P_SLEEP_CLK,
- };
- 
--static struct pll_vco fabia_vco[] = {
-+static const struct pll_vco fabia_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/mmcc-msm8994.c b/drivers/clk/qcom/mmcc-msm8994.c
-index 3229ff77372f..f19080cf715b 100644
---- a/drivers/clk/qcom/mmcc-msm8994.c
-+++ b/drivers/clk/qcom/mmcc-msm8994.c
-@@ -84,14 +84,14 @@ static const struct clk_parent_data mmcc_xo_dsibyte[] = {
- 	{ .fw_name = "dsi1pllbyte" },
- };
- 
--static struct pll_vco mmpll_p_vco[] = {
-+static const struct pll_vco mmpll_p_vco[] = {
- 	{ 250000000, 500000000, 3 },
- 	{ 500000000, 1000000000, 2 },
- 	{ 1000000000, 1500000000, 1 },
- 	{ 1500000000, 2000000000, 0 },
- };
- 
--static struct pll_vco mmpll_t_vco[] = {
-+static const struct pll_vco mmpll_t_vco[] = {
- 	{ 500000000, 1500000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/mmcc-msm8996.c b/drivers/clk/qcom/mmcc-msm8996.c
-index d3f2dc798567..92287d40c3a5 100644
---- a/drivers/clk/qcom/mmcc-msm8996.c
-+++ b/drivers/clk/qcom/mmcc-msm8996.c
-@@ -57,20 +57,20 @@ static struct clk_fixed_factor gpll0_div = {
- 	},
- };
- 
--static struct pll_vco mmpll_p_vco[] = {
-+static const struct pll_vco mmpll_p_vco[] = {
- 	{ 250000000, 500000000, 3 },
- 	{ 500000000, 1000000000, 2 },
- 	{ 1000000000, 1500000000, 1 },
- 	{ 1500000000, 2000000000, 0 },
- };
- 
--static struct pll_vco mmpll_gfx_vco[] = {
-+static const struct pll_vco mmpll_gfx_vco[] = {
- 	{ 400000000, 1000000000, 2 },
- 	{ 1000000000, 1500000000, 1 },
- 	{ 1500000000, 2000000000, 0 },
- };
- 
--static struct pll_vco mmpll_t_vco[] = {
-+static const struct pll_vco mmpll_t_vco[] = {
- 	{ 500000000, 1500000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
-index 996bd01fb9ac..4b8380c2d648 100644
---- a/drivers/clk/qcom/mmcc-sdm660.c
-+++ b/drivers/clk/qcom/mmcc-sdm660.c
-@@ -96,14 +96,14 @@ static struct clk_alpha_pll mmpll6 =  {
- };
- 
- /* APSS controlled PLLs */
--static struct pll_vco vco[] = {
-+static const struct pll_vco vco[] = {
- 	{ 1000000000, 2000000000, 0 },
- 	{ 750000000, 1500000000, 1 },
- 	{ 500000000, 1000000000, 2 },
- 	{ 250000000, 500000000, 3 },
- };
- 
--static struct pll_vco mmpll3_vco[] = {
-+static const struct pll_vco mmpll3_vco[] = {
- 	{ 750000000, 1500000000, 1 },
- };
- 
-diff --git a/drivers/clk/qcom/videocc-sm8150.c b/drivers/clk/qcom/videocc-sm8150.c
-index a0329260157a..554631aa279b 100644
---- a/drivers/clk/qcom/videocc-sm8150.c
-+++ b/drivers/clk/qcom/videocc-sm8150.c
-@@ -24,7 +24,7 @@ enum {
- 	P_VIDEO_PLL0_OUT_MAIN,
- };
- 
--static struct pll_vco trion_vco[] = {
-+static const struct pll_vco trion_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
-diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
-index 016b596e03b3..914eddd0ae15 100644
---- a/drivers/clk/qcom/videocc-sm8250.c
-+++ b/drivers/clk/qcom/videocc-sm8250.c
-@@ -26,7 +26,7 @@ enum {
- 	P_VIDEO_PLL1_OUT_MAIN,
- };
- 
--static struct pll_vco lucid_vco[] = {
-+static const struct pll_vco lucid_vco[] = {
- 	{ 249600000, 2000000000, 0 },
- };
- 
--- 
-2.45.0
-
+Konrad
 
