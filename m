@@ -1,101 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-19707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B6A48C25E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 15:38:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BA0CD8C25EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 15:40:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 315E41F22950
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 13:38:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E9131F2644A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 May 2024 13:40:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 693F5127E0D;
-	Fri, 10 May 2024 13:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFF93127E0D;
+	Fri, 10 May 2024 13:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="3vGeAgym"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X0f6tCSf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE87C5472A;
-	Fri, 10 May 2024 13:38:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392A712C46B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2024 13:40:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715348297; cv=none; b=OyZzZy4ZwFBB662+ReOeSN3PGvQR9F2kJkPiQxApPFm2Ye7PF5eJ3wmyzNsaL6ZGuQMZoYm8+qXqjwdoNfd/Iu0TOmTL5qZndV+v3jCSUqo31YZGzrAArsrGljqmBhKGtMfPxwXHVVnM/XNXcL6meLwSnncsCwuSaAI00OseJmA=
+	t=1715348404; cv=none; b=BfeW7P5HXeCeRSNX1OEWeBFN97LT4JT0tSpaNOSPab736Yoxz4A+O9ZCpDGAlWk+xUE+iIT+Y9Vkydja0UmVysWLVGx4fZPkW4abT0D51LKkri3De8vKmOhrMAhb5YjPyeuioh0/iNxnLGysC/SBJYJrCTnhbiR59wrUfQ+uBXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715348297; c=relaxed/simple;
-	bh=9M5UJc9C+G9SRyQypj1LM3e6cRMeJPZKj6icey2JQWo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Kn3aSXU+GkeMLZfuqb52dOiP4itq2QWWmjJ9rouQzInJ8E9MSYyEoulDMvDOvoAsjNmPCFPs6JZzFRRKtyocV6q8Mbj4Lr3dC01X8B3PZRcG2DTzensb+iPnOyKauVe+8AXDGhb/iSZGYfIVvz8XojAKkhi8toOlLw3LmSuJORU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=3vGeAgym; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1715348294;
-	bh=9M5UJc9C+G9SRyQypj1LM3e6cRMeJPZKj6icey2JQWo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=3vGeAgymeAMzcAxMN7rZ7VcywZLqyxJ6HqBcuVZVw3pbZP0IOZ/s3qNwfD9spdzp+
-	 AxnO6a2ks5YDDmiQKQGdGE587JsToH2SuMyGVjOtD8lcAWLG1X+qLJWu6/Fv9v8V2O
-	 rVzZkTu2r22ZlxAwMQoQkjuJ9RCm6PKDUHuFXwoCCuxrJ4Kc48hbFKN2G0NOQE7XSg
-	 dESKN/ZcsAi/8Y5/WsmqkZ99MtznQGh3C7gFTL+55B8H812a2tW9jozA+Nsg6YfguN
-	 a5U2By8JSfkz0ZbpKkW58PnSJHhzi5oqLjqgJtYmdiOa/dAbF4SC62IxSy0jThXdHr
-	 9KuZqUEzuFeVA==
-Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: koike)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 7A1873781183;
-	Fri, 10 May 2024 13:38:09 +0000 (UTC)
-Message-ID: <4fcb2d0c-14f6-423a-998f-0965a139eae3@collabora.com>
-Date: Fri, 10 May 2024 10:38:07 -0300
+	s=arc-20240116; t=1715348404; c=relaxed/simple;
+	bh=G58itSBLMxq7Hnti9OjMcpU4zbraFRoaHyfISMmS3dQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=kz/jXKFqxAHDLhxPQ5MONmOQFI7uq2Fgo5+gM6EX0i+CBO97OjRLE+l71xfTnX/Y9pn4Y4CMCmcPfUfmG8LYvSVcIdifxZCqus2al48ngPsLjn4yS5f5Nm7d9BZoKVrZTbSaSYPOgF22D0BUnFNLMjgdtzq5OVKP2DVOgnM6SlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X0f6tCSf; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a5a2c05006aso134391266b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 May 2024 06:40:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715348402; x=1715953202; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ha8fz4Wr+IwPLlSAFxnrozj260YrkxhYC7xfmynUBWM=;
+        b=X0f6tCSfcKBxVAOAq0Qp98kKvEn/7k+bCYBm9fKN8BXzxbqGeD8Fn1kq4ID4iPIRP5
+         xWs0Hl+SI1IXwll8JrHLcSdAaMo5xL5Y6Ep1VUmlD5eA3+Xb4dLpASAJhyJe+Tf8FpQY
+         6dk9k1vwpff5i2m5/gaoTGAd/MHKEkZZ4QqWj1wKXCgcGcPuXB/ahrImtlwzXgGx81z/
+         s5EtRpwcsdaho71vs4NHoHcsb2O9P/B3ZGZAgDAdHpDPa4bI5orbwM6ZCbUqEL9mV87i
+         DJzI4eOtGr47gl2Xis5kWSJ6qeaGVWUEmiFRLP03jZGa7RmZB36u8i1DDZeSpCm7yhAD
+         iJFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715348402; x=1715953202;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ha8fz4Wr+IwPLlSAFxnrozj260YrkxhYC7xfmynUBWM=;
+        b=f6er1pZCgFxi5r+ezqmgde6BoOYuMSYG0t91AuSF12M9eqXra4QMgwvpoS7bSv7rfF
+         hclggtgGIPo/P/jz8v6Oz0ZVlDpHUlLNyDOoA6nWAopBbo6DB7pufd6WSD937+pc/mO8
+         cmHtxcfFYVKvvRENJniK8Z/GcmVxxJK/gJsrGRBPc1Q10zlqtjmy80vvFzYtY+HJ51Uf
+         jWqZ5XVGq/9ToQ9rFkUOxrKhV1k+2A25D7ax/+I3Lfi+r+5BVxNNBOdO0prFKOuJTinN
+         KHTf96FWkx561Q65wV+1t/1cryNdIlfppv0ZA4hKxjulSnZqBAIp0iImbd/759HRTOc6
+         B42w==
+X-Gm-Message-State: AOJu0Yws/aLP9h0IU+H0YL1fovvuPEQ5DVyEx6xA1YwiXBgDHkld7mNt
+	ui+UQcQ2qDqQ9JpXIrgXicXiMvnll8AQGmUeCgJQSOJLzeY+cpvAuCN2Z88vEtE=
+X-Google-Smtp-Source: AGHT+IH6BN4juUw4T+/Txsx7VnJHBlBsO2iEOHL3CdD35k1pZqHytie913QnQod0/ipiHQMnPn3xCA==
+X-Received: by 2002:a50:9fc9:0:b0:570:5b70:3407 with SMTP id 4fb4d7f45d1cf-5734d5c0c84mr2419289a12.10.1715348401718;
+        Fri, 10 May 2024 06:40:01 -0700 (PDT)
+Received: from [127.0.1.1] (078088045141.garwolin.vectranet.pl. [78.88.45.141])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a1781d48dsm185200866b.5.2024.05.10.06.40.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 May 2024 06:40:01 -0700 (PDT)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date: Fri, 10 May 2024 15:39:59 +0200
+Subject: [PATCH] arm64: dts: qcom: sc8280xp: Set status = "reserved" on
+ PSHOLD
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] drm/msm/gen_header: allow skipping the validation
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Stephen Rothwell <sfr@canb.auug.org.au>
-References: <20240503-fd-fix-lxml-v2-0-f80a60ce21a1@linaro.org>
- <CAA8EJppDNYR1D4NacrurY2e_xf5ycrtFBAAWaB2QVRBgSMESnQ@mail.gmail.com>
-Content-Language: en-US
-From: Helen Koike <helen.koike@collabora.com>
-In-Reply-To: <CAA8EJppDNYR1D4NacrurY2e_xf5ycrtFBAAWaB2QVRBgSMESnQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240510-topic-8280_off-v1-1-bcc70cda449e@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAK4jPmYC/x3MQQqAIBBA0avErBPUkrSrRETYTM0mRSMC6e5Jy
+ 7f4v0DGxJhhbAokvDlzOCtU24A/1nNHwVs1aKl7aZQUV4jshdVWLoFIKGU6R94M5CzUKCYkfv7
+ hNL/vB62AubFgAAAA
+To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+ Steev Klimaszewski <steev@kali.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.14-dev
 
+On most devices, TZ seems to be blocking access to the PSHOLD reboot
+register. This seems to be TZ, as even kicking the hypervisor doesn't
+seem to make it writable.
 
+Fixes: 865ff2e6f5da ("arm64: dts: qcom: sc8280xp: Add PS_HOLD restart")
+Reported-by: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-On 03/05/2024 17:23, Dmitry Baryshkov wrote:
-> On Fri, 3 May 2024 at 21:15, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> In order to remove pointless messages regarding missing lxml, skip
->> validation of MSM register files against the schema. Only the driver
->> developers really care and/or can fix the files.
->>
->> Keep the validation enabled during one of DRM CI stages, so that we
->> still catch errors, introduced by mistake.
-> 
-> Helen, could you please ack merging the second patch through drm/msm tree?
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 0549ba1fbeea..59f0a850671a 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -4623,6 +4623,8 @@ tsens0: thermal-sensor@c263000 {
+ 		restart@c264000 {
+ 			compatible = "qcom,pshold";
+ 			reg = <0 0x0c264000 0 0x4>;
++			/* TZ seems to block access */
++			status = "reserved";
+ 		};
+ 
+ 		tsens1: thermal-sensor@c265000 {
 
-Done.
+---
+base-commit: 704ba27ac55579704ba1289392448b0c66b56258
+change-id: 20240510-topic-8280_off-11539fc57f98
 
-> 
->> ---
->> Dmitry Baryshkov (2):
->>        drm/msm/gen_header: allow skipping the validation
->>        drm/ci: validate drm/msm XML register files against schema
-> 
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
