@@ -1,165 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-19735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC3E48C33DD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 May 2024 23:47:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5E518C33EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 May 2024 23:52:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D9E01C20EA3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 May 2024 21:47:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C6C01F21AB1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 May 2024 21:52:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67D83225AE;
-	Sat, 11 May 2024 21:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D468B2C189;
+	Sat, 11 May 2024 21:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BEgKZYrG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QZQg8ESO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE902137F
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 May 2024 21:47:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4B11BF50
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 May 2024 21:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715464027; cv=none; b=twjtcumjjtSoE8AuSyHGCQ4mY+15/iXaty17ykUY6dhH8ocsLtrTQnylvkRWrnY0MRcWfcjAVr3WozJJT/QOO3t3DSPJrkO9FoMEoHANeFlbjBqQUMkwy775MVYl48y3RTrAItD710Km/E2HfK2i/OSDv+evF6fuxgOsyhPaNls=
+	t=1715464357; cv=none; b=hM8j0PumvkwKWd4qkI0u/Pmnwh2QrlUmxtJOpoOQQP4EfPQ1mS/75Hqp+cTjsHfrifX5hw41m3JVTIDP52bPYUEbihbeFzICwB+J3XYIW+AI5Yn7v4qAEzkp2DLlAoQP5QYPVUBeHR5AEepoeSo70eLnlaBxHbMoPr/lDROrfAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715464027; c=relaxed/simple;
-	bh=kgtbFy2eSnTzPw4xjY4seg/MJRPmqlcxNeoaq47N8Kw=;
+	s=arc-20240116; t=1715464357; c=relaxed/simple;
+	bh=pf2wv3ydNosYB79zDqNVaK/3uio46So1rqMJdd2CbYs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vAFLtSu4IXuE6LJ5tBkdFsSueLzy9HkpkmmVZhnr3xXW0wQDwYeXv33SJezaEl204QT3tqPBnr9yPvoo6zqq27TK3CrmD0W0BP8WJvZXjCxB4GsxEPqcRkGJkBPFJwxnWVvvFf7BCey8M4/Codb0fRfxbXbkRs5Y1dMCWTwB1t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BEgKZYrG; arc=none smtp.client-ip=209.85.128.177
+	 To:Cc:Content-Type; b=SFUTOyd+utokqqK/C2bfxSZb3sZ4DM2+jPAINCoJczIFt3A6Zn+cjf8Av41rX0VxDtCE5DBaTMYWrsT4M4cTPtpR+Zb9CxvVjxLJF+3GVjM8os9anlo7lcir4IU/4RwlA1WBr9xRpx0tVioSxLV+MDHS4/B5hHKExTteOI/Uj1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QZQg8ESO; arc=none smtp.client-ip=209.85.219.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-61e01d5ea74so32745267b3.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 May 2024 14:47:05 -0700 (PDT)
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-de61424f478so3080475276.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 May 2024 14:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715464024; x=1716068824; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1715464354; x=1716069154; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UUDDnmzrxB3l3/4aj031ZrzOLNCmAjmO9rvghUTgzkE=;
-        b=BEgKZYrGIq4p1gVZha/Nkjls8UFtnAoxf/pmEWRTU49101eUNy185HBfBJ2t5QRcSh
-         hRGKFGj46lBuNfo0wDAJiD/GgDxp2m1J4/eKl9BVbNnWk5buU0UF1JK5VZrYwPYkC+Tw
-         vmTxlTd0h7/K/hs0CO/MJr6nImqzM1P5FmA0PgCjfXGgeVEB2QHDcli1PClfTvtdhUFk
-         ER2q0tfPiEODu6jF16axWbiQDWPOmNCscW2uLxO1sZ78V4Gk5x40TBIdHtdJ7oUKe3aA
-         kphslASG6qqBBHnv+BC37fKtWQQ9yEvtps+MQtoAz3nbL/TVFWVkpo2zHKeqZ8HZXWqG
-         kkHw==
+        bh=3wjcDK8yOGJQ1DL5gQpu62cFA/q24UQrr/Gt9NCzNO4=;
+        b=QZQg8ESOWSVHHYo4whpb7togbVaxNZW44I8prsjZkSHzoboiF0wKNZHaZCxKF8yNaA
+         gPJ8baF3RvhPuDhLr2IEyPS2mg77sYVTSI5PnAd3hUhyJUsmWMeYMhivhh2c8d+bjetz
+         F8MSGhvhxSesHVi9SOnmJvhEHptQQSyRH6lUjoujMRS7it6cCU+qiqX1QaEMSB9gNM1m
+         90EiLyOTRvGIkQSEtsKRg/mzARoh0DkAdYiTpK8zkpaYA5Q8knXB1yhSp5b0/FbjNDuW
+         HFp2gp1wEkpnSDCNlRFGpN1/JWYBjBsnyLKx8D7njMnMzOEGjx48f3GV1Nq/bx9xRvVX
+         TugA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715464024; x=1716068824;
+        d=1e100.net; s=20230601; t=1715464354; x=1716069154;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UUDDnmzrxB3l3/4aj031ZrzOLNCmAjmO9rvghUTgzkE=;
-        b=S8FZVRRgWWbg+TACtIImkUdwr3bALREV0/nHr7fYQlLOf8dF49WS1XAFqCfwO7gB//
-         PIDcYM3JUNk/b3BqQucAt9cprvG7FLY/O8e3KWfv1ruJpoom3dnT6QnmJRQX34Wl8lMx
-         SPvi/LR712IoFMxCBwLLF8utruDP0VrFSceuhnOJjGA+qOaBVKNQEMeEjQ8YgugrLaY2
-         FdpfMUgfWHgNjyDrvqtzOLpLajQgaOI+UUrQoLKPT3E1F0qDfKA4puNxoSe57J1B+ayu
-         KsgLe2NjZXQvkAq00jUyMDrfgoPg5fRyWyLHLdw4P0SyE0XdWbWq6jjUUZIMpa8mbX/1
-         bwFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+LOpU+yfgtR06HAE7RCA8mD6Fsun1N2Pq8lo0BZnrldXi2OrIwQ+tMkKVbIPwRn2R3KQUX/WwWzrxDjPRJoHnQ4P4uIgEmIdu9bQBcw==
-X-Gm-Message-State: AOJu0YzANNIrCcS+Vy2DAkjwkcpnw01WD+5BdX/dhsngtD6UsrLKB8d6
-	CcnN/MfSENg++b/M2/CcmTQwR4i7C9ox5J+aKRPfFePgxUkWW8L7Ol3pKZIBblmgXnembRuVqqm
-	Dbs7jcP36P2dJh6pVey1w30ARo/f3VpRBvSWNtO34USo1YDaA
-X-Google-Smtp-Source: AGHT+IGG3nr3fWq7oYomiHLISDdigDRI73rcAWer5xHynouZBj9dhN1hlkvK3TDT9c5wAPBOWXNGkt1XOlWrmP10/T4=
-X-Received: by 2002:a05:690c:ed4:b0:61a:e9f6:2b1b with SMTP id
- 00721157ae682-622aff774d9mr84631617b3.8.1715464024566; Sat, 11 May 2024
- 14:47:04 -0700 (PDT)
+        bh=3wjcDK8yOGJQ1DL5gQpu62cFA/q24UQrr/Gt9NCzNO4=;
+        b=IzYltvoWTUJvMUDng4hSGRC86wZnJyWvHKz0gg12Z0s8JrATFtbM/+I3/kyszACa7k
+         YQ2dGIO8fEDNr4vV3xwfxbbWtsox/TraPe+lWr6F8eoGV75vmW1qmuIdP3r49UsvrK/b
+         DoeAW4s/nijXwoDtK/ynBd5paeuFeDwnKT/TUxyIfGebuHlv8LSZezzirAvuWP53YXKB
+         jtkKd4m+1q10P/V5Q0hyO4JCKgrejgfEvHgspGKjXSRCsEpMD69u3GcY/SgJ+HHCHGFd
+         gg9DzQHoJmDvvHSVg7dgWOl2lwwk+HfblFzRNsX9Dcq4TMA3z//CrswOev1QhEEm3DEj
+         H7RA==
+X-Forwarded-Encrypted: i=1; AJvYcCVotC+nkHIrSMcBuPiUb8mXEgyN6SQe3IB/IlVJAVRc80hqAojlO9yJjM2MAEsWrJi8w7h+DUlJzLCqVlJ70DT4nUKNc+eP+h3oQSnD4w==
+X-Gm-Message-State: AOJu0YxFfrp4gPXUhCcvvwDNpCR5EOhvJ9Xgo5Dgn9/rDXHtvYCtWJgS
+	KzreJiPvRvKfMhvmjZJlsnzecSxwEQdwqSb0u/tWjF3X39F0lPUirlqsi01IR/L6MdpTpweAoVA
+	WXiMOm0dZPaJceYRXiwlU8Ar+L3B5gv59GEN3yg==
+X-Google-Smtp-Source: AGHT+IGb9x1QQvEQJcSjuug3d3oh9EExYyyZS6CzAQ25nIfZV+w1kS2+mukgZH63N+DVDr7JXiU7C6btr0dNzo9vHeo=
+X-Received: by 2002:a05:6902:28b:b0:de0:f74b:25f3 with SMTP id
+ 3f1490d57ef6-dee4f3961dcmr5392619276.60.1715464354013; Sat, 11 May 2024
+ 14:52:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240511-msm-adreno-memory-region-v2-1-9f33f42e7b99@gmail.com>
-In-Reply-To: <20240511-msm-adreno-memory-region-v2-1-9f33f42e7b99@gmail.com>
+References: <20240424-qcom-pd-mapper-v7-0-05f7fc646e0f@linaro.org>
+ <20240424-qcom-pd-mapper-v7-1-05f7fc646e0f@linaro.org> <d71c677f-eff7-2bc4-4328-38e4d83e1115@quicinc.com>
+In-Reply-To: <d71c677f-eff7-2bc4-4328-38e4d83e1115@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 12 May 2024 00:46:53 +0300
-Message-ID: <CAA8EJprMULN1BbRvUjh81f7x02cdg7UeNzuEnw2nUNrmKC7eFw@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/msm/a6xx: request memory region
-To: Kiarash Hajian <kiarash8112hajian@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
+Date: Sun, 12 May 2024 00:52:23 +0300
+Message-ID: <CAA8EJpoNQy682GDfWZpKz2McE=ho0YQXperE2Mi1Wk=OFkJb3g@mail.gmail.com>
+Subject: Re: [PATCH v7 1/6] soc: qcom: pdr: protect locator_addr with the main mutex
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Sibi Sankar <quic_sibis@quicinc.com>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+	Xilin Wu <wuxilin123@gmail.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Sat, 11 May 2024 at 22:56, Kiarash Hajian
-<kiarash8112hajian@gmail.com> wrote:
+On Thu, 25 Apr 2024 at 22:30, Chris Lew <quic_clew@quicinc.com> wrote:
 >
-> The driver's memory regions are currently just ioremap()ed, but not
-> reserved through a request. That's not a bug, but having the request is
-> a little more robust.
 >
-> Implement the region-request through the corresponding managed
-> devres-function.
+> On 4/24/2024 2:27 AM, Dmitry Baryshkov wrote:
+> > If the service locator server is restarted fast enough, the PDR can
+> > rewrite locator_addr fields concurrently. Protect them by placing
+> > modification of those fields under the main pdr->lock.
+> >
+> > Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+> > Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/soc/qcom/pdr_interface.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+> > index a1b6a4081dea..19cfe4b41235 100644
+> > --- a/drivers/soc/qcom/pdr_interface.c
+> > +++ b/drivers/soc/qcom/pdr_interface.c
+> > @@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
+> >                                             locator_hdl);
+> >       struct pdr_service *pds;
+> >
+> > +     mutex_lock(&pdr->lock);
+> >       /* Create a local client port for QMI communication */
+> >       pdr->locator_addr.sq_family = AF_QIPCRTR;
+> >       pdr->locator_addr.sq_node = svc->node;
+> >       pdr->locator_addr.sq_port = svc->port;
+> >
+> > -     mutex_lock(&pdr->lock);
+> >       pdr->locator_init_complete = true;
+> >       mutex_unlock(&pdr->lock);
+> >
+> > @@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
+> >
+> >       mutex_lock(&pdr->lock);
+> >       pdr->locator_init_complete = false;
+> > -     mutex_unlock(&pdr->lock);
+> >
+> >       pdr->locator_addr.sq_node = 0;
+> >       pdr->locator_addr.sq_port = 0;
+> > +     mutex_unlock(&pdr->lock);
+> >   }
+> >
+> >   static const struct qmi_ops pdr_locator_ops = {
+> >
 >
-> Signed-off-by: Kiarash Hajian <kiarash8112hajian@gmail.com>
-> ---
-> Changes in v2:
-> - update the subject prefix to "drm/msm/a6xx:", to match the majority of other changes to this file.
+> These two functions are provided as qmi_ops handlers in pdr_locator_ops.
+> Aren't they serialized in the qmi handle's workqueue since it as an
+> ordered_workqueue? Even in a fast pdr scenario I don't think we would
+> see a race condition between these two functions.
+>
+> The other access these two functions do race against is in the
+> pdr_notifier_work. I think you would need to protect locator_addr in
+> pdr_get_domain_list since the qmi_send_request there uses
+> 'pdr->locator_addr'.
 
-Same comment as I posted for v1 of the patch.
+Thanks, I missed it initially. I think I'd keep the rest of the
+changes and expand the lock to cover pdr_get_domain_list().
 
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
 >
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 8bea8ef26f77..aa83cb461a75 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -636,9 +636,9 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->
->  err:
->         if (!IS_ERR_OR_NULL(pdcptr))
-> -               iounmap(pdcptr);
-> +               devm_iounmap(&pdev->dev,pdcptr);
->         if (!IS_ERR_OR_NULL(seqptr))
-> -               iounmap(seqptr);
-> +               devm_iounmap(&pdev->dev,seqptr);
->  }
->
->  /*
-> @@ -1503,7 +1503,7 @@ static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
->                 return ERR_PTR(-EINVAL);
->         }
->
-> -       ret = ioremap(res->start, resource_size(res));
-> +       ret = devm_ioremap_resource(&pdev->dev, res);
->         if (!ret) {
->                 DRM_DEV_ERROR(&pdev->dev, "Unable to map the %s registers\n", name);
->                 return ERR_PTR(-EINVAL);
-> @@ -1646,7 +1646,7 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->         dev_pm_domain_detach(gmu->cxpd, false);
->
->  err_mmio:
-> -       iounmap(gmu->mmio);
-> +       devm_iounmap(gmu->dev ,gmu->mmio);
->
->         /* Drop reference taken in of_find_device_by_node */
->         put_device(gmu->dev);
-> @@ -1825,9 +1825,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->         dev_pm_domain_detach(gmu->cxpd, false);
->
->  err_mmio:
-> -       iounmap(gmu->mmio);
-> +       devm_iounmap(gmu->dev ,gmu->mmio);
->         if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"))
-> -               iounmap(gmu->rscc);
-> +               devm_iounmap(gmu->dev ,gmu->rscc);
->         free_irq(gmu->gmu_irq, gmu);
->         free_irq(gmu->hfi_irq, gmu);
->
->
-> ---
-> base-commit: cf87f46fd34d6c19283d9625a7822f20d90b64a4
-> change-id: 20240511-msm-adreno-memory-region-2bcb1c958621
->
-> Best regards,
-> --
-> Kiarash Hajian <kiarash8112hajian@gmail.com>
->
+> Thanks!
+> Chris
+
 
 
 -- 
