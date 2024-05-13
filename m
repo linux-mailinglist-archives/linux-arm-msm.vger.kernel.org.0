@@ -1,184 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-19772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA0E98C3928
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 01:07:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BE618C3A70
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 05:23:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 671AB1F210A8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 May 2024 23:07:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F94D1C20C9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 03:23:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3028C58AC8;
-	Sun, 12 May 2024 23:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2A7F145B23;
+	Mon, 13 May 2024 03:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gPGdXFyu"
+	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="P7IiSgus"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F14458AC1;
-	Sun, 12 May 2024 23:06:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18011145B1D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2024 03:23:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715555219; cv=none; b=UnHUooCV34Ju5QAaRP/NVDTN6FcF41MSAKv3SBsDRPazaH3RiRb4W9ZwqiNtCqhdVxS+oKV/qq0vTLX/UWVrsXXSBjcYfMcLCvia6ePVmNuKC4NbokCRWkGIQgO4bC05olHHlqMNhT4G8iKrJjNElX6RKFY0l5rvMx4gS9jHUsY=
+	t=1715570623; cv=none; b=WN8aKx0Xdp2joiFeIdP8D1kgdmPsDTUXB0eIbZlcHuSDXtDP/F6S24iUklmhFeMSEeLAe1Vs2qNVrpcthc6lhvk1MY0tFkYctk7FgQ6JRbLff16+s5IeBONrCKfQ2RK2qQBZA/t3TCx23P+DqnpwPgRzgE+Vl8w9N4W9TAefybA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715555219; c=relaxed/simple;
-	bh=iIroH5Y9NmxigOjMGmDqMn7BK8xc09nKaScH6g5IsMc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KHiqr0ugGAppVLpynQi0HH9fWEmFAb95OVGwkkP0wCk88KbcYpSMCeaLRf98SVQj6agAgA5CpMUQVlyYBVl1JONfeTcqWB6AtjNtFOZmbgNVqwDRIAwFq9oznt4iqti+qdqq9GAR3ZyyyCJcduplej9D0wY0Qnk5qMJUE16IHIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gPGdXFyu; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715555217; x=1747091217;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=iIroH5Y9NmxigOjMGmDqMn7BK8xc09nKaScH6g5IsMc=;
-  b=gPGdXFyu2tswU4E8dmK4r3/alwPuz10mMd5OZTTwRX5Y483AmaKb1CEV
-   nji5A/EFwA47rlf58Ob/rsRvhuQncgVjtJXa+WHACcxYuMSx3q9BwZ09T
-   RoP5Qt87aO02ZJOE9CABK7IWYmZGYFEZJsJuuc/6CD6X2avP19fNhOqfx
-   50zapSCIOBFW0aW5cekUmRvSKbiUx11CoXAZuZrO+b1kDgghz1CdmkUKt
-   XCg5ZwXvGJ4jfGbNiZTHlR9cWJjVc3IJllSWuPlZmBbeC0pkQxo1ClH2E
-   gcSBSRzG12w5wyGhTzuOl1eXwqw9dS3VkQ+6QpKKelswMTY+VCwh/KNv2
-   g==;
-X-CSE-ConnectionGUID: NXgLtap3TCSEchOfVid46A==
-X-CSE-MsgGUID: 71fELloMT9qSPjrIPPXnzg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11071"; a="15286294"
-X-IronPort-AV: E=Sophos;i="6.08,157,1712646000"; 
-   d="scan'208";a="15286294"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2024 16:06:56 -0700
-X-CSE-ConnectionGUID: Hi4M41MxT7CnFoyyZkt3fQ==
-X-CSE-MsgGUID: ikHENWtfSTW23qyf6SLTyQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,157,1712646000"; 
-   d="scan'208";a="53390460"
-Received: from lkp-server01.sh.intel.com (HELO f8b243fe6e68) ([10.239.97.150])
-  by fmviesa002.fm.intel.com with ESMTP; 12 May 2024 16:06:53 -0700
-Received: from kbuild by f8b243fe6e68 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1s6IHL-0009H1-13;
-	Sun, 12 May 2024 23:06:51 +0000
-Date: Mon, 13 May 2024 07:06:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: Kiarash Hajian <kiarash8112hajian@gmail.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Kiarash Hajian <kiarash8112hajian@gmail.com>
-Subject: Re: [PATCH v3 2/2] drm/msm/a6xx: request memory region
-Message-ID: <202405130628.7LSM1hPA-lkp@intel.com>
-References: <20240512-msm-adreno-memory-region-v3-2-0a728ad45010@gmail.com>
+	s=arc-20240116; t=1715570623; c=relaxed/simple;
+	bh=XoegDtlcSO/zIWKuRP063e2zFQ+RAdHrnLhPXIuNUEc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AeuArVLRZ0hle7sm0F6ZE/4IHjr7f4WWUxdcXmMC5Qf5hlGP6mvFp68cdQbjrhNIrpRdsFwj/nSaCS8R35JUraSBF0Zw6bYkQCZDr+SvvpyARMxU3TGbvWHMWhLDdInb0d9NVbwF+ma3hxo2HFd5+axzhPaLIafarBrYotb3vB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=P7IiSgus; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-51f12ccff5eso5239992e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 May 2024 20:23:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1715570620; x=1716175420; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e3m7C5s1EzbrOCKMut3xyPmXWEUzIM5EzWY1SS9dSVQ=;
+        b=P7IiSgusaN8tA/JtV2ZeR7LTt62mSdbHpi7C14dNPD54cI5D1X5HFaYTot85dhoctB
+         /nKJPziKXkJlsDqDp5N8S8c1PVYypEb9IhzhV88+CLOKmP+92UAzTi/hf4jL3H5Ix7fu
+         7o2cMlD29pERtxRN9L3HPvLSW4D1GBjwWd8PQ3ZaSOrSwUg9mhlNg+dzB/omgv/UmFTw
+         ZcqTsGvCgfx958jHOEWSbBKur7/jWW++jNe3umLoC4rjLAH5yqLesr4Q7kVkcxQ7804a
+         uJmmesqZSsH3GMJ3NnEi+8aTBFpvcTD7578zbhsZTYPqDunFezuCME1zzvZKATDgEreJ
+         vj2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715570620; x=1716175420;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e3m7C5s1EzbrOCKMut3xyPmXWEUzIM5EzWY1SS9dSVQ=;
+        b=uaOKAwwZkcUVsWDmSk65vtq6XGEVZyvUjWI7eY0GugSLTRXoTJYSoRjVaKBHelY7NR
+         n8cA0svn7z5z7FRZe0dpYE/91Knv+TKyGXgI4OvfM65an71anVM/eqbbaPw5oUIXvKRN
+         3A5+/VE5q1Sxw1iWWT2VvHDsnlZQaUVrFgJtYQGdLeB32Icq1cTvFTtor+CuuZPg5iLg
+         jRf7ArOJ3FZYv3ync/nxflHsvxaMNTNeE1cpggPzGW2OwTJB33mfAuT+fd5Oek02TvzF
+         b8KGIeMSl5VAF77/WuY42R2JofOM2YB/9iHE+6v+du2mBFCh4Ixjtobm083uRBD73/xy
+         E3ew==
+X-Forwarded-Encrypted: i=1; AJvYcCUXX7Q38C4hgluMhpcGiB+bx1V2KJ1lTmUYL/EnHzSU2KHozz1cE/fGyXDi6k2Wd+DOot+Qu+W0fNbh7238dc38jYSHJmwEnBXrT9RtQQ==
+X-Gm-Message-State: AOJu0Yyx09DEoVII8X/yGuWMg7+Zoi25t/Jj1h30bU3cBkbVYkMn+cWp
+	NxhMzIqTtILoL1dIK7NN+73CvqvHnxOYLejtHhKBxGFHdkUTfo3YI9yhm3WwBIUo5YUg1DE1Y3p
+	l8ytTRo5vQrByxcPXTjwRaEL/8BQjLWLiZCga/w==
+X-Google-Smtp-Source: AGHT+IHy34Cl4xZziZ107yfN01l4O0AakzJJxSzjElicrXFSsUZTQI+ymQEJT0TItQo7MqTqkqjIYns4wqu3zrFqwIE=
+X-Received: by 2002:a19:6410:0:b0:51a:d5d3:ee52 with SMTP id
+ 2adb3069b0e04-5221006e6f8mr5380369e87.17.1715570619914; Sun, 12 May 2024
+ 20:23:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240512-msm-adreno-memory-region-v3-2-0a728ad45010@gmail.com>
+References: <20240512-qcom-pd-mapper-v8-0-5ecbb276fcc0@linaro.org>
+In-Reply-To: <20240512-qcom-pd-mapper-v8-0-5ecbb276fcc0@linaro.org>
+From: Steev Klimaszewski <steev@kali.org>
+Date: Sun, 12 May 2024 22:23:28 -0500
+Message-ID: <CAKXuJqjLFL4iYFf_FxTpKUpHPL2-G095Pyp0Qn0ofBCKwFqRRA@mail.gmail.com>
+Subject: Re: [PATCH v8 0/5] soc: qcom: add in-kernel pd-mapper implementation
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Sibi Sankar <quic_sibis@quicinc.com>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+	Xilin Wu <wuxilin123@gmail.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Alexey Minnekhanov <alexeymin@postmarketos.org>, Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Kiarash,
+On Sat, May 11, 2024 at 4:56=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Protection domain mapper is a QMI service providing mapping between
+> 'protection domains' and services supported / allowed in these domains.
+> For example such mapping is required for loading of the WiFi firmware or
+> for properly starting up the UCSI / altmode / battery manager support.
+>
+> The existing userspace implementation has several issue. It doesn't play
+> well with CONFIG_EXTRA_FIRMWARE, it doesn't reread the JSON files if the
+> firmware location is changed (or if the firmware was not available at
+> the time pd-mapper was started but the corresponding directory is
+> mounted later), etc.
+>
+> However this configuration is largely static and common between
+> different platforms. Provide in-kernel service implementing static
+> per-platform data.
+>
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Konrad Dybcio <konrad.dybcio@linaro.org>
+> To: Sibi Sankar <quic_sibis@quicinc.com>
+> To: Mathieu Poirier <mathieu.poirier@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: linux-remoteproc@vger.kernel.org
+> Cc: Johan Hovold <johan+linaro@kernel.org>
+> Cc: Xilin Wu <wuxilin123@gmail.com>
+> Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+> Cc: Steev Klimaszewski <steev@kali.org>
+> Cc: Alexey Minnekhanov <alexeymin@postmarketos.org>
+>
+> --
+>
+> Changes in v8:
+> - Reworked pd-mapper to register as an rproc_subdev / auxdev
+> - Dropped Tested-by from Steev and Alexey from the last patch since the
+>   implementation was changed significantly.
+> - Add sensors, cdsp and mpss_root domains to 660 config (Alexey
+>   Minnekhanov)
+> - Added platform entry for sm4250 (used for qrb4210 / RB2)
+> - Added locking to the pdr_get_domain_list() (Chris Lew)
+> - Remove the call to qmi_del_server() and corresponding API (Chris Lew)
+> - In qmi_handle_init() changed 1024 to a defined constant (Chris Lew)
+> - Link to v7: https://lore.kernel.org/r/20240424-qcom-pd-mapper-v7-0-05f7=
+fc646e0f@linaro.org
+>
+> Changes in v7:
+> - Fixed modular build (Steev)
+> - Link to v6: https://lore.kernel.org/r/20240422-qcom-pd-mapper-v6-0-f969=
+57d01207@linaro.org
+>
+> Changes in v6:
+> - Reworked mutex to fix lockdep issue on deregistration
+> - Fixed dependencies between PD-mapper and remoteproc to fix modular
+>   builds (Krzysztof)
+> - Added EXPORT_SYMBOL_GPL to fix modular builds (Krzysztof)
+> - Fixed kerneldocs (Krzysztof)
+> - Removed extra pr_debug messages (Krzysztof)
+> - Fixed wcss build (Krzysztof)
+> - Added platforms which do not require protection domain mapping to
+>   silence the notice on those platforms
+> - Link to v5: https://lore.kernel.org/r/20240419-qcom-pd-mapper-v5-0-e35b=
+6f847e99@linaro.org
+>
+> Changes in v5:
+> - pdr: drop lock in pdr_register_listener, list_lock is already held (Chr=
+is Lew)
+> - pd_mapper: reworked to provide static configuration per platform
+>   (Bjorn)
+> - Link to v4: https://lore.kernel.org/r/20240311-qcom-pd-mapper-v4-0-2467=
+9cca5c24@linaro.org
+>
+> Changes in v4:
+> - Fixed missing chunk, reenabled kfree in qmi_del_server (Konrad)
+> - Added configuration for sm6350 (Thanks to Luca)
+> - Removed RFC tag (Konrad)
+> - Link to v3: https://lore.kernel.org/r/20240304-qcom-pd-mapper-v3-0-6858=
+fa1ac1c8@linaro.org
+>
+> Changes in RFC v3:
+> - Send start / stop notifications when PD-mapper domain list is changed
+> - Reworked the way PD-mapper treats protection domains, register all of
+>   them in a single batch
+> - Added SC7180 domains configuration based on TCL Book 14 GO
+> - Link to v2: https://lore.kernel.org/r/20240301-qcom-pd-mapper-v2-0-5d12=
+a081d9d1@linaro.org
+>
+> Changes in RFC v2:
+> - Swapped num_domains / domains (Konrad)
+> - Fixed an issue with battery not working on sc8280xp
+> - Added missing configuration for QCS404
+>
+> ---
+> Dmitry Baryshkov (5):
+>       soc: qcom: pdr: protect locator_addr with the main mutex
+>       soc: qcom: pdr: fix parsing of domains lists
+>       soc: qcom: pdr: extract PDR message marshalling data
+>       soc: qcom: add pd-mapper implementation
+>       remoteproc: qcom: enable in-kernel PD mapper
+>
+>  drivers/remoteproc/qcom_common.c    |  87 +++++
+>  drivers/remoteproc/qcom_common.h    |  10 +
+>  drivers/remoteproc/qcom_q6v5_adsp.c |   3 +
+>  drivers/remoteproc/qcom_q6v5_mss.c  |   3 +
+>  drivers/remoteproc/qcom_q6v5_pas.c  |   3 +
+>  drivers/remoteproc/qcom_q6v5_wcss.c |   3 +
+>  drivers/soc/qcom/Kconfig            |  15 +
+>  drivers/soc/qcom/Makefile           |   2 +
+>  drivers/soc/qcom/pdr_interface.c    |  17 +-
+>  drivers/soc/qcom/pdr_internal.h     | 318 ++---------------
+>  drivers/soc/qcom/qcom_pd_mapper.c   | 676 ++++++++++++++++++++++++++++++=
+++++++
+>  drivers/soc/qcom/qcom_pdr_msg.c     | 353 +++++++++++++++++++
+>  12 files changed, 1190 insertions(+), 300 deletions(-)
+> ---
+> base-commit: e5119bbdaca76cd3c15c3c975d51d840bbfb2488
+> change-id: 20240301-qcom-pd-mapper-e12d622d4ad0
+>
+> Best regards,
+> --
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
 
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on cf87f46fd34d6c19283d9625a7822f20d90b64a4]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Kiarash-Hajian/drm-msm-a6xx-request-memory-region/20240512-135215
-base:   cf87f46fd34d6c19283d9625a7822f20d90b64a4
-patch link:    https://lore.kernel.org/r/20240512-msm-adreno-memory-region-v3-2-0a728ad45010%40gmail.com
-patch subject: [PATCH v3 2/2] drm/msm/a6xx: request memory region
-config: i386-buildonly-randconfig-003-20240513 (https://download.01.org/0day-ci/archive/20240513/202405130628.7LSM1hPA-lkp@intel.com/config)
-compiler: gcc-13 (Ubuntu 13.2.0-4ubuntu3) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240513/202405130628.7LSM1hPA-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202405130628.7LSM1hPA-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/gpu/drm/msm/adreno/a6xx_gmu.c: In function 'a6xx_gmu_wrapper_init':
->> drivers/gpu/drm/msm/adreno/a6xx_gmu.c:1611:17: error: label 'err_mmio' used but not defined
-    1611 |                 goto err_mmio;
-         |                 ^~~~
-
-
-vim +/err_mmio +1611 drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-
-c11fa1204fe940 Akhil P Oommen 2023-01-02  1582  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1583  int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
-5a903a44a98471 Konrad Dybcio  2023-06-16  1584  {
-5a903a44a98471 Konrad Dybcio  2023-06-16  1585  	struct platform_device *pdev = of_find_device_by_node(node);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1586  	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1587  	int ret;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1588  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1589  	if (!pdev)
-5a903a44a98471 Konrad Dybcio  2023-06-16  1590  		return -ENODEV;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1591  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1592  	gmu->dev = &pdev->dev;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1593  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1594  	of_dma_configure(gmu->dev, node, true);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1595  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1596  	pm_runtime_enable(gmu->dev);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1597  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1598  	/* Mark legacy for manual SPTPRAC control */
-5a903a44a98471 Konrad Dybcio  2023-06-16  1599  	gmu->legacy = true;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1600  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1601  	/* Map the GMU registers */
-5a903a44a98471 Konrad Dybcio  2023-06-16  1602  	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu");
-5a903a44a98471 Konrad Dybcio  2023-06-16  1603  	if (IS_ERR(gmu->mmio)) {
-5a903a44a98471 Konrad Dybcio  2023-06-16  1604  		ret = PTR_ERR(gmu->mmio);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1605  		goto err_mmio;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1606  	}
-5a903a44a98471 Konrad Dybcio  2023-06-16  1607  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1608  	gmu->cxpd = dev_pm_domain_attach_by_name(gmu->dev, "cx");
-5a903a44a98471 Konrad Dybcio  2023-06-16  1609  	if (IS_ERR(gmu->cxpd)) {
-5a903a44a98471 Konrad Dybcio  2023-06-16  1610  		ret = PTR_ERR(gmu->cxpd);
-5a903a44a98471 Konrad Dybcio  2023-06-16 @1611  		goto err_mmio;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1612  	}
-5a903a44a98471 Konrad Dybcio  2023-06-16  1613  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1614  	if (!device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME)) {
-5a903a44a98471 Konrad Dybcio  2023-06-16  1615  		ret = -ENODEV;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1616  		goto detach_cxpd;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1617  	}
-5a903a44a98471 Konrad Dybcio  2023-06-16  1618  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1619  	init_completion(&gmu->pd_gate);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1620  	complete_all(&gmu->pd_gate);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1621  	gmu->pd_nb.notifier_call = cxpd_notifier_cb;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1622  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1623  	/* Get a link to the GX power domain to reset the GPU */
-5a903a44a98471 Konrad Dybcio  2023-06-16  1624  	gmu->gxpd = dev_pm_domain_attach_by_name(gmu->dev, "gx");
-5a903a44a98471 Konrad Dybcio  2023-06-16  1625  	if (IS_ERR(gmu->gxpd)) {
-5a903a44a98471 Konrad Dybcio  2023-06-16  1626  		ret = PTR_ERR(gmu->gxpd);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1627  	}
-5a903a44a98471 Konrad Dybcio  2023-06-16  1628  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1629  	gmu->initialized = true;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1630  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1631  	return 0;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1632  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1633  detach_cxpd:
-5a903a44a98471 Konrad Dybcio  2023-06-16  1634  	dev_pm_domain_detach(gmu->cxpd, false);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1635  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1636  	/* Drop reference taken in of_find_device_by_node */
-5a903a44a98471 Konrad Dybcio  2023-06-16  1637  	put_device(gmu->dev);
-5a903a44a98471 Konrad Dybcio  2023-06-16  1638  
-5a903a44a98471 Konrad Dybcio  2023-06-16  1639  	return ret;
-5a903a44a98471 Konrad Dybcio  2023-06-16  1640  }
-5a903a44a98471 Konrad Dybcio  2023-06-16  1641  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+I've tested this over the weekend on my Thinkpad X13s with a number of
+reboots and seems to do the correct thing in v8 as well.
+Tested-by: Steev Klimaszewski <steev@kali.org>
 
