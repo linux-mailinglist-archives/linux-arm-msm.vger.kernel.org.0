@@ -1,128 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-19789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B467A8C3E6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 11:56:01 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55DD08C4189
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 15:12:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFCE71C2132B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 09:56:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02A95B238DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 13:12:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BE0A149DF2;
-	Mon, 13 May 2024 09:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F096615219D;
+	Mon, 13 May 2024 13:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BZEgnYu5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q/F60R55"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E98219E7;
-	Mon, 13 May 2024 09:55:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA061514C1;
+	Mon, 13 May 2024 13:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715594148; cv=none; b=lrHFZIgufqKfWR2KV4XQPIstkH6zQAKaf8wI7+xKrr0DRHJTtUMsjbuB7kQa324vCbMxsLK5c+O3o5ezfkt2cTstDWQzMsqdH1/F0EK+Gvf1UQ/WnO4RfMoJDVHUCLsO9w5NVRUJbcQAzOdsz6JwqFk5TzihMB7R754mmO+AKKc=
+	t=1715605916; cv=none; b=sdBUt3Zf6mFVISQd9Y3AN8iviwwQ2O89Ux2xHO3BXbQrX9Y5y0yoOkgBt00G6HnKrN/Iupw76D/+7StJBLZRsdoOvtSl6zk6GWWWD4DW4TPlFH21ywtWqH76jkglFGMX1Ew1vRqNkMaVD2MJCmbh/LxaRrrdLryayx0DlYZ5GIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715594148; c=relaxed/simple;
-	bh=zlS6twK/Dl58Vu5VAcua0fVTm5IGTx2anPsS2Dxpav8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=b8YFq0xI2X8GD3xyGT2xvjGlXU9EZ30h8PaNFmZ74vVWnd43b+7IHGUVmqN8eDnuOzYZ8xQ3CQRENhO1SJ+AnkYKcjEBig+VN50/amzbzIhuSwynWcxyPir9Ab1VcjemrWl5V3LW+zzJF8UCt1iUnoqH0IicPuErjfcpujDnFq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BZEgnYu5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44D09G2Y009113;
-	Mon, 13 May 2024 09:55:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=U2WX32G1rFMx1/6IKHQPtO9xARAWs9tEx1dIHWNfp54=; b=BZ
-	EgnYu5wtaG+ih6mDQcRwFZhDHCE9+LkSMr3+nTrbXFa4NvsrFnVjBWAZ35r4h6oG
-	AG4DST5a9SlFXfMX3zKzH7EmRSOiwzHghXcvh6MNU1xB1zrPFv38wDrnvQi7aPSJ
-	cstuFft/oi588KH2OIxNbRlLgxRZgo7cQeuIWYv6G1EOSEsPjntaHv5zht8f8oro
-	FP9oaZ1DimdBPPswATAkd7n1sXazrXXaDGYf4KyXMvgCuIiNJBgBuzU7S91/YuII
-	9441WGzOLmt94jPBR6Rb0e6ODeZF5XdrU0hHt8TOu2L4nWxAcPuiq28WjjhCDQn2
-	7exiyiePrMXKVeAeIVpA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y2125b3p1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 May 2024 09:55:40 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44D9tcpU015241
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 May 2024 09:55:38 GMT
-Received: from [10.251.44.40] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 May
- 2024 02:55:35 -0700
-Message-ID: <96a1e5a8-b887-4bb6-b79a-a4d4549c1415@quicinc.com>
-Date: Mon, 13 May 2024 12:55:34 +0300
+	s=arc-20240116; t=1715605916; c=relaxed/simple;
+	bh=uGs8wzYzpFdHeDX/Baun3PNqRfhFUdOCMRK1N+BXjW4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N4WsXZcjH2w3u4MxWNkO7KerML+guXqIUSsA1JCzs90oc90CBuOd9ohkjmxGVlgjX0JsoVOUm9z2ms0ArfwVh6MWJUI+MMeBTLQGe896qLVgSr30PjpZ20/eqVcvQsHAVPGS5JEln129+T6BJxXxKCu74IUnNxzHf+++jOaFjks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q/F60R55; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784B8C113CC;
+	Mon, 13 May 2024 13:11:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715605916;
+	bh=uGs8wzYzpFdHeDX/Baun3PNqRfhFUdOCMRK1N+BXjW4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Q/F60R55cHvo9mUi6TeNwVAW+cVuHc5gINjapKsijPDjTyvL3OJxAPo1CI5s4PgQU
+	 GOEwEnrtWN92SqnR7sNe8m9lKmIhmV2lv3I2LtXzUKPqkD6j7okakkVhLo1VUwa0oc
+	 DVbM700lQFHqWRNi5n4oubd0s1ujyiLsMyxO8gj2LzBitMoQaLi5pV7vnfkV2WRh9m
+	 3WwgyoBouZ7DnGYxCqhDTOnUR7+QRH162mWBIyGwHgkEUSE7dqxUlaqT3idbP/qjRW
+	 t9u1Ug/QTnxb1MitreNh/M+0VdbJjJov6YD770VxGQPaTgQQ3E1FiW7i5Ok5K6Lxev
+	 6cSaAiEqK5WyQ==
+Date: Mon, 13 May 2024 08:11:54 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+	linux-usb@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH] dt-bindings: usb: qcom,dwc3: fix interrupt max items
+Message-ID: <171560591201.2413613.15944875819159638447.robh@kernel.org>
+References: <20240509083822.397-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] media: qcom: camss: Add per sub-device type
- resources
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
-        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>,
-        <matti.lehtimaki@gmail.com>
-References: <20240411124543.199-1-quic_grosikop@quicinc.com>
- <20240411124543.199-2-quic_grosikop@quicinc.com>
- <f9afdda4-0921-4632-8e4a-e8157b685da1@linaro.org>
-Content-Language: en-US
-From: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>
-In-Reply-To: <f9afdda4-0921-4632-8e4a-e8157b685da1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mHPZmh5kXH2r6ID9jrhHU0_gdQtT8OJG
-X-Proofpoint-ORIG-GUID: mHPZmh5kXH2r6ID9jrhHU0_gdQtT8OJG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-13_06,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- lowpriorityscore=0 mlxlogscore=878 clxscore=1011 bulkscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0
- suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405130061
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240509083822.397-1-johan+linaro@kernel.org>
 
 
-
-On 5/11/2024 1:18 AM, Bryan O'Donoghue wrote:
-> On 11/04/2024 13:45, Gjorgji Rosikopulos wrote:
->> +        .type = CAMSS_SUBDEV_TYPE_CSIPHY,
+On Thu, 09 May 2024 10:38:22 +0200, Johan Hovold wrote:
+> A recent commit adding the SC8280XP multiport controller to the binding
+> failed to update the interrupt maxItems, which results it DT checker
+> warnings like:
 > 
-> As Matti pointed out to me on IRC, the .type value here isn't populated
-> in the rest of the 8280xp resources.
+> 	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb: usb@a4f8800: interrupts-extended: [[1, 0, 130, 4], [1, 0, 135, 4], [1, 0, 857, 4], [1, 0, 856, 4], [1, 0, 131, 4], [1, 0, 136, 4], [1, 0, 860, 4], [1, 0, 859, 4], [136, 127, 3], [136, 126, 3], [136, 129, 3], [136, 128, 3], [136, 131, 3], [136, 130, 3], [136, 133, 3], [136, 132, 3], [136, 16, 4], [136, 17, 4]] is too long
 > 
-> I completely missed that but, then again this appears to be a dead field
-> in this series so it makes no difference if it is populated.
-> 
-> I realise it is probably of use in code you _haven't_ yet published but,
-> for now I think we should drop this field, since its dead code.
-
-Yes that is correct i miss that as well.
-
-> 
-> I'll send a fixup patch for this, I don't think there's a need for you
-> to send the whole series again.
-
-Thank you for this.
-
-~Gjorgji
-
-> 
+> Fixes: 80adfb54044e ("dt-bindings: usb: qcom,dwc3: Add bindings for SC8280 Multiport")
+> Reported-by: "Rob Herring (Arm)" <robh@kernel.org>
+> Link: https://lore.kernel.org/r/171502764588.89686.5159158035724685961.robh@kernel.org
+> Link: https://lore.kernel.org/lkml/171449016553.3484108.5214033788092698309.robh@kernel.org/
+> Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
-> bod
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+
 
