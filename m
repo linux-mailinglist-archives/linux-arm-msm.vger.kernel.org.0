@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-19806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5BEA8C465D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 19:43:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A86F8C466E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 19:48:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D1242899BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 17:43:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3AF461C2294D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 17:48:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C22FA22331;
-	Mon, 13 May 2024 17:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C78D249F5;
+	Mon, 13 May 2024 17:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J98GTKTw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bk/Gg8Oz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305E62C69D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2024 17:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE241364BE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2024 17:48:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715622201; cv=none; b=bwHROq+XuNiBvTwc+AH4CmwPDAIrERX3Iw8Ns7Snv0pZthoZPIWVoEhANXaS9aBtoWLAoUAie77uKDB/XzGp9QJWzMWWmCAT++qj6+S8eKTKqVQj9Dt8c+7rhSH6bUs7zv/SQGr3So4g3L7vfhVGsf2IOABZj+yzTI/wkZ0qzuk=
+	t=1715622516; cv=none; b=GMcA+QXRCv4j5b0mKmqo38R3hdHp98JuzoDLoQHftKLuBcoc5qyknfJ+Yvpn5IP+RK20cN5C73jnfszHStC0NfgMiH4F6TGmsg3N1MTXmHV/mt0kR0B5y+bJus1MA8Tueg3aG+VbObVn3vbtGhbnLLbDUCOFnyfUvUmUC1Eoc9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715622201; c=relaxed/simple;
-	bh=CejXXsjOA3SIu2w4YNwZ/Z+ltOoM4sfK/JZcNG8ud/g=;
+	s=arc-20240116; t=1715622516; c=relaxed/simple;
+	bh=Qb9pI7QfawdOPDOVP3uOoIDj0eSToii5WjRsBEqNIHE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gfYc1MsV0pomms70K05KAVBJhdTSIaERJ5V7Sy6nPFnGL0af+nkJbmyvoMo6E8F75eSfp1vCaIOCccOa0D1Gsq39rpDD828nbx3o1R+TUNANg84vC8mhm7p977+7FzLSDmrk3y/62CeQK1nq2iaqydi15bTtpXzNIoAWl/saC50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J98GTKTw; arc=none smtp.client-ip=209.85.218.54
+	 In-Reply-To:Content-Type; b=fOqqTOmxBXi+VN8SNKMY5PentZZN5NucX4SE21fnuCn+XlbLsR0XpgUjKoaw0yo26KFSaAf/WQC2zyOsliW8maTSFvuzLl7CCAJMcQpBZ2a9K9lOj5p3OmYtVkDBhI1kqVZ5N5gwhqQOlhYHEp1tcgY3XLjrW5f4NeH/WhtO6p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bk/Gg8Oz; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a59ab4f60a6so971609466b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2024 10:43:19 -0700 (PDT)
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a5a7d28555bso47834966b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2024 10:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715622198; x=1716226998; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1715622513; x=1716227313; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CejXXsjOA3SIu2w4YNwZ/Z+ltOoM4sfK/JZcNG8ud/g=;
-        b=J98GTKTw3D0z+xU+CR0UUBU22I88kwuahpsOh4pPHBwWv3JURsu2HOPNfYFy4ZZtrd
-         lC5SteOWQUt1FKTWrrdT4U92QnltFp7dd70V5klAerhRgqi7AfCCvvtK51vXZQfwuSQC
-         Hc1b+CrNHtskuouFlp9CV9RQdOSLlrbXF/A+z7HlA6yY93R5Wd9B3ks8Tw+G+2Lklv4b
-         1U13sUshsYRhDVlzVIUMOIF34ADSR3IfqiGWnvQmfyqJoAkHM9gxdGXzs08s+fgXkEvP
-         QC5kBEMTyI0C2EJgKJTEwYt9x7sVJPgtJxB/V+RKlUrN7XhX3Mf8aQXm9TjGoKFcsi4s
-         2Ocg==
+        bh=gRY3tylgCmAliI8QRE7thGCyBV7jJo3wfys0Ur6AtsA=;
+        b=bk/Gg8Oz+f9piwrkNNGwhRueQSquVpOk3rSxPgTNKprtsIz63AdTKzhCu9uSlhMESt
+         /YYS3CD3TSv6byf0h3SOQWCa+5IpckzRS+rYFtiU2N+57yFWutvrRTeZGfKHBLZYD9i3
+         QH+bqcH4AXn4DIywuJ0Lxu0VPs9qcTd+WHFgrnnACGRQ/lJXHM5ZQZ3dHJ3LZseM7K5b
+         YIrlGCUzrljVDzmypc77PGuObojSYiAuZSgs2Ve9R8YEAghQW4RmAvnCRJcmzrMM2eeq
+         CdElxCYrsDtIb+rH4+g1MsXUeMRVSkx+GmyUmC8kvIImfNmaRU5mFfFGED3nxQrbvdeC
+         EvEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715622198; x=1716226998;
+        d=1e100.net; s=20230601; t=1715622513; x=1716227313;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CejXXsjOA3SIu2w4YNwZ/Z+ltOoM4sfK/JZcNG8ud/g=;
-        b=ggdeLpqOZ6hnubPbhhE2gE60xKg0M/hPkXRyy7PWD1CSrxsItXpQ3Yn5EVuq5k/cLW
-         PKlJNTnLayspoZ8QXaIB8YGDMm4p3SMnNgPYjyVKZqGKkyYKsJLvPE7CV3Imbr1YXco0
-         5TwuXlYHa49lMaYFctaNayNmC+SuZA9F8Mc2h53C/yL19JdTWZuq5nrDjhuWPWOt0mg2
-         PqOiXhTqdO1O7JCUgmsGijG+h4mRkd7PyujIgF21+sC45yeOCBM9TmIkyAaUVrvmyX+s
-         R0qwDjROd0bFJPDk1vh70p3VouJOA7519oPsdx5xRZg2bBoMlcW1x7RUOKg/0oJ7dDBN
-         nZSg==
-X-Forwarded-Encrypted: i=1; AJvYcCXoRnk9Xwka/BQqxJHZnub5Nw8b63+8QG1Wo7K+yT0Bs1uxORPbB5tDstlkZF2TLPo30T5vX1nuQI4dLluATIm8TuD/0BeO8urNm8Zl5Q==
-X-Gm-Message-State: AOJu0YxjjyG/wq7a/uxcpGkSBKY9o6/xsKK+GNWYOk7ueyqesnQBz0nb
-	O3M4sVVn73U7bDi80ZEjJ3gpPgZHTS+5CR2JCela8FU+/GHoZnY63D57M+S6Szg=
-X-Google-Smtp-Source: AGHT+IELKDh/+p7rTu+QYWM0Kfw5Umh5ct8MWUA/OEgaNq1Sq3Gqglnpa7+36cmcM3bbU55BfNcgHA==
-X-Received: by 2002:a50:bb0f:0:b0:56f:e7b9:e67d with SMTP id 4fb4d7f45d1cf-5734d5cec3bmr11655801a12.12.1715622198507;
-        Mon, 13 May 2024 10:43:18 -0700 (PDT)
+        bh=gRY3tylgCmAliI8QRE7thGCyBV7jJo3wfys0Ur6AtsA=;
+        b=uhG3bMKctoNv5zb6ofoGlB0ewjmQyEbSIS+M6fqvAr6yTY1lCPWoAdlkH+j9E7knkZ
+         OGgL754PoQ/qDhYKoTejtahRb6QpZto5E0WwNm5wabN2xhkOKsNIP/Rs06SnaZHRQxUJ
+         F7rHWjH1Cv9QcYatrhTBc+/4Uudf1FI2DaLRBzDHf2cVlC2xRWU10e9C9vwP5IRKG3YI
+         ciwt8K3odoQkgYEXKldhvWog4TxHHu4kNBtrFVKuTQrR+/tNqwW8GU3O1KOp/Bbv5evZ
+         pMcSNTE0wL8pKDwgkx+Xccct0n7GklwpXZbGdWYHjW7RIskt8wFHhFmf1nxGDZwKQjpu
+         DfkA==
+X-Forwarded-Encrypted: i=1; AJvYcCXgqzLZ5clZgoRSsz4Q/2CnXT+eO+2FkH134IZjqqT/by5gzv5GpufuU8CDxWy8fz/BkN6dGiXJUYV2+RQarDF2zvv2AJRc8p7BHzPBwA==
+X-Gm-Message-State: AOJu0Yx3h0VUGK4s0dsfYsD43nn4+5GZJ+KZ69JjAU4oXIfudXh677ac
+	gAsodnO+A+sORQ/5e2jYTd8uJIbqRSJBDdg/x1uI+F4ydqvgbOw5+pnanlfEvPc=
+X-Google-Smtp-Source: AGHT+IGrVeWxVKN0p3yev+Hucpc6yYLDpPjmN9epTdt903Nk5yOck85W17lX4Glgzej2638xCJkGQQ==
+X-Received: by 2002:a17:906:17c5:b0:a5a:1b57:426f with SMTP id a640c23a62f3a-a5a2d54c10fmr711563766b.13.1715622513191;
+        Mon, 13 May 2024 10:48:33 -0700 (PDT)
 Received: from [10.1.3.28] ([149.14.240.163])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5733c2b8f7fsm6393355a12.66.2024.05.13.10.43.17
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a1781cf9csm620178866b.7.2024.05.13.10.48.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 May 2024 10:43:18 -0700 (PDT)
-Message-ID: <12bfcd12-28ef-4fa9-9a46-f370bdb4cce8@linaro.org>
-Date: Mon, 13 May 2024 18:43:17 +0100
+        Mon, 13 May 2024 10:48:32 -0700 (PDT)
+Message-ID: <5bcfbb01-9650-4420-8982-af6537d7e7b5@linaro.org>
+Date: Mon, 13 May 2024 18:48:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/8] media: qcom: camss: Move format related functions
+Subject: Re: [PATCH v3 8/8] media: qcom: camss: Decouple VFE from CSID
 Content-Language: en-US
 To: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>,
  Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
@@ -86,26 +86,46 @@ Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, laurent.pinchart@ideasonboard.com,
  hverkuil-cisco@xs4all.nl, quic_hariramp@quicinc.com
 References: <20240411124543.199-1-quic_grosikop@quicinc.com>
- <20240411124543.199-6-quic_grosikop@quicinc.com>
- <c6797921-2c2b-4dc1-866e-011d10c9d3c2@linaro.org>
- <d53fec3e-e46c-4185-abcd-e621818057a5@quicinc.com>
+ <20240411124543.199-9-quic_grosikop@quicinc.com>
+ <adbd0eeb-62c0-46a3-9cbb-92f6fde6c152@linaro.org>
+ <b4bf05b5-4e03-40d9-8149-956b55d91a41@quicinc.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <d53fec3e-e46c-4185-abcd-e621818057a5@quicinc.com>
+In-Reply-To: <b4bf05b5-4e03-40d9-8149-956b55d91a41@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 13/05/2024 17:52, Gjorgji Rosikopulos (Consultant) wrote:
->> 0 as an error condition indicator is not very common, at least it shall be
->> documented in the comment.
-> The original function was vfe_find_code. This change moves all format
-> related functions across the sub-device files to camss-format
-> I believe that 0 is default format
+On 13/05/2024 17:26, Gjorgji Rosikopulos (Consultant) wrote:
+>>> +static void __iomem
+>>> +*vfe_parent_dev_ops_get_base_address(struct camss *camss, int id)
+>>> +{
+>>> +    if (id < camss->res->vfe_num) {
+>>> +        struct vfe_device *vfe = &camss->vfe[id];
+>>> +
+>>> +        return vfe->base;
+>>> +    }
+>>> +
+>>> +    return NULL;
+>> I can find code snippets above like
+>>
+>>      if (IS_ERR(csid->base))
+>>          ...
+>>
+>> So, is it really a good idea to return NULL on error? Probably it might
+>> be better
+>> to return a reasonable error to the caller.
+> As general rule i agree. But here either we have address or not,
+> i dont see the reason to return an error code. Also i dont see what
+> caller will do if he gets error code instead of NULL.
+> I am refering in particular this case. If we have different error paths
+> of failiure maybe it will more sense.
 
-For this series changing the result code is extraneous, agree.
+I don't see a compelling reason to change the submitted code. I'd leave 
+well-enough alone for v4.
 
-We can debate such a change in a standalone patch on its own merits.
+Please keep changes for V4 restricted to formatting/line indentation/SPDX.
+
+I don't want to have to reverify all of this code unless a bug is found.
 
 ---
 bod
-
 
