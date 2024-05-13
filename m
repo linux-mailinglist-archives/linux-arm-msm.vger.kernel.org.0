@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 224338C3B96
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 08:48:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5B838C3B9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 08:48:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 524541C20FD4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 06:48:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6418FB21009
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 06:48:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C77431465B5;
-	Mon, 13 May 2024 06:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E9EA1465AD;
+	Mon, 13 May 2024 06:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uk4tmBt7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p4KQIVYW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919E250291;
-	Mon, 13 May 2024 06:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7381C14659B;
+	Mon, 13 May 2024 06:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715582905; cv=none; b=uqaR/a/jqpSk+t/yohynXh+6oCLuxLZFD9euXSRoFUe9JLY5RTuXCDdYTsXOqU4L76Pcmf6hfGjPCxRdwyvixPCS/gjbjMQIGGGwIhp0CyBl4B2DjiN+hYPYxM9LiOvlnCc5uV1+7f6OZO3GWrHWz3cR6h4PoVz+rSpBxkMnEHI=
+	t=1715582929; cv=none; b=Jg3XbxnkNRGeJesPvaOXIf0muwtCiIyvxj4FvCi9PWPiulRFr8npRiAH1RYMBZOfLOhwXXPDSkoZRYVLfdVg/UxcUZ5LQnVDEm/1bJjeK+JySO9WQfwgIis1oA1byhLjA5dUkOOjiC4zCWHSZFrcWM++gOdbyNja25PfxphlCLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715582905; c=relaxed/simple;
-	bh=YMe5rjfi2aJHY/Jb4QOx03hySKCxFSlYAqn1DwApzYY=;
+	s=arc-20240116; t=1715582929; c=relaxed/simple;
+	bh=BL7ea56f7IRq97McfG2GKuk5+W78EDHVuHGDV+iQxNk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qjEDyOjE1HCNfcil2/ENybQ3uxmGMCAuyUf/vT9Fyali+blN2buxSs80+BXOtcC7YpYskRD8smg76TyXy49B3B9sW3o12sQiCnuvsrlLG6hJDf3Bxje+AOWQRhBUOaSqSCmYdrlW73ZWtnquox1+qFWPnsK6ahu/OCO5jvtMBUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uk4tmBt7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F0CC32783;
-	Mon, 13 May 2024 06:48:21 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=WcUX1FXjH/Fbukv8Xjb3EVc5TYawHy4laa/Oi+hMD+YdP3uY31IftddyQ1JJPhZ/A538GJp3gSRLkSPgyuZIbnZCytkXLeeiWaaSWEQA8Le9cB4p/GOaUFVBaXMG9Lk3LovDOZWhFjMIdYT4CxTLzdsZhI5sfAJJoMhJ1i9s+hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p4KQIVYW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020FDC113CC;
+	Mon, 13 May 2024 06:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715582905;
-	bh=YMe5rjfi2aJHY/Jb4QOx03hySKCxFSlYAqn1DwApzYY=;
+	s=k20201202; t=1715582929;
+	bh=BL7ea56f7IRq97McfG2GKuk5+W78EDHVuHGDV+iQxNk=;
 	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=Uk4tmBt71qel/8b6gDlcsnQobU3M93/uEqsvejmx/B4ZfRCrC2viGzJNvn00A/Xcw
-	 X3DWVbBwabZa18PaPN82gLqyIC+Ya4WNHszI3DtaJ+ICxO3ASO78xfVHZRHxWVRW3a
-	 Ck2Kn2djxDlcY+b9hr82/48ZBrqhpXOzrfJfYSEjqAA9B/MkA01zhuMXKNGXDfMrfM
-	 Y4YGRYOFQghPG1Pm6zDjj+MmX2cQhCkvrVdrMO4Lwke+MOIO0tl6pQowAYfAvVKB8U
-	 +rBbGOcfG3rBrTOlBToTEiLR0V/iKofG8EXaApXrIISXDLfG/hXRQQeQkfMoUi1HA1
-	 5s0f4orUUAoXQ==
-Message-ID: <b3199f40-0983-4185-bd0c-2e2d45d690ad@kernel.org>
-Date: Mon, 13 May 2024 08:48:19 +0200
+	b=p4KQIVYWijwmbIjk7Z2Lm5DHuQHdS+ll4gs/QIygYN5r2OWwXrQg2zcGT4Ls9XAeI
+	 bERpsCt5ai76GHpOS+VtdNHeC98416k6D5DfgZvpgxPzpZBLwhg4GVBhYrrftbTLVG
+	 p7rQwLesOm9URyOH65WBdhyrCHdPl10ruDI7qkT3LtfHHMnPLcXFfV0o7ncxISp5dg
+	 LXMB8VBF8zerUaJb2yzNc4P9p4mEFbabI574xVD1zH3zjFDmRGw3G/vbkHgZPE0mQY
+	 eqkVE/t4ovoGb0vdiFOi760GShNRYKV1GvwxI/xVTD+6Jd/h2UTUr1mIffhKTG+Y+a
+	 DExrXZLrghJIw==
+Message-ID: <2eaefbc2-d284-460f-aae8-4c1cd003580c@kernel.org>
+Date: Mon, 13 May 2024 08:48:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 3/6] dt-bindings: PCI: qcom: Document the IPQ9574 PCIe
- controller.
-To: devi priya <quic_devipriy@quicinc.com>, bhelgaas@google.com,
- lpieralisi@kernel.org, kw@linux.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
- mturquette@baylibre.com, sboyd@kernel.org, manivannan.sadhasivam@linaro.org,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org
-References: <20240512082858.1806694-1-quic_devipriy@quicinc.com>
- <20240512082858.1806694-4-quic_devipriy@quicinc.com>
+Subject: Re: [PATCH V3 1/2] dt-bindings: phy: qcom,ipq8074-qmp-pcie: Document
+ the IPQ9574 QMP PCIe PHYs
+To: devi priya <quic_devipriy@quicinc.com>, vkoul@kernel.org,
+ kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
+ quic_msarkar@quicinc.com, quic_qianyu@quicinc.com, abel.vesa@linaro.org,
+ quic_cang@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240512082541.1805335-1-quic_devipriy@quicinc.com>
+ <20240512082541.1805335-2-quic_devipriy@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,40 +106,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240512082858.1806694-4-quic_devipriy@quicinc.com>
+In-Reply-To: <20240512082541.1805335-2-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/05/2024 10:28, devi priya wrote:
+On 12/05/2024 10:25, devi priya wrote:
+> Document the QMP PCIe PHYs on IPQ9574 platform.
+> 
+> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+> ---
 
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pcie-ipq9574
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 6
-> +          maxItems: 6
-> +        clock-names:
-> +          items:
-> +            - const: ahb  # AHB clock
-> +            - const: aux  # Auxiliary clock
-> +            - const: axi_m # AXI Master clock
-> +            - const: axi_s # AXI Slave clock
-> +            - const: axi_bridge # AXI bridge clock
-> +            - const: rchng
 
-That's introducing one more order of clocks... Please keep it
-consistent. The only existing case with ahb has it at after axi_m and
-others. Why making things everytime differently?
-
-I also to propose to finally drop the obvious comments, like "AHB
-clock". It cannot be anything else. AXI Master / slave are descriptive,
-so should stay.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
