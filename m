@@ -1,159 +1,490 @@
-Return-Path: <linux-arm-msm+bounces-19799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D8188C4496
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 17:52:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E576C8C44AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 17:58:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB0F51F222A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 15:52:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 13E4B1C2133A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 15:58:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B994C15443B;
-	Mon, 13 May 2024 15:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F08015532B;
+	Mon, 13 May 2024 15:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E5BdzkMv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OR8gSALN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C2148853;
-	Mon, 13 May 2024 15:51:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF337155323
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2024 15:58:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715615516; cv=none; b=LYmFm9GumvL2fXkJUC4Om7Q9oJ1MyIrda76qTWi9Ro8xdR4qHIW7pk3ly92MWYuqpey3cuqmVCtMAS9yZhCVBTSGmlKuosyt13T+q7v0+bu6cAHLs4q2KO8Fv9ALEn6qtcNgriI+NR14A0WA4cezYWHLGXJ5a+p032Y7GC06ni0=
+	t=1715615922; cv=none; b=O33wKL9D3vb9EXqaLWJMkxL/uYAb2EXVBA2RdRXZT3dHL6NOSGWCPf962YsPcNF0ChDG8tezhMRq26SaUXXfuZGwudCbctrcQvzE/Fvgr/lqtQmLK2m+wULtA9vL6EfR0BS1njQtGn65h2hneLslyPGK1JpBZXhuADxOXWjhLLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715615516; c=relaxed/simple;
-	bh=3imVNZ8J43hY3SgwUsbOPr7mp+hW498mREULCZekQPM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jIPrT+Yg6bvxlcB0EVOS49enScBzfU5EX/SYH2hZoYlgKvippBekBkXeegDI6F1gn0zLuYGcHJ8XsUZDErj4gQVzAPsrsGzANHm6m+wx17trTmsHEk6fVJnq1clzpwY/DJdpvhi/M4wskF7WGVHvhDYtE/SVi1DuIk6/1crU8yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E5BdzkMv; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6f447976de7so3903326b3a.1;
-        Mon, 13 May 2024 08:51:55 -0700 (PDT)
+	s=arc-20240116; t=1715615922; c=relaxed/simple;
+	bh=CdOD1G+FzfDDGS299FbWX6XS1Yj9LkhVx1wSI9hm5kg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fbP91okTPeHP7tVNSB7ouaafV4NQPlcMxTc8S7+tp4IQ3EfzeWDKfdFL2zsNpmWy2uyZkFlkIsBRr7XY9aZ9a8M7kacb4sW1mB0BOFwzyhYDK1yEVIcrfWMEf6KSj+wQUDRtSSz50QgWN1PaXxRUFDG1j50teTttNI6hiFsMkaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OR8gSALN; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a59a0d10e12so116058866b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 May 2024 08:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715615514; x=1716220314; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=C1wioqfQiuQuCuNYwlP+E5Wyu8F6jbMqAw/h0oL3eqU=;
-        b=E5BdzkMvItijxacNcTnQywLJQRhulPW/U18k+7mCsCFs/TRaR2d4S0ISuAC616Q7fY
-         /uKkANAOcAJQD7PJPqknoxwXOVoX2pjnRSCnaY2fX25ehE7ymzbOE9dv93mm9K0krfpX
-         UpAsX1JHodwqUvLA7eoWMkxRnw4X4zB+UOaudWml3J7ZmUZ7HBdPkzxx/ZxITOLyfzkh
-         xhHSBEcxqNnUn9Bahlr696fIOQ5SvS52woMbR9P3qsxoKNZHpEJ5uhqEFfa3rFmxkm6l
-         QJK4RiK5SvW7kqhFy/bEzmMGBGyIL7fLJ+cx6/Qk5J0jvu0NJ2ka2+Oc0XKZMYJ5Ocer
-         J3Lg==
+        d=linaro.org; s=google; t=1715615918; x=1716220718; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=w5xwyXsMcEAqRQV7MwV0fzEq0BmcG1UxFonWIXrER1Y=;
+        b=OR8gSALNDugQT363ubZ9AvYP57lUV2Wdi+4mxQeZWDKQje4xqjZwlT2248BIrCLgN4
+         vFUG6J4e7dhUy0DGHr8+Y085dDMJB+6jxtsq1cxAPTUHyorzCosnHJLOqRfDk4di3d5t
+         +NwYuiKDa0gWbfUv3Qbb6XaB4Djk3/+UG4Te6Kiwzz/XzTjEDqiNAgh+AVDfv0nNCBKe
+         W9VYgpGu8wznRutotaqboh81Kvho9LDJDeWXDfDziP43Sp5oZAlKzh+jJrHhgFNxY9UJ
+         glYcdbodHaKKxxe23K09LB+5p1AcQIwefCqRhZsG+8uF3m8upVQ/R9PHaCF8B1TFDGet
+         sLCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715615514; x=1716220314;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C1wioqfQiuQuCuNYwlP+E5Wyu8F6jbMqAw/h0oL3eqU=;
-        b=UKm/mLGR5UTZ63crCmM5hR+oJGqGPUgPS5mtv3hXf3DVUSctt4IzxKag4pK8Mszjlx
-         RzEVS9qnww8BFvvBWvc3TFgoy1ff+JBKXMVbGF4VUD5QjmqYnA3IyEPJ2wwCdRyaIe7h
-         MTt0ar2joumkf0RV7anXMbL9eK4RL6wiYHCQsQskSgfG3t9boeNn2oh9fBe2nUeIztZD
-         nybt+64kvx0BxVNYzlfYcsgbPB7OOwOOLFwdaXmKwYI2kdrXp05xYbvE27B89Xgvg0qX
-         70Ic0hkg1Kh2GIi91lnwwBxhrMoADHWtMzwkNqbptE5HoXdiZq+xhKshSSVwX2G4w/S1
-         OVPg==
-X-Forwarded-Encrypted: i=1; AJvYcCVzivmIuj7oXS5EHSwz1fBaqZ6f+G407ZkRrqXS4ZlM6wap5fQWx4CrTwnam3Im6ryv5xUqfDSIAi7mHjR1eMHa6PvqTlxWnhvLsIcD
-X-Gm-Message-State: AOJu0Yx+gltDMoEtICPnQN6ihKchyAWfIzTJ8mPCACOjHIuvN2eBNIDH
-	cPkRoB4XFG2r8P0fwa0abRyQVebZfNm2qIaiWRuki+flSKG3e1jbExSn7Q==
-X-Google-Smtp-Source: AGHT+IEDqMYogdWr3XOXh22OTvx+Uw4uVC3Zk4ODbviWxNXuhd9FThKOLXrM7kC6578pgduyhtA/Fw==
-X-Received: by 2002:a17:90a:d714:b0:2b8:f7c6:1581 with SMTP id 98e67ed59e1d1-2b8f7c615d5mr2619575a91.23.1715615514501;
-        Mon, 13 May 2024 08:51:54 -0700 (PDT)
-Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2b628ea6ae7sm9906113a91.51.2024.05.13.08.51.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 May 2024 08:51:53 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Ruan Jinjie <ruanjinjie@huawei.com>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Add obj flags to gpu devcoredump
-Date: Mon, 13 May 2024 08:51:47 -0700
-Message-ID: <20240513155150.166924-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.45.0
+        d=1e100.net; s=20230601; t=1715615918; x=1716220718;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w5xwyXsMcEAqRQV7MwV0fzEq0BmcG1UxFonWIXrER1Y=;
+        b=WzoyrCUbPuMwPHI9AzDXcC/xzQxdykRgDTajlfX57zdi4H6gYnnXx0Dw0Xc3wjdJR9
+         fNTpDV9lLM0pRCgA6qkqMXjB4vc56mJFq4MMBK/GBTvIrM3gjpZz7ltwB+6w+FDxFtTZ
+         ceksOL6V0u1z9hKPqNT/oA1adiqu7QFaf5xPocYx9620xKH1CdXD+YnmRoLncRp1rpO2
+         dFvkeKKbqoii9pOZhY3ijUMKlVgOZZ9ZC+hynPDTMsHQXfnO47Qmbi4+Z5EAXg3+2TJl
+         LCv+xwBF75Quq5LnLed2pYuVnahscmYdgy+UVonrb+UL0VBSF6Whuhlcjo+NxzFdYXr8
+         Ra8g==
+X-Forwarded-Encrypted: i=1; AJvYcCX04faxa/mdVcaot5OB86INbYkhUPa5KKk3IOmNeclmEcinmqo69c1jB11DZcK+2v/Sie24YuxPwBpvLJ5VPb4pHBScZbT95QlucxLTKQ==
+X-Gm-Message-State: AOJu0Yxm+zUoHl5dnYJeACR3Tg/2Yeinfnv3W8WQgKfIDFnoM4uHOEEj
+	XjlpfMA8uqGfj6LjbB8gMUiqqpedXncqhDO18H1J1lUcqsdm1UfKvuObS/6OjLM=
+X-Google-Smtp-Source: AGHT+IHzO2elxnDvfmK+9BLynuXl9ayKOJeKIxDeKqr4qlyDpjL2tcYqzf36kEL0SsDBmw6e46LxTg==
+X-Received: by 2002:a17:906:e8a:b0:a5a:7a1:5da5 with SMTP id a640c23a62f3a-a5a2d615f8bmr657578266b.4.1715615917891;
+        Mon, 13 May 2024 08:58:37 -0700 (PDT)
+Received: from [10.91.0.142] ([149.14.240.163])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17b0145csm611133666b.158.2024.05.13.08.58.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 May 2024 08:58:37 -0700 (PDT)
+Message-ID: <adbd0eeb-62c0-46a3-9cbb-92f6fde6c152@linaro.org>
+Date: Mon, 13 May 2024 18:58:36 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 8/8] media: qcom: camss: Decouple VFE from CSID
+Content-Language: en-US
+To: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, andersson@kernel.org,
+ konrad.dybcio@linaro.org, mchehab@kernel.org
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, laurent.pinchart@ideasonboard.com,
+ hverkuil-cisco@xs4all.nl, quic_hariramp@quicinc.com
+References: <20240411124543.199-1-quic_grosikop@quicinc.com>
+ <20240411124543.199-9-quic_grosikop@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20240411124543.199-9-quic_grosikop@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Rob Clark <robdclark@chromium.org>
+On 4/11/24 15:45, Gjorgji Rosikopulos wrote:
+> From: Milen Mitkov <quic_mmitkov@quicinc.com>
+> 
+> Decouple the direct calls to VFE's vfe_get/put in the CSID subdev
+> in order to prepare for the introduction of IFE subdev.
+> 
+> Also decouple CSID base address from VFE since on the Titan platform
+> CSID register base address resides within VFE's base address.
+> 
+> Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
+> Signed-off-by: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
+> ---
+>   .../media/platform/qcom/camss/camss-csid.c    | 16 +++--
+>   .../media/platform/qcom/camss/camss-csid.h    |  1 +
+>   drivers/media/platform/qcom/camss/camss.c     | 69 +++++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss.h     |  8 +++
+>   4 files changed, 89 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
+> index 5b23f5b8746d..858db5d4ca75 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
+> @@ -602,7 +602,6 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+>   	struct csid_device *csid = v4l2_get_subdevdata(sd);
+>   	struct camss *camss = csid->camss;
+>   	struct device *dev = camss->dev;
+> -	struct vfe_device *vfe = &camss->vfe[csid->id];
+>   	int ret = 0;
+>   
+>   	if (on) {
+> @@ -611,7 +610,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+>   		 * switching on the CSID. Do so unconditionally, as there is no
+>   		 * drawback in following the same powering order on older SoCs.
+>   		 */
+> -		ret = vfe_get(vfe);
+> +		ret = csid->res->parent_dev_ops->get(camss, csid->id);
+>   		if (ret < 0)
+>   			return ret;
+>   
+> @@ -663,7 +662,7 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
+>   		regulator_bulk_disable(csid->num_supplies,
+>   				       csid->supplies);
+>   		pm_runtime_put_sync(dev);
+> -		vfe_put(vfe);
+> +		csid->res->parent_dev_ops->put(camss, csid->id);
+>   	}
+>   
+>   	return ret;
+> @@ -1021,6 +1020,11 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+>   	csid->id = id;
+>   	csid->res = &res->csid;
+>   
+> +	if (dev_WARN_ONCE(dev, !csid->res->parent_dev_ops,
 
-When debugging faults, it is useful to know how the BO is mapped (cached
-vs WC, gpu readonly, etc).
+Please remove/replace dev_WARN_ONCE() to a lesser dev_warn_once(), wherever it's
+possible please do not use/introduce WARN() type of writes to the kernel log buffer...
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 1 +
- drivers/gpu/drm/msm/msm_gpu.c           | 6 ++++--
- drivers/gpu/drm/msm/msm_gpu.h           | 1 +
- 3 files changed, 6 insertions(+), 2 deletions(-)
+> +			  "Error: CSID depends on VFE/IFE device ops!\n")) {
+> +		return -EINVAL;
+> +	}
+> +
+>   	csid->res->hw_ops->subdev_init(csid);
+>   
+>   	/* Memory */
+> @@ -1031,9 +1035,11 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+>   		 * VFE to be initialized before CSID
+>   		 */
+>   		if (id >= 2) /* VFE/CSID lite */
+> -			csid->base = camss->vfe[id].base + VFE_480_LITE_CSID_OFFSET;
+> +			csid->base = csid->res->parent_dev_ops->get_base_address(camss, id)
+> +				+ VFE_480_LITE_CSID_OFFSET;
+>   		else
+> -			csid->base = camss->vfe[id].base + VFE_480_CSID_OFFSET;
+> +			csid->base = csid->res->parent_dev_ops->get_base_address(camss, id)
+> +				 + VFE_480_CSID_OFFSET;
+>   	} else {
+>   		csid->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
+>   		if (IS_ERR(csid->base))
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
+> index 0e385d17c250..8cdae98e4dca 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid.h
+> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
+> @@ -157,6 +157,7 @@ struct csid_hw_ops {
+>   struct csid_subdev_resources {
+>   	bool is_lite;
+>   	const struct csid_hw_ops *hw_ops;
+> +	const struct parent_dev_ops *parent_dev_ops;
+>   	const struct csid_formats *formats;
+>   };
+>   
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 37060eaa0ba5..4d625ef59cf7 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -32,6 +32,8 @@
+>   #define CAMSS_CLOCK_MARGIN_NUMERATOR 105
+>   #define CAMSS_CLOCK_MARGIN_DENOMINATOR 100
+>   
+> +static const struct parent_dev_ops vfe_parent_dev_ops;
+> +
+>   static const struct camss_subdev_resources csiphy_res_8x16[] = {
+>   	/* CSIPHY0 */
+>   	{
+> @@ -87,6 +89,7 @@ static const struct camss_subdev_resources csid_res_8x16[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_1,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_1
+>   		}
+>   	},
+> @@ -109,6 +112,7 @@ static const struct camss_subdev_resources csid_res_8x16[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_1,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_1
+>   		}
+>   	},
+> @@ -226,6 +230,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_7,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_7
+>   		}
+>   	},
+> @@ -248,6 +253,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_7,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_7
+>   		}
+>   	},
+> @@ -270,6 +276,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_7,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_7
+>   		}
+>   	},
+> @@ -292,6 +299,7 @@ static const struct camss_subdev_resources csid_res_8x96[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_7,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_7
+>   		}
+>   	}
+> @@ -445,6 +453,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_7,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_7
+>   		}
+>   	},
+> @@ -470,6 +479,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_7,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_7
+>   		}
+>   	},
+> @@ -495,6 +505,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_7,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_7
+>   		}
+>   	},
+> @@ -520,6 +531,7 @@ static const struct camss_subdev_resources csid_res_660[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_4_7,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_4_7
+>   		}
+>   	}
+> @@ -714,6 +726,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -739,6 +752,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -765,6 +779,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
+>   		.csid = {
+>   			.is_lite = true,
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	}
+> @@ -957,6 +972,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -974,6 +990,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
+>   		.type = CAMSS_SUBDEV_TYPE_CSID,
+>   		.csid = {
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -991,6 +1008,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
+>   		.csid = {
+>   			.is_lite = true,
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -1008,6 +1026,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
+>   		.csid = {
+>   			.is_lite = true,
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	}
+> @@ -1212,6 +1231,7 @@ static const struct camss_subdev_resources csid_res_sc8280xp[] = {
+>   		.interrupt = { "csid0" },
+>   		.csid = {
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -1227,6 +1247,7 @@ static const struct camss_subdev_resources csid_res_sc8280xp[] = {
+>   		.interrupt = { "csid1" },
+>   		.csid = {
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -1242,6 +1263,7 @@ static const struct camss_subdev_resources csid_res_sc8280xp[] = {
+>   		.interrupt = { "csid2" },
+>   		.csid = {
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -1257,6 +1279,7 @@ static const struct camss_subdev_resources csid_res_sc8280xp[] = {
+>   		.interrupt = { "csid3" },
+>   		.csid = {
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -1272,6 +1295,7 @@ static const struct camss_subdev_resources csid_res_sc8280xp[] = {
+>   		.csid = {
+>   			.is_lite = true,
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -1287,6 +1311,7 @@ static const struct camss_subdev_resources csid_res_sc8280xp[] = {
+>   		.csid = {
+>   			.is_lite = true,
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -1302,6 +1327,7 @@ static const struct camss_subdev_resources csid_res_sc8280xp[] = {
+>   		.csid = {
+>   			.is_lite = true,
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	},
+> @@ -1317,6 +1343,7 @@ static const struct camss_subdev_resources csid_res_sc8280xp[] = {
+>   		.csid = {
+>   			.is_lite = true,
+>   			.hw_ops = &csid_ops_gen2,
+> +			.parent_dev_ops = &vfe_parent_dev_ops,
+>   			.formats = &csid_formats_gen2
+>   		}
+>   	}
+> @@ -1661,6 +1688,48 @@ void camss_pm_domain_off(struct camss *camss, int id)
+>   	}
+>   }
+>   
+> +static int vfe_parent_dev_ops_get(struct camss *camss, int id)
+> +{
+> +	int ret = -EINVAL;
+> +
+> +	if (id < camss->res->vfe_num) {
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index b7bbef2eeff4..d9ea15994ae9 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -887,6 +887,7 @@ void adreno_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
- 			drm_printf(p, "  - iova: 0x%016llx\n",
- 				state->bos[i].iova);
- 			drm_printf(p, "    size: %zd\n", state->bos[i].size);
-+			drm_printf(p, "    flags: 0x%x\n", state->bos[i].flags);
- 			drm_printf(p, "    name: %-32s\n", state->bos[i].name);
- 
- 			adreno_show_object(p, &state->bos[i].data,
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index d14ec058906f..ceaee23a4d22 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -222,14 +222,16 @@ static void msm_gpu_crashstate_get_bo(struct msm_gpu_state *state,
- 		struct drm_gem_object *obj, u64 iova, bool full)
- {
- 	struct msm_gpu_state_bo *state_bo = &state->bos[state->nr_bos];
-+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 
- 	/* Don't record write only objects */
- 	state_bo->size = obj->size;
-+	state_bo->flags = msm_obj->flags;
- 	state_bo->iova = iova;
- 
--	BUILD_BUG_ON(sizeof(state_bo->name) != sizeof(to_msm_bo(obj)->name));
-+	BUILD_BUG_ON(sizeof(state_bo->name) != sizeof(msm_obj->name));
- 
--	memcpy(state_bo->name, to_msm_bo(obj)->name, sizeof(state_bo->name));
-+	memcpy(state_bo->name, msm_obj->name, sizeof(state_bo->name));
- 
- 	if (full) {
- 		void *ptr;
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 685470b84708..05bb247e7210 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -527,6 +527,7 @@ struct msm_gpu_submitqueue {
- struct msm_gpu_state_bo {
- 	u64 iova;
- 	size_t size;
-+	u32 flags;
- 	void *data;
- 	bool encoded;
- 	char name[32];
--- 
-2.45.0
 
+if (id >= camss->res->vfe_num)
+     return -EINVAL;
+
+> +		struct vfe_device *vfe = &camss->vfe[id];
+> +
+> +		ret = vfe_get(vfe);
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static int vfe_parent_dev_ops_put(struct camss *camss, int id)
+> +{
+> +	if (id < camss->res->vfe_num) {
+> +		struct vfe_device *vfe = &camss->vfe[id];
+> +
+> +		vfe_put(vfe);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void __iomem
+> +*vfe_parent_dev_ops_get_base_address(struct camss *camss, int id)
+> +{
+> +	if (id < camss->res->vfe_num) {
+> +		struct vfe_device *vfe = &camss->vfe[id];
+> +
+> +		return vfe->base;
+> +	}
+> +
+> +	return NULL;
+
+I can find code snippets above like
+
+	if (IS_ERR(csid->base))
+		...
+
+So, is it really a good idea to return NULL on error? Probably it might be better
+to return a reasonable error to the caller.
+
+> +}
+> +
+> +static const struct parent_dev_ops vfe_parent_dev_ops = {
+> +	.get = vfe_parent_dev_ops_get,
+> +	.put = vfe_parent_dev_ops_put,
+> +	.get_base_address = vfe_parent_dev_ops_get_base_address
+> +};
+> +
+>   /*
+>    * camss_of_parse_endpoint_node - Parse port endpoint node
+>    * @dev: Device
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index a5be9e872992..b3c967bcf8a9 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -143,6 +143,12 @@ struct camss_clock {
+>   	u32 nfreqs;
+>   };
+>   
+> +struct parent_dev_ops {
+> +	int (*get)(struct camss *camss, int id);
+> +	int (*put)(struct camss *camss, int id);
+> +	void __iomem *(*get_base_address)(struct camss *camss, int id);
+> +};
+> +
+>   void camss_add_clock_margin(u64 *rate);
+>   int camss_enable_clocks(int nclocks, struct camss_clock *clock,
+>   			struct device *dev);
+> @@ -153,6 +159,8 @@ s64 camss_get_link_freq(struct media_entity *entity, unsigned int bpp,
+>   int camss_get_pixel_clock(struct media_entity *entity, u64 *pixel_clock);
+>   int camss_pm_domain_on(struct camss *camss, int id);
+>   void camss_pm_domain_off(struct camss *camss, int id);
+> +int camss_vfe_get(struct camss *camss, int id);
+> +void camss_vfe_put(struct camss *camss, int id);
+>   void camss_delete(struct camss *camss);
+>   
+>   #endif /* QC_MSM_CAMSS_H */
+
+--
+Best wishes,
+Vladimir
 
