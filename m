@@ -1,270 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-19803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8F148C4558
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 18:52:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AC788C460F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 19:32:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB8AD1C2149E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 16:52:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DDB11C22831
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 17:32:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05653199B0;
-	Mon, 13 May 2024 16:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD71120DCB;
+	Mon, 13 May 2024 17:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b8bL5T2q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fubs1i13"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEFD18C3D;
-	Mon, 13 May 2024 16:52:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F371C6BD;
+	Mon, 13 May 2024 17:32:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715619139; cv=none; b=ulLDR7zAHADkUjwxcTWYCgtyv+2ji0Eq5Q9TpK3hUrkSxlmAAvR5F2atse5CqmeUQ6UV+eUMAiydDVT3lgjZbTL7IQPoaF6877er1VTSN1bKo/a8m5slwaL7ih10Cpidu5VAJqHiEN/IqpbEqrvG0+Y2BG/0PxSTZT1Gv1KeGNw=
+	t=1715621536; cv=none; b=uK55nAmbtiB4t7BxOzzw9fJOfXa3bjOPOCJr47Fna+hJpYF27u8VNRQVlHqcGLRqtWGR//5L0LuaEdgmvLhAS9SYbfPRRqrZFjeirVJFcwkjoH6zo6KoMZF+6V+2sbgVX/SCywdxjzkYjgAWLSMME17AO9POmyz6VgS8Ov1RWuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715619139; c=relaxed/simple;
-	bh=HxxOong3W3gZPaT5eDY3JXpmkoKgzN6SCBTlmXMa5lU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=L5iHmvFJpjyPp/zrxe6/x/hcOdhPEUHJ9p+gG0SRJATQFOYIYFAlpmO3B/Jde19oZeQDNfx8P+sg1Hy6RSPkquAVJgrG6qyN+M+7UCmH1Bd3MX+jdG2O5Jea6Gd1viVKzaJloxu4+aIeywDiIGvdCbuC/2UD900kJWofhUI6JEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b8bL5T2q; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1715621536; c=relaxed/simple;
+	bh=ZSSEbtbttkwsrPbY8E/NC08o4PHmSyGtjw557q4yApQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=ljbykAyC9QYh2xVnVFVAlH86SgJsHh/Yt0w++mP9huIQyA6NM+YPGjTkd8lvZRj0eNv7k5hpXQvJiuAiktYTGCJvOxMuJKGMRSJOsOB2YQUmXqcasbIYsJAhz7NZ+xbXMPFvjzw+KxcTXzrHx3xAbw6dHRZ1zyEJth1jldiKmRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fubs1i13; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44DBKFuT028330;
-	Mon, 13 May 2024 16:52:11 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44DBUkUk007047;
+	Mon, 13 May 2024 17:32:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=Es6jTmjTFhFxEXJqbKsv8hP+lTSCf3yS1oPECWLd7uU=; b=b8
-	bL5T2qM6w6vWqsveIlmPT6FTE+fEHl/SgiNkv56tjxBXCYVJ0SIg76lJVLQgmOli
-	17SFFFZc5wP6pDBDj+MvzoH2h0AAhphre+NP+OYqcJ0kcEobhDH1fPi3Bq+TcBw/
-	QsdEVeBalSbAUGFnGF3hiKyk+HIxqJh+dc3k+zF8Pb0UM0UnyRTJG34OnFNdRbrn
-	KzgjumTmYHZAyXeD743//D3gG6fegklJIgC2ka8Phusi+H2ZyJRYpSUV+Kz6zjVY
-	ttLWSzC/dOm1fPYju+MhZ5juBzoHxUpLxhiR/v8ITbtB8qu8Cc2H5bJ1xhQLVNIA
-	U4liJwWFrg04LepwDmcA==
+	from:date:subject:mime-version:content-type
+	:content-transfer-encoding:message-id:to:cc; s=qcppdkim1; bh=mFI
+	a/q49REPxuxed+XDDq52GL2LF+3opVnI+acndT90=; b=fubs1i13TDg6HLA10s+
+	8HMRXRru+ECY7cH91nrIvaAvL93DeO2t9gw2WPNrM51pM8GKy6Jc1eeTHKYqEOgD
+	C/YqhgHFi4FD1PrmxfHZnhPvwCTbxNEPhnTlLD6rWzcF1zKdSKz55ioX0QiGwB/x
+	zgiFVIsolwPRcWuLU1PvIJddAte6NYvXTvFQs84qKRIyZxREeMu4d6MMB5/+qPTH
+	4Tq4Le2Wc6bUwbdN9puSfe8flYirfPC+gDo7fijKtEiCxH4U0Aj87pZC/sHqKcMw
+	DHP7l9akaxddtvCnRW2O+mBWXiAleSlEJMly95l8KFjFmjwi7GdB/drHoqzmlLAN
+	iyw==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y1ymq45qg-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y3j28gs2d-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 May 2024 16:52:11 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44DGq9Uj022330
+	Mon, 13 May 2024 17:32:04 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44DHW2Nj008393
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 May 2024 16:52:09 GMT
-Received: from [10.251.44.40] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 May
- 2024 09:52:04 -0700
-Message-ID: <d53fec3e-e46c-4185-abcd-e621818057a5@quicinc.com>
-Date: Mon, 13 May 2024 19:52:02 +0300
+	Mon, 13 May 2024 17:32:02 GMT
+Received: from hu-clew-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 13 May 2024 10:32:01 -0700
+From: Chris Lew <quic_clew@quicinc.com>
+Date: Mon, 13 May 2024 10:31:46 -0700
+Subject: [PATCH] net: qrtr: ns: Fix module refcnt
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/8] media: qcom: camss: Move format related functions
-Content-Language: en-US
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
-        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>
-References: <20240411124543.199-1-quic_grosikop@quicinc.com>
- <20240411124543.199-6-quic_grosikop@quicinc.com>
- <c6797921-2c2b-4dc1-866e-011d10c9d3c2@linaro.org>
-From: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>
-In-Reply-To: <c6797921-2c2b-4dc1-866e-011d10c9d3c2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240513-fix-qrtr-rmmod-v1-1-312a7cd2d571@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAIFOQmYC/3XMTQ6CMBCG4auQrq3pDwV05T2Mi7aMMguoTLHRE
+ O5uYaUxLt/JfM/MIhBCZMdiZgQJI4Yhh9wVzHd2uAHHNjdTQpXCiIZf8clHmohT34eWG1UZB7U
+ onW1ZHt0J8scGni+5O4xToNfmJ7le/1JJcsmdcY324Or6oE/jAz0Ofu9Dz1YsqQ9Aih9AZaC0u
+ gIlhG7AfwPLsrwBIU6Ryu8AAAA=
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "David S.
+ Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        "Jakub
+ Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>, Luca Weiss <luca@z3ntu.xyz>
+CC: Manivannan Sadhasivam <mani@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>,
+        Chris Lew <quic_clew@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1715621521; l=3136;
+ i=quic_clew@quicinc.com; s=20240508; h=from:subject:message-id;
+ bh=ZSSEbtbttkwsrPbY8E/NC08o4PHmSyGtjw557q4yApQ=;
+ b=WSrEc5tDlS+xFh2IhZFcxLzgjhqbuUg2tpJ1b56Fjth61nCZP0bI/HUFCJkYuDbjSDl7UvFke
+ CUY8mR6oUoKApgp+u9f16/OkmSwArJxwfYfgXiZLyZ1Fd+y2ElB1Q0G
+X-Developer-Key: i=quic_clew@quicinc.com; a=ed25519;
+ pk=lEYKFaL1H5dMC33BEeOULLcHAwjKyHkTLdLZQRDTKV4=
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: w_TBqawH3ZvU1dG_Am_m1ksTWIZOPq5_
-X-Proofpoint-ORIG-GUID: w_TBqawH3ZvU1dG_Am_m1ksTWIZOPq5_
+X-Proofpoint-ORIG-GUID: MiskJSnQz4dcZxZ0VqjfaV8bzNvzqU5_
+X-Proofpoint-GUID: MiskJSnQz4dcZxZ0VqjfaV8bzNvzqU5_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-13_11,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- bulkscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501 phishscore=0
- lowpriorityscore=0 mlxscore=0 impostorscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
- definitions=main-2405130109
+ definitions=2024-05-13_12,2024-05-10_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
+ impostorscore=0 malwarescore=0 phishscore=0 bulkscore=0 suspectscore=0
+ mlxscore=0 clxscore=1011 priorityscore=1501 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405130116
 
-Hi Vladimir,
+The qrtr protocol core logic and the qrtr nameservice are combined into
+a single module. Neither the core logic or nameservice provide much
+functionality by themselves; combining the two into a single module also
+prevents any possible issues that may stem from client modules loading
+inbetween qrtr and the ns.
 
-Thanks for the review,
+Creating a socket takes two references to the module that owns the
+socket protocol. Since the ns needs to create the control socket, this
+creates a scenario where there are always two references to the qrtr
+module. This prevents the execution of 'rmmod' for qrtr.
 
+To resolve this, forcefully put the module refcount for the socket
+opened by the nameservice.
 
-On 5/13/2024 6:39 PM, Vladimir Zapolskiy wrote:
-> On 4/11/24 15:45, Gjorgji Rosikopulos wrote:
->> From: Radoslav Tsvetkov <quic_rtsvetko@quicinc.com>
->>
->> Move out the format related helper functions from vfe and video in a
->> separate file. The goal here is to create a format API.
->>
->> Signed-off-by: Radoslav Tsvetkov <quic_rtsvetko@quicinc.com>
->> Signed-off-by: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
->> ---
->>   drivers/media/platform/qcom/camss/Makefile    |  1 +
->>   .../media/platform/qcom/camss/camss-format.c  | 98 +++++++++++++++++++
->>   .../media/platform/qcom/camss/camss-format.h  |  5 +
->>   drivers/media/platform/qcom/camss/camss-vfe.c | 86 +++++-----------
->>   .../media/platform/qcom/camss/camss-video.c   | 26 +----
->>   5 files changed, 128 insertions(+), 88 deletions(-)
->>   create mode 100644 drivers/media/platform/qcom/camss/camss-format.c
->>
->> diff --git a/drivers/media/platform/qcom/camss/Makefile
->> b/drivers/media/platform/qcom/camss/Makefile
->> index 0d4389ab312d..e636968a1126 100644
->> --- a/drivers/media/platform/qcom/camss/Makefile
->> +++ b/drivers/media/platform/qcom/camss/Makefile
->> @@ -19,5 +19,6 @@ qcom-camss-objs += \
->>           camss-vfe-gen1.o \
->>           camss-vfe.o \
->>           camss-video.o \
->> +        camss-format.o \
->>     obj-$(CONFIG_VIDEO_QCOM_CAMSS) += qcom-camss.o
->> diff --git a/drivers/media/platform/qcom/camss/camss-format.c
->> b/drivers/media/platform/qcom/camss/camss-format.c
->> new file mode 100644
->> index 000000000000..6279cb099625
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/camss/camss-format.c
->> @@ -0,0 +1,98 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/* Copyright (c) 2023, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2023 Qualcomm Technologies, Inc.
->> + *
->> + * This program is free software; you can redistribute it and/or modify
->> + * it under the terms of the GNU General Public License version 2 and
->> + * only version 2 as published by the Free Software Foundation.
->> + *
->> + * This program is distributed in the hope that it will be useful,
->> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
->> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
->> + * GNU General Public License for more details.
->> + */
-> 
-> SPDX-License-Identifier is fully sufficient, the licence description
-> shall be removed.
+Fixes: a365023a76f2 ("net: qrtr: combine nameservice into main module")
+Reported-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+---
+This patch takes heavy influence from the following TIPC patch.
 
-I need to check, but as i can see with other files the license
-description can be removed.
+Link: https://lore.kernel.org/all/1426642379-20503-2-git-send-email-ying.xue@windriver.com/
+---
+ net/qrtr/ns.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-> 
->> +
->> +#include <linux/bug.h>
->> +#include <linux/errno.h>
->> +
->> +#include "camss-format.h"
->> +
->> +/*
->> + * camss_format_get_bpp - Map media bus format to bits per pixel
->> + * @formats: supported media bus formats array
->> + * @nformats: size of @formats array
->> + * @code: media bus format code
->> + *
->> + * Return number of bits per pixel
->> + */
->> +u8 camss_format_get_bpp(const struct camss_format_info *formats,
->> unsigned int nformats, u32 code)
->> +{
->> +    unsigned int i;
->> +
->> +    for (i = 0; i < nformats; i++)
->> +        if (code == formats[i].code)
->> +            return formats[i].mbus_bpp;
->> +
->> +    WARN(1, "Unknown format\n");
->> +
->> +    return formats[0].mbus_bpp;
->> +}
->> +
->> +/*
->> + * camss_format_find_code - Find a format code in an array
->> + * @code: a pointer to media bus format codes array
->> + * @n_code: size of @code array
->> + * @index: index of code in the array
->> + * @req_code: required code
->> + *
->> + * Return media bus format code
->> + */
->> +u32 camss_format_find_code(u32 *code, unsigned int n_code, unsigned
->> int index, u32 req_code)
->> +{
->> +    int i;
->> +
->> +    if (!req_code && index >= n_code)
->> +        return 0;
->> +
-> 
-> 0 as an error condition indicator is not very common, at least it shall be
-> documented in the comment.
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index abb0c70ffc8b..654a3cc0d347 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -725,6 +725,24 @@ int qrtr_ns_init(void)
+ 	if (ret < 0)
+ 		goto err_wq;
+ 
++	/* As the qrtr ns socket owner and creator is the same module, we have
++	 * to decrease the qrtr module reference count to guarantee that it
++	 * remains zero after the ns socket is created, otherwise, executing
++	 * "rmmod" command is unable to make the qrtr module deleted after the
++	 *  qrtr module is inserted successfully.
++	 *
++	 * However, the reference count is increased twice in
++	 * sock_create_kern(): one is to increase the reference count of owner
++	 * of qrtr socket's proto_ops struct; another is to increment the
++	 * reference count of owner of qrtr proto struct. Therefore, we must
++	 * decrement the module reference count twice to ensure that it keeps
++	 * zero after server's listening socket is created. Of course, we
++	 * must bump the module reference count twice as well before the socket
++	 * is closed.
++	 */
++	module_put(qrtr_ns.sock->ops->owner);
++	module_put(qrtr_ns.sock->sk->sk_prot_creator->owner);
++
+ 	return 0;
+ 
+ err_wq:
+@@ -739,6 +757,15 @@ void qrtr_ns_remove(void)
+ {
+ 	cancel_work_sync(&qrtr_ns.work);
+ 	destroy_workqueue(qrtr_ns.workqueue);
++
++	/* sock_release() expects the two references that were put during
++	 * qrtr_ns_init(). This function is only called during module remove,
++	 * so try_stop_module() has already set the refcnt to 0. Use
++	 * __module_get() instead of try_module_get() to successfully take two
++	 * references.
++	 */
++	__module_get(qrtr_ns.sock->ops->owner);
++	__module_get(qrtr_ns.sock->sk->sk_prot_creator->owner);
+ 	sock_release(qrtr_ns.sock);
+ }
+ EXPORT_SYMBOL_GPL(qrtr_ns_remove);
 
-The original function was vfe_find_code. This change moves all format
-related functions across the sub-device files to camss-format
-I believe that 0 is default format.
+---
+base-commit: e7b4ef8fffaca247809337bb78daceb406659f2d
+change-id: 20240508-fix-qrtr-rmmod-5265be704bad
 
-> 
->> +    for (i = 0; i < n_code; i++) {
->> +        if (req_code) {
->> +            if (req_code == code[i])
->> +                return req_code;
->> +        } else {
->> +            if (i == index)
->> +                return code[i];
->> +        }
->> +    }
->> +
->> +    return code[0];
->> +}
->> +
->> +/*
->> + * camss_format_find_format - Find a format in an array
->> + * @code: media bus format code
->> + * @pixelformat: V4L2 pixel format FCC identifier
->> + * @formats: a pointer to formats array
->> + * @nformats: size of @formats array
->> + *
->> + * Return index of a format or a negative error code otherwise
->> + */
->> +int camss_format_find_format(u32 code, u32 pixelformat, const struct
->> camss_format_info *formats,
->> +                 unsigned int nformats)
->> +{
->> +    int i;
-> 
-> unsigned int i
+Best regards,
+-- 
+Chris Lew <quic_clew@quicinc.com>
 
-Maybe it makes sense to go to all functions already existing in camss
-and change int with unsigned int for for loops...
-
-> 
->> +
->> +    for (i = 0; i < nformats; i++) {
->> +        if (formats[i].code == code &&
->> +            formats[i].pixelformat == pixelformat)
->> +            return i;
->> +    }
->> +
->> +    for (i = 0; i < nformats; i++) {
->> +        if (formats[i].code == code)
->> +            return i;
->> +    }
->> +
->> +    WARN_ON(1);
->> +
-> 
-> WARN_ON() is not needed here, it has to be removed.
-
-Again this is migrated code from camss-video :/. I guess we need bigger
-consensus to remove this WARN_ON. For me it makes sense to be removed.
-
-~Gjorgji
 
