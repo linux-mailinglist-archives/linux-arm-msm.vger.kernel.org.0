@@ -1,551 +1,369 @@
-Return-Path: <linux-arm-msm+bounces-19801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBDBB8C450C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 18:27:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA3D98C452D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 18:37:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 60343B228EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 16:27:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 60C9C2854B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 May 2024 16:37:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBF7F155355;
-	Mon, 13 May 2024 16:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4AEF12B83;
+	Mon, 13 May 2024 16:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GaRr1a9L"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="V+E6KIUq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D91415534A;
-	Mon, 13 May 2024 16:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207941C6A8;
+	Mon, 13 May 2024 16:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715617641; cv=none; b=tR4lJQ9NFHXBKtQInYPZLRYGOdmSkv3DjAsOPTqeAF2PwcmGalqAgVDiuic3AqQp7oMPL7hTT/ymUq2Aiw9hWJBpDGZZ2VXdBAiZxgCoveyOfeVTeljhmu85uWnQnaVhilyEmrOQmrgSHCwuNa6d1ocgI+x9aaJxsCUhsGzNwdU=
+	t=1715618270; cv=none; b=bOaIQOry4LWhuhLY7IJUSq7CSNYtjL6SyIYovI98nSsIdizD/Ei1KRl0s+bw14B2vZpnKyKdFOMvEdWl6PjfJmFbD4lpHP/D4Bve34ja6FHLMRZGvmd/fExZhUfPtra2/z46j/uxYh7eLOEu+EO238SE49t3DN5bGf/SrzWZm8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715617641; c=relaxed/simple;
-	bh=FoI8/Crln/k9Fu4H8Hk3E6wVBMT2gYt3UZjWYoFJIR4=;
+	s=arc-20240116; t=1715618270; c=relaxed/simple;
+	bh=X18vwAxlVG0UKTCuKLQ28hp2uw3lgPZsOtm11sImz1E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VxJKsQcZiRGMDBnIsEmXrN2FYXfsrTZHldA56d5CxQ6YbN+dAVVTIjjK2oTI5WaU7sSQvfaQwq+C6p9QnFukIDoKaT/lHwbdNaozhahP+ngddNf8TFIWHlT+bVtHYcEHrOKb+Nnm0F6PvJnyrpG94kz6rWEHmAyLV5Mm7uI9wpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GaRr1a9L; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=bbXH8x9W5KnKAJeLy5C1AhiPtAlB2e/ptLBHPwCcnMIu38qXdE/zfcyzu9HtcDN+N0GmCbRauVcYwZTftXey4mXElPp/QoheQJl9dIdaONJi3nQ4YKhZWX8LcXPaE8Cl/YWztGBtvSIfOqf0uj0zBiSCns57F3xSTXBsqAFxgSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=V+E6KIUq; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44DBRqEj013854;
-	Mon, 13 May 2024 16:27:11 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44DCVWWj017846;
+	Mon, 13 May 2024 16:37:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=2Kkf7INoYXad9rw9GnOquyxpBI9tsHNTkxfG2dISyn4=; b=Ga
-	Rr1a9LCeQRKhs2xiMPIQHu+fi97j86qjuZDqBTEKBfiYNjhku1jx63QHBSvchbZb
-	JllAhjffL4zynPvF26wkv1xcgCoea9HlQdtnJE966z0FOat+hetCfIDeKwLQR1VY
-	f4GfYMRK35Pn8ye4NZDgYtWWsdOHSGewyPvsn1VMPMh9YSzwyIPGPiVL8DE1YO5s
-	N2iszm/2fkme8YwjpnXDfCTI/FRzeK3IlA4j7Ac0YGtE1YhZNslxjDFJvzPMoqcw
-	kf6OaSlb3h9pBWF60q25gi8y5VyGB2Qvxxbv3d7U7jSwM5MHQ8Hfd6ZkuABXM6TJ
-	a433HYEGnlUPsl8sHCSw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y1y9kv3e7-1
+	qcppdkim1; bh=W5arlA8MXtY+9NSAQzAXJc9YmqjS5maGVc0JDRCzk00=; b=V+
+	E6KIUqAqgoN65ziKpd/rqx3KKAvDaOueUKJsvLma69RgjmcJBwGGnVbrku14hh2/
+	AxadMF6ikIxxw15UbWfdqlD0an8XhmMFYLaBYDF0cRSc6szyaTkw512MDBsriT/u
+	LlnKgCSrY08KeDGyU753pPSniRiuYH8Gx3jzNBVAMhVceh9R7+smzucdsgYuQE6v
+	7/+2sR5CNApV9kfpfcCgzeiVBgfSwwM0t5W2lSvajyysPyvLlzbTbKUMhxLg8H9d
+	k+P/9YL8hcIvd7XfNR8dfgrS5OZtLmRHNiJmj3J80/zZ9/Fqdla5MVCd5GIFN9Hr
+	bPUxbvrt1MQBlCfB6Vaw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y21edby9q-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 May 2024 16:27:11 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44DGR98Z010391
+	Mon, 13 May 2024 16:37:34 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44DGbV8t009351
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 May 2024 16:27:10 GMT
-Received: from [10.251.44.40] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 13 May 2024 16:37:31 GMT
+Received: from [10.110.48.61] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 May
- 2024 09:27:00 -0700
-Message-ID: <b4bf05b5-4e03-40d9-8149-956b55d91a41@quicinc.com>
-Date: Mon, 13 May 2024 19:26:58 +0300
+ 2024 09:37:27 -0700
+Message-ID: <ce8bc51b-a8b3-259c-f70c-d240d7b166cc@quicinc.com>
+Date: Mon, 13 May 2024 09:37:26 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] media: qcom: camss: Decouple VFE from CSID
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v8 2/4] arm64: dts: qcom: qcs8550: introduce qcs8550 dtsi
 Content-Language: en-US
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
-        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>
-References: <20240411124543.199-1-quic_grosikop@quicinc.com>
- <20240411124543.199-9-quic_grosikop@quicinc.com>
- <adbd0eeb-62c0-46a3-9cbb-92f6fde6c152@linaro.org>
-From: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>
-In-Reply-To: <adbd0eeb-62c0-46a3-9cbb-92f6fde6c152@linaro.org>
+To: Tengfei Fan <quic_tengfan@quicinc.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>
+CC: <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <kernel@quicinc.com>
+References: <20240513090735.1666142-1-quic_tengfan@quicinc.com>
+ <20240513090735.1666142-3-quic_tengfan@quicinc.com>
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <20240513090735.1666142-3-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Qi5N_gkUIYQZJwucl1qQPxa6Cktp0eLB
-X-Proofpoint-GUID: Qi5N_gkUIYQZJwucl1qQPxa6Cktp0eLB
+X-Proofpoint-GUID: YjorLMcRRo1bcy5TzRutdL8oOvFAKhcn
+X-Proofpoint-ORIG-GUID: YjorLMcRRo1bcy5TzRutdL8oOvFAKhcn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-13_11,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 malwarescore=0 phishscore=0 mlxscore=0 suspectscore=0
- spamscore=0 clxscore=1015 impostorscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405130107
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 mlxscore=0 malwarescore=0
+ suspectscore=0 impostorscore=0 clxscore=1011 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405130108
 
-Hi Vladimir,
+On 5/13/2024 2:07 AM, Tengfei Fan wrote:
+> QCS8550 is derived from SM8550. The differnece between SM8550 and
 
-Thanks for the review,
+spellcheck s/difference/difference 
 
-On 5/13/2024 6:58 PM, Vladimir Zapolskiy wrote:
-> On 4/11/24 15:45, Gjorgji Rosikopulos wrote:
->> From: Milen Mitkov <quic_mmitkov@quicinc.com>
->>
->> Decouple the direct calls to VFE's vfe_get/put in the CSID subdev
->> in order to prepare for the introduction of IFE subdev.
->>
->> Also decouple CSID base address from VFE since on the Titan platform
->> CSID register base address resides within VFE's base address.
->>
->> Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
->> Signed-off-by: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
->> ---
->>   .../media/platform/qcom/camss/camss-csid.c    | 16 +++--
->>   .../media/platform/qcom/camss/camss-csid.h    |  1 +
->>   drivers/media/platform/qcom/camss/camss.c     | 69 +++++++++++++++++++
->>   drivers/media/platform/qcom/camss/camss.h     |  8 +++
->>   4 files changed, 89 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss-csid.c
->> b/drivers/media/platform/qcom/camss/camss-csid.c
->> index 5b23f5b8746d..858db5d4ca75 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csid.c
->> +++ b/drivers/media/platform/qcom/camss/camss-csid.c
->> @@ -602,7 +602,6 @@ static int csid_set_power(struct v4l2_subdev *sd,
->> int on)
->>       struct csid_device *csid = v4l2_get_subdevdata(sd);
->>       struct camss *camss = csid->camss;
->>       struct device *dev = camss->dev;
->> -    struct vfe_device *vfe = &camss->vfe[csid->id];
->>       int ret = 0;
->>         if (on) {
->> @@ -611,7 +610,7 @@ static int csid_set_power(struct v4l2_subdev *sd,
->> int on)
->>            * switching on the CSID. Do so unconditionally, as there is no
->>            * drawback in following the same powering order on older SoCs.
->>            */
->> -        ret = vfe_get(vfe);
->> +        ret = csid->res->parent_dev_ops->get(camss, csid->id);
->>           if (ret < 0)
->>               return ret;
->>   @@ -663,7 +662,7 @@ static int csid_set_power(struct v4l2_subdev
->> *sd, int on)
->>           regulator_bulk_disable(csid->num_supplies,
->>                          csid->supplies);
->>           pm_runtime_put_sync(dev);
->> -        vfe_put(vfe);
->> +        csid->res->parent_dev_ops->put(camss, csid->id);
->>       }
->>         return ret;
->> @@ -1021,6 +1020,11 @@ int msm_csid_subdev_init(struct camss *camss,
->> struct csid_device *csid,
->>       csid->id = id;
->>       csid->res = &res->csid;
->>   +    if (dev_WARN_ONCE(dev, !csid->res->parent_dev_ops,
-> 
-> Please remove/replace dev_WARN_ONCE() to a lesser dev_warn_once(),
-> wherever it's
-> possible please do not use/introduce WARN() type of writes to the kernel
-> log buffer...
+> QCS8550 is QCS8550 doesn't have modem RF system. QCS8550 is mainly used
+> in IoT scenarios.
 
-The error is fatal and driver probe will fail if this happens,
-it is good to have it in kernel log buffer.
-However i agree it can be changed to dev_warn_once.
+IoT products and not scenarios. 
 
-> 
->> +              "Error: CSID depends on VFE/IFE device ops!\n")) {
->> +        return -EINVAL;
->> +    }
->> +
->>       csid->res->hw_ops->subdev_init(csid);
->>         /* Memory */
->> @@ -1031,9 +1035,11 @@ int msm_csid_subdev_init(struct camss *camss,
->> struct csid_device *csid,
->>            * VFE to be initialized before CSID
->>            */
->>           if (id >= 2) /* VFE/CSID lite */
->> -            csid->base = camss->vfe[id].base + VFE_480_LITE_CSID_OFFSET;
->> +            csid->base =
->> csid->res->parent_dev_ops->get_base_address(camss, id)
->> +                + VFE_480_LITE_CSID_OFFSET;
->>           else
->> -            csid->base = camss->vfe[id].base + VFE_480_CSID_OFFSET;
->> +            csid->base =
->> csid->res->parent_dev_ops->get_base_address(camss, id)
->> +                 + VFE_480_CSID_OFFSET;
->>       } else {
->>           csid->base = devm_platform_ioremap_resource_byname(pdev,
->> res->reg[0]);
->>           if (IS_ERR(csid->base))
->> diff --git a/drivers/media/platform/qcom/camss/camss-csid.h
->> b/drivers/media/platform/qcom/camss/camss-csid.h
->> index 0e385d17c250..8cdae98e4dca 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csid.h
->> +++ b/drivers/media/platform/qcom/camss/camss-csid.h
->> @@ -157,6 +157,7 @@ struct csid_hw_ops {
->>   struct csid_subdev_resources {
->>       bool is_lite;
->>       const struct csid_hw_ops *hw_ops;
->> +    const struct parent_dev_ops *parent_dev_ops;
->>       const struct csid_formats *formats;
->>   };
->>   diff --git a/drivers/media/platform/qcom/camss/camss.c
->> b/drivers/media/platform/qcom/camss/camss.c
->> index 37060eaa0ba5..4d625ef59cf7 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -32,6 +32,8 @@
->>   #define CAMSS_CLOCK_MARGIN_NUMERATOR 105
->>   #define CAMSS_CLOCK_MARGIN_DENOMINATOR 100
->>   +static const struct parent_dev_ops vfe_parent_dev_ops;
->> +
->>   static const struct camss_subdev_resources csiphy_res_8x16[] = {
->>       /* CSIPHY0 */
->>       {
->> @@ -87,6 +89,7 @@ static const struct camss_subdev_resources
->> csid_res_8x16[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_1,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_1
->>           }
->>       },
->> @@ -109,6 +112,7 @@ static const struct camss_subdev_resources
->> csid_res_8x16[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_1,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_1
->>           }
->>       },
->> @@ -226,6 +230,7 @@ static const struct camss_subdev_resources
->> csid_res_8x96[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_7,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_7
->>           }
->>       },
->> @@ -248,6 +253,7 @@ static const struct camss_subdev_resources
->> csid_res_8x96[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_7,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_7
->>           }
->>       },
->> @@ -270,6 +276,7 @@ static const struct camss_subdev_resources
->> csid_res_8x96[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_7,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_7
->>           }
->>       },
->> @@ -292,6 +299,7 @@ static const struct camss_subdev_resources
->> csid_res_8x96[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_7,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_7
->>           }
->>       }
->> @@ -445,6 +453,7 @@ static const struct camss_subdev_resources
->> csid_res_660[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_7,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_7
->>           }
->>       },
->> @@ -470,6 +479,7 @@ static const struct camss_subdev_resources
->> csid_res_660[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_7,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_7
->>           }
->>       },
->> @@ -495,6 +505,7 @@ static const struct camss_subdev_resources
->> csid_res_660[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_7,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_7
->>           }
->>       },
->> @@ -520,6 +531,7 @@ static const struct camss_subdev_resources
->> csid_res_660[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_4_7,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_4_7
->>           }
->>       }
->> @@ -714,6 +726,7 @@ static const struct camss_subdev_resources
->> csid_res_845[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -739,6 +752,7 @@ static const struct camss_subdev_resources
->> csid_res_845[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -765,6 +779,7 @@ static const struct camss_subdev_resources
->> csid_res_845[] = {
->>           .csid = {
->>               .is_lite = true,
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       }
->> @@ -957,6 +972,7 @@ static const struct camss_subdev_resources
->> csid_res_8250[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -974,6 +990,7 @@ static const struct camss_subdev_resources
->> csid_res_8250[] = {
->>           .type = CAMSS_SUBDEV_TYPE_CSID,
->>           .csid = {
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -991,6 +1008,7 @@ static const struct camss_subdev_resources
->> csid_res_8250[] = {
->>           .csid = {
->>               .is_lite = true,
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -1008,6 +1026,7 @@ static const struct camss_subdev_resources
->> csid_res_8250[] = {
->>           .csid = {
->>               .is_lite = true,
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       }
->> @@ -1212,6 +1231,7 @@ static const struct camss_subdev_resources
->> csid_res_sc8280xp[] = {
->>           .interrupt = { "csid0" },
->>           .csid = {
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -1227,6 +1247,7 @@ static const struct camss_subdev_resources
->> csid_res_sc8280xp[] = {
->>           .interrupt = { "csid1" },
->>           .csid = {
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -1242,6 +1263,7 @@ static const struct camss_subdev_resources
->> csid_res_sc8280xp[] = {
->>           .interrupt = { "csid2" },
->>           .csid = {
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -1257,6 +1279,7 @@ static const struct camss_subdev_resources
->> csid_res_sc8280xp[] = {
->>           .interrupt = { "csid3" },
->>           .csid = {
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -1272,6 +1295,7 @@ static const struct camss_subdev_resources
->> csid_res_sc8280xp[] = {
->>           .csid = {
->>               .is_lite = true,
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -1287,6 +1311,7 @@ static const struct camss_subdev_resources
->> csid_res_sc8280xp[] = {
->>           .csid = {
->>               .is_lite = true,
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -1302,6 +1327,7 @@ static const struct camss_subdev_resources
->> csid_res_sc8280xp[] = {
->>           .csid = {
->>               .is_lite = true,
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       },
->> @@ -1317,6 +1343,7 @@ static const struct camss_subdev_resources
->> csid_res_sc8280xp[] = {
->>           .csid = {
->>               .is_lite = true,
->>               .hw_ops = &csid_ops_gen2,
->> +            .parent_dev_ops = &vfe_parent_dev_ops,
->>               .formats = &csid_formats_gen2
->>           }
->>       }
->> @@ -1661,6 +1688,48 @@ void camss_pm_domain_off(struct camss *camss,
->> int id)
->>       }
->>   }
->>   +static int vfe_parent_dev_ops_get(struct camss *camss, int id)
->> +{
->> +    int ret = -EINVAL;
->> +
->> +    if (id < camss->res->vfe_num) {
-> 
-> 
-> if (id >= camss->res->vfe_num)
->     return -EINVAL;
+> QCS8550 firmware has different memory map with SM8550 firmware. 
 
-:-). I believe this is metter of personal taste. I also like
-the code which you have posted. But with function of this size
-i dont see that it will make any difference.
-
-> 
->> +        struct vfe_device *vfe = &camss->vfe[id];
->> +
->> +        ret = vfe_get(vfe);
->> +    }
->> +
->> +    return ret;
->> +}
->> +
->> +static int vfe_parent_dev_ops_put(struct camss *camss, int id)
->> +{
->> +    if (id < camss->res->vfe_num) {
->> +        struct vfe_device *vfe = &camss->vfe[id];
->> +
->> +        vfe_put(vfe);
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static void __iomem
->> +*vfe_parent_dev_ops_get_base_address(struct camss *camss, int id)
->> +{
->> +    if (id < camss->res->vfe_num) {
->> +        struct vfe_device *vfe = &camss->vfe[id];
->> +
->> +        return vfe->base;
->> +    }
->> +
->> +    return NULL;
-> 
-> I can find code snippets above like
-> 
->     if (IS_ERR(csid->base))
->         ...
-> 
-> So, is it really a good idea to return NULL on error? Probably it might
-> be better
-> to return a reasonable error to the caller.
-
-As general rule i agree. But here either we have address or not,
-i dont see the reason to return an error code. Also i dont see what
-caller will do if he gets error code instead of NULL.
-I am refering in particular this case. If we have different error paths
-of failiure maybe it will more sense.
+"QCS8550 firmware has different memory map compared to SM8550"
 
 
+The
+> memory map will be runtime added through bootloader.
+
+
+> There are 3 types of reserved memory regions here:
+> 1. Firmware related regions which aren't shared with kernel.
+>     The device tree source in kernel doesn't need to have node to indicate
+> the firmware related reserved information. OS bootloader conveys the
+
+Just "Bootloader conveys the information by updating devicetree at runtime" ?
+
+> information by update device tree in runtime.
+>     This will be described as: UEFI saves the physical address of the
+> UEFI System Table to dts file's chosen node. Kernel read this table and
+> add reserved memory regions to efi config table. Current reserved memory
+> region may have reserved region which was not yet used, release note of
+> the firmware have such kind of information.
+
+I understand what you are trying to explain below, but can we simplify further? I 
+had to read multiple times to understand what you are trying to convey above. 
+
+> 2. Firmware related memory regions which are shared with Kernel
+>     Each region has a specific node with specific label name for later
+> phandle reference from other driver dt node.
+> 3. PIL regions.
+
+Do we use the PIL - peripheral image loader in the upstream kernel or just remoteproc?
+I am fine w/ PIL if it is used at other places in Qualcomm remoteproc. 
+
+>     PIL regions will be reserved and then assigned to subsystem firmware
+> later.
+> Here is a reserved memory map for this platform:
+> 0x100000000 +------------------+
+>             |                  |
+>             | Firmware Related |
+>             |                  |
+>  0xd4d00000 +------------------+
+>             |                  |
+>             | Kernel Available |
+
+What is "kernel available" means? 
+
+>             |                  |
+>  0xa7000000 +------------------+
+>             |                  |
+>             |    PIL Region    |
+>             |                  |
+>  0x8a800000 +------------------+
+>             |                  |
+>             | Firmware Related |
+>             |                  |
+>  0x80000000 +------------------+
+
+> Note that:
+
+Do we need to write "Note that:" ? 
+
+> 0xa7000000..0xA8000000 is used by bootloader, when kernel boot up,
+> it is available for kernel usage. This region is not suggested to be
+> used by kernel features like ramoops, suspend resume etc.
 > 
->> +}
->> +
->> +static const struct parent_dev_ops vfe_parent_dev_ops = {
->> +    .get = vfe_parent_dev_ops_get,
->> +    .put = vfe_parent_dev_ops_put,
->> +    .get_base_address = vfe_parent_dev_ops_get_base_address
->> +};
->> +
->>   /*
->>    * camss_of_parse_endpoint_node - Parse port endpoint node
->>    * @dev: Device
->> diff --git a/drivers/media/platform/qcom/camss/camss.h
->> b/drivers/media/platform/qcom/camss/camss.h
->> index a5be9e872992..b3c967bcf8a9 100644
->> --- a/drivers/media/platform/qcom/camss/camss.h
->> +++ b/drivers/media/platform/qcom/camss/camss.h
->> @@ -143,6 +143,12 @@ struct camss_clock {
->>       u32 nfreqs;
->>   };
->>   +struct parent_dev_ops {
->> +    int (*get)(struct camss *camss, int id);
->> +    int (*put)(struct camss *camss, int id);
->> +    void __iomem *(*get_base_address)(struct camss *camss, int id);
->> +};
->> +
->>   void camss_add_clock_margin(u64 *rate);
->>   int camss_enable_clocks(int nclocks, struct camss_clock *clock,
->>               struct device *dev);
->> @@ -153,6 +159,8 @@ s64 camss_get_link_freq(struct media_entity
->> *entity, unsigned int bpp,
->>   int camss_get_pixel_clock(struct media_entity *entity, u64
->> *pixel_clock);
->>   int camss_pm_domain_on(struct camss *camss, int id);
->>   void camss_pm_domain_off(struct camss *camss, int id);
->> +int camss_vfe_get(struct camss *camss, int id);
->> +void camss_vfe_put(struct camss *camss, int id);
->>   void camss_delete(struct camss *camss);
->>     #endif /* QC_MSM_CAMSS_H */
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs8550.dtsi | 169 ++++++++++++++++++++++++++
+>  1 file changed, 169 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcs8550.dtsi
 > 
-> -- 
-> Best wishes,
-> Vladimir
+> diff --git a/arch/arm64/boot/dts/qcom/qcs8550.dtsi b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
+> new file mode 100644
+> index 000000000000..a3ebf3d4e16d
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qcs8550.dtsi
+> @@ -0,0 +1,169 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include "sm8550.dtsi"
+> +
+> +/delete-node/ &reserved_memory;
+> +
+> +/ {
+> +	reserved_memory: reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +
+> +		/* These are 3 types of reserved memory regions here:
+> +		 * 1. Firmware related regions which aren't shared with kernel.
+> +		 *     The device tree source in kernel doesn't need to have node to
+> +		 * indicate the firmware related reserved information. OS bootloader
+> +		 * conveys the information by update device tree in runtime.
+> +		 *     This will be described as: UEFI saves the physical address of
+> +		 * the UEFI System Table to dts file's chosen node. Kernel read this
+> +		 * table and add reserved memory regions to efi config table. Current
+> +		 * reserved memory region may have reserved region which was not yet
+> +		 * used, release note of the firmware have such kind of information.
+> +		 * 2. Firmware related memory regions which are shared with Kernel.
+> +		 *     Each region has a specific node with specific label name for
+> +		 * later phandle reference from other driver dt node.
+> +		 * 3. PIL regions.
+> +		 *     PIL regions will be reserved and then assigned to subsystem
+> +		 * firmware later.
+> +		 * Here is a reserved memory map for this platform:
+
+Just check the comment above and it will apply here. 
+
+> +		 * 0x100000000 +------------------+
+> +		 *             |                  |
+> +		 *             | Firmware Related |
+> +		 *             |                  |
+> +		 *  0xd4d00000 +------------------+
+> +		 *             |                  |
+> +		 *             | Kernel Available |
+> +		 *             |                  |
+> +		 *  0xa7000000 +------------------+
+> +		 *             |                  |
+> +		 *             |    PIL Region    |
+> +		 *             |                  |
+> +		 *  0x8a800000 +------------------+
+> +		 *             |                  |
+> +		 *             | Firmware Related |
+> +		 *             |                  |
+> +		 *  0x80000000 +------------------+
+> +		 * Note that:
+> +		 * 0xa7000000..0xA8000000 is used by bootloader, when kernel boot up,
+> +		 * it is available for kernel usage. This region is not suggested to
+> +		 * be used by kernel features like ramoops, suspend resume etc.
+> +		 */
+> +
+> +		/*
+> +		 * Firmware related regions, bootlader will possible reserve parts of
+
+spellcheck s/bootlader/bootloader
+
+> +		 * region from 0x80000000..0x8a800000.
+> +		 */
+> +		aop_image_mem: aop-image-region@81c00000 {
+> +			reg = <0x0 0x81c00000 0x0 0x60000>;
+> +			no-map;
+> +		};
+> +
+> +		aop_cmd_db_mem: aop-cmd-db-region@81c60000 {
+> +			compatible = "qcom,cmd-db";
+> +			reg = <0x0 0x81c60000 0x0 0x20000>;
+> +			no-map;
+> +		};
+> +
+> +		aop_config_mem: aop-config-region@81c80000 {
+> +			no-map;
+> +			reg = <0x0 0x81c80000 0x0 0x20000>;
+> +		};
+> +
+> +		smem_mem: smem-region@81d00000 {
+> +			compatible = "qcom,smem";
+> +			reg = <0x0 0x81d00000 0x0 0x200000>;
+> +			hwlocks = <&tcsr_mutex 3>;
+> +			no-map;
+> +		};
+> +
+> +		adsp_mhi_mem: adsp-mhi-region@81f00000 {
+> +			reg = <0x0 0x81f00000 0x0 0x20000>;
+> +			no-map;
+> +		};
+> +
+> +		/* PIL region */
+> +		mpss_mem: mpss-region@8a800000 {
+> +			reg = <0x0 0x8a800000 0x0 0x10800000>;
+> +			no-map;
+> +		};
+> +
+> +		q6_mpss_dtb_mem: q6-mpss-dtb-region@9b000000 {
+> +			reg = <0x0 0x9b000000 0x0 0x80000>;
+> +			no-map;
+> +		};
+> +
+> +		ipa_fw_mem: ipa-fw-region@9b080000 {
+> +			reg = <0x0 0x9b080000 0x0 0x10000>;
+> +			no-map;
+> +		};
+> +
+> +		ipa_gsi_mem: ipa-gsi-region@9b090000 {
+> +			reg = <0x0 0x9b090000 0x0 0xa000>;
+> +			no-map;
+> +		};
+> +
+> +		gpu_micro_code_mem: gpu-micro-code-region@9b09a000 {
+> +			reg = <0x0 0x9b09a000 0x0 0x2000>;
+> +			no-map;
+> +		};
+> +
+> +		spss_region_mem: spss-region@9b100000 {
+> +			reg = <0x0 0x9b100000 0x0 0x180000>;
+> +			no-map;
+> +		};
+> +
+> +		spu_secure_shared_memory_mem: spu-secure-shared-memory-region@9b280000 {
+> +			reg = <0x0 0x9b280000 0x0 0x80000>;
+> +			no-map;
+> +		};
+> +
+> +		camera_mem: camera-region@9b300000 {
+> +			reg = <0x0 0x9b300000 0x0 0x800000>;
+> +			no-map;
+> +		};
+> +
+> +		video_mem: video-region@9bb00000 {
+> +			reg = <0x0 0x9bb00000 0x0 0x700000>;
+> +			no-map;
+> +		};
+> +
+> +		cvp_mem: cvp-region@9c200000 {
+> +			reg = <0x0 0x9c200000 0x0 0x700000>;
+> +			no-map;
+> +		};
+> +
+> +		cdsp_mem: cdsp-region@9c900000 {
+> +			reg = <0x0 0x9c900000 0x0 0x2000000>;
+> +			no-map;
+> +		};
+> +
+> +		q6_cdsp_dtb_mem: q6-cdsp-dtb-region@9e900000 {
+> +			reg = <0x0 0x9e900000 0x0 0x80000>;
+> +			no-map;
+> +		};
+> +
+> +		q6_adsp_dtb_mem: q6-adsp-dtb-region@9e980000 {
+> +			reg = <0x0 0x9e980000 0x0 0x80000>;
+> +			no-map;
+> +		};
+> +
+> +		adspslpi_mem: adspslpi-region@9ea00000 {
+> +			reg = <0x0 0x9ea00000 0x0 0x4080000>;
+> +			no-map;
+> +		};
+> +
+> +		/*
+> +		 * Firmware related regions, bootlader will possible reserve parts of
+
+Ditto. 
+
+> +		 * region from 0xd8000000..0x100000000.
+> +		 */
+> +		mpss_dsm_mem: mpss_dsm_region@d4d00000 {
+> +			reg = <0x0 0xd4d00000 0x0 0x3300000>;
+> +			no-map;
+> +		};
+> +	};
+> +};
+-- 
+---Trilok Soni
+
 
