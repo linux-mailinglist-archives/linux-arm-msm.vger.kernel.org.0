@@ -1,252 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-19830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D39308C566F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 14:57:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 662858C5688
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 15:09:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75EF8284554
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 12:57:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C02F1F22645
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 13:09:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAA796D1B4;
-	Tue, 14 May 2024 12:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8BD91411D8;
+	Tue, 14 May 2024 13:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CW1qUJkm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j21QyHbX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ADA6D1A7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2024 12:56:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E619413FD8D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2024 13:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715691381; cv=none; b=FWWgTVmrMvGsmBo1IbTu8JPcwObe2llSjCoZnTIenkaPhO28oWxTrx0l4HTzCfCleh2812hVZhz11i4h6CM7L/bV/f3JJNM7LI24jGEyq7LtJAfUeOBVAtuqJu4IegfekgNUv75TuCMrMZzPpTBzpww/rkeaJYMYOSdv1TleujE=
+	t=1715692130; cv=none; b=LNdt0FSwKFkfb3XPZKCJdkXr0tDdfvhbcwV6Gunrhjg3KFUPIIxvOdQmYNIE/cG/ywvOjiaEU62Tjw6aXxzF1NNR5QiLuXQlnlro2Z1fCxQLbVrefsiGUcY2Fs9AjMRAG6tz2lH3i63aeA7W/ux8Y9dtE6/rc7gCQMGvdaxTUV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715691381; c=relaxed/simple;
-	bh=MN7SlPdpAe5QBcnVhCSzhjMMbkyk5IJ2S33wWdWmnSs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=p96JQ+Z69TNoYm+AYXWxJoSlrInB8RZciV5aSQm2pUIYGQp+ZNx5v+A9VhWliUzYuIe3YCcshKU7Kmt2IzrV2KTFuD6JbfyQqbQM9wAB3IUrlqintwK/JnqOIDCGRfJQc7DO9gCGUFVrutGuJyX9oPaBvuM8rl5/87WMoFlA5u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CW1qUJkm; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715691380; x=1747227380;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=MN7SlPdpAe5QBcnVhCSzhjMMbkyk5IJ2S33wWdWmnSs=;
-  b=CW1qUJkmRvoCFVtCbfdU8Zs0SnUqKEG4kiPxOouQM4uZHHxVSstmfIQv
-   gsv5Sdfr4zAnLr7rjVynN1fOTXUfQ3dgaxtIKNCzaCSSk4o2+1jbzzDIN
-   ajAIVhFp+VovcM8SPJ4SSBZQbegsSg4KpZBPzfnlgnaSNVwsmLvw1zRGa
-   XxGZumvU80Nd/BxxLY6hmYg+mL5kql5dsfBIjM0mOQwqKuQ/IYWoOET4p
-   kX5B5CSywqFh3x9ci7K+l7jXgw31L03v0aNQN3yZ7MtEM6iW/1qTYnCaj
-   uOx1LVPHcgCHvNiubtZB5qK1HJRiX1RpXRi8+LoS55DtcRuimrlo5ZDPM
-   w==;
-X-CSE-ConnectionGUID: XC1MMffOTJK/7ud+Aef1DQ==
-X-CSE-MsgGUID: abqb35b6QEOo/LsAVRPF8w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11073"; a="22270717"
-X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; 
-   d="scan'208";a="22270717"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2024 05:56:19 -0700
-X-CSE-ConnectionGUID: XZh4ZFrCR4CI5YnAWetkiQ==
-X-CSE-MsgGUID: 9kdD4cv8SAaa0C+pjqHywg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,159,1712646000"; 
-   d="scan'208";a="35140834"
-Received: from mjarzebo-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.246.91])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2024 05:56:16 -0700
-From: Jani Nikula <jani.nikula@intel.com>
-To: dri-devel@lists.freedesktop.org
-Cc: jani.nikula@intel.com,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH 08/11] drm/msm/dp: switch to struct drm_edid
-Date: Tue, 14 May 2024 15:55:14 +0300
-Message-Id: <93d6c446ed4831dadfb4a77635a67cf5f27e19ff.1715691257.git.jani.nikula@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1715691257.git.jani.nikula@intel.com>
-References: <cover.1715691257.git.jani.nikula@intel.com>
+	s=arc-20240116; t=1715692130; c=relaxed/simple;
+	bh=ZcblkuDSMv7tvtn/vseBea9lWN9fs5R+BIKAqQHnsjM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QlIBVCQf/6VLcMWcXxipCdLc4dGBsYljqnfcquL7/2hfUc2DX117bX3q5dFJjG9DpO8Ib4l8UOYExhhcrcuBcfgyo9NK0gltpmSGNKhbKYrgPcymC9LSJPzqQ9oSJMFssIXsXz75G1bSiPNXudgKeG57uwNpiDQkiDBh3PzE1Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j21QyHbX; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a59ab4f60a6so5873066b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2024 06:08:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715692126; x=1716296926; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zeT6KnLVfhQXaqC3Lu4DkuZNlc4YLw9XtuNUDZ2X/BE=;
+        b=j21QyHbXXZCSqc50bIZmrSoW8YkiXvRWX4oxNyXkFDVYImoS99hwMNKXNR1GQyFAOd
+         P9O39C8Oc5kPYNgTrh0IhUfP33lzlNmtQeMPkaZ0kVxhQ8YLGf3k1vxOxO7THJ59wJJ+
+         c2UyZNaVhpexrk+uP3a750SWDLTTFqvSFIod1Zr+Xl9+JNj5ZpYomptYLB1nvOM2qpm+
+         rbW330r5k/YTzOyc1eY+pTDF8ixavbkb0Bp+P8gQd2oyVS/YOFRvK7lBsbGcNk3vJcC/
+         Lp2xR8Qkqy0WPN/ZcdItUZpNHbJVlD6542iUjrorQTDTebVTAYSawCYm0jXfP/q90/px
+         W+Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715692126; x=1716296926;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zeT6KnLVfhQXaqC3Lu4DkuZNlc4YLw9XtuNUDZ2X/BE=;
+        b=ndHSrb3nhKfEFBP97FZ/UewbzCIan7fyagjAt0+I3DZujYOFhSOmaNIpJ6xxCCVwxs
+         nYa7r0l+L2uOsae9+6u9yCYJGqB0AglqeA1VNDvxoMrmYOrhmxG7JFhbp35Caa8UagHH
+         h1P/zWPIip1ivN3jsGk6jFYVq+pgYGI8Ui81UlYI6HoctaQYZ8me7J9Fcfhy7Ei4i63C
+         InWWV3J6ySFc3/rfxERox5BWnOTHfBlG9ImNbbqlS72/Z+sUOPIM0BY3mk1a9iDuyGPj
+         dQFkCVCDyGeS8NtuMOmFp9KM/LCBhH8FbNBHDmiWo0M+yWIdqntjLbKZBMWE46Np+jOl
+         dDiA==
+X-Gm-Message-State: AOJu0YwxdkB9v7eIEoeYHmwI81rFHKAciZ1i8QT4ARYn/VhcDf3ml7FR
+	LdNXH5Yj06V7lSycBiHoPUNKntxD/dCmW0OMyG0rzG75OuNhsiMCCfnnyENRQA==
+X-Google-Smtp-Source: AGHT+IEyW5wWXcI0YcuMfRPEURlz7RUMcwyj0jHYGuOT5hpqOwAsP8E1/EwXva+mlyTkLrd58nrF6A==
+X-Received: by 2002:a17:906:fe07:b0:a5a:81b0:a6a9 with SMTP id a640c23a62f3a-a5a81b0a73cmr290104466b.53.1715692126068;
+        Tue, 14 May 2024 06:08:46 -0700 (PDT)
+Received: from [127.0.1.1] ([149.14.240.163])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a1781cf91sm719572466b.1.2024.05.14.06.08.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 May 2024 06:08:45 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: Use 'ufshc' as the node name for UFS
+ controller nodes
+Date: Tue, 14 May 2024 15:08:39 +0200
+Message-Id: <20240514-ufs-nodename-fix-v1-0-4c55483ac401@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFdiQ2YC/x2MQQqAIBAAvyJ7bsFMi/pKdDDbag9ZKEUg/j3pO
+ AMzCSIFpgiDSBDo4cinL1BXAtxu/UbIS2FQUmlpao33GtGfC3l7EK78opZtp2Zn+sYaKNkVqOh
+ /OU45fwYcUmZiAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+ Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
+ cros-qcom-dts-watchers@chromium.org
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1214;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=ZcblkuDSMv7tvtn/vseBea9lWN9fs5R+BIKAqQHnsjM=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmQ2JcaJ9euCKId9vPpWsFIdRS2FdM2R5vL6pDl
+ fZWwIiROd2JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZkNiXAAKCRBVnxHm/pHO
+ 9edqCACDqoqsYSw6t2XP/npVZcwSA/XSunW2FkD4mEAfxYKrhfV3MRmsTne0zbB8MSwnmO2r/YJ
+ bf4ZgALL1+P8RkSSRRNQ+0Ly7z08Jb435scJlJVskteLH+clh5Z4CCVxrUFXMhKLOCERZyMJhJB
+ ww2GNgy15M0ewcoqe78aMj9zM0Rc0aA12NlXs643WJG16wH4Fyi62fiDW/D89seZut7pG64Vfhv
+ 97fdlqGmup6lNtv44Vfe1g1wK75VpWHTdVKh3bZlor9Ou9oMgEFTYz02/HXKsn637qoM2Jrn6vG
+ IKG7v4vL/N60ZvTXWG5BGrGWz5aR5t8l1gN/1QFjMkkHA5AB
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-Prefer the struct drm_edid based functions for reading the EDID and
-updating the connector.
+Devicetree binding has documented the node name for UFS controllers as
+'ufshc'. So let's use it instead of 'ufs' which is for the UFS devices.
 
-Simplify the flow by updating the EDID property when the EDID is read
-instead of at .get_modes.
-
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
+Manivannan Sadhasivam (2):
+      dt-bindings: ufs: qcom: Use 'ufshc' as the node name for UFS controller nodes
+      arm64: dts: qcom: Use 'ufshc' as the node name for UFS controller nodes
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi               | 2 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi                | 2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi              | 4 ++--
+ arch/arm64/boot/dts/qcom/sm6115.dtsi                | 2 +-
+ arch/arm64/boot/dts/qcom/sm6125.dtsi                | 2 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi                | 2 +-
+ arch/arm64/boot/dts/qcom/sm8550.dtsi                | 2 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi                | 2 +-
+ 9 files changed, 10 insertions(+), 10 deletions(-)
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 11 +++----
- drivers/gpu/drm/msm/dp/dp_panel.c   | 47 +++++++++--------------------
- drivers/gpu/drm/msm/dp/dp_panel.h   |  2 +-
- 3 files changed, 20 insertions(+), 40 deletions(-)
+base-commit: 4cece764965020c22cff7665b18a012006359095
+change-id: 20240514-ufs-nodename-fix-40672bc593a5
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 672a7ba52eda..9622e58dce3e 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -360,26 +360,25 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
- 
- static int dp_display_process_hpd_high(struct dp_display_private *dp)
- {
-+	struct drm_connector *connector = dp->dp_display.connector;
-+	const struct drm_display_info *info = &connector->display_info;
- 	int rc = 0;
--	struct edid *edid;
- 
--	rc = dp_panel_read_sink_caps(dp->panel, dp->dp_display.connector);
-+	rc = dp_panel_read_sink_caps(dp->panel, connector);
- 	if (rc)
- 		goto end;
- 
- 	dp_link_process_request(dp->link);
- 
- 	if (!dp->dp_display.is_edp)
--		drm_dp_set_subconnector_property(dp->dp_display.connector,
-+		drm_dp_set_subconnector_property(connector,
- 						 connector_status_connected,
- 						 dp->panel->dpcd,
- 						 dp->panel->downstream_ports);
- 
--	edid = dp->panel->edid;
--
- 	dp->dp_display.psr_supported = dp->panel->psr_cap.version && psr_enabled;
- 
--	dp->audio_supported = drm_detect_monitor_audio(edid);
-+	dp->audio_supported = info->has_audio;
- 	dp_panel_handle_sink_request(dp->panel);
- 
- 	/*
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 07db8f37cd06..a916b5f3b317 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -108,28 +108,6 @@ static u32 dp_panel_get_supported_bpp(struct dp_panel *dp_panel,
- 	return bpp;
- }
- 
--static int dp_panel_update_modes(struct drm_connector *connector,
--	struct edid *edid)
--{
--	int rc = 0;
--
--	if (edid) {
--		rc = drm_connector_update_edid_property(connector, edid);
--		if (rc) {
--			DRM_ERROR("failed to update edid property %d\n", rc);
--			return rc;
--		}
--		rc = drm_add_edid_modes(connector, edid);
--		return rc;
--	}
--
--	rc = drm_connector_update_edid_property(connector, NULL);
--	if (rc)
--		DRM_ERROR("failed to update edid property %d\n", rc);
--
--	return rc;
--}
--
- int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
- 	struct drm_connector *connector)
- {
-@@ -175,12 +153,13 @@ int dp_panel_read_sink_caps(struct dp_panel *dp_panel,
- 	if (rc)
- 		return rc;
- 
--	kfree(dp_panel->edid);
--	dp_panel->edid = NULL;
-+	drm_edid_free(dp_panel->drm_edid);
-+
-+	dp_panel->drm_edid = drm_edid_read_ddc(connector, &panel->aux->ddc);
-+
-+	drm_edid_connector_update(connector, dp_panel->drm_edid);
- 
--	dp_panel->edid = drm_get_edid(connector,
--					      &panel->aux->ddc);
--	if (!dp_panel->edid) {
-+	if (!dp_panel->drm_edid) {
- 		DRM_ERROR("panel edid read failed\n");
- 		/* check edid read fail is due to unplug */
- 		if (!dp_catalog_link_is_connected(panel->catalog)) {
-@@ -224,13 +203,13 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
- 		return -EINVAL;
- 	}
- 
--	if (dp_panel->edid)
--		return dp_panel_update_modes(connector, dp_panel->edid);
-+	if (dp_panel->drm_edid)
-+		return drm_edid_connector_add_modes(connector);
- 
- 	return 0;
- }
- 
--static u8 dp_panel_get_edid_checksum(struct edid *edid)
-+static u8 dp_panel_get_edid_checksum(const struct edid *edid)
- {
- 	edid += edid->extensions;
- 
-@@ -249,10 +228,12 @@ void dp_panel_handle_sink_request(struct dp_panel *dp_panel)
- 	panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
- 
- 	if (panel->link->sink_request & DP_TEST_LINK_EDID_READ) {
-+		/* FIXME: get rid of drm_edid_raw() */
-+		const struct edid *edid = drm_edid_raw(dp_panel->drm_edid);
- 		u8 checksum;
- 
--		if (dp_panel->edid)
--			checksum = dp_panel_get_edid_checksum(dp_panel->edid);
-+		if (edid)
-+			checksum = dp_panel_get_edid_checksum(edid);
- 		else
- 			checksum = dp_panel->connector->real_edid_checksum;
- 
-@@ -539,5 +520,5 @@ void dp_panel_put(struct dp_panel *dp_panel)
- 	if (!dp_panel)
- 		return;
- 
--	kfree(dp_panel->edid);
-+	drm_edid_free(dp_panel->drm_edid);
- }
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
-index 4ea42fa936ae..6722e3923fa5 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.h
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.h
-@@ -39,7 +39,7 @@ struct dp_panel {
- 	u8 downstream_ports[DP_MAX_DOWNSTREAM_PORTS];
- 
- 	struct dp_link_info link_info;
--	struct edid *edid;
-+	const struct drm_edid *drm_edid;
- 	struct drm_connector *connector;
- 	struct dp_display_mode dp_mode;
- 	struct dp_panel_psr psr_cap;
+Best regards,
 -- 
-2.39.2
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 
