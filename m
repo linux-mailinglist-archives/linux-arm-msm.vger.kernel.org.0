@@ -1,288 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-19813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22A8C8C4B6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 05:15:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E01FB8C4CF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 09:28:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 469311C2102F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 03:15:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 291E9B22160
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 07:28:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9058B653;
-	Tue, 14 May 2024 03:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B106636AE4;
+	Tue, 14 May 2024 07:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q53s3NS4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VFnuYnPi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9587B645;
-	Tue, 14 May 2024 03:14:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03391374F1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2024 07:25:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715656499; cv=none; b=cpLcGRayKy/abjvmHYUvTFFS6zJO1lVuanfIHWUvNfdxj6a4OraEuf4KzqnG1KL7vR5issX8F5/+A1xy7EWyxiArqPHmrpJru6X6OPRBwr/Q3f2gueMsECMXG0OkGvevktzycl7QZxIA1tAcEsiYELTProxmW9xKhscoWGhq4xc=
+	t=1715671507; cv=none; b=IFx4srcC6HSpW5h1WLgWV4p3E1eXV7yy7O1699DOa6ws80fxeENiIhUYfPIuKlLjOL0utMAGd5kVRwRblwFaz9FJVYFYGm5kjEDnxrU7nsLH3HuudPBlxf4LepI4d14TQBr2CQmBofXjrn2cO7Kxs6kexOiJnjAlByGCoyBMvu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715656499; c=relaxed/simple;
-	bh=QbqVBfQNoYjDk/o0VprLKiXeXk6JhqHR8BTYi43LpLg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=n1cCKie1pXfXzHyHX1oBYc2QMjMxKOwoGMoTESqz9xuTMGSVtbHoqHJCRDD/KEM0H1ZnyKO+Zy4fPyVP9E12nY1IXfVSvq4EexYMuq01o7YUcxgXxnl9q5LlcimTvykg1qgM5gOrOO2TeFZJdkGzSKi9ycw5rcHMWgYA1bO2NNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q53s3NS4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44DJ8svH024231;
-	Tue, 14 May 2024 03:14:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:from:subject:to:cc:references
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=lhiZUR02R0SWrwr3dvTvUIP0NvYrnDtZcWB6iVMfBn8=; b=Q5
-	3s3NS4nUMPqvw8fAoAgVuKY10zLTK7o0hLuUhrPBxRytOTzM2KlI9qk2gVLfWedJ
-	sHiFBG/AwQSkOOz6LAyggbLahQzUd42M/eJI19/3RYzUZTud+f4Y+oP0+6sE84Tu
-	biUXRFYRwuIlCgaHlT+f0pZwnaDv8/XE5Wb/Ijhh5NrngK4FgoN0OTKqCy6x/+Ld
-	Lf1m+PsM5ipstn8/rEkg5LSZwzNdDLsfGD6E12wYkCKzicpiks2ZkKXqSHFEDwqv
-	S9rHXxJ9vSdcoIiXzgoW/4yLE7gBy2b/CWECpl0UryOtC9+mbzKFVJ5iOD5D3/+s
-	ZZaB2lsao0KQRROmw7Eg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y1ymq579v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 May 2024 03:14:39 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44E3EcAW006727
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 May 2024 03:14:38 GMT
-Received: from [10.216.57.43] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 13 May
- 2024 20:14:27 -0700
-Message-ID: <3f6faea5-575d-46db-3a7b-ed6dbde060ea@quicinc.com>
-Date: Tue, 14 May 2024 08:44:22 +0530
+	s=arc-20240116; t=1715671507; c=relaxed/simple;
+	bh=MrsK/SOAFyvJ5rW6noiqY2i2AWXHF7hXaxT2Iuly1Kw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QbOkW4z+/Fdz+HqajQecD5VEY0N3K2HtOy3729/pD1Fd/9byfYacLn4TLMOwKY/bqzm3iPlc3Srs8fDVXEkfupbXkSp8xuQRyvYAv4IyUx74Ygx4L7HDUBu/+xw7xXpwx29eMvrD01UvN9oaYcNE6Pka6MPg6WPcx5KfpbgRfFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VFnuYnPi; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a59b097b202so1117056566b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2024 00:25:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715671504; x=1716276304; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=JB+Z0CRSJcLUU9yXDS+6zp2SY8ySyHlLC8dbiqLhtlQ=;
+        b=VFnuYnPijUKB5OvXDY4k+InVPo5hmPze9ahmz5tkhJUqO7fsoeww5VCnnSCFttYCwU
+         zcRnuUzTc0WaHbUp03SF28XAAbAaMvDY77hYTr8pVB2nCUfgwtZmN3hb7S0uNp0FrE4R
+         ogOw1rNBSlcUrt6HzNMJEkq1qwAANH0bZMLBpyPvJKg6NdkctCoNbx5ieROcTDHE9ZOK
+         OYbZ8tvx8YLKE/mHQ6yz4+kg/ch95kQuL7LmmsSZcuUg5VemintQU+s42IkTSIAbcZvV
+         CwBdjJrFz1/eroLQ78WGb3KhYpTLgy7vpJXolTI140gMdYwsmZKxccYLggzpmEgE/Kww
+         oKNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715671504; x=1716276304;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JB+Z0CRSJcLUU9yXDS+6zp2SY8ySyHlLC8dbiqLhtlQ=;
+        b=SCgfyzbehyWWQfrWRN4zEKZ20Qm5GZ7JjHvDNNnIQWRBgAhVnCJ9/ZoYthHWE3hMI6
+         wMapPd/TJu3MAEHgOteW5Ew4wKF5PFFI4KM6uI5JTd5CLlywDt/k7gTk9P5KpW8izQw4
+         SZvC1rQkiSmSTpc55XS0QbC7VK1UYlrm8FlZFDR80UW+5PBIsQVao76YE0Gm4uX7C+p6
+         I9pGHKaWUXvb22pBk7ycoAOdf04/lzNsFtrDSxmdWSOlxuRls4TayQRA5OK9ycLInNkd
+         y3JYGJ/U49xXm7jR/gs5oaLoTLHP8Uu0nGVFzUYNLl4aREitiwC7NN1RTrinGFY58uCJ
+         5e0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUj1bVvp1zRYb4iynUrTIMwc2UeLaoZ55HtNWGZdAswcVNdED+bUxoKG1uGsoXpJ592uFqoD13D1BcJL9bYvN5X3W0BVkAjV52iesWcZw==
+X-Gm-Message-State: AOJu0Yy2Jvh2F+pSDN17gToTvJSP7Z7nZ0rvA3OfY+geLV7VSi2J0Vy3
+	nN4x8BMpkU60qc47pIEPZojlR4rDY4iJZ8gblbXNckExXgrs4xZOyIx9KO52SQ==
+X-Google-Smtp-Source: AGHT+IEQTQ5t33iG1QpTljAk13ZjKCJq2arLVGhz/pfUDhGt2rL8ANrYeLV7xamqA3YFh7dM+6YrzA==
+X-Received: by 2002:a17:906:ee86:b0:a59:aae5:5840 with SMTP id a640c23a62f3a-a5a2d6759e5mr1063776566b.75.1715671504270;
+        Tue, 14 May 2024 00:25:04 -0700 (PDT)
+Received: from thinkpad ([149.14.240.163])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a1781d2ecsm703097166b.16.2024.05.14.00.25.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 May 2024 00:25:03 -0700 (PDT)
+Date: Tue, 14 May 2024 09:25:02 +0200
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: devi priya <quic_devipriy@quicinc.com>, bhelgaas@google.com,
+	lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+	konrad.dybcio@linaro.org, mturquette@baylibre.com, sboyd@kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org
+Subject: Re: [PATCH V5 3/6] dt-bindings: PCI: qcom: Document the IPQ9574 PCIe
+ controller.
+Message-ID: <20240514072502.GA2463@thinkpad>
+References: <20240512082858.1806694-1-quic_devipriy@quicinc.com>
+ <20240512082858.1806694-4-quic_devipriy@quicinc.com>
+ <b3199f40-0983-4185-bd0c-2e2d45d690ad@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-From: Amrit Anand <quic_amrianan@quicinc.com>
-Subject: Re: [PATCH v2 2/2] dt-bindings: qcom: Update DT bindings for multiple
- DT
-To: Caleb Connolly <caleb.connolly@linaro.org>, <robh@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
-        <peter.griffin@linaro.org>, <linux-riscv@lists.infradead.org>,
-        <chrome-platform@lists.linux.dev>,
-        <linux-mediatek@lists.infradead.org>, Simon Glass <sjg@chromium.org>
-References: <1710418312-6559-1-git-send-email-quic_amrianan@quicinc.com>
- <1710418312-6559-3-git-send-email-quic_amrianan@quicinc.com>
- <f6f317d9-830d-4c38-998f-b229b3d9f95a@linaro.org>
- <a5eac9d5-1e88-4d7a-b8e8-677f6d116782@linaro.org>
-Content-Language: en-US
-In-Reply-To: <a5eac9d5-1e88-4d7a-b8e8-677f6d116782@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -yV4KEYXNc3XSkcHYWdAkYL7u1Bw6tM-
-X-Proofpoint-ORIG-GUID: -yV4KEYXNc3XSkcHYWdAkYL7u1Bw6tM-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-13_17,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
- bulkscore=0 malwarescore=0 mlxlogscore=999 priorityscore=1501 phishscore=0
- lowpriorityscore=0 mlxscore=0 impostorscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
- definitions=main-2405140023
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b3199f40-0983-4185-bd0c-2e2d45d690ad@kernel.org>
 
+On Mon, May 13, 2024 at 08:48:19AM +0200, Krzysztof Kozlowski wrote:
+> On 12/05/2024 10:28, devi priya wrote:
+> 
+> >  
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - qcom,pcie-ipq9574
+> > +    then:
+> > +      properties:
+> > +        clocks:
+> > +          minItems: 6
+> > +          maxItems: 6
+> > +        clock-names:
+> > +          items:
+> > +            - const: ahb  # AHB clock
+> > +            - const: aux  # Auxiliary clock
+> > +            - const: axi_m # AXI Master clock
+> > +            - const: axi_s # AXI Slave clock
+> > +            - const: axi_bridge # AXI bridge clock
+> > +            - const: rchng
+> 
+> That's introducing one more order of clocks... Please keep it
+> consistent. The only existing case with ahb has it at after axi_m and
+> others. Why making things everytime differently?
+> 
+> I also to propose to finally drop the obvious comments, like "AHB
+> clock". It cannot be anything else. AXI Master / slave are descriptive,
+> so should stay.
+> 
 
-On 3/14/2024 8:05 PM, Caleb Connolly wrote:
-> On 14/03/2024 14:20, Caleb Connolly wrote:
->> Hi Amrit,
->>
->> On 14/03/2024 12:11, Amrit Anand wrote:
->>> Qualcomm produces a lot of "unique" boards with slight differences in
->>> SoC's and board's configuration. For eg, there can be SM8150v1 on MTPv1,
->>> SM8150v1 on MTPv2, SM8150v2 on MTPv2, SM8150v2 on MTPv2 with a different
->>> PMIC, SM8150v2 with no modem support and so on. For instance, suppose we
->>> have 3 SoC, each with 4 boards supported, along with 2 PMIC support for
->>> each case which would lead to total of 24 DTB files. Along with these
->>> configurations, OEMs may also add certain additional board variants. Thus
->>> a mechanism is required to pick the correct DTB for the corresponding board.
->>>
->>> Introduce mechanism to select required DTB using newly introduced device
->>> tree properties "board-id" and "board-id-type". "board-id" will contain
->>> the list of values of "qcom,soc-id", "qcom,board-id", "qcom,pmic-id" or
->>> "qcom,oem-id". "board-id-types" contains the type of parameter which is
->>> entered. It can be either "qcom,soc-id", "qcom,board-id", "qcom,pmic-id"
->>> or "qcom,oem-id".
->> Thanks for working on this, it's nice to finally see this logic
->> documented in the kernel.
->>> Qualcomm based bootloader will use these properties to pick the best
->>> matched DTB to boot the device with.
->>>
->>> Signed-off-by: Amrit Anand<quic_amrianan@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/arm/qcom.yaml | 90 +++++++++++++++++++++++++
->>>   1 file changed, 90 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->>> index 7f80f48..dc66ae9 100644
->>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->>> @@ -1100,6 +1100,76 @@ properties:
->>>         kernel
->>>         The property is deprecated.
->>>   
->>> +  board-id:
->>> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
->>> +    minItems: 2
->>> +    description: |
->>> +      Qualcomm specific bootloader uses multiple different identifiers
->>> +      (qcom,soc-id, qcom,board-id, qcom,pmic-id, qcom,oem-id) to select
->>> +      single Devicetree among list of Devicetrees. For different identifiers,
->>> +      the selection can be done either based on exact match (where the
->>> +      identifiers information coming from firmware should exactly match
->>> +      the ones described in devicetree) or best match (firmware provided
->>> +      identifier information closely matches with the one of the Devicetree).
->>> +      Below table describes matching criteria for each identifier::
->>> +      |----------------------------------------------------------------------|
->>> +      |  DT property  |  Individual fields   |   Exact  |  Best  |  Default  |
->>> +      |----------------------------------------------------------------------|
->>> +      | qcom,soc-id   |                                                      |
->>> +      |               |  Chipset Id          |     Y    |    N   |     -     |
->>> +      |               |  SoC Revision        |     N    |    Y   |     -     |
->>> +      | qcom,board-id |                                                      |
->>> +      |               |  Board Id            |     Y    |    N   |     -     |
->>> +      |               |  Board Major         |     N    |    Y   |     -     |
->>> +      |               |  Board Minor         |     N    |    Y   |     -     |
->>> +      |               |  Subtype             |     Y    |    N   |     0     |
->>> +      |               |  DDRtype             |     Y    |    N   |     0     |
->>> +      |               |  BootDevice Type     |     Y    |    N   |     0     |
->>> +      | qcom,pmic-id  |                                                      |
->>> +      |               |  Slave Id            |     Y    |    N   |     0     |
->>> +      |               |  PMIC Id             |     Y    |    N   |     0     |
->>> +      |               |  PMIC Major          |     N    |    Y   |     0     |
->>> +      |               |  PMIC Minor          |     N    |    Y   |     0     |
->>> +      | qcom,oem-id   |                                                      |
->>> +      |               |  OEM Id              |     Y    |    N   |     0     |
->>> +      |----------------------------------------------------------------------|
->>> +      For best match, identifiers are matched based on following priority order::
->>> +      SoC Revision > Board Major > Board Minor > PMIC Major > PMIC Minor
->>> +
->>> +  board-id-types:
->>> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
->>> +    description:
->>> +       Each field and helper macros are defined at include/dt-bindings/arm/qcom,ids.
->>> +    minItems: 2
->>> +    items:
->>> +       oneOf:
->>> +         - const: qcom,soc-id
->>> +           description:
->>> +              Matches Qualcomm Technologies, Inc. boards with the specified SoC.
->>> +              2 integers are needed to describe a soc-id. The first integer is the
->>> +              SoC ID and the second integer is the SoC revision.
->>> +              qcom,soc-id = <soc-id  soc-revision>
->>> +         - const: qcom,board-id
->>> +           description: |
->>> +              Matches Qualcomm Technologies, Inc. boards with the specified board.
->>> +              2 integers are needed to describe a board-id. The first integer is the
->>> +              board ID. The second integer is the board-subtype.
->>> +              qcom,board-id = <board-id  board-subtype>
-> This is a recursive definition. You partially described the individual
-> fields above, you should do that here.
++1 to drop the names.
 
-The information about these fields are documented in header 
-include/dt-bindings/arm/qcom,ids.h
-sent in patch 1.
+- Mani
 
-> What is DDR type? What information is encoded that doesn't make sense to
-> describe elsewhere in DT?
->
-> Same for "bootdevice type", why would you pick a different DT based on
-> whether the bootloader was loaded from UFS or NAND? Why does this
-> information belong in DT?
-
-We can have multiple DT for different DDR types and boot device types. 
-In order to distinguish different DT when
-all other parameters are same, we are using DDR type, boot device type 
-as distinguishable parameters.
-
->>> +         - const: qcom,pmic-id
->>> +           description: |
->>> +              Qualcomm boards can be attached to multiple PMICs where slave-id (SID)
->>> +              indicates the address of the bus on which the PMIC is attached. It can be
->>> +              any number. The model for a PMIC indicates the PMIC name attached to bus
->>> +              described by SID along with  major and minor version. 2 integers are needed
->>> +              to describe qcom,pmic-id. The first integer is the slave-id and the second integer
->>> +              is the pmic model.
->>> +              qcom,pmic-id = <pmic-sid pmic-model>
-> Same questions here, why don't you just walk the DT and read the
-> compatible properties of PMIC nodes?
->>> +         - const: qcom,oem-id
->>> +           description: |
->>> +              Matches Qualcomm Technologies, Inc. boards with the specified OEM ID.
->>> +              1 integer is needed to describe the oem-id.
->>> +              qcom,oem-id = <oem-id>
->>> +
->>>   allOf:
->>>     # Explicit allow-list for older SoCs. The legacy properties are not allowed
->>>     # on newer SoCs.
->>> @@ -1167,4 +1237,24 @@ allOf:
->>>   
->>>   additionalProperties: true
->>>   
->>> +examples:
->>> +  - |
->>> +    #include <dt-bindings/arm/qcom,ids.h>
->>> +    / {
->>> +         model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
->>> +         compatible = "qcom,sc7280-idp", "google,senor", "qcom,sc7280";
->>> +
->>> +         #board-id-cells = <2>;
->>> +         board-id = <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(1)>,
->>> +                    <QCOM_SOC_ID(SC7280) QCOM_SOC_REVISION(2)>,
->>> +                    <QCOM_BOARD_ID(IDP, 1, 0) QCOM_BOARD_SUBTYPE(UFS, ANY, 1)>;
->>> +         board-id-types = "qcom,soc-id",
->>> +                          "qcom,soc-id",
->>> +                          "qcom,board-id";
->> Forgive me if this is a particularly cynical view, but this seems
->> incredibly blatant, the "qcom,board-id" property is deprecated for
->> various good reasons, just using a key/value map where "qcom,board-id"
->> is a key doesn't change that. There are two main issues I have with the
->> proposal here:
->>
->> 1. This breaks backwards compatibility, millions of production devices
->> with bootloaders that will never receive another update might be
->> compatible with the downstream "qcom,board-id" property, but they won't
->> work with this.
->> 2. A top level board-id property that isn't namespaced implies that it
->> isn't vendor specific, but the proposed implementation doesn't even
->> pretend to be vendor agnostic.
-
-ok, will try to redefine it. Meantime, since Elliot has some suggestions 
-from his EOSS conference presentation,
-will also co-work with him towards making another attempt at vendor 
-agnostic approach as well.
-
-
->>
->> U-Boot also has some ideas around this issue, there you can pass in
->> multiple DTBs and provide some board specific "best match" function.
->> I think there's definitely some value in exposing this information, but
->> there's no good reason to define the same data as `qcom,board-id` while
->> breaking production bootloaders.
->>> +
->>> +         #address-cells = <2>;
->>> +         #size-cells = <2>;
->>> +    };
->>> +
->>> +
->>>   ...
+-- 
+மணிவண்ணன் சதாசிவம்
 
