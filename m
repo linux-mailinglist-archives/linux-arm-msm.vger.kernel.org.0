@@ -1,126 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-19819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02A3B8C4DC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 10:39:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CA6B8C4DD9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 10:43:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33D371C215C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 08:39:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D8311F22B6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 08:43:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A72E1D556;
-	Tue, 14 May 2024 08:39:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iHWYGS/f"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC8DB1D555;
+	Tue, 14 May 2024 08:43:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8721B1CAB1;
-	Tue, 14 May 2024 08:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90991D54B;
+	Tue, 14 May 2024 08:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715675969; cv=none; b=GoPQodPJ0J1rnz+n2B8AFAFSSEk4KQNNKjbbh2moYniR6aVss7gMbI6xKMhHWyEFBMvndg04IuD/gmMG4V3M4S1n55kGN2vjeJ6ftOCxNEXo3DCpYKaMMFYfzDEV3WQbf6vFT+6HK6h7AFz8aLifMMwrwkAM7gYMsGImCq6nqgQ=
+	t=1715676188; cv=none; b=LhadBY+/7t/DnIDLW1JY9M9lHSZYgt83iPTMlgOzb07tC2H2FejbGAdtIESrvfrjPdrpBZ9RdsMTAZC1x1AxuSdY8tfIUm7tvxi8x8AD9ZADOw+zGXxtDTXGAI+o1VTDl66sumwq7zzyd7FU0IhsykOlVke0G9K6WW6dpCVZy7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715675969; c=relaxed/simple;
-	bh=Lj4Zx1rIkde5sg/gNvqusl6lGf0Bj0HmSnq3nSnra4A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=K236IlADBtBE7g52rkHfxyNoISPMZTu3fBjysIRgmtRqFagXCINoCE/qHdPgR8r14onOI1sUcKdaudoourPvR4LfkBM7bP0zdlGG9MCBULiNNEJ6WKLmQkT+n2oWfr47zm/llTu4fphqUTItjnKADGqkz6sUGjKU94Na87o0Apc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iHWYGS/f; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44DJ8qGc009927;
-	Tue, 14 May 2024 08:39:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=arxYHOnh1XaXsKWitYbSPh3JP+VL4K7roRKT+z9yAvk=; b=iH
-	WYGS/fP4ybvaU1pJ9mWFebuzOLtVh67YFHDnjzxdG5Y0IgdD+eY2PdovIqln1/UP
-	+rzhB4rF82tsh2n3NQAB7xtosb7MW7RtcvkVOjx6sjp4h66WI8hnh4CQXCxfxcvC
-	CmpULWRep69fMuT7e5QhOYFnUtK442or25DJJRUtmGRY8Jt/lWFbX87y5OzXEPhZ
-	f3MTgSWvp9m8LGEAud1wjKzXNZWjIhh9mH2DPLMtYmNpVgx6paHc/dV254FwLrJ1
-	cRXrDWx5CGjxG3x9Wjx0m8tCxwF70pfu2Zzz45A3ARzMW3uYHk89N6vvemNWB11m
-	6wripzd1/8zpgv8MnDUQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y21eddk7b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 May 2024 08:39:21 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44E8dKOU004132
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 May 2024 08:39:20 GMT
-Received: from [10.251.44.40] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 14 May
- 2024 01:39:17 -0700
-Message-ID: <d0b80f9a-9625-4151-8cb4-dd86c8325fd3@quicinc.com>
-Date: Tue, 14 May 2024 11:39:15 +0300
+	s=arc-20240116; t=1715676188; c=relaxed/simple;
+	bh=Fljb2ROWbiju3hczRTFPhDqUN7rOS5RI6ewU7ldmI0o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a9Q8YGUkYGAEl5OGm/AlQp7uboPSGlLPaICaveOG8cd8Jjw7n9nJ8eQ3tZtmTcVjEsBo/wsi3CENmaaiWyYBCHySuWA0npJIMBqYdkLlC4fHmhsocU63pdu9NrhW++ljBONz4wkujyiL6nbhoUWQcUsuvcQEFXq/LQNp6SsHpmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA347C2BD10;
+	Tue, 14 May 2024 08:43:05 +0000 (UTC)
+Date: Tue, 14 May 2024 10:43:03 +0200
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Bjorn Andersson <andersson@kernel.org>, Luca Weiss <luca@z3ntu.xyz>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	quic_qianyu@quicinc.com
+Subject: Re: [PATCH] net: qrtr: ns: Fix module refcnt
+Message-ID: <20240514084303.GD2463@thinkpad>
+References: <20240513-fix-qrtr-rmmod-v1-1-312a7cd2d571@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] media: qcom: camss: Attach formats to VFE
- resources
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>,
-        <rfoss@kernel.org>, <todor.too@gmail.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
-        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>
-References: <20240411124543.199-1-quic_grosikop@quicinc.com>
- <20240411124543.199-3-quic_grosikop@quicinc.com>
- <c76957b9-d57d-469d-87c8-c9f59b4462b0@linaro.org>
- <9ac41841-9281-4867-a607-e3883f32db83@quicinc.com>
- <55ce4e31-4134-40fe-8e94-28392863886a@linaro.org>
-From: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>
-In-Reply-To: <55ce4e31-4134-40fe-8e94-28392863886a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UoWX0jMuOaED5cQkLJYW1iH9fYbSAs7n
-X-Proofpoint-ORIG-GUID: UoWX0jMuOaED5cQkLJYW1iH9fYbSAs7n
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-14_03,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=970 adultscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 mlxscore=0 malwarescore=0
- suspectscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405140060
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240513-fix-qrtr-rmmod-v1-1-312a7cd2d571@quicinc.com>
 
++ Qiang (who also reported a similar issue)
 
-
-On 5/13/2024 8:36 PM, Bryan O'Donoghue wrote:
-> On 13/05/2024 16:35, Gjorgji Rosikopulos (Consultant) wrote:
->> I agree but i would propose to have next series for cleanup up patches,
->> Otherwise we will have to many changes across the files.
+On Mon, May 13, 2024 at 10:31:46AM -0700, Chris Lew wrote:
+> The qrtr protocol core logic and the qrtr nameservice are combined into
+> a single module. Neither the core logic or nameservice provide much
+> functionality by themselves; combining the two into a single module also
+> prevents any possible issues that may stem from client modules loading
+> inbetween qrtr and the ns.
 > 
-> So, I missed these plats in the code, thanks for spotting.
+> Creating a socket takes two references to the module that owns the
+> socket protocol. Since the ns needs to create the control socket, this
+> creates a scenario where there are always two references to the qrtr
+> module. This prevents the execution of 'rmmod' for qrtr.
 > 
-> I'd like to get the header SPDX and style stuff Vlad highlighted fixed
-> in a V4 of this series.
+> To resolve this, forcefully put the module refcount for the socket
+> opened by the nameservice.
 > 
-> However given the amount of effort required to verify these changes, I'd
-> rather avoid data-structure and/or logic changes at this stage.
+> Fixes: a365023a76f2 ("net: qrtr: combine nameservice into main module")
+> Reported-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
 
-I agree. V4 will contain only style stuff from Vlad and patch 3.1 with
-fix for csyphy type.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-~Gjorgji
+- Mani
 
+> ---
+> This patch takes heavy influence from the following TIPC patch.
+> 
+> Link: https://lore.kernel.org/all/1426642379-20503-2-git-send-email-ying.xue@windriver.com/
+> ---
+>  net/qrtr/ns.c | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
+> diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+> index abb0c70ffc8b..654a3cc0d347 100644
+> --- a/net/qrtr/ns.c
+> +++ b/net/qrtr/ns.c
+> @@ -725,6 +725,24 @@ int qrtr_ns_init(void)
+>  	if (ret < 0)
+>  		goto err_wq;
+>  
+> +	/* As the qrtr ns socket owner and creator is the same module, we have
+> +	 * to decrease the qrtr module reference count to guarantee that it
+> +	 * remains zero after the ns socket is created, otherwise, executing
+> +	 * "rmmod" command is unable to make the qrtr module deleted after the
+> +	 *  qrtr module is inserted successfully.
+> +	 *
+> +	 * However, the reference count is increased twice in
+> +	 * sock_create_kern(): one is to increase the reference count of owner
+> +	 * of qrtr socket's proto_ops struct; another is to increment the
+> +	 * reference count of owner of qrtr proto struct. Therefore, we must
+> +	 * decrement the module reference count twice to ensure that it keeps
+> +	 * zero after server's listening socket is created. Of course, we
+> +	 * must bump the module reference count twice as well before the socket
+> +	 * is closed.
+> +	 */
+> +	module_put(qrtr_ns.sock->ops->owner);
+> +	module_put(qrtr_ns.sock->sk->sk_prot_creator->owner);
+> +
+>  	return 0;
+>  
+>  err_wq:
+> @@ -739,6 +757,15 @@ void qrtr_ns_remove(void)
+>  {
+>  	cancel_work_sync(&qrtr_ns.work);
+>  	destroy_workqueue(qrtr_ns.workqueue);
+> +
+> +	/* sock_release() expects the two references that were put during
+> +	 * qrtr_ns_init(). This function is only called during module remove,
+> +	 * so try_stop_module() has already set the refcnt to 0. Use
+> +	 * __module_get() instead of try_module_get() to successfully take two
+> +	 * references.
+> +	 */
+> +	__module_get(qrtr_ns.sock->ops->owner);
+> +	__module_get(qrtr_ns.sock->sk->sk_prot_creator->owner);
+>  	sock_release(qrtr_ns.sock);
+>  }
+>  EXPORT_SYMBOL_GPL(qrtr_ns_remove);
 > 
 > ---
-> bod
+> base-commit: e7b4ef8fffaca247809337bb78daceb406659f2d
+> change-id: 20240508-fix-qrtr-rmmod-5265be704bad
+> 
+> Best regards,
+> -- 
+> Chris Lew <quic_clew@quicinc.com>
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
