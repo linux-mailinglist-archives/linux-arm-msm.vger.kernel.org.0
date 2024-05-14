@@ -1,249 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-19824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C42F78C4EF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 12:25:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65B488C54D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 13:53:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E790C1C20F5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 10:25:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 999DB28AABD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 11:53:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4A1312FF84;
-	Tue, 14 May 2024 09:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7B444DA13;
+	Tue, 14 May 2024 11:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nUybUr9i"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orIPcRiN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2ABC41C92;
-	Tue, 14 May 2024 09:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8E845014;
+	Tue, 14 May 2024 11:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715679650; cv=none; b=Lv4J2ojccTtVx2ia+DxcyHCPfnt5mJjmFgvlNUoDWn8bFN3yaSyt4wcdLMxdMSQlsS2eTO0qnAo9Y3HwY+GPrnJTWJCfHniISuouT6fZMwq3WN2xo4APqaAqcagCW1P99x9yX3HD8ZWcPfKxaQtUZMOlUAVInu0lvu7p6z4dP+s=
+	t=1715687485; cv=none; b=BYkNYyvFigdMgbcbUApHrO50RGFRPwwQwPmugy5iCKNY36XgW7H/9bYXakAhfb/Uo+0HgBJ7UMRp1YmqZsxjBnlkJQwVeZMeu4sph+JZ3ciQh2zJMIsZt74Spv/PYPfEjhS0707iy4jczcUoGZeP53TEoiWE88wq1VYwv+NNSiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715679650; c=relaxed/simple;
-	bh=fUsD6LUTdjE3pAPXHLqyl5dRHGqYcANQ1LUVv9dUdZA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EXKrTFBYwD2P4DiotIOY5a11tZvs0Ugplwh/GKizdle0Qq2uYYttHVhVvQpHD1gruV1JDNZs1pNE4VAHGdnYs14zfFWKtueqEg9dOg7GIBAxrG5/ydsnOiIe9nNDQkf38cUqJt27JsKEsSzPuwZMPzZQo3YR9tlERBjDnuCFvl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nUybUr9i; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44E7tsc4027298;
-	Tue, 14 May 2024 09:40:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=mi2RdJrkmKsN8ltJ5aUEwLAREuBftGQxjpo5hXDRxgg=; b=nU
-	ybUr9iEsxZRQjD1S24T59fGP4OSgAcKLjwUywOCertkq9k7S2Vzjav+5/AgN1DWD
-	hsufoytciMEqmICSQKMR1cV+ehP1L+b3WACSYxc2VkLMIZQC6xeI5fML6PEvioW8
-	wTub8zgwarkgFS+BNkkZqvLIq4zRbWYxj7BJct0yFN9PR0AHY1JIdr9x+CpcNfES
-	9gg3I9w408tgQ5+kSTG5v5KYNwizQ2EoEzc5Q4c42BV5QzxLapi7ftDdwxivaw6s
-	YddBaXql/yzxj153u2fkE8+YOk7TIQ/miRHfKi6m1yFTam3Pzaw+9rlg2Y1Zd6gv
-	jn78Je17KqUsBtohO3dw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y1y9mdy6y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 May 2024 09:40:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44E9eZfl030697
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 May 2024 09:40:35 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 14 May
- 2024 02:40:31 -0700
-Message-ID: <d7fbc261-39a1-57a3-6891-ae2de63368d0@quicinc.com>
-Date: Tue, 14 May 2024 15:10:28 +0530
+	s=arc-20240116; t=1715687485; c=relaxed/simple;
+	bh=SQCazENokHnU8+aplmsUMdGTRw0rMnxfifSkt+NxMBk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tXhCk8qOBD9MoDTthHx3YKRnrGwHqz3SpZ80yrwXwJI+BgVU6LZZzXUcPIO9aoz9pwU6MTP/Hu0AcWyJVQYKCuPTyyk3EhuHxDhkXJxuihjQRsPOXDKZWzgVQda/Cv8f5vrc8yqDmad1pf3MQl6YMoRoG02t3mYbanQX7H0Yo78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orIPcRiN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B19EC2BD10;
+	Tue, 14 May 2024 11:51:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1715687485;
+	bh=SQCazENokHnU8+aplmsUMdGTRw0rMnxfifSkt+NxMBk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=orIPcRiNmTYqx1QtPwgRgShw5bW6tJ4U2SngAOU4HEqIEfZnpxTKvtBzdna5N4BP+
+	 vVXbPhUSnLi8Iuk1WB/bdZBiy6mPpg4qvffni/xYxHq/yjL2r3JZx4UN/Eri0/G/wi
+	 BaZWQA7QNCYqEUUOZWOHfWqGbWIUDoddLGVqJxUs=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Alex Elder <elder@linaro.org>
+Subject: [PATCH 5.10 091/111] arm64: dts: qcom: Fix interrupt-map parent address cells
+Date: Tue, 14 May 2024 12:20:29 +0200
+Message-ID: <20240514101000.588373210@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20240514100957.114746054@linuxfoundation.org>
+References: <20240514100957.114746054@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V4 2/2] cpufreq: scmi: Register for limit change
- notifications
-Content-Language: en-US
-To: Cristian Marussi <cristian.marussi@arm.com>
-CC: <sudeep.holla@arm.com>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <morten.rasmussen@arm.com>, <dietmar.eggemann@arm.com>,
-        <lukasz.luba@arm.com>, <pierre.gondois@arm.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20240328074131.2839871-1-quic_sibis@quicinc.com>
- <20240328074131.2839871-3-quic_sibis@quicinc.com> <ZjH7hWnKFcpQ-TXH@pluto>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <ZjH7hWnKFcpQ-TXH@pluto>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7BftsmZAxynvjVdMmba2KZ8pb45XmQ0V
-X-Proofpoint-ORIG-GUID: 7BftsmZAxynvjVdMmba2KZ8pb45XmQ0V
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-14_04,2024-05-10_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
- malwarescore=0 suspectscore=0 impostorscore=0 clxscore=1011 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405140068
+Content-Transfer-Encoding: 8bit
+
+5.10-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Rob Herring <robh@kernel.org>
+
+commit 0ac10b291bee84b00bf9fb2afda444e77e7f88f4 upstream.
+
+The 'interrupt-map' in several QCom SoCs is malformed. The '#address-cells'
+size of the parent interrupt controller (the GIC) is not accounted for.
+
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20210928192210.1842377-1-robh@kernel.org
+Cc: Alex Elder <elder@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/arm64/boot/dts/qcom/msm8998.dtsi |    8 ++++----
+ arch/arm64/boot/dts/qcom/sdm845.dtsi  |   16 ++++++++--------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -949,10 +949,10 @@
+ 			interrupts = <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-			interrupt-map =	<0 0 0 1 &intc 0 135 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 2 &intc 0 136 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 3 &intc 0 138 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 4 &intc 0 139 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-map =	<0 0 0 1 &intc 0 0 135 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 2 &intc 0 0 136 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 3 &intc 0 0 138 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
+ 
+ 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+ 				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -1824,10 +1824,10 @@
+ 			interrupt-names = "msi";
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-			interrupt-map = <0 0 0 1 &intc 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+-					<0 0 0 2 &intc 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+-					<0 0 0 3 &intc 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+-					<0 0 0 4 &intc 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
++			interrupt-map = <0 0 0 1 &intc 0 0 0 149 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
++					<0 0 0 2 &intc 0 0 0 150 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
++					<0 0 0 3 &intc 0 0 0 151 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
++					<0 0 0 4 &intc 0 0 0 152 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+ 
+ 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+ 				 <&gcc GCC_PCIE_0_AUX_CLK>,
+@@ -1928,10 +1928,10 @@
+ 			interrupt-names = "msi";
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-			interrupt-map = <0 0 0 1 &intc 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+-					<0 0 0 2 &intc 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+-					<0 0 0 3 &intc 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+-					<0 0 0 4 &intc 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
++			interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
++					<0 0 0 2 &intc 0 0 0 435 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
++					<0 0 0 3 &intc 0 0 0 438 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
++					<0 0 0 4 &intc 0 0 0 439 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+ 
+ 			clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
+ 				 <&gcc GCC_PCIE_1_AUX_CLK>,
 
 
-
-On 5/1/24 13:51, Cristian Marussi wrote:
-> On Thu, Mar 28, 2024 at 01:11:31PM +0530, Sibi Sankar wrote:
->> Register for limit change notifications if supported and use the throttled
->> frequency from the notification to apply HW pressure.
->>
-> 
-> Hi Sibi,
-> 
-> a bit late on this, sorry.
-> 
-> Just a couple of nitpicks down below.
-> 
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>
->> v4:
->> * Use a interim variable to show the khz calc. [Lukasz]
->> * Use driver_data to pass on the handle and scmi_dev instead of using
->>    global variables. Dropped Lukasz's Rb due to adding these minor
->>    changes.
->>
->>   drivers/cpufreq/scmi-cpufreq.c | 44 ++++++++++++++++++++++++++++++++++
->>   1 file changed, 44 insertions(+)
->>
->> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
->> index 3b4f6bfb2f4c..d946b7a08258 100644
->> --- a/drivers/cpufreq/scmi-cpufreq.c
->> +++ b/drivers/cpufreq/scmi-cpufreq.c
->> @@ -21,11 +21,18 @@
->>   #include <linux/types.h>
->>   #include <linux/units.h>
->>   
->> +struct scmi_cpufreq_driver_data {
->> +	struct scmi_device *sdev;
->> +	const struct scmi_handle *handle;
->> +};
->> +
->>   struct scmi_data {
->>   	int domain_id;
->>   	int nr_opp;
->>   	struct device *cpu_dev;
->> +	struct cpufreq_policy *policy;
->>   	cpumask_var_t opp_shared_cpus;
->> +	struct notifier_block limit_notify_nb;
->>   };
->>   
->>   static struct scmi_protocol_handle *ph;
->> @@ -174,6 +181,22 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
->>   	NULL,
->>   };
->>   
->> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
->> +{
->> +	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
->> +	struct scmi_perf_limits_report *limit_notify = data;
->> +	struct cpufreq_policy *policy = priv->policy;
->> +	unsigned int limit_freq_khz;
->> +
->> +	limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
->> +
->> +	policy->max = clamp(limit_freq_khz, policy->cpuinfo.min_freq, policy->cpuinfo.max_freq);
->> +
->> +	cpufreq_update_pressure(policy);
->> +
->> +	return NOTIFY_OK;
->> +}
->> +
->>   static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->>   {
->>   	int ret, nr_opp, domain;
->> @@ -181,6 +204,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->>   	struct device *cpu_dev;
->>   	struct scmi_data *priv;
->>   	struct cpufreq_frequency_table *freq_table;
->> +	struct scmi_cpufreq_driver_data *data = cpufreq_get_driver_data();
->>   
->>   	cpu_dev = get_cpu_device(policy->cpu);
->>   	if (!cpu_dev) {
->> @@ -294,6 +318,17 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
->>   		}
->>   	}
->>   
->> +	priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
->> +	ret = data->handle->notify_ops->devm_event_notifier_register(data->sdev, SCMI_PROTOCOL_PERF,
->> +							SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
->> +							&domain,
->> +							&priv->limit_notify_nb);
->> +	if (ret)
->> +		dev_warn(cpu_dev,
-> 
-> or &data->sdev->dev which refers to this driver ? which is more informational ? no strong opinion just a question...
-
-Pointing to the driver is better given that we already pass on domain
-info.
-
-> 
->> +			 "failed to register for limits change notifier for domain %d\n", domain);
->> +
->> +	priv->policy = policy;
->> +
->>   	return 0;
->>   
->>   out_free_opp:
->> @@ -366,12 +401,21 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
->>   	int ret;
->>   	struct device *dev = &sdev->dev;
->>   	const struct scmi_handle *handle;
->> +	struct scmi_cpufreq_driver_data *data;
->>   
->>   	handle = sdev->handle;
-> 
-> 	^^^ ....
->>   
->>   	if (!handle)
->>   		return -ENODEV;
->>   
->> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
->> +	if (!data)
->> +		return -ENOMEM;
->> +
->> +	data->sdev = sdev;
->> +	data->handle = handle;
-> 
-> 	^^^ ... you dont need to pass around handle AND sdev really
->                  since you can access the handle from sdev.
-> 
->> +	scmi_cpufreq_driver.driver_data = data;
-
-Ack setting sdev as driver data would suffice. Will fix it in the next
-re-spin.
-
--Sibi
-
-> 
-> This is slightly better, but, as said, does not solve the multi-instance issue...
-> ...the scmi cpufreq driver remains a driver that works only if instantiated (probed)
-> once, given how the CPUFreq core handles cpufreq_driver registration itself...
-> 
-> ...just a note about something to work on in the future...NOT a concern for this series.
-> 
-> In general,
-> 
-> LGTM.
-> 
-> Thanks,
-> Cristian
-> 
 
