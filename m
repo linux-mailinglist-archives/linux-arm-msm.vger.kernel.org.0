@@ -1,124 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-19853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26C358C5B5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 20:50:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0BAD8C5DA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 00:30:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57DF81C21BF1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 18:50:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70C33281C2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 22:30:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5F6E181313;
-	Tue, 14 May 2024 18:50:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KmPEz8LP"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06E19181D19;
+	Tue, 14 May 2024 22:30:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B429418AEA;
-	Tue, 14 May 2024 18:50:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E1E1DDEE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 May 2024 22:30:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715712620; cv=none; b=pbE/4wpbFN7TlFjxJI6d4+qrtDv2OY4bXEX/8Twk/fzUTGNs27B7hGx0lks6JwHeHLziCxDtSRMmjSs3NVl8PCvKuXR4mrNCRuHXB8s7BT9TEh4OPpyXunT53Q7DpBQy8+3bdq8PFLCV9E4rDF1l6DHozCnGPN2jtbZcD3oc2bw=
+	t=1715725818; cv=none; b=VE+sv1ze0Ysjs4kHR3TEQG9VOUkCx20il7Pn1boiwcM7iZLcE4eJWenhH5WGi8vIVifHJwYLrQxtnxxd41Dk0H706N1Le+lXeolstCJG5K9cj5Jzgr0pLtHGtJQTGWfk9+kw75j7HTtVMEQ99u180WS4CfriXyFyvnM8YgONRCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715712620; c=relaxed/simple;
-	bh=CVX9i/4HCz3SLBmAajNapHumvmHnQgYc6x4rzeWE9EM=;
+	s=arc-20240116; t=1715725818; c=relaxed/simple;
+	bh=q9mwPbcMcpcNLUMsp2wXl0vnEpFK6Aj1RmaicPJb9K0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QYiDxTT4wD7/AWNNBQ7oxHylVFdEFI590F9Pk6Vx1jb3YK3WNzv+ZsI+SNpcjNUzsf0tx2YVEsl7tTRXzjnZNPuWsQKzxlEqI39M3ahveLE7DuDpt/nmBYeSBxIWKzg6vDqts010p51iyrsvDV+XJj86dKo49c1d/aQe84x5Wg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KmPEz8LP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DFFC4AF09;
-	Tue, 14 May 2024 18:50:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715712620;
-	bh=CVX9i/4HCz3SLBmAajNapHumvmHnQgYc6x4rzeWE9EM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KmPEz8LPUN8XVDdnTcMHzajInJgBaxO57t36APCa4nCQEQdrc8vRVM63lbnB9ORfA
-	 N0bFe7ThSi8tHLM9QuMLIyZeJEMV2q/ZEYRT2VQcr7taSMjOfikwGx8oEmL2WZSO8R
-	 qGeZnGlmLi/wlzTAKJXobAZDK2OkBw4LECDdvkP8EQsNY33Pko0SHmakb7JGJPZ7Z6
-	 WAKn5vEx6QDX0YGNrMvTjSaMRNreWXa1Mdbw9vz25NS9EaZenajYvcmgQgaVqgqqfz
-	 xFzv8CAPVIAM2tgRlmSJJhVHEkGypGKjmPuPbJKp00StlqvIkohvWI513e7YUKDhPp
-	 C2VfuJi9zxOrA==
-Date: Tue, 14 May 2024 19:50:15 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: ufs: qcom: Use 'ufshc' as the node name
- for UFS controller nodes
-Message-ID: <20240514-buggy-sighing-1573000e3f52@spud>
-References: <20240514-ufs-nodename-fix-v1-0-4c55483ac401@linaro.org>
- <20240514-ufs-nodename-fix-v1-1-4c55483ac401@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=sbtDaxhKtjlQJf+B6ZpOTL+nOV37leE366xcjL1twkIcLvjSb8HxEwrrkWF+CxlTlq4enkml8pXoqI3yYAy9lPMNuEIfa+hvZp10xxeLxpsg63ureBcdQvaVjbUzWwcwbwiSfyNHqbYOLEhtdhOwgZ1NuTjxttnSx6bxJy22dCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id DCAC5206DE;
+	Wed, 15 May 2024 00:13:51 +0200 (CEST)
+Date: Wed, 15 May 2024 00:13:50 +0200
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
+	MSM <linux-arm-msm@vger.kernel.org>, freedreno@lists.freedesktop.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bryan O Donoghue <bryan.odonoghue@linaro.org>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Pierre-Hugues Husson <phhusson@freebox.fr>, 
+	Arnaud Vrac <avrac@freebox.fr>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8998: enable adreno_smmu
+Message-ID: <bm6joejl755ynmiqdfhm3godxhfwzb7vvlb5l2vou5p2wkkfgv@4mapycyt3zzb>
+References: <1ba7031f-c97c-41f1-8cbc-d99f1e848e76@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="GRbsOrovulyyCxUp"
-Content-Disposition: inline
-In-Reply-To: <20240514-ufs-nodename-fix-v1-1-4c55483ac401@linaro.org>
-
-
---GRbsOrovulyyCxUp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1ba7031f-c97c-41f1-8cbc-d99f1e848e76@freebox.fr>
 
-On Tue, May 14, 2024 at 03:08:40PM +0200, Manivannan Sadhasivam wrote:
-> Devicetree binding has documented the node name for UFS controllers as
-> 'ufshc'. So let's use it instead of 'ufs' which is for the UFS devices.
+How about appending "by default" to the title?
 
-Can you point out where that's been documented?
-Thanks,
-Conor.
+On 2024-05-14 19:04:04, Marc Gonzalez wrote:
+> Right now, GPU init fails:
+> 
+> [    2.756363] [drm:adreno_bind] Found GPU: 5.4.0.1
+> [    2.767183] [drm:a5xx_gpu_init]
+> [    2.767422] [drm:adreno_gpu_init] fast_rate=710000097, slow_rate=27000000
+> [    3.003869] [drm:msm_gpu_init] ebi1_clk: fffffffffffffffe
+> [    3.004002] adreno 5000000.gpu: supply vdd not found, using dummy regulator
+> [    3.008463] [drm:msm_gpu_init] gpu_reg: ffff0000819e4000
+> [    3.015105] adreno 5000000.gpu: supply vddcx not found, using dummy regulator
+> [    3.020702] [drm:msm_gpu_init] gpu_cx: ffff0000819e4180
+> [    3.028173] [drm:adreno_iommu_create_address_space]
+> [    3.054552] [drm:msm_gpu_init] gpu->aspace=ffffffffffffffed
+> [    3.058112] [drm:a5xx_destroy] 5.4.0.1
+> [    3.065922] [drm:msm_gpu_cleanup] 5.4.0.1
+> [    3.074237] msm_dpu c901000.display-controller: failed to load adreno gpu
+> [    3.082412] msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops a3xx_ops): -19
+> [    3.088342] msm_dpu c901000.display-controller: [drm:drm_managed_release] drmres release begin
+> ...
+> [    3.197694] [drm:drm_managed_release] drmres release end
+> [    3.204009] msm_dpu c901000.display-controller: adev bind failed: -19
 
->=20
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+This whole log is a tad spammy, do maintainers think that's worth having in the
+commit or should it be moved below the cut (---), in favour of a more clear and
+elaborate patch justification?
+(Seems some logs are custom local changes, how about that?)
+
+> 
+> adreno_smmu is required, so it must be enabled.
+
+Required for what?  This is not providing much if any context whatsoever, nor
+justifying the change.  Adreno is disabled by default, so it's fine to have the
+corresponding Adreno SMMU disabled by default too.
+
+Instead, why not copy-paste the justification that was helpfully provided to
+you in IRC?  At least three reasons popped up that could be used to fill up the
+patch description:
+- No other SoC disables adreno_smmu in DTSI;
+- Nodes are typically only disabled if enabling them requires additional **board
+  specific** configuration (regulators, firmware paths, ...);
+- Nodes are typically also disabled if they are optional and not used on every board
+  (wled and vibrator PMIC nodes were brought up).
+
+> 
+> [    3.220381] msm_dpu c901000.display-controller: bound 5000000.gpu (ops a3xx_ops)
+> [    3.235503] [drm:dpu_kms_hw_init:1053] dpu hardware revision:0x30000000
+
+And this is the expected log when it works?  You should annotate that.
+
+The change itself is good to have.
+
+> Fixes: 87cd46d68aeac8 ("Configure Adreno GPU and related IOMMU")
+
+This isn't fixing any buggy behaviour, just lining up the DTSI to be more alike
+the other SoCs.  I'd drop this line.
+
+- Marijn
+
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 > ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Docume=
-ntation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index 10c146424baa..37112e17e474 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -273,7 +273,7 @@ examples:
->          #address-cells =3D <2>;
->          #size-cells =3D <2>;
-> =20
-> -        ufs@1d84000 {
-> +        ufshc@1d84000 {
->              compatible =3D "qcom,sm8450-ufshc", "qcom,ufshc",
->                           "jedec,ufs-2.0";
->              reg =3D <0 0x01d84000 0 0x3000>;
->=20
-> --=20
-> 2.25.1
->=20
-
---GRbsOrovulyyCxUp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZkOyZwAKCRB4tDGHoIJi
-0uTOAQD3efl763usqhQlsGDLj5MrpeQyejG1k0iJ4Z8uVzGJkgD/U5f9mtLPsM2i
-xObl4643kFDN0oUD1N+vPB41K3TJDQY=
-=o+dl
------END PGP SIGNATURE-----
-
---GRbsOrovulyyCxUp--
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index 3d3b1f61c0690..edf379c28e1e1 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -1580,7 +1580,6 @@ adreno_smmu: iommu@5040000 {
+>  			 * SoC VDDMX RPM Power Domain in the Adreno driver.
+>  			 */
+>  			power-domains = <&gpucc GPU_GX_GDSC>;
+> -			status = "disabled";
+>  		};
+>  
+>  		gpucc: clock-controller@5065000 {
+> -- 
+> 2.34.1
+> 
 
