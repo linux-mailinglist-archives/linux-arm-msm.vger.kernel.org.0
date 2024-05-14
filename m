@@ -1,131 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-19835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 395BC8C572D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 15:31:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA37A8C574B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 15:43:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C9D9228569A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 13:31:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 106AD1C21199
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 13:43:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 184A0144D1C;
-	Tue, 14 May 2024 13:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF9511448CB;
+	Tue, 14 May 2024 13:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fU7iub52"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GBasVKUo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE98B144D13;
-	Tue, 14 May 2024 13:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0955313E030;
+	Tue, 14 May 2024 13:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715693240; cv=none; b=ACRDQOqxYhE6aBlw0ZZroF7FIByJ9emKwwvbyRt6qGGyZiXo6c6towuw6PN/7ZDtr6J1EzXMPfCRp6YUrNOI0Om34Ot0nBbW8nRKH0aeSNSNmdC3OQfHT37BowxOa/t59WGPAk0O7EWdS65qQEs0K9+GllE6LhJghSh/8LYWnNw=
+	t=1715694227; cv=none; b=t47t2KsW9AmRC0r9uUh/A25sgYCNMSTw1esQmUsxcBuFmwzPCmffT0MmleAxw6vTIWDWl96SLBsNkN8QjlI/eGnScdj7etCJGXUXM5vnCfIfEoRHi00djahkPNXe60g8LrNCCrDVCT5GF3o2xuWey3+yJY4ImHoekiloOCWYbaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715693240; c=relaxed/simple;
-	bh=kxySqPFu4sUYCB8YJjlp//s/6Dn2bdzwQN1qJGJYBPI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fkmPsCEx4jV3V5RznGptSw/JeIFJB7iCPYZa9Q6ZibJREF9T1RWLnuVGmdvLcunf6ViHZvrRPBDJpVZhl807lmmQnDN1yClBzYV27FAEPLY9bY/O8vA/K1g07Iucibocmv+mVIauGfdQFKDhZbhb/9DezgV7ftk42HSMDroVfaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fU7iub52; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F947C2BD10;
-	Tue, 14 May 2024 13:27:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715693239;
-	bh=kxySqPFu4sUYCB8YJjlp//s/6Dn2bdzwQN1qJGJYBPI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fU7iub52KlIvTJAsi+ZCaTdjcucUkC7YaqVJpfOA7zB03TBy9jYvo8J7g6jjSoF3E
-	 fn0kSPkKJcR0Josjn560X8IjwqSYcnxAFpHqLHy9tmC0F99UsxRaGogstoc7IZ41ql
-	 FbAe07S3jhB9jL+fyxcV3Kgd++975375YnVfIRJJCaHt20YxiJUba3kKg8x1odni3m
-	 3lOi1b2mknAlPGPLBgYVWSHQRRfsvkZHQPbCrjsC4lh+hm9e5Fj5Xg2Mo5kjcOuG/6
-	 eWtFRY2R4PNe75Yof8vVS8FhkHgQEXCfod3W1fOpQmXin/NAN7pN1HERyscK2Wm3Wh
-	 rHV6D3Gvqk+cg==
-Message-ID: <45e0aee9-87d5-434f-8ffe-d3270def0f72@kernel.org>
-Date: Tue, 14 May 2024 15:27:14 +0200
+	s=arc-20240116; t=1715694227; c=relaxed/simple;
+	bh=G0Bo38YZIzqeU2pSO1mST+0MOKskBDfPjlOUdtUd3Ew=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=U7uKkPnTen2GtCSOy8zyW7Mu1ih1eXflMA1bTz/o229WDsqL0GxeGaDvvjIvDXHGw2uhZjCsM5uDG+Wgue7/KAe13e0hDlhJ0zUFGsN/9SJSdkxZcjZaxEfhXN0rGLGnbXzxV05sJ4KX32Di8ud1r3o7KOUFcTRE+ibWWljvR/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GBasVKUo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44E8p9wn023860;
+	Tue, 14 May 2024 13:43:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:in-reply-to:references
+	:mime-version:content-transfer-encoding:content-type; s=
+	qcppdkim1; bh=BhGliWrH0f1GGT+R8BeF5lpysJJHwl35yYYn/PJwrHo=; b=GB
+	asVKUoVbM4nZ7eeAhVRdpYxCmIZ2C9lXyToVeGXYWy0Dq3OSIpaBAHVdAo6GUdkv
+	utOwHrqb2yqgDuGL74DUSfC5DI+O18Ukwycnd3XbcdeELa2WyCoTtqvZlmkj2stl
+	6CXw6gnks8pinntFewtExmDslY79WOzmTr+8H4P2Tzm95ncUW6O/tfocWp9eBxdW
+	2+Z1bUCTVLO9IO9tQGEr28lkhq3yFvBubr2+wN0HAjGTlsgrOFad/fqIxXs4OURy
+	JPzMbZAvFB7ckoMzpj6nTvZ/+RdnNS52imhWkFEVbhEV+J38GZUXY0pfLXAe+VCW
+	X4f2zjC9+ES7LLiuTHLw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y2125ee73-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 May 2024 13:43:40 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44EDhdub016651
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 14 May 2024 13:43:39 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 14 May 2024 06:43:33 -0700
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+To: <johan@kernel.org>
+CC: <andersson@kernel.org>, <andy.shevchenko@gmail.com>, <broonie@kernel.org>,
+        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <johan+linaro@kernel.org>, <konrad.dybcio@linaro.org>,
+        <krzk+dt@kernel.org>, <lee@kernel.org>, <lgirdwood@gmail.com>,
+        <linus.walleij@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_c_skakit@quicinc.com>, <quic_gurus@quicinc.com>,
+        <robh@kernel.org>, <swboyd@chromium.org>
+Subject: Re: [PATCH 12/13] regulator: add pm8008 pmic regulator driver
+Date: Tue, 14 May 2024 19:13:17 +0530
+Message-ID: <20240514134317.691887-1-quic_skakitap@quicinc.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <ZjpMeVk_HiixZUEu@hovoldconsulting.com>
+References: <ZjpMeVk_HiixZUEu@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qdu/qru1000-idp: Fix the voltage
- setting
-To: Komal Bajaj <quic_kbajaj@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Melody Olvera <quic_molvera@quicinc.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240514131038.28036-1-quic_kbajaj@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240514131038.28036-1-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UmTUJpFNGnTJwVmIvoG1naXdyimjSYr1
+X-Proofpoint-ORIG-GUID: UmTUJpFNGnTJwVmIvoG1naXdyimjSYr1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-14_07,2024-05-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 mlxlogscore=696 clxscore=1011 bulkscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405140096
 
-On 14/05/2024 15:10, Komal Bajaj wrote:
-> Fixing the regulator voltages for qdu/qru1000 idp boards.
-> In particular -
-> - smps4 is 1.574V min and 2.04V max
-> - smps5 is 1.2V min and 1.4V max
-> - smps6 is 0.382V min and 1.12V max
-
-Wait, why? This looks, at least partially, you are changing from fixed
-voltage choice to full range, without clear explanation.
-
-> - smps8 is fixed at 0.752V
-
-
-> 
-> Fixes: d1f2cfe2f669 ("arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs")
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-
-Best regards,
-Krzysztof
-
+> On Tue, May 07, 2024 at 01:48:30PM +0200, Konrad Dybcio wrote:=0D
+> > On 5/6/24 17:08, Johan Hovold wrote:=0D
+> > > From: Satya Priya <quic_c_skakit@quicinc.com>=0D
+> > > =0D
+> > > Qualcomm Technologies, Inc. PM8008 is an I2C-controlled PMIC containi=
+ng=0D
+> > > seven LDO regulators. Add a PM8008 regulator driver to support PMIC=0D
+> > > regulator management via the regulator framework.=0D
+> > > =0D
+> > > Note that this driver, originally submitted by Satya Priya [1], has b=
+een=0D
+> > > reworked to match the new devicetree binding which no longer describe=
+s=0D
+> > > each regulator as a separate device.=0D
+> > > =0D
+> > > This avoids describing internal details like register offsets in the=
+=0D
+> > > devicetree and allows for extending the implementation with features=
+=0D
+> > > like over-current protection without having to update the binding.=0D
+> > > =0D
+> > > Specifically note that the regulator interrupts are shared between al=
+l=0D
+> > > regulators.=0D
+> > > =0D
+> > > Note that the secondary regmap is looked up by name and that if the=0D
+> > > driver ever needs to be generalised to support regulators provided by=
+=0D
+> > > the primary regmap (I2C address) such information could be added to a=
+=0D
+> > > driver lookup table matching on the parent compatible.=0D
+> > > =0D
+> > > This also fixes the original implementation, which looked up regulato=
+rs=0D
+> > > by 'regulator-name' property rather than devicetree node name and whi=
+ch=0D
+> > > prevented the regulators from being named to match board schematics.=
+=0D
+> > > =0D
+> > > [1] https://lore.kernel.org/r/1655200111-18357-8-git-send-email-quic_=
+c_skakit@quicinc.com=0D
+> > > =0D
+> > > Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>=0D
+=0D
+This is my old email which is discontinued, please use <quic_skakitap@quici=
+nc.com>=0D
+=0D
+> > > Cc: Stephen Boyd <swboyd@chromium.org>=0D
+> > > [ johan: rework probe to match new binding, amend commit message and=
+=0D
+> > >           Kconfig entry]=0D
+> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>=0D
+> > > ---=0D
+> > =0D
+> > I'm a bit lukewarm on calling this qcom-pm8008-regulator.. But then=0D
+> > qcom-i2c-regulator or qpnp-i2c-regulator may bite due to being overly=0D
+> > generic.. Would you know whether this code will also be used for e.g.=0D
+> > PM8010?=0D
+> =0D
+> Yes, for any sufficiently similar PMICs, including SPMI ones. So=0D
+> 'qpnp-regulator' would be a generic name, but only Qualcomm knows what=0D
+> PMICs they have and how they are related -- the rest of us is left doing=
+=0D
+> tedious code forensics to try to make some sense of this.=0D
+> =0D
+> So just like for compatible strings, letting the first supported PMIC=0D
+> name the driver makes sense as we don't know when we'll want to add a=0D
+> second one for another set of devices (and we don't want to call that=0D
+> one 'qpnp-regulator-2'). On the other hand, these names are now mostly=0D
+> internal and can more easily be renamed later.=0D
+=0D
+There is a PMIC called PM8010 which also is implemented over I2C, which cou=
+ld use the same pm8008 regulator driver.=0D
+Hence it is better to use device_id instead of a MODULE_ALIAS().=
 
