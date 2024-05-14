@@ -1,48 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-19820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CA6B8C4DD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 10:43:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53E148C4ECE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 12:19:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D8311F22B6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 08:43:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 846731C21152
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 May 2024 10:19:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC8DB1D555;
-	Tue, 14 May 2024 08:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5631A12A151;
+	Tue, 14 May 2024 09:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GfYcL/Qk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90991D54B;
-	Tue, 14 May 2024 08:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C2A8594C;
+	Tue, 14 May 2024 09:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715676188; cv=none; b=LhadBY+/7t/DnIDLW1JY9M9lHSZYgt83iPTMlgOzb07tC2H2FejbGAdtIESrvfrjPdrpBZ9RdsMTAZC1x1AxuSdY8tfIUm7tvxi8x8AD9ZADOw+zGXxtDTXGAI+o1VTDl66sumwq7zzyd7FU0IhsykOlVke0G9K6WW6dpCVZy7Y=
+	t=1715678925; cv=none; b=nOqCnnIzzK1e3sFAc76Gbg8AoUks3lrBPSDi23rhkrOmGOlgTJI7hhTktH4Xk+Wk77B1CUPR1VvpD6eYZkqKN1KntzuK+rG1ALDKJZDckxCQ9GkwC4FE8A48bOPl9cKU9fD+t8KsDX5PpmXfsJqV9YiO7qV2nTvKnrC2XVR8NN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715676188; c=relaxed/simple;
-	bh=Fljb2ROWbiju3hczRTFPhDqUN7rOS5RI6ewU7ldmI0o=;
+	s=arc-20240116; t=1715678925; c=relaxed/simple;
+	bh=HwGGfmR6sqS6WP0aIbowQLShPEm7IIhjY9D4SqgUD2M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a9Q8YGUkYGAEl5OGm/AlQp7uboPSGlLPaICaveOG8cd8Jjw7n9nJ8eQ3tZtmTcVjEsBo/wsi3CENmaaiWyYBCHySuWA0npJIMBqYdkLlC4fHmhsocU63pdu9NrhW++ljBONz4wkujyiL6nbhoUWQcUsuvcQEFXq/LQNp6SsHpmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA347C2BD10;
-	Tue, 14 May 2024 08:43:05 +0000 (UTC)
-Date: Tue, 14 May 2024 10:43:03 +0200
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Chris Lew <quic_clew@quicinc.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Bjorn Andersson <andersson@kernel.org>, Luca Weiss <luca@z3ntu.xyz>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	quic_qianyu@quicinc.com
-Subject: Re: [PATCH] net: qrtr: ns: Fix module refcnt
-Message-ID: <20240514084303.GD2463@thinkpad>
-References: <20240513-fix-qrtr-rmmod-v1-1-312a7cd2d571@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=f2Hhws9gttplsJT4eZ8ZAxhCa1BjXAkcrV/NRVOSFUeOZSs9pSORaOfisCWrlhllNPZyrYXZFGqSukPnGxeJNkak+wouoB0avvgAR1q2/LdFR42NLW2BzdOlx2OVJ9eT+d2G9jT6eRwaaNIuaAsAcrI7h0gFJKMw2t4quasm8nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GfYcL/Qk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E81C2BD10;
+	Tue, 14 May 2024 09:28:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715678924;
+	bh=HwGGfmR6sqS6WP0aIbowQLShPEm7IIhjY9D4SqgUD2M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GfYcL/QkIkE5PyQHM6b+a0gOfkH5yNZSZ3mxJt7ajzRnDnfnS0M3o0HiU1jhxfNCP
+	 p4h2hiT8rutj76sSkfZxwJqSGaUHji8hFAeLtvvA0sTeWfmp3oWIh2IdjW/q4YDxEt
+	 /3E7usTuEDyX3LJ6fPe+XTgnmGSiL9nQ4+Giz/zunWs03LJ+PvWkOr05qS+2h+Dpdu
+	 0DN8P5XPHbJMQYgs2PccGG8Fa9T8BEY3W7tXZuyRI1f7KyXqp6vcFnTOlDboMJq8ay
+	 F/7TjQuD97ExUfjAwCSkF8HBOTdB9IQ6X2m8oPBjBoTtBy2rtkEvKt5VlYpviFqqw1
+	 XHpl48Quz2AZA==
+Date: Tue, 14 May 2024 11:28:38 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, johan+linaro@kernel.org,
+	bmasney@redhat.com, djakov@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	vireshk@kernel.org, quic_vbadigan@quicinc.com,
+	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_parass@quicinc.com, krzysztof.kozlowski@linaro.org
+Subject: Re: [PATCH v12 6/6] PCI: qcom: Add OPP support to scale performance
+Message-ID: <20240514092838.GE2463@thinkpad>
+References: <20240427-opp_support-v12-0-f6beb0a1f2fc@quicinc.com>
+ <20240427-opp_support-v12-6-f6beb0a1f2fc@quicinc.com>
+ <20240430052613.GD3301@thinkpad>
+ <8b213eba-7ab6-ae9c-7683-937a9d6aaf08@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,96 +74,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240513-fix-qrtr-rmmod-v1-1-312a7cd2d571@quicinc.com>
+In-Reply-To: <8b213eba-7ab6-ae9c-7683-937a9d6aaf08@quicinc.com>
 
-+ Qiang (who also reported a similar issue)
+On Thu, May 09, 2024 at 09:21:55PM +0530, Krishna Chaitanya Chundru wrote:
+> 
+> 
+> On 4/30/2024 10:56 AM, Manivannan Sadhasivam wrote:
+> > On Sat, Apr 27, 2024 at 07:22:39AM +0530, Krishna chaitanya chundru wrote:
+> > > QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
+> > > maintains hardware state of a regulator by performing max aggregation of
+> > > the requests made by all of the clients.
+> > > 
+> > > PCIe controller can operate on different RPMh performance state of power
+> > > domain based on the speed of the link. And this performance state varies
+> > > from target to target, like some controllers support GEN3 in NOM (Nominal)
+> > > voltage corner, while some other supports GEN3 in low SVS (static voltage
+> > > scaling).
+> > > 
+> > > The SoC can be more power efficient if we scale the performance state
+> > > based on the aggregate PCIe link bandwidth.
+> > > 
+> > > Add Operating Performance Points (OPP) support to vote for RPMh state based
+> > > on the aggregate link bandwidth.
+> > > 
+> > > OPP can handle ICC bw voting also, so move ICC bw voting through OPP
+> > > framework if OPP entries are present.
+> > > 
+> > > As we are moving ICC voting as part of OPP, don't initialize ICC if OPP
+> > > is supported.
+> > > 
+> > > Before PCIe link is initialized vote for highest OPP in the OPP table,
+> > > so that we are voting for maximum voltage corner for the link to come up
+> > > in maximum supported speed.
+> > > 
+> > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > ---
+> > >   drivers/pci/controller/dwc/pcie-qcom.c | 81 ++++++++++++++++++++++++++++------
+> > >   1 file changed, 67 insertions(+), 14 deletions(-)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index 465d63b4be1c..40c875c518d8 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > 
+> > [...]
+> > 
+> > > @@ -1661,6 +1711,9 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+> > >   		ret = icc_disable(pcie->icc_cpu);
+> > >   		if (ret)
+> > >   			dev_err(dev, "Failed to disable CPU-PCIe interconnect path: %d\n", ret);
+> > > +
+> > > +		if (!pcie->icc_mem)
+> > > +			dev_pm_opp_set_opp(pcie->pci->dev, NULL);
+> > 
+> > At the start of the suspend, there is a call to icc_set_bw() for PCIe-MEM path.
+> > Don't you want to update it too?
+> > 
+> > - Mani
+> > 
+> if opp is supported we just need to call dev_pm_opp_set_opp() only once
+> which will take care for both PCIe-MEM & CPU-PCIe path.
+> so we are not adding explicitly there.
 
-On Mon, May 13, 2024 at 10:31:46AM -0700, Chris Lew wrote:
-> The qrtr protocol core logic and the qrtr nameservice are combined into
-> a single module. Neither the core logic or nameservice provide much
-> functionality by themselves; combining the two into a single module also
-> prevents any possible issues that may stem from client modules loading
-> inbetween qrtr and the ns.
-> 
-> Creating a socket takes two references to the module that owns the
-> socket protocol. Since the ns needs to create the control socket, this
-> creates a scenario where there are always two references to the qrtr
-> module. This prevents the execution of 'rmmod' for qrtr.
-> 
-> To resolve this, forcefully put the module refcount for the socket
-> opened by the nameservice.
-> 
-> Fixes: a365023a76f2 ("net: qrtr: combine nameservice into main module")
-> Reported-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+No, I was asking you why you are not adding a check for the existing
+icc_set_bw() at the start like you were doing elsewhere.
 
 - Mani
-
-> ---
-> This patch takes heavy influence from the following TIPC patch.
-> 
-> Link: https://lore.kernel.org/all/1426642379-20503-2-git-send-email-ying.xue@windriver.com/
-> ---
->  net/qrtr/ns.c | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
-> 
-> diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-> index abb0c70ffc8b..654a3cc0d347 100644
-> --- a/net/qrtr/ns.c
-> +++ b/net/qrtr/ns.c
-> @@ -725,6 +725,24 @@ int qrtr_ns_init(void)
->  	if (ret < 0)
->  		goto err_wq;
->  
-> +	/* As the qrtr ns socket owner and creator is the same module, we have
-> +	 * to decrease the qrtr module reference count to guarantee that it
-> +	 * remains zero after the ns socket is created, otherwise, executing
-> +	 * "rmmod" command is unable to make the qrtr module deleted after the
-> +	 *  qrtr module is inserted successfully.
-> +	 *
-> +	 * However, the reference count is increased twice in
-> +	 * sock_create_kern(): one is to increase the reference count of owner
-> +	 * of qrtr socket's proto_ops struct; another is to increment the
-> +	 * reference count of owner of qrtr proto struct. Therefore, we must
-> +	 * decrement the module reference count twice to ensure that it keeps
-> +	 * zero after server's listening socket is created. Of course, we
-> +	 * must bump the module reference count twice as well before the socket
-> +	 * is closed.
-> +	 */
-> +	module_put(qrtr_ns.sock->ops->owner);
-> +	module_put(qrtr_ns.sock->sk->sk_prot_creator->owner);
-> +
->  	return 0;
->  
->  err_wq:
-> @@ -739,6 +757,15 @@ void qrtr_ns_remove(void)
->  {
->  	cancel_work_sync(&qrtr_ns.work);
->  	destroy_workqueue(qrtr_ns.workqueue);
-> +
-> +	/* sock_release() expects the two references that were put during
-> +	 * qrtr_ns_init(). This function is only called during module remove,
-> +	 * so try_stop_module() has already set the refcnt to 0. Use
-> +	 * __module_get() instead of try_module_get() to successfully take two
-> +	 * references.
-> +	 */
-> +	__module_get(qrtr_ns.sock->ops->owner);
-> +	__module_get(qrtr_ns.sock->sk->sk_prot_creator->owner);
->  	sock_release(qrtr_ns.sock);
->  }
->  EXPORT_SYMBOL_GPL(qrtr_ns_remove);
-> 
-> ---
-> base-commit: e7b4ef8fffaca247809337bb78daceb406659f2d
-> change-id: 20240508-fix-qrtr-rmmod-5265be704bad
-> 
-> Best regards,
-> -- 
-> Chris Lew <quic_clew@quicinc.com>
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
