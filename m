@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 036858C6879
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 16:22:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BDC78C6887
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 16:23:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 354D01C20F0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 14:22:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C3211C20F34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 14:23:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C4CE13F450;
-	Wed, 15 May 2024 14:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F98513F450;
+	Wed, 15 May 2024 14:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CueoZhB2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aB2THjf9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC02128374;
-	Wed, 15 May 2024 14:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8E46214D;
+	Wed, 15 May 2024 14:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715782943; cv=none; b=My5MG/+zZgTWznqrON6VtFbyQMIyxGNzCZ9YQmYEpqkxvu4q5oouYWbQb/oLO8T/yQvvJelVkWCteu/30fGr41rMM2qgA3oDKkRZzB2Z0wrQoDAHB+oOsaC1+8bWZl/RxQxXSVgXnZ+G7iZiHvrDqWonzclAd2pegU4vEdHzvkM=
+	t=1715783003; cv=none; b=LCWXMbTTuzy+v3j6N+loFw7x/u6+OuxzssEa8i7ZfKKEXvayEFinkquoRdqBGdnSwefYHDgFbcGGkM0KfD14722mFzBSUy5yjlQrBW804wVyA/Kw1EItfyG5fI/h4M1Ld1QqastLni+52pRAamyoMG7M0nGucWjBzL0sDpH7OTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715782943; c=relaxed/simple;
-	bh=IYa8U3GwTT6emlBqHWo5mWIUbSrmH2NUdPO0Of/UvTk=;
+	s=arc-20240116; t=1715783003; c=relaxed/simple;
+	bh=b2WSbJJtikE2IrS3tTleC0R//uK4vxCZ7pxmMLEk25E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lVBL7gbYuJic5L52HgXurxgGHZtEVudYs1gCaIIFngj3sMn/SQ7B1t9nOvOtU4IWmtqqc8nWUnhtgz23u0N+FLWTjthqJH4SEBvzg6ihio5FWtQZbLaVytHjiKJHLezgYNySlrNwVNRlZmSF7tdg/Z0Yipd9FiQc7IVyI4Pv4Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CueoZhB2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF0BC116B1;
-	Wed, 15 May 2024 14:22:19 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=NVcAehP5bER+LSRjhgQuzhm6pCN9tCZmlROhPC6Hpv3DKdSaAZYuqAQtd01sc8EqIVaUuPX8ONKXmat4HOX02H2Jw617l2Jtd+0ns12gea+g29/4KDo6LxyOrAHojCF49EcsQD4RUxbOCgh+U00feEIkdCHL8y6ljDb24cXkog8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aB2THjf9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC06EC116B1;
+	Wed, 15 May 2024 14:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715782943;
-	bh=IYa8U3GwTT6emlBqHWo5mWIUbSrmH2NUdPO0Of/UvTk=;
+	s=k20201202; t=1715783002;
+	bh=b2WSbJJtikE2IrS3tTleC0R//uK4vxCZ7pxmMLEk25E=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CueoZhB2zuuGwLARJMmvT6lzIV9pb4IWmO3syNwwkyLYfCqzWvzHWUe5tmQaK8N2b
-	 bA6SGbE3v1U3+VL1radDeRqtjTyFHZ85n0PN+bob4zqVdsNpefqV2P+/536RZe2scF
-	 +6W/KbwrcNATWV4M0KDpzL1pxCccXzdWlagdRN0R0b+pXA683vjjAFVwUyBy7IPrqx
-	 zQBhNQwpYFYdDMUBosVdSDWfFo0aJjnVfZKeH791NoIvME9t5X9Jw7sH1x0zuFO8xc
-	 GkLIDGgOCtPekJRh255BXM0E+/dOZgFW9Yk0J7cOzHULSMmALYbXGdA2iv4bKClr+J
-	 FaKjtsMkpNpqQ==
-Message-ID: <89359317-8f96-4781-924c-93cac1e0c443@kernel.org>
-Date: Wed, 15 May 2024 16:22:18 +0200
+	b=aB2THjf9FqEcRy6ED+gb3vWh1QehHA8HCSPdyuYHZ6tuI2Cb8KBvSpTB2kr4Oq9Bs
+	 68MhZHJGa1xmIrmRZZeNRVyfG/iEVmCQi5mMYBiw0ZzusF9jzjCf85E3iGez8bgJja
+	 TRirioJBAbnXBMU94JpcQrdNEDbj9mzwQEHG03Sr9DjoVFso3VvtyISJys8KzSpF2F
+	 Z2/0uOGvg8Ono+BD0S1NRGw/I7pyZ2Jwr1BPtIWv9utXZo5sf9CY4o8pn0L/fRJZ0w
+	 K+CoxKgOAkPKoZUtpwqkNJae6kvnbNGzLlAMovVbDX9KVJYlHFOP27gCpzYS3Wq/lT
+	 N2g9tXBSsZumg==
+Message-ID: <a5833628-65f3-493d-9de5-33ba87a18875@kernel.org>
+Date: Wed, 15 May 2024 16:23:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: mmc: sdhci-msm: Document the SDX75
- compatible
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdx75-idp: add SDHCI for SD Card
 To: Naina Mehta <quic_nainmeht@quicinc.com>, ulf.hansson@linaro.org,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  andersson@kernel.org, konrad.dybcio@linaro.org, bhupesh.sharma@linaro.org
 Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20240515120958.32032-1-quic_nainmeht@quicinc.com>
- <20240515120958.32032-2-quic_nainmeht@quicinc.com>
+ <20240515120958.32032-4-quic_nainmeht@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,34 +103,35 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240515120958.32032-2-quic_nainmeht@quicinc.com>
+In-Reply-To: <20240515120958.32032-4-quic_nainmeht@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 15/05/2024 14:09, Naina Mehta wrote:
-> Document the compatible for SDHCI on SDX75 SoC.
+> Enable SDHCI on sdx75-idp to support SD card.
+> Also add the required regulators.
 > 
 > Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
 > ---
+>  arch/arm64/boot/dts/qcom/sdx75-idp.dts | 45 ++++++++++++++++++++++++++
+>  1 file changed, 45 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+> index f76e72fb2072..6f94278cf837 100644
+> --- a/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+> @@ -41,6 +41,29 @@
+> 
+>  		vin-supply = <&vph_ext>;
+>  	};
+> +
+> +	vreg_sd_vccb: sd-vccb {
 
+Please use name for all fixed regulators which matches current format
+recommendation: 'regulator-[0-9]+v[0-9]+'
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git/commit/?id=b6d4b3500d57370f5b3abf0701c9166b384db976
 
----
-
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
 
 Best regards,
 Krzysztof
