@@ -1,146 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-19863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A79F68C619F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 09:24:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 326B78C61E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 09:41:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 630B4281F4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 07:24:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 55F9A1C20DD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 07:41:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 097294AEE0;
-	Wed, 15 May 2024 07:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5E6C45948;
+	Wed, 15 May 2024 07:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FUYjWlPm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QkfXWV1N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138164AEDD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2024 07:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70734438F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2024 07:41:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715757763; cv=none; b=M93eo6rKwevqE7Bn/KTvIyPTFMe63FpeVPJhBBlDQzruT1SysfTZE0wQDCFeQ7qFY7gUNgeKzK+6vfiAbiu+M+9W0JxG9rbnQhpz/rSeahi9BLLMaCAoPxOacdB1Oyk6UAgcUt6nvWLa6pSzPi9HdQQv/7OXa8t61zP1Ed7NrEk=
+	t=1715758884; cv=none; b=OqRLryL544YWQYKJboI+YD+uEVC2jcrol43lJlzZGNvxj5Qwnbop0ENIGvTI1DoR0oqBOgoWVkpFl3K+4NnjlKfs80cYuaChJDbW9kxUXPvZR9q05PprOEphx2nYFs1YaWOuKPK/37Blx2fDH2lW4I3ImDjXvWFAtZN7CubqaZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715757763; c=relaxed/simple;
-	bh=/zqmWMpSqIK8w/5CYxrGVps+c5Ka2GSak4daBZvGXAc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OcRNuldcp37nazPo0NxV5yryjabpmrgDj/b68GqtVs+y850sztCZB+GZuhPwxt5M3SRC/9pcsBpF7bVxzhEs/A0FiMCVayzv2jPYXfePV26NmHGML0IpSepitV6/ocLi/L/xVfkPYjb6ak5zAaA5QY1SJufEHiABs42U9s8LE9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FUYjWlPm; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1715758884; c=relaxed/simple;
+	bh=RFW3BR0Fx+ilvq56Z5emz/Ta0NJMDiHFx1b3U+5kH5A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FHZKX0BBqKrR9qSo1LqgRQj9WYU3NUUZd72ysLLFVdZbyD4ymrkSzylMlXjBz/sIc/xR6on2tVJTZ5VRDtxupsaortxZoGBBrVI77T2/GGw8RNHOEe/EqfbzwlUaFZitlGAd4AWlWIHA//VZ/qrfDcuZGKpwjSAuI7j9EOw2iiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QkfXWV1N; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-41dc9c83e57so41978015e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2024 00:22:41 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-34ddc9fe497so4060252f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2024 00:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715757760; x=1716362560; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=w838iTqcEdF/wb4Y5xIa/WPLb8ecXgpzd26gnDTPlSs=;
-        b=FUYjWlPm5Md++h9u1FXd4KD7/9DsPp6zKfTjCkq4668W6pu4TgX6CIHhSxFr3V1oKe
-         TfbalmxeuUEtQNg97CqR+wcXHL4UVXuhRgs+RGuoFpp3DTlmkfI7ppIXE1wOPT8ZAvLO
-         j6f9ifO5NvtXNthLKXZ8s01iWnOvvkeF6mvuiqizq9wBOtyjZFFWhhZuhAqZvtRE3thg
-         kS10THRAFBu9mteQNxsHWK076ANwuO4UlstzvKWpdr37MBzF6+Mme2oIUmfI/vhviSu0
-         d0k+Gop5HP48F6USVgGIGrm1sR+Yg8pbt3smhq+oBjwdwuL0a+dNx2jOgSdkmdndupWa
-         /Z1g==
+        d=linaro.org; s=google; t=1715758881; x=1716363681; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3JHt5mzBMB3tfzCLNPXhZ+TCuVkqxJvVqoFszdx1YnQ=;
+        b=QkfXWV1NKNeuGJ6yKXRSBozVvJZztDzFc41BYDGcQN43KgC5miOk/nKqj2+dM1NU60
+         6q+bQREeizoq6dVoMFuBV21IX3TvQudlYWkFGvY6EySWl5dqVo9/2sWs4NOkET2ggoqM
+         nVnkS9sEHj81ETnUxPutIIN3g72oY11o+iy/E5YGrUnF3Uy1AJTUqr5tPeXagARApU6A
+         4I4bTcWK+/wcKYHZpwYRbiGT6c5A+2ane311AeA1KO0W2niM4lrxXuIQobw0E5zLX16A
+         qDwaNKeoztqZ7semPSxuZUh/1u1wS+5DW1HG9Iwr8bI7Cx9OOa45SYg/ofCDSchfqCCA
+         of7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715757760; x=1716362560;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1715758881; x=1716363681;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w838iTqcEdF/wb4Y5xIa/WPLb8ecXgpzd26gnDTPlSs=;
-        b=VHwKFJjiGCwLlSGEtrqZRENrvok68VfcSPIkOO3VDkqfl41ic8+D90p4Q3kDpuGkVd
-         qxAiQewTzi18i0D9sv7gInak5Xqgv41QBw5diRAHppEkwzkPCHnlylFAq1MKxIg6uEEn
-         JJD+EVwz1VhMZA1nM/9VCBdnHfMAlERRxwk0bAPybjm59VgyEMhpFdXM+kTisRtA4fhu
-         hLki0fA5j6rIjYr6wQ/n7SHIXmOKBBwFDiTFiQ97OhD60bL8QjBvoTvsasHkU5ufT7b2
-         wbGxdA8tZBMxUx7cPoV4PpYo9K7XS46/4HB0BGyVnFE0J53rWUdV1rNU9rkUPR3+lLRc
-         tgAQ==
-X-Gm-Message-State: AOJu0Yy4YH3j/OsNbmfQMl0tkHjVlnKnLhmar5WOG3v8HsMNPDKYliQ3
-	jGv6Rs39A3h5VMLxUGxTs0jo22k1iyyRU0Y1Z9xPMS7Nse9kvpsUNLyGK1NnazI=
-X-Google-Smtp-Source: AGHT+IHRNvpzKANP6HmQMDSLC74SFWdzuu8uJteTxxXVhmOixHXfwakzFmM76TwcqtKAYC5rdjUpgw==
-X-Received: by 2002:a05:600c:3548:b0:419:c9e1:70b8 with SMTP id 5b1f17b1804b1-41feac51e2emr129937675e9.13.1715757760345;
-        Wed, 15 May 2024 00:22:40 -0700 (PDT)
-Received: from [10.1.3.28] ([149.14.240.163])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502baacfd3sm15717366f8f.84.2024.05.15.00.22.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 May 2024 00:22:40 -0700 (PDT)
-Message-ID: <fb4b166e-2940-4b0a-9ea7-ac8c838ef5ca@linaro.org>
-Date: Wed, 15 May 2024 08:22:42 +0100
+        bh=3JHt5mzBMB3tfzCLNPXhZ+TCuVkqxJvVqoFszdx1YnQ=;
+        b=eoOJH45o2LuTBy492b8f8r5Dc5L3pcEU8C0GtOSesBZBAZSv65CXVcyz73FT/4Op5M
+         vtBpeCwVAHMtZ/51lp3AHzFL8F2BGXoKZhuYd8qwQfcwFCWDTnLNHSwzsiaDhZZZpbli
+         ba2w+fX5udqyfrYYkixbF/eVq+CSAZlHOBsKp7HbCg2QT/ovuaNTiJZP2CoXt7XWize1
+         UJQ/2dk9s6kVijmTXRD+e/zjs43++ldQbyBNyqKRxAnqKJE+aVXPg11KGKFVT/y68BEV
+         jBaRZ7UIoxxKNMP+0St4VTOjee4AhS5EzUJ92ydqcqDRHmyWfxS3vbPg/KTBIYBVRFwp
+         tiCg==
+X-Forwarded-Encrypted: i=1; AJvYcCWegl8i/7SbMxxUWfgswt0o2098Kfce5v7sdjuu7+iVcALA7r+eNYC/4PZZwHW3zIpUIv4rOGCLyar/TZxVatRAkdvqcf9AGhM2+nYt8Q==
+X-Gm-Message-State: AOJu0Yx93KXGGoct7eevbn2fdKeD2E8fvYNmhTDIOS9woX1i7TJALuqw
+	XfA07PAr+qXhh27lDPDUCTyPIvVIXG1krIPA228H40AzAkZYcsmwizYr9ELeBA==
+X-Google-Smtp-Source: AGHT+IGBVDu0Law5aI1G/S0fHUin98INzJfLX8XCfcsUILHBusKucgtQy7yBdtXwtqjuuDPb4IhRpQ==
+X-Received: by 2002:adf:eb49:0:b0:345:816c:6e16 with SMTP id ffacd0b85a97d-3504a632b68mr13926271f8f.25.1715758880897;
+        Wed, 15 May 2024 00:41:20 -0700 (PDT)
+Received: from thinkpad ([149.14.240.163])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3502b8a78cdsm15608272f8f.58.2024.05.15.00.41.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 May 2024 00:41:20 -0700 (PDT)
+Date: Wed, 15 May 2024 09:41:19 +0200
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Slark Xiao <slark_xiao@163.com>
+Cc: loic.poulain@linaro.org, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_qianyu@quicinc.com
+Subject: Re: Re: [PATCH] bus: mhi: host: Add Foxconn SDX72 related support
+Message-ID: <20240515074119.GA2445@thinkpad>
+References: <20240510032657.789629-1-slark_xiao@163.com>
+ <20240514143741.GA2306@thinkpad>
+ <541de8e4.1600.18f79de44f3.Coremail.slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8998: enable adreno_smmu
-To: Marc Gonzalez <mgonzalez@freebox.fr>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: MSM <linux-arm-msm@vger.kernel.org>, freedreno@lists.freedesktop.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
-References: <1ba7031f-c97c-41f1-8cbc-d99f1e848e76@freebox.fr>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <1ba7031f-c97c-41f1-8cbc-d99f1e848e76@freebox.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <541de8e4.1600.18f79de44f3.Coremail.slark_xiao@163.com>
 
-On 14/05/2024 18:04, Marc Gonzalez wrote:
-> Right now, GPU init fails:
-> 
-> [    2.756363] [drm:adreno_bind] Found GPU: 5.4.0.1
-> [    2.767183] [drm:a5xx_gpu_init]
-> [    2.767422] [drm:adreno_gpu_init] fast_rate=710000097, slow_rate=27000000
-> [    3.003869] [drm:msm_gpu_init] ebi1_clk: fffffffffffffffe
-> [    3.004002] adreno 5000000.gpu: supply vdd not found, using dummy regulator
-> [    3.008463] [drm:msm_gpu_init] gpu_reg: ffff0000819e4000
-> [    3.015105] adreno 5000000.gpu: supply vddcx not found, using dummy regulator
-> [    3.020702] [drm:msm_gpu_init] gpu_cx: ffff0000819e4180
-> [    3.028173] [drm:adreno_iommu_create_address_space]
-> [    3.054552] [drm:msm_gpu_init] gpu->aspace=ffffffffffffffed
-> [    3.058112] [drm:a5xx_destroy] 5.4.0.1
-> [    3.065922] [drm:msm_gpu_cleanup] 5.4.0.1
-> [    3.074237] msm_dpu c901000.display-controller: failed to load adreno gpu
-> [    3.082412] msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops a3xx_ops): -19
-> [    3.088342] msm_dpu c901000.display-controller: [drm:drm_managed_release] drmres release begin
-> ...
-> [    3.197694] [drm:drm_managed_release] drmres release end
-> [    3.204009] msm_dpu c901000.display-controller: adev bind failed: -19
->
++ Qiang
 
-I agree with Marjin the log of the failure isn't required.
+On Wed, May 15, 2024 at 09:29:20AM +0800, Slark Xiao wrote:
+> At 2024-05-14 22:37:41, "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org> wrote:
+> >On Fri, May 10, 2024 at 11:26:57AM +0800, Slark Xiao wrote:
+> >> Align with Qcom SDX72, add ready timeout item for Foxconn SDX72.
+> >> And also, add firehose support since SDX72.
+> >> 
+> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> >> ---
+> >>  drivers/bus/mhi/host/pci_generic.c | 31 ++++++++++++++++++++++++++++++
+> >>  1 file changed, 31 insertions(+)
+> >> 
+> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> >> index 08844ee79654..0fd94c193fc6 100644
+> >> --- a/drivers/bus/mhi/host/pci_generic.c
+> >> +++ b/drivers/bus/mhi/host/pci_generic.c
+> >> @@ -399,6 +399,8 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+> >>  	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+> >>  	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> >>  	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+> >> +	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
+> >> +	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
+> >
+> >This means SDX55 is also supporting FIREHOSE channels, which is not true I
+> >believe.
+> Actually, I just verified it with my sdx55 and the answer is Yes. These channels
+> are common settings for Qcom device which support PCIe mode. BTW, the
+> default settings of Qcom and Quectel support firehose for their sdx55 products.
 
-How about this as a commit log ?
+Qiang, can you please confirm that SDX55 supports FIREHOSE channels?
 
-"The GPU currently fails to initialise because the adreno_smmu node is 
-missing. We require the adreno_smmu node to translate device virtual 
-addresses properly.
+> >
+> >>  	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+> >>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+> >>  };
+> >> @@ -419,6 +421,16 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
+> >>  	.event_cfg = mhi_foxconn_sdx55_events,
+> >>  };
+> >>  
+> >> +static const struct mhi_controller_config modem_foxconn_sdx72_config = {
+> >> +	.max_channels = 128,
+> >> +	.timeout_ms = 20000,
+> >> +	.ready_timeout_ms = 50000,
+> >> +	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
+> >> +	.ch_cfg = mhi_foxconn_sdx55_channels,
+> >> +	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
+> >> +	.event_cfg = mhi_foxconn_sdx55_events,
+> >> +};
+> >> +
+> >>  static const struct mhi_pci_dev_info mhi_foxconn_sdx24_info = {
+> >>  	.name = "foxconn-sdx24",
+> >>  	.config = &modem_foxconn_sdx55_config,
+> >> @@ -448,6 +460,16 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx65_info = {
+> >>  	.sideband_wake = false,
+> >>  };
+> >>  
+> >> +static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
+> >> +	.name = "foxconn-sdx72",
+> >> +	.edl = "qcom/sdx72m/xbl_s_devprg_ns.melf",
+> >
+> >What is '.melf'? Is the firmware available somewhere? Did you plan to upstream
+> >it to linux-firmware?
+> >
+> This file similar with "edl.mbn". In SDX72 product, the default "edl" file name is
+> "xbl_s_devprg_ns.melf". Currently we don't plan to upstream it to linux-firmware
+> since 2 reasons: 1: we share the same fold name sdx72m with qcom or other vendors
+> 2: this file may be changed since sdx72 product still under developing in our side. we
+> may change the base line according to QCOM release.
 
-Enable it now."
+Then I would ask you to add support when you have a stable firmware. I do not
+want to change the firmware name after some time as it will confuse users.
 
-> 
-> [    3.220381] msm_dpu c901000.display-controller: bound 5000000.gpu (ops a3xx_ops)
-> [    3.235503] [drm:dpu_kms_hw_init:1053] dpu hardware revision:0x30000000
+- Mani
 
-I'd drop that, we know the fix works.
-
-> 
-> Fixes: 87cd46d68aeac8 ("Configure Adreno GPU and related IOMMU")
-
-Retain this though, its a legitimate fix the GPU won't work without this 
-change.
-
-Then add
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
----
-bod
+-- 
+மணிவண்ணன் சதாசிவம்
 
