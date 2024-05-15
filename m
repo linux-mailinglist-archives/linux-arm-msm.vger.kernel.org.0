@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B9D68C6828
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 16:01:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 036858C6879
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 16:22:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF66E1F23E56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 14:01:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 354D01C20F0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 14:22:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8644D14036B;
-	Wed, 15 May 2024 14:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C4CE13F450;
+	Wed, 15 May 2024 14:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cX3oXw54"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CueoZhB2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC92413F433;
-	Wed, 15 May 2024 14:00:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC02128374;
+	Wed, 15 May 2024 14:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715781606; cv=none; b=Vjeos/y3jx1GCQe7tFlrI+nz1J2tKcuZBBXTo8sZlLW+ifQmpxDO6YKcrQZYWO0HNjGsY/fzTANziSm3m569n78Oa8ET4SSuc43+xAEWBy40HoevAVxFr0WVwpWTwCawhO+7OJs9mMFDvyWoIJ0HHQ/5zqtzD3GM7brDcs5EsrQ=
+	t=1715782943; cv=none; b=My5MG/+zZgTWznqrON6VtFbyQMIyxGNzCZ9YQmYEpqkxvu4q5oouYWbQb/oLO8T/yQvvJelVkWCteu/30fGr41rMM2qgA3oDKkRZzB2Z0wrQoDAHB+oOsaC1+8bWZl/RxQxXSVgXnZ+G7iZiHvrDqWonzclAd2pegU4vEdHzvkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715781606; c=relaxed/simple;
-	bh=nNCvn+LTR3HF0HYu1Ms5WNy0wPxDZ1DGc/ApOSFNMas=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Qx0K1H8OSIEy3159oNZ5uK9cyA5Nu9UNAVStkWUHLhBoaXHFbMwpvezC0hHIkDQwa2pnvUF6zjasZ04rgCcNSsyYEpEz/H6RwF/2ZktIYF/Lf+7+BHJVdSwmMYpc+rFUacYSMDPed6JjiZdusVnyahttLBaBDA/rlU1jpmu7u8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cX3oXw54; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44F90cf6012347;
-	Wed, 15 May 2024 13:59:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=z5nmHfaq7fpNC+vzw2j6vpM0SSB3xUrKvCEz2G5i64A=; b=cX
-	3oXw548rkNZvsDHwyD8fsL+ePmfn4tSF8HZ40Bs5H7pjf6svQWECZ0dp9iYwu86R
-	6VDY5awiM6W2UINFqZQZcr2xe9CKk+C9aLdisS1/Kh3slEmyVjf4qCY4qUtX1sEu
-	4EGB0xiSANcf2mFzDQUYqByk9PHnDJ+mTn1mIydoEb6y4C8bAizg7UHT4m2hENoQ
-	YDfal4M/hkL40akKTGHzwMPPjXycj5EgwD4AxDWgDVOHyxG2hA6TElluW8Auq7wc
-	MD0VUeIN9DpKX/0dzVXGxtSiX9AhbnoCqpQxHM1e/bKfmqMsJq8FWz5Y/WrgVQUX
-	/Lb5H35kHp3Fyrw2B7EA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y3j28npx3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 May 2024 13:59:40 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44FDxdTb015592
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 May 2024 13:59:39 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 15 May
- 2024 06:59:33 -0700
-Message-ID: <0a867cd1-8d99-495e-ae7e-a097fc9c00e9@quicinc.com>
-Date: Wed, 15 May 2024 19:29:29 +0530
+	s=arc-20240116; t=1715782943; c=relaxed/simple;
+	bh=IYa8U3GwTT6emlBqHWo5mWIUbSrmH2NUdPO0Of/UvTk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lVBL7gbYuJic5L52HgXurxgGHZtEVudYs1gCaIIFngj3sMn/SQ7B1t9nOvOtU4IWmtqqc8nWUnhtgz23u0N+FLWTjthqJH4SEBvzg6ihio5FWtQZbLaVytHjiKJHLezgYNySlrNwVNRlZmSF7tdg/Z0Yipd9FiQc7IVyI4Pv4Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CueoZhB2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF0BC116B1;
+	Wed, 15 May 2024 14:22:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715782943;
+	bh=IYa8U3GwTT6emlBqHWo5mWIUbSrmH2NUdPO0Of/UvTk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=CueoZhB2zuuGwLARJMmvT6lzIV9pb4IWmO3syNwwkyLYfCqzWvzHWUe5tmQaK8N2b
+	 bA6SGbE3v1U3+VL1radDeRqtjTyFHZ85n0PN+bob4zqVdsNpefqV2P+/536RZe2scF
+	 +6W/KbwrcNATWV4M0KDpzL1pxCccXzdWlagdRN0R0b+pXA683vjjAFVwUyBy7IPrqx
+	 zQBhNQwpYFYdDMUBosVdSDWfFo0aJjnVfZKeH791NoIvME9t5X9Jw7sH1x0zuFO8xc
+	 GkLIDGgOCtPekJRh255BXM0E+/dOZgFW9Yk0J7cOzHULSMmALYbXGdA2iv4bKClr+J
+	 FaKjtsMkpNpqQ==
+Message-ID: <89359317-8f96-4781-924c-93cac1e0c443@kernel.org>
+Date: Wed, 15 May 2024 16:22:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,118 +50,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 3/5] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Clark <robdclark@gmail.com>
-CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <jsnitsel@redhat.com>,
-        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>
-References: <20240123144543.9405-1-quic_bibekkum@quicinc.com>
- <20240123144543.9405-4-quic_bibekkum@quicinc.com>
- <CAF6AEGs3_wBNo58EbGicFoQuq8--fDohTGv1JSFgoViygLS5Lg@mail.gmail.com>
- <f2222714-1e00-424e-946d-c314d55541b8@quicinc.com>
- <51b2bd40-888d-4ee4-956f-c5239c5be9e9@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: mmc: sdhci-msm: Document the SDX75
+ compatible
+To: Naina Mehta <quic_nainmeht@quicinc.com>, ulf.hansson@linaro.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org, bhupesh.sharma@linaro.org
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240515120958.32032-1-quic_nainmeht@quicinc.com>
+ <20240515120958.32032-2-quic_nainmeht@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <51b2bd40-888d-4ee4-956f-c5239c5be9e9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: txihSruCNW1nVPzBJ-XNCpZsT7TjaDCy
-X-Proofpoint-GUID: txihSruCNW1nVPzBJ-XNCpZsT7TjaDCy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-15_07,2024-05-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- impostorscore=0 malwarescore=0 phishscore=0 bulkscore=0 suspectscore=0
- mlxscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405150098
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240515120958.32032-2-quic_nainmeht@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-On 5/10/2024 6:32 PM, Konrad Dybcio wrote:
-> On 10.05.2024 2:52 PM, Bibek Kumar Patro wrote:
->>
->>
->> On 5/1/2024 12:30 AM, Rob Clark wrote:
->>> On Tue, Jan 23, 2024 at 7:00 AM Bibek Kumar Patro
->>> <quic_bibekkum@quicinc.com> wrote:
->>>>
->>>> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
->>>> the TLB to fetch just the next page table. MMU-500 features ACTLR
->>>> register which is implementation defined and is used for Qualcomm SoCs
->>>> to have a custom prefetch setting enabling TLB to prefetch the next set
->>>> of page tables accordingly allowing for faster translations.
->>>>
->>>> ACTLR value is unique for each SMR (Stream matching register) and stored
->>>> in a pre-populated table. This value is set to the register during
->>>> context bank initialisation.
->>>>
->>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>> ---
+On 15/05/2024 14:09, Naina Mehta wrote:
+> Document the compatible for SDHCI on SDX75 SoC.
 > 
-> [...]
-> 
->>>> +
->>>> +               for_each_cfg_sme(cfg, fwspec, j, idx) {
->>>> +                       smr = &smmu->smrs[idx];
->>>> +                       if (smr_is_subset(smr, id, mask)) {
->>>> +                               arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR,
->>>> +                                               actlrcfg[i].actlr);
->>>
->>> So, this makes ACTLR look like kind of a FIFO.  But I'm looking at
->>> downstream kgsl's PRR thing (which we'll need to implement vulkan
->>> sparse residency), and it appears to be wanting to set BIT(5) in ACTLR
->>> to enable PRR.
->>>
->>>           val = KGSL_IOMMU_GET_CTX_REG(ctx, KGSL_IOMMU_CTX_ACTLR);
->>>           val |= FIELD_PREP(KGSL_IOMMU_ACTLR_PRR_ENABLE, 1);
->>>           KGSL_IOMMU_SET_CTX_REG(ctx, KGSL_IOMMU_CTX_ACTLR, val);
->>>
->>> Any idea how this works?  And does it need to be done before or after
->>> the ACTLR programming done in this patch?
->>>
->>> BR,
->>> -R
->>>
->>
->> Hi Rob,
->>
->> Can you please help provide some more clarification on the FIFO part? By FIFO are you referring to the storing of ACTLR data in the table?
->>
->> Thanks for pointing to the downstream implementation of kgsl driver for
->> the PRR bit. Since kgsl driver is already handling this PRR bit's
->> setting, this makes setting the PRR BIT(5) by SMMU driver redundant.
-> 
-> The kgsl driver is not present upstream.
-> 
-
-Right kgsl is not present upstream, it would be better to avoid 
-configuring the PRR bit and can be handled by kgsl directly in downstream.
-
->> Thanks for bringing up this point.
->> I will send v10 patch series removing this BIT(5) setting from the ACTLR
->> table.
-> 
-> I think it's generally saner to configure the SMMU from the SMMU driver..
-
-Yes, agree on this. But since PRR bit is not directly related to SMMU
-configuration so I think it would be better to remove this PRR bit
-setting from SMMU driver based on my understanding.
+> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
+> ---
 
 
-Thanks & regards,
-Bibek
-> 
-> Konrad
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+---
+
+This is an automated instruction, just in case, because many review tags
+are being ignored. If you know the process, you can skip it (please do
+not feel offended by me posting it here - no bad intentions intended).
+If you do not know the process, here is a short explanation:
+
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+Best regards,
+Krzysztof
+
 
