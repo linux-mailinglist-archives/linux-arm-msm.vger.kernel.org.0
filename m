@@ -1,161 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-19878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AA468C65EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 13:52:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAE9E8C662B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 14:11:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC929284E20
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 11:52:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 38627B20EB7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 12:11:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 043476F073;
-	Wed, 15 May 2024 11:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 498EC7CF34;
+	Wed, 15 May 2024 12:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sgGzwMOS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CA89P5O5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B5E6EB4D;
-	Wed, 15 May 2024 11:52:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2487317C;
+	Wed, 15 May 2024 12:10:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715773963; cv=none; b=U9UfTH7sBplE5kI5am1eE2A82wLABRj3puKgKi9IvdOfpHQeMNcdosEMH6r5obqttY2XcijTWR4qB1/xDuhY5+94Yrh+eLWumQDmkt2sjxONMEs/vrnRGRg16fo+n84YNIQdn8BSGv+222U9mVOtPsNX5JXhIU5fiFTezV0zfqM=
+	t=1715775045; cv=none; b=lU8vgs0s/BaP/r9EA6ZB+6XBEZ69jmwvjxZCMZ5gKiKLP1s+Is5rkmWnqDca2pSifSRONxEdMpTm5NyViK5w0YIDEBr1XFfEZYJEZz0GU26QSAs/8gMJihUm2l8uiDSwv+n0NXi0o124xsLKBG8Nzf5r2Lt2tapO34YngMyN/DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715773963; c=relaxed/simple;
-	bh=6/w6PXuqTKJkCkKH+o49ec5fUjWDa/wTnoKCbxVJAWE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NoreX66M5L2vvcQVD5XTrPI43lW1lXZdu+VlBStuAArUm6LPCK+keest/Tj2uzr3V2lCGjEgijHQg0urMeYRaLa2F8n+tkdg0spzCCRkliIGVi2RANGAYu8jyhwVU3OrXjzrYfC4BQscSIP/mkmR/zsHbyKbcgJAHsCs/Wzg8J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sgGzwMOS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA203C116B1;
-	Wed, 15 May 2024 11:52:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715773963;
-	bh=6/w6PXuqTKJkCkKH+o49ec5fUjWDa/wTnoKCbxVJAWE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sgGzwMOS2L7p7LfzwCrjMxtTPPLiStcG7C6IigkFtBXfGAk6EwHZMdrJwy1jE3KAv
-	 1mi6QPgfRLangA+iTPCxoITKHVz+jrq/EjtV3y2eMI+Vg0jGSfmWASTqk2xBSut5tK
-	 9O8rmcMs4fWWgYDx7xG24vWoHnl3yO7sgFGMZPse2orPLHbvyFbPo+z2ay/r6CHW9i
-	 fPTB35oPCWVdPqR2NXdXxpxK1oxQJ4RZC+UUfx40s7UIvryKKAbBGtvyvFKhth5++a
-	 7paGhkCUUeVTo6hxtKtWHUEO1A9+AGbtQzWW1heQZqqsEsSrfCZK8NTFUmQ2ZrMLOg
-	 DM01uhXrPuCAA==
-Date: Wed, 15 May 2024 13:52:39 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Slark Xiao <slark_xiao@163.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	loic.poulain@linaro.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_qianyu@quicinc.com
-Subject: Re: Re: Re: [PATCH] bus: mhi: host: Add Foxconn SDX72 related support
-Message-ID: <20240515115239.GD4488@thinkpad>
-References: <20240510032657.789629-1-slark_xiao@163.com>
- <20240514143741.GA2306@thinkpad>
- <541de8e4.1600.18f79de44f3.Coremail.slark_xiao@163.com>
- <20240515074119.GA2445@thinkpad>
- <5eee5967.7bdf.18f7b4567b7.Coremail.slark_xiao@163.com>
+	s=arc-20240116; t=1715775045; c=relaxed/simple;
+	bh=pJqvjsgCvNBkKyzYsgEoP0V2lPFJZrSdd7i0P9EDSt0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ir8mfexq85VfUWvs/yW94H4fwEg+l2/qBHkfnedKJMDRBDZyjUQkaLXYKFi1Ov04uy4tIQBkkume+SxiOK3D/N1mTgz6drCsNTjG8jbv52oJCH2H5rW4GiwUTsY7B69AMEUmVj32fh7hRQz44rKplKrjommjJmHCoNCRm/RP9mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CA89P5O5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44F90XOe007493;
+	Wed, 15 May 2024 12:10:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=xEF+xDSBfTCHhiYaODH9Zu9Pp0jwfoPRn50l2ESd8fA=; b=CA
+	89P5O5VHLBw8cJIdFacZ8WKVzv/BafF9cPRBAambzhOPSUa6nc1o4r/SKE5FdiHf
+	rZggD+q5bAkEg9ekLX8eRBWeIQhckzQRCnGVvDraHX9uwrvhnKMAjJiBIp5HkCMS
+	/mnh/c//ZXL3Xr34IonKNTb/ahVFExaI+Xd02thFTqVoD8ZWezVmP1kfafStKQBL
+	F94jtpAOki3+HcEG9/isL2WFjN/Bxs7BZEqP9G/4kn5HITyGL9F5h1zh6mH66H4z
+	BySjJWo91WrWZLaE7Meqe+y3s0HJ/mXhVkn+JO+OzC9imGtGCSPgluDnCCr16bEg
+	/n9H7kjiIqYVb0w/nx4A==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y47f42q7d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 May 2024 12:10:27 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44FCAO2G022765
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 May 2024 12:10:24 GMT
+Received: from hyd-e160-a01-3-01.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 15 May 2024 05:10:20 -0700
+From: Naina Mehta <quic_nainmeht@quicinc.com>
+To: <ulf.hansson@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <bhupesh.sharma@linaro.org>
+CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Naina Mehta
+	<quic_nainmeht@quicinc.com>
+Subject: [PATCH 0/3] Add SDHCI support for SDX75 SoC
+Date: Wed, 15 May 2024 17:39:55 +0530
+Message-ID: <20240515120958.32032-1-quic_nainmeht@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5eee5967.7bdf.18f7b4567b7.Coremail.slark_xiao@163.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9pyKq2YjbFl6FZBU8xxNWWVMCLdjkkXm
+X-Proofpoint-ORIG-GUID: 9pyKq2YjbFl6FZBU8xxNWWVMCLdjkkXm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-15_06,2024-05-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 bulkscore=0 clxscore=1011 malwarescore=0 adultscore=0
+ lowpriorityscore=0 impostorscore=0 suspectscore=0 mlxlogscore=873
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405150084
 
-On Wed, May 15, 2024 at 04:01:37PM +0800, Slark Xiao wrote:
-> 
-> At 2024-05-15 15:41:19, "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org> wrote:
-> >+ Qiang
-> >
-> >On Wed, May 15, 2024 at 09:29:20AM +0800, Slark Xiao wrote:
-> >> At 2024-05-14 22:37:41, "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org> wrote:
-> >> >On Fri, May 10, 2024 at 11:26:57AM +0800, Slark Xiao wrote:
-> >> >> Align with Qcom SDX72, add ready timeout item for Foxconn SDX72.
-> >> >> And also, add firehose support since SDX72.
-> >> >> 
-> >> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> >> >> ---
-> >> >>  drivers/bus/mhi/host/pci_generic.c | 31 ++++++++++++++++++++++++++++++
-> >> >>  1 file changed, 31 insertions(+)
-> >> >> 
-> >> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> >> >> index 08844ee79654..0fd94c193fc6 100644
-> >> >> --- a/drivers/bus/mhi/host/pci_generic.c
-> >> >> +++ b/drivers/bus/mhi/host/pci_generic.c
-> >> >> @@ -399,6 +399,8 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
-> >> >>  	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> >> >>  	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> >> >>  	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> >> >> +	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
-> >> >> +	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-> >> >
-> >> >This means SDX55 is also supporting FIREHOSE channels, which is not true I
-> >> >believe.
-> >> Actually, I just verified it with my sdx55 and the answer is Yes. These channels
-> >> are common settings for Qcom device which support PCIe mode. BTW, the
-> >> default settings of Qcom and Quectel support firehose for their sdx55 products.
-> >
-> >Qiang, can you please confirm that SDX55 supports FIREHOSE channels?
-> >
-> >> >
-> >> >>  	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-> >> >>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-> >> >>  };
-> >> >> @@ -419,6 +421,16 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
-> >> >>  	.event_cfg = mhi_foxconn_sdx55_events,
-> >> >>  };
-> >> >>  
-> >> >> +static const struct mhi_controller_config modem_foxconn_sdx72_config = {
-> >> >> +	.max_channels = 128,
-> >> >> +	.timeout_ms = 20000,
-> >> >> +	.ready_timeout_ms = 50000,
-> >> >> +	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
-> >> >> +	.ch_cfg = mhi_foxconn_sdx55_channels,
-> >> >> +	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
-> >> >> +	.event_cfg = mhi_foxconn_sdx55_events,
-> >> >> +};
-> >> >> +
-> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_sdx24_info = {
-> >> >>  	.name = "foxconn-sdx24",
-> >> >>  	.config = &modem_foxconn_sdx55_config,
-> >> >> @@ -448,6 +460,16 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx65_info = {
-> >> >>  	.sideband_wake = false,
-> >> >>  };
-> >> >>  
-> >> >> +static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
-> >> >> +	.name = "foxconn-sdx72",
-> >> >> +	.edl = "qcom/sdx72m/xbl_s_devprg_ns.melf",
-> >> >
-> >> >What is '.melf'? Is the firmware available somewhere? Did you plan to upstream
-> >> >it to linux-firmware?
-> >> >
-> >> This file similar with "edl.mbn". In SDX72 product, the default "edl" file name is
-> >> "xbl_s_devprg_ns.melf". Currently we don't plan to upstream it to linux-firmware
-> >> since 2 reasons: 1: we share the same fold name sdx72m with qcom or other vendors
-> >> 2: this file may be changed since sdx72 product still under developing in our side. we
-> >> may change the base line according to QCOM release.
-> >
-> >Then I would ask you to add support when you have a stable firmware. I do not
-> >want to change the firmware name after some time as it will confuse users.
-> >
-> >- Mani
-> If a stable firmware must be provided, I think I shall change the folder name from qcom to
-> fox, do you agree this?
+Add SDHC instance for supporting SD card on SDX75 SoC.
 
-Even in that case, where can the user find the firmware?
+Naina Mehta (3):
+  dt-bindings: mmc: sdhci-msm: Document the SDX75 compatible
+  arm64: dts: qcom: sdx75: Add SDHCI node
+  arm64: dts: qcom: sdx75-idp: add SDHCI for SD Card
 
-> BTW, I need to check if it works after updating 'edl fw' from  xbl_s_devprg_ns.melf to
-> edl.mbn. 
+ .../devicetree/bindings/mmc/sdhci-msm.yaml    |  1 +
+ arch/arm64/boot/dts/qcom/sdx75-idp.dts        | 45 ++++++++++
+ arch/arm64/boot/dts/qcom/sdx75.dtsi           | 89 +++++++++++++++++++
+ 3 files changed, 135 insertions(+)
 
-Okay. IMO, we should upstream the product support only after a stable firmware
-release (well stable in the sense a stable name at least).
+--
+2.17.1
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
