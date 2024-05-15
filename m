@@ -1,54 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-19890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2F688C690D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 16:55:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5872B8C6924
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 17:02:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F3201C21365
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 14:55:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5C4A284210
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 May 2024 15:02:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B551155727;
-	Wed, 15 May 2024 14:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0323F155A39;
+	Wed, 15 May 2024 15:01:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dJl3MCaF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007BD155730
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2024 14:55:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.164
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DB2155A2F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2024 15:01:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715784918; cv=none; b=Qv3QJHh7gKvTp3XKrAAM5Nq5F4fETOdABA3bDUz7IUpFxgCCcoaFZGoO8r4OxI4LYLJzfFAZ8beQBB/rEE4BeQrVljEvUco2sANqBJVN7DnBpKxj8pGqCUhyL77O7O9hyFaUX3V/9P1Sltu2Mfd7Sng9cFSnnlnLn5LxnBoH1tk=
+	t=1715785313; cv=none; b=MseogySmuteKwrheKLW/uYIjvkmHrJen/N6EWpHzHLP03nsyuZNMVWKsjl6/vwd+UWj5qxlWXPPa97eiVhRSO0atQmO36LcJPHkPyYvOBO3sUykGUB4kCEAlgGaxT/i7aQqPvGN2mjyRIPqgo77/Eze6DsOX7q/XRDyoLfJgBSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715784918; c=relaxed/simple;
-	bh=wskqyjWHaMdBLOq5gBxPHJ1h8n2QskC3xDOfJJVGcpk=;
+	s=arc-20240116; t=1715785313; c=relaxed/simple;
+	bh=ScHBNCjfwH0hgsz8GZny0v3ytqV7J3w0ocDS7d+1VoI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N9GREQaF0I+QZj4wA+PtUgg3jcYDe55eyVLGdOBfdFRBYmDdpvUeO0dsAXw6upLHa/Yy1xdh0gBdMlfCmvBefJjlKt/KppUxGg5dz/5eHt6mBGJ/1TgiNwRnjmOQX/LRomkwcXSHy/f3sXBF6jLtEA6zb+hOenIUISgU+kh5EJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.164
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id D970D1FD0A;
-	Wed, 15 May 2024 16:48:01 +0200 (CEST)
-Date: Wed, 15 May 2024 16:48:00 +0200
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
-	MSM <linux-arm-msm@vger.kernel.org>, freedreno@lists.freedesktop.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bryan O Donoghue <bryan.odonoghue@linaro.org>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Luca Weiss <luca.weiss@fairphone.com>, 
-	Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8998: enable adreno_smmu by
- default
-Message-ID: <pbwsu3w6nl2eyrpbyquo2xmlt2xeniloyhcoegsdoaxs5ezhcn@552egeqfqcz7>
-References: <be51d1a4-e8fc-48d1-9afb-a42b1d6ca478@freebox.fr>
+	 Content-Type:Content-Disposition:In-Reply-To; b=o7gY7rQv2Se9Q1JnRMJxUZlmLMUi9aMd+pCMuPhqgOT3oYO94VSgB9qMqDb5pi4E7v7Jms/BoOnpotbNtXVDH+AUOYRtBfvCeax4ntAgQ6sesyRTclRn9n+qrkkPrgcqmwIDdrbQjJBbe+LBs5E8luIOU9W4r3rONy8/G5sKFkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dJl3MCaF; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2e6f2534e41so15407351fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 May 2024 08:01:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715785310; x=1716390110; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1UyqZmUfboktWppmzlMbge493UhsV2Qc8tBPPHmQa0s=;
+        b=dJl3MCaFt/4v3FygCxRHjHN9zOqmdNhNlo1EPkCzVGKI9Yi25D5IHgLeZJaq++ZH01
+         gtVEnJXXNjYebR9EnogSbPVbiLUPUWfjN68+O2q5z4SK98/SK23PyD85QL4ceiNAcFqV
+         VeTYjL5JwY3TP2mGtPFCubqeqsRkAznyJKFNesuaTZSrZU86ONCdi4fyVMsPZnko0VsF
+         4pFACOc8Of/WQHIw5WpRUsww+qo678orS68qP4NaJtJiqIAxrYjw/RYz4zpJRgLW9P0l
+         qsR3r7S+FrtprUzB14vU+93bcgn/LmIyB9wAB/EENKdlZUZp59hTsRsY68fCNbWRtdVY
+         LbzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715785310; x=1716390110;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1UyqZmUfboktWppmzlMbge493UhsV2Qc8tBPPHmQa0s=;
+        b=P4fUu7HgXltunRRIxMQRS3EoFj4tFGDAFXsUxWR7AJxOWPJCCgUlyni8tkGThpmlSV
+         p1xiEG6OncSsAkO6hAJIOSB34/aP7uQaMyTE3H59skx8C0DlbpawRncfgQoirPHc5VMB
+         yUQz2SvkfihVHN3vDY1fIca4DUWNabKOLEhTmnXF9sMVKb5q5TOiL1ET8MHEuyy+e61u
+         H4e9JaAuQmg6KtjPzF2JI2/S8nz3hE3r+JszVPNBG+jf+R2RoYznol5twjHg7zhKrqRn
+         tqNqvTqI9bskQohVF+Pf0TNo3+oQzhgeLjs0XxwQux9hxci05s2Y3HWCcTRLEwFMK5Ei
+         SCoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVPw/6A3vkNiQk0J09u0L9EeLDMvpD0+yrrhlOHVNup2Cp8eN/HXJuF9srluHz778zJWRaLJhUGrJ1T6ZQLkcB+DXDE83UedDuqNZqFnQ==
+X-Gm-Message-State: AOJu0YyHIM93rJIq16IoimMj2pdfxhpIlk3CKBcZZaGmAEt7/Z6W7+E+
+	GN5vLdClEqw22ThSaA9FA4gc/VUskBsqHR/6RNdiuI5jTyiwfBnv0OxeOoLjV2g=
+X-Google-Smtp-Source: AGHT+IHbwp2iYCqmHM0R9xejEb13mh3r9CmNNOPKVYnou4CH7qz3D3yCaBHkx24yNkzM8v3qHfsyGg==
+X-Received: by 2002:a2e:f1a:0:b0:2e6:a7c3:775a with SMTP id 38308e7fff4ca-2e6a7c37977mr49132481fa.52.1715785310131;
+        Wed, 15 May 2024 08:01:50 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2e4d1622740sm21039371fa.119.2024.05.15.08.01.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 May 2024 08:01:49 -0700 (PDT)
+Date: Wed, 15 May 2024 18:01:48 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 7/8] usb: typec: ucsi: glink: merge pmic_glink_altmode
+ driver
+Message-ID: <f2bqgtoll3j6pseg6hzvwtyqiwfwcaepuhcnq4nrshux2bnluh@rte67mi7zcey>
+References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
+ <20240416-ucsi-glink-altmode-v1-7-890db00877ac@linaro.org>
+ <ZiZC/l9nOmzWx+j6@kuha.fi.intel.com>
+ <46fktwtp3xers6tcpov3qo4zswptvajewsdltm45zbz2kmmpzp@cthu6ylttup3>
+ <ZiZ8El4779l0W1Ig@kuha.fi.intel.com>
+ <CAA8EJppMKFSbe-EZLELy+dnd4BZeg24crotH95hpCwcvoEbw5Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,92 +90,154 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <be51d1a4-e8fc-48d1-9afb-a42b1d6ca478@freebox.fr>
+In-Reply-To: <CAA8EJppMKFSbe-EZLELy+dnd4BZeg24crotH95hpCwcvoEbw5Q@mail.gmail.com>
 
-On 2024-05-15 16:27:44, Marc Gonzalez wrote:
-> 15 qcom platform DTSI files define an adreno_smmu node.
-> msm8998 is the only one with adreno_smmu disabled by default.
+Hi Heikki,
+
+
+On Sat, May 04, 2024 at 09:49:42AM +0300, Dmitry Baryshkov wrote:
+> On Mon, 22 Apr 2024 at 18:02, Heikki Krogerus
+> <heikki.krogerus@linux.intel.com> wrote:
+> >
+> > Hi Dmitry,
+> >
+> > On Mon, Apr 22, 2024 at 03:45:22PM +0300, Dmitry Baryshkov wrote:
+> > > On Mon, Apr 22, 2024 at 01:59:10PM +0300, Heikki Krogerus wrote:
+> > > > Hi Dmitry,
+> > > >
+> > > > On Tue, Apr 16, 2024 at 05:20:56AM +0300, Dmitry Baryshkov wrote:
+> > > > > Move handling of USB Altmode to the ucsi_glink driver. This way the
+> > > > > altmode is properly registered in the Type-C framework, the altmode
+> > > > > handlers can use generic typec calls, the UCSI driver can use
+> > > > > orientation information from altmode messages and vice versa, the
+> > > > > altmode handlers can use GPIO-based orientation inormation from UCSI
+> > > > > GLINK driver.
+> > > > >
+
+[skipped]
+
+> > > Note, the existing UCSI displayport AltMode driver depends on the UCSI
+> > > actually handling the altomode. It needs a partner, etc.
+> > >
+
+[skipped the patch]
+
+> > > > > +static void pmic_glink_ucsi_set_state(struct ucsi_connector *con,
+> > > > > +                               struct pmic_glink_ucsi_port *port)
+> > > > > +{
+> > > > > + struct typec_displayport_data dp_data = {};
+> > > > > + struct typec_altmode *altmode = NULL;
+> > > > > + unsigned long flags;
+> > > > > + void *data = NULL;
+> > > > > + int mode;
+> > > > > +
+> > > > > + spin_lock_irqsave(&port->lock, flags);
+> > > > > +
+> > > > > + if (port->svid == USB_SID_PD) {
+> > > > > +         mode = TYPEC_STATE_USB;
+> > > > > + } else if (port->svid == USB_TYPEC_DP_SID && port->mode == DPAM_HPD_OUT) {
+> > > > > +         mode = TYPEC_STATE_SAFE;
+> > > > > + } else if (port->svid == USB_TYPEC_DP_SID) {
+> > > > > +         altmode = find_altmode(con, port->svid);
+> > > > > +         if (!altmode) {
+> > > > > +                 dev_err(con->ucsi->dev, "altmode woth SVID 0x%04x not found\n",
+> > > > > +                         port->svid);
+> > > > > +                 spin_unlock_irqrestore(&port->lock, flags);
+> > > > > +                 return;
+> > > > > +         }
+> > > > > +
+> > > > > +         mode = TYPEC_MODAL_STATE(port->mode - DPAM_HPD_A);
+> > > > > +
+> > > > > +         dp_data.status = DP_STATUS_ENABLED;
+> > > > > +         dp_data.status |= DP_STATUS_CON_DFP_D;
+> > > > > +         if (port->hpd_state)
+> > > > > +                 dp_data.status |= DP_STATUS_HPD_STATE;
+> > > > > +         if (port->hpd_irq)
+> > > > > +                 dp_data.status |= DP_STATUS_IRQ_HPD;
+> > > > > +         dp_data.conf = DP_CONF_SET_PIN_ASSIGN(port->mode - DPAM_HPD_A);
+> > > > > +
+> > > > > +         data = &dp_data;
+> > > > > + } else {
+> > > > > +         dev_err(con->ucsi->dev, "Unsupported SVID 0x%04x\n", port->svid);
+> > > > > +         spin_unlock_irqrestore(&port->lock, flags);
+> > > > > +         return;
+> > > > > + }
+> > > > > +
+> > > > > + spin_unlock_irqrestore(&port->lock, flags);
+> > > > > +
+> > > > > + if (altmode)
+> > > > > +         typec_altmode_set_port(altmode, mode, data);
+> > > >
+> > > > So if the port altmode is using the ucsi_displayport_ops, you can
+> > > > simply register the partner altmode here instead. That should
+> > > > guarantee that it'll bind to the DP altmode driver which will take
+> > > > care of typec_altmode_enter() etc.
+> > >
+> > > In our case the altmode is unfortunately completely hidden inside the
+> > > firmware. It is not exported via the native UCSI interface. Even if I
+> > > plug the DP dongle, there is no partner / altmode being reported by the
+> > > PPM. All DP events are reported via additional GLINK messages.
+> >
+> > I understand that there is no alt mode being reported, but I assumed
+> > that there is a notification about connections.
+> >
+> > If that's not the case, then you need to use this code path to
+> > register the partner device as well I think. The partner really has to
+> > be registered somehow.
+> >
+> > > The goal is to use the core Type-C altmode handling, while keeping UCSI
+> > > out of the altmode business.
+> > >
+> > > This allows the core to handle switches / muxes / retimers, report the
+> > > altmode to the userspace via sysfs, keep the link between the DP part of
+> > > the stack and the typec port, but at the same time we don't get errors
+> > > from UCSI because of the PPM reporting unsupported commands, etc.
+> >
+> > I understand, and just to be clear, I don't have a problem with
+> > bypassing UCSI. But that does not mean you can skip the alt mode
+> > registration.
+> >
+> > The primary purpose of drivers/usb/typec/ucsi/displayport.c is to
+> > emulate the partner DP alt mode device a little so that the actual DP
+> > alt mode driver drivers/usb/typec/altmodes/displayport.c is happy. The
+> > altmode driver will then make sure that all the muxes, switches and
+> > what have you, are configured as they should, and more importantly,
+> > make sure the DP alt mode is exposed to the user space exactly the
+> > same way as it's exposed on all the other systems.
+> >
+> > There are a couple of UCSI commands that are being used there yes, but
+> > by modifying it so that those UCSI commands are executed conditionally
+> > - by checking the ALT_MODE_DETAILS feature - you should be able to use
+> > it also in this case.
 > 
-> There's no reason why this SMMU should be disabled by default,
-> it doesn't need any further configuration.
+> I have played with the DP AltMode driver. I got it somewhat working,
+> but I think I'm facing a control issue.
+> Basically, the altmode driver wants to control pin assignment on its
+> own. It works with the software TCPM, as we control it.
+> It works with the normal UCSI, because it still can configure pin
+> config. However with PMIC GLINK implementation there is no way to
+> control pin assignment from the Linux side. The firmware does that for
+> us.
+> What would be the recommended way to handle it? Is it okay to override
+> status_update to return just the selected pin config? Or is there any
+> other (better) way to handle such an issue?
+
+Any suggestions or further comments? Is it better to extend the
+DisplayPort Altmode driver with the 'forced' transitions? Or it would be
+fine to just register a partner device, emulate the userspace events,
+but completely ignore the existing displayport driver?
+
 > 
-> Bring msm8998 in line with the 14 other platforms.
+> >
+> > You really need to register the partner alt mode(s) one way or the
+> > other in any case, and the partner device itself you absolutely must
+> > register. The user space interface needs to be consistent.
 > 
-> This fixes GPU init failing with ENODEV:
+> For reference, the partner is being reported and registered by the
+> UCSI firmware. It's only the altmode itself where I'm facing the
+> issue.
 
-Nit: I'd specialize this to:
-
-"This saves every MSM8998 board DTS from having to enable adreno_smmu when
-enabling the Adreno GPU node, which leads to the following unclear probe failure
-when forgotten about:"
-
-But no need to send a v3 for that.
-
-> msm_dpu c901000.display-controller: failed to load adreno gpu
-> msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops a3xx_ops): -19
-
-And as a more general discussion, which is not really relevant to have your
-commit message, we could have a separate patch adding an error message detailing
-**where** this -19 came from.  In this case create_address_space().
-
-> Fixes: 87cd46d68aeac8 ("Configure Adreno GPU and related IOMMU")
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-> ---
-> New in v2: rewrote commit message with input from Martin, Bryan, Luca
-
-Thanks!
-
-> Supersedes: <1ba7031f-c97c-41f1-8cbc-d99f1e848e76@freebox.fr>
-> 
-> Maintainers, feel free to drop the Fixes tag.
-
-For context, I don't think the original patch was necessarily wrong in disabling
-this node, as any node using it (adreno_gpu) is also disabled by default.  It is
-however less consistent with other DTSI, which don't require every board DTS to
-re-enable adreno_smmu.
-
-- Marijn
-
-> Failure log:
-> [    2.756363] [drm:adreno_bind] Found GPU: 5.4.0.1
-> [    2.767183] [drm:a5xx_gpu_init]
-> [    2.767422] [drm:adreno_gpu_init] fast_rate=710000097, slow_rate=27000000
-> [    3.003869] [drm:msm_gpu_init] ebi1_clk: fffffffffffffffe
-> [    3.004002] adreno 5000000.gpu: supply vdd not found, using dummy regulator
-> [    3.008463] [drm:msm_gpu_init] gpu_reg: ffff0000819e4000
-> [    3.015105] adreno 5000000.gpu: supply vddcx not found, using dummy regulator
-> [    3.020702] [drm:msm_gpu_init] gpu_cx: ffff0000819e4180
-> [    3.028173] [drm:adreno_iommu_create_address_space]
-> [    3.054552] [drm:msm_gpu_init] gpu->aspace=ffffffffffffffed
-> [    3.058112] [drm:a5xx_destroy] 5.4.0.1
-> [    3.065922] [drm:msm_gpu_cleanup] 5.4.0.1
-> [    3.074237] msm_dpu c901000.display-controller: failed to load adreno gpu
-> [    3.082412] msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops a3xx_ops): -19
-> [    3.088342] msm_dpu c901000.display-controller: [drm:drm_managed_release] drmres release begin
-> ...
-> [    3.197694] [drm:drm_managed_release] drmres release end
-> [    3.204009] msm_dpu c901000.display-controller: adev bind failed: -19
-> ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index 3d3b1f61c0690..edf379c28e1e1 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -1580,7 +1580,6 @@ adreno_smmu: iommu@5040000 {
->  			 * SoC VDDMX RPM Power Domain in the Adreno driver.
->  			 */
->  			power-domains = <&gpucc GPU_GX_GDSC>;
-> -			status = "disabled";
->  		};
->  
->  		gpucc: clock-controller@5065000 {
-> -- 
-> 2.34.1
-> 
+-- 
+With best wishes
+Dmitry
 
