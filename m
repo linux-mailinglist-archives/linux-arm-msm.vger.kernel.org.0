@@ -1,128 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-19943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25A278C793B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 17:22:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88A778C7949
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 17:25:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D423D28933C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 15:22:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B99701C20A08
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 15:25:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 978D314A097;
-	Thu, 16 May 2024 15:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53D9B14B97A;
+	Thu, 16 May 2024 15:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wu2GE1lS"
+	dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b="NU2xaTu/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx.treblig.org (mx.treblig.org [46.235.229.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC52D1E491
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2024 15:21:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8751E491;
+	Thu, 16 May 2024 15:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.229.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715872903; cv=none; b=L1QAlwL+8nWSgysWuVCw82g4GaRoeswVz/w9EfdX8k47Xa++w9ISTUICTJtojsPwI0LsMT1EBrcuksmDSHtyQSBhv9Az4lb0tC6A6EvLedqtPRjYUjW27aF2I2CU+5uCirA8n5NUKNCAIlU/rO1lskAE7gaXp6iIFD8Ee5EqYfc=
+	t=1715873118; cv=none; b=pEuzf8x6pHZpH7Wa6ykcDpFQxsnmb6IJIHc33PZYMMIjHeZSrig8tDHciSVHfxv44JRPL0z/9RdjVCbD/vXSLE8jszmHgAGa3G7ODya8YXPBnfyKIj5z0cYWQRvk6jEylLGMj5qWsp0pwOw2FMSghSBWjnMDfVGJR4mHO7Rq5iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715872903; c=relaxed/simple;
-	bh=InSuLl604U89RQPunJzThhSIkiSjc2LZbihM8ltX+Ik=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kofw+qA4L0IqJr8mjkLxiX2Gb0+Mn1Dgh4IcXwmTkbvzPLftRrXdsPFz7283vXsB7blAxnM3vPojpHZaWmRR4M1okSfwYp5hh5911oRMgcSC0OM1e3c7n4JhDM5VCQiU9+KfePjdbabetNbFYbTe14RsM+FKWRhV0v+QzDk8aVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wu2GE1lS; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-572af0b12b8so3554490a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2024 08:21:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715872900; x=1716477700; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SaHRH+mYLcZvnEqoaCOmbmlFeAJ9hDKTr835kz6kRpI=;
-        b=Wu2GE1lS0NExT8uKxt5ArrjgMbxnRfIHwaxJalAmN03znDR0Jv3RI46UMFAeFDzv8A
-         ZoxrfM0+k++sQClQst1kcLkLZRqCe6MCXW87Edf7n6+FKvie+BuTjXxPj+eW6MdAlfVw
-         +BUfEv01P9YF5WEh250gLg04Fr0vneVaEt8X4l+yhLc4McwbrXIt44g8nEGQryweMv3m
-         XaAIZpTPbYvTSpoVYd3D0IW9FLWuyydOEaxzHe+3SSrrNHRJfI1ED6jXIMgrI8aPu1XU
-         IGRGBZH9TKK6q8EHUva5NB9MLvNCRcem1bpDnm2k3CUWNyK2gTYnxINGAYstk3E6Z5zy
-         /EHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715872900; x=1716477700;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SaHRH+mYLcZvnEqoaCOmbmlFeAJ9hDKTr835kz6kRpI=;
-        b=f5MOMHp14uz7ZmP2ppkWWAWLATvVTG5w+pB8aZLLsSBsOTlLdSNKGVjZo7p4NTY9ZR
-         aZOrkI4yDsdJAlYhYhwQioBE+3MxTY6JomQhKS34r1KdsgM5VxJxq00z7aG8OjB27/I/
-         ai6Jcw6OyvR1WJE971EJc0F2GPgTbJ5d4vwLMuncV6pqQ2oZ3CCd9cOEJCieeQOF/Z/A
-         X0CYNEm1i5fSE0cq+6/R01z6S13GU8C+fDRyKR7ikI3hTd0IKZ6Vl0wbq8KujjVZ54vU
-         Znb/ZllSkGW0aomPBbQGmatXo5eB/hzqBRzUMaGEyPO4W4/BXbV2YHpZySNuEJGqPL8N
-         paWg==
-X-Forwarded-Encrypted: i=1; AJvYcCXu5/akMb0gZovwCK3TRA8+9mp4qPckv6HFqSzAlzfORDJeN8ts8kT4hCv1w0I69+lLeoBZH0Ybt4yvT+CyX12c+oH5900QSaw58yJhNA==
-X-Gm-Message-State: AOJu0YxTKaRImjVNP915LFQeqD5xeHhyNDJ9Ch2vTBezibXn0jaFsxEK
-	oDiGSj4DYifh/DMjcFdtKjSFu1jYW3J2Cphv0u5mxVUCteQgbJWnhwvnUSOb7jk=
-X-Google-Smtp-Source: AGHT+IGyS3tFi38rfpt7SHPfYJVr8YnCDDrBAJUgEbq8J3Hk1n0bx1UegnpKYmvY8t4uv6WjIovc8w==
-X-Received: by 2002:a50:d653:0:b0:572:7d75:a715 with SMTP id 4fb4d7f45d1cf-5734d6b4120mr12519162a12.28.1715872900061;
-        Thu, 16 May 2024 08:21:40 -0700 (PDT)
-Received: from zoltan.localdomain ([149.14.240.163])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5733bfe2dd1sm10621482a12.58.2024.05.16.08.21.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 May 2024 08:21:39 -0700 (PDT)
-From: Alex Elder <elder@linaro.org>
-To: stable@vger.kernel.org
-Cc: Rob Herring <robh@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 5.4.x] arm64: dts: qcom: Fix 'interrupt-map' parent address cells
-Date: Thu, 16 May 2024 10:21:36 -0500
-Message-Id: <20240516152136.276884-1-elder@linaro.org>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1715873118; c=relaxed/simple;
+	bh=YTfcN3ABeR8TgtyVD7RSJHOoZtLWmrSjRR3Vv5D/b6w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A/J6ArceosP0ui6juDHW642eSW8cPqnQQyeJEOnGP2pi1gxjNDz6To2lq5XGizR0u9UbAZ72pUenqvUDqPXQVhi7voG3je2lo4KFBlHLmPMtjSsBbJD7k8pBXv6/25Lo5epzPgCqdZnbyshllkSqLau6g2W+BhKtbvTVYi2tFhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org; spf=pass smtp.mailfrom=treblig.org; dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b=NU2xaTu/; arc=none smtp.client-ip=46.235.229.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=treblig.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+	; s=bytemarkmx; h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+	:Subject; bh=ZhFvrP46M0abGKnWf7SV+eo4mI12fx7mDm5L6hnBtXA=; b=NU2xaTu/MB5fraFn
+	tWRzPU7/oXq/XojRJgS/8tT+OrizrJBQOsBOoDUKqLA51M+jnKfht5LpV0TSmTlWwb4cZ3D4r9wzY
+	sPv44QOg6m3TJcIcjt28/szsca5ky3Ox+ZdD1fo6snX5yX7HqaD9Q1GSeMf7g3jemgmRcCHc9Ynys
+	msgXJmYa0mX20oyG8bGWxajwylJZTsl5qFZ1TtE0AebI1H9/U8QBw/IdNoS4pLdGn2Prnmn3L1Pmq
+	/OGXOGEvnGeV0FQ1/VabsrH41YKcCNVoecDQHB7PQZGKDWGXNsKPLKpoopjlmi1D5c9MDXJcF5cRe
+	a8Towg5rJiBB6YBYFw==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+	(envelope-from <dg@treblig.org>)
+	id 1s7cym-001Fs8-1V;
+	Thu, 16 May 2024 15:25:12 +0000
+Date: Thu, 16 May 2024 15:25:12 +0000
+From: "Dr. David Alan Gilbert" <linux@treblig.org>
+To: Frank Li <Frank.li@nxp.com>
+Cc: vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: gpi: remove unused struct 'gpi_desc'
+Message-ID: <ZkYlWIg74EqHUFAp@gallifrey>
+References: <20240516133211.251205-1-linux@treblig.org>
+ <ZkYdDtoPMnYlGT/6@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <ZkYdDtoPMnYlGT/6@lizhi-Precision-Tower-5810>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 15:24:29 up 8 days,  2:38,  2 users,  load average: 0.01, 0.04, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-From: Rob Herring <robh@kernel.org>
+* Frank Li (Frank.li@nxp.com) wrote:
+> On Thu, May 16, 2024 at 02:32:11PM +0100, linux@treblig.org wrote:
+> > From: "Dr. David Alan Gilbert" <linux@treblig.org>
+> > 
+> > 'gpi_desc' seems like it was never used.
+> > Remove it.
+> 
+> code change show 'reg_info', not 'gpi_desc'. You need make sure that it
+> really is not used, not "seems like".
 
-commit 0ac10b291bee84b00bf9fb2afda444e77e7f88f4 upstream.
+Oops that was a cut-and-paste when I did the commit on the name.
 
-The 'interrupt-map' in several QCom SoCs is malformed. The '#address-cells'
-size of the parent interrupt controller (the GIC) is not accounted for.
+It was build tested.
 
-Cc: <stable@vger.kernel.org>		# v5.4
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20210928192210.1842377-1-robh@kernel.org
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+V2 coming along now.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 9cb7163c5714c..5c653ab907463 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -872,10 +872,10 @@
- 			interrupts = <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
- 			interrupt-map-mask = <0 0 0 0x7>;
--			interrupt-map =	<0 0 0 1 &intc 0 135 IRQ_TYPE_LEVEL_HIGH>,
--					<0 0 0 2 &intc 0 136 IRQ_TYPE_LEVEL_HIGH>,
--					<0 0 0 3 &intc 0 138 IRQ_TYPE_LEVEL_HIGH>,
--					<0 0 0 4 &intc 0 139 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-map =	<0 0 0 1 &intc 0 0 135 IRQ_TYPE_LEVEL_HIGH>,
-+					<0 0 0 2 &intc 0 0 136 IRQ_TYPE_LEVEL_HIGH>,
-+					<0 0 0 3 &intc 0 0 138 IRQ_TYPE_LEVEL_HIGH>,
-+					<0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
- 
- 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
- 				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+Dave
+
+> 'struct reg_info' is never used, so remove it.
+> 
+> > 
+> > Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+> > ---
+> >  drivers/dma/qcom/gpi.c | 6 ------
+> >  1 file changed, 6 deletions(-)
+> > 
+> > diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> > index 1c93864e0e4d..639ab304db9b 100644
+> > --- a/drivers/dma/qcom/gpi.c
+> > +++ b/drivers/dma/qcom/gpi.c
+> > @@ -476,12 +476,6 @@ struct gpi_dev {
+> >  	struct gpii *gpiis;
+> >  };
+> >  
+> > -struct reg_info {
+> > -	char *name;
+> > -	u32 offset;
+> > -	u32 val;
+> > -};
+> > -
+> >  struct gchan {
+> >  	struct virt_dma_chan vc;
+> >  	u32 chid;
+> > -- 
+> > 2.45.0
+> > 
 -- 
-2.39.2
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
