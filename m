@@ -1,82 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-19926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E13018C72A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 10:18:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BFE998C7317
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 10:43:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C3722822D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 08:18:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A2AD28116B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 08:43:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 809856BFBF;
-	Thu, 16 May 2024 08:18:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PqbpoqkD"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4D291420BB;
+	Thu, 16 May 2024 08:43:14 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026164501A;
-	Thu, 16 May 2024 08:18:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA776BFBF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2024 08:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715847506; cv=none; b=ZqIl/GLDbZcQq6CBnsd+vdbwbIN5O9y+ZsQC90dg7K8y2I+neq3pPhz8F5mGwYOpxNFZ/RQaeo4lGixrTuBQYNTBTALAO4LfVhHDCVzf1N3V+tus53Z/bu3ML2aDdCo74rakGVH33fEi0eCPob++KaZR2WOCJu12M3/v3MDILQg=
+	t=1715848994; cv=none; b=PPl77KiHhQwR3u5R5p66q9AeKKsaQBUzjTpaH9NWXU1petXBE96dRbqp2DKpEVyA1OG2NnIl90yo132yCkmVAk/WvPeGosw6sfkG25Fi3EormdjUAY6cohudsyCzjhxote3BE8psPPj8r7uu4pGsOJWC8lmddDDb8ZrYqz3wwes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715847506; c=relaxed/simple;
-	bh=lRZJLUFdmnnOAfzyTHmvoTllMU6+DNYz5tYYHNzXAjI=;
+	s=arc-20240116; t=1715848994; c=relaxed/simple;
+	bh=SKBv4dOuu0huRA43K4sqgTTS3dYHR3D3+/KsrfKkeUQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eRdwsA0MUf/qQ52HgxJTJ8Y2t8jWJCdHKWnURZFejaPyqXl+6tPhbKDQXWMPKFpbrU9mZI7mMN0vZA/BdbdElWzM/FV7vhaoR3RMGpuSRKK1Nl28o9o49dM2ffStaJQVikg+nbN8utkBjMQfZLSFiMM1jRP6ClOG7n0MqNsOYl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PqbpoqkD; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715847505; x=1747383505;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=lRZJLUFdmnnOAfzyTHmvoTllMU6+DNYz5tYYHNzXAjI=;
-  b=PqbpoqkDVY8id8RgIRY4EI6ggIw0MbbxkiAstghxFxDv1fE4yMaWClDX
-   FxsCpsXFrjb7GVj+JcRg4td4/MDwVqkKtIot/8a/SkbGoAZR2OovH6VCL
-   23UpVkXpsTQpM8BDV9+UpI3f8wNzlpw7UnJLUb+MsNH0MnjJvWXGQGGH7
-   eCYWGMC+3ECymp4Mzx/bnjw1WQ/2XhL2QjiDXGNk+lvknRDa6765VG3Kp
-   jUbjLlYgc30+DydgtYsBqJvOEExGLS9SEFrV1CUjoqxvJCv14T2WrZkDd
-   TGOcE+8Y1HHTCZYm/R0SjZ1ygmrxQ8rDSuQfc4BU7OF4L0qiXwsn0rVWH
-   Q==;
-X-CSE-ConnectionGUID: PsO2DpIvTjOpZCM1qQG4fQ==
-X-CSE-MsgGUID: 1LADsLLKShWvXA9VbAB5Lg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="23080177"
-X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; 
-   d="scan'208";a="23080177"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 May 2024 01:18:24 -0700
-X-CSE-ConnectionGUID: cQm4yrICR4SvCvL9OgNUZw==
-X-CSE-MsgGUID: A6JwECsMRLix6jCRDznfLw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; 
-   d="scan'208";a="36136414"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orviesa005.jf.intel.com with SMTP; 16 May 2024 01:18:21 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 16 May 2024 11:18:20 +0300
-Date: Thu, 16 May 2024 11:18:20 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 7/8] usb: typec: ucsi: glink: merge pmic_glink_altmode
- driver
-Message-ID: <ZkXBTCfMCkl07/sl@kuha.fi.intel.com>
-References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
- <20240416-ucsi-glink-altmode-v1-7-890db00877ac@linaro.org>
- <ZiZC/l9nOmzWx+j6@kuha.fi.intel.com>
- <46fktwtp3xers6tcpov3qo4zswptvajewsdltm45zbz2kmmpzp@cthu6ylttup3>
- <ZiZ8El4779l0W1Ig@kuha.fi.intel.com>
- <CAA8EJppMKFSbe-EZLELy+dnd4BZeg24crotH95hpCwcvoEbw5Q@mail.gmail.com>
- <f2bqgtoll3j6pseg6hzvwtyqiwfwcaepuhcnq4nrshux2bnluh@rte67mi7zcey>
+	 Content-Type:Content-Disposition:In-Reply-To; b=U7u+CQphc8SQMYXknR8PjiKg2/oXEBfTmn/kUHrAB6d7iA4Jabfw6HhGIxefzBB/CofTToI/yj+IDBJ8La+CXvbJOtJUya4r/xKIgx8JjOhAtzQvT+grh3vEPix2CU8XBl4+CtnXb936xqV8yO/Aqb6nSCuF6X3furhs/ZL+WSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 070501F53E;
+	Thu, 16 May 2024 10:43:01 +0200 (CEST)
+Date: Thu, 16 May 2024 10:43:00 +0200
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	MSM <linux-arm-msm@vger.kernel.org>, freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>, 
+	Bryan O Donoghue <bryan.odonoghue@linaro.org>, Luca Weiss <luca.weiss@fairphone.com>, 
+	Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: Re: [PATCH] drm/msm: log iommu init failure
+Message-ID: <dkmtnizbuyswyvocczjfgmhsuedawliabycig4urw42a65hu3j@jglxzumuzamd>
+References: <64ec16b9-c680-408c-b547-5debae2f7f87@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,39 +56,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f2bqgtoll3j6pseg6hzvwtyqiwfwcaepuhcnq4nrshux2bnluh@rte67mi7zcey>
+In-Reply-To: <64ec16b9-c680-408c-b547-5debae2f7f87@freebox.fr>
 
-Hi Dmitry,
-
-On Wed, May 15, 2024 at 06:01:48PM +0300, Dmitry Baryshkov wrote:
-> > I have played with the DP AltMode driver. I got it somewhat working,
-> > but I think I'm facing a control issue.
-> > Basically, the altmode driver wants to control pin assignment on its
-> > own. It works with the software TCPM, as we control it.
-> > It works with the normal UCSI, because it still can configure pin
-> > config. However with PMIC GLINK implementation there is no way to
-> > control pin assignment from the Linux side. The firmware does that for
-> > us.
-> > What would be the recommended way to handle it? Is it okay to override
-> > status_update to return just the selected pin config? Or is there any
-> > other (better) way to handle such an issue?
+On 2024-05-15 17:09:02, Marc Gonzalez wrote:
+> When create_address_space() fails (e.g. when smmu node is disabled)
+> msm_gpu_init() silently fails:
 > 
-> Any suggestions or further comments? Is it better to extend the
-> DisplayPort Altmode driver with the 'forced' transitions? Or it would be
-> fine to just register a partner device, emulate the userspace events,
-> but completely ignore the existing displayport driver?
+> msm_dpu c901000.display-controller: failed to load adreno gpu
+> msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops a3xx_ops): -19
+> 
+> Log create_address_space() failure.
+> 
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 
-I may have to look at the DP alt mode with the TI host interface
-(drivers/usb/typec/tipd/) at some point, because on some systems the
-firmware does not seem to automatically enter the mode, but the forced
-transition option would probable work there as well...
+Thanks!
 
-I would prefer that we don't ignore the DP alt mode driver, but just
-to be clear, I'm also not completely against it if you feel that would
-be the most reasonable option in your case.
+Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-br,
+And, after checking the below:
 
--- 
-heikki
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+> ---
+>  drivers/gpu/drm/msm/msm_gpu.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+> index 655002b21b0d5..f1e692866cc38 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.c
+> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+> @@ -941,6 +941,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>  		DRM_DEV_INFO(drm->dev, "%s: no IOMMU, fallback to VRAM carveout!\n", name);
+>  	else if (IS_ERR(gpu->aspace)) {
+>  		ret = PTR_ERR(gpu->aspace);
+> +		DRM_DEV_ERROR(drm->dev, "could not create address space: %d\n", ret);
+
+Maybe this wasn't done before because this also includes `-EPROBE_DEFER`, so you
+might want to wrap this in
+
+	if (ret != -EPROBE_DEFER)
+		DRM_DEV_ERROR...
+
+But then dev_err_probe() was built specifically to be less verbose about this
+(and track defer reasons).  While this is an init and not probe function, it's
+called from struct component_ops->bind where it should be okay to call that,
+as long as you have access to the component `struct device*` and not its master
+(IIRC).
+
+- Marijn
+
+>  		goto fail;
+>  	}
+>  
+> -- 
+> 2.34.1
+> 
 
