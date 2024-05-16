@@ -1,274 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-19942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 044618C78AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 16:50:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25A278C793B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 17:22:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 975AD1F229CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 14:50:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D423D28933C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 15:22:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 313B414B961;
-	Thu, 16 May 2024 14:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 978D314A097;
+	Thu, 16 May 2024 15:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h+rLoDzS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wu2GE1lS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D665149001;
-	Thu, 16 May 2024 14:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC52D1E491
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2024 15:21:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715871036; cv=none; b=t0kFxca4LyJh2lHL0Tb9R+Ly7882ba8lF+TZvTKnUTuLhkVnC69vBipRvKY9KMQGrNoeUtQ9Laof1nsTvBJ/1cS++NAea7nsyLx5RG6Uetlf8OyTMihu0JNHSV1LeZBkmqoHGHBUKVTRAblo6wrkj9AXB3/+dx+qd1KDnqOrWzc=
+	t=1715872903; cv=none; b=L1QAlwL+8nWSgysWuVCw82g4GaRoeswVz/w9EfdX8k47Xa++w9ISTUICTJtojsPwI0LsMT1EBrcuksmDSHtyQSBhv9Az4lb0tC6A6EvLedqtPRjYUjW27aF2I2CU+5uCirA8n5NUKNCAIlU/rO1lskAE7gaXp6iIFD8Ee5EqYfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715871036; c=relaxed/simple;
-	bh=cIuRZMCXx6tga+KjwTBuSD33NoycbKHK8ATJUv4vGHM=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eh6ECOIv6lWfZVji1ywU/hvDvL22/L73HBGS1OBfEKWGeVABQuXSSzH7FTaUhFrGdj6tyc0uTJe7ziQF+Vup0VvsM398nxSDlpOFrNdslAL+QLo/1W9nKiSCrcgO/P1MaGkl18anSFb1FYB8M2nuvgjs28PKinWlmsn/aewGoYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h+rLoDzS; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44G8wWer027342;
-	Thu, 16 May 2024 14:50:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=7LC7lcmJyov9Qi/efmiSV
-	LbqbpOslruMoQMnmaayvGc=; b=h+rLoDzSfJm971uPBV9guJzeWth+r4jJSs6YE
-	AGpwRWaU3+p1i5/2HMZpFIwMdJqR5xYeM6T4RpP4ExU8InVlaM1YZGYUh90LxN7e
-	SnAoFn2mUDRRPH7x3gtdfmRLxL9kH/yVTvf8++Jv6DRHzfdnsYOHhVvKsHpchvOA
-	N7ARMaSb85e6Lyy8wadVJ3/hToco06bJ5J9852t6d2nUFHzV6Gw5lDNy1KOW0smj
-	FZvh2l3wtqmAizGi3LCcbiGLksbnm8c8S+6ZX+7UeWxmbslgwenYP/sI+YP+ONJ8
-	OAd07XBpjg9M6wuFWXtHlHiuiuHm/O3CFZCRWgHNWM8gkXEjg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y42kvxhvk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 May 2024 14:50:16 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44GEoErJ026535
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 May 2024 14:50:14 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 16 May 2024 07:50:09 -0700
-Date: Thu, 16 May 2024 20:20:05 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Andrew Halaney <ahalaney@redhat.com>, Will Deacon <will@kernel.org>
-CC: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm/adreno: De-spaghettify the use of memory barriers
-Message-ID: <20240516145005.gdksmvxp35m45ifh@hu-akhilpo-hyd.qualcomm.com>
-References: <20240508-topic-adreno-v1-1-1babd05c119d@linaro.org>
- <20240514183849.6lpyplifero5u35r@hu-akhilpo-hyd.qualcomm.com>
- <ae4a77wt3kc73ejshptldqx6ugzrqguyq7etbbu54y4avhbdlt@qyt4r6gma7ev>
+	s=arc-20240116; t=1715872903; c=relaxed/simple;
+	bh=InSuLl604U89RQPunJzThhSIkiSjc2LZbihM8ltX+Ik=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kofw+qA4L0IqJr8mjkLxiX2Gb0+Mn1Dgh4IcXwmTkbvzPLftRrXdsPFz7283vXsB7blAxnM3vPojpHZaWmRR4M1okSfwYp5hh5911oRMgcSC0OM1e3c7n4JhDM5VCQiU9+KfePjdbabetNbFYbTe14RsM+FKWRhV0v+QzDk8aVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wu2GE1lS; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-572af0b12b8so3554490a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2024 08:21:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1715872900; x=1716477700; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SaHRH+mYLcZvnEqoaCOmbmlFeAJ9hDKTr835kz6kRpI=;
+        b=Wu2GE1lS0NExT8uKxt5ArrjgMbxnRfIHwaxJalAmN03znDR0Jv3RI46UMFAeFDzv8A
+         ZoxrfM0+k++sQClQst1kcLkLZRqCe6MCXW87Edf7n6+FKvie+BuTjXxPj+eW6MdAlfVw
+         +BUfEv01P9YF5WEh250gLg04Fr0vneVaEt8X4l+yhLc4McwbrXIt44g8nEGQryweMv3m
+         XaAIZpTPbYvTSpoVYd3D0IW9FLWuyydOEaxzHe+3SSrrNHRJfI1ED6jXIMgrI8aPu1XU
+         IGRGBZH9TKK6q8EHUva5NB9MLvNCRcem1bpDnm2k3CUWNyK2gTYnxINGAYstk3E6Z5zy
+         /EHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715872900; x=1716477700;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SaHRH+mYLcZvnEqoaCOmbmlFeAJ9hDKTr835kz6kRpI=;
+        b=f5MOMHp14uz7ZmP2ppkWWAWLATvVTG5w+pB8aZLLsSBsOTlLdSNKGVjZo7p4NTY9ZR
+         aZOrkI4yDsdJAlYhYhwQioBE+3MxTY6JomQhKS34r1KdsgM5VxJxq00z7aG8OjB27/I/
+         ai6Jcw6OyvR1WJE971EJc0F2GPgTbJ5d4vwLMuncV6pqQ2oZ3CCd9cOEJCieeQOF/Z/A
+         X0CYNEm1i5fSE0cq+6/R01z6S13GU8C+fDRyKR7ikI3hTd0IKZ6Vl0wbq8KujjVZ54vU
+         Znb/ZllSkGW0aomPBbQGmatXo5eB/hzqBRzUMaGEyPO4W4/BXbV2YHpZySNuEJGqPL8N
+         paWg==
+X-Forwarded-Encrypted: i=1; AJvYcCXu5/akMb0gZovwCK3TRA8+9mp4qPckv6HFqSzAlzfORDJeN8ts8kT4hCv1w0I69+lLeoBZH0Ybt4yvT+CyX12c+oH5900QSaw58yJhNA==
+X-Gm-Message-State: AOJu0YxTKaRImjVNP915LFQeqD5xeHhyNDJ9Ch2vTBezibXn0jaFsxEK
+	oDiGSj4DYifh/DMjcFdtKjSFu1jYW3J2Cphv0u5mxVUCteQgbJWnhwvnUSOb7jk=
+X-Google-Smtp-Source: AGHT+IGyS3tFi38rfpt7SHPfYJVr8YnCDDrBAJUgEbq8J3Hk1n0bx1UegnpKYmvY8t4uv6WjIovc8w==
+X-Received: by 2002:a50:d653:0:b0:572:7d75:a715 with SMTP id 4fb4d7f45d1cf-5734d6b4120mr12519162a12.28.1715872900061;
+        Thu, 16 May 2024 08:21:40 -0700 (PDT)
+Received: from zoltan.localdomain ([149.14.240.163])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5733bfe2dd1sm10621482a12.58.2024.05.16.08.21.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 May 2024 08:21:39 -0700 (PDT)
+From: Alex Elder <elder@linaro.org>
+To: stable@vger.kernel.org
+Cc: Rob Herring <robh@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH 5.4.x] arm64: dts: qcom: Fix 'interrupt-map' parent address cells
+Date: Thu, 16 May 2024 10:21:36 -0500
+Message-Id: <20240516152136.276884-1-elder@linaro.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ae4a77wt3kc73ejshptldqx6ugzrqguyq7etbbu54y4avhbdlt@qyt4r6gma7ev>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HCAGNcshZ20vdCVu8DRxPqG465O0ngvi
-X-Proofpoint-ORIG-GUID: HCAGNcshZ20vdCVu8DRxPqG465O0ngvi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-16_07,2024-05-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- mlxlogscore=966 phishscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0 impostorscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405160104
+Content-Transfer-Encoding: 8bit
 
-On Thu, May 16, 2024 at 08:15:34AM -0500, Andrew Halaney wrote:
-> On Wed, May 15, 2024 at 12:08:49AM GMT, Akhil P Oommen wrote:
-> > On Wed, May 08, 2024 at 07:46:31PM +0200, Konrad Dybcio wrote:
-> > > Memory barriers help ensure instruction ordering, NOT time and order
-> > > of actual write arrival at other observers (e.g. memory-mapped IP).
-> > > On architectures employing weak memory ordering, the latter can be a
-> > > giant pain point, and it has been as part of this driver.
-> > > 
-> > > Moreover, the gpu_/gmu_ accessors already use non-relaxed versions of
-> > > readl/writel, which include r/w (respectively) barriers.
-> > > 
-> > > Replace the barriers with a readback that ensures the previous writes
-> > > have exited the write buffer (as the CPU must flush the write to the
-> > > register it's trying to read back) and subsequently remove the hack
-> > > introduced in commit b77532803d11 ("drm/msm/a6xx: Poll for GBIF unhalt
-> > > status in hw_init").
-> 
-> For what its worth, I've been eyeing (but haven't tested) sending some
-> patches to clean up dsi_phy_write_udelay/ndelay(). There's no ordering
-> guarantee between a writel() and a delay(), so the expected "write then
-> delay" sequence might not be happening.. you need to write, read, delay.
-> 
-> memory-barriers.txt:
-> 
-> 	5. A readX() by a CPU thread from the peripheral will complete before
-> 	   any subsequent delay() loop can begin execution on the same thread.
-> 	   This ensures that two MMIO register writes by the CPU to a peripheral
-> 	   will arrive at least 1us apart if the first write is immediately read
-> 	   back with readX() and udelay(1) is called prior to the second
-> 	   writeX():
-> 
-> 		writel(42, DEVICE_REGISTER_0); // Arrives at the device...
-> 		readl(DEVICE_REGISTER_0);
-> 		udelay(1);
-> 		writel(42, DEVICE_REGISTER_1); // ...at least 1us before this.
+From: Rob Herring <robh@kernel.org>
 
-Yes, udelay orders only with readl(). I saw a patch from Will Deacon
-which fixes this for arm64 few years back:
-https://lore.kernel.org/all/1543251228-30001-1-git-send-email-will.deacon@arm.com/T/
+commit 0ac10b291bee84b00bf9fb2afda444e77e7f88f4 upstream.
 
-But this is needed only when you write io and do cpuside wait , not when
-you poll io to check status.
+The 'interrupt-map' in several QCom SoCs is malformed. The '#address-cells'
+size of the parent interrupt controller (the GIC) is not accounted for.
 
-> 
-> > > 
-> > > Fixes: b77532803d11 ("drm/msm/a6xx: Poll for GBIF unhalt status in hw_init")
-> > > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  5 ++---
-> > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 14 ++++----------
-> > >  2 files changed, 6 insertions(+), 13 deletions(-)
-> > 
-> > I prefer this version compared to the v2. A helper routine is
-> > unnecessary here because:
-> > 1. there are very few scenarios where we have to read back the same
-> > register.
-> > 2. we may accidently readback a write only register.
-> > 
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > > index 0e3dfd4c2bc8..4135a53b55a7 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > > @@ -466,9 +466,8 @@ static int a6xx_rpmh_start(struct a6xx_gmu *gmu)
-> > >  	int ret;
-> > >  	u32 val;
-> > >  
-> > > -	gmu_write(gmu, REG_A6XX_GMU_RSCC_CONTROL_REQ, 1 << 1);
-> > > -	/* Wait for the register to finish posting */
-> > > -	wmb();
-> > > +	gmu_write(gmu, REG_A6XX_GMU_RSCC_CONTROL_REQ, BIT(1));
-> > > +	gmu_read(gmu, REG_A6XX_GMU_RSCC_CONTROL_REQ);
-> > 
-> > This is unnecessary because we are polling on a register on the same port below. But I think we
-> > can replace "wmb()" above with "mb()" to avoid reordering between read
-> > and write IO instructions.
-> 
-> If I understand correctly, you don't need any memory barrier.
-> writel()/readl()'s are ordered to the same endpoint. That goes for all
-> the reordering/barrier comments mentioned below too.
-> 
-> device-io.rst:
-> 
->     The read and write functions are defined to be ordered. That is the
->     compiler is not permitted to reorder the I/O sequence. When the ordering
->     can be compiler optimised, you can use __readb() and friends to
->     indicate the relaxed ordering. Use this with care.
-> 
-> memory-barriers.txt:
-> 
->      (*) readX(), writeX():
-> 
-> 	    The readX() and writeX() MMIO accessors take a pointer to the
-> 	    peripheral being accessed as an __iomem * parameter. For pointers
-> 	    mapped with the default I/O attributes (e.g. those returned by
-> 	    ioremap()), the ordering guarantees are as follows:
-> 
-> 	    1. All readX() and writeX() accesses to the same peripheral are ordered
-> 	       with respect to each other. This ensures that MMIO register accesses
-> 	       by the same CPU thread to a particular device will arrive in program
-> 	       order.
-> 
+Cc: <stable@vger.kernel.org>		# v5.4
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20210928192210.1842377-1-robh@kernel.org
+Signed-off-by: Alex Elder <elder@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-In arm64, a writel followed by readl translates to roughly the following
-sequence: dmb_wmb(), __raw_writel(), __raw_readl(), dmb_rmb(). I am not
-sure what is stopping compiler from reordering  __raw_writel() and __raw_readl()
-above? I am assuming iomem cookie is ignored during compilation.
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 9cb7163c5714c..5c653ab907463 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -872,10 +872,10 @@
+ 			interrupts = <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-			interrupt-map =	<0 0 0 1 &intc 0 135 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 2 &intc 0 136 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 3 &intc 0 138 IRQ_TYPE_LEVEL_HIGH>,
+-					<0 0 0 4 &intc 0 139 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-map =	<0 0 0 1 &intc 0 0 135 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 2 &intc 0 0 136 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 3 &intc 0 0 138 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
+ 
+ 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
+ 				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+-- 
+2.39.2
 
-Added Will to this thread if he can throw some light on this.
-
--Akhil
-
-> 
-> > 
-> > >  
-> > >  	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_RSCC_CONTROL_ACK, val,
-> > >  		val & (1 << 1), 100, 10000);
-> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > index 973872ad0474..0acbc38b8e70 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > @@ -1713,22 +1713,16 @@ static int hw_init(struct msm_gpu *gpu)
-> > >  	}
-> > >  
-> > >  	/* Clear GBIF halt in case GX domain was not collapsed */
-> > > +	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0);
-> > 
-> > We need a full barrier here to avoid reordering. Also, lets add a
-> > comment about why we are doing this odd looking sequence.
-> > 
-> > > +	gpu_read(gpu, REG_A6XX_GBIF_HALT);
-> > >  	if (adreno_is_a619_holi(adreno_gpu)) {
-> > > -		gpu_write(gpu, REG_A6XX_GBIF_HALT, 0);
-> > >  		gpu_write(gpu, REG_A6XX_RBBM_GPR0_CNTL, 0);
-> > > -		/* Let's make extra sure that the GPU can access the memory.. */
-> > > -		mb();
-> > 
-> > We need a full barrier here.
-> > 
-> > > +		gpu_read(gpu, REG_A6XX_RBBM_GPR0_CNTL);
-> > >  	} else if (a6xx_has_gbif(adreno_gpu)) {
-> > > -		gpu_write(gpu, REG_A6XX_GBIF_HALT, 0);
-> > >  		gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 0);
-> > > -		/* Let's make extra sure that the GPU can access the memory.. */
-> > > -		mb();
-> > 
-> > We need a full barrier here.
-> > 
-> > > +		gpu_read(gpu, REG_A6XX_RBBM_GBIF_HALT);
-> > >  	}
-> > >  
-> > > -	/* Some GPUs are stubborn and take their sweet time to unhalt GBIF! */
-> > > -	if (adreno_is_a7xx(adreno_gpu) && a6xx_has_gbif(adreno_gpu))
-> > > -		spin_until(!gpu_read(gpu, REG_A6XX_GBIF_HALT_ACK));
-> > > -
-> > 
-> > Why is this removed?
-> > 
-> > -Akhil
-> > 
-> > >  	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_CNTL, 0);
-> > >  
-> > >  	if (adreno_is_a619_holi(adreno_gpu))
-> > > 
-> > > ---
-> > > base-commit: 93a39e4766083050ca0ecd6a3548093a3b9eb60c
-> > > change-id: 20240508-topic-adreno-a2d199cd4152
-> > > 
-> > > Best regards,
-> > > -- 
-> > > Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > 
-> > 
-> 
 
