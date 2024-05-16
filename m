@@ -1,54 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-19906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FE808C7079
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 04:57:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6292A8C7072
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 04:57:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2B0F9B22610
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 02:57:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D7A21C21115
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 02:57:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C52F21A2C33;
-	Thu, 16 May 2024 02:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B5683FEF;
+	Thu, 16 May 2024 02:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ReJ90PEl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ONGScRrq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61203522E;
-	Thu, 16 May 2024 02:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0551C14;
+	Thu, 16 May 2024 02:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715828235; cv=none; b=dwlt58DFftKw7zMLq1wozeKY90xChEtTXGPv6ceEki9M5ntxj1lhiFQqZMwY3IEYNaPnmvaETFTT6YlbWw7Aw0xnXjRyGn32Az1MB7XmtMhvGhk8POGGi0ofep+d004uCYJAWfNLruZhOHS78zx1XlFMVlZpZWOgPD43UcszEfQ=
+	t=1715828233; cv=none; b=JkW8RUgZM8K6KMevRgHbX/LOr8Au6mQdma7ZEvgQxhJbU9ato6Mzk2iBSN7kZhCmgdOhCZwGC7Y7CWBvYdIFSKTGUz3x/AnTi6RxytiQuozfe6yn6phQKMHagZBklgGwj8xxRoYCRv40YC/1smhKK6+40kCJQBZ3DVydPmlgaKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715828235; c=relaxed/simple;
-	bh=GziP5EuxONdYvySF6zDKZ9ctaWsBMTU2rlgzt665eRg=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cTRNSP6i3ifozcyvTYmliF2tzkwK7iH0P2+2pl32cbaZO9SRPzrvfbHaV+/5leGYAeYnjJzd08YXJypEKxGOFThOjUQqLz6pGeRTBlArMHRFUc0rxu5VN8GNs+uyQRD1nAkFU2qdf6BOMBFHAF5pVp/Y1JoX6f5QV/VkAGFnmdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ReJ90PEl; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1715828233; c=relaxed/simple;
+	bh=huXl8QaDVgfgg8UoVU6HmZ3Njzbt9oBjDywQdhWwJKM=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PNCNOY9U0hFj/9br3m08+Uzxp9idu9wu8/FGiOC4npWXprkjcOglwVfEi3ozdzaFeCmAD9qOB4fNRgYVBIhV7MoD29e729sVsau7Qy5ZHg+O0UEy/sGYHFNFLUYpixY5bv5scFIXMbXecdkUdX16PY2302QRZtd1vK6f16aB58g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ONGScRrq; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44FLC8QM024800;
-	Thu, 16 May 2024 02:56:57 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44FL4cDS021777;
+	Thu, 16 May 2024 02:56:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding:content-type; s=qcppdkim1; bh=KPSTHVO
-	hJbfke8X0OKBwneEFhJUY7shxJp8KynfdjUI=; b=ReJ90PEl0k+7Ub4iYp9ADYt
-	HfKGcH6YWIg/trFkrq0dHkoYqDJqOjZ5LwBM/pxg1e8cOEfbCF6lej22M4Y6C1N/
-	8+vskoSIo2l2hXn4sykix4KbQXHXXM4NHr1x+ZPvuX7CejgiJ9TEgC5f9SE61gSR
-	chCeRqDrfD7w0OCOfpbD9k4xoHyofHFltDe8xSl4OpuglpgzsPdu9QWXNDrln62M
-	Kco4z1BiAqZA32/1dyEuGSqRdu2buT2vzssFjX+zPH2y3nQmKwYWOpZn9eqQKP7x
-	8TS1X7S3zIEJyVZyC1lzg3mnDTMFaffX1phuWGLLd7FZiqHYQBMUvVGrpgqmL7A=
-	=
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y49gdv0vr-1
+	from:to:cc:subject:date:message-id:in-reply-to:references
+	:mime-version:content-transfer-encoding:content-type; s=
+	qcppdkim1; bh=Fj91bppyWaq3zj1aYGpnewKQyG3354S9rF1Sp504wwQ=; b=ON
+	GScRrq8icX5ucwwEZSmWPvLlJ3cMNfQbt69B1BAhs0kVHRGpIZk0RJkQi7QxcGEJ
+	okZLzsFxwR3tH/vtZGJ1y5aCih0IcEp1CTpKjm+cOgm1wzpT9EuahG2BcKdL/qyt
+	DUrKcLcnAMOKput73ZtbPw4vzhcj7FEkDAaRaz/dO/k4OkMYRuNP5Kkbs3aLCNHl
+	UDxeZ6+gqWhNMJkHOfCDfHKWIQFkj6BOwtrru9p0vXIfkpztj/R16R3lLI9pDagd
+	dKSnaCxmdZKO0rqpoRxGr/B01HjtedQVoTWM2i1Le/G3KHLTryjWfGenlR+l6LtG
+	JZzpXQolK8b7H1tjnwuw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y45vbckmt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 May 2024 02:56:57 +0000 (GMT)
+	Thu, 16 May 2024 02:56:58 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44G2uuVb001680
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44G2uubf009779
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Thu, 16 May 2024 02:56:56 GMT
 Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
@@ -75,10 +76,12 @@ CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
         Tao Zhang
 	<quic_taozha@quicinc.com>,
         songchai <quic_songchai@quicinc.com>
-Subject: [PATCH v1 0/3] coresight: Add reserve trace id support
-Date: Wed, 15 May 2024 19:56:39 -0700
-Message-ID: <20240516025644.4383-1-quic_jinlmao@quicinc.com>
+Subject: [PATCH v1 1/3] dt-bindings: arm: Add trace-id for coresight dummy source
+Date: Wed, 15 May 2024 19:56:40 -0700
+Message-ID: <20240516025644.4383-2-quic_jinlmao@quicinc.com>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240516025644.4383-1-quic_jinlmao@quicinc.com>
+References: <20240516025644.4383-1-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,38 +94,41 @@ X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZR5JZ_7ZG0E4tv2M234P1Vu7hXVMu69p
-X-Proofpoint-ORIG-GUID: ZR5JZ_7ZG0E4tv2M234P1Vu7hXVMu69p
+X-Proofpoint-GUID: 5WimG0IQ5ad59mMDZMP5KnPtlMmKIUd8
+X-Proofpoint-ORIG-GUID: 5WimG0IQ5ad59mMDZMP5KnPtlMmKIUd8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
  definitions=2024-05-16_01,2024-05-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=828
- impostorscore=0 clxscore=1011 priorityscore=1501 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 mlxscore=0 suspectscore=0 spamscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=925 phishscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405010000 definitions=main-2405160019
 
-Some HW has static trace id which cannot be changed via software programming.
-For this case, configure the trace id in device tree with
-"trace-id = <xxx>", and call coresight_trace_id_reserve_system_id in
-device probe function. The id will be reserved for the HW all the time
-if the device is probed.
+Add trace-id for static id support to coresight dummy source.
 
-Mao Jinlong (3):
-  dt-bindings: arm: Add trace-id for coresight dummy source
-  coresight: Add reserve trace id support
-  coresight: dummy: Add reserve atid support for dummy source
+Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+---
+ .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
- .../sysfs-bus-coresight-devices-dummy-source  | 15 +++++
- .../arm/arm,coresight-dummy-source.yaml       |  6 ++
- drivers/hwtracing/coresight/coresight-dummy.c | 56 +++++++++++++++++--
- .../hwtracing/coresight/coresight-platform.c  | 26 +++++++++
- .../hwtracing/coresight/coresight-trace-id.c  | 24 ++++++++
- .../hwtracing/coresight/coresight-trace-id.h  | 11 ++++
- include/linux/coresight.h                     |  1 +
- 7 files changed, 135 insertions(+), 4 deletions(-)
- create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-
+diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+index 6745b4cc8f1c..9adf34ea450e 100644
+--- a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
++++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+@@ -38,6 +38,12 @@ properties:
+     enum:
+       - arm,coresight-dummy-source
+ 
++  trace-id:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description:
++      If dummy source needs static id support, use this to set trace id.
++      The range is 1 to 127.
++
+   out-ports:
+     $ref: /schemas/graph.yaml#/properties/ports
+ 
 -- 
 2.41.0
 
