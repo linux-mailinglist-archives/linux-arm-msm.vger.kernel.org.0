@@ -1,40 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-19938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3BAA8C77D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 15:41:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFDC18C77FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 15:56:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 76B551F22B4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 13:41:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63B30284F61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 13:56:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4329146A72;
-	Thu, 16 May 2024 13:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D307147C6E;
+	Thu, 16 May 2024 13:56:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8725928680;
-	Thu, 16 May 2024 13:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B6F34206C;
+	Thu, 16 May 2024 13:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715866875; cv=none; b=oJoxDnswTOQb6O/EtNOOxH3KDgRPrgeyIrRuNYthf3Tww3DPt2MfTe2N2PehvZZ+gAKQdZZmaHp179vhE7ZY748I3WbA3lq05n1KO9l2GCb2PZStNtz7jZUOoZTCszwsVKHzICmUDBx1sgpHndOyU6BWouWOBISk371VD6EaaXc=
+	t=1715867787; cv=none; b=asNcqzG3+OboJaHZg/tiWFFGtdV9VP90qI/AVo3V1VMLZwYTzoGd+uwZ0mdu1kqQXo424sMWkmSZXABSfrsKLWn7g4Bc1uKj1HOTX9H65lHeFuespm3uQg5rfWJfoa9oDgkLnXXDmotM45UMIKpe8YOK5YWbYBabDXap7bP5CNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715866875; c=relaxed/simple;
-	bh=VPm12psuaZndL/wP6JfnMY2aRs+EzAwdiDQqEIcw2lc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ONFSreWFSTkUYmfqtIY4TXV2Yys+X0R8CYzZb9q1iyncIDv6HNj3zngxYYXk4WQQ5WU1KbROa4LTa9RWHgMDnAGoEUAKGB3KSFwXSF+vXHQtaKq+URNseiIBAuWT2VCgBFkdkhzQuqAR5URz4BH9ZLZ4t011CMMARyS1J/6HqEw=
+	s=arc-20240116; t=1715867787; c=relaxed/simple;
+	bh=ufVV9p+KR5KWRUPFyPw4/PLj0QNqQJpk5Penf19fI4E=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=KSIi/8BkNDsuWh5rMnnuQ/szgxX42CWqI5eIRIsET2TVuOqCAhtEadBSBZFCzRPCHqGe7XZi+o0q57CDoYJ9Qjwu/i/knA0/RruV1OhJHeHcBglZpdh/Z9OyaTHYv/yGGjITY2LQP82erYgf/RtGr610ek2eGXMkTroVyo4EUpk=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2629EDA7;
-	Thu, 16 May 2024 06:41:37 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 82BEDDA7;
+	Thu, 16 May 2024 06:56:48 -0700 (PDT)
 Received: from [10.91.2.16] (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7F2893F7A6;
-	Thu, 16 May 2024 06:41:10 -0700 (PDT)
-Message-ID: <8f1814fe-7ae5-4c32-8645-0df9e607b522@arm.com>
-Date: Thu, 16 May 2024 15:41:14 +0200
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E147D3F7A6;
+	Thu, 16 May 2024 06:56:21 -0700 (PDT)
+Message-ID: <e5469460-209b-44f2-8b3a-1e67539e281b@arm.com>
+Date: Thu, 16 May 2024 15:56:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,8 +42,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] dt-bindings: arm: Add trace-id for coresight dummy
- source
+Subject: Re: [PATCH v1 2/3] coresight: Add reserve trace id support
+From: James Clark <james.clark@arm.com>
 To: Mao Jinlong <quic_jinlmao@quicinc.com>
 Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -56,41 +56,147 @@ Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
  <conor+dt@kernel.org>,
  Alexander Shishkin <alexander.shishkin@linux.intel.com>
 References: <20240516025644.4383-1-quic_jinlmao@quicinc.com>
- <20240516025644.4383-2-quic_jinlmao@quicinc.com>
+ <20240516025644.4383-3-quic_jinlmao@quicinc.com>
+ <34e8c1b9-e351-46c9-abbc-2cef9d0a71db@arm.com>
 Content-Language: en-US
-From: James Clark <james.clark@arm.com>
-In-Reply-To: <20240516025644.4383-2-quic_jinlmao@quicinc.com>
+In-Reply-To: <34e8c1b9-e351-46c9-abbc-2cef9d0a71db@arm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
-On 16/05/2024 04:56, Mao Jinlong wrote:
-> Add trace-id for static id support to coresight dummy source.
+On 16/05/2024 15:23, James Clark wrote:
 > 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
-> index 6745b4cc8f1c..9adf34ea450e 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
-> @@ -38,6 +38,12 @@ properties:
->      enum:
->        - arm,coresight-dummy-source
->  
-> +  trace-id:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description:
-> +      If dummy source needs static id support, use this to set trace id.
-> +      The range is 1 to 127.
-> +
+> On 16/05/2024 04:56, Mao Jinlong wrote:
+>> Dynamic trace id was introduced in coresight subsystem so trace id is
+>> allocated dynamically. However, some hardware ATB source has static trace
+>> id and it cannot be changed via software programming. Reserve trace id
+>> for this kind of hardware source.
+>>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>  .../hwtracing/coresight/coresight-platform.c  | 26 +++++++++++++++++++
+>>  .../hwtracing/coresight/coresight-trace-id.c  | 24 +++++++++++++++++
+>>  .../hwtracing/coresight/coresight-trace-id.h  | 11 ++++++++
+>>  include/linux/coresight.h                     |  1 +
+>>  4 files changed, 62 insertions(+)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+>> index 9d550f5697fa..d3e22a2608df 100644
+>> --- a/drivers/hwtracing/coresight/coresight-platform.c
+>> +++ b/drivers/hwtracing/coresight/coresight-platform.c
+>> @@ -183,6 +183,17 @@ static int of_coresight_get_cpu(struct device *dev)
+>>  	return cpu;
+>>  }
+>>  
+>> +/*
+>> + * of_coresight_get_trace_id: Get the atid of a source device.
+>> + *
+>> + * Returns 0 on success.
+>> + */
+>> +static int of_coresight_get_trace_id(struct device *dev, u32 *id)
+>> +{
+>> +
+>> +	return of_property_read_u32(dev->of_node, "trace-id", id);
+>> +}
+>> +
+>>  /*
+>>   * of_coresight_parse_endpoint : Parse the given output endpoint @ep
+>>   * and fill the connection information in @pdata->out_conns
+>> @@ -315,6 +326,12 @@ static inline int of_coresight_get_cpu(struct device *dev)
+>>  {
+>>  	return -ENODEV;
+>>  }
+>> +
+>> +static int of_coresight_get_trace_id(struct device *dev, u32 *id)
+>> +{
+>> +	return -ENODEV;
+>> +}
+>> +
+>>  #endif
+>>  
+>>  #ifdef CONFIG_ACPI
+>> @@ -794,6 +811,15 @@ int coresight_get_cpu(struct device *dev)
+>>  }
+>>  EXPORT_SYMBOL_GPL(coresight_get_cpu);
+>>  
+>> +int coresight_get_trace_id(struct device *dev, u32 *id)
+>> +{
+>> +	if (!is_of_node(dev->fwnode))
+>> +		return -EINVAL;
+>> +
+>> +	return of_coresight_get_trace_id(dev, id);
 
-The max is CORESIGHT_TRACE_ID_RES_TOP, so this would be 1 to 111 (inclusive)
+Can we somehow make this function name distinct from the trace ID
+functions. It's a bit hard to read that it's called
+coresight_get_trace_id() but it doesn't actually get an ID from the
+existing trace ID stuff.
 
->    out-ports:
->      $ref: /schemas/graph.yaml#/properties/ports
->  
+>> +}
+>> +EXPORT_SYMBOL_GPL(coresight_get_trace_id);
+>> +
+>>  struct coresight_platform_data *
+>>  coresight_get_platform_data(struct device *dev)
+>>  {
+>> diff --git a/drivers/hwtracing/coresight/coresight-trace-id.c b/drivers/hwtracing/coresight/coresight-trace-id.c
+>> index af5b4ef59cea..536a34e9de6f 100644
+>> --- a/drivers/hwtracing/coresight/coresight-trace-id.c
+>> +++ b/drivers/hwtracing/coresight/coresight-trace-id.c
+>> @@ -110,6 +110,24 @@ static int coresight_trace_id_alloc_new_id(struct coresight_trace_id_map *id_map
+>>  	return id;
+>>  }
+>>  
+>> +static int coresight_trace_id_set(int id, struct coresight_trace_id_map *id_map)
+>> +{
+>> +	unsigned long flags;
+>> +
+>> +	spin_lock_irqsave(&id_map_lock, flags);
+>> +
+>> +	if (WARN(!IS_VALID_CS_TRACE_ID(id), "Invalid Trace ID %d\n", id))
+>> +		return -EINVAL;
+>> +	if (WARN(test_bit(id, id_map->used_ids), "ID is already used: %d\n", id))
+>> +		return -EINVAL;
+> 
+> Do these returns not skip unlocking the spinlock?
+> 
+> It might be slightly fewer changes if we update the existing
+> coresight_trace_id_alloc_new_id() to add a new "only_preferred" option.
+> 
+> Then use the existing system id allocator which already handles the lock
+> and unlock properly:
+> 
+>   static int coresight_trace_id_map_get_system_id(struct
+>                              coresight_trace_id_map *id_map, int id,
+> 
+>                              bool only_preferred)
+>   {
+>   ...
+> 	spin_lock_irqsave(&id_map_lock, flags);
+> 	/* prefer odd IDs for system components to avoid legacy CPU IDS
+> 	id = coresight_trace_id_alloc_new_id(id_map, id, true,
+>                                              only_preferred);
+>         spin_unlock_irqrestore(&id_map_lock, flags);
+>   ...
+> 
+> I suppose the end result is the same as your implementation, but it
+> trades making one existing function slightly more complicated instead of
+> adding some new ones.
+
+It's also not that obvious that there is the new reserve function, but
+you still free the ID with the same coresight_trace_id_put_system_id().
+
+Another benefit of adding arguments to the existing functions is that we
+keep just ...get...() and ...put...(). 'Reserve' implies some other new
+mechanism, but it's really a normal get. I think we should do one of
+these two options for the top level API:
+
+#1 (when id != 0, then it's an "only preferred" preferred ID:
+  coresight_trace_id_get_system_id(int id)
+  coresight_trace_id_put_system_id(int id)
+
+#2
+  coresight_trace_id_get_system_id()
+  coresight_trace_id_get_system_id_resrv(int id)
+  coresight_trace_id_put_system_id(int id)
 
