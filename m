@@ -1,114 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-19927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFE998C7317
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 10:43:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9176C8C7335
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 10:50:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A2AD28116B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 08:43:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB230B214EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 08:50:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4D291420BB;
-	Thu, 16 May 2024 08:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F08A142E94;
+	Thu, 16 May 2024 08:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r+VhujnR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA776BFBF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 May 2024 08:43:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.163
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0E32D054;
+	Thu, 16 May 2024 08:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715848994; cv=none; b=PPl77KiHhQwR3u5R5p66q9AeKKsaQBUzjTpaH9NWXU1petXBE96dRbqp2DKpEVyA1OG2NnIl90yo132yCkmVAk/WvPeGosw6sfkG25Fi3EormdjUAY6cohudsyCzjhxote3BE8psPPj8r7uu4pGsOJWC8lmddDDb8ZrYqz3wwes=
+	t=1715849430; cv=none; b=LT1Xgoz1DmyyCb2Nyo0McSyL+2827R8kF5ULN6rqgaeDwtOYNrw54DRrKiuz5ayNAWU9UTwsIPQLA2taAdkLLwc5+N+Krnup0DxoJtFxqDzcg6EoqXTZ02BsCAfg5M5ncYkonkGit4nR9ijts9V0vdkwNexZX2z05ee0QhPzk2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715848994; c=relaxed/simple;
-	bh=SKBv4dOuu0huRA43K4sqgTTS3dYHR3D3+/KsrfKkeUQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U7u+CQphc8SQMYXknR8PjiKg2/oXEBfTmn/kUHrAB6d7iA4Jabfw6HhGIxefzBB/CofTToI/yj+IDBJ8La+CXvbJOtJUya4r/xKIgx8JjOhAtzQvT+grh3vEPix2CU8XBl4+CtnXb936xqV8yO/Aqb6nSCuF6X3furhs/ZL+WSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 070501F53E;
-	Thu, 16 May 2024 10:43:01 +0200 (CEST)
-Date: Thu, 16 May 2024 10:43:00 +0200
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	MSM <linux-arm-msm@vger.kernel.org>, freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>, 
-	Bryan O Donoghue <bryan.odonoghue@linaro.org>, Luca Weiss <luca.weiss@fairphone.com>, 
-	Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: Re: [PATCH] drm/msm: log iommu init failure
-Message-ID: <dkmtnizbuyswyvocczjfgmhsuedawliabycig4urw42a65hu3j@jglxzumuzamd>
-References: <64ec16b9-c680-408c-b547-5debae2f7f87@freebox.fr>
+	s=arc-20240116; t=1715849430; c=relaxed/simple;
+	bh=y5h+7pOsf2LQAzv1rpEJ5kQwncPFKnUuGd6tyQje25k=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=HUV5EcE8VUAd8KwMeNGNSwdeKhnMggcQ/uCL3tax+YRSo6UfH4Xz87KHpH4j5q6ZuVpe2RrRWqQwUz9S+b/kH6UakTzrSZJ26Irsmt4K+ui/tw+Bbck8fEdpRxH12fWl+Q+DNC264cUg7cICo3VNidW+SuyDUo/amDV7Qa9POtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r+VhujnR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A4039C32789;
+	Thu, 16 May 2024 08:50:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715849429;
+	bh=y5h+7pOsf2LQAzv1rpEJ5kQwncPFKnUuGd6tyQje25k=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=r+VhujnRujmUBpv/ObSVS+c1hQ43UOiplppyQ3Mv7lVVG15ED2HXXp8DSLMhlz2/5
+	 yQepyVjcbY4Yxrj3eqUqc91iz+4kt25zhnyOrEXji/LxCfjc5yRNuR+LhXEmGRNttW
+	 5XLtk91iNpG3jyVbWDgldy7z9urqI1ij/Lu1Sjp5ibjovCQUUOb5CMZFrkmYUNA3m/
+	 R4lsyrfc+uiHq7NIHFpQVZ9DVM62Q15bBKsXJVMnRN5CTkC2AQuZLNW4yB11VTTGLk
+	 /ngPjmNo0xqE39LPOrDM0pSY/5vPiVpNRu9bbwG7Y2fWik8s+azxc1VurfTUgXgt+3
+	 0sUZyo0EZJZiw==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 92E73C54BB6;
+	Thu, 16 May 2024 08:50:29 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <64ec16b9-c680-408c-b547-5debae2f7f87@freebox.fr>
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] net: qrtr: ns: Fix module refcnt
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <171584942959.27746.10698605172964484112.git-patchwork-notify@kernel.org>
+Date: Thu, 16 May 2024 08:50:29 +0000
+References: <20240513-fix-qrtr-rmmod-v1-1-312a7cd2d571@quicinc.com>
+In-Reply-To: <20240513-fix-qrtr-rmmod-v1-1-312a7cd2d571@quicinc.com>
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: manivannan.sadhasivam@linaro.org, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ andersson@kernel.org, luca@z3ntu.xyz, mani@kernel.org,
+ linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_jhugo@quicinc.com
 
-On 2024-05-15 17:09:02, Marc Gonzalez wrote:
-> When create_address_space() fails (e.g. when smmu node is disabled)
-> msm_gpu_init() silently fails:
+Hello:
+
+This patch was applied to netdev/net.git (main)
+by David S. Miller <davem@davemloft.net>:
+
+On Mon, 13 May 2024 10:31:46 -0700 you wrote:
+> The qrtr protocol core logic and the qrtr nameservice are combined into
+> a single module. Neither the core logic or nameservice provide much
+> functionality by themselves; combining the two into a single module also
+> prevents any possible issues that may stem from client modules loading
+> inbetween qrtr and the ns.
 > 
-> msm_dpu c901000.display-controller: failed to load adreno gpu
-> msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops a3xx_ops): -19
+> Creating a socket takes two references to the module that owns the
+> socket protocol. Since the ns needs to create the control socket, this
+> creates a scenario where there are always two references to the qrtr
+> module. This prevents the execution of 'rmmod' for qrtr.
 > 
-> Log create_address_space() failure.
-> 
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> [...]
 
-Thanks!
+Here is the summary with links:
+  - net: qrtr: ns: Fix module refcnt
+    https://git.kernel.org/netdev/net/c/fd76e5ccc48f
 
-Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-And, after checking the below:
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-> ---
->  drivers/gpu/drm/msm/msm_gpu.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 655002b21b0d5..f1e692866cc38 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -941,6 +941,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->  		DRM_DEV_INFO(drm->dev, "%s: no IOMMU, fallback to VRAM carveout!\n", name);
->  	else if (IS_ERR(gpu->aspace)) {
->  		ret = PTR_ERR(gpu->aspace);
-> +		DRM_DEV_ERROR(drm->dev, "could not create address space: %d\n", ret);
-
-Maybe this wasn't done before because this also includes `-EPROBE_DEFER`, so you
-might want to wrap this in
-
-	if (ret != -EPROBE_DEFER)
-		DRM_DEV_ERROR...
-
-But then dev_err_probe() was built specifically to be less verbose about this
-(and track defer reasons).  While this is an init and not probe function, it's
-called from struct component_ops->bind where it should be okay to call that,
-as long as you have access to the component `struct device*` and not its master
-(IIRC).
-
-- Marijn
-
->  		goto fail;
->  	}
->  
-> -- 
-> 2.34.1
-> 
 
