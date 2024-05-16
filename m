@@ -1,111 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-19925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 487B68C7272
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 10:07:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E13018C72A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 10:18:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D9B1FB22D90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 08:07:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C3722822D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 May 2024 08:18:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75ACE13119D;
-	Thu, 16 May 2024 08:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 809856BFBF;
+	Thu, 16 May 2024 08:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Udmyx05N"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PqbpoqkD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A124120A;
-	Thu, 16 May 2024 08:06:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026164501A;
+	Thu, 16 May 2024 08:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715846798; cv=none; b=awuKunsgi9IbXNNXisFP5kpgAC5j+hVpzPMsAkK2bAftPLKdUCJ3fcWrZBSRa271qa1vAXBPkgpE0Tz5nP+cZxViRq4K7cYoKtDa2z1koM3jbS9dKrm116n3DfSlRhLGhyN67VNkg5HLHCP72ZUv14W4BFNZvBk8BnyvVKorzxw=
+	t=1715847506; cv=none; b=ZqIl/GLDbZcQq6CBnsd+vdbwbIN5O9y+ZsQC90dg7K8y2I+neq3pPhz8F5mGwYOpxNFZ/RQaeo4lGixrTuBQYNTBTALAO4LfVhHDCVzf1N3V+tus53Z/bu3ML2aDdCo74rakGVH33fEi0eCPob++KaZR2WOCJu12M3/v3MDILQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715846798; c=relaxed/simple;
-	bh=zmrYzsDBzvTZniaVCCeuBZSYiuTRObWwzzeoGzPyFQ4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hGz6Dxsw7YoZHIC+TU9P4ptBEV84OEduB+HlpAWAPa1MEuYcNQlZCfewNa5ckCEuOww6ueazUK+SjXJXQ7hXAIA7BJeYtTIdpwIM2T7qzpFKq/WPxk0vdptJ7CIbcKImyAQItQDRlXtAMcWvhIa0fFw45NnzgL26gGruuw5gMD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Udmyx05N; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44G5QUrZ015678;
-	Thu, 16 May 2024 08:06:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=EvtDLPUioGQv95bvrfcXzbPUlQC83IW0glY8CjGmWTY=; b=Ud
-	myx05NrrKbkJFGLEzZzURHVvM6Fc1pOGQASRp18jJZsTeE/yAqBlMh6X8M/+Z245
-	Xs+4DaMRG4qQlJfmGR10l5grCiqJkeV6CJG9iz8ZOanBnC+KUDzCc56lTQPN1peF
-	oaefIaIGmNBj1yprowkCu1Z4oqMIsHa0e4iUg5qQR3sI5lXZloHLlo8lw4a05wGQ
-	8R+k3FStWUFjmr9ftzfxf9xmsc0pOObuilhd+FXTASc/Tw/OEPLHI+BFgv0uIo4C
-	017imQotTGS+cszipyrSCyVtGy2Xj9KHRStYPFeblo0OnLQ70r6Q+P1g01lMoWRc
-	l0guDuVSUwqOhBVa4B1A==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y5c05rbsp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 May 2024 08:06:21 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44G86LN9011028
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 May 2024 08:06:21 GMT
-Received: from [10.216.55.40] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 16 May
- 2024 01:06:17 -0700
-Message-ID: <20d7b8e9-ab72-6a4a-ea04-728cd289bf12@quicinc.com>
-Date: Thu, 16 May 2024 13:36:03 +0530
+	s=arc-20240116; t=1715847506; c=relaxed/simple;
+	bh=lRZJLUFdmnnOAfzyTHmvoTllMU6+DNYz5tYYHNzXAjI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eRdwsA0MUf/qQ52HgxJTJ8Y2t8jWJCdHKWnURZFejaPyqXl+6tPhbKDQXWMPKFpbrU9mZI7mMN0vZA/BdbdElWzM/FV7vhaoR3RMGpuSRKK1Nl28o9o49dM2ffStaJQVikg+nbN8utkBjMQfZLSFiMM1jRP6ClOG7n0MqNsOYl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PqbpoqkD; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1715847505; x=1747383505;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=lRZJLUFdmnnOAfzyTHmvoTllMU6+DNYz5tYYHNzXAjI=;
+  b=PqbpoqkDVY8id8RgIRY4EI6ggIw0MbbxkiAstghxFxDv1fE4yMaWClDX
+   FxsCpsXFrjb7GVj+JcRg4td4/MDwVqkKtIot/8a/SkbGoAZR2OovH6VCL
+   23UpVkXpsTQpM8BDV9+UpI3f8wNzlpw7UnJLUb+MsNH0MnjJvWXGQGGH7
+   eCYWGMC+3ECymp4Mzx/bnjw1WQ/2XhL2QjiDXGNk+lvknRDa6765VG3Kp
+   jUbjLlYgc30+DydgtYsBqJvOEExGLS9SEFrV1CUjoqxvJCv14T2WrZkDd
+   TGOcE+8Y1HHTCZYm/R0SjZ1ygmrxQ8rDSuQfc4BU7OF4L0qiXwsn0rVWH
+   Q==;
+X-CSE-ConnectionGUID: PsO2DpIvTjOpZCM1qQG4fQ==
+X-CSE-MsgGUID: 1LADsLLKShWvXA9VbAB5Lg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="23080177"
+X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; 
+   d="scan'208";a="23080177"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 May 2024 01:18:24 -0700
+X-CSE-ConnectionGUID: cQm4yrICR4SvCvL9OgNUZw==
+X-CSE-MsgGUID: A6JwECsMRLix6jCRDznfLw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,164,1712646000"; 
+   d="scan'208";a="36136414"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by orviesa005.jf.intel.com with SMTP; 16 May 2024 01:18:21 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Thu, 16 May 2024 11:18:20 +0300
+Date: Thu, 16 May 2024 11:18:20 +0300
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 7/8] usb: typec: ucsi: glink: merge pmic_glink_altmode
+ driver
+Message-ID: <ZkXBTCfMCkl07/sl@kuha.fi.intel.com>
+References: <20240416-ucsi-glink-altmode-v1-0-890db00877ac@linaro.org>
+ <20240416-ucsi-glink-altmode-v1-7-890db00877ac@linaro.org>
+ <ZiZC/l9nOmzWx+j6@kuha.fi.intel.com>
+ <46fktwtp3xers6tcpov3qo4zswptvajewsdltm45zbz2kmmpzp@cthu6ylttup3>
+ <ZiZ8El4779l0W1Ig@kuha.fi.intel.com>
+ <CAA8EJppMKFSbe-EZLELy+dnd4BZeg24crotH95hpCwcvoEbw5Q@mail.gmail.com>
+ <f2bqgtoll3j6pseg6hzvwtyqiwfwcaepuhcnq4nrshux2bnluh@rte67mi7zcey>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 00/34] Qualcomm video encoder and decoder driver
-To: Hyunjun Ko <zzoon@igalia.com>, <quic_dikshita@quicinc.com>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <bryan.odonoghue@linaro.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <mchehab@kernel.org>, <quic_abhinavk@quicinc.com>,
-        <stanimir.k.varbanov@gmail.com>
-References: <1702899149-21321-1-git-send-email-quic_dikshita@quicinc.com>
- <20240516075732.105878-1-zzoon@igalia.com>
-Content-Language: en-US
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20240516075732.105878-1-zzoon@igalia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vg9UdyFDzi2gOuNGAtya5FVdAo57Ki2-
-X-Proofpoint-ORIG-GUID: vg9UdyFDzi2gOuNGAtya5FVdAo57Ki2-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-16_03,2024-05-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 mlxlogscore=759 mlxscore=0 suspectscore=0 adultscore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405160056
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f2bqgtoll3j6pseg6hzvwtyqiwfwcaepuhcnq4nrshux2bnluh@rte67mi7zcey>
 
-Hi,
+Hi Dmitry,
 
-On 5/16/2024 1:27 PM, Hyunjun Ko wrote:
-> Hi,
+On Wed, May 15, 2024 at 06:01:48PM +0300, Dmitry Baryshkov wrote:
+> > I have played with the DP AltMode driver. I got it somewhat working,
+> > but I think I'm facing a control issue.
+> > Basically, the altmode driver wants to control pin assignment on its
+> > own. It works with the software TCPM, as we control it.
+> > It works with the normal UCSI, because it still can configure pin
+> > config. However with PMIC GLINK implementation there is no way to
+> > control pin assignment from the Linux side. The firmware does that for
+> > us.
+> > What would be the recommended way to handle it? Is it okay to override
+> > status_update to return just the selected pin config? Or is there any
+> > other (better) way to handle such an issue?
 > 
-> Thanks for this series of patches. I successfully adjusted these patches and tried to test video features with gstreamer or ffmpeg.
-> But I found this provides staetful interfaces while I need stateless, which might cause an issue for my side..
-> 
-> My question is do you have any plan to implement stateless interfaces or already you have somewhere?
-There is no plan to implement stateless interfaces.
+> Any suggestions or further comments? Is it better to extend the
+> DisplayPort Altmode driver with the 'forced' transitions? Or it would be
+> fine to just register a partner device, emulate the userspace events,
+> but completely ignore the existing displayport driver?
 
-Regards,
-Vikash
+I may have to look at the DP alt mode with the TI host interface
+(drivers/usb/typec/tipd/) at some point, because on some systems the
+firmware does not seem to automatically enter the mode, but the forced
+transition option would probable work there as well...
+
+I would prefer that we don't ignore the DP alt mode driver, but just
+to be clear, I'm also not completely against it if you feel that would
+be the most reasonable option in your case.
+
+br,
+
+-- 
+heikki
 
