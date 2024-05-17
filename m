@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D00488C82BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 10:51:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A16A18C82C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 10:52:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CE301C20EBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 08:51:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 57BED283503
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 08:52:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94CFE13AE2;
-	Fri, 17 May 2024 08:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B45B14003;
+	Fri, 17 May 2024 08:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="igZeWKIj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TIQ7H1Zw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637428BF7;
-	Fri, 17 May 2024 08:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4C8E572;
+	Fri, 17 May 2024 08:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715935855; cv=none; b=j/Nnzq4ZrmarRtv9LXNDewkWkSJ2JjIlXZvArbl670Wfy6koputVRZENlcRNLhpvxs/xhTvNkmotwcXbQIzR5xLVwg17NxeZ6uDkhugAIWmw+LW7aIcX/Dgrek52TMSCisU4I1PfxMAA1g9Pl+3Lv8pz21NAJGjCMHYzO6TSXA4=
+	t=1715935955; cv=none; b=ur4JWOi8a5CvFARKZzDspRsmdjXUHdqKcLLZ7qgetfcAiXxCqbQ53/7dRM9r1v8n26yNGl5NR1pIS3IwpOiCIBD5UrTQYGuafQbZuYxM6So16yqLMo2aRxQWkA83s8G99EXRcid2PehquxwUd3G/5MtcFOAmzSWz/4Yvjjkk9oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715935855; c=relaxed/simple;
-	bh=ZAfguMeXzvPKhEtkd2HFzHqytIc8HUf8puw18UhpgAU=;
+	s=arc-20240116; t=1715935955; c=relaxed/simple;
+	bh=OQVoTWse2zVyZLUZZY0IQ3FmeZD7K5/Q/qilVQc8qmI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j8KAWnfrWnD5nrhs4YR/33IbqcosJDUGTRqCE3wbADS5VNkefqQeengLQRJg2nVaennSBWS+CQCXY89An063bNiU5TbV6ulXsz+CvFZiAC2ELceDyLUyOfGT/vxqAa/W189FrsZh8zuHJoFM+kMvs7IwLqJogLomD8mUkuaBasw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=igZeWKIj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1C6C2BD10;
-	Fri, 17 May 2024 08:50:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ebp2eXLz81Sg0nRQyG8wcs3fWEW0vk6mkiROlLig/nDlBet3mVk/cReRZiSaR+HOvZb4IDzUO3TScHf8JIIuyGdyhOMx5FhVx/Z3Huvpg5gSc64qPUjP1bWJvMwOcv668pFOSLePqBaBaem1yau4W9KLOdjEPM1OVgd9nOX8G0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TIQ7H1Zw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B2AC2BD10;
+	Fri, 17 May 2024 08:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715935855;
-	bh=ZAfguMeXzvPKhEtkd2HFzHqytIc8HUf8puw18UhpgAU=;
+	s=k20201202; t=1715935955;
+	bh=OQVoTWse2zVyZLUZZY0IQ3FmeZD7K5/Q/qilVQc8qmI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=igZeWKIjYswK7nvBd1xryvzXhmLLSEbfLAhb717eHaLyEnRAdbkuCODQczJ6XoUzp
-	 EgTiFy14MbCEqQVhdo0L04lRvj06F/+ZafR92sKx1fdAnfCZDL98AsYWMEhAqQyVrP
-	 8RNWi9w6BNwgaFCYKu+MEw3OPVCpfXUiSks6SdgrE2jB59C77Fbewq3pcG//PMQ9LY
-	 x/Mc+/rhZIEWkL9KDLZPeudxPi6I7POTBURl12Vei7TkUGzcq/kVGKmZPG+lcH7dpV
-	 DI2VJOkpyDTvYP9ywVmip3lNBLVA4sQcQa94I18YMpXBidce3LdoxzBsg8WF0sdODx
-	 yzRSX+LI6p7oQ==
-Message-ID: <5c7409df-692c-4f22-aea6-56865e801a30@kernel.org>
-Date: Fri, 17 May 2024 10:50:50 +0200
+	b=TIQ7H1ZwlGcqHPS3zWahL7nsSEEup0FUrBwTxSUSgMak2iahHmfnz6AYJ6dlXw1Oo
+	 r7g/Ven7wmg1ZAREazzRA5qSKTcI/fngAA2megMLy/RzyLDxyudVqiSxAGn52p83rs
+	 SOirBH1QGeKtfrnD2Gp85F+Ouw1H47Yx+ZeQZDl4XMdukFtiWoMb4EJFOniW3+0k+W
+	 Wxv+3BiNbWKq2XjzPlYMmJeGu6qfPumiP+AGgg+ySrseNF+M16m4np7SG5vE/pPGG2
+	 V9SI7xrh8Fbt26VNJEVt3KSkkwtJt2hcii94ccAosWhTILCK3F0mq9fEhoPUY6vpBP
+	 CZGhMfTQbvLwg==
+Message-ID: <743c2a10-0ce6-4b84-8127-f3d762976366@kernel.org>
+Date: Fri, 17 May 2024 10:52:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qdu/qru1000-idp: Fix the voltage
- setting
-To: Komal Bajaj <quic_kbajaj@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Melody Olvera <quic_molvera@quicinc.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240514131038.28036-1-quic_kbajaj@quicinc.com>
- <45e0aee9-87d5-434f-8ffe-d3270def0f72@kernel.org>
- <1c214d8b-9c59-7266-4c80-4b548ad6c7f9@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdx75-idp: add SDHCI for SD Card
+To: Naina Mehta <quic_nainmeht@quicinc.com>, ulf.hansson@linaro.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org, bhupesh.sharma@linaro.org
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240515120958.32032-1-quic_nainmeht@quicinc.com>
+ <20240515120958.32032-4-quic_nainmeht@quicinc.com>
+ <a5833628-65f3-493d-9de5-33ba87a18875@kernel.org>
+ <2ed5326a-b2ea-220a-2a9b-0478df0c6f12@quicinc.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -106,39 +105,45 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <1c214d8b-9c59-7266-4c80-4b548ad6c7f9@quicinc.com>
+In-Reply-To: <2ed5326a-b2ea-220a-2a9b-0478df0c6f12@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/05/2024 07:52, Komal Bajaj wrote:
+On 16/05/2024 07:21, Naina Mehta wrote:
 > 
 > 
-> On 5/14/2024 6:57 PM, Krzysztof Kozlowski wrote:
->> On 14/05/2024 15:10, Komal Bajaj wrote:
->>> Fixing the regulator voltages for qdu/qru1000 idp boards.
->>> In particular -
->>> - smps4 is 1.574V min and 2.04V max
->>> - smps5 is 1.2V min and 1.4V max
->>> - smps6 is 0.382V min and 1.12V max
+> On 5/15/2024 7:53 PM, Krzysztof Kozlowski wrote:
+>> On 15/05/2024 14:09, Naina Mehta wrote:
+>>> Enable SDHCI on sdx75-idp to support SD card.
+>>> Also add the required regulators.
+>>>
+>>> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sdx75-idp.dts | 45 ++++++++++++++++++++++++++
+>>>   1 file changed, 45 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+>>> index f76e72fb2072..6f94278cf837 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+>>> @@ -41,6 +41,29 @@
+>>>
+>>>   		vin-supply = <&vph_ext>;
+>>>   	};
+>>> +
+>>> +	vreg_sd_vccb: sd-vccb {
 >>
->> Wait, why? This looks, at least partially, you are changing from fixed
->> voltage choice to full range, without clear explanation.
->>
+>> Please use name for all fixed regulators which matches current format
+>> recommendation: 'regulator-[0-9]+v[0-9]+'
 > 
-> When we started using one of these regulators for USB enablement as sent 
-> in the patch series [1], we saw a sudden reboot.
-> After adding more debug logs, came to know the configuration for smps5 
-> was incorrect.
+> Did you mean that vreg_sd_vdd should be updated according to the 
+> suggested format because vreg_sd_vccb is not a fixed regulator?
 > 
-> Therefore, cross verified the configurations for all the regulators and 
-> got to know that these are incorrectly configured.
-> This fixes some manual errors introduced in the initial patch (mentioned 
-> in fixes tag).
-> 
-> [1] 
-> https://lore.kernel.org/linux-arm-msm/20240502090326.21489-1-quic_kbajaj@quicinc.com/
 
-All this should be explained in commit msg.
+Yeah, it should be about sd-vdd, but then this one should be named as
+well with a similar prefix to have it consistent.
+
+
 
 Best regards,
 Krzysztof
