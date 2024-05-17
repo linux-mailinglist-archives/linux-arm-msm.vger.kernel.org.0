@@ -1,197 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-20005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F26ED8C8AEF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 19:26:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E34258C8B1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 19:37:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 699C91F2101D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 17:26:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD26A1C21408
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 17:37:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 847F413DBBF;
-	Fri, 17 May 2024 17:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50FA413DDCA;
+	Fri, 17 May 2024 17:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kd0yH2xr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="emn3CkST"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E437038DD6;
-	Fri, 17 May 2024 17:26:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B50213E028;
+	Fri, 17 May 2024 17:36:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715966776; cv=none; b=no9d+u5u9aww1YiaBAGEANgAcgppkcLfa5aHC/lvX9u2KPfGckGhOq6NE0IyZODcYhBVpKXYNRHW9YwkQp88QlriGs8lIp+ojUNqnwPpScISxs22pj4YuZt2ETlXuqvJO8zGZiZ4hS+e9Ai02cF8D8S7QyL3sF38j5LEbzPQ0o4=
+	t=1715967401; cv=none; b=VGD+W1XxUso2VlvuOvz4lxOKEOG1+CgMdYH21RRFwrGzncpE6uX2rvfoTeeEHPH29OY+v7d//yMlX7Zpm1LmdWg/0Q0Ow6NTNHQM5w2kDcyPbB/vgn1f05c54oSM9ndNq8DwMOIyRgbeC12qwPOBes4JNFpurb5I1nclEbQAOg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715966776; c=relaxed/simple;
-	bh=0M3HYSdEmubxOzs/jcX7oAnPF/iNS8AiC7WXi8DwIRA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fpumou0DLaxTSj3P4FVrLLjt0cWdEwWXW7r16U88q24mt3si3ZvX4IR8g+dirYjYTH0t7pBuhRgMx5Iq8dkjYYnz/BL2hP7qwcNRU6aLylvg0vigkcoe07MXjdkXvZ9xaY/Vz0+Q/ZNKnF+04hb8ZERI0orz41TIPi2SezHz03U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kd0yH2xr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44H887hm007325;
-	Fri, 17 May 2024 17:25:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=gLVVj3IpTMDOAfQJiNsX9fmZxMsVPG8Kxu10qlV2sjY=; b=Kd
-	0yH2xrdS7mqMMysI3ADZYa8rRXZdNSY5mbAn4DrvuIngbUa9FS/98CqDqHshw8Ee
-	cQzTeilZ7/HuT9O8OlG83JKw6bidRJnWPDwwK2B0y1LJibh8iN9bjMaIrkWlIVsb
-	ACjj1ck65ByXm4pB0zIo7eigOg7UyIY9QqrqfawBSfcb3fU/8oAB7+XZV9EZEc0h
-	GhXFWcHLUtSjLTQo+/xQWAnwif0BRVD675S6TOzqRHvNfRpqd6aepbsiYA1U0wvM
-	KQZIp/OEu4blXaGHGSQFMVy4KRrmUeuTA9z29zHS78XzNKRMj/bmTRRJfzrOFA3I
-	asf3q13i1tG8//uYYKOg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y51tunesg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 May 2024 17:25:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44HHPvSn025836
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 May 2024 17:25:57 GMT
-Received: from [10.110.27.85] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 17 May
- 2024 10:25:56 -0700
-Message-ID: <87e2a55c-4b8c-40e0-b371-aaae40e5e876@quicinc.com>
-Date: Fri, 17 May 2024 10:25:55 -0700
+	s=arc-20240116; t=1715967401; c=relaxed/simple;
+	bh=l7K75G8hEZf6Nf3Gd+zb5LouEwarRLauIdJPMoFivlA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HHDU2a+DAWtPRcmt4C6PNdPbseXKcMelAX2wzvQMYCRqxHPakEdRVvQff3WPguwpodBLpV7fPbdCvZ94NfW0WSvQDuc0Gmbi/M37I2hQcmH6pFp7wlAmn5n+co7hQSDkGkpVMKwa0McBxDQvO/xYNevxFiLG7sf4OWnflrwmeZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=emn3CkST; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1ee954e0aa6so16680785ad.3;
+        Fri, 17 May 2024 10:36:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715967399; x=1716572199; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rzMfxbAB8QJEcJdIySGROcUOqAKXWq8nqUdcExbi1Zk=;
+        b=emn3CkSTmGwb7Ev6REZ9Z3U3XD4Y+jPjdTTKRrd1xunPWgI+cGM6iP3TELOI5V8ATa
+         VbiGe+xcAirEDS5iorMu2B+VEBPivgYYBJAFyyk/dtcE+BdDAEcBR/OSDeMAia+M02aV
+         JtJr53ZjOlMBaf51DPBBJSXIlVEj8/ta7pTQaBfTGVSwemtnu9tMYnJUuHNl2FkBsWa2
+         RY29x4C0oql3h5xd/BScqyiM9KMAjCxcwhA5cszmGMdkeAyAQyWwOl4SEGtmK+Cfk17e
+         ZUmUwjzXpEuOreMImVvNFBtQTMD0YnZzxGLGWYMvA88gK3n/MpOcCwIl6WzZ4yooz3JS
+         JzXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715967399; x=1716572199;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rzMfxbAB8QJEcJdIySGROcUOqAKXWq8nqUdcExbi1Zk=;
+        b=tRaBInC5CBZVJiTyNhPeAMF0Mv8ZyhDngT/Ke4lsBz6dnWLTVbrxiYmDGKR3474tHa
+         Jw0S2Pd1w9vB5TttyIKUZ3vkElFqN8D82iwb6kL7vCXbWz+ZO+kOgSp2q2lMeYG13wJ3
+         Pd4jLhwNb/5j//D5V0kA6eEHTeRPM+KlHNN2ZXDOKj2sqnyMigDYM3Yyxzog0n99DW50
+         DbdwYUgj+mBGDnl1Wi3MfB/KObA9dlYM5hJ0VYDOGEqfhhsM9xkE6J3r09MMgCufkcSJ
+         MFPDLIL9Qyg8pNl52R6ymP0RQyefKT1UiQ+E7Y0jutAqKo/SZ6YeNcoI1ileC9aAa4W0
+         uyJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUeikZ+5A7mGmqeVlRxUOHe3Z4BVx7A6SdRIJ9KlcdOS9QSNvCDsre7aHGEDTt/hTkAM3qO0uM2xeP+jtEHZh5JsSeK9A/+tFrYQA1Gt+sOL3ewNO6LlYK9y7DD7mpAtqpfD7DjXB75ufvKHVU6kM3a/elOuYDfutBUvo4a9bI4BCb2VDcyzEXzDexUc9t0in/T8C2XOhPKn7wWpdtpjhPEZSUvfBbj5JIuV5SOt4ozapoAEBa6p9eoNzUqVSV+FTR0IAeRERSnOL6XqGk495fk7J/QsGArESB7IkyWGLl2UfJVr+STIxS8eHdJJiLcNAzso4UUQBPch6E8dfNENIPvXxQAsave+ZjX9aqXjIT96Hz/aHminfcbngd99gozkR8JcHcG37i5SZidszxbbVcf9ugBd6iBJBSvP3YPM6hIvwhrKlXpceN2VyhqUDGta0Y2tQ8Y92YBThBW9tUwaEcwpwLLtnkcoENUdMSzNo1PisKVaRS0s0oNoAWHaeTm033idWAzW8Z6AMcGqpdUZef30iZpnny7DOCCRdx6bdPIPfc8m8lwMbo6DXkdKIQnaqlplZsK6CLKNgppIYSJ7U793bTJTH44UOdcWLKNUTDeK1XJMU+un4iEAjTM4sbk5xfiplNYftumz3+FD+ZUcLZWXKJBMvMx7eT5NA18jT46CIW4oBwdkZsngjutYGEYxbL/3oE5mRVrHB1dgdQB0YljgIrh2vfVWMnSdGUfmhbsUn3exZybXMRR9PJNk7TMh60ZKjaGM3YyEgvEgQVWpZ4sxK1fHIUzkaJHi56sH9Vb1HRQuX6pNOHreK/nEi3g6aW7gIA7T1ww4N6bLeNtZRSJMBfQ7RJIfpa4nB66EJI9p+xXnabbY1FucmTW2fAhf83tzqzRTLEML3+RBqx6xPn5uR2l/K2m0V/YFHhfHKN5kNYIOcc0Y+KpHUPL2A==
+X-Gm-Message-State: AOJu0YyVJKJDHI54++5KLrCtRmLug9WO1yHYT9xtbae1yHeJBFY7OAOO
+	4meyTffhXTst2nI7rjVckVaPWZ7pOCdtS8zLnwvw9MCn/zh6jfsS
+X-Google-Smtp-Source: AGHT+IHJ9PZtASiLb9HJkYrHy1DRhdQlVEuKbRr0NYIRv4Tx+av91BIA0wx1gBcIQQlm9sd2COIQnQ==
+X-Received: by 2002:a17:90a:9606:b0:2b9:a299:928e with SMTP id 98e67ed59e1d1-2b9a29994c9mr10436893a91.24.1715967398710;
+        Fri, 17 May 2024 10:36:38 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2b67105666csm15749258a91.8.2024.05.17.10.36.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 May 2024 10:36:38 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Fri, 17 May 2024 10:36:37 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+	Linux trace kernel <linux-trace-kernel@vger.kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linuxppc-dev@lists.ozlabs.org, kvm@vger.kernel.org,
+	linux-block@vger.kernel.org, linux-cxl@vger.kernel.org,
+	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, virtualization@lists.linux.dev,
+	linux-rdma@vger.kernel.org, linux-pm@vger.kernel.org,
+	iommu@lists.linux.dev, linux-tegra@vger.kernel.org,
+	netdev@vger.kernel.org, linux-hyperv@vger.kernel.org,
+	ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+	ath11k@lists.infradead.org, ath12k@lists.infradead.org,
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+	linux-usb@vger.kernel.org, linux-bcachefs@vger.kernel.org,
+	linux-nfs@vger.kernel.org, ocfs2-devel@lists.linux.dev,
+	linux-cifs@vger.kernel.org, linux-xfs@vger.kernel.org,
+	linux-edac@vger.kernel.org, selinux@vger.kernel.org,
+	linux-btrfs@vger.kernel.org, linux-erofs@lists.ozlabs.org,
+	linux-f2fs-devel@lists.sourceforge.net, linux-hwmon@vger.kernel.org,
+	io-uring@vger.kernel.org, linux-sound@vger.kernel.org,
+	bpf@vger.kernel.org, linux-wpan@vger.kernel.org,
+	dev@openvswitch.org, linux-s390@vger.kernel.org,
+	tipc-discussion@lists.sourceforge.net,
+	Julia Lawall <Julia.Lawall@inria.fr>
+Subject: Re: [PATCH] tracing/treewide: Remove second parameter of
+ __assign_str()
+Message-ID: <5080f4c5-e0b3-4c2e-9732-f673d7e6ca66@roeck-us.net>
+References: <20240516133454.681ba6a0@rorschach.local.home>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] remoteproc: qcom_q6v5_pas: Add hwspinlock bust on
- stop
-To: Mukesh Ojha <quic_mojha@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        "Peter
- Zijlstra" <peterz@infradead.org>,
-        Ingo Molnar <mingo@redhat.com>, Will Deacon
-	<will@kernel.org>,
-        Waiman Long <longman@redhat.com>, Boqun Feng
-	<boqun.feng@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-CC: <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Richard Maina <quic_rmaina@quicinc.com>
-References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
- <20240516-hwspinlock-bust-v1-6-47a90a859238@quicinc.com>
- <1238fa39-f0da-fb4c-0668-caa946505373@quicinc.com>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <1238fa39-f0da-fb4c-0668-caa946505373@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hUOpJDWfPmO--lYc7lk1l-UrlwupcZOQ
-X-Proofpoint-GUID: hUOpJDWfPmO--lYc7lk1l-UrlwupcZOQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-17_07,2024-05-17_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- mlxscore=0 lowpriorityscore=0 mlxlogscore=999 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405170136
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240516133454.681ba6a0@rorschach.local.home>
 
-
-
-On 5/17/2024 12:21 AM, Mukesh Ojha wrote:
+On Thu, May 16, 2024 at 01:34:54PM -0400, Steven Rostedt wrote:
+> From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 > 
+> [
+>    This is a treewide change. I will likely re-create this patch again in
+>    the second week of the merge window of v6.10 and submit it then. Hoping
+>    to keep the conflicts that it will cause to a minimum.
+> ]
 > 
-> On 5/17/2024 4:28 AM, Chris Lew wrote:
->> From: Richard Maina <quic_rmaina@quicinc.com>
->>
->> When remoteproc goes down unexpectedly this results in a state where any
->> acquired hwspinlocks will remain locked possibly resulting in deadlock.
->> In order to ensure all locks are freed we include a call to
->> hwspin_lock_bust() during remoteproc shutdown.
->>
->> For qcom_q6v5_pas remoteprocs, each remoteproc has an assigned id that
->> is used to take the hwspinlock. Remoteproc should use this id to try and
->> bust the lock on remoteproc stop.
->>
->> This edge case only occurs with q6v5_pas watchdog crashes. The error
->> fatal case has handling to clear the hwspinlock before the error fatal
->> interrupt is triggered.
->>
->> Signed-off-by: Richard Maina <quic_rmaina@quicinc.com>
->> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
->> ---
->>   drivers/remoteproc/qcom_q6v5_pas.c | 28 ++++++++++++++++++++++++++++
->>   1 file changed, 28 insertions(+)
->>
->> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c 
->> b/drivers/remoteproc/qcom_q6v5_pas.c
->> index 54d8005d40a3..57178fcb9aa3 100644
->> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->> @@ -10,6 +10,7 @@
->>   #include <linux/clk.h>
->>   #include <linux/delay.h>
->>   #include <linux/firmware.h>
->> +#include <linux/hwspinlock.h>
->>   #include <linux/interrupt.h>
->>   #include <linux/kernel.h>
->>   #include <linux/module.h>
->> @@ -52,6 +53,7 @@ struct adsp_data {
->>       const char *ssr_name;
->>       const char *sysmon_name;
->>       int ssctl_id;
->> +    int hwlock_id;
->>       int region_assign_idx;
->>       int region_assign_count;
->> @@ -84,6 +86,9 @@ struct qcom_adsp {
->>       bool decrypt_shutdown;
->>       const char *info_name;
->> +    struct hwspinlock *hwlock;
->> +    int hwlock_id;
->> +
->>       const struct firmware *firmware;
->>       const struct firmware *dtb_firmware;
->> @@ -399,6 +404,12 @@ static int adsp_stop(struct rproc *rproc)
->>       if (handover)
->>           qcom_pas_handover(&adsp->q6v5);
->> +    if (adsp->hwlock) {
->> +        ret = hwspin_lock_bust(adsp->hwlock, adsp->hwlock_id);
->> +        if (ret)
->> +            dev_info(adsp->dev, "failed to bust hwspinlock\n");
->> +    }
->> +
+> With the rework of how the __string() handles dynamic strings where it
+> saves off the source string in field in the helper structure[1], the
+> assignment of that value to the trace event field is stored in the helper
+> value and does not need to be passed in again.
 > 
-> As you said above, you seem to cover only wdog case and fatal cases
-> are already handled at remote;
+> This means that with:
 > 
-> You are clearing here for both ? is this right understanding ?
+>   __string(field, mystring)
+> 
+> Which use to be assigned with __assign_str(field, mystring), no longer
+> needs the second parameter and it is unused. With this, __assign_str()
+> will now only get a single parameter.
+> 
+> There's over 700 users of __assign_str() and because coccinelle does not
+> handle the TRACE_EVENT() macro I ended up using the following sed script:
+> 
+>   git grep -l __assign_str | while read a ; do
+>       sed -e 's/\(__assign_str([^,]*[^ ,]\) *,[^;]*/\1)/' $a > /tmp/test-file;
+>       mv /tmp/test-file $a;
+>   done
+> 
+> I then searched for __assign_str() that did not end with ';' as those
+> were multi line assignments that the sed script above would fail to catch.
 > 
 
-Yes that is correct. While the firmware is able to handle error fatal 
-cases, I think it is still the responsibility of the remoteproc driver 
-to try and bust the lock on behalf of the rproc in both cases.
+Building csky:allmodconfig (and others) ... failed
+--------------
+Error log:
+In file included from include/trace/trace_events.h:419,
+                 from include/trace/define_trace.h:102,
+                 from drivers/cxl/core/trace.h:737,
+                 from drivers/cxl/core/trace.c:8:
+drivers/cxl/core/./trace.h:383:1: error: macro "__assign_str" passed 2 arguments, but takes just 1
 
-The bust will only clear the spinlock if it has the token (specific id 
-for that rproc) that is passed into hwspin_lock_bust, so it is safe to 
-attempt this even if the value has been cleared by the rproc in the 
-error fatal case.
+This is with the patch applied on top of v6.9-8410-gff2632d7d08e.
+So far that seems to be the only build failure.
+Introduced with commit 6aec00139d3a8 ("cxl/core: Add region info to
+cxl_general_media and cxl_dram events"). Guess we'll see more of those
+towards the end of the commit window.
 
-> -Mukesh
+Guenter
 
