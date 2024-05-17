@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-19971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3331A8C8300
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 11:09:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4A338C8312
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 11:11:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDD691F21CE4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 09:09:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 013B51C2241A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 09:11:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 171CD25778;
-	Fri, 17 May 2024 09:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00D70225D9;
+	Fri, 17 May 2024 09:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="fCQKzEXp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qg/Fr2OF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828A723770
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2024 09:08:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF9022071
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2024 09:11:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715936926; cv=none; b=a0XpRN5eJVkQbHAzXWb9Io3UbCAsSX5JKEuYTvhKqo3WcF//3m3g74rTPqq27awAIcacgzoXkp2YVZzO67TgEax1Zd8gygncNDOi2t0S4f5DMc8V4AOSz6ehuUWVNLbSg23YSKuhA6/p0Qi4UoPIwdmwxKomvjWGtlt8Btl2PsA=
+	t=1715937095; cv=none; b=qhqvUtxvKBlxXuZGEfDuYsYklZ6YzwvovAGkuhdZdusdpxQG3gUSCg3XiUpyqz587ELQzay7iTdYrevD3/sRbb1U7/9B5+TMq3FqQOaRrhltgYQf100oou3chPmShDuVSdsri9dWVTSQIKJTqKN77bezSILiGdFfXG3XLHWEp8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715936926; c=relaxed/simple;
-	bh=TEHtCpgbdlqVzF1zXyzG1Szb517FKtFzCdajAHVAtmg=;
+	s=arc-20240116; t=1715937095; c=relaxed/simple;
+	bh=DoLTsawHpeTfuB9cwiMX8gLog+phP2olzr7YENPNrxg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sJu+yIduO4L70oIXYJ092GCyiepq2wmRJIw6qwDQ6TOTGgJsbh2IqLWyjM/ClHosKfp0ipTxCAfjyvGoq/TAsBsis49tpdulRBrEEolxzrs7TMwkr/1Tlh5FVHhuqM/+xqxW8rbbUr3aamW7vZ+4D+Ff4Mh3Yv1SuzD00joR4c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=fCQKzEXp; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-571ba432477so5013775a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2024 02:08:43 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=SfiR8iDQ5u4bGRKW97ilgfmUbQm785ZKMMuU634jEC92AqKJQYP6i9jBwCcMSdfywQr8Yw4dJpxFoDfTitwVY6Nck+MHqo54rd+lOR1uMU8N4yaTm/yrPQXkcfPYk4d4BttGW3QbNWzvQf+vKYTy3dMsuh8MvNlD9YuGO2/AE/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qg/Fr2OF; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a5a7d28555bso472868066b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2024 02:11:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1715936922; x=1716541722; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1715937092; x=1716541892; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xwh3lnhUhd7oHBvNUUgJZI2n83eK0ml7NC11m5y4KDs=;
-        b=fCQKzEXpavPM+TuuR2ydaqtoyHospQaCnY360d1397CsR/nVbCTa1Qy0Q6YgjGqt/L
-         tkD71mYnNkf4JPg+za0s+krI91AaiQcmsYTm4eo+hR1+6FJ+qk/r5PdHGmxxoOu+1SCX
-         F9V6iL22RWAp6X/30O+cd43S0eAmvVGbO5AUngW1ROKKRaBdzP0CjmFdyCyKzmBiHMny
-         XTxVCY32sQO2rL7jTXyskzCSalfN9RyM42mpoT51TCTfzB3+een6ul3CRmKuVeFabpZG
-         jAaJH9a6IS9HafT9TBmAZe1RcPATh6djiTWWBCIZnVzt7R7M4BGByqqfEZGdWKs9ZCyh
-         SsOQ==
+        bh=3wbo50xwb3HFwy2Js34OThKfA1hpUVathWWvMAHMruo=;
+        b=qg/Fr2OFlFQTT3Aol9ciNz8tsTHJM2U1dKVMIOqUlhQzbAOSrNKlNhTCX4anwSpxmN
+         rkA/jtsf5La4dmXoZfOo2NlVokOQIhd6SrRaI3sNjkWN9DVgaFjC4Q/uh8vDvBnh2ut1
+         fvGoKabouycpXWto8NWaYLuvZwv2f7hUfQwebBajG0T3QLPKD7U5nnMzeYZllPDfPUfs
+         YQpn8Vo3oPoPQ5/76amJO38E02xiB1Dmzvg44cZWB0qBQCS64DY6gypy7MPof5WhTJA8
+         Vzi/zem1SSANoyoqUEY5vOxaGsunwLx86pOXMnG3dMU1jgHWR/Bl7JS6mcO7WK+IYdff
+         TJwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715936922; x=1716541722;
+        d=1e100.net; s=20230601; t=1715937092; x=1716541892;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xwh3lnhUhd7oHBvNUUgJZI2n83eK0ml7NC11m5y4KDs=;
-        b=K+SflpIn7D7YkHFFL2pfafcsAuGqN6dYBKXuMEOD1Cd8qZNv4OH/fV8paChC1MyDiO
-         gpzzkfzzFhXWbHZKzGO495zAic4ZZZdqiNajQOtW+5gA2l5zd7/AfBBjx86dWrCYprA+
-         QHGLzcMxmv44AwYjPQgmIhNwUpBL6y0RwFE+GfsoC+teJENE3rwu0JooBFalfQlaxbyU
-         MZU8hiyv8oZ5/tBNbDoKz7RZWXXlYDtle1rTazdq+77vpUi0gS5CTwK3c0Y/7uOFDY8x
-         6+g/2gh2LHZWJpihp3fNAy95jsUqToHh2Ilrk3h+hzTVcj9f31Losm9ZQFtMUKNOkHPv
-         3Nsg==
-X-Forwarded-Encrypted: i=1; AJvYcCWF9z2ycaLkewQI8e04OU2DVodgy5ZYFW9F0mP3Be4Hn87jnOcclc+uVOThtCoeutSjvoFaxb84kLPrYLYHwgl2vJn8XC1rD/Gu631ujw==
-X-Gm-Message-State: AOJu0Yw6neSnrNacVtdulqR1VDBEbGAjXyb83GWiizxxp8wrxNsjVk5u
-	05aSQ7SGpcok+3S+kMxpYUUA3TPINZLpxIrv5RJoo+/d2DNkVXh70b1mo6lrbZc=
-X-Google-Smtp-Source: AGHT+IEgG+ysyN5p95zBEB/teN7eTbSrbUtVmUotuv5u7b9gbXK+Nvx5y+aX5ItM1vbciitmK35z4g==
-X-Received: by 2002:a17:906:4886:b0:a59:a83b:d435 with SMTP id a640c23a62f3a-a5a2d55aa50mr1373772366b.18.1715936921554;
-        Fri, 17 May 2024 02:08:41 -0700 (PDT)
+        bh=3wbo50xwb3HFwy2Js34OThKfA1hpUVathWWvMAHMruo=;
+        b=WPdL2UOjrqSgHnsI9hi93eb1MVram9tvOVe7UPDh4q4tr/iw32QvYpSkHT+feWoxpf
+         dZcKnkC68X68+W4sSZWpleNrnNVif2Nk25FwZsDJb8KAHH0fODvVP7R8V/wYDLB3aGwD
+         1AsvC6pH9on8f7Ts3Sn/VOSoD5+Ul3UwVCvKeTaKhKy/FiYwnvn8viln4cr30W3Lfey9
+         i4BuPdgmZ6tYDJskvJ5EdjotJ8kDtUNpJM0fb9dUNPxhkWqdkizL2IzH+L5UYI5/sztj
+         oIgWX0xqOitMHxLXKJ/jRqcbBmTKKUPJsghJkM77cufiZt0A2pLCYdE9U6Ad0e7FdonL
+         Y6iA==
+X-Gm-Message-State: AOJu0YxzIiYmrVJrQw/G958ur7+y9D4jWczVESwhMD2ddJn+VUt9uVbs
+	YB25cpaiZ/i6V0qT7KOjiYjZSTVRzHTvD5/4AN7mn3PogKj08SFGn27cd3kz5MQ=
+X-Google-Smtp-Source: AGHT+IFUuE27SOBRiwiM5jzv8pfjnHU4AIrW12/v2KmpB6rpAdGZVts7qvikNVwq4pSeqOpzntfyrg==
+X-Received: by 2002:a17:906:32d9:b0:a59:dd9d:6da5 with SMTP id a640c23a62f3a-a5a2d54c07amr1318225066b.3.1715937092597;
+        Fri, 17 May 2024 02:11:32 -0700 (PDT)
 Received: from [10.91.1.133] ([149.14.240.163])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17b17886sm1097162266b.210.2024.05.17.02.08.39
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17892471sm1096886566b.84.2024.05.17.02.11.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 May 2024 02:08:40 -0700 (PDT)
-Message-ID: <40730e9f-ae2b-4b56-89bd-f839876271fe@nexus-software.ie>
-Date: Fri, 17 May 2024 11:08:38 +0200
+        Fri, 17 May 2024 02:11:32 -0700 (PDT)
+Message-ID: <39b66355-f67e-49e9-a64b-fdd87340f787@linaro.org>
+Date: Fri, 17 May 2024 11:11:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,58 +75,49 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] remoteproc: qcom_q6v5_pas: Add hwspinlock bust on
- stop
+Subject: Re: [PATCH v2] dmaengine: qcom: gpi: remove unused struct 'reg_info'
 Content-Language: en-US
-To: Chris Lew <quic_clew@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Baolin Wang <baolin.wang@linux.alibaba.com>,
- Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
- Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>,
- Boqun Feng <boqun.feng@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, Richard Maina <quic_rmaina@quicinc.com>
-References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
- <20240516-hwspinlock-bust-v1-6-47a90a859238@quicinc.com>
-From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20240516-hwspinlock-bust-v1-6-47a90a859238@quicinc.com>
+To: linux@treblig.org, Frank.li@nxp.com, vkoul@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240516152537.262354-1-linux@treblig.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240516152537.262354-1-linux@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 17/05/2024 00:58, Chris Lew wrote:
-> From: Richard Maina <quic_rmaina@quicinc.com>
+On 16/05/2024 17:25, linux@treblig.org wrote:
+> From: "Dr. David Alan Gilbert" <linux@treblig.org>
 > 
-> When remoteproc goes down unexpectedly this results in a state where any
-> acquired hwspinlocks will remain locked possibly resulting in deadlock.
-> In order to ensure all locks are freed we include a call to
-> hwspin_lock_bust() during remoteproc shutdown.
+> Remove unused struct 'reg_info'
 > 
-> For qcom_q6v5_pas remoteprocs, each remoteproc has an assigned id that
-> is used to take the hwspinlock. Remoteproc should use this id to try and
-> bust the lock on remoteproc stop.
-> 
-> This edge case only occurs with q6v5_pas watchdog crashes. The error
-> fatal case has handling to clear the hwspinlock before the error fatal
-> interrupt is triggered.
-> 
-> Signed-off-by: Richard Maina <quic_rmaina@quicinc.com>
-> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
 > ---
+>   drivers/dma/qcom/gpi.c | 6 ------
+>   1 file changed, 6 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index 1c93864e0e4d..639ab304db9b 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -476,12 +476,6 @@ struct gpi_dev {
+>   	struct gpii *gpiis;
+>   };
+>   
+> -struct reg_info {
+> -	char *name;
+> -	u32 offset;
+> -	u32 val;
+> -};
+> -
+>   struct gchan {
+>   	struct virt_dma_chan vc;
+>   	u32 chid;
 
-> +	if (adsp->hwlock) {
-> +		ret = hwspin_lock_bust(adsp->hwlock, adsp->hwlock_id);
-> +		if (ret)
-> +			dev_info(adsp->dev, "failed to bust hwspinlock\n");
+More detail in the commit log please - is the structure unused ? What is 
+the provenance of it being added and becoming dead code.
 
-qcom_hwspinlock_bust() already prints an error on failure, you're 
-printing a second error here.
-
-Choose at most one.
+More detail required here.
 
 ---
 bod
