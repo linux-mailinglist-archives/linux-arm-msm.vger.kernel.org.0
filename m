@@ -1,136 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-20009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 337A68C8C3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 20:33:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94B498C8CF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 21:50:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 647791C220C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 18:33:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 344F91F240C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 19:50:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FC0F13FF2;
-	Fri, 17 May 2024 18:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27EA645007;
+	Fri, 17 May 2024 19:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Vg79+cHH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kRWFqIQF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15771A2C19;
-	Fri, 17 May 2024 18:33:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80D7321D;
+	Fri, 17 May 2024 19:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715970784; cv=none; b=WtmqlXDOMEytUsNfn9+cZeUyg9kAoUT1fkESm6YKMB04q44adJ1K7pYQdd0z8iGhsfe4zCLBFKdqehWU8/cGSPKsb3o8ozKpQR6mgkRcy7IIE1qiqGu+VMA2miLzBqL9FSSSeRcwwc78ulXMeopNqO6rQos5qSv9WNRhiOzmwc8=
+	t=1715975430; cv=none; b=IBwAIO3jtLZYOghfR89g4dNTvUO/6eqYb5sVpmwbfBd7wrH76+4JzAAQ0FMItmHaQxzsjoygxcjw5E51A7/dLFpNdeubegTyPj22lI7lRVlf5mWagvRmvUkZQuc4zJStM1MZq1jWEqX3pFnYkgG9NIRXSZeVhmZMb1UVBM7j5RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715970784; c=relaxed/simple;
-	bh=IpHKn100vUjrZafmZKJ1y8v2H5IiPMdG53S1ZMl4E+8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JZBaN1w1C4Z15A0SGIW36kQ6DFv2+fd5nxMyLqQay5WxT+iArhHmSPFZzHjWU25SS7hNbQdiLqcQiXH3+C93mdVvuZrYBStqalYuR/8uJQ9988JfH0pSQRgZpDdMIjuO5VMnDUt8k1nYNKiy4VfmyIJBGp4kal+/LaC+RMkdzXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Vg79+cHH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44H98KQL007278;
-	Fri, 17 May 2024 18:32:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=trmdsobqOMWDgc1D8NKUUfFAo9qR0PrBuwm8lSkrz3c=; b=Vg
-	79+cHHTr16tp9TBmcnGCAcEW4MomLM4m1TKiTIMTQjhQhCHjjJmqRKuVQpASP1VN
-	gxPAIarbirbphn6E+t149eDVGIc8hRdrMDvVL2EPWF0/JqMPMC+sDo22wQMCLsD9
-	TaDEpjCGVD6MyiiC+Zypj2Qh8NGx1wx/BT6qe8gGgVukepc9SfhRSypj9nwj2AXF
-	pdjF1XthSOHFf1ZIDamd8/2hyO6puG00UnQXR3gmAhQeqdI7avackgQZta38hLf+
-	F7v7kO4aoxLR8t6au8FWW0Go2wxeAf7yXaKYIS9GNA8dwVz211WwZI8AzmkmrsoI
-	kP19QtIyiZjB95ADFoOA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y49ge0tmx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 May 2024 18:32:48 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44HIWlH1005033
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 May 2024 18:32:47 GMT
-Received: from [10.110.126.2] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 17 May
- 2024 11:32:46 -0700
-Message-ID: <8000851c-f3e2-4fcb-b4d4-9acaf9763fdb@quicinc.com>
-Date: Fri, 17 May 2024 11:32:45 -0700
+	s=arc-20240116; t=1715975430; c=relaxed/simple;
+	bh=j+QC3kOhZwJKkXX5mPM4HY+DrnVzET6HccRVfuZP43Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jpf9AOgh0wD3jG6kjsMcuLGsJT7eWKOn8m9mTGJalQ/j7jabR1rhObKwzlveg38hWg5h8eA86t512T30eWjiSUXobKRRbFEE34ROAmN2pK9HluFmhHCjAWr394Gk11oAqLfqVYxJVmesaqD4bbkmnD70/Xu+iw6l1wKVifnECzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kRWFqIQF; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1ecd9a81966so7086895ad.0;
+        Fri, 17 May 2024 12:50:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715975428; x=1716580228; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vGDwCwwhr9iyyZbcO2LNbRmyKSJnbSVS/UCD4IYwGr8=;
+        b=kRWFqIQFG1DuUVCLGEmakJneRpaarX/FdIXoIaeRR7om4a8z46CCe7LAUAPoWBIkKc
+         qVz0sBLC92mEPlUiq/eAy+cSab/HZ3VaVJ5bQUrN5/EqAGGzDFFbpZmJg6MBnH/8Fy3V
+         hM+af8ZQpHiJkn19Ro7Iv9jO7mYF6smEiE1Qi7VopEfUG8JQ3kGkruC91dHoBY6yJ/rV
+         k3GbrpKqXHk28XXceRmhOhC1i3pcIiF68RihqtoqUzz7cMyiyOZeYzJnX0EU6NhuccO0
+         pI9GzzfEY7cuf4acksZ9nhO7NDSkRPpY3kavlGb5d+CnXsarlZKQSUz77rKf9QCPsnzV
+         auDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715975428; x=1716580228;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vGDwCwwhr9iyyZbcO2LNbRmyKSJnbSVS/UCD4IYwGr8=;
+        b=VJlGM1xJk1PA+wUcmIdaKQ6tuUy0GTw3pfWZof20TNllYktDdkriCsvCMM+ydmztMN
+         QhdpuA21e7oBggK/E+97m7zE2EViK+8lgKGVQfa9hcEchcCcbOGdyzvAB8ArFksLr0Ke
+         Wfh8UBylaxk6Ha4hf+XEpbXcnKMm9NCTksLcCrkJboz4ssvRlFzdL1E6vh1NO+UHAE2z
+         JZkHuuo8X0mQith7YG186Z5HtNlA6QCe6rmRKYL56/qZv0cMYd91pmMUvL8UkdIfZTNT
+         VTH7dbiwP4IpvdRzVrj9P2WhVQPUcD17koGcdI7oG7Aqf42T7kLe+9I+kO9sUrBPIold
+         AfDw==
+X-Forwarded-Encrypted: i=1; AJvYcCXPqPLjiIHoU2L2psZZ02iW7jBKmqkiOTkme2fkAee8GRkDHBamQWYlcCvYxAx17ajUd3e634uiqH1cctXM55Ss0mgiqtr1kJnXq8sJAYoAkznrFRi/7hPisXz6MzXJgyZN4U7UPmsYG6m7TA==
+X-Gm-Message-State: AOJu0YzJPmyXPC+vhBpO23oj4Jh1dKylQO+opl6qp7aapdXCvTxS+lDh
+	Joj9QLYFW9f/rbBuiZYGQYf+8oAfhi3P0ijGt+HP6baT415vdZCx
+X-Google-Smtp-Source: AGHT+IGED0PKOMspRHBg/lO86eagMfaS1Pal7MYA8gYSpyUm/2pAAGCaWIEFdpCNBk+5VKC7GhGXlA==
+X-Received: by 2002:a17:902:d4ca:b0:1eb:3d68:fc2b with SMTP id d9443c01a7336-1f2ed3f863amr1029215ad.34.1715975427744;
+        Fri, 17 May 2024 12:50:27 -0700 (PDT)
+Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ef0b9d188dsm160529775ad.2.2024.05.17.12.50.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 May 2024 12:50:26 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	Rob Clark <robdclark@chromium.org>,
+	Nikita Travkin <nikita@trvn.ru>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Connor Abbott <cwabbott0@gmail.com>,
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/adreno: Check for zap node availability
+Date: Fri, 17 May 2024 12:50:19 -0700
+Message-ID: <20240517195021.8873-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] hwspinlock: Introduce refcount
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Peter
- Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
-        Will Deacon
-	<will@kernel.org>, Waiman Long <longman@redhat.com>,
-        Boqun Feng
-	<boqun.feng@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof
- Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-CC: <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Richard Maina <quic_rmaina@quicinc.com>
-References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
- <20240516-hwspinlock-bust-v1-1-47a90a859238@quicinc.com>
- <edfb049a-b56e-424f-bca7-556dffa6c87d@linaro.org>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <edfb049a-b56e-424f-bca7-556dffa6c87d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iv9sI3L20wtxJZlWpyoVobWcaFr13M2_
-X-Proofpoint-ORIG-GUID: iv9sI3L20wtxJZlWpyoVobWcaFr13M2_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-17_08,2024-05-17_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=888
- impostorscore=0 clxscore=1011 priorityscore=1501 phishscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405170144
 
+From: Rob Clark <robdclark@chromium.org>
 
+This should allow disabling the zap node via an overlay, for slbounce.
 
-On 5/17/2024 1:58 AM, Bryan O'Donoghue wrote:
-> On 17/05/2024 00:58, Chris Lew wrote:
->> +    unsigned int refcnt;
-> 
-> Why int and not refcount_t ?
-> 
-> Have you an argument for or against use of one over another ?
-> 
+Suggested-by: Nikita Travkin <nikita@trvn.ru>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I wanted to avoid the warning if you try to do a refcount_inc on 0. In 
-this case, 0 means the the hwlock is unused but the hwlock should 
-persist while waiting for another request. It seemed like refcount_t 
-expected the associated object to be released once the count hit 0.
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index d9ea15994ae9..a00241e3373b 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -46,7 +46,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+ 	}
+ 
+ 	np = of_get_child_by_name(dev->of_node, "zap-shader");
+-	if (!np) {
++	if (!np || !of_device_is_available(np)) {
+ 		zap_available = false;
+ 		return -ENODEV;
+ 	}
+-- 
+2.45.1
 
-Also the count here is serialized by hwspinlock_tree_lock so the need 
-for the atomicity provided by refcount_t was unneeded. Using unsigned 
-int here seemed simpler.
-
-> ---
-> bod
 
