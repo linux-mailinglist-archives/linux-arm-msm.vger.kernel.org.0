@@ -1,73 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-19972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4A338C8312
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 11:11:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ADF88C831A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 11:15:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 013B51C2241A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 09:11:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A291A1C2220C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 09:15:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00D70225D9;
-	Fri, 17 May 2024 09:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EFDB1E4AE;
+	Fri, 17 May 2024 09:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qg/Fr2OF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nLA6sKzQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF9022071
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2024 09:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C323758;
+	Fri, 17 May 2024 09:15:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715937095; cv=none; b=qhqvUtxvKBlxXuZGEfDuYsYklZ6YzwvovAGkuhdZdusdpxQG3gUSCg3XiUpyqz587ELQzay7iTdYrevD3/sRbb1U7/9B5+TMq3FqQOaRrhltgYQf100oou3chPmShDuVSdsri9dWVTSQIKJTqKN77bezSILiGdFfXG3XLHWEp8s=
+	t=1715937320; cv=none; b=Gu406ULYg9vaIMrD3bdm2+vHleC3gH9rxGah8Uktpe63FAfQWCLv4u6tDHABL+hcZ6UYObejMENOn3V8FAyz0e3I+XU3hD10+sCYhVEy2hb6VHQCLNIo14ssCiUsqbI5AKTEoyg4mBT1yVIrvR3ylpixY3VTGjjkw7tipYmpaeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715937095; c=relaxed/simple;
-	bh=DoLTsawHpeTfuB9cwiMX8gLog+phP2olzr7YENPNrxg=;
+	s=arc-20240116; t=1715937320; c=relaxed/simple;
+	bh=FW5Dq52kI/4tqHDdl7rHYWj6hQF7PsNPsyYt4vRar0M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SfiR8iDQ5u4bGRKW97ilgfmUbQm785ZKMMuU634jEC92AqKJQYP6i9jBwCcMSdfywQr8Yw4dJpxFoDfTitwVY6Nck+MHqo54rd+lOR1uMU8N4yaTm/yrPQXkcfPYk4d4BttGW3QbNWzvQf+vKYTy3dMsuh8MvNlD9YuGO2/AE/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qg/Fr2OF; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a5a7d28555bso472868066b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2024 02:11:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1715937092; x=1716541892; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3wbo50xwb3HFwy2Js34OThKfA1hpUVathWWvMAHMruo=;
-        b=qg/Fr2OFlFQTT3Aol9ciNz8tsTHJM2U1dKVMIOqUlhQzbAOSrNKlNhTCX4anwSpxmN
-         rkA/jtsf5La4dmXoZfOo2NlVokOQIhd6SrRaI3sNjkWN9DVgaFjC4Q/uh8vDvBnh2ut1
-         fvGoKabouycpXWto8NWaYLuvZwv2f7hUfQwebBajG0T3QLPKD7U5nnMzeYZllPDfPUfs
-         YQpn8Vo3oPoPQ5/76amJO38E02xiB1Dmzvg44cZWB0qBQCS64DY6gypy7MPof5WhTJA8
-         Vzi/zem1SSANoyoqUEY5vOxaGsunwLx86pOXMnG3dMU1jgHWR/Bl7JS6mcO7WK+IYdff
-         TJwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715937092; x=1716541892;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3wbo50xwb3HFwy2Js34OThKfA1hpUVathWWvMAHMruo=;
-        b=WPdL2UOjrqSgHnsI9hi93eb1MVram9tvOVe7UPDh4q4tr/iw32QvYpSkHT+feWoxpf
-         dZcKnkC68X68+W4sSZWpleNrnNVif2Nk25FwZsDJb8KAHH0fODvVP7R8V/wYDLB3aGwD
-         1AsvC6pH9on8f7Ts3Sn/VOSoD5+Ul3UwVCvKeTaKhKy/FiYwnvn8viln4cr30W3Lfey9
-         i4BuPdgmZ6tYDJskvJ5EdjotJ8kDtUNpJM0fb9dUNPxhkWqdkizL2IzH+L5UYI5/sztj
-         oIgWX0xqOitMHxLXKJ/jRqcbBmTKKUPJsghJkM77cufiZt0A2pLCYdE9U6Ad0e7FdonL
-         Y6iA==
-X-Gm-Message-State: AOJu0YxzIiYmrVJrQw/G958ur7+y9D4jWczVESwhMD2ddJn+VUt9uVbs
-	YB25cpaiZ/i6V0qT7KOjiYjZSTVRzHTvD5/4AN7mn3PogKj08SFGn27cd3kz5MQ=
-X-Google-Smtp-Source: AGHT+IFUuE27SOBRiwiM5jzv8pfjnHU4AIrW12/v2KmpB6rpAdGZVts7qvikNVwq4pSeqOpzntfyrg==
-X-Received: by 2002:a17:906:32d9:b0:a59:dd9d:6da5 with SMTP id a640c23a62f3a-a5a2d54c07amr1318225066b.3.1715937092597;
-        Fri, 17 May 2024 02:11:32 -0700 (PDT)
-Received: from [10.91.1.133] ([149.14.240.163])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17892471sm1096886566b.84.2024.05.17.02.11.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 May 2024 02:11:32 -0700 (PDT)
-Message-ID: <39b66355-f67e-49e9-a64b-fdd87340f787@linaro.org>
-Date: Fri, 17 May 2024 11:11:30 +0200
+	 In-Reply-To:Content-Type; b=dP+vCfsCZnK3fCASWGNZNHqkH8/PTdVROXA7FeBwYl1LKSNiAkrH74vvc3TbdESLBOi1m1DcemOZo2s3yNi5nOrwX2Yw0QBqXiarZ8MfFovrVXI8268HJL+fOmGspjB+pMxlY4vUf8+Y4shue2vjFfiF1wuEJxENyHY833K3QUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nLA6sKzQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E7FC2BD10;
+	Fri, 17 May 2024 09:15:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715937320;
+	bh=FW5Dq52kI/4tqHDdl7rHYWj6hQF7PsNPsyYt4vRar0M=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=nLA6sKzQqMy8zQLBOxVbt/Rb+OzB9MDr3+LiHfUs9tzlyqy5BO+TvYWkGdxkgAQXm
+	 5NcdY4go2Rjmc2vYDpC/rViDH8EX1j4rHfPtsbYTva0LvRds0ZXVL5u8ew3aiFkFr9
+	 qCho+p2tSkhe7VR8C6RbylzAdSkiANoYEcDvrO6MULn05HA7mTmSeUJeseDx3oUTgW
+	 8isj20iEZXrlQrhYvTiVurW8Hz8TKCwheoZC5f37ZthM6j/ieEaRqLMqDyY14Zd8Ev
+	 /2MzCp9H7YbzA0Ed5XbkNUiGsciX3NaOjnBRJ3FIcRLFTs0FFyMkLoMYt5RLRGTS8G
+	 fAVrDWuMMRb2A==
+Message-ID: <d719b331-84ed-4889-9959-0d7dde270804@kernel.org>
+Date: Fri, 17 May 2024 11:15:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,50 +50,111 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dmaengine: qcom: gpi: remove unused struct 'reg_info'
+Subject: Re: [PATCH 12/13] regulator: add pm8008 pmic regulator driver
+To: Johan Hovold <johan@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Andy Shevchenko <andy.shevchenko@gmail.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>,
+ Satya Priya <quic_c_skakit@quicinc.com>, Stephen Boyd <swboyd@chromium.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+ <20240506150830.23709-13-johan+linaro@kernel.org>
+ <Zjkq_nWyvc6bUtiu@surfacebook.localdomain>
+ <ZjpMeVk_HiixZUEu@hovoldconsulting.com>
+ <CAHp75VdUFMvkj-r76H7GFZdpcoh_nb8v6CBj4wBHztNhiaWULQ@mail.gmail.com>
+ <8d2ea17c-f91e-4e14-a239-e5e999f6ac50@linaro.org>
+ <ZjyQFrqHT2HBOWY6@hovoldconsulting.com>
+ <1df61b7c-29c4-4537-a0b6-75785606eeae@kernel.org>
+ <ZjzBAvgFt4UnPapk@hovoldconsulting.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: linux@treblig.org, Frank.li@nxp.com, vkoul@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240516152537.262354-1-linux@treblig.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240516152537.262354-1-linux@treblig.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <ZjzBAvgFt4UnPapk@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/05/2024 17:25, linux@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <linux@treblig.org>
+On 09/05/2024 14:26, Johan Hovold wrote:
+> On Thu, May 09, 2024 at 12:48:18PM +0200, Krzysztof Kozlowski wrote:
+>> On 09/05/2024 10:57, Johan Hovold wrote:
+>>> On Tue, May 07, 2024 at 08:14:43PM +0200, Krzysztof Kozlowski wrote:
+>>>> On 07/05/2024 19:22, Andy Shevchenko wrote:
 > 
-> Remove unused struct 'reg_info'
+>>>> Yeah, please use ID table, since this is a driver (unless I missed
+>>>> something). Module alias does not scale, leads to stale and duplicated
+>>>> entries, so should not be used as substitute of ID table. Alias is
+>>>> suitable for different cases.
+>>>
+>>> There's no scalability issue here. If the driver uses driver name
+>>> matching then there will always be exactly one alias needed.
+>>
+>> And then we add one more ID with driver data and how does it scale?
 > 
-> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
-> ---
->   drivers/dma/qcom/gpi.c | 6 ------
->   1 file changed, 6 deletions(-)
+> That's what I wrote in the part of my reply that you left out. If a
+> driver is going to be used for multiple devices, then a module id table
+> makes sense, but there is no need to go around adding redundant tables
+> just for the sake of it when a simple alias will do.
 > 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index 1c93864e0e4d..639ab304db9b 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -476,12 +476,6 @@ struct gpi_dev {
->   	struct gpii *gpiis;
->   };
->   
-> -struct reg_info {
-> -	char *name;
-> -	u32 offset;
-> -	u32 val;
-> -};
-> -
->   struct gchan {
->   	struct virt_dma_chan vc;
->   	u32 chid;
 
-More detail in the commit log please - is the structure unused ? What is 
-the provenance of it being added and becoming dead code.
+I still in general prefer ID tables, because I saw many times people
+copy existing code while not understanding above subtleties thus they
+just keep multiplying MODULE_ALIAS, but I understand your explanation
+and it is reasonable.
 
-More detail required here.
+FWIW:
 
----
-bod
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
 
