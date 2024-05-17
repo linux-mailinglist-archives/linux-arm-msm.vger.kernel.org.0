@@ -1,124 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-19996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-19997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AA3F8C874F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 15:36:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F13D8C8908
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 17:09:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C1241C20F93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 13:36:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 140FA1F25F7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 May 2024 15:09:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48C8754BC3;
-	Fri, 17 May 2024 13:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D555664DD;
+	Fri, 17 May 2024 15:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GLVE1+TD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b79j1uRH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DC6548F1;
-	Fri, 17 May 2024 13:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550488479
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 May 2024 15:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715952988; cv=none; b=NxNVtsDM95ZaoPtfDfW0OKN+549X3/33Dn6vKDYlkABE7k2FAutXZQQE+08hyvC4ffHSUnvPjT87dvvOqqWsyloGso+iu95qS++ZiI0YzMb9HL4bt4AsKl1B0FJ8ZpuhSVArApCQTuQM43xpa6DNHdl8+4XrCUwCy6eLcw5AIdM=
+	t=1715958579; cv=none; b=C19JBhBnVpmyfWSTz78f8Jo0sLqDQPFqpKfshknsHg5/ytV5WabaH6v8Mm+xhVd+UWxGsyK9T+r9WKLeOD35Ywn+zynDsHapgA4zckLKTLgwEHAvDH4YOKWxI+JjUrXeoW3IAr40eJm8yb5BRdRHgBsVPce10TP8FoMIz0mi/8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715952988; c=relaxed/simple;
-	bh=Jn7zwgtw8zPXbp3XlrdrrybXQAtHJe4Qo6Tf/v8KOUU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gBYIeYeM/H10MQUUVydQVJrfavqczaAU56q91fexMu+oObPYZe3USwrlbmvhatFvP19vNai3D3G04dmwbIXEALNky3GGKqa7+QDXCqdW/JXtwSc7KJIy8f2dNpTyJA99hwjNa5mmcTYMc14XGxqhFh81zu3u9ozKU01x4d+Nx1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GLVE1+TD; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1715952987; x=1747488987;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=Jn7zwgtw8zPXbp3XlrdrrybXQAtHJe4Qo6Tf/v8KOUU=;
-  b=GLVE1+TDn1+B+Yvz1TDYsrnHwHKuwnEaOHON1aDguXhPcSKWapzQLrCP
-   Zmm3BPBcaZWWLB8tof7gthuCMyKUFnH+GP+BEsNKSz6FMQeEevVLyJAdD
-   UHGs6MTuFP9+dARRoni9Bmz4N3hMR5j4y/mt6n5sV9h8ZJqm1NXqrHWVZ
-   jPp01eiWt3JeJ/3kkkIza+YMCjVKAFbbQvyIqvhJiGMabQR2d9nWijfO+
-   iQo90bw7saGxZOZCwRvQ74lemjNcdVoi0NBb5fXiplIeBJRJZCmDs2UaD
-   jnnEZUqE4zExEzIi81yKZ4JNhaPkZmOTpxPrWJC2PeMSYSU4F8dhwzDKM
-   A==;
-X-CSE-ConnectionGUID: kPiR+F8/Rqmslq0Yx1dcVg==
-X-CSE-MsgGUID: ePwl3apbSpquXl+4wUveJg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11074"; a="15956634"
-X-IronPort-AV: E=Sophos;i="6.08,167,1712646000"; 
-   d="scan'208";a="15956634"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2024 06:36:26 -0700
-X-CSE-ConnectionGUID: hv+jf/nYRMKp252TDzhWlA==
-X-CSE-MsgGUID: rHPZ9NOjRN2blqqMK8l1iw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,167,1712646000"; 
-   d="scan'208";a="55005642"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2024 06:36:18 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1s7xks-00000008Lkv-21yz;
-	Fri, 17 May 2024 16:36:14 +0300
-Date: Fri, 17 May 2024 16:36:14 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>, linux-omap@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, imx@lists.linux.dev,
-	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org, Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Xiaowei Song <songxiaowei@hisilicon.com>,
-	Binghui Wang <wangbinghui@hisilicon.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH v4 0/5] PCI: controller: Move to agnostic GPIO API
-Message-ID: <ZkddTpyC177ZGoMH@smile.fi.intel.com>
-References: <20240506142142.4042810-1-andriy.shevchenko@linux.intel.com>
- <20240517102234.GA333779@rocinante>
+	s=arc-20240116; t=1715958579; c=relaxed/simple;
+	bh=UvHvPf2ksMfZjTugTHfqmbhPX9a7mAPXwziPNvDMZ1c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=l/csp8CogXmsiIhNRCpf4TaxezE0TxM2ID0YAKQwHoj3DmS94XCYpf7zXlTFI34Ns3K+ArG02emzo7IChdfy4hvh14yXgA1glUHivnoQPW3AKKHPhss3em5lCUykICdd7XX5ScLXtSnSqOawRc0cwkpil27alXMmNqx8lFMDoDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b79j1uRH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44H99Dl0008010;
+	Fri, 17 May 2024 15:09:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=m+PG3NVc/y82Bd3gd9A6Qlkbj3ODvLR8RDXfvRjUSDY=; b=b7
+	9j1uRH2g4km8ovoCEZlde0my1/2ktV3oWvkWJewpWgOtZYv2taJYKVMDsgesp1cB
+	3EefBAiUBVrNSh/n+jbSXeKz0PtN4iDiSHmUrg1ACfJugLdYV5Ddp6iKa3+PmgvF
+	khhPF/A4EVyuVqS8vTbqqmr1FAVTRucZHDPMyJxsXri047GJAbJdU9m7jVe8Zvuh
+	wwLqW6TIjNaP8qxPhJ2w+JsrP1TVXbIrmqpHZk/R7IL5NaepGgmnIm6snX/YHARb
+	DtjARjqdUNKDB+OrtVv0oVKWjlV9RCFVt4XKbAkv3KoIkZjIPHP9vZrpBcLI4oyE
+	CWLtcM0kCVxYCdNOZx5A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y45vbgs0r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 May 2024 15:09:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44HF9Axa028750
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 May 2024 15:09:10 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 17 May
+ 2024 08:09:09 -0700
+Message-ID: <a8a17485-76af-0b19-b939-c05a1473767e@quicinc.com>
+Date: Fri, 17 May 2024 09:09:08 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240517102234.GA333779@rocinante>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2] arm64: dts: qcom: msm8998: enable adreno_smmu by
+ default
+Content-Language: en-US
+To: Marc Gonzalez <mgonzalez@freebox.fr>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: MSM <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bryan O Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Pierre-Hugues Husson <phhusson@freebox.fr>,
+        Arnaud Vrac <avrac@freebox.fr>
+References: <be51d1a4-e8fc-48d1-9afb-a42b1d6ca478@freebox.fr>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <be51d1a4-e8fc-48d1-9afb-a42b1d6ca478@freebox.fr>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6pXSITuVufbWliD838vqkMD0P-U93N2K
+X-Proofpoint-ORIG-GUID: 6pXSITuVufbWliD838vqkMD0P-U93N2K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
+ definitions=2024-05-17_06,2024-05-17_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1011 mlxscore=0 suspectscore=0 spamscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405170119
 
-On Fri, May 17, 2024 at 07:22:34PM +0900, Krzysztof Wilczyński wrote:
-> Hello,
+On 5/15/2024 8:27 AM, Marc Gonzalez wrote:
+> 15 qcom platform DTSI files define an adreno_smmu node.
+> msm8998 is the only one with adreno_smmu disabled by default.
 > 
-> > While at it, remove of_gpio.h leftover from some of the drivers.
+> There's no reason why this SMMU should be disabled by default,
+> it doesn't need any further configuration.
 > 
-> Applied to gpio, thank you!
+> Bring msm8998 in line with the 14 other platforms.
+> 
+> This fixes GPU init failing with ENODEV:
+> msm_dpu c901000.display-controller: failed to load adreno gpu
+> msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops a3xx_ops): -19
+> 
+> Fixes: 87cd46d68aeac8 ("Configure Adreno GPU and related IOMMU")
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Thank you!
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
