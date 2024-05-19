@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6AE98C9596
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 19:38:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38C1A8C95A5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 19:46:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A82BB211CE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 17:38:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83899280EE0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 17:46:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E23A84F201;
-	Sun, 19 May 2024 17:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D5454DA1F;
+	Sun, 19 May 2024 17:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t3xSDKwA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h9bKjizM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCB14AEDF;
-	Sun, 19 May 2024 17:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC21481DB;
+	Sun, 19 May 2024 17:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716140328; cv=none; b=iXYR+MEEhVyS/5+7EFiulB6WCwlVU9MpCVimz4RH+6ogaHaEjQsHnUs3Atmg9tPRjn9zMcZ0CAbRQFJ/fFnd/4YCuWO9vZXxdiNQipo4MnTBdxQQ8iISEAHVHKkrVPkDwqvydNVQcZHjS7Qs1RVkwRPDq75qUEpi1WoV1TUFEkk=
+	t=1716140811; cv=none; b=f7lIEq7K8NtxRuhIKduXIADqdDxxqb0vW5Bt2Cs8ExSVao0wypGFzOOBdVJyosnqp81424zw6CpwiiijTd5qDi6pquKmsKh/Oz2ovTEO9dPeMmS0ecCxKRre30X8TyqAI2jYVTcl2PbfSETBAbaeTy/gH6z5QH9puPf/LkRxajQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716140328; c=relaxed/simple;
-	bh=CfkIu+h+pBx3zNhl0+o091ChzmW2hhrt8qtqEa3D1F0=;
+	s=arc-20240116; t=1716140811; c=relaxed/simple;
+	bh=5/ZIoiWf+C5oVYnJYvUMB8XPKC6HcqPI9Hbmad3rE/Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MhaFpjrFPj4NUpmZ3yLIxM0+LfYIwDNOmYy+GTDtXpbX7y8hewNfjoAIv/utRJSwWRknxLVmS9r6UH2eLgMP8NR0u/Hy1s4ZsU+G/Gk+SZbJMz0ahfDt+FU1KGBpkatVWR1K04YdgHt+P4rVa/vUvVO4FIrmtuJIeOzLe1Mvlq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t3xSDKwA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF62C32781;
-	Sun, 19 May 2024 17:38:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=CNWzGyqud1WSz5BQRrUz5VLK4stiKi8YW1ZRVxPXPoOUcA+k0WJPxHjpIEeBwIj3MOR/tSyPGIOqwwvgco0E2dxc1jdNw9u9FajPTqSzSJLkjFW3yRNyxbjcViKGpqaZqWlBMypk6IvE2uWeFiE1Y41S+cQWR3No7Cshxt1bLSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h9bKjizM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1A1C32781;
+	Sun, 19 May 2024 17:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716140328;
-	bh=CfkIu+h+pBx3zNhl0+o091ChzmW2hhrt8qtqEa3D1F0=;
+	s=k20201202; t=1716140810;
+	bh=5/ZIoiWf+C5oVYnJYvUMB8XPKC6HcqPI9Hbmad3rE/Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=t3xSDKwAR7S1lPFIR5Eyd+oxgexajtay1vukMBEbGjSBtbyVKWgNIAXoiYq46kMWS
-	 d5Hh9y2mTxsSNaUW0sE20RG4x+vxaDRgyaVLPjdHmpEHt5OM4YYB/ub6hxgtqrPQrm
-	 NdoFsfMcCLWhRSJR9cYyBVX7Ryc35Ogd0S2+lhdvHf67k5PyzfKTi1ViG+W+JMx2nt
-	 zg9uXvpVdOSUJ46mpNHq97ttjDEZWIe0jj1Tb/L+fbeYeV8cm7TQCW2Lcr37UmP2Yd
-	 WH7YcVfmg10G6GlG2+GaFeiGmvVoLSv9BaoDDFgREesfKIHJ4GogxgGuOjxU1nTeRP
-	 PpAgnbnF60CBQ==
-Message-ID: <fa2d0619-9051-436b-b751-8a8007e2e622@kernel.org>
-Date: Sun, 19 May 2024 19:38:42 +0200
+	b=h9bKjizMbYegzxwPXGbX5ogmcan8L4rdxMvqzHEncMddhyMy3dYbiMTkwZJNRw1Tv
+	 +ye4aGR1Guje4w0IKEQAlejSd4UdcdlzMRH/KlKSXzaVIpTbAk6eBEkZV/7GsU0H0f
+	 /eaVrfMVfwPlIoANT05fqpy5k1rEhf0Cp5fTy9wZ58wA1e84MK+/gZ2Wo/LGV2ClfW
+	 8xJ0n9lUVxVMyw0V2hAV+LIECapZg7BShYwpFA44p9P9W9xopQ4iop2Rq3nHrP4AHp
+	 uhUbZ1gkNhNQoJOBXzuR+m8xf3q6LTOseU0IVJBMEukuJSGW2wKJpoqohg1136C4H8
+	 RPfT/pEQQY62w==
+Message-ID: <5a4dd2ce-0724-4a54-8909-149ab4b614c6@kernel.org>
+Date: Sun, 19 May 2024 19:46:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: dma: qcom,gpi: document the SDX75 GPI
- DMA Engine
-To: Rohit Agarwal <quic_rohiagar@quicinc.com>, vkoul@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240517100423.2006022-1-quic_rohiagar@quicinc.com>
- <20240517100423.2006022-2-quic_rohiagar@quicinc.com>
+Subject: Re: [PATCH v1 1/3] dt-bindings: arm: Add trace-id for coresight dummy
+ source
+To: Mao Jinlong <quic_jinlmao@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, songchai <quic_songchai@quicinc.com>
+References: <20240516025644.4383-1-quic_jinlmao@quicinc.com>
+ <20240516025644.4383-2-quic_jinlmao@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,18 +110,34 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240517100423.2006022-2-quic_rohiagar@quicinc.com>
+In-Reply-To: <20240516025644.4383-2-quic_jinlmao@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/05/2024 12:04, Rohit Agarwal wrote:
-> Document the GPI DMA Engine on the SDX75 Platform.
+On 16/05/2024 04:56, Mao Jinlong wrote:
+> Add trace-id for static id support to coresight dummy source.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+>  .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+> index 6745b4cc8f1c..9adf34ea450e 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+> @@ -38,6 +38,12 @@ properties:
+>      enum:
+>        - arm,coresight-dummy-source
+>  
+> +  trace-id:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      If dummy source needs static id support, use this to set trace id.
+> +      The range is 1 to 127.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Missing constraints... and then no need to repeat constraints in free
+form text.
 
 Best regards,
 Krzysztof
