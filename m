@@ -1,82 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-20021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74B7F8C93D6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 10:16:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16ADE8C93F9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 10:31:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EEF701F21396
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 08:16:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6457281749
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 08:31:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB16F18B09;
-	Sun, 19 May 2024 08:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667C61B806;
+	Sun, 19 May 2024 08:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DtK4O20s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KI/GbEZN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6F71FB4
-	for <linux-arm-msm@vger.kernel.org>; Sun, 19 May 2024 08:16:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36108944F
+	for <linux-arm-msm@vger.kernel.org>; Sun, 19 May 2024 08:31:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716106598; cv=none; b=AgDT2l34ZAQoq2llh6CJI14vojMGwwQjN2C0zgYpI13oAcX8QRDh206JJ8T179GmGPZTgtoQ0mX2jERzdUA3RnD5fbOQdWrZrARCGQ94p/1993075Sf0oQm2SHa8/S+JiEYh5WqgZxSkzStzXU8ppEvB/bAFgHKqrvUadu+doGs=
+	t=1716107475; cv=none; b=Qld2hMnBXVa7l/UM3AXq3Hngw3/uX7Z60rUlTskQ9rYXwHhsrxvAr9MT0Vu1Ed2yAnYbsEYgtKd7K77Vk9Dp19hjIxgt4MvBWEbEyL5s0Jqzs+qJaNbxTEYQMoE5SNT6M45fRZYVa1eaGshiOTHtF+RNP9opyrKnfOv6Oad2QGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716106598; c=relaxed/simple;
-	bh=5GvvJGAyZf8QY6YNoSOkE8KDWtNj13Zl8SY6VB7LWdE=;
+	s=arc-20240116; t=1716107475; c=relaxed/simple;
+	bh=F0LBOMZDJVE+xbmnqDNWkHm61GJlkhpnSs7Nz8Y6szM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BDmMa8yHLw+KIvfAMLBtWjTukFKNZjO9I4Mwq1WCw8E2qRhGGPEpG0opJ6X4OueGKLWKowM5v31BHhW+bfF5QSsB9wbK7US04SnZZu1YPbUvApTptLeZ/XoHnccdcqxH5rUSvjuPB7LpRnFgyyGVVVYT1IbASh/sYJLhXTZnPoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DtK4O20s; arc=none smtp.client-ip=209.85.167.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=MXSvCHh6Yz/ejY7mYFfZpYvBVm1/M3++U8nTykALfffjkXJEG+ePYLjLheqzqSCQ7NYwAZ0IIdLIoTAKqmvBlZj5NaB6e9Wtz73EALuMfs+wKJtIY7THxl3faWjoO6Tt68vb8S759YulLRqNGvvwRtHn3baQkE1Ea/P7t9MXdBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KI/GbEZN; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5241b49c0daso819341e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 May 2024 01:16:35 -0700 (PDT)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52388d9ca98so3781057e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 May 2024 01:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716106593; x=1716711393; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716107470; x=1716712270; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nqscv5hPY4OsF6W8djpNx/MqPGz0oq15EeGyLjqSwyg=;
-        b=DtK4O20sNPzadCuNXxRkmcfQIBGaGvB+09EpOcQ7DDEVKmjWUh/Mg2mkK0Zno7tLp4
-         s8kPOzAJQSeYuJT2UzgnFzXsVAS62EDhGRimyrZaFNyj4c0ItjqM4eStKgLkVs/a49hR
-         tSj+UbU0NlAoBtUTsu78ruoip0vqVtF5H4Tjeo+oQca8fkJ/948Q9iQgaXVOgNICkTE+
-         fqFVxibByv0aojrXW0nI3SfEJj361lWCeKdtHMTE8AVxMymMIKLBoCVoJzqtzmFHzn3a
-         rWi8ky7Zd8oYUFmB3bmInmBSIEmtGfEiYfFDLN2G+zJOJu6E7LX8vqpVhVS932OkBVcH
-         /eiQ==
+        bh=O3x30n4rUJq1+J/cwi02KSucHGfHRmh38wGSJ7vLBLs=;
+        b=KI/GbEZNVrWmHAg32qInwZeg6owzZBa02pGKm9eYRhtJhowuJo2YrVtPpIE8ijNdAZ
+         M0p0WOnATQ8vwmYUaUpfRR9QkzIYHnHte1ULSMGSuRZnnszOFlOznwsXpVW1ptrcr9b9
+         D7Y9tsi2Np3Hnqd73HXG8BTj9ugh/9mFvlR9w3aC4ddFho70MkzVupnX6TWtVryl7JGS
+         8wmf6cqhaSF+a2ZJ2MoTvonjWq77XOjQcFUiDywUtTqhg02bzFNKUBcSsGjOLpGW/MbZ
+         nW7SJHitmnJvp3qxP8cO+ORE8GF/j/sFCk4p5aXqasqfBnRssrGUzB94vHl0zD2rRcDh
+         p+4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716106593; x=1716711393;
+        d=1e100.net; s=20230601; t=1716107470; x=1716712270;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nqscv5hPY4OsF6W8djpNx/MqPGz0oq15EeGyLjqSwyg=;
-        b=KeeRzxfNTiT1vdcYy0Fx1KzzUSejKNLnbUBt5UahjiJiR6CodVUmhCoYX+SLiSB8rQ
-         QTTREfoO7EYosEE/lNWZSZAkAuYJk3Q7M1vlvS9omzBB0c7hxeQ+SlgwGRRLrcdg0VRf
-         OJrfJJRa3E5Lf6HErlr/7KchA69X4sBgf/PF0RrgneVRMtp2oML0yF3Eb4Q9woeYrmHM
-         1rpO1PsyfAB/FAE49pXIFaWgwj1zRAsOcRaCaU2hGGUVFpLiJsKitWaTvXjwvDP+KTBZ
-         o4fEMkeMdw8XqHN70E+WJbEdnp1fEhclvzQqSnW0FfxLaS5F7eEmau3yiGBy79vntOLv
-         wvlw==
-X-Forwarded-Encrypted: i=1; AJvYcCWQbu1hMQ546YWmYBB5kKzEvC45bMzY/rxQkw6OdPIdYLO8zndPUEGq+JkGYKIPKgkZ9Xa2i8XKrmzbMRuB0GqQu/uiC4jwVbVkeaPViw==
-X-Gm-Message-State: AOJu0Yy1nPhxR94rPx4xr5CPqVuSxdtDdhjCImqi4N2+a6bh2DmB+wbs
-	zp8CKFl1Up/sZU7pCROnX5jVywfkwX0FCLkPFL/jXu4SekOUcXmtsvXbwvvS9o4=
-X-Google-Smtp-Source: AGHT+IFRGaG2cgRyfRkJRXqkedyOipsI0+xvINvklLqDqBRjRxo9DNXLPfaP4ViVN92ReZ3cfEXEYA==
-X-Received: by 2002:ac2:4c55:0:b0:51f:4165:9305 with SMTP id 2adb3069b0e04-5221007016dmr19852722e87.55.1716106592716;
-        Sun, 19 May 2024 01:16:32 -0700 (PDT)
+        bh=O3x30n4rUJq1+J/cwi02KSucHGfHRmh38wGSJ7vLBLs=;
+        b=Oav3pzt3W6qLJesyCjscgvf04kGTSTNcog7XVQLeI28cBbVHJIHgg23SPr2y+sAv/A
+         EbtSDPM4EdEM/+AU46Khdd2Ui1zQnJ8XCt1uj0tVfloQTAKy2JVYxXSl/IQwsMgAgJ4p
+         3329poA9ngNsNFgd28DxaM4+IsD4ezQq2IOvO/ECwiSlqmeaR68ochVm3IDjzkbZJzBt
+         d4KgDen44gooaSVcgyd3XHXXX93CnKOFXx1dRiBSYW+OCIPiyZUih377QtfJAIl5dJt5
+         wyUvut9Rxn42g2x3YiC19SaMcfG6bg+nskGiEm/LcgIz3w4H7GGsJiAxnYkSWUDhAzQs
+         rthg==
+X-Forwarded-Encrypted: i=1; AJvYcCXpXuLIJpmLKIEUH7nC+dx59V3m6ZF0M07C7WBNmailP4OxFPE/2zPGQk1sBR4rip84L5LtTAC2H1wKCap1HZ0wyMnv588qRbu9muyfUw==
+X-Gm-Message-State: AOJu0YyuDh7aGO5gXpn2VvNYeoMDKYmwToMnfsr4h8Fz2NFtw7Uok8Ai
+	YUcgXMCJZB1LGCAaFK6wNaEh3HlsN9QR5yzcIokdh7Hz4k270R5h8OqrrB3NIiQ=
+X-Google-Smtp-Source: AGHT+IERJwac+d8XpIpGcOzehZBQ8zzZtThV/IUxxI/UfebWaSGBVYpY+oyFYOdhW5bfzMUQPlo0Hg==
+X-Received: by 2002:a05:6512:3e17:b0:51d:605e:f0ce with SMTP id 2adb3069b0e04-52210278698mr30114392e87.50.1716107470416;
+        Sun, 19 May 2024 01:31:10 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f39d31aasm3904344e87.283.2024.05.19.01.16.32
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f35ba5d5sm3779923e87.77.2024.05.19.01.31.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 May 2024 01:16:32 -0700 (PDT)
-Date: Sun, 19 May 2024 11:16:30 +0300
+        Sun, 19 May 2024 01:31:10 -0700 (PDT)
+Date: Sun, 19 May 2024 11:31:08 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Kiarash Hajian <kiarash8112hajian@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] drm/msm/a6xx: request memory region
-Message-ID: <4susqladik7qzknlggchehmfyzeaccc7j27jtpvgrfm4pc7bqk@weiwasipz674>
-References: <20240512-msm-adreno-memory-region-v4-1-3881a64088e6@gmail.com>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
+	seanpaul@chromium.org, swboyd@chromium.org, dianders@chromium.org, 
+	quic_jesszhan@quicinc.com, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH 1/4] drm/msm: register a fault handler for display
+ mmu faults
+Message-ID: <cwo63ra2ogrdr3ywmiuxewzuxzsyozyqfcict7xs5kp6uwy2qp@7e6fgb7oyszc>
+References: <20240517233801.4071868-1-quic_abhinavk@quicinc.com>
+ <20240517233801.4071868-2-quic_abhinavk@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,147 +87,71 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240512-msm-adreno-memory-region-v4-1-3881a64088e6@gmail.com>
+In-Reply-To: <20240517233801.4071868-2-quic_abhinavk@quicinc.com>
 
-On Sun, May 12, 2024 at 05:03:53AM -0400, Kiarash Hajian wrote:
-> The driver's memory regions are currently just ioremap()ed, but not
-> reserved through a request. That's not a bug, but having the request is
-> a little more robust.
+On Fri, May 17, 2024 at 04:37:56PM -0700, Abhinav Kumar wrote:
+> In preparation to register a iommu fault handler for display
+> related modules, register a fault handler for the backing
+> mmu object of msm_kms.
 > 
-> Implement the region-request through the corresponding managed
-> devres-function.
+> Currently, the fault handler only captures the display snapshot
+> but we can expand this later if more information needs to be
+> added to debug display mmu faults.
 > 
-> Signed-off-by: Kiarash Hajian <kiarash8112hajian@gmail.com>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
-> Changes in v4:
-> - Combine v3 commits into a singel commit
-> - Link to v3: https://lore.kernel.org/r/20240512-msm-adreno-memory-region-v3-0-0a728ad45010@gmail.com
+>  drivers/gpu/drm/msm/msm_kms.c | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
 > 
-> Changes in v3:
-> - Remove redundant devm_iounmap calls, relying on devres for automatic resource cleanup.
-> 
-> Changes in v2:
-> - update the subject prefix to "drm/msm/a6xx:", to match the majority of other changes to this file.
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 22 +---------------------
->  1 file changed, 1 insertion(+), 21 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 8bea8ef26f77..cf0b3b3d8f34 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -524,9 +524,6 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->  	uint32_t pdc_address_offset;
->  	bool pdc_in_aop = false;
->  
-> -	if (IS_ERR(pdcptr))
-> -		goto err;
-
-So, if there is an error, we just continue through? What about the code
-that accesses the region afterwards?
-
-If error handling becomes void, then there should be an early return
-instead of dropping the error check completely.
-
-> -
->  	if (adreno_is_a650(adreno_gpu) ||
->  	    adreno_is_a660_family(adreno_gpu) ||
->  	    adreno_is_a7xx(adreno_gpu))
-> @@ -540,8 +537,6 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->  
->  	if (!pdc_in_aop) {
->  		seqptr = a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
-> -		if (IS_ERR(seqptr))
-> -			goto err;
-
-Same question.
-
->  	}
->  
->  	/* Disable SDE clock gating */
-> @@ -633,12 +628,6 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
->  	wmb();
->  
->  	a6xx_rpmh_stop(gmu);
-> -
-> -err:
-> -	if (!IS_ERR_OR_NULL(pdcptr))
-> -		iounmap(pdcptr);
-> -	if (!IS_ERR_OR_NULL(seqptr))
-> -		iounmap(seqptr);
+> diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+> index af6a6fcb1173..62c8e6163e81 100644
+> --- a/drivers/gpu/drm/msm/msm_kms.c
+> +++ b/drivers/gpu/drm/msm/msm_kms.c
+> @@ -200,6 +200,28 @@ struct msm_gem_address_space *msm_kms_init_aspace(struct drm_device *dev)
+>  	return aspace;
 >  }
 >  
->  /*
-> @@ -1503,7 +1492,7 @@ static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
->  		return ERR_PTR(-EINVAL);
+> +static int msm_kms_fault_handler(void *arg, unsigned long iova, int flags, void *data)
+> +{
+> +	struct msm_kms *kms = arg;
+> +	struct msm_disp_state *state;
+> +	int ret;
+> +
+> +	ret = mutex_lock_interruptible(&kms->dump_mutex);
+> +	if (ret)
+> +		return ret;
+> +
+> +	state = msm_disp_snapshot_state_sync(kms);
+> +
+> +	mutex_unlock(&kms->dump_mutex);
+> +
+> +	if (IS_ERR(state)) {
+> +		DRM_DEV_ERROR(kms->dev->dev, "failed to capture snapshot\n");
+> +		return PTR_ERR(state);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  void msm_drm_kms_uninit(struct device *dev)
+>  {
+>  	struct platform_device *pdev = to_platform_device(dev);
+> @@ -261,6 +283,9 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
+>  		goto err_msm_uninit;
 >  	}
 >  
-> -	ret = ioremap(res->start, resource_size(res));
-> +	ret = devm_ioremap_resource(&pdev->dev, res);
->  	if (!ret) {
->  		DRM_DEV_ERROR(&pdev->dev, "Unable to map the %s registers\n", name);
->  		return ERR_PTR(-EINVAL);
-> @@ -1613,13 +1602,11 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->  	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu");
->  	if (IS_ERR(gmu->mmio)) {
->  		ret = PTR_ERR(gmu->mmio);
-> -		goto err_mmio;
+> +	if (kms->aspace)
+> +		msm_mmu_set_fault_handler(kms->aspace->mmu, kms, msm_kms_fault_handler);
+> +
 
-And this is even worse. See the comment below.
+Can we move this to msm_kms_init_aspace() instead of checking for
+kms->aspace?
 
->  	}
+>  	drm_helper_move_panel_connectors_to_head(ddev);
 >  
->  	gmu->cxpd = dev_pm_domain_attach_by_name(gmu->dev, "cx");
->  	if (IS_ERR(gmu->cxpd)) {
->  		ret = PTR_ERR(gmu->cxpd);
-> -		goto err_mmio;
->  	}
->  
->  	if (!device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME)) {
-> @@ -1635,7 +1622,6 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->  	gmu->gxpd = dev_pm_domain_attach_by_name(gmu->dev, "gx");
->  	if (IS_ERR(gmu->gxpd)) {
->  		ret = PTR_ERR(gmu->gxpd);
-> -		goto err_mmio;
->  	}
->  
->  	gmu->initialized = true;
-> @@ -1645,9 +1631,6 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->  detach_cxpd:
->  	dev_pm_domain_detach(gmu->cxpd, false);
->  
-> -err_mmio:
-> -	iounmap(gmu->mmio);
-> -
-
-You have dropped the iounmap(). However now the error path should
-remain. The put_device() must be called. So fix the label name and just
-drop the iounmap().
-
->  	/* Drop reference taken in of_find_device_by_node */
->  	put_device(gmu->dev);
->  
-> @@ -1825,9 +1808,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
->  	dev_pm_domain_detach(gmu->cxpd, false);
->  
->  err_mmio:
-> -	iounmap(gmu->mmio);
-> -	if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"))
-> -		iounmap(gmu->rscc);
-
-Same comment here.
-
->  	free_irq(gmu->gmu_irq, gmu);
->  	free_irq(gmu->hfi_irq, gmu);
->  
-> 
-> ---
-> base-commit: cf87f46fd34d6c19283d9625a7822f20d90b64a4
-> change-id: 20240511-msm-adreno-memory-region-2bcb1c958621
-> 
-> Best regards,
+>  	drm_for_each_crtc(crtc, ddev) {
 > -- 
-> Kiarash Hajian <kiarash8112hajian@gmail.com>
+> 2.44.0
 > 
 
 -- 
