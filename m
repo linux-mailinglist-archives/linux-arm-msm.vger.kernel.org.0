@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7BDB8C958F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 19:37:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6AE98C9596
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 19:38:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB742B210EA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 17:36:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A82BB211CE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 May 2024 17:38:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C32A4DA0F;
-	Sun, 19 May 2024 17:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E23A84F201;
+	Sun, 19 May 2024 17:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RtGQ7N+F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t3xSDKwA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663A514A81;
-	Sun, 19 May 2024 17:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCB14AEDF;
+	Sun, 19 May 2024 17:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716140214; cv=none; b=Pbl4tmbUowaeH/RgQqjUNEM0CGwTtZOErtnDTK7dnRaNhtN2i4HXJ68aOU9DIgprd1m7OxxIaPudX44H/M3jsGGqL9k9lmWq39CieuGSJgNTGjFFahtk3H/xWN4hBs3cbZM8y5St9Dic6o36rgxPKVNiY3iNwq7IsEIQSwO/9a8=
+	t=1716140328; cv=none; b=iXYR+MEEhVyS/5+7EFiulB6WCwlVU9MpCVimz4RH+6ogaHaEjQsHnUs3Atmg9tPRjn9zMcZ0CAbRQFJ/fFnd/4YCuWO9vZXxdiNQipo4MnTBdxQQ8iISEAHVHKkrVPkDwqvydNVQcZHjS7Qs1RVkwRPDq75qUEpi1WoV1TUFEkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716140214; c=relaxed/simple;
-	bh=21HH8WXzLEybD2y2VIp++QC2CVQcWQk6SHeek0XTQ94=;
+	s=arc-20240116; t=1716140328; c=relaxed/simple;
+	bh=CfkIu+h+pBx3zNhl0+o091ChzmW2hhrt8qtqEa3D1F0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NPBEbEU1Wwmimef8wCs2AeEfBCM1M5XvkCyBLP4egep86573wLcZ7J+0UY4C+yqX9U0N+OL4VlZ2lmFuVjqSLB5q9dEAEScMnSiFaZtq9D1csIK5Ef+2SUkZiAabLmrFGlhuTPziiQQvmYema9aj/+ZAqB+9kcNrV5/ZJDmOlqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RtGQ7N+F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69A8C32781;
-	Sun, 19 May 2024 17:36:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=MhaFpjrFPj4NUpmZ3yLIxM0+LfYIwDNOmYy+GTDtXpbX7y8hewNfjoAIv/utRJSwWRknxLVmS9r6UH2eLgMP8NR0u/Hy1s4ZsU+G/Gk+SZbJMz0ahfDt+FU1KGBpkatVWR1K04YdgHt+P4rVa/vUvVO4FIrmtuJIeOzLe1Mvlq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t3xSDKwA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF62C32781;
+	Sun, 19 May 2024 17:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716140214;
-	bh=21HH8WXzLEybD2y2VIp++QC2CVQcWQk6SHeek0XTQ94=;
+	s=k20201202; t=1716140328;
+	bh=CfkIu+h+pBx3zNhl0+o091ChzmW2hhrt8qtqEa3D1F0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RtGQ7N+FB7NrCMWMjlPXPNI+TIjSqq9wL69w8b1BJoaAOvAgfk+GM26LM5ZRznQ1b
-	 feYTg4OsmBBOED/bv2gg26qqTtEs+Z7dNe4ufrdmQorgW9yUDsqRqI/AsYefxNrOOT
-	 ucMKo6Xz7oEn/k4t3dvseP6kev8chYG2eOWrK1wzX1YjuFTjpy9lyml01KdMyuKm/Z
-	 uhUGxE0LY9dHTkdeYtd8F3dQCRU1nDHRY/4Njr3w9sv1qtgUuiepnkYtTSUqd1fuzY
-	 v1zyi1npymvYvMZ7S15wz89u1p00xLkPzyy7/RbgujE4wdMXN13hRPJVpSE+d66ZWW
-	 prq/3CwfgukoQ==
-Message-ID: <3521519f-34b8-472d-be37-f0e64bba24fc@kernel.org>
-Date: Sun, 19 May 2024 19:36:46 +0200
+	b=t3xSDKwAR7S1lPFIR5Eyd+oxgexajtay1vukMBEbGjSBtbyVKWgNIAXoiYq46kMWS
+	 d5Hh9y2mTxsSNaUW0sE20RG4x+vxaDRgyaVLPjdHmpEHt5OM4YYB/ub6hxgtqrPQrm
+	 NdoFsfMcCLWhRSJR9cYyBVX7Ryc35Ogd0S2+lhdvHf67k5PyzfKTi1ViG+W+JMx2nt
+	 zg9uXvpVdOSUJ46mpNHq97ttjDEZWIe0jj1Tb/L+fbeYeV8cm7TQCW2Lcr37UmP2Yd
+	 WH7YcVfmg10G6GlG2+GaFeiGmvVoLSv9BaoDDFgREesfKIHJ4GogxgGuOjxU1nTeRP
+	 PpAgnbnF60CBQ==
+Message-ID: <fa2d0619-9051-436b-b751-8a8007e2e622@kernel.org>
+Date: Sun, 19 May 2024 19:38:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] dt-bindings: remoteproc: qcom,pas: Add hwlocks
-To: Chris Lew <quic_clew@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Baolin Wang <baolin.wang@linux.alibaba.com>,
- Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
- Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>,
- Boqun Feng <boqun.feng@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
- <20240516-hwspinlock-bust-v1-5-47a90a859238@quicinc.com>
+Subject: Re: [PATCH 1/2] dt-bindings: dma: qcom,gpi: document the SDX75 GPI
+ DMA Engine
+To: Rohit Agarwal <quic_rohiagar@quicinc.com>, vkoul@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240517100423.2006022-1-quic_rohiagar@quicinc.com>
+ <20240517100423.2006022-2-quic_rohiagar@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,17 +104,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240516-hwspinlock-bust-v1-5-47a90a859238@quicinc.com>
+In-Reply-To: <20240517100423.2006022-2-quic_rohiagar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/05/2024 00:58, Chris Lew wrote:
-> Add hwlocks property to describe the hwspinlock that remoteproc can try
-> to bust on behalf of the remoteproc's smem.
+On 17/05/2024 12:04, Rohit Agarwal wrote:
+> Document the GPI DMA Engine on the SDX75 Platform.
+> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
 
-Sorry, as you wrote, the lock is part of smem, not here. Drivers do not
-crash, so if your crashes as you imply in the cover letter, then first
-fix the driver.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
