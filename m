@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-20064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5D878C9CF4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 14:13:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13F3A8C9CFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 14:13:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4315282561
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 12:13:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 80547B21F6C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 12:13:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD70255E6B;
-	Mon, 20 May 2024 12:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3DE956440;
+	Mon, 20 May 2024 12:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bFT4Abd0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VCubSv7w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFEA54FBD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043B855C35
 	for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 12:12:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716207173; cv=none; b=NV8JYOvWqs7MABCRIP1f3Q6ivVIjrzyWVvcxNni5d0TKMXtZCspcSUn6AvnU+lGcmxKUr3Ga9cldw1K5DQSS8mi2gBjOFPsJ21FnyxQyGCLj89oVqyQ+kzR7K867etjmw7enBiNEuSVMXQTcL7phhQ1FcpKNvWkkkHAXGwIrBc4=
+	t=1716207174; cv=none; b=TZBtQKX2ajXsWGhqYzHKidIersYSc0MApUlIl//MBcwGP8UEhAE/O7URsIr/DhtUaAExCJ/UAgNtGjoZU3SS5cov7RkgIuUPPZKIrokng6OZj8QRWxNHI0M9ZKIZ9IbmSz6Yk+DLPripoJhxs+6xuux+1m4UHc8rwZGIfRIRuP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716207173; c=relaxed/simple;
-	bh=bDrKpwdiQQO/7yqHHeSqz8kQDyfWunAboKt0w5ii6fE=;
+	s=arc-20240116; t=1716207174; c=relaxed/simple;
+	bh=ZrM9buBF+7o6VFKWXROwO7MpIS2e3+tniUIcYb9S9j0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=taBehKxSvIoealkQyjqG9k3J65N4eUZQciu6OJJ8QTBv5WQeJuw8vTUYzNylwnTmUcqnw2gGWYtKDF/GKoTPXneWuSQphvj0g0ngbFJgbsME2pZUwnJRt7ylUrEJnP2C9eA5fQLLY5HPB1ZjvrhcMWXR2grHbNNxSFmtVUKmyag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bFT4Abd0; arc=none smtp.client-ip=209.85.167.49
+	 In-Reply-To:To:Cc; b=XUJ5iysNcBj8q8mT+RMJxc6rf36t2tjNHDB821Jag130WmssxI78KQBXVhxIX1FHBd5OYkO9h6wNk/AaV5XH8e0xeNJqafwjxhdidaBEdUi4f6bhSXcF5y0hj+jJD9CKxPPa38LKmcaGdDki+1CzHcrbWQJCm7YAIttCXJdSNSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VCubSv7w; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-51f2ebbd8a7so5074741e87.2
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5238fe0cfc9so2472350e87.0
         for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 05:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716207170; x=1716811970; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716207171; x=1716811971; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EngRNEegfEjPtk1lyTiOuhRxh7ZIkugIZOeBU7wBZ0k=;
-        b=bFT4Abd0WwjxMpNb09Bwx0JPozMeZVdCYccypmvEZcCX/Xxw9x0MMOtMRYlBOxyker
-         DfEolPJjpIUZWWJWLbTCZv3tasiVar9QUoU/dvVi3hHK5+qZ3iqO+ry11oP/88YB0LE/
-         4dbJB8mJJajJZFXX1rym41IkxQV/zuFC5/+67ewdQD1W8RvRTRNdrtLQ1nCWfsuEUWUw
-         hDyU+alaOEi/jz4KQJlx1ZCzPBx59H0cG+cihlpf9tukRqXpbltXv2dVRn61WPp9BEA5
-         0pMdMUxRJvGGiLWO9QKGDACTFWmLaxwOXh6uKIQ0CtWjH87jCLl2viHt0NQ6tE5F5i7J
-         vq2A==
+        bh=M8rKQysuLyUxJHz0JlgckR0sJmCMpy02kHDsRfWeHc4=;
+        b=VCubSv7wkD9lh1kHTBAaYmn3ftTN9xXL/vt4vPIU2BgGK3zyASU3MAFm2aDdsx6ZIX
+         gyJSDKAG7yoU5jdKsqS2yfkDj8xKBeb7fUU9HozXYxcSJI31CtlsVcYAo24iJW5o99jS
+         7JyAFNmpNcVs5V0tIN35zKRwVy8BJi+D1Goe1RQQ/W0T/0Pl6qIuPxQWy200PzmeP48K
+         Y9ndQQb7ZYTnNIgC15XP4qOqo5t1TqgAzYZSI68OMHHmeYWt9x0hpSvMdEt6pc+43KiJ
+         3AxmkgX8yy6uI6BMGiJepN873+fbpz/fvjv2OF9LDmKnNnUj1EDOFTbRZlqv8W9iNTHv
+         CDPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716207170; x=1716811970;
+        d=1e100.net; s=20230601; t=1716207171; x=1716811971;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EngRNEegfEjPtk1lyTiOuhRxh7ZIkugIZOeBU7wBZ0k=;
-        b=f+GHuVCMJYzKQUKcY96EfNN/h9rTy/WxrDEei24DQE2IvAg3W/NokQ9tfVPeJe+2dG
-         DrXFB6USKFHeaDuSj24wxFVtUYfk5kvw00jv2UWt4NESWXHC1Ias7b72g3PFb0m7MUWd
-         e2Nez39S2ax8DgDKUql6dUlL+1/+fIj0HvZhr0XKBqvyP4M3xquNIsYdbOKBvA8qI6ZX
-         wgr5oLH4UEvKnD7GJ78G/zlKgFx0DUM1zkvX57spHB5f1h0uIiuQ8R4/BeUPtLNVmgq8
-         mfMlgQh13ESHTIr8H+gQQRo2Q4z9qRXE3uHs5QTATPb0UZxpstl+UXPgkfmPi9jEFf5f
-         hh4Q==
-X-Gm-Message-State: AOJu0YzgWslnl+ol9Xh9j67SLlkkOMQdzPnbLyLs8RbQYosj+tqIXaj1
-	5Rj5ZvTQZnbclqk9eX3N20YI7vng0AYuqgZDrF+WvW04oUxESrD4gALZPy+DzWA=
-X-Google-Smtp-Source: AGHT+IEYyPQvYUPUkStl7KT7W6EBwKTLfRV+KK4qV5SWFd+bL47S1rPoRfmfxHCn1nM/BJ6/LstSyw==
-X-Received: by 2002:a19:e05a:0:b0:518:ce4b:17ef with SMTP id 2adb3069b0e04-5221006cdd3mr19262792e87.60.1716207170564;
-        Mon, 20 May 2024 05:12:50 -0700 (PDT)
+        bh=M8rKQysuLyUxJHz0JlgckR0sJmCMpy02kHDsRfWeHc4=;
+        b=kF656VfcjrsIPSZyb0/wt2QfAK2u/FaFZYii4ClAMwJw5xyygZOXwvngWQgiJ5Ekdd
+         cVRLTWifh95u5eQuJ6zGRXQzZJy7NM46og72MN7ufx6SEvJwvRqT76x2IUTEFjZovpxX
+         bnMg0bHK0RJKcTpUL82L1YBS+Njk354GtYq0nyXvQlJ6iYCNG6R8FKYqbu+4jdgyOfYD
+         06cNr+CZjCE5QiKrvtnDNTxPWAlOEd0DcrcNQDiQh9PeOkLEhc9SY3AkichlDHK421kx
+         UkXA0trGxBjGHG6CmfKZoy3Mql3jwqQTLJzFi2q0OLv9Sp3ZLSSr/6OEbSwfwL3ZCZWK
+         AHQw==
+X-Gm-Message-State: AOJu0YwL1yttawlQ9xuBL3zF1dU7Zjb6LnA1xBVJti0Zoaqyk74CLSWp
+	aekXeziYO9e9ALj59hp4qczvNBD9Fntx2Z4wGc9irRWyzEwYWY6KuaZMjTqAHbQ=
+X-Google-Smtp-Source: AGHT+IEM/5lq5VbrxVRGPP3AdsXOfhy3gr/csJTCN6F5pjX5h0TynyHAHhOnBhGhqp1xs6FUoZ7GUQ==
+X-Received: by 2002:ac2:514d:0:b0:51f:5f6d:3fba with SMTP id 2adb3069b0e04-52407cddc4amr1877945e87.27.1716207171391;
+        Mon, 20 May 2024 05:12:51 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f35ad6c0sm4273682e87.30.2024.05.20.05.12.49
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f35ad6c0sm4273682e87.30.2024.05.20.05.12.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 20 May 2024 05:12:50 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 20 May 2024 15:12:47 +0300
-Subject: [PATCH 5/7] drm/msm/dpu: rework vsync_source handling
+Date: Mon, 20 May 2024 15:12:48 +0300
+Subject: [PATCH 6/7] drm/msm/dsi: parse vsync source from device tree
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240520-dpu-handle-te-signal-v1-5-f273b42a089c@linaro.org>
+Message-Id: <20240520-dpu-handle-te-signal-v1-6-f273b42a089c@linaro.org>
 References: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
 In-Reply-To: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -93,82 +93,112 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2812;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3299;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=bDrKpwdiQQO/7yqHHeSqz8kQDyfWunAboKt0w5ii6fE=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmSz49AMFTxVsOTQ6II89mW7JkSKQZyAIvHbgJH
- GxIP0WdhFKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZks+PQAKCRCLPIo+Aiko
- 1UxpB/0XrJ+wL2heNZBu+e/GS36+zBKxFzinOB9jN7LtSt7GELN2B2DbynOfvt1Z45kgyVqKx38
- UN2uXeXYzkKRWoWwfzbZw9tiKiKFA0OkCj/JCOS/Z9kGU4S0f3+/cCentspiGssxmouiLyKwG25
- 0xrAfeAo5Gh8C8hnUt6uPv3BqfuaQZByJMVTOxGtGnxkgDNloIXu85lrdgWcVdVAIvYe9p+bYGx
- tL20eForFg4k6aDr7uZxZ8VrZ59t9aFKdFHNWXuFu6wmwV9FW94bVoVFqNZqLQ5BJuIPA/cLTum
- BmBjE8Lxto1irvaPzlrAICxldSLjkHnye+trSYfynhWxLR+6
+ bh=ZrM9buBF+7o6VFKWXROwO7MpIS2e3+tniUIcYb9S9j0=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ5q3ne28q6Hfv7c8rj08x85Nxo/r11EX3Z6/SY11z/L/R
+ 2+84vurk9GYhYGRi0FWTJHFp6Blasym5LAPO6bWwwxiZQKZwsDFKQAX4WL/7xS82iIlxvv1T6cf
+ XYuZVFeEqqfvfCe3vrsj/bzLtdUXTq2wMfrVtnvZk3OCOlZF3i5GH/d235rE8tzPSJTh2sRzJyt
+ 1CiJk1ixNifbU/P1uTeVD3Z3had/ydmpND952fNkRoe7g9Nnvbol17Fud+WZxtlHVdoMDKxRuTn
+ 9+KURuhka6lmHf7XeTI37aWrZH8N6NXPPbjmX7PQFtFoOzqRUPD/G6JezJ+quT3PHw78eQ6R8Ub
+ zamxIVOfDHNoP+Curp4XT3P/53vdPw/hspvUHKNSGDTCWP+ntV334J5Te4WxXkcClw/TmQxWjNH
+ qMb/vFV477ennjx/8haJoPqProWPP95QOi3CL5ay7VoJAA==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The struct msm_display_info has is_te_using_watchdog_timer field which
-is neither used anywhere nor is flexible enough to specify different
-sources. Replace it with the field specifying the vsync source using
-enum dpu_vsync_source.
+Allow board's device tree to specify the vsync source (aka TE source).
+If the property is omitted, the display controller driver will use the
+default setting.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 +----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 5 ++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 2 ++
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi.h         |  1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c    | 11 +++++++++++
+ drivers/gpu/drm/msm/dsi/dsi_manager.c |  5 +++++
+ drivers/gpu/drm/msm/msm_drv.h         |  6 ++++++
+ 4 files changed, 23 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index bd37a56b4d03..b147f8814a18 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -743,10 +743,7 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
- 		vsync_cfg.pp_count = dpu_enc->num_phys_encs;
- 		vsync_cfg.frame_rate = drm_mode_vrefresh(&dpu_enc->base.crtc->state->adjusted_mode);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+index afc290408ba4..87496db203d6 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -37,6 +37,7 @@ struct msm_dsi {
  
--		if (disp_info->is_te_using_watchdog_timer)
--			vsync_cfg.vsync_source = DPU_VSYNC_SOURCE_WD_TIMER_0;
--		else
--			vsync_cfg.vsync_source = DPU_VSYNC_SOURCE_GPIO_0;
-+		vsync_cfg.vsync_source = disp_info->vsync_source;
+ 	struct mipi_dsi_host *host;
+ 	struct msm_dsi_phy *phy;
++	const char *te_source;
  
- 		hw_mdptop->ops.setup_vsync_source(hw_mdptop, &vsync_cfg);
+ 	struct drm_bridge *next_bridge;
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-index 76be77e30954..cb59bd4436f4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-@@ -26,15 +26,14 @@
-  * @h_tile_instance:    Controller instance used per tile. Number of elements is
-  *                      based on num_of_h_tiles
-  * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
-- * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
-- *				 used instead of panel TE in cmd mode panels
-+ * @vsync_source:	Source of the TE signal for DSI CMD devices
-  */
- struct msm_display_info {
- 	enum dpu_intf_type intf_type;
- 	uint32_t num_of_h_tiles;
- 	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
- 	bool is_cmd_mode;
--	bool is_te_using_watchdog_timer;
-+	enum dpu_vsync_source vsync_source;
- };
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index c4d72562c95a..c26ad0fed54d 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1786,9 +1786,11 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
  
- /**
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 1955848b1b78..e9991f3756d4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -543,6 +543,8 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
+ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+ {
++	struct msm_dsi *msm_dsi = platform_get_drvdata(msm_host->pdev);
+ 	struct device *dev = &msm_host->pdev->dev;
+ 	struct device_node *np = dev->of_node;
+ 	struct device_node *endpoint;
++	const char *te_source;
+ 	int ret = 0;
  
- 		info.is_cmd_mode = msm_dsi_is_cmd_mode(priv->dsi[i]);
+ 	/*
+@@ -1811,6 +1813,15 @@ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+ 		goto err;
+ 	}
  
-+		info.vsync_source = DPU_VSYNC_SOURCE_GPIO_0;
++	ret = of_property_read_string(endpoint, "qcom,te-source", &te_source);
++	if (ret && ret != -EINVAL) {
++		DRM_DEV_ERROR(dev, "%s: invalid TE source configuration %d\n",
++			__func__, ret);
++		goto err;
++	}
++	if (!ret)
++		msm_dsi->te_source = devm_kstrdup(dev, te_source, GFP_KERNEL);
 +
- 		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI, &info);
- 		if (IS_ERR(encoder)) {
- 			DPU_ERROR("encoder init failed for dsi display\n");
+ 	if (of_property_read_bool(np, "syscon-sfpb")) {
+ 		msm_host->sfpb = syscon_regmap_lookup_by_phandle(np,
+ 					"syscon-sfpb");
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index 5b3f3068fd92..a210b7c9e5ca 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -603,3 +603,8 @@ bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi)
+ {
+ 	return IS_MASTER_DSI_LINK(msm_dsi->id);
+ }
++
++const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi)
++{
++	return msm_dsi->te_source;
++}
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 912ebaa5df84..afd98dffea99 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -330,6 +330,7 @@ bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
+ bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
+ bool msm_dsi_wide_bus_enabled(struct msm_dsi *msm_dsi);
+ struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
++const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi);
+ #else
+ static inline void __init msm_dsi_register(void)
+ {
+@@ -367,6 +368,11 @@ static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_
+ {
+ 	return NULL;
+ }
++
++static inline const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi)
++{
++	return NULL;
++}
+ #endif
+ 
+ #ifdef CONFIG_DRM_MSM_DP
 
 -- 
 2.39.2
