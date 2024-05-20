@@ -1,73 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-20059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14E018C9CE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 14:12:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B449A8C9CE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 14:13:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 69F06B21ED0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 12:12:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 29FDBB22212
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 12:12:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D158E54669;
-	Mon, 20 May 2024 12:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0C2A54BF6;
+	Mon, 20 May 2024 12:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nFm1ByPZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UFRdGOuF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC9620311
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 12:12:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0422353E25
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 12:12:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716207169; cv=none; b=QTX/9nZ8eerCp3RX/y5UWxhpT1YAW+ZhldEhFBYC1UussGOzKKwdSZf6YyWGuiFu/7ISAeJSR1TNfmFXktz0WhAdpmVkcA1HnamH3ow8tgqLisAQDHrZaRxwRVqwvMWB9pRGa+/kEDoCx3gp4uVc8DeNpnagCSIAXiyYSfY2h84=
+	t=1716207170; cv=none; b=LJPjGRqjYMCtXTnaBxha1+peJuiXgKDOQXzttZxi15lYMRQNN7PmB8lHHOz3zTC1A4E7hddvt+MAQYmPVmA4tukRdVKec5sVZ4Re3OEkYerORqBshC6IBNVYQBwE/lwQGet1zjOmfFWz3laHqxMiPYJm0T2RabUldLsrQNYDJdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716207169; c=relaxed/simple;
-	bh=DX93PVbvVm550XJ59hPJYzMq0R5QP/h0qcUJAnqZViU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kC1qaYfZ3QvrYIk4urajeBjJp0r3dSIbWTZSYl3tuFLNufUVUntupBtO4FQFApG7seuyDt4I1D45vH9Y4YxR1GNM98+0Qq6f6nrLTBFWqVkd8ASl5PDlpMmwGQh95tCj9c38K/F9fhp2FZYDe1Nx8cjK8nd3tKJ9wo0OhjfBXtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nFm1ByPZ; arc=none smtp.client-ip=209.85.167.47
+	s=arc-20240116; t=1716207170; c=relaxed/simple;
+	bh=jse+EfinCh8AnjkQx3C/iJk2/gtirSq7agUZaG5U5so=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=CFEHCQVol1+riAmr5O7FtMeomsEgBBkJW2jGDV3lWUlkeurBHNzgUM9G5uUYME9B0EvGhDKdqQT13HVJRQecqNGtozUIDlDVtNbIdlok4n0a6qQvbk1rGAqnj7xDuvi3Xtx25W9nnIhuKw0Oc1h+OWUBIOhYMbJKVR9o4n3RVTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UFRdGOuF; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-51f4d2676d1so3393692e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 05:12:47 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51f1e8eaee5so3697441e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 05:12:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716207166; x=1716811966; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bH/LloORtAdJqakmZhy23BG1cTvef7l0ekgFCknTjPw=;
-        b=nFm1ByPZmbrlmEw+b05gshkP1ECE1nUEVHqv/UiMM1NVn4eNC1K/vN9fgR6ck9uILh
-         8OqIvRGfHB+jCJ8SAKLAPDIwRy8SzppV85q3T3tpyUAbYUujR2o1hfnJ9qG2u3PAqvTt
-         u9ubfwaTX2jO8Tiv0k6SbCj8HcjrgeTHMjKAkF9XItpCHCbNK2nyhZ86BjiolC/E9ZKH
-         0kdEcz1TzxpD4Q/9hHFr1/2aOR96RRL/Y3onJKHHEN1oRG/Vkoh+S51bxqZIUOOwITFM
-         PHAV/Aa4kTID5fwIHoIpu+hZiDiqblvX4/hU5VhlkuoDaZECyX604QDrRRcxJs+OuBlc
-         nxaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716207166; x=1716811966;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1716207167; x=1716811967; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bH/LloORtAdJqakmZhy23BG1cTvef7l0ekgFCknTjPw=;
-        b=q29bVfCtEHOSdA7RqcouFOwQa3drClVAeBe5r8Qn0CcmuauhJCBy7XDMi8XGUaPjPO
-         nRoBBSDEB/cSGnQK0IPXzvx5tDe2uJqvbzC5Y/MFf/fj0V3bw6rmTa8QQLgHICNVmsYB
-         pmLuWSzjlgnRzAlIVvVXO9OFprYIzNZ8Nn3Mio8nKeSPrsc3mvoi6fP190ZWOqpcBa/3
-         HJCnTxDyyOw32b2gsueBzyaViFN6ssStXG2Tu5B/1wG+JrDd5vEfu7f6gte+9YH6hn5y
-         ZLl8vfc9DVo+LjDeIcLOusdblURf70wWNKDrkZv6fQ2BHgpH24DZoaKm0h+eE5EK3g0C
-         1IqA==
-X-Gm-Message-State: AOJu0Yw1VgefHnoSWsAnH4KeHu0n5Vx2wHBxtC5gms82Q2fixP6iN3jy
-	r7c99DngDjnQ0FatUQMyVal46QIFWHvXBlXjJusDqRhLhdAG5zOUO2h81qd7HhM=
-X-Google-Smtp-Source: AGHT+IFLqYhkFTSfEMengeFM9Uixm1e8E4F2WchZdLT/7cV4/a/D9WE0HWBrmfZuNn4yGUJDqaS60w==
-X-Received: by 2002:a05:6512:3ca4:b0:51d:67a0:2433 with SMTP id 2adb3069b0e04-52210074979mr23298869e87.46.1716207166288;
-        Mon, 20 May 2024 05:12:46 -0700 (PDT)
+        bh=u5zLKnMtRb2Yx+jUatqEm2tktsnKzIpv+CHT4vbWSNo=;
+        b=UFRdGOuFXfIeuzvDBn8yMb888J+m7NbPIMOIjkzu0D5biRGt0o9C844GYDuTMCJjM+
+         0KL9ZJ5bG0O/p07LcmOEFK0YVz7spkIWI4Y22T4+Y8J+SiEGKtJmMr0dNo2nCbpOuIm/
+         UL6KZfupwAGH8q23aAuf6C6MghXSCwoVzInc6kx5tirXYUgzHgKZfGxXHuX92rUJEJQ2
+         1YIFwBjOEU0Pmknyzk1SSxVGWm8XY8cSaBnGmOP4AY+0KkaWnYvQD8XPeLY9jgv4hllO
+         d2H8myltyGi9RZJe5ot6Rp2RAlHHxIYgFU8qsib6MjtJhCNsL2AZ68y9exPXAuYdUR99
+         swmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716207167; x=1716811967;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=u5zLKnMtRb2Yx+jUatqEm2tktsnKzIpv+CHT4vbWSNo=;
+        b=Ct8c+77aJXpr9umeLCI/WWPLjEi/AyFWxegJrEHm1MEHuO9HpVrfdCZwbX45G2jMdG
+         gMg4r7uC8bUPyBABF79OJSinW88MSssawtEwzGTpegHOSpIL0IvRip9AUf9VYqwWFkin
+         fkMHDg6oUPKnr932SayQy8B4/l3+rKCi0INPZc+n2yBwunmQuo0lsrZMpjn4Ie0Udatu
+         iOntl/xo2yy9/4m+//OqOZAhcYM2aTfPw4mq8fenwhffkpzr8cNhiV+LIXxmfyBzsS3t
+         GUvPzwI+s1nIimJ5AoSvIebJ+wMR3e7VJzAK0AWfnbCxSqyD/cFzAJCVpzEAuMd5KMOM
+         wRig==
+X-Gm-Message-State: AOJu0YyRWc2IGIXOnzhew/z0c5aYNMR3Yn3n9RITH+VP58hTufY8bVud
+	QjdIuVdSjA3ADxBBD8v+Q6cQNBdxrpIzmsj8vZf4xq+XX4mt+ofAd3NXoWiJcRc=
+X-Google-Smtp-Source: AGHT+IFmCz2UjdpX2jReHWPeQmSe3l39pMsynvOjbskQ/rKPTL0Rxr5iRCVGRc6KIMGt0K9PVz9jrQ==
+X-Received: by 2002:ac2:504a:0:b0:523:7680:d07 with SMTP id 2adb3069b0e04-52407ac106bmr2029575e87.6.1716207167313;
+        Mon, 20 May 2024 05:12:47 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f35ad6c0sm4273682e87.30.2024.05.20.05.12.45
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-521f35ad6c0sm4273682e87.30.2024.05.20.05.12.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 May 2024 05:12:45 -0700 (PDT)
+        Mon, 20 May 2024 05:12:46 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 0/7] drm/msm/dpu: handle non-default TE source pins
-Date: Mon, 20 May 2024 15:12:42 +0300
-Message-Id: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
+Date: Mon, 20 May 2024 15:12:43 +0300
+Subject: [PATCH 1/7] dt-bindings: display/msm/dsi: allow specifying TE
+ source
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,9 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADo+S2YC/x2MQQqAIBAAvxJ7bkHNIvpKdDDdakFMtCKI/p50H
- IaZBzIlpgxD9UCiizPvoYCsK7CbCSshu8KghNKilRpdPLEI5wkPwsxrMB571XWNFUrK2UFJY6K
- F7387Tu/7Ab5JQl9mAAAA
+Message-Id: <20240520-dpu-handle-te-signal-v1-1-f273b42a089c@linaro.org>
+References: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
+In-Reply-To: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
  Marijn Suijten <marijn.suijten@somainline.org>, 
@@ -92,55 +94,66 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1857;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1898;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=DX93PVbvVm550XJ59hPJYzMq0R5QP/h0qcUJAnqZViU=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ5q3nc2rPoM8cbUfKw6Z8B5c9+LDB33zPGWRzaH3z+7hS
- Hm2PaS4k9GYhYGRi0FWTJHFp6Blasym5LAPO6bWwwxiZQKZwsDFKQATiXnL/j9yqUNBoLjfdW3N
- PXxeK15W8Va0J/3cIbd2dfrSRMHSJq+vwpu9Q5ZW9vZcu3TP9uyJH4vK8+fvirBwN1cMYvC7NYl
- 900H1thDroFkmuRPWrP/lMOdMSLS2yHSPLrZTlaed9zJd5pL2toidc/3VaduWHYURah9NV6Zt+e
- V/5vGa75OjjLySrN3qOkoLa+/e/C2Vrvkurc7mzmKzNoUL+4+Kb0s83V2oeyCsq8sk6MWGJaZZP
- Mc+7Lcuj3kVypHT4KHLlf5C6AGzwGJdzTsiBWVC2x57njoR92NDi8210pBrgvkrmZUXljzgXahl
- yRsk0DxrhrvnO9PwZ+zuhxhSopQrVHr6Xfw6NymX3/wFAA==
+ bh=jse+EfinCh8AnjkQx3C/iJk2/gtirSq7agUZaG5U5so=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmSz48jwip4m8plivDyhrPuFWOv0Ug1EGy9W0K9
+ cDJzlc2sZeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZks+PAAKCRCLPIo+Aiko
+ 1Y8uB/985G/uHWGA0fZD2EfZLAaCrUvpeIOFfLeCFEa028C+6blQHf0FSdKZqvw3Zj2Pzfptf9k
+ 4mn6ZhLgH3HoSk9Lur7syvZFJflVZn9Zyxo2U9VTjxi+78uTiZuZevLadDhhwvjNTghv6uqvqMH
+ oDXwGp6eReQbD5gvE+TYsw3cn/6zdGzRcus9oMvln5mkk91k/aoLNpTaBGJ3y5wREkYW0xC22QB
+ NTKhnNxwNfYb40pqUpqyMwMIXJp4dwrM8pITaxgYhp1RoskLo7YpNb1tNMWTSmM2LbpkqXyb4zV
+ Zt71RD+a1F2Wvdbr2bBMwR4o1PYlHQF+NVi+mylASA5FrqWX
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Command-mode DSI panels need to signal the display controlller when
-vsync happens, so that the device can start sending the next frame. Some
-devices (Google Pixel 3) use a non-default pin, so additional
-configuration is required. Add a way to specify this information in DT
-and handle it in the DSI and DPU drivers.
+Command mode panels provide TE signal back to the DSI host to signal
+that the frame display has completed and update of the image will not
+cause tearing. Usually it is connected to the first GPIO with the
+mdp_vsync function, which is the default. In such case the property can
+be skipped.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Dmitry Baryshkov (7):
-      dt-bindings: display/msm/dsi: allow specifying TE source
-      drm/msm/dpu: convert vsync source defines to the enum
-      drm/msm/dsi: drop unused GPIOs handling
-      drm/msm/dpu: pull the is_cmd_mode out of _dpu_encoder_update_vsync_source()
-      drm/msm/dpu: rework vsync_source handling
-      drm/msm/dsi: parse vsync source from device tree
-      drm/msm/dpu: support setting the TE source
+ .../bindings/display/msm/dsi-controller-main.yaml        | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
- .../bindings/display/msm/dsi-controller-main.yaml  | 16 ++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 11 ++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  5 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        | 26 ++++++------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h         |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 44 ++++++++++++++++++++
- drivers/gpu/drm/msm/dsi/dsi.h                      |  1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c                 | 48 +++++-----------------
- drivers/gpu/drm/msm/dsi/dsi_manager.c              |  5 +++
- drivers/gpu/drm/msm/msm_drv.h                      |  6 +++
- 12 files changed, 106 insertions(+), 62 deletions(-)
----
-base-commit: 75fa778d74b786a1608d55d655d42b480a6fa8bd
-change-id: 20240514-dpu-handle-te-signal-82663c0211bd
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+index 1fa28e976559..c1771c69b247 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -162,6 +162,21 @@ properties:
+                 items:
+                   enum: [ 0, 1, 2, 3 ]
+ 
++              qcom,te-source:
++                $ref: /schemas/types.yaml#/definitions/string
++                description:
++                  Specifies the source of vsync signal from the panel used for
++                  tearing elimination. The default is mdp_gpio0.
++                enum:
++                  - mdp_gpio0
++                  - mdp_gpio1
++                  - mdp_gpio2
++                  - timer0
++                  - timer1
++                  - timer2
++                  - timer3
++                  - timer4
++
+     required:
+       - port@0
+       - port@1
+@@ -452,6 +467,7 @@ examples:
+                           dsi0_out: endpoint {
+                                    remote-endpoint = <&sn65dsi86_in>;
+                                    data-lanes = <0 1 2 3>;
++                                   qcom,te-source = "mdp_gpio2";
+                           };
+                   };
+            };
 
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
