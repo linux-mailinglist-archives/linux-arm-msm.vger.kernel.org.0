@@ -1,123 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-20080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC8208CA26C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 20:58:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A2718CA2B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 21:29:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80FBE1F21A66
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 18:58:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9BA2D1F20F99
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 19:29:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22F764AEE3;
-	Mon, 20 May 2024 18:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741451384B3;
+	Mon, 20 May 2024 19:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bAPnp4Sp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FhEYg9TS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DE31DFCB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 18:58:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFBE138496;
+	Mon, 20 May 2024 19:29:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716231534; cv=none; b=BWuvq4Qcc//crIKNwOwCxd0Zkif4PICvTdcnlzZYoRy8xF8mjtWdZfLkws3f52iZuntLckYnmfUACrHBkSidqQLDqKFiL+9E5988nKvsvQI1Jdi2oy2KVn1KFjNtcJUAueVelIGOS1htYokZn7b5unBQe1Fvy0XQnVGe8zxI6WE=
+	t=1716233347; cv=none; b=NzFlnp4sTbiZL1ez4fCScyulppBnudDuXYfZIB9uppmP2RUJRvqpwrDMOLUIc/SJOGkvrlDGbKxYTnOLnw+jaN8MaF5x+v+oZ1+pyDq8NkPdSsaLDNFK755Q8LWPC85Y2EwWpLtnbCmnbfxLmHmUhYDPIuLabcrHkW/6YPUJgtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716231534; c=relaxed/simple;
-	bh=fBnCjpKJ7CF65HGWNGXJZSrAbDCCX00X0RQT571Lttc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gws6h/9KYOWh+S28/7Si6JgOurc8G3iLeKQdeYPd7H93OxNIZgGVjqDFcwlWKUO+7II0PhQYQNi9hvPPf9danYTmUr0jfHw3WKNR8vy1SKOcFhZj7RFRyP3gC9I0WIqtSssTmBJlbwMtPIZZ2AYSZLxrxCkX06+mLlnsrFQIQ1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bAPnp4Sp; arc=none smtp.client-ip=209.85.167.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3c99e8958faso1470073b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 11:58:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1716231531; x=1716836331; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=df0l1z5z3FCtw3Ch204FxFA5rR9YqNy64rwyV2fw88o=;
-        b=bAPnp4SptxmoFbRkuGl/PzzDsgHaUGsjy39ofUdnmmyevTSzfewDziz6/Of40xjtzg
-         l35Dfp1U9E8PyIfqd2SkXywtz6vesOwcDLdGFmRNBawkiqpzo+7cDVsWeCvKAfoZqH43
-         BbIm6em4fSGrDT4pEy3jOT22IXwqXiod+TU1I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716231531; x=1716836331;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=df0l1z5z3FCtw3Ch204FxFA5rR9YqNy64rwyV2fw88o=;
-        b=RktbMqDV6fzBMdZ33fZx0VWuYz0tXK9LsIzSYludVJ5vrpxoV5+GYzKz4EmugWVGmF
-         BNfze/gLrhXLZMPpcYxUaZ/AnuM8/vFx89Rs0gUbO70gdywCBoFYlJKKOMGZKgx24P17
-         PEdWy1Hrbo40kN7Y0ozzli3Tunlp7Q9p8HP4cP6fQkIS6qdUNLHkkenGZuE8hOiKq6+o
-         LKLYJ5P/MSIT8/WppwRbR+Fvr4ZrHuldyj1IU+gVHnsxzxOFZAued4y4DLnGSsg+92ML
-         Rn69O+w1kZ/UaW3+S3QqJaXl3GMMuDMjLnCWwbIvGAcHIunmNKWt34Y1nefGdpUU5Q11
-         jOow==
-X-Forwarded-Encrypted: i=1; AJvYcCUoGSeTC4s9EQFKUA+XOwr7nM6h2GKXhF1DbH3OZHlzPEoMNhURlR/EfxUvkvsy5GhTrcUkGdy3yuCoeUdtSZAnDmHyv+WFEmVQsZsawQ==
-X-Gm-Message-State: AOJu0YwDyggGLMiYUAigV/4zHmzvTH6JGknTCdYJewFZiSU2WDP4RpeV
-	GKFpUNERp/UlEARii2+4pGyukjbWJeQ5FXQsiVJRH/nU00S/78ahvohuvWWn/AS98YKfPp9u74s
-	=
-X-Google-Smtp-Source: AGHT+IHurSqRqZlVTDsssQOlCmNpMS5b/+5qEkLoUDZiWzULbbmxd2NFCv7q0ZoanGOgUcU7hsWKDA==
-X-Received: by 2002:a05:6808:30a9:b0:3c7:2d4a:d2b4 with SMTP id 5614622812f47-3c9971db286mr33388410b6e.52.1716231530887;
-        Mon, 20 May 2024 11:58:50 -0700 (PDT)
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com. [209.85.160.174])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-792eb161bbcsm734867485a.101.2024.05.20.11.58.50
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 May 2024 11:58:50 -0700 (PDT)
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-43f87dd6866so388301cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 11:58:50 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCU6Jysvy4HGCzpx/NIcnC+VbYBm40cGy3DM6G2zerTEGZPB5f394rLg4wr46yqKIR1kaoiv/Mjt6rc0KmFfFhXX+A0V+zlqdtvSmF6Dhw==
-X-Received: by 2002:a05:622a:1918:b0:43d:a002:b with SMTP id
- d75a77b69052e-43f7a91b195mr5561141cf.9.1716231529626; Mon, 20 May 2024
- 11:58:49 -0700 (PDT)
+	s=arc-20240116; t=1716233347; c=relaxed/simple;
+	bh=XUJS0Nr3vYVX0F8uk+6ZJ1bmsN6ximLLLBQTiJ2ot4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VfKUS3WVp4YhsWbWgHXL4yUj6Y6PpefL2AyqIxsD5Cgzn0Sroc0iTCALgwLCc1EJ/zdr0OZYvAX4RbDOTQdiBzPMaHAy8ucai121MaBiq9lKrfU0LWQ3fkPvGJEiDuyqJe7392GAFa+y/ZQ02QO56QRIL1GeLlTnHTbj/V/RcDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FhEYg9TS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910FBC2BD10;
+	Mon, 20 May 2024 19:29:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716233346;
+	bh=XUJS0Nr3vYVX0F8uk+6ZJ1bmsN6ximLLLBQTiJ2ot4E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FhEYg9TSNmjmqsi4z5nUbjshugz1fFBtkFH2PhPoUnp6gGAGsjyZC6Mg9+o9NMDEE
+	 Y/gcdIwhMguzNueJwnw0GgYHoBUBuvU+3CVKqGXKBdHD1mhHXwzYFmZKsN3tsaLCSU
+	 Zpom41x7pESpNRUxUfMw8FxCP4MJptcduDANtfdd1oLaaoM3pizIr6JCl5klPQq12M
+	 /++/5H7iwoD+Lp8p56BLpH0yXkecBBes0MZutT1l3o6T5blQ5B7HrYgYZnCsaNS+Kf
+	 Rv34ZUkPgBHQHEoH3U2klhWMaNUxCRFD0o5tHLonTogbTfAWy74SOq0N5IwTaYrjq4
+	 1jFUl/FrKH+nA==
+Date: Mon, 20 May 2024 14:29:05 -0500
+From: Rob Herring <robh@kernel.org>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	Shivendra Pratap <quic_spratap@quicinc.com>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] dt-bindings: power: reset: Convert mode-.*
+ properties to array
+Message-ID: <20240520192905.GA1345016-robh@kernel.org>
+References: <20240515-arm-psci-system_reset2-vendor-reboots-v3-0-16dd4f9c0ab4@quicinc.com>
+ <20240515-arm-psci-system_reset2-vendor-reboots-v3-1-16dd4f9c0ab4@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240507230440.3384949-1-quic_abhinavk@quicinc.com>
-In-Reply-To: <20240507230440.3384949-1-quic_abhinavk@quicinc.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 20 May 2024 11:58:33 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Us-459kG-h1xT2+ffuSGuTLJ-UrJBD-5seRh4jAeHxmQ@mail.gmail.com>
-Message-ID: <CAD=FV=Us-459kG-h1xT2+ffuSGuTLJ-UrJBD-5seRh4jAeHxmQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: remove python 3.9 dependency for compiling msm
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, seanpaul@chromium.org, 
-	swboyd@chromium.org, quic_jesszhan@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240515-arm-psci-system_reset2-vendor-reboots-v3-1-16dd4f9c0ab4@quicinc.com>
 
-Hi,
-
-On Tue, May 7, 2024 at 4:05=E2=80=AFPM Abhinav Kumar <quic_abhinavk@quicinc=
-.com> wrote:
->
-> Since commit 5acf49119630 ("drm/msm: import gen_header.py script from Mes=
-a"),
-> compilation is broken on machines having python versions older than 3.9
-> due to dependency on argparse.BooleanOptionalAction.
->
-> Switch to use simple bool for the validate flag to remove the dependency.
->
-> Fixes: 5acf49119630 ("drm/msm: import gen_header.py script from Mesa")
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On Wed, May 15, 2024 at 04:09:44PM -0700, Elliot Berman wrote:
+> PSCI reboot mode will map a mode name to multiple magic values instead
+> of just one. Convert the mode-.* property to an array. Users of the
+> reboot-mode schema will need to specify the maxItems of the mode-.*
+> properties. Existing users will all be 1.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/registers/gen_header.py | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+>  .../devicetree/bindings/power/reset/nvmem-reboot-mode.yaml |  4 ++++
+>  .../devicetree/bindings/power/reset/qcom,pon.yaml          |  4 ++++
+>  .../devicetree/bindings/power/reset/reboot-mode.yaml       | 14 ++++++++++++--
+>  .../bindings/power/reset/syscon-reboot-mode.yaml           |  4 ++++
+>  4 files changed, 24 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
+> index 627f8a6078c2..03b3b9be36de 100644
+> --- a/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
+> +++ b/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
+> @@ -30,6 +30,10 @@ properties:
+>  
+>  allOf:
+>    - $ref: reboot-mode.yaml#
+> +  - patternProperties:
+> +      "^mode-.*$":
+> +        items:
+> +          maxItems: 1
+>  
+>  required:
+>    - compatible
+> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> index fc8105a7b9b2..95964e04d5d6 100644
+> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> @@ -68,6 +68,10 @@ allOf:
+>      then:
+>        allOf:
+>          - $ref: reboot-mode.yaml#
+> +        - patternProperties:
+> +            "^mode-.*$":
+> +              items:
+> +                maxItems: 1
+>  
+>        properties:
+>          reg:
+> diff --git a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
+> index ad0a0b95cec1..feb70609bb5f 100644
+> --- a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
+> +++ b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
+> @@ -28,13 +28,23 @@ description: |
+>  
+>  properties:
+>    mode-normal:
+> -    $ref: /schemas/types.yaml#/definitions/uint32
+> +    $ref: "#/patternProperties/^mode-.*$"
+>      description:
+>        Default value to set on a reboot if no command was provided.
+>  
+>  patternProperties:
+>    "^mode-.*$":
+> -    $ref: /schemas/types.yaml#/definitions/uint32
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    # Limit to 1 outer cell, e.g. no mode-normal = <0>, <1>;
+> +    maxItems: 1
 
-FWIW, it looks like the commit this is fixing is now present in
-Linus's tree. Is there any plan to land this fix? It would be nifty if
-it could somehow make it in time for -rc1 so I don't need to track
-down this patch every time I need to build a subsystem tree for the
-next several weeks...
+So it's an array, not a matrix...
 
--Doug
+> +    # Note: to reference this schema, the allOf should include hint about
+> +    # maxItems for the inner cell
+> +    # allOf:
+
+Don't need allOf here.
+
+> +    # - $ref: /schemas/power/reset/reboot-mode.yaml#
+> +    # - patternProperties:
+> +    #     "^mode-.*$":
+> +    #       items:
+> +    #         maxItems: 1
+>  
+>  additionalProperties: true
+>  
+> diff --git a/Documentation/devicetree/bindings/power/reset/syscon-reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/syscon-reboot-mode.yaml
+> index b6acff199cde..bf6d68355e7f 100644
+> --- a/Documentation/devicetree/bindings/power/reset/syscon-reboot-mode.yaml
+> +++ b/Documentation/devicetree/bindings/power/reset/syscon-reboot-mode.yaml
+> @@ -31,6 +31,10 @@ properties:
+>  
+>  allOf:
+>    - $ref: reboot-mode.yaml#
+> +  - patternProperties:
+> +      "^mode-.*$":
+> +        items:
+> +          maxItems: 1
+>  
+>  unevaluatedProperties: false
+>  
+> 
+> -- 
+> 2.34.1
+> 
 
