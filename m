@@ -1,165 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-20069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD94B8C9D2B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 14:26:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05B688C9D73
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 14:35:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 618261F22A4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 12:26:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE340283E77
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 May 2024 12:35:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84DCB54675;
-	Mon, 20 May 2024 12:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2A3B5647B;
+	Mon, 20 May 2024 12:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dLTTahqY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tojo2ZU6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538E856771;
-	Mon, 20 May 2024 12:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3D25579F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 12:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716207970; cv=none; b=GWQWJFv6lm2laZQqHbCqwl/tM5l9b90gS5MoHFv5CNJXJQPjwEwJ6Viv7ZQKl5v4alDvzVVeo69hhgNg01AUHaJl6yovE5vOIGGRrJP7jYPGy8yulyXW8kh1F8XbBDOMXHLEWB3Do5lxjrrLStwC7O3uisKZd4J0gLOMa8eWFF0=
+	t=1716208404; cv=none; b=AgSvMLr08YDV3ZMESf47JX0aGA3tkyXbzsLOQl9R3CawFQRIkN8VPLASufDbs27lUagwNB0OfphINZkZoODuS0MYFozf2RljCQaLDx0BMkGeC0XPxwMx7MC92P1irMHPrsf29jmYcYe5m9mLubDEZ2obl5MDahsOm3PcEir+Yeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716207970; c=relaxed/simple;
-	bh=d7Y1ljsOCE7t6xm7XGN8IEteQpcaac3Sby7CXgtkK9E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KqAsl7efIbP5OV+QjQ1Ounsvj6D9uVU0LwkmiHCZme3nYqJdWo7TLpCBBHhcbdKlLcbNe13oegHFAr8ECzDQIKkKbGxFTOZ+AqGVsWR+d9TiT+KrJselF85b9OfH/jbXL7tlI5ROUADCVTQGw9s61iJE6nGz4ULb4m3doBgSHp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dLTTahqY; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44K0cjP6028797;
-	Mon, 20 May 2024 12:26:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=24G0fJbpP5ZtIf9WPSrIaKcIL6MEzJUu2OpwT2Cfhfc=; b=dL
-	TTahqYFdb6CobcminT05NEnz7pW+TzCL1jfWnkhZCUjbw/w/XGDCvreZxjBwUUgo
-	F6CHVXs0cPT/adbMcApDGCvzhd3r6vM9Ke9T7uKYcKK60hSop4b50E/mVjBeNhR1
-	QHUridpLVIE9CjCZiqxHl2xkf6ySvLAz+nk94rYd9/rBcD4itCsYowFuOSQSzugT
-	BKEzlwyGKr6QpYkV/XOg3rK8llRJGDOB2NTPgJEbUHFftUQ8yc1GEielRQTLG98u
-	m+q/i5li/vU9TDc45OXLuZkWnZyPsZ/CoiYSWBCPnWWZlkfQlOUG7Um3wFw7TqBi
-	SGaX7QYv6Y+r9EiyDApQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6pqak57k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 May 2024 12:26:03 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44KCQ3fN031330
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 20 May 2024 12:26:03 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 20 May
- 2024 05:26:01 -0700
-Message-ID: <a39b3b85-8abe-52fd-e4b9-81720ffcd6a1@quicinc.com>
-Date: Mon, 20 May 2024 17:55:49 +0530
+	s=arc-20240116; t=1716208404; c=relaxed/simple;
+	bh=jPAr9I1d71ZVqQYfQqvOSswv31/4CUL5uXtTYAcFx94=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YuxtyKr9hG6wfwctJEh5PD6lFQ8K7n+aVvfXMVg98U2EUDC0JNAqs7ueAOIvpeh7RB4Ilpl3qZblqloZCstxj0L00kwRAbGg0I7g0pytDac0im0RjF+MHF8eHktNKJbi3gCMGZmyqlSIOl2dZ5rDfZjbc+uTc7cQeMFONtVC3rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tojo2ZU6; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-62050e00cfdso20748877b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 05:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716208402; x=1716813202; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ovkEWaQCA7eBKIybUwU0MV7EJ/U35ld+RDcvKJwMYS0=;
+        b=tojo2ZU6RZn7c/XhYkWI1paZIa9fxIQYptXlqJdRZuLCbtMKS9FLeOgcPF/ITmzRnh
+         GwOvLpe77VhreZ0QBkBQacqpsxZwk/1pa/jB2Eh53A+gZ5DA0TtIG6wI2x3ynBu6GDsC
+         DJs4t8AzGk+Y9LMaf2rWtunONDM3vkodMhEd+hmSkmPKMKITAoU0k75APyvc+EkMC/ll
+         a8rl+basBw0QzpRNQIRi/yXWy4Vhx9Wuuf6OSDyEAMdK6wJt1eLjjvgcduC4xJYC2uYV
+         uNuO6J0/cM53aeBjVZyHpn8sCzT+YQ2w52h8c/w2vKr76Pv3Sm85Kig1seNUXQvrQ6ka
+         EyUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716208402; x=1716813202;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ovkEWaQCA7eBKIybUwU0MV7EJ/U35ld+RDcvKJwMYS0=;
+        b=hm1XQklJBdUrZ3CGe3SF1JdbAqd25b4ytWKC8DEn3aBHSSLhWQt/PpgRuvnI8xhXHj
+         tKSCdf9N48wEIuucOz4iCeA62EE0ATti7ZN8fqi18uijJlVYWwPkCIEkdnzGEAbq4Zz7
+         53vneIOdrAXsfaX8idvyZlDPxmOlzZy/OZeUZs/XO2PbckP+ihUjemCxPAAtjavlpq/+
+         /DWy7UHyo/ENmnQMWd9c70chSSbha0QOCsKw0qhHp0aqF8Vqld/K3oYMbmAZhqrSbEoP
+         1oXf50t0jh6K0xQPa2MbvMMJEV+lVFlEhnGONR2Ld72H+1Oawkg+3UVUmoHYOQEmxtmU
+         aKIA==
+X-Forwarded-Encrypted: i=1; AJvYcCUxTiejRv28ZsmfN9JkyZhSMmHOk9PGhQrjP4/HUR2fBOXsFysAaK0Q4Ijj5mBwYB/GZRkjVB9QnVyhLKNbuRebEawTGDWhoStZlOnGiA==
+X-Gm-Message-State: AOJu0YwcTLnvtHn2cgWgowlCALkwPegPVwRW6Pdvc3YZ+zKk3ZrDl19L
+	+NdGESkmUsm1wu7aVySYmEQGFPFZlA+W9AgsAfNu19PzXU/9PgsmpTd7owCOISrOISOgnqspgHr
+	Oj38q15H0MWYxWHsnjHQzDy+B8p4BdloVJDNQlA==
+X-Google-Smtp-Source: AGHT+IGs0xMhNjXBQwaD1yEBLjIanzDkrGthytqkRz05Fj5APi4G3kf/ZJJYkvM5bAuoB6pl+p9xmBERmiYfprGkWU8=
+X-Received: by 2002:a25:ada8:0:b0:de6:17e7:ddd1 with SMTP id
+ 3f1490d57ef6-dee4f30c3f1mr26969452276.34.1716208401987; Mon, 20 May 2024
+ 05:33:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] firmware: qcom_scm: Give page_aligned size for dma api's
-Content-Language: en-US
-To: Elliot Berman <quic_eberman@quicinc.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1715887976-1288-1-git-send-email-quic_mojha@quicinc.com>
- <20240516131759140-0700.eberman@hu-eberman-lv.qualcomm.com>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20240516131759140-0700.eberman@hu-eberman-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: S5JlrgdeOYLzTLOnE-WQ0zTsYk_ODa7E
-X-Proofpoint-ORIG-GUID: S5JlrgdeOYLzTLOnE-WQ0zTsYk_ODa7E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.11.176.26
- definitions=2024-05-20_05,2024-05-17_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 suspectscore=0 bulkscore=0 mlxscore=0 adultscore=0
- spamscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2405010000 definitions=main-2405200104
+References: <cover.1715691257.git.jani.nikula@intel.com> <93d6c446ed4831dadfb4a77635a67cf5f27e19ff.1715691257.git.jani.nikula@intel.com>
+ <i7labithttzkv62nybrtpucoklycz76ykgj2zjf3qnwycjjsyt@wck7s5uxg2bt> <871q5wu0u2.fsf@intel.com>
+In-Reply-To: <871q5wu0u2.fsf@intel.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 20 May 2024 15:33:09 +0300
+Message-ID: <CAA8EJprJg_yzembu2zb3=r8gGTEbq3fiYqpdNFQyBSGw+9+qcA@mail.gmail.com>
+Subject: Re: [PATCH 08/11] drm/msm/dp: switch to struct drm_edid
+To: Jani Nikula <jani.nikula@intel.com>
+Cc: Douglas Anderson <dianders@chromium.org>, dri-devel@lists.freedesktop.org, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks for the review..
+On Mon, 20 May 2024 at 15:25, Jani Nikula <jani.nikula@intel.com> wrote:
+>
+> On Sun, 19 May 2024, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+> > On Tue, May 14, 2024 at 03:55:14PM +0300, Jani Nikula wrote:
+> >> Prefer the struct drm_edid based functions for reading the EDID and
+> >> updating the connector.
+> >>
+> >> Simplify the flow by updating the EDID property when the EDID is read
+> >> instead of at .get_modes.
+> >>
+> >> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+> >>
+> >> ---
+> >
+> > The patch looks good to me, I'd like to hear an opinion from Doug (added
+> > to CC).
+> >
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Thanks!
+>
+> > What is the merge strategy for the series? Do you plan to pick up all
+> > the patches to drm-misc or should we pick up individual patches into
+> > driver trees?
+>
+> I think all of the patches here are connected in theme, but
+> independent. Either way is fine by me.
+>
+> >
+> >
+> >>
+> >> Cc: Rob Clark <robdclark@gmail.com>
+> >> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> >> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> Cc: Sean Paul <sean@poorly.run>
+> >> Cc: Marijn Suijten <marijn.suijten@somainline.org>
+> >> Cc: linux-arm-msm@vger.kernel.org
+> >> Cc: freedreno@lists.freedesktop.org
+> >> ---
+> >>  drivers/gpu/drm/msm/dp/dp_display.c | 11 +++----
+> >>  drivers/gpu/drm/msm/dp/dp_panel.c   | 47 +++++++++--------------------
+> >>  drivers/gpu/drm/msm/dp/dp_panel.h   |  2 +-
+> >>  3 files changed, 20 insertions(+), 40 deletions(-)
+> >
+> > [skipped]
+> >
+> >> @@ -249,10 +228,12 @@ void dp_panel_handle_sink_request(struct dp_panel *dp_panel)
+> >>      panel = container_of(dp_panel, struct dp_panel_private, dp_panel);
+> >>
+> >>      if (panel->link->sink_request & DP_TEST_LINK_EDID_READ) {
+> >> +            /* FIXME: get rid of drm_edid_raw() */
+> >
+> > The code here can get use of something like drm_edid_smth_checksum().
+> > 'Something', because I could not come up with the word that would make
+> > it clear that it is the declared checksum instead of the actual /
+> > computed one.
+>
+> This is an annoying one, to be honest, and linked to the historical fact
+> that we filter some EDID blocks that have an incorrect checksum.
 
-On 5/17/2024 1:58 AM, Elliot Berman wrote:
-> On Fri, May 17, 2024 at 01:02:56AM +0530, Mukesh Ojha wrote:
->> If we disable CONFIG_ZONE_DMA32 to make the selection of DMA
->> memory from higher 4GB range. dma_alloc_coherant() api usage
->                                  dma_alloc_coherent()
->> inside qcom_scm_pas_init_image() which usage scm 32bit device
->> will fail for size of data passed less than PAGE_SIZE and
->> it will fallback to buddy pool to allocate memory from which
->> will fail.
-> 
-> I interpreted this as:
-> 
-> When CONFIG_ZONE_DMA32 is disabled, dma_alloc_coherent() fails when size
-> is < PAGE_SIZE. qcom_scm_pas_init_image() will fail to allocate using > dma_alloc_coherent() and incorrectly fall back to buddy pool.
-> 
-> This justification seems incorrect to me. None of the other
-> dma_alloc_coherent() users are page-aligning their requests in scm
-> driver. Is something else going on?
+It is a part of the DP test suite if I remember correctly.
 
-For SCM protection, memory allocation should be physically contiguous, 
-4K aligned and non-cacheable to avoid XPU violations as that is the
-granularity of protection to be applied from secure world also what if,
-there is a 32-bit secure peripheral is going to access this memory which 
-  for some SoCs and some not.
+>
+> (Some blocks, yes. We don't filter all blocks, because there are some
+> nasty docks out there that modify the CTA block but fail to update the
+> checksum, and filtering the CTA blocks would render the display
+> useless. So we accept CTA blocks with incorrect checksums. But reject
+> others. Yay.)
+>
+> IMO the real fix would be to stop mucking with the EDID, and just expose
+> it to userspace, warts and all. We could still ignore the EDID blocks
+> with incorrect checksum while using it ourselves if we want to. And with
+> that, we could just have a function that checks the last EDID block's
+> checksum, and stop using this ->real_edid_checksum thing.
+>
+> Anyway, yes, we could add the function already.
+>
+> BR,
+> Jani.
+>
+> >
+> >> +            const struct edid *edid = drm_edid_raw(dp_panel->drm_edid);
+> >>              u8 checksum;
+> >>
+> >> -            if (dp_panel->edid)
+> >> -                    checksum = dp_panel_get_edid_checksum(dp_panel->edid);
+> >> +            if (edid)
+> >> +                    checksum = dp_panel_get_edid_checksum(edid);
+> >>              else
+> >>                      checksum = dp_panel->connector->real_edid_checksum;
+> >>
+>
+> --
+> Jani Nikula, Intel
 
-So, we wanted to keep this common and align across multiple SoCs to do
-the allocation from CMA and add a pad to the memory passed to secure 
-world Also, this also enables us to keep CONFIG_ZONE_{DMA|DMA32} 
-disabled which is a significant overhead.
 
-> 
->>
->> Convert the size to aligned to PAGE_SIZE before it gets pass
->> to dma_alloc_coherant(), so that it gets coherant memory in
->       dma_alloc_coherent                    coherent
->> lower 4GB from linux cma region.
->>
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->> ---
->>   drivers/firmware/qcom/qcom_scm.c | 8 +++++---
->>   1 file changed, 5 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index 029ee5edbea6..6616048f1c33 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -562,6 +562,7 @@ static void qcom_scm_set_download_mode(u32 dload_mode)
->>   int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
->>   			    struct qcom_scm_pas_metadata *ctx)
->>   {
->> +	size_t page_aligned_size;
->>   	dma_addr_t mdata_phys;
->>   	void *mdata_buf;
->>   	int ret;
->> @@ -579,7 +580,8 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
->>   	 * data blob, so make sure it's physically contiguous, 4K aligned and
->>   	 * non-cachable to avoid XPU violations.
->>   	 */
->> -	mdata_buf = dma_alloc_coherent(__scm->dev, size, &mdata_phys,
->> +	page_aligned_size = PAGE_ALIGN(size + PAGE_SIZE);
-> 
-> Isn't PAGE_ALIGN(size) good enough? Why do you need to round up to the
-> 2nd page? Maybe you thought PAGE_ALIGN was PAGE_ALIGN_DOWN ?
 
-No, this was intentional as there is a check inside
-dma_alloc_contiguous() call for a size <= PAGE_SIZE .
-
--Mukesh
+-- 
+With best wishes
+Dmitry
 
