@@ -1,150 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-20092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AB328CA738
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 06:09:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EF5698CA73D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 06:12:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 866A51F218FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 04:09:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D5EA1F21641
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 04:12:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85DE71DA53;
-	Tue, 21 May 2024 04:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BABD91DA53;
+	Tue, 21 May 2024 04:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CI+TuwHv"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="TCJteCuG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185486FDC;
-	Tue, 21 May 2024 04:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0316FDC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 04:12:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716264566; cv=none; b=nHYXJHnZpOIxV8N8AHOKQd5ihv1sTNstWiyFcewpZAhnV7/01EZmai6tufD9/Pr6Yh1YxaOCWWEVu7eebAkG7eW2t3BtN8T2ssuQ0/4B7hK3shOu6D6GUjkBiwDTobxQDy3w8u91Vp8MyeRqlR8l9nF3N3INb9wHbD1qtlTJOVk=
+	t=1716264762; cv=none; b=MrLvzASI6Juk1fof+CV+PQZn/ebSAxjKyFFaUc2SbDN5P9a0OjniXCYGcxOCz2E+1MrpADYnPwqr0ay72lUE5lrBDCZPjwAKKNsNpRBtZgNJBCOgjXkwzBFV4838cFasjIRJzI4qhJbCS6IoryLDpP2E5ymJQSMJyQl6I7rTcO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716264566; c=relaxed/simple;
-	bh=G0RfpzHbQbPEMYGRnyOaBLmaQauY+K1fa3zLkroTKx8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uO7vJ8DZMeNuEylUkYrI4IrH71pjxBVbNC4siwMDmJZXJeu1AYPCYQA+21GdL8t8/7+aDUZa0714X8K+sO+bSqygbriuOW/RhUVIZX/xMbgziMTnhn/kfipotQho0QQE0yU9K01C2+frCeW751Fy4MiAM50aWo43iEJktMkVrXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CI+TuwHv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44L2aMF2015841;
-	Tue, 21 May 2024 04:08:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=iMFmbqJV/ZTR9bccmUFxM94fDgUi8bcxTAUWFmwoJEU=; b=CI
-	+TuwHv8t8B3DjGrwIxloD0ctJVkMYEM2hFEwzVL9gNH2Yoyk2Bk28xiQSxRsyoGz
-	l7f5PC+jkufTedoPNIugVyVRmNnC6/3XzUUXIGwPWWSv4pDXl1zmLmvkTAlPeSqG
-	QhqqaTSM2+LPf/Tu5d/KPDJTO/1ActyDcGrhEf6k5aTTFifvhmGzG6Y0tXyEY+j3
-	IX0TpjrQExH9wFEgYXCYinW7X+hxFRh48zKC+2EqHkNNVNXasanDQyZtf50KJStL
-	sEJmEHqC/YZUx+4BxevxwxdJCOeQwm6zAL/N4iWONovLu994B02cU7bD2ouGwkjV
-	XGTMbkiQTqEZ9klQjUog==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6psncsm5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 04:08:54 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44L48r16026215
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 04:08:53 GMT
-Received: from [10.110.15.188] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 20 May
- 2024 21:08:52 -0700
-Message-ID: <a944418a-1699-44fa-bdfc-2e57129adea1@quicinc.com>
-Date: Mon, 20 May 2024 21:08:51 -0700
+	s=arc-20240116; t=1716264762; c=relaxed/simple;
+	bh=O92KeYUkA1edHwlwkgSl2dByMiiKmyF/6D5jrMUsaIQ=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DnzQ7FBOhIgND4tYkCSSiBLZztiqY49y8kIj6TkeaXO4UlwJ67gkzTCKw6XbZfJ/L0XW2Yy8ep1WCL/7PRbahyCSewTnI60p05gAYOzIRmujouwuiG+tI2KuOtSdqniS9E+IE3EzUyGOkvqIOWB2lZ1ZS2vgB33424dZnVnMsac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=TCJteCuG; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-792d65cd7a8so190427685a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 May 2024 21:12:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1716264760; x=1716869560; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HDK8WDfUBYYirSWO06T0TVOheARrNR/0B8M0BZ3uAqU=;
+        b=TCJteCuGSX2EXaKRCsBoBMOb5dK/dicBSL/0kUkHsR5XHVrmHiW4JVmw6yw6n/CBUV
+         fCjAnIeV/ERNQw6Vt5mn1GKy55xVI5VxFbyPfmMJK/SMRciX+IPrbIeyMZlZOMlrRsAu
+         1ASGpxwwtPo5n8+cPwJ+EGutcFouHcM+wSIL8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716264760; x=1716869560;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HDK8WDfUBYYirSWO06T0TVOheARrNR/0B8M0BZ3uAqU=;
+        b=W+LDqo/rYbATIOPSvfYaDmnL579aL6xSbsPsYC6hR/PFcJOXdghVd0Vsfgy9bUnj+n
+         nCN33R71j5YIrkAz9l+1+l8dx6eV8BrFhExvDepxnzHuVRty7moWqBXzgUjy07X5KpXs
+         q8iHl/7bQmsQOJelT+Q0fxyvxrODd1mc04TpyLZ+cITi0NAYiha0GOos2W5lsxWzjeaa
+         /gP10M/n0xKBqwKSSfdJ6VLZSmpub6vN752/dt+WHfSocuhaLm3zAe/h7IVVbJL+4Mf7
+         7+MXd1nF8O54BVFnx0VQe5cmhpg9qzDseb3cYoa47dsJEGTg1g/2IJ3L00J6LFQYALgW
+         lhDg==
+X-Forwarded-Encrypted: i=1; AJvYcCXkMBt/sqoaK6RBoF/mbk7opaCbiLMMHY3gY1ffhXN+GI59dw7R4jveFGKSpR62k+NQBZ/X2sIYfsXffZZW244laO/RhnyPNvKwxHf67w==
+X-Gm-Message-State: AOJu0YwHI3KlweHrTRqKQ7wZ2yHEfAtGXgvl2i3eY7ugvPc8WfYLEjyA
+	R7JuCf1DFPMXN7d9wQLS4rcgTOJmQy+iLlFlic8+XWYAx0DzS2hzs/TjrkC1MF0gaXEOGOnw6PG
+	XjBXHnNepNWNIACOYxNZBTqVXJXtiaBni4RUD
+X-Google-Smtp-Source: AGHT+IH+wekBZ0lrLtGQB1o7O9rCbCkIv21Dk0Sq8vPde6mos/k0ulEy29KCnMHFyBn7FO/k9cX+aqOaPP9RXBhho0Q=
+X-Received: by 2002:a05:620a:280e:b0:793:b91:2dbe with SMTP id
+ af79cd13be357-7930b912e08mr1615135785a.40.1716264760099; Mon, 20 May 2024
+ 21:12:40 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 21 May 2024 00:12:39 -0400
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] dt-bindings: remoteproc: qcom,pas: Add hwlocks
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Peter
- Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
-        Will Deacon
-	<will@kernel.org>, Waiman Long <longman@redhat.com>,
-        Boqun Feng
-	<boqun.feng@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof
- Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-CC: <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
- <20240516-hwspinlock-bust-v1-5-47a90a859238@quicinc.com>
- <3521519f-34b8-472d-be37-f0e64bba24fc@kernel.org>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <3521519f-34b8-472d-be37-f0e64bba24fc@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: lGa-4i3d4YmAMe17lVnHXa2N3V772CGJ
-X-Proofpoint-ORIG-GUID: lGa-4i3d4YmAMe17lVnHXa2N3V772CGJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-21_02,2024-05-17_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 bulkscore=0 phishscore=0 impostorscore=0 adultscore=0
- mlxlogscore=999 clxscore=1011 priorityscore=1501 suspectscore=0
- spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405210031
+In-Reply-To: <20240517233801.4071868-2-quic_abhinavk@quicinc.com>
+References: <20240517233801.4071868-1-quic_abhinavk@quicinc.com> <20240517233801.4071868-2-quic_abhinavk@quicinc.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 21 May 2024 00:12:39 -0400
+Message-ID: <CAE-0n517DSbNim+K3=N2J2R0iZn44MS3siLKkhdLq05GTfaHtQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/4] drm/msm: register a fault handler for display mmu faults
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	David Airlie <airlied@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org, seanpaul@chromium.org, 
+	dianders@chromium.org, quic_jesszhan@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-
-
-On 5/19/2024 10:36 AM, Krzysztof Kozlowski wrote:
-> On 17/05/2024 00:58, Chris Lew wrote:
->> Add hwlocks property to describe the hwspinlock that remoteproc can try
->> to bust on behalf of the remoteproc's smem.
-> 
-> Sorry, as you wrote, the lock is part of smem, not here. Drivers do not
-> crash, so if your crashes as you imply in the cover letter, then first
-> fix the driver.
+Quoting Abhinav Kumar (2024-05-17 16:37:56)
+> diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+> index af6a6fcb1173..62c8e6163e81 100644
+> --- a/drivers/gpu/drm/msm/msm_kms.c
+> +++ b/drivers/gpu/drm/msm/msm_kms.c
+> @@ -200,6 +200,28 @@ struct msm_gem_address_space *msm_kms_init_aspace(struct drm_device *dev)
+>         return aspace;
+>  }
 >
+> +static int msm_kms_fault_handler(void *arg, unsigned long iova, int flags, void *data)
+> +{
+> +       struct msm_kms *kms = arg;
+> +       struct msm_disp_state *state;
+> +       int ret;
+> +
+> +       ret = mutex_lock_interruptible(&kms->dump_mutex);
 
-Hi Krzysztof,
+From past experience I've seen the smmu fault handler called in hardirq
+context, so it can't sleep. Is there some way to grab the register
+contents without sleeping? Otherwise this will have to fork off
+somewhere else that can take locks, runtime PM resume, etc.
 
-Sorry for the confusion, I dont think I meant that the smem driver will 
-ever crash. The referred to crash in the cover letter is a crash in the 
-firmware running on the remoteproc. The remoteproc could crash for any 
-unexpected reason, related or unrelated to smem, while holding the tcsr 
-mutex. I want to ensure that all resources that a remoteproc might be 
-using are released as part of remoteproc stop.
-
-The SMEM driver manages the lock/unlock operations on the tcsr mutex 
-from the Linux CPU's perspective. This case is for cleaning up from the 
-remote side's perspective.
-
-In this case it's the hwspinlock used to synchronize SMEM, but it's 
-conceivable that firmware running on the remoteproc has additional locks 
-that need to be busted in order for the system to continue executing 
-until the firmware is reinitialized.
-
-We did consider tying this to the SMEM instance, but the entitiy 
-relating to firmware is the remoteproc instance.
-
-> Best regards,
-> Krzysztof
-> 
+> +       if (ret)
+> +               return ret;
+> +
+> +       state = msm_disp_snapshot_state_sync(kms);
+> +
+> +       mutex_unlock(&kms->dump_mutex);
+> +
 
