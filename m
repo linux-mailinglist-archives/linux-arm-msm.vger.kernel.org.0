@@ -1,152 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-20123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CB9F8CACD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 12:56:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C13A8CAD44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 13:22:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8DA451C21B3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 10:56:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37F4B2824F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 11:22:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C6EF7640E;
-	Tue, 21 May 2024 10:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0CFB76028;
+	Tue, 21 May 2024 11:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CWt7wYEE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CWtljR7C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA778757FC;
-	Tue, 21 May 2024 10:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1C975818;
+	Tue, 21 May 2024 11:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716288961; cv=none; b=EunqAnAn9B2VpuvZs52HsVr7o7Qbl3nbqEfdmg3zMNwRZlkjA3LQWwLGem4K7C3fpTT856ajKRZwYXOZWKRDAlLZQRxjJu7WaAOxsyWf/T7hPMvm2okxUCQgTZ9QV5ddv/PMOte7nMoXEJYsKTKAbGSEfCKONg1CwpQQXTlKkxI=
+	t=1716290441; cv=none; b=Zu8Z3X1t8DwH362/o45ZmLkB2Z/A1J2oX25BPzbgnJfyHjUUxmjCfjPQyZiX5S9x80L8dHrJVk/kYHoDSCquHWuLhcdtwaa4+I3gz6hyJh6xCiEKw0cXptC+APof/LgQ0+G9uco+myhO/il/7+aU20jIAu1LdkX74mI/CSolBhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716288961; c=relaxed/simple;
-	bh=e8Lmm/G3KHiwDcfMbg+EQjmTHI0jYoiscjJWeGQwKf4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BGdT+t1jdNLGIHdi5035JX90QpgPgjTtmlOXcZoG1CjBTX893FPB/BcLyYGcU8OX3NfbyEhV6BnUm0FJvPAVgL9rUHdY+SEWgQKR4uzvA88d/0j/piA0tIy+2sQJOHcGLSV6HNFhXKxrm79HSEODwz62sZN7brO2dtrVxKnhXqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CWt7wYEE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44L4vQHH032376;
-	Tue, 21 May 2024 10:55:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding; s=qcppdkim1; bh=223KGTr
-	csFBFEhhBbq9RgYZbruTGt0fHyuJCbF/lWcI=; b=CWt7wYEEfLBRsM9ZVXoO3MP
-	PIS4jO2ht0fqSIntvzl8bpA3KvH8YSuQ9girrZUInS5iX4mdt7/3nCBzq2iSAy6f
-	G3et9BMIbDIta/r91Fm5kNXtS1T5dUMY1xuCyK+qxNw5Mzyct96w+azOGCuXLVz/
-	e7zbokCXOb/B2BUZZ4nHT1K/SrhkpIo8kKqCGNF4UoYDXb7rAiI5LbT9bldzRhgJ
-	fyR0H17NFiWLKInbYDhovTBl2J5LhaztWn4m1VB7HROKLjaCMNtT5hLTzYOUHWgO
-	aVDptt9Yf0KSQHn7Sky15ISkKaPWTYVCxG3o+CimJs6kRHk/GH2/IDSpwY8rvCA=
-	=
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n45nmfc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 10:55:40 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 44LAtZnc024604;
-	Tue, 21 May 2024 10:55:37 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3y6ndkytmu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 10:55:37 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 44LAtaab024635;
-	Tue, 21 May 2024 10:55:36 GMT
-Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 44LAta6J024627
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 10:55:36 +0000
-Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
-	id 3DABB4166E; Tue, 21 May 2024 16:25:34 +0530 (+0530)
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org
-Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com,
-        quic_mdalam@quicinc.com
-Subject: [PATCH v6 8/8] arm64: dts: qcom: ipq9574: Disable eMMC node
-Date: Tue, 21 May 2024 16:25:32 +0530
-Message-Id: <20240521105532.1537845-9-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240521105532.1537845-1-quic_mdalam@quicinc.com>
-References: <20240521105532.1537845-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1716290441; c=relaxed/simple;
+	bh=wWzpBfqS6gfocOcYq61FVsITwdyGEdoO2FcMClgUahs=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=TWwHmQTlzrbpOMxIlULvswZu9etAxP84lxAVHKvL50gO11i+6S6SdYWjpqw5fboh53EXALcsUuRfqdtKilKnLETSyz2MtDDJWrtinvjK8iUuDz64D8xrTAFHP/Bgr1PLfM6ybHrwreT9bzAmO4QIWzfQAQezu7Z3Gitnxin/7Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CWtljR7C; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065A1C2BD11;
+	Tue, 21 May 2024 11:20:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716290441;
+	bh=wWzpBfqS6gfocOcYq61FVsITwdyGEdoO2FcMClgUahs=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=CWtljR7CkZBF4Vz4fhIRTYAUQb9nXzsdaXgTiYY4i+cO9p9i0Ii+LmMUI6DkJqRA1
+	 kFX4MIEXkRG6My5WjKY3emmLMRtADTjc2pydbnYdgpaCEZWSNSajpqQPXAUjCUIE54
+	 uFO2gp5AvOfYsgEfNKwsqnO7VpPH1y+Z1235QczQQwNv8akbiz+6Qtfm89GzT8Lj7x
+	 teHOHdwJHJ8TWg3JnwWacb+BEd5MKrS6dUiJK94dNDmTBu7YsBxcme1Fo5z7pxOvVd
+	 A5oG/3JYqLQPZUOiSebj4gdmVlv/EZYu9SwQ0ftwqZN1lya9nLaxtI1A314yObZ8qt
+	 lncBLEW8P6ZRQ==
+From: Kalle Valo <kvalo@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: neil.armstrong@linaro.org,  Bjorn Andersson <andersson@kernel.org>,
+  Konrad Dybcio <konrad.dybcio@linaro.org>,  Loic Poulain
+ <loic.poulain@linaro.org>,  Mathieu Poirier <mathieu.poirier@linaro.org>,
+  Rob Herring <robh@kernel.org>,  Krzysztof Kozlowski <krzk+dt@kernel.org>,
+  Conor Dooley <conor+dt@kernel.org>,  linux-kernel@vger.kernel.org,
+  linux-arm-msm@vger.kernel.org,  wcn36xx@lists.infradead.org,
+  linux-wireless@vger.kernel.org,  linux-remoteproc@vger.kernel.org,
+  devicetree@vger.kernel.org,  Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH 01/12] soc: qcom: add firmware name helper
+References: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
+	<20240521-qcom-firmware-name-v1-1-99a6d32b1e5e@linaro.org>
+	<a45b53f3-b2a5-4094-af5a-1281e0f94d2f@linaro.org>
+	<CAA8EJprxYsoug0ipRHTmX45vaFLzJCUF0dQWOc=QLs4y6uZ1rA@mail.gmail.com>
+Date: Tue, 21 May 2024 14:20:36 +0300
+In-Reply-To: <CAA8EJprxYsoug0ipRHTmX45vaFLzJCUF0dQWOc=QLs4y6uZ1rA@mail.gmail.com>
+	(Dmitry Baryshkov's message of "Tue, 21 May 2024 13:01:45 +0300")
+Message-ID: <878r03csxn.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7agHEvbHamyF6OIs8Vj1iB1ZgmzAIx_9
-X-Proofpoint-ORIG-GUID: 7agHEvbHamyF6OIs8Vj1iB1ZgmzAIx_9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-21_06,2024-05-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 impostorscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=909 phishscore=0
- malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405210082
+Content-Type: text/plain
 
-Disable eMMC node for rdp433, since rdp433
-default boot mode is norplusnand
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
----
-Change in [v6]
+> On Tue, 21 May 2024 at 12:52, <neil.armstrong@linaro.org> wrote:
+>>
+>> On 21/05/2024 11:45, Dmitry Baryshkov wrote:
+>> > Qualcomm platforms have different sets of the firmware files, which
+>> > differ from platform to platform (and from board to board, due to the
+>> > embedded signatures). Rather than listing all the firmware files,
+>> > including full paths, in the DT, provide a way to determine firmware
+>> > path based on the root DT node compatible.
+>>
+>> Ok this looks quite over-engineered but necessary to handle the legacy,
+>> but I really think we should add a way to look for a board-specific path
+>> first and fallback to those SoC specific paths.
+>
+> Again, CONFIG_FW_LOADER_USER_HELPER => delays.
 
-* Updated commit message
+To me this also looks like very over-engineered, can you elaborate more
+why this is needed? Concrete examples would help to understand better.
 
-Change in [v5]
-
-* No Change
-
-Change in [v4]
-
-* No change
-
-Change in [v3]
-
-* Removed co-developed by 
-
-Change in [v2]
-
-* Posted as initial eMMC disable patch
-
-Change in [v1]
-
-* This patch was not included in v1
-
- arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-index 1bb8d96c9a82..e33e7fafd695 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-@@ -24,7 +24,7 @@ &sdhc_1 {
- 	mmc-hs400-enhanced-strobe;
- 	max-frequency = <384000000>;
- 	bus-width = <8>;
--	status = "okay";
-+	status = "disabled";
- };
- 
- &tlmm {
 -- 
-2.34.1
+https://patchwork.kernel.org/project/linux-wireless/list/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
