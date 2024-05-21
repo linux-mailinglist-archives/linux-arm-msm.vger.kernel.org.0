@@ -1,153 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-20134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD62E8CAEA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 14:53:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BA908CAF09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 15:09:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 838DC284AB2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 12:53:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2DBD11F23233
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 13:09:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BFFB770E2;
-	Tue, 21 May 2024 12:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 162F8770F1;
+	Tue, 21 May 2024 13:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mMMqfNwm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uqoFChUI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7721E48B;
-	Tue, 21 May 2024 12:53:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3912F7D3F0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 13:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716296035; cv=none; b=OwRFRQ1u4xV9SwQ+k1PIozf09/wm3iF6wlFDAsgBNb/IWeyu/knDj91Z+0Eu6RvhHOFOkF6vdq9HDIMGenCgLCHbvefK+0tJdsU3qcL7sDrtsl8atiAYwO1QMqImHtYiaLxlfHDGaM4CVAYUehSjKhsZ2Um8SLe6TtgEj1Qp02Y=
+	t=1716296926; cv=none; b=EL3lMXotz/0f5NDsqab0qSig3mO36TcJ2VpclzIMLglSeDH3tWC25o9ZGkG7GP5vOxX/lPf5f6wMiskQZ3oY0Pv8OopKMr40NTXEN5RTl3dpnaxvjybnt53i1FzqEBoRfdEGeCQq7hbuP8j3vG1r9LHnpoueZvRlRk+4wWzHsrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716296035; c=relaxed/simple;
-	bh=t42l+EO81yioHSqdPuYy8/rBjxnMw7vLCdtonq47xpE=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=q53rrJihxpFGZtb8xT9IxK+V8UmbGGYz5vIDS8Pjy02k0ADuOE9/6O1E8D8F/XaqWZaJbX6lK6OsKg18dUCUb37TNPQ9nOc90fqNjKVV3H2/cQybhN/eJ8QBXdS+iAKeDDYGS1ESr7ONxxOAupwe6stPMwQ3Gns/MLwlXjlCRv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mMMqfNwm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA1CC2BD11;
-	Tue, 21 May 2024 12:53:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716296034;
-	bh=t42l+EO81yioHSqdPuYy8/rBjxnMw7vLCdtonq47xpE=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=mMMqfNwmRyJ6amChqv8kyauIlBe2NJc56HzoFhuaPbckWeygt/a/YpnCFoGDyopkA
-	 8PIzkxkw1xES342kDoW0KtBSNBXLbOwobeqZFNHfb/Ik6hZ+M3nYOajHP+KgFESqNy
-	 gpDu2qwxS7qjH3XJ/fmrkNTlkwW9knyIBBNJdHufT7HksLCIERn/xmTcVgdlKRq9vF
-	 0HetZ0yy83Vp8Q8RzatDxhVkvYLPKC8cz9uLxHOdsP3WMjMoiiM4/mKINrh3G5EjYR
-	 4QVNoX8L4QIfGC6o0m8Op6BRpS+e0YqHrIHDMtJWUAT2QlB3VntOMobdIoqDBupzI4
-	 HmAcXbtmaKUXw==
-Date: Tue, 21 May 2024 07:53:53 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1716296926; c=relaxed/simple;
+	bh=Vo1WEyGGZPhdnMPdwMM9V9kHG3COuto8rHsF1dB412c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fR8KxBDlm7U31JWBK0FxsZfFBWxFWmkfWf71n8oAE7yk3HTTnsyQtt+vv0EiqQD6R7CNh15xjfMaRG5u3krXYK36MX7yt4wStCJubRFj3AHX2I71rWHXE9N4Y2vJWED26k6PEEf67Xd/aE5R7x83ZXJrKsOCrEl3wxmOI67xfpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uqoFChUI; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-61e0c1ec7e2so28829707b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 06:08:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716296923; x=1716901723; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=d2PojWB/4MiGFiYJ2E5IG22IJxNV6CKEtX3InCIg1mk=;
+        b=uqoFChUIvUq3OL/O30lMVoHetUHz3LZ1JxQ/2/tiGw9kmQytMElui9oDZX4sY5xvgZ
+         /ke97AQ5pb69SVfOU2B0ih8M0DbEVylS3HULirAwZG75uKaqppFwBRwbzkPQTywAteFy
+         eVWJOmyu/HwZyHBHrwZ3FFGbM0UNHZ3j1pS0kkN/m+o+z84+ODeIV/lJXrNJc9pOJ5UN
+         sWNCPnVxSYN5UnC1YWdNm23lsktSYU6hsifnxqU1s/v7q0mLbvmyWoJPZNU8narSvTum
+         Xpb4AG4VGqFKmSnTD9CKfgP3d5rTSRLj0L0+8mITvOHP+huR3Y/W7a94BAD1VwCCEdux
+         CMBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716296923; x=1716901723;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d2PojWB/4MiGFiYJ2E5IG22IJxNV6CKEtX3InCIg1mk=;
+        b=UqNNlZMR4Ph2FMky/MQDQ/ge+DmMiW3I+f1TPkyDNqlFivZXcF9LbZXZDCfw+AjQ1i
+         Y9sBaWxQ1EP9k8rO6A7JUCQeQpEycndMDARzd821ssF3iyagzT2Edp7kov+swCYFy5lI
+         Qfd+Vv7dvMk0lfl/vQqOjuRY6ILJZRSTl1cztNVpvGid983HmVFHPZxN4I2gVArDwFFJ
+         M8CmsZTllclGbIMyCKbCTJWVIMOrhaPppEa+s5Nl7uDGAgpo3spfxqR+aAePOYlspO2c
+         KSKHKGrs6901+Hk3HwB65qoWp+2CC+2Y9VEaS/t1iMoDl2aBTepXzXLOPzKXM09kprF/
+         Ck6A==
+X-Forwarded-Encrypted: i=1; AJvYcCXB+3DG7pVJOCEWmfmkI60xogzfHKO5rY8FxY5f4uwfbuYIaLksdJ2DsWGclPXM12wQ+XfBDlsOCqw/IoLCuGAGC87Qne3DaWmkF6e2iw==
+X-Gm-Message-State: AOJu0YxFf/gIQty/vNzIblkavfNN7+ETSOcfkFsmp4qBtDh7L7WdOToz
+	4jySwlNFLpq+SLfeHfGm8n7vhMywJtmWhRtMYdubvqo0npH5qLyO+EkJu+pRYpNQdu73Sghsy/e
+	b2CejeigeIhMI1LFtelJAjIpmRojhmp+8oHsGxQ==
+X-Google-Smtp-Source: AGHT+IH53renhcJQwt2txPS0pIBqqswFAEQrALUaZ6EkOExh3X0imx+VWniHPWvQCDwckXaGctQumizBOuMfw/NeB+E=
+X-Received: by 2002:a05:690c:7442:b0:622:f7df:aa0a with SMTP id
+ 00721157ae682-627972d3d56mr59212357b3.22.1716296923240; Tue, 21 May 2024
+ 06:08:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Caleb Connolly <caleb@postmarketos.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-kernel@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Alexander Martinz <amartinz@shiftphones.com>, linux-arm-msm@vger.kernel.org, 
- Luca Weiss <luca.weiss@fairphone.com>
-In-Reply-To: <20240520-otter-bringup-v2-0-d717d1dab6b8@linaro.org>
-References: <20240520-otter-bringup-v2-0-d717d1dab6b8@linaro.org>
-Message-Id: <171629597652.3545832.2165714141282112448.robh@kernel.org>
-Subject: Re: [PATCH v2 0/2] qcom: initial support for the SHIFTphone 8
+References: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
+ <20240521-qcom-firmware-name-v1-1-99a6d32b1e5e@linaro.org>
+ <a45b53f3-b2a5-4094-af5a-1281e0f94d2f@linaro.org> <CAA8EJprxYsoug0ipRHTmX45vaFLzJCUF0dQWOc=QLs4y6uZ1rA@mail.gmail.com>
+ <878r03csxn.fsf@kernel.org>
+In-Reply-To: <878r03csxn.fsf@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 21 May 2024 15:08:31 +0200
+Message-ID: <CAA8EJpqkgpCb57DGka0ckbPz=2YiaHzxmiNzG39ad5y6smgO5A@mail.gmail.com>
+Subject: Re: [PATCH 01/12] soc: qcom: add firmware name helper
+To: Kalle Valo <kvalo@kernel.org>
+Cc: neil.armstrong@linaro.org, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Loic Poulain <loic.poulain@linaro.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, wcn36xx@lists.infradead.org, 
+	linux-wireless@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	devicetree@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 
+On Tue, 21 May 2024 at 13:20, Kalle Valo <kvalo@kernel.org> wrote:
+>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>
+> > On Tue, 21 May 2024 at 12:52, <neil.armstrong@linaro.org> wrote:
+> >>
+> >> On 21/05/2024 11:45, Dmitry Baryshkov wrote:
+> >> > Qualcomm platforms have different sets of the firmware files, which
+> >> > differ from platform to platform (and from board to board, due to the
+> >> > embedded signatures). Rather than listing all the firmware files,
+> >> > including full paths, in the DT, provide a way to determine firmware
+> >> > path based on the root DT node compatible.
+> >>
+> >> Ok this looks quite over-engineered but necessary to handle the legacy,
+> >> but I really think we should add a way to look for a board-specific path
+> >> first and fallback to those SoC specific paths.
+> >
+> > Again, CONFIG_FW_LOADER_USER_HELPER => delays.
+>
+> To me this also looks like very over-engineered, can you elaborate more
+> why this is needed? Concrete examples would help to understand better.
 
-On Mon, 20 May 2024 17:29:40 +0200, Caleb Connolly wrote:
-> The SHIFTphone 8 is an upcoming QCM6490 smartphone, it has the following
-> features:
-> 
-> * 12GB of RAM, 512GB UFS storage
-> * 1080p display.
-> * Hardware kill switches for cameras and microphones
-> * UART access via type-c SBU pins (enabled by an internal switch)
-> 
-> Initial support includes:
-> 
-> * Framebuffer display
-> * UFS and sdcard storage
-> * Battery monitoring and USB role switching via pmic glink
-> * Bluetooth
-> * Thermals
-> 
-> Wifi works but requires some commits to be reverted to prevent a
-> firmware crash.
-> 
-> The serial port on the device can be accessed via the usb-cereal
-> adapter, it must first be enabled by flipping the switch under the
-> display. Additional info can be found on the postmarketOS wiki page.
-> 
-> https://wiki.postmarketos.org/wiki/SHIFT_SHIFTphone_8_(shift-otter)
-> 
-> ---
-> Changes in v2:
-> - Fix authorship
-> - Address Luca's feedback
-> - Link to v1: https://lore.kernel.org/r/20240508-otter-bringup-v1-0-c807d3d931f6@linaro.org
-> 
-> ---
-> Caleb Connolly (2):
->       dt-bindings: arm: qcom: Add QCM6490 SHIFTphone 8
->       arm64: dts: qcom: add QCM6490 SHIFTphone 8
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml  |   1 +
->  arch/arm64/boot/dts/qcom/Makefile                |   1 +
->  arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts | 923 +++++++++++++++++++++++
->  3 files changed, 925 insertions(+)
-> ---
-> change-id: 20240507-otter-bringup-388cf3aa7ca5
-> base-commit: a38297e3fb012ddfa7ce0321a7e5a8daeb1872b6
-> 
-> // Caleb (they/them)
-> 
-> 
-> 
+Sure. During the meeting last week Arnd suggested evaluating if we can
+drop firmware-name from the board DT files. Several reasons for that:
+- DT should describe the hardware, not the Linux-firmware locations
+- having firmware name in DT complicates updating the tree to use
+different firmware API (think of mbn vs mdt vs any other format)
+- If the DT gets supplied by the vendor (e.g. for
+SystemReady-certified devices), there should be a sync between the
+vendor's DT, linux kernel and the rootfs. Dropping firmware names from
+DT solves that by removing one piece of the equation
 
+Now for the complexity of the solution. Each SoC family has their own
+firmware set. This includes firmware for the DSPs, for modem, WiFi
+bits, GPU shader, etc.
+For the development boards these devices are signed by the testing key
+and the actual signature is not validated against the root of trust
+certificate.
+For the end-user devices the signature is actually validated against
+the bits fused to the SoC during manufacturing process. CA certificate
+(and thus the fuses) differ from vendor to vendor (and from the device
+to device)
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+Not all of the firmware files are a part of the public linux-firmware
+tree. However we need to support the rootfs bundled with the firmware
+for different platforms (both public and vendor). The non-signed files
+come from the Adreno GPU and can be shared between platforms. All
+other files are SoC-specific and in some cases device-specific.
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+So for example the SDM845 db845c (open device) loads following firmware files:
+Not signed:
+- qcom/a630_sqe.fw
+- qcom/a630_gmu.bin
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+Signed, will work for any non-secured sdm845 device:
+- qcom/sdm845/a630_zap.mbn
+- qcom/sdm845/adsp.mbn
+- qcom/sdm845/cdsp.mbn
+- qcom/sdm485/mba.mbn
+- qcom/sdm845/modem.mbn
+- qcom/sdm845/wlanmdsp.mbn (loaded via TQFTP)
+- qcom/venus-5.2/venus.mbn
 
-  pip3 install dtschema --upgrade
+Signed, works only for DB845c.
+- qcom/sdm845/Thundercomm/db845c/slpi.mbn
 
+In comparison, the SDM845 Pixel-3 phone (aka blueline) should load the
+following firmware files:
+- qcom/a630_sqe.fw (the same, non-signed file)
+- qcom/a630_gmu.bin (the same, non-signed file)
+- qcom/sdm845/Google/blueline/a630_zap.mbn
+- qcom/sdm845/Google/blueline/adsp.mbn
+- qcom/sdm845/Google/blueline/cdsp.mbn
+- qcom/sdm845/Google/blueline/ipa_fws.mbn
+- qcom/sdm845/Google/blueline/mba.mbn
+- qcom/sdm845/Google/blueline/modem.mbn
+- qcom/sdm845/Google/blueline/venus.mbn
+- qcom/sdm845/Google/blueline/wlanmdsp.mbn
+- qcom/sdm845/Google/blueline/slpi.mbn
 
-New warnings running 'make CHECK_DTBS=y qcom/qcm6490-shift-otter.dtb' for 20240520-otter-bringup-v2-0-d717d1dab6b8@linaro.org:
+The Lenovo Yoga C630 WoS laptop (SDM850 is a variant of SDM845) uses
+another set of files:
+- qcom/a630_sqe.fw (the same, non-signed file)
+- qcom/a630_gmu.bin (the same, non-signed file)
+- qcom/sdm850/LENOVO/81JL/qcdxkmsuc850.mbn
+- qcom/sdm850/LENOVO/81JL/qcadsp850.mbn
+- qcom/sdm850/LENOVO/81JL/qccdsp850.mbn
+- qcom/sdm850/LENOVO/81JL/ipa_fws.elf
+- qcom/sdm850/LENOVO/81JL/qcdsp1v2850.mbn
+- qcom/sdm850/LENOVO/81JL/qcdsp2850.mbn
+- qcom/sdm850/LENOVO/81JL/qcvss850.mbn
+- qcom/sdm850/LENOVO/81JL/wlanmdsp.mbn
+- qcom/sdm850/LENOVO/81JL/qcslpi850.mbn
 
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: pcie@1c08000: interrupts: [[0, 307, 4], [0, 308, 4], [0, 309, 4], [0, 312, 4], [0, 313, 4], [0, 314, 4], [0, 374, 4], [0, 375, 4]] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: pcie@1c08000: interrupt-names:0: 'msi' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: pcie@1c08000: interrupt-names: ['msi0', 'msi1', 'msi2', 'msi3', 'msi4', 'msi5', 'msi6', 'msi7'] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: phy@88e3000: 'orientation-switch' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: usb@8cf8800: interrupt-names: ['pwr_event', 'hs_phy_irq', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: video-codec@aa00000: iommus: [[65, 8576, 32]] is too short
-	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#
+If we look at one of the recent platforms, e.g. SM8650-QRD, this list
+also grows up:
+- qcom/gen70900_sqe.fw (generic, non-signed)
+- qcom/gmu_gen70900.bin (generic, non-signed)
+- qcom/sm8650/gen70900_zap.mbn
+- qcom/sm8650/adsp.mbn
+- qcom/sm8650/adsp_dtb.mbn
+- qcom/sm8650/cdsp.mbn
+- qcom/sm8650/cdsp_dtb.mbn
+- qcom/sm8650/ipa_fws.mbn
+- qcom/sm8650/modem.mbn
+- qcom/sm8650/modem_dtb.mbn
+- qcom/sm8650/vpu33_4v.mbn (or maybe qcom/vpu-33/vpu_4v.mbn)
 
-
-
-
-
+-- 
+With best wishes
+Dmitry
 
