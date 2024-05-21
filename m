@@ -1,124 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-20151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2887A8CB407
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 21:06:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 913428CB41B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 21:18:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C76C31F23591
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 19:06:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1E22B223A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 19:18:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ED20148857;
-	Tue, 21 May 2024 19:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC7C11482ED;
+	Tue, 21 May 2024 19:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VWoUZi6L"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dF+KerWM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE13142916;
-	Tue, 21 May 2024 19:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4871865C;
+	Tue, 21 May 2024 19:18:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716318394; cv=none; b=KfazDQeYlZOF+9SA3fTewq9EeFIGwloMH6LWkUqM4yDRpO64EULS5qVrKpXhL5/OE4zxyl7m1oGnU0LLIxWhBZJalAiQeebT/zcLa2eXzVHzHmnmBYYyr0NwvEC6R24KPsP1UWnB2HB5t+MSz2sPjVr6jlWWk6zA+hQTTuKsyPI=
+	t=1716319099; cv=none; b=kZ4dX8MXOWyZVZX3tyNSGu7rX5DeGtqDXFytKk8OLI9yNA+qiMMRkD16ASO1ecDDyyaEIJXScnWzudOPViNzaWEYToUsBSDHZnRkqNVu4BRzzymwTt0sGJdsuBhVjirr8PTgaNBcujrefTRPeQhL/aUduHZAz8bHC3an8UXETGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716318394; c=relaxed/simple;
-	bh=jf3PoTCYyoGQlltkoN5drs/N/MbZHqPObDflP8b6Ij4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ESHMlzM7dxrx6GxlsQPkq2iZenVkE+xwg2F1D7yUrffkquWys6ifu7/gapcLsuKgKEKz1UuZoXyDouugKsS2avJ/3M33uKMwnqXBScfcqYG9yxwwh5PRhEeeKUwiFloIHTunePakA0LR5N4oGtIjlInuolHHFzgDPdMCygiVuKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VWoUZi6L; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2b432be5cc9so652824a91.3;
-        Tue, 21 May 2024 12:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716318392; x=1716923192; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kCi2tgKaPoizRmS2HCm41p2WvP6QyyrMLgfX9gf4Sao=;
-        b=VWoUZi6L6e6Mkx3aSJ+rQUx7g6lOr+AshA7ABLT0ykZidVXPZgDRcT003h/5z5437e
-         0Xgdwfy/zk/Mv9AaFE0juK9saNBj75Sd4nkyz7NQWmfRlDf9J1cMQhDRf1KOeUG54Xqc
-         8soCLcLN6f6JNZv1pFUP8auhEV89yFplfq0106Wq+4JtrepDaVZusevh4W1zZuCoxqiw
-         XgX+jALqu/bC29baGjgxnMu9dBDGcKihNj2oRjvp4rrzG2Epx484DwAPJLd8XG/EOvqs
-         Yv2Gqxk4+cYmQ7V1HW+gf/D7zIEB2B1AGmJuDxAdxRs6B2F8VxCeVmFlsjQlOFZJUvi4
-         ln9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716318392; x=1716923192;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kCi2tgKaPoizRmS2HCm41p2WvP6QyyrMLgfX9gf4Sao=;
-        b=HLL4Q5Pc/aTyOHEvEQjoIcIEXCqmvLfhpd2RZDf4JDlf+rI8/jIAZ16ZMaLBSA/tuY
-         YxwOZ5MUNVol2fI3fvdrPAQ70N2sCGBpUXnpiahT8pH1+5lwQQgsT79rff1q4Ym3nJmL
-         zQRUG/VJjcXJpiC1eSMP8pKpj8PGZBN8zDCZEy9ZGCRKkfoT58W3SUqUtajsLX9n9i4S
-         gzd8DrGp5B521rqHldgd5+7W59Gz4gPExM6yXinfeArKFoJbMyGKascuBVLQIIWytMdy
-         nnxoUMKFbBGvmk73gtIHqZ49JgviOEpQNBfAIveJizdB4prI2LPcCBFkZtWgn+QdWPEA
-         Pm9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUVn8IHDGZZN4ItKJEGLoUaSk+y9OzTLMAIX6tmHOYgN+6cTfMJxx/7RBx/sd9Te4XFzJgQ2/QHRSBDJZtZmRtF3gB8/qodhos6xEcd
-X-Gm-Message-State: AOJu0Yw9znZUNO1qvHrwglJSFJUuNWWlaRixi7SOmf5hwdtroxZdh6+4
-	ucB2Y+5VSMaqNqSaM+MqhItcw50/EWMEHwGrUyuofJ7Ry5S9xn2b
-X-Google-Smtp-Source: AGHT+IEYGFDa0EL7fznkIwua/pLhml67HOs1OCiKfl5rty5U01lfBd3pLOVVWeBS2HgqE1CYrR0Dfg==
-X-Received: by 2002:a17:90b:1485:b0:2bd:92da:23a0 with SMTP id 98e67ed59e1d1-2bd9f460769mr28984a91.25.1716318391936;
-        Tue, 21 May 2024 12:06:31 -0700 (PDT)
-Received: from localhost.localdomain ([27.7.152.139])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2bd94c3d18csm1495277a91.49.2024.05.21.12.06.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 May 2024 12:06:31 -0700 (PDT)
-From: Prabhav Kumar Vaish <pvkumar5749404@gmail.com>
-To: andersson@kernel.org,
-	konrad.dybcio@linaro.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	julia.lawall@inria.fr,
-	javier.carrasco@wolfvision.net,
-	skhan@linuxfoundation.org,
-	Prabhav Kumar Vaish <pvkumar5749404@gmail.com>
-Subject: [PATCH next RESEND] drivers: soc: qcom: Auto cleanup using __free()
-Date: Wed, 22 May 2024 00:36:24 +0530
-Message-Id: <20240521190624.1087210-1-pvkumar5749404@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1716319099; c=relaxed/simple;
+	bh=QcvjddLO5V4At528MX8mQheZ5hvqyxqkL2NEO03yCHc=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ULDHOef8Vq0C5xgWKTAiidr19wvlOFjniDAlgy4z99EOuDKn7cjxbaKJHPCerFdJ/Icpms27gXNa6Cyx0R2GsoxDTfkVcbmc++gjOjrMmNsnyjja9CEcQSrunnVwnKiXIq6IsWZB5E4B+5YILDPMYrW4SkodiFXnCfKqaEuxHBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dF+KerWM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44LB0dU3026034;
+	Tue, 21 May 2024 19:17:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=I3p/C816+U4MU703Y26jR
+	xZT+omVzAMG1Hh9XxhT77I=; b=dF+KerWM6KS5a6gzufI8KcoqqcfdvVGPMRFgO
+	ZuWMjdP77xRs+My+0BvgBd0LKdfDTNpkL4GaBbzXA4ItIOmwMJgdCUE+ZQkBszBS
+	YwCBUBPtYcTMsR5ioAH9VKl/lb3GsFzzflAoJriB6fG2fHayNzTHnBtZS1167mol
+	p0vP1gICHGTyJh5PSVsHyODVOfO7J46D1eSFuoRHFfombv7+S+FVloBsPlUdsZde
+	JYgJBF20go57ddNeK8+L+eUFiZNHEpmm6XxV5rLEpyaeW6SU4Q2GZsPwOlF2triN
+	fM1ewTxbbDbweaw4BnIDV6JaNO7ZpJY8O1J2zpdhyeuApv4Ew==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n3tfj8f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 May 2024 19:17:58 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44LJHveS032752
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 May 2024 19:17:57 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 21 May 2024 12:17:56 -0700
+Date: Tue, 21 May 2024 12:17:55 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Chris Lew <quic_clew@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Peter Zijlstra
+	<peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
+        Will Deacon
+	<will@kernel.org>, Waiman Long <longman@redhat.com>,
+        Boqun Feng
+	<boqun.feng@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 5/7] dt-bindings: remoteproc: qcom,pas: Add hwlocks
+Message-ID: <ZkzzY311XiRigJPt@hu-bjorande-lv.qualcomm.com>
+References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
+ <20240516-hwspinlock-bust-v1-5-47a90a859238@quicinc.com>
+ <3521519f-34b8-472d-be37-f0e64bba24fc@kernel.org>
+ <a944418a-1699-44fa-bdfc-2e57129adea1@quicinc.com>
+ <c9882ba0-bbbf-44ec-9606-ebe68bcb8866@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <c9882ba0-bbbf-44ec-9606-ebe68bcb8866@kernel.org>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vTf-zT4pgHoIyXF-_mYpHXXUul_8TYCw
+X-Proofpoint-ORIG-GUID: vTf-zT4pgHoIyXF-_mYpHXXUul_8TYCw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-21_11,2024-05-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=927
+ lowpriorityscore=0 phishscore=0 spamscore=0 impostorscore=0 clxscore=1011
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405210143
 
-Use automated cleanup to replace of_node_put() in
-qcom_smem_resolve_mem().
+On Tue, May 21, 2024 at 09:36:03AM +0200, Krzysztof Kozlowski wrote:
+> On 21/05/2024 06:08, Chris Lew wrote:
+> > 
+> > 
+> > On 5/19/2024 10:36 AM, Krzysztof Kozlowski wrote:
+> >> On 17/05/2024 00:58, Chris Lew wrote:
+> >>> Add hwlocks property to describe the hwspinlock that remoteproc can try
+> >>> to bust on behalf of the remoteproc's smem.
+> >>
+> >> Sorry, as you wrote, the lock is part of smem, not here. Drivers do not
+> >> crash, so if your crashes as you imply in the cover letter, then first
+> >> fix the driver.
+> >>
+> > 
+> > Hi Krzysztof,
+> > 
+> > Sorry for the confusion, I dont think I meant that the smem driver will 
+> > ever crash. The referred to crash in the cover letter is a crash in the 
+> > firmware running on the remoteproc. The remoteproc could crash for any 
+> > unexpected reason, related or unrelated to smem, while holding the tcsr 
+> > mutex. I want to ensure that all resources that a remoteproc might be 
+> > using are released as part of remoteproc stop.
+> > 
+> > The SMEM driver manages the lock/unlock operations on the tcsr mutex 
+> > from the Linux CPU's perspective. This case is for cleaning up from the 
+> > remote side's perspective.
+> > 
+> > In this case it's the hwspinlock used to synchronize SMEM, but it's 
+> > conceivable that firmware running on the remoteproc has additional locks 
+> > that need to be busted in order for the system to continue executing 
+> > until the firmware is reinitialized.
+> > 
+> > We did consider tying this to the SMEM instance, but the entitiy 
+> > relating to firmware is the remoteproc instance.
+> 
+> I still do not understand why you have to add hwlock to remoteproc, even
+> though it is not directly used. Your driver problem looks like lack of
+> proper driver architecture - you want to control the locks not from the
+> layer took the lock, but one layer up. Sorry, no, fix the driver
+> architecture.
+> 
 
-Signed-off-by: Prabhav Kumar Vaish <pvkumar5749404@gmail.com>
----
- drivers/soc/qcom/smem.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+No, it is the firmware's reference to the lock that is represented in
+the remoteproc node, while SMEM deals with Linux's reference to the lock.
 
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index 7191fa0c087f..ad1cf8dcc6ec 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -1032,18 +1032,16 @@ static int qcom_smem_resolve_mem(struct qcom_smem *smem, const char *name,
- 				 struct smem_region *region)
- {
- 	struct device *dev = smem->dev;
--	struct device_node *np;
- 	struct resource r;
- 	int ret;
-+	struct device_node *np __free(device_node) = of_parse_phandle(dev->of_node, name, 0);
- 
--	np = of_parse_phandle(dev->of_node, name, 0);
- 	if (!np) {
- 		dev_err(dev, "No %s specified\n", name);
- 		return -EINVAL;
- 	}
- 
- 	ret = of_address_to_resource(np, 0, &r);
--	of_node_put(np);
- 	if (ret)
- 		return ret;
- 
--- 
-2.34.1
+This reference would be used to release the lock - on behalf of the
+firmware - in the event that the firmware held it when it
+stopped/crashed.
 
+Regards,
+Bjorn
 
