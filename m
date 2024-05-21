@@ -1,172 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-20095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B8FF8CA817
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 08:44:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 571B48CA83A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 08:56:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 310ABB21816
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 06:44:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 128D12827C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 06:56:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C349046441;
-	Tue, 21 May 2024 06:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF7F244384;
+	Tue, 21 May 2024 06:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="NAJbt7a5"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="j8hBCfaC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E718941C63;
-	Tue, 21 May 2024 06:44:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055E6C12C;
+	Tue, 21 May 2024 06:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716273843; cv=none; b=hByU3+wNTgnJJxYBykBjO7OJM/OcsiThj1fd7HKyiWDDQjvvrh6Z/l1W5dfAPfOy7jTpuh61pXQe9yQgxVe4vbND4L3fllKVGeBpkzgk47rbEGnfU8/V/eWYp2mJ3VW9s2Pg5aLc8JxsewXktdFElm6qRI3l5d7kNgDgfIvkm+A=
+	t=1716274602; cv=none; b=mEJA15nhDvc+nGS80LfvhIaYF8PwHXge/9ZnbHJZaVmuXzmMv7CdGcXVu+G7bUY41Q4YUUQ9uQ9B6+MVkMWPwewR+BrG6lIRpRGGFo8ULHuSEkriczq4HXSz6v3pqKWe+hWHk9wCXmuTbRMhE1oCANZ+sdTbgp8QaXtqLC1WmbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716273843; c=relaxed/simple;
-	bh=eck8LkiBmFIk3D6cjAJWmIkNyfD/MCEdYcx9mI2Wz8U=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cKDve+HkMDHCR1OoFAkwilNEbNfxuKZsxzmqXl4T+BTpQ04CfxFVcTyT1j4O1lfPtI2gyobv61pp3hTDYjLdwJWtyiSlF7kuiG0+D1yz5KOIaHJfuZV9yuSIeJHiGJU2UU2yWd8IIURliE6y422Ngly8gd0fKVogzKttW/79Kdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=NAJbt7a5; arc=none smtp.client-ip=198.47.23.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-	by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 44L6gmm0011241;
-	Tue, 21 May 2024 01:42:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1716273768;
-	bh=+ZfOONRU6juW9FS/6TxFdABLBWxqz7rqnKx7hWQStMk=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=NAJbt7a5DoTR+zca5xHgtqfKuYpVEVUoncFcDAa9rnhd0cNDBfAjwlhHiy9tha2Vb
-	 g+Gb2EgkITFo0mgOhhaULzAGqx7RAEEAtxvOqpq8731MIkkNr26sB2h4ivC48fprL6
-	 wDMkTrcTcJlygDX4vsPSR2HaVHGcYvfXEn8aKLKI=
-Received: from DLEE106.ent.ti.com (dlee106.ent.ti.com [157.170.170.36])
-	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 44L6gmJG015907
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Tue, 21 May 2024 01:42:48 -0500
-Received: from DLEE111.ent.ti.com (157.170.170.22) by DLEE106.ent.ti.com
- (157.170.170.36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 21
- May 2024 01:42:48 -0500
-Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DLEE111.ent.ti.com
- (157.170.170.22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Tue, 21 May 2024 01:42:48 -0500
-Received: from localhost (uda0492258.dhcp.ti.com [172.24.227.9])
-	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 44L6gldU029813;
-	Tue, 21 May 2024 01:42:48 -0500
-Date: Tue, 21 May 2024 12:12:46 +0530
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
-To: Onkarnarth <onkarnath.1@samsung.com>
-CC: <bhelgaas@google.com>, <helgaas@kernel.org>, <vigneshr@ti.com>,
-        <s-vadapalli@ti.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <robh@kernel.org>, <yue.wang@Amlogic.com>, <neil.armstrong@linaro.org>,
-        <khilman@baylibre.com>, <jbrunet@baylibre.com>,
-        <martin.blumenstingl@googlemail.com>, <thomas.petazzoni@bootlin.com>,
-        <shawn.guo@linaro.org>, <lchuanhua@maxlinear.com>,
-        <srikanth.thokala@intel.com>, <songxiaowei@hisilicon.com>,
-        <wangbinghui@hisilicon.com>, <manivannan.sadhasivam@linaro.org>,
-        <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
-        <hayashi.kunihiko@socionext.com>, <mhiramat@kernel.org>,
-        <pali@kernel.org>, <toan@os.amperecomputing.com>,
-        <daire.mcnamara@microchip.com>, <conor.dooley@microchip.com>,
-        <marek.vasut+renesas@gmail.com>, <shawn.lin@rock-chips.com>,
-        <heiko@sntech.de>, <nirmal.patel@linux.intel.com>,
-        <jonathan.derrick@linux.dev>, <kishon@kernel.org>, <jdmason@kudzu.us>,
-        <dave.jiang@intel.com>, <rafael@kernel.org>, <lenb@kernel.org>,
-        <mahesh@linux.ibm.com>, <oohall@gmail.com>,
-        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-omap@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-amlogic@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-tegra@vger.kernel.org>, <r.thapliyal@samsung.com>,
-        Maninder Singh <maninder1.s@samsung.com>
-Subject: Re: [PATCH v2 1/1] PCI : Refactoring error log prints for better
- readability
-Message-ID: <2227b0ed-a57f-4bca-8f3e-721bc2e2055a@ti.com>
-References: <CGME20240521061553epcas5p1c7db70b37a70f599face675bc4dedda9@epcas5p1.samsung.com>
- <20240521061528.3559751-1-onkarnath.1@samsung.com>
+	s=arc-20240116; t=1716274602; c=relaxed/simple;
+	bh=TfIOtUcqbwJkZ6notRudlNbUTFukk69iQGuDM3mE/MU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JAW9E/o0DjIlfImstIyhaaL6WBR8MGb18eAhRPZjclsJhWj6KxRNr1+qJ2CZqG8+U7RHXkzCP4GOWR8SGqMN6dnlkhvfpAvFkAtWjHoBLcA+joPQYmyNgr1tS5RAzGywx/7YFoTxhsE6YvKamMYycgXm87+kYa6c2JKniAhzeMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=j8hBCfaC; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1716274598;
+	bh=TfIOtUcqbwJkZ6notRudlNbUTFukk69iQGuDM3mE/MU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=j8hBCfaCITG8b7pfUhoD1HKU00f770m7cYI7bu4vJH8rk/LXn0Yf+54WofcnvQcjO
+	 EBrwL0Jt2wDVrxrr+0JBpPbNrJOira99dUdCUm9/dP/GWui7vnBWQNV3pOEVCaXWfP
+	 KIkcTRj8vFjREo+/EPduJnkDhULrUqWVhWOHchgYqBE6VpSp3LlufdpcPgqZgmEoMb
+	 0Xi1EdMqEXTobHSa/oC9awjBJi9zI4qGB7izvFUBxKilyV71NgrBMi44w52x5Tklr3
+	 l7edZajr7e5ZeXhaq1i2UPch5QdDzhEK/PASHKWT3nl9DpEwW0izTYnOWML1e/u8Iq
+	 K8mL3G0ETrAaA==
+Received: from [100.66.96.193] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 3B376378202E;
+	Tue, 21 May 2024 06:56:35 +0000 (UTC)
+Message-ID: <87fba814-eb5a-4b6a-800b-158987fca1d8@collabora.com>
+Date: Tue, 21 May 2024 12:26:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240521061528.3559751-1-onkarnath.1@samsung.com>
-X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/6] drm/ci: generate testlist from build
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
+ helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
+ robdclark@gmail.com, david.heidelberg@collabora.com,
+ guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+ mcanal@igalia.com, linux-mediatek@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ intel-gfx@lists.freedesktop.org, virtualization@lists.linux-foundation.org,
+ linux-kernel@vger.kernel.org
+References: <20240517092502.647420-1-vignesh.raman@collabora.com>
+ <20240517092502.647420-3-vignesh.raman@collabora.com>
+ <o363vir3dqz2znrnifo6enbdwudalmxqbigdkci2ykxf5qjbnx@2ngllflxotgk>
+From: Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <o363vir3dqz2znrnifo6enbdwudalmxqbigdkci2ykxf5qjbnx@2ngllflxotgk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 21, 2024 at 11:45:28AM +0530, Onkarnarth wrote:
-> From: Onkarnath <onkarnath.1@samsung.com>
+Hi Dmitry,
 
-nitpick: In $subject:
-s/Refactoring/Refactor
-to follow the convention of using imperative mood.
-
+On 20/05/24 16:30, Dmitry Baryshkov wrote:
+> On Fri, May 17, 2024 at 02:54:58PM +0530, Vignesh Raman wrote:
+>> Stop vendoring the testlist into the kernel. Instead, use the
+>> testlist from the IGT build to ensure we do not miss renamed
+>> or newly added tests.
+>>
+>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+>> ---
+>>
+>> v2:
+>>    - Fix testlist generation for arm and arm64 builds.
+>>
+>> ---
+>>   drivers/gpu/drm/ci/build-igt.sh  |   34 +
+>>   drivers/gpu/drm/ci/igt_runner.sh |    9 +-
+>>   drivers/gpu/drm/ci/testlist.txt  | 2761 ------------------------------
+>>   3 files changed, 39 insertions(+), 2765 deletions(-)
+>>   delete mode 100644 drivers/gpu/drm/ci/testlist.txt
+>>
+>> diff --git a/drivers/gpu/drm/ci/build-igt.sh b/drivers/gpu/drm/ci/build-igt.sh
+>> index 7859554756c4..e62244728613 100644
+>> --- a/drivers/gpu/drm/ci/build-igt.sh
+>> +++ b/drivers/gpu/drm/ci/build-igt.sh
 > 
-> As %pe is already introduced, it's better to use it in place of (%ld) or
-> (%d) for printing error in logs. It will enhance readability of logs.
+> [...]
 > 
-> Error print style is more consistent now.
+>> @@ -26,6 +50,16 @@ meson build $MESON_OPTIONS $EXTRA_MESON_ARGS
+>>   ninja -C build -j${FDO_CI_CONCURRENT:-4} || ninja -C build -j 1
+>>   ninja -C build install
+>>   
+>> +if [[ "$KERNEL_ARCH" = "arm64" ]]; then
+>> +    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/igt/lib/aarch64-linux-gnu
+>> +elif [[ "$KERNEL_ARCH" = "arm" ]]; then
+>> +    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/igt/lib
+>> +else
+>> +    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/igt/lib64
 > 
-> Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
-> Co-developed-by: Maninder Singh <maninder1.s@samsung.com>
-> Signed-off-by: Maninder Singh <maninder1.s@samsung.com>
-> Signed-off-by: Onkarnath <onkarnath.1@samsung.com>
+> Could you please clarify this part? The arm64 vs arm don't look logical
+> from my point of view.
+> 
+> The rest LGTM.
 
-Thank you for the patch. LGTM.
+The libs are installed in the below path for different arch.
 
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+ > find . -name libigt.so
+./x86/igt/lib64/libigt.so
+./arm64/igt/lib/aarch64-linux-gnu/libigt.so
+./arm/igt/lib/libigt.so
+~/igt-build
 
-> ---
-> Suggested by Bjorn Helgaas in below discussion
-> https://patchwork.kernel.org/comment/25712288/
-> 
-> v1 -> v2: Added suggested by tag
-> 
->  drivers/pci/bus.c                             |   2 +-
->  drivers/pci/controller/dwc/pci-dra7xx.c       |   2 +-
->  drivers/pci/controller/dwc/pci-meson.c        |  16 +--
->  drivers/pci/controller/dwc/pcie-armada8k.c    |   4 +-
->  drivers/pci/controller/dwc/pcie-histb.c       |   6 +-
->  drivers/pci/controller/dwc/pcie-intel-gw.c    |  10 +-
->  drivers/pci/controller/dwc/pcie-keembay.c     |   2 +-
->  drivers/pci/controller/dwc/pcie-kirin.c       |   6 +-
->  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  18 +--
->  drivers/pci/controller/dwc/pcie-qcom.c        |  18 +--
->  drivers/pci/controller/dwc/pcie-tegra194.c    | 132 +++++++++---------
->  drivers/pci/controller/dwc/pcie-uniphier-ep.c |   2 +-
->  drivers/pci/controller/pci-aardvark.c         |   6 +-
->  drivers/pci/controller/pci-ftpci100.c         |   2 +-
->  drivers/pci/controller/pci-tegra.c            |  86 ++++++------
->  drivers/pci/controller/pci-xgene.c            |   4 +-
->  drivers/pci/controller/pcie-microchip-host.c  |   2 +-
->  drivers/pci/controller/pcie-rcar-host.c       |  14 +-
->  drivers/pci/controller/pcie-rockchip.c        |  34 ++---
->  drivers/pci/controller/vmd.c                  |   2 +-
->  drivers/pci/doe.c                             |   4 +-
->  drivers/pci/endpoint/functions/pci-epf-mhi.c  |   8 +-
->  drivers/pci/endpoint/functions/pci-epf-ntb.c  |   2 +-
->  drivers/pci/endpoint/functions/pci-epf-test.c |   4 +-
->  drivers/pci/endpoint/functions/pci-epf-vntb.c |   2 +-
->  drivers/pci/endpoint/pci-ep-cfs.c             |  12 +-
->  drivers/pci/endpoint/pci-epf-core.c           |  16 +--
->  drivers/pci/hotplug/acpiphp_core.c            |   2 +-
->  drivers/pci/hotplug/pciehp_core.c             |   8 +-
->  drivers/pci/hotplug/shpchp_core.c             |   4 +-
->  drivers/pci/of.c                              |   6 +-
->  drivers/pci/pci-driver.c                      |   4 +-
->  drivers/pci/pcie/dpc.c                        |   4 +-
->  drivers/pci/quirks.c                          |   2 +-
->  drivers/pci/setup-bus.c                       |   2 +-
->  drivers/pci/slot.c                            |   4 +-
->  drivers/pci/vgaarb.c                          |   2 +-
->  37 files changed, 227 insertions(+), 227 deletions(-)
-> 
+So for arm64 it is 'lib/aarch64-linux-gnu' and arm it is 'lib'.
 
-[...]
+s3.freedesktop.org/artifacts/vigneshraman/linux/1179691/arm64/igt.tar.gz
+s3.freedesktop.org/artifacts/vigneshraman/linux/1179691/arm/igt.tar.gz
+s3.freedesktop.org/artifacts/vigneshraman/linux/1179691/x86_64/igt.tar.gz
 
 Regards,
-Siddharth.
+Vignesh
+
+> 
+>> +fi
+>> +
+>> +generate_testlist
+>> +
+>>   mkdir -p artifacts/
+>>   tar -cf artifacts/igt.tar /igt
+>>   
 
