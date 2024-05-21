@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-20143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F5458CB3AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 20:41:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9A968CB3B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 20:41:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83CED1C20949
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 18:41:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E81D2825D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 18:41:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B543D1494D0;
-	Tue, 21 May 2024 18:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6529C149C6A;
+	Tue, 21 May 2024 18:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Dv6fvSdO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DmYV9SnT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE00148FEB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A54F149011;
 	Tue, 21 May 2024 18:40:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716316848; cv=none; b=mc+wEbE0KSTQh24Q0qI2vyi0giY16apVH5+Xd53PntdfGYOoFwL4bjJ7jVaVRIbdau1JqMbpauPwtNwqQZ0g0n4BHQLLNV8QNDeRiqvEghPK2zmcNMYkNh2no4GtNNqYwuxPLtetb8XscmGdwjl6QI2pkfuLCPOeZ/hj7eU6s+M=
+	t=1716316849; cv=none; b=XZ92BQ/yJ2VDgxLLcbXM1qLDj1MkXFPMPCRX8Mhm4WixkVr4JN1GlD4YvwoZFd7gCXprIr5hzNcs971f424YjnOlJYyqFKLSA51xbUPqxXyT2q3GvXLefg9stcqsBpiVIIHenGQ7wRv3r8LjoPtktDZqIDOhtX7WQZ3UcYAZSdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716316848; c=relaxed/simple;
-	bh=8KuC+8An/+QRes8Bri7TPb+7ESdJc5p96EB5KfxVkWs=;
+	s=arc-20240116; t=1716316849; c=relaxed/simple;
+	bh=svX454L73EMuirziWipo2A5ykvfNkU64QfZlqYwY4lo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=q+EiUG++nPviXXSzBKrzUmQQQoW+uKrQ0oGfMnHPwx+K6qMSEFbJjry4YbSy1o80TfexfSRH1O5RR4SrKaq1uZVYXS6XTXO25CEA9UcmonaPqPDrtnQBD7/aAz4ZXJ71fNVrEyT8NMlpexua+zf1tPk789Rm817YGERmtYf8/Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Dv6fvSdO; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=RBsQ5tFKzTH4XZYIVZdi2uTxOzMrtGlWM9vNxo1xVEVUipzszyRANUNzzGILLrItaXDi56J2POZYXdvny54vAsPuWHCpAr07x1S4fJLgMr3nAjDuhLqQLlRuxntBMdSzqC/SWHZqOYLv7KqGpNurbDyHoE3q1kQ7lrYHKG7XD7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DmYV9SnT; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44LDQASj031060;
-	Tue, 21 May 2024 18:38:28 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44LCOAqL018275;
+	Tue, 21 May 2024 18:38:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:date:subject:mime-version:content-type
 	:content-transfer-encoding:message-id:references:in-reply-to:to
-	:cc; s=qcppdkim1; bh=88NHDvPij+mRH8DRPYPERvabYSKAr78Aq4d8qESSJx4
-	=; b=Dv6fvSdOfeRP1fIaLkqdmwaCjRcYmAwdjuGU1MBW/AaJ6wv38o4WVS711eO
-	EzglyCJyd9YtQLdYSj8Xr7GtHtNoBW7kdZ2z0M80l3ftY6C0qeGLkCvBMabXz9c/
-	/4NoyU/TO9TbSoFGFjuLfq3RUPYmKF7kBTSdfO66aw+bwxzC84ATULDxndFDvNBj
-	L6BW/+0MnTdy9jcnKcRBi4zOK/7UdlpB0S1123I9PyVFbYBG+MU2575wq8J/DUnR
-	ywl10jXu5SQMzFQmbnMP1aFHaVFlK+I7mTBp3h1V0YdzcwMWxLkYZDIrBKqGvuiN
-	H4xvn42swtXg2yMSXCtH3E9/dwA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n45pue7-1
+	:cc; s=qcppdkim1; bh=bLJS9SRClb/39GErtcxjZ/NjKaKPQ4DvHuL8dZn9IE0
+	=; b=DmYV9SnTmnJEENuCi8lE85Te6Ld9IbF26dsEfeZqJNqFkx92+b279VNedis
+	HlccHu/y1CkVtGYgdtS0IonaKw4V+i3elBViIusaUswasPtfu0dAbJvXWAIiGkRn
+	8Ekr9ZbU8VmatJ6EyNZIV+W1nkCDGuGjWMPZCDIwSe2wBxi59z7eqSUrzxxeOvZM
+	KbOdDg+wKTqqSNPuswOcYRpBoDn03JVpt0Rdh5y3ZKMwwhxx4l/hmNx2I0BrK4s2
+	pDtlgmxufWkgBk/VENe2nBi74C2n+sEJZp3GvHYB1iaW4JKKZjqbdG4rpZOdoxz/
+	qcIU7lKDJEFOu53V0AdBR11TmKw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n4p7c7m-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 18:38:27 +0000 (GMT)
+	Tue, 21 May 2024 18:38:28 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44LIcQTw012119
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44LIcRIA020132
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 18:38:26 GMT
+	Tue, 21 May 2024 18:38:27 GMT
 Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.2.1544.9; Tue, 21 May 2024 11:38:26 -0700
 From: Elliot Berman <quic_eberman@quicinc.com>
-Date: Tue, 21 May 2024 11:38:00 -0700
-Subject: [PATCH RFC v3 3/9] fdt-select-board: Add test tool for selecting
- dtbs based on board-id
+Date: Tue, 21 May 2024 11:38:01 -0700
+Subject: [PATCH RFC v3 4/9] dt-bindings: arm: qcom: Update Devicetree
+ identifiers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240521-board-ids-v3-3-e6c71d05f4d2@quicinc.com>
+Message-ID: <20240521-board-ids-v3-4-e6c71d05f4d2@quicinc.com>
 References: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
 In-Reply-To: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
 To: Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>,
@@ -105,192 +105,148 @@ X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: K5cwYU7NhjfDktkbDUzCLcw99Op14pQM
-X-Proofpoint-ORIG-GUID: K5cwYU7NhjfDktkbDUzCLcw99Op14pQM
+X-Proofpoint-ORIG-GUID: DtQhngKaOHN50LilzhejxnCo_Zg7dO3B
+X-Proofpoint-GUID: DtQhngKaOHN50LilzhejxnCo_Zg7dO3B
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-21_11,2024-05-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 impostorscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=999 phishscore=0
- malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405210140
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0 spamscore=0
+ impostorscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=788 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405210139
 
-Introduce a tool which scores devicetrees based on their board-id and a
-supplied reference devicetree. This mechanism would be most similar to
-an proposal to EBBR where firmware provides a reference devicetree which
-contains the actual board identifier values, and an OS loader can
-choose to replace (or overlay) the firmware-provided devicetree.
+From: Amrit Anand <quic_amrianan@quicinc.com>
 
+Update existing documentation for qcom,msm-id (interchangeably:
+qcom,soc-id) and qcom,board-id. Add support for qcom,pmic-id, qcom,oem-id
+to support multi-DTB selection on Qualcomm's boards.
+
+"qcom,soc-id", "qcom,board-id" and "qcom,pmic-id" are tuples of two 32-bit
+values. The "qcom,oem-id" is a tuple of one 32-bit value.
+Introduce macros to help generate SOC, board, PMIC and OEM identifiers.
+QCOM_SOC_ID and QCOM_SOC_REVISION can be used to generate qcom,msm-id.
+QCOM_BOARD_ID and QCOM_BOARD_SUBTYPE can be used to generate qcom,board-id.
+QCOM_PMIC_SID and QCOM_PMIC_MODEL can be used to generate qcom,pmic-id.
+QCOM_OEM_ID can be used to generate qcom,oem-id.
+
+Add entries for different types of SoC, boards, DDR type, Boot device
+type which are currently used by Qualcomm based bootloader.
+
+Signed-off-by: Amrit Anand <quic_amrianan@quicinc.com>
 Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- scripts/dtc/.gitignore         |   1 +
- scripts/dtc/Makefile           |   3 +-
- scripts/dtc/fdt-select-board.c | 126 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 129 insertions(+), 1 deletion(-)
+ include/dt-bindings/arm/qcom,ids.h | 86 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 77 insertions(+), 9 deletions(-)
 
-diff --git a/scripts/dtc/.gitignore b/scripts/dtc/.gitignore
-index e0b5c1d2464a..7f6d5202c0ba 100644
---- a/scripts/dtc/.gitignore
-+++ b/scripts/dtc/.gitignore
-@@ -1,3 +1,4 @@
- # SPDX-License-Identifier: GPL-2.0-only
- /dtc
- /fdtoverlay
-+/fdt-select-board
-diff --git a/scripts/dtc/Makefile b/scripts/dtc/Makefile
-index 4d32b9497da9..a331f07091b3 100644
---- a/scripts/dtc/Makefile
-+++ b/scripts/dtc/Makefile
-@@ -2,7 +2,7 @@
- # scripts/dtc makefile
+diff --git a/include/dt-bindings/arm/qcom,ids.h b/include/dt-bindings/arm/qcom,ids.h
+index 51e0f6059410..0cb521f0c0e7 100644
+--- a/include/dt-bindings/arm/qcom,ids.h
++++ b/include/dt-bindings/arm/qcom,ids.h
+@@ -8,9 +8,14 @@
+ #define _DT_BINDINGS_ARM_QCOM_IDS_H
  
- # *** Also keep .gitignore in sync when changing ***
--hostprogs-always-$(CONFIG_DTC)		+= dtc fdtoverlay
-+hostprogs-always-$(CONFIG_DTC)		+= dtc fdtoverlay fdt-select-board
- hostprogs-always-$(CHECK_DT_BINDING)	+= dtc
+ /*
+- * The MSM chipset and hardware revision used by Qualcomm bootloaders, DTS for
+- * older chipsets (qcom,msm-id) and in socinfo driver:
++ * The MSM chipset ID (soc-id) used by Qualcomm bootloaders,
++ * and in socinfo driver:
++ * where, "a" indicates Qualcomm supported chipsets, example MSM8260, MSM8660 etc
+  */
++
++#define QCOM_SOC_ID(a)  ((QCOM_ID_##a) && 0xffff)
++
++
+ #define QCOM_ID_MSM8260			70
+ #define QCOM_ID_MSM8660			71
+ #define QCOM_ID_APQ8060			86
+@@ -267,16 +272,79 @@
+ #define QCOM_ID_IPQ5302			595
+ #define QCOM_ID_IPQ5300			624
  
- dtc-objs	:= dtc.o flattree.o fstree.o data.o livetree.o treesource.o \
-@@ -14,6 +14,7 @@ dtc-objs	+= dtc-lexer.lex.o dtc-parser.tab.o
- libfdt-objs	:= fdt.o fdt_ro.o fdt_wip.o fdt_sw.o fdt_rw.o fdt_strerror.o fdt_empty_tree.o fdt_addresses.o fdt_overlay.o
- libfdt		= $(addprefix libfdt/,$(libfdt-objs))
- fdtoverlay-objs	:= $(libfdt) fdtoverlay.o util.o
-+fdt-select-board-objs := $(libfdt) fdt-select-board.o util.o
- 
- # Source files need to get at the userspace version of libfdt_env.h to compile
- HOST_EXTRACFLAGS += -I $(srctree)/$(src)/libfdt
-diff --git a/scripts/dtc/fdt-select-board.c b/scripts/dtc/fdt-select-board.c
-new file mode 100644
-index 000000000000..a7f3dc715ed1
---- /dev/null
-+++ b/scripts/dtc/fdt-select-board.c
-@@ -0,0 +1,126 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
++ /* The SOC revision used by Qualcomm bootloaders (soc-revision) */
++
++#define QCOM_SOC_REVISION(a)		(a & 0xff)
++
+ /*
+- * The board type and revision information, used by Qualcomm bootloaders and
+- * DTS for older chipsets (qcom,board-id):
++ * The board type and revision information (board-id), used by Qualcomm bootloaders
++ * where, "a" indicates board type which can be either MTP, QRD etc
+  */
++
+ #define QCOM_BOARD_ID(a, major, minor) \
+-	(((major & 0xff) << 16) | ((minor & 0xff) << 8) | QCOM_BOARD_ID_##a)
++	(((major & 0xff) << 16) | ((minor & 0xff) << 8) | ((QCOM_BOARD_ID_##a) & 0xff))
++
++#define QCOM_BOARD_ID_MTP		0x8
++#define QCOM_BOARD_ID_LIQUID		0x9
++#define QCOM_BOARD_ID_DRAGONBOARD	0xA
++#define QCOM_BOARD_ID_QRD		0x11
++#define QCOM_BOARD_ID_ADP		0x19
++#define QCOM_BOARD_ID_HDK		0x1F
++#define QCOM_BOARD_ID_ATP		0x21
++#define QCOM_BOARD_ID_IDP		0x22
++#define QCOM_BOARD_ID_SBC		0x24
++#define QCOM_BOARD_ID_QXR		0x26
++#define QCOM_BOARD_ID_X100		0x26
++#define QCOM_BOARD_ID_CRD		0x28
++
 +/*
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * The platform subtype is used by Qualcomm bootloaders and
++ * DTS (board-subtype)
++ * where, "a" indicates boot device type, it can be EMMC,
++ * UFS, NAND or OTHER (which can be used for default).
++ * "b" indicates DDR type which can be 128MB, 256MB,
++ * 512MB, 1024MB, 2048MB, 3072MB, 4096MB or ANY 
++ * (which can be used for default).
 + */
-+#include <ctype.h>
-+#include <getopt.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <inttypes.h>
++#define QCOM_BOARD_SUBTYPE(a, b, SUBTYPE) \
++	(((QCOM_BOARD_BOOT_##a & 0xf) << 16) | ((QCOM_BOARD_DDRTYPE_##b & 0x7) << 8) | \
++	(SUBTYPE & 0xff))
 +
-+#include <libfdt.h>
++/* Board DDR Type where each value indicates higher limit */
++#define QCOM_BOARD_DDRTYPE_ANY		0x0
++#define QCOM_BOARD_DDRTYPE_128M		0x1
++#define QCOM_BOARD_DDRTYPE_256M		0x2
++#define QCOM_BOARD_DDRTYPE_512M		0x3
++#define QCOM_BOARD_DDRTYPE_1024M	0x4
++#define QCOM_BOARD_DDRTYPE_2048M	0x5
++#define QCOM_BOARD_DDRTYPE_3072M	0x6
++#define QCOM_BOARD_DDRTYPE_4096M	0x7
+ 
+-#define QCOM_BOARD_ID_MTP			8
+-#define QCOM_BOARD_ID_DRAGONBOARD		10
+-#define QCOM_BOARD_ID_QRD			11
+-#define QCOM_BOARD_ID_SBC			24
++/* Board Boot Device Type */
++#define QCOM_BOARD_BOOT_EMMC		0x0
++#define QCOM_BOARD_BOOT_UFS		0x1
++#define QCOM_BOARD_BOOT_NAND		0x2
++#define QCOM_BOARD_BOOT_OTHER		0x3
 +
-+#include "util.h"
++/*
++ * The PMIC slave id is used by Qualcomm bootloaders to
++ * indicates which PMIC is attached (pmic-sid)
++ */
 +
-+static const char usage_synopsis[] =
-+	"find the best matching device tree from a reference board\n"
-+	"	fdt-select-board <options> [<candidate.dtb>]\n"
-+	"\n";
-+static const char usage_short_opts[] = "r:av" USAGE_COMMON_SHORT_OPTS;
-+static const struct option usage_long_opts[] = {
-+	{"reference", required_argument, NULL, 'r'},
-+	{"verbose",	    no_argument, NULL, 'v'},
-+	{"all",		    no_argument, NULL, 'a'},
-+	USAGE_COMMON_LONG_OPTS
-+};
++#define QCOM_PMIC_SID(a)		(a & 0xff)
 +
-+static const char * const usage_opts_help[] = {
-+	"Reference DTB",
-+	"Verbose messages",
-+	"List all matches",
-+	USAGE_COMMON_OPTS_HELP
-+};
++/*
++ * The PMIC ID is used by Qualcomm bootloaders to describe the ID
++ * of PMIC attached to bus described by SID (pmic-model)
++ */
 +
-+int verbose = 0;
++#define QCOM_PMIC_MODEL(ID, major, minor) \
++	(((major & 0xff) << 16) | ((minor & 0xff) << 8) | (ID & 0xff))
 +
-+struct context {
-+	const void *fdt;
-+	int node;
-+};
-+
-+static const void *get_board_id(void *ctx, const char *name, int *datalen)
-+{
-+	struct context *c = ctx;
-+
-+	return fdt_getprop(c->fdt, c->node, name, datalen);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+	int opt;
-+	char *input_filename = NULL;
-+	const void *fdt;
-+	const void *ref;
-+	int ref_node;
-+	int max_score = -1;
-+	const char *best_match = NULL;
-+	struct context ctx;
-+	int all = 0;
-+
-+	while ((opt = util_getopt_long()) != EOF) {
-+		switch (opt) {
-+		case_USAGE_COMMON_FLAGS
-+
-+		case 'a':
-+			all = 1;
-+			break;
-+		case 'r':
-+			input_filename = optarg;
-+			break;
-+		case 'v':
-+			verbose = 1;
-+			break;
-+		}
-+	}
-+
-+	if (!input_filename)
-+		usage("missing reference file");
-+
-+	argv += optind;
-+	argc -= optind;
-+
-+	if (argc <= 0)
-+		usage("missing candidate dtbs");
-+
-+	ref = utilfdt_read(input_filename, NULL);
-+	if (!ref) {
-+		fprintf(stderr, "failed to read reference %s\n", input_filename);
-+		return -1;
-+	}
-+
-+	ref_node = fdt_path_offset(ref, "/board-id");
-+	if (ref_node < 0) {
-+		fprintf(stderr, "reference blob doesn't have a board-id\n");
-+		return -1;
-+	}
-+
-+	ctx.fdt = ref;
-+	ctx.node = ref_node;
-+
-+	for (; argc > 0; --argc, ++argv) {
-+		int score;
-+
-+		fdt = utilfdt_read(*argv, NULL);
-+		if (!fdt) {
-+			fprintf(stderr, "failed to read %s\n", *argv);
-+			return -1;
-+		}
-+
-+		score = fdt_board_id_score(fdt, get_board_id, &ctx);
-+		if (verbose || (score > 0 && all))
-+			printf("%s: %d\n", *argv, score);
-+
-+		if (score > max_score) {
-+			max_score = score;
-+			best_match = *argv;
-+		}
-+
-+		free(fdt);
-+	}
-+
-+	if (best_match && !all)
-+		printf("%s\n", best_match);
-+
-+	return 0;
-+}
++/*
++ * The OEM ID consists of 32 bit value to support OEM boards where they
++ * have slight differences on top of Qualcomm's standard boards
++ */
++#define QCOM_OEM_ID(a)		(a & 0xffffffff)
+ 
+ #endif /* _DT_BINDINGS_ARM_QCOM_IDS_H */
 
 -- 
 2.34.1
