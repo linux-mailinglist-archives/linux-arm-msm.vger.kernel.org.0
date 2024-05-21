@@ -1,149 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-20102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31D198CAA6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 10:58:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 945498CAAF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 11:45:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B1178B220F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 08:58:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F2463B22424
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 09:45:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6503756475;
-	Tue, 21 May 2024 08:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8178C6BFA8;
+	Tue, 21 May 2024 09:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XWEYiY3K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QatskZQI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351D11F951;
-	Tue, 21 May 2024 08:58:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0334154777
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 09:45:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716281894; cv=none; b=PEmViUV9o5FbGDsqFe8dQnnne9S/HVQhdROHGoELx09kYWy2z3AaCEcmKGgb0BDf+OGcgr8Pns2oHw+KN2OYitEbddL133ZgG7dgG3GVZg9ihpEXsXCjIJuXg/XXdhyJgTfzttDxfEe2C0xrtvMzwactdsEbynOxVEaBYkAH0dA=
+	t=1716284729; cv=none; b=ACjitlVh5x7avdvuxIjZMWurjCQyz14Cc7STaWaHdaGQwGFXdSg0PzTtZ+x+wqec6NfN0bX3Qfm4YHIHlQ167HjTsHjUpW1WHQXxTl8zxGhC3QR1eFeUJ6xIqZPePpuH4bcYhPhPfFxuH3C4BTtcYqIQIwXIXjB9vZzmBpZRtvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716281894; c=relaxed/simple;
-	bh=Yb9S3qcvqNTBPcx8/jgoqgRqjkneywUyKMXmfw7NoqI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aTYcoAurh2Vol7d9M1kP1Sj6KSg0xM05RvhvLkSFjftMuljp2OH6KC2s50L1QJHj2c1Ny0AT8O3rQh5z4cMRE3gbt98Q2RHNZ+fALMIk/EtRZNt9hnWucO23uXV3gD3LcMMSxsuE2/n3mA+QXB8exkuokHcdx5Uc57cpqp/tNeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XWEYiY3K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B78C2BD11;
-	Tue, 21 May 2024 08:58:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716281893;
-	bh=Yb9S3qcvqNTBPcx8/jgoqgRqjkneywUyKMXmfw7NoqI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XWEYiY3KUox0XoQh+DTDf/kyFjxeG6DD+EyfLNeYYOhDkTaBrKmbD/szBgKbeBlda
-	 AIIgAzHFzastY9VZfsO9wF3QUhC11fwusu4Ye8LVe6knrs+41MWxXlQayGawxhi2hL
-	 m582TzfkJfhJJ+5xP8IVSQBNQB49YFtKzTJxrgfbRWd/2JUYJxubYyCGi0Gn7odRsr
-	 hql5Tj5fB86D4ZxzeG6Dmz79dkYuLWlsExpL6JSd4fbI0eky5eOGnXVRz6vent45f4
-	 DApp4Ky2k6nEQvDLQ/6v3sssYnCQpGInjq9NInDXK3vwUaUOXUWG0QOgWVcX5j2Ras
-	 SMGBi+uSUZrzg==
-Message-ID: <06565532-987a-465a-b2ab-a03fce7279e1@kernel.org>
-Date: Tue, 21 May 2024 10:58:07 +0200
+	s=arc-20240116; t=1716284729; c=relaxed/simple;
+	bh=7qLaoqIIAaTz5fph0kyugjFXnFjLbaUGL7rC2ceDlok=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=BsfId4mfqHFIIlDswY3WZSth6MVPxK8ifCJqHIcyvHHKXWhADFuLKjnJffKscN4lvHISjajUZgrNobcAW2aEoI8lf6Ev4i8NmPX6LdWsEY9DBeXEWezdroQviwaHHllnkW8lT93gtwu3+lei0VgRwsgVLF0k+Y2obhC/z9/Rano=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QatskZQI; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2e72b8931caso19227631fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 02:45:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716284725; x=1716889525; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Md+WRwALrBDV2V3shAX8d3uWCybuvTD8xlgzEt6mj3s=;
+        b=QatskZQIbHWGZW+tpnSfL3wmD6MmPZjHIDBDY73stAXPfnCuv39Wimi9Tdu2n4jtDb
+         bnkM9jMHm9VvxAi35ZjlndBBH4+JAVH7u40dsS1omHmyrqV1LcvZLqmguLYj1wwk9bVj
+         nbZKUrny1/6CXq6+hIAJ+J4V94QqYbLhhs5VMKFEM6NoiRGJhTrRPSjhbQTgBMPDNdkz
+         0h3Opsda1oGtmjK9+osG2JU2SFIFcDC/Zi03QNjdeQ7eIbO57pGJMSI4AcjIlPgWJBj0
+         t6KW9M9BipEmEjkTq9/By/twYvlxbnfEn2r5Rfu6Avx4k8QTqKUwF+Run50oCtDXoI3o
+         eEuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716284725; x=1716889525;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Md+WRwALrBDV2V3shAX8d3uWCybuvTD8xlgzEt6mj3s=;
+        b=Jvjm0HMkZVdatJYIV1t+rUibzIOR8bNH/TNYORAoWN4Nxv7nKqous997A2glPa5FZN
+         kYLgBwYTa2MHWXlW4Sri1at9Gkxg9xTGHpyMetFUUnFP35xoUfJY7Nr4MZZWfbpi7FkI
+         RbDYTRlRqEqScX8uROtR9Ji8IjJZ/O5AotI9VIyJkdh2Ohq9wQc9ge3YXzKQ+tYH0SI3
+         IJsHsEwM70SPmemDEMD3gGpnA7ToPy7M2I48geULzCXL9YIHPmH6NCwk2UrBLxMXWiQP
+         +vkxbxUVRS6S9aDOWohugR9egFSRh4yHYhnll8TCoTUUTP8E+ueKZC7xCRCyK65b5gEd
+         IqVA==
+X-Forwarded-Encrypted: i=1; AJvYcCW4lAGUxAHVioo4bT1gj5qSh+VkJJiTQ7VsQcsqlmFeNQIDlZ/QOiTJzMf6kB3iWBLTTU1dlCq4Ti9tDZ6JlDZiDqPtkvi6D/L2o1v1Ng==
+X-Gm-Message-State: AOJu0YyYVC7K1uxH6j4aCJ5Npg7pex+5qSgxgZCUlP5WKIQw+Rp7aYI7
+	mkc9HtlRkLKxcQN2slBJOrlY2y5gMYLHavXN1SqQgUWejKy+4r3oj+N77HgKztI=
+X-Google-Smtp-Source: AGHT+IHei8MVuGwNP1mQ+VWZ8la4NiILOnWDAPhCft9QiMk5UUjYW5f5kC0nYQH6ZN+vh0aDQ4fT2g==
+X-Received: by 2002:a05:651c:50f:b0:2df:7ac1:b27 with SMTP id 38308e7fff4ca-2e52006399cmr239371871fa.28.1716284725211;
+        Tue, 21 May 2024 02:45:25 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2e706ee0a65sm13906261fa.112.2024.05.21.02.45.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 May 2024 02:45:24 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 00/12] arm64: qcom: autodetect firmware paths
+Date: Tue, 21 May 2024 12:45:20 +0300
+Message-Id: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/2] dt-bindings: soc: qcom,smsm: Allow specifying
- mboxes instead of qcom,ipc
-To: Luca Weiss <luca@z3ntu.xyz>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240424-smsm-mbox-v1-0-555f3f442841@z3ntu.xyz>
- <2729475.mvXUDI8C0e@g550jk> <1ab150cd-68f0-4153-8d4e-5bd30bb01dfe@linaro.org>
- <12437992.O9o76ZdvQC@g550jk>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <12437992.O9o76ZdvQC@g550jk>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADBtTGYC/x3MQQqDMBBG4avIrB2IqbHgVYqLwf7RWSS2E6iCe
+ PcGl9/ivZMKTFFobE4y/LToliu6tqF5lbyA9V1N3vneBe/4O2+Jo1raxcBZEliA6Icgz/AQquH
+ HEPW4p6/puv54QBvvZAAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Loic Poulain <loic.poulain@linaro.org>, Kalle Valo <kvalo@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org, 
+ linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+ Arnd Bergmann <arnd@arndb.de>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3460;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=7qLaoqIIAaTz5fph0kyugjFXnFjLbaUGL7rC2ceDlok=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmTG0yaDfbXvoevOUjHPs8IuKzmJYGjmc1kguRR
+ zAiKXLcMdeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZkxtMgAKCRCLPIo+Aiko
+ 1UIfB/sE3R07GqWvVQQIOHXBJLGbD/snQft/uArKi60KzVDniDBBl5qB//sKVqDrgc3OWAJcIqA
+ 1RcJbCi4Mxee4Xz73+ryd3ZTjnkLDsBiodcG9KzI0CtjtpgFHlHAc2tMMdrgXbMi+U8tLzLDVBN
+ w7ibw4ArXfhNbEuUTgphqgJPC83Xi77j41x7WENSEaBKKtfv39qBbAI7iyVsravdcFw8lgTzmOg
+ FThYcPmWCgMS6Lxo8zlQ1K5O9skLBZJdhpIpn8qNmy3Q+AULTfMilXHVSYwp9rzXsFAuqBwhym2
+ Gm8oVGyD77ZzYIiUCWRUX7GtOHE+J1iq8/t6xHllnWz+eb9L
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On 20/05/2024 17:11, Luca Weiss wrote:
-> Hi Krzysztof
-> 
-> Ack, sounds good.
-> 
-> Maybe also from you, any opinion between these two binding styles?
-> 
-> So first using index of mboxes for the numbering, where for the known
-> usages the first element (and sometimes the 3rd - ipc-2) are empty <>.
-> 
-> The second variant is using mbox-names to get the correct channel-mbox
-> mapping.
-> 
-> -               qcom,ipc-1 = <&apcs 8 13>;
-> -               qcom,ipc-2 = <&apcs 8 9>;
-> -               qcom,ipc-3 = <&apcs 8 19>;
-> +               mboxes = <0>, <&apcs 13>, <&apcs 9>, <&apcs 19>;
-> 
-> vs.
-> 
-> -               qcom,ipc-1 = <&apcs 8 13>;
-> -               qcom,ipc-2 = <&apcs 8 9>;
-> -               qcom,ipc-3 = <&apcs 8 19>;
-> +               mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
-> +               mbox-names = "ipc-1", "ipc-2", "ipc-3";
+This is a followup to the discussion during the Linaro Connect. Remove
+most of the firmware-name properties from the board DT by using
+root node compatible to detect firmware path.
 
-Sorry, don't get, ipc-1 is the first mailbox, so why would there be <0>
-in first case? Anyway, the question is if you need to know that some
-mailbox is missing. But then it is weird to name them "ipc-1" etc.
+The most obvious change is that the drivers now have to look for the
+MBN firmware files by default, so this might break the case of the user
+simply mounting vendor's firmware partition to /lib/firmware and
+expecting it to work.
+
+Also things are slightly more complex for the platforms like DB845c and
+Qualcomm RB5. These platforms have generic SoC firmware in qcom/sdm845
+and qcom/sm8250 and also the board-specific firmware at
+qcom/sdm845/Thundercomm/DB845C and qcom/sm8250/Thundercomm/RB5
+respectively. Making these boards follow up the scheme would require
+additional symlinks in the firmware dir.
+
++Link: qcom/sdm845/Thundercomm/db845c/a630_zap.mbn -> ../../a630_zap.mbn
++Link: qcom/sm8250/Thundercomm/RB5/a650_zap.mbn -> ../../a650_zap.mbn
++Link: qcom/sdm845/Thundercomm/db845c/adsp.mbn -> ../../adsp.mbn
++Link: qcom/sdm845/Thundercomm/db845c/adspr.jsn -> ../../adspr.jsn
++Link: qcom/sdm845/Thundercomm/db845c/adspua.jsn -> ../../adspua.jsn
++Link: qcom/sdm845/Thundercomm/db845c/cdsp.mbn -> ../../cdsp.mbn
++Link: qcom/sdm845/Thundercomm/db845c/cdspr.jsn -> ../../cdspr.jsn
++Link: qcom/sm8250/Thundercomm/RB5/adsp.mbn -> ../../adsp.mbn
++Link: qcom/sm8250/Thundercomm/RB5/adspr.jsn -> ../../adspr.jsn
++Link: qcom/sm8250/Thundercomm/RB5/adspua.jsn -> ../../adspua.jsn
++Link: qcom/sm8250/Thundercomm/RB5/cdsp.mbn -> ../../cdsp.mbn
++Link: qcom/sm8250/Thundercomm/RB5/cdspr.jsn -> ../../cdspr.jsn
+
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (12):
+      soc: qcom: add firmware name helper
+      wifi: wcn36xx: make use of QCOM_FW_HELPER
+      soc: qcom: wcnss_ctrl: make use of QCOM_FW_HELPER
+      remoteproc: qcom_q6v5_mss: switch to mbn files by default
+      remoteproc: qcom_q6v5_mss: make use of QCOM_FW_HELPER
+      remoteproc: qcom_q6v5_pas: switch to mbn files by default
+      remoteproc: qcom_q6v5_pas: make use of QCOM_FW_HELPER
+      remoteproc: qcom_wcnss: switch to mbn files by default
+      remoteproc: qcom_wcnss: make use of QCOM_FW_HELPER
+      remoteproc: qcom_wcnss: make use of QCOM_FW_HELPER
+      arm64: dts: qcom: apq8016-sbc: drop firmware-name properties
+      arm64: dts: qcom: apq8096-db820c: drop firmware-name properties
+
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts    |  5 +-
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dts |  2 -
+ drivers/net/wireless/ath/wcn36xx/Kconfig    |  1 +
+ drivers/net/wireless/ath/wcn36xx/main.c     |  5 ++
+ drivers/remoteproc/Kconfig                  |  3 +
+ drivers/remoteproc/qcom_q6v5_mss.c          | 12 +++-
+ drivers/remoteproc/qcom_q6v5_pas.c          | 85 +++++++++++++++-------------
+ drivers/remoteproc/qcom_wcnss.c             |  8 ++-
+ drivers/soc/qcom/Kconfig                    |  6 ++
+ drivers/soc/qcom/Makefile                   |  1 +
+ drivers/soc/qcom/qcom_fw_helper.c           | 86 +++++++++++++++++++++++++++++
+ drivers/soc/qcom/wcnss_ctrl.c               |  9 +++
+ include/linux/soc/qcom/fw_helper.h          | 10 ++++
+ 13 files changed, 187 insertions(+), 46 deletions(-)
+---
+base-commit: 632483ea8004edfadd035de36e1ab2c7c4f53158
+change-id: 20240520-qcom-firmware-name-aeef265a753a
 
 Best regards,
-Krzysztof
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
