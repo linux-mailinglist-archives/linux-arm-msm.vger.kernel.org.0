@@ -1,124 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-20149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06CDC8CB3F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 21:00:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 198938CB403
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 21:06:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C07B7283773
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 19:00:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C37ED280D58
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 19:06:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CB6814901F;
-	Tue, 21 May 2024 19:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44BBE148820;
+	Tue, 21 May 2024 19:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s4ji7tJl"
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="NL5qKz9F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F85E14901C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 19:00:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F6814885E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 19:06:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716318018; cv=none; b=gaqj3N+CpqJGBgucLm9JR06MjItjvY18liw4NqM0DlpI/G7RjgAT2/754AHmAXLjy3Y/XZYb45BUZ+bebFGF+9FCvrNtV3FmDGVc5jx0+M89zzYeVA/n8TLDwU39QjymI1nuo5PM3EN5Qws2yir6WFPo62TXXg5CI63EAi5iVL8=
+	t=1716318384; cv=none; b=JIKhRVqT/tUmKMCYx3qNKzp91gUoR+gKWNmLjiwrzAe2ELRQZodEputulrsmKayWOJpbUOsyg5ZXoIk/SgfH3uwEGL69rXVhb6ZOgDA5BLVfMwyrvKGMiMj/KKfzElIB+8tBuBKTBBATiFNgosjohvKWKZp5arQkXJnnHTkeujs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716318018; c=relaxed/simple;
-	bh=Y4kAtq2u27/QT2c8cc/6K07/xzsH3x5mStJNRe+bsuQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JrPAVy2D7p1jzTZb6pVKVCt17lTdBOGiv1OlK9h4/d8XXThC8tqQRJ6qq1CnUfTwBzyylbxZCjLhXuwO00PCWqCq/358WzvyGbQVl0goRDqNiLtK/NPweyF80sQMdpIZWNf+oaV2fs/nDB/5LaOI5ZWsAq44Pam6toLibNwD3uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s4ji7tJl; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-61bed5ce32fso41682757b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 12:00:13 -0700 (PDT)
+	s=arc-20240116; t=1716318384; c=relaxed/simple;
+	bh=K+vtHoqaNlZZNr6oE0+RHRQ6wuFTfPXBz1ErIQ1/t4g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JxgAe7XmFTMt/TyrMCEOGMVHJr3OYOzFHT4Xv38kh+TVxNXrjh0n6qUo70osTOZ1cLOw/XK4M2IvnkeoIOpMG1vhDgUvRov/n6SjkFFrcOLK6hZs5vCRvcLF1aEWmpuU9Zk9DXy/S+R60YUNz4FYKPwy3Wd1hN5WNhSJ/32Mwlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=NL5qKz9F; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-43e12244dc9so3380641cf.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 12:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716318012; x=1716922812; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j2dJjZszZabWmG8eK2HsvGgJ24f0l3khGbuW2IX85+M=;
-        b=s4ji7tJlWsBErxZeYCRwjlB3Yy3Zr5QJ4Szh/wABWXAd6SXldYAMdjwQEJ3T7t/Vhe
-         MCJkIZB3d4hwZthWdwKQkFqb2WsGrBG/GqBfWumO3v/6HV9x0LphdQN+mTC3EzzN1een
-         BchVlQ7JazH//iMi3lv0hDZtEy54ZT7Epdeaccp/8ZPwxWwHsZSdgiZ2L36a8oXYC6j5
-         kimjUpeCR6c8uyJ6CkEoNbkdE+Vp0M/tnJ0W+1NVnVxZDX84INlKJ/w+B/XA3zcKYPJZ
-         T+E/Ks0r1Byodo21owCGqQgSo5UXul/mLaKF8iPNmauCIWieTiZfSSkcZVN09myjc4i2
-         NqgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716318012; x=1716922812;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=broadcom.com; s=google; t=1716318381; x=1716923181; darn=vger.kernel.org;
+        h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=j2dJjZszZabWmG8eK2HsvGgJ24f0l3khGbuW2IX85+M=;
-        b=cF+jGo1jVLgAnSwOlEj/OpY5PKvgu0JSkbDRfZ3L1SGk3QN6gRKKdD0ofW1lK2HgfT
-         iBXsFFkJb9pzMPCThPMDkBIutH1Ri90WP+UC22V4cE7h3x7j6ZIe/AhrclCVprTWQArM
-         KXlBssKmj5r53PM3TFhzHXHP9KlMPevpC8X/NAF4CInicvNyEWwhQ6fC+xalZUrezF1J
-         wGpHzyG9aT0c1Va3/bCIF45MtrtNpIuMRYZ5kYZT87phQI1qaHmNBHtEokkEFMAHIN8P
-         +Zv/IMEsbV4wp1jgquUvy6JTXVwbhAXMg+tv8+Q/7RNVJ7Hpqqn5+99ildDORBQzQGo0
-         pnPw==
-X-Forwarded-Encrypted: i=1; AJvYcCU0UnmnfZOvUCAwP/0SN66uIk1c4b8uGTpK7UCn/YuW1QE1WbWJRU1JiP53/ZDDt+uoEkLS/k9vWBZEHg3pCqsggAZEZIYb/6qhcIu/Gg==
-X-Gm-Message-State: AOJu0Yyuev4eCYzLuAmNMJjYsBS3IpScI+85CXDW6QLk+qt4oqN0Xc2U
-	ABXsSROSaDpoRAnuDLam5JiTchDSjdtmwi9K83R9PmMX7suSNwYidIprUmT4qmHantJL3cFwEqI
-	30c61v4J7hvxfXLSV/u58k9da8EgR2NK/ko2SXw==
-X-Google-Smtp-Source: AGHT+IHps+GRz537VGqn9WNMddSpdygBCzdOT0qoyGTzMRpEmepGJPUIo/0kWhUJl0kN5U1agql0O+39Wkicam0iijY=
-X-Received: by 2002:a0d:d78d:0:b0:61a:d2a0:5497 with SMTP id
- 00721157ae682-627e46aa110mr79027b3.8.1716318011734; Tue, 21 May 2024 12:00:11
- -0700 (PDT)
+        bh=kSYujyq6qvlEJKaqZWcw+qGvdWClg4mtICYs0c+xekc=;
+        b=NL5qKz9FdmSQgtprDWTNb8rK2KTCiPeaLjg/WdfD9fLPQ4A9fb2YiLEhV9eQc5G/Kx
+         0wvgOrhZJLJtOFvKG9yq14/LvVAJEzZ61v8tlJaOFQoM5xWJNZ2wkKSY2E6jgzE0pGeL
+         rTLMCfsu11g6j6UsHu70UIfnnnWRETYXfB19Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716318381; x=1716923181;
+        h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kSYujyq6qvlEJKaqZWcw+qGvdWClg4mtICYs0c+xekc=;
+        b=b2xp67dR2gwcVPw/JmdwPDmM3EBEtomdxWuG9fztt1+AqtRZEuc+z1HD3P3hOJE1Rx
+         zT4l6stXU9HNeQ2DFro1+MRc6t8o4tZvxHdriEs6uCxsd3+2gH8FdbTS+LGQVrRA5OQb
+         SM4yr9PpwbnBYm/MV0WjxCvn5IbvevMcZZR9LSKndm61D2Ly8Okc0sxoy74EspVLyd/Y
+         IBBVoOZfONZuA/ONjGJmpeu9+8JpOpW9twJ8VDnZRQu4YuBSjHWWO7C4yF7AEJ7K5Ms5
+         kVB/QdDTKVwVZfQZVdn+SpKVXiz6FRLVbVL8vauyakdLhKCJR4BfPFXLItk/d48FRTXn
+         SuUA==
+X-Forwarded-Encrypted: i=1; AJvYcCXM2wK2WwxmFmOhqzWIILvqlYhfhPUYMPN++THUe5SIysZVGCv5flUNfrAOM/qBwNgrEYn/WswHrR+XqLGBFx74yaOfqFYBG6Aeq4d/pQ==
+X-Gm-Message-State: AOJu0YxchPwzz4hiVlvv7LG/ne0v39QqBKCH8kKSNOkNQnZw/X2kVacb
+	qUKFSEk1U2RqPSKZN3SvHedG/KpmSiFssLvK2m2pJcdSihEbN4F9sQfMkECwyA==
+X-Google-Smtp-Source: AGHT+IFgotCHAGczqOna/kHnezW+p6kFfpgMwP7rKDufJghFAIoOxyuH16O12z89+vPJITyVpeg8mQ==
+X-Received: by 2002:ac8:594a:0:b0:43e:3c4b:a543 with SMTP id d75a77b69052e-43e3c4bab23mr179250971cf.51.1716318381462;
+        Tue, 21 May 2024 12:06:21 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43f7e8e4bafsm44661361cf.80.2024.05.21.12.06.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 May 2024 12:06:20 -0700 (PDT)
+Message-ID: <7f346f29-45a2-4548-8ffe-66ba61fd8558@broadcom.com>
+Date: Tue, 21 May 2024 12:06:17 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
-In-Reply-To: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 21 May 2024 22:00:00 +0300
-Message-ID: <CAA8EJppYmVMmhgLSiSEGA_r4hFbQYriOLjNK9b6VXUYEYiZ6Zg@mail.gmail.com>
-Subject: Re: [PATCH RFC v3 0/9] dt-bindings: hwinfo: Introduce board-id
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Amrit Anand <quic_amrianan@quicinc.com>, Peter Griffin <peter.griffin@linaro.org>, 
-	Caleb Connolly <caleb.connolly@linaro.org>, Andy Gross <agross@kernel.org>, 
-	Doug Anderson <dianders@chromium.org>, Simon Glass <sjg@chromium.org>, 
-	Chen-Yu Tsai <wenst@chromium.org>, Julius Werner <jwerner@chromium.org>, 
-	"Humphreys, Jonathan" <j-humphreys@ti.com>, Sumit Garg <sumit.garg@linaro.org>, 
-	Jon Hunter <jonathanh@nvidia.org>, Michal Simek <michal.simek@amd.com>, 
-	boot-architecture@lists.linaro.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/4] firmware: psci: Read and use vendor reset types
+To: Elliot Berman <quic_eberman@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Sebastian Reichel
+ <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Andy Yan <andy.yan@rock-chips.com>, Lorenzo Pieralisi
+ <lpieralisi@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+ Melody Olvera <quic_molvera@quicinc.com>,
+ Shivendra Pratap <quic_spratap@quicinc.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240515-arm-psci-system_reset2-vendor-reboots-v3-0-16dd4f9c0ab4@quicinc.com>
+ <20240515-arm-psci-system_reset2-vendor-reboots-v3-3-16dd4f9c0ab4@quicinc.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
+Autocrypt: addr=florian.fainelli@broadcom.com; keydata=
+ xsBNBFPAG8ABCAC3EO02urEwipgbUNJ1r6oI2Vr/+uE389lSEShN2PmL3MVnzhViSAtrYxeT
+ M0Txqn1tOWoIc4QUl6Ggqf5KP6FoRkCrgMMTnUAINsINYXK+3OLe7HjP10h2jDRX4Ajs4Ghs
+ JrZOBru6rH0YrgAhr6O5gG7NE1jhly+EsOa2MpwOiXO4DE/YKZGuVe6Bh87WqmILs9KvnNrQ
+ PcycQnYKTVpqE95d4M824M5cuRB6D1GrYovCsjA9uxo22kPdOoQRAu5gBBn3AdtALFyQj9DQ
+ KQuc39/i/Kt6XLZ/RsBc6qLs+p+JnEuPJngTSfWvzGjpx0nkwCMi4yBb+xk7Hki4kEslABEB
+ AAHNMEZsb3JpYW4gRmFpbmVsbGkgPGZsb3JpYW4uZmFpbmVsbGlAYnJvYWRjb20uY29tPsLB
+ IQQQAQgAywUCZWl41AUJI+Jo+hcKAAG/SMv+fS3xUQWa0NryPuoRGjsA3SAUAAAAAAAWAAFr
+ ZXktdXNhZ2UtbWFza0BwZ3AuY29tjDAUgAAAAAAgAAdwcmVmZXJyZWQtZW1haWwtZW5jb2Rp
+ bmdAcGdwLmNvbXBncG1pbWUICwkIBwMCAQoFF4AAAAAZGGxkYXA6Ly9rZXlzLmJyb2FkY29t
+ Lm5ldAUbAwAAAAMWAgEFHgEAAAAEFQgJChYhBNXZKpfnkVze1+R8aIExtcQpvGagAAoJEIEx
+ tcQpvGagWPEH/2l0DNr9QkTwJUxOoP9wgHfmVhqc0ZlDsBFv91I3BbhGKI5UATbipKNqG13Z
+ TsBrJHcrnCqnTRS+8n9/myOF0ng2A4YT0EJnayzHugXm+hrkO5O9UEPJ8a+0553VqyoFhHqA
+ zjxj8fUu1px5cbb4R9G4UAySqyeLLeqnYLCKb4+GklGSBGsLMYvLmIDNYlkhMdnnzsSUAS61
+ WJYW6jjnzMwuKJ0ZHv7xZvSHyhIsFRiYiEs44kiYjbUUMcXor/uLEuTIazGrE3MahuGdjpT2
+ IOjoMiTsbMc0yfhHp6G/2E769oDXMVxCCbMVpA+LUtVIQEA+8Zr6mX0Yk4nDS7OiBlvOwE0E
+ U8AbwQEIAKxr71oqe+0+MYCc7WafWEcpQHFUwvYLcdBoOnmJPxDwDRpvU5LhqSPvk/yJdh9k
+ 4xUDQu3rm1qIW2I9Puk5n/Jz/lZsqGw8T13DKyu8eMcvaA/irm9lX9El27DPHy/0qsxmxVmU
+ pu9y9S+BmaMb2CM9IuyxMWEl9ruWFS2jAWh/R8CrdnL6+zLk60R7XGzmSJqF09vYNlJ6Bdbs
+ MWDXkYWWP5Ub1ZJGNJQ4qT7g8IN0qXxzLQsmz6tbgLMEHYBGx80bBF8AkdThd6SLhreCN7Uh
+ IR/5NXGqotAZao2xlDpJLuOMQtoH9WVNuuxQQZHVd8if+yp6yRJ5DAmIUt5CCPcAEQEAAcLB
+ gQQYAQIBKwUCU8AbwgUbDAAAAMBdIAQZAQgABgUCU8AbwQAKCRCTYAaomC8PVQ0VCACWk3n+
+ obFABEp5Rg6Qvspi9kWXcwCcfZV41OIYWhXMoc57ssjCand5noZi8bKg0bxw4qsg+9cNgZ3P
+ N/DFWcNKcAT3Z2/4fTnJqdJS//YcEhlr8uGs+ZWFcqAPbteFCM4dGDRruo69IrHfyyQGx16s
+ CcFlrN8vD066RKevFepb/ml7eYEdN5SRALyEdQMKeCSf3mectdoECEqdF/MWpfWIYQ1hEfdm
+ C2Kztm+h3Nkt9ZQLqc3wsPJZmbD9T0c9Rphfypgw/SfTf2/CHoYVkKqwUIzI59itl5Lze+R5
+ wDByhWHx2Ud2R7SudmT9XK1e0x7W7a5z11Q6vrzuED5nQvkhAAoJEIExtcQpvGagugcIAJd5
+ EYe6KM6Y6RvI6TvHp+QgbU5dxvjqSiSvam0Ms3QrLidCtantcGT2Wz/2PlbZqkoJxMQc40rb
+ fXa4xQSvJYj0GWpadrDJUvUu3LEsunDCxdWrmbmwGRKqZraV2oG7YEddmDqOe0Xm/NxeSobc
+ MIlnaE6V0U8f5zNHB7Y46yJjjYT/Ds1TJo3pvwevDWPvv6rdBeV07D9s43frUS6xYd1uFxHC
+ 7dZYWJjZmyUf5evr1W1gCgwLXG0PEi9n3qmz1lelQ8lSocmvxBKtMbX/OKhAfuP/iIwnTsww
+ 95A2SaPiQZA51NywV8OFgsN0ITl2PlZ4Tp9hHERDe6nQCsNI/Us=
+In-Reply-To: <20240515-arm-psci-system_reset2-vendor-reboots-v3-3-16dd4f9c0ab4@quicinc.com>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="00000000000078a1820618fb8310"
 
-Hi Elliot,
+--00000000000078a1820618fb8310
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 21 May 2024 at 21:41, Elliot Berman <quic_eberman@quicinc.com> wrote:
->
-> Device manufacturers frequently ship multiple boards or SKUs under a
-> single software package. These software packages will ship multiple
-> devicetree blobs and require some mechanism to pick the correct DTB for
-> the board the software package was deployed. Introduce a common
-> definition for adding board identifiers to device trees. board-id
-> provides a mechanism for bootloaders to select the appropriate DTB which
-> is vendor/OEM-agnostic.
+On 5/15/24 16:09, Elliot Berman wrote:
+> SoC vendors have different types of resets and are controlled through
+> various registers. For instance, Qualcomm chipsets can reboot to a
+> "download mode" that allows a RAM dump to be collected. Another example
+> is they also support writing a cookie that can be read by bootloader
+> during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
+> vendor reset types to be implemented without requiring drivers for every
+> register/cookie.
+> 
+> Add support in PSCI to statically map reboot mode commands from
+> userspace to a vendor reset and cookie value using the device tree.
+> 
+> A separate initcall is needed to parse the devicetree, instead of using
+> psci_dt_init because mm isn't sufficiently set up to allocate memory.
+> 
+> Reboot mode framework is close but doesn't quite fit with the
+> design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
+> be solved but doesn't seem reasonable in sum:
+>   1. reboot mode registers against the reboot_notifier_list, which is too
+>      early to call SYSTEM_RESET2. PSCI would need to remember the reset
+>      type from the reboot-mode framework callback and use it
+>      psci_sys_reset.
+>   2. reboot mode assumes only one cookie/parameter is described in the
+>      device tree. SYSTEM_RESET2 uses 2: one for the type and one for
+>      cookie.
+>   3. psci cpuidle driver already registers a driver against the
+>      arm,psci-1.0 compatible. Refactoring would be needed to have both a
+>      cpuidle and reboot-mode driver.
+> 
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 
-This is a v3 of the RFC, however it is still a qcom-only series. Might
-I suggest gaining an actual interest from any other hardware vendor
-(in the form of the patches) before posting v4? Otherwise it might
-still end up being a Qualcomm solution which is not supported and/or
-used by other hardware vendors.
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 
->
-> This series is based off a talk I gave at EOSS NA 2024 [1]. There is
-> some further discussion about how to do devicetree selection in the
-> boot-architecture mailing list [2].
->
-> [1]: https://sched.co/1aBFy
-> [2]: https://lists.linaro.org/archives/list/boot-architecture@lists.linaro.org/thread/DZCZSOCRH5BN7YOXEL2OQKSDIY7DCW2M/
->
-
+Thanks!
 -- 
-With best wishes
-Dmitry
+Florian
+
+
+--00000000000078a1820618fb8310
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+riBJ/K1AFUjRAjFhGV64l++td7dkmnq/X8ET75ti+w1s4FRpFqkD2m7pg5NxdsZphYIXAgMBAAGj
+QjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSP8Et/qC5FJK5N
+UPpjmove4t0bvDANBgkqhkiG9w0BAQsFAAOCAQEAS0DbwFCq/sgM7/eWVEVJu5YACUGssxOGhigH
+M8pr5nS5ugAtrqQK0/Xx8Q+Kv3NnSoPHRHt44K9ubG8DKY4zOUXDjuS5V2yq/BKW7FPGLeQkbLmU
+Y/vcU2hnVj6DuM81IcPJaP7O2sJTqsyQiunwXUaMld16WCgaLx3ezQA3QY/tRG3XUyiXfvNnBB4V
+14qWtNPeTCekTBtzc3b0F5nCH3oO4y0IrQocLP88q1UOD5F+NuvDV0m+4S4tfGCLw0FREyOdzvcy
+a5QBqJnnLDMfOjsl0oZAzjsshnjJYS8Uuu7bVW/fhO4FCU29KNhyztNiUGUe65KXgzHZs7XKR1g/
+XzCCBVgwggRAoAMCAQICDBP8P9hKRVySg3Qv5DANBgkqhkiG9w0BAQsFADBbMQswCQYDVQQGEwJC
+RTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMg
+UGVyc29uYWxTaWduIDIgQ0EgMjAyMDAeFw0yMjA5MTAxMjE4MTFaFw0yNTA5MTAxMjE4MTFaMIGW
+MQswCQYDVQQGEwJJTjESMBAGA1UECBMJS2FybmF0YWthMRIwEAYDVQQHEwlCYW5nYWxvcmUxFjAU
+BgNVBAoTDUJyb2FkY29tIEluYy4xGTAXBgNVBAMTEEZsb3JpYW4gRmFpbmVsbGkxLDAqBgkqhkiG
+9w0BCQEWHWZsb3JpYW4uZmFpbmVsbGlAYnJvYWRjb20uY29tMIIBIjANBgkqhkiG9w0BAQEFAAOC
+AQ8AMIIBCgKCAQEA+oi3jMmHltY4LMUy8Up5+1zjd1iSgUBXhwCJLj1GJQF+GwP8InemBbk5rjlC
+UwbQDeIlOfb8xGqHoQFGSW8p9V1XUw+cthISLkycex0AJ09ufePshLZygRLREU0H4ecNPMejxCte
+KdtB4COST4uhBkUCo9BSy1gkl8DJ8j/BQ1KNUx6oYe0CntRag+EnHv9TM9BeXBBLfmMRnWNhvOSk
+nSmRX0J3d9/G2A3FIC6WY2XnLW7eAZCQPa1Tz3n2B5BGOxwqhwKLGLNu2SRCPHwOdD6e0drURF7/
+Vax85/EqkVnFNlfxtZhS0ugx5gn2pta7bTdBm1IG4TX+A3B1G57rVwIDAQABo4IB3jCCAdowDgYD
+VR0PAQH/BAQDAgWgMIGjBggrBgEFBQcBAQSBljCBkzBOBggrBgEFBQcwAoZCaHR0cDovL3NlY3Vy
+ZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3J0MEEG
+CCsGAQUFBzABhjVodHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9nc2djY3IzcGVyc29uYWxzaWdu
+MmNhMjAyMDBNBgNVHSAERjBEMEIGCisGAQQBoDIBKAowNDAyBggrBgEFBQcCARYmaHR0cHM6Ly93
+d3cuZ2xvYmFsc2lnbi5jb20vcmVwb3NpdG9yeS8wCQYDVR0TBAIwADBJBgNVHR8EQjBAMD6gPKA6
+hjhodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24yY2EyMDIwLmNy
+bDAoBgNVHREEITAfgR1mbG9yaWFuLmZhaW5lbGxpQGJyb2FkY29tLmNvbTATBgNVHSUEDDAKBggr
+BgEFBQcDBDAfBgNVHSMEGDAWgBSWM9HmWBdbNHWKgVZk1b5I3qGPzzAdBgNVHQ4EFgQUUwwfJ6/F
+KL0fRdVROal/Lp4lAF0wDQYJKoZIhvcNAQELBQADggEBAKBgfteDc1mChZjKBY4xAplC6uXGyBrZ
+kNGap1mHJ+JngGzZCz+dDiHRQKGpXLxkHX0BvEDZLW6LGOJ83ImrW38YMOo3ZYnCYNHA9qDOakiw
+2s1RH00JOkO5SkYdwCHj4DB9B7KEnLatJtD8MBorvt+QxTuSh4ze96Jz3kEIoHMvwGFkgObWblsc
+3/YcLBmCgaWpZ3Ksev1vJPr5n8riG3/N4on8gO5qinmmr9Y7vGeuf5dmZrYMbnb+yCBalkUmZQwY
+NxADYvcRBA0ySL6sZpj8BIIhWiXiuusuBmt2Mak2eEv0xDbovE6Z6hYyl/ZnRadbgK/ClgbY3w+O
+AfUXEZ0xggJtMIICaQIBATBrMFsxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52
+LXNhMTEwLwYDVQQDEyhHbG9iYWxTaWduIEdDQyBSMyBQZXJzb25hbFNpZ24gMiBDQSAyMDIwAgwT
+/D/YSkVckoN0L+QwDQYJYIZIAWUDBAIBBQCggdQwLwYJKoZIhvcNAQkEMSIEIJiU1htmRtfBAqXO
+x550cYXmn/LX3Jp7NXZABmaYuRK5MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcN
+AQkFMQ8XDTI0MDUyMTE5MDYyMVowaQYJKoZIhvcNAQkPMVwwWjALBglghkgBZQMEASowCwYJYIZI
+AWUDBAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQowCwYJKoZIhvcNAQEH
+MAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEFAASCAQAP6Qlw2RsptJntL47ZreCIezpofVsOzt32
+lSFmTQ946b0v9H3Qy1ZNULgJxkpfTe7h7MfxlXaChDK2eS610831FB+VGey3lZ7fox5Zrswn3Soi
+g/cEypxWV+y33zR1f2z1/zwphg6qUix1gdzYmC9OstzSBMgToDTagenQCdl2y2zT2dodpnuJKObk
+j7lYOLbV8+jKmtlhDzqlGN1/ziC6Z0+6q6Kp6pCJOGNW5tZ98W8wkLktrYhWwB0YCA7NIwyRRnOn
+bZGFPOtug+zxWKpmF6mX4A2y3mSfuN9c6ZoUnDbNELbCZGtqBr21NeUB168QM2wA7Mxpni07pjlw
+RWSK
+--00000000000078a1820618fb8310--
 
