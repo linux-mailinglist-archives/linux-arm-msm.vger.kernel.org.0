@@ -1,124 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-20161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E78E68CB456
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 21:40:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 022FD8CB45F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 21:43:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3B2A281CDB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 19:40:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 261711C226DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 19:43:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73414148301;
-	Tue, 21 May 2024 19:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D02E148859;
+	Tue, 21 May 2024 19:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="W0xm7JCs"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MlqlcRnJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE17433AD;
-	Tue, 21 May 2024 19:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2160148301;
+	Tue, 21 May 2024 19:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716320436; cv=none; b=QlOUm20Sc04yP/yLueAYMYKJpka9Flk0zDf5V0BUmXfUPCAif8Xxhtr3Q4+FQo9Q/3+ENWzMe/xV4HoV0TcG4GUUa4mIQs2x5SwUOe8D4vJYiwtVEevaoZe5gIZmJsBoVCOfjpkw3gGk0KBwFSpp3vqVqPbJipTqGelX2+GQ8iY=
+	t=1716320616; cv=none; b=Vr6TmG6OXD5sESUMMhuzwGn8yydIQAU6mvnAR+a8eNedYd3GdHrYFpwK8jAR4IGeK/5F+8TWzLXr0zm2Fped5aGC78pvebRrE998BkikeqgQKSkcBbheO9SnHpZfRkqIX1W3zRREa6i7trVY/NXjNnB9Cm6x+9COXodguniMd9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716320436; c=relaxed/simple;
-	bh=PSJzz3wBgM4Nov61eoQKU/G3JLPzuVohtgY4OMFxi4c=;
+	s=arc-20240116; t=1716320616; c=relaxed/simple;
+	bh=3HxYsuE4vwht7mgql4QlXI/YmOzZn0ERD38uVvGnylQ=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dYl/YbwIuVFbJPjAKQzREoioNPQIVvP2PAr1ZZ/Y3SarWLShE4C7E8N6yW2wcMgY/MQrqhqKngT5eEVOh0upxpKUIXBM5vbU4imyh5C4BvbIebMVKo8I/enjSJNEQuQjBu3WuD007VQcjYWRbOvKgqxFO08LltRHJwiZJp3prFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=W0xm7JCs; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=ESKb53X8nZgHLRzcoYpEIwVHqIcIEj2Jym9Uyw9wH4mImZouwaEcabU9ORIy8WXIMa0SOtB1s/M/pYMa9pMR1w6jbAE7nW5GMXVUYpTPsGyojLu4w4XcGXmeDL2AzOlslSePiEDGMvG3pLynYRBPSMteqPfwn5t07tUBlgWVsn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MlqlcRnJ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44LF9oJu026154;
-	Tue, 21 May 2024 19:40:25 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44LDx5tV012339;
+	Tue, 21 May 2024 19:43:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=nZuM5wFSsss4g1FMYAGG9
-	HP332Eng3D3fi1g85v+vW8=; b=W0xm7JCs2OpfXRlrdSE/erqZ0i2Prsuk6I207
-	mfU8vv8gNPFSyXzlFAiK7OVuESsQyBpzUA1vHP4oiINET1Aa4AX1Ce/HFQjhz4ia
-	j0PNqNlTZRph5i25ytrmkzFTAkEz+sL1OMTJAWmQEPBZkdxvbw+X0iVLiM11E6Bm
-	eS8pjubf/Rlc8HuK8bISK1wlDWEOZgHz9Cr7bgEu56IBveuNi5j9/VnvwWqq9TLO
-	wCnIV3LZFOb9+QajBZUdpMvWtTRDjWrySlXUWCWMW8TB1ClDYwkgDqi6WQyZdY9O
-	1YavNp3AAGm1F3t+Kkd75aLGDLOmtOQN43411FnPeoJqMkESg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6pqc74v9-1
+	:content-type:content-transfer-encoding:in-reply-to; s=
+	qcppdkim1; bh=cqoHDuBiUbHtYw/508huYL/EIPtHAho3rzh0DMUdW4k=; b=Ml
+	qlcRnJBx3RY8asyCvl8tw2mf1bUkBJAPv2Ge8J0Tfjird/l4Yg4sofkYXUry9OW3
+	K0XNrL5pXBxy6DjypnuINVJ6zx7UU9PNzXbzVDWZmr9VhgopDRHF/sMK/cYXQohg
+	sxGe0nfO4hymr4KHjblmZSRKCIDNcx8zQo4+aSVQQZyGRAUD78j2uvd6NKf/ulBr
+	nnKVpz1+wUnVPwMEb4ix4Vh7kiuVaU7qRhBK+MfVaUGkr/4vg/XgUPFyKrhkriHh
+	Vvn/c+jgA1Eq+vFaXWPHqOlQCc5Xq10jGgDZxo2tHEHe+JAkvBKFXSto28jG5oQ7
+	uWsJrWoJxgyCLC19UWtA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6psay0hv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 19:40:24 +0000 (GMT)
+	Tue, 21 May 2024 19:43:26 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44LJeNvI013710
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44LJhOYN030881
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 May 2024 19:40:23 GMT
+	Tue, 21 May 2024 19:43:24 GMT
 Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 21 May 2024 12:40:22 -0700
-Date: Tue, 21 May 2024 12:40:21 -0700
+ 15.2.1544.9; Tue, 21 May 2024 12:43:23 -0700
+Date: Tue, 21 May 2024 12:43:22 -0700
 From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: <neil.armstrong@linaro.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic
- Poulain <loic.poulain@linaro.org>, Kalle Valo <kvalo@kernel.org>,
-        Mathieu
- Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <wcn36xx@lists.infradead.org>,
-        <linux-wireless@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Arnd
- Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 06/12] remoteproc: qcom_q6v5_pas: switch to mbn files by
- default
-Message-ID: <Zkz4pf00lYCx185i@hu-bjorande-lv.qualcomm.com>
-References: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
- <20240521-qcom-firmware-name-v1-6-99a6d32b1e5e@linaro.org>
- <a314906d-b297-474d-910c-6634c8c23042@linaro.org>
+To: prabhav kumar <pvkumar5749404@gmail.com>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <julia.lawall@inria.fr>, <javier.carrasco@wolfvision.net>,
+        <skhan@linuxfoundation.org>
+Subject: Re: [PATCH next] drivers: soc: qcom: Auto cleanup using
+ __free(device_node)
+Message-ID: <Zkz5WtB0pBLqlc+3@hu-bjorande-lv.qualcomm.com>
+References: <20240407072330.229076-1-pvkumar5749404@gmail.com>
+ <Zkzz7PZUnU/xP/O2@hu-bjorande-lv.qualcomm.com>
+ <CAH8oh8UY9FkHy=RyMU2AOZr+1x_KyH4m166kVmQd6peRNvFVTw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <a314906d-b297-474d-910c-6634c8c23042@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAH8oh8UY9FkHy=RyMU2AOZr+1x_KyH4m166kVmQd6peRNvFVTw@mail.gmail.com>
 X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3gCDzfA-TlFLM7-69lgS-CJjFqRAVhLw
-X-Proofpoint-GUID: 3gCDzfA-TlFLM7-69lgS-CJjFqRAVhLw
+X-Proofpoint-GUID: BI_p40hjresZpelIRK7LbPciGlFMhhMa
+X-Proofpoint-ORIG-GUID: BI_p40hjresZpelIRK7LbPciGlFMhhMa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-21_12,2024-05-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- spamscore=0 clxscore=1011 lowpriorityscore=0 phishscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 mlxlogscore=999 malwarescore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ adultscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
+ priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0 clxscore=1015
  suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405010000 definitions=main-2405210148
 
-On Tue, May 21, 2024 at 11:49:42AM +0200, neil.armstrong@linaro.org wrote:
-> On 21/05/2024 11:45, Dmitry Baryshkov wrote:
-> > We have been pushing userspace to use mbn files by default for ages.
-> > As a preparation for making the firmware-name optional, make the driver
-> > use .mbn instead of .mdt files by default.
-> 
-> I think we should have a mechanism to fallback to .mdt since downstream
-> uses split mdt on the devices filesystem.
-> 
+On Wed, May 22, 2024 at 01:01:22AM +0530, prabhav kumar wrote:
+> On Wed, May 22, 2024 at 12:50 AM Bjorn Andersson
+> <quic_bjorande@quicinc.com> wrote:
+> >
+> > On Sun, Apr 07, 2024 at 12:53:30PM +0530, Prabhav Kumar Vaish wrote:
+> > > Use automated cleanup to replace of_node_put() in qcom_smem_resolve_mem().
+> > >
+> >
+> > I don't find this easier to read or maintain.
+> Should I change it , explaining the change ??
+> >
+> > Also, your subject prefix does not match other changes to this driver.
+> The patch is to add a __free function attribute to np pointer
+> initialization ensuring
+> the pointers are freed as soon as they go out of scope, thus removing
+> the work to
+> manually free them using of_node_put.
 
-Let's ignore and continue to move away from the split .mdt files.
-
-Combining split files is trivial and removes a class of problems where
-people mix and match their parts. (And worst case you can rename/symlink
-your downstream firmware to match the requested filename)
+Yes, that is what the __free() attribute does, but I don't find it
+easier to read and unless I'm missing something you're not fixing an
+actual issue here?
 
 Regards,
 Bjorn
+
+> >
+> > Regards,
+> > Bjorn
+> >
+> > > Signed-off-by: Prabhav Kumar Vaish <pvkumar5749404@gmail.com>
+> > > ---
+> > > drivers/soc/qcom/smem.c | 4 +---
+> > >  1 file changed, 1 insertion(+), 3 deletions(-)
+> > >
+> > > diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> > > index 7191fa0c087f..ad1cf8dcc6ec 100644
+> > > --- a/drivers/soc/qcom/smem.c
+> > > +++ b/drivers/soc/qcom/smem.c
+> > > @@ -1032,18 +1032,16 @@ static int qcom_smem_resolve_mem(struct qcom_smem *smem, const char *name,
+> > >                                struct smem_region *region)
+> > >  {
+> > >       struct device *dev = smem->dev;
+> > > -     struct device_node *np;
+> > >       struct resource r;
+> > >       int ret;
+> > > +     struct device_node *np __free(device_node) = of_parse_phandle(dev->of_node, name, 0);
+> > >
+> > > -     np = of_parse_phandle(dev->of_node, name, 0);
+> > >       if (!np) {
+> > >               dev_err(dev, "No %s specified\n", name);
+> > >               return -EINVAL;
+> > >       }
+> > >
+> > >       ret = of_address_to_resource(np, 0, &r);
+> > > -     of_node_put(np);
+> > >       if (ret)
+> > >               return ret;
+> > >
+> > > --
+> > > 2.34.1
+> > >
 
