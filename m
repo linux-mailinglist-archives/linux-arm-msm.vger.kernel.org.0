@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-20104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C8218CAAF9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 11:45:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 325A28CAAFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 11:45:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 528B32815FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 09:45:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 560221C21800
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 09:45:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 040D76CDAF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93D146214E;
 	Tue, 21 May 2024 09:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m5xFXcKb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xvx6a4lH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D176214E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 09:45:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6EA6A8AD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 09:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716284729; cv=none; b=eGJfKHsxAdBnjJMNc7gjyWGtiQXkeqbmmy2bI6gyIMhLtpbaPccKhwmTw3bae+91pKA9QO1Xh4Bb3SGtH8INXIqzzCyC4xcnXv5C0IHn7W+3rS2CgyT13QVmRShEZw6VSzDNdRNfybCLwIOgtJcdRQd7UwemJD71z199E7IH+9Y=
+	t=1716284730; cv=none; b=FFWtLIBdYMzR2pXTl86HTDnvkvlytFTBV+4l6vop9c82q2/sE41crzJILoRkCUTmwZb385C4J9yqqe6rk2iPNSzK62rku7u2zAhrV8PHZSmoEN9uM9nSBJS8ean5F0sDq8KhNbwd2i6PVRtShHFpW4DxMb5Ztkig0r+FBb+BUjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716284729; c=relaxed/simple;
-	bh=8bSYJFZxOttwC6WGzJnbnsvxZHPinVGAHkl3/krhwFU=;
+	s=arc-20240116; t=1716284730; c=relaxed/simple;
+	bh=93C6VdWrKA3F4L2pbTvmlVsMwuAb+l57jMfHeI9flc8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Eq7lY263sDDnf6fnybCyZ8J247pcyorP28jeGlsnCLXKfiR/P7z99+pLmMPIoDF6LVnpVGaxJ5Ci311QYxPuOQaJE4kGXui11AeP416+NOVP/pXeVkfC/Z8pJD9IcgXFJ5Xx9PpQAV/cUz41W2KKLCsYt03oPbmAR0O69MSePjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m5xFXcKb; arc=none smtp.client-ip=209.85.208.180
+	 In-Reply-To:To:Cc; b=NW85ARshEZLoqzQ9xVDDBzOKLlKWHMBBCCHADyUA8cUBQVvlHG5f7090+JTtqFpBBiyJnaSz7MmHxzzDlwf7PzmWlLgaYzFK/UgCAkjArM3/NOEbu67tsessTqxRuE/Kl9o0B62fn4t0BBDscvyA2CF4DENK4G1K0z2MS4J0tA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xvx6a4lH; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2e73441edf7so12253321fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 02:45:27 -0700 (PDT)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2e271acb015so66756451fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 May 2024 02:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1716284726; x=1716889526; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=s+iPb833VFVcxccVnaoN5omlaE6HTbUUtzkP4wXORTQ=;
-        b=m5xFXcKbP3jJPDk8reuRHY+7n77jSX2QAZndqoPqK0TZjSOIA7QvcRwwZ3IveIEia1
-         CVdAOf6Hm3L1wNoW+gbkswW/3qeNeYcNTUpoucE3JMRplzmaMdHWYe5st14AZEUHnVc4
-         CsRIL5YnX+28fcZFkwH+YDAlM4cukzwXEAypWiezGTL+CT4eHHFzKQkLgsHLkGjhMqMo
-         L5P9RWNKVMdXQAL71sExaDFK3cdtStiEpqF5hvfaENbrzHSnEDgA2/SJkHGOqgBpwFzS
-         jQZg6oGFZPYQ+RwHp9mtQh7Ccuz5r7Npg1uBXZ1qiteTlbGZywL2SSLTYMH0hgLKoZ/n
-         Amsw==
+        bh=A25lOkPAYIem0QXdhyIts7q0LCcqMUXPkolw5JT6tE8=;
+        b=Xvx6a4lH314okQqJ9pylwxi4TIrQKSzwBTkck4zwg4T41DQWbw9IDxwzmA75eoVE2E
+         5RmiAF4uhOnxx2/OpQcDNenWfx8cwBNxwZTLMTRunMlvnK16MlQzaJsq/g2jSgiIbKul
+         ylRbCznYVyTwou2m6XCce7y+o/MauvIUr6vlRb6XleH5rJvhf7vAbc8AYRu5BV2jqp64
+         SsSw2rBm5XqukLia+jqMG3NLaV3inaKhxslpFInB/mhsKSFs9S5iabrJ2/SxGlfQ4ENW
+         DfEzyzpftRYCynI96Ce/O/2JygDHA7aRl/P631s/h7X49NMLra0OAW5makMYpUu+NJsN
+         XjEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1716284726; x=1716889526;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=s+iPb833VFVcxccVnaoN5omlaE6HTbUUtzkP4wXORTQ=;
-        b=Fl6aE4/aM60lmxq3SbYUDugzwyOkzcjB7uHr6G/xYFFPcV+ALZ/r4aMNY9A2LCTgOt
-         k/3QmbhiPtEFjZhGxpqg3cMlL5kFyIB5PgCKBBaWIWmoBfxh67pcHCnjDtCVN5Z+zaxb
-         xCYeC3qfrbfFR8Dn5YLJrEJuJQz3okFO2sznKk9Wl2/EY5H8grPXCMnJQ+/u49G0tKPX
-         vE9Um8e0Pu5CR6zZ9+7Cym4wo2yCjOqiYeao41uOtJqTvjLpc/4pqOLNcEvNMA8xMfF6
-         kB5SwTvTXpu1qtBcSQZ3bjajF2OsB684C98dZ/ZzJONP4AeEPgf1xntAEyHXPFp+meU0
-         Y3mA==
-X-Forwarded-Encrypted: i=1; AJvYcCVap0ikMXTlGIFIsxSwtWmMN8jH7ehh13cw5nlYgaGLibUPkQL/QgvvfRgwkGxQ6IiW1jrUJjkf3jnxhU6+N/7X5Vb/HC2zyesRD3FL0A==
-X-Gm-Message-State: AOJu0Yykyx0HJrCQKfW1pZxD4ljMuB+Q8FSG4Zbwjk0pgvIMXwqJ1zEY
-	yTjJscmfs45VVcSnj4tTBy86dYrUhBF7LDRjDH0HYlN7idEIivmwc+viSstpu9s=
-X-Google-Smtp-Source: AGHT+IGK2Mm/vNlP83fxNawhKETP5S72Iv/Fv7BCr1CruU63ZvCJ9JIg8mo2tnDHyPHB1+g5HBRVvQ==
-X-Received: by 2002:a2e:74f:0:b0:2e6:bc64:dd50 with SMTP id 38308e7fff4ca-2e6bc64de97mr164048351fa.39.1716284726075;
+        bh=A25lOkPAYIem0QXdhyIts7q0LCcqMUXPkolw5JT6tE8=;
+        b=IBlQlyFS15ot1PHtIy3f0/Hf/au+3On2N7s+ef9oiJmxUVJ1orQFIw32f3+ihmI4Gu
+         wywZH7FR2vlsMQItQpldaaHiLqm1JqqA7gcuX6rh3yJZ+JcMaji+0dd4HelSQ8BEh1iz
+         vNRhfOX8gu/4rT0UaOmyIguwnx0gOj5D70SE5pFh0DIxQMwic+JYtZRcvSsAwkVXtWMu
+         ZoHx3dvwxlt4Jc72XKxfHuRxyoBbnZKWx94raPgFcSp7ySOVokogP1g5droSK//Ir07+
+         6zxACoW2SVvVlK7y1+HPgY7Iji1Ny6smp4Bb/2HC06I1AdEWLhMQRYmJJx0NGeBNvYy9
+         IKVA==
+X-Forwarded-Encrypted: i=1; AJvYcCVc9z2EQy4MxG7iWZlfwOEb5ETUJKUexbnAZsMNxb7vayW5RnqhqbUgRI2F8J6VOi7LFFuC4NLmRc/18EPv+W+Ppu67T9R6ytysZKYRNQ==
+X-Gm-Message-State: AOJu0YxK+I7JpUuqZicjGgJgA15irE4jqMl8zsjdF2F6Vh88fdZpDpJk
+	k10pSSAK93NrffJqC4xtv+w49RVuRdJS8/g1LZchCkm1P1cn2ZneANBH+CrxyfM=
+X-Google-Smtp-Source: AGHT+IEAWe28pTg85AhhLUeeo7JJ7lfVb04BZMvFFnep7DU1veqKcLN+AogT8YrMcOrIFXgcishk6Q==
+X-Received: by 2002:a2e:9053:0:b0:2e7:bc7:b6ea with SMTP id 38308e7fff4ca-2e70bc7b72fmr75487961fa.14.1716284726753;
         Tue, 21 May 2024 02:45:26 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2e706ee0a65sm13906261fa.112.2024.05.21.02.45.25
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2e706ee0a65sm13906261fa.112.2024.05.21.02.45.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 May 2024 02:45:25 -0700 (PDT)
+        Tue, 21 May 2024 02:45:26 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 21 May 2024 12:45:21 +0300
-Subject: [PATCH 01/12] soc: qcom: add firmware name helper
+Date: Tue, 21 May 2024 12:45:22 +0300
+Subject: [PATCH 02/12] wifi: wcn36xx: make use of QCOM_FW_HELPER
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240521-qcom-firmware-name-v1-1-99a6d32b1e5e@linaro.org>
+Message-Id: <20240521-qcom-firmware-name-v1-2-99a6d32b1e5e@linaro.org>
 References: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
 In-Reply-To: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -93,170 +93,63 @@ Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  Arnd Bergmann <arnd@arndb.de>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4930;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1730;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=8bSYJFZxOttwC6WGzJnbnsvxZHPinVGAHkl3/krhwFU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmTG0y1XUQH+EkXc9kNuEjWYoYT5cJRxUMUftgv
- dfOM+jgTIKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZkxtMgAKCRCLPIo+Aiko
- 1YlIB/9nvjT0T/s9Ip16YLNw25bZIyKJO+WvibNJUKE13nQDVALipPKFR8jyH1tkeaAqeI8rg21
- qoAK5hzh0LytrRgX8iRNtEpm7liRiM/Oxn8APVe+PPOjzAKo84EqvW67uCJHBQV5VaFR6CrCtb7
- EIe46Mjt/ZRc4FUlmGf9of6WIwut+LJf+KzqgSb7/X+hQCatGhtpxcLH8hhqcYQMViUTjqyMxj8
- xuL3FFPKz0K0VPUUI6DRbUeFg7z1uY1HeeVqOlRomg1q/HAHGMQ/ewg+bpMT/y/HoP047eCXXV9
- jrkGfY3YItyS3bp25iqY/JUUI6gf0vzQYiT+NEkuseYQsV+m
+ bh=93C6VdWrKA3F4L2pbTvmlVsMwuAb+l57jMfHeI9flc8=;
+ b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ5pPrhGrlNQyruXtrrrFAV5mO7lzjzx0qWr/6p8ZZcok6
+ 9XmGN3JaMzCwMjFICumyOJT0DI1ZlNy2IcdU+thBrEygUxh4OIUgIkkX2b/w3lVbFHDvhj1dTx5
+ zJ9idwhd+1Gr82OL/L5D4j5l77dIbV+ktCJm2Xx91oh63TtRWqrV1pV3kitkelPOGvdudGI1fP5
+ mR6/o3Aie5c9Kt3XPl8j6b7NDzlbveJsmb+5kX+X/vo7XLIR1d12X+e9Q3L9tsoTMlAuqnya+N2
+ 1uiK8+Hsaq0prWs4E/drVY9hTRnamP9gV/npM+W2bHBYVFl3O6E6Yd6zqx0Smq+9a+D9+Fjfc//
+ rhqzrzm559yZu/esGfzwj3iOsusG2WtDRSFGR6r68v8jfhW5HPWNquGhVlQycyZwWv//Uu+Rha3
+ TPJEthr4K2r21UfUvO7tMjqmdKX7h/V2vSOWq9V5mp0B
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Qualcomm platforms have different sets of the firmware files, which
-differ from platform to platform (and from board to board, due to the
-embedded signatures). Rather than listing all the firmware files,
-including full paths, in the DT, provide a way to determine firmware
-path based on the root DT node compatible.
+Make the driver use qcom_fw_helper to autodetect the path to the
+calibration data file.
 
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/soc/qcom/Kconfig           |  5 +++
- drivers/soc/qcom/Makefile          |  1 +
- drivers/soc/qcom/qcom_fw_helper.c  | 86 ++++++++++++++++++++++++++++++++++++++
- include/linux/soc/qcom/fw_helper.h | 10 +++++
- 4 files changed, 102 insertions(+)
+ drivers/net/wireless/ath/wcn36xx/Kconfig | 1 +
+ drivers/net/wireless/ath/wcn36xx/main.c  | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-index 5af33b0e3470..b663774d65f8 100644
---- a/drivers/soc/qcom/Kconfig
-+++ b/drivers/soc/qcom/Kconfig
-@@ -62,6 +62,11 @@ config QCOM_MDT_LOADER
- 	tristate
- 	select QCOM_SCM
- 
-+config QCOM_FW_HELPER
-+	tristate "NONE FW HELPER"
-+	help
-+	  Helpers to return platform-specific location for the firmware files.
-+
- config QCOM_OCMEM
- 	tristate "Qualcomm On Chip Memory (OCMEM) driver"
- 	depends on ARCH_QCOM
-diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-index ca0bece0dfff..e612bee5b955 100644
---- a/drivers/soc/qcom/Makefile
-+++ b/drivers/soc/qcom/Makefile
-@@ -6,6 +6,7 @@ obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
- obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
- obj-$(CONFIG_QCOM_GSBI)	+=	qcom_gsbi.o
- obj-$(CONFIG_QCOM_MDT_LOADER)	+= mdt_loader.o
-+obj-$(CONFIG_QCOM_FW_HELPER)	+= qcom_fw_helper.o
- obj-$(CONFIG_QCOM_OCMEM)	+= ocmem.o
- obj-$(CONFIG_QCOM_PDR_HELPERS)	+= pdr_interface.o
- obj-$(CONFIG_QCOM_PMIC_GLINK)	+= pmic_glink.o
-diff --git a/drivers/soc/qcom/qcom_fw_helper.c b/drivers/soc/qcom/qcom_fw_helper.c
-new file mode 100644
-index 000000000000..13123c2514b8
---- /dev/null
-+++ b/drivers/soc/qcom/qcom_fw_helper.c
-@@ -0,0 +1,86 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Qualcomm Firmware loading data
-+ *
-+ * Copyright (C) 2024 Linaro Ltd
-+ */
-+
-+#include <linux/cleanup.h>
-+#include <linux/device.h>
-+#include <linux/mutex.h>
-+#include <linux/of.h>
+diff --git a/drivers/net/wireless/ath/wcn36xx/Kconfig b/drivers/net/wireless/ath/wcn36xx/Kconfig
+index 5832c7ef9352..90239c89676a 100644
+--- a/drivers/net/wireless/ath/wcn36xx/Kconfig
++++ b/drivers/net/wireless/ath/wcn36xx/Kconfig
+@@ -4,6 +4,7 @@ config WCN36XX
+ 	depends on MAC80211 && HAS_DMA
+ 	depends on QCOM_WCNSS_CTRL || QCOM_WCNSS_CTRL=n
+ 	depends on RPMSG || RPMSG=n
++	select QCOM_FW_HELPER
+ 	help
+ 	  This module adds support for wireless adapters based on
+ 	  Qualcomm Atheros WCN3660 and WCN3680 mobile chipsets.
+diff --git a/drivers/net/wireless/ath/wcn36xx/main.c b/drivers/net/wireless/ath/wcn36xx/main.c
+index e760d8002e09..8d25db81c1d0 100644
+--- a/drivers/net/wireless/ath/wcn36xx/main.c
++++ b/drivers/net/wireless/ath/wcn36xx/main.c
+@@ -22,6 +22,7 @@
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/rpmsg.h>
 +#include <linux/soc/qcom/fw_helper.h>
+ #include <linux/soc/qcom/smem_state.h>
+ #include <linux/soc/qcom/wcnss_ctrl.h>
+ #include <net/ipv6.h>
+@@ -1609,6 +1610,10 @@ static int wcn36xx_probe(struct platform_device *pdev)
+ 		goto out_wq;
+ 	}
+ 
++	wcn->nv_file = devm_qcom_get_board_fw(wcn->dev, wcn->nv_file);
++	if (!wcn->nv_file)
++		return -ENOMEM;
 +
-+static DEFINE_MUTEX(qcom_fw_mutex);
-+static const char *fw_path;
-+
-+static const struct of_device_id qcom_fw_paths[] = {
-+	/* device-specific entries */
-+	{ .compatible = "thundercomm,db845c", .data = "qcom/sdm845/Thundercomm/db845c", },
-+	{ .compatible = "qcom,qrb5165-rb5", .data = "qcom/sm8250/Thundercomm/RB5", },
-+	/* SoC default entries */
-+	{ .compatible = "qcom,apq8016", .data = "qcom/apq8016", },
-+	{ .compatible = "qcom,apq8096", .data = "qcom/apq8096", },
-+	{ .compatible = "qcom,sdm845", .data = "qcom/sdm845", },
-+	{ .compatible = "qcom,sm8250", .data = "qcom/sm8250", },
-+	{ .compatible = "qcom,sm8350", .data = "qcom/sm8350", },
-+	{ .compatible = "qcom,sm8450", .data = "qcom/sm8450", },
-+	{ .compatible = "qcom,sm8550", .data = "qcom/sm8550", },
-+	{ .compatible = "qcom,sm8650", .data = "qcom/sm8650", },
-+	{},
-+};
-+
-+static int qcom_fw_ensure_init(void)
-+{
-+	const struct of_device_id *match;
-+	struct device_node *root;
-+
-+	if (fw_path)
-+		return 0;
-+
-+	root = of_find_node_by_path("/");
-+	if (!root)
-+		return -ENODEV;
-+
-+	match = of_match_node(qcom_fw_paths, root);
-+	of_node_put(root);
-+	if (!match || !match->data) {
-+		pr_notice("Platform not supported by qcom_fw_helper\n");
-+		return -ENODEV;
-+	}
-+
-+	fw_path = match->data;
-+
-+	return 0;
-+}
-+
-+const char *qcom_get_board_fw(const char *firmware)
-+{
-+	if (strchr(firmware, '/'))
-+		return kstrdup(firmware, GFP_KERNEL);
-+
-+	scoped_guard(mutex, &qcom_fw_mutex) {
-+		if (!qcom_fw_ensure_init())
-+			return kasprintf(GFP_KERNEL, "%s/%s", fw_path, firmware);
-+	}
-+
-+	return kstrdup(firmware, GFP_KERNEL);
-+}
-+EXPORT_SYMBOL_GPL(qcom_get_board_fw);
-+
-+const char *devm_qcom_get_board_fw(struct device *dev, const char *firmware)
-+{
-+	if (strchr(firmware, '/'))
-+		return devm_kstrdup(dev, firmware, GFP_KERNEL);
-+
-+	scoped_guard(mutex, &qcom_fw_mutex) {
-+		if (!qcom_fw_ensure_init())
-+			return devm_kasprintf(dev, GFP_KERNEL, "%s/%s", fw_path, firmware);
-+	}
-+
-+	return devm_kstrdup(dev, firmware, GFP_KERNEL);
-+}
-+EXPORT_SYMBOL_GPL(devm_qcom_get_board_fw);
-+
-+MODULE_DESCRIPTION("Firmware helpers for Qualcomm devices");
-+MODULE_LICENSE("GPL");
-diff --git a/include/linux/soc/qcom/fw_helper.h b/include/linux/soc/qcom/fw_helper.h
-new file mode 100644
-index 000000000000..755645386bba
---- /dev/null
-+++ b/include/linux/soc/qcom/fw_helper.h
-@@ -0,0 +1,10 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __QCOM_FW_HELPER_H__
-+#define __QCOM_FW_HELPER_H__
-+
-+struct device;
-+
-+const char *qcom_get_board_fw(const char *firmware);
-+const char *devm_qcom_get_board_fw(struct device *dev, const char *firmware);
-+
-+#endif
+ 	wcn->smd_channel = qcom_wcnss_open_channel(wcnss, "WLAN_CTRL", wcn36xx_smd_rsp_process, hw);
+ 	if (IS_ERR(wcn->smd_channel)) {
+ 		wcn36xx_err("failed to open WLAN_CTRL channel\n");
 
 -- 
 2.39.2
