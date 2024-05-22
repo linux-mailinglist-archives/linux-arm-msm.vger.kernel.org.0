@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB0FE8CBBEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 09:26:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBD138CBBF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 09:27:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0A4A2B21686
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 07:26:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A24551F215E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 07:27:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DAD47BB13;
-	Wed, 22 May 2024 07:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65E277BB13;
+	Wed, 22 May 2024 07:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EYH8z2PF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iSnaWPeG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D695E79B84;
-	Wed, 22 May 2024 07:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3151D79B84;
+	Wed, 22 May 2024 07:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716362770; cv=none; b=i55GA/MUdktcWqQ3lauizYFT/qmR0zvo1gPtDYWXj/7bqlhBcLFTCfqJsTIEwiG9c193SFU1ZuLvSSL6fG7OaRzWEBSrpDKTZd9xv5iynrkoNRSxrc1eiQ09xQ/YjksCMm+w1vPq3JH0II5rRAtIHIuFbuaI88JWiovRg31CLGA=
+	t=1716362858; cv=none; b=APWHu269APQs8mhYLtVT2/uviuiXYfwSBT0rg3A0EslmJ1kmSkjSwAislT4UCD/JXQMZsW8K06ESTnIMmdNXMndB0KzdDqu42uUZ9mI1eTvIGOhffZFv9OCPhewqobzM/iv58mwdo2gynM+T84/JarTfkov/DwxyCMyjAnwqOFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716362770; c=relaxed/simple;
-	bh=n5LLv9bSswZF/D//73kPSDD+5Lxdyao4a0l3XWOscVY=;
+	s=arc-20240116; t=1716362858; c=relaxed/simple;
+	bh=Cj4rOccV5n4WWzyX8ZvH5KCQ+t6e8DjdPRMFd1Z3Wpc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X0h39d1cp5bzdXVpoqOPe/ifQ+7eyZneSOWOoJgSkfDZ3Xv//edF3YkFk2cK3qsDzzpEi8jHLi1/qIQwNEflAIhOIHYre7iE0BPljTW6zxW2GQyfXRi1rluLze9aks2AM81oT0JVZ2s6TfMKCC6Rb2SGuQUTUrB76C1mBW+fYKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EYH8z2PF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2329CC2BD11;
-	Wed, 22 May 2024 07:26:02 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QGPk9y/+HtOcDPoLKsi4HZXZ0erKuah4I9SHAnj0kBZOaEXa4lfsL70lsAGPxaJDb7Rj0y2tFbhuvbVGpry5V+ADBcaulhX1LhSqYMM4YBqnTZV9Echzehkwo6KC6bpPU2LcYyTe1xwskFi9Ecti+LYBIyTYwuR1nJOAN3UNitw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iSnaWPeG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0C7C2BD11;
+	Wed, 22 May 2024 07:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716362769;
-	bh=n5LLv9bSswZF/D//73kPSDD+5Lxdyao4a0l3XWOscVY=;
+	s=k20201202; t=1716362857;
+	bh=Cj4rOccV5n4WWzyX8ZvH5KCQ+t6e8DjdPRMFd1Z3Wpc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EYH8z2PFFr9Q6wEmLwnjgunv6W/i6KhHIoRRkdS0gDls0UL05iPDuFwOVg+sfncAU
-	 sm+fs0vxwUT3Xhn5WiFSstRChl46M0x0HMVFXfePC7jypxQaEWePW8ohdM+IojL2F9
-	 AJmcUgzz8TQMu4E3AlGimv2ucFdwvsbSwDCPoAPqilLjM1dx7ZNEV2CN1N2ot09hfa
-	 g9dG7ZeIim117uTV+npXhquFOVda9kq/peI71W2RLJftsubnW+tiP7hXJDkJhiNFFP
-	 WVmUCrL1XSo8iHApZdziE+wUR2x0KMhPi0p3Sc0T8uXSi/Iy0BNrnbDLAuX8lTyyQD
-	 ZHTTM5Ryvgm1g==
-Message-ID: <92dcd555-69b1-4111-92dd-debe5107d526@kernel.org>
-Date: Wed, 22 May 2024 09:26:00 +0200
+	b=iSnaWPeGfdlpKVyRlSkCnqcfgpIN8POcITDHdw+KjcoGvX+fwgPNx16i24H0ZtRFp
+	 nO7W0YJLJcPiIOckngG7aYPLqQD39qETSmP7WJlB+AWpSj2FvPtl/WzLWY8IRFlye/
+	 zD1pnbi1eQ0HoBSnOsJ2dGW9idTJZGayGe5TiA3+Co7lYlaYW9+SDfecNFzCyGIRth
+	 pwEQIdxXZfgd04iedflMAYjl8rjapUo9u0vXKuK8GKeWVj7EG18wEt+52TZK8DwJE1
+	 R7y+kCiqAIxiiVFsJpfUaGbq8TOC3ZfzYjUnMZpqb7RoVuGt6xwlWoeA0S7W31cPM7
+	 qfynx4AIzwRMw==
+Message-ID: <c2905eaf-7194-4f2b-98c8-52b1907e398a@kernel.org>
+Date: Wed, 22 May 2024 09:27:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,9 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] dt-bindings: remoteproc: qcom,pas: Add hwlocks
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Chris Lew <quic_clew@quicinc.com>, Bjorn Andersson
+Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8650: Add hwlock to remoteproc
+To: Chris Lew <quic_clew@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Baolin Wang <baolin.wang@linux.alibaba.com>,
  Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
  Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>,
@@ -61,15 +60,12 @@ Cc: Chris Lew <quic_clew@quicinc.com>, Bjorn Andersson
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>,
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-remoteproc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org
 References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
- <20240516-hwspinlock-bust-v1-5-47a90a859238@quicinc.com>
- <3521519f-34b8-472d-be37-f0e64bba24fc@kernel.org>
- <a944418a-1699-44fa-bdfc-2e57129adea1@quicinc.com>
- <c9882ba0-bbbf-44ec-9606-ebe68bcb8866@kernel.org>
- <ZkzzY311XiRigJPt@hu-bjorande-lv.qualcomm.com>
+ <20240516-hwspinlock-bust-v1-7-47a90a859238@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,56 +111,36 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <ZkzzY311XiRigJPt@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <20240516-hwspinlock-bust-v1-7-47a90a859238@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/05/2024 21:17, Bjorn Andersson wrote:
->>>
->>> Hi Krzysztof,
->>>
->>> Sorry for the confusion, I dont think I meant that the smem driver will 
->>> ever crash. The referred to crash in the cover letter is a crash in the 
->>> firmware running on the remoteproc. The remoteproc could crash for any 
->>> unexpected reason, related or unrelated to smem, while holding the tcsr 
->>> mutex. I want to ensure that all resources that a remoteproc might be 
->>> using are released as part of remoteproc stop.
->>>
->>> The SMEM driver manages the lock/unlock operations on the tcsr mutex 
->>> from the Linux CPU's perspective. This case is for cleaning up from the 
->>> remote side's perspective.
->>>
->>> In this case it's the hwspinlock used to synchronize SMEM, but it's 
->>> conceivable that firmware running on the remoteproc has additional locks 
->>> that need to be busted in order for the system to continue executing 
->>> until the firmware is reinitialized.
->>>
->>> We did consider tying this to the SMEM instance, but the entitiy 
->>> relating to firmware is the remoteproc instance.
->>
->> I still do not understand why you have to add hwlock to remoteproc, even
->> though it is not directly used. Your driver problem looks like lack of
->> proper driver architecture - you want to control the locks not from the
->> layer took the lock, but one layer up. Sorry, no, fix the driver
->> architecture.
->>
+On 17/05/2024 00:58, Chris Lew wrote:
+> Add the hwlock property to remoteproc. This enables the remoteproc to
+> try and bust the smem hwspinlock if the remoteproc has crashed while
+> holding the hwspinlock.
 > 
-> No, it is the firmware's reference to the lock that is represented in
-> the remoteproc node, while SMEM deals with Linux's reference to the lock.
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> This reference would be used to release the lock - on behalf of the
-> firmware - in the event that the firmware held it when it
-> stopped/crashed.
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 62a6e77730bc..a65a1679f003 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -2878,6 +2878,7 @@ remoteproc_mpss: remoteproc@4080000 {
+>  
+>  			qcom,smem-states = <&smp2p_modem_out 0>;
+>  			qcom,smem-state-names = "stop";
+> +			hwlocks = <&tcsr_mutex 3>;
 
-I understood, but the remoteproc driver did not acquire the hardware
-lock. It was taken by smem, if I got it correctly, so you should poke
-smem to bust the spinlock.
+lock #3 is used by smem, so this proves you are taking someone else's
+lock. I commented on this in the binding, but let's be specific:
 
-The hwlock is not a property of remote proc, because remote proc does
-not care, right? Other device cares... and now for every smem user you
-will add new binding property?
+NAK, please carry:
 
-No, you are adding a binding based on your driver solution.
+Nacked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
