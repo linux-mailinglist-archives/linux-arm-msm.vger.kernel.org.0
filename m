@@ -1,116 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-20169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DBD08CB57D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 23:47:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8D348CBAF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 08:09:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9E749B2116F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 May 2024 21:47:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 838BA282C59
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 06:09:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E697958AA1;
-	Tue, 21 May 2024 21:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4906757E3;
+	Wed, 22 May 2024 06:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RWwxnWXR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VfcFxf9c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FE3487B0;
-	Tue, 21 May 2024 21:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19FF1C6B4;
+	Wed, 22 May 2024 06:09:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716328028; cv=none; b=gA7c8QHOWR8GvHEqYdbr2TdmN9Py8QcA5tEmioQGe9fKOM371hOJteO0wd2ko5tfDpIbNYcfSeUxcE6kEKjmduOvnkjm9cFKZPdWCSEqFcQVApfrqfGPU5bkL2lOxcKk8YnTI6qaU2hhw0MIN2qD/ZA4oFwQq0K70vkuRhTv7XQ=
+	t=1716358167; cv=none; b=KGWyssh+xrx/zpx2FOj9yLJAzS12kTEOY1FMjuY1uSud8VAqvTfg8xzuxwnaKzN4OYCZ8Ykhiw8yZxeqJVaOvWYrKPvJxyIwS2wsGFGv3nfkSXj8D5E7gEZHgoHf550YnP94ASm051b2qsQnSKOGzKH3WGlc5+N/RXeUt034V2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716328028; c=relaxed/simple;
-	bh=3ja++l8gegiuSd+IaT5ZeNri5Jl4TETtWWgt1Pg1pBQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QVi1yTZn9Aa+lpLM328BhmCfuA1u/2h7S/N6IPtmQrzt1aljUmBabi8tBFVKbxp2zOVmd9Zfqh4X1OPju+kb4WUUfQw5i1KtNzlk84uUVQOYDGhYU7rAEjiwGxhoBO8Ut23L1r9/3ERufKTBm4mDWeZEk8ZQzJ2Jwjz5VMJNgjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RWwxnWXR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05963C2BD11;
-	Tue, 21 May 2024 21:47:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716328028;
-	bh=3ja++l8gegiuSd+IaT5ZeNri5Jl4TETtWWgt1Pg1pBQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RWwxnWXRqIOapVN68IqprVwN1owlDAa6N6/i2s81DmrI7zF0CbqRs3mJeDEC0uP9t
-	 RUawJ62IJcw83KlU5jlnFI0txLkbrGUNma5ltJm7qjLr2EPMtuk7P2O+XZLSPlPUFH
-	 rNIdY/MbsR9dzTtF+Ba3+RMejpUvSE81L/Bq2iUmVb4o7w51xGSx26CGySoAXrGx62
-	 7YAFJ4ZNgTek3TJO/EIEq0ZevpEm/d7WK4jIxirobEabagXvqtUmrEYVkK2gscvuvN
-	 bYyMKU48/bXhZio0qWHXeGM4Fxe5EY4z43i96kRi/uzEkM+Ck/t7j14NTWlr8irT4M
-	 GuazqKnd6b7uA==
-Date: Tue, 21 May 2024 22:47:01 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Rob Herring <robh+dt@kernel.org>
-Cc: Elliot Berman <quic_eberman@quicinc.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Amrit Anand <quic_amrianan@quicinc.com>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Doug Anderson <dianders@chromium.org>,
-	Simon Glass <sjg@chromium.org>, Chen-Yu Tsai <wenst@chromium.org>,
-	Julius Werner <jwerner@chromium.org>,
-	"Humphreys, Jonathan" <j-humphreys@ti.com>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jon Hunter <jonathanh@nvidia.org>,
-	Michal Simek <michal.simek@amd.com>,
-	boot-architecture@lists.linaro.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH RFC v3 2/9] dt-bindings: board: Introduce board-id
-Message-ID: <20240521-reroute-drainer-af9c5b80afa3@spud>
-References: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
- <20240521-board-ids-v3-2-e6c71d05f4d2@quicinc.com>
- <20240521-bonfire-backboned-9ef33c10d447@spud>
- <20240521-unskilled-spindle-c4161092ae83@spud>
- <CAL_JsqJjvNfr_Vo7JNsBn6Fcv5r--ZqQTiforSLwrZ-z4_mURQ@mail.gmail.com>
+	s=arc-20240116; t=1716358167; c=relaxed/simple;
+	bh=RHJzBZKBYDregnPcMEAoO1XuZcME3KtgeKMDPxPVhZQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iiImxYZ64UhYfBWuwh3SoiasYGo0Qn+OloElUwO3+yJtcu1UiK3i43yoVGwA7lrIoJpBy/+RXbd4OBndUOLcbTzfs7PDqq41UCMKW6rZSc4K/xmNJJmxTZKYOfvDZKyddKrRju6MYOASGCl1sydyvT9tpUNYeCOQoblwj31G0Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VfcFxf9c; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44LNaRHs019181;
+	Wed, 22 May 2024 06:08:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=76X18h8ZdxGj97syQ3G8X16mJAi6U8JWctpGW0mNnGM=; b=Vf
+	cFxf9cRRjiPYJwdfkeRQkRxSwgXWdNCY0Wwdh+iQhCGEXlUEdMXe6DNkBTRLEGFw
+	GLqAKJed9gNHi7Jlqn+rWm2qu70L955pYwSaNK7E7w1+Gn5Kc/IkC9fNO0XRxeZ7
+	cFFeQ5SXKQD+23ibg0D8s3UJR0QcCYlgRM+lg3PqAB1Wl9UF4MO0LedTYPDv6E/k
+	GWVDc0DUsrtFCLqf0s9Uv7tS8Q7wzQUNN6omCr9LVPF4lr14F7oIdyg4hYLHrAqL
+	7/mh/8Co35rimFPifRFmpjU355JYMVG4OH5glBdq1ByV5eGIuadp2UppMVGmmTfb
+	4K+yiTfP5GBLaYbh2NlA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n4gfyeh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 May 2024 06:08:54 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44M68rYs023009
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 May 2024 06:08:53 GMT
+Received: from [10.216.52.184] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 21 May
+ 2024 23:08:48 -0700
+Message-ID: <1eaa6f78-07d8-25e7-2e00-1284dd37f761@quicinc.com>
+Date: Wed, 22 May 2024 11:38:37 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="HYLZW+tE+PSJkClw"
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqJjvNfr_Vo7JNsBn6Fcv5r--ZqQTiforSLwrZ-z4_mURQ@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v6 4/8] drivers: mtd: nand: Add qpic_common API file
+Content-Language: en-US
+To: Miquel Raynal <miquel.raynal@bootlin.com>
+CC: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <richard@nod.at>, <vigneshr@ti.com>,
+        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240521105532.1537845-1-quic_mdalam@quicinc.com>
+ <20240521105532.1537845-5-quic_mdalam@quicinc.com>
+ <20240521145140.5cb49946@xps-13>
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20240521145140.5cb49946@xps-13>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aUN5v4k1sl7V4N9StjvzU3eaRECy46JR
+X-Proofpoint-ORIG-GUID: aUN5v4k1sl7V4N9StjvzU3eaRECy46JR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-22_02,2024-05-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0 mlxlogscore=999
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405220043
 
 
---HYLZW+tE+PSJkClw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Tue, May 21, 2024 at 04:32:16PM -0500, Rob Herring wrote:
-
-> boot-architecture is not private[0]. It is where EBBR gets discussed
-> amongst other things. This came up in a thread there[1].
-
-I dunno man, in my book any mailing list that rejects non-member mails
-is private. Or outright broken, take your pick :)
-
-I don't care if a private list's subscribers miss part of the discussion,
-but it's list owner probably should, whoever that may be.
-
-> [0] https://lists.linaro.org/mailman3/lists/boot-architecture.lists.linaro.org/
-> [1] https://lists.linaro.org/archives/list/boot-architecture@lists.linaro.org/thread/DZCZSOCRH5BN7YOXEL2OQKSDIY7DCW2M/
-
---HYLZW+tE+PSJkClw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZk0WVQAKCRB4tDGHoIJi
-0pwFAQDFFUs7sBteTrPNKO67mthOWORfHlXs8gaDDSsN/GgjpAEAm2mi3SFSxt12
-Gy0Yt4cta4KwcbUmXjcpHVs1u1+XEw0=
-=IEN1
------END PGP SIGNATURE-----
-
---HYLZW+tE+PSJkClw--
+On 5/21/2024 6:21 PM, Miquel Raynal wrote:
+> Hi,
+> 
+>>   drivers/mtd/nand/Makefile            |    4 +-
+>>   drivers/mtd/nand/qpic_common.c       |  740 +++++++++++++++++
+>>   drivers/mtd/nand/raw/qcom_nandc.c    | 1090 +-------------------------
+>>   include/linux/mtd/nand-qpic-common.h |  467 +++++++++++
+>>   4 files changed, 1222 insertions(+), 1079 deletions(-)
+>>   create mode 100644 drivers/mtd/nand/qpic_common.c
+>>   create mode 100644 include/linux/mtd/nand-qpic-common.h
+>>
+>> diff --git a/drivers/mtd/nand/Makefile b/drivers/mtd/nand/Makefile
+>> index 19e1291ac4d5..e59106e0a3af 100644
+>> --- a/drivers/mtd/nand/Makefile
+>> +++ b/drivers/mtd/nand/Makefile
+>> @@ -3,7 +3,9 @@
+>>   nandcore-objs := core.o bbt.o
+>>   obj-$(CONFIG_MTD_NAND_CORE) += nandcore.o
+>>   obj-$(CONFIG_MTD_NAND_ECC_MEDIATEK) += ecc-mtk.o
+>> -
+>> +ifeq ($(CONFIG_MTD_NAND_QCOM),y)
+>> +obj-y	+= qpic_common.o
+>> +endif
+> 
+> Breaks if you set CONFIG_MTD_NAND_QCOM = m
+  Ok , will fix in next patch.
+> 
+>>   obj-y	+= onenand/
+>>   obj-y	+= raw/
+>>   obj-y	+= spi/
+>> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
+>> new file mode 100644
+>> index 000000000000..dfbbb5f626b6
+>> --- /dev/null
+>> +++ b/drivers/mtd/nand/qpic_common.c
+>> @@ -0,0 +1,740 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+>> + */
+>> +#include <linux/bitops.h>
+>> +#include <linux/clk.h>
+>> +#include <linux/delay.h>
+>> +#include <linux/dmaengine.h>
+>> +#include <linux/dma-mapping.h>
+>> +#include <linux/dma/qcom_adm.h>
+>> +#include <linux/dma/qcom_bam_dma.h>
+>> +#include <linux/module.h>
+>> +#include <linux/mtd/partitions.h>
+> 
+> Didn't you say you would remove that include?
+  Sorry, missed it , will fix in next patch.
+> 
+> Thanks,
+> Miquèl
 
