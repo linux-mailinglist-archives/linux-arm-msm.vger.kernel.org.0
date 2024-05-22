@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-20216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 456288CC0A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 13:51:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A07D58CC0B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 13:53:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC0F6284700
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 11:51:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13AC01F2169D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 11:53:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 264EC13D531;
-	Wed, 22 May 2024 11:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1F1D13D53D;
+	Wed, 22 May 2024 11:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sQ9neFzZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TaayML6I"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3F513D529
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 11:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C637E101
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 11:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716378674; cv=none; b=Y4j99973E2Pfynf+jHvyuoEBDpNuHRo0lFdqOBTAykoXaVSQy40CzjeT25kYBOkbSjM1+v3QGEEiEByfVD55/P6priZqqQ3mc1cq3n72Ub547PDIWwkrkIhQxssd6sjaZYoxv/2PRtwePqzIoGj1/Rqz/lmjgtXkUcBgyaRLneg=
+	t=1716378791; cv=none; b=DGCCFhTJIrRhyP9s0ppUpCm9dVPoj5Y0aVnJ6N72nKY/bjD8gfJSSCX7mIKBEXuextriXxO8AJ7w5iFF32pn3D88NBQfNvROD0k3RskEamXODXXhKkR06IJ9fhu/vQwB8EysNxc6cy/ovWX6M75IUAqKnUDFl0mOb+vbzuQEsyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716378674; c=relaxed/simple;
-	bh=a7HbsaGo4mOmiiYKbcq9Cy8SMYt7s7x49P1rK6RBFFo=;
+	s=arc-20240116; t=1716378791; c=relaxed/simple;
+	bh=WXZH/yz80gYFyQ4BbC/w5IyTTWDKcC5KranzjFiKEL4=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=VenDY4T/UzvIjYcOUlmbLtW6WEUdyEEx/JMsJBethPrhofBUdZEe68MdgBsDc401RnklzleGHG35B8OzM/NAEGPOZluM33SVYfI6nTfSBcUMYLNdjXkKlC4bFW5AgaMgB6/p9KLI17kPe/wj/TmvBzmIdf20+ONcqlmXLJrGhks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sQ9neFzZ; arc=none smtp.client-ip=209.85.218.45
+	 In-Reply-To:Content-Type; b=SrLFwHblKAKY3bJYgnTrVZFUYOHwWPnLhEEhLgvA1JTJzbOvKqyFit4tq6jRX8xiWKxTeDOIidykFd2OV4m2B8pbXFdVT283x8dy7KZVzygpPvMf5tz+g130k9Iqsuno2cL9KKsEft6pcIMSc+5lNzBifbttBIyYJAzWQxpHZGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TaayML6I; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a61b70394c0so373389766b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 04:51:12 -0700 (PDT)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a5a2c05006aso519529166b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 04:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716378671; x=1716983471; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716378787; x=1716983587; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eRBy76jWiwOjrHuYKLdt1gCriWsCPRZJnOSXuDJQRjQ=;
-        b=sQ9neFzZTja4UHSHzs9N4Fki2rBA/BLbSo/pL2je+9kWf2SZMsv+3bfq04iAf5em+h
-         TW1w/BXQ8DN94jH0yAaVsrF1GdRWLXJ4fuTGL0FvI+SeIISm7yqswPLo1L1P4r/Nlte5
-         y3zyGn0CAradpYCqXrNpLzQmLeCwWyCzsrsGzBm7bomUFnEZ11GdjbUOPuUO5Y3f94YK
-         99u4TRJVdEuYO8z5+aCRu7LsLvk9U/mDKhS7hBqppCZk6WIfKGjNu/iAutIl3tAVjwEH
-         acUrWV7HTJGkYYvyi7pnMORxqAgr3wDMSS5XBHrP/fVWT7iGQ8qrEardJejDLIUwbUCz
-         7UNQ==
+        bh=lZc9L8nSVEY9ZvVjEf6riakUMqbgRISVhXQ6LxB8KeY=;
+        b=TaayML6II0kHHVHrWwLC5JIM8ff/LcVqw6r24NFCuCaSgQ1eYUa+WMnVM+X9xy4chK
+         o9t6bm6hxUd4QasRmKMFnEkStBch/BjtELV5IJsA20qiDlD6S9bOV0axKgH5hzk/UAwr
+         IwoX60u1+z4F22y1nj9yeRk39ZmXHo834GjnAcLMtmxOdb7kGmcVFE57SYLcdEZiLgn5
+         KZwK9XbV/MRBCGo0pgygZf7aa2saS06trCdtmaP/UcEuOy1YpjSykt03m62SSKBgz49s
+         CwqsikpAlSU0PiNt3HodvSFvKf/oBCR0BMJoOGkQICozATjVxmXPCRqovtBPhzT5EG2S
+         cxyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716378671; x=1716983471;
+        d=1e100.net; s=20230601; t=1716378787; x=1716983587;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=eRBy76jWiwOjrHuYKLdt1gCriWsCPRZJnOSXuDJQRjQ=;
-        b=bgemIZXX4G7cNshs5mwh4rMMpJWFQ8t/qB5pQyvcBIP9RhO0A+BZK5MiNEgwNIfChT
-         RzR5r8754GUEK3A0KXg9YUtyQQ4lb3OEfoXhxjhR3JCjP/D5w5cStuqpbpwlQERdTTuS
-         LAtS0paz1fEQ3ZFCYRwQfCawycXi3wvMJ9+MiuEKUgNeP9KLeSqXJXFNro00+twWRBJn
-         zKDnADlCfrwmc8tC79/XJSvFBCAUciAl+q9iUbqLSKfMhBwbSYQlU5xnTp/nlU+bWn5S
-         YE3NRWnhrBetr8w8NXL3wBOxksb/4iFFdSi3TdipXKQJJjCknpjvGWl/9lcNXa+/G4YH
-         saSA==
-X-Gm-Message-State: AOJu0Yymys9yW1aJn3RBotMQX/SAxjWlGTgFns5Y9eP40xjCN2HOv4iQ
-	I3V6zeBJLCxULrBbB4hyKTGU2PiFEQv14R0JCbz0hkuCAUZynqy3Lkrwr5MiSSXhLS8dOr6jnDo
-	P
-X-Google-Smtp-Source: AGHT+IHWTq1+7a88RzzW93woluqpDnjnBcFC/6apHrRRWa9WLIh970+yDw0jNvUnJrQ3mM+UZ5fL1w==
-X-Received: by 2002:a17:906:3585:b0:a62:2eca:4f12 with SMTP id a640c23a62f3a-a622eca50c1mr78912266b.59.1716378670550;
-        Wed, 22 May 2024 04:51:10 -0700 (PDT)
+        bh=lZc9L8nSVEY9ZvVjEf6riakUMqbgRISVhXQ6LxB8KeY=;
+        b=wq5E/HhjgCTUNeGnm1ktyFaKMIyLqgxlTb/MZ3ksNpyWKztGRYRDoRPCAg1xaJ/KdH
+         i/+hNKAMnl05a+pMe53rvbZbHm+KnDCA52ISXPU9MaPceNU0XgA8ldXKq7lhpgn3+SF7
+         7n3uFcYGmKxD+Cr62euxiBzyuMEc2aIoIePcZGy7/GWXoIVvBzzX0f6cS5PnCqLo9pDo
+         DKEKsHvzFQiye1Qk1U7EVwKJw4/XpGEFfAvHrjNNTRn31zqPuQlaBqjDQYVv937kiSTq
+         G2ChDU0FZm/TDoZapVqgmQnbGkUn5H10y/0d/lNzbloU8aAxnCH0g5fBAwvBRr/uz/4L
+         6fBw==
+X-Forwarded-Encrypted: i=1; AJvYcCU5ECPCCuRlBQUXzXurNyL9dSzms3d98Er/2ugCDTohYgIvKvcf29cpWLe8Vml1r73btiO1VkCDCmOGdwFM3tzD5fGJj6NuQotEWspKcw==
+X-Gm-Message-State: AOJu0Yx1+Zb77AaX9lsw0oba+46pPTstRywzaQOyT6bFOi6TQb9fYabD
+	z8zRR0Gl6e8+GML4/OsClg1G3LShD9+EzN2/GeLTYvkysteStjWhzdzih7ghTEw=
+X-Google-Smtp-Source: AGHT+IE4NBVO9QRHXYLTIYpzW5NCa2OlPs1k+MjfwqxSTPKnDPMzW1HQCLXvDCpYDeLK3/lR8XPvpA==
+X-Received: by 2002:a50:cdcd:0:b0:572:7d75:a70e with SMTP id 4fb4d7f45d1cf-57832a8c715mr1390052a12.25.1716378786998;
+        Wed, 22 May 2024 04:53:06 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:8b9d:52bd:4757:6b10? ([2a01:e0a:982:cbb0:8b9d:52bd:4757:6b10])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17892450sm1779214266b.63.2024.05.22.04.51.09
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5751ada828esm7285640a12.62.2024.05.22.04.53.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 May 2024 04:51:10 -0700 (PDT)
-Message-ID: <8879d9c0-6e22-4335-af0e-0774721fe2c4@linaro.org>
-Date: Wed, 22 May 2024 13:51:08 +0200
+        Wed, 22 May 2024 04:53:06 -0700 (PDT)
+Message-ID: <5c32d7fd-4a7f-4d9c-805c-87d4d14f741e@linaro.org>
+Date: Wed, 22 May 2024 13:53:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,13 +78,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
+From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] soc: qcom: socinfo: Update X1E PMICs
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240522-topic-x1e_pmics_socinfo-v1-1-da8a097e5134@linaro.org>
+Subject: Re: [PATCH v1 1/1] spi: Remove unneded check for orig_nents
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: =?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= <nfraprado@collabora.com>,
+ Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <20240507201028.564630-1-andriy.shevchenko@linux.intel.com>
+ <d8930bce-6db6-45f4-8f09-8a00fa48e607@notapiano>
+ <8ae675b5-fcf9-4c9b-b06a-4462f70e1322@linaro.org>
+ <Zk3X7Dgst5kVzJxy@smile.fi.intel.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -111,39 +115,92 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20240522-topic-x1e_pmics_socinfo-v1-1-da8a097e5134@linaro.org>
+In-Reply-To: <Zk3X7Dgst5kVzJxy@smile.fi.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 22/05/2024 13:33, Konrad Dybcio wrote:
-> Assign the correct name to ID 82 and fix the ID of SMB2360.
+On 22/05/2024 13:33, Andy Shevchenko wrote:
+> On Wed, May 22, 2024 at 12:03:33PM +0200, Neil Armstrong wrote:
+>> On 15/05/2024 23:09, Nícolas F. R. A. Prado wrote:
+>>> On Tue, May 07, 2024 at 11:10:27PM +0300, Andy Shevchenko wrote:
+>>>> Both dma_unmap_sgtable() and sg_free_table() in spi_unmap_buf_attrs()
+>>>> have checks for orig_nents against 0. No need to duplicate this.
+>>>> All the same applies to other DMA mapping API calls.
+>>>>
+>>>> Also note, there is no other user in the kernel that does this kind of
+>>>> checks.
+>>>>
+>>>> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+>>>
+>>> Hi,
+>>>
+>>> this commit caused a regression which I reported here:
+>>>
+>>> https://lore.kernel.org/all/d3679496-2e4e-4a7c-97ed-f193bd53af1d@notapiano
+>>>
+>>> along with some thoughts on the cause and a possible solution, though I'm not
+>>> familiar with this code base at all and would really appreciate any feedback you
+>>> may have.
+>>
+>> I also see the same regression on the SM8550 and SM8650 platforms,
+>> please CC linux-arm-msm@vger.kernel.org and me for a potential fix to test on those platforms.
 > 
-> Fixes: e025171d1ab1 ("soc: qcom: socinfo: Add SMB2360 PMIC")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/soc/qcom/socinfo.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index 277c07a6603d..41342c37916a 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -133,7 +133,8 @@ static const char *const pmic_models[] = {
->   	[72] = "PMR735D",
->   	[73] = "PM8550",
->   	[74] = "PMK8550",
-> -	[82] = "SMB2360",
-> +	[82] = "PMC8380",
-> +	[83] = "SMB2360",
->   };
->   
->   struct socinfo_params {
-> 
-> ---
-> base-commit: 8314289a8d50a4e05d8ece1ae0445a3b57bb4d3b
-> change-id: 20240522-topic-x1e_pmics_socinfo-30462d186a86
-> 
-> Best regards,
+> There is still no answer from IOMMU patch author. Do you have the same trace
+> due to IOMMU calls? Anyway, I guess it would be nice to see it.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Yes :
+[    6.404623] Unable to handle kernel NULL pointer dereference at virtual address 000000000000001c
+<snip>
+[    6.641597] lr : __dma_sync_sg_for_device+0x3c/0x40
+<snip>
+[    6.688286] Call trace:
+[    6.688287]  iommu_dma_sync_sg_for_device+0x28/0x100
+[    6.717582]  __dma_sync_sg_for_device+0x3c/0x40
+[    6.717585]  spi_transfer_one_message+0x358/0x680
+[    6.732229]  __spi_pump_transfer_message+0x188/0x494
+[    6.732232]  __spi_sync+0x2a8/0x3c4
+[    6.732234]  spi_sync+0x30/0x54
+[    6.732236]  goodix_berlin_spi_write+0xf8/0x164 [goodix_berlin_spi]
+[    6.739854]  _regmap_raw_write_impl+0x538/0x674
+[    6.750053]  _regmap_raw_write+0xb4/0x144
+[    6.750056]  regmap_raw_write+0x7c/0xc0
+[    6.750058]  goodix_berlin_power_on+0xb0/0x1b0 [goodix_berlin_core]
+[    6.765520]  goodix_berlin_probe+0xc0/0x660 [goodix_berlin_core]
+[    6.765522]  goodix_berlin_spi_probe+0x12c/0x14c [goodix_berlin_spi]
+[    6.772339]  spi_probe+0x84/0xe4
+[    6.772342]  really_probe+0xbc/0x29c
+[    6.784313]  __driver_probe_device+0x78/0x12c
+[    6.784316]  driver_probe_device+0x3c/0x15c
+[    6.784319]  __driver_attach+0x90/0x19c
+[    6.784322]  bus_for_each_dev+0x7c/0xdc
+[    6.794520]  driver_attach+0x24/0x30
+[    6.794523]  bus_add_driver+0xe4/0x208
+[    6.794526]  driver_register+0x5c/0x124
+[    6.802586]  __spi_register_driver+0xa4/0xe4
+[    6.802589]  goodix_berlin_spi_driver_init+0x20/0x1000 [goodix_berlin_spi]
+[    6.802591]  do_one_initcall+0x80/0x1c8
+[    6.902310]  do_init_module+0x60/0x218
+[    6.921988]  load_module+0x1bcc/0x1d8c
+[    6.925847]  init_module_from_file+0x88/0xcc
+[    6.930238]  __arm64_sys_finit_module+0x1dc/0x2e4
+[    6.935074]  invoke_syscall+0x48/0x114
+[    6.938944]  el0_svc_common.constprop.0+0xc0/0xe0
+[    6.943781]  do_el0_svc+0x1c/0x28
+[    6.947195]  el0_svc+0x34/0xd8
+[    6.950348]  el0t_64_sync_handler+0x120/0x12c
+[    6.954833]  el0t_64_sync+0x190/0x194
+[    6.958600] Code: 2a0203f5 2a0303f6 a90363f7 aa0003f7 (b9401c2
+
+Reverting  8cc3bad9d9d6 ("spi: Remove unneded check for orig_nents") removes the crash.
+
+> 
+> Meanwhile, I have three changes I posted in the replies to the initial report,
+> can you combine them all and test? This will be a plan B (? or A, depending on
+> the culprit).
+> 
+
+I'll try to apply them and test.
+
+Neil
+
 
