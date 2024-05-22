@@ -1,126 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-20212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A759B8CC04B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 13:33:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06AF98CC04E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 13:33:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D1FE21C21839
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 11:33:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7A9A2836E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 11:33:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 794587E776;
-	Wed, 22 May 2024 11:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2938F7E776;
+	Wed, 22 May 2024 11:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="G8y2NcjM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TQGq+5a3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BBE2A8D7;
-	Wed, 22 May 2024 11:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705812A8D7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 11:33:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716377621; cv=none; b=R0U8iIOekIFN9gm0Nd5GWvyc6UOuN+65iks5DWbewdPdselkwkNH6x5ASsKD2C5ZQd2v/WzTPUmR95TUbqFnNZBw1oeEEOqRftteEeGdshbMRsEKQ1P/5szaxu8tHLI4v1X1OkTa3OS84nQlxMUVqnbFL3BpFfXu8Wkf4LTHBI4=
+	t=1716377632; cv=none; b=hjN82A6JgYKt+Ofu92E3aTCpxHG1qDgGLkED3goe12EnJOQMO3j62I0o2hIgc0dkK0QW1etTbOWJE87X5pxGONWpS9hV1T9ZgejNkTa0ULFhYN5Grf9i6BiQon2hH1iWH1JF5Fg2simbB0ymM3wzQj49PPvpa30PTDFAl09k/Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716377621; c=relaxed/simple;
-	bh=ppLA3GtdGJReY+A88qxBFMZYBsM5WtwL4sGmG7lx61U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qUBsyhW2+K8kMfnGtEor0aHNoKjvbmwRHfgSnEOuP1omlQg9U+ovCs9vQxJzToFPUKmbb7bej9+BYEXBcbtvoDIcHzkWxmOTOE5DMbgyqEblgykrhYvCDuF1LLa/AydfjXsBnITQoio+dqsR+dq0wbHBX+cb/UNTnvO5avXlspo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=G8y2NcjM; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1716377619; x=1747913619;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=ppLA3GtdGJReY+A88qxBFMZYBsM5WtwL4sGmG7lx61U=;
-  b=G8y2NcjMpj+/l/P7UHOyaUddffTulsyWhtVidB7GNmsRjm88qg1ANF9n
-   yXZNjrLS1Ghgy3lncD7Vh4RFxhz1eP5wphn4kGCLD67Ukf97jJUzSrwDK
-   4dfovW00vKOy0YdYaldw7ligkV8RXIW98PSIPfmcAYi1AeQOFbx/nIVte
-   flrF8JSNuS9ZsmHjLlnxGw7Wi6Gs4sEJFpnvHMokuueEc8Pq2zAeki0Tf
-   NieAGU+ZjxReHO163Z/uTkiTqqHTaxFUjXiIF2UaarTOIRjrV4HL6geVl
-   PtTkB4P0Fbev1i9D7MmYN0HcAoHqkaT5j5CmF2EHjzKZttBL6DdAIKaz9
-   g==;
-X-CSE-ConnectionGUID: YgrQ/WPbS8Cd+SY5uwbufg==
-X-CSE-MsgGUID: Zd6SrbKVRgKJLV5KoUE6kg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="16410563"
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; 
-   d="scan'208";a="16410563"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2024 04:33:05 -0700
-X-CSE-ConnectionGUID: STpzZLEJQgy8EMLg52h4aw==
-X-CSE-MsgGUID: JUnZ14FAQc+QX6sUZCtHJQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,179,1712646000"; 
-   d="scan'208";a="33680482"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2024 04:33:04 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1s9kDM-00000009xMi-3ino;
-	Wed, 22 May 2024 14:33:00 +0300
-Date: Wed, 22 May 2024 14:33:00 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: =?iso-8859-1?Q?N=EDcolas_F=2E_R=2E_A=2E?= Prado <nfraprado@collabora.com>,
-	Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v1 1/1] spi: Remove unneded check for orig_nents
-Message-ID: <Zk3X7Dgst5kVzJxy@smile.fi.intel.com>
-References: <20240507201028.564630-1-andriy.shevchenko@linux.intel.com>
- <d8930bce-6db6-45f4-8f09-8a00fa48e607@notapiano>
- <8ae675b5-fcf9-4c9b-b06a-4462f70e1322@linaro.org>
+	s=arc-20240116; t=1716377632; c=relaxed/simple;
+	bh=nTvlfb9YGnNTKN6G+RLS44igQJv3ipgoswKOLp1f0ig=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pCbQTrLwUd2Q/ThWW9qhlwKrpZdZJ8oFZkuCSgk+T5EV9GQNFToZysq9DRhXlqPop3OxW6M+ErIZBc3g1XsyifpS1sEwzn6Qxd+XpQPrG0BJRumxdseEnaBzotsojWN1jKrqdNuLa8/YGxHNl4/rNxTtjQA+na+fXFGOISIxAaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TQGq+5a3; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a59cdd185b9so163738966b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 04:33:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716377629; x=1716982429; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cRW932voPWIlMWkxCkJVneBFSVf5edVVWFRjcR0MAnU=;
+        b=TQGq+5a3lxQWfohysyGBcIiJYzGE1pqxbNHhDi2IpgH5lmbjgEJBVKB4Bly7OQtkZu
+         f3HkybCO2iPYLIRaiQdQ3grEDWJwGWVCti2XRs0oLnPOnSHzk4dqvKvKP+DQgYt+5fxh
+         RFAiLit0Z6Y2XEqyzoZqqDxZw614og3I0lEKKlXH6y/PB4eszeinMKtV0xm7aNB7iGgZ
+         XGizzkV9+iNajg8CxXovJWRTilnEBgtEPb3t6lZI94MaB/1vyBF+1z/TKKc2YxYJmNEc
+         aMvO4uGV9lqMwaemfM4QX1W6E6TPdEfJCk8sZ37fgWC820ArJ/McWi1PNk4Peh7wmsTq
+         pZLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716377629; x=1716982429;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cRW932voPWIlMWkxCkJVneBFSVf5edVVWFRjcR0MAnU=;
+        b=KOAfP8vvjcIb+3ZB31uTXxUvoRjuZUb+yYWXpKzuJXw/bFspogtqBk+niJdyAh5BUm
+         VYtEvSPi//hQ/gNxwThg2eLZ4GZWk6JaX0kgQd6CwB5I7tYHUkCNADAu/yFdmrzS2csL
+         4uONdoYMFvtZrfkALtiw891tC3SrAmk6dxAjFESS9zE6yj1/N4llzx2gCbV6YBX1vtuu
+         sTyVEls+CBfdWLxWlbJ18NFE7c9Da5t2uaCGPk6BIqrL3jSNN7PPD4t5N4hwBiIBOM8t
+         q7SV7J/Ks53VgEAf5QPNSEVEszXNPsdiGtfnXYw7pt/JgjDuzNCdX5+AVPYmC8+Mf2mV
+         NFig==
+X-Gm-Message-State: AOJu0Yzzb+UgRVqJId73kjA/5b/tSrSwD7dpX+y7WfcY7ybT42tKCRD7
+	Ixi4cpxiyKrByATBhJty4GX0pJE+700RyH/aPWSMOFqFOdpfhJ6fWAHNiFDbn70=
+X-Google-Smtp-Source: AGHT+IHdFu3XoWK3DJSSo9+7yDuyrUMyNNW6xZNAHXCMupaIHhESb4rOw7EWexdU0Bt1/PvMFRv9rw==
+X-Received: by 2002:a17:906:7c53:b0:a5a:3908:f4ad with SMTP id a640c23a62f3a-a62230f84a1mr157277666b.10.1716377628873;
+        Wed, 22 May 2024 04:33:48 -0700 (PDT)
+Received: from [127.0.1.1] ([2a00:f41:c55:53ae:4d0a:75f4:a9ea:5025])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a179c7d2bsm1748202266b.120.2024.05.22.04.33.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 May 2024 04:33:48 -0700 (PDT)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Date: Wed, 22 May 2024 13:33:43 +0200
+Subject: [PATCH] soc: qcom: socinfo: Update X1E PMICs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8ae675b5-fcf9-4c9b-b06a-4462f70e1322@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240522-topic-x1e_pmics_socinfo-v1-1-da8a097e5134@linaro.org>
+X-B4-Tracking: v=1; b=H4sIABfYTWYC/x3MQQqAIBBA0avErBN0KomuEhFhU80iFScikO6et
+ HyL/zMIJSaBocqQ6Gbh4AtMXYE7Fr+T4rUYUGOrO0R1hchOPYbmeLKTWYJjvwXV6Nbianq79BZ
+ KHRNt/PzncXrfD9Sh3HVpAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.14-dev
 
-On Wed, May 22, 2024 at 12:03:33PM +0200, Neil Armstrong wrote:
-> On 15/05/2024 23:09, Nícolas F. R. A. Prado wrote:
-> > On Tue, May 07, 2024 at 11:10:27PM +0300, Andy Shevchenko wrote:
-> > > Both dma_unmap_sgtable() and sg_free_table() in spi_unmap_buf_attrs()
-> > > have checks for orig_nents against 0. No need to duplicate this.
-> > > All the same applies to other DMA mapping API calls.
-> > > 
-> > > Also note, there is no other user in the kernel that does this kind of
-> > > checks.
-> > > 
-> > > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> > 
-> > Hi,
-> > 
-> > this commit caused a regression which I reported here:
-> > 
-> > https://lore.kernel.org/all/d3679496-2e4e-4a7c-97ed-f193bd53af1d@notapiano
-> > 
-> > along with some thoughts on the cause and a possible solution, though I'm not
-> > familiar with this code base at all and would really appreciate any feedback you
-> > may have.
-> 
-> I also see the same regression on the SM8550 and SM8650 platforms,
-> please CC linux-arm-msm@vger.kernel.org and me for a potential fix to test on those platforms.
+Assign the correct name to ID 82 and fix the ID of SMB2360.
 
-There is still no answer from IOMMU patch author. Do you have the same trace
-due to IOMMU calls? Anyway, I guess it would be nice to see it.
+Fixes: e025171d1ab1 ("soc: qcom: socinfo: Add SMB2360 PMIC")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/soc/qcom/socinfo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Meanwhile, I have three changes I posted in the replies to the initial report,
-can you combine them all and test? This will be a plan B (? or A, depending on
-the culprit).
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 277c07a6603d..41342c37916a 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -133,7 +133,8 @@ static const char *const pmic_models[] = {
+ 	[72] = "PMR735D",
+ 	[73] = "PM8550",
+ 	[74] = "PMK8550",
+-	[82] = "SMB2360",
++	[82] = "PMC8380",
++	[83] = "SMB2360",
+ };
+ 
+ struct socinfo_params {
 
+---
+base-commit: 8314289a8d50a4e05d8ece1ae0445a3b57bb4d3b
+change-id: 20240522-topic-x1e_pmics_socinfo-30462d186a86
+
+Best regards,
 -- 
-With Best Regards,
-Andy Shevchenko
-
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
 
