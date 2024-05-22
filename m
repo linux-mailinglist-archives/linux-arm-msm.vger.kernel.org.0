@@ -1,126 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-20261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDE7F8CC6BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 21:08:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1A598CC6CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 21:22:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 275CF1C219EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 19:08:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80A101F22698
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 19:22:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7511E1411E9;
-	Wed, 22 May 2024 19:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CB96145B2F;
+	Wed, 22 May 2024 19:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GogqL4+5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GvZ1JmSf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D88C1420C6;
-	Wed, 22 May 2024 19:08:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA04D51E;
+	Wed, 22 May 2024 19:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716404888; cv=none; b=K0dADGA+iy5FCR85YHNPGj5gNF8rtWz7JhR1mzxH1v8cqOhkblV6DW++PR1TvrTmQWqidK4K+wQAGkwYzLm2uZ2DNxWMsvgDS535aEpRhS0nsuMCbdj8PE+2jmUFTOPgPcHZ4kyPzVFDrCOnByIJNeAtxUPAeTdP7h5SkYKSQXs=
+	t=1716405738; cv=none; b=UC2EoYqIh8pLw/ourwgQgXLxVn1l/n0xbYwz0f4N+QJpk+alJOuBOH4lNpIE6v8aDJxw+ok2lnhC1lpdhEKXShYWPS5W1OWpFfMRyeJhsHAEKggB3+NEkpsXMkK64RnB/VgHdkOq09/VBAUHhOhI/SNbYlfQH/Jp3g7lTN/tX5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716404888; c=relaxed/simple;
-	bh=sqMoGfUro0zCQxeqiqZTC/f11CC03VLrhPzvw6+Eg8I=;
+	s=arc-20240116; t=1716405738; c=relaxed/simple;
+	bh=0+7xrxHcIqXbOHoXrH88X8Y9k/W+g9wVdubBgA6njtA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OsLJHpEcKieROZyvmIoENKfMi5GrbqzmqrwOw0Rd18FiSmd4OstaAec4kM2urfbKIcxtjiDdr9+/+rm+l334gs1cgaSj7PwXamcsqbGplwZmlrD4HUQxuOUO+dKx6JQkjo/34LIfUqVa529mg6mD4lzF3d12QXhkeOEQ1DCNnnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GogqL4+5; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=anp9vaEcf6CkQ6UF7QVpO2Jq8gg1q10m7y0aTw8hlzvKCSiNfLk2nqyDSsjZE1sClkhnOXJc22zAnIF2Ia2qBOmbgkcHc51YLfy1/RdHdGOAZhjj+uu0lqR287BDY+6SZBmLRPkTjyyQO6GOldX6BerMHgLcu9z6TIHlTtE0tU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GvZ1JmSf; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44M8ETqG030497;
-	Wed, 22 May 2024 19:07:54 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44MAGZHn010057;
+	Wed, 22 May 2024 19:22:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=YIYmoPrZ5Yq2XAWbTqHD9ZUhZHbestVjqup+laAMYF8=; b=Go
-	gqL4+5f6la+lno/AlZCyGbbJIlJhNuTRI+zyMD04pbqQDosDNtq6wPBZyJmJzXrI
-	Jw6zRJopsLWHOlRDGk5mpXXGpDnxHydm2lbjTvNaqfHj3USeQuLAcQNBaunBDG8R
-	Z+O+Pygbp74QcG7vDByeCwi1ZFteHAkZLH79VyaV804c03J6CFfOzXxQnatBClnb
-	CW26UjzMOP+xt5Vw5P38yykSd1Rheytq5wCfmtz3Y+dYCRUru69DfLRVO6OpZQGF
-	Gy4J36QqxHyN9AE3eG6dR0kZEs9Ow9QEwUSzy9mGE0Wab/tIzgwLodo1kjm3zZWq
-	2IJ8KMQNV160PD71MRfQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6pq5htte-1
+	qcppdkim1; bh=7Y/RN1PFOa+6BTPyCnx/ocDE9nnxvEeXbmZ9MEkrzO4=; b=Gv
+	Z1JmSfS1vvNVPQTnLGqdl+x9gxWcNFS4ntVe5Eq94REbmTW454DnozK9aOC3zrgC
+	88C413A/v/akbbc2Wo9pS+4jteqrVNTEfZbtmOMRLty7NPxRMI2K0M2yYrbYLRGE
+	qobUyNBFTHj+I9b+S/LrkWX9vxZX+H91rsJrB3/DjkANzM9iqgJeAD/cvtndKmU2
+	9DLHOlmOz7OPuzgzM0dfRv7wTiO/EmaI3865ZeOwliasLDLmzqg/j9bWe9MfmYua
+	2+HU8WMIhgKXBuGqmxn1rDhyYVSj5JvWbEM6X/zBOqYkVv41s+jmp3MbVmecBi8E
+	s49B9m5b37OUOxrWufzg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n4ghuht-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 May 2024 19:07:54 +0000 (GMT)
+	Wed, 22 May 2024 19:22:01 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44MJ7rdB030857
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44MJLx7C018637
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 May 2024 19:07:53 GMT
-Received: from [10.110.28.32] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Wed, 22 May 2024 19:21:59 GMT
+Received: from [10.110.17.44] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 22 May
- 2024 12:07:52 -0700
-Message-ID: <6b49466e-5223-6e05-5d2b-a181d9a0d3b7@quicinc.com>
-Date: Wed, 22 May 2024 12:07:52 -0700
+ 2024 12:21:58 -0700
+Message-ID: <a553622c-7576-4662-abac-68abe7ea7918@quicinc.com>
+Date: Wed, 22 May 2024 12:21:57 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5/7] drm/msm/dpu: rework vsync_source handling
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/12] remoteproc: qcom_wcnss: make use of QCOM_FW_HELPER
 Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Loic
+ Poulain <loic.poulain@linaro.org>, Kalle Valo <kvalo@kernel.org>,
+        Mathieu
+ Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>
-References: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
- <20240520-dpu-handle-te-signal-v1-5-f273b42a089c@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240520-dpu-handle-te-signal-v1-5-f273b42a089c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Conor Dooley <conor+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <wcn36xx@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Arnd
+ Bergmann <arnd@arndb.de>
+References: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
+ <20240521-qcom-firmware-name-v1-9-99a6d32b1e5e@linaro.org>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <20240521-qcom-firmware-name-v1-9-99a6d32b1e5e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ltZJ-FQnnPojuSHU7ooIqN0tfowh_rir
-X-Proofpoint-ORIG-GUID: ltZJ-FQnnPojuSHU7ooIqN0tfowh_rir
+X-Proofpoint-GUID: 6Cd_Uw9DlpwQ2Q_X57Sv7uAZhpOsr7NT
+X-Proofpoint-ORIG-GUID: 6Cd_Uw9DlpwQ2Q_X57Sv7uAZhpOsr7NT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-22_10,2024-05-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- suspectscore=0 spamscore=0 clxscore=1015 mlxlogscore=999 mlxscore=0
- bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405220132
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1011 priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0 mlxlogscore=999
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405220134
 
-
-
-On 5/20/2024 5:12 AM, Dmitry Baryshkov wrote:
-> The struct msm_display_info has is_te_using_watchdog_timer field which
-> is neither used anywhere nor is flexible enough to specify different
-> sources. Replace it with the field specifying the vsync source using
-> enum dpu_vsync_source.
+On 5/21/2024 2:45 AM, Dmitry Baryshkov wrote:
+> Make the driver use qcom_fw_helper to autodetect the path to the
+> calibration data file.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 +----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 5 ++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 2 ++
->   3 files changed, 5 insertions(+), 7 deletions(-)
+>  drivers/remoteproc/qcom_wcnss.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+> index 421a3943a90d..45fc578ae30b 100644
+> --- a/drivers/remoteproc/qcom_wcnss.c
+> +++ b/drivers/remoteproc/qcom_wcnss.c
+> @@ -23,6 +23,7 @@
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/remoteproc.h>
+>  #include <linux/soc/qcom/mdt_loader.h>
+> +#include <linux/soc/qcom/fw_helper.h>
+>  #include <linux/soc/qcom/smem.h>
+>  #include <linux/soc/qcom/smem_state.h>
+>  
+> @@ -555,8 +556,13 @@ static int wcnss_probe(struct platform_device *pdev)
+>  	if (ret < 0 && ret != -EINVAL)
+>  		return ret;
+>  
+> +	fw_name = qcom_get_board_fw(fw_name);
+> +	if (!fw_name)
+> +		return -ENOMEM;
+> +
+>  	rproc = devm_rproc_alloc(&pdev->dev, pdev->name, &wcnss_ops,
+>  				 fw_name, sizeof(*wcnss));
+> +	kfree(fw_name);
+>  	if (!rproc) {
+>  		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
+>  		return -ENOMEM;
 > 
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
+can you cleanly bisect to this patch? seems it depends upon patch 10.
+should 09 & 10 be swapped, or perhaps squashed?
 
