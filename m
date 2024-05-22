@@ -1,140 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-20178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E350D8CBBA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 09:02:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B34528CBBC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 09:14:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08A3E1C206A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 07:02:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D69CB1C20F6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 07:14:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47D1D2B9C2;
-	Wed, 22 May 2024 07:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34B897BB12;
+	Wed, 22 May 2024 07:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nDDlW6Ws"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nCo5Kpl8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B4D17758;
-	Wed, 22 May 2024 07:02:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD657BB06;
+	Wed, 22 May 2024 07:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716361332; cv=none; b=qX1nRjXUxAmNa9giB52ZGjeS++aCru3/LzIfVeWGTRrKCaZceqL+HwktDttvVydhBKw3RO8P7JBtw0qJnLEwed6tr2TqEUCJYwAUYAnGW6nkRjkHl3+virrR28kc6RsEVNMOlGBz+ViSTJRizk/y54yFkKAuwGPOG9QnIZtWmaw=
+	t=1716362054; cv=none; b=I2878wXc2Eco237WnPt8VpgINa2PuvqxhQeaf3O3QVSw5OrKvD9Jkwd0grcBi3SVkbf9Hr1M0FPkGXVttnCxQZq55Gl8AZMzze+/Fs8VwNSE0EDlZcUqaq7lyrUX6jeoRFnAEk7V+Qx6KXyLnDeAz1vTtuN42TEHCvVESIqyBEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716361332; c=relaxed/simple;
-	bh=1UfZkb4B2JrKG4crbIuSVRNoZKf1gDZK+5FboRIfZ+o=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ldlsxv0hwJkriSqERMLLpBwlHA2bOOoOzzoL9RqGxNdic27js1Gxad11CQFTL1zGos7HvFoHfPjimA3scf6dE1D0HVsctNTDJEGi2PNQi2CX9Nbn1s9AAiuR9pSzrr4x3HfsqH59AqmxJ1FfDVv/AO8Lb58qJJyDzZrERb04QNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nDDlW6Ws; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44LJIwQT028232;
-	Wed, 22 May 2024 07:01:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=qRTPNRgzLNaqp1abE7ty
-	bw26shArfVhyaTLRSm7ms2c=; b=nDDlW6Wstt+A9qTzA04c6OEeiYi8xI0b/JZC
-	2aA1BeYxF0HQEL6gtXeXMjnZBoDfnrOVb/qDBmESu2vLy4d1sC1pa4GGzHnzoo5O
-	VlAU5walmtF2klYgMBOGZA/tVeRGqpzF9O+Xuln7CB0M89QImlAXAWhpxgdx9q8p
-	ApHI5lAG/rYmHAEhhbgaxO5W6apS5O0wJH4/fNFpKM52i3UMWf/5g9doTwFmoIsQ
-	LD8hJxo8Bpl3aGWK2Q3qMk13/mxmBLAX+QwKm8ZlAHZ2zn3UNlLy4R4CLNgz/jkV
-	qyXJvfEDDgxQE15WSG8x/pbjEGv+50s3shxb+xcuCG2t41FVqA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n3tgsgs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 May 2024 07:01:56 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44M71tJB009742
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 May 2024 07:01:55 GMT
-Received: from stor-berry.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 22 May 2024 00:01:54 -0700
-From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-To: <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>, <bvanassche@acm.org>,
-        <avri.altman@wdc.com>, <beanhuo@micron.com>, <adrian.hunter@intel.com>,
-        <martin.petersen@oracle.com>
-CC: <linux-scsi@vger.kernel.org>, "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        "James E.J. Bottomley"
-	<jejb@linux.ibm.com>,
-        "open list:ARM/QUALCOMM SUPPORT"
-	<linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1 2/2] scsi: ufs: qcom: Update the UIC Command Timeout
-Date: Wed, 22 May 2024 00:01:28 -0700
-Message-ID: <8e5593feaac75660ff132d67ee5d9130e628fefb.1716359578.git.quic_nguyenb@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1716359578.git.quic_nguyenb@quicinc.com>
-References: <cover.1716359578.git.quic_nguyenb@quicinc.com>
+	s=arc-20240116; t=1716362054; c=relaxed/simple;
+	bh=TlQ0uuVIHzbHxyVEL3n6tWns0j3sTNIMm88GfvOupfA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cZpojh45O6s96FLqwN7OuwOzQ+mEG4y0ega0JW1xI2DWmWkHB0Qf/EBZU6oqtZ1a9BYga6lrdLKbIxFi2BxHDeFsnSw2v3waNEro7SLyDDWmKYM4B1ufYHq3nndMBKdW5mUtMxTAm6u4ue3U7KH/yFr6TlMmYW+WxG9wR9SLeB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nCo5Kpl8; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a5d67064885so499399266b.1;
+        Wed, 22 May 2024 00:14:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716362051; x=1716966851; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kIdChEw5DvBFSfSpnHNPUpxstFzR4q/9Q7FfD5YW1qs=;
+        b=nCo5Kpl8Fc+kIrTNuH+YNv0p01Cs5iAvWsVM5UBHcDxyRiQD6c2vZSQ9euazVar53D
+         0UbZ+i/Io3L8w7HI9V4R33vAHAfSIWHxQIN7iCbftzHOFSHiJT8uBq78yfAQqdnHJH8R
+         thXSZtEgR90dbd0IS2itPrZuVwcroPsos5Dok2wE8sPsLuPoKUPOgVHOjFcVlW3OBgju
+         GbGQb04YzlRv+x/+D50XMiFw8ugXVBNO3vEVqskhA1g/8J98E2Y395NAZ5E9XCqjQjW8
+         TLrID+/1E6HQ+zQ8a5XFYlTGRbv33ZFYpMd/PLABazj9g+inK5r9xHdcgb9PNVBJSdBX
+         GdqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716362051; x=1716966851;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kIdChEw5DvBFSfSpnHNPUpxstFzR4q/9Q7FfD5YW1qs=;
+        b=qsdRSrn1TiyFQ5799tCDezgE6oivQE0Gm5U/1iBvUxsdTzI9A8MRfjjeRzltH/3A1p
+         fMpl/a/oJmj+LnxDWR4LDBhksHUqKZkf68XG21pXPV2ycz45NpMKosCf3a/hEpxyJcrI
+         s854H15+uP7EbG66MY+kmgTnr14ZYjtc52hV4OyN4x92Z4bkDWIXFYRF7OxzCMJufrIH
+         Pff1lqvBM+t5r64DxSjj+OCccYlfO/3Ag/jAKux/6WMFTkFgCSP3SjmHjgLYJv4Uzigf
+         ac0zpQJGv5+LXBqhKX2z2CUQgD4gn++W6G+SaGpkSYPFDQOlWx8SC/3KxoFZTaiywzn8
+         1N+A==
+X-Forwarded-Encrypted: i=1; AJvYcCVVAzKLes1RrNTgLwuAr+wlBYas31OwUEifMxjOyfQ+AimK9rdPh3xUZAU54mqWZMnrEaMN9uQQzbRwT5f/1fohSaMjsL1vZjyukNUJAOfhlCKhsNeypzYwJyoKXQBmWtyJIHAdWLSWxH39yel+Av4RPvhj0nfBSjHJWchbfUCXI27ElnzGot1eLwgNSbQWNdtZDZ/di+01eXmxf+wzmfEhg7Zi
+X-Gm-Message-State: AOJu0YwjA9FEvCuoaAFcJpiwBo/DqjVHAzc9v5QKbW2oH66WSEuMQPY/
+	1g3GWeNisDPG+So/Hm5eUgOb1KV9oFJJ3J1uk47tUGYYMHDlAmGowhhRhL/xYD6ZpbMZisq3pzB
+	BeIAmA5yj7i0p51ahqpPg+XNlTc8=
+X-Google-Smtp-Source: AGHT+IFT21FczkEAvOPstRxTfY9A4JXSOIuGuffflPE6NOhSwYFu+h1M0zhqA2RK5KD36M+OtRmfX/EDdu2IzgO9xXk=
+X-Received: by 2002:a17:906:31c6:b0:a5a:7d28:54aa with SMTP id
+ a640c23a62f3a-a62280d6175mr117645766b.23.1716362050534; Wed, 22 May 2024
+ 00:14:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VVfVq3LnP2y92wbQrY89XTQZH3k5garw
-X-Proofpoint-ORIG-GUID: VVfVq3LnP2y92wbQrY89XTQZH3k5garw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-22_03,2024-05-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 spamscore=0 impostorscore=0 clxscore=1011
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405220050
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+ <20240506150830.23709-12-johan+linaro@kernel.org> <ZjktIrsZS-T7cm-A@surfacebook.localdomain>
+ <ZjyafGz_1pY4J9C7@hovoldconsulting.com> <CAHp75VfP2AB45mn6gB3suCAO9iT3bOWZ=7m9U7E087Lac0P3gg@mail.gmail.com>
+ <Zk2VX5JRzmePxG4N@hovoldconsulting.com>
+In-Reply-To: <Zk2VX5JRzmePxG4N@hovoldconsulting.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Wed, 22 May 2024 10:13:33 +0300
+Message-ID: <CAHp75Vcs3DvBK3P058gU6L-24Q9PTrPg_hLujxaUGHNB=JCW0A@mail.gmail.com>
+Subject: Re: [PATCH 11/13] mfd: pm8008: rework driver
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>, 
+	Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
+	Satya Priya <quic_c_skakit@quicinc.com>, Stephen Boyd <swboyd@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Change the UIC command timeout to 2 seconds.
-This extra time is to allow the uart occasionally print long
-debug messages and logging from different modules during
-product development. With the default hardcoded 500ms timeout,
-the uart printing with interrupt disabled may cause the UIC command
-interrupt get starved, resulting in a UIC command timeout and
-eventually a watchdog timeout.
-When a product development completes, the vendors may
-select a different UIC command timeout as desired.
+On Wed, May 22, 2024 at 9:49=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
+> On Fri, May 10, 2024 at 04:15:43PM +0300, Andy Shevchenko wrote:
+> > On Thu, May 9, 2024 at 12:42=E2=80=AFPM Johan Hovold <johan@kernel.org>=
+ wrote:
+> > > On Mon, May 06, 2024 at 10:18:58PM +0300, Andy Shevchenko wrote:
+> > > > Mon, May 06, 2024 at 05:08:28PM +0200, Johan Hovold kirjoitti:
 
-Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 3 +++
- 1 file changed, 3 insertions(+)
+...
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 79f8cb3..4649e0f 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -49,6 +49,7 @@ enum {
- 
- #define QCOM_UFS_MAX_GEAR 4
- #define QCOM_UFS_MAX_LANE 2
-+#define QCOM_UIC_CMD_TIMEOUT_MS 2000
- 
- enum {
- 	MODE_MIN,
-@@ -1111,6 +1112,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
- 		dev_warn(dev, "%s: failed to configure the testbus %d\n",
- 				__func__, err);
- 
-+	hba->uic_cmd_timeout = QCOM_UIC_CMD_TIMEOUT_MS;
-+
- 	return 0;
- 
- out_variant_clear:
--- 
-2.7.4
+> > > > > +static void devm_irq_domain_fwnode_release(void *res)
+> > > > > +{
+> > > >
+> > > > > +   struct fwnode_handle *fwnode =3D res;
+> > > >
+> > > > Unneeded line, can be
+> > > >
+> > > > static void devm_irq_domain_fwnode_release(void *fwnode)
+> > > >
+> > > > > +   irq_domain_free_fwnode(fwnode);
+> > > > > +}
+> > >
+> > > I think I prefer it this way for clarity and for type safety in the
+> > > unlikely even that the argument to irq_domain_free_fwnode() would eve=
+r
+> > > change.
+> >
+> > If it ever changes, the allocation part most likely would need an
+> > update and since devm_add_action() takes this type of function, I
+> > don't believe the argument would ever change from void * to something
+> > else. With this it just adds an additional burden on the conversion.
+>
+> I was referring to the irq_domain_free_fwnode() prototype.
 
+And I also referred to that one. The release callback, i.e. the type
+of the parameter, is solely defined by a caller of devm_add_action()
+end friends, and in this case it means that if ever the type changes
+(this is your argument why you want to have explicit line for that,
+necessity of which I oppose) the devm_add_action() arguments also has
+to be changed, it can't be done _just_ there, in
+irq_domain_free_fwnode().
+
+> > > > > +   name =3D devm_kasprintf(dev, GFP_KERNEL, "%pOF-internal", dev=
+->of_node);
+> > > >
+> > > > You are using fwnode for IRQ domain and IRQ domain core uses fwnode=
+, why OF here?
+> > > >
+> > > >       name =3D devm_kasprintf(dev, GFP_KERNEL, "%pfw-internal", dev=
+_fwnode(dev));
+> > >
+> > > This driver only support OF so why bother.
+> >
+> > Sure, but it makes a bit of inconsistency.
+>
+> No, I don't consider this an inconsistency. Again, *this* is an OF
+> driver, other subsystems need to deal with ACPI and use fwnode.
+
+OK.
+
+
+--=20
+With Best Regards,
+Andy Shevchenko
 
