@@ -1,133 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-20236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 191B78CC31F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 16:21:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0316F8CC331
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 16:24:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4AC7F1C2239E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 14:21:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC9532862C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 14:24:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA31F140381;
-	Wed, 22 May 2024 14:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 081241411EB;
+	Wed, 22 May 2024 14:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O5yE1Uhf"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Wun3A0k7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FF4142E86;
-	Wed, 22 May 2024 14:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652021DA24;
+	Wed, 22 May 2024 14:24:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716387681; cv=none; b=PmCRJgY+TzS/IH4WgccvuEHI9k1LQJsbQU7ULMbAC1FjA71JdGdMCWAWI0moVfgev34+HqLXtJPiJK0/7EJAtCiJ/MtLWs6Vrp4VBQ9V6gYzoXAsg57+eR6msRY/x6OeaCGzdkNYMdZ10gPpT2l2A/Xs2oMAMK8h/zbMVj0SZ4g=
+	t=1716387886; cv=none; b=FjMBUtUekkkokB8Tm/6eAXJeSzwRhohDEl6XeHjH2/KAobuFfzkAQFsIKSHqadKta4kka25BHCy+u43c0WADqatMFo+NdrJ5MX9SGhHPP7A9rEiYhzis0QTtFnxjJibiMQxqtWSZ3vjc2O8BY7K76fg8UFrUcS8K1nmdbRX3xmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716387681; c=relaxed/simple;
-	bh=lquTU6pX0ULhSMvL+iVpOVq7rbv4rErDdUOxr4AwOyA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KRkQYtbcSKsTMG43pmastE/tJaodz+7u4DAfQDLwoOEvKU3p7YuGIRn4tXSls3izEMY/sb4ep4vmydnG52V9aj+eCD+S2u9GsA56jttlFSBVQ1LeIkTFJ08wNRHzMju5/Lno01mkkFx6hLT5TXbpUY2Dri0lRYug8WgEq8qZE/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O5yE1Uhf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E66C2BBFC;
-	Wed, 22 May 2024 14:21:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716387680;
-	bh=lquTU6pX0ULhSMvL+iVpOVq7rbv4rErDdUOxr4AwOyA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=O5yE1Uhfepn+5cl0PWB3BFdQhrnD1Gh3IDOE4I7MJi8bH5gUjckjPgZSOHCxv2N49
-	 vTp8vtQm9t42ZXZWu5reLOZarpkUDi58vh2XEKzYDouYPXYa8Zp1nzyxE5NfefOeYP
-	 VOJZoa7Qb/thmOEwrDz1XJDM81rCgviYSLplGAzFIfyGK2iQ20c/XQGBchguunI51o
-	 L/4VrhKqgbRStfdT2/vmXxyyISdbmuDDviauBIkthvxu1gNrFpAqoutKaXLvNSeg1t
-	 RWC2qKm+MPVFDTWrhCBjfvkyPLqCBFPW3fWDt571aOlTx2R+81o8yKXI7Ejzmp00zN
-	 0rjCeNKfXn2LA==
-Message-ID: <8519b339-adb2-440e-8a54-077fac39ccfe@kernel.org>
-Date: Wed, 22 May 2024 16:21:12 +0200
+	s=arc-20240116; t=1716387886; c=relaxed/simple;
+	bh=4HdH2WSoEjtzw3/IRy4XnCEk8ND6ji1NG2pzUyyvaoQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t5uVhq8EOb7PC6LCADy/YjHdcEX/tMRir4V32W04fdAfzk6MR3eImNVbWmZTZ7+WByfwV5A1k/VAsYU/nRdZv42Strdc2aTZPqksPnC6OKV2RtFFzrqs8+hZb/yCWA9CMNVd4D6wqSPi/d+44fb4KPiSIuysB0yZfd7QF18JL/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Wun3A0k7; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1716387885; x=1747923885;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=4HdH2WSoEjtzw3/IRy4XnCEk8ND6ji1NG2pzUyyvaoQ=;
+  b=Wun3A0k7wAg2waf9Zqtb72k0BOUZiKtsjrvUNIbIFuNmE120t21S22cM
+   77enfHJ2G5+WsJXFrGgGAmVThbswbiSKMwqu5A6NETZmQfNTaQ4Gm/WpK
+   xNxkkcCygm5oFJ1bg/f35J0MWXAZa6zXccdF2sERk2San0wWSCEz5/0Kl
+   0N8U+6eX2+dYCZOZcHXgaa4J5uTDBe83ZhWX9lVOo5E6MkjODeuWldC00
+   Mf9dhKzDkYNRFhjJyVLQeTC3/gZ9X+8ThrVmBz1gkowz+J7rQa8djFeI8
+   XjSsxd/Emgu8ZJlXBeZxMuqf1v+CAi7fqDKyAABe9dX6ZXrGiuifBKax1
+   Q==;
+X-CSE-ConnectionGUID: TsTEzY00TzKDhWuMvC4HbQ==
+X-CSE-MsgGUID: tXsRRDRiTLeoqHRfwMfqNA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11079"; a="16474019"
+X-IronPort-AV: E=Sophos;i="6.08,181,1712646000"; 
+   d="scan'208";a="16474019"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2024 07:24:45 -0700
+X-CSE-ConnectionGUID: PSqobMfWT6GCbF3w1EYD2Q==
+X-CSE-MsgGUID: JZSFloj4TsyHc69eSFFnvw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,181,1712646000"; 
+   d="scan'208";a="33886280"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2024 07:24:43 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1s9mtU-00000009zWu-3NL2;
+	Wed, 22 May 2024 17:24:40 +0300
+Date: Wed, 22 May 2024 17:24:40 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: =?iso-8859-1?Q?N=EDcolas_F=2E_R=2E_A=2E?= Prado <nfraprado@collabora.com>,
+	Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v1 1/1] spi: Remove unneded check for orig_nents
+Message-ID: <Zk4AKOoymq5OvlkA@smile.fi.intel.com>
+References: <20240507201028.564630-1-andriy.shevchenko@linux.intel.com>
+ <d8930bce-6db6-45f4-8f09-8a00fa48e607@notapiano>
+ <8ae675b5-fcf9-4c9b-b06a-4462f70e1322@linaro.org>
+ <Zk3X7Dgst5kVzJxy@smile.fi.intel.com>
+ <5c32d7fd-4a7f-4d9c-805c-87d4d14f741e@linaro.org>
+ <71e7b6f8-67f2-4c03-b83a-71d7e747ad04@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] dt-bindings: mailbox: qcom-ipcc: Add GPDSP0 and
- GPDSP1 clients
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Jassi Brar <jassisinghbrar@gmail.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Tengfei Fan <quic_tengfan@quicinc.com>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Alex Elder <elder@kernel.org>
-References: <20240522-topic-lemans-iot-remoteproc-v1-0-af9fab7b27f0@linaro.org>
- <20240522-topic-lemans-iot-remoteproc-v1-2-af9fab7b27f0@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240522-topic-lemans-iot-remoteproc-v1-2-af9fab7b27f0@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <71e7b6f8-67f2-4c03-b83a-71d7e747ad04@linaro.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On 22/05/2024 14:08, Bartosz Golaszewski wrote:
-> From: Tengfei Fan <quic_tengfan@quicinc.com>
+On Wed, May 22, 2024 at 03:18:18PM +0200, Neil Armstrong wrote:
+> On 22/05/2024 13:53, Neil Armstrong wrote:
+> > On 22/05/2024 13:33, Andy Shevchenko wrote:
+> > > On Wed, May 22, 2024 at 12:03:33PM +0200, Neil Armstrong wrote:
+> > > > On 15/05/2024 23:09, Nícolas F. R. A. Prado wrote:
+> > > > > On Tue, May 07, 2024 at 11:10:27PM +0300, Andy Shevchenko wrote:
+> > > > > > Both dma_unmap_sgtable() and sg_free_table() in spi_unmap_buf_attrs()
+> > > > > > have checks for orig_nents against 0. No need to duplicate this.
+> > > > > > All the same applies to other DMA mapping API calls.
+> > > > > > 
+> > > > > > Also note, there is no other user in the kernel that does this kind of
+> > > > > > checks.
+> > > > > > 
+> > > > > > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > > > > 
+> > > > > Hi,
+> > > > > 
+> > > > > this commit caused a regression which I reported here:
+> > > > > 
+> > > > > https://lore.kernel.org/all/d3679496-2e4e-4a7c-97ed-f193bd53af1d@notapiano
+> > > > > 
+> > > > > along with some thoughts on the cause and a possible solution, though I'm not
+> > > > > familiar with this code base at all and would really appreciate any feedback you
+> > > > > may have.
+> > > > 
+> > > > I also see the same regression on the SM8550 and SM8650 platforms,
+> > > > please CC linux-arm-msm@vger.kernel.org and me for a potential fix to test on those platforms.
+> > > 
+> > > There is still no answer from IOMMU patch author. Do you have the same trace
+> > > due to IOMMU calls? Anyway, I guess it would be nice to see it.
+> > 
+> > Yes :
+> > [    6.404623] Unable to handle kernel NULL pointer dereference at virtual address 000000000000001c
+> > <snip>
+> > [    6.641597] lr : __dma_sync_sg_for_device+0x3c/0x40
+> > <snip>
+> > [    6.688286] Call trace:
+> > [    6.688287]  iommu_dma_sync_sg_for_device+0x28/0x100
+> > [    6.717582]  __dma_sync_sg_for_device+0x3c/0x40
+> > [    6.717585]  spi_transfer_one_message+0x358/0x680
+> > [    6.732229]  __spi_pump_transfer_message+0x188/0x494
+> > [    6.732232]  __spi_sync+0x2a8/0x3c4
+> > [    6.732234]  spi_sync+0x30/0x54
+> > [    6.732236]  goodix_berlin_spi_write+0xf8/0x164 [goodix_berlin_spi]
+> > [    6.739854]  _regmap_raw_write_impl+0x538/0x674
+> > [    6.750053]  _regmap_raw_write+0xb4/0x144
+> > [    6.750056]  regmap_raw_write+0x7c/0xc0
+> > [    6.750058]  goodix_berlin_power_on+0xb0/0x1b0 [goodix_berlin_core]
+> > [    6.765520]  goodix_berlin_probe+0xc0/0x660 [goodix_berlin_core]
+> > [    6.765522]  goodix_berlin_spi_probe+0x12c/0x14c [goodix_berlin_spi]
+> > [    6.772339]  spi_probe+0x84/0xe4
+> > [    6.772342]  really_probe+0xbc/0x29c
+> > [    6.784313]  __driver_probe_device+0x78/0x12c
+> > [    6.784316]  driver_probe_device+0x3c/0x15c
+> > [    6.784319]  __driver_attach+0x90/0x19c
+> > [    6.784322]  bus_for_each_dev+0x7c/0xdc
+> > [    6.794520]  driver_attach+0x24/0x30
+> > [    6.794523]  bus_add_driver+0xe4/0x208
+> > [    6.794526]  driver_register+0x5c/0x124
+> > [    6.802586]  __spi_register_driver+0xa4/0xe4
+> > [    6.802589]  goodix_berlin_spi_driver_init+0x20/0x1000 [goodix_berlin_spi]
+> > [    6.802591]  do_one_initcall+0x80/0x1c8
+> > [    6.902310]  do_init_module+0x60/0x218
+> > [    6.921988]  load_module+0x1bcc/0x1d8c
+> > [    6.925847]  init_module_from_file+0x88/0xcc
+> > [    6.930238]  __arm64_sys_finit_module+0x1dc/0x2e4
+> > [    6.935074]  invoke_syscall+0x48/0x114
+> > [    6.938944]  el0_svc_common.constprop.0+0xc0/0xe0
+> > [    6.943781]  do_el0_svc+0x1c/0x28
+> > [    6.947195]  el0_svc+0x34/0xd8
+> > [    6.950348]  el0t_64_sync_handler+0x120/0x12c
+> > [    6.954833]  el0t_64_sync+0x190/0x194
+> > [    6.958600] Code: 2a0203f5 2a0303f6 a90363f7 aa0003f7 (b9401c2
+> > 
+> > Reverting  8cc3bad9d9d6 ("spi: Remove unneded check for orig_nents") removes the crash.
+> > 
+> > > 
+> > > Meanwhile, I have three changes I posted in the replies to the initial report,
+> > > can you combine them all and test? This will be a plan B (? or A, depending on
+> > > the culprit).
+> > > 
+> > 
+> > I'll try to apply them and test.
 > 
-> Add GPDSP0 and GPDSP1 clients for SA8775p platform.
-> 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
+> I stacked the 3 changes, and it works:
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thank you!
 
-Best regards,
-Krzysztof
+I will try to develop and submit a fix against IOMMU which I believe is the
+correct place to address this. So, this one will be plan B in case the IOMMU
+folks will refuse the other one.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
 
