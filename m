@@ -1,148 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-20254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61E198CC5E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 19:52:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECEFD8CC632
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 20:18:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04D5CB217E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 17:52:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A063B1F21807
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 18:18:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACD451420C4;
-	Wed, 22 May 2024 17:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06D8F57C8E;
+	Wed, 22 May 2024 18:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q1jefk0y"
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="iiQULoBj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1759257C8E;
-	Wed, 22 May 2024 17:52:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A8C1BF40;
+	Wed, 22 May 2024 18:18:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716400343; cv=none; b=RI0QJOG6OGIVzzHwH1StBvR2WzEKiV+TjIg/BYZ45elOjS8Aq/7BYHP17t4q9kU6jhDkz7xBBfSRAWD5OyMhgHxkP2h+e53ZTeUXPG0yzULJJxRinjqdh/8ilX9pbactm7CKgxmyg5fI++o2Lq8zTez1/wWkFD70DCj0CadwByE=
+	t=1716401921; cv=none; b=kUgUmylSBFF2MBULpbdJyOuxO4YtfzeNWE4Zbf3ERCteDfqF5oBvj03dA3uV6KiNfQNMJ7Z17OsqtFkYbg9qGRhFSU/NvdK+YsAd9nH106H7nnBcWqyok90oE8P1uyPv0V0KQNfMTlQOChInCdCQN/ArknHS/aMhXzVXWjXpkxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716400343; c=relaxed/simple;
-	bh=GqUR8YikJ6aus54l8QP7m+6LW+eBsJvJWssh9eElXjA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NemlFeY12PFSDdfxYI1AFpH9myTCLnGhBkJZd2mNcfk7SeIiaQSlujE9lnrFl2UY31yxMAuwLrRl31yZ9W8PhIqdPUG+TksaisvcRcLbV6Ih1kXw5VZmG2b74fkQqb58SOCif2N6cNPUR01NkZl2aZjX1KqitzNZz0Nj+Ef2pZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q1jefk0y; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44M8Go04025175;
-	Wed, 22 May 2024 17:52:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=by0d6FIgykBOIQ2rkYvOY
-	1RYbDxocjPFrC4pjQMP+Sk=; b=Q1jefk0y1G31BaP6KSmzXhs+f6jbYI1BT3cM4
-	aWIUZoXSnyO1qRYfpHgFSgjckaKKm6/2SCJyD2ZimZB1EfZsRk7tNbS/P+u6tjiH
-	oiM5P8dgdX6zTTZHl+YAk0XyCZbxKWvzyzEO9vfRQERap8U1iamPfrqtAHdefsfL
-	pBgncK1pSaqbAyq62W8mmToT+MGKjlzhENh2VH1xr2IKoRPcG4PVaX5TNvJa0/TO
-	isq/GszcDGgNxqoJNI56pW0NNjuguMj07QueIluhvoGUWV27UhH5sJDsWy4tD51h
-	QdenswZapdu7SJzKm4J4TQ9tIN6hicCIf3nfX+MN7ySKshJAg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n4pa5u1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 May 2024 17:52:00 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44MHpxHl003730
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 May 2024 17:51:59 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 22 May 2024 10:51:58 -0700
-Date: Wed, 22 May 2024 10:51:57 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Chris Lew <quic_clew@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Peter Zijlstra
-	<peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
-        Will Deacon
-	<will@kernel.org>, Waiman Long <longman@redhat.com>,
-        Boqun Feng
-	<boqun.feng@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: sm8650: Add hwlock to remoteproc
-Message-ID: <Zk4wvTjld4QVBMDY@hu-bjorande-lv.qualcomm.com>
-References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
- <20240516-hwspinlock-bust-v1-7-47a90a859238@quicinc.com>
- <c2905eaf-7194-4f2b-98c8-52b1907e398a@kernel.org>
+	s=arc-20240116; t=1716401921; c=relaxed/simple;
+	bh=xNPRpsPuVeB1807eoXlBMa6zFy2qwMHE8uh3XCXeDu4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YHEwLGKYUjMXIC7Qz4FNserxj4Vlor4vFcpFLToZSrxkplJHfGYyQoqtMjHYVdZTU5tVGW9ZKlc98vk3fnzgpxfJJzPc8BhfTmB1lTd6cFAZNOHvxGArt8SYotR4VhwPKrylfMeXBmGz9sB0er53hBDvYLFVk5AtuWyhuXsxDwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=iiQULoBj; arc=none smtp.client-ip=199.89.1.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 008.lax.mailroute.net (Postfix) with ESMTP id 4Vl01C66Nrz6Cnk98;
+	Wed, 22 May 2024 18:18:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1716401913; x=1718993914; bh=thEXQsTRDJ1Qfc6861WlvJl6
+	NVBIcBsBOUsg8V8uzR4=; b=iiQULoBjFntVjvuasDAhoo7SNCRPRlQ/P5j9eK1T
+	AM5tIzi+th0fMmoFxD/JSJr3KTzUT8S8x5PbX1d8py2vXpne9CPFxmDcz5e7cYUG
+	jxdGRE2/f6xUUedQFrwIQuHRwANlURNCIfmUJ39rDwOZ2Oc/B30mDEnnrTvbez+l
+	9jYiamz5IAGINaM+0xt5gABDMt4V6m5Lzzd9k624vGFgREPngf4CYVag5MQzjNZQ
+	wxcjMhUEdZNVt0W2m908Mq6UnktEDag+KecWGSc0CRIDJKh0fCSVLozBuEJxu/gZ
+	qztAd1VE3s2kniimTeJNZNEKn/5jZrnAfPwdDjP7161MFA==
+X-Virus-Scanned: by MailRoute
+Received: from 008.lax.mailroute.net ([127.0.0.1])
+ by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id gDLaIP6kWfP7; Wed, 22 May 2024 18:18:33 +0000 (UTC)
+Received: from [100.96.154.26] (unknown [104.132.0.90])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4Vl0142Ml9z6Cnk8s;
+	Wed, 22 May 2024 18:18:31 +0000 (UTC)
+Message-ID: <2ec8a7a6-c2cd-4861-9a43-8a4652e0f116@acm.org>
+Date: Wed, 22 May 2024 11:18:31 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <c2905eaf-7194-4f2b-98c8-52b1907e398a@kernel.org>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: qHvMGm8dNuCWFSgpif71DXrFX8vzWdMh
-X-Proofpoint-GUID: qHvMGm8dNuCWFSgpif71DXrFX8vzWdMh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-22_10,2024-05-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0 spamscore=0
- impostorscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
- mlxlogscore=794 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405220123
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/2] scsi: ufs: qcom: Update the UIC Command Timeout
+To: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>, quic_cang@quicinc.com,
+ quic_nitirawa@quicinc.com, avri.altman@wdc.com, beanhuo@micron.com,
+ adrian.hunter@intel.com, martin.petersen@oracle.com
+Cc: linux-scsi@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ "James E.J. Bottomley" <jejb@linux.ibm.com>,
+ "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>
+References: <cover.1716359578.git.quic_nguyenb@quicinc.com>
+ <8e5593feaac75660ff132d67ee5d9130e628fefb.1716359578.git.quic_nguyenb@quicinc.com>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <8e5593feaac75660ff132d67ee5d9130e628fefb.1716359578.git.quic_nguyenb@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 22, 2024 at 09:27:29AM +0200, Krzysztof Kozlowski wrote:
-> On 17/05/2024 00:58, Chris Lew wrote:
-> > Add the hwlock property to remoteproc. This enables the remoteproc to
-> > try and bust the smem hwspinlock if the remoteproc has crashed while
-> > holding the hwspinlock.
-> > 
-> > Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 +++
-> >  1 file changed, 3 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> > index 62a6e77730bc..a65a1679f003 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> > @@ -2878,6 +2878,7 @@ remoteproc_mpss: remoteproc@4080000 {
-> >  
-> >  			qcom,smem-states = <&smp2p_modem_out 0>;
-> >  			qcom,smem-state-names = "stop";
-> > +			hwlocks = <&tcsr_mutex 3>;
+On 5/22/24 00:01, Bao D. Nguyen wrote:
+> Change the UIC command timeout to 2 seconds.
+> This extra time is to allow the uart occasionally print long
+> debug messages and logging from different modules during
+> product development. With the default hardcoded 500ms timeout,
+> the uart printing with interrupt disabled may cause the UIC command
+> interrupt get starved, resulting in a UIC command timeout and
+> eventually a watchdog timeout.
+> When a product development completes, the vendors may
+> select a different UIC command timeout as desired.
 > 
-> lock #3 is used by smem, so this proves you are taking someone else's
-> lock.
+> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+> ---
+>   drivers/ufs/host/ufs-qcom.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 79f8cb3..4649e0f 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -49,6 +49,7 @@ enum {
+>   
+>   #define QCOM_UFS_MAX_GEAR 4
+>   #define QCOM_UFS_MAX_LANE 2
+> +#define QCOM_UIC_CMD_TIMEOUT_MS 2000
+>   
+>   enum {
+>   	MODE_MIN,
+> @@ -1111,6 +1112,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>   		dev_warn(dev, "%s: failed to configure the testbus %d\n",
+>   				__func__, err);
+>   
+> +	hba->uic_cmd_timeout = QCOM_UIC_CMD_TIMEOUT_MS;
+> +
+>   	return 0;
+>   
+>   out_variant_clear:
 
-The lock is a shared resource, it's not "some else's lock".
+Given the description of patch 1, the addressed issue is not specific to
+a single vendor. Is that correct?
 
-Regards,
-Bjorn
+Since the described issue is only encountered during development, why to
+modify the UIC command timeout unconditionally?
 
-> I commented on this in the binding, but let's be specific:
-> 
-> NAK, please carry:
-> 
-> Nacked-by: Krzysztof Kozlowski <krzk@kernel.org>
-> 
-> Best regards,
-> Krzysztof
-> 
+Thanks,
+
+Bart.
 
