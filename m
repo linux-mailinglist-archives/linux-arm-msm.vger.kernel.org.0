@@ -1,164 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-20241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2D808CC423
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 17:32:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CC028CC45F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 17:47:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6EA012843D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 15:32:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2941D1F224D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 15:47:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0477654656;
-	Wed, 22 May 2024 15:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 296E425753;
+	Wed, 22 May 2024 15:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LbigJODn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F4CHmBRK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492C0770F1;
-	Wed, 22 May 2024 15:32:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6380E28EA;
+	Wed, 22 May 2024 15:47:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716391945; cv=none; b=DQckZd6YQplZXjyHm6UHc7p5f2wu+kcsXBNP2cDBiHJqjQItllwV1K3EoW5ifXk/v0LVMI5X6LARFOiRQkqZ6grBW08spjrne2H4MS/yUSSO45orCK5aQFcWctvPucXfQ5zMjPgAOCiy6IG+TvqoH2omkYP4MHtBpnYXxijqZqU=
+	t=1716392866; cv=none; b=aaQrglhmvLovKDI3c+cJSivaVKBgiAwZ9TMq7GFVuWmRnO/xu2gSn8KAGIcwjBBWGuoxnh6Hg9AmfHDL9XSkwtgunjEsRMa3xSyW0w2TPlVvZxZ2dB7D5m+C6t4nkQrTQ2boOcmtBIrXPoRg5gzhfm/XavNB7FwsSAzZgYLEkzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716391945; c=relaxed/simple;
-	bh=pk7gL9KFnLHCIcDNZkl0FBoe2u3ggrO0NEiXwJ6x+Lk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KxXjx+ugMgzecvCH6ydef2IyEA3pQMciWC3Xl3OfoFQjiRk2U0A/+E0bDvSTcSLSbBIpDbuPN6XPYPXEQd2CAgmuHR9XOFp8UeoZe5tEQvGLdg7ki0MD0Tk3r0/bOBWeoTav83GVjxEV/fVXJ/8wYNxezXaW6SZT0KVeLN0h2L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LbigJODn; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-572b37afd73so11673335a12.2;
-        Wed, 22 May 2024 08:32:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716391942; x=1716996742; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l3Viv2LgBYblTqqidUO+On3iQhxj1js86l0CizZE8cQ=;
-        b=LbigJODn1m80IK0Dm4FuIlvdDZ/2PjmFBS/vF7Q5UfsBP28clOZ5V2O68D4RwMOtus
-         CIi0/Xs3VNIewFDAWH2CbgnQApMhIFSvyNZylncN/or8UnM9yItrD3mMfditJ8xRdmnL
-         me8qBN0ArOQl/gI/wY4GghhyNKs5+XyO+ZR7aVzrfq2Up0v9b1W2LB5liUCbJpvYBDmF
-         lVD/IHHzR2c/rHGKmavDMTBKlNJGOB1MMbvLoXr2t6fm34qzt7+jVOjmC68O4JZHTDvE
-         Mk7HXMd2vA12+P22IjQL1ttCPiDi/NLVZNK8iZdfNOKFbmlTeIuWZTDprMglfyerXpcX
-         pTzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716391942; x=1716996742;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=l3Viv2LgBYblTqqidUO+On3iQhxj1js86l0CizZE8cQ=;
-        b=ZsTq+l6DZoK401QCTqWa79EnVgPXES1rwQvITYW+zfRZ33qqre7fUNGMNO7Nqb0gtX
-         /JH4PmYziI5FsTSwsyk17x2vtU/+pPiIMTocrRRwdEoMGCOrLfPZV2LCZBg3HmAkgZig
-         uI1ITvxJblUerTv2u+XZWN/ktqFJrurrzDmQoy8lxIfuvO3dDQtqvE//aYT7nttoDfuS
-         Kz6VJXln1uc9XI7lUklmkP7fnpv0R2scrS2Zzu2RuVbpsgIulQezUAdZio0hNO0kS7et
-         6pamZTVMtczqbz9wl29gmK217LaLElmf/MnIx/woA/rIX9A7igGXWgY/5tmjAfgxRVmE
-         Bi+A==
-X-Forwarded-Encrypted: i=1; AJvYcCUPWvq/BP0oKYnyI3GAlFJjaNq7TMAgxruu4kUGiOzoOCU5XAA5n2z/EN6vxk7MkJzrmjJbw88eQaBrTpSsGIsHkP2mioWRl+eIi4CkE6vms4Cqqzt3m54qy0HvEFPLI2ejrKmWkse97lk0Gg==
-X-Gm-Message-State: AOJu0Yw0H9CZMC08AQ3oxMxcv3DHA6DbHQ83I20yVmg2kO5xoPPz05e7
-	y8rkeNlWy2TFbn0i9HMeZW6TnIG/f7mdhTFJve75ELlfzVvAdtDRcSD0ntee1fBULA4pvjR8SXk
-	HGYmW2PuCfnI4CnUXnU7OvcfVhYk=
-X-Google-Smtp-Source: AGHT+IH5HcME7lGOWDOdDwP9jdihZAipJCFAzwf/J2QQDekZihZ5LC0rYZLOM07LyJYn+gzVqndQwHXb7J+X2KnN/mU=
-X-Received: by 2002:a50:9349:0:b0:571:fc6b:966c with SMTP id
- 4fb4d7f45d1cf-57832a2678dmr1401490a12.13.1716391942380; Wed, 22 May 2024
- 08:32:22 -0700 (PDT)
+	s=arc-20240116; t=1716392866; c=relaxed/simple;
+	bh=Z4b6yAOm419MX7wPDVaKyHdQeVieRDgxocrRUfc/tls=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kkDFTlzoXl6J/IYT8DOCGSDU1nq9WeO90S8o9PRUoHy/AVmJ+hbWoa4FmyEzd2FCuhfAPZHMvz298/av0JPO3DT7Cski8TKKrUr3xB7kSo3uIr2zJax2Qxzmb6C2KoyUlOUBNN9pbhF9iXqMReJ9bx0D34dheCp5hgHxZu96JEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=F4CHmBRK; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44MDXFES009063;
+	Wed, 22 May 2024 15:47:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=f9u+nCP
+	C+UHzz1WIorUWxk8YUqmznhU63Uts/ePUqj4=; b=F4CHmBRKbYqf17etxOLagm4
+	iUsLc10bE3VB5M1NUgCD7Iz9P6SWuE7NCglcWKY3h+ReoB+uj2FvA6hIYjKY/bK7
+	FzfSYRvS2S4rC31qaNSNwjRsvIhEPI16Oo6i251LonMgXKAv5u4v+/fLXgNp7iI2
+	JY3zJfzmNWWhtNWpKKKgW7dZ+TNpDUpab/xj9mDL0vHMWjmtq5RBClP2TNNeyoqm
+	0/n8s1Yj/hyQKNW0ugt/o/M3cnRdIAGgqCSovkZqtc+2/3Mqu+IJkGizw8N3/JQX
+	l7GOxFod1FXm8wA87P3xXrvB39iPSjeR3MLX/ugLf+DhkYHjV1CKYMsxZBhrOMw=
+	=
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6pqc9jm8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 May 2024 15:47:32 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44MFlUFn010548
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 May 2024 15:47:30 GMT
+Received: from grosikop.eu.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 22 May 2024 08:47:27 -0700
+From: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
+        <hverkuil-cisco@xs4all.nl>, <quic_hariramp@quicinc.com>
+Subject: [PATCH v4 0/8] Move camss version related defs in to resources
+Date: Wed, 22 May 2024 18:46:51 +0300
+Message-ID: <20240522154659.510-1-quic_grosikop@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240407072330.229076-1-pvkumar5749404@gmail.com>
- <Zkzz7PZUnU/xP/O2@hu-bjorande-lv.qualcomm.com> <CAH8oh8UY9FkHy=RyMU2AOZr+1x_KyH4m166kVmQd6peRNvFVTw@mail.gmail.com>
- <Zkz5WtB0pBLqlc+3@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <Zkz5WtB0pBLqlc+3@hu-bjorande-lv.qualcomm.com>
-From: prabhav kumar <pvkumar5749404@gmail.com>
-Date: Wed, 22 May 2024 21:02:09 +0530
-Message-ID: <CAH8oh8VL8Tn_w_pDRzW9UzwS27RF_Zq3OFa_aNqPPyuH8z=5Eg@mail.gmail.com>
-Subject: Re: [PATCH next] drivers: soc: qcom: Auto cleanup using __free(device_node)
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	julia.lawall@inria.fr, javier.carrasco@wolfvision.net, 
-	skhan@linuxfoundation.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: McuxGJK1IvhHIB9GhJxPAIBF1XoesGTT
+X-Proofpoint-GUID: McuxGJK1IvhHIB9GhJxPAIBF1XoesGTT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-22_08,2024-05-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ spamscore=0 clxscore=1011 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 mlxlogscore=999 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405220107
 
-On Wed, May 22, 2024 at 1:13=E2=80=AFAM Bjorn Andersson
-<quic_bjorande@quicinc.com> wrote:
->
-> On Wed, May 22, 2024 at 01:01:22AM +0530, prabhav kumar wrote:
-> > On Wed, May 22, 2024 at 12:50=E2=80=AFAM Bjorn Andersson
-> > <quic_bjorande@quicinc.com> wrote:
-> > >
-> > > On Sun, Apr 07, 2024 at 12:53:30PM +0530, Prabhav Kumar Vaish wrote:
-> > > > Use automated cleanup to replace of_node_put() in qcom_smem_resolve=
-_mem().
-> > > >
-> > >
-> > > I don't find this easier to read or maintain.
-> > Should I change it , explaining the change ??
-> > >
-> > > Also, your subject prefix does not match other changes to this driver=
-.
-> > The patch is to add a __free function attribute to np pointer
-> > initialization ensuring
-> > the pointers are freed as soon as they go out of scope, thus removing
-> > the work to
-> > manually free them using of_node_put.
->
-> Yes, that is what the __free() attribute does, but I don't find it
-> easier to read and unless I'm missing something you're not fixing an
-> actual issue here?
->
-There is not any issue here, the patch sent is the cleanup of unnecessary
-of_node_put() function call.
+The different resources required for different camss soc versions are
+split in to two groups:
 
-Thanks,
-Prabhav
+1. Camss device related. In this group are all resources described
+in the device tree, clocks, regulators etc.
 
-> Regards,
-> Bjorn
->
-> > >
-> > > Regards,
-> > > Bjorn
-> > >
-> > > > Signed-off-by: Prabhav Kumar Vaish <pvkumar5749404@gmail.com>
-> > > > ---
-> > > > drivers/soc/qcom/smem.c | 4 +---
-> > > >  1 file changed, 1 insertion(+), 3 deletions(-)
-> > > >
-> > > > diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-> > > > index 7191fa0c087f..ad1cf8dcc6ec 100644
-> > > > --- a/drivers/soc/qcom/smem.c
-> > > > +++ b/drivers/soc/qcom/smem.c
-> > > > @@ -1032,18 +1032,16 @@ static int qcom_smem_resolve_mem(struct qco=
-m_smem *smem, const char *name,
-> > > >                                struct smem_region *region)
-> > > >  {
-> > > >       struct device *dev =3D smem->dev;
-> > > > -     struct device_node *np;
-> > > >       struct resource r;
-> > > >       int ret;
-> > > > +     struct device_node *np __free(device_node) =3D of_parse_phand=
-le(dev->of_node, name, 0);
-> > > >
-> > > > -     np =3D of_parse_phandle(dev->of_node, name, 0);
-> > > >       if (!np) {
-> > > >               dev_err(dev, "No %s specified\n", name);
-> > > >               return -EINVAL;
-> > > >       }
-> > > >
-> > > >       ret =3D of_address_to_resource(np, 0, &r);
-> > > > -     of_node_put(np);
-> > > >       if (ret)
-> > > >               return ret;
-> > > >
-> > > > --
-> > > > 2.34.1
-> > > >
+2. Sub-device specific resources. In the initialization
+of the each sub-device, the version of camss is passed.
+Based on this version the sub-device adds: hw layer support,
+per pad formats, number of dma's etc.
+
+The code for "1" group lives in camss.c. However the "2" group
+is spread across all sub-device implementations including video device.
+
+This kind of separation is not very convenient when adding new camss soc
+version. The reason is that you need to add support in all sub-device
+implementations.
+
+There were some improvements in this direction where some of the
+hw version related definitions were moved in to the "1". One
+example is attaching of the hw operations.
+
+This series aim to improve the things more and add additional definitions
+in to the "1".
+
+What is included:
+
+- Remove all format definitions from camss video. The will be passed
+  by the parent sub-device
+
+- Make camss generic format definition mapping, containing mbus to
+  v4l2 mapping, mbus bpp and other required fields used by the
+  sub-device and video node.
+
+- Add per sub-device type union in the resources, different
+  sub-devices are using different resources, as an example: is_lite flag.
+
+- Move camss link operation in to the resources. Currently one
+  function supports different topologies depending of the number
+  of devices. As hw version support increases this is not good
+  way of supporting different topologies.
+
+- Add parent device ops in to the resources. This resolves
+  inter-dependencies of vfe and csid. Csid requests the clocks
+  regulators etc from parent device instead calling directly vfe
+  functions.
+
+- Some cleanups in csid code for split the configuration of
+  RX and testgen and RDI.
+
+Changes in V4:
+- Updated first patch with once posted by Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+  for adding missing csiphy types in 8280xp resources.
+- Incorporate only cosmetic changes pointed by Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+  as agreed.
+- Add Reviewed-by and Tested-by tags form Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+Changes in V3:
+- Incorporate missing changes in resources reported and fixed by
+  Bryan O'Donoghue <bryan.odonoghue@linaro.org> taken from the branch:
+  https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/sc8280xp-6.9-rc1-camss-resource-change-verification?ref_type=heads
+- Added missing signed-off to the changes submitted by me.
+
+Changes in V2:
+- Rebased on top of sc8280xp v6.
+- The change "Designate lite subdevices in resources" was dropped,
+  it was already merged in previous series.
+
+Atanas Filipov (1):
+  media: qcom: camss: Decompose register and link operations
+
+Milen Mitkov (2):
+  media: qcom: camss: Split testgen, RDI and RX for CSID 170
+  media: qcom: camss: Decouple VFE from CSID
+
+Radoslav Tsvetkov (5):
+  media: qcom: camss: Add per sub-device type resources
+  media: qcom: camss: Attach formats to VFE resources
+  media: qcom: camss: Attach formats to CSID resources
+  media: qcom: camss: Attach formats to CSIPHY resources
+  media: qcom: camss: Move format related functions
+
+ drivers/media/platform/qcom/camss/Makefile    |   1 +
+ .../platform/qcom/camss/camss-csid-4-1.c      | 132 +---
+ .../platform/qcom/camss/camss-csid-4-7.c      | 160 +----
+ .../platform/qcom/camss/camss-csid-gen2.c     | 410 ++++-------
+ .../media/platform/qcom/camss/camss-csid.c    | 512 ++++++++++++-
+ .../media/platform/qcom/camss/camss-csid.h    |  32 +-
+ .../media/platform/qcom/camss/camss-csiphy.c  |  74 +-
+ .../media/platform/qcom/camss/camss-csiphy.h  |  23 +-
+ .../media/platform/qcom/camss/camss-format.c  |  91 +++
+ .../media/platform/qcom/camss/camss-format.h  |  62 ++
+ .../media/platform/qcom/camss/camss-vfe-17x.c |  10 +-
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   4 +-
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |   6 +-
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |   6 +-
+ .../platform/qcom/camss/camss-vfe-gen1.c      |   8 +-
+ drivers/media/platform/qcom/camss/camss-vfe.c | 483 ++++++++-----
+ drivers/media/platform/qcom/camss/camss-vfe.h |  22 +-
+ .../media/platform/qcom/camss/camss-video.c   | 294 +-------
+ .../media/platform/qcom/camss/camss-video.h   |   4 +-
+ drivers/media/platform/qcom/camss/camss.c     | 678 +++++++++++++-----
+ drivers/media/platform/qcom/camss/camss.h     |  20 +-
+ 21 files changed, 1696 insertions(+), 1336 deletions(-)
+ create mode 100644 drivers/media/platform/qcom/camss/camss-format.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-format.h
+
+-- 
+2.17.1
+
 
