@@ -1,77 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-20232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E50338CC1F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 15:18:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A65048CC202
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 15:22:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AA6E1F24B09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 13:18:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1FF1C1F210FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 13:22:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7B90823CB;
-	Wed, 22 May 2024 13:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD02D13DDB8;
+	Wed, 22 May 2024 13:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uz91kDpC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fagkg2fP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593E413FD8B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 13:18:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D0182480
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 13:22:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716383903; cv=none; b=Vm2KIVDvE6adCH36CRod6R7AtK/8nz4pUJI41Q1GkufOZPq9RjbK71XKeqCff0aAeTlrrQ2EW4ZNgF0G5IdFOQ7ErM6TpVNvj1dder7GTJ+OXYkZqEpFpIt6O8LIbdS1NFFRp1ZYeg4dEHjeutIFG6XW4mrjN3vBqM99LNV9GLo=
+	t=1716384141; cv=none; b=OfgWi1+H1sRW+U6gS8dzUtWd04HZksfHBdky+75orbvwPzq5mSa0T7Tx+bHWUpjgxiMrWrpRySMARFLPLRaLKb9HyFeNFcZINPiumULZAavCBWl8mGBgD6QSQyDRxpvM+tyaLYyxwkQMuvmm17TEyyxXKFept4EKFlA8BZm3m+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716383903; c=relaxed/simple;
-	bh=jEwM0kOo09rp2TUsgk4DTGHqwE3eLNGg1VYjTBvYx9k=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LIEfdVX6G7Z2uUSMRUWSzsLpBaa2wNXXGNKnhthbcYKPAHj8xaz1BP3Nobvel15VKLg+MJygT+oc6HQmOFmGm1xayX+2Mgtf0XYSWpiVa1zlRWlF6KhPsOnVEq4GUzndPVnz5XzyzSZMD3TeYkFJutkDITtiL/fjgqVsVzFsjdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uz91kDpC; arc=none smtp.client-ip=209.85.208.47
+	s=arc-20240116; t=1716384141; c=relaxed/simple;
+	bh=dKNZ5CJsAFXaKBWxbAsUexD9QKQL1d8lHCe0m3TQcIw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=TvtiRciKuvTvuoImFnAF+iCDcOBMHp0SsnoVMkzx2+prxN53x8old1wAuV3Gk3B0OxsnXN1WxzvmBNZ9OC08lyJUUmvyjDSL7EnTi57d694wQI8GmxhNtzkd8BwsFpWdBJrSq1nkcgAhrpM+M6yqpqmExbXEljW+SjXP3uZNqV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fagkg2fP; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5755fafa5a7so5323923a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 06:18:21 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-56e37503115so7220215a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 06:22:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716383900; x=1716988700; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716384138; x=1716988938; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:from:subject:reply-to:user-agent
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qqcESmaWM8FJOpyOPS0sprtY1tr2oWGLmcOcBYk/KFo=;
-        b=uz91kDpCUh+/THhMhR1Q9VDeR58HCmaY7pNeT+8qu0htbp1PVEFymWDT8YkMqVmlgx
-         rucT1gxYnQ6pzn1JVayP3rwUy2cpYXLTmn0COQ+iOqUB+g1cjQfNlbnwMneD8ck5ahJ9
-         qYdBbgaeRDX0fyIBQfHUzhX5ge8q/E4ba2a+zQ/YY3pZZ1khYErjB2bm+a59nmeR+Yav
-         ohazTrJ/n1GSNA9V/Ef4aXcgo6vw8D9Aa8oK4omE4Z3DYQeu49cR3pWFOiJ4ASfUpNcb
-         iWKSOqrEkrllMxFfhauPLMRbvLMatZatekUzuds2ZrE41RzztryvV08JAa0rYa+xgyC2
-         sJsw==
+        bh=9bKLL5XIAHEVLvDN5YrC/ZHxoZSNxD9MKEhKk6FUBOU=;
+        b=Fagkg2fPSzzXmrNhjbKmD0GbnOfG6NgD28LPxw9nunpkYkNgxtOhBLzLvIcMf/UcBj
+         cXYyonZ68F1E/zkeTsJa5PO9Kv9uL12Ql1T7BB9A3SK9Wy7lhj+7l9m4UH0AnoKVC7F7
+         wjC3Ds8rhJPhrwawFtxf5Wk58v4Qiq3oOpyYBbQl/68hRKBti0CokqZq7Hy9p0aNJW1e
+         UKX2OAbmn4hdfOPPAEkIkrJ3T7vGXkJBdxGct7Li/MhjpYZ3zVe74Snwar9U40WRV+hz
+         o9vz+jBASjY0/A+iZm1EHrXQTkIjX7I1s3bgOfUNxziyrHcs/CX7hMpHgCseYBw1chT7
+         95nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716383900; x=1716988700;
+        d=1e100.net; s=20230601; t=1716384138; x=1716988938;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:from:subject:reply-to:user-agent
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=qqcESmaWM8FJOpyOPS0sprtY1tr2oWGLmcOcBYk/KFo=;
-        b=M22BSzt17F/vHzMCS0yvjdA6XXsN74K9NkkhHrmb3e/UxqlXIQ0agnFEzaJyBSyXGc
-         20xLOAeRbDVt1orvYIpyoSx13bt1t4PwZVFRbSQ9YIyjmuBl2cNpcXxWC9a+4iMGQXBH
-         OoK7QorGmh6rzZiqKrdLsowALzs+f5UFh5qoesIbZwu8LSB2Xfo8IcUoLT7YPa6MvFbm
-         aI0sXpVxnafJQ/K9elYxNtDBasgL4L47ghBYdXPL3ApQeQYYfV4BwUUGFIqIC5LjQ33X
-         J6c9l/zKyP0QQV2kSCPS3SYGA/t2Bvsu5tnv3oO7cPMMdXFsbkgcMXlGGrzeH8JUx4fW
-         eNkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVtRqn6dJstK99JuvQMqyc2Pxz/7Ka9Z098tTS5r10kXWlRPm0Zhezr9HNAFXbIBCsND0LCL62AMiM4w0tyOmCfVP70tthGk3cGCPBDlg==
-X-Gm-Message-State: AOJu0Yzl/7hnrlVhc3Zx3tkZ2S2/+KppoZzstJj6GN/6mTv0QU7IvPgs
-	zlLPFMRd3FTD/M0f8ekl37CoVZCd1txVNTuRX7x9wOeHY36bQENUtSFk66EfGuTfUxNybOFo6RU
-	4
-X-Google-Smtp-Source: AGHT+IEUk2Li2IEfcrnOb1ftgQowl3n2MBBBZ16yurpy908Ne1i0rXR90Z7ga35SnRf3k14JJ3/mKg==
-X-Received: by 2002:a17:906:259a:b0:a59:a0b6:638 with SMTP id a640c23a62f3a-a622819aea3mr113715266b.61.1716383899523;
-        Wed, 22 May 2024 06:18:19 -0700 (PDT)
+        bh=9bKLL5XIAHEVLvDN5YrC/ZHxoZSNxD9MKEhKk6FUBOU=;
+        b=mHQBsp3XiOP9BfC1b5e/C27XQOGi1qbGMeDsjtEe5q+cfdnieIeRRKzSIGl7EpQrNr
+         yTdPnF3X4HHsfGY4ISqA8S6dHs4nF4w8sCuhIkUx+s7BK8RqaGtQZ2TuVxATaWcko1fR
+         y/vkzsEuncmCeFgZ2lmG5kDpyFxzQZeVfDaNNjlTiA8Hr3+MCmNqqKyFf17Vz++6bto2
+         D45y/MgnOkHxnss2CAJ4/RehenbKc/SjbUwPXxi3j7D0so62WhVhA/bf9JAXbJrWKbYE
+         Ca/uSnHicYjw7TNYO1Y6AcGq9nUXtaXWU8//neKvnnWLzNNV8XqyOn9sWJ9vQjb0pRlw
+         HbKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUD5vswFhdAcFNqXQ8ebAZTCeTa39DfC5Qq079h4I/CY9Dbf9Y+nOnEDyq3oZlJXPXEwo7wF5HVvofbDdkNiWKIdxvAhXsoyxVk+2NhsQ==
+X-Gm-Message-State: AOJu0Yxw8W6MfVYB3fAZoWcf4R8Sd7aGdgCeEeApmdUjQ7L/5UpuHHDp
+	Bz7y+Av2g4OmAo/oozb2CI/O7nikmnwkzJOBBnDlADGjCXzgg3TU8AtBNyAG+vs=
+X-Google-Smtp-Source: AGHT+IEm0saGodh7RpUehh6ch8U1BxsILC9cvXZJ83PFyYVR48QbRteA8MXQzFg1qIXy7mSDgn8IiQ==
+X-Received: by 2002:a17:906:f28e:b0:a59:a857:85ce with SMTP id a640c23a62f3a-a62281c9fa6mr123890766b.52.1716384138369;
+        Wed, 22 May 2024 06:22:18 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:8b9d:52bd:4757:6b10? ([2a01:e0a:982:cbb0:8b9d:52bd:4757:6b10])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a178923fesm1778659866b.64.2024.05.22.06.18.18
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17b01932sm1770472566b.168.2024.05.22.06.22.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 May 2024 06:18:19 -0700 (PDT)
-Message-ID: <71e7b6f8-67f2-4c03-b83a-71d7e747ad04@linaro.org>
-Date: Wed, 22 May 2024 15:18:18 +0200
+        Wed, 22 May 2024 06:22:17 -0700 (PDT)
+Message-ID: <4221943d-b0cf-4b78-992a-b2226589b745@linaro.org>
+Date: Wed, 22 May 2024 15:22:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,18 +78,32 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v1 1/1] spi: Remove unneded check for orig_nents
 From: Neil Armstrong <neil.armstrong@linaro.org>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: =?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= <nfraprado@collabora.com>,
- Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20240507201028.564630-1-andriy.shevchenko@linux.intel.com>
- <d8930bce-6db6-45f4-8f09-8a00fa48e607@notapiano>
- <8ae675b5-fcf9-4c9b-b06a-4462f70e1322@linaro.org>
- <Zk3X7Dgst5kVzJxy@smile.fi.intel.com>
- <5c32d7fd-4a7f-4d9c-805c-87d4d14f741e@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 3/3] drm/panel/lg-sw43408: mark sw43408_backlight_ops
+ as static
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Sumit Semwal <sumit.semwal@linaro.org>,
+ Caleb Connolly <caleb.connolly@linaro.org>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Tvrtko Ursulin
+ <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>, Vinod Koul
+ <vkoul@kernel.org>, Caleb Connolly <caleb@connolly.tech>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ kernel test robot <lkp@intel.com>
+References: <20240522-panel-sw43408-fix-v3-0-6902285adcc0@linaro.org>
+ <20240522-panel-sw43408-fix-v3-3-6902285adcc0@linaro.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -117,155 +130,37 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <5c32d7fd-4a7f-4d9c-805c-87d4d14f741e@linaro.org>
+In-Reply-To: <20240522-panel-sw43408-fix-v3-3-6902285adcc0@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On 22/05/2024 13:53, Neil Armstrong wrote:
-> On 22/05/2024 13:33, Andy Shevchenko wrote:
->> On Wed, May 22, 2024 at 12:03:33PM +0200, Neil Armstrong wrote:
->>> On 15/05/2024 23:09, Nícolas F. R. A. Prado wrote:
->>>> On Tue, May 07, 2024 at 11:10:27PM +0300, Andy Shevchenko wrote:
->>>>> Both dma_unmap_sgtable() and sg_free_table() in spi_unmap_buf_attrs()
->>>>> have checks for orig_nents against 0. No need to duplicate this.
->>>>> All the same applies to other DMA mapping API calls.
->>>>>
->>>>> Also note, there is no other user in the kernel that does this kind of
->>>>> checks.
->>>>>
->>>>> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->>>>
->>>> Hi,
->>>>
->>>> this commit caused a regression which I reported here:
->>>>
->>>> https://lore.kernel.org/all/d3679496-2e4e-4a7c-97ed-f193bd53af1d@notapiano
->>>>
->>>> along with some thoughts on the cause and a possible solution, though I'm not
->>>> familiar with this code base at all and would really appreciate any feedback you
->>>> may have.
->>>
->>> I also see the same regression on the SM8550 and SM8650 platforms,
->>> please CC linux-arm-msm@vger.kernel.org and me for a potential fix to test on those platforms.
->>
->> There is still no answer from IOMMU patch author. Do you have the same trace
->> due to IOMMU calls? Anyway, I guess it would be nice to see it.
+On 22/05/2024 08:25, Dmitry Baryshkov wrote:
+> Fix sparse warning regarding symbol 'sw43408_backlight_ops' not being
+> declared.
 > 
-> Yes :
-> [    6.404623] Unable to handle kernel NULL pointer dereference at virtual address 000000000000001c
-> <snip>
-> [    6.641597] lr : __dma_sync_sg_for_device+0x3c/0x40
-> <snip>
-> [    6.688286] Call trace:
-> [    6.688287]  iommu_dma_sync_sg_for_device+0x28/0x100
-> [    6.717582]  __dma_sync_sg_for_device+0x3c/0x40
-> [    6.717585]  spi_transfer_one_message+0x358/0x680
-> [    6.732229]  __spi_pump_transfer_message+0x188/0x494
-> [    6.732232]  __spi_sync+0x2a8/0x3c4
-> [    6.732234]  spi_sync+0x30/0x54
-> [    6.732236]  goodix_berlin_spi_write+0xf8/0x164 [goodix_berlin_spi]
-> [    6.739854]  _regmap_raw_write_impl+0x538/0x674
-> [    6.750053]  _regmap_raw_write+0xb4/0x144
-> [    6.750056]  regmap_raw_write+0x7c/0xc0
-> [    6.750058]  goodix_berlin_power_on+0xb0/0x1b0 [goodix_berlin_core]
-> [    6.765520]  goodix_berlin_probe+0xc0/0x660 [goodix_berlin_core]
-> [    6.765522]  goodix_berlin_spi_probe+0x12c/0x14c [goodix_berlin_spi]
-> [    6.772339]  spi_probe+0x84/0xe4
-> [    6.772342]  really_probe+0xbc/0x29c
-> [    6.784313]  __driver_probe_device+0x78/0x12c
-> [    6.784316]  driver_probe_device+0x3c/0x15c
-> [    6.784319]  __driver_attach+0x90/0x19c
-> [    6.784322]  bus_for_each_dev+0x7c/0xdc
-> [    6.794520]  driver_attach+0x24/0x30
-> [    6.794523]  bus_add_driver+0xe4/0x208
-> [    6.794526]  driver_register+0x5c/0x124
-> [    6.802586]  __spi_register_driver+0xa4/0xe4
-> [    6.802589]  goodix_berlin_spi_driver_init+0x20/0x1000 [goodix_berlin_spi]
-> [    6.802591]  do_one_initcall+0x80/0x1c8
-> [    6.902310]  do_init_module+0x60/0x218
-> [    6.921988]  load_module+0x1bcc/0x1d8c
-> [    6.925847]  init_module_from_file+0x88/0xcc
-> [    6.930238]  __arm64_sys_finit_module+0x1dc/0x2e4
-> [    6.935074]  invoke_syscall+0x48/0x114
-> [    6.938944]  el0_svc_common.constprop.0+0xc0/0xe0
-> [    6.943781]  do_el0_svc+0x1c/0x28
-> [    6.947195]  el0_svc+0x34/0xd8
-> [    6.950348]  el0t_64_sync_handler+0x120/0x12c
-> [    6.954833]  el0t_64_sync+0x190/0x194
-> [    6.958600] Code: 2a0203f5 2a0303f6 a90363f7 aa0003f7 (b9401c2
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202404200739.hbWZvOhR-lkp@intel.com/
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Fixes: 069a6c0e94f9 ("drm: panel: Add LG sw43408 panel driver")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/panel/panel-lg-sw43408.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Reverting  8cc3bad9d9d6 ("spi: Remove unneded check for orig_nents") removes the crash.
-> 
->>
->> Meanwhile, I have three changes I posted in the replies to the initial report,
->> can you combine them all and test? This will be a plan B (? or A, depending on
->> the culprit).
->>
-> 
-> I'll try to apply them and test.
-
-I stacked the 3 changes, and it works:
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-
-For reference, the changeset looks like:
-============><============================================================================================
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 289feccca376..0851c5e1fd1f 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -1220,6 +1220,11 @@ void spi_unmap_buf(struct spi_controller *ctlr, struct device *dev,
-  	spi_unmap_buf_attrs(ctlr, dev, sgt, dir, 0);
-  }
-
-+/* Dummy SG for unidirect transfers */
-+static struct scatterlist dummy_sg = {
-+	.page_link = SG_END,
-+};
-+
-  static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
-  {
-  	struct device *tx_dev, *rx_dev;
-@@ -1243,6 +1248,7 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
-  	else
-  		rx_dev = ctlr->dev.parent;
-
-+	ret = -ENOMSG;
-  	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
-  		/* The sync is done before each transfer. */
-  		unsigned long attrs = DMA_ATTR_SKIP_CPU_SYNC;
-@@ -1257,6 +1263,9 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
-  						attrs);
-  			if (ret != 0)
-  				return ret;
-+		} else {
-+			memset(&xfer->tx_sg, 0, sizeof(xfer->tx_sg));
-+			xfer->tx_sg.sgl = &dummy_sg;
-  		}
-
-  		if (xfer->rx_buf != NULL) {
-@@ -1270,8 +1279,14 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
-
-  				return ret;
-  			}
-+		} else {
-+			memset(&xfer->rx_sg, 0, sizeof(xfer->rx_sg));
-+			xfer->rx_sg.sgl = &dummy_sg;
-  		}
-  	}
-+	/* No transfer has been mapped, bail out with success */
-+	if (ret)
-+		return 0;
-
-  	ctlr->cur_rx_dma_dev = rx_dev;
-  	ctlr->cur_tx_dma_dev = tx_dev;
-============><============================================================================================
-
-Thanks,
-Neil
-> 
-> Neil
+> diff --git a/drivers/gpu/drm/panel/panel-lg-sw43408.c b/drivers/gpu/drm/panel/panel-lg-sw43408.c
+> index 115f4702d59f..2b3a73696dce 100644
+> --- a/drivers/gpu/drm/panel/panel-lg-sw43408.c
+> +++ b/drivers/gpu/drm/panel/panel-lg-sw43408.c
+> @@ -182,7 +182,7 @@ static int sw43408_backlight_update_status(struct backlight_device *bl)
+>   	return mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
+>   }
+>   
+> -const struct backlight_ops sw43408_backlight_ops = {
+> +static const struct backlight_ops sw43408_backlight_ops = {
+>   	.update_status = sw43408_backlight_update_status,
+>   };
+>   
 > 
 
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
