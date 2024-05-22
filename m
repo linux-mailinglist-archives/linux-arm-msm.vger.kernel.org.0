@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-20215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F1A18CC0A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 13:51:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 456288CC0A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 13:51:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 219112834A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 11:51:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC0F6284700
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 11:51:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C460713D52B;
-	Wed, 22 May 2024 11:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 264EC13D531;
+	Wed, 22 May 2024 11:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QIY9vgQW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sQ9neFzZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B561613D526
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 11:50:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3F513D529
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 11:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716378657; cv=none; b=nGeuNJVOFNcJI+ZxLGHIegLhpxjUCAD/KhX6qO05h5ApolxiARf5+Axvqy7szCBh0Q/2ux4HQCBMa5LNp+7pMJcTiMErB2ZveD1uNWDJ6mw6ZIqtUqLQDksLzz2N0Bn7HB6rRXO0Yer2lzZ5pndEao07z2Rfp8HjBV2mjcl8/Xw=
+	t=1716378674; cv=none; b=Y4j99973E2Pfynf+jHvyuoEBDpNuHRo0lFdqOBTAykoXaVSQy40CzjeT25kYBOkbSjM1+v3QGEEiEByfVD55/P6priZqqQ3mc1cq3n72Ub547PDIWwkrkIhQxssd6sjaZYoxv/2PRtwePqzIoGj1/Rqz/lmjgtXkUcBgyaRLneg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716378657; c=relaxed/simple;
-	bh=xuIhDV7rRZwKTVNf/UW8iqp/4UGbYaxtCKVMJrH8lQU=;
+	s=arc-20240116; t=1716378674; c=relaxed/simple;
+	bh=a7HbsaGo4mOmiiYKbcq9Cy8SMYt7s7x49P1rK6RBFFo=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=foz7em6dndKWf4dodQ8pNIH55SwO7tCGAn54FAhMH8zKKgxqxZGZXDBhlJ5VOXBG1PlBvbodj2fc+FLKTYR1BAjqN9yZ0j/UUWv9GK0qygwARfGj09892QlqTelJFL4YGt84bF0d+DrAu580+Ik0orisGpB8G1dYWKMIz04uTFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QIY9vgQW; arc=none smtp.client-ip=209.85.218.42
+	 In-Reply-To:Content-Type; b=VenDY4T/UzvIjYcOUlmbLtW6WEUdyEEx/JMsJBethPrhofBUdZEe68MdgBsDc401RnklzleGHG35B8OzM/NAEGPOZluM33SVYfI6nTfSBcUMYLNdjXkKlC4bFW5AgaMgB6/p9KLI17kPe/wj/TmvBzmIdf20+ONcqlmXLJrGhks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sQ9neFzZ; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a59a387fbc9so1007928766b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 04:50:54 -0700 (PDT)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a61b70394c0so373389766b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 May 2024 04:51:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716378653; x=1716983453; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716378671; x=1716983471; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yd5oW/Yg0rGA94eKqcIAc76EkjdcxSx2TyuzLljfjrk=;
-        b=QIY9vgQWmOFEuREWj+270v/8yuI6ZDOA9xXL2tYDgNPDd2gac8cwdHnimuJJsKQ2o8
-         c0U9IHv41XGJ7KPIbee87saCgrZP2BjPhQT9KtqEX4YIou/6hDBTUoF/EWumxcsBX14d
-         akslfjWWHqTuvFmdzByyHFxVdumiDRn1AnmLdhzgdZYqFaImKxGpKmw8/P+jBis5FgrN
-         0vLltD+NkYnnEJBZoJkgsXTPCTy/mhvBReOJmZUVRm7u83u3KpPTaNkAL3lP2DnY+H+6
-         X/DBBmmtfJNgHAuFXKX1AatPVSE55GcSb0H7nkAeVX6Fwd0TXr/KtNiUuvNIFDhUZyU6
-         rKzg==
+        bh=eRBy76jWiwOjrHuYKLdt1gCriWsCPRZJnOSXuDJQRjQ=;
+        b=sQ9neFzZTja4UHSHzs9N4Fki2rBA/BLbSo/pL2je+9kWf2SZMsv+3bfq04iAf5em+h
+         TW1w/BXQ8DN94jH0yAaVsrF1GdRWLXJ4fuTGL0FvI+SeIISm7yqswPLo1L1P4r/Nlte5
+         y3zyGn0CAradpYCqXrNpLzQmLeCwWyCzsrsGzBm7bomUFnEZ11GdjbUOPuUO5Y3f94YK
+         99u4TRJVdEuYO8z5+aCRu7LsLvk9U/mDKhS7hBqppCZk6WIfKGjNu/iAutIl3tAVjwEH
+         acUrWV7HTJGkYYvyi7pnMORxqAgr3wDMSS5XBHrP/fVWT7iGQ8qrEardJejDLIUwbUCz
+         7UNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716378653; x=1716983453;
+        d=1e100.net; s=20230601; t=1716378671; x=1716983471;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=yd5oW/Yg0rGA94eKqcIAc76EkjdcxSx2TyuzLljfjrk=;
-        b=PsHJp1K4jgtBKHsG0yCuK8RrLBCwVrEh0qeLpUjwA0c5pirIkwyFQ035OWeWPnOW2d
-         x+HvEGM0xtLukBT4jDFVRN2hn6hfSQJPHP8wHdEDHsRyX7NqYPtBLW2gh5y8Ai5duLau
-         qo/xSoc9Lz6ezyth68VbwJPagLvkfzEWoeC2m0jNbEW5Ed20Ytzn289CfM/ooIwgelmx
-         Fi+4PmjfgOhJce5mpyVscoZtuWtBhHhAf1L2uXs7rWjxhO6uoL8TA2/PKMJFJY2fLZde
-         HRDojtMvjDUQyEOhKK0P/MUTz6sgw9QRUBK8VLPPmGDe1LrPvi0yG55/wYNdsacgS9nE
-         2q/A==
-X-Gm-Message-State: AOJu0YwsFlhfwrJJA75NLyCy8S4ygloBSe0bdSx2bic0ldfVFXoBK2CA
-	NboZ2uh3HaM3oO8JY4TqlBXNVn+vP25mTb3dfYpS7aDYcZbglWIiWrYEFGNwydk=
-X-Google-Smtp-Source: AGHT+IFGiOTO0ylGuf3k6rpu5+NBLFfcw8q+dAYVxiEl6/ftDj5oK+RL+v/wVxS+2JN9Evufg6Vc5w==
-X-Received: by 2002:a17:907:9382:b0:a59:b342:3ed5 with SMTP id a640c23a62f3a-a622805565bmr96650566b.15.1716378652740;
-        Wed, 22 May 2024 04:50:52 -0700 (PDT)
+        bh=eRBy76jWiwOjrHuYKLdt1gCriWsCPRZJnOSXuDJQRjQ=;
+        b=bgemIZXX4G7cNshs5mwh4rMMpJWFQ8t/qB5pQyvcBIP9RhO0A+BZK5MiNEgwNIfChT
+         RzR5r8754GUEK3A0KXg9YUtyQQ4lb3OEfoXhxjhR3JCjP/D5w5cStuqpbpwlQERdTTuS
+         LAtS0paz1fEQ3ZFCYRwQfCawycXi3wvMJ9+MiuEKUgNeP9KLeSqXJXFNro00+twWRBJn
+         zKDnADlCfrwmc8tC79/XJSvFBCAUciAl+q9iUbqLSKfMhBwbSYQlU5xnTp/nlU+bWn5S
+         YE3NRWnhrBetr8w8NXL3wBOxksb/4iFFdSi3TdipXKQJJjCknpjvGWl/9lcNXa+/G4YH
+         saSA==
+X-Gm-Message-State: AOJu0Yymys9yW1aJn3RBotMQX/SAxjWlGTgFns5Y9eP40xjCN2HOv4iQ
+	I3V6zeBJLCxULrBbB4hyKTGU2PiFEQv14R0JCbz0hkuCAUZynqy3Lkrwr5MiSSXhLS8dOr6jnDo
+	P
+X-Google-Smtp-Source: AGHT+IHWTq1+7a88RzzW93woluqpDnjnBcFC/6apHrRRWa9WLIh970+yDw0jNvUnJrQ3mM+UZ5fL1w==
+X-Received: by 2002:a17:906:3585:b0:a62:2eca:4f12 with SMTP id a640c23a62f3a-a622eca50c1mr78912266b.59.1716378670550;
+        Wed, 22 May 2024 04:51:10 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:8b9d:52bd:4757:6b10? ([2a01:e0a:982:cbb0:8b9d:52bd:4757:6b10])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17b17808sm1769934166b.217.2024.05.22.04.50.51
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5a17892450sm1779214266b.63.2024.05.22.04.51.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 May 2024 04:50:52 -0700 (PDT)
-Message-ID: <3dbf3ae9-e5b3-4257-ac63-b007a3ca391f@linaro.org>
-Date: Wed, 22 May 2024 13:50:51 +0200
+        Wed, 22 May 2024 04:51:10 -0700 (PDT)
+Message-ID: <8879d9c0-6e22-4335-af0e-0774721fe2c4@linaro.org>
+Date: Wed, 22 May 2024 13:51:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,15 +80,11 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] pinctrl: qcom: spmi: Add PMC8380
+Subject: Re: [PATCH] soc: qcom: socinfo: Update X1E PMICs
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240522-topic-pmc8380_gpio-v1-0-7298afa9e181@linaro.org>
- <20240522-topic-pmc8380_gpio-v1-2-7298afa9e181@linaro.org>
+ Bjorn Andersson <andersson@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240522-topic-x1e_pmics_socinfo-v1-1-da8a097e5134@linaro.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -114,31 +111,39 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20240522-topic-pmc8380_gpio-v1-2-7298afa9e181@linaro.org>
+In-Reply-To: <20240522-topic-x1e_pmics_socinfo-v1-1-da8a097e5134@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 22/05/2024 13:30, Konrad Dybcio wrote:
-> PMC8380 is a new chip, featuring 10 GPIOs. Describe it.
+On 22/05/2024 13:33, Konrad Dybcio wrote:
+> Assign the correct name to ID 82 and fix the ID of SMB2360.
 > 
+> Fixes: e025171d1ab1 ("soc: qcom: socinfo: Add SMB2360 PMIC")
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
->   1 file changed, 1 insertion(+)
+>   drivers/soc/qcom/socinfo.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> index 4e80c7204e5f..ce576149b7ae 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> @@ -1235,6 +1235,7 @@ static const struct of_device_id pmic_gpio_of_match[] = {
->   	{ .compatible = "qcom,pm8994-gpio", .data = (void *) 22 },
->   	{ .compatible = "qcom,pm8998-gpio", .data = (void *) 26 },
->   	{ .compatible = "qcom,pma8084-gpio", .data = (void *) 22 },
-> +	{ .compatible = "qcom,pmc8380-gpio", .data = (void *) 10 },
->   	{ .compatible = "qcom,pmd8028-gpio", .data = (void *) 4 },
->   	{ .compatible = "qcom,pmi632-gpio", .data = (void *) 8 },
->   	{ .compatible = "qcom,pmi8950-gpio", .data = (void *) 2 },
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index 277c07a6603d..41342c37916a 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -133,7 +133,8 @@ static const char *const pmic_models[] = {
+>   	[72] = "PMR735D",
+>   	[73] = "PM8550",
+>   	[74] = "PMK8550",
+> -	[82] = "SMB2360",
+> +	[82] = "PMC8380",
+> +	[83] = "SMB2360",
+>   };
+>   
+>   struct socinfo_params {
 > 
+> ---
+> base-commit: 8314289a8d50a4e05d8ece1ae0445a3b57bb4d3b
+> change-id: 20240522-topic-x1e_pmics_socinfo-30462d186a86
+> 
+> Best regards,
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
