@@ -1,107 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-20268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F06F8CC7E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 23:02:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF2298CC83B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 23:50:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06E80282329
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 21:02:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C4E9281E6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 21:50:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D87FD7CF30;
-	Wed, 22 May 2024 21:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E0E6145B20;
+	Wed, 22 May 2024 21:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="dXWVEvto"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sjk1LAZj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC1A1CAA6;
-	Wed, 22 May 2024 21:02:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D3F80045;
+	Wed, 22 May 2024 21:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716411722; cv=none; b=CUbUiMgCfoFdbLxDEmnjwPPzO7SQM58kOz5viKbSu1lC7eA/qtoMY/t710LiMzeiHJN+zbSd7fC9n2C4AV8k+82TXi97zFxgGkeJlXBJQssB0p3LycsKrA8YNavMf29eNlftM2wnl3OTsaj1+3w2JT6tN4uY0A7WBVIcKLXoZnM=
+	t=1716414628; cv=none; b=OKOI3zQxjsheTMYQ/k/7CWmwmaAiQ2ebwxvTv0ZZR6fePpEA1Iqr6w40k40ldXEYHO/nn4yRFmvtySi/bhkymAlmu/dZg9l6DRvFxobqeTac2XWy+1VF6A0D5qurkSY5uhS+gjZRwQq7fgono0gQWSbfGuxsyWfgPmaNqJ3bfX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716411722; c=relaxed/simple;
-	bh=er7P36jIArk3ujM8x9Cy03xPyL1nefNS9QVEIwttV+U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gIonnEh6LtKuSAOocxNSgZFX3NIMucr2Dx9PmLYCbBXRIrC00mV66gpinkhNrAtM2BMmONMZo28aiWvzxj2VjatR3k3pur4sD4Q7tDvXZP34w8zSWTBk7hIrQysQWqZJvn4n2bLLC8QgzRVTJHM5vPh1uYgIKY2aCIsszHPWgqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=dXWVEvto; arc=none smtp.client-ip=199.89.1.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 008.lax.mailroute.net (Postfix) with ESMTP id 4Vl3dh2jgnz6Cnk9V;
-	Wed, 22 May 2024 21:02:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1716411715; x=1719003716; bh=Atjv96qq2OAJtNvHEuhpPZvH
-	JqM/RL80by+9suRd8jY=; b=dXWVEvtowpQ/rT7tagj4HNILifmUfKkdishecPh+
-	MZxW074xv03njCj4qBGGmx1YkWMVGBQtEdFWKWofKAsDhLmBEvMAN8rWI3YFGwIA
-	Mqu0FHc338dszAqlPs6ayXz7Sz6+UBQTbGb77FJwgHgvT8X/yNaH88IR7A6R/r47
-	ywyGHCk45eSBz9ZMVyvgg1+6rsrEpP4x8Qh6EAfoM9aLf2D+1XFU1EraKR1DIB23
-	6EpH69ahHuOtVpXP4Dj4FeDKtF2ZXu/LHtLjOdCW5SeTPaykIsXq3dgcXrJZbZ33
-	JYi5jljhi+70lM8JXqw7Y/CARw+rKZ5gn4Ju0h2crqSG1w==
-X-Virus-Scanned: by MailRoute
-Received: from 008.lax.mailroute.net ([127.0.0.1])
- by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id D78-WJJWmQKg; Wed, 22 May 2024 21:01:55 +0000 (UTC)
-Received: from [100.96.154.26] (unknown [104.132.0.90])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4Vl3dW10Lrz6Cnk9B;
-	Wed, 22 May 2024 21:01:50 +0000 (UTC)
-Message-ID: <bdd52dc0-85dd-4000-b5dd-c2c22f5b8ba1@acm.org>
-Date: Wed, 22 May 2024 14:01:49 -0700
+	s=arc-20240116; t=1716414628; c=relaxed/simple;
+	bh=L//sNRivVqdwa73OnOET5hl3cywNzWVR2sKrxJQ9x1g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tryyKkHVGqZIsTDTv1jWjt8VSRTbExmnObAyoLdo2SKVkYM/mLXqMvaNwiPLBjiLTjSkGrFgrnB0EhHJsWaPNKXqpaOpGGbtGSBlAuCT8rTEItVT/o8aSnddsq/Eq8QnOSznkSzt+DvFb0s8kSgkJX3tlVeKR8TFD+JXlo2lb44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sjk1LAZj; arc=none smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5b2cc8c4b8aso3799275eaf.1;
+        Wed, 22 May 2024 14:50:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716414625; x=1717019425; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zBAoZG0al1m+JA3ktgdRMgrP5Z9mDaaNRS9hpWp/qPE=;
+        b=Sjk1LAZjtZs+b40oEpf7JiLOvy5Urg2UkTNObNysI8K7UUfiQZsDXON9b762IJ0sWJ
+         kkAOt0cKgWLo/lwBEZbQr9xlAWlGxCREwweOecVrF7BBzH4iPVipxzlGhYW6gH3gBkZk
+         LxTFzWy4ERDgH2VDqjLziskc7u2lWnUdj8E/IIbZHbCvOakns5F8ttFeJMauiBRiwv2D
+         iLnK9YlnG8L5364Jc6V2DGhB8Yb4OFW4VK584jAFUP49fd7j8Lr5N5qQc/TZ5Oy3UDgj
+         qAqE6tcVxsT/3elFFc1dGEogjswTqET37ovKKwSv/RW29pQ5CsgXJBRO7NwXdlgh3rOs
+         hCXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716414625; x=1717019425;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zBAoZG0al1m+JA3ktgdRMgrP5Z9mDaaNRS9hpWp/qPE=;
+        b=LatPJjkny4duWvFfsLZLIqQVBNcA+2KR/L8zNCB1skpQnWoZYgencpf0ZJewSmSHv+
+         lFjHdTth1OpohkSNCoHkcsvLWz84PBva6zUb5mx8U3+jxN2OXQSxutMGUGEsWCuIGTJv
+         jOUfr2eI4KFlfO4kz1Dyd9NLDnnG+9iEkJACltaJH4wqzUZIvs1Hnp/jyvs8WqkK1+YK
+         Uz1t29rKNYJeiZeKUdeyHqyyYzuoqlJHx7GT37NgqpEo6HVTS8KYe9pye5OGKuQOJg08
+         DQWWSZHwHTqBf861YYL9RTQKrVndpN7yStzQR0yy6SHrOeXiv6MAqHo27FtHCfW0YPlN
+         DSzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUtkssaxYVDs28rBJZ95+XIdAAtVqx0fttzKSAvS7gWhGrqP59/v75q5hnYBNAnhIhaE0ATySZpZBr/1h9oPSWFwhPT0RKG15/OMSng7ufVrFtChv8fo9sM+TPsVGdzcPPAb1huzXVFMNaB/HVTTXz5R5hPXbbWWHSDTEA3TG3kTFIgAu3d
+X-Gm-Message-State: AOJu0YzpeQqVQJK1zU4Kgq5FgsfysyQJYVQ15ltl6zbT3dip5peWAQnZ
+	RQQOShGewHGkO6YpNiaQWqJGnossI3UHxrK7eKQP+1XYIWb0g05fKvr8qg==
+X-Google-Smtp-Source: AGHT+IEJ5Jxw6Dx7ysWEw9SOQIKtcpP6HWnvE1UIWEcK7zpJ4dBNansEqpDAUp5l6zKniQsabf2Azw==
+X-Received: by 2002:a05:6359:704b:b0:18d:9e5f:aaec with SMTP id e5c5f4694b2df-1979213ec36mr296068055d.31.1716414624804;
+        Wed, 22 May 2024 14:50:24 -0700 (PDT)
+Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f677a20c6bsm13037190b3a.129.2024.05.22.14.50.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 May 2024 14:50:23 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	Will Deacon <will@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	iommu@lists.linux.dev (open list:IOMMU SUBSYSTEM),
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+	linux-kernel@vger.kernel.org (open list),
+	linux-pm@vger.kernel.org (open list:POWER MANAGEMENT CORE),
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sean Paul <sean@poorly.run>
+Subject: [PATCH v3 0/2] io-pgtable-arm + drm/msm: Extend iova fault debugging
+Date: Wed, 22 May 2024 14:50:03 -0700
+Message-ID: <20240522215014.26007-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] scsi: ufs: qcom: Update the UIC Command Timeout
-To: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>, quic_cang@quicinc.com,
- quic_nitirawa@quicinc.com, avri.altman@wdc.com, beanhuo@micron.com,
- adrian.hunter@intel.com, martin.petersen@oracle.com
-Cc: linux-scsi@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- "James E.J. Bottomley" <jejb@linux.ibm.com>,
- "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>
-References: <cover.1716359578.git.quic_nguyenb@quicinc.com>
- <8e5593feaac75660ff132d67ee5d9130e628fefb.1716359578.git.quic_nguyenb@quicinc.com>
- <2ec8a7a6-c2cd-4861-9a43-8a4652e0f116@acm.org>
- <f9595b82-66f9-dce2-7fba-c42b1eacf962@quicinc.com>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <f9595b82-66f9-dce2-7fba-c42b1eacf962@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 5/22/24 13:56, Bao D. Nguyen wrote:
-> On 5/22/2024 11:18 AM, Bart Van Assche wrote:
->> Since the described issue is only encountered during development, why to
->> modify the UIC command timeout unconditionally?
-> 
-> The vendors can enjoy the default 500ms UIC timeout if they prefer.
-> As long as they don't write to hba->uic_cmd_timeout in the vendor's initialization routine, the default value of 500ms will be used.
+From: Rob Clark <robdclark@chromium.org>
 
-Since this issue is not vendor specific, I think it would be better to
-modify the UFSHCI core driver only. Has it been considered to introduce a
-kernel module parameter for setting the UIC command timeout instead of the
-approach of this patch? As you probably know there are multiple mechanisms
-for specifying kernel module parameters, e.g. the bootargs parameter in the
-device tree.
+This series extends io-pgtable-arm with a method to retrieve the page
+table entries traversed in the process of address translation, and then
+beefs up drm/msm gpu devcore dump to include this (and additional info)
+in the devcore dump.
 
-Thanks,
+This is a respin of https://patchwork.freedesktop.org/series/94968/
+(minus a patch that was already merged)
 
-Bart.
+v2: Fix an armv7/32b build error in the last patch
+v3: Incorperate Will Deacon's suggestion to make the interface
+    callback based.
+
+Rob Clark (2):
+  iommu/io-pgtable-arm: Add way to debug pgtable walk
+  drm/msm: Extend gpu devcore dumps with pgtbl info
+
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 10 +++++
+ drivers/gpu/drm/msm/msm_gpu.c           | 22 +++++++++++
+ drivers/gpu/drm/msm/msm_gpu.h           |  8 ++++
+ drivers/gpu/drm/msm/msm_iommu.c         | 18 +++++++++
+ drivers/gpu/drm/msm/msm_mmu.h           |  5 ++-
+ drivers/iommu/io-pgtable-arm.c          | 50 ++++++++++++++++++++-----
+ include/linux/io-pgtable.h              |  4 ++
+ 7 files changed, 107 insertions(+), 10 deletions(-)
+
+-- 
+2.45.1
 
 
