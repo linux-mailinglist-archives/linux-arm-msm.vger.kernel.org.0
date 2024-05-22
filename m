@@ -1,86 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-20272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB3648CC930
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 00:48:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7920B8CC9D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 01:48:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10AE8B21BBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 22:48:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B53C1C213E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 May 2024 23:48:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A46D9146A67;
-	Wed, 22 May 2024 22:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12952146D53;
+	Wed, 22 May 2024 23:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="So9qYnAJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="azsBbvxE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB5943147;
-	Wed, 22 May 2024 22:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D93A14D2A4;
+	Wed, 22 May 2024 23:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716418103; cv=none; b=iIZ5NxEdIoyNwIVgFl8Idr7MRenY561D0HreVmPMTSi5ob8hIu3HHclo9d65dCjEyrsfhP242c5dPhBnXsAYktldYGUOHdC7GCB/ZtRSl5bA35Onvt3stVw1X3u9wz4G6nSe6EOlnvm9dgMp9KJja7yCJaIUZdaR6kD/NHfuCwg=
+	t=1716421701; cv=none; b=BuVS3UA4lrJjM1UO+xwFSmPi8IK6/TtDD8vaNcBdLQ1eDOKiVWWcAfnTvNwB5UjRGwf7ORcXNnGMKDY8chneS1RliI4ABezxqa4hGoMj+vHM6SpsVwFfz1vyBrwBROf/Fo56YdzsYxek/i0gImiytJMUbFgakWLIC/B/FI3gs4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716418103; c=relaxed/simple;
-	bh=Q7AOVt4S3YTvLLMTVjuhbRLaDJ2/BYT450UoDN+ynHA=;
+	s=arc-20240116; t=1716421701; c=relaxed/simple;
+	bh=AJsx9yBJy7KmJZ8yFLoOgiMw7kr+qvivBCVpiic91SA=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tTR4d5JTPsnC7NDanziGGfAyD7kw/C8frW31zRKOvEsHEsOyth72TKl/C4YlH15LZXJLiBaJrWq6aSM3ZAjLg3jY0dvca8g90eU5Hb+k/obiXXNrfSgyQnsluTztLH0/bZMdqWzRSkyRZZ52HR9+v9Gp+FzjzlQXpdor/MRMMLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=So9qYnAJ; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=MhpE5LBdWrgRglHnYYYsCHNPNrqMVBJVdo5gntd04+ok27iN+5fWhpgjoANkK3J8s1RfsXVdT0nBTwVsUh8IfGYhPPQIV7qRCjFbXkSjTBkd5Z7ZB5pe4cCYrrFdM8CfX7pYu+I+9PykCSJdK4RFe8O+CJoDUN5t5lUd9N7NvCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=azsBbvxE; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44MC54HT016423;
-	Wed, 22 May 2024 22:48:05 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44MDGP5Z031736;
+	Wed, 22 May 2024 23:48:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=wVZZk2nJL2CSRX5wqlOsi
-	2I9R2Fqp1NUECQy71UCZJk=; b=So9qYnAJypGQRcFVOE+JolI4XVpuh5mZWe8O6
-	IwLu0+kDoNK2QL4Cp3SSgUfcT7buoAQsmmnlfDvuwyGWqlsEZ62fAeymMlF6P7kb
-	F92WvtesRHOfZa1OMmw4i0FOJBOX/o0AUDuLoA/t7l/6vxRrUUn3Uf9l7PPuUfZp
-	HZMizILsNlhwt0N5nG8EbTmRTJ8uorGb/Uw7TT2N1ONfdEmWWJX/mJw9/wTufsHi
-	1uRpl5W6xDTImY/wuaiXxu5+vg2qTzZN2ITqoISHpJd8YJuKiQrfIqjN1bHAXkED
-	oVJrVY0J/0OsSz8Xf/nbixGKbTtUgj2iLlYT1m6Gy0434y8zw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n4gj6x0-1
+	:content-type:in-reply-to; s=qcppdkim1; bh=iEKyOIGYT1uhtKW2TUcrB
+	jky0FOziJQOHoYC/86BYaA=; b=azsBbvxEMnGpJ8q1Omtt0NcKV+il/vmJkYSCj
+	h4nNGz5yOkY05j+Am9C9gyeP/f8XE9VNUWKLCwtd/gcQmVWkyyEYu4D1hkF7Ojf1
+	AxgJp+8Fujb0sQ6drCw77UJW10KSqcSbFtRf12x4rcvFHmE/64CGeaVGhRTUuVTo
+	xnT1gX5r7Qs42+cnFjz2LXORvyUh8k5tRy6ZJoCZWCnIGotZwkRIuCGIrWIP+xYn
+	Na1yByBFVQ4rxMjUUGhDFUfHquWShWcs1hoLlfEjg/MQGxIl4csvGKw09MFBly/z
+	n2X5PgxW8hBS6nyvRni7o399BXQ+yNExeWmNnrnj3w+gtTTWg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6psb2bku-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 May 2024 22:48:04 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44MMm1n7032193
+	Wed, 22 May 2024 23:47:59 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44MNlwRm022885
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 May 2024 22:48:01 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+	Wed, 22 May 2024 23:47:58 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 22 May 2024 15:48:01 -0700
-Date: Wed, 22 May 2024 15:48:00 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Kalle Valo <kvalo@kernel.org>, <neil.armstrong@linaro.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof
- Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <wcn36xx@lists.infradead.org>,
-        <linux-wireless@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Arnd
- Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 01/12] soc: qcom: add firmware name helper
-Message-ID: <Zk52IHqAfOnVDm50@hu-bjorande-lv.qualcomm.com>
-References: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
- <20240521-qcom-firmware-name-v1-1-99a6d32b1e5e@linaro.org>
- <a45b53f3-b2a5-4094-af5a-1281e0f94d2f@linaro.org>
- <CAA8EJprxYsoug0ipRHTmX45vaFLzJCUF0dQWOc=QLs4y6uZ1rA@mail.gmail.com>
- <878r03csxn.fsf@kernel.org>
- <CAA8EJpqkgpCb57DGka0ckbPz=2YiaHzxmiNzG39ad5y6smgO5A@mail.gmail.com>
+ 15.2.1544.9; Wed, 22 May 2024 16:47:57 -0700
+Date: Wed, 22 May 2024 16:47:56 -0700
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Conor Dooley <conor@kernel.org>
+CC: Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Amrit Anand <quic_amrianan@quicinc.com>,
+        "Peter
+ Griffin" <peter.griffin@linaro.org>,
+        Caleb Connolly
+	<caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>, Doug Anderson
+	<dianders@chromium.org>,
+        Simon Glass <sjg@chromium.org>, Chen-Yu Tsai
+	<wenst@chromium.org>,
+        Julius Werner <jwerner@chromium.org>,
+        "Humphreys,
+ Jonathan" <j-humphreys@ti.com>,
+        Sumit Garg <sumit.garg@linaro.org>,
+        "Michal
+ Simek" <michal.simek@amd.com>,
+        <boot-architecture@lists.linaro.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH RFC v3 2/9] dt-bindings: board: Introduce board-id
+Message-ID: <20240522162545887-0700.eberman@hu-eberman-lv.qualcomm.com>
+References: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
+ <20240521-board-ids-v3-2-e6c71d05f4d2@quicinc.com>
+ <20240521-bonfire-backboned-9ef33c10d447@spud>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,148 +96,125 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpqkgpCb57DGka0ckbPz=2YiaHzxmiNzG39ad5y6smgO5A@mail.gmail.com>
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+In-Reply-To: <20240521-bonfire-backboned-9ef33c10d447@spud>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Ec0OrfEXBm9WUFIjYdi3lyRS60ub_eX8
-X-Proofpoint-ORIG-GUID: Ec0OrfEXBm9WUFIjYdi3lyRS60ub_eX8
+X-Proofpoint-GUID: qY_JvQaN1iAlFKq6mrdUQu4JL51Q8nc-
+X-Proofpoint-ORIG-GUID: qY_JvQaN1iAlFKq6mrdUQu4JL51Q8nc-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-22_12,2024-05-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0
- mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0 mlxlogscore=939
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405220159
+ definitions=2024-05-22_13,2024-05-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ adultscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
+ priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0 clxscore=1015
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405220165
 
-On Tue, May 21, 2024 at 03:08:31PM +0200, Dmitry Baryshkov wrote:
-> On Tue, 21 May 2024 at 13:20, Kalle Valo <kvalo@kernel.org> wrote:
-> >
-> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
-> >
-> > > On Tue, 21 May 2024 at 12:52, <neil.armstrong@linaro.org> wrote:
-> > >>
-> > >> On 21/05/2024 11:45, Dmitry Baryshkov wrote:
-> > >> > Qualcomm platforms have different sets of the firmware files, which
-> > >> > differ from platform to platform (and from board to board, due to the
-> > >> > embedded signatures). Rather than listing all the firmware files,
-> > >> > including full paths, in the DT, provide a way to determine firmware
-> > >> > path based on the root DT node compatible.
-> > >>
-> > >> Ok this looks quite over-engineered but necessary to handle the legacy,
-> > >> but I really think we should add a way to look for a board-specific path
-> > >> first and fallback to those SoC specific paths.
-> > >
-> > > Again, CONFIG_FW_LOADER_USER_HELPER => delays.
-> >
-> > To me this also looks like very over-engineered, can you elaborate more
-> > why this is needed? Concrete examples would help to understand better.
-> 
-> Sure. During the meeting last week Arnd suggested evaluating if we can
-> drop firmware-name from the board DT files. Several reasons for that:
-> - DT should describe the hardware, not the Linux-firmware locations
-> - having firmware name in DT complicates updating the tree to use
-> different firmware API (think of mbn vs mdt vs any other format)
-> - If the DT gets supplied by the vendor (e.g. for
-> SystemReady-certified devices), there should be a sync between the
-> vendor's DT, linux kernel and the rootfs. Dropping firmware names from
-> DT solves that by removing one piece of the equation
-> 
-> Now for the complexity of the solution. Each SoC family has their own
-> firmware set. This includes firmware for the DSPs, for modem, WiFi
-> bits, GPU shader, etc.
-> For the development boards these devices are signed by the testing key
-> and the actual signature is not validated against the root of trust
-> certificate.
-> For the end-user devices the signature is actually validated against
-> the bits fused to the SoC during manufacturing process. CA certificate
-> (and thus the fuses) differ from vendor to vendor (and from the device
-> to device)
-> 
-> Not all of the firmware files are a part of the public linux-firmware
-> tree. However we need to support the rootfs bundled with the firmware
-> for different platforms (both public and vendor). The non-signed files
-> come from the Adreno GPU and can be shared between platforms. All
-> other files are SoC-specific and in some cases device-specific.
-> 
-> So for example the SDM845 db845c (open device) loads following firmware files:
-> Not signed:
-> - qcom/a630_sqe.fw
-> - qcom/a630_gmu.bin
-> 
-> Signed, will work for any non-secured sdm845 device:
-> - qcom/sdm845/a630_zap.mbn
-> - qcom/sdm845/adsp.mbn
-> - qcom/sdm845/cdsp.mbn
-> - qcom/sdm485/mba.mbn
-> - qcom/sdm845/modem.mbn
-> - qcom/sdm845/wlanmdsp.mbn (loaded via TQFTP)
-> - qcom/venus-5.2/venus.mbn
-> 
-> Signed, works only for DB845c.
-> - qcom/sdm845/Thundercomm/db845c/slpi.mbn
-> 
-> In comparison, the SDM845 Pixel-3 phone (aka blueline) should load the
-> following firmware files:
-> - qcom/a630_sqe.fw (the same, non-signed file)
-> - qcom/a630_gmu.bin (the same, non-signed file)
-> - qcom/sdm845/Google/blueline/a630_zap.mbn
+Hi Conor,
 
-How do you get from "a630_zap.mbn" to this? By extending the lookup
-table for every target, or what am I missing?
+Thanks for taking the time to look at the patch.
 
-Regards,
-Bjorn
+On Tue, May 21, 2024 at 08:21:45PM +0100, Conor Dooley wrote:
+> On Tue, May 21, 2024 at 11:37:59AM -0700, Elliot Berman wrote:
+> > Device manufcturers frequently ship multiple boards or SKUs under a
+> > single softwre package. These software packages ship multiple devicetree
+> > blobs and require some mechanims to pick the correct DTB for the boards
+> > that use the software package.
+> 
+> Okay, you've got the problem statement here, nice.
+> 
+> > This patch introduces a common language
+> > for adding board identifiers to devicetrees.
+> 
+> But then a completely useless remainder of the commit message.
+> I open this patch, see the regexes, say "wtf", look at the commit
+> message and there is absolutely no explanation of what these properties
+> are for. That's quite frankly just not good enough - even for an RFC.
+> 
 
-> - qcom/sdm845/Google/blueline/adsp.mbn
-> - qcom/sdm845/Google/blueline/cdsp.mbn
-> - qcom/sdm845/Google/blueline/ipa_fws.mbn
-> - qcom/sdm845/Google/blueline/mba.mbn
-> - qcom/sdm845/Google/blueline/modem.mbn
-> - qcom/sdm845/Google/blueline/venus.mbn
-> - qcom/sdm845/Google/blueline/wlanmdsp.mbn
-> - qcom/sdm845/Google/blueline/slpi.mbn
+Understood, I've been trying to walk the line of getting the idea across
+to have conversation about the board-ids, while not getting into too
+much of the weeds. I was hoping the example and the matching code in the
+first patch would get enough of the idea across, but I totally
+empathize that might not be enough. I'll reply here shortly with a
+version of this patch which adds more details.
+
+> > 
+> > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > ---
+> >  .../devicetree/bindings/board/board-id.yaml        | 24 ++++++++++++++++++++++
+> >  1 file changed, 24 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/board/board-id.yaml b/Documentation/devicetree/bindings/board/board-id.yaml
+> > new file mode 100644
+> > index 000000000000..99514aef9718
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/board/board-id.yaml
+> > @@ -0,0 +1,24 @@
+> > +# SPDX-License-Identifier: BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/board/board-id.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: board identifiers
+> > +description: Common property for board-id subnode
 > 
-> The Lenovo Yoga C630 WoS laptop (SDM850 is a variant of SDM845) uses
-> another set of files:
-> - qcom/a630_sqe.fw (the same, non-signed file)
-> - qcom/a630_gmu.bin (the same, non-signed file)
-> - qcom/sdm850/LENOVO/81JL/qcdxkmsuc850.mbn
-> - qcom/sdm850/LENOVO/81JL/qcadsp850.mbn
-> - qcom/sdm850/LENOVO/81JL/qccdsp850.mbn
-> - qcom/sdm850/LENOVO/81JL/ipa_fws.elf
-> - qcom/sdm850/LENOVO/81JL/qcdsp1v2850.mbn
-> - qcom/sdm850/LENOVO/81JL/qcdsp2850.mbn
-> - qcom/sdm850/LENOVO/81JL/qcvss850.mbn
-> - qcom/sdm850/LENOVO/81JL/wlanmdsp.mbn
-> - qcom/sdm850/LENOVO/81JL/qcslpi850.mbn
+> s/property/properties/
 > 
-> If we look at one of the recent platforms, e.g. SM8650-QRD, this list
-> also grows up:
-> - qcom/gen70900_sqe.fw (generic, non-signed)
-> - qcom/gmu_gen70900.bin (generic, non-signed)
-> - qcom/sm8650/gen70900_zap.mbn
-> - qcom/sm8650/adsp.mbn
-> - qcom/sm8650/adsp_dtb.mbn
-> - qcom/sm8650/cdsp.mbn
-> - qcom/sm8650/cdsp_dtb.mbn
-> - qcom/sm8650/ipa_fws.mbn
-> - qcom/sm8650/modem.mbn
-> - qcom/sm8650/modem_dtb.mbn
-> - qcom/sm8650/vpu33_4v.mbn (or maybe qcom/vpu-33/vpu_4v.mbn)
+> > +
+> > +maintainers:
+> > +  - Elliot Berman <quic_eberman@quicinc.com>
+> > +
+> > +properties:
+> > +  $nodename:
+> > +    const: '/'
+> > +  board-id:
+> > +    type: object
+> > +    patternProperties:
+> > +      "^.*(?!_str)$":
 > 
-> -- 
-> With best wishes
-> Dmitry
+> Does this regex even work? Take "foo_str" as an example - doesn't "^.*"
+> consume all of the string, leaving the negative lookahead with nothing
+> to object to? I didn't properly test this with an example and the dt
+> tooling, but I lazily threw it into regex101 and both the python and
+> emcascript versions agree with me. Did you test this?
+
+Right, it should be a lookbehind, not a lookahead.
+
 > 
+> And while I am here, no underscores in property names please. And if
+> "str" means string, I suggest not saving 3 characters.
 > 
+> > +        $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> > +      "^.*_str$":
+> > +        $ref: /schemas/types.yaml#/definitions/string-array
 > 
+> Why do we even need two methods? Commit message tells me nothing and
+> there's no description at all... Why do we need regexes here, rather
+> than explicitly defined properties? Your commit message should explain
+> the justification for that and the property descriptions (as comments if
+> needs be for patternProperties) should explain why this is intended to
+> be used.
 > 
-> 
-> 
-> 
-> 
-> 
+> How is anyone supposed to look at this binding and understand how it
+> should be used?
+
+I was thinking that firmware may only provide the data without being
+able to provide the context whether the value is a number or a string.
+I think this is posisble if firmware provides the device's board
+identifier in the format of a DT itself. It seems natural to me in the
+EBBR flow. There is example of this in example in patches 3
+(fdt-select-board) and 9 (the test suite). DTB doesn't inherently
+provide instruction on how to interpret a property's value, so I created
+a rule that strings have to be suffixed with "-string".
+
+One other note -- I (QCOM) don't currently have a need for board-ids to
+be strings. I thought it was likely that someone might want that though.
+
+Thanks,
+Elliot
+
 
