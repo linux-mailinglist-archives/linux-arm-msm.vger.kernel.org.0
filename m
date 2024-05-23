@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-20289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D10758CCC2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 08:19:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44B538CCCBF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 09:08:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 888EA283956
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 06:19:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C35A51F22FA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 07:08:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 173E213B2B4;
-	Thu, 23 May 2024 06:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5975713C9D2;
+	Thu, 23 May 2024 07:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G84jSHXZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QVD1OZ9I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D5D187F;
-	Thu, 23 May 2024 06:19:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9647413C9BD;
+	Thu, 23 May 2024 07:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716445158; cv=none; b=GVJnkHZkoQ82/iwotY91ux1uSw2qPeqwAhsoYv2klmxlz7x9oMPvXNYmFzAPz24c+1C1QSQWpF904b5M/ZVxEx5EVTMTRK2DXE6aA8NS7YvStXjRcET1J29/p82aCipYB5TAwNhgS+wt+SmsYvGxAsNEzqfn4CTtXALHk/bLyok=
+	t=1716448108; cv=none; b=uCXLPJJu9seRvkO37yGG4KR1DWhtAUiLXkJ+yrakn51Nub99yvSUGSCZqjvl7vPjO/LYonZATJb09pfIL6XWJWNCi5LF8RuTNTqOB/RV2UmSrYO5ZU2mRx5tKBxCC/SD+CFRIr1cb66gO9bUcr72w9RveyIdA+fwi/qOn5GRA9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716445158; c=relaxed/simple;
-	bh=8zHA0HU2AbRI7s7cejYhTpjhS07bLPkgGzXqxwDglsw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AKsistQhql/D2Rou56c2hY7+DKuYbNk5bv0r1X2+o0w4GWzftFcuTz6ZvuvpieWP4iHcC1IgcR03RoQFE8f6z9guAH8vDkuCWPBoi5uwVp4Vh7snxfcW0C4fgE28jsiFQkK779BnGC5wezT+9a+6fq9QAm6T+HnTHL8yiwxPmuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G84jSHXZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C20C2BD10;
-	Thu, 23 May 2024 06:19:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716445157;
-	bh=8zHA0HU2AbRI7s7cejYhTpjhS07bLPkgGzXqxwDglsw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=G84jSHXZsPZbgtATo0PIlB91aprBi3Lig4z09Esp9z+lXtr9fLABITgYa8z38bGnX
-	 q/eujJXu9dXdZAs3CajrXjzOFboP3p/29NBDnNfEkszkUcU9PfaRrri78EIRhc23tV
-	 /g1jxjHBcZCDWOQjWVBcuTLXwiQkemvlPh4ZA64R9KxW8DaNAuy3IEIasFKWx8shzF
-	 ZDYlsUo+upflB9MryCVxJqHCBSh32iGi7mgAIxLVU9B9z/Ph/hqJ5mFpQgLk47BUzu
-	 0X5lPhI4Y/CZR/WOUxa6Xg7vlqVbkXXqkBPcaUVL2p4k6BNrNZdPMkE/5m0JSoKCMd
-	 CBFsWctBcouBA==
-Message-ID: <e4579702-089e-48cb-bf06-f8e4fb618050@kernel.org>
-Date: Thu, 23 May 2024 08:19:11 +0200
+	s=arc-20240116; t=1716448108; c=relaxed/simple;
+	bh=ijvfwmsIYrGBjX90Bb1NC8ZZ5eC7RXM7EAhrgy++/3E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=C44U0O5/MuJ44JNWbKKAgvkjjQmIO0eLi4GcSo0PVHfoxGde2gWLqZmIQ9+YwWQqg0MwUeYUKdfFuD4Ro0TFSwpSrV68T0Xx0Zpmi7Y1p+BwX56lPQ4gQ5C3LhQMaG+NClRfwMtOJs3KXrzDZmtQEHw80UeCn4ZTt2hDMApPVLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QVD1OZ9I; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44N4jThT010543;
+	Thu, 23 May 2024 07:08:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AJAgBM8RRNv0boYLbUX7vZhvxHDqRZaUH76fthHL5T8=; b=QVD1OZ9IVQjmAQUK
+	xIVPw3XTZbiszJlX+4djUVmfBYFwH/EkJN8/FyfptBZZ7dJij4S/nXNGEZK4uMV/
+	/7AWpttDA6xxKv4d3j+gwj0MPA8jEHH6kJzR4BmamHWW9btJ8QpkNw4PRVGOFeBg
+	KKbcjFh4zSkV56vd3nlbXAkGQqtcfxPuR925M83oJRW4dZp0l0Hv7JDB8ZVxgKah
+	QmTmi06l7JaXDlLdWsI0k/muxGxRoc8+r2LOiFwAfZErCWcltOSbpijm7ARuWRYa
+	v+tXcYy0CSO/PMjWuxHAItvOXseIirVQdZulHqOz8gKpeJV5rW4AY9DnjPuK2iJw
+	8TtxNg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y9y29r83b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 May 2024 07:07:59 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44N77wXl018231
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 May 2024 07:07:58 GMT
+Received: from [10.50.38.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 23 May
+ 2024 00:07:53 -0700
+Message-ID: <a4c77ac8-f417-4d91-99a6-0420bd1259aa@quicinc.com>
+Date: Thu, 23 May 2024 12:37:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,176 +65,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/2] dt-bindings: soc: qcom,smsm: Allow specifying
- mboxes instead of qcom,ipc
-To: Luca Weiss <luca@z3ntu.xyz>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240424-smsm-mbox-v1-0-555f3f442841@z3ntu.xyz>
- <6253429.lOV4Wx5bFT@g550jk> <aced3d43-5f79-4b57-8663-5762db1ad2f6@linaro.org>
- <5099926.GXAFRqVoOG@g550jk>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH V5 4/6] arm64: dts: qcom: ipq9574: Add PCIe PHYs and
+ controller nodes
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <5099926.GXAFRqVoOG@g550jk>
-Content-Type: text/plain; charset=UTF-8
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+References: <20240512082858.1806694-1-quic_devipriy@quicinc.com>
+ <20240512082858.1806694-5-quic_devipriy@quicinc.com>
+ <20240514073943.GB2463@thinkpad>
+From: Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <20240514073943.GB2463@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: eQ-fLeVP4MIj0PUSQ70rZGe4jInovAs0
+X-Proofpoint-GUID: eQ-fLeVP4MIj0PUSQ70rZGe4jInovAs0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-23_04,2024-05-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 mlxlogscore=999
+ mlxscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
+ definitions=main-2405230045
 
-On 23/05/2024 08:16, Luca Weiss wrote:
-> On Donnerstag, 23. Mai 2024 08:02:13 MESZ Krzysztof Kozlowski wrote:
->> On 22/05/2024 19:34, Luca Weiss wrote:
->>> On Mittwoch, 22. Mai 2024 08:49:43 MESZ Krzysztof Kozlowski wrote:
->>>> On 21/05/2024 22:35, Luca Weiss wrote:
->>>>> On Dienstag, 21. Mai 2024 10:58:07 MESZ Krzysztof Kozlowski wrote:
->>>>>> On 20/05/2024 17:11, Luca Weiss wrote:
->>>>>>> Hi Krzysztof
->>>>>>>
->>>>>>> Ack, sounds good.
->>>>>>>
->>>>>>> Maybe also from you, any opinion between these two binding styles?
->>>>>>>
->>>>>>> So first using index of mboxes for the numbering, where for the known
->>>>>>> usages the first element (and sometimes the 3rd - ipc-2) are empty <>.
->>>>>>>
->>>>>>> The second variant is using mbox-names to get the correct channel-mbox
->>>>>>> mapping.
->>>>>>>
->>>>>>> -               qcom,ipc-1 = <&apcs 8 13>;
->>>>>>> -               qcom,ipc-2 = <&apcs 8 9>;
->>>>>>> -               qcom,ipc-3 = <&apcs 8 19>;
->>>>>>> +               mboxes = <0>, <&apcs 13>, <&apcs 9>, <&apcs 19>;
->>>>>>>
->>>>>>> vs.
->>>>>>>
->>>>>>> -               qcom,ipc-1 = <&apcs 8 13>;
->>>>>>> -               qcom,ipc-2 = <&apcs 8 9>;
->>>>>>> -               qcom,ipc-3 = <&apcs 8 19>;
->>>>>>> +               mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
->>>>>>> +               mbox-names = "ipc-1", "ipc-2", "ipc-3";
->>>>>>
->>>>>> Sorry, don't get, ipc-1 is the first mailbox, so why would there be <0>
->>>>>> in first case?
->>>>>
->>>>> Actually not, ipc-0 would be permissible by the driver, used for the 0th host
->>>>>
->>>>> e.g. from:
->>>>>
->>>>> 	/* Iterate over all hosts to check whom wants a kick */
->>>>> 	for (host = 0; host < smsm->num_hosts; host++) {
->>>>> 		hostp = &smsm->hosts[host];
->>>>>
->>>>> Even though no mailbox is specified in any upstream dts for this 0th host I
->>>>> didn't want the bindings to restrict that, that's why in the first example
->>>>> there's an empty element (<0>) for the 0th smsm host
->>>>>
->>>>>> Anyway, the question is if you need to know that some
->>>>>> mailbox is missing. But then it is weird to name them "ipc-1" etc.
->>>>>
->>>>> In either case we'd just query the mbox (either by name or index) and then
->>>>> see if it's there? Not quite sure I understand the sentence..
->>>>> Pretty sure either binding would work the same way.
->>>>
->>>> The question is: does the driver care only about having some mailboxes
->>>> or the driver cares about each specific mailbox? IOW, is skipping ipc-0
->>>> important for the driver?
->>>
->>> There's nothing special from driver side about any mailbox. Some SoCs have
->>> a mailbox for e.g. hosts 1&2&3, some have only 1&3, and apq8064 even has
->>> 1&2&3&4.
->>>
->>> And if the driver doesn't find a mailbox for a host, it just ignores it
->>> but then of course it can't 'ring' the mailbox for that host when necessary.
->>>
->>> Not sure how much more I can add here, to be fair I barely understand what
->>> this driver is doing myself apart from the obvious.
+
+
+On 5/14/2024 1:09 PM, Manivannan Sadhasivam wrote:
+> On Sun, May 12, 2024 at 01:58:56PM +0530, devi priya wrote:
+>> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
+>> found on IPQ9574 platform. The PCIe0 & PCIe1 are 1-lane Gen3
+>> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
 >>
->> From what you said, it looks like it is enough to just list mailboxes,
->> e.g. for ipc-1, ipc-2 and ipc-4 (so no ipc-0 and ipc-3):
-> 
-> No, for sure we need also the possibility to list ipc-3.
-
-? You can list it, what's the problem>
-
-> 
-> And my point is that I'm not sure if any platform will ever need ipc-0, but
-> the code to use that if it ever exists is there - the driver always
-> tries getting an mbox (currently just syscon of course) for every host
-> from 0 to n.
-> 
-> These are the current (non-mbox-API) mboxes provided to smsm:
-> 
-> $ git grep qcom,ipc- arch/
-> arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:               qcom,ipc-1 = <&l2cc 8 4>;
-> arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:               qcom,ipc-2 = <&l2cc 8 14>;
-> arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:               qcom,ipc-3 = <&l2cc 8 23>;
-> arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:               qcom,ipc-4 = <&sps_sic_non_secure 0x4094 0>;
-> arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:               qcom,ipc-1 = <&apcs 8 13>;
-> arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:               qcom,ipc-2 = <&apcs 8 9>;
-> arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:               qcom,ipc-3 = <&apcs 8 19>;
-> arch/arm64/boot/dts/qcom/msm8916.dtsi:          qcom,ipc-1 = <&apcs 8 13>;
-> arch/arm64/boot/dts/qcom/msm8916.dtsi:          qcom,ipc-3 = <&apcs 8 19>;
-> arch/arm64/boot/dts/qcom/msm8939.dtsi:          qcom,ipc-1 = <&apcs1_mbox 8 13>;
-> arch/arm64/boot/dts/qcom/msm8939.dtsi:          qcom,ipc-3 = <&apcs1_mbox 8 19>;
-> arch/arm64/boot/dts/qcom/msm8953.dtsi:          qcom,ipc-1 = <&apcs 8 13>;
-> arch/arm64/boot/dts/qcom/msm8953.dtsi:          qcom,ipc-3 = <&apcs 8 19>;
-> arch/arm64/boot/dts/qcom/msm8976.dtsi:          qcom,ipc-1 = <&apcs 8 13>;
-> arch/arm64/boot/dts/qcom/msm8976.dtsi:          qcom,ipc-2 = <&apcs 8 9>;
-> arch/arm64/boot/dts/qcom/msm8976.dtsi:          qcom,ipc-3 = <&apcs 8 19>;
-> 
+>> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+>> ---
+>>   Changes in V5:
+>> 	- Dropped anoc and snoc lane clocks from Phy nodes and enabled them
+>> 	  via interconnect.
+>> 	- Dropped msi-parent as it is handled via msi IRQ
 >>
->> mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
+>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 365 +++++++++++++++++++++++++-
+>>   1 file changed, 361 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> index 5b3e69379b1f..da6418c9d52b 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> 
+> [...]
+> 
+>> +		pcie1: pci@10000000 {
+> 
+> 'pcie@' since this is a PCIe controller.
+okay
+> 
+>> +			compatible = "qcom,pcie-ipq9574";
+>> +			reg =  <0x10000000 0xf1d>,
+>> +			       <0x10000F20 0xa8>,
+> 
+> Please use lower case for hex everywhere.
+okay
+> 
+>> +			       <0x10001000 0x1000>,
+>> +			       <0x000F8000 0x4000>,
+>> +			       <0x10100000 0x1000>;
+>> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
+>> +			device_type = "pci";
+>> +			linux,pci-domain = <2>;
+>> +			bus-range = <0x00 0xff>;
+>> +			num-lanes = <1>;
+>> +			#address-cells = <3>;
+>> +			#size-cells = <2>;
+>> +
+>> +			ranges = <0x01000000 0x0 0x00000000 0x10200000 0x0 0x100000>,  /* I/O */
+>> +				 <0x02000000 0x0 0x10300000 0x10300000 0x0 0x7d00000>; /* MEM */
+>> +
+>> +			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names = "msi";
+> 
+> Are you sure that this platform only has single MSI SPI IRQ?
+It has 8 MSI SPI IRQs, will define all of them
+> 
+>> +			#interrupt-cells = <1>;
+>> +			interrupt-map-mask = <0 0 0 0x7>;
+>> +			interrupt-map = <0 0 0 1 &intc 0 0 35 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+>> +					<0 0 0 2 &intc 0 0 49 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+>> +					<0 0 0 3 &intc 0 0 84 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+>> +					<0 0 0 4 &intc 0 0 85 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+>> +
+>> +			/* clocks and clock-names are used to enable the clock in CBCR */
+> 
+> This comment is redundant.
+okay
+> 
+>> +			clocks = <&gcc GCC_PCIE1_AHB_CLK>,
+>> +				 <&gcc GCC_PCIE1_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE1_AXI_M_CLK>,
+>> +				 <&gcc GCC_PCIE1_AXI_S_CLK>,
+>> +				 <&gcc GCC_PCIE1_AXI_S_BRIDGE_CLK>,
+>> +				 <&gcc GCC_PCIE1_RCHNG_CLK>;
+>> +			clock-names = "ahb",
+>> +				      "aux",
+>> +				      "axi_m",
+>> +				      "axi_s",
+>> +				      "axi_bridge",
+>> +				      "rchng";
+>> +
+>> +			resets = <&gcc GCC_PCIE1_PIPE_ARES>,
+>> +				 <&gcc GCC_PCIE1_CORE_STICKY_ARES>,
+>> +				 <&gcc GCC_PCIE1_AXI_S_STICKY_ARES>,
+>> +				 <&gcc GCC_PCIE1_AXI_S_ARES>,
+>> +				 <&gcc GCC_PCIE1_AXI_M_STICKY_ARES>,
+>> +				 <&gcc GCC_PCIE1_AXI_M_ARES>,
+>> +				 <&gcc GCC_PCIE1_AUX_ARES>,
+>> +				 <&gcc GCC_PCIE1_AHB_ARES>;
+>> +			reset-names = "pipe",
+>> +				      "sticky",
+>> +				      "axi_s_sticky",
+>> +				      "axi_s",
+>> +				      "axi_m_sticky",
+>> +				      "axi_m",
+>> +				      "aux",
+>> +				      "ahb";
+>> +
+>> +			phys = <&pcie1_phy>;
+>> +			phy-names = "pciephy";
+>> +			interconnects = <&gcc MASTER_ANOC_PCIE1 &gcc SLAVE_ANOC_PCIE1>,
+>> +					<&gcc MASTER_SNOC_PCIE1 &gcc SLAVE_SNOC_PCIE1>;
+> 
+> Is this really the interconnect paths between PCIe-DDR and PCIe-CPU? I doubt...
 
-So which case is not covered?
+We actually designed a minimalistic ICC driver for enabling the NoC 
+clocks based on the suggestions received from the community.
+Please find the link to the discussions that went in for introducing the 
+ICC driver for NoC clock enablement
 
-Best regards,
-Krzysztof
+https://lore.kernel.org/linux-arm-msm/abd29b47-a8ab-4e2a-8147-d5d8ded98065@linaro.org/
 
+Thanks,
+Devi Priya
+> 
+> - Mani
+> 
 
