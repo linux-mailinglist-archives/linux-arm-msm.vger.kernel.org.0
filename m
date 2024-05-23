@@ -1,145 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-20283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FCCF8CCBD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 07:42:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 292248CCBDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 07:45:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2AB5528107E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 05:42:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 933D71F21B2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 05:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2861537F8;
-	Thu, 23 May 2024 05:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 428AC4436B;
+	Thu, 23 May 2024 05:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j1WEB2tb"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="V6XZISe2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D64B39AF9;
-	Thu, 23 May 2024 05:42:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4801BDD0;
+	Thu, 23 May 2024 05:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716442948; cv=none; b=Jdy8Gd2qffrniuwc/ZW8a1vy/s8/3DWZ07lCOjp34/AFkkprlrLvqpJNmZPoIcUka8zs2QgeT6UvM00F4eeDNWIkpYxGSVVnNZztDpjbf1LkIU/NiszUfAQsAXFCBtWB7QxMn8jjRXuZPDJXqsc0kEIGl1s7eYUcySBiF4DonUA=
+	t=1716443153; cv=none; b=SABG15XjTT+kVESu7Hkt5yEMRbel6UjhUbpDbI6b7KV4Tj0Tx7O+YYKPO0yIQl0DXsjPxSOfA8ys7Tcd3wnfV8b61aetwdY8SCyevwUPXl6E6DGflsY8lDT4D7z9A0aYt5mTLLdEACoBoxe+SKm4uvCoVI1jRVOc8CrT2v28QzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716442948; c=relaxed/simple;
-	bh=Y1VXwDvxGAnVnlR04JsLrkNPdKxtHxOw44VCzccAUPo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TbkT2w9jo5m0Z3jf8TFnK7mGidUYlpligN8hGsqqlKmiXJMZcsFVcs+WYEvtNX93SZkG3FaMeFpVcCPphd3T3ThV8JHZ/GoLpTfhQuEyjiuMP7yMUdhFt4hB5Xu8yOU36MD5Hy98oDg7/s7U4bmzv5TY6uMyjEZvwDQ0lOwDhFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j1WEB2tb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44N4bTfS017045;
-	Thu, 23 May 2024 05:42:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/U9ryxChaVrHIu5gC0OQEG+gB2a/wA1FmQs1ySyoP90=; b=j1WEB2tbbVqkfzZS
-	0qW+F64TFxGj3Sm9ZKeKCvzcEcs+A+EyRdVxgTFhRbr/qmBU5cmlzOtYeM998V2a
-	a45WwCfaBoYLaj5o4ppQ7TH5uyT0udG500qJ5TlkH7QHwGT1QrI2Rutlq4EISuhD
-	B3jpikfCptGmcKrlbGo3J/1DDNDxh7Hf0MGWyb61fJmIv1TH21rK/xwUUwKwEIKF
-	XyXVMOHl4FYM0ZZ/MzG0aNXM6g1xLGXkPOsgKaWUuv3MIwp7waO+KEm7zLwhCqk0
-	aoRldNN+rgHVgLkjpVZ9xLgPho0GXoXAAIQNFSnbC8dmOoEACaIkOVVqUA/WkmlF
-	+T4FbA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y9xxe03ab-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 May 2024 05:42:16 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44N5gEwm022938
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 May 2024 05:42:15 GMT
-Received: from [192.168.143.77] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 22 May
- 2024 22:42:14 -0700
-Message-ID: <a6950702-536c-af82-4eae-6f9cc2c3baaa@quicinc.com>
-Date: Wed, 22 May 2024 22:42:14 -0700
+	s=arc-20240116; t=1716443153; c=relaxed/simple;
+	bh=ixt8OajYR20IPA+H5M4ytRrCuvQEPCIDj6wZr5U9vZU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=rhGKOq3bdfhFx/nVbUkZ3Rq0Wq4Jg97twlUqkUXEivrnjwve2Hrykb8mUa5+8elkjA4ouLDTeql3zEph3MQViqaZsQzaCcGnvdMJkkvWvBTCysJeiSKDmkfnTXft9mfz53q5fLCYHT4EXDfSu73kBkCW/4R0kH4A+1UzgpI0MPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=V6XZISe2; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1716443149;
+	bh=ixt8OajYR20IPA+H5M4ytRrCuvQEPCIDj6wZr5U9vZU=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=V6XZISe2rHRPDxCU3RcaRltfEjMsf3Um1F7s2Knx3jBoPnoWXYLTzBB1x2GEXFNlA
+	 zCUCvq/awcplJhGU9EHEmA06ZVtHfJe0QRL0SxHOCBDpNUeLpks5b6o7YrYR8Z+0JD
+	 jJVHUHbOum7lO29ITpT33LzBWBmhEmtjVsm1AeUnTM81zmzbDR00y3AVw7dE0/xQ7q
+	 wgIzSxGobBDfFQRLyrrVAK78jMvSAybnilANfAm2CwRhrPydRXI5h2h1YYYNI9aIDM
+	 pVoGtRcF0sS4YgQRyYQUvx/UVf6KA9mvN2TP05pxOmAzrMSCZx594KP6GwZlPhptpQ
+	 PQxZ6jnI5aOrg==
+Received: from [100.66.96.193] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 8AA8637820E5;
+	Thu, 23 May 2024 05:45:45 +0000 (UTC)
+Message-ID: <bb94b70d-cb6d-4ca6-8c80-abb6a12c2ef3@collabora.com>
+Date: Thu, 23 May 2024 11:15:42 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v1 2/2] scsi: ufs: qcom: Update the UIC Command Timeout
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] drm/ci: build virtual GPU driver as module
+From: Vignesh Raman <vignesh.raman@collabora.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
+ helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
+ robdclark@gmail.com, david.heidelberg@collabora.com,
+ guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+ mcanal@igalia.com, linux-mediatek@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ intel-gfx@lists.freedesktop.org, virtualization@lists.linux-foundation.org,
+ linux-kernel@vger.kernel.org
+References: <20240517092502.647420-1-vignesh.raman@collabora.com>
+ <20240517092502.647420-4-vignesh.raman@collabora.com>
+ <elftuzsd7lhz6y5ow6rb5uu5fb5b5jcprxtvxtxtojo774rnyr@swpeg4vkgtnc>
+ <f3646d66-01f0-476c-8b7f-5df102790fcb@collabora.com>
 Content-Language: en-US
-To: Avri Altman <Avri.Altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
-        "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
-        "quic_nitirawa@quicinc.com"
-	<quic_nitirawa@quicinc.com>,
-        "beanhuo@micron.com" <beanhuo@micron.com>,
-        "adrian.hunter@intel.com" <adrian.hunter@intel.com>,
-        "martin.petersen@oracle.com" <martin.petersen@oracle.com>
-CC: "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Manivannan
- Sadhasivam" <manivannan.sadhasivam@linaro.org>,
-        "James E.J. Bottomley"
-	<jejb@linux.ibm.com>,
-        "open list:ARM/QUALCOMM SUPPORT"
-	<linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <cover.1716359578.git.quic_nguyenb@quicinc.com>
- <8e5593feaac75660ff132d67ee5d9130e628fefb.1716359578.git.quic_nguyenb@quicinc.com>
- <2ec8a7a6-c2cd-4861-9a43-8a4652e0f116@acm.org>
- <f9595b82-66f9-dce2-7fba-c42b1eacf962@quicinc.com>
- <bdd52dc0-85dd-4000-b5dd-c2c22f5b8ba1@acm.org>
- <DM6PR04MB6575FAF59F9F3499BEC4128CFCF42@DM6PR04MB6575.namprd04.prod.outlook.com>
-From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-In-Reply-To: <DM6PR04MB6575FAF59F9F3499BEC4128CFCF42@DM6PR04MB6575.namprd04.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: l7PSWFsDcmJaTaLfgHQQRpLzC6ozpM-u
-X-Proofpoint-ORIG-GUID: l7PSWFsDcmJaTaLfgHQQRpLzC6ozpM-u
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-23_02,2024-05-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 phishscore=0 impostorscore=0 spamscore=0 mlxscore=0
- mlxlogscore=999 adultscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405010000 definitions=main-2405230036
+In-Reply-To: <f3646d66-01f0-476c-8b7f-5df102790fcb@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 5/22/2024 8:18 PM, Avri Altman wrote:
->> On 5/22/24 13:56, Bao D. Nguyen wrote:
->>> On 5/22/2024 11:18 AM, Bart Van Assche wrote:
->>>> Since the described issue is only encountered during development, why to
->>>> modify the UIC command timeout unconditionally?
+Hi Dmitry,
+
+On 21/05/24 12:39, Vignesh Raman wrote:
+> Hi Dmitry,
+> 
+> On 20/05/24 16:32, Dmitry Baryshkov wrote:
+>> On Fri, May 17, 2024 at 02:54:59PM +0530, Vignesh Raman wrote:
+>>> With latest IGT, the tests tries to load the module and it
+>>> fails. So build the virtual GPU driver for virtio as module.
+>>
+>> Why? If the test fails on module loading (if the driver is built-in)
+>> then it's the test that needs to be fixed, not the kerenel config.
+>>
+>> It's fine as a temporal workaround, but please include a link to the
+>> patch posted to fix the issue.
+> 
+> I will recheck this issue and post a link to the fix.
+
+
+This was the issue seen with IGT commit 
+https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/commit/7d1841317c13c19c26b6352f923b205d43742c55 
+
+
+[    4.450571] [drm:virtio_gpu_init] *ERROR* failed to find virt queues
+[    4.450962] virtio_gpu virtio0: probe with driver virtio_gpu failed 
+with error -2
+[    5.471417] [drm:virtio_gpu_init] *ERROR* failed to find virt queues
+[    5.471916] virtio_gpu virtio0: probe with driver virtio_gpu failed 
+with error -2
+
+https://gitlab.freedesktop.org/vigneshraman/linux/-/jobs/59037122
+
+With the recent uprev of IGT to 
+https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/commit/0df7b9b97f9da0e364f5ee30fe331004b8c86b56,
+this issue is not seen. So will drop this commit.
+
+Regards,
+Vignesh
+
+> 
+> Regards,
+> Vignesh
+> 
+>>
 >>>
->>> The vendors can enjoy the default 500ms UIC timeout if they prefer.
->>> As long as they don't write to hba->uic_cmd_timeout in the vendor's
->> initialization routine, the default value of 500ms will be used.
+>>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+>>> ---
+>>>
+>>> v2:
+>>>    - No changes.
+>>>
+>>> ---
+>>>   drivers/gpu/drm/ci/build.sh       | 1 -
+>>>   drivers/gpu/drm/ci/igt_runner.sh  | 6 +++---
+>>>   drivers/gpu/drm/ci/image-tags.yml | 4 ++--
+>>>   drivers/gpu/drm/ci/test.yml       | 1 +
+>>>   drivers/gpu/drm/ci/x86_64.config  | 2 +-
+>>>   5 files changed, 7 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
+>>> index a67871fdcd3f..e938074ac8e7 100644
+>>> --- a/drivers/gpu/drm/ci/build.sh
+>>> +++ b/drivers/gpu/drm/ci/build.sh
+>>> @@ -157,7 +157,6 @@ fi
+>>>   mkdir -p artifacts/install/lib
+>>>   mv install/* artifacts/install/.
+>>> -rm -rf artifacts/install/modules
+>>>   ln -s common artifacts/install/ci-common
+>>>   cp .config artifacts/${CI_JOB_NAME}_config
+>>> diff --git a/drivers/gpu/drm/ci/igt_runner.sh 
+>>> b/drivers/gpu/drm/ci/igt_runner.sh
+>>> index 20026612a9bd..55532f79fbdc 100755
+>>> --- a/drivers/gpu/drm/ci/igt_runner.sh
+>>> +++ b/drivers/gpu/drm/ci/igt_runner.sh
+>>> @@ -30,10 +30,10 @@ case "$DRIVER_NAME" in
+>>>               export IGT_FORCE_DRIVER="panfrost"
+>>>           fi
+>>>           ;;
+>>> -    amdgpu)
+>>> +    amdgpu|virtio_gpu)
+>>>           # Cannot use HWCI_KERNEL_MODULES as at that point we don't 
+>>> have the module in /lib
+>>> -        mv /install/modules/lib/modules/* /lib/modules/.
+>>> -        modprobe amdgpu
+>>> +        mv /install/modules/lib/modules/* /lib/modules/. || true
+>>> +        modprobe --first-time $DRIVER_NAME
+>>>           ;;
+>>>   esac
+>>> diff --git a/drivers/gpu/drm/ci/image-tags.yml 
+>>> b/drivers/gpu/drm/ci/image-tags.yml
+>>> index 60323ebc7304..328f5c560742 100644
+>>> --- a/drivers/gpu/drm/ci/image-tags.yml
+>>> +++ b/drivers/gpu/drm/ci/image-tags.yml
+>>> @@ -4,9 +4,9 @@ variables:
+>>>      DEBIAN_BASE_TAG: "${CONTAINER_TAG}"
+>>>      DEBIAN_X86_64_BUILD_IMAGE_PATH: "debian/x86_64_build"
+>>> -   DEBIAN_BUILD_TAG: "2023-10-08-config"
+>>> +   DEBIAN_BUILD_TAG: "2024-05-09-virtio"
+>>> -   KERNEL_ROOTFS_TAG: "2023-10-06-amd"
+>>> +   KERNEL_ROOTFS_TAG: "2024-05-09-virtio"
+>>>      DEBIAN_X86_64_TEST_BASE_IMAGE: "debian/x86_64_test-base"
+>>>      DEBIAN_X86_64_TEST_IMAGE_GL_PATH: "debian/x86_64_test-gl"
+>>> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+>>> index 612c9ede3507..864ac3809d84 100644
+>>> --- a/drivers/gpu/drm/ci/test.yml
+>>> +++ b/drivers/gpu/drm/ci/test.yml
+>>> @@ -350,6 +350,7 @@ virtio_gpu:none:
+>>>     script:
+>>>       - ln -sf $CI_PROJECT_DIR/install /install
+>>>       - mv install/bzImage /lava-files/bzImage
+>>> +    - mkdir -p /lib/modules
 >>
->> Since this issue is not vendor specific, I think it would be better to
->> modify the UFSHCI core driver only. Has it been considered to introduce a
->> kernel module parameter for setting the UIC command timeout instead of the
->> approach of this patch? As you probably know there are multiple mechanisms
->> for specifying kernel module parameters, e.g. the bootargs parameter in the
->> device tree.
-> Since the problem statement is "During product development...", why not just a debugfs?
-
-Hi Avri, if I am not mistaken, debugfs is not available at the initial 
-stage of ufs probe/init time right?
-
-> 
-> Thanks,
-> Avri
-> 
+>> Is it necessary to create it manually here?
 >>
->> Thanks,
+>>>       - mkdir -p $CI_PROJECT_DIR/results
+>>>       - ln -sf $CI_PROJECT_DIR/results /results
+>>>       - install/crosvm-runner.sh install/igt_runner.sh
+>>> diff --git a/drivers/gpu/drm/ci/x86_64.config 
+>>> b/drivers/gpu/drm/ci/x86_64.config
+>>> index 1cbd49a5b23a..78479f063e8e 100644
+>>> --- a/drivers/gpu/drm/ci/x86_64.config
+>>> +++ b/drivers/gpu/drm/ci/x86_64.config
+>>> @@ -91,7 +91,7 @@ CONFIG_KVM=y
+>>>   CONFIG_KVM_GUEST=y
+>>>   CONFIG_VIRT_DRIVERS=y
+>>>   CONFIG_VIRTIO_FS=y
+>>> -CONFIG_DRM_VIRTIO_GPU=y
+>>> +CONFIG_DRM_VIRTIO_GPU=m
+>>>   CONFIG_SERIAL_8250_CONSOLE=y
+>>>   CONFIG_VIRTIO_NET=y
+>>>   CONFIG_VIRTIO_CONSOLE=y
+>>> -- 
+>>> 2.40.1
+>>>
 >>
->> Bart.
-> 
-
 
