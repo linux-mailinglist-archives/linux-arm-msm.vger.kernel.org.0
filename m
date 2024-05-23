@@ -1,214 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-20298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A0F68CCFBF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 11:58:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 070358CCFC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 11:59:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B96BE1F235C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 09:58:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B7931F23816
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 09:59:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E2F013D538;
-	Thu, 23 May 2024 09:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1F1313D896;
+	Thu, 23 May 2024 09:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yLE7n8mI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z0nP5/Lv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD3813D61E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 09:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76CC13D521
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 09:59:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716458301; cv=none; b=ueTAjIj2sqo0rEH22VIf0cnFSB47kS9LLsB/Uxx483hMRAxMyG8gaqmegv4qPF6NaxkB2udg7Jl2YiO+72cl3vrd3a9G8UbWqkBfS5Y17Icghd8mr3SHBPYqtQokWutq/FWB9wZzkuVvD1sDkiCQTBu9Es18S5QwAl6p1qf/zSA=
+	t=1716458390; cv=none; b=WX6s6Idqfa6JdWWDmgRNZS3T7wKMXTyikffTpbEoXwT9Cdhe0BYJI/WgiyrqzbNS7cEF5/fMHUq1VEb6CfB19EB4id5SIqCW5GTGOsk4z0fWhmTSysLT+1RfxP3n3/rMbkoyyCt0VQI+3IevwynsD6Q8q4n5iFSnE+ZWRWx7d7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716458301; c=relaxed/simple;
-	bh=MeQhY+H63qfrwa+ZV9kpemLqTZnKVQF3cpOAfLeW+7w=;
+	s=arc-20240116; t=1716458390; c=relaxed/simple;
+	bh=+59I1LMHz5513L5Tt9Gn+0+i8+g532fE4EtvdMuItaE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aNniVUp7oE7FgfJyCBGSzYYMa+2bT8RD8moDPQh5334yc/2t9jFx8YrN4/fRdRwyfeQSWtfQ50biFIUAdeDTdaBjhCoj8myGODAKHAbkSbOClnQvFsWvOo1DgAz+VYZfGEGFc/HUa+kQyToBlmwf7wUPAjPT1Ur5GaCMpVRFQP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yLE7n8mI; arc=none smtp.client-ip=209.85.128.169
+	 To:Cc:Content-Type; b=Fy0j6UcD+t8YCSRg3u+ck3Qy3aSIvIYR4tDby8iBRrVSVE3RoZxp0m9cYJMIKkFOAz60/eDA367GaLbg3sel8OLIzJ822lOOag8tmwzhJvTsPHAdJvaPYNs4aaSGc95vo9YHpwE2JdC5qer8vnRcre7ibfWzNlCFOBFUa5bLQTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z0nP5/Lv; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-627dfbcf42aso18545637b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 02:58:19 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dbed0710c74so5010701276.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 02:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716458299; x=1717063099; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716458387; x=1717063187; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y1sOYJIvzvzoC2yvl9zoEh4JKtXSdU2JwzVDJiDmqfo=;
-        b=yLE7n8mIg5EmGbVB2vV9x3KqXwPYqq+7m2+JVDM6gIezCcQz8OgzPJ/3WamOpI0M7t
-         uuaZxqSSZM4HPcgxIegpijGNwZPCixRyt0AOKWfrtK+Pz93TA3SHfhbGx3udUGdHQ3OT
-         5f+fusRXSkaMaZ6V8q2/EZHsHC65cfDcmsf05HH5wbuUVORK7GuVnglTlZOyzhJdmixU
-         zTWBB1FlGDPtdO500Ci1Gcdp8eoyE7rJUWfF5akC7ewR/Iz5asTqB21B+MYpTDoKIhOY
-         Yge39OX1XQ4vxwdrxzhRl4EggfmLmXItlrZqm/1hG5z5w6BGnytMRf3/PQVCQX7FwEDP
-         QHYQ==
+        bh=4eLg5W63v6nyWYGdaPlQGL+64DpELLePyMxWT5qrNUU=;
+        b=z0nP5/LvIxvVLOMeNooQdvUytMDrVgTnDiIhr83FXLgKBp3m4dE7VGLZwXZNLGEEDc
+         KuWYQZyeYZ/NRsYOHtxZ4ud/6VOy65ygkLfS7jR1zCZM7EA+17oaKnnlSTVfaeLhXWaM
+         f7kNzbmEQTvftoT8F9YLLqifFrBA6rIUWhFq5JE424JbDSVv9pa+oVAUZhYAv8VRNuAf
+         Vm1bpR8yz6vIelJ9s/4cSM9OeyMVNVz35hZfNgU4uo4cgCesa/CA+k8X6I7NrTyvbOPe
+         /0xQOGV5vM8JaS3Q9Za/Jg2zn3O4wmYv6WwdCJgC6o6PwEzMZzawrH6Gnt7g5xK2D2Z0
+         IzRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716458299; x=1717063099;
+        d=1e100.net; s=20230601; t=1716458387; x=1717063187;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=y1sOYJIvzvzoC2yvl9zoEh4JKtXSdU2JwzVDJiDmqfo=;
-        b=TvXm3u7WHFiZcmsf1jaopn7wSvapPACjagXTH3Li4Wr1iHR8oWDGM65S8+DYuuzsB1
-         SF9UUy3Xg9ccu1LUGIoJnpsmu9J9shIx5tAJsxJ+E0Fx5dR44/oE499x349F/LuesFz0
-         U0TqKX7ew7w6CYyvH9DyBmZBorKidY5UwDcehr4TkyUawH36m2lXHikPiRKzu1RCPM4J
-         vVslnyODPWLINHgwdCLz8HgMoUW+fWmeLf7otSCZ6QK+cmNA7PI7dygkei4PqkJ3bVhG
-         gMcp35YBTp/nNrftjEY34LXEj15UQ7MDE6yYHvE2ekEPvmANs3awMWcrFvrTu205jvzy
-         OW+A==
-X-Forwarded-Encrypted: i=1; AJvYcCXH78AOTJEuxBp3V79JH+QqZByyKP++BqlEvr7jjW2IpjaRX7C8wgWdgkbzmwJBL8DbMxxfCB8Yy+MvDXneFQhlLJtLGq47wC/XJNLfDA==
-X-Gm-Message-State: AOJu0YzxLibn3Um7rA6XYYZH9cGUVBXH5vJTWEyGD9Js41U8PAWbubVF
-	LeOKJaOXNSgFKeasyjxuvmGVb/UAitA8LB1JoZ8knxl/wOP9s8Be4FEKVUaloL9aWgCIVfAZ3gL
-	IjsRchsvOkO51nYwWWhfVsuvpvgnSWSuZB+V9ig==
-X-Google-Smtp-Source: AGHT+IFSx7eH9OK/hI8iq0vTScgxcbZqJWA8/FXYjaRvJCffCTFJs80i56nCHfpAt38cyIIYw5RoPljn2ZLPu/XiJlY=
-X-Received: by 2002:a0d:e206:0:b0:61b:3304:cdc7 with SMTP id
- 00721157ae682-627e4824bc6mr43478167b3.29.1716458298915; Thu, 23 May 2024
- 02:58:18 -0700 (PDT)
+        bh=4eLg5W63v6nyWYGdaPlQGL+64DpELLePyMxWT5qrNUU=;
+        b=eSAznIzwZdQcbwsLQPdbOkxC+Ib/oNQbIfFKoNuif2ll0xBAwu0rBoSC/Ir1kNC1V0
+         Jn3C4IJK2ZXkD1K0sAWiTgCDKza756P6A/gb+19wVqnSc/1beONXf82KZbhB9H3DdYKr
+         RPyazskYl/zDJzCMxCVfyaZ9TZHQwuh53B2/7yXceIOdO5G8P5466Z4By8UdzUHxDZsi
+         tF58WB3vpeiSzzPLzLa43/gSI9tqztyMQ8Lyf4OXf8WY0UrdBbvvZoSP4Ei48SJR4/R+
+         MdXAIg+R7qmRGKO9cZlGj0WPYNlfxtjpcSEF617qTvoSSfBM8rzSCm4G3mUhahdJWygx
+         LkdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUNiSF5NVGg3yIGayWad0obWpFDaunmgx89jGWJDXUaM6i3d0WBCOhtkcAFOtYA5C7glVDQYO/rPqq6Xfy06R7nziUZh7WWH+/bqQJ7rg==
+X-Gm-Message-State: AOJu0YzJfg8wqOzof79XQbcX+bOTQWwGp5IfuJ7WeXmEYBSpnhiQWZZp
+	hcl1p6Ib4Y1OGWMe8E4Ewj/3qLj7d/9TE7heVg99Jniq9UA45aNsF/dgQnV0MMggo1/02AFljBk
+	Ux8LLh9gLcZ4G8xSHa5aOceSMaFFeigxS+2PiJg==
+X-Google-Smtp-Source: AGHT+IEH2bet0vxbyQkGUI55R017CbgvtHVbrVup5m0zjkPeCkh3N7ZUjMndzd5BhJJAs4TMZp+oQ52G6r3Sss4urHM=
+X-Received: by 2002:a25:b181:0:b0:dee:607c:3528 with SMTP id
+ 3f1490d57ef6-df4e0a9cfa9mr4821493276.3.1716458387642; Thu, 23 May 2024
+ 02:59:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
- <20240520-dpu-handle-te-signal-v1-1-f273b42a089c@linaro.org>
- <224fa477-07ba-e7b2-2f7d-8f7d21f4a0c7@quicinc.com> <CAA8EJpp8kRPKboHNHwD+R5f1AcndjaQdGG=Q4ygmRE9VMNievQ@mail.gmail.com>
- <5cde2f43-89ab-d2d4-d68e-605f8f5d1da7@quicinc.com>
-In-Reply-To: <5cde2f43-89ab-d2d4-d68e-605f8f5d1da7@quicinc.com>
+References: <20240517092502.647420-1-vignesh.raman@collabora.com>
+ <20240517092502.647420-2-vignesh.raman@collabora.com> <2qzmfv3oc6feihwxu3tl37rg6w3qsj2vddu5olvqk6vhqr26cc@bxu5y6ijvtfa>
+ <9cd0667a-12ee-4d45-80e8-dc34259bf01d@collabora.com>
+In-Reply-To: <9cd0667a-12ee-4d45-80e8-dc34259bf01d@collabora.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 23 May 2024 12:58:07 +0300
-Message-ID: <CAA8EJpoMtr6OGjL8qq-cHadQSOVyDAaL8=2TLvOjBbYV2Z7+Mg@mail.gmail.com>
-Subject: Re: [PATCH 1/7] dt-bindings: display/msm/dsi: allow specifying TE source
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Krishna Manikandan <quic_mkrishn@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org
+Date: Thu, 23 May 2024 12:59:36 +0300
+Message-ID: <CAA8EJprVVkQO7aPkehwL2zhYkGRkm4Foc13ErfuY6ikBA_4nLQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] drm/ci: uprev mesa version
+To: Vignesh Raman <vignesh.raman@collabora.com>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com, 
+	helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch, 
+	robdclark@gmail.com, david.heidelberg@collabora.com, 
+	guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com, 
+	mcanal@igalia.com, linux-mediatek@lists.infradead.org, 
+	linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+	amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	intel-gfx@lists.freedesktop.org, virtualization@lists.linux-foundation.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 23 May 2024 at 02:57, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Thu, 23 May 2024 at 09:07, Vignesh Raman <vignesh.raman@collabora.com> wrote:
 >
+> Hi Dmitry,
 >
->
-> On 5/22/2024 1:05 PM, Dmitry Baryshkov wrote:
-> > On Wed, 22 May 2024 at 21:38, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> On 20/05/24 16:13, Dmitry Baryshkov wrote:
+> > On Fri, May 17, 2024 at 02:54:57PM +0530, Vignesh Raman wrote:
+> >> zlib.net is not allowing tarball download anymore and results
+> >> in below error in kernel+rootfs_arm32 container build,
+> >> urllib.error.HTTPError: HTTP Error 403: Forbidden
+> >> urllib.error.HTTPError: HTTP Error 415: Unsupported Media Type
 > >>
+> >> Uprev mesa to latest version which includes a fix for this issue.
+> >> https://gitlab.freedesktop.org/mesa/mesa/-/commit/908f444e
 > >>
+> >> Use id_tokens for JWT authentication. Since s3 bucket is migrated to
+> >> mesa-rootfs, update the variables accordingly. Also copy helper scripts
+> >> to install, so that the ci jobs can use these scripts for logging.
 > >>
-> >> On 5/20/2024 5:12 AM, Dmitry Baryshkov wrote:
-> >>> Command mode panels provide TE signal back to the DSI host to signal
-> >>> that the frame display has completed and update of the image will not
-> >>> cause tearing. Usually it is connected to the first GPIO with the
-> >>> mdp_vsync function, which is the default. In such case the property can
-> >>> be skipped.
-> >>>
+> >> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+> >> ---
 > >>
-> >> This is a good addition overall. Some comments below.
+> >> v2:
+> >>    - Uprev to recent version and use id_tokens for JWT authentication
 > >>
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> ---
-> >>>    .../bindings/display/msm/dsi-controller-main.yaml        | 16 ++++++++++++++++
-> >>>    1 file changed, 16 insertions(+)
-> >>>
-> >>> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> >>> index 1fa28e976559..c1771c69b247 100644
-> >>> --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> >>> +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-> >>> @@ -162,6 +162,21 @@ properties:
-> >>>                    items:
-> >>>                      enum: [ 0, 1, 2, 3 ]
-> >>>
-> >>> +              qcom,te-source:
-> >>> +                $ref: /schemas/types.yaml#/definitions/string
-> >>> +                description:
-> >>> +                  Specifies the source of vsync signal from the panel used for
-> >>> +                  tearing elimination. The default is mdp_gpio0.
+> >> ---
+> >>   drivers/gpu/drm/ci/build-igt.sh   |  2 +-
+> >>   drivers/gpu/drm/ci/build.sh       |  6 +++--
+> >>   drivers/gpu/drm/ci/container.yml  | 12 +++------
+> >>   drivers/gpu/drm/ci/gitlab-ci.yml  | 44 +++++++++++++++++++++----------
+> >>   drivers/gpu/drm/ci/image-tags.yml |  2 +-
+> >>   drivers/gpu/drm/ci/lava-submit.sh |  4 +--
+> >>   drivers/gpu/drm/ci/test.yml       |  2 ++
+> >>   7 files changed, 44 insertions(+), 28 deletions(-)
 > >>
-> >> panel --> command mode panel?
-> >>
-> >>> +                enum:
-> >>> +                  - mdp_gpio0
-> >>> +                  - mdp_gpio1
-> >>> +                  - mdp_gpio2
-> >>
-> >> are gpio0, gpio1 and gpio2 referring to the vsync_p, vsync_s and vsync_e
-> >> sources?
 > >
-> > No idea, unfortunately. They are gpioN or just mdp_vsync all over the
-> > place. For the reference, in case of the SDM845 and Pixel3 the signal
-> > is routed through SoC GPIO12.
+> > [skipped]
 > >
+> >> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+> >> index 8bc63912fddb..612c9ede3507 100644
+> >> --- a/drivers/gpu/drm/ci/test.yml
+> >> +++ b/drivers/gpu/drm/ci/test.yml
+> >> @@ -150,6 +150,8 @@ msm:sdm845:
+> >>       BM_KERNEL: https://${PIPELINE_ARTIFACTS_BASE}/arm64/cheza-kernel
+> >>       GPU_VERSION: sdm845
+> >>       RUNNER_TAG: google-freedreno-cheza
+> >> +    DEVICE_TYPE: sdm845-cheza-r3
+> >> +    FARM: google
+> >
+> > I see that this is the only user of the FARM: tag. Is it correct?
 >
-> GPIO12 on sdm845 is mdp_vsync_e.
->
-> Thats why I think its better we use mdp_vsync_p/s/e instead of mdp_gpio0/1/2
+> No, we need to add FARM variable for other jobs as well.
 
-Sure. This matches pins description. Are you fine with changing
-defines in DPU driver to VSYNC_P / _S / _E too ?
+Why? Even if we have to, we don't have them now and the change doesn't
+seem to be related to the uprev'ing of mesa. So this probably should
+go to a separate commit.
 
 >
-> >> In that case wouldnt it be better to name it like that?
+> > Also we miss DEVICE_TYPE for several other boards. Should we be adding
+> > them?
+>
+> Yes, device type needs to be added for msm:apq8016, msm:apq8096, virtio_gpu.
+>
+> I will add this. Thanks.
+
+I'd guess, separate commit too.
+
+>
+> Regards,
+> Vignesh
+>
+> >
+> >>     script:
+> >>       - ./install/bare-metal/cros-servo.sh
 > >>
-> >>> +                  - timer0
-> >>> +                  - timer1
-> >>> +                  - timer2
-> >>> +                  - timer3
-> >>> +                  - timer4
-> >>> +
+> >> --
+> >> 2.40.1
 > >>
-> >> These are indicating watchdog timer sources right?
 > >
-> > Yes.
-> >
-> >>
-> >>>        required:
-> >>>          - port@0
-> >>>          - port@1
-> >>> @@ -452,6 +467,7 @@ examples:
-> >>>                              dsi0_out: endpoint {
-> >>>                                       remote-endpoint = <&sn65dsi86_in>;
-> >>>                                       data-lanes = <0 1 2 3>;
-> >>> +                                   qcom,te-source = "mdp_gpio2";
-> >>
-> >> I have a basic doubt on this. Should te-source should be in the input
-> >> port or the output one for the controller? Because TE is an input to the
-> >> DSI. And if the source is watchdog timer then it aligns even more as a
-> >> property of the input endpoint.
-> >
-> > I don't really want to split this. Both data-lanes and te-source are
-> > properties of the link between the DSI and panel. You can not really
-> > say which side has which property.
-> >
->
-> TE is an input to the DSI from the panel. Between input and output port,
-> I think it belongs more to the input port.
 
-Technically we don't have in/out ports. There are two ports which
-define a link between two instances. For example, if the panel
-supports getting information through DCS commands, then "panel input"
-also becomes "panel output".
 
->
-> I didnt follow why this is a link property. Sorry , I didnt follow the
-> split part.
 
-There is a link between the DSI host and the panel. I don't want to
-end up in a situation when the properties of the link are split
-between two different nodes.
-
->
-> If we are unsure about input vs output port, do you think its better we
-> make it a property of the main dsi node instead?
-
-No, it's not a property of the DSI node at all. If the vendor rewires
-the panel GPIOs or (just for example regulators), it has nothing to do
-with the DSI host.
-
---
+-- 
 With best wishes
 Dmitry
 
