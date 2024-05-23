@@ -1,61 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-20307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 536088CD375
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 15:15:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05B278CD381
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 15:16:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DD1B2852F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 13:15:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37BFB1C20D05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 13:16:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4F1F14A604;
-	Thu, 23 May 2024 13:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3777A14A62D;
+	Thu, 23 May 2024 13:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFFsoC1r"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CsPp0LI5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B281D52D;
-	Thu, 23 May 2024 13:15:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B79114A60C;
+	Thu, 23 May 2024 13:15:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716470125; cv=none; b=m/HJqbEMFKn3jT/k0SytKqTioR1+iJ+E29WrwWq1c7f95jFk5wll6pwT0FuNtEa4BBq90IizMTBeiobi3VhWulzNf1MXHl7bkMaHQqsI6ZjWVDnbOlwWT5cpcTCU0Un8pLbo7fwt8E+wXddNPzrsWMmNGRAxta+egmyERvq0bJY=
+	t=1716470155; cv=none; b=BmEtGfAKzHrshPoDdADCeo78bLkvEA51CXNYrOOQCPTSuSk9Hv2oEUlhmcK0M4hgHg1VL6Iz8x2qo78+fW/aN/5gFeLtS8BZyYT1+a+Bu10rHs+MoO9e6okAKFqxYt0eCb/Ot9pY86vG/ZbMCsegu9893ZDcwaFJKkUbcp7rQC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716470125; c=relaxed/simple;
-	bh=jowO80mJUiu32oLMQWrZ456/ZNEBno7fgecgZXoVaJA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g23KOgzDYylQCjfJLJs60hnd4riatGDfabE01396OwolIaRxyFb+5754gLyufivoW4H1O4+alr+bBRm+0oM0SAWp9jg6i4aSu2htrlhsy9S1P7q+FMR8ggHQLUb99KKx+MjpvbLcTRC7Dd+EtPkQ8wWvzXNngPlw63MJMbiA3gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFFsoC1r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F4CC3277B;
-	Thu, 23 May 2024 13:15:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1716470125;
-	bh=jowO80mJUiu32oLMQWrZ456/ZNEBno7fgecgZXoVaJA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kFFsoC1r/Wc/wdKoh8KbKYkvQ1uGGUUbdbaRx+B0jkZ3CuQ33G8gczaRPg7fuOVrN
-	 nmR3R2t3Jsw0ga9yd2bHmvyTuDW2y6/JGrxWDaJo7M50FZ+Xj/F1yZ8GXwfcqCWD0z
-	 BASVXWNsNimIby+ns6luOwJCNWOrKSxfPGxCdDLQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
-	Alex Elder <elder@linaro.org>
-Subject: [PATCH 5.4 11/16] arm64: dts: qcom: Fix interrupt-map parent address cells
-Date: Thu, 23 May 2024 15:12:44 +0200
-Message-ID: <20240523130326.174127361@linuxfoundation.org>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240523130325.743454852@linuxfoundation.org>
-References: <20240523130325.743454852@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	s=arc-20240116; t=1716470155; c=relaxed/simple;
+	bh=Ux+x518pl7/uep26zN3pHNo6TJlFmAenHd5rKrgkXkY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AOkwLfuiurkTLQBafkYVTFDkREYbm9ohyCxaszhKJObgR3iULV7nOD7N0no0Fqlmz+HML7JUaRXcRJp7lAGzrdUOqhs24G6xunPOGTUxMsRMbpQHmklKfiQsVG2eUK3/lC8fMGjgrhre3YtNwWlgRHH4/vSuqHmy0K+wNBVaIs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CsPp0LI5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44NCjM4H016562;
+	Thu, 23 May 2024 13:15:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=10591ahE1WkTed7Dc8TeF5
+	gdlCW9JVXi5D/o2l11h90=; b=CsPp0LI5+qMyZ4K5+GQK5NKFak0EpHZG2nLXY7
+	pAcKldGi0g8WXpRvRVcnG9ZGAg9X70c1T3FLcSfANZjAvXB/xyRjE+AXEW+18wId
+	Mp3u+w03MtNQKW0zkuzfkLMldOTrnIm+nobd3ycEwL6aM840iWTTvW6Hjthsd1ib
+	fw0EaUF5xAeQvo0v3KQIF5+sbQKudEuwe+NW/2UsXtDFe8PDPXptpAQV5tincWqT
+	b9JR3XrlLsale48LbTSYyy20wUotfAzgySYOnmTSxCoM6i8sDmBLtZXlrFVPeyiR
+	z4KZMUzFJ3tzlhNtGZe4QLcNTTWjCtn4sNim8h8QJPE7O0QQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y9y04s5vp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 May 2024 13:15:46 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44NDFj2o004185
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 May 2024 13:15:45 GMT
+Received: from hu-uchheda-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 23 May 2024 06:15:41 -0700
+From: Umang Chheda <quic_uchheda@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <quic_uchheda@quicinc.com>, <quic_kamalw@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Enable PMK8350 RTC module
+Date: Thu, 23 May 2024 18:45:28 +0530
+Message-ID: <20240523131528.3454431-1-quic_uchheda@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,47 +76,45 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YI5QQNDMSc4tyFl8BLXQeBJ73NLUh6a7
+X-Proofpoint-ORIG-GUID: YI5QQNDMSc4tyFl8BLXQeBJ73NLUh6a7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-23_08,2024-05-23_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 suspectscore=0 phishscore=0 clxscore=1011 malwarescore=0
+ mlxlogscore=676 impostorscore=0 mlxscore=0 adultscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405230091
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+Enable PMK8350 RTC module that is found on qcs6490-rb3gen2.
 
-------------------
-
-From: Rob Herring <robh@kernel.org>
-
-commit 0ac10b291bee84b00bf9fb2afda444e77e7f88f4 upstream.
-
-The 'interrupt-map' in several QCom SoCs is malformed. The '#address-cells'
-size of the parent interrupt controller (the GIC) is not accounted for.
-
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20210928192210.1842377-1-robh@kernel.org
-Signed-off-by: Alex Elder <elder@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Umang Chheda <quic_uchheda@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -872,10 +872,10 @@
- 			interrupts = <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
- 			interrupt-map-mask = <0 0 0 0x7>;
--			interrupt-map =	<0 0 0 1 &intc 0 135 IRQ_TYPE_LEVEL_HIGH>,
--					<0 0 0 2 &intc 0 136 IRQ_TYPE_LEVEL_HIGH>,
--					<0 0 0 3 &intc 0 138 IRQ_TYPE_LEVEL_HIGH>,
--					<0 0 0 4 &intc 0 139 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-map =	<0 0 0 1 &intc 0 0 135 IRQ_TYPE_LEVEL_HIGH>,
-+					<0 0 0 2 &intc 0 0 136 IRQ_TYPE_LEVEL_HIGH>,
-+					<0 0 0 3 &intc 0 0 138 IRQ_TYPE_LEVEL_HIGH>,
-+					<0 0 0 4 &intc 0 0 139 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+index a085ff5b5fb2..5cc259c5b262 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+@@ -602,6 +602,10 @@ &mdss_edp_phy {
+ 	status = "okay";
+ };
  
- 			clocks = <&gcc GCC_PCIE_0_PIPE_CLK>,
- 				 <&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-
++&pmk8350_rtc {
++	status = "okay";
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+-- 
+2.25.1
 
 
