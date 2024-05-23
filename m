@@ -1,199 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-20317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02CA28CDBF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 23:25:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45D718CDC28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 23:35:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F2691C23007
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 21:25:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EED272834EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 21:35:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60005128813;
-	Thu, 23 May 2024 21:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 196CE127E06;
+	Thu, 23 May 2024 21:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UzaeEZ8P"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bjbk3BFa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8ED128375;
-	Thu, 23 May 2024 21:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94050811FF;
+	Thu, 23 May 2024 21:34:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716499513; cv=none; b=a+FsRNjBOywwzOKo1DoIbA5hv8YJCTG/Va1fEHn2aSfxyBXaTMZPtQn5U5wSHGfoOukpfxLAuuUtc2hBe0Wk1yVN33BN9vuuUrBUBbacLe7t2QlSMDi30CK1IQ6JFqlXV4bNogm1TxK//TOUO/P73n0LRx7V+IP4hdbWEhj4k0Q=
+	t=1716500100; cv=none; b=LfRfiCuf4Y7MxrFbMuChp/1UaRVC1VJIq8ThQUxpuNRypqWgKVSqEnGQTPtVEdwlwtfUVfp+tk5h2OQhsgDgE7tna03+2LwBebmLqA6dYIBo8xmqwCT9El5YApsgimHbrrNamgLDCfsfYFoUe3zwnC2NhDDaJ2SdOq2Y77pB6uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716499513; c=relaxed/simple;
-	bh=6gMDag0IBE3/Dtgu37LmaX1zY0IArivgLqDHwuWD/PM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HAh0csMW4tlSnAZT7+b93lGWEcir6q0Mlq4eKgVovfXmB1IxNAZzYCDGgsPsJKRd3BG8YBp3zh/kdZi1sX1pnTn6vtmaaZmz5GNhzSDxF6oOl0p7xcofWcHH5zZ6d1+l4TSyn910jBO0eoJXkMqdmXeNdudJXFbn5smFxDexNLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UzaeEZ8P; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1716500100; c=relaxed/simple;
+	bh=TtkKeCps0ejierSSi4w3QTlHUP2b6nZhMZC8/xjZifE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JwYR/qGFI07gtC3TyXuFtlMopZWW7+DGOYJRXRSYJwgCDTqxJmTNqSgQ8ChmnKyCSTkgJegRcX9clCQDeVuk6m44dDExZgPf2WdougfjA3sR+xEkzJWSKgEng0EQU2Tv0VXBnDRAopsHDz4gu6RAENWZouCnLVg8GMJ21xNZpoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bjbk3BFa; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-421087b6f3fso2393425e9.1;
-        Thu, 23 May 2024 14:25:11 -0700 (PDT)
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f333e7a669so16263335ad.3;
+        Thu, 23 May 2024 14:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716499509; x=1717104309; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=19nJ81IbZdMF8t0gAmZF3gea97mrAihPPznRZWLIEpI=;
-        b=UzaeEZ8PXo4YI93mKHUdMI2P22CcN4PELy3TE9JQdHI9/x5qI77a/9Wn45PYOhuZU/
-         VCIWuNw5i85cdJatiSmGlO8vs2QjEyVDdGODUzyRwykaXInokNX/t22d4AfsUWzuXzy4
-         p/dZAgUHk/4p7AJEmBJ/VjfbqqoeYNtWlw8DKXsn/LEJQP8ST2LGfrJyWPh5OfS8Pi5Z
-         gZzgRYo+Z1HYq1VN8a/OnMyD1GkTOWUB/xmcg0Nd7yFnnmJWM1FHjqbyhVQmJWz4GwCK
-         Ep9pJrpTc42ufMaNtDgQcqLwhf9AOaQPcs8v89hXUIOoFMUk5sGWSVec1VnYtqS95IyH
-         WJbA==
+        d=gmail.com; s=20230601; t=1716500098; x=1717104898; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T7a2uMVZssHO/XdZkFjaZx6Fve2Wj78fROEuqBTUEKo=;
+        b=Bjbk3BFam0qDIrREoEVZ24ewxsMyexmPY+M40Pgl4Y+pIz4sfYReqb/m+r8S3h2N+Y
+         NKAtd03Kvh4MOrbe+inHjUglrbW132pKzmX9CJtLprhXIthQMf0gznEhUSG1KEVl08aB
+         4VRbq36nJJQiqsX6RwfprCIzKw7LeyoiuMfBnHkbOUJCzJI3xAVaoTI6QD+nGE74Y4qB
+         wvo2bsHPY9zXDtahdVy/LeV9PPvEiDG/dkfkLKdc15CGrOibrsgF37o/TyOOq7U/FYEb
+         Wv4zEXByXeHPqZxeJzaw/0ptnpDsfY9uJLZjO3MQUkid2vY1W0u2qqCK4Yv3P8PsZO09
+         CPLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716499509; x=1717104309;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=19nJ81IbZdMF8t0gAmZF3gea97mrAihPPznRZWLIEpI=;
-        b=lFGK/iurrOPQ/mefXs668NCPOish1y24sdjO2tP5Zhgux+unV5McF7opwE9XPBMzuY
-         vU80ZS5pHpyw2M9XaQ33u6GKF+a3KOEabmiFu/Dvq2uxXh+2TlASIJ7rHq8ITcNDX+5D
-         QTWYJ0UNH02d7W+PXpMP/pkdxwc2D1YhSREXXIQ++l5Tx7bemDcDmPE9YaL7eXFJixl8
-         ZyjBQDWEb3INpse9eusLMK7JR2NwdNXWXgm9oBFTaUB0Sn7xo5ieRbh+G/mow71ilM6c
-         y43p6cxZsvvjoh1PPf1FERn4i1Jdg2/ul8LA+cgFJo70+5Z8sGOcT5yAp6tp4mtxe3KR
-         HsZg==
-X-Forwarded-Encrypted: i=1; AJvYcCWKEq8Z+WWKLoot1DqjdHQHo29X1YH26FHH2pOD8DnQPcDfX86q0aR2sz2NZDKsC6QJgSfKYniG1a2J94sR1lsumCx3kZtKWgsnuIUaTjHbMFu7zal2Da5zWOn4hhwYqnqdr9xqqjI=
-X-Gm-Message-State: AOJu0YzWpJSigIV1UF1EV/c0Potw3W/a9bZZcBpT9QJ0zNAGrQWLn+TU
-	cyKqCocxC5TZEiZPxJFSQ7WFTGGPzc2ruBcTZYBu4pHP1zBu7uuuFP/LXvMuAIM=
-X-Google-Smtp-Source: AGHT+IENW5nPyGPQwYAj+VFP8s9e+Lia8VUh5UdAtDJ6gqFlLidE3jjeARjPRYKh6wPvYAmy4V9Uxg==
-X-Received: by 2002:a7b:c055:0:b0:41b:f788:8ca6 with SMTP id 5b1f17b1804b1-421089d3a7emr3181235e9.8.1716499509277;
-        Thu, 23 May 2024 14:25:09 -0700 (PDT)
-Received: from [127.0.1.1] (84-115-212-250.cable.dynamic.surfer.at. [84.115.212.250])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-421089ae976sm2522955e9.38.2024.05.23.14.25.08
+        d=1e100.net; s=20230601; t=1716500098; x=1717104898;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T7a2uMVZssHO/XdZkFjaZx6Fve2Wj78fROEuqBTUEKo=;
+        b=s5TzmRUe0MA0f0WpNiePZ0EhFeO2hyAD9FM27mt3gXuoDqHY7w3tkESrB7UOXM7xAz
+         +klTPGeLHcWiQKFIncAesrOMUx3njGvWFuF3wDyIxgNjrgGJ6P27MO5IikJtHltUQidr
+         UVW+0FV8ULdA8VZRSlgAn/Rp4G5AqLf334++PBeqXESYTznj5qFb/thk5IKJexMThxxX
+         fXEbiKUtCyz7cFH/PMpa/ZvCZ1TebPw/yYBycH4oD7vydjSr6pUEXZFSF1NHcTo/x4hw
+         GRgbKmeCzdRMUtdlxqQ4q1CRgxrYcUHt54bf7dhBigtfrbCukJ4k7GvlCUtw9I87aqpv
+         FVig==
+X-Forwarded-Encrypted: i=1; AJvYcCVMXQiTJO1oM4+7+wAUgaRkCoiSmZXBgct++GOwmAEpzEvHX2L6ZDxUgDGb1w3BJRY6fpIJ0TX7tYrYRlHz5KSaxjzh374cWlPJITA4
+X-Gm-Message-State: AOJu0YxId/CqpYW8hGlIuW0pGSuuE0/ekfgyNYH6mIduKJQDDUzR5mtl
+	bjPij7n1lw4+QpY/7lWpSOe97grIM1UoeDcWklo9EDz3GF9LrqMf
+X-Google-Smtp-Source: AGHT+IHg64GfV68qCaL9nLaV71GpQJxYCS/dHS/c9zQ8wKfbt4plO5szkSRDbRHEZbACBIBwzwC+Ng==
+X-Received: by 2002:a17:902:ea0a:b0:1f2:fd9a:dbf3 with SMTP id d9443c01a7336-1f4486d1fa4mr5743115ad.11.1716500097727;
+        Thu, 23 May 2024 14:34:57 -0700 (PDT)
+Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f44c9dd519sm399235ad.298.2024.05.23.14.34.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 May 2024 14:25:08 -0700 (PDT)
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Date: Thu, 23 May 2024 23:25:00 +0200
-Subject: [PATCH 2/2] cpufreq: qcom-nvmem: eliminate uses of of_node_put()
+        Thu, 23 May 2024 14:34:57 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: iommu@lists.linux-foundation.org
+Cc: linux-arm-msm@vger.kernel.org,
+	Stephen Boyd <swboyd@chromium.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+	iommu@lists.linux.dev (open list:IOMMU SUBSYSTEM),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] iommu/arm-smmu: Pretty-print context fault related regs
+Date: Thu, 23 May 2024 14:34:47 -0700
+Message-ID: <20240523213452.144108-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240523-qcom-cpufreq-nvmem_memleak-v1-2-e57795c7afa7@gmail.com>
-References: <20240523-qcom-cpufreq-nvmem_memleak-v1-0-e57795c7afa7@gmail.com>
-In-Reply-To: <20240523-qcom-cpufreq-nvmem_memleak-v1-0-e57795c7afa7@gmail.com>
-To: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Javier Carrasco <javier.carrasco.cruz@gmail.com>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1716499505; l=3086;
- i=javier.carrasco.cruz@gmail.com; s=20240312; h=from:subject:message-id;
- bh=6gMDag0IBE3/Dtgu37LmaX1zY0IArivgLqDHwuWD/PM=;
- b=1X14HdRwItlzvBF4/8jTH5oGmp5k0ilwAg4PmKnQ/+T+WpLTRgSj/VDrkFniAKtTf6nycg7v7
- UzNGwnTpqqeBPyUfZvaxnXV4996lfMDaGUDVVIoi2eqOhNbnNZZmWCc
-X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
- pk=lzSIvIzMz0JhJrzLXI0HAdPwsNPSSmEn6RbS+PTS9aQ=
+Content-Transfer-Encoding: 8bit
 
-Make use of the __free() macro to automate memory deallocation when
-the existing device nodes get out of scope, removing the need for
-of_node_put() and therefore increasing code safety if more error paths
-are added to the driver, which could miss the required of_node_put()
-as it already occurred with commit '57f2f8b4aa0c ("cpufreq: qcom:
-Refactor the driver to make it easier to extend")'.
+From: Rob Clark <robdclark@chromium.org>
 
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Parse out the bitfields for easier-to-read fault messages.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+Stephen was wanting easier to read fault messages.. so I typed this up.
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index 5004e1dbc752..716066423b92 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -455,7 +455,6 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
- {
- 	struct qcom_cpufreq_drv *drv;
- 	struct nvmem_cell *speedbin_nvmem;
--	struct device_node *np;
- 	struct device *cpu_dev;
- 	char pvs_name_buffer[] = "speedXX-pvsXX-vXX";
- 	char *pvs_name = pvs_name_buffer;
-@@ -467,49 +466,40 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
- 	if (!cpu_dev)
- 		return -ENODEV;
- 
--	np = dev_pm_opp_of_get_opp_desc_node(cpu_dev);
-+	struct device_node *np __free(device_node) =
-+		dev_pm_opp_of_get_opp_desc_node(cpu_dev);
- 	if (!np)
- 		return -ENOENT;
- 
- 	ret = of_device_is_compatible(np, "operating-points-v2-kryo-cpu") ||
- 	      of_device_is_compatible(np, "operating-points-v2-krait-cpu");
--	if (!ret) {
--		of_node_put(np);
-+	if (!ret)
- 		return -ENOENT;
--	}
- 
- 	drv = devm_kzalloc(&pdev->dev, struct_size(drv, cpus, num_possible_cpus()),
- 		           GFP_KERNEL);
--	if (!drv) {
--		of_node_put(np);
-+	if (!drv)
- 		return -ENOMEM;
--	}
- 
- 	match = pdev->dev.platform_data;
- 	drv->data = match->data;
--	if (!drv->data) {
--		of_node_put(np);
-+	if (!drv->data)
- 		return -ENODEV;
--	}
- 
- 	if (drv->data->get_version) {
- 		speedbin_nvmem = of_nvmem_cell_get(np, NULL);
--		if (IS_ERR(speedbin_nvmem)) {
--			of_node_put(np);
-+		if (IS_ERR(speedbin_nvmem))
- 			return dev_err_probe(cpu_dev, PTR_ERR(speedbin_nvmem),
- 					     "Could not get nvmem cell\n");
--		}
- 
- 		ret = drv->data->get_version(cpu_dev,
- 							speedbin_nvmem, &pvs_name, drv);
- 		if (ret) {
--			of_node_put(np);
- 			nvmem_cell_put(speedbin_nvmem);
- 			return ret;
- 		}
- 		nvmem_cell_put(speedbin_nvmem);
- 	}
--	of_node_put(np);
- 
- 	for_each_possible_cpu(cpu) {
- 		struct device **virt_devs = NULL;
-@@ -645,7 +635,7 @@ MODULE_DEVICE_TABLE(of, qcom_cpufreq_match_list);
-  */
- static int __init qcom_cpufreq_init(void)
- {
--	struct device_node *np = of_find_node_by_path("/");
-+	struct device_node *np __free(device_node) = of_find_node_by_path("/");
- 	const struct of_device_id *match;
+ drivers/iommu/arm/arm-smmu/arm-smmu.c | 53 +++++++++++++++++++++++++--
+ drivers/iommu/arm/arm-smmu/arm-smmu.h |  5 +++
+ 2 files changed, 54 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index c572d877b0e1..06712d73519c 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -411,6 +411,8 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+ 	unsigned long iova;
+ 	struct arm_smmu_domain *smmu_domain = dev;
+ 	struct arm_smmu_device *smmu = smmu_domain->smmu;
++	static DEFINE_RATELIMIT_STATE(rs, DEFAULT_RATELIMIT_INTERVAL,
++				      DEFAULT_RATELIMIT_BURST);
+ 	int idx = smmu_domain->cfg.cbndx;
  	int ret;
  
-@@ -653,7 +643,6 @@ static int __init qcom_cpufreq_init(void)
- 		return -ENODEV;
+@@ -425,10 +427,53 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+ 	ret = report_iommu_fault(&smmu_domain->domain, NULL, iova,
+ 		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
  
- 	match = of_match_node(qcom_cpufreq_match_list, np);
--	of_node_put(np);
- 	if (!match)
- 		return -ENODEV;
+-	if (ret == -ENOSYS)
+-		dev_err_ratelimited(smmu->dev,
+-		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
+-			    fsr, iova, fsynr, cbfrsynra, idx);
++	if (ret == -ENOSYS && __ratelimit(&rs)) {
++		static const struct {
++			u32 mask; const char *name;
++		} fsr_bits[] = {
++			{ ARM_SMMU_FSR_MULTI,  "MULTI" },
++			{ ARM_SMMU_FSR_SS,     "SS"    },
++			{ ARM_SMMU_FSR_UUT,    "UUT"   },
++			{ ARM_SMMU_FSR_ASF,    "ASF"   },
++			{ ARM_SMMU_FSR_TLBLKF, "TLBLKF" },
++			{ ARM_SMMU_FSR_TLBMCF, "TLBMCF" },
++			{ ARM_SMMU_FSR_EF,     "EF"     },
++			{ ARM_SMMU_FSR_PF,     "PF"     },
++			{ ARM_SMMU_FSR_AFF,    "AFF"    },
++			{ ARM_SMMU_FSR_TF,     "TF"     },
++		}, fsynr0_bits[] = {
++			{ ARM_SMMU_FSYNR0_WNR,    "WNR"    },
++			{ ARM_SMMU_FSYNR0_PNU,    "PNU"    },
++			{ ARM_SMMU_FSYNR0_IND,    "IND"    },
++			{ ARM_SMMU_FSYNR0_NSATTR, "NSATTR" },
++			{ ARM_SMMU_FSYNR0_PTWF,   "PTWF"   },
++			{ ARM_SMMU_FSYNR0_AFR,    "AFR"    },
++		};
++
++		pr_err("%s %s: Unhandled context fault: fsr=0x%x (",
++		       dev_driver_string(smmu->dev), dev_name(smmu->dev), fsr);
++
++		for (int i = 0, n = 0; i < ARRAY_SIZE(fsr_bits); i++) {
++			if (fsr & fsr_bits[i].mask) {
++				pr_cont("%s%s", (n > 0) ? "|" : "", fsr_bits[i].name);
++				n++;
++			}
++		}
++
++		pr_cont("), iova=0x%08lx, fsynr=0x%x (S1CBNDX=%u", iova, fsynr,
++			(fsynr >> 16) & 0xff);
++
++		for (int i = 0; i < ARRAY_SIZE(fsynr0_bits); i++) {
++			if (fsynr & fsynr0_bits[i].mask) {
++				pr_cont("|%s", fsynr0_bits[i].name);
++			}
++		}
++
++		pr_cont("|PLVL=%u), cbfrsynra=0x%x, cb=%d\n",
++			fsynr & 0x3,   /* FSYNR0.PLV */
++			cbfrsynra, idx);
++
++	}
  
-
+ 	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
+ 	return IRQ_HANDLED;
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+index 836ed6799a80..3b051273718b 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+@@ -223,6 +223,11 @@ enum arm_smmu_cbar_type {
+ 
+ #define ARM_SMMU_CB_FSYNR0		0x68
+ #define ARM_SMMU_FSYNR0_WNR		BIT(4)
++#define ARM_SMMU_FSYNR0_PNU		BIT(5)
++#define ARM_SMMU_FSYNR0_IND		BIT(6)
++#define ARM_SMMU_FSYNR0_NSATTR		BIT(8)
++#define ARM_SMMU_FSYNR0_PTWF		BIT(10)
++#define ARM_SMMU_FSYNR0_AFR		BIT(11)
+ 
+ #define ARM_SMMU_CB_FSYNR1		0x6c
+ 
 -- 
-2.40.1
+2.45.1
 
 
