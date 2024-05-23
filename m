@@ -1,136 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-20314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B79058CDB9F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 22:52:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFE698CDBEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 23:25:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D24A2856D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 20:52:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A542A286245
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 21:25:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 734CE8528D;
-	Thu, 23 May 2024 20:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25461127E33;
+	Thu, 23 May 2024 21:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nli7FNZO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QWIfwZbT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B5B85277;
-	Thu, 23 May 2024 20:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBDB126F37;
+	Thu, 23 May 2024 21:25:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716497525; cv=none; b=cG5uxTtpWof798Jksi+96q1M8w8LTLTTldIoS0r0B+ajgeVvaYJ4PSsCMRi0sZxllpOvy1cE8+wWvpLloznUQYNWahthplqUiAniDCD2XHKAzzDKuC5Z2uCuQrkYjOSx4+hdnamW9Wzf19WI60KxqqC+ERDYUAjq+eTzj7nFzok=
+	t=1716499511; cv=none; b=kMAR6qDXYoXVr43uMf2m/YTZOs9JJtyxYVXOG+W1i7ZPWhNQKhUUdkpIg89C+evyE4s2jiAYUXByZ7zrKB8rcBCOyooeJTOkFOZKcTHWHmj6IC7kRfOPi6akJovMIqKMvF9jldnjzKLzbjJzPtOFVJr7BvC6HWJPzIgrfjbw1+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716497525; c=relaxed/simple;
-	bh=a8xk6RChx36XVnYBqEzPd31J2jDkpPLdySnC/hT5oAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eqw4FRL7vkSQk23pcBQLkSpGTYo3HjK17SqpnKOFY0DGsMgJNYqHKRs2aU6ICNaZ7F8OEHLtOrb69Sa2DPmxh1a4PLjkjUvhm62u0WnMMxK+3Bw2xjt5mIzZGgVJJqcApXNI/002UtIwaz7sQG6tYB8BlSXSRkxknTI+5VnmsA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nli7FNZO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E94C2BD10;
-	Thu, 23 May 2024 20:52:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716497524;
-	bh=a8xk6RChx36XVnYBqEzPd31J2jDkpPLdySnC/hT5oAM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nli7FNZOH7mmh6eropuP3Yqrbu1VbfI6DhqqpkIQWttthMFFlG+6+XO5otUe2aJXO
-	 XSh3VwS6Y15HgLC6OCgMjodyqAkyV3p4/xoo5Py59qpHC+ngqGXhZJAi2qqx82kfCB
-	 97XyxEWCEHryso+Nn8p+CYRvCEG9hbhrhQy/Zc36SZ5S7eLuQBnkzET92/d/rwhSd7
-	 rHaT+fXHnsib/mzoqiyJaf9U1Ma5pAR7jn235PWwP8SxdAcS62s35iIxEVmYb9nINp
-	 BGDwq/KQ8gFpyvZtNrXSRPJ6ZiQC8uGS5Nj+Kz8Z0L/PnKJRxjiiVX4jpw/VTAS/nR
-	 cA1vBQbXKb0Ww==
-Message-ID: <ecdefda0-08e9-409b-8cc8-b1783b984049@kernel.org>
-Date: Thu, 23 May 2024 22:51:58 +0200
+	s=arc-20240116; t=1716499511; c=relaxed/simple;
+	bh=VHdjSkKxWm5rfyGLl7Yk8K1zO0mB7odDFsgg9+Tfu8s=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qic4VedKoX/kUbbmtxTMynylGZgeeiE/qgZAxi9xLfAmEf6FuxvitJkQxc/uliXjR1FbsJowm7GqaEHpLOs+NcErr0U9znxey0ozroHfFIY2V0ce3Ggj0jWvZieMPRl/1NK1VS6gWkCkfO8yyVrg129wkBGxNA8TQVjgC0iWobk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QWIfwZbT; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-354f5fb80d5so1311176f8f.2;
+        Thu, 23 May 2024 14:25:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716499507; x=1717104307; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=U+I9c44cbx3EWc9H7lfkabZH5dwju+xdfdQpItJBfjY=;
+        b=QWIfwZbTOC0zEO33zgidA8aomQoEMAc7IufXEgzDrQWlv2hpHckHBomumWqhpxlAAc
+         tn7C5qtv8anrIYE2UiYgfl5wormneDaRUjwrvUEdm/Zn02Cxtg23cr4E9cEM7GeEtAmD
+         rHtoqE7JrmCjnYdwASNQ+nRdH7mLmY66sT5fwFExmLNBWz6dQBahc+96V/byn7iRBW43
+         FyuoUYbRsw1V64l4NoqQW153QfP+zcuHU/llMWFtFtTr5bgKcZkn2O/wuiLzleC+MMnr
+         UHHYecMQElpyQpXdM0fzKiY2WKWAuCFVV3XdDhIrnTiollXHdJ2LAfVoUYbM8z3P00Sq
+         aHQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716499507; x=1717104307;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U+I9c44cbx3EWc9H7lfkabZH5dwju+xdfdQpItJBfjY=;
+        b=TJTWdFdE8khAB8/NpCLRVqnNZoP7F62l3LB+Fnn8Y04aQY/ADBEEP4gjtqRaBYlkWs
+         Y6Ljpybjb0dqScqytWpfkNMqJQhr1rYsqqL/rIVo9bd/MIdlCVHPoEgYtCZVIPmpsL3J
+         /0a9c5WE9fFKPgqKtF++c8cnWMo6ujgwXZybLptSNh/AykBZK8YghygVDFTMZszpMp+d
+         t6WDlQ7+Hs1Km8OPGh78dfEXzfZddh7OnjyS1WmYRH3GxqiBNko7CptOIMoGg8+tXvE+
+         Y1uA/Yg0PcJkvdSq3u11mZiKagq1sumRqYR0AIeQ4rzfvBlv3PNCJJmHFrYjwKPV43Js
+         SC3w==
+X-Forwarded-Encrypted: i=1; AJvYcCUufJrHGoGi0Nc58UaBXSHMZHcDBE61rcwfLR8MUXKlXksb5boMdURnZLVzztX6h+xWfS9Xew+ksYjYsVRJqLC7QQH1pwfJQK38QxbGNO0MmgDpCoVX9rPHrD4/59c07qo01OLxsH+RkRCAk/FlBFlv+U9+wEgO78Jd72rkNpE=
+X-Gm-Message-State: AOJu0YzQaSqxT5dNFdm9mhaEpO95aTUilPD9Mq3S85sFRG5XefwjvzoD
+	eLIK0cdgklZP3bkj1hrgmo6MeH7B2+ZCoH2nFtsKuRxB1XPU4mmyzehjuAJ3zXY=
+X-Google-Smtp-Source: AGHT+IH8OD5gV8/1smKKDoZX9EgdPWl5N+fjjkenQw6jr7OYD/hRr8503cKcLcTN5wI0POCJ16VABQ==
+X-Received: by 2002:a05:600c:54c4:b0:421:17d:1ec1 with SMTP id 5b1f17b1804b1-421089f9d92mr2601535e9.18.1716499506783;
+        Thu, 23 May 2024 14:25:06 -0700 (PDT)
+Received: from [127.0.1.1] (84-115-212-250.cable.dynamic.surfer.at. [84.115.212.250])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-421089ae976sm2522955e9.38.2024.05.23.14.25.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 May 2024 14:25:06 -0700 (PDT)
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Subject: [PATCH 0/2] cpufreq: qcom-nvmem: fix memory leaks and add auto
+ device node cleanup
+Date: Thu, 23 May 2024 23:24:58 +0200
+Message-Id: <20240523-qcom-cpufreq-nvmem_memleak-v1-0-e57795c7afa7@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom,pmic-gpio: Document
- PMC8380
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240522-topic-pmc8380_gpio-v1-0-7298afa9e181@linaro.org>
- <20240522-topic-pmc8380_gpio-v1-1-7298afa9e181@linaro.org>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240522-topic-pmc8380_gpio-v1-1-7298afa9e181@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACq0T2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDUyNj3cLk/Fzd5ILStKLUQt28stzU3HggzklNzNY1SzKzMDJMSTI1SjJ
+ UAhpQUJSallkBNjw6trYWAK274S1sAAAA
+To: Ilia Lin <ilia.lin@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Javier Carrasco <javier.carrasco.cruz@gmail.com>, stable@vger.kernel.org
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1716499505; l=1291;
+ i=javier.carrasco.cruz@gmail.com; s=20240312; h=from:subject:message-id;
+ bh=VHdjSkKxWm5rfyGLl7Yk8K1zO0mB7odDFsgg9+Tfu8s=;
+ b=14d9eQKhZyHNHy3nsPQ8V1gTIq1GdV//SoUiwVSvFMrNQfJq/NT5EnqCuIOUXdL29hOEemMpn
+ 1x9zo3p7LKYAt1mKWn9Bwdn+AKuTBdXDc4saqt3Npwyf1jsQKQphVHX
+X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
+ pk=lzSIvIzMz0JhJrzLXI0HAdPwsNPSSmEn6RbS+PTS9aQ=
 
-On 22/05/2024 13:30, Konrad Dybcio wrote:
-> PMC8380 is a new PMIC used with X1 SoCs. Document it
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> index 50846a2d09c8..a52949526a2a 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> @@ -57,6 +57,7 @@ properties:
->            - qcom,pma8084-gpio
->            - qcom,pmc8180-gpio
->            - qcom,pmc8180c-gpio
-> +          - qcom,pmc8380-gpio
+There are a number of error paths in the probe function that do not call
+of_node_put() to decrement the np device node refcount, leading to
+memory leaks if those errors occur.
 
-There is also allOf: with if: constraining number of lines and reserved
-ranges.
+In order to ease backporting, the fix has been divided into two patches:
+the first one simply adds the missing calls to of_node_put(), and the
+second one adds the __free() macro to the existing device nodes to
+remove the need for of_node_put(), ensuring that the same bug will not
+arise in the future.
+
+The issue was found by chance while analyzing the code, and I do not
+have the hardware to test it beyond compiling and static analysis tools.
+Although the issue is clear and the fix too, if someone wants to
+volunteer to test the series with real hardware, it would be great.
+
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+---
+Javier Carrasco (2):
+      cpufreq: qcom-nvmem: fix memory leaks in probe error paths
+      cpufreq: qcom-nvmem: eliminate uses of of_node_put()
+
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
+---
+base-commit: 3689b0ef08b70e4e03b82ebd37730a03a672853a
+change-id: 20240523-qcom-cpufreq-nvmem_memleak-6b6821db52b1
 
 Best regards,
-Krzysztof
+-- 
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
 
