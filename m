@@ -1,228 +1,560 @@
-Return-Path: <linux-arm-msm+bounces-20279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6744B8CCB08
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 05:18:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 376B98CCB33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 05:35:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E16A282325
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 03:18:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E0C6E283101
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 03:34:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A44B63EA66;
-	Thu, 23 May 2024 03:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 973C92C87A;
+	Thu, 23 May 2024 03:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wdc.com header.i=@wdc.com header.b="YipjBQmy";
-	dkim=pass (1024-bit key) header.d=sharedspace.onmicrosoft.com header.i=@sharedspace.onmicrosoft.com header.b="ZVXAvSV6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WoglU0F2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from esa2.hgst.iphmx.com (esa2.hgst.iphmx.com [68.232.143.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDF18475;
-	Thu, 23 May 2024 03:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=68.232.143.124
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716434313; cv=fail; b=fqkmneG49js71mZK7SYOupaGKtUGlN5XRPRUZeEDbOWzcFf52yHtMc+2tyGOm9y4WkSW5Io4ofEFLmTQfJKttrc6hE5Y36VraAuCkYBHvLWxNBAYQpLMTe2twXH44vNbXRwA8sWOgWhmM4Ss3euz9pL5GLY/JsB1+Zb1lUHXpYQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716434313; c=relaxed/simple;
-	bh=3C+OEa1gBrUpqUmmaE/lWPMUi8NnR0/jfw5aOOb7dHM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=BdosoHspxbdwGpxKRmq26N2dacUbrXdcyJQUz8ThazAo6r8nghKTjvVzz99wjLBl8qc4LPf3PaRwX+r2l1pxb2C35jMK2QaRKmyzi+xOZrWlwAkVg0f/8E0x6LUd7p6S/IUvGDpBd69cqktssblf+WQJgcB3tsi6yV3MwRSt/2Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wdc.com; spf=pass smtp.mailfrom=wdc.com; dkim=pass (2048-bit key) header.d=wdc.com header.i=@wdc.com header.b=YipjBQmy; dkim=pass (1024-bit key) header.d=sharedspace.onmicrosoft.com header.i=@sharedspace.onmicrosoft.com header.b=ZVXAvSV6; arc=fail smtp.client-ip=68.232.143.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wdc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wdc.com
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
-  t=1716434311; x=1747970311;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=3C+OEa1gBrUpqUmmaE/lWPMUi8NnR0/jfw5aOOb7dHM=;
-  b=YipjBQmyi+4NNm46YhH/2mVd4wztzcY0e3HQMT0PN4Z6z6vM403W8czN
-   DkYz6LcUWB+tq/5/lmB4v78MwuWiyFBMe68G7sWNiYul5/uRcuRfJoT+x
-   cxo9x6OOkooVZt/GOR5exCRjH/3BvMC0XorEbdGwliIH4U1PFpJIW5KaD
-   M57g2Znc9o/umwCgjjvxTenRxCDK7f4Z6BPvS/216M/haeaerFJA8GlYv
-   m624XF4b5OwOhSksK4lPxwD0KVspm+VPr0Q6EMUK+M7UOi3hDkKSmnIXc
-   8CL/x0fX8e+bAWmcGf4I3LSHvPGMrm8cb8XXt8i6r6Ia96zdaYYjt9t9P
-   g==;
-X-CSE-ConnectionGUID: LAKnqh9XSvWHgLdA0VJTqA==
-X-CSE-MsgGUID: /Rs0ZmJdT5KEbJZk1gXgJQ==
-X-IronPort-AV: E=Sophos;i="6.08,181,1712592000"; 
-   d="scan'208";a="17095860"
-Received: from mail-bn8nam12lp2168.outbound.protection.outlook.com (HELO NAM12-BN8-obe.outbound.protection.outlook.com) ([104.47.55.168])
-  by ob1.hgst.iphmx.com with ESMTP; 23 May 2024 11:18:27 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=P/bAmbprYgXDwL7acZ4I5GZyzygmlnEPd6vMZWx31sr3Yv3zVs2/1tco33lyw36aMr7kcRh0GoquyrtVsBObHfNv6jCLCLHIVT6nplQxthiLLv9nagBATBb7wm+Re+YW4rpxO8H95Uo2B0eypD60l0b67wcwHnSEMmViBG6/znma20ANSyCEUtRBkusrkdWke22vHsoggpj9MF75BKdiiZl7Fy8CraQedkuZ5tnvhHD5FAMFxfo9ArihOEy7Xqe5sP7xiA5VR/iWihHfAchzhx0caYHTMqHXQ3C5zGXDTEwwdWE8X/TrvcTBHAZTAGiqgfE+Xd3b7dhqYX99FPL0bQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3C+OEa1gBrUpqUmmaE/lWPMUi8NnR0/jfw5aOOb7dHM=;
- b=VnFwMyVNc+GIdkFTf8p9CRlZcc9L4hlRf4pSdCO6L1BSsbyRIVwxhFIyY2zMVoljSD1SjqGx3S2VJc4YU/A6LbVeQY7JVpQz57g1spHwAT6sNodlIhQ3HCVReNbAOwnwSNbn04s65wCOlxnzLSMRez5vKaDk5WNT1TCQTSGdX/zBbnExT2RXN/mCLK1yWgJD8QNnt4ADfMWYCtSe8+F6ROafEKbp5NMlmGhPhs35Z+il17WP2DrV/D70tdCKs/Y9MJYMWJNlEh/d2qKhP9F7zjOWOu5Y5g0zhdc7j1z0ROQoMVgoqDeCSm1mMEbRGDvrPUXM8rEX0ocrHDG6eBldBg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3C+OEa1gBrUpqUmmaE/lWPMUi8NnR0/jfw5aOOb7dHM=;
- b=ZVXAvSV60nsj4Ip2UBnVT8/uPTuPClHZ2iU0or74GC42UPVF1mi5OnmP1eytbsJFAb+BPFWogz6TbM0mtNijFRfvJ+DgNCDLhb0cbcT6q9DFYP47WfvJsloQC0RNYa1Xn1a/CZPLH8Ce/rgrtc9RsMdCvcts6JJ5J6VuVw/nT9A=
-Received: from DM6PR04MB6575.namprd04.prod.outlook.com (2603:10b6:5:1b7::7) by
- CH2PR04MB6808.namprd04.prod.outlook.com (2603:10b6:610:98::17) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7611.19; Thu, 23 May 2024 03:18:26 +0000
-Received: from DM6PR04MB6575.namprd04.prod.outlook.com
- ([fe80::bf16:5bed:e63:588f]) by DM6PR04MB6575.namprd04.prod.outlook.com
- ([fe80::bf16:5bed:e63:588f%5]) with mapi id 15.20.7611.016; Thu, 23 May 2024
- 03:18:26 +0000
-From: Avri Altman <Avri.Altman@wdc.com>
-To: Bart Van Assche <bvanassche@acm.org>, "Bao D. Nguyen"
-	<quic_nguyenb@quicinc.com>, "quic_cang@quicinc.com" <quic_cang@quicinc.com>,
-	"quic_nitirawa@quicinc.com" <quic_nitirawa@quicinc.com>, "beanhuo@micron.com"
-	<beanhuo@micron.com>, "adrian.hunter@intel.com" <adrian.hunter@intel.com>,
-	"martin.petersen@oracle.com" <martin.petersen@oracle.com>
-CC: "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>, Bjorn Andersson
-	<andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Manivannan
- Sadhasivam <manivannan.sadhasivam@linaro.org>, "James E.J. Bottomley"
-	<jejb@linux.ibm.com>, "open list:ARM/QUALCOMM SUPPORT"
-	<linux-arm-msm@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH v1 2/2] scsi: ufs: qcom: Update the UIC Command Timeout
-Thread-Topic: [PATCH v1 2/2] scsi: ufs: qcom: Update the UIC Command Timeout
-Thread-Index: AQHarBX7OisvtrLxb0WSwrfwSly0ebGjkLqAgAAsJACAAAF8gIAAaIOA
-Date: Thu, 23 May 2024 03:18:26 +0000
-Message-ID:
- <DM6PR04MB6575FAF59F9F3499BEC4128CFCF42@DM6PR04MB6575.namprd04.prod.outlook.com>
-References: <cover.1716359578.git.quic_nguyenb@quicinc.com>
- <8e5593feaac75660ff132d67ee5d9130e628fefb.1716359578.git.quic_nguyenb@quicinc.com>
- <2ec8a7a6-c2cd-4861-9a43-8a4652e0f116@acm.org>
- <f9595b82-66f9-dce2-7fba-c42b1eacf962@quicinc.com>
- <bdd52dc0-85dd-4000-b5dd-c2c22f5b8ba1@acm.org>
-In-Reply-To: <bdd52dc0-85dd-4000-b5dd-c2c22f5b8ba1@acm.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR04MB6575:EE_|CH2PR04MB6808:EE_
-x-ms-office365-filtering-correlation-id: 20af8eb3-deda-4a28-c6ac-08dc7ad702c6
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230031|1800799015|366007|7416005|376005|38070700009;
-x-microsoft-antispam-message-info:
- =?utf-8?B?M3VyMXlMTi9IRVBlMy9Ya1VVNXhGalFWUldWV3VtSTN5bE9IL2c3R3Jtc0tl?=
- =?utf-8?B?eUZoOUZTVnFLSDNvdzZxZWtNVk5VOWpuRDRMazRwOGZ2akFFUjI1NVV3WHhk?=
- =?utf-8?B?cVgzYUI1YkxqWVl5K0Y4Vk9FaEprNmZEV1JRWENyVlZaUlFFaDZpaksrVVZM?=
- =?utf-8?B?amtYcjFMNU1USXoybkZwQWFhMTNlaTJ6Q0kvc25WYXpsS25MV0haUVFNQUt4?=
- =?utf-8?B?NExrZE0vbSt6cG9Ka2s4VnV0U05tRkVKR0NGZ1lmMG5OU3JDSktLbG1WTlg2?=
- =?utf-8?B?NlNtTXh5Q2trTnNhSmNPL3NKN21vNmxjdVpveTBaL2dlMkpKUUQyTENaWjdF?=
- =?utf-8?B?ODhJS21YVVNGWTViZU9jTGVMZG9MSHRuVGN2SUt0dW9JVGVNcFBmRUdIbkdQ?=
- =?utf-8?B?WnZEZWFHTVNkWDNtaHpEMXF1anQvSHUva2t4dnF3UUs0dFloby9CT3RPWUhj?=
- =?utf-8?B?emZySE5DVEZEWkpWSWJpUm1LRGpTbnFLSEFBVUhYTnZQWU1xTDVUUjFtdUgv?=
- =?utf-8?B?RWx1c3VlNSs2QVpRTStMZnhiRXZrT2VNZzVVSlpwOGRCenNnbUR1dDF2WUEw?=
- =?utf-8?B?a1lndHVGczEySlZQWXdienlQYi9zaEJtZTBacUpNWWZlLzFoNERFcWxvTHpR?=
- =?utf-8?B?SVRHc2hqUDhnM29VZ2YrYzlndUdzb1dKSjRlbzR4dFNsSGd2ZlFqWnhyWmw5?=
- =?utf-8?B?T3lJTHNtZkJvRUN2RkhEcVBQZjhLNmpSUzJjR3JtSm9icVBNeGdtUFZ2OFVQ?=
- =?utf-8?B?Ymg2UXVoS0RVMGJmMW1ETEVZZ3JZWG9iSmgwZHNtWVZFZnpJekJBV0pzZWNx?=
- =?utf-8?B?VkpIQ2JVSXlJaFIxS1I2VU5zQnh2OHR3bjdUSGJWOUxVbDRCM1owdHczZWlN?=
- =?utf-8?B?QmJ1c1JBeWE0cEhjMlNUV1BHQURaRFRnRWxjNHhPSGZlL3dvbk9scXNVamlt?=
- =?utf-8?B?THQ3bzRtUVdEQkFNbWk3VkdQcUIrNEU5T0lPb0xGdGJDb21uclE4aDBmSTVl?=
- =?utf-8?B?OGE2Q2VnRE51dWdjVVJBc0ZwbzZNZGF4b3NPR2pZWm0xSVh3Skd0d01lVng4?=
- =?utf-8?B?a2YyTHp3UjJEeWJxZ0dWKzd6RDRUZDltZTBKa1FQMk9LeU1YR3lTNVN0UHZu?=
- =?utf-8?B?K01PWHBtNm9XSnA4ZjRtSU92YXdUVmV3V0ZvKzhQdFlkUDlOZGk0ZFJBMGYx?=
- =?utf-8?B?eXUzTjF2TE5QYndiMmJQc3M2VVB5S21WaW02YXNqbWxDamtyVWVUbUpIUXQ0?=
- =?utf-8?B?M3lDVXhJNXFmcC93NkJXdk9VL1ozWFBUTEc0dkxReVcyUG9GbzJHcHgvUFhk?=
- =?utf-8?B?RFl2empXRUNaTzNJLzBNdUIxQTliVFdXQnlFNGxuS0tBSzVwbFVIRDErVTJX?=
- =?utf-8?B?YVZhQVFTV2czSXdXa2x4UzlqRnN2emRzN2QrWHV5aW13ZTRaZk1IWHRkUHJY?=
- =?utf-8?B?cXhqK0VpcG5lNUFLUWpEa2hMVTRmRDZBL3J4akN0bjhQMHFLZG9CUFFHU2VN?=
- =?utf-8?B?YkxnbUE0NHl2RHNFRW9LNTVTKzV3QS9IRlY0ZjlJQXE0VDc3QnBpeWhScTBK?=
- =?utf-8?B?SW84aXMrTjR3ZTBGdDNIMGRCUDV1OStsWEdxVXA0eGx5dTAwRjFoeFBsMSs0?=
- =?utf-8?B?enIzdThGemhTalpQSGI2N0EzaEFkZ1UrcThqRzZJRXZzNVNhNzBwb3pBd3dV?=
- =?utf-8?B?WklmV2huUzJ3cDZzenhNREVtaGNtbzBlT2Q5YmNvcHVBUTg2elg4b0toUVhj?=
- =?utf-8?B?ZXF5b3VwS05KVktzbGI3RWlBWFAxemVsUTlnZUcxVkU3UGFVb3Zab2VEU2FX?=
- =?utf-8?B?SEwzYkhjREx4bFFtYnhEUT09?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR04MB6575.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(366007)(7416005)(376005)(38070700009);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?RnZ0ODhETVpnWE1VY3BxakNTc3Y5MS9Tdk5DRmg5Mm5JRU5xN1B1MGtoQzM0?=
- =?utf-8?B?dHZMenpYU2d2Y2lPckJQajQvUkJNOG80bnVrL2JBMWhVWTRiRVFlWTdha0xr?=
- =?utf-8?B?K0ovMXIvZTZDQlRkQzVtVUw0bkE1TWpxdUpDVE90ZEMreUhYUmJBS3dZd2tk?=
- =?utf-8?B?Rkoyc205Q1dYSWZPRGsxNDFwd1ZxbTJGOGN4TnMxdTYvVHhLS0hvSFgvNXll?=
- =?utf-8?B?SXZ1SHpMTkdhc3gwcE1pU0hpdUpDSDBjT2VHKytCcExRU1ArMGo3V3IyaVQ4?=
- =?utf-8?B?RHkxR3U2NTRna1l1S0RYNXd1bktKR2xhR0wxc0ZkUXFseC9rVkZvRUdJZ2Vx?=
- =?utf-8?B?YkhmbnhZTHVhMUxNUklWcm5mNXZGK0JNdDlkZDNiWU92VmY0MDlpK1FoQXAr?=
- =?utf-8?B?RExiU1pLQ1E2M3pDZkdtdGtZblZCb2s5K0oxYWh6N0RyaWpTU2xhbmFTbTlr?=
- =?utf-8?B?SnBGbjlVQWhzN0JwS1liUWNMVHVRZEpIMUtaSWdTbzF4UWFqZTZ2YmxaaTlk?=
- =?utf-8?B?dnM3dlEyY01oVnE2U0N6NnRNeHliUVo4di9SVk1ZbERNaWsyRkY2Z1hXd0Jt?=
- =?utf-8?B?OGRlNzRBVWh3cXkxYm9ocFg3djltZzR6Q0tqMWJaNy9Ld2NXSWwwLzZ4VVFJ?=
- =?utf-8?B?VStGSFJCS09Pbi80Z09RSnltRTFwV3B5c2dFaHd1QVExRGlxb0dReGpkYktX?=
- =?utf-8?B?dnAyN0dybW5WQmt4WStSTkdOMVpWN1VJQzR5UitkRkVhWVhzQ20wQW8vYWFL?=
- =?utf-8?B?UTJhSzZoN0x0WGNsMWtiaG0zckxiQzg1Z2ExeGpCMzdEb25WMU11NkhURWVF?=
- =?utf-8?B?eVpJS0JxZlNmM09NYUdMYUNwYXh3UkQyTlE4OWNMamcwdmVkTng2NlVrUmNy?=
- =?utf-8?B?V2hxSE11L1FJeXRpVE1CZGJ0QnFuRVhQUmZMSEZzR1lBWVZFNXJ1bmVuUTMz?=
- =?utf-8?B?bzVITVRGQWhrRVVVaW5OSzBmOFMrVzZLaFd5N1QxQ3RGNEVvVnVJcnZEaGtk?=
- =?utf-8?B?aGJSNmh5OWxuYzFscWNUdUxPZGN3QWZtdE1ta1dBNHRVRXRXOWZPVlY5RUtN?=
- =?utf-8?B?amxYQm9BYkdZZUdzSzFqdUVPWUxuNm80TGs4MXJyRXhIZ1M0eVI2aU13WlVm?=
- =?utf-8?B?QjBVbVVJbGxvODB5djFuMUY5U1NkdEFkN1lqNk14S252cHg0Z1FnYlhpOTdo?=
- =?utf-8?B?WGo5UHAwOEFpV2Nqa1VMWlZnSUJlYlFCaTFveGFvMmNBcEZZckI1elE1TUUx?=
- =?utf-8?B?OUtLalRtcFFqSVR2WjZ3VTVsTjN6VmFvajdDRFd3NEZHSHZLK1ZFbVprcWFP?=
- =?utf-8?B?QzlaMExJVTEzcHdCR2JJU1RNUGdYcjN4YUZJOVBtd0hoSFU4SDAxc1ZYWUpN?=
- =?utf-8?B?Zzhpc0NXMmhVMjJBQnB4cGk4RUVCd2xsOHYzek8wcFAraG5Rc2lFZVFlcVp6?=
- =?utf-8?B?YVdtK1VSMU8wOW5QYjBNSGxvVnhlczkxL2dlSWtqVmZmd3o1NEV1SjJIWXBD?=
- =?utf-8?B?VnI0VWVsZndpRDhWZldZNGs4MlBBSHZTUk9vUzVHM1Z6T2ZCUU1mZVUydE05?=
- =?utf-8?B?SVFkb3ZlcjE3V3FIa2o4NFpxOUJqUG5MSnIzUWJOREtWVWF6RXQ2M3kyc0Uv?=
- =?utf-8?B?NEVrRUYwK1J6eXBvTkc1QU9UZldvTUtZaFZLbms0RDZKRTdFT3JEdXd6RFBo?=
- =?utf-8?B?MFJzaFNqYXFmakdobVl2Tm5QNDU3OUNucVY0SUdMVVVMZytHWTQ4TkUxbjZS?=
- =?utf-8?B?MEZjS3Ixekt0eEMvalQ3L0lBN1h5UkJMcytBb1lvK3BKeHVLZGpTTkFMSWJw?=
- =?utf-8?B?N2xuTGhob1BxcUhoREhHUDBBVTl3bGF1M2U5aVZNNTdiYnBoMFBWN0dRWTJ2?=
- =?utf-8?B?ZHh4ZCtCRXhCM1hGa1NMSFRjWTBQbUFhRHZGOHNsa3YvYjE3aU90dExMZ2Z3?=
- =?utf-8?B?MXgzaVZTQnFNQ0M2YmtSWGFCODFIWXVjV2xPOENEQ2NCRFkyNE1hbWFmeXoy?=
- =?utf-8?B?MS9JSloyKzdBdlFlT0gvVlN5eEZ2RUEwK1BVdXBGUlFLWnRHUmkxbjJ4ZG11?=
- =?utf-8?B?bHVCRHMvWlJCaWxzb3pTRlR3RVphNi9EdU9LbnlnQTlwTTBtanhJZnJ4aEM1?=
- =?utf-8?B?VkY0RUJhbzZiWExBa3FrNHF3c3dQak1SLzBELzJzWm9Qa01TZmIxS2VDYzhu?=
- =?utf-8?Q?keQv+UnWvzHYwjV/U7ndLmlFBGjylQBlSOdYE0/wMlpc?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B8920319;
+	Thu, 23 May 2024 03:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1716435299; cv=none; b=e43FM55R++zlKnuAphzI+REh2i+LV6C6QRnp2Zc8EPrp/22xbDvrh41pNJfzqE/sN1kfRFvJ5EVXDQUNqrDjciMTS2JR7mU1HnAYqyJcFkFMR6S85iQyM/coOSm6TT/s0KDw02l2r9QfA2U0E1C8CRo5Mp+GEPix5Kyy9kYXD8s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1716435299; c=relaxed/simple;
+	bh=o10imn5J0AI2O2FGptsG7XtejKtBda9RPe1N1FflebA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=czwZ9ZGY4zMRKGzMcST6pSLDaGC9DsdRf7tkxRqHbxzUxihWe7IqJLKIN1hkRmB3J2RnCapaFanuaHdUkB6Sj+4JoIH6mVudJZxY4H/Hf/i2Y7NHdGJO0pMjrU/ZTOR44adzbwpFK1xKCQeFVdnGnIra0V5FR0gh8RvWar2x89M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WoglU0F2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44MLkf46002549;
+	Thu, 23 May 2024 03:34:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=7MeQ8tDFi4p6ig6ite5CM/mtmGZW9qTTX3crnlZFHT0=; b=Wo
+	glU0F2QPnXttl748KKTmNNkzgvCIbtqR+2PUebRGdrbE/2GKYZy2ayMFi9+LCNsK
+	o9sMsMvzp2hu0r9pZiqmOpNwhDibY8c/D3M492J87V77CqRmlS7W/anWU13IkmHi
+	TUe4jZTszt8zOXPtE72bMznrjPTPs2K54rRbrsxPTSc7CDcuscVl1qTitjnnWwAk
+	Q4kjyiGMUCDt4qpAVAi0dOc1Wlon7OywRvVQ6Yz5f/hpgbbd38h4hBFLdQ5F1VvL
+	G48sLTqi1Ke+jaSo8EBFW0DOydPO46gK2qzjThaCM7jorsbAKc5XdSXiAGirF+G0
+	0uA4TMuhGTkifs9lN+lA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y6n4gjmpd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 May 2024 03:34:41 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44N3YdCh024879
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 May 2024 03:34:39 GMT
+Received: from [10.216.36.209] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 22 May
+ 2024 20:34:33 -0700
+Message-ID: <6fe417c8-8eb8-2489-5295-c94dd5cc08bd@quicinc.com>
+Date: Thu, 23 May 2024 09:04:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	S0+i4ZZ7voTmzJvyMM/owf/Q4JODWyyQWfrERo1hV6H1nT5qgymNgpXhdC/oAo4qb7k5qVR7YSVS3GnnMlFu2ega5xzpIPGp7jf4q2fBUtAf/X861HensMILgyT3KW6b2RiRtFjymdgt3iSCX+/GrHdhLVaQ07Wy+HNXHJksKjvaH9IAsakutjPtaLPMLi9wVJlGpK09t1D9IURahrdMwn8ArUfQ3R/tBuUOZEq51Lea19CfEGFTNWTDiROwyhhnf9smkjA+QGJn0kSIJdFVwTbswz2MoEio92v2cQszjYKzfcZmXUbCOY1+3QS1bLZAoH/b3AL6miLKi6rR1tXGukaSu0tfm19SWIU4YRcKAkcSoXa9dVLTaz9n1ejaBE45fO4KN17lDZkuCOkIX7ED0z5LygWt+NRO0wmpHOBkIe6Wcx2sQK1s7phJfZjxPaMEn68MaBgYiiQnXnVmZfP7oGkTNv3GB861NyLsFaM+K0JIlpOoh9m1fHtDdOIwKNx6zeGUnXmQEEQrdkyNp8nnusCf3395APJem8Z7QPWp6PC0Pye5jT0Dbx64J197vg5Q2GDve573xXw6TE/W4qut/rlOeVDFqvqqo7JUoqHS1uhdbzeWptD9R0bXTEvJHpL7
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR04MB6575.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 20af8eb3-deda-4a28-c6ac-08dc7ad702c6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 May 2024 03:18:26.2769
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: BeVqMlhE30WrV/wSTMduvEoCrjjcXAajVwMjc3Fh28zPOgBYeC1hrRu/iI3siGvQwyx1aB7AyWHkmvRetTnWaw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR04MB6808
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v6 6/8] spi: spi-qpic: add driver for QCOM SPI NAND flash
+ Interface
+To: Miquel Raynal <miquel.raynal@bootlin.com>
+CC: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <richard@nod.at>, <vigneshr@ti.com>,
+        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240521105532.1537845-1-quic_mdalam@quicinc.com>
+ <20240521105532.1537845-7-quic_mdalam@quicinc.com>
+ <20240521152410.7cff71ab@xps-13>
+ <5b96e24a-edcd-df85-9e70-332a6059ee73@quicinc.com>
+ <20240522143317.07f78601@xps-13>
+Content-Language: en-US
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20240522143317.07f78601@xps-13>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: bLwe8LSLbrzdS-DgTxjFvWXzELXu1Vt1
+X-Proofpoint-ORIG-GUID: bLwe8LSLbrzdS-DgTxjFvWXzELXu1Vt1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-23_01,2024-05-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0 mlxlogscore=999
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405230023
 
-PiBPbiA1LzIyLzI0IDEzOjU2LCBCYW8gRC4gTmd1eWVuIHdyb3RlOg0KPiA+IE9uIDUvMjIvMjAy
-NCAxMToxOCBBTSwgQmFydCBWYW4gQXNzY2hlIHdyb3RlOg0KPiA+PiBTaW5jZSB0aGUgZGVzY3Jp
-YmVkIGlzc3VlIGlzIG9ubHkgZW5jb3VudGVyZWQgZHVyaW5nIGRldmVsb3BtZW50LCB3aHkgdG8N
-Cj4gPj4gbW9kaWZ5IHRoZSBVSUMgY29tbWFuZCB0aW1lb3V0IHVuY29uZGl0aW9uYWxseT8NCj4g
-Pg0KPiA+IFRoZSB2ZW5kb3JzIGNhbiBlbmpveSB0aGUgZGVmYXVsdCA1MDBtcyBVSUMgdGltZW91
-dCBpZiB0aGV5IHByZWZlci4NCj4gPiBBcyBsb25nIGFzIHRoZXkgZG9uJ3Qgd3JpdGUgdG8gaGJh
-LT51aWNfY21kX3RpbWVvdXQgaW4gdGhlIHZlbmRvcidzDQo+IGluaXRpYWxpemF0aW9uIHJvdXRp
-bmUsIHRoZSBkZWZhdWx0IHZhbHVlIG9mIDUwMG1zIHdpbGwgYmUgdXNlZC4NCj4gDQo+IFNpbmNl
-IHRoaXMgaXNzdWUgaXMgbm90IHZlbmRvciBzcGVjaWZpYywgSSB0aGluayBpdCB3b3VsZCBiZSBi
-ZXR0ZXIgdG8NCj4gbW9kaWZ5IHRoZSBVRlNIQ0kgY29yZSBkcml2ZXIgb25seS4gSGFzIGl0IGJl
-ZW4gY29uc2lkZXJlZCB0byBpbnRyb2R1Y2UgYQ0KPiBrZXJuZWwgbW9kdWxlIHBhcmFtZXRlciBm
-b3Igc2V0dGluZyB0aGUgVUlDIGNvbW1hbmQgdGltZW91dCBpbnN0ZWFkIG9mIHRoZQ0KPiBhcHBy
-b2FjaCBvZiB0aGlzIHBhdGNoPyBBcyB5b3UgcHJvYmFibHkga25vdyB0aGVyZSBhcmUgbXVsdGlw
-bGUgbWVjaGFuaXNtcw0KPiBmb3Igc3BlY2lmeWluZyBrZXJuZWwgbW9kdWxlIHBhcmFtZXRlcnMs
-IGUuZy4gdGhlIGJvb3RhcmdzIHBhcmFtZXRlciBpbiB0aGUNCj4gZGV2aWNlIHRyZWUuDQpTaW5j
-ZSB0aGUgcHJvYmxlbSBzdGF0ZW1lbnQgaXMgIkR1cmluZyBwcm9kdWN0IGRldmVsb3BtZW50Li4u
-Iiwgd2h5IG5vdCBqdXN0IGEgZGVidWdmcz8NCg0KVGhhbmtzLA0KQXZyaQ0KDQo+IA0KPiBUaGFu
-a3MsDQo+IA0KPiBCYXJ0Lg0KDQo=
+
+
+On 5/22/2024 6:03 PM, Miquel Raynal wrote:
+> Hi,
+> 
+>>>> +static int qcom_spi_ooblayout_ecc(struct mtd_info *mtd, int section,
+>>>> +				  struct mtd_oob_region *oobregion)
+>>>> +{
+>>>> +	struct nand_device *nand = mtd_to_nanddev(mtd);
+>>>> +	struct qcom_nand_controller *snandc = nand_to_qcom_snand(nand);
+>>>> +	struct qpic_ecc *qecc = snandc->qspi->ecc;
+>>>> +
+>>>> +	if (section > 1)
+>>>> +		return -ERANGE;
+>>>> +
+>>>> +	if (!section) {
+>>>> +		oobregion->length = (qecc->bytes * (qecc->steps - 1)) + qecc->bbm_size;
+>>>> +		oobregion->offset = 0;
+>>>
+>>> No, offset 0 is for the BBM. This is wrong.
+>>> The whole oob layout looks really really wrong.
+>>>
+>>> ECC bytes are where the ECC engine puts its bytes in the OOB area.
+>>> Free bytes start after the BBM and fill the gaps until the end of the
+>>> area, except where there are ECC bytes.
+>>    QPIC NAND controller having its own page layout with ecc and without ecc.
+>>    The same layout we are using in raw nand driver as well, so i used the
+>>    same here. The below info is already there in qcom raw nand driver file
+>>    in page layout info.
+>>
+>>    QPIC NAND controller layout as below:
+>>
+>>     Layout with ECC enabled:
+>>
+>>       |----------------------|  |---------------------------------|
+>>       |           xx.......yy|  |             *********xx.......yy|
+>>       |    DATA   xx..ECC..yy|  |    DATA     **SPARE**xx..ECC..yy|
+>>       |   (516)   xx.......yy|  |  (516-n*4)  **(n*4)**xx.......yy|
+>>       |           xx.......yy|  |             *********xx.......yy|
+>>       |----------------------|  |---------------------------------|
+>>        codeword 1,2..n-1                  codeword n
+>>       <---(528/532 Bytes)-->    <-------(528/532 Bytes)--------->
+>>
+>>       n = Number of codewords in the page
+>>       . = ECC bytes
+>>       * = Spare/free bytes
+>>       x = Unused byte(s)
+>>       y = Reserved byte(s)
+>>
+>>       2K page: n = 4, spare = 16 bytes
+>>       4K page: n = 8, spare = 32 bytes
+>>       8K page: n = 16, spare = 64 bytes
+>>
+>>       the qcom nand controller operates at a sub page/codeword level. each
+>>       codeword is 528 and 532 bytes for 4 bit and 8 bit ECC modes respectively.
+>>       the number of ECC bytes vary based on the ECC strength and the bus width.
+>>
+>>       the first n - 1 codewords contains 516 bytes of user data, the remaining
+>>       12/16 bytes consist of ECC and reserved data. The nth codeword contains
+>>       both user data and spare(oobavail) bytes that sum up to 516 bytes.
+>>
+>>       When we access a page with ECC enabled, the reserved bytes(s) are not
+>>       accessible at all. When reading, we fill up these unreadable positions
+>>       with 0xffs. When writing, the controller skips writing the inaccessible
+>>       bytes.
+>>
+>>       Layout with ECC disabled:
+>>
+>>       |------------------------------|  |---------------------------------------|
+>>       |         yy          xx.......|  |         bb          *********xx.......|
+>>       |  DATA1  yy  DATA2   xx..ECC..|  |  DATA1  bb  DATA2   **SPARE**xx..ECC..|
+>>       | (size1) yy (size2)  xx.......|  | (size1) bb (size2)  **(n*4)**xx.......|
+>>       |         yy          xx.......|  |         bb          *********xx.......|
+>>       |------------------------------|  |---------------------------------------|
+>>            codeword 1,2..n-1                        codeword n
+>>       <-------(528/532 Bytes)------>    <-----------(528/532 Bytes)----------->
+>>
+>>       n = Number of codewords in the page
+>>       . = ECC bytes
+>>       * = Spare/free bytes
+>>       x = Unused byte(s)
+>>       y = Dummy Bad Bock byte(s)
+>>       b = Real Bad Block byte(s)
+>>       size1/size2 = function of codeword size and 'n'
+>>
+>>       when the ECC block is disabled, one reserved byte (or two for 16 bit bus
+>>       width) is now accessible. For the first n - 1 codewords, these are dummy Bad
+>>       Block Markers. In the last codeword, this position contains the real BBM
+>>
+>>       In order to have a consistent layout between RAW and ECC modes, we assume
+>>       the following OOB layout arrangement:
+>>
+>>       |-----------|  |--------------------|
+>>       |yyxx.......|  |bb*********xx.......|
+>>       |yyxx..ECC..|  |bb*FREEOOB*xx..ECC..|
+>>       |yyxx.......|  |bb*********xx.......|
+>>       |yyxx.......|  |bb*********xx.......|
+>>       |-----------|  |--------------------|
+>>       first n - 1       nth OOB region
+>>       OOB regions
+>>
+>>       n = Number of codewords in the page
+>>       . = ECC bytes
+>>       * = FREE OOB bytes
+>>       y = Dummy bad block byte(s) (inaccessible when ECC enabled)
+>>       x = Unused byte(s)
+>>       b = Real bad block byte(s) (inaccessible when ECC enabled)
+>>
+>>       This layout is read as is when ECC is disabled. When ECC is enabled, the
+>>       inaccessible Bad Block byte(s) are ignored when we write to a page/oob,
+>>       and assumed as 0xffs when we read a page/oob. The ECC, unused and
+>>       dummy/real bad block bytes are grouped as ecc bytes (i.e, ecc->bytes is
+>>       the sum of the three).
+> 
+> Thanks for the detailed explanation (which would benefit from being
+> added somewhere in a comment, maybe at the top of the file).
+Ok
+> 
+> Unfortunately, these ooblayout callbacks do work on a flat <data><oob>
+> layout, not on the hardware ECC engine layout. So whatever the real
+> physical position of the bad block marker within the NAND array, these
+> markers will always be at offset 0 and 1 in the OOB final buffer.
+Ok , will fix in next patch.
+> 
+> Same applies to the spare and ECC bytes. These layouts are totally
+> wrong and must be fixed. If the layouts are the same in both raw/spi
+> cases, maybe they should be part of the common file?
+Ok , will fix in next patch.
+> 
+>>>> +	} else {
+>>>> +		oobregion->length = qecc->ecc_bytes_hw + qecc->spare_bytes;
+>>>> +		oobregion->offset = mtd->oobsize - oobregion->length;
+>>>> +	}
+>>>> +
+>>>> +	return 0;
+>>>> +}
+>>>> +
+>>>> +static int qcom_spi_ooblayout_free(struct mtd_info *mtd, int section,
+>>>> +				   struct mtd_oob_region *oobregion)
+>>>> +{
+>>>> +	struct nand_device *nand = mtd_to_nanddev(mtd);
+>>>> +	struct qcom_nand_controller *snandc = nand_to_qcom_snand(nand);
+>>>> +	struct qpic_ecc *qecc = snandc->qspi->ecc;
+>>>> +
+>>>> +	if (section)
+>>>> +		return -ERANGE;
+>>>> +
+>>>> +	oobregion->length = qecc->steps * 4;
+>>>> +	oobregion->offset = ((qecc->steps - 1) * qecc->bytes) + qecc->bbm_size;
+>>>> +
+>>>> +	return 0;
+>>>> +}
+>>>> +
+>>>
+>>> ...
+>>>    
+>>>> +static int qcom_spi_ecc_prepare_io_req_pipelined(struct nand_device *nand,
+>>>> +						 struct nand_page_io_req *req)
+>>>> +{
+>>>> +	struct qcom_nand_controller *snandc = nand_to_qcom_snand(nand);
+>>>> +	struct qpic_ecc *ecc_cfg = nand_to_ecc_ctx(nand);
+>>>> +	struct mtd_info *mtd = nanddev_to_mtd(nand);
+>>>> +
+>>>> +	snandc->qspi->ecc = ecc_cfg;
+>>>> +	snandc->qspi->pagesize = mtd->writesize;
+>>>> +	snandc->qspi->raw_rw = false;
+>>>> +	snandc->qspi->oob_rw = false;
+>>>> +	snandc->qspi->page_rw = false;
+>>>> +
+>>>> +	if (req->datalen)
+>>>> +		snandc->qspi->page_rw = true;
+>>>> +
+>>>> +	if (req->ooblen) {
+>>>> +		snandc->qspi->oob_rw = true;
+>>>> +		if (req->ooblen == BAD_BLOCK_MARKER_SIZE)
+>>>> +			snandc->qspi->read_last_cw = true;
+>>>
+>>> ???
+>>     As per QPIC controller layout , the actual babd block marker will
+>>     be present in last code word. Thats why i have added this check.
+>>     to read only last codeword for bad block check.
+> 
+> You need to comply with the request. If ooblen is != 0, you need to
+> read the codeword(s) where the oob is. Please don't try to be smarter
+> than that. Checking the _value_ of ooblen is an optimization I don't
+> think is worth.
+Ok, will try to cleanup all the indirection in next patch.
+> 
+>>>    
+>>>> +	}
+>>>> +
+>>>> +	if (req->mode == MTD_OPS_RAW)
+>>>> +		snandc->qspi->raw_rw = true;
+>>>> +
+>>>> +	return 0;
+>>>> +}
+>>>> +
+>>>> +static int qcom_spi_ecc_finish_io_req_pipelined(struct nand_device *nand,
+>>>> +						struct nand_page_io_req *req)
+>>>> +{
+>>>> +	struct qcom_nand_controller *snandc = nand_to_qcom_snand(nand);
+>>>> +	struct mtd_info *mtd = nanddev_to_mtd(nand);
+>>>> +
+>>>> +	if (req->mode == MTD_OPS_RAW || req->type != NAND_PAGE_READ)
+>>>> +		return 0;
+>>>> +
+>>>> +	if (snandc->qspi->ecc_stats.failed)
+>>>> +		mtd->ecc_stats.failed += snandc->qspi->ecc_stats.failed;
+>>>> +	mtd->ecc_stats.corrected += snandc->qspi->ecc_stats.corrected;
+>>>
+>>> Seems strange
+>>     In flash error check for each code word i am updating the error value.
+>>     So on finishing on io i am assigning that error to mtd variables so that
+>>     upper layer check for error.
+> 
+> You don't clear the qspi ecc_stats so this cannot work properly.
+  I am clearing in the qcom_spi_check_error() api, before reading status for the next page.
+
+  snandc->qspi->ecc_stats.failed = 0;
+  snandc->qspi->ecc_stats.corrected = 0;
+> 
+> Plus, I would welcome an else statement for incrementing the corrected
+> field.
+Ok
+> 
+>>>    
+>>>> +
+>>>> +	if (snandc->qspi->ecc_stats.failed)
+>>>> +		return -EBADMSG;
+>>>> +	else
+>>>> +		return snandc->qspi->ecc_stats.bitflips;
+>>>> +}
+>>>> +
+>>>> +static struct nand_ecc_engine_ops qcom_spi_ecc_engine_ops_pipelined = {
+>>>> +	.init_ctx = qcom_spi_ecc_init_ctx_pipelined,
+>>>> +	.cleanup_ctx = qcom_spi_ecc_cleanup_ctx_pipelined,
+>>>> +	.prepare_io_req = qcom_spi_ecc_prepare_io_req_pipelined,
+>>>> +	.finish_io_req = qcom_spi_ecc_finish_io_req_pipelined,
+>>>> +};
+>>>> +
+>>>
+>>> ...
+>>>    
+>>>> +static int qcom_spi_read_page_raw(struct qcom_nand_controller *snandc,
+>>>> +				  const struct spi_mem_op *op)
+>>>> +{
+>>>> +	struct qpic_ecc *ecc_cfg = snandc->qspi->ecc;
+>>>> +	u8 *data_buf = NULL, *oob_buf = NULL;
+>>>> +	int ret, cw;
+>>>> +	u32 num_cw = snandc->qspi->num_cw;
+>>>> +
+>>>> +	if (snandc->qspi->page_rw)
+>>>
+>>> I don't like this indirection very much. Can't you simplify this and
+>>> just follow the spi-mem op instead of constantly trying to add
+>>> additional stuff?
+>>     This indirection needed due to QPIC controller will not take all the instruction
+>>     one-by-one , once we will set CMD_EXEC = 1, then it will execute all the instruction
+>>     at once.
+> 
+> The spi_mem_op structure already describes the whole operation. Why do
+> you split the operation in sub routines if you can't actually do that?
+Ok , will try to cleanup in next patch.
+> 
+>>>
+>>> The hardware is already quite complex, but it feels like your adding
+>>> yet another pile of unnecessary complexity.
+>>     Yes hardware is complex. let me check if i can further optimize as per spi-mem op
+>>     as you suggested.
+>>>    
+>>>> +		data_buf = op->data.buf.in;
+>>>> +
+>>>> +	if (snandc->qspi->oob_rw)
+>>>> +		oob_buf = op->data.buf.in;
+> 
+> ...
+> 
+>>>> +static int qcom_spi_write_page_cache(struct qcom_nand_controller *snandc,
+>>>> +				     const struct spi_mem_op *op)
+>>>> +{
+>>>> +	struct qpic_snand_op s_op = {};
+>>>> +	u32 cmd;
+>>>> +
+>>>> +	cmd = qcom_spi_cmd_mapping(snandc, op->cmd.opcode);
+>>>
+>>> I've asked for switch cases to return an error in case they could not
+>>> handle the request. If you don't check the returned values, it
+>>> does not make any sense.
+>>    Ok, will fix in next patch.
+>>>    
+>>>> +	s_op.cmd_reg = cmd;
+>>>> +
+>>>> +	if (op->cmd.opcode == SPINAND_PROGRAM_LOAD) {
+>>>> +		if (snandc->qspi->page_rw)
+>>>> +			snandc->qspi->data_buf = (u8 *)op->data.buf.out;
+>>>
+>>> What you do here does not write anything in a page cache.
+>>     No here just updating the buffer , actual write will happen in program_execute.
+>>     This is due to QPIC controller will not take all the instruction one-by-one.
+>>     once we will set CMD_EXEC = 1, then it will execute all the instruction
+>>     at once. So accumulating all the instruction and then executing at once in
+>>     program_execute.
+>>>
+>>> I also don't understand why you would have to check against the
+>>> SPINAND_PROGRAM_LOAD opcode.
+>>     Because the actual write will happen in program_execute. and here
+>>     PROGRAM_EXECUTE command will also land, so that added the check.
+>>>    
+>>>> +	}
+>>>> +
+>>>> +	return 0;
+>>>> +}
+>>>> +
+>>>> +static int qcom_spi_send_cmdaddr(struct qcom_nand_controller *snandc,
+>>>> +				 const struct spi_mem_op *op)
+>>>> +{
+>>>> +	struct qpic_snand_op s_op = {};
+>>>> +	u32 cmd;
+>>>> +	int ret, opcode;
+>>>> +
+>>>> +	cmd = qcom_spi_cmd_mapping(snandc, op->cmd.opcode);
+>>>> +
+>>>> +	s_op.cmd_reg = cmd;
+>>>> +	s_op.addr1_reg = op->addr.val;
+>>>> +	s_op.addr2_reg = 0;
+>>>> +
+>>>> +	opcode = op->cmd.opcode;
+>>>> +
+>>>> +	switch (opcode) {
+>>>> +	case SPINAND_WRITE_EN:
+>>>> +		return 0;
+>>>> +	case SPINAND_PROGRAM_EXECUTE:
+>>>> +		s_op.addr1_reg = op->addr.val << 16;
+>>>> +		s_op.addr2_reg = op->addr.val >> 16 & 0xff;
+>>>> +		snandc->qspi->addr1 = s_op.addr1_reg;
+>>>> +		snandc->qspi->addr2 = s_op.addr2_reg;
+>>>> +		snandc->qspi->cmd = cmd;
+>>>> +		return qcom_spi_program_execute(snandc, op);
+>>>> +	case SPINAND_READ:
+>>>> +		s_op.addr1_reg = (op->addr.val << 16);
+>>>> +		s_op.addr2_reg = op->addr.val >> 16 & 0xff;
+>>>> +		snandc->qspi->addr1 = s_op.addr1_reg;
+>>>> +		snandc->qspi->addr2 = s_op.addr2_reg;
+>>>> +		snandc->qspi->cmd = cmd;
+>>>> +		return 0;
+>>>> +	case SPINAND_ERASE:
+>>>> +		s_op.addr2_reg = (op->addr.val >> 16) & 0xffff;
+>>>> +		s_op.addr1_reg = op->addr.val;
+>>>> +		snandc->qspi->addr1 = (s_op.addr1_reg << 16);
+>>>> +		snandc->qspi->addr2 = s_op.addr2_reg;
+>>>> +		snandc->qspi->cmd = cmd;
+>>>> +		qcom_spi_block_erase(snandc);
+>>>> +		return 0;
+>>>> +	default:
+>>>> +		break;
+>>>> +	}
+>>>> +
+>>>> +	snandc->buf_count = 0;
+>>>> +	snandc->buf_start = 0;
+>>>> +	qcom_clear_read_regs(snandc);
+>>>> +	qcom_clear_bam_transaction(snandc);
+>>>> +
+>>>> +	snandc->regs->cmd = s_op.cmd_reg;
+>>>> +	snandc->regs->exec = 1;
+>>>> +	snandc->regs->addr0 = s_op.addr1_reg;
+>>>> +	snandc->regs->addr1 = s_op.addr2_reg;
+>>>> +
+>>>> +	qcom_write_reg_dma(snandc, &snandc->regs->cmd, NAND_FLASH_CMD, 3, NAND_BAM_NEXT_SGL);
+>>>> +	qcom_write_reg_dma(snandc, &snandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+>>>> +
+>>>> +	ret = qcom_submit_descs(snandc);
+> 
+> And you really don't want to check the validity of the opcode with what
+> you support before submitting the descriptors?
+Ok , will do in next patch.
+> 
+>>>> +	if (ret)
+>>>> +		dev_err(snandc->dev, "failure in sbumitting cmd descriptor\n");
+>>>
+>>> typo
+>>    Ok , will fix in next patch.
+>>>    
+>>>> +
+>>>> +	return ret;
+>>>> +}
+>>>> +
+>>>> +static int qcom_spi_io_op(struct qcom_nand_controller *snandc, const struct spi_mem_op *op)
+>>>> +{
+>>>> +	int ret, val, opcode;
+>>>> +	bool copy = false, copy_ftr = false;
+>>>> +
+>>>> +	ret = qcom_spi_send_cmdaddr(snandc, op);
+>>>> +	if (ret)
+>>>> +		return ret;
+>>>> +
+>>>> +	snandc->buf_count = 0;
+>>>> +	snandc->buf_start = 0;
+>>>> +	qcom_clear_read_regs(snandc);
+>>>> +	qcom_clear_bam_transaction(snandc);
+>>>> +	opcode = op->cmd.opcode;
+>>>> +
+>>>> +	switch (opcode) {
+>>>> +	case SPINAND_READID:
+>>>> +		snandc->buf_count = 4;
+>>>> +		qcom_read_reg_dma(snandc, NAND_READ_ID, 1, NAND_BAM_NEXT_SGL);
+>>>> +		copy = true;
+>>>> +		break;
+>>>> +	case SPINAND_GET_FEATURE:
+>>>> +		snandc->buf_count = 4;
+>>>> +		qcom_read_reg_dma(snandc, NAND_FLASH_FEATURES, 1, NAND_BAM_NEXT_SGL);
+>>>> +		copy_ftr = true;
+>>>> +		break;
+>>>> +	case SPINAND_SET_FEATURE:
+>>>> +		snandc->regs->flash_feature = *(u32 *)op->data.buf.out;
+>>>> +		qcom_write_reg_dma(snandc, &snandc->regs->flash_feature,
+>>>> +				   NAND_FLASH_FEATURES, 1, NAND_BAM_NEXT_SGL);
+>>>> +		break;
+>>>> +	case SPINAND_RESET:
+>>>> +		return 0;
+>>>> +	case SPINAND_PROGRAM_EXECUTE:
+>>>> +		return 0;
+>>>> +	case SPINAND_WRITE_EN:
+>>>> +		return 0;
+>>>> +	case SPINAND_ERASE:
+>>>> +		return 0;
+>>>> +	case SPINAND_READ:
+>>>> +		return 0;
+>>>
+>>> You can stack the cases
+>> Ok
+>>>    
+>>>> +	default:
+>>>> +		return -EOPNOTSUPP;
+>>>> +	}
+>>>> +
+>>>> +	ret = qcom_submit_descs(snandc);
+>>>> +	if (ret)
+>>>> +		dev_err(snandc->dev, "failure in submitting descriptor for:%d\n", opcode);
+>>>> +
+>>>> +	if (copy) {
+>>>> +		qcom_nandc_dev_to_mem(snandc, true);
+>>>> +		memcpy(op->data.buf.in, snandc->reg_read_buf, snandc->buf_count);
+>>>> +	}
+>>>> +
+>>>> +	if (copy_ftr) {
+>>>> +		qcom_nandc_dev_to_mem(snandc, true);
+>>>> +		val = le32_to_cpu(*(__le32 *)snandc->reg_read_buf);
+>>>> +		val >>= 8;
+>>>> +		memcpy(op->data.buf.in, &val, snandc->buf_count);
+>>>> +	}
+>>>> +
+>>>> +	return ret;
+>>>> +}
+> 
+> Thanks,
+> Miquèl
 
