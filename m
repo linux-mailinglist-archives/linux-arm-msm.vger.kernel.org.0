@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-20301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B35F58CD1AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 14:04:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 727EF8CD1B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 14:04:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 69E941F21E10
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 12:04:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CDA31B20BA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 12:04:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 357C713B7A1;
-	Thu, 23 May 2024 12:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E15F713B7A1;
+	Thu, 23 May 2024 12:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bGjQPoQG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jD6QGEbD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD52B13B5B0;
-	Thu, 23 May 2024 12:04:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4266013B5B3;
+	Thu, 23 May 2024 12:04:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716465855; cv=none; b=PIuRiSg8rHFDjIusU6OqJ/EjYEVIQQYeov85LLMyP/xuHPZbBA2NcSlvV0BJHd81c3TkX5e+5oBsNzz3+wBcJ5jl4Xtpoz1Vn5gmVU07dN12TjRxToQ0oEY3Xuynf4/VJqYSNBHEG6UUrkqLW86BqESXdZjNxrwe1IDWtu+Azjc=
+	t=1716465872; cv=none; b=E12yNfWki+rvWK++B4WPJpCZFnjoqlCgR7C2rU9+ZZLQlVRhwjNw7FpP9HMwUVYQ+fJx211G0ow4YtwVjcJz8oJ89kOtJEnc0f1BltdOsXTNsEpTYoBsEZ3uRt9G28Hk0BCaQJJEMQ2uS7HnCUfqVQUz7WoYpDww0B1vMvY+JcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716465855; c=relaxed/simple;
-	bh=HgC9TVuJDL0Gxu+T0SW+6KJaOfIiSm5IJ7kzEtOwfn0=;
+	s=arc-20240116; t=1716465872; c=relaxed/simple;
+	bh=W0uL0jNwP3jzQVh4r/C9wU/FRethe03s0i3vSW4cqSU=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YqCywrm9ttoMFX2YIRPAJpzBauv011OcYoSs8vQxlj/nCAlOL9leWkPukB99CS4LqjNbNItrDnUNi16ecJ3FckHTSy2/QBxbTKOo3ZgEXeQ1+csSNkUkAUsKwwEG/I3Cj5Z84gkmzcwhOZiz/7K/RkvjsI7yMF4RgtaAJnYYs0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bGjQPoQG; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=O4EngK3ZCtTRXX/Qx5/KFMM6CcHmAD6fc7wglcnsilnQQJmVwmzk2hlgpbdousRB6TYUFt+n5IH3ER9PEMqWNZdVGcfhoB35H2KNAExFf8tT0Z0GivjSN2Su/f+8Hy/xdYp/PMnbBwVqckuA3Ir4kRGGlmeSGE9chcv8OHpO74o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jD6QGEbD; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44N4kAL6013120;
-	Thu, 23 May 2024 12:04:10 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44N4ir13012480;
+	Thu, 23 May 2024 12:04:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=ZrL88IawaIl55f5X99a7wwfG
-	NdPBNplE1/fKAm5VbNo=; b=bGjQPoQGJCOMoUH/zbhHkun2nvCjaljlfRDAaP4k
-	PNSD9Du/6FQm9a04lFKR7uLdzaBuUF3XkfltS+H43KuB21OTEe+f7FqJCBuCLXso
-	bh4oSA2Zyo5hrEbdz2H+Df61mM/mFbJFdqrfEJCX6dTgXxkS2CJ0NwjU90ZV1yCu
-	HON4hAAEOg69yBkWt79n0vz1UFnHK+SCsOzCLKrb7b0alMsy8bFLLL2rtRdc1nWn
-	1ZcceoNVnRJNE8qqH3oHz+qombfKMTftEk6/tXODSwWZ1ttT9igN6d7gjn/jDuch
-	1jKPn/ZzV9lKHpx2nvH3h4ugduXn2sc4gW3wr1ioGXqk7A==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y9y29s0me-1
+	:references:subject:to; s=qcppdkim1; bh=GNRDPxkPyvH2pmCnWvx/pCd9
+	CJhx1/fEaAlzz8FMh+4=; b=jD6QGEbDdZZ/PhryNu+FgGIXDZg+maj1ZpLnb5rR
+	fHk+yKt7CjUIJMeuhivTmqHsXKA+PGG6ghzvHx7AB65xlWdsPHDcMejg3BihtRrR
+	hAa1Qs/ERUn0idTLmrDX+dZWGRSg1R0Rt0GyV+EVfbdYexmiS2DGDYvMmk8+OL3S
+	Ogo03BVfz+mW0eOxKaqVpdY01Syq4ZvGUEoiZfRQpG+xRR3acfuGRqZVP4VkCzPj
+	qLS2J+djaz/SeBVUZLwFs4l7qYVe1v47xADbyY83c3jMUamfCD6f2gbzaQ15vmr+
+	zmt9U2ImkGirr673uKN+sgybT13eoKsd5xA7FOFfTe3ppA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y9y20h001-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 May 2024 12:04:10 +0000 (GMT)
+	Thu, 23 May 2024 12:04:14 +0000 (GMT)
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44NC49oC002469
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44NC4DQS014200
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 May 2024 12:04:09 GMT
+	Thu, 23 May 2024 12:04:13 GMT
 Received: from hyd-e160-a01-3-01.qualcomm.com (10.80.80.8) by
  nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 23 May 2024 05:04:05 -0700
+ 15.2.1544.9; Thu, 23 May 2024 05:04:09 -0700
 From: Naina Mehta <quic_nainmeht@quicinc.com>
 To: <ulf.hansson@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
         <conor+dt@kernel.org>, <andersson@kernel.org>,
@@ -62,9 +62,9 @@ To: <ulf.hansson@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
 CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <quic_nainmeht@quicinc.com>
-Subject: [PATCH v2 1/3] dt-bindings: mmc: sdhci-msm: Document the SDX75 compatible
-Date: Thu, 23 May 2024 17:33:35 +0530
-Message-ID: <20240523120337.9530-2-quic_nainmeht@quicinc.com>
+Subject: [PATCH v2 2/3] arm64: dts: qcom: sdx75: Add SDHCI node
+Date: Thu, 23 May 2024 17:33:36 +0530
+Message-ID: <20240523120337.9530-3-quic_nainmeht@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240523120337.9530-1-quic_nainmeht@quicinc.com>
 References: <20240523120337.9530-1-quic_nainmeht@quicinc.com>
@@ -79,37 +79,139 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: P_RtDrR5AsO49KUlbiuD7eZ15fciGUvB
-X-Proofpoint-GUID: P_RtDrR5AsO49KUlbiuD7eZ15fciGUvB
+X-Proofpoint-ORIG-GUID: WWeO1X_58xEvW8KQudq9wvWzcWlfPFVH
+X-Proofpoint-GUID: WWeO1X_58xEvW8KQudq9wvWzcWlfPFVH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-23_07,2024-05-23_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 mlxlogscore=999
- mlxscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
- definitions=main-2405230082
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 malwarescore=0 phishscore=0 bulkscore=0 clxscore=1015
+ impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405010000 definitions=main-2405230082
 
-Document the compatible for SDHCI on SDX75 SoC.
+Add sdhc node for SDX75 SoC to support SD card.
+Also add pins required for SDHCI.
 
 Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sdx75.dtsi | 89 +++++++++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-index c24c537f62b1..11979b026d21 100644
---- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-+++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-@@ -51,6 +51,7 @@ properties:
-               - qcom,sdm845-sdhci
-               - qcom,sdx55-sdhci
-               - qcom,sdx65-sdhci
-+              - qcom,sdx75-sdhci
-               - qcom,sm6115-sdhci
-               - qcom,sm6125-sdhci
-               - qcom,sm6350-sdhci
+diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+index da1704061d58..16f3a2400d7f 100644
+--- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+@@ -8,6 +8,7 @@
+ 
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/clock/qcom,sdx75-gcc.h>
++#include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interconnect/qcom,icc.h>
+ #include <dt-bindings/interconnect/qcom,sdx75.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+@@ -538,6 +539,54 @@
+ 			#hwlock-cells = <1>;
+ 		};
+ 
++		sdhc: mmc@8804000 {
++			compatible = "qcom,sdx75-sdhci", "qcom,sdhci-msm-v5";
++			reg = <0x0 0x08804000 0x0 0x1000>;
++
++			interrupts = <GIC_SPI 210 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq",
++					  "pwr_irq";
++
++			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
++				 <&gcc GCC_SDCC1_APPS_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "iface",
++				      "core",
++				      "xo";
++			iommus = <&apps_smmu 0x00a0 0x0>;
++			qcom,dll-config = <0x0007442c>;
++			qcom,ddr-config = <0x80040868>;
++			power-domains = <&rpmhpd RPMHPD_CX>;
++			operating-points-v2 = <&sdhc1_opp_table>;
++
++			interconnects = <&system_noc MASTER_SDCC_1 &mc_virt SLAVE_EBI1>,
++					<&gem_noc MASTER_APPSS_PROC &system_noc SLAVE_SDCC_1>;
++			interconnect-names = "sdhc-ddr",
++					     "cpu-sdhc";
++			bus-width = <4>;
++			dma-coherent;
++
++			/* Forbid SDR104/SDR50 - broken hw! */
++			sdhci-caps-mask = <0x3 0>;
++
++			status = "disabled";
++
++			sdhc1_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-100000000 {
++					opp-hz = /bits/ 64 <100000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++				};
++
++				opp-384000000 {
++					opp-hz = /bits/ 64 <384000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++				};
++			};
++		};
++
+ 		usb: usb@a6f8800 {
+ 			compatible = "qcom,sdx75-dwc3", "qcom,dwc3";
+ 			reg = <0x0 0x0a6f8800 0x0 0x400>;
+@@ -683,6 +732,46 @@
+ 				drive-strength = <2>;
+ 				bias-pull-down;
+ 			};
++
++			sdc1_default: sdc1-default-state {
++				clk-pins {
++					pins = "sdc1_clk";
++					drive-strength = <16>;
++					bias-disable;
++				};
++
++				cmd-pins {
++					pins = "sdc1_cmd";
++					drive-strength = <10>;
++					bias-pull-up;
++				};
++
++				data-pins {
++					pins = "sdc1_data";
++					drive-strength = <10>;
++					bias-pull-up;
++				};
++			};
++
++			sdc1_sleep: sdc1-sleep-state {
++				clk-pins {
++					pins = "sdc1_clk";
++					drive-strength = <2>;
++					bias-disable;
++				};
++
++				cmd-pins {
++					pins = "sdc1_cmd";
++					drive-strength = <2>;
++					bias-pull-up;
++				};
++
++				data-pins {
++					pins = "sdc1_data";
++					drive-strength = <2>;
++					bias-pull-up;
++				};
++			};
+ 		};
+ 
+ 		apps_smmu: iommu@15000000 {
 -- 
 2.17.1
 
