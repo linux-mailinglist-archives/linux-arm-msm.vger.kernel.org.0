@@ -1,67 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-20320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 739828CDDA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 01:22:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E1138CDDA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 01:22:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2ACF41F22526
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 23:22:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90C3B1C2180C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 23:22:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 490C91292C2;
-	Thu, 23 May 2024 23:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A76D1292D1;
+	Thu, 23 May 2024 23:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="TttDrzA4"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="JX8RbgWd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B871E128362
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 23:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FF8128829
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 23:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716506564; cv=none; b=RROigFT8v33uDc+ec9xbUw5+vGCsK/WFjRlJ74Vuf3XQ6gXqhLF+pj1JrH4CiOhFITjaVfEnkD33h0OX6xV4rmWwOa0l6lUKGd+EtsMSx20GMkjcQqPv1Lat3mwiNAOP/i6XSDrwHnLAptEov2Gt4yrGmlDlDfJ8VlMu1Ghxzwk=
+	t=1716506565; cv=none; b=Z0vZhVXGoH5X4afbho6x7y8H7SSOe8F/gtdjVvlZVPzSM1x4ZB944bb930C4ZNZjbDzygmBMrmox9V2rfwnZC6Lhd4Lc8zs77Trg21WkM7A3AUMRcQJXH6TWTcHFcvBYzeaVSOWBf+XWL61h+hZOxdfyOj9O252JNb8dfXVXKPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716506564; c=relaxed/simple;
-	bh=rgPr4Ngu722SRDj2ZtjbrxVxv2puo2dZm2D+9CkatPI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Hl6/Jwwq89yyJcHKB5ubtaB4u0KHUMWNeCDZLkLJpWypCmxJv7ObSs/43RR287hXzJn/vJPOp2oQhabkAoNSOm5FumMGKuZhnqlBopH5FdWVPKAO6bh0u8GjrZxzBhuo8kOBjRd9fpklknwnY5nNidcyyhgJZsNorsyJfNlBsSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=TttDrzA4; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1716506565; c=relaxed/simple;
+	bh=kkkhBwgehEF7n1T23cL1CwSfbc9VolDpTC3FStnSsd0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TP2m90hmobIXBbiWPfIH3HGsGXWhKETwvgzaqqw11+T9cmu+oBehBOj4jy/bIXixbtAJEb3jszyLIGCfrmPVeK8qtZ0qXUwz4rpikia/1Wop3AARcBrc3SxOTJxtJsn/craWWUTZZjC8O6+ImkPzuciQmx33vr/Kzgad7ebP/es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=JX8RbgWd; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1f3421564d2so8222495ad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 16:22:41 -0700 (PDT)
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1f3434c36baso8935425ad.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 16:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1716506561; x=1717111361; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZfP9vIEmS390P3O4iAtZjeM8HWFzEOcH0/2SUf3/Hok=;
-        b=TttDrzA4qnK/uWrFshTTPAVszxLlkHAJ5wbe4kgITRdvWR/nkEXrJsLEcEQw7On3/t
-         wDD8A+GalWqEFGeEcJVTZtMiTEZQKvxPxrbN0Tu5i1XuHGZyQ4gkUC9GYb2sQxyPcbVx
-         WwtM5wwMViUyTnhfzAuyhYOLcKjj6EKviLaUg=
+        d=chromium.org; s=google; t=1716506563; x=1717111363; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G7fuT9Y1ix7BMb1d7jsMKipipzI5RerSwpQeO523sQw=;
+        b=JX8RbgWdxgUBdtuKPPGK+oZTV6ybfM+6/iCINoVkpbj2AB7vEJLyrcpyttl/WMizyq
+         HSnObBpNoFvOWinAynCsp9X4sIa75bhO8WDa3TjpR9oDiuzQsQe8PZnTmSRcitX+ouAN
+         D6F12LawjqfHddl07AhKumoDrL0yXS2atYQ0U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716506561; x=1717111361;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZfP9vIEmS390P3O4iAtZjeM8HWFzEOcH0/2SUf3/Hok=;
-        b=eTdTIPLPmRGqfyoRHT3wxERJfvRFi/d2Ap1SBZXjj4UH7IfzJ/IJ1YXpAsAB48mNwN
-         N59koNuNtReR3lrIWlfFPRJh+6WZnuuKMfDrvqVW33bRobDyhx134gePbNSdxFkc1Y4l
-         FS6rXNnKk82x1zU4uiUmlz2cJUMESJ+yBRf86rJ+HCp3dZs+JUK5sRaTCkGuJdPv8OcJ
-         DwwaUZV6HuyTTnxskvY7RUMVlj4uNLuZx7MaWSyZgSNZF1GXzCeB9P/woE96pisKUyCZ
-         s78q6fFompNmPDqO4JAfL/14wZI95ud0jc2f8dptkqB9x186OVTWZF6DxigPG45KV7El
-         bDkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVZ8f4xZyxHvYvWy/RKMOxRtnbSFEoC2mnLFEzJQGO3zcurJv/H5cHuihlew0ntzznZFBElg65ks1TEuCdxfGz6UuyhLoN82byzjSNB3g==
-X-Gm-Message-State: AOJu0YyHoOQHP1nRCP8LPi+I8bykhE/5y3K0YO3g4HvFiCxgxQOwNR7J
-	wlg1HxDuSaphkcy79KVYThcN0FnGUAP9pEEtkSNCuIrmpyK/UI4W4/FehT4Psg==
-X-Google-Smtp-Source: AGHT+IGv12M53lM+GUULtAWysbxmBRhEDbBtm/AXwGQlH56IEyIRCa/lNDP8GHgZxm6j/t23nijr+Q==
-X-Received: by 2002:a17:902:d58c:b0:1f2:fcc0:66f with SMTP id d9443c01a7336-1f448248a0emr11751435ad.31.1716506560961;
-        Thu, 23 May 2024 16:22:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1716506563; x=1717111363;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G7fuT9Y1ix7BMb1d7jsMKipipzI5RerSwpQeO523sQw=;
+        b=OeRCY5CngRJCH9XwMSNV1j9g4sh7LzS779a57AUIVApS6touXeyTKkG1qra5hcDWyK
+         rIQHX8bQYDP6zJ7uGwhrkDEtSz/xIPge2t6aylEo5WfqGT1szlA6I4FLYwK/+hQvrYzs
+         W+xAxDmE1q2Uw8gheghUIWriDV7jyu/EpBXiksaY2QwEGGZbMqxeeVy6CLcGhPTSlfD1
+         mTY1wvGpAh2D/4CL6N/L/HEXG2ZIUoS9xf/ifmnWZkckzRJ4wPcIt4H03EWC0A9f47b7
+         pRzFaKnf4aO87AvAAoseCda79N2F4l6mPxLn/7+3vWwfnqEZI4ZSFKMXODxxG2R+Jj8h
+         LiKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUtCfEx5Iedv7t3RCh+IS9MbZFNw2Q6HdK2ROZ6Xtq1suXulp5+Cm4rNE8f6YcmNpPjH0bkO2+N0UgDTwR0TxRDYG7C085l4h/m5919Mg==
+X-Gm-Message-State: AOJu0YyEKqYK4Dd1K4nvcLWL90HgiYYO2DlW+8Nyw94gF6cfRQFXMXht
+	1x1YaOJyDBMVmFurvzm+rBj3dYQtzb+RL63wkcR8Dmpsb5w1Zyiz1t0jfcLMfg==
+X-Google-Smtp-Source: AGHT+IGwLF6m50OvfMrgXu5OtjFWL8dtO9YTmydt+ZsukEMXxXhyqzG9PSYlm5popmEqsreBccc6Gg==
+X-Received: by 2002:a17:902:c408:b0:1f3:29f1:76be with SMTP id d9443c01a7336-1f4497d8af4mr9107695ad.56.1716506562808;
+        Thu, 23 May 2024 16:22:42 -0700 (PDT)
 Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:b835:ba86:8e6d:41c6])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f44c797938sm1279545ad.64.2024.05.23.16.22.39
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f44c797938sm1279545ad.64.2024.05.23.16.22.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 May 2024 16:22:40 -0700 (PDT)
+        Thu, 23 May 2024 16:22:42 -0700 (PDT)
 From: Douglas Anderson <dianders@chromium.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiri Slaby <jirislaby@kernel.org>
@@ -74,56 +76,80 @@ Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Yicong Yang <yangyicong@hisilicon.com>,
 	Douglas Anderson <dianders@chromium.org>,
 	Guanbing Huang <albanhuang@tencent.com>,
-	James Clark <james.clark@arm.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
 	linux-kernel@vger.kernel.org,
 	linux-serial@vger.kernel.org
-Subject: [PATCH 0/2] serial: Fix problems when serial transfer is happening at suspend time
-Date: Thu, 23 May 2024 16:22:11 -0700
-Message-ID: <20240523232216.3148367-1-dianders@chromium.org>
+Subject: [PATCH 1/2] serial: port: Don't block system suspend even if bytes are left to xmit
+Date: Thu, 23 May 2024 16:22:12 -0700
+Message-ID: <20240523162207.1.I2395e66cf70c6e67d774c56943825c289b9c13e4@changeid>
 X-Mailer: git-send-email 2.45.1.288.g0e0cd299f1-goog
+In-Reply-To: <20240523232216.3148367-1-dianders@chromium.org>
+References: <20240523232216.3148367-1-dianders@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+Recently, suspend testing on sc7180-trogdor based devices has started
+to sometimes fail with messages like this:
 
-This is a set of two patches that fix problems related to suspending
-while a serial transfer is going on. The two patches are independent
-from each other and can land in any order. The only thing tying them
-together is that I used the same test to reproduce both of them.
-Specifically, I could reproduce my problemes by logging in via an
-agetty on the debug serial port (which was _not_ used for kernel
-console) and running:
+  port a88000.serial:0.0: PM: calling pm_runtime_force_suspend+0x0/0xf8 @ 28934, parent: a88000.serial:0
+  port a88000.serial:0.0: PM: dpm_run_callback(): pm_runtime_force_suspend+0x0/0xf8 returns -16
+  port a88000.serial:0.0: PM: pm_runtime_force_suspend+0x0/0xf8 returned -16 after 33 usecs
+  port a88000.serial:0.0: PM: failed to suspend: error -16
+
+I could reproduce these problem by logging in via an agetty on the
+debug serial port (which was _not_ used for kernel console) and
+running:
   cat /var/log/messages
 ...and then (via an SSH session) forcing a few suspend/resume cycles.
 
-The first patch solves a problem that is probably more major. It was
-introduced recently and has even shown up in stable trees.
-Suspend/resume testing in ChromeOS test labs are hitting the problem
-fixed by this patch. The fix hasn't been tested in labs, but when I
-reproduced the problem locally I could see that the fix worked. IMO it
-should land ASAP.
+Tracing through the code and doing some printf debugging shows that
+the -16 (-EBUSY) comes from the recently added
+serial_port_runtime_suspend().
 
-The second patch fixes an ancient problem that I only found because I
-was trying to reproduce the first problem. Given how long it's been
-around it's probably not urgent but it would be nice to get fixed.
+The idea of the serial_port_runtime_suspend() function is to prevent
+the port from being _runtime_ suspended if it still has bytes left to
+transmit. Having bytes left to transmit isn't a reason to block
+_system_ suspend, though. The DEFINE_RUNTIME_DEV_PM_OPS() used by the
+serial_port code means that the system suspend function will be
+pm_runtime_force_suspend(). In pm_runtime_force_suspend() we can see
+that before calling the runtime suspend function we'll call
+pm_runtime_disable(). This should be a reliable way to detect that
+we're called from system suspend and that we shouldn't look for
+busyness.
 
+Fixes: 43066e32227e ("serial: port: Don't suspend if the port is still busy")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
 
-Douglas Anderson (2):
-  serial: port: Don't block system suspend even if bytes are left to
-    xmit
-  serial: qcom-geni: Fix qcom_geni_serial_stop_tx_fifo() while xfer
+ drivers/tty/serial/serial_port.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
- drivers/tty/serial/qcom_geni_serial.c | 45 +++++++++++++++++++++++++--
- drivers/tty/serial/serial_port.c      | 10 ++++++
- 2 files changed, 52 insertions(+), 3 deletions(-)
-
+diff --git a/drivers/tty/serial/serial_port.c b/drivers/tty/serial/serial_port.c
+index 91a338d3cb34..b781227cc996 100644
+--- a/drivers/tty/serial/serial_port.c
++++ b/drivers/tty/serial/serial_port.c
+@@ -64,6 +64,16 @@ static int serial_port_runtime_suspend(struct device *dev)
+ 	if (port->flags & UPF_DEAD)
+ 		return 0;
+ 
++	/*
++	 * We only want to check the busyness of the port if PM Runtime is
++	 * enabled. Specifically PM Runtime will be disabled by
++	 * pm_runtime_force_suspend() during system suspend and we don't want
++	 * to block system suspend even if there is data still left to
++	 * transmit. We only want to block regulator PM Runtime transitions.
++	 */
++	if (!pm_runtime_enabled(dev))
++		return 0;
++
+ 	uart_port_lock_irqsave(port, &flags);
+ 	if (!port_dev->tx_enabled) {
+ 		uart_port_unlock_irqrestore(port, flags);
 -- 
 2.45.1.288.g0e0cd299f1-goog
 
