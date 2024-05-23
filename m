@@ -1,219 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-20290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44B538CCCBF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 09:08:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D403C8CCD99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 10:00:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C35A51F22FA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 07:08:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0144F1C212FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 May 2024 08:00:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5975713C9D2;
-	Thu, 23 May 2024 07:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73D9D13CF84;
+	Thu, 23 May 2024 07:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QVD1OZ9I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H1dKsC2a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9647413C9BD;
-	Thu, 23 May 2024 07:08:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DF713D268
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 07:59:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716448108; cv=none; b=uCXLPJJu9seRvkO37yGG4KR1DWhtAUiLXkJ+yrakn51Nub99yvSUGSCZqjvl7vPjO/LYonZATJb09pfIL6XWJWNCi5LF8RuTNTqOB/RV2UmSrYO5ZU2mRx5tKBxCC/SD+CFRIr1cb66gO9bUcr72w9RveyIdA+fwi/qOn5GRA9M=
+	t=1716451185; cv=none; b=muCpKMdME1Iovw0bXl4L7+DMxIpUYtDGaRVLsZOBI4bUme+CYcMTRMEspBIhZni76CP2KpU1a2CW94IlG0yHpvvUrDSCJYChjzjzPL/XkXcHVnxcuMkeOzAhjlLANn8/h1YxZNIRzB+w/Gp6YCeHaJlIhH0IO5DHiXeNAKrgvhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716448108; c=relaxed/simple;
-	bh=ijvfwmsIYrGBjX90Bb1NC8ZZ5eC7RXM7EAhrgy++/3E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=C44U0O5/MuJ44JNWbKKAgvkjjQmIO0eLi4GcSo0PVHfoxGde2gWLqZmIQ9+YwWQqg0MwUeYUKdfFuD4Ro0TFSwpSrV68T0Xx0Zpmi7Y1p+BwX56lPQ4gQ5C3LhQMaG+NClRfwMtOJs3KXrzDZmtQEHw80UeCn4ZTt2hDMApPVLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QVD1OZ9I; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44N4jThT010543;
-	Thu, 23 May 2024 07:08:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AJAgBM8RRNv0boYLbUX7vZhvxHDqRZaUH76fthHL5T8=; b=QVD1OZ9IVQjmAQUK
-	xIVPw3XTZbiszJlX+4djUVmfBYFwH/EkJN8/FyfptBZZ7dJij4S/nXNGEZK4uMV/
-	/7AWpttDA6xxKv4d3j+gwj0MPA8jEHH6kJzR4BmamHWW9btJ8QpkNw4PRVGOFeBg
-	KKbcjFh4zSkV56vd3nlbXAkGQqtcfxPuR925M83oJRW4dZp0l0Hv7JDB8ZVxgKah
-	QmTmi06l7JaXDlLdWsI0k/muxGxRoc8+r2LOiFwAfZErCWcltOSbpijm7ARuWRYa
-	v+tXcYy0CSO/PMjWuxHAItvOXseIirVQdZulHqOz8gKpeJV5rW4AY9DnjPuK2iJw
-	8TtxNg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3y9y29r83b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 May 2024 07:07:59 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44N77wXl018231
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 May 2024 07:07:58 GMT
-Received: from [10.50.38.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 23 May
- 2024 00:07:53 -0700
-Message-ID: <a4c77ac8-f417-4d91-99a6-0420bd1259aa@quicinc.com>
-Date: Thu, 23 May 2024 12:37:50 +0530
+	s=arc-20240116; t=1716451185; c=relaxed/simple;
+	bh=+j8A4VZeAl+Y4aj2STDkjjffz6s3NT87BVIa8sVLpDk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MI+q1h8oQB1T0NRuVFjf7g4jvvbKEFt1yExiqLL/SUjUV9YQdHgxKS1JHlTBW/NYNEwNoYuyIjUgz3KjiSBBBI+TibUZ6pp/cAYLBcCuXhTGxdZPNDCIyyC/Ol2b7+OKYlglU2/z3bbVLsoKfVPAOPgnzND0dDqjtEsJVZGS7rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H1dKsC2a; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a620a28e95cso357462566b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 00:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716451182; x=1717055982; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BBn5fJbZjjKVEfV88PasIUUBNVIZvJAuh9fIwEn4kSQ=;
+        b=H1dKsC2avCBDN/vKbLf2ftj4Fk9gqoTyLghBidVPnGj9jLkjMszCdf+VzaCGgbbRnQ
+         SrNlSisOpT76OuAEXVkRyDP/x1QVHGATdxTer9YFcQ5rL5zaKBQIzH1c8bABANXGneT0
+         HHPd4pZU8b07tAb50hOUyeMNgLBCTU2w5NYVSxChQD+PRHnBHonBkmRUpfI3yXhuE9a8
+         pr/vxPKgpuLaTzS9i+iUO6mW1ip1Sm/sWzM0udAaoPKpvRoOQDJWI6Icp/xkSPUMWH8B
+         Y9+VT37dIGdzFwvuLqCU5e73zx1YygoF/0GVPAEDsxZZe9CtBSK/wtRISaGlK+UWaaPw
+         YjSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716451182; x=1717055982;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BBn5fJbZjjKVEfV88PasIUUBNVIZvJAuh9fIwEn4kSQ=;
+        b=SlLVxM8/lyCANGK0MZcrp51DN1j20Ock1z0K+X9htnQhwuAF77JqlW9gB4AkCRNsPx
+         vv+a32FP5/j59dypgld0WmeBfxUashurwlRAcm5x4IzLx4OfbiqNKlQA1+o/oX3pjtVL
+         GJIObOkVGdsHb0y2TnBshGR/mONrMGBbSHgU0Bk79a/oixKBAWuXf7j8+RMl+WPDtwrZ
+         a/nNpTCP3moslaA/ItDEpLbZrnCHmuWgRhsHXuyhamD3bpP6vDF+x2LUQle+rDMeTt0G
+         2Etg3tkd6jL1gTcz1pOZpXgmpmmU89QZpaXR+McVKpAExePLiqMU9PD/FmSomPQg09M8
+         zqEw==
+X-Gm-Message-State: AOJu0Yxikkkjsr+9GQXrV4K0dBrkgIDGspE3ZqOAwxt8hO96LXqI00Ux
+	P8vLRnfqbLfOhp7VD+AH3NifQ/z7c8YZLpXBfWvg0/+R8TcdU91ZmD+bB2BNkoM=
+X-Google-Smtp-Source: AGHT+IE2a1HuJ87qJ5GF7wgS7CRYREnyk7jhZzWYgIBDeaQk+LSmL0pKqmeh32jI27/6wsPC1TPjHg==
+X-Received: by 2002:a17:906:3daa:b0:a5a:8d07:6a00 with SMTP id a640c23a62f3a-a622814c36amr270759666b.64.1716451181810;
+        Thu, 23 May 2024 00:59:41 -0700 (PDT)
+Received: from [127.0.1.1] ([2a01:e0a:982:cbb0:825d:600a:c16:a973])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a5ec2a8f320sm719100066b.170.2024.05.23.00.59.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 May 2024 00:59:41 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/3] arm64: qcom: sdm450: add initial support for Lenovo
+ Smart Tab M10
+Date: Thu, 23 May 2024 09:59:32 +0200
+Message-Id: <20240523-topic-sdm450-upstream-tbx605f-v1-0-e52b89133226@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 4/6] arm64: dts: qcom: ipq9574: Add PCIe PHYs and
- controller nodes
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-References: <20240512082858.1806694-1-quic_devipriy@quicinc.com>
- <20240512082858.1806694-5-quic_devipriy@quicinc.com>
- <20240514073943.GB2463@thinkpad>
-From: Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <20240514073943.GB2463@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eQ-fLeVP4MIj0PUSQ70rZGe4jInovAs0
-X-Proofpoint-GUID: eQ-fLeVP4MIj0PUSQ70rZGe4jInovAs0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-23_04,2024-05-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 mlxlogscore=999
- mlxscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405010000
- definitions=main-2405230045
+X-B4-Tracking: v=1; b=H4sIAGT3TmYC/x3MwQqDMAwA0F+RnBeIWSubvzJ2qDXOHNTS1CGI/
+ 76y47u8E0yyikHfnJDlq6bbWtHeGohzWD+COlYDEzvyzFi2pBFtXJwn3JOVLGHBMhwd+QmZSR7
+ P4O5xCFCPlGXS4/+/3tf1Azu8EiFvAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Joerg Roedel <joro@8bytes.org>, 
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, iommu@lists.linux.dev, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1622;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=+j8A4VZeAl+Y4aj2STDkjjffz6s3NT87BVIa8sVLpDk=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBmTvdmN2PpWBGo+DgdsVg3di1/28MIozIYQe4Kh
+ iSsDdxrOrGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZk73ZgAKCRB33NvayMhJ
+ 0VNYEACMzhmilSv/cnWGpD3CJ5na508TP5YZevct065S/q7D/76vqdskqd7bihAaIvNtgVfToie
+ f3xCzZe1T6MzhNjpvx3tBihB9xgnU4hxMS0P8iFBqE0WQ5lgnED7APBV5GJoGl6GnuuHvF632yC
+ sGod7gp+cVu8x7AU+Y3nB7GB/2aDFVnS/ucL9lf5/6JZhMtPmNH6qJvOtOAUaYYnCqusXfzbiTr
+ a1VS57Eh6aMDjvOfBCBrge7iSDaCVYXA0wdIM2cq7Y2j/H6uLMlI8PRtFWfdnEOGyLsGczGiTYL
+ OTvBu23RdE/yI+rWPGlKa/oX5pH/3p5eyUCQKC+Yuc6tkIRVkBFoK+Algh6hfEzFlVG/5gvquyT
+ Jd6letUrWjNBV8cOuYINAOc8/kpi9tBWoDbrRXQXfRiTrx/oCxkL/NyLjmobCGrr4G+QrOEfXK8
+ hymSBp5vrIirJG09vd48+F9/xw2H//m/BUijQLD6sK4NWavgDs7jFwRbXze57XzZIUoarJdYZ1Z
+ FP4r+i+5gleIyVIEgxxw3HnMdCWGz/HN9SVEtB1TkpUDKTcu1TpfcfuBgVdGR7rvorSEFc3Q5ie
+ uVJNWgklPatoHrUOIHNej5qEPp20j90NXFvr8Bb7f7a+v9vWzSkrpZKadQHh/80+UPrlV+XE7m4
+ OG/MW5VlvJf2yJw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
+Add initial support for the WiFi version of the Lenovo Smart Tab M10,
+model TB-X605F with:
+- SDM450 SoC
+- Up to 3GiB of DDR
+- 10.1" LCD Touch Panel
+- eMMC
+- Bluetooth & WiFi
+- SDcard Slot
+- Camera (unsupported)
 
+Tablet can be found as "Tab M10" and "Smart Tab M10", the "Smart" variant
+seems to comes with a dock I do not own.
 
-On 5/14/2024 1:09 PM, Manivannan Sadhasivam wrote:
-> On Sun, May 12, 2024 at 01:58:56PM +0530, devi priya wrote:
->> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
->> found on IPQ9574 platform. The PCIe0 & PCIe1 are 1-lane Gen3
->> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
->>
->> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
->> ---
->>   Changes in V5:
->> 	- Dropped anoc and snoc lane clocks from Phy nodes and enabled them
->> 	  via interconnect.
->> 	- Dropped msi-parent as it is handled via msi IRQ
->>
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 365 +++++++++++++++++++++++++-
->>   1 file changed, 361 insertions(+), 4 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 5b3e69379b1f..da6418c9d52b 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> 
-> [...]
-> 
->> +		pcie1: pci@10000000 {
-> 
-> 'pcie@' since this is a PCIe controller.
-okay
-> 
->> +			compatible = "qcom,pcie-ipq9574";
->> +			reg =  <0x10000000 0xf1d>,
->> +			       <0x10000F20 0xa8>,
-> 
-> Please use lower case for hex everywhere.
-okay
-> 
->> +			       <0x10001000 0x1000>,
->> +			       <0x000F8000 0x4000>,
->> +			       <0x10100000 0x1000>;
->> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
->> +			device_type = "pci";
->> +			linux,pci-domain = <2>;
->> +			bus-range = <0x00 0xff>;
->> +			num-lanes = <1>;
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +
->> +			ranges = <0x01000000 0x0 0x00000000 0x10200000 0x0 0x100000>,  /* I/O */
->> +				 <0x02000000 0x0 0x10300000 0x10300000 0x0 0x7d00000>; /* MEM */
->> +
->> +			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "msi";
-> 
-> Are you sure that this platform only has single MSI SPI IRQ?
-It has 8 MSI SPI IRQs, will define all of them
-> 
->> +			#interrupt-cells = <1>;
->> +			interrupt-map-mask = <0 0 0 0x7>;
->> +			interrupt-map = <0 0 0 1 &intc 0 0 35 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
->> +					<0 0 0 2 &intc 0 0 49 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
->> +					<0 0 0 3 &intc 0 0 84 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
->> +					<0 0 0 4 &intc 0 0 85 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
->> +
->> +			/* clocks and clock-names are used to enable the clock in CBCR */
-> 
-> This comment is redundant.
-okay
-> 
->> +			clocks = <&gcc GCC_PCIE1_AHB_CLK>,
->> +				 <&gcc GCC_PCIE1_AUX_CLK>,
->> +				 <&gcc GCC_PCIE1_AXI_M_CLK>,
->> +				 <&gcc GCC_PCIE1_AXI_S_CLK>,
->> +				 <&gcc GCC_PCIE1_AXI_S_BRIDGE_CLK>,
->> +				 <&gcc GCC_PCIE1_RCHNG_CLK>;
->> +			clock-names = "ahb",
->> +				      "aux",
->> +				      "axi_m",
->> +				      "axi_s",
->> +				      "axi_bridge",
->> +				      "rchng";
->> +
->> +			resets = <&gcc GCC_PCIE1_PIPE_ARES>,
->> +				 <&gcc GCC_PCIE1_CORE_STICKY_ARES>,
->> +				 <&gcc GCC_PCIE1_AXI_S_STICKY_ARES>,
->> +				 <&gcc GCC_PCIE1_AXI_S_ARES>,
->> +				 <&gcc GCC_PCIE1_AXI_M_STICKY_ARES>,
->> +				 <&gcc GCC_PCIE1_AXI_M_ARES>,
->> +				 <&gcc GCC_PCIE1_AUX_ARES>,
->> +				 <&gcc GCC_PCIE1_AHB_ARES>;
->> +			reset-names = "pipe",
->> +				      "sticky",
->> +				      "axi_s_sticky",
->> +				      "axi_s",
->> +				      "axi_m_sticky",
->> +				      "axi_m",
->> +				      "aux",
->> +				      "ahb";
->> +
->> +			phys = <&pcie1_phy>;
->> +			phy-names = "pciephy";
->> +			interconnects = <&gcc MASTER_ANOC_PCIE1 &gcc SLAVE_ANOC_PCIE1>,
->> +					<&gcc MASTER_SNOC_PCIE1 &gcc SLAVE_SNOC_PCIE1>;
-> 
-> Is this really the interconnect paths between PCIe-DDR and PCIe-CPU? I doubt...
+Vendor page:
+- https://pcsupport.lenovo.com/us/en/products/tablets/m-series-tablets/tab-m10
 
-We actually designed a minimalistic ICC driver for enabling the NoC 
-clocks based on the suggestions received from the community.
-Please find the link to the discussions that went in for introducing the 
-ICC driver for NoC clock enablement
+Downstream sources can be found at:
+- https://github.com/Yahoo-Mike/android_kernel_lenovo_X605F
+- https://gitlab.com/ubports/porting/community-ports/android9/lenovo-tab-m10-fhd/kernel-lenovo-x605
 
-https://lore.kernel.org/linux-arm-msm/abd29b47-a8ab-4e2a-8147-d5d8ded98065@linaro.org/
+In order to pass DTBs check, the GPU SMMU compatible needs to be fixed.
 
-Thanks,
-Devi Priya
-> 
-> - Mani
-> 
+The current display uses simple-framebuffer, proper support
+of the BOE TV101WUM-LL2 DSI panel will be sent separately.
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (3):
+      dt-bindings: arm: qcom: Add Lenovo Smart Tab M10 (WiFi)
+      dt-bindings: iommu: qcom,iommu: Add MSM8953 GPU IOMMU to SMMUv2 compatibles
+      arm64: dts: qcom: sdm450: add Lenovo Smart Tab M10 DTS
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ .../devicetree/bindings/iommu/qcom,iommu.yaml      |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ arch/arm64/boot/dts/qcom/sdm450-lenovo-tbx605f.dts | 276 +++++++++++++++++++++
+ 4 files changed, 279 insertions(+)
+---
+base-commit: a38297e3fb012ddfa7ce0321a7e5a8daeb1872b6
+change-id: 20240522-topic-sdm450-upstream-tbx605f-220e89a43cba
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
