@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-20399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED2E48CE607
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 15:21:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 235468CE60A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 15:21:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1CE6281695
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 13:21:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9BA71F24E21
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 13:21:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13DB5128376;
-	Fri, 24 May 2024 13:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB9912881C;
+	Fri, 24 May 2024 13:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wZonWxfb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W8cWa98F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A4486AFB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 13:19:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F7E127B54
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 13:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716556800; cv=none; b=mGQb9xLQQNKy+Z5qSK6zFjBpBhWuULrta2vf8j5SuM5a6/TyY9dBhbq9UU9zWmPL4pERep1j2OzKrDxvg2uHTJ7KyG5p4Psvhg7X97pdmwPXNBFDAzf2RhsX3ydj0ROSavZiD3xW4e7W1eWRUd3XlDSRqZqwzVgW8f1dTQeQoPM=
+	t=1716556807; cv=none; b=kJrF4MFBb/bzM5RA+FRWH0VAkVZNk2NtcNyLSbmWJZLXEtcrW4PpJCPml0QyNXrUUlSzAfbCVj73p2hFKzIaBcIq+6Bz6vAo2LGQA+BuBtF8HLeUf88p+PCHAH43iLAQRJA1VK3B4CCEhCVDBvCL24ACCZ52Rw3UO78prAkOb/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716556800; c=relaxed/simple;
-	bh=SCnJNIycjKCOU6+DbbjFa7Anywkc1It7tnIXU4WQ6yg=;
+	s=arc-20240116; t=1716556807; c=relaxed/simple;
+	bh=G4jmD+K/fkmFufgBXjmnjPbCcQzArsr/IXqIKSDtt2s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EGoWWEt3HKWcBNxsv/X1R6clp40oNLdAnEuRGtfRLwN30b+4bKLGGW0UHx2pjBb72pmEtjqlxHzmqfIBPoKqausDkF0O60TCNFldpVpBo8Y2ly7dKdSagSTQMviNqUhz/x1BKICD6x4z3BO9jinhURlRaA4+BpvJT6kAd+wKyGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wZonWxfb; arc=none smtp.client-ip=209.85.210.177
+	 In-Reply-To:To:Cc; b=XeZ9ZEu1m4NHUEdb6GErVwVYAqVHqUs2ctugU/Ueubm6ThBZr8gnw/w1IeCi4HqFIusnykJaXKCwjuOfWicgW0CtqntEVfoYj8xde9pNaS6H2gdp7xjS0vrlViXA3zW2NJ24hBKVs/sFn+C6JKwi7hxMp6WTMocGkdimogVOsLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W8cWa98F; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-6f693306b7cso3820480b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 06:19:58 -0700 (PDT)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6f8edff35a0so719685b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 06:20:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716556798; x=1717161598; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716556805; x=1717161605; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AhL1+y0kIDyt6L6HzzdKzEkTEMOaNifsp3D2+XHrbto=;
-        b=wZonWxfbanUbP5R/j/A0E/+Szjpw8JjVCWYnROa703BLjkBzVng2Wjubq13ngD1Hwk
-         Oy/qcoLpPKhxSODjORfPkVBKeZ55QnhN8YE/I+TNRDHXPZrfa+neJ3nqMlmKXK7kLz3H
-         KIOE+OhhyNP+dnnElhel+gkdkKnFBNLWIlrOpo/hS0wW1ADjj2NeVEk0FAyLFC/9AjAp
-         D3xkQNhOp4mrgTCuGs4d08jkLmDdtjR/6cZHmX6SPCC+Lzj0Eihrx4MNTSEZgGCkS1gd
-         S7nWhkavXzjIc2Rqi0azMkbiyDEi8/ybE+VOouHfeFsFUNTCdxyBJinHIYWObyj1BNpD
-         sSRw==
+        bh=O7X6X7Xg0a7P3rLwok0YLujXGrmUyMxWDQ/9AezaVG8=;
+        b=W8cWa98Ff/IeWHa0mOodnah/aWgRcIE9brrHirbPnr46oY8Y3l7rwNvvuTN8qGoQ+3
+         SAgBUyVupkODlMj+LYLUsDE6n/Bwg03eHiHT4YOTLQEtLpl5ppfdRfpS9Ke3Na8WcBWt
+         XvWKFeanO6FKj8UIGgqRXJPA8RSMcxj6l/v1CEfl9TEvknUKobfs6kJMxgOfXdCwJMOF
+         RjOAeVIB0+bmtn/0LbinS6UZLVqcN8yN9lsvl5sYWV95tbOl8UNomfFwILuUQ+fD0FRm
+         yi1ZfBLwbHhta+Pe0maIlk3OaKy08B0IXbWhiYtI7f905W1aDNI5h1RWpq7QuXoXi0AW
+         JlSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716556798; x=1717161598;
+        d=1e100.net; s=20230601; t=1716556805; x=1717161605;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AhL1+y0kIDyt6L6HzzdKzEkTEMOaNifsp3D2+XHrbto=;
-        b=ZFwPEtaOtbBOYX9vHoPaYRON529rrb3+76YBq2h8j7WCjSZpzIYjxoB6UKtVn86UN0
-         SsbcFR2xZsPrFjj9DR9ZkSUUaS/OolfA5lxurKPj43faY2SPbMRR/kAi4cR1aRWD4GuZ
-         RcNfipHQoNepLLqv6124DPEoKZ7xqYiLy+5OaHEWw4iRkd3luHJpZsjpdc2iJdiBqH3l
-         nJv2crloBn0NOwEvp51fN5dmS4Pnp+3WEFzWNkWvyFAMETpKv5NRt4Kx0ZE/tmaMc78H
-         2XmasiEUccemweY2pfqX1Z0fLpVBR8Uwkwl2V544WmWLkeST54+ABUGdY/DnUCvrwmXy
-         ixKw==
-X-Gm-Message-State: AOJu0Yy1VuftKN6VaHWOoh9A+IbEmRLR+BxnVxR/c0DzPczGHFDaEeZe
-	7VBOzLia1u++tLJAOPOk79UCCQ7qZ3kbp+y1Rc9BJ7rOYdOwMrNrLlh0wEUZz54=
-X-Google-Smtp-Source: AGHT+IGYLRLvRCV0D84/IopEephkJQILPn2RZgOVI7Q2aoXRtKdZHxZWVGFZ6JlmgNMpYIqoXVs6Og==
-X-Received: by 2002:a05:6a00:1c83:b0:6f8:de0e:cdbb with SMTP id d2e1a72fcca58-6f8f33b05d3mr2189694b3a.13.1716556797922;
-        Fri, 24 May 2024 06:19:57 -0700 (PDT)
+        bh=O7X6X7Xg0a7P3rLwok0YLujXGrmUyMxWDQ/9AezaVG8=;
+        b=mbwwZPwwzJUs9KWaiosS0tH8wD0EUlGyhogpiUQBRC1LbFUB5pjSPjONvRmHPSOoCP
+         M0rk9bA4X3I63KovUMquMB5QQ7+RyN2CJph/6xMfXJy1KqMQ3TEmgqAgDzBY76aNfCLg
+         RBvLRzBqb2r4lM+jjA8UgYvaaM0uIr90TVFjfB3/Qac64V+mpB2kxJhN+ihOw6k0HnEE
+         UxK+pw6GXUHuML4VQANkzAyiToDCUM3hJ+GELS91FHqYkbdHNcSIpfyNXx01o2M1eRAV
+         R6xLFqSgk1+chycvwnr/KUIgdX+OgUNDypW9C7vDY/bXCrYwPohw2Arvi9HatEYpTbEx
+         I1sg==
+X-Gm-Message-State: AOJu0YxJMjU74t/G0Ws33d2+BQ/nwx4jypsuyhnk4A5/Ec8fns1woibD
+	ySD4HazZv/r4Hyc+gRrIpNxYTWW1398AnKTuNBK58C4rkTxNGp3bbF5hlKjyEas=
+X-Google-Smtp-Source: AGHT+IEaF2Y5Q7PpzxWxDlSpCPw29IB00sbmr5EJBez/e+fhZLJRTYl/6p9AjxbjhfA7ASd7c8riaw==
+X-Received: by 2002:a05:6a00:1c83:b0:6ea:f392:bce9 with SMTP id d2e1a72fcca58-6f8f3185033mr2206294b3a.15.1716556805523;
+        Fri, 24 May 2024 06:20:05 -0700 (PDT)
 Received: from [127.0.1.1] ([112.64.61.67])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f8fd2d492csm1117852b3a.179.2024.05.24.06.19.51
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f8fd2d492csm1117852b3a.179.2024.05.24.06.19.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 May 2024 06:19:57 -0700 (PDT)
+        Fri, 24 May 2024 06:20:04 -0700 (PDT)
 From: Jun Nie <jun.nie@linaro.org>
-Date: Fri, 24 May 2024 21:18:22 +0800
-Subject: [PATCH v4 2/5] drm: adjust data width for widen bus case
+Date: Fri, 24 May 2024 21:18:23 +0800
+Subject: [PATCH v4 3/5] drm/msm/dsi: set video mode widebus enable bit when
+ widebus is enabled
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240524-msm-drm-dsc-dsi-video-upstream-4-v4-2-e61c05b403df@linaro.org>
+Message-Id: <20240524-msm-drm-dsc-dsi-video-upstream-4-v4-3-e61c05b403df@linaro.org>
 References: <20240524-msm-drm-dsc-dsi-video-upstream-4-v4-0-e61c05b403df@linaro.org>
 In-Reply-To: <20240524-msm-drm-dsc-dsi-video-upstream-4-v4-0-e61c05b403df@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -88,43 +89,53 @@ To: Rob Clark <robdclark@gmail.com>,
  Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Jun Nie <jun.nie@linaro.org>
+ Jun Nie <jun.nie@linaro.org>, Jonathan Marek <jonathan@marek.ca>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1716556778; l=1081;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1716556778; l=1644;
  i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=SCnJNIycjKCOU6+DbbjFa7Anywkc1It7tnIXU4WQ6yg=;
- b=sEk66AQRqgPYNGk32xeRrchV7uu3ZrAvWWbJGODk/QYBOrByjanPmW9jI9kFbdWwYSIY0ltA5
- ap1NVCxK4ZmC3cS20S2Fl9I7yKwSQ/K71lMWsa7FlqkOWVPHREINtdu
+ bh=myYBVxgRS2I/E3QUdyhnLOjWSeM7jzrWqz2ABozlocE=;
+ b=acTSUbISIJX/UiCq8kqoDO4+D8/1oY7QOyQNkEU/pl4GyuyGinhAF/uix6W7YgXHJteo4QthI
+ m0ghV/Ena4ODZ7iitRZjSs3qclPIVQxtybpusCBTC4rAOs/QHAWOOs5
 X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
  pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-data is valid for only half the active window if widebus
-is enabled
+From: Jonathan Marek <jonathan@marek.ca>
 
+The value returned by msm_dsi_wide_bus_enabled() doesn't match what the
+driver is doing in video mode. Fix that by actually enabling widebus for
+video mode.
+
+Fixes: efcbd6f9cdeb ("drm/msm/dsi: Enable widebus for DSI")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 Signed-off-by: Jun Nie <jun.nie@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-index 2cf1f8c116b5..3d1bc8fa4ca2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -167,6 +167,14 @@ static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *intf,
- 		intf_cfg2 |= INTF_CFG2_DATABUS_WIDEN;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index a50f4dda5941..47f5858334f6 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -754,6 +754,8 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+ 		data |= DSI_VID_CFG0_TRAFFIC_MODE(dsi_get_traffic_mode(flags));
+ 		data |= DSI_VID_CFG0_DST_FORMAT(dsi_get_vid_fmt(mipi_fmt));
+ 		data |= DSI_VID_CFG0_VIRT_CHANNEL(msm_host->channel);
++		if (msm_dsi_host_is_wide_bus_enabled(&msm_host->base))
++			data |= DSI_VID_CFG0_DATABUS_WIDEN;
+ 		dsi_write(msm_host, REG_DSI_VID_CFG0, data);
  
- 	data_width = p->width;
-+	/*
-+	 * If widebus is enabled, data is valid for only half the active window
-+	 * since the data rate is doubled in this mode. But for the compression
-+	 * mode in DP case, the p->width is already adjusted in
-+	 * drm_mode_to_intf_timing_params()
-+	 */
-+	if (p->wide_bus_en && !dp_intf)
-+		data_width = p->width >> 1;
+ 		/* Do not swap RGB colors */
+@@ -778,7 +780,6 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+ 			if (cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V1_3)
+ 				data |= DSI_CMD_MODE_MDP_CTRL2_BURST_MODE;
  
- 	/* TODO: handle DSC+DP case, we only handle DSC+DSI case so far */
- 	if (p->compression_en && !dp_intf)
+-			/* TODO: Allow for video-mode support once tested/fixed */
+ 			if (msm_dsi_host_is_wide_bus_enabled(&msm_host->base))
+ 				data |= DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN;
+ 
 
 -- 
 2.34.1
