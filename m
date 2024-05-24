@@ -1,207 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-20419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFA4B8CE948
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 19:55:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B5D08CE966
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 20:20:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E86DF1C20A4C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 17:55:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 132571F21553
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 18:20:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55DEC381B9;
-	Fri, 24 May 2024 17:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC5701CAA4;
+	Fri, 24 May 2024 18:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="e3bheGnR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hLgINpyx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73827364A9;
-	Fri, 24 May 2024 17:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FDB3C00;
+	Fri, 24 May 2024 18:19:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716573330; cv=none; b=oUBQecgFzIxfYTZTn4sfzvSZDLARbn1DMYX6RLjoPeolyUyv4c3PHKMartMWC18akeBBH521Od9ulJ5YhdDn+8lDAMf78/RrmELJ1Cokk6gbJ5hgDUf3Ug2rYbYXwtotnprSq40FAuNfFNaKGfefe4ifNCCXH6dKVkzxHvsJG6M=
+	t=1716574796; cv=none; b=uxuhDf/EI/+G0FRn3JjajNeA9KwX/C/+HzHjBFUKUElvz6ZQ6pgfz3JtQZOo1jcWOn9hrZWZePaPON9eqPmAfGUo5x9OxvBhtWEgteecWYh4fGD+l3RLBQS14EGQ7Z5F+lMF53zAe9nZVQlFFbpKd/+7klTeXUo24OQpcHglS4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716573330; c=relaxed/simple;
-	bh=NE3+asARG+T0s+9Kmlx2qtu/4uK3J6MB1QLPal+bElU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SfdUOBh3xCt3ZTsW2Ydp5qoK8GrycEmNh/qrF1eJSftPhEBwHsUgKCpTdJXJGrLFi3LXiheS41MuzI3odRZUaPQmQ52hzJBI0WdIFNP9u9u1aizjX2nwaN3z7f1EezCYpEf1s0WgtBuuvoWrztAiupQGhdGUDqTwoqwITvYRbpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz; spf=pass smtp.mailfrom=z3ntu.xyz; dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b=e3bheGnR; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=z3ntu.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=z3ntu.xyz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1716573320; bh=NE3+asARG+T0s+9Kmlx2qtu/4uK3J6MB1QLPal+bElU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e3bheGnRdMoLMHBHDKhHLoteVK3Xh7+4NP0w86XYuAGLDLLBw8H46SyfBulhucqB5
-	 BgUGEQDgh9nkQcyITUdUOb+wfWaoEeIopVp5qPCFzLJXjwx7tOaekJHv8Q+/p0hGiT
-	 6/N02nnwkrdP9GXWmOnDFITmKg7aq7UfcWY4aJvo=
-From: Luca Weiss <luca@z3ntu.xyz>
-To: Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- ~postmarketos/upstreaming@lists.sr.ht
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzk@kernel.org>
-Subject:
- Re: [PATCH RFC 1/2] dt-bindings: soc: qcom,smsm: Allow specifying mboxes
- instead of qcom,ipc
-Date: Fri, 24 May 2024 19:55:19 +0200
-Message-ID: <4881282.LvFx2qVVIh@g550jk>
-In-Reply-To: <e4579702-089e-48cb-bf06-f8e4fb618050@kernel.org>
-References:
- <20240424-smsm-mbox-v1-0-555f3f442841@z3ntu.xyz> <5099926.GXAFRqVoOG@g550jk>
- <e4579702-089e-48cb-bf06-f8e4fb618050@kernel.org>
+	s=arc-20240116; t=1716574796; c=relaxed/simple;
+	bh=JWsCNf+jzHO49Y3NQf3KgHDEPooDA1NIecvE6GPE3OY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VFp+ABB2TRqyE/zJrgBEMkHvB0y8lxxk4kAJN8ILunkZU4u3nqeCknbLFYK3XybV9XR6Icynv/TVPOs87jqLx5lxaKoZrnyQc+MQdAwFgD2Ma2iaE6W4jTCK9aQj45iZcZKc2ECzti8mgs4Ej1YShIfqk7eCWhLyH5XNnL7zJFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hLgINpyx; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44O9qGhd011993;
+	Fri, 24 May 2024 18:19:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lnYhjTxqVIzgdrzBnAAvjO6PnXT/NqFysO5gWZNMD8o=; b=hLgINpyxQA3W2E8R
+	Csy7Qyvy4kNizcQKE0FOcbPL1ojDXPBXmA1tWQBjJO/HwRl/E9hmc5XHWRjrYHxm
+	b6QezQed9ZHI34DL6fIO7S9AXCxha0z5WKN4p9Ak39wbzHTOMBhhu/v9hZJJMOVx
+	8yOX0lqFlQa8wIR558u2hPPfqxcK7Gve+bqv8HobEqGptfDp50OJRaa8rw1Gb40i
+	Db/erZEHPNc4oUVKaXtKtwOEHPjTZvANZzGVYD781RZO4o5Uzqmha24f2GR4FAwB
+	FKf+lpw1qQejQPlhmGTbQr0ZebHC4cCTQal+nYzbdrBFnzw389scGGigcNFhBGwj
+	hvdEjA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yaa97u8gw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 May 2024 18:19:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44OIJh6O024370
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 May 2024 18:19:43 GMT
+Received: from [10.110.54.113] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 24 May
+ 2024 11:19:41 -0700
+Message-ID: <5db69319-4d61-7637-8bde-5d786e5faea4@quicinc.com>
+Date: Fri, 24 May 2024 11:19:41 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dpu: drop duplicate drm formats from wb2_formats
+ arrays
+Content-Language: en-US
+To: Junhao Xie <bigfoot@classfun.cn>, Rob Clark <robdclark@gmail.com>,
+        Dmitry
+ Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ryan McCann <quic_rmccann@quicinc.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240524150128.1878297-2-bigfoot@classfun.cn>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240524150128.1878297-2-bigfoot@classfun.cn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vlHK5zkBU_longt3fpGsbSeFx78bGiLf
+X-Proofpoint-ORIG-GUID: vlHK5zkBU_longt3fpGsbSeFx78bGiLf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-24_06,2024-05-24_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 mlxscore=0 bulkscore=0 spamscore=0 phishscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1011 mlxlogscore=623 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2405170001 definitions=main-2405240128
 
-On Donnerstag, 23. Mai 2024 08:19:11 MESZ Krzysztof Kozlowski wrote:
-> On 23/05/2024 08:16, Luca Weiss wrote:
-> > On Donnerstag, 23. Mai 2024 08:02:13 MESZ Krzysztof Kozlowski wrote:
-> >> On 22/05/2024 19:34, Luca Weiss wrote:
-> >>> On Mittwoch, 22. Mai 2024 08:49:43 MESZ Krzysztof Kozlowski wrote:
-> >>>> On 21/05/2024 22:35, Luca Weiss wrote:
-> >>>>> On Dienstag, 21. Mai 2024 10:58:07 MESZ Krzysztof Kozlowski wrote:
-> >>>>>> On 20/05/2024 17:11, Luca Weiss wrote:
-> >>>>>>> Hi Krzysztof
-> >>>>>>>
-> >>>>>>> Ack, sounds good.
-> >>>>>>>
-> >>>>>>> Maybe also from you, any opinion between these two binding styles?
-> >>>>>>>
-> >>>>>>> So first using index of mboxes for the numbering, where for the known
-> >>>>>>> usages the first element (and sometimes the 3rd - ipc-2) are empty <>.
-> >>>>>>>
-> >>>>>>> The second variant is using mbox-names to get the correct channel-mbox
-> >>>>>>> mapping.
-> >>>>>>>
-> >>>>>>> -               qcom,ipc-1 = <&apcs 8 13>;
-> >>>>>>> -               qcom,ipc-2 = <&apcs 8 9>;
-> >>>>>>> -               qcom,ipc-3 = <&apcs 8 19>;
-> >>>>>>> +               mboxes = <0>, <&apcs 13>, <&apcs 9>, <&apcs 19>;
-> >>>>>>>
-> >>>>>>> vs.
-> >>>>>>>
-> >>>>>>> -               qcom,ipc-1 = <&apcs 8 13>;
-> >>>>>>> -               qcom,ipc-2 = <&apcs 8 9>;
-> >>>>>>> -               qcom,ipc-3 = <&apcs 8 19>;
-> >>>>>>> +               mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
-> >>>>>>> +               mbox-names = "ipc-1", "ipc-2", "ipc-3";
-> >>>>>>
-> >>>>>> Sorry, don't get, ipc-1 is the first mailbox, so why would there be <0>
-> >>>>>> in first case?
-> >>>>>
-> >>>>> Actually not, ipc-0 would be permissible by the driver, used for the 0th host
-> >>>>>
-> >>>>> e.g. from:
-> >>>>>
-> >>>>> 	/* Iterate over all hosts to check whom wants a kick */
-> >>>>> 	for (host = 0; host < smsm->num_hosts; host++) {
-> >>>>> 		hostp = &smsm->hosts[host];
-> >>>>>
-> >>>>> Even though no mailbox is specified in any upstream dts for this 0th host I
-> >>>>> didn't want the bindings to restrict that, that's why in the first example
-> >>>>> there's an empty element (<0>) for the 0th smsm host
-> >>>>>
-> >>>>>> Anyway, the question is if you need to know that some
-> >>>>>> mailbox is missing. But then it is weird to name them "ipc-1" etc.
-> >>>>>
-> >>>>> In either case we'd just query the mbox (either by name or index) and then
-> >>>>> see if it's there? Not quite sure I understand the sentence..
-> >>>>> Pretty sure either binding would work the same way.
-> >>>>
-> >>>> The question is: does the driver care only about having some mailboxes
-> >>>> or the driver cares about each specific mailbox? IOW, is skipping ipc-0
-> >>>> important for the driver?
-> >>>
-> >>> There's nothing special from driver side about any mailbox. Some SoCs have
-> >>> a mailbox for e.g. hosts 1&2&3, some have only 1&3, and apq8064 even has
-> >>> 1&2&3&4.
-> >>>
-> >>> And if the driver doesn't find a mailbox for a host, it just ignores it
-> >>> but then of course it can't 'ring' the mailbox for that host when necessary.
-> >>>
-> >>> Not sure how much more I can add here, to be fair I barely understand what
-> >>> this driver is doing myself apart from the obvious.
-> >>
-> >> From what you said, it looks like it is enough to just list mailboxes,
-> >> e.g. for ipc-1, ipc-2 and ipc-4 (so no ipc-0 and ipc-3):
-> > 
-> > No, for sure we need also the possibility to list ipc-3.
+
+
+On 5/24/2024 8:01 AM, Junhao Xie wrote:
+> There are duplicate items in wb2_formats_rgb and wb2_formats_rgb_yuv,
+> which cause weston assertions failed.
 > 
-> ? You can list it, what's the problem>
-
-Maybe we're talking past each other...
-
-You asked why this wouldn't work:
-
-  e.g. for ipc-1, ipc-2 and ipc-4 (so no ipc-0 and ipc-3):
-  mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
-
-How would we know that the 3rd mailbox (&apcs 19) is for the 4th host
-(previous ipc-4)?
-
-1. If we use mboxes with indexes we'd need to have <0> values for
-"smsm hosts" where we don't have a mailbox for - this is at least
-for the 2nd smsm host (qcom,ipc-2) for a bunch of SoCs.
-
-2. If we use mboxes with mbox-names then we could skip that since we
-can directly specify which "smsm host" a given mailbox is for.
-
-My only question really is whether 1. or 2. is a better idea.
-
-Is this clearer now or still not?
-
-
+> weston: libweston/drm-formats.c:131: weston_drm_format_array_add_format:
+> Assertion `!weston_drm_format_array_find_format(formats, format)' failed.
 > 
-> > 
-> > And my point is that I'm not sure if any platform will ever need ipc-0, but
-> > the code to use that if it ever exists is there - the driver always
-> > tries getting an mbox (currently just syscon of course) for every host
-> > from 0 to n.
-> > 
-> > These are the current (non-mbox-API) mboxes provided to smsm:
-> > 
-> > $ git grep qcom,ipc- arch/
-> > arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:               qcom,ipc-1 = <&l2cc 8 4>;
-> > arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:               qcom,ipc-2 = <&l2cc 8 14>;
-> > arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:               qcom,ipc-3 = <&l2cc 8 23>;
-> > arch/arm/boot/dts/qcom/qcom-apq8064.dtsi:               qcom,ipc-4 = <&sps_sic_non_secure 0x4094 0>;
-> > arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:               qcom,ipc-1 = <&apcs 8 13>;
-> > arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:               qcom,ipc-2 = <&apcs 8 9>;
-> > arch/arm/boot/dts/qcom/qcom-msm8974.dtsi:               qcom,ipc-3 = <&apcs 8 19>;
-> > arch/arm64/boot/dts/qcom/msm8916.dtsi:          qcom,ipc-1 = <&apcs 8 13>;
-> > arch/arm64/boot/dts/qcom/msm8916.dtsi:          qcom,ipc-3 = <&apcs 8 19>;
-> > arch/arm64/boot/dts/qcom/msm8939.dtsi:          qcom,ipc-1 = <&apcs1_mbox 8 13>;
-> > arch/arm64/boot/dts/qcom/msm8939.dtsi:          qcom,ipc-3 = <&apcs1_mbox 8 19>;
-> > arch/arm64/boot/dts/qcom/msm8953.dtsi:          qcom,ipc-1 = <&apcs 8 13>;
-> > arch/arm64/boot/dts/qcom/msm8953.dtsi:          qcom,ipc-3 = <&apcs 8 19>;
-> > arch/arm64/boot/dts/qcom/msm8976.dtsi:          qcom,ipc-1 = <&apcs 8 13>;
-> > arch/arm64/boot/dts/qcom/msm8976.dtsi:          qcom,ipc-2 = <&apcs 8 9>;
-> > arch/arm64/boot/dts/qcom/msm8976.dtsi:          qcom,ipc-3 = <&apcs 8 19>;
-> > 
-> >>
-> >> mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
-> 
-> So which case is not covered?
-> 
-> Best regards,
-> Krzysztof
-> 
+> Signed-off-by: Junhao Xie <bigfoot@classfun.cn>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 6 ------
+>   1 file changed, 6 deletions(-)
 > 
 
+I think we need two fixes tag here, one for the RGB array and the other 
+one for the RGB+YUV array.
 
+Fixes: 8c16b988ba2d ("drm/msm/dpu: introduce separate wb2_format arrays 
+for rgb and yuv")
 
+Fixes: 53324b99bd7b ("drm/msm/dpu: add writeback blocks to the sm8250 
+DPU catalog")
 
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+(pls ignore the line breaks in the fixes line, I will fix it while applying)
 
