@@ -1,140 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-20367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 787AA8CDF26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 03:21:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 948BF8CDF83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 04:33:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 28BC41F23DA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 01:21:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46D411F21B6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 02:33:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E6F8D51A;
-	Fri, 24 May 2024 01:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69ECF1E884;
+	Fri, 24 May 2024 02:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CPPtpMqv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ym0ZdkDp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CA21BF53;
-	Fri, 24 May 2024 01:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397EF33D8;
+	Fri, 24 May 2024 02:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716513683; cv=none; b=rVhZlWmcq605l8pjHCGMxqkGa8cDmnmFvWbKyqKsw3rB+Ky/2BSJ4VURLc1abbYsC7DLJhQICIqdNfp79K5Wsdhlc4s2KKkRL0RP15RgBhovcVB8dE9bocu2OJ4h9xNtQyGp3kZtIhNPTZh1JOFFqOB8PlAM95bvoIgcZ4mMW10=
+	t=1716517976; cv=none; b=CwSkwdlfJwWLkAeSf9wEf4jB1wyFxb4Z/bGRkuXJeh5gJofKiIKcxlB6JOYjyTHTkR1r910UiCRPMzeQUWzEUTlg5bsBROAw9wmsHZXLO8eSFDznKg6aBHe3aBPC1FN+Bx6td8rZyZGUVn/FZVmBHSh14lhSiTBlLlW90ii7NpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716513683; c=relaxed/simple;
-	bh=NoaOUjbYffG2oVE1+cnE1at9BkX9K3GHUrejZJ+nR1c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a1ePTSXxJiLNU6F7lHID5WeM4C6TzBthSWFQbdIc4HgKLUyioXZz+lMw3NjA1bWleWnU9rEBv267mH7W4mPPD1tg9RWRWAMnIPOLS4lErBK7KvnwCzT0yV53JiqxTxoElKQitP1Vs51wK5/aNpbkVebliwCVMwoe+i+MJmo+G78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CPPtpMqv; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-df4f05e5901so2325839276.0;
-        Thu, 23 May 2024 18:21:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1716513681; x=1717118481; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sxW8siyxw1AYj0VmMo8J0Cm5HJ0SxGgND32Gg2jRRuk=;
-        b=CPPtpMqvrk/b0tIp1vfnUwtgIoiWe0zeXbTsZSJ+9Slnb3LjMNnBhE0H+CtuteJYon
-         TCnxYB2nCrzcvUHXfdrG/hUGyKsXojsKprjsfWIcMAIabt5qug6CQl3ilnDQluKIPZrL
-         3+/V0+uWQo5ADrgoKIIaQp0+wrvdfRrBoG4dt/Cg+jCm8QUF1ISmRxgu8qQ1EEAcRa5L
-         zKVa8NHtBQZDV5h+kF6o2eNjVWGVZ26oQvdNgZ8UVBd971WIa4vj4qRF7HqcDbeVJJOK
-         XkOUkyW+2R+VG+kDm4YWcQaZ/eswMMWjvQqO/lJ4Qci7bDArj39nvLU61e3sLz0QRB/2
-         wi5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716513681; x=1717118481;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sxW8siyxw1AYj0VmMo8J0Cm5HJ0SxGgND32Gg2jRRuk=;
-        b=MF3rWDNPEQLO1KqtIuJr4HFwkviZuMTqv+jqZT8XGalks2jPz9sGcS2Dw6BqrwThXi
-         YgafMiX0pG+cpNodApYm4JeufD4WufWyvbeRhH29gKpszrhgL8e494RsNwwYEvcCEwTh
-         pIOlv7siMVSRAC3LtgIzx05pu8cYdzp1kNALwXuN2zZjb7yzT9RqwMyBjeU4Dar/7KAe
-         bfeXnQZ12jO6yMWulBo6t1RIEQSeE8nXmMOcWKQnMRFmpahdvArfeV/+y0skBY+b1NYp
-         gLszQwsaclsiw487jYAj7OFwbpEALZ2f98CATxe/GErY+2/DSBWmFuyOEVow77/bCrcb
-         VyoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWbAYg6l9gZ5sfpGKPRXxxsty7g/KQZgPF5NXKAlyE6cktzNJI0WXhiV1E1UM+faNC6od1+TF1n6jmd58ONv5qX13SvNWDeuBZMkfP6GW/fhxqmVZOju+ois39HHo+iVMHBuSoELESmZ3g=
-X-Gm-Message-State: AOJu0YyhI4VB4RxE4Tb8OeUYhFDCkdqFxGmX5WyGOZ4tjoEp/eZXV+fm
-	VIEA2K4MmpJ8JZoezxGRS2ZOsJ+QSm8nsIPEC70NJRtvxfw88ep8
-X-Google-Smtp-Source: AGHT+IGtKfQ34xgOCE+DPD1gQTyODdr6YwdHpmwMVlQe6TuP7MiHQ1A8OYo4jvzI7zHzvNdn9o4Wog==
-X-Received: by 2002:a25:ae1e:0:b0:df4:df14:61bc with SMTP id 3f1490d57ef6-df7721b7236mr992243276.29.1716513680910;
-        Thu, 23 May 2024 18:21:20 -0700 (PDT)
-Received: from localhost ([2607:fea8:52a3:d200:324c:b818:b179:79b])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ac070f05d5sm2253716d6.50.2024.05.23.18.21.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 May 2024 18:21:20 -0700 (PDT)
-From: Richard Acayan <mailingradian@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Cc: Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: sdm670: add smem region
-Date: Thu, 23 May 2024 21:20:27 -0400
-Message-ID: <20240524012023.318965-8-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240524012023.318965-5-mailingradian@gmail.com>
-References: <20240524012023.318965-5-mailingradian@gmail.com>
+	s=arc-20240116; t=1716517976; c=relaxed/simple;
+	bh=A2LtdXVt1FOoMFQuFZN7A3gmcj+m+lSSGQ1UKkAuIUw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GlNb9mX2bc8W1GV2aMhyDzOICTH4YFMuPDK2zlovh43ojHNKCtiuLfL9Q/taBIlxyu/08qFvBtJlFyKpYN21nT/3a1DEQoIZQj4gjRCQoubkqE8SQnD+Yc1nPBYo+PkMIF79+K4rUnfRfhAbYfw2hEheA5hhFB6nc5jlGnHS0ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ym0ZdkDp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AD9C2BD10;
+	Fri, 24 May 2024 02:32:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716517975;
+	bh=A2LtdXVt1FOoMFQuFZN7A3gmcj+m+lSSGQ1UKkAuIUw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ym0ZdkDptYBUPkE3hlOpEL8aNS0dZcAKflY9fiifTdmYSQ6M7h6gTBNUPa/O32+uX
+	 hvr6icl4FGzK2iCeX9bCHMX2ncpBEKUzAS1ZH5dBJuqvsBJbC+OKueC+k1Wqvr+7qB
+	 6zRogeiRSLzL76X+k05LJ7bFe25m/aGmtljuUAFk0A8S2Ol187Ss05jYzlI9qtN+qI
+	 jJNznbDXYf5Fvu3x6u6fW4Bp9or4iLCeLPY/8xqWsSJ8PLcjToWwLmd51kLhJX7DPf
+	 ivM2/NmoSN8wjEnN/k2t4mEcT5hYD0KyDTh/2IN2RFqcyPxg9/tPQ7aUyoy3fAnrbe
+	 7hYBSW5g+tNng==
+Date: Thu, 23 May 2024 21:32:52 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Caleb Connolly <caleb.connolly@linaro.org>, 
+	Komal Bajaj <quic_kbajaj@quicinc.com>, Naina Mehta <quic_nainmeht@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Specify zap region
+ for gpu
+Message-ID: <7zpdjp6h26isowviky3zlcmyafrrxdutqubnqgsmxioecfhdhs@ppvk2at4vp3t>
+References: <20240402-rb3gen2-gpu-v1-1-a51bb6080968@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240402-rb3gen2-gpu-v1-1-a51bb6080968@quicinc.com>
 
-The shared memory region is used for information about the SoC and
-communication with remote processors. Add the smem region for SDM670.
+On Tue, Apr 02, 2024 at 08:33:30PM GMT, Bjorn Andersson wrote:
+> Without the zap region defined the enabled GPU will, if able to find the
+> other firmware files, attempt to initialize itself without the zap
+> firmware loading, which causes the rb3gen2 to freeze or crash.
+> 
+> Add the zap-shader node and define the memory-region and firmware path
+> to avoid this problem.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- arch/arm64/boot/dts/qcom/sdm670.dtsi | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+This statement is wrong, there is a zap-shader node already, but we're
+lacking the firmware-name...
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-index 80e81c4233b3..187c6698835d 100644
---- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-@@ -509,6 +509,18 @@ aop_cmd_db_mem: aop-cmd-db-mem@85fe0000 {
- 			no-map;
- 		};
- 
-+		smem@86000000 {
-+			compatible = "qcom,smem";
-+			reg = <0 0x86000000 0 0x200000>;
-+			no-map;
-+			hwlocks = <&tcsr_mutex 3>;
-+		};
-+
-+		tz_mem: tz@86200000 {
-+			reg = <0 0x86200000 0 0x2d00000>;
-+			no-map;
-+		};
-+
- 		camera_mem: camera-mem@8ab00000 {
- 			reg = <0 0x8ab00000 0 0x500000>;
- 			no-map;
-@@ -1139,6 +1151,12 @@ mmss_noc: interconnect@1740000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		tcsr_mutex: hwlock@1f40000 {
-+			compatible = "qcom,tcsr-mutex";
-+			reg = <0 0x01f40000 0 0x20000>;
-+			#hwlock-cells = <1>;
-+		};
-+
- 		tlmm: pinctrl@3400000 {
- 			compatible = "qcom,sdm670-tlmm";
- 			reg = <0 0x03400000 0 0xc00000>;
--- 
-2.45.1
+Regards,
+Bjorn
 
+> 
+> Fixes: 04cf333afc75 ("arm64: dts: qcom: Add base qcs6490-rb3gen2 board dts")
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index 63ebe0774f1d..5b81b5e0b4ce 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -471,6 +471,13 @@ &gcc {
+>  			   <GCC_WPSS_RSCP_CLK>;
+>  };
+>  
+> +&gpu {
+> +	zap-shader {
+> +		memory-region = <&gpu_microcode_mem>;
+> +		firmware-name = "qcom/qcs6490/a660_zap.mbn";
+> +	};
+> +};
+> +
+>  &qupv3_id_0 {
+>  	status = "okay";
+>  };
+> 
+> ---
+> base-commit: 727900b675b749c40ba1f6669c7ae5eb7eb8e837
+> change-id: 20240326-rb3gen2-gpu-4343c5dc7e40
+> 
+> Best regards,
+> -- 
+> Bjorn Andersson <quic_bjorande@quicinc.com>
+> 
 
