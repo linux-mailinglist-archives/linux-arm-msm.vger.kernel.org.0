@@ -1,172 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-20382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03FF68CE122
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 08:46:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2A4E8CE12B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 08:51:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD6B11F21852
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 06:46:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A83E22823A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 06:51:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A335E1EEE3;
-	Fri, 24 May 2024 06:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B865C25757;
+	Fri, 24 May 2024 06:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="SJsYf8+E"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="JPB3o/uY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC37511720;
-	Fri, 24 May 2024 06:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E190A1EEE3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 06:51:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716533183; cv=none; b=Pb2p4kC5xs5HrRaSjGqxVqsW6V1owIz2I4PEn2ho3YZvB1/KQ2x4qhwnGu/fYP31iD+8zxl7zSfJM/yNjCOcPnaobWnOXSln71xApHz2d3a2qJIW4ykN9u1tAUt7bZi2CsD7A8CHrLkuC8PFXjbpdZY5bFIBAmrmP+CspfO/UFw=
+	t=1716533506; cv=none; b=sJLZkG1Rd8kEZRC5YD1j/idmYWaCpnibGcow6yBkX51Bh0fe7tLKFHSMy3ULFC4SUeimYOXxlgZS1awiAVSfHuF9W8gQYG0VXQL+A/ymkgpanHiqjg67eWdK5kc2e2cfoCs7B1hYorzWddFs1icLDjXLtVYejUdeWjDdh3MXDWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716533183; c=relaxed/simple;
-	bh=0x62kCjeY+J4sbdaaUkUR2ly1ES+mb2DRDWplkfWUds=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fYk4UIPZJLvOmhcT7TzjSpieYq09o6iZM9mFDUKEVUvKaMj64bymaHpUqhJWr6md51KpEWpqCUNQmqDnPdh+FysaJNlE55+DDuPvsDVKxLirzBeiZPs0OaqM04nei77riNliBGuQKcnACcEjJYRdkfF1orwSlIjMN3dhSzNYuHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=SJsYf8+E; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1716533179;
-	bh=0x62kCjeY+J4sbdaaUkUR2ly1ES+mb2DRDWplkfWUds=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SJsYf8+E0w6OSLbVoUwUSsolkuQTmZhNQnLJw0QsNGkjkGYFd8n2xohI2RvX5otBP
-	 89R+6Situxt4jvifcn/oo6h1jodewOReqLFgkPyO9orxk+p9HUp+wYrFC7qzl8HDEZ
-	 7Iug8I4CKu6KR7NsudZhhVAhPKnRF6vR5VhCUZOUF9nMO8lRZLiU3gcIdSKk4hzLK2
-	 yLDS4DuHt67z9bG4pm8+ip4ABXYYphDpTcBSlhEfnasesHdepNcZs58eczinwd+R6J
-	 KPTwxQuv4O3Nj8hmmAISzONjCXIq08lvpx/QwLGR59wg8MJT17+g5O+Y2/eECAIvcT
-	 1XQUtvRcgYCTw==
-Received: from [100.66.96.193] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CC0FA3782112;
-	Fri, 24 May 2024 06:46:15 +0000 (UTC)
-Message-ID: <b695a2a3-2b4f-400d-a0b7-5d436926f49a@collabora.com>
-Date: Fri, 24 May 2024 12:16:11 +0530
+	s=arc-20240116; t=1716533506; c=relaxed/simple;
+	bh=bQ0F2m4aBg8Va1VvxQeZ4hY5GUZdpIU111SIkEQdJR4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=JRwRV6O5Otlwt5ce+5/DdeRI8gJTR8Kxd+y45wG44ek2MwVzUkM4CRVsBifgKQIh3PsBAnwcGrRhEylnnr9KCQFQMqOK94Va2EMX9kYLwk9/aoHXwCzy94QQvv9KNU/B17n5wpYaP41pU5zYVTo0WXwdX3xR8GdkA/06vxwecnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=JPB3o/uY; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-529646df247so413266e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 May 2024 23:51:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1716533503; x=1717138303; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8AM6VA18bFGFYY5kMPUR9rqKd9gSuqX5euarcCf0EZ4=;
+        b=JPB3o/uYSvuidL+Z6sDJghVko9dUg0T9Cc8e/HNqOXeaWgqYuqR6ySsCpxTKt85UAf
+         b99ytJ/vViHhqeTsPBe2Dtt8LSEHju/KuohBWjyHdyX8jXpQgJb7d87e/MJCkllseVf0
+         eq7NeiFRX7WI1bvbYa/EOdFiBZXL+zZqeA69wR9iFKFISoNFvP5ixiOKTWl+8FmGkYBw
+         Nzzb91bAkINUaNHfgREUGnOcAwU1dSM0y2M23E3uzgs6F8tgIUU+cAdJuyw62i3JRkY+
+         DTMe/8nWNTdzX60IrRX5feamnUPPIA9DY8a6fB2O1GaSi3BGLh66AY9YI2vDefU+GeK5
+         e7Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716533503; x=1717138303;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8AM6VA18bFGFYY5kMPUR9rqKd9gSuqX5euarcCf0EZ4=;
+        b=uzC/FWDDtwVV8OSP4lVaTjBVzykuYsyCzk2ZBh5mtl+/j0O2A/+8mlrXMR6IIi8vgh
+         4T6WethcXdp9i/EtR7eT8YSRCzKENCo8/cdlO2Unk+2MWJMrDqHGnjdn4btDweUpnn/5
+         z16ls3bjM/jlM8YhjzsX8WMMLAmzUzKmiKGSUXz+q+xuB3mHRsEdPTKlZmhILL3kT8mT
+         LhUMpGDHfOXiKyDfHxzCfWqoGi56dmQmngsWs43yFQcSVMe6gk1+S8+G80ur0lF7EPwV
+         7QgHhDbJO4wdqlNVl2wYe8xAmXASBet2xNwrYnuH8uSjyobTbgTw4/Jg0CCvKMmJcuQx
+         Vcyg==
+X-Forwarded-Encrypted: i=1; AJvYcCVMGIlttRFwDW2tMykw4vc6ajDiHE2zOL+uP0K3WOj4+MgkKRfjyDKsdpybAI59oNsQlWR1jthXe3Qr96WqWaflKpicnSXFFwvZiycS+Q==
+X-Gm-Message-State: AOJu0YxCsHb0s7gQftH1E+BxjB6XRR5pk9gN9xi25+0+UHAt5iaT1++g
+	9YOEjhwwk7y1LKybeaeNvWNA5SbLCX5AZQuhSESI5bmcYiqPHAuFsMEcsE3MMvU=
+X-Google-Smtp-Source: AGHT+IFF5NGys5h91On8M/+eUNTfZssOWAGaxJkGIKXJhJWSzEy0HxwULqIkVug0I42xC4SkbqA2rg==
+X-Received: by 2002:ac2:5b12:0:b0:523:df53:93c2 with SMTP id 2adb3069b0e04-529666d81a6mr733669e87.51.1716533503025;
+        Thu, 23 May 2024 23:51:43 -0700 (PDT)
+Received: from localhost (2a02-a210-20ba-5a00-9ceb-707b-2d57-26f7.cable.dynamic.v6.ziggo.nl. [2a02:a210:20ba:5a00:9ceb:707b:2d57:26f7])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5297066ba0bsm109560e87.163.2024.05.23.23.51.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 May 2024 23:51:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] drm/ci: uprev mesa version
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
- helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
- robdclark@gmail.com, david.heidelberg@collabora.com,
- guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
- mcanal@igalia.com, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- intel-gfx@lists.freedesktop.org, virtualization@lists.linux-foundation.org,
- linux-kernel@vger.kernel.org
-References: <20240517092502.647420-1-vignesh.raman@collabora.com>
- <20240517092502.647420-2-vignesh.raman@collabora.com>
- <2qzmfv3oc6feihwxu3tl37rg6w3qsj2vddu5olvqk6vhqr26cc@bxu5y6ijvtfa>
- <9cd0667a-12ee-4d45-80e8-dc34259bf01d@collabora.com>
- <CAA8EJprVVkQO7aPkehwL2zhYkGRkm4Foc13ErfuY6ikBA_4nLQ@mail.gmail.com>
-From: Vignesh Raman <vignesh.raman@collabora.com>
-In-Reply-To: <CAA8EJprVVkQO7aPkehwL2zhYkGRkm4Foc13ErfuY6ikBA_4nLQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 24 May 2024 08:51:40 +0200
+Message-Id: <D1HOCBW6RG72.1B2RKGKW2Q5VC@fairphone.com>
+Cc: "Vinod Koul" <vkoul@kernel.org>, "Kishon Vijay Abraham I"
+ <kishon@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
+ <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH RFT 0/7] arm64: qcom: allow up to 4 lanes for the Type-C
+ DisplayPort Altmode
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: <neil.armstrong@linaro.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+ "Bjorn Andersson" <andersson@kernel.org>
+X-Mailer: aerc 0.17.0
+References: <20240229-topic-sm8x50-upstream-phy-combo-typec-mux-v1-0-07e24a231840@linaro.org> <CZUHV429NTF7.1GW9TN9NXB4J1@fairphone.com> <7a7aa05f-9ae6-4ca0-a423-224fc78fbd0c@linaro.org> <liah4xvkfattlen7s2zi3vt2bl5pbbxqgig3k5ljqpveoao656@iacnommxkjkt> <236a104c-fc16-4b3d-9a00-e16517c00e3a@linaro.org> <D064242SMIVM.1GUC1I9GE9IGC@fairphone.com> <963b60e5-6ab7-4d9f-885a-ba744c2b7991@linaro.org> <D0C42YR1270X.23P9WCWWNB8XF@fairphone.com> <f2d96f99-d8ac-4ff1-83fa-742e541565e4@linaro.org> <864063fb-eeae-4eb7-9089-0d98011a0343@linaro.org> <D15RKEU49B4G.1B6A2MYB4LH3X@fairphone.com> <cbc8a2c6-0047-4345-8c93-afdba9c2bd10@linaro.org>
+In-Reply-To: <cbc8a2c6-0047-4345-8c93-afdba9c2bd10@linaro.org>
 
-Hi Dmitry,
+On Thu May 23, 2024 at 11:06 AM CEST,  wrote:
+> Hi Lucas,
+>
+> On 10/05/2024 08:51, Luca Weiss wrote:
+> > On Tue Apr 23, 2024 at 4:08 PM CEST,  wrote:
+> >> On 23/04/2024 15:03, Konrad Dybcio wrote:
+> >>>
+> >>>
+> >>> On 4/5/24 12:19, Luca Weiss wrote:
+>
+> <snip>
+>
+> >=20
+> > Next, with DP 4 lane (not working on mainline but still plugged into a
+> > screen) the diff is quite a bit bigger.
+> >=20
+> > See attachments for the full files:
+> > * usb_1_qmpphy_20240503_151052_android_4lane.txt
+> > * usb_1_qmpphy_20240503_122443_mainline_4lane.txt
+> >=20
+> > Not attaching the diff because it's quite a lot
+> > $ diff --ignore-case -U0 usb_1_qmpphy_20240503_151052_android_4lane.txt=
+ usb_1_qmpphy_20240503_122443_mainline_4lane.txt
+> >=20
+> > Not sure this is helpful to anyone, but at least wanted to share what
+> > I've done so far here.
+>
+> Thanks a lot for the traces, it founds out the QPHY_V3_DP_COM_PHY_MODE_CT=
+RL stays at 0x3,
+> which means the mode doesn't get broadcasted to the phy because.... the r=
+etimer only broadcasts
+> the orientation and not the mode... and it works on the HDKs and the X13s=
+ because they don't have retimers.
 
-On 23/05/24 15:29, Dmitry Baryshkov wrote:
-> On Thu, 23 May 2024 at 09:07, Vignesh Raman <vignesh.raman@collabora.com> wrote:
->>
->> Hi Dmitry,
->>
->> On 20/05/24 16:13, Dmitry Baryshkov wrote:
->>> On Fri, May 17, 2024 at 02:54:57PM +0530, Vignesh Raman wrote:
->>>> zlib.net is not allowing tarball download anymore and results
->>>> in below error in kernel+rootfs_arm32 container build,
->>>> urllib.error.HTTPError: HTTP Error 403: Forbidden
->>>> urllib.error.HTTPError: HTTP Error 415: Unsupported Media Type
->>>>
->>>> Uprev mesa to latest version which includes a fix for this issue.
->>>> https://gitlab.freedesktop.org/mesa/mesa/-/commit/908f444e
->>>>
->>>> Use id_tokens for JWT authentication. Since s3 bucket is migrated to
->>>> mesa-rootfs, update the variables accordingly. Also copy helper scripts
->>>> to install, so that the ci jobs can use these scripts for logging.
->>>>
->>>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
->>>> ---
->>>>
->>>> v2:
->>>>     - Uprev to recent version and use id_tokens for JWT authentication
->>>>
->>>> ---
->>>>    drivers/gpu/drm/ci/build-igt.sh   |  2 +-
->>>>    drivers/gpu/drm/ci/build.sh       |  6 +++--
->>>>    drivers/gpu/drm/ci/container.yml  | 12 +++------
->>>>    drivers/gpu/drm/ci/gitlab-ci.yml  | 44 +++++++++++++++++++++----------
->>>>    drivers/gpu/drm/ci/image-tags.yml |  2 +-
->>>>    drivers/gpu/drm/ci/lava-submit.sh |  4 +--
->>>>    drivers/gpu/drm/ci/test.yml       |  2 ++
->>>>    7 files changed, 44 insertions(+), 28 deletions(-)
->>>>
->>>
->>> [skipped]
->>>
->>>> diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
->>>> index 8bc63912fddb..612c9ede3507 100644
->>>> --- a/drivers/gpu/drm/ci/test.yml
->>>> +++ b/drivers/gpu/drm/ci/test.yml
->>>> @@ -150,6 +150,8 @@ msm:sdm845:
->>>>        BM_KERNEL: https://${PIPELINE_ARTIFACTS_BASE}/arm64/cheza-kernel
->>>>        GPU_VERSION: sdm845
->>>>        RUNNER_TAG: google-freedreno-cheza
->>>> +    DEVICE_TYPE: sdm845-cheza-r3
->>>> +    FARM: google
->>>
->>> I see that this is the only user of the FARM: tag. Is it correct?
->>
->> No, we need to add FARM variable for other jobs as well.
-> 
-> Why? Even if we have to, we don't have them now and the change doesn't
-> seem to be related to the uprev'ing of mesa. So this probably should
-> go to a separate commit.
+Hi Neil,
 
-I will move them to separate commit.
+This was it!
 
-Regards,
-Vignesh
+>
+> So I made the changes in nb7vpq904m and ptn36502 drivers to get the next =
+mux and broadcast the typec mode,
+> if you find time could you test it ?
+>
+> Bjorn could you also test on the rb3gen2 ?
+>
+> The changes:
+> https://git.codelinaro.org/neil.armstrong/linux/-/commit/a61fb3b816ecbe28=
+a12480367d9e09b700ec09e1
 
-> 
->>
->>> Also we miss DEVICE_TYPE for several other boards. Should we be adding
->>> them?
->>
->> Yes, device type needs to be added for msm:apq8016, msm:apq8096, virtio_gpu.
->>
->> I will add this. Thanks.
-> 
-> I'd guess, separate commit too.
-> 
->>
->> Regards,
->> Vignesh
->>
->>>
->>>>      script:
->>>>        - ./install/bare-metal/cros-servo.sh
->>>>
->>>> --
->>>> 2.40.1
->>>>
->>>
-> 
-> 
-> 
+With this ptn36502 patch on top, I can confirm that DP 4-lane seems to
+work on qcm6490-fairphone-fp5 smartphone with DP over USB-C!
+
+Tested with a USB-C dongle that only has a HDMI port on the other side
+(so no USB), and cat'ing dp_debug while connected showed num_lanes =3D 4
+
+So feel free to add my:
+
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+
+Regards
+Luca
+
+> https://git.codelinaro.org/neil.armstrong/linux/-/commit/f6f976ff692bad43=
+0cd945f02b835e355f19632b
+>
+> Thanks,
+> Neil
+>
+> >=20
+> > Regards
+> > Luca
+> >=20
+> >>
+> >> Neil
+> >>
+> >>>
+> >>> Konrad
+> >=20
+> >=20
+
 
