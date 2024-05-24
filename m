@@ -1,133 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-20402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F9878CE612
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 15:22:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0136E8CE755
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 16:52:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F1CA51F24E09
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 13:22:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 70E261F211F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 14:52:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1ED7126F37;
-	Fri, 24 May 2024 13:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45BEF12BF34;
+	Fri, 24 May 2024 14:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IU6OUHfl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tXUA2lmw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737F112BF26
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 13:20:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB3C2BAF3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 14:51:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716556821; cv=none; b=EsnB3mSvR+ctOSRrgWuKVjU5YWfRzz5BnH8XIzEBNETd7hLnWjyrJeEqlT6WJ95mvV+YWwS95AiHwJhBVzQKubmW81do6d4Nsk9zEXaV6xaYTlrDZPXMDf5UN92DpYRjJrG5NWyMzpb7IGSJF2HeSRLTCcilAPqMlHbI7Uih62E=
+	t=1716562317; cv=none; b=kPL+EwecxET+zwOJJ7t91fTopMFTdHNsZpgkY52mABxgnbczA7a8ppsnWH/FTbE46RwezVa7HUx9hQ5+Tt7SzFosgBZ/bMCrIuTnLyHo8D5Y70qxzWDgdnfXhj/c54QOipIr5iSI1Qos1TzayTZJ+dPh/pQCF2JvSxue80UozAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716556821; c=relaxed/simple;
-	bh=OWccy+nICEZUKQPwByjtML13iQY9e7N6XueMvybRfeI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UOGKm9xEzmDFtqvwnBhKjVVUPp9GAcp33Gg8LBcx99VPRr1dqbTjNaTvaOtdsnfAbQ7tn/Q2FeLFTH8DuQAqQ1dFTLjVkbdpYWPL0Rd60XFBhfptZ7cryfObZ3rxGB4ufjWLUF5TweDwbj0R+4cqDHwUrgj3qttt2YiTfL77ybw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IU6OUHfl; arc=none smtp.client-ip=209.85.210.176
+	s=arc-20240116; t=1716562317; c=relaxed/simple;
+	bh=WjiI8ybe4eiixG0uMQlez0Dv2iXjBfm7PVw47/YjSvc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V8eQCuqUIrGqdfoZ3LOB8kLS5277+J44J3yASZn8v2XpzyZoKd09oL0mLBf02ogtGjNryuPl+44/YiMZ18iZ5ZGGa4ttshGCgUvnQLYHKtxuY/N5jQ6mctDZ1EfbMP/HfiOAC+4fZDGGRnQHzRLIRY/i58xjGVz1/eIx8GILzRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tXUA2lmw; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6f8f34cb0beso628792b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 06:20:20 -0700 (PDT)
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2bde007cc57so1631981a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 07:51:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716556820; x=1717161620; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y7t4uYmRqlJLrpJDiHKBdOulRnB5HHZ6HHejKDBAJ1A=;
-        b=IU6OUHflzIQ3LfNWG+D/bimD1ibzNlg5vbkENyYCu7VHlHbOHRRHO+56AyE9NgAB/V
-         xo5e2KJC7hBIwrbnoo+v8WIxMq4po4ctp3cLrHpXtc8mBenItZMbem0Z23Vu0BJXu0wP
-         sQssISbCmrgdCOw3bJ8q387P63TlDeWi26icPSnwxjd/AH25VwumZh3GGKcn4Z0DqKFI
-         cv9riteRHBYsetWnnlo7m3Y0asSU32i9+kGfhFjPFD7Be6Q4Ku2+4aDowjzspS4YiDuT
-         Tem0EglvGkJFzlQ49/niUDtDQ9UM7a1NpLdeLGgJkeAbljc83KopoVGofRibhA0hNsbi
-         R/6g==
+        d=linaro.org; s=google; t=1716562314; x=1717167114; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pIFIsBuVWw6jkhTpTL23angRB7Fq2EWXtvTb6t5SofI=;
+        b=tXUA2lmw9vhuj1nZ6qhRIyaAp4z79knpUJhj/p2BIMrxZYE22UmsL1edRfcVe03xMy
+         LS48LgBM0koKQ/E5r7diWGkYRq30j8Fh9RAOsmOLSvxvWeikjP8hNRXQqfRzSWJX6Olx
+         E9Fx71QjTRTokiUS76j2zCc0RwWudROfCt30aqJ9xv+r1Az4RQkdh7ji1avdD6MfXGl7
+         QL4WrZWhAFueIyFpY5xHFAf2WoDmkWP77Pqu852sHMzNkaRtJWYk7lrJeR1e0ydiQ0b5
+         XBr1ErxQakl7nu+GhjdB3Bz7O8jX7qQQk72/n1Fujdv06HzxutogEg6KK6J26NTZCIkE
+         zl+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716556820; x=1717161620;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y7t4uYmRqlJLrpJDiHKBdOulRnB5HHZ6HHejKDBAJ1A=;
-        b=MSsKl5DYeipLIDihI0nXtAc1TQqwp2XAwBRKIKRpIqd5UVmthcIH5+HyjH7zgxLn6g
-         qBMN0Nb53LUWsyIT1deXdppbmqJXo1mEFQsCchFTtKPZwbi6fXbj92lm3UvgrHa0qAxy
-         4qW+f1xy+UM0XPu20uRsAANwVFUJ80ecoZ6LfUBHmYRPS3bKpb/KkhUHAdDtV5pMqLV7
-         QJv3FMhqsrbiZPeQxDi2J9YNjQ0uLtN5UeM1Y061qFcTl02mw8S9uxdhSptC3phCATNY
-         Sy+n9T/UNMuWhd39BT5n2mMgMy6loTOcrH/PKcA5+VrNQAd3EoRnnemxQ3NEGbSm8j7R
-         reNA==
-X-Gm-Message-State: AOJu0YyCx2Hu9budSjG8+CAJ6VpyxxO1XXzJr210MRhhkEaASm/h2PSA
-	a8tR8G77esMhkI8iasoQdBLJ8mD0LEfuD8P57iajCbd/ep32MQpF7cuyHAI7W5M=
-X-Google-Smtp-Source: AGHT+IHKqrriJSvWlSL2AXQz2HqI+Yiz7gfhITS8Gwwie2F6zWm4wV2V3P9tfoiHsWR5eUyC4vIFvQ==
-X-Received: by 2002:a05:6a21:3d86:b0:1af:8cc6:abc7 with SMTP id adf61e73a8af0-1b212d28770mr3034833637.15.1716556819791;
-        Fri, 24 May 2024 06:20:19 -0700 (PDT)
-Received: from [127.0.1.1] ([112.64.61.67])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f8fd2d492csm1117852b3a.179.2024.05.24.06.20.13
+        d=1e100.net; s=20230601; t=1716562314; x=1717167114;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pIFIsBuVWw6jkhTpTL23angRB7Fq2EWXtvTb6t5SofI=;
+        b=rB/cVXcliHJ9dCJGnwBKfUH4nUdYcSO32thlku/bDBQlg2SNREtv/xgkGuSmY4tXM7
+         U8OGpnc+5OOQoFbilKfuzZHtNBv3nHooDltKi5e6WTbAMyF2D76eSgM3gope5PjXugTJ
+         +KPQSIsOHzuQrSsg4R14pGeZfscZOBYZha0Uv0K6lObwWhKgvU+ngmC3adP571ZDkxEC
+         TajsFaDvzmmBv53+su4VCRlD2huJ+cn0VqwSSmcB1ee8+lJDvWwn5KCBv98deLrTohF3
+         ud/KrxYEjcfOfcTkS8nCNitiJKVfKwGo8D5cFNeQguSEfa59aYOYMvfE6sadVKd8bR51
+         vUTg==
+X-Forwarded-Encrypted: i=1; AJvYcCWAD55k+GrDS1L9d4sCNcCK9A9Q47UXfK6k+JVRbHV51yG0HFkTtbjQ3NUSk0dHP8vPsAAfHVyZJCriVzk5FLs1XrR+gR9TOvoKtiltFA==
+X-Gm-Message-State: AOJu0YwN0uKUc+AQBSyJsEQ8nJwUuhjAmQCw0KPD3KFOCFt9bBUmPTuJ
+	P0HLKfuhWYb9dHRsk+BVqZZUUEOsA53NnVAkgj99/QeMlLYFiGHocgwzTRAX/Q==
+X-Google-Smtp-Source: AGHT+IHBzq1mSEGRsqLs5Du9N3tIUDTGCmvjWHX1HnwVoO6x/qVcbswIrti1nAmJXzHXEekp1t5ZRA==
+X-Received: by 2002:a17:90a:c903:b0:2bd:92e6:99ac with SMTP id 98e67ed59e1d1-2bf5f7512e9mr2417536a91.40.1716562313659;
+        Fri, 24 May 2024 07:51:53 -0700 (PDT)
+Received: from thinkpad ([120.60.56.133])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2bdd9ece075sm3400385a91.9.2024.05.24.07.51.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 May 2024 06:20:19 -0700 (PDT)
-From: Jun Nie <jun.nie@linaro.org>
-Date: Fri, 24 May 2024 21:18:25 +0800
-Subject: [PATCH v4 5/5] drm/msm/dsi: add a comment to explain pkt_per_line
- encoding
+        Fri, 24 May 2024 07:51:53 -0700 (PDT)
+Date: Fri, 24 May 2024 20:21:43 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc: andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, konrad.dybcio@linaro.org,
+	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+	quic_schintav@quicinc.com, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/2] arm64: dts: qcom: sa8775p: Adding iommus property
+ in pcie DT nodes
+Message-ID: <20240524145143.GB5758@thinkpad>
+References: <1714494711-10322-1-git-send-email-quic_msarkar@quicinc.com>
+ <1714494711-10322-2-git-send-email-quic_msarkar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240524-msm-drm-dsc-dsi-video-upstream-4-v4-5-e61c05b403df@linaro.org>
-References: <20240524-msm-drm-dsc-dsi-video-upstream-4-v4-0-e61c05b403df@linaro.org>
-In-Reply-To: <20240524-msm-drm-dsc-dsi-video-upstream-4-v4-0-e61c05b403df@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Jun Nie <jun.nie@linaro.org>, Jonathan Marek <jonathan@marek.ca>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1716556778; l=1190;
- i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=hsA6cTh9A+abQ7dtFiITzQof1AHhT8P4eUkFfENrPaA=;
- b=rda5R/WGjjaZFeTS5BHxnspwaWD3dcdhQZQeU5xyj00vWyacOIsN9uG3MPOVi/pV68aZ9Wj2n
- NWcHKDGTT4NCuaISuJLgNbItYGSL8mEmt1TuqxUTZkwhEHUl9RABCqe
-X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
- pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1714494711-10322-2-git-send-email-quic_msarkar@quicinc.com>
 
-From: Jonathan Marek <jonathan@marek.ca>
+On Tue, Apr 30, 2024 at 10:01:50PM +0530, Mrinmay Sarkar wrote:
+> 'iommus' is a list of phandle and IOMMU specifier pairs that describe
+> the IOMMU master interfaces of the device. Specified this property in
+> PCIe DT nodes so that IOMMU can be used for address translation.
+> 
 
-Make it clear why the pkt_per_line value is being "divided by 2".
+This patch description is heavily misleading. Even without the 'iommus'
+property, there will be IOMMU translation because of 'iommu-map'. And I recently
+got rid of 'iommus' property from all DTs because it is not really required for
+the translation (it allows the host bridge to bind to IOMMU, but that's not what
+we want).
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++++
- 1 file changed, 4 insertions(+)
+This patch is intented to fix the IOMMU fault that occurs whenever the EP is
+attached to the host. But you never described or even mentioned about the IOMMU
+fault. Please describe the problem clearly and explain how the patch fixes that
+in patch description.
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 7252d36687e6..4768cff08381 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -885,7 +885,11 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	/* DSI_VIDEO_COMPRESSION_MODE & DSI_COMMAND_COMPRESSION_MODE
- 	 * registers have similar offsets, so for below common code use
- 	 * DSI_VIDEO_COMPRESSION_MODE_XXXX for setting bits
-+	 *
-+	 * pkt_per_line is log2 encoded, >>1 works for supported values (1,2,4)
- 	 */
-+	if (pkt_per_line > 4)
-+		drm_warn_once(msm_host->dev, "pkt_per_line too big");
- 	reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE(pkt_per_line >> 1);
- 	reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM(eol_byte_num);
- 	reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EN;
+Now for the IOMMU fault, I did some investigation and found that the fault is
+happening due to some AER generated by the bridge whenever the device is
+attached to the host. Interestingly, there was no AER IRQ received on the host.
+But that can be expected due to the IOMMU fault as that could've blocked the AER
+MSI from reaching the interrupt controller. And 'lspci' shows that the bridge
+(even device) generated CE error (RxErr):
+
+                CESta:  RxErr+ BadTLP- BadDLLP- Rollover- Timeout+ AdvNonFatalErr-
+
+But I dont' know why the IOMMU fault occurs. I also tried to manually inject the
+AER errors and I saw the AER IRQs are generated correctly. So this confirms that
+there is no problem with AER itself.
+
+For experimenting, I reduced the PCIe bandwidth to Gen 2, and the above error
+was gone. So this hints that there could be something wrong with the PHY.
+
+And yes, adding the 'iommus' property indeed makes the IOMMU fault go away, but
+still I can see the AER error in lspci, but no actual IRQ received (weird). So
+this patch is not really _fixing_ the issue, but just masking it in some form.
+
+Please investigate on why the RxErr is being generated and how that ended up as
+an IOMMU fault instead of an IRQ.
+
+- Mani
+
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 9065645..0c52180 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -3666,6 +3666,7 @@
+>  				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
+>  		interconnect-names = "pcie-mem", "cpu-pcie";
+>  
+> +		iommus = <&pcie_smmu 0x0000 0x7f>;
+>  		iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
+>  			    <0x100 &pcie_smmu 0x0001 0x1>;
+>  
+> @@ -3822,6 +3823,7 @@
+>  				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_1 0>;
+>  		interconnect-names = "pcie-mem", "cpu-pcie";
+>  
+> +		iommus = <&pcie_smmu 0x0080 0x7f>;
+>  		iommu-map = <0x0 &pcie_smmu 0x0080 0x1>,
+>  			    <0x100 &pcie_smmu 0x0081 0x1>;
+>  
+> -- 
+> 2.7.4
+> 
 
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
