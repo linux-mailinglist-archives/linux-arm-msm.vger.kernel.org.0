@@ -1,206 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-20385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A84868CE248
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 10:23:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 390B68CE340
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 11:20:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 347511F21ADF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 08:23:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CADD91F22E87
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 09:20:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 064DE84A4C;
-	Fri, 24 May 2024 08:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB69E84FAC;
+	Fri, 24 May 2024 09:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nyfmf4r5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AasbsFK8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C00436AEC;
-	Fri, 24 May 2024 08:23:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CA984DE6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 09:19:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716538999; cv=none; b=NvbfFWOGA2XU7gcWbdvwMirDKze8EtLxC5re471z/mYJPse/8Vp2W7QJjAoxr2hxrXryWrDeThvQMiv9mmCKEhxlrbq0BBByZNPz00Xhh9lBY3cLWoCsxh18+Hh/7hO3pzkjRmd8nVTikY3BosUWyP5pYecXcizAJYXkUf3Ljac=
+	t=1716542371; cv=none; b=oUTeLZ7YMJmRBYqTY4lz1u8XET6Z4xVVsV9A2rJrRqjIEZz1pmUzvr4sBAaaa5ZPvN1O2jisRuF3/0Q0gR9cqTqk47upiSU0+00Hb6AOO9vCEZxQ700LAzoaOvjI+qgqDDD+fU6OVgSZEidAZvKLJVPR2AhVIedMoB+SVOIvbdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716538999; c=relaxed/simple;
-	bh=MolUCV0A+icHOOATMkKEORfKO2NFfWcNgiHdVyLxerc=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Loz/yaK9aPtLNURLmAGbprAaYw5Mvz8iqqBB+xFcUOYvp9we2oT5f2A581Eh+SdHm8WIDa/Sydqw6ENAFkE/CN6a5t5COamVAxD2k2ufB3ZzZT5kZQRzs++3644EeNf1HAkb9r+XodTENqulRpy9IKnd39B6euCtBwl/qHcdbfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nyfmf4r5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44NNPtJ7005348;
-	Fri, 24 May 2024 08:23:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=5d5oHEebI5TE7KgXAlc0rk
-	OpA/Qkd9P4UI0fJA0icy0=; b=nyfmf4r59PLLMc+BgymqomqlrR5D638Q30HGLz
-	GwoebZHJWf04soT+GrxbSEytqyT20VoUm5Hwgjc23JdhK3dnRcVAjjUeL0+2Q89+
-	Xfdg1827YD2kwYMy5ROmqG07E4HhgWzTp5DlEz/M+AgeNOwypp3I8903OUvMqo0+
-	DyCCSFP++40M+4xaTnhXMvUudIC30+/U1KrMg/4xKnenjUA5BjcPeYg6n0mofnxW
-	/WDVIcGjG1FEQWi6mQmS3PUN7J9Bz6o2jBPcOOo/M1V2tMqYvkrdbl9eWDx84enW
-	bZOk0WuJD0PYNDsQgzWOcFlTAB3Ym8MTUUfWOW5v6tYXnNGQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yaabq1mxa-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 May 2024 08:23:13 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44O8NCP7017209
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 May 2024 08:23:12 GMT
-Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 24 May 2024 01:23:08 -0700
-From: Komal Bajaj <quic_kbajaj@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: Melody Olvera <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Komal Bajaj
-	<quic_kbajaj@quicinc.com>
-Subject: [PATCH v2] arm64: dts: qcom: qdu/qru1000-idp: Fix the voltage setting
-Date: Fri, 24 May 2024 13:52:36 +0530
-Message-ID: <20240524082236.24112-1-quic_kbajaj@quicinc.com>
-X-Mailer: git-send-email 2.42.0
+	s=arc-20240116; t=1716542371; c=relaxed/simple;
+	bh=S5WIHfo/GVVFuV2a8N3J3V/bskkP4vgyxo9cxv7VQAU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZHi22atNYCwrMhGK+JFV9aLz16qhFParr3xTmcMc78TZeWDqVHLb6823MOQqK2p+aNfJzLLz2eTGnf6wCP1MIGbpqig2Jl/M4SdXuEvRiPmMxnBC28kczDYlJTgAxy/vfVscSl1JF6g2KgASjKwrCaD2ol63rSAiniCugi2Sz3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AasbsFK8; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-df4d60c59f7so3162101276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 02:19:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716542369; x=1717147169; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BFC/Wq6r2ZnocxgGVbxbRurbvlwJyoIDrYIsqw3lJqc=;
+        b=AasbsFK8Mt/PBkyaFq4wDhGGCDNTzpxMQ1Mwa29niqtT3epguk2PVIEfb9sc3EadZP
+         FklJq+xk0xVWrT4Oc7bdebK+3oHdLd0476OGs+6I9Tl6C+tslihGZZjAA8jurcuO7S0E
+         WPvda+m4XLP+XP4E9CGlLt2qTM6nthiWNjd8k4HVi/EnK7Ouf4dywmuElXhqbyHKgqgs
+         BUb67NX40RL9ApGWYisP4HvOAocfawqNpguvbSGYvgJerlevu1vlxKAUyD8qsV7wkU0E
+         jyrJoiGUNr/PyPc0Dqu6L/MXrvX11cdH3cpGY6Iigvu8GwMDeViM8r3Xf9bF9E8uIvGv
+         e7Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716542369; x=1717147169;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BFC/Wq6r2ZnocxgGVbxbRurbvlwJyoIDrYIsqw3lJqc=;
+        b=g9jTMVShspc69Fnqn5ha8dRUg5kuquCPddxaaZWCSaOrJNSwYqchCSJtJPFUkU07/o
+         eDUtN7ZVO9xwjQ89IGjEiKPGC+d9wR11nl7S0CGxQoIG7ymPt836OxOFjji3K9cErAYn
+         illtqBz3J5K1dT8mvAT4HcOxPnh6y9I/9d32KQ9GGp2WMKxB74rFKd/8FzhJ6p1xg8Zs
+         tDRloSLNCHfOp7R9g3RnXyIPtusvinHwTb5ordIH8VDUkRpqO2Lvp9qUFL7wp1J9Ko3w
+         UN6PwyHhxCAk7huN6IFRiXoSDwYiy1AoGVzhjFvfLxZMKI5U8H3Qt3jR4HIzgMQHkN1E
+         OZcA==
+X-Forwarded-Encrypted: i=1; AJvYcCX+ez94pjZQztay2fyIy3nl6d8yvXrV4mjQ3bOChi7fnU53y0d4QqlhCJ18GmI5zn05yfZib/EBJwesYzD5Q85SmbCPlPtK3ehzHlib5Q==
+X-Gm-Message-State: AOJu0YxCOavfmUWl0aOwjKbrIwBkQd99IMeUKJiN3kumLtpuHZr5gF1W
+	TSyyUMrLe93mrynkzGui9LtE24tts4kTc0JGVER8wxtNz1gVt1a8227U8F8jQ72fRCmQzgQ5x3c
+	T4EikDsE321M2Nx6uMaalCc4zHYGS9IuKrDJ8cw==
+X-Google-Smtp-Source: AGHT+IHQOGkX6tTv+H0dG9M4HcslJIDthMVJK/fTaxTSoTTh7UEYLllN3SvzcSDRZhpNnspLGW/VvYGgTEt21HlMSwo=
+X-Received: by 2002:a25:adc2:0:b0:df7:695a:1cee with SMTP id
+ 3f1490d57ef6-df77221c3b5mr1532190276.50.1716542369346; Fri, 24 May 2024
+ 02:19:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nGQyoYgCboG2at20B8l-DhTu4ok4rLYZ
-X-Proofpoint-ORIG-GUID: nGQyoYgCboG2at20B8l-DhTu4ok4rLYZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-24_02,2024-05-23_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=443
- adultscore=0 suspectscore=0 bulkscore=0 impostorscore=0 malwarescore=0
- spamscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405240057
+References: <20240524035350.3118981-1-quic_mohs@quicinc.com> <865adb41-fd27-d303-5f0f-a68a814f41ab@quicinc.com>
+In-Reply-To: <865adb41-fd27-d303-5f0f-a68a814f41ab@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 24 May 2024 12:19:18 +0300
+Message-ID: <CAA8EJprDb0fk0G1wrzB99EG=HAm5tw1Mz=mSd5mDMptDOoUb2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Add support for QCM6490 and QCS6490
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_rohkumar@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-While adding the USB support, it was found that the configuration
-for regulator smps5 was incorrectly set. Upon cross verifying for
-all the regulators, found that smps4, smps6 and smps8 are also
-incorrectly configured. This patch fixes the same.
+On Fri, 24 May 2024 at 07:06, Mohammad Rafi Shaik <quic_mohs@quicinc.com> wrote:
+>
+> On 5/24/2024 9:23 AM, Mohammad Rafi Shaik wrote:
+> > This patchset adds support for sound card on Qualcomm QCM6490 IDP and
+> > QCS6490 RB3Gen2 boards.
+>
+> Please ignore this abounded patch series. No need for review.
 
-In particular -
-- smps4 is 1.574V min and 2.04V max
-- smps5 is 1.2V min and 1.4V max
-- smps6 is 0.382V min and 1.12V max
-- smps8 is fixed at 0.752V
+In future please use a logical prefix for the cover letter too. This
+helps other developers to understand whether they are interested or
+not.
 
-Fixes: d1f2cfe2f669 ("arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs")
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
----
-Changes in v2-
-* Updated the commit message as suggested by Krzysztof
-* Link to v1: https://lore.kernel.org/linux-arm-msm/20240514131038.28036-1-quic_kbajaj@quicinc.com/
----
+>
+> Thanks,
+> Rafi.
+> >
+> > Changes since v1:
+> >       - Use existing sc8280xp machine driver instead of separate driver.
+> >       - Modify qcs6490 compatible name as qcs6490-rb3gen2.
+> >
+> > Mohammad Rafi Shaik (2):
+> >    ASoC: dt-bindings: qcom,sm8250: Add QCM6490 snd QCS6490 sound card
+> >    ASoC: qcom: sc8280xp: Add support for QCM6490 and QCS6490
+> >
+> >   Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 2 ++
+> >   sound/soc/qcom/sc8280xp.c                                | 2 ++
+> >   2 files changed, 4 insertions(+)
+> >
+>
+>
 
- arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 16 ++++++++--------
- arch/arm64/boot/dts/qcom/qru1000-idp.dts | 16 ++++++++--------
- 2 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-index 6e129dc123ed..89b84fb0f70a 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-@@ -96,20 +96,20 @@ vreg_s3a_1p05: smps3 {
-
- 		vreg_s4a_1p8: smps4 {
- 			regulator-name = "vreg_s4a_1p8";
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1800000>;
-+			regulator-min-microvolt = <1574000>;
-+			regulator-max-microvolt = <2040000>;
- 		};
-
- 		vreg_s5a_2p0: smps5 {
- 			regulator-name = "vreg_s5a_2p0";
--			regulator-min-microvolt = <1904000>;
--			regulator-max-microvolt = <2000000>;
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1400000>;
- 		};
-
- 		vreg_s6a_0p9: smps6 {
- 			regulator-name = "vreg_s6a_0p9";
--			regulator-min-microvolt = <920000>;
--			regulator-max-microvolt = <1128000>;
-+			regulator-min-microvolt = <382000>;
-+			regulator-max-microvolt = <1120000>;
- 		};
-
- 		vreg_s7a_1p2: smps7 {
-@@ -120,8 +120,8 @@ vreg_s7a_1p2: smps7 {
-
- 		vreg_s8a_1p3: smps8 {
- 			regulator-name = "vreg_s8a_1p3";
--			regulator-min-microvolt = <1352000>;
--			regulator-max-microvolt = <1352000>;
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <752000>;
- 		};
-
- 		vreg_l1a_0p91: ldo1 {
-diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-index 2a862c83309e..258483af065b 100644
---- a/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
-@@ -96,20 +96,20 @@ vreg_s3a_1p05: smps3 {
-
- 		vreg_s4a_1p8: smps4 {
- 			regulator-name = "vreg_s4a_1p8";
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1800000>;
-+			regulator-min-microvolt = <1574000>;
-+			regulator-max-microvolt = <2040000>;
- 		};
-
- 		vreg_s5a_2p0: smps5 {
- 			regulator-name = "vreg_s5a_2p0";
--			regulator-min-microvolt = <1904000>;
--			regulator-max-microvolt = <2000000>;
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1400000>;
- 		};
-
- 		vreg_s6a_0p9: smps6 {
- 			regulator-name = "vreg_s6a_0p9";
--			regulator-min-microvolt = <920000>;
--			regulator-max-microvolt = <1128000>;
-+			regulator-min-microvolt = <382000>;
-+			regulator-max-microvolt = <1120000>;
- 		};
-
- 		vreg_s7a_1p2: smps7 {
-@@ -120,8 +120,8 @@ vreg_s7a_1p2: smps7 {
-
- 		vreg_s8a_1p3: smps8 {
- 			regulator-name = "vreg_s8a_1p3";
--			regulator-min-microvolt = <1352000>;
--			regulator-max-microvolt = <1352000>;
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <752000>;
- 		};
-
- 		vreg_l1a_0p91: ldo1 {
---
-2.42.0
-
+-- 
+With best wishes
+Dmitry
 
