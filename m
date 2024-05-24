@@ -1,168 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-20396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B630B8CE5FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 15:20:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BD868CE603
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 15:21:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 473B71F24708
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 13:20:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E0F41F249B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 May 2024 13:21:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA23812A157;
-	Fri, 24 May 2024 13:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E18E86244;
+	Fri, 24 May 2024 13:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n5w6FbmH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yDwqcH6t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B06E129E9E;
-	Fri, 24 May 2024 13:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A5112AAC8
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 13:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716556762; cv=none; b=rfIMmmAJsIOLUwSC3dFTaAHTf4UUGedImQSxO4ScjLGHYxgar8SxQpWoJKc7fzD+wXZMG0zbR7Qg8Hso5CXszqBcBwbtJbqROpFpEalSxsCVxrWoLssqVUqUrOkW+n+ZxAHIAjs/Y9C9hvFyAvdIUIWZN0e3NCCuVZPUoy7lg7c=
+	t=1716556786; cv=none; b=GW8CsKRS9KmTtK/RFsT9MgcmFjgPjnBChJcH4fRjHJvDCt98eV1yFzqZ2md0B8TNYHBjRkPE6RAZvc8rmyDZG1LTdJU2+RenlJOuoSM2iF+bsPGCS/yVz4wSauILlM5OCS75wt/7EWtcME5DiLfo4MkBMb2mSbwBPfh22axeLYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716556762; c=relaxed/simple;
-	bh=VYASND7DkjxIdSKvksdElZNKwr1G8BS4C2AWVcyC9ZM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o+hahx48YSTZc9mXcWvQxW9vVyZlJnq7xc13zdRd2N/qYdQZVWk1KirOywo8Qe1eTN9ivR9p52Y5WVn/CCRT/QbgACmMpBIzJsrowFBNf5+SCFKC7nRsZrLrKvNAJDYAD2MKFSvQkogM6M6HXIs3hW+HN8Jkah8vvyNmjx+3wrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n5w6FbmH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44O9GDo7004833;
-	Fri, 24 May 2024 13:19:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6gTuD659RBNpe4VbArDAG26UrZnRn8ECIH/vQ20wfOg=; b=n5w6FbmHG0RqjXtJ
-	/YruTIKMv28FyHcTnggWHzOp1we1i2yTdk3Dk4rDjieGzDmufG7tAlz28JSgyqS0
-	388YRv96G2OfQLRqmst5unNOzFOHaaTBpbTEl093jBjD3g5yIoQfnR3h4ckz1NJ+
-	a7Am+UBumX6E3qMOQiSkZy+yLpCV+uRcZk7wGp/P9aZcGx6dfg7aI82B0igHKE19
-	/3KkW65eev16LLR5YmhiOPCtPJsLSINU+ZtU63Wex8JQ3DW3HKatDhVhseDmXido
-	CIbJ8sp7TxakmAuNLtVgoqw7Q4P+aGisAtQm/ieOMp3iuyFWJ/tFv76O7MLmNmVZ
-	dxqJYQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yaa96jj4w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 May 2024 13:19:04 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44ODJ3am031240
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 May 2024 13:19:03 GMT
-Received: from hu-bibekkum-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 24 May 2024 06:18:58 -0700
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-To: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
-        <joro@8bytes.org>, <jgg@ziepe.ca>, <jsnitsel@redhat.com>,
-        <robh@kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <quic_c_gdjako@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <konrad.dybcio@linaro.org>
-CC: <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        "Bibek Kumar Patro" <quic_bibekkum@quicinc.com>
-Subject: [PATCH v10 5/5] iommu/arm-smmu: add ACTLR data and support for SC7280
-Date: Fri, 24 May 2024 18:48:00 +0530
-Message-ID: <20240524131800.2288259-6-quic_bibekkum@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240524131800.2288259-1-quic_bibekkum@quicinc.com>
-References: <20240524131800.2288259-1-quic_bibekkum@quicinc.com>
+	s=arc-20240116; t=1716556786; c=relaxed/simple;
+	bh=+VbmLrr+MxBwHguG6QH57yAkTY866KqHsjxTiaWJiUo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Dc1uMTlf7dQ6N1CxQ67QLCQGbKGdcLafq2Ub/kIxIG0EccRsxu5v9mn8G0huEhDKVPHyqvwmNBDtPAKTWLgM3IiGgHnlWkWsXPQOs533PdcLwjJslrbIRR4vts9gZvkS8Sx4Qv4JYOEhkkFbhoTIkXmTUggFCuBW/Zsy8rDXQr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yDwqcH6t; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-6f4603237e0so2246501b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 May 2024 06:19:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716556784; x=1717161584; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9LDfNWVg/nkGwfC2fZiQvw0fSrYSYmc/J/W6QstXb1o=;
+        b=yDwqcH6tdqler7KfibWEF/Z0uAMi0N4Wt1Es+Sw0hhAL/Bq2I2wsy2NquFiolbmyBK
+         1bxI7VXQNyBMk6a9Jwd8DulvEKz+LbMFcI8QtFzGA9c6m/Aklv6dKbpwDDZ3dyfnAH7T
+         iiu+HHkwEbomY/XolJn55mfzyiTlbTWObl+8Uw485/9vdjjoekZBUg7og+cKlv1QP8Jw
+         iq22nrthDVlQjTdwpgXVe/Zs3lyZONpNHkxm3GI7xDLeiaDyxjZ0S7SQAMytg9N+J6UP
+         uuWQgrQg7sY4bR+t0anr5UlOF8Sb+cUJXjE71gywNUzKYE3wwPVeDOdFGmn4fVw+OtEa
+         EFSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716556784; x=1717161584;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9LDfNWVg/nkGwfC2fZiQvw0fSrYSYmc/J/W6QstXb1o=;
+        b=t7QcZ89MJUcMipBMTZdGk40iT/xX2/KE+9374bhkETIpMRO6uOaYd/0Xd1JqdQOylU
+         FFddm+lVmeObGoZCj2wZZLSYHhQ8YkWcmGZfwQj3qH2/+oOpFRNiunT7VM2Iap6yH1VF
+         LqG4w+/t/AJOW1su9zjDKmhPhmbH/L2WyrHhifx0pxxwRf/UfTl3pGTGqp9ajPU3rc/l
+         IemPEGas8JtrurGX2WAMqE2q7U9Lw55Ac9OzyKQz7KySsN/URL7BBCZhtQKNoevOcG2h
+         /Z+lF657c1ASF9lF/eNTUoEpUVdDVuDduse45IDQw7W16sQGMLyQffkzhqFaHofhRHbj
+         5RKw==
+X-Gm-Message-State: AOJu0YwRoxn3DaK9H5SCKbcs5xPExOcwjrCpbGRHuAYhQBawZPBkUVAL
+	BlxTl/bSsFcJs6NMMdpcnsuwBrbIaMae7GSC/4Z4Cxwx5SPlOa1MTm8pTtcNnLs=
+X-Google-Smtp-Source: AGHT+IEJZdkZUd+uet0RvE9yt804KFshNazfc5SYnkX24jgpFp43TZQkuae564In0mna7++YZ7uyGA==
+X-Received: by 2002:a05:6a21:6d9e:b0:1af:cbe1:8a4e with SMTP id adf61e73a8af0-1b212dd09famr3256099637.23.1716556783894;
+        Fri, 24 May 2024 06:19:43 -0700 (PDT)
+Received: from [127.0.1.1] ([112.64.61.67])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f8fd2d492csm1117852b3a.179.2024.05.24.06.19.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 May 2024 06:19:43 -0700 (PDT)
+From: Jun Nie <jun.nie@linaro.org>
+Subject: [PATCH v4 0/5] Add DSC support to DSI video panel
+Date: Fri, 24 May 2024 21:18:20 +0800
+Message-Id: <20240524-msm-drm-dsc-dsi-video-upstream-4-v4-0-e61c05b403df@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qm4KlVUOxpQk-gZDHVmp0XsvZn83cYFY
-X-Proofpoint-ORIG-GUID: qm4KlVUOxpQk-gZDHVmp0XsvZn83cYFY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-24_04,2024-05-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 mlxlogscore=999 spamscore=0 bulkscore=0 phishscore=0
- mlxscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2405170001 definitions=main-2405240091
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJyTUGYC/x2NQQqDUAwFryJZNyDhK61XkS7U/2yz+CpJK4J49
+ 4YuZjGbmZMcpnDqqpMMu7quS0i6VTS9h+UF1hxOUkuqG0lcvHC2wKdAedeMlb+bfwxD4cQiEGn
+ becT9QZHZDLMe/0X/vK4f6nuR7nIAAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Jun Nie <jun.nie@linaro.org>, Jonathan Marek <jonathan@marek.ca>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1716556778; l=1621;
+ i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
+ bh=+VbmLrr+MxBwHguG6QH57yAkTY866KqHsjxTiaWJiUo=;
+ b=+UYOOp4JE49VtIHFxZq+eHqAnMnpfrs4LQ7WhRjxDKutKQ5aM4fp53lUrH9EFfbdLYftxfqze
+ /jUY0i3IGpGDo0Nu3UIcs2ZnP7pr1vlm4nrmeuDyyy+X39rt+JHQvds
+X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
+ pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-Add ACTLR data table for SC7280 along with support for
-same including SC7280 specific implementation operations.
+This is follow up update to Jonathan's patch set.
 
-Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Changes vs V3:
+- Rebase to latest msm-next-lumag branch.
+- Drop the slice_per_pkt change as it does impact basic DSC feature.
+- Remove change in generated dsi header
+- update DSC compressed width calculation with bpp and bpc
+- split wide bus impact on width into another patch
+- rename patch tile of VIDEO_COMPRESSION_MODE_CTRL_WC change
+- Polish warning usage
+- Add tags from reviewers
+
+Changes vs V2:
+- Drop the INTF_CFG2_DATA_HCTL_EN change as it is handled in
+latest mainline code.
+- Drop the bonded DSI patch as I do not have device to test it.
+- Address comments from version 2.
+
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 35 +++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+Jonathan Marek (4):
+      drm/msm/dpu: fix video mode DSC for DSI
+      drm/msm/dsi: set video mode widebus enable bit when widebus is enabled
+      drm/msm/dsi: set VIDEO_COMPRESSION_MODE_CTRL_WC
+      drm/msm/dsi: add a comment to explain pkt_per_line encoding
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index b4521471ffe9..8dabc26fa10e 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -29,6 +29,32 @@
- #define PREFETCH_MODERATE	(2 << PREFETCH_SHIFT)
- #define PREFETCH_DEEP		(3 << PREFETCH_SHIFT)
+Jun Nie (1):
+      drm: adjust data width for widen bus case
 
-+static const struct actlr_config sc7280_apps_actlr_cfg[] = {
-+	{ 0x0800, 0x24e1, PREFETCH_DEFAULT | CMTLB },
-+	{ 0x2000, 0x0163, PREFETCH_DEFAULT | CMTLB },
-+	{ 0x2080, 0x0461, PREFETCH_DEFAULT | CMTLB },
-+	{ 0x2100, 0x0161, PREFETCH_DEFAULT | CMTLB },
-+	{ 0x0900, 0x0407, PREFETCH_SHALLOW | CPRE | CMTLB },
-+	{ 0x2180, 0x0027, PREFETCH_SHALLOW | CPRE | CMTLB },
-+	{ 0x1000, 0x07ff, PREFETCH_DEEP | CPRE | CMTLB },
-+};
-+
-+static const struct actlr_config sc7280_gfx_actlr_cfg[] = {
-+	{ 0x0000, 0x07ff, PREFETCH_DEEP | CPRE | CMTLB },
-+};
-+
-+static const struct actlr_variant sc7280_actlr[] = {
-+	{
-+		.io_start = 0x15000000,
-+		.actlrcfg = sc7280_apps_actlr_cfg,
-+		.num_actlrcfg = ARRAY_SIZE(sc7280_apps_actlr_cfg)
-+	}, {
-+		.io_start = 0x03da0000,
-+		.actlrcfg = sc7280_gfx_actlr_cfg,
-+		.num_actlrcfg = ARRAY_SIZE(sc7280_gfx_actlr_cfg)
-+	},
-+};
-+
- static const struct actlr_config sm8550_apps_actlr_cfg[] = {
- 	{ 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
- 	{ 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-@@ -685,6 +711,13 @@ static const struct qcom_smmu_match_data sdm845_smmu_500_data = {
- 	/* Also no debug configuration. */
- };
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h     |  8 ++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 13 +++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 12 ++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi_host.c                   | 10 +++++++++-
+ 5 files changed, 43 insertions(+), 2 deletions(-)
+---
+base-commit: e6428bcb611f6c164856a41fc5a1ae8471a9b5a9
+change-id: 20240524-msm-drm-dsc-dsi-video-upstream-4-22e2266fbe89
 
-+static const struct qcom_smmu_match_data sc7280_smmu_500_impl0_data = {
-+	.impl = &qcom_smmu_500_impl,
-+	.adreno_impl = &qcom_adreno_smmu_500_impl,
-+	.cfg = &qcom_smmu_impl0_cfg,
-+	.actlrvar = sc7280_actlr,
-+	.num_smmu = ARRAY_SIZE(sc7280_actlr),
-+};
-
- static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
- 	.impl = &qcom_smmu_500_impl,
-@@ -711,7 +744,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
- 	{ .compatible = "qcom,qdu1000-smmu-500", .data = &qcom_smmu_500_impl0_data  },
- 	{ .compatible = "qcom,sc7180-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sc7180-smmu-v2", .data = &qcom_smmu_v2_data },
--	{ .compatible = "qcom,sc7280-smmu-500", .data = &qcom_smmu_500_impl0_data },
-+	{ .compatible = "qcom,sc7280-smmu-500", .data = &sc7280_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
- 	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
---
-2.34.1
+Best regards,
+-- 
+Jun Nie <jun.nie@linaro.org>
 
 
