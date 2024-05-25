@@ -1,48 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-20449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A4638CF078
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 19:39:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D927A8CF07C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 19:44:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3048E1F21429
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 17:39:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93C6C1F214B4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 17:44:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DC4986AE7;
-	Sat, 25 May 2024 17:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1622126F0F;
+	Sat, 25 May 2024 17:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoVOqVz7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q41ndA5p"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E19A3A29F;
-	Sat, 25 May 2024 17:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0033A29F;
+	Sat, 25 May 2024 17:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716658764; cv=none; b=gc60ABSZulKKwxdbhmNug4SKKNuzIZwxFcnv8ZhMTpF/3HlSBUso2oBEO7kA2OEuqgcu0+6eS7tjvToMW5vTPG+2H/+CcU7OY67nz21WZVUM8cvkiwFqDobj/KbNKsNH+z2rPrl+QC1KN3BiJYpjyPxJyU4Trpc+/sUsbOr7w6I=
+	t=1716659042; cv=none; b=VmYkuloCEsu4LlOe93BPL86vz8CCWn+SiKWhO/RO2EL13fzdgvVB617jS5pG0vnlyFMTdaUGGXvj47RfFL/5vBS6n3wxCKz3uMBI/T80S7vqYz5FMiDmTtKdsDMaFM3DuFE8aKWaLKc2H1fh5+Am8Y9KGhgVUwoMY7tYGVAYQ4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716658764; c=relaxed/simple;
-	bh=cOJAS+lSpANLmIdlcOUWxK83GUMKgG5eurzHyM54Noo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HCA0WRKPrUJjaSc2qx4IvMnf4uBe8rnwlu327QRkhq6mgLyjUkuNVbvhfRdpMDr4jVtjavdIK/UKmPVGyp6cVpsoVkAjANzcsw3HDiwxxRh+jh2KV1iBSyVLILuiQ3qtXp4zHXyrb1MPDGN6TjSgNbhktIJ6YxzaOvk1rh0WxTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoVOqVz7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D67AC2BD11;
-	Sat, 25 May 2024 17:39:23 +0000 (UTC)
+	s=arc-20240116; t=1716659042; c=relaxed/simple;
+	bh=7fEBcBjsW4Wc0wk8NeBzK6jYtH4x5qqffjXR7Y2F8cg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HBf9V0uZGujONC0VWR1TqciHLiyNJReAs1T+CZdIcy9zzUIh4f4+Guj/gEYmhE7qYm3I6eCntAW/9TQbQcH4Emd3DvGyoAhGqzPiQwuPE1Bn9RNJZ7h07gQBQMrY4VlVaQdZJa9PKaSdXdEnU+msitgvBvSC81QCNmlA0O8kk3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q41ndA5p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3966AC2BD11;
+	Sat, 25 May 2024 17:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716658763;
-	bh=cOJAS+lSpANLmIdlcOUWxK83GUMKgG5eurzHyM54Noo=;
-	h=From:Date:Subject:To:Cc:From;
-	b=eoVOqVz7E9v+5euKLm8T2htWuV/1JYuZf7IhDIobQohTWvFnTxYUkxiNGi1vELNbm
-	 foJj0E2eiRu4eNlx6L8QTspp78IzDOx6upfAqBW6DBsFWiydGBdnheI0TYMSx/evk8
-	 7TC5DbN6iQk9NEsGY9aXTOwIdH//uP6aHfvYFo9YgoKtN6KSzsvF3WJ6NtzcMSD4H9
-	 /zFhRMaEwDmwx583ZLJ4IKb0YySBuSOVyaflGdEQG4zcbicGA7+FlPkxNrYaEUONLB
-	 2VWccQ2QYZTUwX4Gl1K5hSyLO201S/T+ctp4HBXjns8pt0wVWqbZvLbZl6HGzoefWC
-	 dqJEaOYA4mRLg==
+	s=k20201202; t=1716659042;
+	bh=7fEBcBjsW4Wc0wk8NeBzK6jYtH4x5qqffjXR7Y2F8cg=;
+	h=From:Subject:Date:To:Cc:From;
+	b=q41ndA5pAs4ZEw18sOoAy7C5bJLbowy/mhuY8v8NrTl30Dk12K754xsAFMExyxQ7W
+	 a4+sqh+E266JnHbjgyq7G2qzGM2N9Ol/E6ebt9KcLoDm+I/XBI7R5v1BUpElfzRid8
+	 4fgEZrFeU6PsuDfwnmOxMzpdUUdWaYGiS6+/KxoGKT9AZOKjwRAspCpkYml4efq/xp
+	 YZnuFxTddhinZdOm2I/cBWyFNl4x4f8itdcCaL32pRWSt+VQqh14/rI51KxU0axa6H
+	 uqV33tZzaDKoMwUjbiTKQb0/7LL1vzQJjSok/b1peXJL+rVt9aDZ+cuzplKBdgwNHQ
+	 aVoahyuCW96sQ==
 From: Bjorn Andersson <andersson@kernel.org>
-Date: Sat, 25 May 2024 10:44:11 -0700
-Subject: [PATCH] arm64: dts: qcom: sc8180x: Fix LLCC reg property again
+Subject: [PATCH 0/2] arm64: dts: qcom: sc8180x: Fix CPUfreq compatible
+Date: Sat, 25 May 2024 10:48:49 -0700
+Message-Id: <20240525-sc8180x-cpufreq-compatible-v1-0-febf0f17909c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,79 +52,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240525-sc8180x-llcc-reg-fixup-v1-1-0c13d4ea94f2@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAGojUmYC/x2M0QpAQBQFf0X32a11s2x+RR60Dm4J7UZb8u82j
- 9M081BEUETqiocCbo167BmqsiC/jvsC1ikziZHaWLEcvaucSbxt3nPAwrOm6+S2bURsAwcLyvE
- ZkMU/7of3/QBsI+QuaAAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+X-B4-Tracking: v=1; b=H4sIAIEkUmYC/x3MQQqDMBAAwK/Inl2IiZHoV8SDbjftQtWY2CJI/
+ t7Q41zmhsRROMFQ3RD5K0n2raCpK6DXvD0Z5VEMWulWWW0xkWucupDCx0c+kPY1zKcsb8bOGGr
+ t0hvnOihBiOzl+ufjlPMPrLr+GmwAAAA=
+To: "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Bjorn Andersson <quic_bjorande@quicinc.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1900;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=600;
  i=quic_bjorande@quicinc.com; h=from:subject:message-id;
- bh=pdAiPkmwix16zBI9UBTkevZJH1zCUnPSJHmIYiTo5OM=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmUiNsKYEK5V8wbmb/GOzthe5vzq8ZIVFtkPEc0
- wyedNNY5wKJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZlIjbBUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcUIdhAA3xcTTXugYl5wVFwaGp8MskzlLIc/mfIOgxIVAOS
- z/MnBL1GMsM2x6h5XYErpwVu/fv1GYDz6YiBHwWm45NjjYo48OzUPtDfNhvELs+egs6yNcWj7e4
- a6zn4WZQY9Vb989s0Zug4jJGHBjQ06kWyBiJD6Qdl5SpdnsSpoG73EnmRB31gfEtYlZwCKarNYl
- y4QYaXFt/jDra9ar0wFqRnqrCzuucRBayUVK0Bc39e05dTDe/W5lui2FkztV63f5N3fW2BfU4fU
- eSQClCnRsaRJ/50F0rmH6UgSIqDJLy2Vu54giR9iCakaGt8ytscCVZx9Ol9MUMYmXTxWtxtTPFC
- 6kysrgEZTMy2p32gyfCvMEglexQglmz+Tm2ojcpp4WxX/0wtqrp5D4UiCWy8Arew5+Qb0tOpivE
- 3vQu7nydYD+XkhNvpFJsmTlVS+5pc357M9bEtz+CKTGd3O/k2N7iM4brrA+bdY3e/7HLH6CGZzx
- 0c/5J94Rh7kq2BsJXicQhqfPgaZJJXL8ngG+arvmRIB17RbQ0Dxi0ogp3/+bjhSKbIjthj39Q4+
- bHnSvnEjY8docaXkPhQZdm5w2hSr2wQPIaY8vyuaLmh0duyD8UhmKcn9UaKvfICu9EdMbLq1mvU
- lH3bYtuB7hE1vw/smAvFgMwOAQNiyOpAVJHKVJK4+DZ0=
+ bh=7fEBcBjsW4Wc0wk8NeBzK6jYtH4x5qqffjXR7Y2F8cg=;
+ b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmUiSC9S3DkydJiZWzLzoXANykY/bRID0Yog9fk
+ B4Bw/JKKEmJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZlIkghUcYW5kZXJzc29u
+ QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcV4ThAAtKUde/TdjPdVVrhmP1yLZ2lwMpKlEFWko9y3xBR
+ TZrzStsyeMSq2LCk1COA8Bb49Ys0n6fLTgwZempqqyTan2uQnOdchYhwmUPNIxEyH3KNN8R6ClZ
+ jw/rE/JrNzs2p4EQEAy7PBZu10UQKEwmvONq63liNQg9PYPBy1GJtpfH8dnLdVi9BiAYiBYp4w8
+ d7UXokbcFJnVhIc3zm++4AQJvofoZrcrMjiA7usByf8q8U47S2XDDeIPbwcYBujxySNevvALVet
+ PJ7QUsTKGfcMBJwoNh6L6gMFtBtMLOfxfu0txmTa9fdu7VEZM6Q78GUb4tTosYn1vSceIKsIqWi
+ +QyQkInbuAbLTGIHbXDBMCYkeu2DeiOIINf3LIoxtnPLYsVVKv8GGqfK+VllQiQsytibztKZ0lc
+ zfAiC8whKRqOIua6ObyAIqw3zuDDyDaHkLhQ3tJwbt+f3uSFu6dqHHxOCb0qcCNxoPIjcee/V19
+ ODpN8uZJuiD2Ok8V4J+zB58VvnnVE/PwXBBU8dbjagE81G7fJXry4ExX1rHAgcrIlV7NOFxkxdx
+ ph5eInxmBlHQ6t0fCDCv24IZ8M/roXeF3klCWK/7b9PDR64RsPZj6j/+JFgVd1NMELr3SuIpPOv
+ meYoJRA4CeX49pYpJMcF6EE5jYqc4NQPh8Y5/EF30Du8=
 X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
  fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-
-Commit '74cf6675c35e ("arm64: dts: qcom: sc8180x: Fix LLCC reg
-property")' transitioned the SC8180X LLCC node to describe each memory
-region individually, but did not include all the regions.
-
-The result is that Linux fails to find the last regions, so extend the
-definition to cover all the blocks.
-
-This also corrects the related DeviceTree validation error.
-
-Fixes: 74cf6675c35e ("arm64: dts: qcom: sc8180x: Fix LLCC reg property")
 Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+Bjorn Andersson (2):
+      dt-bindings: cpufreq: cpufreq-qcom-hw: Add sc8180x compatible
+      arm64: dts: qcom: sc8180x: Correct cpufreq compatible
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 067712310560..581a70c34fd2 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2647,11 +2647,14 @@ usb_sec_dpphy: dp-phy@88ef200 {
- 
- 		system-cache-controller@9200000 {
- 			compatible = "qcom,sc8180x-llcc";
--			reg = <0 0x09200000 0 0x50000>, <0 0x09280000 0 0x50000>,
--			      <0 0x09300000 0 0x50000>, <0 0x09380000 0 0x50000>,
--			      <0 0x09600000 0 0x50000>;
-+			reg = <0 0x09200000 0 0x58000>, <0 0x09280000 0 0x58000>,
-+			      <0 0x09300000 0 0x58000>, <0 0x09380000 0 0x58000>,
-+			      <0 0x09400000 0 0x58000>, <0 0x09480000 0 0x58000>,
-+			      <0 0x09500000 0 0x58000>, <0 0x09580000 0 0x58000>,
-+			      <0 0x09600000 0 0x58000>;
- 			reg-names = "llcc0_base", "llcc1_base", "llcc2_base",
--				    "llcc3_base", "llcc_broadcast_base";
-+				    "llcc3_base", "llcc4_base", "llcc5_base",
-+				    "llcc6_base", "llcc7_base",  "llcc_broadcast_base";
- 			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-
+ Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml | 1 +
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi                          | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 ---
 base-commit: 3689b0ef08b70e4e03b82ebd37730a03a672853a
-change-id: 20240525-sc8180x-llcc-reg-fixup-7762256e8e5e
+change-id: 20240525-sc8180x-cpufreq-compatible-633c45b93886
 
 Best regards,
 -- 
