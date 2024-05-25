@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D28A8CF050
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 19:03:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DC4F8CF055
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 19:05:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CD9AF1C20A04
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 17:03:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37329281B7B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 17:05:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D25EF59160;
-	Sat, 25 May 2024 17:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79EEF86628;
+	Sat, 25 May 2024 17:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iexVq+Qu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T4Sf40ZT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1269B644;
-	Sat, 25 May 2024 17:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4564DB644;
+	Sat, 25 May 2024 17:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716656590; cv=none; b=uYKzSvcJq3bv0kKWPzsCMbYWpJEsFb7PgUrJRTdn7TNBWG/IITnkKuBBa57J7Aum3ectdk7v9fVNqT2ZPvNACesNR8BdyNUfuGO4rsRnrRsasJlt+HGdjME+h1uUxRhyGpOwX+Dk2c2+WV7qPq50EHjLLp+F8aSqlRFvE66/uDc=
+	t=1716656752; cv=none; b=WQGmXf/5oEXLOil9Beu7duEzXMzxiftIRHfXhqn2iq4wSD0s6Nf+e/JLc5opUszxVCiQwVbqq6fAhw/eJZC56mVMKA+HLqCcdvMsvgw6kjv/FfeMxLxuZPLytffqHnfAmiX7t9PlqB+bNinyuDRkRrKh4+ATXPAzVXKT63h5eNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716656590; c=relaxed/simple;
-	bh=9FK0oboQorZhbDvmMpgtORUFCkbQSkfqiSX4FWXKE2k=;
+	s=arc-20240116; t=1716656752; c=relaxed/simple;
+	bh=Q840FnaP3gilF3azGBeDYnmzf08+rOdLw78fbP3ixB4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jkdd7B8PGBZE1M6z+VSb/ENct/74d+o2G/BaSQGvR3Npfn/ZftaMF7ZUjlva5vrsJ4DIVT+kc/KMLg2h/gOFcXNmRg1HL/TWpurlGH+exY+UQ/vr67QjL31jKUS9WJQG3YxOOtqU3CjjjvoPvwg0F9JKaY8FrV+T2xasN3WIrJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iexVq+Qu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148E8C2BD11;
-	Sat, 25 May 2024 17:03:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YBRCQHbKcG+8Rd2UXVpIp0DLal3Hhhy+ooArw6Tt2irwyBeJFz+AAEYD3aip0xZ6d+BVW1FFwS2Qin1OCQwZLQJ+qVhxHBYtx7aTOnvIrw3lpcASGoQCYHYeUE/rbwCpj37UikcYnNiAhEs8Q+oaCXxHU+g+5b7PWxwWFaEpkm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T4Sf40ZT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE979C2BD11;
+	Sat, 25 May 2024 17:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716656590;
-	bh=9FK0oboQorZhbDvmMpgtORUFCkbQSkfqiSX4FWXKE2k=;
+	s=k20201202; t=1716656751;
+	bh=Q840FnaP3gilF3azGBeDYnmzf08+rOdLw78fbP3ixB4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iexVq+Qu9L+ktoAOoPvqTT4kblZB6xL+rYeWbXyhu2clY+FQoZbOLwVahmGKVYbHx
-	 /BxkTPx1qolKedMcPqgTfoL6li0Nu4JLud8H9UTznmj4qv04wnO8TKTc2rZFxdU/K7
-	 vU3hS61nqZD4kVSQW8WCzIRaIKE3OOcjJWLvPbZyk4fQ4YgY05IvS29kyH4CfRnIc+
-	 /AZUV9XYXlDNq114L82O2YXBP0LQW3LA6lHm/dYFEzHDGBKQBCoLYJJcd8itEBZbPO
-	 U6NrVW4NQY4JrGIdoEUROqI5r8bYmq8zMq7/TQs0WHWhPydF8lYC7ZjUir0NyhbLiS
-	 8eKI1f3Nd+luQ==
-Message-ID: <7deee008-a2e6-45c7-8c83-5b2d7db7a04e@kernel.org>
-Date: Sat, 25 May 2024 19:03:02 +0200
+	b=T4Sf40ZT5BW1cxRi1NV1ewHrChsd1QwviWWxsCsPAluqHQIk1G1QsbwAqrxAVDeQ1
+	 X9nszTAi4tpsVdk1uRSpaR5weVYDUqGgsIPXW1yE/UrT6x8Nzqx26TXpNWeKmZosYz
+	 uCmwhmuySxF4gPslFTkgNddBZfxcMN4dHJWOmnu+ZVMxFQC0K5HwWaR1OEmW7abYwF
+	 8nfS9bTJrnM6fgRHpeeEttwBIeZBOJHpFgTb9zR1f8sCKyTJwWQYsvS31G27cwfivV
+	 k0CTv8fZFn+gaLrrhoLVQawHjLNEDQ45oGfLH/8/XOpKZMTErRereONmvAuf8khURN
+	 dpdOKb9ELNhEQ==
+Message-ID: <4a0778c3-163e-468b-9a67-e4c450e33436@kernel.org>
+Date: Sat, 25 May 2024 19:05:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCM6490 snd
- QCS6490 sound card
+Subject: Re: [PATCH v5 1/7] ASoC: dt-bindings: document wcd937x Audio Codec
 To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
  Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
@@ -63,8 +62,8 @@ Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
  linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
  quic_pkumpatl@quicinc.com
-References: <20240524035350.3118981-1-quic_mohs@quicinc.com>
- <20240524035350.3118981-2-quic_mohs@quicinc.com>
+References: <20240524035535.3119208-1-quic_mohs@quicinc.com>
+ <20240524035535.3119208-2-quic_mohs@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,20 +109,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240524035350.3118981-2-quic_mohs@quicinc.com>
+In-Reply-To: <20240524035535.3119208-2-quic_mohs@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 24/05/2024 05:53, Mohammad Rafi Shaik wrote:
-> Document the bindings for the Qualcomm QCM6490 IDP and QCS6490 RB3Gen2
-> soc platforms sound card.
+On 24/05/2024 05:55, Mohammad Rafi Shaik wrote:
+> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
 > 
-> The bindings are the same as for other newer Qualcomm ADSP sound cards,
-> thus keep them in existing qcom,sm8250.yaml file, even though Linux driver
-> is separate.
+> Document the Qualcomm WCD9370/WCD9375 Audio Codec and the
+> Soundwire devices than can be found on Qualcomm QCM6490 based platforms.
 > 
+> The Qualcomm WCD9370/WCD9375 Audio Codec communicates
+> with the host SoC over 2 Soundwire links to provide:
+> - 3 TX ADC paths with 4 differential AMIC inputs
+> - 6 DMIC inputs that are shared with AMIC input
+> - 4 Microphone BIAS
+> - RX paths with 4 PAs – HPHL/R, EAR and AUX
+> - Stereo Headphone output
+> - MBHC engine for Headset Detection
+> 
+> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
