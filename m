@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-20465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B90C98CF0DF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 20:02:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B54CF8CF0E3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 20:02:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E96E1F21CCB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:02:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5DBE1C20ED8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:02:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F9A512FF92;
-	Sat, 25 May 2024 17:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C687C1304B9;
+	Sat, 25 May 2024 17:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iFd+V5SW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dA5YG2ld"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405C712F385;
-	Sat, 25 May 2024 17:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F951304A7;
+	Sat, 25 May 2024 17:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716659961; cv=none; b=o866hbJy+06d0NHS95FWRv9RR68gqwrwcWRVb2hIDsQ+KEeFNj8q7cUa56MvIpst7v/YmglcxSLzXWZXbWFyq0GJNwqHqBcuv3UU3qwFJXdD6q9indjyhUKJhyxsMp+y32BogomYXco4+vGdkzLLkiXtjEC1QfT0Pj1+uCube30=
+	t=1716659962; cv=none; b=VTi38brOf68ButwteMRc1YdP1gVdSFFSeorTsDRLXRLZiqf/WN/9ZOf8A7IrsRx3MxOpLOcmSNJ2TtSbOy/n0AvzLgqZg9y1iyP7kqfpFktC6kCNNXxEIOJfaOG/ehn39asGc7bCH6HqbUpoRXS/1ISdE1o5fMF3UcNxA7IWln0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716659961; c=relaxed/simple;
-	bh=KsAmp/Jpl+aoBvYuIOCjghROnM89Np+AJ6hEEntneRk=;
+	s=arc-20240116; t=1716659962; c=relaxed/simple;
+	bh=x/A3qlHKSNksLYkJyamEvoUm6j0d2K1gDvbHogrpo0Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aLS2w+d6/9DCy/UUGl2xHAFQg7rFv4TweOXc9SrUWFkuNzNEwgKAajI7Nvu/zz8Uz8MQ6aV1KasfF1YMKDXltPRqfPKXSh/l/GjKKBMB2IhGOyE1GGfkcvUC1PBHpyyVM3K1Be5KxXZCTCxiDcFYijN+3x3s5LKmZrjx7bDX4zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iFd+V5SW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB84C4AF08;
-	Sat, 25 May 2024 17:59:19 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=uqy4GZOokWJR/GscXnZC8xCds2xxDDGN9+veAM97b6kh4cq5y8zNLST6QeKX4HAvPtz+elhD3BoAyHx6X7qdjNIEX6FLuvPEKQLL3WV9GKloCUBP6lVCuw5++dLvUrC8rUeHmRR0P4Lvy62yhWSO9Ta0q3gJV9wbQmuy95MSsoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dA5YG2ld; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52574C4AF11;
+	Sat, 25 May 2024 17:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716659961;
-	bh=KsAmp/Jpl+aoBvYuIOCjghROnM89Np+AJ6hEEntneRk=;
+	s=k20201202; t=1716659962;
+	bh=x/A3qlHKSNksLYkJyamEvoUm6j0d2K1gDvbHogrpo0Q=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=iFd+V5SWaySiqa+AKMAxNj4ROI27gCvr9EeyKKdLYHBPi8BdU5F53chbEH/sPxV5X
-	 k9LNheXkF5QX4DdupPwC7dqMeChyxughDdxQEnvtRAp+pxzUY/JPeDbQXejyg64Bfu
-	 oURv7nSgN/Xl1xH1Fm96HVxnEOCfPQFSh1oawO1Chk33V+NMmIfAd1/v3w18OwI1QC
-	 836e85SXr/OuxmCgZDfAmDMAaNE3h2q5P2amuArTzn0AZIIali7TFxRfj5UUyu3Fyd
-	 3XvhA3GImEEiuVUqKmo1oTMoeNo2FCiVjYUTiawipDF67wyRcBZgqPuT14qfwlSbGW
-	 mMmAqeDolcuqA==
+	b=dA5YG2ldKuY07n1rg7kv83bweOx1o7532gHn4E3h6ldpV3PWfYE+K8D759V/hWkEm
+	 d5e9XCx8iUJkHOImcjZlNwzWhJusY58NtiPHf2F8l8QAvK+nV51o1ebigd7M+9tK+8
+	 5+21YARO5/JG53BJpigfvP4h/Q9QsPLn44dazPdqT6pgXabQK8GhZ/BWaQwQAXzXq5
+	 TTS2bet5Kej6E0i5e8rqOMTNtQ4GvCow8uqkok2BxGR367w3U0XSO9w8/lgnI8LZUB
+	 /KksqpX3OE1oFRLjT9gBbt3nqMLw94sS0NZSrGq5Ekf3hHdFHuL0CKWwG7hJT1vuPp
+	 vUwTjFrvhYZ2w==
 From: Bjorn Andersson <andersson@kernel.org>
-Date: Sat, 25 May 2024 11:04:02 -0700
-Subject: [PATCH 09/10] arm64: dts: qcom: sc8180x-primus: Enable the two MP
- USB ports
+Date: Sat, 25 May 2024 11:04:03 -0700
+Subject: [PATCH 10/10] arm64: dts: qcom: sc8180x-lenovo-flex-5g: Enable USB
+ multiport controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240525-sc8180x-usb-mp-v1-9-60a904392438@quicinc.com>
+Message-Id: <20240525-sc8180x-usb-mp-v1-10-60a904392438@quicinc.com>
 References: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
 In-Reply-To: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -70,75 +70,39 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  linux-clk@vger.kernel.org, linux-usb@vger.kernel.org, 
  Bjorn Andersson <quic_bjorande@quicinc.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2196;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1388;
  i=quic_bjorande@quicinc.com; h=from:subject:message-id;
- bh=yBfHZjKorUkAjuU8wZYDXMlV6YNOtdO+oEQ/Pdz50CM=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmUigNgg6i3cQBkU0oOk8Bo3ZOhSDH+NXONlgRj
- HQ3w6aA4ruJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZlIoDRUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcXgWRAAl5ZBUWIZdNNTaSQO8vE74nOcbTkM8cjnSIPSLMx
- 6PQR4YGO/o0Hih4wEyKTWd6NM//+WYNaZukmoqReq9tWyCgCDnDBZ5iYgsHYYlP+7DD0zwcWn1O
- rxdz81pwNfh4Py0SSpyL3ftS81uDvloqwvE3NP/6Lw8K1+xw8vqiRnfzdy5ShQkJYqktv6Lzj7j
- nOC2v7/pY2p/ESe9093mS7LIoqE5szuiVBv8lRAsTkQsULV0EaIYD9Jq9XMhxU+H3Xaw2xbFSgU
- 4J0S0E1BuOFiM+GxavZYmJh2yhirc2zDPhjH0W9Ya89GCsXivxqAoNOTrzukH0GecqSFJPNK0cs
- m39e69uMpAKmQ+c4rUSpIBVduAcBqBY1tzQLix2XcWdpBl/BNf2wovUXynqLLS5eCp3Cu8oYkzZ
- l9yppklzlB8nq3aUaKk95BUnkkahWKMfj1Ywyu7RajnaN1m/mo6onCZLF/vah9LlJb6N3jNfdRR
- voIdQUdG3/O2wcM3ohWrx2mcvhjaRPuQK9twLewFjdeocr7TU79gKkA+TBsDoKuudZBLOWR/kTQ
- u0uSmgZHQ5LHW6eJII+iLuffCOlamNIipXtwabtcN1GAE14WHn9JR4tedWXd2m94GK/Qp+Zpjgb
- PmABA7aLMlIMuKdYnZevDmG3A2tOBYR7RetLoARHhQc4=
+ bh=ApeqdvS88ACvmrMfc7ygIjzXVr8WNirPX8Y+Q+iz2qg=;
+ b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmUigNf7OPmC9AZV+nbwo2ZWqTekEW/mFXM//YE
+ 76bMWBweBSJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZlIoDRUcYW5kZXJzc29u
+ QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcXvxRAAiLS+lEqoMRKXifzpZgBqbQKahAwyZOa/z+B0HjV
+ ATMhQP6UbO02H3tHJ6x+6nhC1uq2w6bTtoaOHCJvbdfJq+Bko3nsyk2M/TbDFeVPeFD0UXNaPpE
+ NO6LtiLjcPXgXVEEaFqUfzrHv76P2dYXrvBZumeiNcK0oLjNaNQn9nqe+w9c5P6RCB928L3iA5A
+ 73IaKXehwKa2kVBsPz4u3bfKcPB5HLecCIMMITIAjAdgcAp/+qGFHP4lh0hBYjxrggcGerQ2/SK
+ IixzUjoP3AB/G2IlRXd8h5jS2tghqvsZ9PaHIbaqh4bMHgWuXxKRhlSpstZuSXR+L8o085tQw1D
+ r3/X3gwY1J6Xbmb0rjR8aL5qAAQhQcDVCr7msLiIxSKrrqGR+73J5iPmzFtji1vSMedeJGfFIcU
+ N1tZc9KjpClkZz50177Qcwjx/2Vt8TgbicEQuZSvQ1sKmw1QuYomO/gYrMjGnMxRplVRehvA0va
+ 3eCt3e4JW7JfJSP+HXamS6i0dMX9Sgmj25gqE01lGE12axNnCUwr4PArGUxzmpzCFbLEUk04va1
+ B6wXVmxUYKYN1oRA0bllHyaKki/ud+DoHQp9moS94dh2dUc3BX+keKtSuSDpGWAEvIu5ir+4sDr
+ LhLiBCDzpogQcB0KF/l4JA0NbNlSK56hzPOvbZiG38HQ=
 X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
  fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
 
 From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-The SC8180X Primus comes with an AUX card with two USB ports, fed by the
-two multiport ports.
-
-Enable the involved nodes and define two always-on regulators to enable
-VBUS for these ports.
+The Lenovo Flex 5G has a camera attached to the multiport USB
+controller, enable the controller and the four phys to enable this.
 
 Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sc8180x-primus.dts | 60 +++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ .../arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts | 32 ++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-index bfee60c93ccc..f7632f13ac43 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
-@@ -223,6 +223,32 @@ vreg_s4a_1p8: pm8150-s4 {
- 		vin-supply = <&vph_pwr>;
- 	};
- 
-+	vreg_usb2_host_en: regulator-usb2-host-en {
-+		compatible = "regulator-fixed";
-+		regulator-name = "usb2_host_en";
-+
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+
-+		gpio = <&pmc8180_1_gpios 9 0>;
-+		enable-active-high;
-+
-+		regulator-always-on;
-+	};
-+
-+	vreg_usb3_host_en: regulator-usb3-host-en {
-+		compatible = "regulator-fixed";
-+		regulator-name = "usb3_host_en";
-+
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+
-+		gpio = <&pmc8180_2_gpios 9 0>;
-+		enable-active-high;
-+
-+		regulator-always-on;
-+	};
-+
- 	usbprim-sbu-mux {
- 		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
- 
-@@ -623,6 +649,40 @@ &ufs_mem_phy {
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
+index 6af99116c715..daa3065bcfe5 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
++++ b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
+@@ -557,6 +557,38 @@ &ufs_mem_phy {
  	status = "okay";
  };
  
@@ -147,11 +111,10 @@ index bfee60c93ccc..f7632f13ac43 100644
 +};
 +
 +&usb_mp0_hsphy {
++	status = "okay";
 +	vdda-pll-supply = <&vreg_l5e_0p88>;
 +	vdda18-supply = <&vreg_l12a_1p8>;
 +	vdda33-supply = <&vreg_l16e_3p0>;
-+
-+	status = "okay";
 +};
 +
 +&usb_mp0_qmpphy {
@@ -162,11 +125,10 @@ index bfee60c93ccc..f7632f13ac43 100644
 +};
 +
 +&usb_mp1_hsphy {
++	status = "okay";
 +	vdda-pll-supply = <&vreg_l5e_0p88>;
 +	vdda18-supply = <&vreg_l12a_1p8>;
 +	vdda33-supply = <&vreg_l16e_3p0>;
-+
-+	status = "okay";
 +};
 +
 +&usb_mp1_qmpphy {
