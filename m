@@ -1,120 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-20468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 697C58CF0F1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 20:04:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DC318CF0FB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 20:20:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB6AAB21C64
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:04:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 842831F21443
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:20:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C197129A8E;
-	Sat, 25 May 2024 18:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1F7E126F16;
+	Sat, 25 May 2024 18:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MgwovX5F"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="d6Qhb33m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F190F9F8;
-	Sat, 25 May 2024 18:02:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668B31CF8F;
+	Sat, 25 May 2024 18:20:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716660137; cv=none; b=m25dAtH3UNgsv8z/MYWx9wvY99whCM6nFtiSI4lVOG/fLLSmeSIGfdZQQAdINYK6V5cVqIyWvgW5++MwwEPqhkyUC7VqzL9eVBthpWywv+qjm9QUVImSh/4gTh9WNGW9edfBGCa4VdfA/3DQZaYU7fDIgkRlZp97KJDCNEC7gnY=
+	t=1716661227; cv=none; b=ZYGqvqlomzGsHzeMBIlIpYjy25NKjr8KgQpfrxfq+HjWOO6TJql9VpRiEiKZRydw254cEgJQSz7kg3iqdkcvXKQXcbUiUyW0QyJrGVEz/qe71aj+vGqb9BOX3sRkbETqEzgOZos22ll5tgD2gm+xvKNlzMMgFFQBpUoTrzln4IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716660137; c=relaxed/simple;
-	bh=4M17/UuBqlQLLBcYxcVFcVbZ+mfrwei8UC03mE9Scq8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BvAyNU07FrJu0VLdHcX8rORLnMEKVO4y7fTGeyok7WbIp+UqSLgMZ1qEW5BfBPtdCNdaUFqTTwZcF/vc79LZT6kjSbwX8DtrKA5oD93yRPgfhP3Bf1sO5ej4Ss/Z1CbgylRnFsnAl175fQMIHkDwrHdn0WvEpCKyjJfhZBnnKGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MgwovX5F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B86CC2BD11;
-	Sat, 25 May 2024 18:02:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716660137;
-	bh=4M17/UuBqlQLLBcYxcVFcVbZ+mfrwei8UC03mE9Scq8=;
-	h=From:Date:Subject:To:Cc:From;
-	b=MgwovX5FI/eKmKWoOWcIyWvTu59yWBlCwKI5hHHocdev++n9kHBjSf706+IFTyl99
-	 2mO88F/5htZvCdAkN5xZNoueUSwTI7WcdSFLJfpEQ0hglAHHwfH5wgYY/QSCQTcLKr
-	 TBr3JNJFmxy46IwKs+E1WMwy1GiAkjsYslPKPHk/oBECYX59SbNU0nK7sI9lI9wybO
-	 fB/MRVPv6GrSWUoDyAIHzkjPbEfsqW1lrcSGDOMdD5mVIB0k+xgMX8RnqfFnG5wJrM
-	 qibKCcJSsrFkY83wZRbVOg9Hyjj1RMP5mW277uu5SrEMUaMyhAZuQg6tIDbNFA/B9v
-	 qWsdtnbTNsJuA==
-From: Bjorn Andersson <andersson@kernel.org>
-Date: Sat, 25 May 2024 11:07:05 -0700
-Subject: [PATCH] arm64: dts: qcom: sc8180x: Drop ipa-virt interconnect
+	s=arc-20240116; t=1716661227; c=relaxed/simple;
+	bh=frYNqj8bLyBV24XE+B8L2uQXn++Kl/zNdYU7wxv28Jw=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=kIDVmtDdNEVpc1ienA1YxvyCNZnEQZgN4AWoL85x4huSIYffDxkrnOGeKeKLMw6qpcBSgW9pgLPg5bCacZfxwTqtQn6TOxhTxLmYBopArBCdGaMhQ2rVJ1ghpmFHB9T8HSbkFSi7+ioB1u3/nV7sZSEpSk116cDZ3sUokEpuSf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=d6Qhb33m; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1716661217; x=1717266017; i=markus.elfring@web.de;
+	bh=ylDCKNwB+uExXDGAm68CO6JDJtc9Fbkz8M9YBROBEBQ=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=d6Qhb33m3fUi27fwH48NbTDdVwIfuRd3UrnCMZEF9Ld1fJNZOZwr6wrUnrGKfQBN
+	 YbQ7T2xTKDvbVsWre9nhLk5WAotWUycY2rE/VjOXTnzc3iuWK+DMT2STJWRUcGUBm
+	 bXYbAwON291ga26XnA5u4V27B3NYJ6CIkRtEnbfLV8sAbB39P72iKUbTNBIrmdU4a
+	 e04KvoH2dHrqF9nazuLtkk42uOTlxSEmuZ7nEoAWd1Zh3ryDoILyspnopNhuWbZb7
+	 PuUJuu+YQPopDdYlGIeShwib6Bj0pSnuGPRQh4jNzhdfc/eEmyaNJAIO+57LqT3bL
+	 ybpXy6dfpCKeXLLHpA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MK52w-1rw9D50YeM-00SgSC; Sat, 25
+ May 2024 20:20:17 +0200
+Message-ID: <0a362e81-1e4a-4c4b-823e-e84c6f408630@web.de>
+Date: Sat, 25 May 2024 20:20:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240525-sc8180x-drop-ipa-icc-v1-1-84ac4cf08fe3@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAMgoUmYC/x3MQQqAIBBA0avErBvQyUi6SrQQHWs2KQoRhHdPW
- r7F/y9ULsIV1uGFwrdUSVeHHgfwp7sORgndQIqMmmnG6q226sFQUkbJDsV7JHZRWVomZxh6mgt
- Hef7ttrf2AUuqS3JmAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1056;
- i=quic_bjorande@quicinc.com; h=from:subject:message-id;
- bh=CsEqn+n+Eza70hGJCXG87FvFxmm9W6wEylukMsBMkJ0=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmUijJpCOxSYulkA+DyZmMvwG6XaCKPAKa1ajSB
- 0RfpArzLPGJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZlIoyRUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcWAeA//YOriADOVYlqnT2GTtcSfranK31ON1AbTdLpaIZE
- pJp6oAGuhFFmf5kcw6d7wD3i+fkJAoMhjx2/G5ztZeFOwSBttOJXWCynpFLNYDYysegFAfsdl5r
- Utm9GXOH2lvxcqVRZyJiH9rkqG/5O6+lu4GXu/OZpQsOwL1PAbC676kGJd6tEzj6YunPA9APqpo
- HRz4c9mCTieq2U6NTPi7ztUsXligWDqMpTVHIl5xnQEn6r2NsIq+BZ1auteExU3sLYTJ2YR0nLb
- Ldar5GF1OrAhPCasMZxZeN+wiag2hC3Rjqrv5qfPC/HJDOsD72pljDk8BcSmJRjQW8KPz72m9Wu
- g+Vc/KEuvPbq1WU6r9r1t8ylvs6B2WC1ptWxJkKGylZUGOdwN5n5OpWvB2k4A6rb+lYsXjIG12k
- sff1fW1XsbUGvIOtiFFABX2rTLkpjZCU4Ie/r3UeihIR9rTyZBU2bBzgeBF2y3rW9ftFo504XRq
- dI37uI7JtkjJmgM2IBOeuf799dn+2fxmEE+pMBkqOsY7TkI/mKwdmUeRBQfBGy5ENYZP/5nfNdN
- DbdIIEAxW0/9O744k0T45CYqG3W73i7Fnry6I5J3NWeamTwEmnGBygFGdwOrvxY3na1cCj0ypMC
- 5WGtBn1qJ6ltaQG2sb0L+GkgnB2g6izz4QumnIhvNiwI=
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
- fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ kernel-janitors@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Rob Herring <robh@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>
+References: <20240525-mdss-reset-v1-1-c0489e8be0d0@gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8996: add reset for display
+ subsystem
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20240525-mdss-reset-v1-1-c0489e8be0d0@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:u5iv6GIczXOJlRb+JNjI53MKRSNQ9Ww+aJMAc/yNUauEqBvtVTy
+ 9ClrXkpMNjJ9pFnVG4yY+Dx63T6lIdXdwV17bu9EJHpp62FUIxdapr6mHeyahcvPXMQsa/D
+ +JO63/O3NMUVohlKmKS8tj4Sz+jxdjl0qteihV+oKrw8UCV3PSTJxUJq+FbRFL7kWPuR8w+
+ LhJy8r9oQr5RpQ0yHvuVw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:x8jl3ITeGf4=;VLGHTn9XQxgy5Tp1Y7wyZd3pm9X
+ wHY8tjLQKH0KHDo0Y6a3bEpfxRC8uI/ASFm9TQrZYplCeOhJMiOgi5b5vPiVTvPV2bC3Ti5VS
+ 6trBEhfKTXxqRl5JCUcyMM5zzILHlx3ld9eCKDURst054bic+hHPgPLVqPfIWVylLTFbscdPO
+ AoN1g2gObW6bXADDCuzWZ/L5DUA7uimmjC0JYA7lK+emf2P0c0SRth86jbZ/gui8v753H58qi
+ uAaUihPISiaXdmtJPk0hzgE/3eDP/shObJZbaVwuZWKX3d02a0WYX6YtAAXCfK9wwt/8/WOhe
+ Js+x6alRW223M6bcRp/hHLRoB3vdkwPLR+yF0cQYW86WH9SZafqST5d2FE3CODk7AAyoxygc9
+ aUeRsaVlMjHvufhr8E5xtXWcPROMKTAiiAeGgcGLhw30g6Zeif83P1SVaJCqo0Ckiym3qSXm+
+ JqmDS2MRTuSqNlS4NEfADZkFYmreNmtZJBqG3jyidPrY2YXI4k6wu9q/SSFGZ6/gXFXgvJ4Am
+ XYYYS0mSxaN425Gji4lmTWk2sJtXZWtLFTtLNh0IDkXeeZt9GL2L8gR8VyCt+40JZ/Z+SRVdt
+ Iu+ucSmSSC21kbaaf6Y56cTeRagW0gU+r5t4WnQJ4H4NXFJaID3u5qPkaCgsFxUeeFKAww/Ce
+ gSKqIYKY4k4QpWUGAXQn+5k3ts/oq7hLa9nGlyC+G+0wFlgMDaHGzjp2e1nmB6XcPphGb7bjJ
+ n3regGLE2QgSViNXWkJ7+lOteCGga/94Di06uW3BXRreIfv0Fb/dHou3pfodPDN1Q0darUHmU
+ yUN0a8yvaGKsluuNimYCs7D/HbvZO5JQNJW2PHlX6nnYY=
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Add reset for display subsystem, make sure it gets
+> properly reset.
 
-The IPA BCM is already exposed by clk-rpmh, remove the interconnect
-node for the same.
+* I suggest to use occasionally more than 50 characters in lines of
+  such change descriptions.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 7 -------
- 1 file changed, 7 deletions(-)
+* Please reconsider word wrapping accordingly.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 067712310560..2be1a5ab0e60 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2250,13 +2250,6 @@ ufs_mem_phy: phy-wrapper@1d87000 {
- 			status = "disabled";
- 		};
- 
--		ipa_virt: interconnect@1e00000 {
--			compatible = "qcom,sc8180x-ipa-virt";
--			reg = <0 0x01e00000 0 0x1000>;
--			#interconnect-cells = <2>;
--			qcom,bcm-voters = <&apps_bcm_voter>;
--		};
--
- 		tcsr_mutex: hwlock@1f40000 {
- 			compatible = "qcom,tcsr-mutex";
- 			reg = <0x0 0x01f40000 0x0 0x40000>;
+* Can such information be relevant for the tag =E2=80=9CFixes=E2=80=9D?
 
----
-base-commit: 3689b0ef08b70e4e03b82ebd37730a03a672853a
-change-id: 20240525-sc8180x-drop-ipa-icc-2eaf08273a4e
-
-Best regards,
--- 
-Bjorn Andersson <quic_bjorande@quicinc.com>
-
+Regards,
+Markus
 
