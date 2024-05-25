@@ -1,140 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-20446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DC4F8CF055
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 19:05:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBCDD8CF05E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 19:09:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37329281B7B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 17:05:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 41419B20BC4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 17:08:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79EEF86628;
-	Sat, 25 May 2024 17:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF2D986628;
+	Sat, 25 May 2024 17:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T4Sf40ZT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HWDoq/3w"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4564DB644;
-	Sat, 25 May 2024 17:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4161B644;
+	Sat, 25 May 2024 17:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716656752; cv=none; b=WQGmXf/5oEXLOil9Beu7duEzXMzxiftIRHfXhqn2iq4wSD0s6Nf+e/JLc5opUszxVCiQwVbqq6fAhw/eJZC56mVMKA+HLqCcdvMsvgw6kjv/FfeMxLxuZPLytffqHnfAmiX7t9PlqB+bNinyuDRkRrKh4+ATXPAzVXKT63h5eNU=
+	t=1716656933; cv=none; b=ggSKxGbIAoK8QV3IP0QWgiPoO72gQYcPUkXSj6XVGdwDeZVcjgvauiLVXCEBXJNwVzrjNADrB//oTURHqJlyd5uWctjBsgPEMX56jc+r/1grMdw19428H2cK4kojduoGr8nupoUlhh4pzSbkwyLrMCH8jyyECQawaOj31F8iwPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716656752; c=relaxed/simple;
-	bh=Q840FnaP3gilF3azGBeDYnmzf08+rOdLw78fbP3ixB4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YBRCQHbKcG+8Rd2UXVpIp0DLal3Hhhy+ooArw6Tt2irwyBeJFz+AAEYD3aip0xZ6d+BVW1FFwS2Qin1OCQwZLQJ+qVhxHBYtx7aTOnvIrw3lpcASGoQCYHYeUE/rbwCpj37UikcYnNiAhEs8Q+oaCXxHU+g+5b7PWxwWFaEpkm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T4Sf40ZT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE979C2BD11;
-	Sat, 25 May 2024 17:05:46 +0000 (UTC)
+	s=arc-20240116; t=1716656933; c=relaxed/simple;
+	bh=oD+OOWOoYQr68PffjFpo9sEKBfMWG/HzUK2GEmo4o8Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e7JvwCXMiGZXzLPOcJuU+1VQUL62ILhPuNDO3/hNlKHxPxJyo7HY6wfGOPHXcPOp1QfwJtyoboKWqqOJaYEK39j9ITBicBDuGZqXwiTpGiS7SmjkRfv8qOx7grsGuTXHwQMoocDuypvVPtzLX0MueyTBPnTixHM5a2ZinU1zwmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HWDoq/3w; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B7DC2BD11;
+	Sat, 25 May 2024 17:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716656751;
-	bh=Q840FnaP3gilF3azGBeDYnmzf08+rOdLw78fbP3ixB4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=T4Sf40ZT5BW1cxRi1NV1ewHrChsd1QwviWWxsCsPAluqHQIk1G1QsbwAqrxAVDeQ1
-	 X9nszTAi4tpsVdk1uRSpaR5weVYDUqGgsIPXW1yE/UrT6x8Nzqx26TXpNWeKmZosYz
-	 uCmwhmuySxF4gPslFTkgNddBZfxcMN4dHJWOmnu+ZVMxFQC0K5HwWaR1OEmW7abYwF
-	 8nfS9bTJrnM6fgRHpeeEttwBIeZBOJHpFgTb9zR1f8sCKyTJwWQYsvS31G27cwfivV
-	 k0CTv8fZFn+gaLrrhoLVQawHjLNEDQ45oGfLH/8/XOpKZMTErRereONmvAuf8khURN
-	 dpdOKb9ELNhEQ==
-Message-ID: <4a0778c3-163e-468b-9a67-e4c450e33436@kernel.org>
-Date: Sat, 25 May 2024 19:05:44 +0200
+	s=k20201202; t=1716656933;
+	bh=oD+OOWOoYQr68PffjFpo9sEKBfMWG/HzUK2GEmo4o8Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HWDoq/3wp7P3PYnVAMNPqjxVsUcRALTfvCeGhy5UYpVz/Erxw/W+NOtZ3/3PFh2gX
+	 LQMdBMedGCkxIwzPPFG9qsfeJ0oTz9GwXCtUIS+hryZVg6Ke4hJHItZvXrVpi6tcKK
+	 1kyBJVXnMX5/4g09OfYw2J6k1Wilx7T4egyA+R7MAdW1/NeJnnG711UMq2KOzCXCpH
+	 r78vyAqDOxm/ENB2bRjtXaBYL4jlMReUJoCmXCFkqOb/wUMWA+85SpCg+0sNZwq5l7
+	 K3SasTjVArwI3eL+ka9DpfDjtCuLCgGQbro2AEq1pXpOtQVY1Wp8MVtQFpTYni7PRc
+	 w55N292HuVc5w==
+Date: Sat, 25 May 2024 18:08:46 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Amrit Anand <quic_amrianan@quicinc.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	Doug Anderson <dianders@chromium.org>,
+	Simon Glass <sjg@chromium.org>, Chen-Yu Tsai <wenst@chromium.org>,
+	Julius Werner <jwerner@chromium.org>,
+	"Humphreys, Jonathan" <j-humphreys@ti.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jon Hunter <jonathanh@nvidia.org>,
+	Michal Simek <michal.simek@amd.com>,
+	boot-architecture@lists.linaro.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH RFC v3 5/9] dt-bindings: board: Document board-ids for
+ Qualcomm devices
+Message-ID: <20240525-parachute-plutonium-ef8d1472ff50@spud>
+References: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
+ <20240521-board-ids-v3-5-e6c71d05f4d2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/7] ASoC: dt-bindings: document wcd937x Audio Codec
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
- quic_pkumpatl@quicinc.com
-References: <20240524035535.3119208-1-quic_mohs@quicinc.com>
- <20240524035535.3119208-2-quic_mohs@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240524035535.3119208-2-quic_mohs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="A98bZ1uEY8yJEbmg"
+Content-Disposition: inline
+In-Reply-To: <20240521-board-ids-v3-5-e6c71d05f4d2@quicinc.com>
 
-On 24/05/2024 05:55, Mohammad Rafi Shaik wrote:
-> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-> 
-> Document the Qualcomm WCD9370/WCD9375 Audio Codec and the
-> Soundwire devices than can be found on Qualcomm QCM6490 based platforms.
-> 
-> The Qualcomm WCD9370/WCD9375 Audio Codec communicates
-> with the host SoC over 2 Soundwire links to provide:
-> - 3 TX ADC paths with 4 differential AMIC inputs
-> - 6 DMIC inputs that are shared with AMIC input
-> - 4 Microphone BIAS
-> - RX paths with 4 PAs – HPHL/R, EAR and AUX
-> - Stereo Headphone output
-> - MBHC engine for Headset Detection
-> 
-> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+--A98bZ1uEY8yJEbmg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best regards,
-Krzysztof
+On Tue, May 21, 2024 at 11:38:02AM -0700, Elliot Berman wrote:
+> Document board identifiers for devices from Qualcomm Technologies, Inc.
+> These platforms are described with two mechanisms: the hardware SoC
+> registers and the "CDT" which is in a RO storage.
+>=20
+> The hardware SoC registers describe both the SoC (e.g. SM8650, SC7180)
+> as well as revision. Add qcom,soc to describe only the SoC itself and
+> qcom,soc-version when the devicetree only works with a certain revision.
+>=20
+> The CDT describes all other information about the board/platform.
+> Besides the platform type (e.g. MTP, ADP, CRD), there are 3 further
+> levels of versioning as well as additional fields to describe the PMIC
+> and boot storage device attached. The 3 levels of versioning are a
+> subtype, major, and minor version of the platform. Support describing
+> just the platform type (qcom,platform), the platform type and subtype
+> (qcom,platform-type), and all 4 numbers (qcom,platform-version).
+>=20
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>  .../devicetree/bindings/board/qcom,board-id.yaml   | 144 +++++++++++++++=
+++++++
+>  1 file changed, 144 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/board/qcom,board-id.yaml b=
+/Documentation/devicetree/bindings/board/qcom,board-id.yaml
+> new file mode 100644
+> index 000000000000..53ba7acab4c3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/board/qcom,board-id.yaml
+> @@ -0,0 +1,144 @@
+> +# SPDX-License-Identifier: BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/board/qcom,board-id.yaml
+> +$schema: http://devicetree.org/meta-schemas/core.yaml
+> +
+> +title: Board identifiers for devices from Qualcomm Technologies, Inc.
+> +description: Board identifiers for devices from Qualcomm Technologies, I=
+nc.
+> +
+> +maintainers:
+> +  - Elliot Berman <quic_eberman@quicinc.com>
+> +
+> +properties:
+> +  $nodename:
+> +    const: 'board-id'
+> +
+> +  qcom,soc:
+> +    description:
+> +      List of Qualcomm SoCs this devicetree is applicable to.
+> +
+> +  qcom,soc-version:
+> +    items:
+> +      items:
+> +        - description: Qualcomm SoC identifier
+> +        - description: SoC version
+> +
+> +  qcom,platform:
+> +    description:
+> +      List of Qualcomm platforms this devicetree is applicable to.
+> +
+> +  qcom,platform-type:
+> +    items:
+> +      items:
+> +        - description: Qualcomm platform type identifier
+> +        - description: Qualcomm platform subtype
+> +
+> +  qcom,platform-version:
+> +    items:
+> +      items:
+> +        - description: Qualcomm platform type identifier
+> +        - description: Qualcomm platform subtype
+> +        - description: Qualcomm platform major and minor version.
+> +
+> +  qcom,boot-device:
+> +    description:
+> +      Boot device type
+> +
+> +  qcom,pmic:
+> +    description:
+> +      List of Qualcomm PMIC attaches
+> +
+> +  qcom,pmic-id:
+> +    items:
+> +      items:
+> +        - description: Qualcomm PMIC identifier
+> +        - description: Qualcomm PMIC revision
+> +
+> +allOf:
+> +  # either describe soc or soc-version; it's confusing to have both
 
+Why not just use the one that has the most information and discard the
+others? If your dtb picker for this platform doesn't care about the soc
+version, then just don't look at that cell?
+
+Likewise for platform and PMIC, why can't you ignore the cells you don't
+care about, rather than having a new property for each variant? Nothing
+in this patch explains why multiple variants are required rather than
+just dealing with the most informational.
+
+Thanks,
+Conor.
+
+> +  - if:
+> +      properties:
+> +        qcom,soc: true
+> +    then:
+> +      properties:
+> +        qcom,soc-version: false
+> +  - if:
+> +      properties:
+> +        qcom,soc-version: true
+> +    then:
+> +      properties:
+> +        qcom,soc: false
+> +
+> +  # describe one of platform, platform-type, or platform-version; it's c=
+onfusing to have multiple
+> +  - if:
+> +    properties:
+> +      qcom,platform: true
+> +    then:
+> +      properties:
+> +        qcom,platform-type: false
+> +        qcom,platform-version: false
+> +  - if:
+> +    properties:
+> +      qcom,platform-type: true
+> +    then:
+> +      properties:
+> +        qcom,platform: false
+> +        qcom,platform-version: false
+> +  - if:
+> +    properties:
+> +      qcom,platform: true
+> +    then:
+> +      properties:
+> +        qcom,platform: false
+> +        qcom,platform-type: false
+> +
+> +  # either describe pmic or pmic-id; it's confusing to have both
+> +  - if:
+> +    properties:
+> +      qcom,pmic: true
+> +    then:
+> +      properties:
+> +        qcom,pmic-id: false
+> +  - if:
+> +    properties:
+> +      qcom,pmic-id: true
+> +    then:
+> +      properties:
+> +        qcom,pmic: false
+> +
+> +additionalProperties: true
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/arm/qcom,ids.h>
+> +    / {
+> +      compatible =3D "qcom,sm8650";
+> +      board-id {
+> +        qcom,soc =3D <QCOM_ID_SM8650>;
+> +        qcom,platform =3D <QCOM_BOARD_ID_MTP>;
+> +      };
+> +    };
+> +
+> +  - |
+> +    #include <dt-bindings/arm/qcom,ids.h>
+> +    / {
+> +      compatible =3D "qcom,sm8650";
+> +      board-id {
+> +        qcom,soc-version =3D <QCOM_ID_SM8650 QCOM_SOC_REVISION(1)>,
+> +                           <QCOM_ID_SM8650 QCOM_SOC_REVISION(2)>;
+> +        qcom,platform-type =3D <QCOM_BOARD_ID_MTP 0>, <QCOM_BOARD_ID_MTP=
+ 1>;
+> +      };
+> +    };
+> +
+> +  - |
+> +    #include <dt-bindings/arm/qcom,ids.h>
+> +    / {
+> +      compatible =3D "qcom,sm8650";
+> +      board-id {
+> +        qcom,soc =3D <QCOM_ID_SM8650>;
+> +        qcom,platform-version =3D <QCOM_BOARD_ID(MTP, 0, 1, 0)>,
+> +                                <QCOM_BOARD_ID(MTP, 0, 1, 1)>;
+> +        qcom,boot-device =3D <QCOM_BOARD_BOOT_UFS>;
+> +      };
+> +    };
+>=20
+> --=20
+> 2.34.1
+>=20
+
+--A98bZ1uEY8yJEbmg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZlIbHgAKCRB4tDGHoIJi
+0ra+AQDEoFa2vpuunjIrZlnjVrWlBEXl/FNWKRB4NdVTCzeCFgEAl6U1vl8Lwh4W
+zaBtPCnhIm0w8+h4XSwJ3r2eizsvRAw=
+=llk1
+-----END PGP SIGNATURE-----
+
+--A98bZ1uEY8yJEbmg--
 
