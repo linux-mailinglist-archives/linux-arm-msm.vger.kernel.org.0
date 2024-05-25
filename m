@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6F7B8CF02E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:46:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9B0E8CF033
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:47:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 47ADB1F2126E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 16:46:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4283D1F212CF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 16:47:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF8335914A;
-	Sat, 25 May 2024 16:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5958485C41;
+	Sat, 25 May 2024 16:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SYX5D08o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F9UDp9XA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EA0F4FC;
-	Sat, 25 May 2024 16:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2958BF4FC;
+	Sat, 25 May 2024 16:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716655562; cv=none; b=fStTkuFQa8H6ctqpBVKj2UjguF7CaFa1FvgBlqlwsrIm1OqV8Uv51Afsvjf8OHzis7HMb7bPqX8uq8/M8tiyCX/53IfLWn1x29k7cCrbpD8gpFDmtV70IAVHlbYKSJgHE8spxfrNfG0dnVRicJjXU5WjF/OzRbAp239naRI/AVI=
+	t=1716655635; cv=none; b=LJ/KzU2WfMM5UgyQqYktxOcZBS27b+BDCzNZbLdxLHWPKVX9GXKA3HqjqICQjoBbBWIPLgnBHaoIihH2eXleuXajn7ih/r0V+kx6pggkufUKOSKUku8e0s+sdIvJUEtwvh9ejSFO8yHcY0sh/J16sdhx+xO3wSwoTHE5xhaMXkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716655562; c=relaxed/simple;
-	bh=rpJb9ufSOqQvGtI1L3Z0XIm/GwLfEIO5aOLPxpga49w=;
+	s=arc-20240116; t=1716655635; c=relaxed/simple;
+	bh=tcgFFUdEq/vKTYnqwg5KpKxETpCiRxdBDuidnItfaZs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qlb2VunVICcI8j6s6pOpOJR8EOqPR1++NOGBq4jRugAdwgojrb7hQYLz5zQDj80JQmsK3wgQZM4CZbYlw6ohET7VVBoVM9ARAd/AiXNmoGO6tl2S5kDsdWiMBkCraA6xbx8MSf5twBCuswCTWYsE3txCe7N8wc6tXVMHc2Hc2Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SYX5D08o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0742BC2BD11;
-	Sat, 25 May 2024 16:45:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ISTEdXKp9lz6CAAVyTwUImM4LKSRsymz9Wmprnb40dDI1KqAWjq+D34ZQZacCYiFUokAV6syy3tfzjh/LodxVUqf5dn5cnSN1N/eGf9ye59xQt9ac5EYTczuSwjQkdIVXroxOUOk7w/gl9h//+uFwHmEP/L1jz4mfxxAGufr4oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F9UDp9XA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85D9C2BD11;
+	Sat, 25 May 2024 16:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716655562;
-	bh=rpJb9ufSOqQvGtI1L3Z0XIm/GwLfEIO5aOLPxpga49w=;
+	s=k20201202; t=1716655634;
+	bh=tcgFFUdEq/vKTYnqwg5KpKxETpCiRxdBDuidnItfaZs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SYX5D08onJBpVQ0l1x8JMjv0c4uyhIDVRKjWvhX40JnIinzy9zsLG9+KIOqcxYTOb
-	 gqtJGmLOl//Vxb+xZySwEn1BiGFqpUV2Gy8npwPOPeYmhO8BBy9PYQGJLwGRhxzXRP
-	 VVKzo09UjONo82nh42uILilKpLIw8bha4Wsg13ce02UqWPCT7tUn2aXrOzzHI0Y1mm
-	 NIoqZjiGTONCFignxTZ1wCYxvRVUvhqncPJQg5f2zQu4SxewOtu2Z4TVIKIqweZ0ZP
-	 ged4LTMSWFkJMb4tLwu17bsbhk+yqLMEHpr62adXlIAhTMaNy3RB7HCaKi7a9q2dCa
-	 HzJB9s2E2MNdg==
-Message-ID: <27151624-0c3c-43da-9983-5de86f431d82@kernel.org>
-Date: Sat, 25 May 2024 18:45:54 +0200
+	b=F9UDp9XAsENdtKmn//ggvG6nygcJsAbLvgJkkwSopi3DAL9TbMfH+M9YymqU4OifW
+	 jElkL2B9w5OKPOsIkYGpOu+mSEKmdoHtSiLcxsgG6o0UVz2w4+lI0Vt0O7L09gLHav
+	 qtRxZ0GKSacEmzsug7LBGdVQdCA7JiFBSyrfnOCAFCIlWAyoV6AYfQrz1j+tqNo+BN
+	 rdPhiO+/6anwaRwQ5DQ0Fm82YbtkMCarlbapHHYg31z5PcWauJyM0Zz21Qbn30umh4
+	 p8jPPvtOlfVaQIcy5vs40dNatn23qZhf3AOcr0HpRWazR2/lal8WcH8jYozbOSuoSX
+	 KeABX/GvtQOQQ==
+Message-ID: <f8c48554-984f-48fd-aa12-87d39888b0f6@kernel.org>
+Date: Sat, 25 May 2024 18:47:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,30 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] dt-bindings: remoteproc: qcom,pas: Add hwlocks
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Chris Lew <quic_clew@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Baolin Wang <baolin.wang@linux.alibaba.com>,
- Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
- Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>,
- Boqun Feng <boqun.feng@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH RFC 1/2] dt-bindings: soc: qcom,smsm: Allow specifying
+ mboxes instead of qcom,ipc
+To: Luca Weiss <luca@z3ntu.xyz>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ ~postmarketos/upstreaming@lists.sr.ht
+Cc: phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-remoteproc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240516-hwspinlock-bust-v1-0-47a90a859238@quicinc.com>
- <20240516-hwspinlock-bust-v1-5-47a90a859238@quicinc.com>
- <3521519f-34b8-472d-be37-f0e64bba24fc@kernel.org>
- <a944418a-1699-44fa-bdfc-2e57129adea1@quicinc.com>
- <c9882ba0-bbbf-44ec-9606-ebe68bcb8866@kernel.org>
- <ZkzzY311XiRigJPt@hu-bjorande-lv.qualcomm.com>
- <92dcd555-69b1-4111-92dd-debe5107d526@kernel.org>
- <Zk4wab/NZOOZ3hA6@hu-bjorande-lv.qualcomm.com>
- <aed37430-7e87-4516-86da-3997c01a8aa8@kernel.org>
- <ZlDpFV8bL8/lwGOP@hu-bjorande-lv.qualcomm.com>
+ <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240424-smsm-mbox-v1-0-555f3f442841@z3ntu.xyz>
+ <5099926.GXAFRqVoOG@g550jk> <e4579702-089e-48cb-bf06-f8e4fb618050@kernel.org>
+ <4881282.LvFx2qVVIh@g550jk>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,97 +109,110 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <ZlDpFV8bL8/lwGOP@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <4881282.LvFx2qVVIh@g550jk>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/05/2024 21:23, Bjorn Andersson wrote:
-> On Thu, May 23, 2024 at 08:15:54AM +0200, Krzysztof Kozlowski wrote:
->> On 22/05/2024 19:50, Bjorn Andersson wrote:
+On 24/05/2024 19:55, Luca Weiss wrote:
+> On Donnerstag, 23. Mai 2024 08:19:11 MESZ Krzysztof Kozlowski wrote:
+>> On 23/05/2024 08:16, Luca Weiss wrote:
+>>> On Donnerstag, 23. Mai 2024 08:02:13 MESZ Krzysztof Kozlowski wrote:
+>>>> On 22/05/2024 19:34, Luca Weiss wrote:
+>>>>> On Mittwoch, 22. Mai 2024 08:49:43 MESZ Krzysztof Kozlowski wrote:
+>>>>>> On 21/05/2024 22:35, Luca Weiss wrote:
+>>>>>>> On Dienstag, 21. Mai 2024 10:58:07 MESZ Krzysztof Kozlowski wrote:
+>>>>>>>> On 20/05/2024 17:11, Luca Weiss wrote:
+>>>>>>>>> Hi Krzysztof
+>>>>>>>>>
+>>>>>>>>> Ack, sounds good.
+>>>>>>>>>
+>>>>>>>>> Maybe also from you, any opinion between these two binding styles?
+>>>>>>>>>
+>>>>>>>>> So first using index of mboxes for the numbering, where for the known
+>>>>>>>>> usages the first element (and sometimes the 3rd - ipc-2) are empty <>.
+>>>>>>>>>
+>>>>>>>>> The second variant is using mbox-names to get the correct channel-mbox
+>>>>>>>>> mapping.
+>>>>>>>>>
+>>>>>>>>> -               qcom,ipc-1 = <&apcs 8 13>;
+>>>>>>>>> -               qcom,ipc-2 = <&apcs 8 9>;
+>>>>>>>>> -               qcom,ipc-3 = <&apcs 8 19>;
+>>>>>>>>> +               mboxes = <0>, <&apcs 13>, <&apcs 9>, <&apcs 19>;
+>>>>>>>>>
+>>>>>>>>> vs.
+>>>>>>>>>
+>>>>>>>>> -               qcom,ipc-1 = <&apcs 8 13>;
+>>>>>>>>> -               qcom,ipc-2 = <&apcs 8 9>;
+>>>>>>>>> -               qcom,ipc-3 = <&apcs 8 19>;
+>>>>>>>>> +               mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
+>>>>>>>>> +               mbox-names = "ipc-1", "ipc-2", "ipc-3";
+>>>>>>>>
+>>>>>>>> Sorry, don't get, ipc-1 is the first mailbox, so why would there be <0>
+>>>>>>>> in first case?
 >>>>>>>
->>>>>>> We did consider tying this to the SMEM instance, but the entitiy 
->>>>>>> relating to firmware is the remoteproc instance.
+>>>>>>> Actually not, ipc-0 would be permissible by the driver, used for the 0th host
+>>>>>>>
+>>>>>>> e.g. from:
+>>>>>>>
+>>>>>>> 	/* Iterate over all hosts to check whom wants a kick */
+>>>>>>> 	for (host = 0; host < smsm->num_hosts; host++) {
+>>>>>>> 		hostp = &smsm->hosts[host];
+>>>>>>>
+>>>>>>> Even though no mailbox is specified in any upstream dts for this 0th host I
+>>>>>>> didn't want the bindings to restrict that, that's why in the first example
+>>>>>>> there's an empty element (<0>) for the 0th smsm host
+>>>>>>>
+>>>>>>>> Anyway, the question is if you need to know that some
+>>>>>>>> mailbox is missing. But then it is weird to name them "ipc-1" etc.
+>>>>>>>
+>>>>>>> In either case we'd just query the mbox (either by name or index) and then
+>>>>>>> see if it's there? Not quite sure I understand the sentence..
+>>>>>>> Pretty sure either binding would work the same way.
 >>>>>>
->>>>>> I still do not understand why you have to add hwlock to remoteproc, even
->>>>>> though it is not directly used. Your driver problem looks like lack of
->>>>>> proper driver architecture - you want to control the locks not from the
->>>>>> layer took the lock, but one layer up. Sorry, no, fix the driver
->>>>>> architecture.
->>>>>>
+>>>>>> The question is: does the driver care only about having some mailboxes
+>>>>>> or the driver cares about each specific mailbox? IOW, is skipping ipc-0
+>>>>>> important for the driver?
 >>>>>
->>>>> No, it is the firmware's reference to the lock that is represented in
->>>>> the remoteproc node, while SMEM deals with Linux's reference to the lock.
+>>>>> There's nothing special from driver side about any mailbox. Some SoCs have
+>>>>> a mailbox for e.g. hosts 1&2&3, some have only 1&3, and apq8064 even has
+>>>>> 1&2&3&4.
 >>>>>
->>>>> This reference would be used to release the lock - on behalf of the
->>>>> firmware - in the event that the firmware held it when it
->>>>> stopped/crashed.
+>>>>> And if the driver doesn't find a mailbox for a host, it just ignores it
+>>>>> but then of course it can't 'ring' the mailbox for that host when necessary.
+>>>>>
+>>>>> Not sure how much more I can add here, to be fair I barely understand what
+>>>>> this driver is doing myself apart from the obvious.
 >>>>
->>>> I understood, but the remoteproc driver did not acquire the hardware
->>>> lock. It was taken by smem, if I got it correctly, so you should poke
->>>> smem to bust the spinlock.
->>>>
+>>>> From what you said, it looks like it is enough to just list mailboxes,
+>>>> e.g. for ipc-1, ipc-2 and ipc-4 (so no ipc-0 and ipc-3):
 >>>
->>> The remoteproc instance is the closest representation of the entity that
->>> took the lock (i.e. the firmware). SMEM here is just another consumer of
->>> the same lock.
->>>
->>>> The hwlock is not a property of remote proc, because remote proc does
->>>> not care, right? Other device cares... and now for every smem user you
->>>> will add new binding property?
->>>>
->>>
->>> Right, the issue seen relates to SMEM, because the remote processor (not
->>> the remoteproc driver) took the lock.
->>>
->>>> No, you are adding a binding based on your driver solution.
->>>
->>> Similar to how hwspinlocks are used in other platforms (e.g. TI) the
->>> firmware could take multiple locks, e.g. to synchronize access to other
->>> shared memory mechanism (i.e. not SMEM). While I am not aware of such
->>> use case today, my expectation was that in such case we just list all
->>> the hwlocks related to the firmware and bust those from the remoteproc
->>> instance.
->>>
->>> Having to export APIs from each one of such drivers and make the
->>> remoteproc identify the relevant instances and call those APIs does
->>> indeed seem inconvenient.
->>> SMEM is special here because it's singleton, but this would not
->>> necessarily be true for other cases.
+>>> No, for sure we need also the possibility to list ipc-3.
 >>
->> I don't think that exporting such API is unreasonable, but quite
->> opposite - expected. The remote processor crashed, so the remoteproc
->> driver is supposed to call some sort of smem_cleanup() or
->> smem_cleanup_on_crash() and call would bust/release the lock. That way
->> lock handling is encapsulated entirely in one driver which already takes
->> and releases the lock.
->>
+>> ? You can list it, what's the problem>
 > 
-> I don't agree.
+> Maybe we're talking past each other...
 > 
-> SMEM does indeed acquire and release the same, shared, lock. But the
-> SMEM driver instance on our side is not involved in taking the lock for
-> the firmware.
+> You asked why this wouldn't work:
 > 
-> There exist an equivalent SMEM driver instance in the firmware that
-> crashed and that's the thing that needs to be released.
+>   e.g. for ipc-1, ipc-2 and ipc-4 (so no ipc-0 and ipc-3):
+>   mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
+> 
+> How would we know that the 3rd mailbox (&apcs 19) is for the 4th host
+> (previous ipc-4)?
+> 
+> 1. If we use mboxes with indexes we'd need to have <0> values for
+> "smsm hosts" where we don't have a mailbox for - this is at least
+> for the 2nd smsm host (qcom,ipc-2) for a bunch of SoCs.
+> 
+> 2. If we use mboxes with mbox-names then we could skip that since we
+> can directly specify which "smsm host" a given mailbox is for.
+> 
+> My only question really is whether 1. or 2. is a better idea.
+> 
+> Is this clearer now or still not?
 
-Then please include relevant explanation in the commit msg.
 
-> 
-> 
-> We're also not tearing down, or cleaning up anything in our SMEM
-> instance. It is simply "when remoteproc id N died, check if N is holding
-> the lock and if so force a release of the lock - so that others can grab
-> it".
-> 
->> Just like freeing any memory. remoteproc driver does not free other
->> driver's memory only because processor crashed.
->>
-> 
-> That's a good comparison. Because when the firmware running on the
-> remote processor crashes, it is indeed the job of the remoteproc driver
-> to clean up the memory allocated to run the remote processor.
-
+So again, does the driver care about missing entry? If so, why?
 
 Best regards,
 Krzysztof
