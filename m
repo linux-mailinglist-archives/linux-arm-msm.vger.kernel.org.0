@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9B0E8CF033
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:47:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 048A28CF041
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:54:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4283D1F212CF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 16:47:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 875D1B20F77
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 16:54:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5958485C41;
-	Sat, 25 May 2024 16:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED0B78626D;
+	Sat, 25 May 2024 16:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F9UDp9XA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HKFepBF1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2958BF4FC;
-	Sat, 25 May 2024 16:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FDC85C77;
+	Sat, 25 May 2024 16:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716655635; cv=none; b=LJ/KzU2WfMM5UgyQqYktxOcZBS27b+BDCzNZbLdxLHWPKVX9GXKA3HqjqICQjoBbBWIPLgnBHaoIihH2eXleuXajn7ih/r0V+kx6pggkufUKOSKUku8e0s+sdIvJUEtwvh9ejSFO8yHcY0sh/J16sdhx+xO3wSwoTHE5xhaMXkI=
+	t=1716656056; cv=none; b=ujGP85TGZMGCRmDDcvTzIGJdmsmIdsnZMSyBHYpFrsrm8c/rYv1W5wQ8OCWsdmc8nMV1oWE8GVOtyXrv97KydB9ijjTsgunb7ivsMtuObixSCnAobiAw9JOHephjoDNAqUBF/GUiVg7QTogIfZOGdoFYNjp/XS6FR8wdcODc2JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716655635; c=relaxed/simple;
-	bh=tcgFFUdEq/vKTYnqwg5KpKxETpCiRxdBDuidnItfaZs=;
+	s=arc-20240116; t=1716656056; c=relaxed/simple;
+	bh=2+Kr6XXPgPmdgZ4u7qxFqlXy+juIof5nyaRlxJQac2M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ISTEdXKp9lz6CAAVyTwUImM4LKSRsymz9Wmprnb40dDI1KqAWjq+D34ZQZacCYiFUokAV6syy3tfzjh/LodxVUqf5dn5cnSN1N/eGf9ye59xQt9ac5EYTczuSwjQkdIVXroxOUOk7w/gl9h//+uFwHmEP/L1jz4mfxxAGufr4oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F9UDp9XA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85D9C2BD11;
-	Sat, 25 May 2024 16:47:10 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Ybiig2KBt2RO0hW/XAaaBiZWxttc0uHXm40/H/3OZzyMpn83D43+tSSn3mk+gNosjPe1R1njTNyVFFqoaz8U8HLwtenYzAbYb19w6Sb7yWbY5ZpGhpDjIrCTtnO4WV29m9n+R0vMpx3dSCJtAEqrApdd3K/WVMp+2pbjjyzTsGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HKFepBF1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACFAC2BD11;
+	Sat, 25 May 2024 16:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716655634;
-	bh=tcgFFUdEq/vKTYnqwg5KpKxETpCiRxdBDuidnItfaZs=;
+	s=k20201202; t=1716656056;
+	bh=2+Kr6XXPgPmdgZ4u7qxFqlXy+juIof5nyaRlxJQac2M=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=F9UDp9XAsENdtKmn//ggvG6nygcJsAbLvgJkkwSopi3DAL9TbMfH+M9YymqU4OifW
-	 jElkL2B9w5OKPOsIkYGpOu+mSEKmdoHtSiLcxsgG6o0UVz2w4+lI0Vt0O7L09gLHav
-	 qtRxZ0GKSacEmzsug7LBGdVQdCA7JiFBSyrfnOCAFCIlWAyoV6AYfQrz1j+tqNo+BN
-	 rdPhiO+/6anwaRwQ5DQ0Fm82YbtkMCarlbapHHYg31z5PcWauJyM0Zz21Qbn30umh4
-	 p8jPPvtOlfVaQIcy5vs40dNatn23qZhf3AOcr0HpRWazR2/lal8WcH8jYozbOSuoSX
-	 KeABX/GvtQOQQ==
-Message-ID: <f8c48554-984f-48fd-aa12-87d39888b0f6@kernel.org>
-Date: Sat, 25 May 2024 18:47:08 +0200
+	b=HKFepBF1SyMDSlE78H872P6Tsvc4B2YX48VYgFxtYRVQshLN0E9d525HmBoz0ARnD
+	 cZ8/JiXE0m8Vd+vFWkCg9/zFg8Clm/7T/rsSFHjoSpS3o3jxRCzyE0Be38MHqKCWbi
+	 SCCfrudfYXGZKAb86OdaJWC0PTt4LVopykNIukCfQO+m2vlyspxUe6O64fF29JjNjL
+	 AUm4OftfCl3Hy+s8N7mQJyOBYllhYz60IGlf7ZlgncRUiaVfkfPdyEsd6O5knFh+JW
+	 SSb3Td9fuHcm4e67JlRH20L8b1hZ87qJzy6wUjsPYeLscbR8QxTXfebeTFYrOVnxcS
+	 14DuVXxjzyOvQ==
+Message-ID: <b9a45cf0-ceff-488f-a532-eff47f1ca79c@kernel.org>
+Date: Sat, 25 May 2024 18:54:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/2] dt-bindings: soc: qcom,smsm: Allow specifying
- mboxes instead of qcom,ipc
-To: Luca Weiss <luca@z3ntu.xyz>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- ~postmarketos/upstreaming@lists.sr.ht
-Cc: phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240424-smsm-mbox-v1-0-555f3f442841@z3ntu.xyz>
- <5099926.GXAFRqVoOG@g550jk> <e4579702-089e-48cb-bf06-f8e4fb618050@kernel.org>
- <4881282.LvFx2qVVIh@g550jk>
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom,pmic-gpio: Document
+ PMC8380
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240525-topic-pmc8380_gpio-v2-0-2de50cb28ac1@linaro.org>
+ <20240525-topic-pmc8380_gpio-v2-1-2de50cb28ac1@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,110 +105,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <4881282.LvFx2qVVIh@g550jk>
+In-Reply-To: <20240525-topic-pmc8380_gpio-v2-1-2de50cb28ac1@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/05/2024 19:55, Luca Weiss wrote:
-> On Donnerstag, 23. Mai 2024 08:19:11 MESZ Krzysztof Kozlowski wrote:
->> On 23/05/2024 08:16, Luca Weiss wrote:
->>> On Donnerstag, 23. Mai 2024 08:02:13 MESZ Krzysztof Kozlowski wrote:
->>>> On 22/05/2024 19:34, Luca Weiss wrote:
->>>>> On Mittwoch, 22. Mai 2024 08:49:43 MESZ Krzysztof Kozlowski wrote:
->>>>>> On 21/05/2024 22:35, Luca Weiss wrote:
->>>>>>> On Dienstag, 21. Mai 2024 10:58:07 MESZ Krzysztof Kozlowski wrote:
->>>>>>>> On 20/05/2024 17:11, Luca Weiss wrote:
->>>>>>>>> Hi Krzysztof
->>>>>>>>>
->>>>>>>>> Ack, sounds good.
->>>>>>>>>
->>>>>>>>> Maybe also from you, any opinion between these two binding styles?
->>>>>>>>>
->>>>>>>>> So first using index of mboxes for the numbering, where for the known
->>>>>>>>> usages the first element (and sometimes the 3rd - ipc-2) are empty <>.
->>>>>>>>>
->>>>>>>>> The second variant is using mbox-names to get the correct channel-mbox
->>>>>>>>> mapping.
->>>>>>>>>
->>>>>>>>> -               qcom,ipc-1 = <&apcs 8 13>;
->>>>>>>>> -               qcom,ipc-2 = <&apcs 8 9>;
->>>>>>>>> -               qcom,ipc-3 = <&apcs 8 19>;
->>>>>>>>> +               mboxes = <0>, <&apcs 13>, <&apcs 9>, <&apcs 19>;
->>>>>>>>>
->>>>>>>>> vs.
->>>>>>>>>
->>>>>>>>> -               qcom,ipc-1 = <&apcs 8 13>;
->>>>>>>>> -               qcom,ipc-2 = <&apcs 8 9>;
->>>>>>>>> -               qcom,ipc-3 = <&apcs 8 19>;
->>>>>>>>> +               mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
->>>>>>>>> +               mbox-names = "ipc-1", "ipc-2", "ipc-3";
->>>>>>>>
->>>>>>>> Sorry, don't get, ipc-1 is the first mailbox, so why would there be <0>
->>>>>>>> in first case?
->>>>>>>
->>>>>>> Actually not, ipc-0 would be permissible by the driver, used for the 0th host
->>>>>>>
->>>>>>> e.g. from:
->>>>>>>
->>>>>>> 	/* Iterate over all hosts to check whom wants a kick */
->>>>>>> 	for (host = 0; host < smsm->num_hosts; host++) {
->>>>>>> 		hostp = &smsm->hosts[host];
->>>>>>>
->>>>>>> Even though no mailbox is specified in any upstream dts for this 0th host I
->>>>>>> didn't want the bindings to restrict that, that's why in the first example
->>>>>>> there's an empty element (<0>) for the 0th smsm host
->>>>>>>
->>>>>>>> Anyway, the question is if you need to know that some
->>>>>>>> mailbox is missing. But then it is weird to name them "ipc-1" etc.
->>>>>>>
->>>>>>> In either case we'd just query the mbox (either by name or index) and then
->>>>>>> see if it's there? Not quite sure I understand the sentence..
->>>>>>> Pretty sure either binding would work the same way.
->>>>>>
->>>>>> The question is: does the driver care only about having some mailboxes
->>>>>> or the driver cares about each specific mailbox? IOW, is skipping ipc-0
->>>>>> important for the driver?
->>>>>
->>>>> There's nothing special from driver side about any mailbox. Some SoCs have
->>>>> a mailbox for e.g. hosts 1&2&3, some have only 1&3, and apq8064 even has
->>>>> 1&2&3&4.
->>>>>
->>>>> And if the driver doesn't find a mailbox for a host, it just ignores it
->>>>> but then of course it can't 'ring' the mailbox for that host when necessary.
->>>>>
->>>>> Not sure how much more I can add here, to be fair I barely understand what
->>>>> this driver is doing myself apart from the obvious.
->>>>
->>>> From what you said, it looks like it is enough to just list mailboxes,
->>>> e.g. for ipc-1, ipc-2 and ipc-4 (so no ipc-0 and ipc-3):
->>>
->>> No, for sure we need also the possibility to list ipc-3.
->>
->> ? You can list it, what's the problem>
+On 25/05/2024 01:37, Konrad Dybcio wrote:
+> PMC8380 is a new PMIC used with X1 SoCs. Document it
 > 
-> Maybe we're talking past each other...
-> 
-> You asked why this wouldn't work:
-> 
->   e.g. for ipc-1, ipc-2 and ipc-4 (so no ipc-0 and ipc-3):
->   mboxes = <&apcs 13>, <&apcs 9>, <&apcs 19>;
-> 
-> How would we know that the 3rd mailbox (&apcs 19) is for the 4th host
-> (previous ipc-4)?
-> 
-> 1. If we use mboxes with indexes we'd need to have <0> values for
-> "smsm hosts" where we don't have a mailbox for - this is at least
-> for the 2nd smsm host (qcom,ipc-2) for a bunch of SoCs.
-> 
-> 2. If we use mboxes with mbox-names then we could skip that since we
-> can directly specify which "smsm host" a given mailbox is for.
-> 
-> My only question really is whether 1. or 2. is a better idea.
-> 
-> Is this clearer now or still not?
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-
-So again, does the driver care about missing entry? If so, why?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
