@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 153EB8CF04A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 18:59:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D28A8CF050
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 19:03:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BAB101F21528
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 16:59:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CD9AF1C20A04
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 May 2024 17:03:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F8B58627B;
-	Sat, 25 May 2024 16:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D25EF59160;
+	Sat, 25 May 2024 17:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BOri3+5r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iexVq+Qu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DC685C77;
-	Sat, 25 May 2024 16:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1269B644;
+	Sat, 25 May 2024 17:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716656365; cv=none; b=McK5T1vEA2CAo4nZwE3maNeuur9s0lozZReblVnsdcJCa/a+aH+5Mr9IWMSG73tALaFh9fPVXq0q4jb+DY5TQi3UWOqPhP9c95V6ac+OSupO+ITKgh6dmCRiOrh9+ii5Ga7f3KNkW1q+gCrLMxPqRQrkXxWyUNTOXu3pWdBT0f4=
+	t=1716656590; cv=none; b=uYKzSvcJq3bv0kKWPzsCMbYWpJEsFb7PgUrJRTdn7TNBWG/IITnkKuBBa57J7Aum3ectdk7v9fVNqT2ZPvNACesNR8BdyNUfuGO4rsRnrRsasJlt+HGdjME+h1uUxRhyGpOwX+Dk2c2+WV7qPq50EHjLLp+F8aSqlRFvE66/uDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716656365; c=relaxed/simple;
-	bh=L5rF1U6u+dgqhRDH+CwtH1ADSUsO7kxEHotp8qUYkmA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=VvuhAE81NPIsz/aAZo3Bn7GDZyIKNxT8UaJjIwWhVLA8sTOHlps8wEtOmCTPu5+yXz9PwMV2mBfw2UQ+tMOkS0D3hJii74UKgk5W1vNfhexVHaIGFYWc71s2zMc9RdG32mITrAnb23WnuGm2FQRZpi//XXiS/C/+C4mrTI77oXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BOri3+5r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51983C2BD11;
-	Sat, 25 May 2024 16:59:21 +0000 (UTC)
+	s=arc-20240116; t=1716656590; c=relaxed/simple;
+	bh=9FK0oboQorZhbDvmMpgtORUFCkbQSkfqiSX4FWXKE2k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jkdd7B8PGBZE1M6z+VSb/ENct/74d+o2G/BaSQGvR3Npfn/ZftaMF7ZUjlva5vrsJ4DIVT+kc/KMLg2h/gOFcXNmRg1HL/TWpurlGH+exY+UQ/vr67QjL31jKUS9WJQG3YxOOtqU3CjjjvoPvwg0F9JKaY8FrV+T2xasN3WIrJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iexVq+Qu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148E8C2BD11;
+	Sat, 25 May 2024 17:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716656365;
-	bh=L5rF1U6u+dgqhRDH+CwtH1ADSUsO7kxEHotp8qUYkmA=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=BOri3+5rcKtt5S1PklzG5CzUVoaEsdI+EGgZdsl0ODHGNlVNB1ErCGpcEdTgK/7Si
-	 50gCk+jkOOxp3AxndqJG8Xc59F9P4AgKVTwbhUiak7XA9hZs3KxAR1HKZbgWliM20Z
-	 r6CrVRAz4YRdi/TqJzFApS+EDmjSpM14TRN6ebsHKPsllg2RuEoXTvk/cieDC7b9tq
-	 dFXVLnxbMPmMyNaTVFQK99HEmmej6x0iLqu9qHkby8EIaCv62o6M9v19XolR8z/k4M
-	 ZknrxODNE7abRcsJIZvyKKukKmpb+EuvOd4VwS/TkHs8UyUZYmY+G1py8UTL0UdwaM
-	 LYUIN/5Qw7maw==
-Message-ID: <34c76368-70b4-4582-833a-589653dc192e@kernel.org>
-Date: Sat, 25 May 2024 18:59:20 +0200
+	s=k20201202; t=1716656590;
+	bh=9FK0oboQorZhbDvmMpgtORUFCkbQSkfqiSX4FWXKE2k=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iexVq+Qu9L+ktoAOoPvqTT4kblZB6xL+rYeWbXyhu2clY+FQoZbOLwVahmGKVYbHx
+	 /BxkTPx1qolKedMcPqgTfoL6li0Nu4JLud8H9UTznmj4qv04wnO8TKTc2rZFxdU/K7
+	 vU3hS61nqZD4kVSQW8WCzIRaIKE3OOcjJWLvPbZyk4fQ4YgY05IvS29kyH4CfRnIc+
+	 /AZUV9XYXlDNq114L82O2YXBP0LQW3LA6lHm/dYFEzHDGBKQBCoLYJJcd8itEBZbPO
+	 U6NrVW4NQY4JrGIdoEUROqI5r8bYmq8zMq7/TQs0WHWhPydF8lYC7ZjUir0NyhbLiS
+	 8eKI1f3Nd+luQ==
+Message-ID: <7deee008-a2e6-45c7-8c83-5b2d7db7a04e@kernel.org>
+Date: Sat, 25 May 2024 19:03:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom,ids: Add SoC ID for SDM670
-To: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCM6490 snd
+ QCS6490 sound card
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240524012023.318965-5-mailingradian@gmail.com>
- <20240524012023.318965-6-mailingradian@gmail.com>
+ <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+ quic_pkumpatl@quicinc.com
+References: <20240524035350.3118981-1-quic_mohs@quicinc.com>
+ <20240524035350.3118981-2-quic_mohs@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,21 +110,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240524012023.318965-6-mailingradian@gmail.com>
+In-Reply-To: <20240524035350.3118981-2-quic_mohs@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/05/2024 03:20, Richard Acayan wrote:
-> The socinfo driver uses SoC IDs from the device tree bindings.
-> Add the SoC ID for SDM670.
+On 24/05/2024 05:53, Mohammad Rafi Shaik wrote:
+> Document the bindings for the Qualcomm QCM6490 IDP and QCS6490 RB3Gen2
+> soc platforms sound card.
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  include/dt-bindings/arm/qcom,ids.h | 1 +
->  1 file changed, 1 insertion(+)
+> The bindings are the same as for other newer Qualcomm ADSP sound cards,
+> thus keep them in existing qcom,sm8250.yaml file, even though Linux driver
+> is separate.
 > 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
