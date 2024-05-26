@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9674E8CF548
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 20:17:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2C948CF54D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 20:18:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 626261F210B0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 18:17:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 590731F21092
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 18:18:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7B2D1DFD9;
-	Sun, 26 May 2024 18:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49B361EB2B;
+	Sun, 26 May 2024 18:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="APlhvY7H"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ASSbAHi2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CED1DA3A;
-	Sun, 26 May 2024 18:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16ED81DFD9;
+	Sun, 26 May 2024 18:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716747474; cv=none; b=kgO4R99xJlpxzjfePSYNxTaRpnGtwFSgkeukylCIwNd0gv9eINLRirZdc6ZnHL7PxRoMj6B1VJK+5zCSC3YKEpjh4aYEQrbV+11ZOxwbPuz+TR4FeSvAKmlYrGztTnkxvBZr7ru/aYMEZXtEPj8Y++kfIqG9j9+ldso9R3o2Eew=
+	t=1716747495; cv=none; b=pFwZ0r18NZe2m3EVr2IPtOsq4UoxFudqaC1FjFyk9UWOtNErMPsWd18OoDBFHjML4qAzh6x0fw0/9ah4//2svVha5rdtr37mvevnaflWpcROwOEPFOhz3oyCEkRifXnRgSjk3r40WxrosIRmaqkPvs+yWrCtO3WZvetnExfEZYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716747474; c=relaxed/simple;
-	bh=mHBnbYPxCL3ioXmDISlbjkpLrRlC4eM9hLGTISnIRcQ=;
+	s=arc-20240116; t=1716747495; c=relaxed/simple;
+	bh=KKV7nqNDm5fVm5UwO4ZtvswOo2K4l9M40/LQKIa+L9Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XYutE+kBucv4emqGMhHoevNOxqP88uLTJo2SoGW3Oxoxq2xnHS4K/i7Ex+Qj+w+IKX7hyvNwRSG9wAlcCw+h2w0+AmGTM01Ym1S4kokRYm79mjmb2I48Of8HGD80NZ9bw49kwLHn+eHAyq1FUert1fO5pLwHiorpM6zs5keNbeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=APlhvY7H; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC471C2BD10;
-	Sun, 26 May 2024 18:17:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=m4UakPSsAX946yDWunpF57jr7exP2lDdPqYQ43f3nQwjUIR3nb/i21AsptllBOXxCGWmkjgJOuzrchwImUum1rqlaINnvYc5of2Da3SsAkyNDJwdR/omDDE2FTfwMqG4s4UrI6xIEerxRw2bms9Q8pw8l1gpmrXAtvyG+4AZ04g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ASSbAHi2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B72C2BD10;
+	Sun, 26 May 2024 18:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716747474;
-	bh=mHBnbYPxCL3ioXmDISlbjkpLrRlC4eM9hLGTISnIRcQ=;
+	s=k20201202; t=1716747494;
+	bh=KKV7nqNDm5fVm5UwO4ZtvswOo2K4l9M40/LQKIa+L9Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=APlhvY7H7XKkyWTF3B8wZZh9ug+kfIEMAhTGi/XJ3abhiMNUCWTON9pKb6YgtMIRF
-	 iQymJDR92R6qgR3/fQa0YtnK1/8Wxi5YfMUZd7oYajiFN/tikVCha/FzVNaJ5urwuk
-	 yb/I/jMxMeEqOhcymzLwDlLcs62JV5z6MKeHteaxXMlUAYxmGf00tSIMML0o2sJKJl
-	 15hplfnYDdWgvXtt5ZZiRgKcjhXK8sx1qpWevdf4LFpn+8j5udq80SZAHhauPv+xqN
-	 cJXBwIeE38pvF6UT797vTnULk126vNavvLYjP1W9kAgxzg+m+tt+GI+uyzc25fGKmj
-	 z6pTqr72NKq/g==
-Message-ID: <a48b15e0-e2c7-4941-8299-340a22690e01@kernel.org>
-Date: Sun, 26 May 2024 20:17:46 +0200
+	b=ASSbAHi2D61S8PV4cTZtkgQYiijZsEYULSHmnHKUQ8pmQuqygjs8c8qvx2+Y4C9MO
+	 R/nqhGacHswPbqKhcpc8Rs8/Pir55XCRG9Xpb+cXB0lOcEheVTrCJqSZf0fHlTKETl
+	 cAVTWp7wZScq6ByR8AtlV4UaOZ5VW3Xb9DNwU/+Rb9ro6yV/ykZ/KqfoPgtiPO0OeN
+	 /cPpK2hVYbBsUR6yOAffHZwdrq+G3GPuK8cWYBtZnECR2eeFD6HRvYAzILYktKcnLU
+	 g9OqqoJVc31ccgl+rpz6v4eQ7ggrmOL7dDYHhHE8uEem1chgWhxIgP8QqN7RJ1fihl
+	 jkwMRsogobrbw==
+Message-ID: <811fc8f8-ac8d-4099-84e1-50d48adfa77d@kernel.org>
+Date: Sun, 26 May 2024 20:18:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add
- sc8180x USB3 compatible
+Subject: Re: [PATCH 03/10] dt-bindings: clock: qcom: Add missing USB MP resets
 To: Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
  Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -65,7 +64,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  linux-clk@vger.kernel.org, linux-usb@vger.kernel.org,
  Bjorn Andersson <quic_bjorande@quicinc.com>
 References: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
- <20240525-sc8180x-usb-mp-v1-1-60a904392438@quicinc.com>
+ <20240525-sc8180x-usb-mp-v1-3-60a904392438@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,21 +110,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240525-sc8180x-usb-mp-v1-1-60a904392438@quicinc.com>
+In-Reply-To: <20240525-sc8180x-usb-mp-v1-3-60a904392438@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/05/2024 20:03, Bjorn Andersson wrote:
 > From: Bjorn Andersson <quic_bjorande@quicinc.com>
 > 
-> The SC8180X has two USB3 UNIPHY QMP blocks, add a compatible for these.
+> The USB multiport controller needs a few missing resets, describe them
+> in the binding.
 > 
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 3 +++
->  1 file changed, 3 insertions(+)
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
