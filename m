@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3C778CF564
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 20:23:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D3488CF568
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 20:23:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99F231F20D6F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 18:23:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 195991F21043
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 18:23:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1857A12BE93;
-	Sun, 26 May 2024 18:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D16BA1EB36;
+	Sun, 26 May 2024 18:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A+8gmAYP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VR1uDQvx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D356D12EBD4;
-	Sun, 26 May 2024 18:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AB01DA58;
+	Sun, 26 May 2024 18:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716747758; cv=none; b=bD57WKwJJiLYbc4hbP6Qjrn8GsFTEORdXR+5iqaIigNlWWaElg+u1dgH4eWJrUMxvAa9lK+5oO47EM0/z2MAoC3hlGcZ4cuWhEZS1JCMdaN0KkB1ezw4iwTixV0x+D48bhhCygP0Luz25U3LooWr9pA5PuUmlp7ZVMsTInhpmLg=
+	t=1716747809; cv=none; b=IiOooCN3ONlXVFuljqIKPoaCIsEm1mwqIlKfcGaFjfJd9mQf7+sAaGvo/Vr20KVd1cbG7GyTx7qORCOFd2HZlKi+fVdnmEzjIvbrQudVOorWg+2QJvO9qpIBEbCcxuANRHrOBVg2oFQkXnFwueptMzpWe5+YEkPmz1KVH/EAfCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716747758; c=relaxed/simple;
-	bh=JJ4NCWf6g7h8oFkGcwb69bzO8ygCts/xU7djwJyQoOI=;
+	s=arc-20240116; t=1716747809; c=relaxed/simple;
+	bh=9Gru5oi12PYEnw/ouK2yDfawlNJk5fRb3iqh6wweMFM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DxJOKZmsPhNXq7JovBW6QErtGaRO84boZ2pyBzpxm4q4JMpTv8ZBLT9sLOYAprIRNGp1SXLkYCRjd9hwT7pFBATaMStK25VHfIYYEOWOsxPiz3WWmZoZQAjySe2WRgB3aVIJkiYSbK3hkCjR4dvVma0xkCccZrHHz7vWy8pdL6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A+8gmAYP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86C5C2BD10;
-	Sun, 26 May 2024 18:22:31 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=diQQGhKUYBIkUFdVy/PUNkYHzoIFlFJC2P8ABB4u73T4qWFgXpprP2PoliXATZEMrREINAuxi77zKqG6S77UI2HZPorI3FDfkes1XtpBX2LVgcNXjqftGJejHQbFWSruH2/PHY4zjTx4EWxMdbkGf+QqTP7EtF4XpBWGQNzHyBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VR1uDQvx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EDBC2BD10;
+	Sun, 26 May 2024 18:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716747757;
-	bh=JJ4NCWf6g7h8oFkGcwb69bzO8ygCts/xU7djwJyQoOI=;
+	s=k20201202; t=1716747809;
+	bh=9Gru5oi12PYEnw/ouK2yDfawlNJk5fRb3iqh6wweMFM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=A+8gmAYPEpA0BmmxkYKwUHfE4mKdvaNisx5CInDa180tbuAbp2BFZD1M8DKogVbK6
-	 F9psvOOjjL9zyPu5PmPqW7FoBMXTqUeU/NphXYTHvudWF9JUKpd9M/yPka8bA5darH
-	 A+Ao3IBed/rb1H3+kdLLfmsd8kE4iIA+cDN7LQDQFV/Z3oUAHfVTLm89BZBfKnWaDT
-	 9dtnelE/JOM2Y/jLSOsC1K5QSViwgq1fXVtO0a+hbUdai/w5Z5yduwckkpnzbHrhvH
-	 X648rOZXWIdruhZXBVrVP223V+CFGDJZGeVt6VxqmJuXySrDCbBCnW3QXGxO/hBAEK
-	 VscSe604CI3Eg==
-Message-ID: <283c6521-04f5-4a7a-8318-8b18c6a1b644@kernel.org>
-Date: Sun, 26 May 2024 20:22:29 +0200
+	b=VR1uDQvxzk4wDV9c3XW7daVesvHz2HuY7yv/hFKzddjjGSDRf0/Wu0YhTYaKosQW7
+	 2PPI7CdRgzQXLDXAv06MNcayFq0ahI1TtMqIatizLicozdFFPFGke1IEVJO+eRcLuO
+	 nDvgVwYl/8LkUf4OiU59snY8tyPxK88s8keUVBk17bCKG4FnTPOQJRf2Lmm5xf0Atx
+	 LqvGYDnICJAlU842Hrlx6GC7FiRYVv1/uhx87HjJP0UV91KT7rFVTxrESoUfHQips7
+	 yaCdXTWVskvXBQdYtWl4QhQqBvr1cpjldtxrKo2fhScGV7iiSfJmWmx2foYQ8vwZHj
+	 ukklMODKE+slw==
+Message-ID: <de70a80c-8c7f-42e5-aa7b-e9549f10636b@kernel.org>
+Date: Sun, 26 May 2024 20:23:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] dt-bindings: usb: qcom,dwc3: Add SC8180X
- compatibles
-To: Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH 1/2] dt-bindings: cpufreq: cpufreq-qcom-hw: Add sc8180x
+ compatible
+To: Bjorn Andersson <andersson@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Wesley Cheng <quic_wcheng@quicinc.com>,
+ <conor+dt@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-usb@vger.kernel.org,
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  Bjorn Andersson <quic_bjorande@quicinc.com>
-References: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
- <20240525-sc8180x-usb-mp-v1-5-60a904392438@quicinc.com>
+References: <20240525-sc8180x-cpufreq-compatible-v1-0-febf0f17909c@quicinc.com>
+ <20240525-sc8180x-cpufreq-compatible-v1-1-febf0f17909c@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,18 +109,32 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240525-sc8180x-usb-mp-v1-5-60a904392438@quicinc.com>
+In-Reply-To: <20240525-sc8180x-cpufreq-compatible-v1-1-febf0f17909c@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/05/2024 20:03, Bjorn Andersson wrote:
+On 25/05/2024 19:48, Bjorn Andersson wrote:
 > From: Bjorn Andersson <quic_bjorande@quicinc.com>
 > 
-> The SC8180X platform has two single port DWC3 instances and a two-port
-> DWC3 instance. Add compatibles for these to the binding.
+> The SC8180X platform has a EPSS block, add a compatible for the SC8180X
+> platform.
 > 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> index 1e9797f96410..24c02ee33266 100644
+> --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> @@ -36,6 +36,7 @@ properties:
+>                - qcom,qdu1000-cpufreq-epss
+>                - qcom,sa8775p-cpufreq-epss
+>                - qcom,sc7280-cpufreq-epss
+> +              - qcom,sc8180x-cpufreq-epss
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+I think you forgot to update the allOf:if:then: entry.
 
 Best regards,
 Krzysztof
