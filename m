@@ -1,133 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-20633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FDDB8D04D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 16:55:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BDDD8D055B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 17:08:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0FDB1C21187
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 14:55:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D6D11F210FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 15:08:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66B8D16F8F6;
-	Mon, 27 May 2024 14:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4475D155CBB;
+	Mon, 27 May 2024 14:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="geZBSPNM"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="iJRIad8X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FCB16F8F3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 14:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4A0155CB1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 14:45:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716819848; cv=none; b=OlcUMFOygMw7108jjlE+odIm1OthvEjJ1/yFfigiH1YtL+QWf5XktOVwGqiIBSesF0o3wYWV6w8hE9pLC9nqu3xusRMeEtTUFc+HKtE0sBY9JW9cGXndSYNB3T1UzyZFPF5LiMAp/vBEAORzaBTtuT290Z+3Vn9qfclwHyDfpdQ=
+	t=1716821151; cv=none; b=KVCK5/+9hocl2/IHKHuA2WRdEyvUfBlpp07I0eP2zAv3pQWe7O+ltPq9bu4NXjiEN3IQqHAHmiZ/jSPbnan26mVdbnQUUQ7YehLdbuj21JeA8uPOWorEy+xDTa5jGgEf6fH5vLF3DHiFG5O79A0XPeA3AWGilaLkmOYd2V3tKzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716819848; c=relaxed/simple;
-	bh=OWccy+nICEZUKQPwByjtML13iQY9e7N6XueMvybRfeI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=t6B0MVOsrRYytI1q3WYUQ5cnzmQJgXwANZzMw5Mq5n5p8l0wYWa2BgMb1pmtktXTKsxMhgyY+GEkPOvNrboqNxueE+MfX7i1MvUUusdk2gOL3HsITkXqrEdzKbEeLsmW+QGVqi7DXhTPQqNeufkOkKgc1A0guqVAv22OPQfFlkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=geZBSPNM; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-6f966840af7so2594142b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 07:24:06 -0700 (PDT)
+	s=arc-20240116; t=1716821151; c=relaxed/simple;
+	bh=AO5nSYfoZmTmOnVUiP3qQUadzHCNJAjQMwP0TefZ1q0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UTi+KWQbwIuEGo6STKwKJV7OHLuJYZuhgHNosup9Ah+36WT8bAw37+FvEnLU+8QRugd7HX5ugMHQG2oquxEL+Ez6qvhqkq3kz5jeTc4r8Cv5rWPccsDfSsdiF3m1H4Uvx/bRGbUN8aoJ7Ul1jf4CS56xUI+NlCd4oON7PO19NRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=iJRIad8X; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-420180b59b7so48800825e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 07:45:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716819846; x=1717424646; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y7t4uYmRqlJLrpJDiHKBdOulRnB5HHZ6HHejKDBAJ1A=;
-        b=geZBSPNM0L7z+LF+w4vMu3B3WY7AF2PO+By/1Ifp0qgg5iN1245+kM7nXmhoFleiKm
-         Vpz8hEfwz4jho/HtEwTstgSK9WIPsZGUI1Tg1xYdKh23/zThArvtorBrWBgrp5DfizE/
-         s/O6Fv263DlWJgmyiQvlSfAWiGs4DUsV5c9WMYmeUgABxabXobrfVER4lw7CMcuj5POc
-         rPGcwoJNC/T5ZSxQLIG8W7d0zmU5DdNxbA4HiDdwJ+bqX9M3JbMbefitjNtbR44WuLYP
-         x+6DMVu/TTt7tgAkovfXB7lLJx2jCklNtC2o9sS0wRM0z1oVgSfL0YHWUxWFpr0ZRgYu
-         E0xQ==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1716821148; x=1717425948; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SlPh8asFNYRAYES5kXdkoiGJIIskI39MHFNbVehtCHw=;
+        b=iJRIad8X/QGGmd79b7bgomr+wyoidVYEkdsMbFU6gMIEv4VIvZfIUuOEf3Z9A25QxR
+         3RYA0PDUYKgwIny0prco6d3uqBagRWVtOT1wxyX6DIt+zAvb7OPB2aPbOv+4UjRXQcYS
+         4fV4G15FRHPaWIdBk6ZuKEgBEne26pwUE8wCgHSgv9WL5uS+vhElzie3XZrmNb5c4BMn
+         Fr6G/4G8DUMZV+tg1nxwzAQnbDfkqKR6iTzvSZHsPCuZAHqsLwgxcLUBbU0LcQU2hL8U
+         +j4aoLjwn04CHdObVwhIdhskibrwjbHoX21NR61ImNopRNqv54JKU3bddU2UCwp7rOlK
+         CY1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716819846; x=1717424646;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y7t4uYmRqlJLrpJDiHKBdOulRnB5HHZ6HHejKDBAJ1A=;
-        b=NpmibkpRdBc9WSf17VNrDb/vcoTPyWu5957k/GSBO9UDo3UU8aUcObqENkH8jbSmDF
-         mIh8y5iSVu0lYhFSEzBQi2T/sJ3up6xVtu2+BGQI2nI56RABvlszWLqgabpW0a/ooHZH
-         2+KVcC/h1GgF7DTdBD/VSQSMUrAJoUahTkCT8b1AmC1fX4Qy/XkdCVRtCRa/MXY/+iqa
-         at3HgwJq1gAZILmeVY+zecxvgD/kqk+plS9R/2wZZL7nC2064Txzh8rOs9Ed6QHLOP+e
-         BnOIRBq8ldmVB2CeEcTVG0g4GcCRKR96qfalYmnOe/w1Ayo36AQ8gWinrTFP+ubap/Bj
-         c+zg==
-X-Gm-Message-State: AOJu0YynqSzpZgtkb5hKEMcVdIGCeaVS66UB35jFH+18u1XRk8tKo59N
-	/dsROm4+8GyCGhA/SzTkVlw11bVHJp+duBUGw+9wDXg/vSmuVWZPE6qgtrmlf+8=
-X-Google-Smtp-Source: AGHT+IHJ7Gus1KojOvbGG4MRVvDnQ0USYq7JfPcmCETBzGI3IuW+o9e/WGNMRkZQQAcHSiH5qpRc+Q==
-X-Received: by 2002:a05:6a20:5612:b0:1b0:24e7:5a35 with SMTP id adf61e73a8af0-1b212e5273emr8026076637.56.1716819846219;
-        Mon, 27 May 2024 07:24:06 -0700 (PDT)
-Received: from [127.0.1.1] ([112.64.61.67])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f8fbd3eb67sm5109895b3a.19.2024.05.27.07.23.59
+        d=1e100.net; s=20230601; t=1716821148; x=1717425948;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SlPh8asFNYRAYES5kXdkoiGJIIskI39MHFNbVehtCHw=;
+        b=oVd9q+Yv3+vehJxEm1gjzkqf6L3dqOVkfOBx6f+/aUnQCQY1E8xxBkc2e3UtblOxHL
+         Em42sATd1zdvi/DDPpoybQMAZh0d+uyzDqgjBLOI/XqfEP/Cvgq2pqEuSNMjAIDwMi9K
+         rUNV+93MBm1i1CvUwArbat7oHibuJ09cjL+rr9wU1RBdMBW1uJjirwuBWtZWtRHbVWeU
+         N0e84l8kLD1TdfvG2t4WDLNspbza7Xrh+7LzGoje4pcbBtw/FDl61nBKpOf6Nzm7FR27
+         WcYoXxhQ4HdXJuS7plNMJ0G0og5Q52h02YUzr/KdMAy4Iewu9K88D1JytuY0F+rd/5Mv
+         k3eA==
+X-Gm-Message-State: AOJu0YxxcPkP02Yw0DcR6XpGMx0A2nKPpNhDmJHG9BOdbulLSQBXcH/g
+	k/ms5UDg9gYFC5CRv2X7TI7Bakzge0uXL27WHWYtbSPVVAXwW+v6sS7lAD2cJSo=
+X-Google-Smtp-Source: AGHT+IFr258v4SXR0QTU2G0U7yZ6h9mynnDCJbZQqvSS9vBIBIZa0qKTI7/tvGC3zsaKQiHMi+PM4A==
+X-Received: by 2002:a05:600c:2045:b0:420:1853:68c3 with SMTP id 5b1f17b1804b1-421089de945mr65141785e9.20.1716821147875;
+        Mon, 27 May 2024 07:45:47 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:75a:e000:c322:131e:ff9d:ef41])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42108989fdesm111746175e9.25.2024.05.27.07.45.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 May 2024 07:24:05 -0700 (PDT)
-From: Jun Nie <jun.nie@linaro.org>
-Date: Mon, 27 May 2024 22:21:52 +0800
-Subject: [PATCH v5 6/6] drm/msm/dsi: add a comment to explain pkt_per_line
- encoding
+        Mon, 27 May 2024 07:45:47 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH] dt-bindings: usb: qcom,dwc3: set minItems for interrupt-names
+Date: Mon, 27 May 2024 16:45:38 +0200
+Message-ID: <20240527144538.155704-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240527-msm-drm-dsc-dsi-video-upstream-4-v5-6-f797ffba4682@linaro.org>
-References: <20240527-msm-drm-dsc-dsi-video-upstream-4-v5-0-f797ffba4682@linaro.org>
-In-Reply-To: <20240527-msm-drm-dsc-dsi-video-upstream-4-v5-0-f797ffba4682@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Jun Nie <jun.nie@linaro.org>, Jonathan Marek <jonathan@marek.ca>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1716819804; l=1190;
- i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=hsA6cTh9A+abQ7dtFiITzQof1AHhT8P4eUkFfENrPaA=;
- b=DmbDrlVs3esyebwnhCPWbFsy+3uwdGxILFetgc/uTTqgEnXQ4scfPZdp9cpq2OPCVEMiCYALa
- kYkngMR3pH8CTp6Ev9lolCotIye0Vm+rDHwrPIy1FkaaCunqMdtsjC0
-X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
- pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
+Content-Transfer-Encoding: 8bit
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Make it clear why the pkt_per_line value is being "divided by 2".
+There's a set of compatibles for which we set a strict list of 5 interrupt
+names even though minItems for the interrupts property is 4. One of the
+USB controllers on sa8775p only consumes 4 interrupts which leads to
+dtbs_check errors. Make the last entry optional by setting minItems to 4.
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 7252d36687e6..4768cff08381 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -885,7 +885,11 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	/* DSI_VIDEO_COMPRESSION_MODE & DSI_COMMAND_COMPRESSION_MODE
- 	 * registers have similar offsets, so for below common code use
- 	 * DSI_VIDEO_COMPRESSION_MODE_XXXX for setting bits
-+	 *
-+	 * pkt_per_line is log2 encoded, >>1 works for supported values (1,2,4)
- 	 */
-+	if (pkt_per_line > 4)
-+		drm_warn_once(msm_host->dev, "pkt_per_line too big");
- 	reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_PKT_PER_LINE(pkt_per_line >> 1);
- 	reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EOL_BYTE_NUM(eol_byte_num);
- 	reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_EN;
-
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index cf633d488c3f..4251dc25ee9a 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -468,6 +468,7 @@ allOf:
+           minItems: 4
+           maxItems: 5
+         interrupt-names:
++          minItems: 4
+           items:
+             - const: pwr_event
+             - const: hs_phy_irq
 -- 
-2.34.1
+2.43.0
 
 
