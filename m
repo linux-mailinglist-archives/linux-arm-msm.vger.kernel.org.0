@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0045D8D0A10
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 20:42:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F08AE8D0A1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 20:44:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE38A28301A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 18:42:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 85A611F218D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 18:44:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45FD415FA7C;
-	Mon, 27 May 2024 18:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ACE315FA7B;
+	Mon, 27 May 2024 18:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y0+7Qr01"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZHx1sLV+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1330F15FA6B;
-	Mon, 27 May 2024 18:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E93E155C81;
+	Mon, 27 May 2024 18:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716835310; cv=none; b=etYKBcaPb2Vqw+FMRfGNzmk01zkkVYtD8AelbaHUK1f3t5iAFplTamn7pgTIwiBHYBOzl0ataGgkKwmMs2lUetRiUxXwtJw2cs4ml9le8f/ZittydF5x5mZebEvWd5jgB1ChMD8Z9yszsjIND7ahPrHSGvkrlmRFwMZWxzl36D8=
+	t=1716835440; cv=none; b=iKCU2oLUhMJLhuDrEwAwb18uoYt0Mz0dvLVjdXWOYBKkEnpX1oO2QcdGe44crU1QPHuw559OPfOdISuU3ZX+6/wYm1Z2wW5snuH3Ek9QL8WkNmxAeDms5gO2f+fFcyyHhHaiq55hsSYldqe45vqeiNCosjtNfqZtlkZFXj3dxZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716835310; c=relaxed/simple;
-	bh=ZAYWwfV1OEyqXzGdLDzfV5BVTmztV5SWkMzCbWrY1TQ=;
+	s=arc-20240116; t=1716835440; c=relaxed/simple;
+	bh=9EmvIFl4KYSHoGu6mBh30DLc+7+lt6Z/dShi6EknA3g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RwrwfzkyMRlDEt8w6SqcSTspnEgkMecGGer1toZxkGwulyoLlMYi+/Lmak0ldB6ieZc+a0SDwd4jPYWpkONT9E4q7QP1JtRi8LFbE/mnL4tKUKBX+MeJFYVcSwidgvCZzxaHpmvnuIAU+8rxVC29VfV/FqUjplXfMFyfGKziHoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y0+7Qr01; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95E8C32782;
-	Mon, 27 May 2024 18:41:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QVDZSDLTe4KWek0lRFpsdvGWKFahPmDi8xtShOBEO619XezT1CWBvjcTk4CxePjKiZjHUV8Hb/PBB5kDgAb8c6/jgsFoAQJIJ6/38kYH8NajhQjr2IB/UJa5Rqv9TBK4cHscFTPJ37CuWWLOraTqh+5cQCMqAUbgkNomCCxnUok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZHx1sLV+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C45C32781;
+	Mon, 27 May 2024 18:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716835309;
-	bh=ZAYWwfV1OEyqXzGdLDzfV5BVTmztV5SWkMzCbWrY1TQ=;
+	s=k20201202; t=1716835439;
+	bh=9EmvIFl4KYSHoGu6mBh30DLc+7+lt6Z/dShi6EknA3g=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Y0+7Qr01/p8fLq0J4RkroNtYjuG0DDqOmttOKEUULhWOLBm5q7DBVuhjWRtJLtaPt
-	 31HokXwENc6DdrxTGow+L3KOCZGCoDgUsNsGjCqYjEB99tatMQfGIxGFETcvVJhqZm
-	 cqMi/uTHaDED63KV9iXAv/ccpK6i7rCOK7UtZM5WD0BRr9sJQcRUWBCzZksyDTXaUD
-	 4OJgFaT/SjBSCbwqfQC1+pimW2IVZVsazdk5+PPuIrqRQGfrinqH42OevzPDh8Q/i3
-	 oxH3i/ZlkbGT4WKC+9e/2fnGhhEmTIXa7B/F0hOpGlKXnrHXoVzgiTPpXvL0hqHwES
-	 rItjTPKdvXNGw==
-Message-ID: <28187208-1cf6-4bee-af2f-f1f1d6e6da3d@kernel.org>
-Date: Mon, 27 May 2024 20:41:42 +0200
+	b=ZHx1sLV+kdgEaHYMxSCoiUFXsrQl5l9LsN+SzNvbSyRVJ+VYqH1HNGuPvLrPfWqEr
+	 ryIqN4M8JuoV38nD5gC/U//GO/mWQsH/GU4taOCb2NXwuMh9bAX4gonEqgQwnezBy6
+	 o29jv2/eZNWJ0KJ07SWYLXGVhO6Ei254uPH82aWuuB0CvcUzsOl/HgjVsv2kArE8SY
+	 7BlXwoJ/A7Sp4a4w4VmcicOC9pVWc6AS0hselcK9gYn5yvw1O0THqe3Q7sooUomS6E
+	 Cvh6PU/HaRHKUxAAtygQwgZnp+GuVQMaf06lY0EcNKWkKh0dIKD6+c/CbTSJiQ033F
+	 JZhli92NulnPg==
+Message-ID: <f0797ee5-8286-45aa-a817-fb8514c72cef@kernel.org>
+Date: Mon, 27 May 2024 20:43:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,25 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 01/15] dt-bindings: firmware: qcom,scm: add
- memory-region for sa8775p
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Marko <robimarko@gmail.com>,
- Das Srinagesh <quic_gurus@quicinc.com>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Maximilian Luz <luzmaximilian@gmail.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, Elliot Berman <quic_eberman@quicinc.com>,
- Alex Elder <elder@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kernel@quicinc.com
-References: <20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org>
- <20240527-shm-bridge-v10-1-ce7afaa58d3a@linaro.org>
+Subject: Re: [PATCH v2 1/7] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp:
+ Reference usb-switch.yaml to allow mode-switch
+To: Neil Armstrong <neil.armstrong@linaro.org>, Vinod Koul
+ <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-0-a03e68d7b8fc@linaro.org>
+ <20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-1-a03e68d7b8fc@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,17 +107,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240527-shm-bridge-v10-1-ce7afaa58d3a@linaro.org>
+In-Reply-To: <20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-1-a03e68d7b8fc@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/05/2024 14:54, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 27/05/2024 10:42, Neil Armstrong wrote:
+> The QMP USB3/DP Combo PHY can work in 3 modes:
+> - DisplayPort Only
+> - USB3 Only
+> - USB3 + DisplayPort Combo mode
 > 
-> Document a new property (currently only for sa8775p) that describes the
-> memory region reserved for communicating with the TrustZone.
+> In order to switch between those modes, the PHY needs to receive
+> Type-C events, allow marking to the phy with the mode-switch
+> property in order to allow the PHY to Type-C events.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Reference usb-switch.yaml as a simpler way to allow the mode-switch
+> property instead of duplicating the property definition.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
 
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
