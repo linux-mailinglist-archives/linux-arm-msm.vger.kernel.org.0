@@ -1,175 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-20546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53FD78CFB35
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 10:22:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C0BFD8CFB30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 10:22:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AA8C0B212CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 08:22:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 24AF7B20A53
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 08:21:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5AAB6A33A;
-	Mon, 27 May 2024 08:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 662514D5A2;
+	Mon, 27 May 2024 08:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uqvZ0TIf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from laurent.telenet-ops.be (laurent.telenet-ops.be [195.130.137.89])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9583F5916B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 08:21:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.130.137.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10A9482DB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 08:21:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716798109; cv=none; b=E4ymGOyKeFcW+xFjpdwisQgXlbmCbOC6CW9pK0mRIuHcXw6sM7+m3b1RNbtY7SvySlLzHMLL2rhBWyfTz1BCkWIf96tiLHAqIacSJGVdcQ99f9l27rR0s+XU4o3SNOE//cjJFmaJc3GMYyxEg0kI7x+VyNwXx7a8771nYuaN9Ow=
+	t=1716798105; cv=none; b=dKgCBHKEPNhh+cSdM0+lcFCsrZmg2npK1cEyQE7aJZpO7QGgN05xZuAcWw4zJFSRHfdDKgTvYrlQ2aWkkYKNNyrNGoNihNpnUYG+6Ih7dfxCB4k4sgkfPQoKoGyJXlES9O1NG0ErCmow521Yl73m8OswT5iiqCwvYrMXmQgjsV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716798109; c=relaxed/simple;
-	bh=VUoipgzKELAh07Yxw3K4MnePp0QyvFWZ+vCKCEYjJ/A=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Cuq8cV/lqa1TegjStI5EabsQeGv6y5K9Md4IcPvdTQargh3GfAHpZLIdhSeoXu0yED9zBqoN2JnQyohL2l+Nn/ZEfmA6hSItpXqyQ8AH6GVlU1e87VDX9+3ls6n9z1NQ36LNY/QfvsNWEoqFc/vo9eJOCqH5XnwDJ21vzqVkcX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=none smtp.mailfrom=linux-m68k.org; arc=none smtp.client-ip=195.130.137.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux-m68k.org
-Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed80:c993:5573:f894:7353])
-	by laurent.telenet-ops.be with bizsmtp
-	id U8Ma2C00B2nC7mg018Ma4k; Mon, 27 May 2024 10:21:40 +0200
-Received: from geert (helo=localhost)
-	by ramsan.of.borg with local-esmtp (Exim 4.95)
-	(envelope-from <geert@linux-m68k.org>)
-	id 1sBVbq-00C8pf-Cj;
-	Mon, 27 May 2024 10:21:34 +0200
-Date: Mon, 27 May 2024 10:21:34 +0200 (CEST)
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-To: linux-kernel@vger.kernel.org
-cc: sparclinux@vger.kernel.org, amd-gfx@lists.freedesktop.org, 
-    dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-    freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org, 
-    mpi3mr-linuxdrv.pdl@broadcom.com, linux-scsi@vger.kernel.org, 
-    linux-um@lists.infradead.org, bpf@vger.kernel.org, 
-    loongarch@lists.linux.dev, linux-parisc@vger.kernel.org
-Subject: Re: Build regressions/improvements in v6.10-rc1
-In-Reply-To: <20240527075047.4004654-1-geert@linux-m68k.org>
-Message-ID: <5483dbca-9826-4d15-8d4-cacce091666c@linux-m68k.org>
-References: <CAHk-=wjQv_CSPzhjOMoOjGO3FmuHe5hzm6Ds69zZSFPa4PeuCA@mail.gmail.com> <20240527075047.4004654-1-geert@linux-m68k.org>
+	s=arc-20240116; t=1716798105; c=relaxed/simple;
+	bh=cceYAsgDiCHGaSpS6IW9ly8dHBzSfQSYZLsDTFcDAFo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=g31woCXaWKZXJxsiL5KlZz+3Fd0JD9OFF7i4Ex61irwWIyXPSwOiqEShPuR5qA+GFF65ZO0Mc8L2JO6lyWADqaG3tLO5PeZb6chrdpuhG09ds7bxFCo9yZzwSY021zq7hBTXDMZrgGc5YNhMtt/b78RafoCqmqRHJBiu/pBPfgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uqvZ0TIf; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5295eb47b48so3048424e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 01:21:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716798102; x=1717402902; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=w4h0xVgmp6O95ltnSyYIN+xgAjoH5av4iO+f2Be+lX8=;
+        b=uqvZ0TIfoGWss7jFXKpaNO9/SLBtvCoi+lh5obdpL+PArkETjjstfQUUOoIJ3otxNl
+         EtmdVWVeG71CEcNtJIVlWy8QxmEmYbcZsd5t/TlbsfDT8sDha/xeFSC8EXE5IofWp4NT
+         VgNm8GcizDFiNmz4h5GAEDMTFTI8dJREmbQprfTXwMXczwZ9nB9pnHRbLRLaepuQ8+VN
+         ENfa3Aijfu+Yj+HwBcSStvxeSuclka1IRiFXZ1JP562YuEdwk/pz2GZ4zCMaWQRIBqUa
+         9ku+wwgD2mvsgH0DFhlDr3bNdLCwNcKEA54e3Secsul971CS0IzvfrSBUe9LrrhMK9j5
+         PPMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716798102; x=1717402902;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=w4h0xVgmp6O95ltnSyYIN+xgAjoH5av4iO+f2Be+lX8=;
+        b=GosZOZzruUfnrZPQHEdCBsqrsTzxM/Y+zTmuijvv9x2GMARVyfjyz3DkLFq1EPNDGK
+         buRvulna7trALR41eHu1U2RV79dCvul8Yv+zakLpgRGqTOvtNyH401nK+9CWfSoYbOW6
+         FQFE+VilsQnyWkgG7qzhSTFyCp6VE/5AQXHIhKtgaxZQb5l9pcuiIbvHCqDCNOPblAi4
+         CQq9WVX5bIFYwAQCPvF2iUkio9IlHQUcKjcLdyrd5zdEguFHrtcQRNo8z54W+GrhEyEb
+         5zCmuLRKRJufNVtkoKTMihaWYl/vabj7MqdG4DRXIWMsMO8FCSAt5ksgvdPNTd0Wap4i
+         wcig==
+X-Gm-Message-State: AOJu0YxGuGoCRAIgzOevYdtI3laBD4JCACu9K+HwBbJPzm+wqNegBAcZ
+	7rHl910apkOG4vxSl66i3+nsk0JWvZl7PBVQ+fjFHxP4OFwbaUO0heEHERxCzIA=
+X-Google-Smtp-Source: AGHT+IG1q5gpqM3RDLiKyRzMzni1Iffzn0AIEcEQwVhmUps93eC5uO7dv5XOzOLKB7s4TiS5dts2XQ==
+X-Received: by 2002:a19:2d56:0:b0:51f:452f:927b with SMTP id 2adb3069b0e04-52966ca6423mr4780973e87.45.1716798101877;
+        Mon, 27 May 2024 01:21:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:371c:b423:6c2b:61bb? ([2a01:e0a:982:cbb0:371c:b423:6c2b:61bb])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42100eeca80sm133840705e9.2.2024.05.27.01.21.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 May 2024 01:21:41 -0700 (PDT)
+Message-ID: <129649cf-214b-4493-bc1b-d8ea3ce978a0@linaro.org>
+Date: Mon, 27 May 2024 10:21:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1442935893-1716798094=:2884583"
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-1442935893-1716798094=:2884583
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] soc: qcom: pmic_glink: Increase max ports to 3
+To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240527-x1e80100-soc-qcom-pmic-glink-v1-1-e5c4cda2f745@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20240527-x1e80100-soc-qcom-pmic-glink-v1-1-e5c4cda2f745@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 
-On Mon, 27 May 2024, Geert Uytterhoeven wrote:
-> Below is the list of build error/warning regressions/improvements in
-> v6.10-rc1[1] compared to v6.9[2].
->
-> Summarized:
->  - build errors: +27/-20
->  - build warnings: +3/-1601
->
-> Happy fixing! ;-)
->
-> Thanks to the linux-next team for providing the build service.
->
-> [1] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0/ (all 138 configs)
-> [2] http://kisskb.ellerman.id.au/kisskb/branch/linus/head/a38297e3fb012ddfa7ce0321a7e5a8daeb1872b6/ (all 138 configs)
->
->
-> *** ERRORS ***
->
-> 27 error regressions:
->  + /kisskb/src/arch/sparc/prom/p1275.c: error: no previous prototype for 'prom_cif_init' [-Werror=missing-prototypes]:  => 52:6
+On 27/05/2024 10:16, Abel Vesa wrote:
+> Up until now, all Qualcomm platforms only had maximum 2 ports. The X Elite
+> (x1e80100) adds a third one. Increase the maximum allowed to 3.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   drivers/soc/qcom/pmic_glink_altmode.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
+> index b3808fc24c69..1e0808b3cb93 100644
+> --- a/drivers/soc/qcom/pmic_glink_altmode.c
+> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
+> @@ -20,7 +20,7 @@
+>   
+>   #include <linux/soc/qcom/pmic_glink.h>
+>   
+> -#define PMIC_GLINK_MAX_PORTS	2
+> +#define PMIC_GLINK_MAX_PORTS	3
+>   
+>   #define USBC_SC8180X_NOTIFY_IND	0x13
+>   #define USBC_CMD_WRITE_REQ      0x15
+> 
+> ---
+> base-commit: 3689b0ef08b70e4e03b82ebd37730a03a672853a
+> change-id: 20240522-x1e80100-soc-qcom-pmic-glink-f3b715fe5f90
+> 
+> Best regards,
 
-sparc64-gcc13/sparc64-allmodconfig (seen before)
-
->  + /kisskb/src/drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn20/display_mode_vba_20.c: error: the frame size of 2192 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 5118:1
->  + /kisskb/src/drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn20/display_mode_vba_20v2.c: error: the frame size of 2280 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 5234:1
->  + /kisskb/src/drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn30/display_mode_vba_30.c: error: the frame size of 2096 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 5188:1
->  + /kisskb/src/drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn30/display_mode_vba_30.c: error: the frame size of 2184 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 3049:1
->  + /kisskb/src/drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn31/display_mode_vba_31.c: error: the frame size of 2264 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 3274:1
->  + /kisskb/src/drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn314/display_mode_vba_314.c: error: the frame size of 2232 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 3296:1
->  + /kisskb/src/drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn314/display_rq_dlg_calc_314.c: error: the frame size of 2080 bytes is larger than 2048 bytes [-Werror=frame-larger-than=]:  => 1646:1
-
-powerpc-gcc5/ppc32_allmodconfig
-
->  + /kisskb/src/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c: error: unknown option after '#pragma GCC diagnostic' kind [-Werror=pragmas]:  => 16:9
->  + /kisskb/src/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h: error: 'gen7_9_0_external_core_regs' defined but not used [-Werror=unused-variable]:  => 1438:19
->  + /kisskb/src/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h: error: 'gen7_9_0_sptp_clusters' defined but not used [-Werror=unused-variable]:  => 1188:43
-
-arm64-gcc5/arm64-allmodconfig
-powerpc-gcc5/powerpc-all{mod,yes}config
-powerpc-gcc5/ppc32_allmodconfig
-powerpc-gcc5/ppc64_book3e_allmodconfig
-powerpc-gcc5/ppc64le_allmodconfig
-sparc64-gcc5/sparc64-allmodconfig
-
-Looks like #pragma "-Wunused-const-variable" is not supported by gcc-5
-
->  + /kisskb/src/drivers/gpu/drm/nouveau/nvif/object.c: error: 'memcpy' accessing 4294967240 or more bytes at offsets 0 and 56 overlaps 6442450833 bytes at offset -2147483593 [-Werror=restrict]:  => 298:17
->  + /kisskb/src/drivers/gpu/drm/nouveau/nvif/object.c: error: 'memcpy' accessing 4294967264 or more bytes at offsets 0 and 32 overlaps 6442450881 bytes at offset -2147483617 [-Werror=restrict]:  => 161:9
-
-parisc-gcc13/generic-32bit_defconfig
-parisc-gcc13/parisc-{def,allmod}config
-
->  + /kisskb/src/include/linux/kern_levels.h: error: format '%lu' expects argument of type 'long unsigned int', but argument 4 has type 'unsigned int' [-Werror=format=]:  => 5:18, 5:25
-
-mips-gcc{8,13}/mips-allmodconfig
-parisc-gcc13/parisc-allmodconfig
-powerpc-gcc{5,13}/ppc32_allmodconfig
-sparc64-gcc{5,13}/sparc-allmodconfig
-xtensa-gcc13/xtensa-allmodconfig
-
-drivers/scsi/mpi3mr/mpi3mr_transport.c: In function 'mpi3mr_sas_port_add':
-drivers/scsi/mpi3mr/mpi3mr_transport.c:1367:62: note: format string is defined here
-     ioc_warn(mrioc, "skipping port %u, max allowed value is %lu\n",
-                                                             ~~^
-                                                             %u
-
->  + /kisskb/src/kernel/bpf/verifier.c: error: ‘pcpu_hot’ undeclared (first use in this function):  => 20317:85
->  + /kisskb/src/lib/iomap.c: error: no previous prototype for ‘ioread64_hi_lo’ [-Werror=missing-prototypes]:  => 163:5
->  + /kisskb/src/lib/iomap.c: error: no previous prototype for ‘ioread64_lo_hi’ [-Werror=missing-prototypes]:  => 156:5
->  + /kisskb/src/lib/iomap.c: error: no previous prototype for ‘ioread64be_hi_lo’ [-Werror=missing-prototypes]:  => 178:5
->  + /kisskb/src/lib/iomap.c: error: no previous prototype for ‘ioread64be_lo_hi’ [-Werror=missing-prototypes]:  => 170:5
->  + /kisskb/src/lib/iomap.c: error: no previous prototype for ‘iowrite64_hi_lo’ [-Werror=missing-prototypes]:  => 272:6
->  + /kisskb/src/lib/iomap.c: error: no previous prototype for ‘iowrite64_lo_hi’ [-Werror=missing-prototypes]:  => 264:6
->  + /kisskb/src/lib/iomap.c: error: no previous prototype for ‘iowrite64be_hi_lo’ [-Werror=missing-prototypes]:  => 288:6
->  + /kisskb/src/lib/iomap.c: error: no previous prototype for ‘iowrite64be_lo_hi’ [-Werror=missing-prototypes]:  => 280:6
-
-um-x86_64-gcc12/um-all{mod,yes}config
-
->  + {standard input}: Error: displacement to undefined symbol .L137 overflows 8-bit field :  => 1105, 1031
->  + {standard input}: Error: displacement to undefined symbol .L158 overflows 8-bit field :  => 1110
->  + {standard input}: Error: unknown pseudo-op: `.al':  => 1270
->  + {standard input}: Error: unknown pseudo-op: `.siz':  => 1273
-
-sh4-gcc13/sh-all{mod,yes}config (SH ICE crickets)
-
-> 3 warning regressions:
->  + /kisskb/src/drivers/gpu/drm/nouveau/nvif/object.c: warning: 'memcpy' accessing 4294967240 or more bytes at offsets 0 and 56 overlaps 6442450833 bytes at offset -2147483593 [-Wrestrict]:  => 298:17
->  + /kisskb/src/drivers/gpu/drm/nouveau/nvif/object.c: warning: 'memcpy' accessing 4294967264 or more bytes at offsets 0 and 32 overlaps 6442450881 bytes at offset -2147483617 [-Wrestrict]:  => 161:9
-
-parisc-gcc13/generic-32bit_defconfig
-parisc-gcc13/parisc-{def,allmod}config
-
->  + {standard input}: Warning: setting incorrect section attributes for .rodata..c_jump_table:  => 10174
-
-loongarch-gcc13/loongson3_defconfig
-
-Gr{oetje,eeting}s,
-
- 						Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
- 							    -- Linus Torvalds
---8323329-1442935893-1716798094=:2884583--
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
