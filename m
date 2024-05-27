@@ -1,60 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-20491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 186078CF6E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 02:03:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5A988CF6FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 02:28:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C874E2814C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 00:03:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 672E91F21874
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 00:28:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC95C1A2C09;
-	Mon, 27 May 2024 00:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EDF3653;
+	Mon, 27 May 2024 00:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PiWZpHOm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t9pxCDdP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912AD2107;
-	Mon, 27 May 2024 00:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F7B64D;
+	Mon, 27 May 2024 00:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716768202; cv=none; b=OzEtulal0QwdH+CS/UBanpk/UEpgIns6mYRftkHLc5olL9vjb0XaoZAo3xC7/u1uou1Jzt48IZqzdaeVMNTDhdDBo2zQEh0bqx8ChQH4uFE59kqetfhcx4OsbuhZ+E+QFuTJIh3sqE4HUkE8p4rTpsuy+02ob7BGjiqndzieHHo=
+	t=1716769726; cv=none; b=Vl0WZpNz+Ywtuto4oPl6tD1fwRGAOwJbR64kwBo6N9BM61zm8zoF0B8f9fTvnWVQ8f0knmgGfFpJGsqfQ9W4kFionnqWOze8dIhi57jp82jR22A7i5gu5oWZv9Dhpe8beuEWLgOjyaM2r+nKRIhfx8NbLAeumPoBfU5PMe3S1zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716768202; c=relaxed/simple;
-	bh=Mz3OF3B15X3H0lFrcQA68DoS91Or2bDicgLrhyGKkHU=;
+	s=arc-20240116; t=1716769726; c=relaxed/simple;
+	bh=zIGvqg9C2cc/RoiPwzBBqxZiUhayYAnjEKOC116yeN4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rFn9hTVxVZIEPoQXLP4ZlhlNmxvqUxRfyn5s1U1JKGra4aOFlCEG1+QuDYMyHdZH9QRMNbVBSLS+g/YGYsJMP2slqSkFkd0w3EyKH67MEFo6FdEgty+JDsJW4pzlA/uLOHsqpUGQTCOjMgmJMNKRt9eMDhnAAvxHDMQAZOXUM3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PiWZpHOm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72ECC2BD10;
-	Mon, 27 May 2024 00:03:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mV7SgjgS9UksgXrbyoX+uyUFqlJQ59I2l1NeA5v9fkBNWBvWHygc1hDA+73niLNXzpjRg0fGQJ7+xGk3imJpJxSFhFUZtbERTIDVDxJvJaxkW/fnRWJrtduEIzdwhcWAjZ0/1AQxpl12wqGfjA0VVXXMC9lYCrh+wFI2gyA+AWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t9pxCDdP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AAA6C2BD10;
+	Mon, 27 May 2024 00:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716768202;
-	bh=Mz3OF3B15X3H0lFrcQA68DoS91Or2bDicgLrhyGKkHU=;
+	s=k20201202; t=1716769725;
+	bh=zIGvqg9C2cc/RoiPwzBBqxZiUhayYAnjEKOC116yeN4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PiWZpHOmjAl9W7sSk/AgizPxT4u6NWhZCOXL9upKTDepm+qKTvZ7eDCLfAixbOF6q
-	 IbsyX0FsJ0Pgibq2XOV1KDtBTfg3MCqKg9kSX76bFTI95JIavlYfmGbVdeq9u0pc/i
-	 7gTcLx3TogltDrGtDRXKAAsBe7QZYXRmAU4Wh0/95T1W6FMrz2o51i6AAWQ++KK/i+
-	 mHs21opCxjoBOUPK9MuRj8cYL3L1RUHDoQNyou0uz1/jPcgliZD6v+y0aY8gIQS+1f
-	 Bwd8zGM/VEkjL7sM3DUMNTvUZZ/YXv5DDzZf/54PPqHBodMIahLU4C/poid5uke4c9
-	 iJMTFOBG4YPDQ==
-Date: Sun, 26 May 2024 19:03:18 -0500
+	b=t9pxCDdPTcZbJk487OCtN3drARKnpYRanClbooRgz7JDyi0pWENvornsabqMg9Z6+
+	 vUuhb15uAHlDu0RrhubLZjGJNwKDAXWFJ1rDK0gDm4HoB+InCYZVYpaF3pfgmS4NCj
+	 1+WYcsiJbasmVVAvsL2x8t+J5xipZn8qWp+PeJq+6741edfDlkVVTuQcCbpr2tyfVx
+	 hCAIIrDbXNsT7MebZLrkv4ySchQKXPozemY72rHF662WMzJV7AfSJm5xGVOeTbI6r2
+	 CgrqSTtXhydJboJOVvh3ZUKp7k0iJmo4pxjAgkWviiiYc4ykPUOC3Vnb+qDBp5Iq48
+	 Nu9AEbtEVaU1g==
+Date: Sun, 26 May 2024 19:28:42 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Connor Abbott <cwabbott0@gmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 2/6] firmware: qcom_scm: Add gpu_init_regs call
-Message-ID: <5uvps3a2zn2q4eokzx5ptmylid4cqt6e6gaasv4qssblczaklv@yr3nfhswn7dt>
-References: <20240430-a750-raytracing-v3-0-7f57c5ac082d@gmail.com>
- <20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Komal Bajaj <quic_kbajaj@quicinc.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>, quic_wcheng@quicinc.com, quic_ppratap@quicinc.com, 
+	Jack Pham <quic_jackp@quicinc.com>, Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Subject: Re: [PATCH v3 0/3] Add devicetree support of USB for QDU/QRU1000
+Message-ID: <km2c2tkd5j3vedrmttpn4nydqpfhhz4bwgtzmngwbok4vic6q6@nshjtqcqmklm>
+References: <20240502090326.21489-1-quic_kbajaj@quicinc.com>
+ <CAA8EJprPLqj7GQM0vmN25U2+3kDow=NH8=-VC2N-0p92Ub3iCA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,101 +62,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com>
+In-Reply-To: <CAA8EJprPLqj7GQM0vmN25U2+3kDow=NH8=-VC2N-0p92Ub3iCA@mail.gmail.com>
 
-On Tue, Apr 30, 2024 at 11:43:16AM GMT, Connor Abbott wrote:
-> This will used by drm/msm to initialize GPU registers that Qualcomm's
-> firmware doesn't make writeable to the kernel.
+On Thu, May 02, 2024 at 12:09:41PM GMT, Dmitry Baryshkov wrote:
+> On Thu, 2 May 2024 at 12:04, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+> >
+> > This series adds devicetree nodes to support interconnects and usb for qdu/qru1000.
+> > This is based on previously sent driver series[1].
+> >
+> > ------
+> > Changes in v3:
+> > * As per comments on upstream[2], to get role-switch working on QDU/QRU1000, it was recommended to
+> >   use the actual TI switch driver. Since driver doesn't have the functionality to provide role-switch
+> >   based on gpio, thus reverting back USB dr_mode to peripheral and removed the remote end-point nodes
+> >   and usb-conn-gpio based role switch functionality.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+> This is not correct. The recommendation was to describe hardware properly.
+> Which means adding schema description, adding  ti,your-switch
+> compatible to the usb-conn-gpio.c driver, etc.
+> 
 
-Acked-by: Bjorn Andersson <andersson@kernel.org>
+In addition to wrangling the ti,switch implementation (and binding) into
+something that only deals with the gpios and not actually talks to the
+chip, this would also require us to add support for fishing out
+vbus-supply of the connector and control that from said driver (or from
+dwc3, or from dwc3-qcom...).
+
+Given that I find it acceptable to pick up the peripheral-only support
+as presented...
 
 Regards,
 Bjorn
 
-> ---
->  drivers/firmware/qcom/qcom_scm.c       | 14 ++++++++++++++
->  drivers/firmware/qcom/qcom_scm.h       |  3 +++
->  include/linux/firmware/qcom/qcom_scm.h | 23 +++++++++++++++++++++++
->  3 files changed, 40 insertions(+)
+> > * Link to v2: https://lore.kernel.org/linux-arm-msm/20240319091020.15137-1-quic_kbajaj@quicinc.com/
+> >
+> > Changes in v2:
+> > * Changes qmpphy node name
+> > * Changes dr_mode to otg and added USB-B port USB role switch
+> > * Dropped maximum-speed property from usb dwc3 node
+> > * Link to v1: https://lore.kernel.org/linux-arm-msm/20240311120859.18489-1-quic_kbajaj@quicinc.com/
+> >
+> > [1] https://lore.kernel.org/linux-arm-msm/20240502082017.13777-1-quic_kbajaj@quicinc.com/
+> > [2] https://lore.kernel.org/all/CAA8EJppNZrLzT=vGS0NXnKJT_wL+bMB9jFhJ9K7b7FPgFQbcig@mail.gmail.com/
+> > ------
+> >
+> > Komal Bajaj (3):
+> >   arm64: dts: qcom: qdu1000: Add USB3 and PHY support
+> >   arm64: dts: qcom: qdu1000-idp: enable USB nodes
+> >   arm64: dts: qcom: qru1000-idp: enable USB nodes
+> >
+> >  arch/arm64/boot/dts/qcom/qdu1000-idp.dts |  23 +++++
+> >  arch/arm64/boot/dts/qcom/qdu1000.dtsi    | 120 +++++++++++++++++++++++
+> >  arch/arm64/boot/dts/qcom/qru1000-idp.dts |  23 +++++
+> >  3 files changed, 166 insertions(+)
+> >
+> > --
+> > 2.42.0
+> >
+> >
 > 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 06e46267161b..f8623ad0987c 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -1394,6 +1394,20 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->  }
->  EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh);
->  
-> +int qcom_scm_gpu_init_regs(u32 gpu_req)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_GPU,
-> +		.cmd = QCOM_SCM_SVC_GPU_INIT_REGS,
-> +		.arginfo = QCOM_SCM_ARGS(1),
-> +		.args[0] = gpu_req,
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +
-> +	return qcom_scm_call(__scm->dev, &desc, NULL);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_scm_gpu_init_regs);
-> +
->  static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
->  {
->  	struct device_node *tcsr;
-> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
-> index 4532907e8489..484e030bcac9 100644
-> --- a/drivers/firmware/qcom/qcom_scm.h
-> +++ b/drivers/firmware/qcom/qcom_scm.h
-> @@ -138,6 +138,9 @@ int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
->  #define QCOM_SCM_WAITQ_RESUME			0x02
->  #define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
->  
-> +#define QCOM_SCM_SVC_GPU			0x28
-> +#define QCOM_SCM_SVC_GPU_INIT_REGS		0x01
-> +
->  /* common error codes */
->  #define QCOM_SCM_V2_EBUSY	-12
->  #define QCOM_SCM_ENOMEM		-5
-> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-> index aaa19f93ac43..a221a643dc12 100644
-> --- a/include/linux/firmware/qcom/qcom_scm.h
-> +++ b/include/linux/firmware/qcom/qcom_scm.h
-> @@ -115,6 +115,29 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
->  int qcom_scm_lmh_profile_change(u32 profile_id);
->  bool qcom_scm_lmh_dcvsh_available(void);
->  
-> +/*
-> + * Request TZ to program set of access controlled registers necessary
-> + * irrespective of any features
-> + */
-> +#define QCOM_SCM_GPU_ALWAYS_EN_REQ BIT(0)
-> +/*
-> + * Request TZ to program BCL id to access controlled register when BCL is
-> + * enabled
-> + */
-> +#define QCOM_SCM_GPU_BCL_EN_REQ BIT(1)
-> +/*
-> + * Request TZ to program set of access controlled register for CLX feature
-> + * when enabled
-> + */
-> +#define QCOM_SCM_GPU_CLX_EN_REQ BIT(2)
-> +/*
-> + * Request TZ to program tsense ids to access controlled registers for reading
-> + * gpu temperature sensors
-> + */
-> +#define QCOM_SCM_GPU_TSENSE_EN_REQ BIT(3)
-> +
-> +int qcom_scm_gpu_init_regs(u32 gpu_req);
-> +
->  #ifdef CONFIG_QCOM_QSEECOM
->  
->  int qcom_scm_qseecom_app_get_id(const char *app_name, u32 *app_id);
 > 
 > -- 
-> 2.31.1
-> 
+> With best wishes
+> Dmitry
 
