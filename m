@@ -1,165 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-20524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A72D8CF875
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 06:37:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BB4D8CF8CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 07:38:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1238528361C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 04:37:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0F891F21A3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 05:38:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 769E979F6;
-	Mon, 27 May 2024 04:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99847D528;
+	Mon, 27 May 2024 05:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CjRSnw3K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NRu0XEoC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA68FBEF;
-	Mon, 27 May 2024 04:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CCCC152
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 05:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716784673; cv=none; b=QbW+gyrZrHYFCMCmVIV/7WB2Q652TCZhe9ZvM08p6lQHv175pehM/PY4yCxxDyhH0yCgGmUWy1LEdfXmcTZCuCtQAtN3h4QD6yrRTmoddAiz9+x4qJ5uTgtCa9BQerfxss4j38IO2NYSwH0IM2I/44o1f5IjBzBuxD6hlaq1CBo=
+	t=1716788326; cv=none; b=QehFYn+XCGTO2R8r83z6fY6HPKvHnJFJB0G6lMDX22fgVVg52lGnn52gMNiNzYdA4ddF+5Ppriz/J6Da0oNOQQo0589tX4H6i+M4TOhsjy5a+PmBfCso7GJcF7bqRVsLF2WykXdDFyjAgwR9SxSJRFmpsjht7wgyCunmUDHso4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716784673; c=relaxed/simple;
-	bh=EHD2w19epTrPQq3vs3G/tNDyHmNlskVxhDpFLuv7B+o=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=TNxYV+y0exRQhSuAFOS3NYkYHCXay+v7VmXbpwRmOQoti2DcQk4Esg2shoWZpOKwuW3J8cCChFK2R+xl0Ve0QDDF8QIVcb1wAfAeQvZYauTQihC1zJlRqnIDo3yieU2MkLo5YvAfM4VE+TXDC7OZ+emkIukuZYTlWcJiYTSS4Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CjRSnw3K; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44QNo1KU028483;
-	Mon, 27 May 2024 04:37:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Jo+UMF3sWeB2kB1ai6K+FjyeSvcvmLSN/FfrBDQ51OM=; b=CjRSnw3KfKd6ZE8N
-	bC5f2O4581r6KLBwma4Oyh546tsct2ggUUbKudah79zYNney4j6BtvfngXanvaIY
-	le4Wm9GxEJ8gILJrTrTMC9ZAVfzzAmShLS4vUXnUWtC3jISrFlYonJp91+Zu2cPK
-	fvn7mE3qL8BGvkZByRaPJgV+ApsH41fvpx4L11367OBoSPv53k6s07rCLbJuhKE2
-	n9SA/7FAK8xSxBHh/azfnyiURD5XG5k+Yi6R4dXr8pS2xt6BnfT5Ypuc8UZcnCQ+
-	hPiyD8LYJ0jOVu3JSf+hUADoOaPH7B6cYNNMzXaOWi2pG0l6QZt82jrPnqYwWahy
-	OJhXiQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba1k2kku-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 May 2024 04:37:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44R4beFM010202
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 May 2024 04:37:40 GMT
-Received: from [10.152.207.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 26 May
- 2024 21:37:35 -0700
-Message-ID: <aeb32037-4e06-4b6a-8b4d-7b8ef0a0ad16@quicinc.com>
-Date: Mon, 27 May 2024 10:07:30 +0530
+	s=arc-20240116; t=1716788326; c=relaxed/simple;
+	bh=5sg5fBwG3vrMNfKaPklVtBjDGFjvu3Nj2ornLEhhTIE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=SuKV9uKBZX+UUniSJ/Y56k6za9DI7sd4NXBzLkXy7B/+ZHjXjb9kiwUQR+5xy6tTh3l/ZqRLVYjrE9S9BYhcyRszN2KPq1gb6hzaeVKsuFm4CGq/oCvRPrFK3GbTVxcS/t1Ko8Pu7AXI6Cj3qSRREmQdz/RRkk024jUqOqHOHJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NRu0XEoC; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6f966840af7so2199124b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 May 2024 22:38:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716788324; x=1717393124; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NKMGRGQD4IsOADQqi/JUkrlmutDXh4ub1soGxeAwulc=;
+        b=NRu0XEoChnPQdFwQ2ITQkm1eRr3vx71/Qxyy8iF0lswMMPzNckGLCh9hXKepLvs1sQ
+         Z44728iLvKuKlxlLztnF3qicTSPrFgcviyuC5trWUxedi64YeZZPUw1QZCahlwv1HZf/
+         9l1lBDwdVY+KfRtkczSpLt4q3klMsRnp7n78fhjmS7QV7T01E/G2qVdOp2ILOHkc4NxR
+         rg3YXtef9mPAldQH7xgO1FHtEjbQrc+Y1hvD69bPdKW78qjVdAiH5zrTu9iBsHxL10dE
+         vt3WO6eFC8JMNou3G6ZaWue0ZTH5Jj8L0mLyzdzuYfVflmmUaBwUd1VUFQqcC0NgnfBz
+         1Meg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716788324; x=1717393124;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NKMGRGQD4IsOADQqi/JUkrlmutDXh4ub1soGxeAwulc=;
+        b=u5IcJMDoWEjEvSBjskYgrCkBy/bMQeGLP1g+HUpIY+MVVavUKtVpzhjMaRlOauAfxW
+         y334lyVLmPCwCWR0dgpoy/+3voRY/BKgE5YmsCWcLK6/r6u1Y0urx+5eYrT9CWEIqOhz
+         uaAs/8inaF8oWtdBsYCxj9zdWKS7lsHbgmdKpJRNNgf4RqHM0oMbQcO21OZO4F1T7Z5m
+         Pn9CNCAfjnpBtGADpfw51OXP2gxBIqrIi7jqLHaPtQNj/4k6SUCcR3b5xp2g798Neu5P
+         tKN4pLmFOQOCnF7jjrioDg34FVVX8ZYU427vglpgDBg8VcwhPwT65g7dpjXMKcmoZ2F5
+         l1XA==
+X-Gm-Message-State: AOJu0Yz88gxyhN9g6s/ioZhx2BLrHWuSDyA4K3c0AhmbN2QI4r/sbzXj
+	cjJhP/0sgMqxfnmIFb26N9nGXggRNZwGRxXuK8pckGk+DLIqo2WYTpvgbhIFoGw=
+X-Google-Smtp-Source: AGHT+IF3zV3yRfCSi0aSgdVrHSQCZGHUpTbemfonAMcARdMq7SQntkUJSeSPc77K34YqCaOQLMkPwQ==
+X-Received: by 2002:a05:6a20:3c92:b0:1af:d647:3108 with SMTP id adf61e73a8af0-1b212ced2famr9606539637.2.1716788324134;
+        Sun, 26 May 2024 22:38:44 -0700 (PDT)
+Received: from sumit-X1.. ([223.178.210.94])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f44c9684ecsm51903745ad.177.2024.05.26.22.38.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 May 2024 22:38:43 -0700 (PDT)
+From: Sumit Garg <sumit.garg@linaro.org>
+To: andersson@kernel.org,
+	konrad.dybcio@linaro.org
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	stephan@gerhold.net,
+	caleb.connolly@linaro.org,
+	neil.armstrong@linaro.org,
+	dmitry.baryshkov@linaro.org,
+	laetitia.mariottini@se.com,
+	pascal.eberhard@se.com,
+	abdou.saker@se.com,
+	jimmy.lalande@se.com,
+	benjamin.missey@non.se.com,
+	daniel.thompson@linaro.org,
+	linux-kernel@vger.kernel.org,
+	Sumit Garg <sumit.garg@linaro.org>
+Subject: [PATCH RESEND2 v5 0/3] arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
+Date: Mon, 27 May 2024 11:08:23 +0530
+Message-Id: <20240527053826.294526-1-sumit.garg@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] Add support for the IPQ5321 SoC
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki"
-	<rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        Mukesh Ojha
-	<quic_mojha@quicinc.com>
-References: <20240325-ipq5321-sku-support-v2-0-f30ce244732f@quicinc.com>
- <12e5708a-ea6e-4798-a487-f2465c848278@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <12e5708a-ea6e-4798-a487-f2465c848278@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gmELGD-OxZ65chYRS6wUeLh0mE56IFwI
-X-Proofpoint-GUID: gmELGD-OxZ65chYRS6wUeLh0mE56IFwI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-26_09,2024-05-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- suspectscore=0 phishscore=0 clxscore=1011 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 spamscore=0 adultscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405270035
 
+Add Schneider Electric HMIBSC board DTS. The HMIBSC board is an IIoT Edge
+Box Core board based on the Qualcomm APQ8016E SoC. For more information
+refer to the product page [1].
 
+One of the major difference from db410c is serial port where HMIBSC board
+uses UART1 as the debug console with a default RS232 mode (UART1 mode mux
+configured via gpio99 and gpio100).
 
-On 4/6/2024 8:18 PM, Kathiravan Thirumoorthy wrote:
-> 
-> 
-> On 3/25/2024 9:19 PM, Kathiravan Thirumoorthy wrote:
->> IPQ5321 SoC belong to IPQ5332 family. Add the SoC ID and the cpufreq
->> support. Maximum cpufreq for IPQ5321 is 1.1GHZ, which is determined
->> based on the eFuse.
->>
->> Viresh is okay to merge the cpufreq change via qcom tree[1] and provided
->> his Ack.
->>
->> [1]
->> https://lore.kernel.org/linux-arm-msm/20240306053200.6iwrviltwt3pnfnt@vireshk-i7/
-> 
-> 
-> Gentle Reminder...
+Support for Schneider Electric HMIBSC. Features:
+- Qualcomm Snapdragon 410C SoC - APQ8016 (4xCortex A53, Adreno 306)
+- 1GiB RAM
+- 8GiB eMMC, SD slot
+- WiFi and Bluetooth
+- 2x Host, 1x Device USB port
+- HDMI
+- Discrete TPM2 chip over SPI
+- USB ethernet adaptors (soldered)
 
+This series is a v2 since v1 of this DTS file has been reviewed on the
+U-Boot mailing list [2].
 
-Bjorn,
+Changes in v5:
+- Resend again as the v6.10-rc1 is out.
+- Addressed another nitpick from Stephen.
+- Collected Stephen's review tag.
+- Warnings reported by Rob's DT check bot aren't related to HMIBSC
+  board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
+  still not converted to YAML format.
 
-Can this series picked up for v6.11?
+Changes in v4:
+- Dropped IRQ_TYPE_EDGE_FALLING for pm8916_resin given the expectations
+  of Linux kernel driver. Instead depend on systemd workaround suggested
+  by Caleb to get expected HMIBSC reset behaviour.
+- Incorporated further DT coding style comments from Stephen.
+- Warnings reported by Rob's DT check bot aren't related to HMIBSC
+  board DTS but rather they are due to msm8916.dtsi or extcon-usb-gpio.txt
+  still not converted to YAML format.
 
-I applied this series on top of qcom/for-next and it's applying cleanly. 
-Do let me know if I have to send V3 in any case.
+Changes in v3:
+- Picked up tags.
+- Fixed further DT schema warnings.
+- Configure resin/power button interrupt as falling edge.
+- Incorporate DTS coding style comments from Krzysztof and Konrad.
 
-Thanks,
-Kathiravan.
+Changes in v2:
+- Fix DT schema warnings.
+- Incorporate suggestions from Stephan.
+- Document UART1 mode GPIOs based mux.
 
+[1] https://www.se.com/us/en/product/HMIBSCEA53D1L0T/iiot-edge-box-core-harmony-ipc-emmc-dc-linux-tpm/
+[2] https://patchwork.ozlabs.org/project/uboot/patch/20240311111027.44577-6-sumit.garg@linaro.org/
 
-> 
->>
->> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
->> ---
->> Changes in v2:
->>     - rebase on next-20240325
->>     - pick up the tags
->>     - Link to v1:
->>       
->> https://lore.kernel.org/linux-arm-msm/20240228-ipq5321-sku-support-v1-0-14e4d4715f4b@quicinc.com/
->>
->> ---
->> Kathiravan Thirumoorthy (3):
->>        dt-bindings: arm: qcom,ids: Add SoC ID for IPQ5321
->>        soc: qcom: socinfo: Add SoC ID for IPQ5321
->>        cpufreq: qcom-nvmem: add support for IPQ5321
->>
->>   drivers/cpufreq/qcom-cpufreq-nvmem.c | 1 +
->>   drivers/soc/qcom/socinfo.c           | 1 +
->>   include/dt-bindings/arm/qcom,ids.h   | 1 +
->>   3 files changed, 3 insertions(+)
->> ---
->> base-commit: 1fdad13606e104ff103ca19d2d660830cb36d43e
->> change-id: 20240228-ipq5321-sku-support-bd07056d5e01
->>
->> Best regards,
+Sumit Garg (3):
+  dt-bindings: vendor-prefixes: Add Schneider Electric
+  dt-bindings: arm: qcom: Add Schneider Electric HMIBSC board
+  arm64: dts: qcom: apq8016: Add Schneider HMIBSC board DTS
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../dts/qcom/apq8016-schneider-hmibsc.dts     | 491 ++++++++++++++++++
+ 4 files changed, 495 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/apq8016-schneider-hmibsc.dts
+
+-- 
+2.34.1
+
 
