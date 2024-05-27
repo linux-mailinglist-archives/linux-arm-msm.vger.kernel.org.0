@@ -1,62 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-20514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E20378CF7D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 05:05:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F19CE8CF7D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 05:06:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E0EF1F21628
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 03:05:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC835281564
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 03:06:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0578713B5B8;
-	Mon, 27 May 2024 03:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56F3413BC1F;
+	Mon, 27 May 2024 03:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OtGXlrER"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qk6ZSxkm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02D613B5A4;
-	Mon, 27 May 2024 03:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E80513BC11;
+	Mon, 27 May 2024 03:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716778875; cv=none; b=rvCGpdTkd9v4iQjHYTlTMYQhYKHXJvaGv/smZ++SJBIGrSVrxyu8vggt4ww+P86n5fto7ruB8mL0LNi8El+XTQieJZaQAwpwxhx4m+oGSc+wmJltOZejrENFoQd/ZFrJ8LLUv1GKGy2Df5hQpsohbboaN0vDaHjTR1FjlLasXjs=
+	t=1716778877; cv=none; b=Rnum2mAOwvNurkUMImkSB8EsQE8+opw+k0yt7yJnw/TnheHXv7l2fTYpE6olcXmfKolAdxVxSRw1bgJuRn9JWvfSHTDshak5oQmFmvBEDpa+yQ6G6skN14YGaderUgS255zx0cjGa6tNRrAYGniKE1UoDjErrDu4LQPvPO+dqGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716778875; c=relaxed/simple;
-	bh=CHxjJQrtopW8dBxAgc3FEx+CTreovx0GR7Lh4NEkX1w=;
+	s=arc-20240116; t=1716778877; c=relaxed/simple;
+	bh=zffqylxuxAKWcLxvVsPxjwR+Jja1cYzzz99On3P8ieg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h7WkI027VCGBAodfDezO7U8/Zm/sj9uXITp1bp+kc/eCLiyLdjGUr8B7ablImyQdkkPbcRt1lAI4PM24SVTaWdZ7raruBhYYauUqB4J3qzfwpMcv+1TOXGxZs2zNQKzszPoxEA4xAtBOh5R43wXg0jtecRZLbnJ8bPGdQAyrHCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OtGXlrER; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0557C4AF0B;
-	Mon, 27 May 2024 03:01:14 +0000 (UTC)
+	 MIME-Version:Content-Type; b=k2ANzuu6HK9FKPCSEX9m/Np5gWm1sjRZ+ucrRbH5HV11CPiew0Vihfzp5l99J0mv63WrnTaFmx4umqKdOaFuY0T9LhxBDwkfpQSTtvvr1kiHwJ+JlFaI4g0ys/SojXtlxy2RxgzUkwRbclQpl9fh3urTYNHEdr6Gi9iP+giG5TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qk6ZSxkm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D36C4AF07;
+	Mon, 27 May 2024 03:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716778875;
-	bh=CHxjJQrtopW8dBxAgc3FEx+CTreovx0GR7Lh4NEkX1w=;
+	s=k20201202; t=1716778876;
+	bh=zffqylxuxAKWcLxvVsPxjwR+Jja1cYzzz99On3P8ieg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtGXlrERAySkOdUM7VGQ6seqKyl8hl1hfimM2s5z2theSbUWf6qYLuoZrwUc7Zrd0
-	 090OTTDI4yehMt3iyKgaKocy19r5u8vTkbWti5NY/InV3Azb9F/F44C8p/dUdeKZo0
-	 /pe0ZRhMvVVoRHcQiITkatUjMi6Y+SoaP7NFzrIV7dsJnGi0aqOHm1BDS24KlNDvxO
-	 kPnYBGSOkkGw/K3V9vntg7pjklX3nqZoWaYPtIzuyqZ4hq0Sye2NF/0fnyIYBLWAtP
-	 TJhzWRiQLpFQxNEqQs7QE4pfO9j16o620pNyr8uPei07aPoSGsE9/rLJF34aWc7DVw
-	 Zb7yCR82m9KIw==
+	b=Qk6ZSxkmsCNvQggXT0bfBXz2SN/YP8fFDj0fWt6RFFq7Sv8RywBnnWS4jIuvfWehW
+	 gKQdQVtJjnCia/TalW3TrD3EXzojZDeYhWrttLh5gaZhBdWLuxOlrHwBsYmLoaLhsx
+	 GzhJGic4yfXhceZJfrXH4YdhhRBhb8pDoXVPOrj05Vic4oz+XNjJfU1w4voY1o/G5k
+	 W2SrYcD9h/5FvNQZjp7KPyIiKdqHq4T9l0kUCI70foy5ayOZqb/3FvZtfiwSCS73FG
+	 ngoCXe0dtwhakeXjajAzKaQzTWHnDdbqOE3B3+n8WGTuZMhCmhNo+Fi+BQTNX5AJu+
+	 ChPfNOBWlhFnA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Umang Chheda <quic_uchheda@quicinc.com>
-Cc: quic_kamalw@quicinc.com,
+To: konrad.dybcio@linaro.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
+	conor+dt@kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Enable PMK8350 RTC module
-Date: Sun, 26 May 2024 22:00:40 -0500
-Message-ID: <171677884191.490947.8943620748021230422.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	dmitry.baryshkov@linaro.org,
+	Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Cc: quic_msavaliy@quicinc.com,
+	quic_anupkulk@quicinc.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: qcm6490-rb3: Enable gpi-dma and qup node
+Date: Sun, 26 May 2024 22:00:41 -0500
+Message-ID: <171677884200.490947.15482010782632522164.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240523131528.3454431-1-quic_uchheda@quicinc.com>
-References: <20240523131528.3454431-1-quic_uchheda@quicinc.com>
+In-Reply-To: <20240424054602.5731-1-quic_vdadhani@quicinc.com>
+References: <20240424054602.5731-1-quic_vdadhani@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,15 +69,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 23 May 2024 18:45:28 +0530, Umang Chheda wrote:
-> Enable PMK8350 RTC module that is found on qcs6490-rb3gen2.
+On Wed, 24 Apr 2024 11:16:02 +0530, Viken Dadhaniya wrote:
+> Enable gpi-dma0, gpi-dma1 and qupv3_id_1 nodes for
+> buses usecase on RB3gen2.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qcs6490-rb3gen2: Enable PMK8350 RTC module
-      commit: a55361454c210ae4fd840cde3913f320663c405a
+[1/1] arm64: dts: qcom: qcm6490-rb3: Enable gpi-dma and qup node
+      commit: fbc7a70b2c1b03eab1ba4a0d611867a2de23d142
 
 Best regards,
 -- 
