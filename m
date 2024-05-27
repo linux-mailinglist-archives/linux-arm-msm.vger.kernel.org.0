@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F08AE8D0A1C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 20:44:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32FC28D0A1E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 20:45:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 85A611F218D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 18:44:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4B99282FF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 18:45:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ACE315FA7B;
-	Mon, 27 May 2024 18:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20CB815F321;
+	Mon, 27 May 2024 18:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZHx1sLV+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sm9oViYk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E93E155C81;
-	Mon, 27 May 2024 18:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACFD2629F;
+	Mon, 27 May 2024 18:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716835440; cv=none; b=iKCU2oLUhMJLhuDrEwAwb18uoYt0Mz0dvLVjdXWOYBKkEnpX1oO2QcdGe44crU1QPHuw559OPfOdISuU3ZX+6/wYm1Z2wW5snuH3Ek9QL8WkNmxAeDms5gO2f+fFcyyHhHaiq55hsSYldqe45vqeiNCosjtNfqZtlkZFXj3dxZU=
+	t=1716835520; cv=none; b=D5RaUT3LbvAEaq1SxAq4Dgoy67un0wPwBgU574vVoT7DgI0qy2GZt6r9pF0CIiwqig8TSH1A1CIX4mvRDCxSS2sj39A/tAX6OlNTnUOG/ZPvpxBlmGtnsQ0+LSNgiSrMlJlDRqoAWLqs9C0QWWj3ftN44AqtH9gKmmreDbD6kp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716835440; c=relaxed/simple;
-	bh=9EmvIFl4KYSHoGu6mBh30DLc+7+lt6Z/dShi6EknA3g=;
+	s=arc-20240116; t=1716835520; c=relaxed/simple;
+	bh=SM9Cgv6POlLLQAXlBqWkW/mfTBcw7BGIqnN/OhWaUZ8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QVDZSDLTe4KWek0lRFpsdvGWKFahPmDi8xtShOBEO619XezT1CWBvjcTk4CxePjKiZjHUV8Hb/PBB5kDgAb8c6/jgsFoAQJIJ6/38kYH8NajhQjr2IB/UJa5Rqv9TBK4cHscFTPJ37CuWWLOraTqh+5cQCMqAUbgkNomCCxnUok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZHx1sLV+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C45C32781;
-	Mon, 27 May 2024 18:43:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=RCQQ1/paK2UCB7SZ6C4klbARKjiI293FF9M1p2yTaYmp94aNCmwdXNNEO87LQbtpmmm9e7wQqiQbrGtBYZ14lnhhS3zfEv8IJ+aI4odI/YgbSRAdYj0BovYtwu1xHY5FIJRCDHt+5p2oFTtV/1HVibSzP+8s/fS0k/RSLE4cWmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sm9oViYk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CD2C2BBFC;
+	Mon, 27 May 2024 18:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716835439;
-	bh=9EmvIFl4KYSHoGu6mBh30DLc+7+lt6Z/dShi6EknA3g=;
+	s=k20201202; t=1716835519;
+	bh=SM9Cgv6POlLLQAXlBqWkW/mfTBcw7BGIqnN/OhWaUZ8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZHx1sLV+kdgEaHYMxSCoiUFXsrQl5l9LsN+SzNvbSyRVJ+VYqH1HNGuPvLrPfWqEr
-	 ryIqN4M8JuoV38nD5gC/U//GO/mWQsH/GU4taOCb2NXwuMh9bAX4gonEqgQwnezBy6
-	 o29jv2/eZNWJ0KJ07SWYLXGVhO6Ei254uPH82aWuuB0CvcUzsOl/HgjVsv2kArE8SY
-	 7BlXwoJ/A7Sp4a4w4VmcicOC9pVWc6AS0hselcK9gYn5yvw1O0THqe3Q7sooUomS6E
-	 Cvh6PU/HaRHKUxAAtygQwgZnp+GuVQMaf06lY0EcNKWkKh0dIKD6+c/CbTSJiQ033F
-	 JZhli92NulnPg==
-Message-ID: <f0797ee5-8286-45aa-a817-fb8514c72cef@kernel.org>
-Date: Mon, 27 May 2024 20:43:53 +0200
+	b=sm9oViYkIC8rr4zo6yHq7peSug465xBAEugP/KKUTP5y+Am6pM6/Y2YpTAivNzYvu
+	 1ZW+QtEQ8yFLLtv+QUH3bO8Hwbm1sCUXlmhp/JSj1KgdKHl/ebelObJkeo24EjatB3
+	 c1pXDCoorRcBLctbySa84qvFTjQGdBY4vuF0buGzF6fVicRWsmSsXK3pZvvkbEuK15
+	 wzjHGYpIIziEoxihmJHAoAShhQsf+u34+4C4NypATs+tl3VWK6RTgyriE44M8+Nolm
+	 NFmwigiuJE8top0yr29/upwxtyrfeMos42fIjed4ztMzF74cEfYtpjwoJ7Ovr1GbEy
+	 Oh10gAGo0R0bA==
+Message-ID: <a1f60c29-e499-4c24-a5fb-5f44aaeee555@kernel.org>
+Date: Mon, 27 May 2024 20:45:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/7] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp:
- Reference usb-switch.yaml to allow mode-switch
-To: Neil Armstrong <neil.armstrong@linaro.org>, Vinod Koul
- <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+Subject: Re: [PATCH] dt-bindings: mfd: qcom-spmi-pmic: Document SMB2360 PMIC
+To: Abel Vesa <abel.vesa@linaro.org>, Lee Jones <lee@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-0-a03e68d7b8fc@linaro.org>
- <20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-1-a03e68d7b8fc@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240527-smb2360-bindings-mfd-qcom-spmi-pmic-v1-1-31a2c051529c@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,25 +102,16 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-1-a03e68d7b8fc@linaro.org>
+In-Reply-To: <20240527-smb2360-bindings-mfd-qcom-spmi-pmic-v1-1-31a2c051529c@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/05/2024 10:42, Neil Armstrong wrote:
-> The QMP USB3/DP Combo PHY can work in 3 modes:
-> - DisplayPort Only
-> - USB3 Only
-> - USB3 + DisplayPort Combo mode
+On 27/05/2024 09:02, Abel Vesa wrote:
+> Add bindings for SMB2360 PMIC. This PMIC is found in boards like
+> X1 Elite CRD and QCP.
 > 
-> In order to switch between those modes, the PHY needs to receive
-> Type-C events, allow marking to the phy with the mode-switch
-> property in order to allow the PHY to Type-C events.
-> 
-> Reference usb-switch.yaml as a simpler way to allow the mode-switch
-> property instead of duplicating the property definition.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+
 
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
