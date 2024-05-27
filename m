@@ -1,117 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-20625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BD8D8D0227
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 15:50:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB9CE8D01E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 15:40:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D7515B2BD35
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 13:40:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08F661C20DEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 13:40:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A8B315F300;
-	Mon, 27 May 2024 13:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12C5715F32E;
+	Mon, 27 May 2024 13:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eCgZ0cWU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KOnIKTNj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1117015F319
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 13:37:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8996915EFA8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 13:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716817079; cv=none; b=dTDvzFfvAE+zsf7reSV1XSEXMc/9XNAMRzcfidKr6/iL9zw8DXmvT6znDXmUFiFECoLpwsNgQTG6RjJeZtOW0a0jT7cez01LrB4ncRojkHSXCg69CRGiu637Eq8Wd6pyMCnjb+81yyKf8JzgcwKycjxkGQ3fDCI4EddyA6NSN1E=
+	t=1716817160; cv=none; b=dgod3EMIt2sQxxkCWt9z5zryj2KsCZGE8qu7FK6eQ6e8h2Wgw+QVyJOf3dnV5PawN8DbWEdeYJ4rsp5wxxHQ82AEZAeRmCNhmt704MtPPm5lM2EIkqQLmtawXgjeXG4Lo/Uchc9Se8wTbFTxfbITRJ0BkSOgS0zrhx+7tNGt9D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716817079; c=relaxed/simple;
-	bh=sI4D4Go0OgKRyqVQduA3nP4L7zQphhNOPs9Kzw8Cmf0=;
+	s=arc-20240116; t=1716817160; c=relaxed/simple;
+	bh=Q0QJSfZ51BjlCjV1fzHNY8jwcshLWXrd/Y3XqvZCfeY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jhxGuxAv0U7pgGExHTv2wB4qj7FQwePw+37Z1X3TZvV7BbVv4wrw5oE1BJYga7EttNC5BtfdWedxAo5Y1ut0RvLrc0aaH5Pbra7AvYQ6vgVrK1CbZlPROio12wugJ4B+a0snmjf8EnJ6WCgHGYvmOfeMMK4J+WOgxk/QXlb+8GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eCgZ0cWU; arc=none smtp.client-ip=209.85.219.173
+	 To:Cc:Content-Type; b=p8WubCJsTrdDh9L+Y4GaUqbroMn/x6hVayfgRNI+e7aW8stNAnL9nmbykJaZSyADz13AuEg1bGdJ3k2Xj8Vhu3flCrxSHFiTgnVkWqIRlA6T++ipTKeZAeJZ6bIX7kUDkHoyUK1RhslZ8wazBTq/SdoBDLdS3cu5bSD7+Vosi5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KOnIKTNj; arc=none smtp.client-ip=209.85.219.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-df771cae64aso2895250276.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 06:37:56 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-df7719583d0so3422003276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 06:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716817076; x=1717421876; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716817157; x=1717421957; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sI4D4Go0OgKRyqVQduA3nP4L7zQphhNOPs9Kzw8Cmf0=;
-        b=eCgZ0cWU8XvjJ+3rIdwk38GQ85ioZedXr/yh5C1PXCUy8eujLIBsVkzmEo+lI6I5Cy
-         9aVz0PgLjw27AN8C7BzX2tlR/2aQ/SvKOJIXp/oZdMPBHWAtYDPvGY9PryXGRjqGlilR
-         6dR8+zzCiiJECAVS1G6fGl90VA69XEArGBpcHxiCUkGUsUejtZIGnJ9UdTZ8RpYa3lYq
-         RLBpEPtzijIS89HWplQnqZs9P1HnOUeXr//TGnLnrikEfqO4gdrbNYJoLP/RwS36U6Dr
-         eUQs1y9hPRUIUCoRmoAWpCkce22ZPFdBeklMPj1+0fhp+KdMBNo6TVQOmOAPU5yUTNUh
-         RvmA==
+        bh=Q0QJSfZ51BjlCjV1fzHNY8jwcshLWXrd/Y3XqvZCfeY=;
+        b=KOnIKTNjBXSL4sXJB2DG3Utd4EPV6UXPpNtvQkN+GYrjgA3h5QiMDJMfYjK83v1m/P
+         SVpf5HywWLSvSuh3Tjzf6x76F9B2byAmMwV4k65B9ZpcmU2s+GVvcFpHolxMhTdRPrX4
+         RWotj1b+PSBs3P4uCGTtIexf2z2fNsC3R1ipvmObb/RsV/3dgMTCT+7wAM9ldthiWEPP
+         r3GgbFrrnDJdRfJczwWHnVqcUxO5JGBG0BY9YcF3Nghcox1+PbsqENHOlSyoygI4cSPd
+         aPBUHvcXQ1rYTPToxbu0sxN0ynq/tqwbFC9ErL/VJWPIGDUniUSHruAJR80+YWn7vnXS
+         fu3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716817076; x=1717421876;
+        d=1e100.net; s=20230601; t=1716817157; x=1717421957;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sI4D4Go0OgKRyqVQduA3nP4L7zQphhNOPs9Kzw8Cmf0=;
-        b=tUrdP7EqK1CGuKNRDt38e4MBAYHKtbU56+s3q0SgNiwRJdSccpAG88jR3hpbTErFOc
-         avIl+ah2EnRRHlcttz2E4Y0uvRnGEoqjIY2/RVApny01yYVi9ZffTfTbknrZtZQYVh2p
-         h62EyQHHO2TcvXbRtBtriCEgx+Su0Z4k9WHucuavXNCD1IIM3dU60YiIXKcF7/ut0z9P
-         KZHl7eGRvONZYt1Y6L42EI7MGYGciXYWR1T6KjM4ZU9GEX9P2grmvC0bk3zjCONITKmJ
-         Zacglrrd2/UqG0dbmIjzkzzggUMT7/Fmr2kPaAUd7v0Ahy9NKVs78Y6Says2Jmb6Co6a
-         mnfg==
-X-Forwarded-Encrypted: i=1; AJvYcCW0AdZZ01UDlvq/ZhNUmUptP4ZHq/B+xVZQhiFQnkY0CkTF+Sf4ra3N7hrPYDTqZcQ6e+bySOKKsA0aPsstnKVvoa12y59kK+cPSRGyaw==
-X-Gm-Message-State: AOJu0Ywyzws3LBIuN4NBbXz1CBbywAG388qCDe2wSLtONr74nONUibbv
-	UTGfF4edBlr0YTvtfH3lojsuv3H9D98VMv7ujpAvGUVAkEexTRv+cy66+5d/xUK8/6o7iQXX3v5
-	aYA6lLmvxzMU1qxWkIIP7bvpBO6DAZD3QH7QYTw==
-X-Google-Smtp-Source: AGHT+IG3ODce9dNV390Ozs9wlqpcGCT+NP7kvAR3YSrx49G8pypddGGuh8zJs0qLVCnoqGn9N6DYCNxnN4AlbhGb3Ao=
-X-Received: by 2002:a25:d610:0:b0:de5:9d13:591b with SMTP id
- 3f1490d57ef6-df7721c660emr8663079276.32.1716817076072; Mon, 27 May 2024
- 06:37:56 -0700 (PDT)
+        bh=Q0QJSfZ51BjlCjV1fzHNY8jwcshLWXrd/Y3XqvZCfeY=;
+        b=qQ6boPr6nrlWyb5wrur28Swq477yiTMAgL4uSiNWp4FeCYUSRoSk7AiMB/sEy8IevR
+         vXSQ2j10rqo8k3fCIbBYm9yj5ZdqgEhhu0H3kqY4O80L+eLtziwiFWnVS1WuZl0fRl4n
+         PRh7tSY0T2G21mVNIJU123neBYVy3hD0fgDT70yjo4BVOLVwHMKQNg/KtwZtCz5iF6EU
+         68GSIoRqj6Yn1pTatv+WnG+7VGH/CwF8/dI6A4Tyw5LzB9pd20uWcd1/k9FwT9365QXp
+         dafsZcBFgr7CyZ9d5c7NXasf5mKROClv0gZObwXvsbQg+WlNyoEVcgP91MG3bIpvSU39
+         Fcvg==
+X-Forwarded-Encrypted: i=1; AJvYcCXAg9ylo3V6zuC5T5him4xqXGDVur29pdjbHaEVkCqIcDKTMegYkQdycTKlBxBTx2l/1bubCRFq22fjy6y4exYrVcH6SeKkZZRAvUAYdw==
+X-Gm-Message-State: AOJu0YxtPGO5yvYFmPOPKEwRrP7+IInY0fXbtLOKNMGixeEvgeuEAn0g
+	a1RWwOQFXXlWUI1Ik5cF9tjZ8RLcchHAznvNJpHpJIwPvzrgdBM7NPVSb8ZX/4AtIuTGiQTPG+H
+	bPJy+HV3znFLyvmjGqhSVY9DzQQpdNOfcrj0KRw==
+X-Google-Smtp-Source: AGHT+IFc+duNcD3dnl5PlfSWaeU543iVanFJg7u8zsI0JSvx+fv5ZxRzO7wGY0GpKjQer78ULichDeY/NaieOEgzTKI=
+X-Received: by 2002:a25:b11c:0:b0:de5:1553:4351 with SMTP id
+ 3f1490d57ef6-df77218b217mr9183346276.15.1716817157481; Mon, 27 May 2024
+ 06:39:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240506142142.4042810-1-andriy.shevchenko@linux.intel.com> <20240506142142.4042810-5-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20240506142142.4042810-5-andriy.shevchenko@linux.intel.com>
+References: <20240506150830.23709-1-johan+linaro@kernel.org> <20240506150830.23709-4-johan+linaro@kernel.org>
+In-Reply-To: <20240506150830.23709-4-johan+linaro@kernel.org>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Mon, 27 May 2024 15:37:45 +0200
-Message-ID: <CACRpkdZFfjCitNiGVe=F4Jd_M36fqdG0ixD7396xEVbvqZUdyA@mail.gmail.com>
-Subject: Re: [PATCH v4 4/5] PCI: imx6: Convert to agnostic GPIO API
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Frank Li <Frank.Li@nxp.com>, 
-	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	imx@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org, 
-	Vignesh Raghavendra <vigneshr@ti.com>, Siddharth Vadapalli <s-vadapalli@ti.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Richard Zhu <hongxing.zhu@nxp.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Yue Wang <yue.wang@amlogic.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Xiaowei Song <songxiaowei@hisilicon.com>, Binghui Wang <wangbinghui@hisilicon.com>, 
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>, =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
+Date: Mon, 27 May 2024 15:39:06 +0200
+Message-ID: <CACRpkdZrTPyv_4LuN7VNhL7VFqoNzPq_WcooJLzELfmCBaF_jA@mail.gmail.com>
+Subject: Re: [PATCH 03/13] mfd: pm8008: deassert reset on probe
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
+	Satya Priya <quic_c_skakit@quicinc.com>, Stephen Boyd <swboyd@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 6, 2024 at 4:21=E2=80=AFPM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
+On Mon, May 6, 2024 at 5:10=E2=80=AFPM Johan Hovold <johan+linaro@kernel.or=
+g> wrote:
 
-> The of_gpio.h is going to be removed. In preparation of that convert
-> the driver to the agnostic API.
+> Request and deassert any (optional) reset gpio during probe in case it
+> has been left asserted by the boot firmware.
 >
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-
-Would maybe mention in the commit that the quirk to gpiolib
-is already in place (people are already confused by it) but no big
-deal.
+> Note the reset line is not asserted to avoid reverting to the default
+> I2C address in case the firmware has configured an alternate address.
+>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
