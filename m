@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-20534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0B9B8CF9E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 09:21:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 081FC8CF9E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 09:21:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B6C0B212D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 07:21:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B185F280CEC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 07:21:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3F3A2032A;
-	Mon, 27 May 2024 07:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D593D2836A;
+	Mon, 27 May 2024 07:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T7Ayi0wa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lHx5mZR+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C3A25774
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 07:20:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244EB1BC3C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 07:20:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716794451; cv=none; b=c5gBdBUSPTjMPUHWDdV0YoCzbrjTX0eBwE6jTSIC8BKA6ze3Hqu3uHJz84jkiyJqXFaN7RadXB2RAw3jrSG6kVK9SkeFy5WS+bp2INyEUHesFpLqh+2OlGgFauvofqwlsddumgnaCBG+ZMbdaxG/Z27/VjvaUdmILglgf5PGSnQ=
+	t=1716794452; cv=none; b=g2m5osMPeYUna3Rl4MwEkOFgZruJYpDmHcoNtgiSwZZqJFLWsi8d2jLfqnYx68srP2PgboYhVPFByf9Rp6FREP/CEt2t0UN5Pmbs9/unE7heTo8KRmpqJitaJbbnIiSti7RZKcJm6uhYXoWod4B+kXJHP/4WejKYmgH5FBc+wrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716794451; c=relaxed/simple;
-	bh=/NKx4g17yrslFj63kXaD12eTW6X1NFoq4AP4B+eaOcA=;
+	s=arc-20240116; t=1716794452; c=relaxed/simple;
+	bh=kaV21qO6GYNjhKLxdxIBJT19wvTGFK2gerZ38MtKK1I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SZuKztv/T09iqh6Jf8KuLalZsEL9f6aYRSx9hRqawDeB8K8Clc5LyrBK+L/ic82zw0Ns8IkJ9ehZ6GKycgGJhn3z3SFlWs8hI6BbGeOBdqPypEA9TUc5tuKTeg2fyqpzSQlDteiaMQ9Fb+QAp6CgBZHlOpLz6JahjoHoakrpCVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T7Ayi0wa; arc=none smtp.client-ip=209.85.208.42
+	 In-Reply-To:To:Cc; b=mn7NojYJ5tLBih+H9gNbAwPbu3HK/nk2M0BWLG8gxJEeK5zUxLPjcWstIF1i5bj7AzzlMG6QUlgJf7fJrbdRXLtGwnxfjCFj+0aignOnwqACB0EAuUGZMPMa6ow84Qqm81rOpUZ4ZBlGZiJr19pI5+iu2/bJ8WBG7GnWUYx/coI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lHx5mZR+; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5766cd9ca1bso9824864a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 00:20:49 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5785fc9c543so2830505a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 00:20:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716794448; x=1717399248; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716794449; x=1717399249; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dFIwML9I1Cig6SdAiuvO9nVLq/nrtM3r9MfRFepo5r8=;
-        b=T7Ayi0waLcVdAm/rI0sjWZCzLIk/6ghcOF6cAp5deZjytPaaxQnxpXVV8SwJgtNJkR
-         AU8mdeq4eN/6aorm6WlcCtJgFzd9sJoG9LhMT2/cT3n96TU/LNAJhHQOvDKuG/D+9jrN
-         ntmj7TbIIFtPkp5qmS105N2LcgsNQcuoKJ2EaaaXSU4RBLWbcwxwuZ/pqUdcbQl4eMnO
-         If9pTB809z/XCgoAXceR18a0zf+o/W6G74VbrMHcpXl9/oUpaRhkb/j41Dnq4OL34pgX
-         T0RkEsb6d6omgqtE9N9dOCcOvRe1Ruiv+STuOzNDdATaGEA9/6FKpm3h/EpD+o2ZEyAn
-         7pYA==
+        bh=TW/LSfGwT5gH7WAKYUuPqo8Jagb7fI9CA0RtQ3h/hLM=;
+        b=lHx5mZR+yCp6rkXAN2+7CMFEFhscTGuknwJBnX5oVlRaThOKxSs/wDqraewoK5du1D
+         eo4kkRe/gAKouHEBlxRksj7b+xGECcFdsz4B9hmm4Ei3pPQrjhIBVZ6o0OxGpzqP26IS
+         LBGJJULV1WnIHblih1INTDatJPcrgbl6lNE5dZ0+JG32kvjbji7ntAHZekGSTHRbJSDJ
+         Y5yG542P0TiEO6wcCAgkuUuG4sAz9/qUXHk3sb89FwSno+GtMKHKZOoLGr3l3VxiGpFx
+         EkW3LFaW6Kwsp7AERv6/YEZsRraGHrKcZT3bM0xtxoN0ARmrytTdOBIF48t0CdnyJHK6
+         oRxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716794448; x=1717399248;
+        d=1e100.net; s=20230601; t=1716794449; x=1717399249;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dFIwML9I1Cig6SdAiuvO9nVLq/nrtM3r9MfRFepo5r8=;
-        b=wq+6hXePvGHikYkxV687m3ZTjpm9ofzkhk0CgIqjYWZKOwPuHANAq2VJqXSIHOMGmM
-         nUusbu7555C7bCN89U5bWdqi7fDwZKNdvkduamQEH42RjAqdld2/9MYupCke0ZbnB52E
-         Af0HcgiIVi/nmPuyVmXU8Vrn0VTqO1Hg/jbocoauOdGitbUvd43OETCRL/xYADJ0KRXP
-         yTgEr8qBzSAereRaXiACBXMCepFxWwymDXetB02i0nBRbBsvmwj3moy55wzT0fF4M99q
-         QxzaqlgD0K3vwdKwdd2UBMtr1ntH3lPwk2IR333/I9dVobgLPULcTudJT8RKbDQKH2vW
-         bDOg==
-X-Gm-Message-State: AOJu0YxVADNZnYQw5841VGSQoaKM1fE/Jpl95Ko7Fv7OCoTfDav1Gwv+
-	OIMomNj+bkAP/PFqXpbZhfuZGAHjl3qgkqv4rfG+dyHJ0gw0sn/AP3jeVtvTRYM=
-X-Google-Smtp-Source: AGHT+IFfzB2M2LevgqhauhGVIk/oSQl9F99lkA56JEK7GoiqpOehtsnPlrupsGgAOl52ZKCriOeykw==
-X-Received: by 2002:a17:906:b117:b0:a59:a431:a8ce with SMTP id a640c23a62f3a-a626407c0d3mr605363366b.2.1716794448164;
-        Mon, 27 May 2024 00:20:48 -0700 (PDT)
+        bh=TW/LSfGwT5gH7WAKYUuPqo8Jagb7fI9CA0RtQ3h/hLM=;
+        b=JXRHA+jlULrRo/AQ8AbB/84uz8yRviaXhd/Pm5nbGIF/GMeam9et+DNUxwRpQkRyjj
+         zPlAsmLQfy+hKa+4jRfaCIN9CarMqQ0RwGrg8GOykhc0NXk9ZQ89upuKD7tpPFgkOxEU
+         L1j0J8oSjqzzpn4ctjOPqaxkAgMkDZyq4zSNSo4MVFR36oL8saHiOkG4LeSM0CU+jALI
+         qJ9Da3YrEznJIVO05k+TouFI1y+Lf+aFl+mmT9MyRSAPyG6jbvn8flXh+WhmxPYty7we
+         kPowCazpROZ3uJglwE7w7Ecu0swxii8vnyMMa8FAiLDuZAeq62D9Z5Z4GfCink9kKwCr
+         3Nrw==
+X-Gm-Message-State: AOJu0Yw4PvPRGaRT/IcJVbJCUwykVIADNOMhyH7US0H9N+qa4wMzt83+
+	73AGAnHjMLNdB1KOvjvHKZDef5ZmoSXuLdByBcCcD6hi0F71UTOXuc9ZC2/zfp8=
+X-Google-Smtp-Source: AGHT+IEb9O/hRjCH/tIkevCOFftVSv6LB7cbfSWDciPmsu1sKUNRJG4uWQdtZUSQVFBIbQhj77IErg==
+X-Received: by 2002:a17:906:b792:b0:a53:ed1b:f3ba with SMTP id a640c23a62f3a-a62642e9202mr804025266b.28.1716794449328;
+        Mon, 27 May 2024 00:20:49 -0700 (PDT)
 Received: from [127.0.1.1] ([188.27.161.69])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626cc8e295sm457915666b.185.2024.05.27.00.20.47
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626cc8e295sm457915666b.185.2024.05.27.00.20.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 May 2024 00:20:47 -0700 (PDT)
+        Mon, 27 May 2024 00:20:48 -0700 (PDT)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 27 May 2024 10:20:35 +0300
-Subject: [PATCH 1/3] phy: qcom-qmp: qserdes-txrx: Add missing registers
- offsets
+Date: Mon, 27 May 2024 10:20:36 +0300
+Subject: [PATCH 2/3] phy: qcom-qmp: pcs: Add missing v6 N4 register offsets
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240527-x1e80100-phy-qualcomm-combo-fix-dp-v1-1-be8a0b882117@linaro.org>
+Message-Id: <20240527-x1e80100-phy-qualcomm-combo-fix-dp-v1-2-be8a0b882117@linaro.org>
 References: <20240527-x1e80100-phy-qualcomm-combo-fix-dp-v1-0-be8a0b882117@linaro.org>
 In-Reply-To: <20240527-x1e80100-phy-qualcomm-combo-fix-dp-v1-0-be8a0b882117@linaro.org>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -88,65 +87,75 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
  Kuogee Hsieh <quic_khsieh@quicinc.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2046; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=/NKx4g17yrslFj63kXaD12eTW6X1NFoq4AP4B+eaOcA=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmVDRJ6FoabRU16VxO/vpp4UncOhfCzCs8qutbM
- KXmtXnXlEuJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZlQ0SQAKCRAbX0TJAJUV
- VmpKD/wPTDzajfnprk6RxhJ8L1Lqp++t0pR+SxyHN3sdKDX/76ZxrV0d1D3zq3YwhEt20KTZcEY
- OBPLe2SmCjZiaFke7lMe3cww6Y79xR0kLzDbsy1majk/zpBJ77x65OsCW06H+76VyLsELFF6aQS
- 3To8fBqNxrVkYz3VV9BXVQhHBevztXNQsHIG1FQVHmyOBAZE7hJCM8JEv4ktT9ovx5HCxFd1Y/H
- i/tc0EZ+gs9n9DPIyNhEHiqhi/ogyxdSV+4tUWPk113SnjmkxKTGXVb6pNd8qFtJD/TnhoIcuy/
- agz4R6jb4KMR2tCSISaPhT1FUSEq3WJM7Tu1+TZlomVs6skt7xOkoyE5dL3OHOym4kEPgEnU+/U
- IQIoAo0rO5wFPDYvT1Bz7qPOz+o09XtM4kPV53RH7s2Iplc8qFbsAA5iY9Yrgf3SMDfbkBV+wtM
- a5Ya9/zOBA58xVaJKF8OgsrUYSvLD/Bil0dGYrivQlKVzfAyowtFZcpUUxnn+OvfTBKZa/4BxH1
- fgV25v2aQRyvg+DXdnlXlmc+UOesUlWFAp1lYqW5o3SSkKqBY7HgzByQhyY3mFAdII3HtWIAdl5
- +bj3FF4JDsrvsKtVKApF+viVRnO7c/T0sgb0yh2IFRxxH4rFYqnYTNAouLwynjuJfuLYEFs2bZz
- WLB1VFbbJY3Zv0Q==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2174; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=kaV21qO6GYNjhKLxdxIBJT19wvTGFK2gerZ38MtKK1I=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmVDRLIpngrysYu+odCHNQ1ihTi2HjKGK3kajka
+ o5g5+S1rQWJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZlQ0SwAKCRAbX0TJAJUV
+ Vp6CEAC1RTXQdEOn4Z0PpOv/6boLkn/EYuDV3dW54c7Kug8NlbEKXizESrytBv/tSGyy8givfDi
+ ld2Mm0eU73K8dGdgVUNdtblJz390BZqdtJtCcB5snvZoDl0Q71Wp99h7TuQ8O46AmxW19nPQPmC
+ ZWzSTe6SRs9Ad7zND6/zVVk/uoQYh4IZPfhmgpwsgMovALxyW1wrf2lYUnTZywp4HxOI8lpIvPU
+ BBD4s0hC979Nwg+3MbtN/86G/sy9ZulQsOcDwn1EeXf7+nmP3/Lid8qXdSR1EsjIlgbq0wNrq8a
+ QgDAN0C9NizmL2Um3IJoljnhoG8uH4cNg616fI34pFhv8uH/Z/Tvq0eq3RGW+94xvJzplCFMAmo
+ lBu+BKwE8/iPHvIzlTRxyItFuYS4/qr6e0gfQ/cwATENJQZRstrznAqtg5lBYEqPzqFEOt2KETG
+ EXlsympwax++Kpet6lC5LXhleDBBiVW2gc2m6vnv3IcpBg0E1AE14gtK8BIswKMNk1Sc9AlKs8T
+ NS6Qn/ccgmuMyd3O53/s8h8CI58AslGa4FJ/XqhEgHfG8vnfZy4WXMmZfGWfftI8W9I0lEUVUZh
+ HIlABdwZk/j9bPDCxOuB4NJM7rLyYOMjuS0E7SqZU4ALJ6Aw+oqEx1fQf58NfUhG8je3NBTNAFE
+ o8vZ2Lhyhn0w6RQ==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Currently, the x1e80100 uses pure V6 register offsets for DP part of the
-combo PHY. This hasn't been an issue because external DP is not yet
-enabled on any of the boards yet. But in order to enabled it, all these
-new V6 N4 register offsets are needed. So add them.
+The new X1E80100 SoC bumps up the HW version of QMP phy to v6 N4 for
+combo USB and DP PHY.  Currently, the X1E80100 uses the pure V6 PCS
+register offsets, which are different. Add the offsets so the
+mentioned platform can be fixed later on. Add the new PCS offsets
+in a dedicated header file.
 
-Fixes: 762c3565f3c8 ("phy: qcom-qmp: qserdes-txrx: Add V6 N4 register offsets")
+Fixes: d7b3579f84f7 ("phy: qcom-qmp-combo: Add x1e80100 USB/DP combo phys")
 Co-developed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_n4.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6-n4.h | 32 +++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_n4.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_n4.h
-index a814ad11af07..d37cc0d4fd36 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_n4.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_n4.h
-@@ -6,11 +6,24 @@
- #ifndef QCOM_PHY_QMP_QSERDES_TXRX_V6_N4_H_
- #define QCOM_PHY_QMP_QSERDES_TXRX_V6_N4_H_
- 
-+#define QSERDES_V6_N4_TX_CLKBUF_ENABLE			0x08
-+#define QSERDES_V6_N4_TX_TX_EMP_POST1_LVL		0x0c
-+#define QSERDES_V6_N4_TX_TX_DRV_LVL			0x14
-+#define QSERDES_V6_N4_TX_RESET_TSYNC_EN			0x1c
-+#define QSERDES_V6_N4_TX_PRE_STALL_LDO_BOOST_EN		0x20
- #define QSERDES_V6_N4_TX_RES_CODE_LANE_OFFSET_TX	0x30
- #define QSERDES_V6_N4_TX_RES_CODE_LANE_OFFSET_RX	0x34
-+#define QSERDES_V6_N4_TX_TRANSCEIVER_BIAS_EN		0x48
-+#define QSERDES_V6_N4_TX_HIGHZ_DRVR_EN			0x4c
-+#define QSERDES_V6_N4_TX_TX_POL_INV			0x50
-+#define QSERDES_V6_N4_TX_PARRATE_REC_DETECT_IDLE_EN	0x54
- #define QSERDES_V6_N4_TX_LANE_MODE_1			0x78
- #define QSERDES_V6_N4_TX_LANE_MODE_2			0x7c
- #define QSERDES_V6_N4_TX_LANE_MODE_3			0x80
-+#define QSERDES_V6_N4_TX_TRAN_DRVR_EMP_EN		0xac
-+#define QSERDES_V6_N4_TX_TX_BAND			0xd8
-+#define QSERDES_V6_N4_TX_INTERFACE_SELECT		0xe4
-+#define QSERDES_V6_N4_TX_VMODE_CTRL1			0xb0
- 
- #define QSERDES_V6_N4_RX_UCDR_FO_GAIN_RATE2		0x8
- #define QSERDES_V6_N4_RX_UCDR_SO_GAIN_RATE2		0x18
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6-n4.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6-n4.h
+new file mode 100644
+index 000000000000..b3024714dab4
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6-n4.h
+@@ -0,0 +1,32 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) 2023, Linaro Limited
++ */
++
++#ifndef QCOM_PHY_QMP_PCS_V6_N4_H_
++#define QCOM_PHY_QMP_PCS_V6_N4_H_
++
++/* Only for QMP V6 N4 PHY - USB/PCIe PCS registers */
++#define QPHY_V6_N4_PCS_SW_RESET			0x000
++#define QPHY_V6_N4_PCS_PCS_STATUS1		0x014
++#define QPHY_V6_N4_PCS_POWER_DOWN_CONTROL	0x040
++#define QPHY_V6_N4_PCS_START_CONTROL		0x044
++#define QPHY_V6_N4_PCS_POWER_STATE_CONFIG1	0x090
++#define QPHY_V6_N4_PCS_LOCK_DETECT_CONFIG1	0x0c4
++#define QPHY_V6_N4_PCS_LOCK_DETECT_CONFIG2	0x0c8
++#define QPHY_V6_N4_PCS_LOCK_DETECT_CONFIG3	0x0cc
++#define QPHY_V6_N4_PCS_LOCK_DETECT_CONFIG6	0x0d8
++#define QPHY_V6_N4_PCS_REFGEN_REQ_CONFIG1	0x0dc
++#define QPHY_V6_N4_PCS_RX_SIGDET_LVL		0x188
++#define QPHY_V6_N4_PCS_RCVR_DTCT_DLY_P1U2_L	0x190
++#define QPHY_V6_N4_PCS_RCVR_DTCT_DLY_P1U2_H	0x194
++#define QPHY_V6_N4_PCS_RATE_SLEW_CNTRL1		0x198
++#define QPHY_V6_N4_PCS_RX_CONFIG		0x1b0
++#define QPHY_V6_N4_PCS_ALIGN_DETECT_CONFIG1	0x1c0
++#define QPHY_V6_N4_PCS_ALIGN_DETECT_CONFIG2	0x1c4
++#define QPHY_V6_N4_PCS_PCS_TX_RX_CONFIG		0x1d0
++#define QPHY_V6_N4_PCS_EQ_CONFIG1		0x1dc
++#define QPHY_V6_N4_PCS_EQ_CONFIG2		0x1e0
++#define QPHY_V6_N4_PCS_EQ_CONFIG5		0x1ec
++
++#endif
 
 -- 
 2.34.1
