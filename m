@@ -1,146 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-20638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FEF28D0884
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 18:29:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D35BD8D08B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 18:34:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D14381C2292D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 16:29:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 866681F21EC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 16:34:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 625BE61FD3;
-	Mon, 27 May 2024 16:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED17D61FF4;
+	Mon, 27 May 2024 16:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HC+86xTn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WJPYjlpf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E11461FC9;
-	Mon, 27 May 2024 16:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC40E61FE1;
+	Mon, 27 May 2024 16:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716827368; cv=none; b=DhYI59oKEAdsuVSoEFCTh2pg0k3VBtcGAUQAIlVwPvecLIE5xV040GKKr2KwYneCVxhTkQh/V6XteVDYVA1DBfSTtgXZShN8qqDho5EMMtxSKnB7S6O7XpVypH40VOIcwT6S4zqMvp7ktj4Or098kPRoqypBArW/UnL1q2JsoI4=
+	t=1716827638; cv=none; b=ajjWKDP+Yl0fwIw4HgXJq6bvOk0RoM3eSkYrkK+pXaNpYcGJ72j9kSEFfLsAS8kpxA7oJlPY7iCuNB0pKEuR8lQwd+zsGKBc2ETqJ+a4hv14+dR9ELMLf/XQMdmyeFDiG7FAfbcxVwQoo8jCebNdyyrHsykLfh7pHzCMa3ELBRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716827368; c=relaxed/simple;
-	bh=iA18VivydKAQ4UA9PjBaSAgMP8a7UkSDlzUR8RE2CNE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X/Z4nAW4aQNa9Jo+jMndH6FJCLYgIGjX9tJGABs5ZjHit+0SQ2nC+YHMI2wPjHfjn94vSzV4KX0rrAoro7Dk+NJ+v/7c3Js51zSrISq12RaGTVvmXDkwP5Vw1lKu5Uxn+EvFBibrEaSI9Zihd+rxKP6t1E0vQz6Oh2UW/P54dhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HC+86xTn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28690C2BBFC;
-	Mon, 27 May 2024 16:29:23 +0000 (UTC)
+	s=arc-20240116; t=1716827638; c=relaxed/simple;
+	bh=FqwLRmZq7+sdJul6dGAtnX2DgoqP9PXXAfeDCFAU9F0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V0FAx6hA+6Gj+TWrxtIvuKZ1w7IyUMxJYREa0afsuxo70LXe4hOZkN9DAl0nNiSvUmaDoOsNyO9P3rlXOLFcdxNgQnHDbjQla7vqB6+VyxXRtS8Z8c81rHacCDjWYy/s6b+2twqaChtB8+t3F0nBlq+U9s7JNMHEx1sBI6/U/KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WJPYjlpf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CD7C2BBFC;
+	Mon, 27 May 2024 16:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716827367;
-	bh=iA18VivydKAQ4UA9PjBaSAgMP8a7UkSDlzUR8RE2CNE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HC+86xTnZCEA4oVsfN6B5G05HQwYFMt8In7u8WB8kUekOG/yDZBG8NX1E4lAMYZx+
-	 QAfAJ38guBsbZgPzQGt2oghMxOhl86LikBts4vzJ+bTLld7emKaMekcgEK3BceYaQp
-	 zDltP2A5pzRat7ka3YPooUMEDKgLdAu9Xzz1BqbbaHfmALzPMEUy//1jVaSTTuQTMD
-	 8JKffa6lUdeVo+l98YsswqndFBj4MdRXvHicvLhjEPkQNhV6yYp6LZTGg5c3WCXPsk
-	 lIDDYURMbHTFHehYpTaNdaEFRnGccb07/GShqJq1KW6V7oy5QEdVs8C+DqO5gA0Amg
-	 w8fKFmSTmL60g==
-Message-ID: <35d68e6b-c821-4ebd-96f6-33f09fa04f1b@kernel.org>
-Date: Mon, 27 May 2024 18:29:22 +0200
+	s=k20201202; t=1716827638;
+	bh=FqwLRmZq7+sdJul6dGAtnX2DgoqP9PXXAfeDCFAU9F0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WJPYjlpfQfU1/Omo2Hf+yu0gJGY/UyDbMlGw+tPR1grvIwXGPv8YVJxVIZ7Mymkoj
+	 pio6+HfD+hWdU4TwlPSe9XtlJnM8Ix5kRh8jSUPFgUFjtrZZ2YtItH2N95gou//KtY
+	 CKL397Fvt5D8QtnkIxu3091HHRFzaC+gmxv+bTipNF91tZP1p02LnL9y3/1PFbcwE9
+	 z6/aoDbAYv1m4QiCykYoWjFEumHi6X8QkdWyxeatpOnj7h9KT5JxJtR/J6atyzw+Xi
+	 wgUchisEMjGRqxgNyDO5EBwueCVglI/nkflD5NdS04iUC9GNWh0yx7AGujlBg0hp2J
+	 rXVOEsBIuEanw==
+Date: Mon, 27 May 2024 11:33:54 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, iommu@lists.linux.dev
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm450: add Lenovo Smart Tab M10
+ DTS
+Message-ID: <r243r56bz7nrp2guaqj2n26exdv6y5jyjtoytmceutd3cqbaao@r5xk3qlspwsi>
+References: <20240523-topic-sdm450-upstream-tbx605f-v1-0-e52b89133226@linaro.org>
+ <20240523-topic-sdm450-upstream-tbx605f-v1-3-e52b89133226@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: usb: qcom,dwc3: set minItems for
- interrupt-names
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-References: <20240527144538.155704-1-brgl@bgdev.pl>
- <f709f17d-c20c-4777-b23b-8275f6d4f3f5@kernel.org>
- <CAMRc=McDRpwvTbVZVmzT45zjrZN+ZxYP8_9QVTScZCew+fboMg@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <CAMRc=McDRpwvTbVZVmzT45zjrZN+ZxYP8_9QVTScZCew+fboMg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240523-topic-sdm450-upstream-tbx605f-v1-3-e52b89133226@linaro.org>
 
-On 27/05/2024 17:33, Bartosz Golaszewski wrote:
-> On Mon, May 27, 2024 at 5:13 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>
->> On 27/05/2024 16:45, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> There's a set of compatibles for which we set a strict list of 5 interrupt
->>> names even though minItems for the interrupts property is 4. One of the
->>> USB controllers on sa8775p only consumes 4 interrupts which leads to
->>> dtbs_check errors. Make the last entry optional by setting minItems to 4.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>> ---
->>>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
->>>  1 file changed, 1 insertion(+)
->>
->> Can you also fix other cases? I found there at least two other. I missed
->> that during review... or maybe we discussed it? I remember that commit
->> was a pain :/
->>
-> 
-> I can put that on my TODO list but I really have too much on my plate
-> ATM. I propose this be picked up separately.
-> 
+On Thu, May 23, 2024 at 09:59:35AM GMT, Neil Armstrong wrote:
+> diff --git a/arch/arm64/boot/dts/qcom/sdm450-lenovo-tbx605f.dts b/arch/arm64/boot/dts/qcom/sdm450-lenovo-tbx605f.dts
+[..]
+> +&rpm_requests {
+> +	regulators {
+> +		compatible = "qcom,rpm-pm8953-regulators";
+[..]
+> +		pm8953_l8: l8 {
+> +			regulator-min-microvolt = <2900000>;
+> +			regulator-max-microvolt = <2900000>;
+> +		};
+[..]
+> +		pm8953_l11: l11 {
+> +			regulator-min-microvolt = <3300000>;
+> +			regulator-max-microvolt = <3300000>;
+> +		};
+[..]
+> +	};
+> +};
+> +
+> +&sdhc_1 {
+> +	vmmc-supply = <&pm8953_l8>;
 
+JFYI. Not ensuring that the vmmc-supply is in HPM mode bitten us
+multiple times in the past. 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Regards,
+Bjorn
 
