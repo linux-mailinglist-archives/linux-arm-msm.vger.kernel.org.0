@@ -1,83 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-20578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F0F28CFCB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 11:22:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79AA98CFCCE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 11:26:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14FD028263E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 09:22:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33F3B283CD5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 09:26:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83BB5139D12;
-	Mon, 27 May 2024 09:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 626B613A40C;
+	Mon, 27 May 2024 09:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uc2fjePo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dasqq9O/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3952139CFC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 09:22:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9801013A3FC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 09:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716801749; cv=none; b=n21jbd4T0N+NBuI3xUvUoKc4wOWjwfURFHZfx2b3zp0yLRNwMJ1nIKvH07ms9CMOEeEuFBaKGGWMyY+Uj+R5WYpoDDBRH/cnFg9CIXmKf8dM3ow2TfEwANLuQHtclSTQ0RyZOrVLyKWT/1HMj+yDbVpZGz873mBbvnh7whx/V6w=
+	t=1716801948; cv=none; b=rTE2IDmwaR+IhGjMAaAQtwlw/ukXx2+MrgsfFfKgXkYkJ1YJS2AgfNGxA3EdHzCG/a0ECa7Kj5iIVAFafX1qByU6rHGFViOP/eUoRxIoElGdYGVh+VzpQeyiIxnRgrQEJ13Zd2Ecb6Xs4G2Svzlc2LjTrCrXlkcYHBu2z9+yB+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716801749; c=relaxed/simple;
-	bh=0SYu8q7ybUYE2G79eoZeMw4E0O4SMqXCRfB5V/UHjKg=;
+	s=arc-20240116; t=1716801948; c=relaxed/simple;
+	bh=cQko5yHzoPs2yV/CH4+PZ1Xt8ozLjrQwA0DjyeGLoGM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KE2OQainNMoTcJnIE3Xi2fU1UCcKBy6yww5L2VF55H9o8CgRw5Teu2HWwMpIJlvCG4zGP6G0gieFie4PnkgTpnR+FFqilbs6EgycLgXSQ+fTjzPrSsA6tRY4UfoyHvrSwCI9YRDAMzMPmWFgZyo2O7KeYpTGEU8lHyXJr6Z545U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uc2fjePo; arc=none smtp.client-ip=209.85.167.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y4p8p8bezZc6tNH93c86AY/7OcfRPQsCQtOTehmaxtp/YKy7B5+RVILWU+9e33on1X24YGHLg3UZBkoHvsMcCK3eLcEeZN6ACE4PT3xpZHJT8hmT+MIonxIkZ+xKc6z8VCib+Ftvk+D/Zh7IrpYQsl0cwvySWZG9vpb9jYwJ+1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dasqq9O/; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52388d9ca98so16456289e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 02:22:27 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5238b7d0494so11765374e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 02:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716801746; x=1717406546; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716801945; x=1717406745; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ym8N/apnsnms9AtlgZdpReV5NsUO3m79sBepxCN6Uq0=;
-        b=uc2fjePoPMq3GVl3iEinh9sTZJo39zgLKBecIo6uBlKNOWq+Kym2lxCT0L49YuzRzg
-         LfbiZ1tAcTxKKlPi5sRhMLBzgFpTonwicSBaWaRyWVBVwznSmAaBYGMws9p/VrqOYV1P
-         tzHJ84D3g0t3l2MMpjsRIxhUYOcpAZM5YHJyBue5V/IsyCs6NDs4n5/0q6wOFzQ6c3Lb
-         A+0VohdPBVPzk6yEU0nAM6PfRcZVBqbqiqJqdz8K0/G8VVmZUXZVvaIXw7GtJZrJK3/F
-         ffRUMJECXy8DYCS3M/sGozuhCvWk9xAhtu25t4kZ+5m/n/i2DWag5E/QJQK4jZ2j5zzG
-         w8ug==
+        bh=wKVcWHGtXv4+Y/GGLknnmWszynoHdWdRaEwxbwxRfgQ=;
+        b=dasqq9O/OS3PsrbM69mu5IcP44/75IuT7JH0uPDiaobNuIGuqAir0MImtxvv5NvD+5
+         /ApxmRfeIF2FAJp77PnUMmg/3+Wn2mEcs4TJE69gev3IlYZznbFYCCwyB3IYDikgySUp
+         HioI0W3Ep8iXPy3Hgf6139nalcD9P4qKpUOjQGAMJ2Wuqhm4u+W/EYQ9vtTbPNfLxPDi
+         K9TaQNpbqnRMSaFONLu0JeMK44ym6ux+fE5Del9lAEC0vFwQ9N560Mj7o1tsTQfVLi+i
+         sUg6bBHntj04ta/HdtxPYfwfRQLOWCNCBio9RUMf+ZT6JamwgO37ZYnLqoR6k5o/rXll
+         Ll9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716801746; x=1717406546;
+        d=1e100.net; s=20230601; t=1716801945; x=1717406745;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ym8N/apnsnms9AtlgZdpReV5NsUO3m79sBepxCN6Uq0=;
-        b=mKbOpUQx5D2Pi6RiidpMZ2+UylOnQooxxC7m2QUq9CDT5MpqgXv7YE7uOuQCx3L8i1
-         fVgnANHgnPnUfnE8NlQDp8Y1AYdqSz4v8nD3HmfTgzANxaB9DCZm56ZYjGuM7MajHb6R
-         +/Z9usg+osKfwWblY5hCIVyVCYR0Wge6J7Cx2jyhP/iYiKm43PDXJ2HOeQrosMoqYPs+
-         HkbIBNopjC1bqWf3gMU/vfD68+gxrx5wpIDkDWhiCnmiL/PyqLWDPEXmoNR7v9EdU01f
-         us5GNpRvWbDe8tK8OoW3HQwrad/KiNW3vXyrZL/Ef/CL7IOplbp/f+diH2HnV1sF9Det
-         EqwA==
-X-Forwarded-Encrypted: i=1; AJvYcCW4ooBmGV1pqtHRJCJVErQETGxiaNfcOlsAEA2eG3y5j0b1Ag10Y5rzQ4BdTpsaaDpY2ZyZSXsuBSTpgKh3uSX7IYSRSlUEPCRiEIL1+w==
-X-Gm-Message-State: AOJu0YyTsXmefgGxP+xcNSkHJbZ/d0CjaIOBZ55dvuvrmNH/Kt/CgYqt
-	aMDrF6ItKsn9Aqyz5FtpArfIvhiJgnlqlR6dG+9SBvrufSRxpbGQ1mUR9vniVK4=
-X-Google-Smtp-Source: AGHT+IFd0MGA8r0nsUkIMq2/dqyrPskMgV4yuH4ss7YhuqJmfZ/8dq9fDi/S0lBTmYS2hAfnqGxTuA==
-X-Received: by 2002:a05:6512:1597:b0:523:9515:4b74 with SMTP id 2adb3069b0e04-52965290576mr8727679e87.14.1716801746001;
-        Mon, 27 May 2024 02:22:26 -0700 (PDT)
+        bh=wKVcWHGtXv4+Y/GGLknnmWszynoHdWdRaEwxbwxRfgQ=;
+        b=k7A+pgQcdZMTACNujhJwaZ9u94vOdKxpVMXV1cnrVRvv0HfdVCPbFDS82Mm0agqs/z
+         GCqqcb3Z9PgKhtNhKigeM27hhlGIZKE1x/JsGnVAUlKn9XQWCKiFZ1/AhaWmvM4YvSA8
+         Nyr5t8uZ6jSJMvChO1hEOOPl+8rKqeU/PCJYljX7J/GazUexat1SxSQLTFt+5OmSBVmg
+         Foj66ALErlouOFGmM5P/jDC3GL4EQPUF1dUCDwrQ7TRzNLy445IEIHl8WYeu+uHxJDHJ
+         wAxmkUNtHPtNTyFdBnoOsFH87WXNoHKZdrBEYLeGrK4xz4+JLJ/993t0OnDPwN0/hRKV
+         bS4A==
+X-Forwarded-Encrypted: i=1; AJvYcCUeryNmBVWnwrPaJPCQRAIVYd1CEMBeEyhWQanovOsNPqUbYBjbzuSVc24wkZsZHS61srdLW6gX4K6WbD686TAqhuzyaJJFfjI2Q2z5sQ==
+X-Gm-Message-State: AOJu0YwGuQtUKjGqWxzL0iePrdFmKUQ2Hye72nSVU/YNMRKu7cR+/LGJ
+	YCrV1O1tC/CeCmaNMpwM9rSBny5lbXh2l2XZkDlK7kRSrqER6BF+RXlfTmelSqk=
+X-Google-Smtp-Source: AGHT+IFRYnTuxuIaVnx862PVinhHJOao3oJwf/SJegXqqHDpG9Zyp3u9wU+0bAUOsIFxJDQqynxSIA==
+X-Received: by 2002:a05:6512:328e:b0:521:742a:baf4 with SMTP id 2adb3069b0e04-52964ea96eemr7616266e87.9.1716801944756;
+        Mon, 27 May 2024 02:25:44 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5297066af3fsm495960e87.153.2024.05.27.02.22.25
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5296e887a6csm498529e87.24.2024.05.27.02.25.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 May 2024 02:22:25 -0700 (PDT)
-Date: Mon, 27 May 2024 12:22:24 +0300
+        Mon, 27 May 2024 02:25:44 -0700 (PDT)
+Date: Mon, 27 May 2024 12:25:42 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Abel Vesa <abel.vesa@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: x1e80100: Add ports nodes to USB1
- SS[0-2] PHYs and controllers
-Message-ID: <gezvh4tnltri3mdo3lphyqytrmi53h2thgk7i6v3f7y6emoa2b@lkwwoqopoaqq>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: x1e80100-crd: Add pmic-glink node
+ with all 3 connectors
+Message-ID: <t2gozu6atrv34abnuwafjje4aiy6j536bd3og53c2sdoxdkyew@vw3m367hzdxq>
 References: <20240527-x1e80100-dts-pmic-glink-v1-0-7ea5c8eb4d2b@linaro.org>
- <20240527-x1e80100-dts-pmic-glink-v1-1-7ea5c8eb4d2b@linaro.org>
+ <20240527-x1e80100-dts-pmic-glink-v1-2-7ea5c8eb4d2b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,194 +86,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240527-x1e80100-dts-pmic-glink-v1-1-7ea5c8eb4d2b@linaro.org>
+In-Reply-To: <20240527-x1e80100-dts-pmic-glink-v1-2-7ea5c8eb4d2b@linaro.org>
 
-On Mon, May 27, 2024 at 11:07:27AM +0300, Abel Vesa wrote:
-> All PHYs, being QMP combo type, implement both USB and DP. Add the port
-> nodes for high-speed, super-speed and DP to all 3 PHYs belonging to
-> USB1. Also add the counterpart nodes for the DWC3 controllers.
+On Mon, May 27, 2024 at 11:07:28AM +0300, Abel Vesa wrote:
+> Add the pmic-glink node and describe all 3 USB Type-C connectors. Do this
+> for USB only, for now. The DP port will come at a later stage since it
+> uses a retimer.
 > 
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 123 +++++++++++++++++++++++++++++++--
->  1 file changed, 117 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 5f90a0b3c016..63e85c5ea6c9 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -2543,6 +2543,29 @@ usb_1_ss0_qmpphy: phy@fd5000 {
->  			#phy-cells = <1>;
->  
->  			status = "disabled";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +
-> +					usb_1_ss0_qmpphy_out: endpoint {};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +
-> +					usb_1_ss0_qmpphy_usb_ss_in: endpoint {};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +
-> +					usb_1_ss0_qmpphy_dp_in: endpoint {};
+>  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 143 ++++++++++++++++++++++++++++++
+>  1 file changed, 143 insertions(+)
 
-Unless the configuration is dynamic or platform-dependent, please link DWC3, QMP PHY and DP nodes in the SoC.dtsi.
+Please rebase on top of https://lore.kernel.org/linux-arm-msm/20240429-usb-link-dtsi-v1-12-87c341b55cdf@linaro.org/, sorry about it.
 
-> +				};
-> +			};
->  		};
->  
->  		usb_1_ss1_hsphy: phy@fd9000 {
-> @@ -2583,6 +2606,29 @@ usb_1_ss1_qmpphy: phy@fda000 {
->  			#phy-cells = <1>;
->  
->  			status = "disabled";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +
-> +					usb_1_ss1_qmpphy_out: endpoint {};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +
-> +					usb_1_ss1_qmpphy_usb_ss_in: endpoint {};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +
-> +					usb_1_ss1_qmpphy_dp_in: endpoint {};
-> +				};
-> +			};
->  		};
->  
->  		usb_1_ss2_hsphy: phy@fde000 {
-> @@ -2623,6 +2669,29 @@ usb_1_ss2_qmpphy: phy@fdf000 {
->  			#phy-cells = <1>;
->  
->  			status = "disabled";
-> +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +
-> +				port@0 {
-> +					reg = <0>;
-> +
-> +					usb_1_ss2_qmpphy_out: endpoint {};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +
-> +					usb_1_ss2_qmpphy_usb_ss_in: endpoint {};
-> +				};
-> +
-> +				port@2 {
-> +					reg = <2>;
-> +
-> +					usb_1_ss2_qmpphy_dp_in: endpoint {};
-> +				};
-> +			};
->  		};
->  
->  		cnoc_main: interconnect@1500000 {
-> @@ -3445,8 +3514,22 @@ usb_1_ss2_dwc3: usb@a000000 {
->  
->  				dma-coherent;
->  
-> -				port {
-> -					usb_1_ss2_role_switch: endpoint {
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +
-> +						usb_1_ss2_dwc3_hs: endpoint {
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +
-> +						usb_1_ss2_dwc3_ss: endpoint {
-> +						};
->  					};
->  				};
->  			};
-> @@ -3590,8 +3673,22 @@ usb_1_ss0_dwc3: usb@a600000 {
->  
->  				dma-coherent;
->  
-> -				port {
-> -					usb_1_ss0_role_switch: endpoint {
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +
-> +						usb_1_ss0_dwc3_hs: endpoint {
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +
-> +						usb_1_ss0_dwc3_ss: endpoint {
-> +						};
->  					};
->  				};
->  			};
-> @@ -3673,8 +3770,22 @@ usb_1_ss1_dwc3: usb@a800000 {
->  
->  				dma-coherent;
->  
-> -				port {
-> -					usb_1_ss1_role_switch: endpoint {
-> +				ports {
-> +					#address-cells = <1>;
-> +					#size-cells = <0>;
-> +
-> +					port@0 {
-> +						reg = <0>;
-> +
-> +						usb_1_ss1_dwc3_hs: endpoint {
-> +						};
-> +					};
-> +
-> +					port@1 {
-> +						reg = <1>;
-> +
-> +						usb_1_ss1_dwc3_ss: endpoint {
-> +						};
->  					};
->  				};
->  			};
 > 
-> -- 
-> 2.34.1
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> index c5c2895b37c7..2fcc994cbb89 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> @@ -49,6 +49,101 @@ chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+>  
+> +	pmic-glink {
+> +		compatible = "qcom,x1e80100-pmic-glink",
+> +			     "qcom,sm8550-pmic-glink",
+> +			     "qcom,pmic-glink";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
+> +				    <&tlmm 123 GPIO_ACTIVE_HIGH>,
+> +				    <&tlmm 125 GPIO_ACTIVE_HIGH>;
+> +
+> +		connector@0 {
+> +			compatible = "usb-c-connector";
+> +			reg = <0>;
+> +			power-role = "dual";
+> +			data-role = "dual";
+
+Does this match the information reported by UCSI?
+
+> +
+
 
 -- 
 With best wishes
