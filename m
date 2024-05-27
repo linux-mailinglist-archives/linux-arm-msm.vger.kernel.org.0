@@ -1,65 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-20513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC2CF8CF7CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 05:05:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E20378CF7D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 05:05:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91DB21F217AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 03:05:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E0EF1F21628
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 03:05:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 134AC13B28F;
-	Mon, 27 May 2024 03:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0578713B5B8;
+	Mon, 27 May 2024 03:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qNpXI09R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OtGXlrER"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADA113AD3E;
-	Mon, 27 May 2024 03:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02D613B5A4;
+	Mon, 27 May 2024 03:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716778875; cv=none; b=qFI/scH+SswWyYO21eLsx/E4lzmzYuVh6emxXcgj5XrUL8Zij1I4Hjc1Zvym/O6Boc1ReFWNOrCn1W3iF3pNUqNY0Hrg1lJaC+9jxDSqewjeoA/tpADMmwya4O5Vmx8XA9+1DtrPFHKCq5fA7AZS7p/BzCzd3dmQISB1mqP0RjA=
+	t=1716778875; cv=none; b=rvCGpdTkd9v4iQjHYTlTMYQhYKHXJvaGv/smZ++SJBIGrSVrxyu8vggt4ww+P86n5fto7ruB8mL0LNi8El+XTQieJZaQAwpwxhx4m+oGSc+wmJltOZejrENFoQd/ZFrJ8LLUv1GKGy2Df5hQpsohbboaN0vDaHjTR1FjlLasXjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1716778875; c=relaxed/simple;
-	bh=cSMjlR4oVkTw4q0nSSZqgjVZ2PPghXwAB1QPdZEyN+M=;
+	bh=CHxjJQrtopW8dBxAgc3FEx+CTreovx0GR7Lh4NEkX1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tj203NuqUhPD+hKNuGTVF/DKHEnb9M7sFAJhk8/ltSrvkKhABxhByKuyZFx+taomUp5lQV1bfL5rZ1tPsF+Xy0lfntEplduOYiFoXMMLTr90D0UMxGPML4CJHr2EhnF0tVO2IjS6NCd7mi5EF2vvEr+7+h+8b8RsWlON2PwWN4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qNpXI09R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D080C4AF09;
-	Mon, 27 May 2024 03:01:13 +0000 (UTC)
+	 MIME-Version:Content-Type; b=h7WkI027VCGBAodfDezO7U8/Zm/sj9uXITp1bp+kc/eCLiyLdjGUr8B7ablImyQdkkPbcRt1lAI4PM24SVTaWdZ7raruBhYYauUqB4J3qzfwpMcv+1TOXGxZs2zNQKzszPoxEA4xAtBOh5R43wXg0jtecRZLbnJ8bPGdQAyrHCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OtGXlrER; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0557C4AF0B;
+	Mon, 27 May 2024 03:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716778874;
-	bh=cSMjlR4oVkTw4q0nSSZqgjVZ2PPghXwAB1QPdZEyN+M=;
+	s=k20201202; t=1716778875;
+	bh=CHxjJQrtopW8dBxAgc3FEx+CTreovx0GR7Lh4NEkX1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNpXI09Re5iQnpnI+jC17jEVJoHE//yvdCzec+CnZekTN3BmCx0UBIE7v99Z4tBNc
-	 UJX7EBB0TfcdhOPsv7fxLNN5KciDZyzPNPw/XGPgJ8NNyhLD9ZaOTnd3qgdockiah6
-	 gt/+NYpbAR5eALAHXxg/GhRkLi67wvvo9GV54xb4TFUo1xHXTwOdMomhGU6IO4aHT5
-	 Pud/5uHrvVYleZc8EjyJ9Dq7ykoM6j42i9xiR5IUIWxbXqc73e0IjqmXPIHgXlWSiV
-	 Zpto6L5t/K082P9fvmiZqI996Z+h1HFaxv2niOrntkxB5bwHA3COjQU0nCQY2fc5xv
-	 RshIjg0bZhz6A==
+	b=OtGXlrERAySkOdUM7VGQ6seqKyl8hl1hfimM2s5z2theSbUWf6qYLuoZrwUc7Zrd0
+	 090OTTDI4yehMt3iyKgaKocy19r5u8vTkbWti5NY/InV3Azb9F/F44C8p/dUdeKZo0
+	 /pe0ZRhMvVVoRHcQiITkatUjMi6Y+SoaP7NFzrIV7dsJnGi0aqOHm1BDS24KlNDvxO
+	 kPnYBGSOkkGw/K3V9vntg7pjklX3nqZoWaYPtIzuyqZ4hq0Sye2NF/0fnyIYBLWAtP
+	 TJhzWRiQLpFQxNEqQs7QE4pfO9j16o620pNyr8uPei07aPoSGsE9/rLJF34aWc7DVw
+	 Zb7yCR82m9KIw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: rafael@kernel.org,
-	viresh.kumar@linaro.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	konrad.dybcio@linaro.org,
-	Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org,
-	linux-pm@vger.kernel.org,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Umang Chheda <quic_uchheda@quicinc.com>
+Cc: quic_kamalw@quicinc.com,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/3] arm64: qcom: Add cpufreq and clock support
-Date: Sun, 26 May 2024 22:00:39 -0500
-Message-ID: <171677884202.490947.5425236103241171149.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Enable PMK8350 RTC module
+Date: Sun, 26 May 2024 22:00:40 -0500
+Message-ID: <171677884191.490947.8943620748021230422.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240424101503.635364-1-quic_tengfan@quicinc.com>
-References: <20240424101503.635364-1-quic_tengfan@quicinc.com>
+In-Reply-To: <20240523131528.3454431-1-quic_uchheda@quicinc.com>
+References: <20240523131528.3454431-1-quic_uchheda@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,17 +67,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 24 Apr 2024 18:15:00 +0800, Tengfei Fan wrote:
-> Add cpufreq and clock support for SM4450 platform.
+On Thu, 23 May 2024 18:45:28 +0530, Umang Chheda wrote:
+> Enable PMK8350 RTC module that is found on qcs6490-rb3gen2.
 > 
 > 
 
 Applied, thanks!
 
-[2/3] arm64: dts: qcom: sm4450: Add cpufreq support
-      commit: 15476ccd3dc6cea04048d159115c86a3d5042501
-[3/3] arm64: dts: qcom: sm4450: Supply clock from cpufreq node to CPUs
-      commit: 15476ccd3dc6cea04048d159115c86a3d5042501
+[1/1] arm64: dts: qcom: qcs6490-rb3gen2: Enable PMK8350 RTC module
+      commit: a55361454c210ae4fd840cde3913f320663c405a
 
 Best regards,
 -- 
