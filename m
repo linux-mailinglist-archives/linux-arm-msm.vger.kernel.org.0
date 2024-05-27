@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-20512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DDFC8CF7CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 05:05:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC2CF8CF7CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 05:05:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0D3B1F218DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 03:05:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91DB21F217AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 03:05:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 931FC13AD1C;
-	Mon, 27 May 2024 03:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 134AC13B28F;
+	Mon, 27 May 2024 03:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L8Fray6S"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qNpXI09R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695DB13AD14;
-	Mon, 27 May 2024 03:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADA113AD3E;
+	Mon, 27 May 2024 03:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716778873; cv=none; b=jsj89mkbDaBgxkTKeQMShbNn8bYyM+vcrjTcEzwyaZv6idf4rBmxH1UOqiWKsJUZvpwUebLCxQGfMNmbulLAsn76O7X8no82WDPhhxEYj9Z7wF7VQ9VSqUgDVUjXyGIipbsMlAAQgz32ycvOKl7lKtdjqSlQA28BJ4DVeoOFJ2s=
+	t=1716778875; cv=none; b=qFI/scH+SswWyYO21eLsx/E4lzmzYuVh6emxXcgj5XrUL8Zij1I4Hjc1Zvym/O6Boc1ReFWNOrCn1W3iF3pNUqNY0Hrg1lJaC+9jxDSqewjeoA/tpADMmwya4O5Vmx8XA9+1DtrPFHKCq5fA7AZS7p/BzCzd3dmQISB1mqP0RjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716778873; c=relaxed/simple;
-	bh=KkWUF+Ohkjx/svEf3wHrviX8k8IfWZaNlYqryqSDCWc=;
+	s=arc-20240116; t=1716778875; c=relaxed/simple;
+	bh=cSMjlR4oVkTw4q0nSSZqgjVZ2PPghXwAB1QPdZEyN+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qd0c3Id5UUx8yzdag6Mm97ZHROnDqfuLfwCKkGNAWIZtI+Tm80UqudfpKVEzeki4yLVJUzXV/3akxOrXGEUJG+WdwxK/5WulUuYW003g6FkAFPFTw34ynZAGzcqesBeN5RMQMnj26xqd/2Xn4cUYFSfihWJdj16r4ABrwd31VF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L8Fray6S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500EDC4AF07;
-	Mon, 27 May 2024 03:01:12 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Tj203NuqUhPD+hKNuGTVF/DKHEnb9M7sFAJhk8/ltSrvkKhABxhByKuyZFx+taomUp5lQV1bfL5rZ1tPsF+Xy0lfntEplduOYiFoXMMLTr90D0UMxGPML4CJHr2EhnF0tVO2IjS6NCd7mi5EF2vvEr+7+h+8b8RsWlON2PwWN4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qNpXI09R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D080C4AF09;
+	Mon, 27 May 2024 03:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716778873;
-	bh=KkWUF+Ohkjx/svEf3wHrviX8k8IfWZaNlYqryqSDCWc=;
+	s=k20201202; t=1716778874;
+	bh=cSMjlR4oVkTw4q0nSSZqgjVZ2PPghXwAB1QPdZEyN+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8Fray6SKBfykrOppE8GpMWfi8O2aVlkBCduVCawQi/fn6d5G0JW2FldweOHIobTZ
-	 2oyB1d8bKgEJ0qYdmtyk5ch7emXYlELerSSHbaxqDbH2qDIN6reYrLh0eJ1VvqGZTL
-	 QGRrkzgbPwdJyK9MlFXNlbX7tbsWjDwNbYq8hH/kTpB5KkGTZ7LjbDBp+voDbNj5vz
-	 cAr2dxdhFabGKanEATFFmg4NqhOCzLeOBqYUs012eh/ZlgyjEWMfpZJO9x75lptdjg
-	 sIk7DaGybOBUCppkhVHF4JRraKPbDpYjHy/Ka/oX0rUpMhnQsCLn6rGnrqcv59zVZS
-	 5L9QImEOgH2vg==
+	b=qNpXI09Re5iQnpnI+jC17jEVJoHE//yvdCzec+CnZekTN3BmCx0UBIE7v99Z4tBNc
+	 UJX7EBB0TfcdhOPsv7fxLNN5KciDZyzPNPw/XGPgJ8NNyhLD9ZaOTnd3qgdockiah6
+	 gt/+NYpbAR5eALAHXxg/GhRkLi67wvvo9GV54xb4TFUo1xHXTwOdMomhGU6IO4aHT5
+	 Pud/5uHrvVYleZc8EjyJ9Dq7ykoM6j42i9xiR5IUIWxbXqc73e0IjqmXPIHgXlWSiV
+	 Zpto6L5t/K082P9fvmiZqI996Z+h1HFaxv2niOrntkxB5bwHA3COjQU0nCQY2fc5xv
+	 RshIjg0bZhz6A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konrad.dybcio@linaro.org,
-	manivannan.sadhasivam@linaro.org,
-	jassisinghbrar@gmail.com,
+To: rafael@kernel.org,
+	viresh.kumar@linaro.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	lee@kernel.org,
-	Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	konrad.dybcio@linaro.org,
+	Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: manivannan.sadhasivam@linaro.org,
+	linux-pm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	kernel@quicinc.com
-Subject: Re: (subset) [PATCH 0/6] Add some devicetree node for SDX75
-Date: Sun, 26 May 2024 22:00:38 -0500
-Message-ID: <171677884217.490947.17155292242168330229.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/3] arm64: qcom: Add cpufreq and clock support
+Date: Sun, 26 May 2024 22:00:39 -0500
+Message-ID: <171677884202.490947.5425236103241171149.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240426055326.3141727-1-quic_rohiagar@quicinc.com>
-References: <20240426055326.3141727-1-quic_rohiagar@quicinc.com>
+In-Reply-To: <20240424101503.635364-1-quic_tengfan@quicinc.com>
+References: <20240424101503.635364-1-quic_tengfan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,31 +70,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 26 Apr 2024 11:23:20 +0530, Rohit Agarwal wrote:
-> This series add some basic DT nodes on Qcom's SDX75 SoC that are required
-> for different subsystems.
+On Wed, 24 Apr 2024 18:15:00 +0800, Tengfei Fan wrote:
+> Add cpufreq and clock support for SM4450 platform.
 > 
-> Thanks,
-> Rohit.
 > 
-> Rohit Agarwal (6):
->   dt-bindings: mailbox: qcom-ipcc: Document the SDX75 IPCC
->   dt-bindings: mfd: qcom,tcsr: Add compatible for SDX75
->   dt-bindings: soc: qcom,aoss-qmp: Document the SDX75 AOSS channel
->   arm64: dts: qcom: sdx75: Add IPCC node
->   arm64: dts: qcom: sdx75: Add TCSR register space
->   arm64: dts: qcom: sdx75: Add AOSS node
-> 
-> [...]
 
 Applied, thanks!
 
-[4/6] arm64: dts: qcom: sdx75: Add IPCC node
-      commit: 220be0f04eb1c753fdfe8ff95942fbcdc5ed650a
-[5/6] arm64: dts: qcom: sdx75: Add TCSR register space
-      commit: 85ab1969865b78dc14af930d0819d52ab9cd6dee
-[6/6] arm64: dts: qcom: sdx75: Add AOSS node
-      commit: 91f767eb693881c0424e05866fde3c033c86c2d3
+[2/3] arm64: dts: qcom: sm4450: Add cpufreq support
+      commit: 15476ccd3dc6cea04048d159115c86a3d5042501
+[3/3] arm64: dts: qcom: sm4450: Supply clock from cpufreq node to CPUs
+      commit: 15476ccd3dc6cea04048d159115c86a3d5042501
 
 Best regards,
 -- 
