@@ -1,450 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-20605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D3108D0034
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 14:39:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72C058D0092
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 14:57:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 60BD91C20A62
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 12:39:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0265A1F242EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 12:57:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7639315DBCA;
-	Mon, 27 May 2024 12:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FC7E15EFDC;
+	Mon, 27 May 2024 12:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="JvwtPN1e"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="pH4FkCfT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7845E38FA6
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 12:39:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A65315EFD3
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 12:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716813583; cv=none; b=pHNPxD/54NSrkDT4uv1kJSHmDDY5WEseThAHjHaiMvFBhu1AUlWRznp4Zfkunc1tyNa2A7A3W4XPCing/8N5ANFIad5Bqztwu0QQA0PiHy88zBUHpCRRQy/fN+5LWhXXiyWgWtSvrLobA/DmfToiA7p1cNMugPo2KI6BYn82iHg=
+	t=1716814607; cv=none; b=GZzfpTDq9h6rYHacWakOwjgne2yHQuk0PUykKL3yuOpEdIv3jvMmGZOQpGF3hfCJTU233UExdoWOpMawmpD1G5JDcD3csBwhCwoHkmBzspdViW2QqWZX9UyDDP8yHupAxEkxlONwjASrkdASBK8bvbE/34JkkPh4hMtnB/jRkDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716813583; c=relaxed/simple;
-	bh=zVR2l+QCIDiSd7hCkiaAPdgBkbikp56F5ISIOd1JDy4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dY0cDm+sZmjK9AD+LhV4IAbf7nlkttMa4UUlMCUwAtYvkXj9NdVwSXyin4X7fCk1wJaI6OwEjSS35VhzQqPOQThzetq95xA5H6Pp9JwTBPyc8H0WloGoip/mbPg7KJZ1EBNpyWRwSG51IVLnLkEJFZ8zGifRnImPMmiPorOImMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=JvwtPN1e; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4202ca70270so61129295e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 05:39:39 -0700 (PDT)
+	s=arc-20240116; t=1716814607; c=relaxed/simple;
+	bh=CA8042YIpnyj2ZXHYRDm1I27BUIfcazEW/6sonPev8Q=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=G2IFc5tgjc2N226mObktKdCe8DfKrA7ibyw4IAoIX2RDBOPOAT0umjFBfKLL92Uwj97MgE27YsC9scEWyQeIyzu4/Ty7sy90m26Tl0cB5bJH60g58AXD8kfO9b7juUUbzZdLHGV5Viuxqc8nrEGh8P0aPBoNEaL+RZYMY4LWoeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=pH4FkCfT; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42108739ed8so33631815e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 05:56:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1716813577; x=1717418377; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PQ2XKQ4bi3ifBt7xklb3YobX7rwSn+TKhRl1RNG+ius=;
-        b=JvwtPN1eC7uG7uISsxHY6pJ/obBnPanMuuOMf9V0QacMlUi2SE8eZzJSrtdYKlTql6
-         f5R2IriNx4wsLarTcrkCZ/eYWc1qJl0UVTAG9Wl6BbQvmKwB3f8unDUjqRgQ73e9D3kr
-         d1AkyowsZwfbAsrKUpKPzcyst29Ztew4McPY/QfVL2Z1yXKpALU/s7xMMveUv15/jPwa
-         nYzT9kcOfIJRADiAEeD/VPQ+BRrvBYBK9PFc+syzKy8lde/SPuCXTllJWVs57Nx4X4SH
-         y5NmhAGBOrCkJZ2Jps0XElicH4ai2MES3nr7LBG/68cpOWBiCgSEYIIwkUpVICipTwYT
-         64EA==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1716814605; x=1717419405; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GD82MM1VVjohnjRvbeZeJlkCdboh2s6SKcgpo4ScdJw=;
+        b=pH4FkCfTEz8EeN0nO71PcsbQeZ+EzsIbNQCc33Kw4HKGos89/ylC3cIddIqSpQoIYR
+         xCgIp+fJdNrndjbPSHN+K2pZLzD8YhR4db3rgp10QhVMvviBGJ9aLJuhpcNdjzmHk2PX
+         LEsGWZHPh9owsRvWLFx/3mmmvW3auT7bJFHRkez5Pvfe5grCHCxzr55D4sbY46hmEH/R
+         4WqnuznBBQYKpM0kTxlRt14Z1qozlWYT5doLR/HhKLbF8pVbQKAQopDzauMvyF2dGl0F
+         V8/jxhLbLGL7kcirAkTzMRfmsS5CyJtpe08TjjolYkPtH3xbEmdUqfTQD/nvuEm04rlQ
+         H7fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716813577; x=1717418377;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PQ2XKQ4bi3ifBt7xklb3YobX7rwSn+TKhRl1RNG+ius=;
-        b=i7okFN36vobz26N/acObAiAt2tzIPYKsJ5schKxCoYamcg1sfnafcZ6f3iFlsI+wY9
-         MZve2FowAOUJ3ozHN+urZgHyKaFHcFzpKJMbqceICHofHxeXV61MyZntMKDJXLqxvE7m
-         iQgNgnqS2jsPe4qUbgM0RzhNOailwWDEYUg6Qu5RJbnwYbap45S3j/KVmWsp8ltjMWQL
-         OyXpAIhje5rZwwnHrY8mmuVObQSQiX1kGNrNfdHdl8GL8iNL8COh5pCORBJA6US5xGwM
-         TyN5J9dMvSdUAQl39ugQRxo+jHSnkb+UUeNPb6OFIR7eopJcUq1pq1qhQ1JAZStV4LTl
-         bEIA==
-X-Forwarded-Encrypted: i=1; AJvYcCWrMCFOPbEUHAefx2OnUVx3ixecKPo8ZMkvWnkkFI7eOefOjPZLwXlZ/M1TsKxDH/sCOWt3Ff1PVo4uOqmpO+Kyte4ZJdn7XZ4sQ0i5pQ==
-X-Gm-Message-State: AOJu0YynR4nW5gHsUVkT72Z+N8ADbg02ef9/8rk5O77wuc3X0e1elu5Z
-	cWzUdGrBofwzXUaFIHL0lflLEAsnd49D0GU7biVPMuFZLAC2mqdutJutquLYMg==
-X-Google-Smtp-Source: AGHT+IFVLBxasdwVOhT2j5f/keRUhVa56DZAdVC1Btu0N3UElKx9sJlE6aIBx9G82O6BBBp8U1pqHA==
-X-Received: by 2002:a05:600c:2245:b0:420:1426:8485 with SMTP id 5b1f17b1804b1-42108a40f5cmr78096895e9.14.1716813577476;
-        Mon, 27 May 2024 05:39:37 -0700 (PDT)
-Received: from [192.168.108.89] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-420fd37d5c0sm82931965e9.1.2024.05.27.05.39.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 May 2024 05:39:37 -0700 (PDT)
-Message-ID: <e4c2e552-9004-4735-a3b3-ba1f50a145ac@freebox.fr>
-Date: Mon, 27 May 2024 14:39:35 +0200
+        d=1e100.net; s=20230601; t=1716814605; x=1717419405;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GD82MM1VVjohnjRvbeZeJlkCdboh2s6SKcgpo4ScdJw=;
+        b=LVhW3G5V5gnDKn2/iv3xPtOrUtswj6troI9oI1oaaqAA8AR2O/WMNDalbyzgru5O4E
+         urlm9URSPpYG4W6Qk8jP6CPWcWqlFasTxc8j5XTc449V3v/NYfXe20zZ8HcTKJ4GwYCj
+         zOfhA09p98gCXyp7tZj4KTzd9pWO+sQAXAMWjSTui7go4GAZ/Hi1alaiUr1BP6fPIkPs
+         e2mob2maooyWahzYBLjjaClas+o5LMWuhU0KgKL5mJm3921WLyFdZC3AakNCbYOwzT3w
+         k+nTxZSkx7r+SSn0kXUabBHN+yC6Aglb3mdNxwq2VVoHbgbCmmEtmfW8JjfgmF0bDQOw
+         J+mQ==
+X-Gm-Message-State: AOJu0YzUbLdq4jfGK5Vbv+UBo7KdlDQD1nnsvC1gdSFdnhghJvoQPXKD
+	on9WqTk2LK2y/meo0ip6j14mdkXVXjLKjRFsDA3kPvvgEcByMzH9BowOV8F5EQo=
+X-Google-Smtp-Source: AGHT+IE5ugbBF1IRGuSLkrpLGi0B589uc1IvGTg3DvM/wSrGwWTLZuoK7IkX4Cupa1ZlCdYCe3k0VQ==
+X-Received: by 2002:a05:600c:5354:b0:420:f8:23d6 with SMTP id 5b1f17b1804b1-42108aa7589mr94703665e9.36.1716814604660;
+        Mon, 27 May 2024 05:56:44 -0700 (PDT)
+Received: from [127.0.1.1] ([2a01:cb1d:75a:e000:c322:131e:ff9d:ef41])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42100f64f98sm138753635e9.24.2024.05.27.05.56.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 May 2024 05:56:44 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH v10 00/15] firmware: qcom: implement support for and enable
+ SHM bridge
+Date: Mon, 27 May 2024 14:54:50 +0200
+Message-Id: <20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1] drm/msm: add msm8998 hdmi phy/pll support
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, MSM <linux-arm-msm@vger.kernel.org>,
- freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Bryan O Donoghue <bryan.odonoghue@linaro.org>,
- Luca Weiss <luca.weiss@fairphone.com>,
- Pierre-Hugues Husson <phhusson@freebox.fr>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-References: <63337d63-67ef-4499-8a24-5f6e9285c36b@freebox.fr>
- <CAA8EJpptbpRj2htzcsXAiwQe-1Xdgoev-mdMki2OApm3gMEBcw@mail.gmail.com>
-Content-Language: en-US, fr
-From: Arnaud Vrac <avrac@freebox.fr>
-In-Reply-To: <CAA8EJpptbpRj2htzcsXAiwQe-1Xdgoev-mdMki2OApm3gMEBcw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJqCVGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDA10FJSSM
+ xLz0lN1M1OAAkpGBkYmBqZG5rrFGbm6SUWZKUCZVCMTS5O05OQkgyRTJaCGgqLUtMwKsGnRsbW
+ 1AHRGr/9dAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Robert Marko <robimarko@gmail.com>, 
+ Das Srinagesh <quic_gurus@quicinc.com>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Maximilian Luz <luzmaximilian@gmail.com>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Arnd Bergmann <arnd@arndb.de>, Elliot Berman <quic_eberman@quicinc.com>, 
+ Alex Elder <elder@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>, 
+ Deepti Jaggi <quic_djaggi@quicinc.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6070;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=CA8042YIpnyj2ZXHYRDm1I27BUIfcazEW/6sonPev8Q=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBmVIMEs510EWY0AP7N7UDVpxO2Si8KYg3b7HUsk
+ D/JPsAZSw2JAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZlSDBAAKCRARpy6gFHHX
+ citoD/9Zd1+dMd+FnsjX5/jY0RWRlqxdoaDVqQWUwTdCnDssRbXefCUcB7LYJo9UXENpfuqwqJE
+ ljZtDmSe+n4bp9RGKTJl0eLLKlDld4q430oe83vF2z0848OwCXGg9l/60Z0J5T8fBHizikYDrAO
+ Sr2MaUUC5VS8ZqO/bKh5rMUtEQWgGcDNxIevAm2qBdlLCTbS3fMWP5TvmGPW34/ofkLgPK/P52C
+ 6u9t2TOSceD6+Q5OvtBtev64l4X7MF2fNSklCKeeTXm2Xj5fRN9/ibIaczulaNW+DEtZGlyriU/
+ cF/PIHb6Z7j0c96czpKjtmgiIc6Tnwc3zi4JzVvxI6+QnP5W+ImEtnm3kXSv3TP+ML/9YBON1iB
+ 9R3S/yHktXXgURFUwmFCEGHYledlk4onvVyRLF73BbNA0EifW7YVxuzAgtbZKFgB8yc6DdN22DZ
+ kTUy8RGeTDEwFPs/H2KOmXQvwXRMklWMrG8v0zvrJgPp09Hpd0HXOZ6qckhCugr7elPGPAOxlKW
+ UQcs3DWwiquvPeN6fpJEzW0bfZM5cGSBr7sKHX0NOY6tgrXw6lsIaIYggnMFri8eyQD/2B8GoU5
+ 7Bb+YDN2nFAvDaWjEdKv+1gsbjheGWOq27MI6e/oLSkUQaTUIscbc5+MddJFA9GjRrenA3OBfbH
+ dtX8F7ipq8BTXQA==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-On 27/05/2024 14:11, Dmitry Baryshkov wrote:
-> On Thu, 23 May 2024 at 18:14, Marc Gonzalez <mgonzalez@freebox.fr> wrote:
->>
->> From: Arnaud Vrac <avrac@freebox.fr>
->>
->> Ported from the downstream driver.
->>
->> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
->> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
->> ---
->>   drivers/gpu/drm/msm/Makefile             |   1 +
->>   drivers/gpu/drm/msm/hdmi/hdmi.c          |   1 +
->>   drivers/gpu/drm/msm/hdmi/hdmi.h          |   8 +
->>   drivers/gpu/drm/msm/hdmi/hdmi.xml.h      | 162 ++++
->>   drivers/gpu/drm/msm/hdmi/hdmi_phy.c      |   5 +
->>   drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c | 941 +++++++++++++++++++++++
->>   6 files changed, 1118 insertions(+)
->>   create mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
->>
->> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
->> index b21ae2880c715..5b5d6aded5233 100644
->> --- a/drivers/gpu/drm/msm/Makefile
->> +++ b/drivers/gpu/drm/msm/Makefile
->> @@ -26,6 +26,7 @@ msm-$(CONFIG_DRM_MSM_HDMI) += \
->>          hdmi/hdmi_phy.o \
->>          hdmi/hdmi_phy_8960.o \
->>          hdmi/hdmi_phy_8996.o \
->> +       hdmi/hdmi_phy_8998.o \
->>          hdmi/hdmi_phy_8x60.o \
->>          hdmi/hdmi_phy_8x74.o \
->>          hdmi/hdmi_pll_8960.o \
->> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
->> index c8ebd75176bba..2a2ce49ef5aa3 100644
->> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
->> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
->> @@ -549,6 +549,7 @@ static void msm_hdmi_dev_remove(struct platform_device *pdev)
->>   }
->>
->>   static const struct of_device_id msm_hdmi_dt_match[] = {
->> +       { .compatible = "qcom,hdmi-tx-8998", .data = &hdmi_tx_8974_config },
-> 
-> Missing DT bindings.
-> 
->>          { .compatible = "qcom,hdmi-tx-8996", .data = &hdmi_tx_8974_config },
->>          { .compatible = "qcom,hdmi-tx-8994", .data = &hdmi_tx_8974_config },
->>          { .compatible = "qcom,hdmi-tx-8084", .data = &hdmi_tx_8974_config },
->> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
->> index ec57864403915..cad0d50c82fbc 100644
->> --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
->> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
->> @@ -137,6 +137,7 @@ enum hdmi_phy_type {
->>          MSM_HDMI_PHY_8960,
->>          MSM_HDMI_PHY_8x74,
->>          MSM_HDMI_PHY_8996,
->> +       MSM_HDMI_PHY_8998,
->>          MSM_HDMI_PHY_MAX,
->>   };
->>
->> @@ -154,6 +155,7 @@ extern const struct hdmi_phy_cfg msm_hdmi_phy_8x60_cfg;
->>   extern const struct hdmi_phy_cfg msm_hdmi_phy_8960_cfg;
->>   extern const struct hdmi_phy_cfg msm_hdmi_phy_8x74_cfg;
->>   extern const struct hdmi_phy_cfg msm_hdmi_phy_8996_cfg;
->> +extern const struct hdmi_phy_cfg msm_hdmi_phy_8998_cfg;
->>
->>   struct hdmi_phy {
->>          struct platform_device *pdev;
->> @@ -184,6 +186,7 @@ void __exit msm_hdmi_phy_driver_unregister(void);
->>   #ifdef CONFIG_COMMON_CLK
->>   int msm_hdmi_pll_8960_init(struct platform_device *pdev);
->>   int msm_hdmi_pll_8996_init(struct platform_device *pdev);
->> +int msm_hdmi_pll_8998_init(struct platform_device *pdev);
->>   #else
->>   static inline int msm_hdmi_pll_8960_init(struct platform_device *pdev)
->>   {
->> @@ -194,6 +197,11 @@ static inline int msm_hdmi_pll_8996_init(struct platform_device *pdev)
->>   {
->>          return -ENODEV;
->>   }
->> +
->> +static inline int msm_hdmi_pll_8998_init(struct platform_device *pdev)
->> +{
->> +       return -ENODEV;
->> +}
->>   #endif
->>
->>   /*
->> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.xml.h b/drivers/gpu/drm/msm/hdmi/hdmi.xml.h
->> index 973b460486a5a..c9ca1101b5ad4 100644
->> --- a/drivers/gpu/drm/msm/hdmi/hdmi.xml.h
->> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.xml.h
->> @@ -1396,4 +1396,166 @@ static inline uint32_t HDMI_8x60_PHY_REG1_OUTVOL_SWING_CTRL(uint32_t val)
->>   #define REG_HDMI_PHY_QSERDES_TX_LX_TX_ALOG_INTF_OBSV           0x00000110
->>
->>
->> +#define REG_HDMI_8998_PHY_CFG                                  0x00000000
->> +
->> +#define REG_HDMI_8998_PHY_PD_CTL                               0x00000004
->> +
->> +#define REG_HDMI_8998_PHY_MODE                                 0x00000010
->> +
->> +#define REG_HDMI_8998_PHY_CLOCK                                        0x0000005c
->> +
->> +#define REG_HDMI_8998_PHY_CMN_CTRL                             0x00000068
->> +
->> +#define REG_HDMI_8998_PHY_STATUS                               0x000000b4
->> +
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_ATB_SEL1                 0x00000000
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_ATB_SEL2                 0x00000004
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_FREQ_UPDATE              0x00000008
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_BG_TIMER                 0x0000000c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SSC_EN_CENTER            0x00000010
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SSC_ADJ_PER1             0x00000014
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SSC_ADJ_PER2             0x00000018
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SSC_PER1                 0x0000001c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SSC_PER2                 0x00000020
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SSC_STEP_SIZE1           0x00000024
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SSC_STEP_SIZE2           0x00000028
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_POST_DIV                 0x0000002c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_POST_DIV_MUX             0x00000030
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_BIAS_EN_CLKBUFLR_EN      0x00000034
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CLK_ENABLE1              0x00000038
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SYS_CLK_CTRL             0x0000003c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SYSCLK_BUF_ENABLE                0x00000040
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_PLL_EN                   0x00000044
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_PLL_IVCO                 0x00000048
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CMN_IETRIM               0x0000004c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CMN_IPTRIM               0x00000050
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CP_CTRL_MODE0            0x00000060
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CP_CTRL_MODE1            0x00000064
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_PLL_RCTRL_MODE0          0x00000068
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_PLL_RCTRL_MODE1          0x0000006c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_PLL_CCTRL_MODE0          0x00000070
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_PLL_CCTRL_MODE1          0x00000074
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_PLL_CNTRL                        0x00000078
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_BIAS_EN_CTRL_BY_PSM      0x0000007c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SYSCLK_EN_SEL            0x00000080
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CML_SYSCLK_SEL           0x00000084
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_RESETSM_CNTRL            0x00000088
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_RESETSM_CNTRL2           0x0000008c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_LOCK_CMP_EN              0x00000090
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_LOCK_CMP_CFG             0x00000094
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_LOCK_CMP1_MODE0          0x00000098
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_LOCK_CMP2_MODE0          0x0000009c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_LOCK_CMP3_MODE0          0x000000a0
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_DEC_START_MODE0          0x000000b0
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_DEC_START_MODE1          0x000000b4
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_DIV_FRAC_START1_MODE0    0x000000b8
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_DIV_FRAC_START2_MODE0    0x000000bc
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_DIV_FRAC_START3_MODE0    0x000000c0
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_DIV_FRAC_START1_MODE1    0x000000c4
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_DIV_FRAC_START2_MODE1    0x000000c8
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_DIV_FRAC_START3_MODE1    0x000000cc
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_INTEGLOOP_INITVAL                0x000000d0
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_INTEGLOOP_EN             0x000000d4
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_INTEGLOOP_GAIN0_MODE0    0x000000d8
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_INTEGLOOP_GAIN1_MODE0    0x000000dc
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_INTEGLOOP_GAIN0_MODE1    0x000000e0
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_INTEGLOOP_GAIN1_MODE1    0x000000e4
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_VCOCAL_DEADMAN_CTRL      0x000000e8
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_VCO_TUNE_CTRL            0x000000ec
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_VCO_TUNE_MAP             0x000000f0
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CMN_STATUS               0x00000124
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_RESET_SM_STATUS          0x00000128
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CLK_SEL                  0x00000138
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_HSCLK_SEL                        0x0000013c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CORECLK_DIV_MODE0                0x00000148
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SW_RESET                 0x00000150
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CORE_CLK_EN              0x00000154
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_C_READY_STATUS           0x00000158
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_CMN_CONFIG               0x0000015c
->> +
->> +#define REG_HDMI_8998_PHY_QSERDES_COM_SVS_MODE_CLK_SEL         0x00000164
->> +
->> +
->> +#define REG_HDMI_8998_PHY_TXn_EMP_POST1_LVL                    0x00000000
->> +
->> +#define REG_HDMI_8998_PHY_TXn_INTERFACE_SELECT_TX_BAND         0x00000008
->> +
->> +#define REG_HDMI_8998_PHY_TXn_CLKBUF_TERM_ENABLE               0x0000000c
->> +
->> +#define REG_HDMI_8998_PHY_TXn_DRV_LVL_RES_CODE_OFFSET          0x00000014
->> +
->> +#define REG_HDMI_8998_PHY_TXn_DRV_LVL                          0x00000018
->> +
->> +#define REG_HDMI_8998_PHY_TXn_LANE_CONFIG                      0x0000001c
->> +
->> +#define REG_HDMI_8998_PHY_TXn_PRE_DRIVER_1                     0x00000024
->> +
->> +#define REG_HDMI_8998_PHY_TXn_PRE_DRIVER_2                     0x00000028
->> +
->> +#define REG_HDMI_8998_PHY_TXn_LANE_MODE                                0x0000002c
->> +
->>   #endif /* HDMI_XML */
->> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
->> index 88a3423b7f24d..95b3f7535d840 100644
->> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
->> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
->> @@ -118,6 +118,9 @@ static int msm_hdmi_phy_pll_init(struct platform_device *pdev,
->>          case MSM_HDMI_PHY_8996:
->>                  ret = msm_hdmi_pll_8996_init(pdev);
->>                  break;
->> +       case MSM_HDMI_PHY_8998:
->> +               ret = msm_hdmi_pll_8998_init(pdev);
->> +               break;
->>          /*
->>           * we don't have PLL support for these, don't report an error for now
->>           */
->> @@ -193,6 +196,8 @@ static const struct of_device_id msm_hdmi_phy_dt_match[] = {
->>            .data = &msm_hdmi_phy_8x74_cfg },
->>          { .compatible = "qcom,hdmi-phy-8996",
->>            .data = &msm_hdmi_phy_8996_cfg },
->> +       { .compatible = "qcom,hdmi-phy-8998",
->> +         .data = &msm_hdmi_phy_8998_cfg },
->>          {}
->>   };
->>
->> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
->> new file mode 100644
->> index 0000000000000..28c4824a30e89
->> --- /dev/null
->> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
->> @@ -0,0 +1,941 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-> 
-> No changes since 2016?
-> 
->> + */
->> +
->> +#include <linux/clk-provider.h>
->> +#include <linux/delay.h>
->> +
-> 
-> [...]
-> 
->> +
->> +static inline u64 pll_cmp_to_fdata(u32 pll_cmp, unsigned long ref_clk)
->> +{
->> +       u64 fdata = ((u64)pll_cmp) * ref_clk * 10;
->> +
->> +       do_div(fdata, HDMI_PLL_CMP_CNT);
->> +
->> +       return fdata;
->> +}
->> +
->> +#if 0
-> 
-> This should probably go away.
-> 
->> +static int pll_get_post_div(struct hdmi_8998_post_divider *pd, u64 bclk)
->> +{
->> +       /* FIXME: use downstream ratio list ? */
->> +       int ratio[] = { 2, 3, 4, 5, 6, 9, 10, 12, 14, 15, 20, 21, 25, 28, 35 };
->> +       int hs_divsel[] = { 0, 4, 8, 12, 1, 5, 2, 9, 3, 13, 10, 7, 14, 11, 15 };
->> +       int tx_band_sel[] = { 0, 1, 2, 3 };
->> +       u64 vco_freq[60];
->> +       u64 vco, vco_optimal;
->> +       int half_rate_mode = 0;
->> +       int vco_optimal_index, vco_freq_index;
->> +       int i, j;
->> +
-> 
-> So, first of all, the code needs to be cleaned. It contains debugging
-> and temporary code all over the place. Such code should be removed
-> 
-> Second, at some point I worked on moving HDMI PHY drivers to
-> drivers/phy. Oh my, it was nearly a year ago.
-> https://patchwork.freedesktop.org/series/118210/
-> 
-> I hope to land the HDMI HPD rework this cycle, then get back to the
-> HDMI PHY code. No promises though, just wanted to point out that we
-> might need to rework this even further in few months.
-> 
-> 
+SCM calls that take memory buffers as arguments require that they be
+page-aligned, physically continuous and non-cachable. The same
+requirements apply to the buffer used to pass additional arguments to SCM
+calls that take more than 4.
 
-Thanks Dmitry. I wasn't planning on sending the patch anywhere in this state, but Marc did so I'll ask some of the questions I had when I wrote this. The first thing I was planning to do was indeed to rebase on your patch series refactoring PHY drivers.
+To that end drivers typically use dma_alloc_coherent() to allocate memory
+of suitable format which is slow and inefficient space-wise.
 
-First, I understand the XML files describing registers have been integrated in the kernel tree, so we will have to move the definitions of the 8998 PHY registers there.
+SHM Bridge is a safety mechanism that - once enabled - will only allow
+passing buffers to the TrustZone that have been explicitly marked as
+shared. It improves the overall system safety with SCM calls and is
+required by the upcoming scminvoke functionality.
 
-Second, the #if 0 code is the phy setup code I tried to write based on the simpler 8996 driver, but it doesn't work, hence the actual compiled code which is a direct port of the downstream code. We'll probably have to dig a little more to ask more detailed questions on the phy internals.
+The end goal of this series is to enable SHM bridge support for those
+architectures that support it but to that end we first need to unify the
+way memory for SCM calls is allocated. This in itself is beneficial as
+the current approach of using dma_alloc_coherent() in most places is quite
+slow.
 
-Last, I tried to implement the recalc_rate callback which does not exist downstream but I'm not able to get a correct value with the little data I have on the registers. Is this callback actually needed ? I don't see why the values programmed in the set_rate call could change under our feet.
+First let's add a new TZ Memory allocator that allows users to create
+dynamic memory pools of format suitable for sharing with the TrustZone.
+Make it ready for implementing multiple build-time modes.
 
-Thanks,
--Arnaud
+Convert all relevant drivers to using it. Add separate pools for SCM core
+and for qseecom.
+
+Finally add support for SHM bridge and make it the default mode of
+operation with the generic allocator as fallback for the platforms that
+don't support SHM bridge.
+
+Tested on db410c, RB5, sm8550-qrd, sa8775p-ride (verified the memory is
+allocated from the dedicated pool) and lenovo X13s. I also tested on
+sc8180x with SHM bridge disabled to make sure we can still use this SoC
+with generic allocator.
+
+v9 -> v10:
+- add support for dedicated TZ FFI memory carveout and enable it for
+  sa8775p
+- add a blacklist of SoC known to not support SHM bridge correctly
+  (currently only sc8180x)
+
+v8 -> v9:
+- split the qseecom driver rework into two parts: first convert it to using
+  the __free() helper and then make it switch to tzmem
+- use QCOM_SCM_PERM_RW instead of (QCOM_SCM_PERM_WRITE | QCOM_SCM_PERM_READ)
+- add the TZMEM MAINTAINERS entry in correct alphabetical order
+- add a missing break; in a switch case in the tzmem module
+
+v7 -> v8:
+- make the pool size dynamic and add different policies for pool growth
+- improve commit messages and the cover letter: describe what the SHM
+  bridge is and why do we need it and the new allocator, explain why it's
+  useful to merge these changes already, independently from scminvoke
+- improve kerneldoc format
+- improve the comment on the PIL SCM calls
+- fix license tags, drop "or-later" for GPL v2
+- add lockdep and sleeping asserts
+- minor tweaks and improvements
+
+v6 -> v7:
+- fix a Kconfig issue: TZMEM must select GENERIC_ALLOCATOR
+
+v5 -> v6:
+Fixed two issues reported by autobuilders:
+- add a fix for memory leaks in the qseecom driver as the first patch for
+  easier backporting to the v6.6.y branch
+- explicitly cast the bus address stored in a variable of type dma_addr_t
+  to phys_addr_t expected by the genpool API
+
+v4 -> v5:
+- fix the return value from qcom_tzmem_init() if SHM Bridge is not supported
+- remove a comment that's no longer useful
+- collect tags
+
+v3 -> v4:
+- include linux/sizes.h for SZ_X macros
+- use dedicated RCU APIs to dereference radix tree slots
+- fix kerneldocs
+- fix the comment in patch 14/15: it's the hypervisor, not the TrustZone
+  that creates the SHM bridge
+
+v2 -> v3:
+- restore pool management and use separate pools for different users
+- don't use the new allocator in qcom_scm_pas_init_image() as the
+  TrustZone will create an SHM bridge for us here
+- rewrite the entire series again for most part
+
+v1 -> v2:
+- too many changes to list, it's a complete rewrite as explained above
+
+---
+Bartosz Golaszewski (15):
+      dt-bindings: firmware: qcom,scm: add memory-region for sa8775p
+      firmware: qcom: add a dedicated TrustZone buffer allocator
+      firmware: qcom: scm: enable the TZ mem allocator
+      firmware: qcom: scm: smc: switch to using the SCM allocator
+      firmware: qcom: scm: make qcom_scm_assign_mem() use the TZ allocator
+      firmware: qcom: scm: make qcom_scm_ice_set_key() use the TZ allocator
+      firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the TZ allocator
+      firmware: qcom: scm: make qcom_scm_qseecom_app_get_id() use the TZ allocator
+      firmware: qcom: qseecom: convert to using the TZ allocator
+      firmware: qcom: scm: add support for SHM bridge operations
+      firmware: qcom: tzmem: enable SHM Bridge support
+      firmware: qcom: scm: add support for SHM bridge memory carveout
+      firmware: qcom: scm: clarify the comment in qcom_scm_pas_init_image()
+      arm64: defconfig: enable SHM Bridge support for the TZ memory allocator
+      arm64: dts: qcom: sa8775p: add a dedicated memory carveout for TZ
+
+ .../devicetree/bindings/firmware/qcom,scm.yaml     |  15 +
+ MAINTAINERS                                        |   8 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |   7 +
+ arch/arm64/configs/defconfig                       |   1 +
+ drivers/firmware/qcom/Kconfig                      |  31 ++
+ drivers/firmware/qcom/Makefile                     |   1 +
+ drivers/firmware/qcom/qcom_qseecom_uefisecapp.c    | 256 +++++------
+ drivers/firmware/qcom/qcom_scm-smc.c               |  30 +-
+ drivers/firmware/qcom/qcom_scm.c                   | 175 ++++++--
+ drivers/firmware/qcom/qcom_scm.h                   |   6 +
+ drivers/firmware/qcom/qcom_tzmem.c                 | 466 +++++++++++++++++++++
+ drivers/firmware/qcom/qcom_tzmem.h                 |  13 +
+ include/linux/firmware/qcom/qcom_qseecom.h         |   8 +-
+ include/linux/firmware/qcom/qcom_scm.h             |  14 +-
+ include/linux/firmware/qcom/qcom_tzmem.h           |  56 +++
+ 15 files changed, 854 insertions(+), 233 deletions(-)
+---
+base-commit: 3689b0ef08b70e4e03b82ebd37730a03a672853a
+change-id: 20240527-shm-bridge-e2494fccb0b5
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
 
