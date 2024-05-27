@@ -1,72 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC1B18D065E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 17:40:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FEF28D0884
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 18:29:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED97B1C2220D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 15:40:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D14381C2292D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 16:29:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC3661FD2;
-	Mon, 27 May 2024 15:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 625BE61FD3;
+	Mon, 27 May 2024 16:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="bBYqcC4z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HC+86xTn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D8E1EB3E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 15:40:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E11461FC9;
+	Mon, 27 May 2024 16:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716824421; cv=none; b=NtmgrhQxc7sM4mqaCxBgRPHsHKHa9QNE8Xzhm0CwyZZVY3cvtqK+/iB9BmofnIKs0WoHnJ+U4wvMo63X6ZRbIyWiQmK0GjnXGy95wtk4lM9ReIK0CXdt8/+faf6OAwucevKuZif6WpObcfEDCqCbUWfeRFOa1iT47Nm2KB1PEqU=
+	t=1716827368; cv=none; b=DhYI59oKEAdsuVSoEFCTh2pg0k3VBtcGAUQAIlVwPvecLIE5xV040GKKr2KwYneCVxhTkQh/V6XteVDYVA1DBfSTtgXZShN8qqDho5EMMtxSKnB7S6O7XpVypH40VOIcwT6S4zqMvp7ktj4Or098kPRoqypBArW/UnL1q2JsoI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716824421; c=relaxed/simple;
-	bh=DVhtxKy/g6Jw9Zac26mbMJkQSFj9K9gpSNpyZiB8W28=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=cHvIKjyjYVgAASVIWXbA8r7awO8SdYDpD6bodyFUMnt/MkI56GKC21qVGUeFy8pgJzRRvstQevls+TuTCWXSGZMQpnv9RzPd3tNJGwp0DV6OElMMcNt9QwsaWAe+OJYH+2p0HofLVgeBD4M02zQf9p/IhqVrhKe0Rlz8us0mjwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=bBYqcC4z; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-354f3f6c3b1so4681379f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 08:40:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1716824417; x=1717429217; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:content-language:subject:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XVr9JrV0nG2+wTrmTNe0v5f/mYkzf+N7lyxDsOb/dPs=;
-        b=bBYqcC4z7kpd20ffWLgjfuOK0qs4+++S+dPK154UB4UXNqcVmRCTZH48qjalexLZM3
-         bPvVHAx28YtAeejvinA4tSJqNGcT7kDFnA1akTZv6QAafokb75Yf02A6UbqrqCoeBs+/
-         vwT03OfADKLi06ymH8Fbm1RcSFkBYIedvZv1ZjRBdhU/QSw9IovIeu2WbaRoOeY/Tbpe
-         s0hcqLvnhcehGjgl7T1iIwN2oWTIfuOT0fIvkjtqSjnxFe3oZzcAIthdd8lXXlNjnX69
-         WOz1iN5vK/QaJvkl9pFsbd6m1sjlRxIYIy6PK6Ly45BJyg8/AL/9AzM8wZvCuSjE3PFY
-         xGMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716824417; x=1717429217;
-        h=content-transfer-encoding:cc:to:content-language:subject:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=XVr9JrV0nG2+wTrmTNe0v5f/mYkzf+N7lyxDsOb/dPs=;
-        b=C/9WKSw7zOaNYPdSPD3fq26AuqVSip5FqkbJmC24bQVeGX6JCXeHMac5b0m5boxvJh
-         57WeRbgsgEytJBrsJTarxePgp85mnZShcrVzDrAN4tEmF2Ng5F+jE+M9DkLc20M4YFHH
-         Hwqn5noAnfiU5bO3PHEVaqsr02BGwOGinped9HJ6QCpFUSBzEpanjulprSOcbZDpvXYv
-         LNfmxquCDSxneP9kvMruXpwqs7zNtU9YquuxGjbqYqntv+LU3sjxEx33Uv1rKmRoVPx0
-         C1Va4I8seu6M/0k0+j7RR+YaztwlNpEGxP0VZwffgg7aZfUWNA3FOy9R6ay+obEc/OpH
-         uJqg==
-X-Gm-Message-State: AOJu0Yyovk9XvHTlRGJtH0pW9sZIsj/h/3DJdXazMoPMb9AoDoHFfO7U
-	hcVQBDl98SgWfqhQ3o+UHBUpbh7gQZ7N5zY+dlTXvTh4zx9g7sEyY1pI0vQ33Xo=
-X-Google-Smtp-Source: AGHT+IF+VR8zvPqcmS9JVDxwhcv/vAODOlwnqPTA2SWhHKo1nHb3CASRkC8D7fFqdeGXUnHZPETx3A==
-X-Received: by 2002:a5d:5050:0:b0:355:75f:2876 with SMTP id ffacd0b85a97d-35526c3d541mr6991025f8f.5.1716824417139;
-        Mon, 27 May 2024 08:40:17 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557a090366sm9221319f8f.56.2024.05.27.08.40.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 May 2024 08:40:16 -0700 (PDT)
-Message-ID: <8cc61db5-2920-4dd1-8132-5af434fb05b1@freebox.fr>
-Date: Mon, 27 May 2024 17:40:15 +0200
+	s=arc-20240116; t=1716827368; c=relaxed/simple;
+	bh=iA18VivydKAQ4UA9PjBaSAgMP8a7UkSDlzUR8RE2CNE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X/Z4nAW4aQNa9Jo+jMndH6FJCLYgIGjX9tJGABs5ZjHit+0SQ2nC+YHMI2wPjHfjn94vSzV4KX0rrAoro7Dk+NJ+v/7c3Js51zSrISq12RaGTVvmXDkwP5Vw1lKu5Uxn+EvFBibrEaSI9Zihd+rxKP6t1E0vQz6Oh2UW/P54dhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HC+86xTn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28690C2BBFC;
+	Mon, 27 May 2024 16:29:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716827367;
+	bh=iA18VivydKAQ4UA9PjBaSAgMP8a7UkSDlzUR8RE2CNE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HC+86xTnZCEA4oVsfN6B5G05HQwYFMt8In7u8WB8kUekOG/yDZBG8NX1E4lAMYZx+
+	 QAfAJ38guBsbZgPzQGt2oghMxOhl86LikBts4vzJ+bTLld7emKaMekcgEK3BceYaQp
+	 zDltP2A5pzRat7ka3YPooUMEDKgLdAu9Xzz1BqbbaHfmALzPMEUy//1jVaSTTuQTMD
+	 8JKffa6lUdeVo+l98YsswqndFBj4MdRXvHicvLhjEPkQNhV6yYp6LZTGg5c3WCXPsk
+	 lIDDYURMbHTFHehYpTaNdaEFRnGccb07/GShqJq1KW6V7oy5QEdVs8C+DqO5gA0Amg
+	 w8fKFmSTmL60g==
+Message-ID: <35d68e6b-c821-4ebd-96f6-33f09fa04f1b@kernel.org>
+Date: Mon, 27 May 2024 18:29:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,89 +50,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-Subject: [PATCH v1] arm64: dts: qcom: msm8998: add HDMI GPIOs
+Subject: Re: [PATCH] dt-bindings: usb: qcom,dwc3: set minItems for
+ interrupt-names
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+References: <20240527144538.155704-1-brgl@bgdev.pl>
+ <f709f17d-c20c-4777-b23b-8275f6d4f3f5@kernel.org>
+ <CAMRc=McDRpwvTbVZVmzT45zjrZN+ZxYP8_9QVTScZCew+fboMg@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: MSM <linux-arm-msm@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
- Bryan O Donoghue <bryan.odonoghue@linaro.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <CAMRc=McDRpwvTbVZVmzT45zjrZN+ZxYP8_9QVTScZCew+fboMg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-MSM8998 GPIO pin controller reference design defines:
+On 27/05/2024 17:33, Bartosz Golaszewski wrote:
+> On Mon, May 27, 2024 at 5:13 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>
+>> On 27/05/2024 16:45, Bartosz Golaszewski wrote:
+>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>
+>>> There's a set of compatibles for which we set a strict list of 5 interrupt
+>>> names even though minItems for the interrupts property is 4. One of the
+>>> USB controllers on sa8775p only consumes 4 interrupts which leads to
+>>> dtbs_check errors. Make the last entry optional by setting minItems to 4.
+>>>
+>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>> ---
+>>>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
+>>>  1 file changed, 1 insertion(+)
+>>
+>> Can you also fix other cases? I found there at least two other. I missed
+>> that during review... or maybe we discussed it? I remember that commit
+>> was a pain :/
+>>
+> 
+> I can put that on my TODO list but I really have too much on my plate
+> ATM. I propose this be picked up separately.
+> 
 
-- CEC: pin 31
-- DDC: pin 32,33
-- HPD: pin 34
 
-Downstream vendor code for reference:
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-pinctrl.dtsi#L2324-2400
+Best regards,
+Krzysztof
 
-mdss_hdmi_{cec,ddc,hpd}_{active,suspend}
-
-Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 42 +++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index edf379c28e1e1..ec4e967ed9b2a 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1424,6 +1424,48 @@ blsp2_spi6_default: blsp2-spi6-default-state {
- 				drive-strength = <6>;
- 				bias-disable;
- 			};
-+
-+			hdmi_cec_default: hdmi-cec-default-state {
-+				pins = "gpio31";
-+				function = "hdmi_cec";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			hdmi_cec_sleep: hdmi-cec-sleep-state {
-+				pins = "gpio31";
-+				function = "hdmi_cec";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			hdmi_ddc_default: hdmi-ddc-default-state {
-+				pins = "gpio32", "gpio33";
-+				function = "hdmi_ddc";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			hdmi_ddc_sleep: hdmi-ddc-sleep-state {
-+				pins = "gpio32", "gpio33";
-+				function = "hdmi_ddc";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			hdmi_hpd_default: hdmi-hpd-default-state {
-+				pins = "gpio34";
-+				function = "hdmi_hot";
-+				drive-strength = <16>;
-+				bias-pull-down;
-+			};
-+
-+			hdmi_hpd_sleep: hdmi-hpd-sleep-state {
-+				pins = "gpio34";
-+				function = "hdmi_hot";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
- 		};
- 
- 		remoteproc_mss: remoteproc@4080000 {
--- 
-2.34.1
 
