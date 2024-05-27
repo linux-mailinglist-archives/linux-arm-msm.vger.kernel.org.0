@@ -1,55 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-20490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B96A08CF600
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 22:46:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 186078CF6E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 02:03:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB3431C20983
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 May 2024 20:46:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C874E2814C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 00:03:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C57F374FE;
-	Sun, 26 May 2024 20:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC95C1A2C09;
+	Mon, 27 May 2024 00:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IsmZax6Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PiWZpHOm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442B31A2C26;
-	Sun, 26 May 2024 20:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912AD2107;
+	Mon, 27 May 2024 00:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716756382; cv=none; b=nSOYSSYVI2yesFCHRlgqzllG8GgNgyPqaEzKSBkbMluFgX3qcrcN2tpB8gcq6x+KssNquFyBMTvbWDgvghSXRDblYs41kBz1mssB8csFXXHel25jmtVD07QW8xDBLJlltuCP1zXFJbu3yjKr/TEcu+QtYjuu45kfrD23l/XWOhA=
+	t=1716768202; cv=none; b=OzEtulal0QwdH+CS/UBanpk/UEpgIns6mYRftkHLc5olL9vjb0XaoZAo3xC7/u1uou1Jzt48IZqzdaeVMNTDhdDBo2zQEh0bqx8ChQH4uFE59kqetfhcx4OsbuhZ+E+QFuTJIh3sqE4HUkE8p4rTpsuy+02ob7BGjiqndzieHHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716756382; c=relaxed/simple;
-	bh=rt+luzDKVTP2ZR/sRuF+JTDWUKx2Jda97Licl23pJpU=;
+	s=arc-20240116; t=1716768202; c=relaxed/simple;
+	bh=Mz3OF3B15X3H0lFrcQA68DoS91Or2bDicgLrhyGKkHU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AWK8jRMpAJeVpIyKpsBSi2hJgMAqOs+XiIWjCT2Cq6tsB2soRPuxR66yTbsAE4ciEaWGicr9zAYGcvAwF0mJySK/BOf5EhmJsdJfFkuR5ZKhnrmXqE2SOM0fBQIIOlSKW7GTzT1ElIj9H59HAN9xXhWbhSGGNCCZMc0eeICSMek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IsmZax6Y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675ACC2BD10;
-	Sun, 26 May 2024 20:46:21 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=rFn9hTVxVZIEPoQXLP4ZlhlNmxvqUxRfyn5s1U1JKGra4aOFlCEG1+QuDYMyHdZH9QRMNbVBSLS+g/YGYsJMP2slqSkFkd0w3EyKH67MEFo6FdEgty+JDsJW4pzlA/uLOHsqpUGQTCOjMgmJMNKRt9eMDhnAAvxHDMQAZOXUM3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PiWZpHOm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72ECC2BD10;
+	Mon, 27 May 2024 00:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716756381;
-	bh=rt+luzDKVTP2ZR/sRuF+JTDWUKx2Jda97Licl23pJpU=;
+	s=k20201202; t=1716768202;
+	bh=Mz3OF3B15X3H0lFrcQA68DoS91Or2bDicgLrhyGKkHU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IsmZax6Yx3f5lNdSyocfqc+vTxOaLnwtvDKqz5V3HtPnVgOrV89wB9ll0CYKii5zG
-	 ZG7VvqrRdVLGI1KbK4zbsCly7pQhAnM8zfJ7qf+hqI9Z3seImnu0fFwWDFwV/5+hrw
-	 EstKGuzt3ozMg6LmBn+rSdU3Lmlf/Gpg97NBHAvvyjF1AR/BjRUjjHSHxZuoJgU8kI
-	 C6jWEQzs1QJvB5VAv1HCpBor8lKehM5UGgJjRk15mRXr2Qv4i52ZyQgVQW3vfKZzc6
-	 pnfl5WBQt/dHNs/K4AXmxwdR3mxTzkIABqvoJdfukqSpGuleXq45+Gx3DjtJLZUXeP
-	 RiRavu8oB1J/g==
-Date: Sun, 26 May 2024 15:46:19 -0500
+	b=PiWZpHOmjAl9W7sSk/AgizPxT4u6NWhZCOXL9upKTDepm+qKTvZ7eDCLfAixbOF6q
+	 IbsyX0FsJ0Pgibq2XOV1KDtBTfg3MCqKg9kSX76bFTI95JIavlYfmGbVdeq9u0pc/i
+	 7gTcLx3TogltDrGtDRXKAAsBe7QZYXRmAU4Wh0/95T1W6FMrz2o51i6AAWQ++KK/i+
+	 mHs21opCxjoBOUPK9MuRj8cYL3L1RUHDoQNyou0uz1/jPcgliZD6v+y0aY8gIQS+1f
+	 Bwd8zGM/VEkjL7sM3DUMNTvUZZ/YXv5DDzZf/54PPqHBodMIahLU4C/poid5uke4c9
+	 iJMTFOBG4YPDQ==
+Date: Sun, 26 May 2024 19:03:18 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] firmware: qcom_scm: Add a padded page to ensure DMA
- memory from lower 4GB
-Message-ID: <h6omxqre7pod3ztn7x3sckjbgcg32u4btfmtxwn2rkjw7uwsgd@ncdmu5ed4gm3>
-References: <1716564705-9929-1-git-send-email-quic_mojha@quicinc.com>
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 2/6] firmware: qcom_scm: Add gpu_init_regs call
+Message-ID: <5uvps3a2zn2q4eokzx5ptmylid4cqt6e6gaasv4qssblczaklv@yr3nfhswn7dt>
+References: <20240430-a750-raytracing-v3-0-7f57c5ac082d@gmail.com>
+ <20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,87 +63,101 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1716564705-9929-1-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com>
 
-On Fri, May 24, 2024 at 09:01:45PM GMT, Mukesh Ojha wrote:
-> For SCM protection, memory allocation should be physically contiguous,
-> 4K aligned, and non-cacheable to avoid XPU violations. This granularity
-> of protection applies from the secure world. Additionally, it's possible
-> that a 32-bit secure peripheral will access memory in SoCs like
-> sm8{4|5|6}50 for some remote processors. Therefore, memory allocation
-> needs to be done in the lower 4 GB range. To achieve this, Linux's CMA
-> pool can be used with dma_alloc APIs.
+On Tue, Apr 30, 2024 at 11:43:16AM GMT, Connor Abbott wrote:
+> This will used by drm/msm to initialize GPU registers that Qualcomm's
+> firmware doesn't make writeable to the kernel.
 > 
-> However, dma_alloc APIs will fall back to the buddy pool if the requested
-> size is less than or equal to PAGE_SIZE. It's also possible that the remote
-> processor's metadata blob size is less than a PAGE_SIZE. Even though the
-> DMA APIs align the requested memory size to PAGE_SIZE, they can still fall
-> back to the buddy allocator, which may fail if `CONFIG_ZONE_{DMA|DMA32}`
-> is disabled.
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
 
-Does "fail" here mean that the buddy heap returns a failure - in some
-case where dma_alloc would have succeeded, or that it does give you
-a PAGE_SIZE allocation which doesn't meeting your requirements?
-
-From this I do find the behavior of dma_alloc unintuitive, do we know if
-there's a reason for the "equal to PAGE_SIZE" case you describe here?
-
-> 
-> To address this issue, use an extra page as padding to ensure allocation
-> from the CMA region. Since this memory is temporary, it will be released
-> once the remote processor is up or in case of any failure.
-> 
-
-Thanks for updating the commit message, this is good.
+Acked-by: Bjorn Andersson <andersson@kernel.org>
 
 Regards,
 Bjorn
 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
-> Changes in v2:
->  - Described the issue more clearly in commit text.
-> 
->  drivers/firmware/qcom/qcom_scm.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+>  drivers/firmware/qcom/qcom_scm.c       | 14 ++++++++++++++
+>  drivers/firmware/qcom/qcom_scm.h       |  3 +++
+>  include/linux/firmware/qcom/qcom_scm.h | 23 +++++++++++++++++++++++
+>  3 files changed, 40 insertions(+)
 > 
 > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 520de9b5633a..0426972178a4 100644
+> index 06e46267161b..f8623ad0987c 100644
 > --- a/drivers/firmware/qcom/qcom_scm.c
 > +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -538,6 +538,7 @@ static void qcom_scm_set_download_mode(bool enable)
->  int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
->  			    struct qcom_scm_pas_metadata *ctx)
+> @@ -1394,6 +1394,20 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh);
+>  
+> +int qcom_scm_gpu_init_regs(u32 gpu_req)
+> +{
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_GPU,
+> +		.cmd = QCOM_SCM_SVC_GPU_INIT_REGS,
+> +		.arginfo = QCOM_SCM_ARGS(1),
+> +		.args[0] = gpu_req,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +
+> +	return qcom_scm_call(__scm->dev, &desc, NULL);
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_scm_gpu_init_regs);
+> +
+>  static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
 >  {
-> +	size_t page_aligned_size;
->  	dma_addr_t mdata_phys;
->  	void *mdata_buf;
->  	int ret;
-> @@ -555,7 +556,8 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
->  	 * data blob, so make sure it's physically contiguous, 4K aligned and
->  	 * non-cachable to avoid XPU violations.
->  	 */
-> -	mdata_buf = dma_alloc_coherent(__scm->dev, size, &mdata_phys,
-> +	page_aligned_size = PAGE_ALIGN(size + PAGE_SIZE);
-> +	mdata_buf = dma_alloc_coherent(__scm->dev, page_aligned_size, &mdata_phys,
->  				       GFP_KERNEL);
->  	if (!mdata_buf) {
->  		dev_err(__scm->dev, "Allocation of metadata buffer failed.\n");
-> @@ -580,11 +582,11 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+>  	struct device_node *tcsr;
+> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+> index 4532907e8489..484e030bcac9 100644
+> --- a/drivers/firmware/qcom/qcom_scm.h
+> +++ b/drivers/firmware/qcom/qcom_scm.h
+> @@ -138,6 +138,9 @@ int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+>  #define QCOM_SCM_WAITQ_RESUME			0x02
+>  #define QCOM_SCM_WAITQ_GET_WQ_CTX		0x03
 >  
->  out:
->  	if (ret < 0 || !ctx) {
-> -		dma_free_coherent(__scm->dev, size, mdata_buf, mdata_phys);
-> +		dma_free_coherent(__scm->dev, page_aligned_size, mdata_buf, mdata_phys);
->  	} else if (ctx) {
->  		ctx->ptr = mdata_buf;
->  		ctx->phys = mdata_phys;
-> -		ctx->size = size;
-> +		ctx->size = page_aligned_size;
->  	}
+> +#define QCOM_SCM_SVC_GPU			0x28
+> +#define QCOM_SCM_SVC_GPU_INIT_REGS		0x01
+> +
+>  /* common error codes */
+>  #define QCOM_SCM_V2_EBUSY	-12
+>  #define QCOM_SCM_ENOMEM		-5
+> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+> index aaa19f93ac43..a221a643dc12 100644
+> --- a/include/linux/firmware/qcom/qcom_scm.h
+> +++ b/include/linux/firmware/qcom/qcom_scm.h
+> @@ -115,6 +115,29 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+>  int qcom_scm_lmh_profile_change(u32 profile_id);
+>  bool qcom_scm_lmh_dcvsh_available(void);
 >  
->  	return ret ? : res.result[0];
+> +/*
+> + * Request TZ to program set of access controlled registers necessary
+> + * irrespective of any features
+> + */
+> +#define QCOM_SCM_GPU_ALWAYS_EN_REQ BIT(0)
+> +/*
+> + * Request TZ to program BCL id to access controlled register when BCL is
+> + * enabled
+> + */
+> +#define QCOM_SCM_GPU_BCL_EN_REQ BIT(1)
+> +/*
+> + * Request TZ to program set of access controlled register for CLX feature
+> + * when enabled
+> + */
+> +#define QCOM_SCM_GPU_CLX_EN_REQ BIT(2)
+> +/*
+> + * Request TZ to program tsense ids to access controlled registers for reading
+> + * gpu temperature sensors
+> + */
+> +#define QCOM_SCM_GPU_TSENSE_EN_REQ BIT(3)
+> +
+> +int qcom_scm_gpu_init_regs(u32 gpu_req);
+> +
+>  #ifdef CONFIG_QCOM_QSEECOM
+>  
+>  int qcom_scm_qseecom_app_get_id(const char *app_name, u32 *app_id);
+> 
 > -- 
-> 2.7.4
+> 2.31.1
 > 
 
