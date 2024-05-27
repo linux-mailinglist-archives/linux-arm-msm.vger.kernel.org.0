@@ -1,74 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-20530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D0688CF994
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 08:53:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F1AD58CF9A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 09:02:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C53D31F2141B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 06:53:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 938411F21565
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 07:02:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A91DF17BBE;
-	Mon, 27 May 2024 06:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C86417BC9;
+	Mon, 27 May 2024 07:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X+p19uTt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zt5MFyhU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228204C8B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 06:52:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9FB16415
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 07:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716792782; cv=none; b=ODl7uzHJowtxnvvr8JT6Yusgg17b4UIHbD4yEBAIQPDJHiqFzJu6n9po3B/KiYNZdm6NaFoZp3CRMEVRP5D9p05WJYuQDRq1ggmvvFSjVJH15uQy3+9918+OeORXihO1EW6/yR9EmRB9GEr0DFyzu+jJ+MZdlVjuBdN2dmZPpMY=
+	t=1716793334; cv=none; b=Nrt4w5/A8pgQj70vLRGKmnb1fHLWTuEPoPdmoU4b97TlfPf2iwrtL1s92z69fzo77TFfG2ThjendzTSRkAmV9mEVa8Q/rTfmmCJvK2bG4SMVXFztuus9DNYPVDAO1X6AB06RMedU0JsnLoXqMWSrkaG4dmAfHporqeYl1w15Yys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716792782; c=relaxed/simple;
-	bh=LQt9dThnSzo/E4SnKuEuBz+EbP/P0jrW+Y4I8XPbjzg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=niKXuAaACRZFvx5y/t+ewfBCW2uuUqUod4BifQK3LNEEuASUxBFedK601QCd7dYn/pPP5nbaWfik1m6lcFtbEgbnPmBE2voNIQ8PJ4HJqE14USivUye6bnbDaBQQJkrb70EZ3hPYXVRLloCEfLiaxSZYI2OXsUzSTCRAE5Kwdik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X+p19uTt; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1716793334; c=relaxed/simple;
+	bh=1tn4S0+loovF4zyHvHYFI5Fo+i+d3bhTurXjsvL5onY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=OFP5SnQnmPntw/sDJF8/OmbzhQOdm7XkRA43gKT8LYqfkjvmcuI5SRIwocX2Oy0kfAK3IOnHKPqBPSLayxOHcaio+e2L9yy4HSoqb3KOvqAhIEDYQtD2RcREs5Qkuz4BhaeliI/t+U4jQLtLxvlWJStkL46M2QbAVWuH+Mo/mkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zt5MFyhU; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-57863a8f4b2so2370286a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 May 2024 23:52:59 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2e9819a630fso537311fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 00:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716792778; x=1717397578; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716793329; x=1717398129; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Is1GYzjcsTC+5qtL51hTLZtB96PeUDAxukDQor2tqyA=;
-        b=X+p19uTt650EPosEfqgIsNiv+75tr3rIsCjWlwGF5K8a+PlIVtZQOsqyMuh7lC+6Ye
-         bwIk0tfEiByA1/HGWInBavKtXsZjZQmDMEPwTdNAHz6FXJ5SdJLQT/MeRaqwsATJb2Ez
-         KtYg3XGfmGGS3mUwM1cmXFheTRQ21E/Y6YizVT7/eMLgZu5jeEwRi6Rso6DnfuDuDuOA
-         xqMI6YD1qpeaxJvYTeKaPZnHOOY9BydnpexQydNE0wyf918RPb1aw7aaBtnSUqopj9/D
-         2U5FbjqJB2Pp3VLYt+iPHjZR7gKLeNyg9orQqOpLmvsIBknILoFHuvXSfIQ7d1ZzrAli
-         XYOg==
+        bh=6H+U8glfYQ/SUJ1iWIPZmuXoEeAsgiGGGO6vnmqj2zc=;
+        b=Zt5MFyhUy3XVjV+s3/83ribC4iJKkGfDP5i+Foxz9nAf+L0c0utTAYM2LGyV4OWIeK
+         yKbpGZ+hifAJQ6hBHqdOULdYyq0Ul5UxDL3oTN0XTNasGOUvLqw07gU+xcKZSAJvIper
+         l8ftKP4QF3G4SiBHLpFsz9yBA7iCsWR88irvRVLmmYNRLXiAGNQdF2gXL7Ljjj2UyqES
+         h6opsV2hhNMZvTr/kx8ZVwb4fTR/O3/gbqM3Bu0nVp+Goj2xn+TXojXDpJ9eFXtxHbi8
+         HtIFplB++S/V1ItodY0GIKEq0gAgR2sEJ8F+kvjVzYmHGxdtvtiwobLvsAbfK1iaFJfr
+         uSxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716792778; x=1717397578;
+        d=1e100.net; s=20230601; t=1716793329; x=1717398129;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Is1GYzjcsTC+5qtL51hTLZtB96PeUDAxukDQor2tqyA=;
-        b=Va7zPwNMoG5FEyG9f4yLvLeadnExukqX0R/DTSKx8yPOZL1saXflV6VcYaP2VdARzB
-         ky83FuBr/PLN0ap6Yieoc1i+1rujjsFF3/oyUDF6Xd9PCiFgYgqNaVxrF5hu5+eL5xaR
-         tYjJtSQAtJw8aq0Y8F8qX0HpWkVR1grKP2Q3AQWvHRq+Rr1M6RhG0y+J++2862EmfUmh
-         I9EinPN6lqtmWG4XCsygAQYPAVKHo3MwI1k14zli/7yBUpm3Hgx1po/7TnCfeEm1WQcD
-         9GyOMnREbZJPLqMXFI2StQnJC/q7pF6IRxg9iRUWIVTs6kYgEHdk0kKw9aXWYSx/ii8d
-         ddUg==
-X-Forwarded-Encrypted: i=1; AJvYcCU/7+eWmMsSw7rKx+MdEjAmfXy44cgjkOKz9sIYnHeBkz5CqaTj0yscajxrgUwnMfxmFAs6GLg/grMhlFTD79osXSkv4IIE+1dPXS/Vhw==
-X-Gm-Message-State: AOJu0YxyNsEGDelWSmjMpnEs0RxVTov9o2y7CQB76dZtGdSCiAN/DgVl
-	ryXtzHw2/Wy8mqEHUdCUh00lg0ElboDbwVrfUogPYHIJ2Iq+BsciFUgL8xYd5no=
-X-Google-Smtp-Source: AGHT+IHaeStXfSqqOyUz+Mi/3wHy2ylA84orYV5PCgQVyCYO3ytJiWkgkxQsbxtOs6DBUfK4Ifynzg==
-X-Received: by 2002:a50:d4ce:0:b0:572:8aab:4420 with SMTP id 4fb4d7f45d1cf-57851aa84cemr5690278a12.39.1716792778316;
-        Sun, 26 May 2024 23:52:58 -0700 (PDT)
+        bh=6H+U8glfYQ/SUJ1iWIPZmuXoEeAsgiGGGO6vnmqj2zc=;
+        b=ZeE/3Y39Q9VchIQ1JNyJ6inIEls/94FL9n7UTL2qz4/RC7qbsNfXWP8cl69/GC6rBF
+         i78Te65LN3GTjCrPpK+y8fvDm+vDY/v16OgK1A+lk54YvqwK3bAluS9uAbulu7ImOKIT
+         vFSVUkFZt3fDtbKpTQZ9eMh4NLVPh0SkB4KfW8Qc2GEsG+Cpw+9682WBeuiD8jBnZlSf
+         JjQ1k3T55PpyBHduAg+V8YdFzZlT4WEUjQgaTqX7iTkh3WVBDjEa7AUwinNY0KJShH3q
+         8kIsRuQs1ynTRgIMpU4AT+LY1Rh5wNnSylnJkTCF8mZZ1d8urmCSlfAWQCpC3P349Ixk
+         1FUw==
+X-Gm-Message-State: AOJu0YzuFPq7u2KupROj4RzbtqqLufS2J3B53a0PfWuCIArBdGLINEaw
+	sUmT49rjONhOoaUrug0/EQxOJ0u/kKYXMy4n44RXhKkBe7T58IvbS5eIDC4ZWoc=
+X-Google-Smtp-Source: AGHT+IEpYgczhYiz3yWqQP7ltRSMM8yA5cKl8KSs2ZlWbMEFNN47xHjR7QGPRJYGQE/7o/yl0Y/rhw==
+X-Received: by 2002:a2e:b385:0:b0:2e6:be3c:9d4d with SMTP id 38308e7fff4ca-2e95b096b68mr68862021fa.12.1716793329320;
+        Mon, 27 May 2024 00:02:09 -0700 (PDT)
 Received: from [127.0.1.1] ([188.27.161.69])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-578524bae20sm5345800a12.90.2024.05.26.23.52.57
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626c81773bsm458766166b.30.2024.05.27.00.02.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 May 2024 23:52:57 -0700 (PDT)
+        Mon, 27 May 2024 00:02:08 -0700 (PDT)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 27 May 2024 09:52:51 +0300
-Subject: [PATCH] dt-bindings: thermal: qcom-tsens: Document the X1E80100
- Temperature Sensor
+Date: Mon, 27 May 2024 10:02:03 +0300
+Subject: [PATCH] dt-bindings: mfd: qcom-spmi-pmic: Document SMB2360 PMIC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,61 +75,57 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240527-x1e80100-bindings-thermal-qcom-tsens-v1-1-0f50f58253e1@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAMItVGYC/x3NSwrDMAwA0asErSuQhUs/VyldKLaaCBqntUIIh
- Ny9psu3mdnBtZo63Lsdqq7mNpeGcOogjVIGRcvNwMSRzsy4Bb1SIMLeSrYyOC6j1kne+E3zhIt
- rcRTh3N8oRblEaKlP1Zdt/83jeRw/rbZVmHYAAAA=
-To: Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+Message-Id: <20240527-smb2360-bindings-mfd-qcom-spmi-pmic-v1-1-31a2c051529c@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAOovVGYC/x2NMQ6DMAwAv4I811LiBlr6FdSBJAY8JEAsISTE3
+ xt1uOGWuwuUi7DCp7mg8CEqa65iHw2EZcwzo8TqQIacaYlQk6dnZ9BLjpJnxTRF3MOaULckWAn
+ 46tg6249v5zzU0lZ4kvN/Gb73/QMTZNfNdQAAAA==
+To: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=990; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=LQt9dThnSzo/E4SnKuEuBz+EbP/P0jrW+Y4I8XPbjzg=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmVC3E5P09MQRe2+lB4aZi9HE/8prDG2IC1HVm8
- slFb9jEvYeJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZlQtxAAKCRAbX0TJAJUV
- VmLND/0XE0UA+5AAbC2jndetnZAvUOZlq4sUG9jRlVtfSlZ65DYvoezr47+mwJnqrFDUqNMrOJ7
- OF85YBxZk/GWsSNh0+GG40cw9dJ8Y+1w5g7sehd977oO49Kvah4RdcMRCXdm09EAkJ1g6Eds00F
- oq4jPyQf0iV9H/wF7Byn4dB7s7kybyI7HR9wqOh6yv8+k3rjBW8TtA3thaTbxI3EDCv2deYZ6QT
- /e08tmPLR1p1Ti8iQ7p+7emqoDDqVqGrWFb7jpJyzqa+vMISyTm05HsxRS+2PIUZO2M9VOSRf22
- PaoQwuoCJ41ixi8ZI5N/FGYk6/WewteT2DwRtdRk0OcwYcgYIvRyf3uxqCszPRy0pFOHc/IkQg+
- xaiQDpnl+Ex6scwnFI/jIBPQisvflH8nLFIlX3fGfJvetIyqX7qPOfTmpcrvLKbWJ0H/MwdDaAq
- l88NVZH3bychxCkYhsyLMFOzPmWpJLc7XV51OfMm0sOJsM2HYMlMckWWg7IVFXfifsiUTlulMV4
- N/RVoBuvbsvcZdSH68lDn2X/ZCa78R6PVZ3lIjgmT0QnNgDDfx1NbGCXW6mjTzfCOK52MpCtMYI
- NFmadgtIhcLqQSeQzmlWX1Swx/mWY5zrMXTid1zSEdH0vaVvEK6VOpoJX6mOVmMgqSOO6qDGqoa
- LcD9icJ39DkqZ7w==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=916; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=1tn4S0+loovF4zyHvHYFI5Fo+i+d3bhTurXjsvL5onY=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmVC/s3WW2aTtyZ9RyAvCg8nArYgSbFCWc58g9Q
+ 1fCZ2/eGpCJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZlQv7AAKCRAbX0TJAJUV
+ VkvWD/99yYgaZcXcxcolIcNOKw7WyyglxbhIBo3jU+BqvLIhgOBsvCRaQ24N3yBWZXYjNYwdJg2
+ stcyrwQc/rihq/8VpXNsMA8EGBc+Qh/pWzstKRJqzyFqz6K5XIa79PDqvH7AARHgnbQs64iAc9b
+ +4VG7lqDg9LVEp/qySuZQ1XAGK3ODCzvwfcs//8znypQdOBpOhdPXsQyMPdNvG9UjwTye5LQc6V
+ 7uhJWCjSxV7fLB3uNp9S/RGoObsD5wIB9Lw2ibDBjwgg7R+SGG4pn4p36GW+f1zwn4zIbb2dlk7
+ CJv6gpLii8j9xyNkuIxn81ePAJaGyos5PlSyATF51c5TBR89qFj993/OE1pp2iqEgLjkhxUtQWo
+ P6knCfBTopyqv3mErmr8VojdVXPnSl7pwNSryKrMpbiLFMVxrxgLish7ps53BHPXD3RN97wTVBJ
+ fYqYbG5i8ZSI25nTnf6KtDuEhEk2AzODGOSEENzVgoldoQ+gx0aXzzUMTgmCz2D/vq+Ojezkudq
+ X1bX/5zOtbryWfyUMo6fy1SPz3AK6uqyvwQp21W7bnyCRu16ZC3qahuM9jB1P+Mj+LdNYdJ6KtG
+ yHZmBVTCPKHAe0haM8fChyYy6yZQ3OuzjTYbYeOeC+MaUDGx8k9ZbqD5ENolzCM+KqEQbd6IqTq
+ LJ0EPncbYJ4TsPA==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Document the Temperature Sensor (TSENS) on the X1E80100 Platform.
+Add bindings for SMB2360 PMIC. This PMIC is found in boards like
+X1 Elite CRD and QCP.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 99d9c526c0b6..ac54ed604b74 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -67,6 +67,7 @@ properties:
-               - qcom,sm8450-tsens
-               - qcom,sm8550-tsens
-               - qcom,sm8650-tsens
-+              - qcom,x1e80100-tsens
-           - const: qcom,tsens-v2
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index b7f01cbb8fff..72e4462473ea 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -95,6 +95,7 @@ properties:
+           - qcom,pmx65
+           - qcom,pmx75
+           - qcom,smb2351
++          - qcom,smb2360
+       - const: qcom,spmi-pmic
  
-       - description: v2 of TSENS with combined interrupt
+   reg:
 
 ---
 base-commit: 3689b0ef08b70e4e03b82ebd37730a03a672853a
-change-id: 20240522-x1e80100-bindings-thermal-qcom-tsens-aa2db90c4a74
+change-id: 20240522-smb2360-bindings-mfd-qcom-spmi-pmic-76e1419a844b
 
 Best regards,
 -- 
