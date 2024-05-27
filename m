@@ -1,124 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-20645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D588C8D0A21
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 20:45:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF6AB8D0EFD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 23:09:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 893AB1F21753
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 18:45:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5CDF6B2175F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 21:09:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3C1815FA81;
-	Mon, 27 May 2024 18:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30FD3161305;
+	Mon, 27 May 2024 21:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i3DpXNtI"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="k97pWcsv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839B315FA68;
-	Mon, 27 May 2024 18:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D25053370
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 21:08:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716835545; cv=none; b=BwfA1zAw4hw7yjAQ9AV8a0VU2n0xbyZ/W6GM0WND/rN3ikYSepfpYoNmG00Zk+VdGOgtoNBVnwt/bYerMGs1w8pEIqlf46U8ZW16W2C7qaLbG7SlvbpM+YzI5NnRxebku+gDgBJ9nk7jxJxgkJLgaZTY75B++BhKwcW2fVCKBrE=
+	t=1716844137; cv=none; b=tviuIh7c9kwtDOT7r6vo3j9v2olKeTOk6C2tTCu944AA7zIkabHiONKMd6hwNJ0C40j3OFLtc93+jPVglvUtEvJQkNrreoOKNreDAbDhCXsoKrg2y01zs+5iBfORm6N6BQ5fpq6DKIX4j3P9WYK/8k2ej0MBlYPPZIs7oGdJC1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716835545; c=relaxed/simple;
-	bh=+lgrcWv2d5hUELgZXgg1mfyLgMa4f/KFrKkgNaGJNuQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XZop6injbm39CXbQcfAFd7plMsVl34zTvBUQLW12cG/1IGcop/a98drdoKwU73Wkd3628ncdHKZ3J2CughWorHCZuhFpDBh3ltAEXeDIpqcXRtVKHU4S4fBzRcTtd5eGLFTVfBwTFd3x3gdnglzf4CfCjdxodBxLWRpaQi2zJHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i3DpXNtI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491AAC2BBFC;
-	Mon, 27 May 2024 18:45:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716835545;
-	bh=+lgrcWv2d5hUELgZXgg1mfyLgMa4f/KFrKkgNaGJNuQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=i3DpXNtIrd5v+Z8Ur5+KWtRQFBJAQkv9ZL5bUvwTzo7nqEAG+JqXvdGCcONP2Qjgb
-	 wlHab3Q/Lw/v5zS9ES9cvjgaG3RCBWtcIHKtodbhU5n/1KcfQ6KiL/J4BXkeyJLRtf
-	 6RzwpZhSVYGMT9YlqLOPujBs54waFiG/BlbOlQTGEj5dA/5GJ/x4HNuPMzzZLysIry
-	 aM7NYs/pEHKAXRurkF2iu0nmAyz1RE5HrMungZoyJAweidcX8YXXmGBlda3tVXLRpZ
-	 AndwDnK/LpeBjbVr+f9jMk28Dvl1/HFMiGoPKitVlnmwk0zC9OvO+9Zva2nLcPUMjp
-	 nQl+v43sSFQkw==
-Message-ID: <6aac1fce-887b-4ace-bd74-b4e1e5d98517@kernel.org>
-Date: Mon, 27 May 2024 20:45:38 +0200
+	s=arc-20240116; t=1716844137; c=relaxed/simple;
+	bh=ktOool4la2K3Ch5U6qURiQDsK4zx2dK0DDAYnavRRiM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=q+nGY3YxkHig2efvhyv2eQGbvfJf6zbbC1rsU95HQQB87CsMh5+mBybwCbWuXXRaMd/Qvaywp2ZMHR1YWK+dRE69SvWolDws79+XcQczKflhIEKa+5UaTNo92rZsoK2egNN774D+5JXEyhEUhWyucPYLiPQGrscFFtbUTOWsr38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=k97pWcsv; arc=none smtp.client-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5b970e90ab8so71093eaf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 14:08:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1716844134; x=1717448934; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WkhLLtNdQQ166JLmgy9oTgRJvGdeZaOnVieg5pXIOy4=;
+        b=k97pWcsv+LtYXzggcoZ+w0S9uSUhYcB3lAvDBLWd+p/fXKTAEXG1dvFDtVWvjx7N30
+         F0rwZffl48CmDr7X/pS648hZTGQIKsTnQUT5uQjmmNJZyGGc7MIqi7SDJeV/qmuHhOQG
+         wlfTxAlkfMP/9+wp8n+FJA9MDlZDttxlSftno=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716844134; x=1717448934;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WkhLLtNdQQ166JLmgy9oTgRJvGdeZaOnVieg5pXIOy4=;
+        b=im0Z2qEI715ZsloGO0jX65PP9wOv9UPE1lA0U2R8s+Kce3jTIByoXv0bQY9gv3sVP1
+         i191aLkpv13KQbOJfnknZcA4m7+Hzqv5h8ODbmek9YVwwADEQo+KhULocKqTaOCxK3Du
+         6YNt+rb6Gp2EiyywpWZBYFZ2+0Hragv7b8RQnj3eyDcRr02XtBbwGIhNCOcxUwZypZGK
+         dhIzJxGlLiwTULT0pq8Y65vVNx6kHm5iBH2OTzx0DZbaL6iq5DPK4tJBrln0yoAi/QYH
+         1eQnrB3UoHRl6DLtgOHVUZ1uJkRAhs3j0i4FRW8fIQ0IBuk/HxjQ163/HFRn2tSbHvyb
+         06TA==
+X-Forwarded-Encrypted: i=1; AJvYcCWwa0uIWe1QVZjwImxcnXZ6nJinklEDm65G7Xs92P2tdnsHRBxhnYR6pM45GES/8lo4nwaCZ7a5Un3aP+yaAT7tVk9NB0yTLtAwO2SimQ==
+X-Gm-Message-State: AOJu0YxJeRSdpgqNU9wt8sjTjrRFndIuPydp5Go4DVOxkNYOm+WifOQB
+	SWjYAljLXAERISj84wUCG2E1tIgRx9omyL/ESmWjBHkf/9PUgEPfzppdoV+jTg==
+X-Google-Smtp-Source: AGHT+IHKBoTjiEWufz6HkJxCHl14PQW6B7FmtNjhRPgkJI6/XkalgOyG105zpAvuo6WpKcoeijZ+mg==
+X-Received: by 2002:a05:6359:4287:b0:18d:8c13:b83d with SMTP id e5c5f4694b2df-197e45d86b6mr1453805755d.0.1716844134467;
+        Mon, 27 May 2024 14:08:54 -0700 (PDT)
+Received: from denia.c.googlers.com (125.135.86.34.bc.googleusercontent.com. [34.86.135.125])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ad850a6dc7sm9511866d6.93.2024.05.27.14.08.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 May 2024 14:08:53 -0700 (PDT)
+From: Ricardo Ribalda <ribalda@chromium.org>
+Subject: [PATCH v3 00/18] media: Fix the last set of coccinelle warnings
+Date: Mon, 27 May 2024 21:08:50 +0000
+Message-Id: <20240527-cocci-flexarray-v3-0-cda09c535816@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: Document the X1E80100
- Temperature Sensor
-To: Abel Vesa <abel.vesa@linaro.org>, Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240527-x1e80100-bindings-thermal-qcom-tsens-v1-1-0f50f58253e1@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240527-x1e80100-bindings-thermal-qcom-tsens-v1-1-0f50f58253e1@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGP2VGYC/4XNTQrCMBCG4auUrI1Mxv7pynuIi5BO2wHbyERDS
+ +ndTbsUxOX7wTyzqEDCFNQlW5RQ5MB+THE6ZMr1duxIc5NaIWAOBVTaeedYtw+arIid9dnWUNm
+ aDNSk0tVTqOVpF2/31D2Hl5d5fxDNtv62otGgc5ujcWjaBsqr68UP/B6OXjq1cRH/EJiIypLFE
+ l0LZfFFrOv6AX5kqJz0AAAA
+To: Michael Tretter <m.tretter@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
+ Michal Simek <michal.simek@amd.com>, Andy Walls <awalls@md.metrocast.net>, 
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
+ Ricardo Ribalda <ribalda@chromium.org>
+X-Mailer: b4 0.12.4
 
-On 27/05/2024 08:52, Abel Vesa wrote:
-> Document the Temperature Sensor (TSENS) on the X1E80100 Platform.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
+With this set we are done with all the cocci warning/errors.
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+---
+Changes in v3:
+- Do not rename structure fields. (Thanks Bryan)
+- Link to v2: https://lore.kernel.org/r/20240507-cocci-flexarray-v2-0-7aea262cf065@chromium.org
+
+Changes in v2:
+- allegro: Replace hard coded 1 with a define. (Thanks Michael)
+- Link to v1: https://lore.kernel.org/r/20240507-cocci-flexarray-v1-0-4a421c21fd06@chromium.org
+
+---
+Ricardo Ribalda (18):
+      media: allegro: nal-hevc: Replace array[1] with arrray[N]
+      media: xilinx: Refactor struct xvip_dma
+      media: dvb-frontend/mxl5xx: Refactor struct MBIN_FILE_T
+      media: dvb-frontend/mxl5xx: Use flex array for MBIN_SEGMENT_T
+      media: pci: cx18: Use flex arrays for struct cx18_scb
+      media: siano: Refactor struct sms_msg_data
+      media: siano: Remove unused structures
+      media: siano: Use flex arrays for sms_firmware
+      media: venus: Remove unused structs
+      media: venus: Use flex array for hfi_session_release_buffer_pkt
+      media: venus: Refactor struct hfi_uncompressed_plane_info
+      media: venus: Refactor struct hfi_session_get_property_pkt
+      media: venus: Refactor struct hfi_uncompressed_format_supported
+      media: venus: Refactor hfi_session_empty_buffer_uncompressed_plane0_pkt
+      media: venus: Refactor hfi_session_empty_buffer_compressed_pkt
+      media: venus: Refactor hfi_sys_get_property_pkt
+      media: venus: Refactor hfi_session_fill_buffer_pkt
+      media: venus: Refactor hfi_buffer_alloc_mode_supported
+
+ drivers/media/common/siano/smscoreapi.c        | 10 +++---
+ drivers/media/common/siano/smscoreapi.h        | 18 ++---------
+ drivers/media/common/siano/smsdvb-main.c       |  4 +--
+ drivers/media/common/siano/smsendian.c         |  8 +++--
+ drivers/media/dvb-frontends/mxl5xx.c           |  2 +-
+ drivers/media/dvb-frontends/mxl5xx_defs.h      |  4 +--
+ drivers/media/pci/cx18/cx18-scb.h              |  2 +-
+ drivers/media/platform/allegro-dvt/nal-hevc.h  |  7 ++--
+ drivers/media/platform/qcom/venus/hfi_cmds.c   |  8 ++---
+ drivers/media/platform/qcom/venus/hfi_cmds.h   | 38 ++++------------------
+ drivers/media/platform/qcom/venus/hfi_helper.h | 45 ++------------------------
+ drivers/media/platform/qcom/venus/hfi_parser.c |  2 +-
+ drivers/media/platform/xilinx/xilinx-dma.c     |  4 +--
+ drivers/media/platform/xilinx/xilinx-dma.h     |  2 +-
+ 14 files changed, 39 insertions(+), 115 deletions(-)
+---
+base-commit: 48259b90973718d2277db27b5e510f0fe957eaa0
+change-id: 20240507-cocci-flexarray-9a807a8e108e
 
 Best regards,
-Krzysztof
+-- 
+Ricardo Ribalda <ribalda@chromium.org>
 
 
