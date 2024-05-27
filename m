@@ -1,58 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-20640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F32C78D0944
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 19:16:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 635A08D0992
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 19:54:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABEA22830CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 17:16:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93F161C216FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 17:54:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D57D938DDB;
-	Mon, 27 May 2024 17:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1650615F324;
+	Mon, 27 May 2024 17:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uLnDTfTp"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LsBzqnQX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D2B1DA58;
-	Mon, 27 May 2024 17:16:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710DB155C8D;
+	Mon, 27 May 2024 17:54:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716830191; cv=none; b=GOHBQI15s9cAP30Wx8lRKOFb8gYcrocEHcet01ODvLctxNH5BC7OeEd6sQzZCWPhpKM2ifvAm3w0Aw2HkMFJ2oKk48tYeIvf4hz6EnYAPAcXDJjjIpDVMstaWgg7DPYoDCCwokFvQvSIg2yu/4gniIBzjOorcF3J3KGFxUhnhEo=
+	t=1716832476; cv=none; b=miZ6ZHEfPs1Ic5KPtj4k869D5aY7ZKuEHzjpoUDn8kowZ+J2jN5fgJAmNp3qPFwAy615Uyr6Y8S6rg2MzJ3F5s98M4fryb1rmGi5CY2AkHACyvfL21gQP2qcEk+gITykJKkPP0pXqgSQ4Dc0JgPr3sXWo0HTnC7VEVgFppy1Vxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716830191; c=relaxed/simple;
-	bh=EjOc56aRyzKFkw2McUibnXXwAFLZ8zW7DftTuyG0EAQ=;
+	s=arc-20240116; t=1716832476; c=relaxed/simple;
+	bh=pQD9hTPYdYG3waVVdZmos5TrgAbzf/0R6TMZHpPrboM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kjjwvtgF/bPcq+6GG43+YdaM3HleLxOaE3qy5vkTVBn6Pa4ifk7N+2T8r/u+Udex9EdbN3BJXiaJJAQC2HcmWtr6FbJSn88diRwti9nj/7+vmSf1A62ksnQdCTpCfaRtTahZf+bV+gHtq/iQeDQeXcPNL+vWFxZkH+LzuGkq2Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uLnDTfTp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5CBC2BBFC;
-	Mon, 27 May 2024 17:16:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716830190;
-	bh=EjOc56aRyzKFkw2McUibnXXwAFLZ8zW7DftTuyG0EAQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uLnDTfTpXCpxPpnS1b0p2OW/U4+nez++TEk9DGB62hFkWd0WTYihGnPZW8G0oHuaC
-	 3ACt4pJ0uQl2yYk0yj6m/1bUpbxGxuM9xi8XwV6xF2bzfUOWDW3hgGplgDGOX5BbMn
-	 ljGhVezYa4ioJybgoZbd80ptWCBkX0fQTC8x5gtEk7QRdKhq8arHWLzSeJ6BYW/3Xt
-	 ZK8hXyZhAkCBjsYPYsnOd9Sh8eQKQXRhaWssWk/rUkeyyJqhTFzH3qG7iMnR7xLkNS
-	 qk0qGz2VmviprKrdnfW/xyyzSWiJ63/uRVkXhKtNqASuTWQ6MYlLZPl1kWphF7qI0B
-	 o94A0Kk4lU/gg==
-Date: Mon, 27 May 2024 12:16:27 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht, 
-	phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: pm7250b: Add a TCPM description
-Message-ID: <rjhf6pzdcw6zjneosshvg4d6ov5twxndya7q2btf3tnj5yy3fs@zzu6rfg6wzlu>
-References: <20240329-fp4-tcpm-v2-0-d7f8cd165355@fairphone.com>
- <20240329-fp4-tcpm-v2-2-d7f8cd165355@fairphone.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=r49bZo+xdMa/EMekvcir67BlPeJSlCAh/4RxIk5+ZyvC3IRkUk2w+nwIDL9g3apECG3DFS7R3y75Y3hfuW3L0UerJVYbNOzYoGfFQ/xc4Wy7eVCelKYfpRI1xFxVnrll5wFhmAduZdA59TSko82wHk8hCT7x7E0B92hmGm8Uokk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LsBzqnQX; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1716832474; x=1748368474;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=pQD9hTPYdYG3waVVdZmos5TrgAbzf/0R6TMZHpPrboM=;
+  b=LsBzqnQXyV3Xx1nnFXM45EjldD5DLqMJzGQQZDqKS7kkEGKACYq9+jAv
+   T8ggPNgT+yezRrsbtpkoLlqBeaKM1K4VtCrnRhaKLKcSFuwoiyP4qUVyn
+   ABJbKAWtbG7BOdMXJVjLwWPLqusEFG0A5CD9K/6ovsXqqfcgrqgNuYm8z
+   Kdsr+zJcwbIBWtXG0JBwxz/UeUZHSGmpuwoxLqp3uIyxPDvD/WFeTBB7v
+   8sbDUz37eePAJ+sL8pG/bE0rhKN8Zi1C+hsy7w5o0jWsU4uVCuXDcWZtk
+   R7X0Y6nimQNbgGxL7SOBLMS3DPka4pR5djDXk94c9fAz0AitLjiTfGZjP
+   Q==;
+X-CSE-ConnectionGUID: lM7sI2tDTAy/3D6scbpjWw==
+X-CSE-MsgGUID: 7OLsxJ1sS2CI5t7wgxmn4Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11085"; a="24574928"
+X-IronPort-AV: E=Sophos;i="6.08,193,1712646000"; 
+   d="scan'208";a="24574928"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2024 10:54:33 -0700
+X-CSE-ConnectionGUID: Ix3a3+nnSBC1vshm3rHFRQ==
+X-CSE-MsgGUID: vJghpWlyTH6wYE8nRgwRZQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,193,1712646000"; 
+   d="scan'208";a="39617573"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2024 10:54:30 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1sBeYF-0000000BKuj-0myM;
+	Mon, 27 May 2024 20:54:27 +0300
+Date: Mon, 27 May 2024 20:54:26 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Tony Lindgren <tony@atomide.com>, linux-arm-msm@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Guanbing Huang <albanhuang@tencent.com>,
+	Thomas Gleixner <tglx@linutronix.de>, linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org
+Subject: Re: [PATCH 1/2] serial: port: Don't block system suspend even if
+ bytes are left to xmit
+Message-ID: <ZlTI0pYuv7_g6x-V@smile.fi.intel.com>
+References: <20240523232216.3148367-1-dianders@chromium.org>
+ <20240523162207.1.I2395e66cf70c6e67d774c56943825c289b9c13e4@changeid>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,84 +88,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240329-fp4-tcpm-v2-2-d7f8cd165355@fairphone.com>
+In-Reply-To: <20240523162207.1.I2395e66cf70c6e67d774c56943825c289b9c13e4@changeid>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Fri, Mar 29, 2024 at 01:26:20PM GMT, Luca Weiss wrote:
-> Type-C port management functionality lives inside of the PMIC block on
-> pm7250b.
+On Thu, May 23, 2024 at 04:22:12PM -0700, Douglas Anderson wrote:
+> Recently, suspend testing on sc7180-trogdor based devices has started
+> to sometimes fail with messages like this:
 > 
-> The Type-C port management logic controls orientation detection,
-> vbus/vconn sense and to send/receive Type-C Power Domain messages.
+>   port a88000.serial:0.0: PM: calling pm_runtime_force_suspend+0x0/0xf8 @ 28934, parent: a88000.serial:0
+>   port a88000.serial:0.0: PM: dpm_run_callback(): pm_runtime_force_suspend+0x0/0xf8 returns -16
+>   port a88000.serial:0.0: PM: pm_runtime_force_suspend+0x0/0xf8 returned -16 after 33 usecs
+>   port a88000.serial:0.0: PM: failed to suspend: error -16
 > 
+> I could reproduce these problem by logging in via an agetty on the
+> debug serial port (which was _not_ used for kernel console) and
+> running:
+>   cat /var/log/messages
+> ...and then (via an SSH session) forcing a few suspend/resume cycles.
+> 
+> Tracing through the code and doing some printf debugging shows that
 
-pm7250b is found in devices where USB Type-C port management is
-performed in firmware, presumably using this hardware block.
+printf()
 
-As such, it seems reasonable to leave this node disabled and only enable
-it on the targets that doesn't do this in firmware.
+...or...
 
-Regards,
-Bjorn
+printf()-based
 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 39 +++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
+> the -16 (-EBUSY) comes from the recently added
+> serial_port_runtime_suspend().
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> index 4faed25a787f..0205c2669093 100644
-> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> @@ -51,6 +51,45 @@ pm7250b_vbus: usb-vbus-regulator@1100 {
->  			status = "disabled";
->  		};
->  
-> +		pm7250b_typec: typec@1500 {
-> +			compatible = "qcom,pm7250b-typec", "qcom,pm8150b-typec";
-> +			reg = <0x1500>,
-> +			      <0x1700>;
-> +			interrupts = <PM7250B_SID 0x15 0x00 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x15 0x01 IRQ_TYPE_EDGE_BOTH>,
-> +				     <PM7250B_SID 0x15 0x02 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x15 0x03 IRQ_TYPE_EDGE_BOTH>,
-> +				     <PM7250B_SID 0x15 0x04 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x15 0x05 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x15 0x06 IRQ_TYPE_EDGE_BOTH>,
-> +				     <PM7250B_SID 0x15 0x07 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x17 0x00 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x17 0x01 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x17 0x02 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x17 0x03 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x17 0x04 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x17 0x05 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x17 0x06 IRQ_TYPE_EDGE_RISING>,
-> +				     <PM7250B_SID 0x17 0x07 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-names = "or-rid-detect-change",
-> +					  "vpd-detect",
-> +					  "cc-state-change",
-> +					  "vconn-oc",
-> +					  "vbus-change",
-> +					  "attach-detach",
-> +					  "legacy-cable-detect",
-> +					  "try-snk-src-detect",
-> +					  "sig-tx",
-> +					  "sig-rx",
-> +					  "msg-tx",
-> +					  "msg-rx",
-> +					  "msg-tx-failed",
-> +					  "msg-tx-discarded",
-> +					  "msg-rx-discarded",
-> +					  "fr-swap";
-> +			vdd-vbus-supply = <&pm7250b_vbus>;
-> +		};
-> +
->  		pm7250b_temp: temp-alarm@2400 {
->  			compatible = "qcom,spmi-temp-alarm";
->  			reg = <0x2400>;
-> 
-> -- 
-> 2.44.0
-> 
+> The idea of the serial_port_runtime_suspend() function is to prevent
+> the port from being _runtime_ suspended if it still has bytes left to
+> transmit. Having bytes left to transmit isn't a reason to block
+> _system_ suspend, though. The DEFINE_RUNTIME_DEV_PM_OPS() used by the
+> serial_port code means that the system suspend function will be
+> pm_runtime_force_suspend(). In pm_runtime_force_suspend() we can see
+> that before calling the runtime suspend function we'll call
+> pm_runtime_disable(). This should be a reliable way to detect that
+> we're called from system suspend and that we shouldn't look for
+> busyness.
+
+...
+
+> +	/*
+> +	 * We only want to check the busyness of the port if PM Runtime is
+> +	 * enabled. Specifically PM Runtime will be disabled by
+> +	 * pm_runtime_force_suspend() during system suspend and we don't want
+> +	 * to block system suspend even if there is data still left to
+> +	 * transmit. We only want to block regulator PM Runtime transitions.
+
+regular
+
+> +	 */
+> +	if (!pm_runtime_enabled(dev))
+> +		return 0;
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
