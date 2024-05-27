@@ -1,292 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-20601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D39068CFEDF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 13:23:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 566E48CFF33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 13:43:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 035131C2084C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 11:23:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7ED4E283935
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 May 2024 11:43:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5171613C80B;
-	Mon, 27 May 2024 11:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEF6615D5D2;
+	Mon, 27 May 2024 11:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n1AdncgO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d7861i/q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB3213DDDF;
-	Mon, 27 May 2024 11:21:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B20D13AD28
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 11:42:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716808907; cv=none; b=UsKjFAym6yyIpZy5ksQZSZJP7utu0hIkU6DKXsAMRFp2h0lIC1TQ/SLh/zAQw9O+/v6L6LXqrtPkjS3F2tdEfoy0ZxGUHr4NRK311esOJbCL1mUL07gh3Fm9eao4PYourc0YCmAsBCpdwVMojMPTLSffHer6ByyQCmuRSWj4mvY=
+	t=1716810178; cv=none; b=jNIQvTxy8quKZhc6ZuycucdtYbaG1HUVVFbo11nP8PQdkb9SXXeUSLzcQB2R24KRzrEAvhnFC/s9SG1oKjTQ1ETYijp11X1njxpd7C1UInok6oiQ6Lk9X4pt2kFXoFZ02E+qMap10SSWemOQHaImu5LERpyBm43iQq0xQRZKOfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716808907; c=relaxed/simple;
-	bh=OS5MSzcbBQ7ZMcHYY64PkaLDe5X8hNrcrVRe1HmwDaE=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bM4n7aZRswXh443b4HvUSGoUkoRsQ8AX9hnRX80hGkUAf9qFVRMarQjYFER+cmCT1TE1yArV1zQS8xNUEDWkbpFdhZOdtrmXn8r6uCPMcJi4icJLm38zqCaMQTCNHgViKnQa/l1qYC0pUrCXC1lOuWjQCsrNM5O8rw4LY/dJ44Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n1AdncgO; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44RAq7pY020041;
-	Mon, 27 May 2024 11:21:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SKImBEUAhMXEL4iLiIXWuWHCFP8rOWfIpyIny+N1N9U=; b=n1AdncgOnfMVwc4X
-	eWwlNAnnt3uTdmOKuGpkuLd7ARzSeDv0D0pLO9xHj4+fr9RKdbaUBfcuXbHdVC0y
-	3IjabaDt8u3s0MDZWatvYIrM9gPxrbYJwB9+k40uMF8GsIlTeiQN12KdWgWBuB5l
-	6bbgkVuhC9XDXf7eu+yPQ1JUEKA8iOsPOhKgiFnWa1Yo754vKmA9CyqMx6yD3Zpu
-	GWi22fIeFvLsetwYa6pIGZmiLYZj7zdmlVaIozKB8Cy0i+jbPrlyvqp2eMR3t7PW
-	NJdJKN/WMw/2eHg48RdoxoJATvbHE9x7QcLOI7joSxRtogVeqLoT1ECsBPFhA07a
-	wZITbg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba2h3mpd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 May 2024 11:21:33 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44RBLWUP014916
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 May 2024 11:21:32 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 27 May 2024 04:21:27 -0700
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami
-	<bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
-	<broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela
-	<perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>
-CC: <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <quic_pkumpatl@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [RESEND v5 7/7] ASoC: codecs: wcd937x: add audio routing and Kconfig
-Date: Mon, 27 May 2024 16:49:56 +0530
-Message-ID: <20240527111956.444425-8-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240527111956.444425-1-quic_mohs@quicinc.com>
-References: <20240527111956.444425-1-quic_mohs@quicinc.com>
+	s=arc-20240116; t=1716810178; c=relaxed/simple;
+	bh=EOsL7NiepwoktnPHVm7DC3r9sxjI4Vg8cl11xkZfn/w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gpIxs0YgAeRkiDyfwWNH1RUEgy+xR58fLZ/2xDIJquvaC3vzhUX2KK+PxLKpthvbUZ8sMPAP5vRwFK9qsV5zsheIeUJimBKYp2r4rxmHVrNcukchrxJpzWHqEDiqG4zFE8pi2uQrqLA9Q3WshaAD3Mx5xX9F59S/U1gdmWCkF6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d7861i/q; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-df4dda88ce9so5622025276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 04:42:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716810176; x=1717414976; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=32DpmCz616oJj3sZ30ujufGqTcF/NmhflobLHv+4XM8=;
+        b=d7861i/qM8mmHt9KUfU21uZAfNVNoYbH4rxjOZpXcq38zqoiduEENgsSIH1mF6uQdP
+         nRu87lIPLcmnKZlm6IKD5ZZUZXlsvxhkDwyTDYGu8ICwe8UOXAe4gFSw6LMClChr++w9
+         BTCeZ12IThw0xQMUHUV7LXgrdfi7kGrlkUM9imCjA0BgAdWodaG2JrAVDYjsz6ya0yiu
+         ORHTGkKDRBRo+vBYh6o7JTv0zqKoQHmbei/vAATnkJLXqyxbWPyj7NL5r38L7Wn6o5s3
+         vU7Dyh72oS0Wzd6Q0DHJ0o8nJgahNaY9pIBsYKNdxkX5EtB8eLivSLrhdw/ZpV29J/B0
+         k7OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716810176; x=1717414976;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=32DpmCz616oJj3sZ30ujufGqTcF/NmhflobLHv+4XM8=;
+        b=qyVG2HwKYVDKw1vC5OK+kTpoDYavdQFKcVrNK2Un1mCEhDIca8ZFuf5UDm1dwVu1U5
+         UIT2mgAr9e+mLgrmVAm1qzDxcqSzFRCmr5SkDPLzO/38IrlP6JUh7/Ln0F+XR148OCg7
+         Hb8ouV5NKBGTC+hCTSuOkuiVErKFwCuu0hNisF8t0BBjTjqWNbaGsIfKjhktvxycV0Ud
+         T7srcB7zoLO9Cql67GU7G2gXJdU9k118aLXR5JRIxFxH+oG08Uny+D+lI3/7+4RWkpxT
+         ++kZSPcH1XJY/+uHn0AJ4dGjR9HN19Z776xaI20BKmIr52h2ob5XPPKW/zw24wyOIwcy
+         GZYg==
+X-Forwarded-Encrypted: i=1; AJvYcCW0I9iXkIGoJoOMEwqrtSd/eF8ahA3qns5Fcnq0rHSOxiaT0hJdjT4QSsqbQI/ORok+F9O5gZNnqMEhUDIuPDBAe+UPZcgH/N3ItpGC6Q==
+X-Gm-Message-State: AOJu0Yy2a/sblosP1oHCSeIezXaca3ZcvQNB59kb79PcKnRroiOCDttc
+	CBt3RWo3RbB7nTm6eJih42s6CdRtxOeVKnuL88C1TdK6i7ZJ95XvrPKeledqJUa5jwEubY3tGeI
+	AVT8ssJblJ9HFM9+OlO+Ta1t5KPDOT1kBobu0uA==
+X-Google-Smtp-Source: AGHT+IFHwGY0a+7rv/7KMXy9+d+MKKeKjUaKRmg/b92ApME6fLHQGJOLc1NGnxd/PGhiSwgle60+hRRnygz1Kpak1qw=
+X-Received: by 2002:a25:e310:0:b0:de5:4b1f:7e00 with SMTP id
+ 3f1490d57ef6-df77215f566mr8579337276.15.1716810175995; Mon, 27 May 2024
+ 04:42:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WuRzhBrqvxJYyAj8ivRUnEsHGDSUXSHZ
-X-Proofpoint-ORIG-GUID: WuRzhBrqvxJYyAj8ivRUnEsHGDSUXSHZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-27_01,2024-05-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- spamscore=0 malwarescore=0 bulkscore=0 mlxscore=0 impostorscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=999 lowpriorityscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405270093
+References: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
+ <20240521-qcom-firmware-name-v1-1-99a6d32b1e5e@linaro.org>
+ <a45b53f3-b2a5-4094-af5a-1281e0f94d2f@linaro.org> <CAA8EJprxYsoug0ipRHTmX45vaFLzJCUF0dQWOc=QLs4y6uZ1rA@mail.gmail.com>
+ <878r03csxn.fsf@kernel.org> <CAA8EJpqkgpCb57DGka0ckbPz=2YiaHzxmiNzG39ad5y6smgO5A@mail.gmail.com>
+ <Zk52IHqAfOnVDm50@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <Zk52IHqAfOnVDm50@hu-bjorande-lv.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 27 May 2024 14:42:44 +0300
+Message-ID: <CAA8EJpogG5wW2mUUkYFtnnZLMVuneU4Wie6GBfYytSYe0zQ77Q@mail.gmail.com>
+Subject: Re: [PATCH 01/12] soc: qcom: add firmware name helper
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Kalle Valo <kvalo@kernel.org>, neil.armstrong@linaro.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Loic Poulain <loic.poulain@linaro.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+	Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+On Thu, 23 May 2024 at 01:48, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+>
+> On Tue, May 21, 2024 at 03:08:31PM +0200, Dmitry Baryshkov wrote:
+> > On Tue, 21 May 2024 at 13:20, Kalle Valo <kvalo@kernel.org> wrote:
+> > >
+> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+> > >
+> > > > On Tue, 21 May 2024 at 12:52, <neil.armstrong@linaro.org> wrote:
+> > > >>
+> > > >> On 21/05/2024 11:45, Dmitry Baryshkov wrote:
+> > > >> > Qualcomm platforms have different sets of the firmware files, which
+> > > >> > differ from platform to platform (and from board to board, due to the
+> > > >> > embedded signatures). Rather than listing all the firmware files,
+> > > >> > including full paths, in the DT, provide a way to determine firmware
+> > > >> > path based on the root DT node compatible.
+> > > >>
+> > > >> Ok this looks quite over-engineered but necessary to handle the legacy,
+> > > >> but I really think we should add a way to look for a board-specific path
+> > > >> first and fallback to those SoC specific paths.
+> > > >
+> > > > Again, CONFIG_FW_LOADER_USER_HELPER => delays.
+> > >
+> > > To me this also looks like very over-engineered, can you elaborate more
+> > > why this is needed? Concrete examples would help to understand better.
+> >
+> > Sure. During the meeting last week Arnd suggested evaluating if we can
+> > drop firmware-name from the board DT files. Several reasons for that:
+> > - DT should describe the hardware, not the Linux-firmware locations
+> > - having firmware name in DT complicates updating the tree to use
+> > different firmware API (think of mbn vs mdt vs any other format)
+> > - If the DT gets supplied by the vendor (e.g. for
+> > SystemReady-certified devices), there should be a sync between the
+> > vendor's DT, linux kernel and the rootfs. Dropping firmware names from
+> > DT solves that by removing one piece of the equation
+> >
+> > Now for the complexity of the solution. Each SoC family has their own
+> > firmware set. This includes firmware for the DSPs, for modem, WiFi
+> > bits, GPU shader, etc.
+> > For the development boards these devices are signed by the testing key
+> > and the actual signature is not validated against the root of trust
+> > certificate.
+> > For the end-user devices the signature is actually validated against
+> > the bits fused to the SoC during manufacturing process. CA certificate
+> > (and thus the fuses) differ from vendor to vendor (and from the device
+> > to device)
+> >
+> > Not all of the firmware files are a part of the public linux-firmware
+> > tree. However we need to support the rootfs bundled with the firmware
+> > for different platforms (both public and vendor). The non-signed files
+> > come from the Adreno GPU and can be shared between platforms. All
+> > other files are SoC-specific and in some cases device-specific.
+> >
+> > So for example the SDM845 db845c (open device) loads following firmware files:
+> > Not signed:
+> > - qcom/a630_sqe.fw
+> > - qcom/a630_gmu.bin
+> >
+> > Signed, will work for any non-secured sdm845 device:
+> > - qcom/sdm845/a630_zap.mbn
+> > - qcom/sdm845/adsp.mbn
+> > - qcom/sdm845/cdsp.mbn
+> > - qcom/sdm485/mba.mbn
+> > - qcom/sdm845/modem.mbn
+> > - qcom/sdm845/wlanmdsp.mbn (loaded via TQFTP)
+> > - qcom/venus-5.2/venus.mbn
+> >
+> > Signed, works only for DB845c.
+> > - qcom/sdm845/Thundercomm/db845c/slpi.mbn
+> >
+> > In comparison, the SDM845 Pixel-3 phone (aka blueline) should load the
+> > following firmware files:
+> > - qcom/a630_sqe.fw (the same, non-signed file)
+> > - qcom/a630_gmu.bin (the same, non-signed file)
+> > - qcom/sdm845/Google/blueline/a630_zap.mbn
+>
+> How do you get from "a630_zap.mbn" to this? By extending the lookup
+> table for every target, or what am I missing?
 
-This patch adds audio routing for both playback and capture and
-Makefile and Kconfigs changes for wcd937x.
+More or less so. Matching the root OF node gives us the firmware
+location, then it gets prepended to all firmware targets. Not an ideal
+solution, as there is no fallback support, but at least it gives us
+some points to discuss (and to decide whether to move to some
+particular direction or to abandon the idea completely, making Arnd
+unhappy again).
 
-Co-developed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
-Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- sound/soc/codecs/Kconfig   | 20 ++++++++++
- sound/soc/codecs/Makefile  |  7 ++++
- sound/soc/codecs/wcd937x.c | 80 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 107 insertions(+)
+>
+> Regards,
+> Bjorn
+>
+> > - qcom/sdm845/Google/blueline/adsp.mbn
+> > - qcom/sdm845/Google/blueline/cdsp.mbn
+> > - qcom/sdm845/Google/blueline/ipa_fws.mbn
+> > - qcom/sdm845/Google/blueline/mba.mbn
+> > - qcom/sdm845/Google/blueline/modem.mbn
+> > - qcom/sdm845/Google/blueline/venus.mbn
+> > - qcom/sdm845/Google/blueline/wlanmdsp.mbn
+> > - qcom/sdm845/Google/blueline/slpi.mbn
+> >
+> > The Lenovo Yoga C630 WoS laptop (SDM850 is a variant of SDM845) uses
+> > another set of files:
+> > - qcom/a630_sqe.fw (the same, non-signed file)
+> > - qcom/a630_gmu.bin (the same, non-signed file)
+> > - qcom/sdm850/LENOVO/81JL/qcdxkmsuc850.mbn
+> > - qcom/sdm850/LENOVO/81JL/qcadsp850.mbn
+> > - qcom/sdm850/LENOVO/81JL/qccdsp850.mbn
+> > - qcom/sdm850/LENOVO/81JL/ipa_fws.elf
+> > - qcom/sdm850/LENOVO/81JL/qcdsp1v2850.mbn
+> > - qcom/sdm850/LENOVO/81JL/qcdsp2850.mbn
+> > - qcom/sdm850/LENOVO/81JL/qcvss850.mbn
+> > - qcom/sdm850/LENOVO/81JL/wlanmdsp.mbn
+> > - qcom/sdm850/LENOVO/81JL/qcslpi850.mbn
+> >
+> > If we look at one of the recent platforms, e.g. SM8650-QRD, this list
+> > also grows up:
+> > - qcom/gen70900_sqe.fw (generic, non-signed)
+> > - qcom/gmu_gen70900.bin (generic, non-signed)
+> > - qcom/sm8650/gen70900_zap.mbn
+> > - qcom/sm8650/adsp.mbn
+> > - qcom/sm8650/adsp_dtb.mbn
+> > - qcom/sm8650/cdsp.mbn
+> > - qcom/sm8650/cdsp_dtb.mbn
+> > - qcom/sm8650/ipa_fws.mbn
+> > - qcom/sm8650/modem.mbn
+> > - qcom/sm8650/modem_dtb.mbn
+> > - qcom/sm8650/vpu33_4v.mbn (or maybe qcom/vpu-33/vpu_4v.mbn)
+> >
+> > --
+> > With best wishes
+> > Dmitry
+> >
+> >
+> >
+> >
+> >
+> >
+> >
+> >
+> >
 
-diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
-index 4afc43d3f71f..a6bb5716632d 100644
---- a/sound/soc/codecs/Kconfig
-+++ b/sound/soc/codecs/Kconfig
-@@ -278,6 +278,7 @@ config SND_SOC_ALL_CODECS
- 	imply SND_SOC_UDA1380
- 	imply SND_SOC_WCD9335
- 	imply SND_SOC_WCD934X
-+	imply SND_SOC_WCD937X_SDW
- 	imply SND_SOC_WCD938X_SDW
- 	imply SND_SOC_WCD939X_SDW
- 	imply SND_SOC_LPASS_MACRO_COMMON
-@@ -2100,6 +2101,25 @@ config SND_SOC_WCD934X
- 	  The WCD9340/9341 is a audio codec IC Integrated in
- 	  Qualcomm SoCs like SDM845.
- 
-+config SND_SOC_WCD937X
-+	depends on SND_SOC_WCD937X_SDW
-+	tristate
-+	depends on SOUNDWIRE || !SOUNDWIRE
-+	select SND_SOC_WCD_CLASSH
-+
-+config SND_SOC_WCD937X_SDW
-+	tristate "WCD9370/WCD9375 Codec - SDW"
-+	select SND_SOC_WCD937X
-+	select SND_SOC_WCD_MBHC
-+	select REGMAP_IRQ
-+	depends on SOUNDWIRE
-+	select REGMAP_SOUNDWIRE
-+	help
-+	  The WCD9370/9375 is an audio codec IC used with SoCs
-+	  like SC7280 or QCM6490 chipsets, and it connected
-+	  via soundwire.
-+	  To compile this codec driver say Y or m.
-+
- config SND_SOC_WCD938X
- 	depends on SND_SOC_WCD938X_SDW
- 	tristate
-diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
-index b4df22186e25..c6f0cd5815f2 100644
---- a/sound/soc/codecs/Makefile
-+++ b/sound/soc/codecs/Makefile
-@@ -316,6 +316,8 @@ snd-soc-wcd-classh-y := wcd-clsh-v2.o
- snd-soc-wcd-mbhc-y := wcd-mbhc-v2.o
- snd-soc-wcd9335-y := wcd9335.o
- snd-soc-wcd934x-y := wcd934x.o
-+snd-soc-wcd937x-objs := wcd937x.o
-+snd-soc-wcd937x-sdw-objs := wcd937x-sdw.o
- snd-soc-wcd938x-y := wcd938x.o
- snd-soc-wcd938x-sdw-y := wcd938x-sdw.o
- snd-soc-wcd939x-y := wcd939x.o
-@@ -710,6 +712,11 @@ obj-$(CONFIG_SND_SOC_WCD_CLASSH)	+= snd-soc-wcd-classh.o
- obj-$(CONFIG_SND_SOC_WCD_MBHC)	+= snd-soc-wcd-mbhc.o
- obj-$(CONFIG_SND_SOC_WCD9335)	+= snd-soc-wcd9335.o
- obj-$(CONFIG_SND_SOC_WCD934X)	+= snd-soc-wcd934x.o
-+obj-$(CONFIG_SND_SOC_WCD937X)	+= snd-soc-wcd937x.o
-+ifdef CONFIG_SND_SOC_WCD937X_SDW
-+# avoid link failure by forcing sdw code built-in when needed
-+obj-$(CONFIG_SND_SOC_WCD937X) += snd-soc-wcd937x-sdw.o
-+endif
- obj-$(CONFIG_SND_SOC_WCD938X)	+= snd-soc-wcd938x.o
- ifdef CONFIG_SND_SOC_WCD938X_SDW
- # avoid link failure by forcing sdw code built-in when needed
-diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
-index f8b57f47ad55..ef649ed77fb2 100644
---- a/sound/soc/codecs/wcd937x.c
-+++ b/sound/soc/codecs/wcd937x.c
-@@ -2409,6 +2409,77 @@ static const struct snd_soc_dapm_widget wcd9375_dapm_widgets[] = {
- 	SND_SOC_DAPM_OUTPUT("DMIC6_OUTPUT"),
- };
- 
-+static const struct snd_soc_dapm_route wcd937x_audio_map[] = {
-+	{ "ADC1_OUTPUT", NULL, "ADC1_MIXER" },
-+	{ "ADC1_MIXER", "Switch", "ADC1 REQ" },
-+	{ "ADC1 REQ", NULL, "ADC1" },
-+	{ "ADC1", NULL, "AMIC1" },
-+
-+	{ "ADC2_OUTPUT", NULL, "ADC2_MIXER" },
-+	{ "ADC2_MIXER", "Switch", "ADC2 REQ" },
-+	{ "ADC2 REQ", NULL, "ADC2" },
-+	{ "ADC2", NULL, "ADC2 MUX" },
-+	{ "ADC2 MUX", "INP3", "AMIC3" },
-+	{ "ADC2 MUX", "INP2", "AMIC2" },
-+
-+	{ "IN1_HPHL", NULL, "VDD_BUCK" },
-+	{ "IN1_HPHL", NULL, "CLS_H_PORT" },
-+	{ "RX1", NULL, "IN1_HPHL" },
-+	{ "RDAC1", NULL, "RX1" },
-+	{ "HPHL_RDAC", "Switch", "RDAC1" },
-+	{ "HPHL PGA", NULL, "HPHL_RDAC" },
-+	{ "HPHL", NULL, "HPHL PGA" },
-+
-+	{ "IN2_HPHR", NULL, "VDD_BUCK" },
-+	{ "IN2_HPHR", NULL, "CLS_H_PORT" },
-+	{ "RX2", NULL, "IN2_HPHR" },
-+	{ "RDAC2", NULL, "RX2" },
-+	{ "HPHR_RDAC", "Switch", "RDAC2" },
-+	{ "HPHR PGA", NULL, "HPHR_RDAC" },
-+	{ "HPHR", NULL, "HPHR PGA" },
-+
-+	{ "IN3_AUX", NULL, "VDD_BUCK" },
-+	{ "IN3_AUX", NULL, "CLS_H_PORT" },
-+	{ "RX3", NULL, "IN3_AUX" },
-+	{ "RDAC4", NULL, "RX3" },
-+	{ "AUX_RDAC", "Switch", "RDAC4" },
-+	{ "AUX PGA", NULL, "AUX_RDAC" },
-+	{ "AUX", NULL, "AUX PGA" },
-+
-+	{ "RDAC3_MUX", "RX3", "RX3" },
-+	{ "RDAC3_MUX", "RX1", "RX1" },
-+	{ "RDAC3", NULL, "RDAC3_MUX" },
-+	{ "EAR_RDAC", "Switch", "RDAC3" },
-+	{ "EAR PGA", NULL, "EAR_RDAC" },
-+	{ "EAR", NULL, "EAR PGA" },
-+};
-+
-+static const struct snd_soc_dapm_route wcd9375_audio_map[] = {
-+	{ "ADC3_OUTPUT", NULL, "ADC3_MIXER" },
-+	{ "ADC3_OUTPUT", NULL, "ADC3_MIXER" },
-+	{ "ADC3_MIXER", "Switch", "ADC3 REQ" },
-+	{ "ADC3 REQ", NULL, "ADC3" },
-+	{ "ADC3", NULL, "AMIC4" },
-+
-+	{ "DMIC1_OUTPUT", NULL, "DMIC1_MIXER" },
-+	{ "DMIC1_MIXER", "Switch", "DMIC1" },
-+
-+	{ "DMIC2_OUTPUT", NULL, "DMIC2_MIXER" },
-+	{ "DMIC2_MIXER", "Switch", "DMIC2" },
-+
-+	{ "DMIC3_OUTPUT", NULL, "DMIC3_MIXER" },
-+	{ "DMIC3_MIXER", "Switch", "DMIC3" },
-+
-+	{ "DMIC4_OUTPUT", NULL, "DMIC4_MIXER" },
-+	{ "DMIC4_MIXER", "Switch", "DMIC4" },
-+
-+	{ "DMIC5_OUTPUT", NULL, "DMIC5_MIXER" },
-+	{ "DMIC5_MIXER", "Switch", "DMIC5" },
-+
-+	{ "DMIC6_OUTPUT", NULL, "DMIC6_MIXER" },
-+	{ "DMIC6_MIXER", "Switch", "DMIC6" },
-+};
-+
- static int wcd937x_set_micbias_data(struct wcd937x_priv *wcd937x)
- {
- 	int vout_ctl[3];
-@@ -2545,6 +2616,13 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
- 			dev_err(component->dev, "Failed to add snd_ctls\n");
- 			return ret;
- 		}
-+
-+		ret = snd_soc_dapm_add_routes(dapm, wcd9375_audio_map,
-+					      ARRAY_SIZE(wcd9375_audio_map));
-+		if (ret < 0) {
-+			dev_err(component->dev, "Failed to add routes\n");
-+			return ret;
-+		}
- 	}
- 
- 	ret = wcd937x_mbhc_init(component);
-@@ -2588,6 +2666,8 @@ static const struct snd_soc_component_driver soc_codec_dev_wcd937x = {
- 	.num_controls = ARRAY_SIZE(wcd937x_snd_controls),
- 	.dapm_widgets = wcd937x_dapm_widgets,
- 	.num_dapm_widgets = ARRAY_SIZE(wcd937x_dapm_widgets),
-+	.dapm_routes = wcd937x_audio_map,
-+	.num_dapm_routes = ARRAY_SIZE(wcd937x_audio_map),
- 	.set_jack = wcd937x_codec_set_jack,
- 	.endianness = 1,
- };
+
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
 
