@@ -1,55 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-20843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B5C18D2701
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 23:27:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F1AFB8D2721
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 23:35:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9EF7B1F2534E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:27:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 687091F260EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:35:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FAF717B43C;
-	Tue, 28 May 2024 21:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D0E117BB03;
+	Tue, 28 May 2024 21:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="onsvdPnv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeU4xdkR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5237A17B432;
-	Tue, 28 May 2024 21:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5BF17B4FA;
+	Tue, 28 May 2024 21:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716931634; cv=none; b=SJw0v5SLS0seIXz7ti/7aKH5FRhELVMkAFLS4bbDvfnVftahwO/YeFVISswC6pkzNqOAa88tP7eAdf6Jg7Rw5yVeqZMGBu05rM1lmgeixl8xIy1em98RXRiIEnx4jpvY/dYFIe9vuRZGgW46fPEgm8IXWO3TZg5Tuy2n+1J/0Dw=
+	t=1716932119; cv=none; b=h3Y7+YmkgL3bOOA9kvM1/fR1etxkHuEeCxOkBrVjPvWjq19Z10vqnIV9TjrzdOXIcdgmBmmYTkvB8sfVBbCUK2hCbDbI+6XdlkVCcfYzuv2fkqxa5BbPJ0Ksm+7LW4+H5sWyLz7KYfpz+X6tHJq/ueMUQdpa9tf/SRF5jAdjKtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716931634; c=relaxed/simple;
-	bh=I1/rPkBVRL+mZ4abLJj6ktTmgOZwov5VOgii3O+1e/U=;
+	s=arc-20240116; t=1716932119; c=relaxed/simple;
+	bh=TTH6TAAHwNlQVXAyaogzfwBqkN2ZRzQ1G1pQrDnBJck=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E9K+WgTyrFZhNRiynfjcF9AjhICVxGIPqR05PtXMRVhH4II8tZrtOEDo1iyEY7i4e39nQx3w3WKRn0DuSSbSiw6tvVGyETevZTDAsHA5UWbFouDI0F6opyRUtH7L0GYZZrC8vRp8a28kC1cKoNE5287YfoE/wO2BkhNinuKzcLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onsvdPnv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64163C3277B;
-	Tue, 28 May 2024 21:27:13 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=aeXVN7Ij9eTczx8gKgJKkJhw9Bg4owjBXNNwT62ZXCO+81hSxxmVhy0zI61H5KSsz2owPW++lfM+me+ND92wJQ7cyTIyQA8P3CkOvamgVbCjgrqf659E8xCo9VrNGMfEQtFWf8b4pv/XLQcfbNtVZPa/7f6eus1vVS6Pz9uqWFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeU4xdkR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912C7C3277B;
+	Tue, 28 May 2024 21:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716931633;
-	bh=I1/rPkBVRL+mZ4abLJj6ktTmgOZwov5VOgii3O+1e/U=;
+	s=k20201202; t=1716932118;
+	bh=TTH6TAAHwNlQVXAyaogzfwBqkN2ZRzQ1G1pQrDnBJck=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=onsvdPnvSR9jUn3MMH6xETjjunFTtNntwjGExPLhXIBUT8afQHyqUkn+F2Oy1LXm9
-	 frU+wsqgNJ8Eir0x+deTPWksi4qsdT5WO97baiEBFnE6A2jGVZVQR5EXcNHYUVQCuo
-	 7bmqu3MJGwkSASwLB/DLTHss8kUcWVEZ8HjnbmanYhx/3QxNhLY8Uz8JOe9AoxX5Yk
-	 u4Gogfch8L6RHnGDnRbGA1Jr6rEUgzOnYK0fBxnTBaqjm5hbMjhMN006Hazgh/GZBx
-	 D9rgeVO08BcqmnemFTV2ff8el4BzvtsShc1VllPob0bcBUdKJlFs9TWKQN8XAzl5NL
-	 /zZiXMB53X49Q==
-Date: Tue, 28 May 2024 16:27:11 -0500
+	b=oeU4xdkRJ3X0RbaYEe79r7B1TPu84xeNqYBWKsrZxaMGxOC4XE9s7C/4kRLbJ0Aj0
+	 XEchBORaoDtvvgb/RDIptSSPBfgAUX9UqhFd0E3frxQikLwi35DH0omy5OuCWh3TAH
+	 0AxyXUmioNEpY0e4njH2E969CC7mvkf7YrMRz95tLZcaFXhwbXHiR7zMbvzgeX27SE
+	 fB12XzBMONchtmgAdH5sX+VDItHOlyPPDiv+A3Xcwre/07lWvk5CoQ9Cy2ojvuTg8u
+	 dkHdk9P65p7TglO/ZnmRyItggxNKVv+eGGzavQ/HF3CKHFhc/2EZ1Fp/fqch2jBKqw
+	 su59ULvI41eOw==
+Date: Tue, 28 May 2024 16:35:15 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: mathieu.poirier@linaro.org, konrad.dybcio@linaro.org, 
-	linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v10] remoteproc: qcom: Move minidump related layout and
- API to soc/qcom directory
-Message-ID: <jukn3ip6m6twfgxs6olnn5nxfsskewfwgfms3fb47w5jefuful@lne6rvpcqqju>
-References: <1714724287-12518-1-git-send-email-quic_mojha@quicinc.com>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: cros-qcom-dts-watchers@chromium.org, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>, Mohammad Rafi Shaik <quic_mohs@quicinc.com>, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH DNM 2/2] arm64: dts: qcom: qcm6490-fairphone-fp5: Add
+ DisplayPort sound support
+Message-ID: <hqwrfe2tcb6vlxybmn52k3j2xrxbt3vw5rqwudindbhj3s3nez@obkr3ayos6gm>
+References: <20240510-sc7280-apr-v1-0-e9eabda05f85@fairphone.com>
+ <20240510-sc7280-apr-v1-2-e9eabda05f85@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,131 +63,93 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1714724287-12518-1-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <20240510-sc7280-apr-v1-2-e9eabda05f85@fairphone.com>
 
-On Fri, May 03, 2024 at 01:48:07PM GMT, Mukesh Ojha wrote:
-> Currently, Qualcomm Minidump is being used to collect mini version of
-> remoteproc coredump with the help of boot firmware however, Minidump
-> as a feature is not limited to be used only for remote processor and
-> can also be used for Application processors. So, in preparation of
-> using it move the Minidump related data structure and its function
-> to its own file under drivers/soc/qcom with qcom_rproc_minidump.c
-> which clearly says it is only for remoteproc minidump.
+On Fri, May 10, 2024 at 02:27:09PM GMT, Luca Weiss wrote:
+> Add the required nodes for sound playback via a connected external
+> display (DisplayPort over USB-C).
 > 
-> Extra changes made apart from the movement is,
-> 1. Adds new config, kernel headers and module macros to get this
->    module compiled.
-> 2. Guards the qcom_minidump() with CONFIG_QCOM_RPROC_MINIDUMP.
-> 3. Selects this QCOM_RPROC_MINIDUMP config when QCOM_RPROC_COMMON
->    enabled.
-> 4. Added new header qcom_minidump.h .
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> Depends on a bunch of patches upstream doing bringup of Display (DSI),
+> DisplayPort, GPU, and then finally audio could land. But we're blocked
+> on DPU 1:1:1 topology for all of that unfortunately.
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> And also machine driver for sound just exists a bit hackily.
 
-I wouldn't be able to merge this without anything depending on it...
-
-[..]
-> diff --git a/drivers/soc/qcom/qcom_rproc_minidump.c b/drivers/soc/qcom/qcom_rproc_minidump.c
-[..]
-> +void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
-> +		void (*rproc_dumpfn_t)(struct rproc *rproc,
-> +		struct rproc_dump_segment *segment, void *dest, size_t offset,
-> +		size_t size))
-> +{
-> +	int ret;
-> +	struct minidump_subsystem *subsystem;
-> +	struct minidump_global_toc *toc;
-> +
-> +	/* Get Global minidump ToC*/
-> +	toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, NULL);
-> +
-> +	/* check if global table pointer exists and init is set */
-> +	if (IS_ERR(toc) || !toc->status) {
-> +		dev_err(&rproc->dev, "Minidump TOC not found in SMEM\n");
-> +		return;
-> +	}
-> +
-> +	/* Get subsystem table of contents using the minidump id */
-> +	subsystem = &toc->subsystems[minidump_id];
-> +
-> +	/**
-> +	 * Collect minidump if SS ToC is valid and segment table
-> +	 * is initialized in memory and encryption status is set.
-> +	 */
-> +	if (subsystem->regions_baseptr == 0 ||
-> +	    le32_to_cpu(subsystem->status) != 1 ||
-> +	    le32_to_cpu(subsystem->enabled) != MINIDUMP_SS_ENABLED) {
-> +		return rproc_coredump(rproc);
-> +	}
-> +
-> +	if (le32_to_cpu(subsystem->encryption_status) != MINIDUMP_SS_ENCR_DONE) {
-> +		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
-> +		return;
-> +	}
-> +
-> +	/**
-> +	 * Clear out the dump segments populated by parse_fw before
-> +	 * re-populating them with minidump segments.
-> +	 */
-> +	rproc_coredump_cleanup(rproc);
-
-I don't think this should be invoked outside drivers/remoteproc, and the
-comment talks about a remoteproc-internal concern...
-
-> +
-> +	ret = qcom_add_minidump_segments(rproc, subsystem, rproc_dumpfn_t);
-
-This function changes the internal state of the remoteproc and relies on
-other operations to clean things up.
-
-I think we could come up with a better design of this, and I don't think
-we should spread this outside of the remoteproc framework.
+Thanks for sharing this, Luca. Can you please resubmit this once it's
+ready to be merged, so that I don't need to keep track of it?
 
 Regards,
 Bjorn
 
-> +	if (ret) {
-> +		dev_err(&rproc->dev, "Failed with error: %d while adding minidump entries\n", ret);
-> +		goto clean_minidump;
-> +	}
-> +	rproc_coredump_using_sections(rproc);
-> +clean_minidump:
-> +	qcom_minidump_cleanup(rproc);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_minidump);
+> ---
+>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 36 ++++++++++++++++++++++
+>  1 file changed, 36 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> index 05bbf1da5cb8..2bbbcaeff95e 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> @@ -14,6 +14,8 @@
+>  #include <dt-bindings/leds/common.h>
+>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include <dt-bindings/sound/qcom,q6afe.h>
+> +#include <dt-bindings/sound/qcom,q6asm.h>
+>  #include "sc7280.dtsi"
+>  #include "pm7250b.dtsi"
+>  #include "pm7325.dtsi"
+> @@ -774,6 +776,12 @@ &pon_resin {
+>  	status = "okay";
+>  };
+>  
+> +&q6afedai {
+> +	dai@104 {
+> +		reg = <DISPLAY_PORT_RX>;
+> +	};
+> +};
 > +
-> +MODULE_DESCRIPTION("Qualcomm Remoteproc Minidump helper module");
-> +MODULE_LICENSE("GPL");
-> diff --git a/include/soc/qcom/qcom_minidump.h b/include/soc/qcom/qcom_minidump.h
-> new file mode 100644
-> index 000000000000..0fe156066bc0
-> --- /dev/null
-> +++ b/include/soc/qcom/qcom_minidump.h
-> @@ -0,0 +1,23 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
+>  &qup_spi13_cs {
+>  	drive-strength = <6>;
+>  	bias-disable;
+> @@ -847,6 +855,34 @@ &sdhc_2 {
+>  	status = "okay";
+>  };
+>  
+> +&sound {
+> +	compatible = "fairphone,fp5-sndcard";
+> +	model = "Fairphone 5";
 > +
-> +#ifndef _QCOM_MINIDUMP_H_
-> +#define _QCOM_MINIDUMP_H_
+> +	mm1-dai-link {
+> +		link-name = "MultiMedia1";
+> +		cpu {
+> +			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
+> +		};
+> +	};
 > +
-> +struct rproc;
-> +struct rproc_dump_segment;
+> +	displayport-rx-dai-link {
+> +		link-name = "DisplayPort Playback";
 > +
-> +#if IS_ENABLED(CONFIG_QCOM_RPROC_MINIDUMP)
-> +void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
-> +		   void (*rproc_dumpfn_t)(struct rproc *rproc,
-> +		   struct rproc_dump_segment *segment, void *dest, size_t offset,
-> +		   size_t size));
-> +#else
-> +static inline void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
-> +		   void (*rproc_dumpfn_t)(struct rproc *rproc,
-> +		   struct rproc_dump_segment *segment, void *dest, size_t offset,
-> +		   size_t size)) { }
-> +#endif /* CONFIG_QCOM_RPROC_MINIDUMP */
-> +#endif /* _QCOM_MINIDUMP_H_ */
+> +		cpu {
+> +			sound-dai = <&q6afedai DISPLAY_PORT_RX>;
+> +		};
+> +
+> +		platform {
+> +			sound-dai = <&q6routing>;
+> +		};
+> +
+> +		codec {
+> +			sound-dai = <&mdss_dp>;
+> +		};
+> +	};
+> +};
+> +
+>  &spi13 {
+>  	status = "okay";
+>  
+> 
 > -- 
-> 2.7.4
+> 2.45.0
 > 
 
