@@ -1,283 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-20815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8828A8D2449
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:12:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17B768D2499
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:29:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B06D8B259A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 19:12:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C291A28B726
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 19:29:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC519187328;
-	Tue, 28 May 2024 19:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98695171E59;
+	Tue, 28 May 2024 19:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="IHeNNx2v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWunVjVa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AB9181CF0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 19:04:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A53B171679;
+	Tue, 28 May 2024 19:29:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716923056; cv=none; b=A7orkZaRzWZd+cpnRyY9mfw0e8Wh8YBlgc/8kdnJOumE/1e8x9nhjeudoeDVcSleKKV3unTLwYhlUXlfscGZFxdm2FjaARraF7IEltMAgbtc5wlS2oxPMmk0A0gFtnrEMX6ZHjAnRmsWiw6fRxJHeaA2cslCtIBb1G7vVBFrBcw=
+	t=1716924581; cv=none; b=kRMyxRmrFtf/xRyd7NwFYptyGpiREwhtX1AFzFZCGC5tGFCqCUEbxo/QHEE0a6iu8TMj5uEQzzM/7+QdW+P5BaM2LYHRvG6MEYzs/rwJyDfdozH8kw8ARQNOQF4FXh2q7fwj2zdAKtlxGcvRnfsX/jkfnpFfXe3/pu9ILvH7isU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716923056; c=relaxed/simple;
-	bh=Skor7xEGEh3YcJ5UBApdq5xrdz4KCiu9TqBrmMget58=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=G+qsA7FJdYozQJ8kHII+6P0E8zcV6lu2mTudUHUzIJ0KIHGXTZboH9P/hc1FxOfCm14t1Apu30euE5Z0IgcHNv52hn9KOTfcEQgXjT9YdCuL//pbdRIS43DG4UewkfNPj0C9utwEzV/yCCAqd9YdPO29OJ+0JCxHYTiH94ePauQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=IHeNNx2v; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42017f8de7aso9434355e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 12:04:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1716923051; x=1717527851; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+ytTEWiXKbIuQ8DpZG6ZoIYYrAybeCYmHd6/M4lW1Rs=;
-        b=IHeNNx2vEwBEPGywqD6Ug6c/wA20A1aq8R04/NvX9bxRoEyIOLKATK+qb2x5PJBZQW
-         y7j6CLtNF3vbdc/+CJL7LXzvwddoWuAliHngpiQ2KhwnPe3jKLTRxPYmVBXBuagzLO3y
-         vDjg0EHEfUlk6b/RhPbSEz8DCNvJUaAqaNQOaLiNWGogyS9a/LM0jr9dz1RH61M6/Wm3
-         Dxs9dYZA18l9SG9c9I99B3RrMWB/9ML1u3jcQGx31i77rb2prRQCf8Lko5qL53ABJ+KP
-         m5FSVX1RmFL3qrSU7zAmhZd6RDqyZmii9wCNRszB4H/sZpvKf2PfReRYys3OLQNJ/ahG
-         3OMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716923051; x=1717527851;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+ytTEWiXKbIuQ8DpZG6ZoIYYrAybeCYmHd6/M4lW1Rs=;
-        b=IA/lqGtL+T7fbMtj0LDU0m8CjbmTA8q7719g+HolzFl+MVv7SYSYIRQcNbteV4QcFo
-         Q5ijv43rW5k4k8xi2mVi5gFjKIgL7TbD1PdrwVEGt0uG2kd2QmYwE0QeFTm/3nWUCrMo
-         KO4l0VDAoU5SeHXpcMX2oYXEdS8UvsFP1lhqaMOjeQi6mEziJhca1GPFP65L8fEq2kj0
-         XrXBvNCK+jFrVz8oG1jiGcODCtrhre3FaphrhK9pwM7fOdF19vpkOXqTxQ3PkQvlil0c
-         doy9rIFyUr0TznasEeAWsFBL0Cs4MXJiArqAbyKBmBdCzqAmB9NC12d8dDuiLZvuyQJd
-         x2Ig==
-X-Gm-Message-State: AOJu0YzWOdhnGhk1GEQ634X8sU0H8AWx7qBP+NoiaYm8tEUPHagqnldX
-	5rvA8faGGVk/72bAuqVv3zNZHU+rCOUdr4JOSABwSdYOjFweavXNDfh+gapsJpA=
-X-Google-Smtp-Source: AGHT+IGr9Ojgwytm4iX9gfeC7HKGDwhCWclljkq1atIIKWkwjLAAGni1lUy44ltShGgL2ph8z+vsKQ==
-X-Received: by 2002:a05:600c:3646:b0:418:f991:713f with SMTP id 5b1f17b1804b1-421089ffb20mr103408325e9.23.1716923050945;
-        Tue, 28 May 2024 12:04:10 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:75a:e000:93eb:927a:e851:8a2f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42100ee954bsm183895415e9.4.2024.05.28.12.04.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 May 2024 12:04:10 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 28 May 2024 21:03:25 +0200
-Subject: [PATCH v8 17/17] Bluetooth: qca: use the power sequencer for
- QCA6390
+	s=arc-20240116; t=1716924581; c=relaxed/simple;
+	bh=Kwt6etvMVjtgUaPiijw3zPlQdj7waZdvWPWf+Kny3Pc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=dTiRa/IhSk4J6zHFBkOpx0TW5jz/nRoxbPGvP8czea2MsjsWaF0eBkiuWg1yavuyhvOdvvzAmGPJVEV/n6yrjyg7OXXnxpLzmuqy+IcDp8mFPwMX6wbsbyeUAoBURZbRo34S1N3+QhkYE8t3a424cViXR1tUCYaWAUZuQRSSV9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWunVjVa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92877C32781;
+	Tue, 28 May 2024 19:29:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716924580;
+	bh=Kwt6etvMVjtgUaPiijw3zPlQdj7waZdvWPWf+Kny3Pc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=nWunVjVageoV1ic3+TmdrTLcKJSn4vdX8fpd69lrmV+7hHSlAiZUtYYSNY+kyWVV7
+	 GokpIHX4LD8NfrvGi5O9lOHLj8VBaxm5ZES3fdjpdtozxo1B8KDJlHrdniNz1SFUBY
+	 O+BNCyXQ+6QUnnZxQU+h96r1vxvAfJclNASpLE+6hytW4qSvjIB2Y54RpVcB6pbw3r
+	 vSbPzz9Bi7RmK5eRP8gwE1ufzcs0kUASS9WlunI2LIHDnim9tdEOsxo5JsqaNfHpEi
+	 U7PGw6V6qziIxn9EVIAwkZu667Y7hKOM0UgzrCI6YObR6fz6LnhRZl8Isui/7wO8En
+	 2A3Q+T1g+IEGw==
+Date: Tue, 28 May 2024 14:29:38 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 0/3] Make pci/endpoint branch buildgg
+Message-ID: <20240528192938.GA458848@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240528-pwrseq-v8-17-d354d52b763c@linaro.org>
-References: <20240528-pwrseq-v8-0-d354d52b763c@linaro.org>
-In-Reply-To: <20240528-pwrseq-v8-0-d354d52b763c@linaro.org>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
- Rocky Liao <quic_rjliao@quicinc.com>, Kalle Valo <kvalo@kernel.org>, 
- Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, Bjorn Helgaas <bhelgaas@google.com>, 
- Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
- Elliot Berman <quic_eberman@quicinc.com>, 
- Caleb Connolly <caleb.connolly@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Alex Elder <elder@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
- netdev@vger.kernel.org, linux-wireless@vger.kernel.org, 
- ath11k@lists.infradead.org, Jeff Johnson <quic_jjohnson@quicinc.com>, 
- ath12k@lists.infradead.org, linux-pm@vger.kernel.org, 
- linux-pci@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, kernel@quicinc.com, 
- Amit Pundir <amit.pundir@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4086;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=Avu9/iVEa5ctX7rSEGjhhAJegGiSsgTxVFrmV4sVK2k=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBmViqRYDzteYvAvkaLJmNfsrKlAel2gGnpKi/5k
- H2AxTd99D2JAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZlYqkQAKCRARpy6gFHHX
- ckx9D/sF6bFK+4+MkxmVs/T0n/IO5FL1tM3ik55oKT13+sSCJ4etW/LbZ5eF91APL859kZG3Y6W
- aFAaNVzjgQTfd/2Q+bdlYL+X9emJuU0T7CXKFlN/N2HrbLlQT9AXmeC4FOi3biUJQK4LOyyDetH
- ojSyoma/VJrnHuurJaQOl80ddoFm5gfzDPJvGzvqwbLTPLLtj1jiwOBhDtMIcPhnFrwueBx9UO3
- 0mCe4phl3MBCwVXmAfnsptIIOSJfilhDsFBdQrHCjqwoBcx+anp9JSJZqfjgEr5ahSNdF4R2bTN
- UBOPXXy9xT0LF+knaYZmBYhqglZ+3VRgdLhCsZm9ffXWTB1Q870+0/dbQCo/ny+7lserGXAXNw3
- z9TJDLJTlOiBiFGdpckN/3ewdubjN8H5JUcDLp/YdaFA3mFZzlDtMzlsmHulkqwPScyE8TTm4VD
- SNcmx60s52eJ43l2F5+keL0lTvd9gDdsDA/RZOspWAcBiibzNVTl24eV24FslRKfGV2Sw0rPuKy
- 3U1FMSrCoUNY1Hv6Tolz1jvLmUxbHQJhGngh0qcq1QPhqF95guvxrjzM8CxlguFHCq9Da+tbOyv
- hxD4fuyfxGNL8/BKI4Tnpm5PbytBKdCT8UyZMGhabSscZmYqkeInoWiGFptllVdWGU4qH/HMDTh
- QySNU7YTsh9KDsw==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZlYpAGFgwgxnnBhZ@ryzen.lan>
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Tue, May 28, 2024 at 08:57:04PM +0200, Niklas Cassel wrote:
+> On Tue, May 28, 2024 at 09:44:52AM -0500, Bjorn Helgaas wrote:
+> > On Tue, May 28, 2024 at 03:00:36PM +0200, Niklas Cassel wrote:
+> > > The pci/next branch has currently not merged the latest pci/endpoint
+> > > branch.
+> > > 
+> > > Perhaps this delay in creating a new pci/next branch is because the
+> > > pci/endpoint branch currently fails to build.
+> > 
+> > The topic branches have things queued on them for build testing, but
+> > they haven't been merged to pci/next yet.  It's standard practice that
+> > we don't add v6.11 content to -next until v6.10-rc1 is tagged:
+> > https://lore.kernel.org/linux-next/20240523111023.7ade2aa4@canb.auug.org.au/
+> > 
+> > v6.10-rc1 was tagged 5/26, and 5/27 was a US holiday.  The topic
+> > branches will be merged to pci/next today.
+> 
+> Ok, great!
+> 
+> Although, perhaps you would want to defer merging pci/endpoint to pci/next
+> until the linker error has been fixed.
+> 
+> We have already gotten a bunch of reports of this on the linux-pci list:
+> https://lore.kernel.org/linux-pci/202405270544.yKgcokbA-lkp@intel.com/T/#u
+> https://lore.kernel.org/linux-pci/202405130815.BwBrIepL-lkp@intel.com/T/#u
+> https://lore.kernel.org/linux-pci/202405140344.glj9WfzM-lkp@intel.com/T/#u
+> 
+> Merging the branch to pci/next is guaranteed to have even move people hit
+> and complain about this error.
 
-Use the pwrseq subsystem's consumer API to run the power-up sequence for
-the Bluetooth module of the QCA6390 package.
+I included pci/endpoint but dropped the "PCI: endpoint: Introduce
+'epc_deinit' event and notify the EPF drivers" patch until we fix that
+issue.
 
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/bluetooth/hci_qca.c | 74 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 59 insertions(+), 15 deletions(-)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 384a2bbbf303..de4f88d835cb 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -28,6 +28,7 @@
- #include <linux/of.h>
- #include <linux/acpi.h>
- #include <linux/platform_device.h>
-+#include <linux/pwrseq/consumer.h>
- #include <linux/regulator/consumer.h>
- #include <linux/serdev.h>
- #include <linux/mutex.h>
-@@ -214,6 +215,7 @@ struct qca_power {
- 	struct regulator_bulk_data *vreg_bulk;
- 	int num_vregs;
- 	bool vregs_on;
-+	struct pwrseq_desc *pwrseq;
- };
- 
- struct qca_serdev {
-@@ -1684,6 +1686,27 @@ static bool qca_wakeup(struct hci_dev *hdev)
- 	return wakeup;
- }
- 
-+static int qca_port_reopen(struct hci_uart *hu)
-+{
-+	int ret;
-+
-+	/* Now the device is in ready state to communicate with host.
-+	 * To sync host with device we need to reopen port.
-+	 * Without this, we will have RTS and CTS synchronization
-+	 * issues.
-+	 */
-+	serdev_device_close(hu->serdev);
-+	ret = serdev_device_open(hu->serdev);
-+	if (ret) {
-+		bt_dev_err(hu->hdev, "failed to open port");
-+		return ret;
-+	}
-+
-+	hci_uart_set_flow_control(hu, false);
-+
-+	return 0;
-+}
-+
- static int qca_regulator_init(struct hci_uart *hu)
- {
- 	enum qca_btsoc_type soc_type = qca_soc_type(hu);
-@@ -1752,21 +1775,7 @@ static int qca_regulator_init(struct hci_uart *hu)
- 		break;
- 	}
- 
--	/* Now the device is in ready state to communicate with host.
--	 * To sync host with device we need to reopen port.
--	 * Without this, we will have RTS and CTS synchronization
--	 * issues.
--	 */
--	serdev_device_close(hu->serdev);
--	ret = serdev_device_open(hu->serdev);
--	if (ret) {
--		bt_dev_err(hu->hdev, "failed to open port");
--		return ret;
--	}
--
--	hci_uart_set_flow_control(hu, false);
--
--	return 0;
-+	return qca_port_reopen(hu);
- }
- 
- static int qca_power_on(struct hci_dev *hdev)
-@@ -1794,6 +1803,17 @@ static int qca_power_on(struct hci_dev *hdev)
- 		ret = qca_regulator_init(hu);
- 		break;
- 
-+	case QCA_QCA6390:
-+		qcadev = serdev_device_get_drvdata(hu->serdev);
-+		ret = pwrseq_power_on(qcadev->bt_power->pwrseq);
-+		if (ret)
-+			return ret;
-+
-+		ret = qca_port_reopen(hu);
-+		if (ret)
-+			return ret;
-+		break;
-+
- 	default:
- 		qcadev = serdev_device_get_drvdata(hu->serdev);
- 		if (qcadev->bt_en) {
-@@ -2168,6 +2188,10 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 		}
- 		break;
- 
-+	case QCA_QCA6390:
-+		pwrseq_power_off(qcadev->bt_power->pwrseq);
-+		break;
-+
- 	default:
- 		gpiod_set_value_cansleep(qcadev->bt_en, 0);
- 	}
-@@ -2309,12 +2333,25 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_QCA6390:
- 		qcadev->bt_power = devm_kzalloc(&serdev->dev,
- 						sizeof(struct qca_power),
- 						GFP_KERNEL);
- 		if (!qcadev->bt_power)
- 			return -ENOMEM;
-+		break;
-+	default:
-+		break;
-+	}
- 
-+	switch (qcadev->btsoc_type) {
-+	case QCA_WCN3988:
-+	case QCA_WCN3990:
-+	case QCA_WCN3991:
-+	case QCA_WCN3998:
-+	case QCA_WCN6750:
-+	case QCA_WCN6855:
-+	case QCA_WCN7850:
- 		qcadev->bt_power->dev = &serdev->dev;
- 		err = qca_init_regulators(qcadev->bt_power, data->vregs,
- 					  data->num_vregs);
-@@ -2360,6 +2397,13 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 		}
- 		break;
- 
-+	case QCA_QCA6390:
-+		qcadev->bt_power->pwrseq = devm_pwrseq_get(&serdev->dev,
-+							   "bluetooth");
-+		if (IS_ERR(qcadev->bt_power->pwrseq))
-+			return PTR_ERR(qcadev->bt_power->pwrseq);
-+		fallthrough;
-+
- 	default:
- 		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
- 					       GPIOD_OUT_LOW);
-
--- 
-2.43.0
-
+Bjorn
 
