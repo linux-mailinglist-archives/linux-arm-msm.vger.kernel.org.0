@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-20839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C53AA8D2665
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 22:47:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 209258D265E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 22:47:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CD77E1C2687D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 20:47:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB42D291ABD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 20:47:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4416E181B8D;
-	Tue, 28 May 2024 20:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EB48181324;
+	Tue, 28 May 2024 20:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ln1/+sDH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bz7kVyot"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4D217966F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 20:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FE217BB03
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 20:45:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716929104; cv=none; b=ADSjVCh/pHD/O4WZiNnJsEZvodU8fHAl6pMqBY7RGVvwdHyPF19/8jtoSQAYlU5/R5oRjkq+kH0wY3iKDekOkjgzWEBvQy188M5V/D2aBKrqKnZowG+U7jv3cc8kRWZB4ocMS0As791N4Yvo/lemrIRWjwjEXaumOlFy8Tvry34=
+	t=1716929103; cv=none; b=r2RXhREJ2vK3oJt8AnRNLCMHsfcaj0R3j0ngCHWFj32dN5OGlzEsOUyZFwrQMYbfd5+6xpVVVuEMmILiCONmTtTD5ejc/BISq9AXQbw8tNeUGDbsCK3ITwBVm0/1iRLAliNcEiTUXy2sroRwvx6cUBgn2aR+gcdSDxa4r2F2w9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716929104; c=relaxed/simple;
-	bh=ow1eTZcV+R5LsXpA87aPOh1pjE54fwdYN5zMsddX7J0=;
+	s=arc-20240116; t=1716929103; c=relaxed/simple;
+	bh=9jn734YvtZuEkzjxMWQQ/F5cN34ZH6ms3Y1ko1ls5C4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XFR5nbAbd+W3saF94H3iyibADG3OyCjV/UuqDZBMpuNFbkJBW+++Bgju8dioBRLveuoQCED+KZhkQQI0aBaoM2k5dJWaiDZ3w3zTOVZ91H9n502b3hnrX5kVTog4TsiwUKPtbLBygNj07HSaSuqOLUyxOdEY+oNlv/mlm6vjCKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ln1/+sDH; arc=none smtp.client-ip=209.85.208.179
+	 In-Reply-To:To:Cc; b=gk+YBeaOA4PO77nJB/XfWpRtqHEf6Yy2Yeg5p5fpmqXjRKJJPs2ovasJcxkZsngU66v4KvVb6S+WDlYfDjybVCzaQft6KcgsC7zjU89+Ms23Bh/bVLErqB6CDjLgIJ2Hyjp2XJtaWOhkWjbHuPysRif0LL2pzk9PLT6GEGX7l88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bz7kVyot; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2e95a60dfcdso14520421fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 13:44:59 -0700 (PDT)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2e964acff1aso13436321fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 13:45:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1716929098; x=1717533898; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ifPw2+gkFyqfl8SUMYERBSnZAC0LWQSO6VH44/EleWI=;
-        b=ln1/+sDHjEmK7u1owBv/cJJNfOTUM7x0kdPQsoQgTNHCFsy3EBkeuNkZsyYuzPxdL8
-         MaPN4vsFWsR00r7kMXIozHAHKs61lpj7OVwkKxF2q6CJNz8Qjb4wY8RFf5AcXcGNqVGV
-         8YN1dmmiXE+KMj5atXcqNwkbLY4LGnhyRj1wz146aF+8guH5/bU5d51RutOTJ+ZT00WD
-         TKvGvWfqwKzrA/b0heQPyzYNujNYySqx8ypV1rzy2chK+QGXL6ZdWNX1JKfzsnjXD9u6
-         vhQu5cPCecbaMhAl66I/8KGiemyQZ2XBNxuJqocmEl1/bgO1E9f6j45AzjYnet8ii2u5
-         Q11A==
+        bh=NzKziQ2mUjFv55TZqX8gJhwOKelVZbp6zvs6HKq3MPA=;
+        b=Bz7kVyotJ4wu7cjZO4T2GtRHWBc+PndNsabHfoxzRd6dHHUugQBHaLxW4TcjMAljPa
+         mMzYAcE2ZJWiNOyJZwKPEiVoqWUUqKRUQXISensLBBdYrceohFOkSMjyhx6fJnfrZxLj
+         8EOqwNhAGqhyB7c51EUlpkg+J2hafKiS+0Hn1CI1+CGT+7Xb8PkbqEO1TAjW64wfNX6S
+         ACPRgycZCOWzBuoD2RAziENzmA2dk6ZUeBQlpnJHLVLI0totybhkU00mpUrWZBGEUY6v
+         DcUx780pjcNl6MDMW3VqdCpmKvHULqJo9hMhEa4mIca0wshvEQWI4mcKFmCd66tjFwEw
+         Ij1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1716929098; x=1717533898;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ifPw2+gkFyqfl8SUMYERBSnZAC0LWQSO6VH44/EleWI=;
-        b=uvfIKNdR2siasPn5ABHquf6jwAm96IDqrpwL61ha37V1RYphqPN591Ep1PoCX9TRIL
-         TA0vofuNi66GeHL0CQFBPeJJ/gSWtmjdgEH/c43T94QDCSPFevityoMleCWpytbk8NlO
-         zEI2xXdL+jjNrKlhNlzWEjCDVrqj7V3NINnYXuwXYts+O9FA5avdqhL5js8EX18bTH32
-         lgNzjza1qUmQy7jukyv1noiI3o9bxg670YBsEnE8qNXH01uqfU/XejoXZ0fA0AbvgWmy
-         Rb1YVh1qEBfvKNs9+KRB5c7WP8LL51qQrE79Vlh/Q254fDRcuZWN6YXYYEKjjgPKOqFf
-         vsRg==
-X-Forwarded-Encrypted: i=1; AJvYcCUeFoInChVAy8KRBuracZmlx9tKQd0GPQLy8R/tsIQe7YNPaEhIkQOujnGYCH2CzHLYIJQRtd50b/WTTe/X+8/KRUePxZhvKzMYMa9uWw==
-X-Gm-Message-State: AOJu0YwmPn03rmlVbylx1ViowSxP9B1l3doSyErCGy8oBb50VTn1tpnY
-	a0SHt2TAMJHJhieoiy0FT0/TUEmyiZ6UOdEMexbGnstOfI1VFdcjTf07dR+X+uA=
-X-Google-Smtp-Source: AGHT+IGL0fGM0DRfvpgGJM9UAw54+tgLICLoXo7esTZ0Mu0MtC8dqJ1QrOz6A0eimvTUESLkgjmAuA==
-X-Received: by 2002:a2e:8807:0:b0:2e9:5ad4:e22f with SMTP id 38308e7fff4ca-2e95b3089e4mr85537261fa.53.1716929097801;
-        Tue, 28 May 2024 13:44:57 -0700 (PDT)
+        bh=NzKziQ2mUjFv55TZqX8gJhwOKelVZbp6zvs6HKq3MPA=;
+        b=NOebvxY4Io1QKn/A0F0aMNiC5WRH6Ebw1HclgdsBO+p3l9HtTf8K/X+ytmArIrRwJF
+         Ob+GgRMv9zUBHe+Uvyqr/Z4Sh/UcbxtrNPJILWqN6WobUxE25CrxochCcDC1ef1RpVpZ
+         PjDvubE3ZATfc5ORRKksYmL8c1tgnp4jXIVxUrNrUEpOCiUZeuFa12eEIztunwaTrqbF
+         u7Q4ZQSet4+6ygk+ydP3o0DBE/4f2bJmJpGS46HEh5RbQlMhClQSY99jdsY/M04tEQLu
+         m1udcfeLvei/tveQ/YVtGCynnFVrsvQgkTaJBoyOY97KaFSfTJxamGDwxhd0MMli0kKb
+         fQEg==
+X-Forwarded-Encrypted: i=1; AJvYcCWOm9HtpK5PVDRv2eBCouJRGf4LCykw3r0556xXl1j/PxgvMCZxLqTdEwS8Ok3zkQBS9PR60lvJTwh87oTLvdB84cLznQpjI0iB0Njf7g==
+X-Gm-Message-State: AOJu0YzklZTMqsngoQB/GIcOAYj/bKI6yLQ2kqP9i8dnwOWxawfKC+L9
+	v9X1Lj3hNh6KBVq7LvcXPi4nxgbse/ibO0C7zkIJ9XuaQtPOzJAowx7lahXdgAM=
+X-Google-Smtp-Source: AGHT+IF2O38frlI9pjwjKVlreOCpdkc1gudpGsT7fXTtcln5A063q1o963wUHg1V8MLSCOee1YQIBg==
+X-Received: by 2002:a2e:3c09:0:b0:2e9:865e:531c with SMTP id 38308e7fff4ca-2e9865e5a60mr21395721fa.26.1716929098472;
+        Tue, 28 May 2024 13:44:58 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2e95bdcd21esm22759431fa.100.2024.05.28.13.44.56
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2e95bdcd21esm22759431fa.100.2024.05.28.13.44.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 May 2024 13:44:57 -0700 (PDT)
+        Tue, 28 May 2024 13:44:58 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 28 May 2024 23:44:49 +0300
-Subject: [PATCH v4 4/6] power: supply: lenovo_yoga_c630_battery: add Lenovo
- C630 driver
+Date: Tue, 28 May 2024 23:44:50 +0300
+Subject: [PATCH v4 5/6] arm64: dts: qcom: sdm845: describe connections of
+ USB/DP port
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240528-yoga-ec-driver-v4-4-4fa8dfaae7b6@linaro.org>
+Message-Id: <20240528-yoga-ec-driver-v4-5-4fa8dfaae7b6@linaro.org>
 References: <20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org>
 In-Reply-To: <20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org>
 To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -96,547 +96,105 @@ Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  Nikita Travkin <nikita@trvn.ru>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=15084;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1907;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=ow1eTZcV+R5LsXpA87aPOh1pjE54fwdYN5zMsddX7J0=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmVkJFH5uBSGa460IlsrMNF1b9Wp6t6OWZVrQVq
- Wjvhzm4Td2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZlZCRQAKCRCLPIo+Aiko
- 1ct5B/9izpiOJVV8JCpZAL4ljFIncDVdRfr0pGadyRv+s8T346Wuf2ekY+agM1yCFzprgtugsFW
- VmJ4YjSN06w9X6Ho2OJyagTTMyOWV9lENsVI8yvV7JUGG9/dSFFPbtkQzD+uX1R70BgOUdSRqyq
- ml43FWGCm9Qgd1tzP7ii95yAdqj0IYri1TUHt9SMKM6tlYeMer8IcGP2NeRmyDoGVCQSdFM1Mf3
- URcTG4hjqztIrYWptdDjpxMmavorH1U3yJ2MzfDyztqiqMpvZmf3DxIfr4Fa4KwqaDdKw05nRzp
- 9bwX4ouVOXXD/NeL+QHQn6mqcHyTfCiMJ1mQMxfsglf8Mrh9
+ bh=9jn734YvtZuEkzjxMWQQ/F5cN34ZH6ms3Y1ko1ls5C4=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmVkJFcnASXQ8B385etFaYrBnafXn1fBmsqc3oT
+ r4821H0zkKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZlZCRQAKCRCLPIo+Aiko
+ 1QenB/48cAngVc+F7/8Jx4s4LYSp3b3wOKl6IOF4pxmFZETpcPLFED/bp2tPHloteFHwNDeMw50
+ 4YT23ZMTHem7xda70l8z61JaPPMhk+6D0Ixa6npyLpdFP68HNySS/S4HteruC7QBYMVxU7lDoQi
+ j7yVFrOmkrM11ykvQIiNkO7LqruEywAKtkWckYTs37GPoTnBAqM0W1HQc29wyl6/yxdkNGoAbt4
+ MryC4Y9ODV5e04qUiPQVcY0kQ6U3UT2Lq+hPjstYbxusFeSuKWr35xflwO4chH22g2lwdKF3WQ1
+ 9EpDtgckKJDwhKihNuNVt2jBBNjwzNSoIt/pvTumK5R/mjkY
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On the Lenovo Yoga C630 WOS laptop the EC provides access to the adapter
-and battery status. Add the driver to read power supply status on the
-laptop.
+Describe links between the first USB3 host and the DisplayPort that is
+routed to the same pins.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/power/supply/Kconfig                    |   9 +
- drivers/power/supply/Makefile                   |   1 +
- drivers/power/supply/lenovo_yoga_c630_battery.c | 479 ++++++++++++++++++++++++
- 3 files changed, 489 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 53 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 52 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-index 3e31375491d5..55ab8e90747d 100644
---- a/drivers/power/supply/Kconfig
-+++ b/drivers/power/supply/Kconfig
-@@ -167,6 +167,15 @@ config BATTERY_LEGO_EV3
- 	help
- 	  Say Y here to enable support for the LEGO MINDSTORMS EV3 battery.
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 26b1638c76f9..5276ab0433b6 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4030,6 +4030,35 @@ usb_1_qmpphy: phy@88e8000 {
  
-+config BATTERY_LENOVO_YOGA_C630
-+	tristate "Lenovo Yoga C630 battery"
-+	depends on OF && EC_LENOVO_YOGA_C630
-+	help
-+	  This driver enables battery support on the Lenovo Yoga C630 laptop.
-+
-+	  To compile the driver as a module, choose M here: the module will be
-+	  called lenovo_yoga_c630_battery.
-+
- config BATTERY_PMU
- 	tristate "Apple PMU battery"
- 	depends on PPC32 && ADB_PMU
-diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
-index 58b567278034..8ebbdcf92dac 100644
---- a/drivers/power/supply/Makefile
-+++ b/drivers/power/supply/Makefile
-@@ -32,6 +32,7 @@ obj-$(CONFIG_BATTERY_DS2782)	+= ds2782_battery.o
- obj-$(CONFIG_BATTERY_GAUGE_LTC2941)	+= ltc2941-battery-gauge.o
- obj-$(CONFIG_BATTERY_GOLDFISH)	+= goldfish_battery.o
- obj-$(CONFIG_BATTERY_LEGO_EV3)	+= lego_ev3_battery.o
-+obj-$(CONFIG_BATTERY_LENOVO_YOGA_C630) += lenovo_yoga_c630_battery.o
- obj-$(CONFIG_BATTERY_PMU)	+= pmu_battery.o
- obj-$(CONFIG_BATTERY_QCOM_BATTMGR)	+= qcom_battmgr.o
- obj-$(CONFIG_BATTERY_OLPC)	+= olpc_battery.o
-diff --git a/drivers/power/supply/lenovo_yoga_c630_battery.c b/drivers/power/supply/lenovo_yoga_c630_battery.c
-new file mode 100644
-index 000000000000..76152ad38d46
---- /dev/null
-+++ b/drivers/power/supply/lenovo_yoga_c630_battery.c
-@@ -0,0 +1,479 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022-2024, Linaro Ltd
-+ * Authors:
-+ *    Bjorn Andersson
-+ *    Dmitry Baryshkov
-+ */
-+#include <linux/auxiliary_bus.h>
-+#include <linux/delay.h>
-+#include <linux/module.h>
-+#include <linux/platform_data/lenovo-yoga-c630.h>
-+#include <linux/power_supply.h>
-+
-+struct yoga_c630_psy {
-+	struct yoga_c630_ec *ec;
-+	struct device *dev;
-+	struct device_node *of_node;
-+	struct notifier_block nb;
-+	struct mutex lock;
-+
-+	struct power_supply *adp_psy;
-+	struct power_supply *bat_psy;
-+
-+	unsigned long last_status_update;
-+
-+	bool adapter_online;
-+
-+	bool unit_mA;
-+
-+	bool bat_present;
-+	unsigned int bat_status;
-+	unsigned int design_capacity;
-+	unsigned int design_voltage;
-+	unsigned int full_charge_capacity;
-+
-+	unsigned int capacity_now;
-+	unsigned int voltage_now;
-+
-+	int current_now;
-+	int rate_now;
-+};
-+
-+#define LENOVO_EC_CACHE_TIME		(10 * HZ)
-+
-+#define LENOVO_EC_ADPT_STATUS		0xa3
-+#define LENOVO_EC_ADPT_PRESENT		BIT(7)
-+#define LENOVO_EC_BAT_ATTRIBUTES	0xc0
-+#define LENOVO_EC_BAT_ATTR_UNIT_IS_MA	BIT(1)
-+#define LENOVO_EC_BAT_STATUS		0xc1
-+#define LENOVO_EC_BAT_REMAIN_CAPACITY	0xc2
-+#define LENOVO_EC_BAT_VOLTAGE		0xc6
-+#define LENOVO_EC_BAT_DESIGN_VOLTAGE	0xc8
-+#define LENOVO_EC_BAT_DESIGN_CAPACITY	0xca
-+#define LENOVO_EC_BAT_FULL_CAPACITY	0xcc
-+#define LENOVO_EC_BAT_CURRENT		0xd2
-+#define LENOVO_EC_BAT_FULL_FACTORY	0xd6
-+#define LENOVO_EC_BAT_PRESENT		0xda
-+#define LENOVO_EC_BAT_FULL_REGISTER	0xdb
-+#define LENOVO_EC_BAT_FULL_IS_FACTORY	BIT(0)
-+
-+/* the mutex should already be locked */
-+static int yoga_c630_psy_update_bat_info(struct yoga_c630_psy *ecbat)
-+{
-+	struct yoga_c630_ec *ec = ecbat->ec;
-+	int val;
-+
-+	val = yoga_c630_ec_read8(ec, LENOVO_EC_BAT_PRESENT);
-+	if (val < 0)
-+		return val;
-+	ecbat->bat_present = !!(val & BIT(0));
-+	if (!ecbat->bat_present)
-+		return val;
-+
-+	val = yoga_c630_ec_read8(ec, LENOVO_EC_BAT_ATTRIBUTES);
-+	if (val < 0)
-+		return val;
-+	ecbat->unit_mA = val & LENOVO_EC_BAT_ATTR_UNIT_IS_MA;
-+
-+	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_DESIGN_CAPACITY);
-+	if (val < 0)
-+		return val;
-+	ecbat->design_capacity = val * 1000;
-+
-+	msleep(50);
-+
-+	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_DESIGN_VOLTAGE);
-+	if (val < 0)
-+		return val;
-+	ecbat->design_voltage = val;
-+
-+	msleep(50);
-+
-+	val = yoga_c630_ec_read8(ec, LENOVO_EC_BAT_FULL_REGISTER);
-+	if (val < 0)
-+		return val;
-+	if (val & LENOVO_EC_BAT_FULL_IS_FACTORY)
-+		val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_FULL_FACTORY);
-+	else
-+		val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_FULL_CAPACITY);
-+	if (val < 0)
-+		return val;
-+
-+	ecbat->full_charge_capacity = val * 1000;
-+
-+	if (!ecbat->unit_mA) {
-+		ecbat->design_capacity *= 10;
-+		ecbat->full_charge_capacity *= 10;
-+	}
-+
-+	return 0;
-+}
-+
-+/* the mutex should already be locked */
-+static int yoga_c630_psy_maybe_update_bat_status(struct yoga_c630_psy *ecbat)
-+{
-+	struct yoga_c630_ec *ec = ecbat->ec;
-+	int current_mA;
-+	int val;
-+
-+	if (time_before(jiffies, ecbat->last_status_update + LENOVO_EC_CACHE_TIME))
-+		return 0;
-+
-+	val = yoga_c630_ec_read8(ec, LENOVO_EC_BAT_STATUS);
-+	if (val < 0)
-+		return val;
-+	ecbat->bat_status = val;
-+
-+	msleep(50);
-+
-+	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_REMAIN_CAPACITY);
-+	if (val < 0)
-+		return val;
-+	ecbat->capacity_now = val * 1000;
-+
-+	msleep(50);
-+
-+	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_VOLTAGE);
-+	if (val < 0)
-+		return val;
-+	ecbat->voltage_now = val * 1000;
-+
-+	msleep(50);
-+
-+	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_CURRENT);
-+	if (val < 0)
-+		return val;
-+	current_mA = sign_extend32(val, 15);
-+	ecbat->current_now = current_mA * 1000;
-+	ecbat->rate_now = current_mA * (ecbat->voltage_now / 1000);
-+
-+	msleep(50);
-+
-+	if (!ecbat->unit_mA)
-+		ecbat->capacity_now *= 10;
-+
-+	ecbat->last_status_update = jiffies;
-+
-+	return 0;
-+}
-+
-+static int yoga_c630_psy_update_adapter_status(struct yoga_c630_psy *ecbat)
-+{
-+	struct yoga_c630_ec *ec = ecbat->ec;
-+	int val;
-+
-+	mutex_lock(&ecbat->lock);
-+
-+	val = yoga_c630_ec_read8(ec, LENOVO_EC_ADPT_STATUS);
-+	if (val > 0)
-+		ecbat->adapter_online = FIELD_GET(LENOVO_EC_ADPT_PRESENT, val);
-+
-+	mutex_unlock(&ecbat->lock);
-+
-+	return val;
-+}
-+
-+static bool yoga_c630_psy_is_charged(struct yoga_c630_psy *ecbat)
-+{
-+	if (ecbat->bat_status != 0)
-+		return false;
-+
-+	if (ecbat->full_charge_capacity <= ecbat->capacity_now)
-+		return true;
-+
-+	if (ecbat->design_capacity <= ecbat->capacity_now)
-+		return true;
-+
-+	return false;
-+}
-+
-+static int yoga_c630_psy_bat_get_property(struct power_supply *psy,
-+					 enum power_supply_property psp,
-+					 union power_supply_propval *val)
-+{
-+	struct yoga_c630_psy *ecbat = power_supply_get_drvdata(psy);
-+	int rc = 0;
-+
-+	if (!ecbat->bat_present &&
-+	    psp != POWER_SUPPLY_PROP_PRESENT)
-+		return -ENODEV;
-+
-+	mutex_lock(&ecbat->lock);
-+	rc = yoga_c630_psy_maybe_update_bat_status(ecbat);
-+	mutex_unlock(&ecbat->lock);
-+
-+	if (rc)
-+		return rc;
-+
-+	switch (psp) {
-+	case POWER_SUPPLY_PROP_STATUS:
-+		if (ecbat->bat_status & BIT(0))
-+			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
-+		else if (ecbat->bat_status & BIT(1))
-+			val->intval = POWER_SUPPLY_STATUS_CHARGING;
-+		else if (yoga_c630_psy_is_charged(ecbat))
-+			val->intval = POWER_SUPPLY_STATUS_FULL;
-+		else
-+			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
-+		break;
-+	case POWER_SUPPLY_PROP_PRESENT:
-+		val->intval = ecbat->bat_present;
-+		break;
-+	case POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN:
-+		val->intval = ecbat->design_voltage;
-+		break;
-+	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
-+	case POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN:
-+		val->intval = ecbat->design_capacity;
-+		break;
-+	case POWER_SUPPLY_PROP_CHARGE_FULL:
-+	case POWER_SUPPLY_PROP_ENERGY_FULL:
-+		val->intval = ecbat->full_charge_capacity;
-+		break;
-+	case POWER_SUPPLY_PROP_CHARGE_NOW:
-+	case POWER_SUPPLY_PROP_ENERGY_NOW:
-+		val->intval = ecbat->capacity_now;
-+		break;
-+	case POWER_SUPPLY_PROP_CURRENT_NOW:
-+		val->intval = ecbat->current_now;
-+		break;
-+	case POWER_SUPPLY_PROP_POWER_NOW:
-+		val->intval = ecbat->rate_now;
-+		break;
-+	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
-+		val->intval = ecbat->voltage_now;
-+		break;
-+	case POWER_SUPPLY_PROP_TECHNOLOGY:
-+		val->intval = POWER_SUPPLY_TECHNOLOGY_LION;
-+		break;
-+	case POWER_SUPPLY_PROP_MODEL_NAME:
-+		val->strval = "PABAS0241231";
-+		break;
-+	case POWER_SUPPLY_PROP_MANUFACTURER:
-+		val->strval = "Compal";
-+		break;
-+	default:
-+		rc = -EINVAL;
-+		break;
-+	}
-+
-+	return rc;
-+}
-+
-+static enum power_supply_property yoga_c630_psy_bat_mA_properties[] = {
-+	POWER_SUPPLY_PROP_STATUS,
-+	POWER_SUPPLY_PROP_PRESENT,
-+	POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN,
-+	POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN,
-+	POWER_SUPPLY_PROP_CHARGE_FULL,
-+	POWER_SUPPLY_PROP_CHARGE_NOW,
-+	POWER_SUPPLY_PROP_CURRENT_NOW,
-+	POWER_SUPPLY_PROP_POWER_NOW,
-+	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-+	POWER_SUPPLY_PROP_TECHNOLOGY,
-+	POWER_SUPPLY_PROP_MODEL_NAME,
-+	POWER_SUPPLY_PROP_MANUFACTURER,
-+};
-+
-+static enum power_supply_property yoga_c630_psy_bat_mWh_properties[] = {
-+	POWER_SUPPLY_PROP_STATUS,
-+	POWER_SUPPLY_PROP_PRESENT,
-+	POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN,
-+	POWER_SUPPLY_PROP_ENERGY_FULL_DESIGN,
-+	POWER_SUPPLY_PROP_ENERGY_FULL,
-+	POWER_SUPPLY_PROP_ENERGY_NOW,
-+	POWER_SUPPLY_PROP_CURRENT_NOW,
-+	POWER_SUPPLY_PROP_POWER_NOW,
-+	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-+	POWER_SUPPLY_PROP_TECHNOLOGY,
-+	POWER_SUPPLY_PROP_MODEL_NAME,
-+	POWER_SUPPLY_PROP_MANUFACTURER,
-+};
-+
-+static const struct power_supply_desc yoga_c630_psy_bat_psy_desc_mA = {
-+	.name = "yoga-c630-battery",
-+	.type = POWER_SUPPLY_TYPE_BATTERY,
-+	.properties = yoga_c630_psy_bat_mA_properties,
-+	.num_properties = ARRAY_SIZE(yoga_c630_psy_bat_mA_properties),
-+	.get_property = yoga_c630_psy_bat_get_property,
-+};
-+
-+static const struct power_supply_desc yoga_c630_psy_bat_psy_desc_mWh = {
-+	.name = "yoga-c630-battery",
-+	.type = POWER_SUPPLY_TYPE_BATTERY,
-+	.properties = yoga_c630_psy_bat_mWh_properties,
-+	.num_properties = ARRAY_SIZE(yoga_c630_psy_bat_mWh_properties),
-+	.get_property = yoga_c630_psy_bat_get_property,
-+};
-+
-+static int yoga_c630_psy_adpt_get_property(struct power_supply *psy,
-+					  enum power_supply_property psp,
-+					  union power_supply_propval *val)
-+{
-+	struct yoga_c630_psy *ecbat = power_supply_get_drvdata(psy);
-+	int rc = 0;
-+
-+	yoga_c630_psy_update_adapter_status(ecbat);
-+
-+	switch (psp) {
-+	case POWER_SUPPLY_PROP_ONLINE:
-+		val->intval = ecbat->adapter_online;
-+		break;
-+	default:
-+		rc = -EINVAL;
-+		break;
-+	}
-+
-+	return rc;
-+}
-+
-+static enum power_supply_property yoga_c630_psy_adpt_properties[] = {
-+	POWER_SUPPLY_PROP_ONLINE,
-+};
-+
-+static const struct power_supply_desc yoga_c630_psy_adpt_psy_desc = {
-+	.name = "yoga-c630-adapter",
-+	.type = POWER_SUPPLY_TYPE_USB_TYPE_C,
-+	.properties = yoga_c630_psy_adpt_properties,
-+	.num_properties = ARRAY_SIZE(yoga_c630_psy_adpt_properties),
-+	.get_property = yoga_c630_psy_adpt_get_property,
-+};
-+
-+static int yoga_c630_psy_register_bat_psy(struct yoga_c630_psy *ecbat)
-+{
-+	struct power_supply_config bat_cfg = {};
-+
-+	bat_cfg.drv_data = ecbat;
-+	bat_cfg.of_node = ecbat->of_node;
-+	if (ecbat->unit_mA)
-+		ecbat->bat_psy = power_supply_register_no_ws(ecbat->dev, &yoga_c630_psy_bat_psy_desc_mA, &bat_cfg);
-+	else
-+		ecbat->bat_psy = power_supply_register_no_ws(ecbat->dev, &yoga_c630_psy_bat_psy_desc_mWh, &bat_cfg);
-+	if (IS_ERR(ecbat->bat_psy)) {
-+		dev_err(ecbat->dev, "failed to register battery supply\n");
-+		return PTR_ERR(ecbat->bat_psy);
-+	}
-+
-+	return 0;
-+}
-+
-+static void yoga_c630_ec_refresh_bat_info(struct yoga_c630_psy *ecbat)
-+{
-+	bool current_unit;
-+
-+	mutex_lock(&ecbat->lock);
-+	current_unit = ecbat->unit_mA;
-+
-+	yoga_c630_psy_update_bat_info(ecbat);
-+
-+	if (current_unit != ecbat->unit_mA) {
-+		power_supply_unregister(ecbat->bat_psy);
-+		yoga_c630_psy_register_bat_psy(ecbat);
-+	}
-+
-+	mutex_unlock(&ecbat->lock);
-+}
-+
-+static int yoga_c630_psy_notify(struct notifier_block *nb,
-+				unsigned long action, void *data)
-+{
-+	struct yoga_c630_psy *ecbat = container_of(nb, struct yoga_c630_psy, nb);
-+
-+	switch (action) {
-+	case LENOVO_EC_EVENT_BAT_INFO:
-+		yoga_c630_ec_refresh_bat_info(ecbat);
-+		break;
-+	case LENOVO_EC_EVENT_BAT_ADPT_STATUS:
-+		power_supply_changed(ecbat->adp_psy);
-+		fallthrough;
-+	case LENOVO_EC_EVENT_BAT_STATUS:
-+		power_supply_changed(ecbat->bat_psy);
-+		break;
-+	}
-+
-+	return NOTIFY_OK;
-+}
-+
-+static int yoga_c630_psy_probe(struct auxiliary_device *adev,
-+				   const struct auxiliary_device_id *id)
-+{
-+	struct yoga_c630_ec *ec = adev->dev.platform_data;
-+	struct power_supply_config adp_cfg = {};
-+	struct device *dev = &adev->dev;
-+	struct yoga_c630_psy *ecbat;
-+	int ret;
-+
-+	ecbat = devm_kzalloc(&adev->dev, sizeof(*ecbat), GFP_KERNEL);
-+	if (!ecbat)
-+		return -ENOMEM;
-+
-+	ecbat->ec = ec;
-+	ecbat->dev = dev;
-+	mutex_init(&ecbat->lock);
-+	ecbat->of_node = adev->dev.parent->of_node;
-+	ecbat->nb.notifier_call = yoga_c630_psy_notify;
-+
-+	auxiliary_set_drvdata(adev, ecbat);
-+
-+	adp_cfg.drv_data = ecbat;
-+	adp_cfg.of_node = ecbat->of_node;
-+	adp_cfg.supplied_to = (char **)&yoga_c630_psy_bat_psy_desc_mA.name;
-+	adp_cfg.num_supplicants = 1;
-+	ecbat->adp_psy = devm_power_supply_register_no_ws(dev, &yoga_c630_psy_adpt_psy_desc, &adp_cfg);
-+	if (IS_ERR(ecbat->adp_psy)) {
-+		dev_err(dev, "failed to register AC adapter supply\n");
-+		return PTR_ERR(ecbat->adp_psy);
-+	}
-+
-+	mutex_lock(&ecbat->lock);
-+
-+	ret = yoga_c630_psy_update_bat_info(ecbat);
-+	if (ret)
-+		goto err_unlock;
-+
-+	ret = yoga_c630_psy_register_bat_psy(ecbat);
-+	if (ret)
-+		goto err_unlock;
-+
-+	mutex_unlock(&ecbat->lock);
-+
-+	ret = yoga_c630_ec_register_notify(ecbat->ec, &ecbat->nb);
-+	if (ret)
-+		goto err_unreg_bat;
-+
-+	return 0;
-+
-+err_unlock:
-+	mutex_unlock(&ecbat->lock);
-+
-+err_unreg_bat:
-+	power_supply_unregister(ecbat->bat_psy);
-+	return ret;
-+}
-+
-+static void yoga_c630_psy_remove(struct auxiliary_device *adev)
-+{
-+	struct yoga_c630_psy *ecbat = auxiliary_get_drvdata(adev);
-+
-+	yoga_c630_ec_unregister_notify(ecbat->ec, &ecbat->nb);
-+	power_supply_unregister(ecbat->bat_psy);
-+}
-+
-+static const struct auxiliary_device_id yoga_c630_psy_id_table[] = {
-+	{ .name = YOGA_C630_MOD_NAME "." YOGA_C630_DEV_PSY, },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(auxiliary, yoga_c630_psy_id_table);
-+
-+static struct auxiliary_driver yoga_c630_psy_driver = {
-+	.name = YOGA_C630_DEV_PSY,
-+	.id_table = yoga_c630_psy_id_table,
-+	.probe = yoga_c630_psy_probe,
-+	.remove = yoga_c630_psy_remove,
-+};
-+
-+module_auxiliary_driver(yoga_c630_psy_driver);
-+
-+MODULE_DESCRIPTION("Lenovo Yoga C630 psy");
-+MODULE_LICENSE("GPL");
+ 			#clock-cells = <1>;
+ 			#phy-cells = <1>;
++			orientation-switch;
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					usb_1_qmpphy_out: endpoint {
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					usb_1_qmpphy_usb_ss_in: endpoint {
++						remote-endpoint = <&usb_1_dwc3_ss>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					usb_1_qmpphy_dp_in: endpoint {
++						remote-endpoint = <&dp_out>;
++					};
++				};
++			};
+ 		};
+ 
+ 		usb_2_qmpphy: phy@88eb000 {
+@@ -4110,6 +4139,26 @@ usb_1_dwc3: usb@a600000 {
+ 				snps,dis_enblslpm_quirk;
+ 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+ 				phy-names = "usb2-phy", "usb3-phy";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						usb_1_dwc3_hs: endpoint {
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						usb_1_dwc3_ss: endpoint {
++							remote-endpoint = <&usb_1_qmpphy_usb_ss_in>;
++						};
++					};
++				};
+ 			};
+ 		};
+ 
+@@ -4600,7 +4649,9 @@ dp_in: endpoint {
+ 
+ 					port@1 {
+ 						reg = <1>;
+-						dp_out: endpoint { };
++						dp_out: endpoint {
++							remote-endpoint = <&usb_1_qmpphy_dp_in>;
++						};
+ 					};
+ 				};
+ 
 
 -- 
 2.39.2
