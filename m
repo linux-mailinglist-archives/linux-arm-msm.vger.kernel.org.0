@@ -1,169 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-20771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B44928D1D29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:35:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CBB88D1D35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:36:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E6C1E1C22021
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:35:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FE28286E5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:36:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 447E816F284;
-	Tue, 28 May 2024 13:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 840DD16F0EF;
+	Tue, 28 May 2024 13:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rX5eCLNU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jTb5wdh+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E8616F0EE;
-	Tue, 28 May 2024 13:34:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA86B16C68B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 13:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716903293; cv=none; b=CJ9UlO568gM2UxcXThPZL0HcneCWblg1Ia61AkfqLmqNAOB9+UPPz/B3drSodhevccCeYHxP/sjb1mW7xZ3ACV/6MOeh5is5o1b7oF7qhl6/GjRib1W4eVjnzZt5Hb65aY8pNpAdlvObd4EkQFCsX3OcvC9snztqwacvSCRfYZI=
+	t=1716903413; cv=none; b=NFFM5shcBCfDjm4uAM5ntyXqT58NHvx85yyZi4obl8aTgBwb7t3wEW4MJDlIryGADndg+Cn8/T15GSqDCYHtWTpHaVjoMaL0BuJVPOhJfL1i1sn5Vbm1CrqLYd1bHhXPzkVckVYivEYruUYbME7r3ZaJKkowmWmfN+xFQgjWXVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716903293; c=relaxed/simple;
-	bh=HYEUVFvQ0AFOAe6Mg1PVLA7v5KJlY+Zus+7fBlbTAXg=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=CcHmwJKTAlm3NqSgMtHmvooo0Yj8MbloMotFVu0asA5K3r4uRF60MgW66KAmEpCZF9BLoxRKTBDtusUhlnskhKkIGtiD6oTm/DMWeOlE3GpvtqXA+lSdzu6EqvuOwvBWL1KXfiBBNdJnhBJ9c+ArwTv+P6s4kZDeZIWZmVm0naE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rX5eCLNU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB829C3277B;
-	Tue, 28 May 2024 13:34:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716903292;
-	bh=HYEUVFvQ0AFOAe6Mg1PVLA7v5KJlY+Zus+7fBlbTAXg=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=rX5eCLNU6Fm9vqdBnA6842Fiou1S4TxlH/3hz033kiEMP6Ck48qW0PB8uogd1804n
-	 +ut/G9g6eAxPzEhWPeQbbsB1fNzZvGEZamAuI/DzYe0p6OrPo1XZ+D9FiuYKGnMqSS
-	 pNgzwTZV91ie+19z/8TSbfOQLu3JuXvOSctG8yRLBYeh9I3enQA3Q2hv8ryQrQmUXG
-	 WlCTuGTKy7UrZgiBT1v8abVBYhuUh2j7C2qU9fSyYnv/CPO/xZoFqYFlbE4YBupq8u
-	 9R2pnMp75/1jBZ3nPsmcvftQ9n3MfFIjnYAmMySSE3++EjC9Ee+g4BFweP3LMWVoDG
-	 OeH9hvHsJvm9w==
-From: Kalle Valo <kvalo@kernel.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Bjorn Andersson <andersson@kernel.org>,  Jeff Johnson
- <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
-  wireless <linux-wireless@vger.kernel.org>,  DT
- <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
- Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
- <avrac@freebox.fr>,  Konrad Dybcio <konrad.dybcio@linaro.org>,  Jami
- Kettunen <jamipkettunen@gmail.com>,  Jeffrey Hugo
- <quic_jhugo@quicinc.com>,  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-  Alexey Minnekhanov <alexeymin@postmarketos.org>
-Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
- qcom,no-msa-ready-indicator prop
-References: <54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
-	<171560975908.1690511.498631481702370762.kvalo@kernel.org>
-	<3464a980-36a7-4ed2-b2dc-be8fd9091b06@freebox.fr>
-	<87zfsa6ybl.fsf@kernel.org>
-	<74ab64e2-9bb4-4e98-9f2f-f6402ba42c08@freebox.fr>
-Date: Tue, 28 May 2024 16:34:46 +0300
-In-Reply-To: <74ab64e2-9bb4-4e98-9f2f-f6402ba42c08@freebox.fr> (Marc
-	Gonzalez's message of "Tue, 28 May 2024 14:36:02 +0200")
-Message-ID: <87msoa6ow9.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1716903413; c=relaxed/simple;
+	bh=LcFYy25T3EVBDfPNggp7aNeBJ3nKQigviyyutbZj/ic=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=G30cmH3Gl6oRzD5a7g0fTR9t64SYJ3X28GzoHkQXNRhsvb+dUya232Yhr4Cd4DS6vM4nMwb6WvLAgwWdTLCxEDBJWtpdfwSy+5flpYrmYxKViuf7P7tE3lFKcyLXb96YFJbp7CyOP8yFsg7zHVekdSSMAHo3SxBoVN08XkeTodA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jTb5wdh+; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2e95a883101so9993891fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 06:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716903410; x=1717508210; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0bYb7kOPdOLKl3Fm8ZrNzYyGK5OCoefcEw1BChMcgKI=;
+        b=jTb5wdh+UozWoOAN2ihLdkippy6N+LSuKVLIEHeX+VCpGOvKfGJVcS6Jynj7C+qzeJ
+         1RhUkhyEivROVups+94YyQDuSe0Nu2M/FevkmfKJDdT+65vWcaLc5PDa1+C3/uAaLV+T
+         XGCbTOMGok//ADntUjcSAXSXgbWXUoZt6vI6UgW//DJQJXaz9Dvep+/cC32nqA5APs3H
+         1BkUOD5wnBtTxqVqd12NAecmB/ra1atKhE44ouHItjXeKuL/Qoxa+XhzO1MxnMnDZ9hz
+         QmVIo2Huar/A34v9IpUGGxJhKnOmz11ZwjbVRm2wsgImfdfdZKGbyGCAlGyWAcJskSbU
+         w2Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716903410; x=1717508210;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0bYb7kOPdOLKl3Fm8ZrNzYyGK5OCoefcEw1BChMcgKI=;
+        b=aelOo729a8F66Ch+C9LD9JaRYmmsZVXrrDpKsgDfB/uRXAO6BPoKHFueD4FuuquglV
+         zL7HeXHFE6a8beA55M4eiLlKfGn7uKLcXx3cX6QURk0HcYQk1xdQgjD8KwbKPe0b5Kb5
+         AO+0ax/nna6BypDr5JMLMPxPlGQB/f970aNxWsy9pX0SW06slFa5TFXzOh3N5BUeq7Xl
+         lW6KJp/vhERpmvA8L2PixBT12HXVEN03XbSnqj/kJvFKDDOoZw1/CrMOC3z7R8KesdfD
+         snFrncBkKq4l6ulTuPtYWa0PuRlqB1FER6T94NrTPEk8S9bCzJwa5n/lHiTX/1VzsXXR
+         UDJA==
+X-Gm-Message-State: AOJu0YxEsopyHQy+tQDeRSsrwn2tww75ZuP2CSkPiu8W09ez+FuuOiZ2
+	XBJ8i8SeaD5Bc3df7P48Uyo1GOpcc63KteiARkVIGSC/IZgqjf9Ry1Dy7WkkpQs=
+X-Google-Smtp-Source: AGHT+IHI1raF5XEZx6ugM9rq7xZ+1m35vsCAfIsmrZNbGvF40rrrsZfXEL0MmMw0rXWJdsHE/hDoKg==
+X-Received: by 2002:a2e:8e95:0:b0:2e1:bb65:8306 with SMTP id 38308e7fff4ca-2e95b27ee28mr86320561fa.44.1716903409814;
+        Tue, 28 May 2024 06:36:49 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2e95bcd8e4bsm22566981fa.41.2024.05.28.06.36.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 May 2024 06:36:48 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 28 May 2024 16:36:48 +0300
+Subject: [PATCH v5] dt-bindings: ufs: qcom,ufs: drop source clock entries
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240528-msm8996-fix-ufs-v5-1-b475c341126e@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAO/dVWYC/3XNQW7CMBAF0Ksgr+tqPBkndle9B+rCScZgqSTIh
+ ogqyt0Z2EAVWP75+m9mVTgnLuprM6vMUyppHCTYj43q9mHYsU69ZIWABAheH8rBeV/rmC76HIu
+ ODgLXPfWui0pWx8xS3cXtj+R9Kqcx/90fTOZ2fW9NRoM20LQW2TaE8P2bhpDHzzHv1A2b8Akw1
+ RpAAWoLjXUd1mTdCqieAbcGKgEIQmjJSxGqFUAPgOAFQAIwm4Cujc42/h+wLMsVV2nY2nIBAAA
+ =
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+ Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2765;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=LcFYy25T3EVBDfPNggp7aNeBJ3nKQigviyyutbZj/ic=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmVd3wjxYDqABMNJG8T5NY0H+WB1xmn+b7lcWY1
+ UEH8pkv8xKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZlXd8AAKCRCLPIo+Aiko
+ 1aZGCACuCYcdAXdlGAUU4r4RYvSftl/0cmcCSR3mhiLgGYLGBYCHqAvmzDoLvdh3vD/+sAc2qDd
+ bjFixwJ3a5PrTL9W55wg2zRHdKuQaGfeRrfZr9Gb24wxCvUQoYuoNW7FcHJOWJT9aTJ/Wui77bx
+ hufH5/z2e1vZsHNKmGAvbkJXJ/3tx2vJku+6wSFivZ+/XXs3ixTYFemkuNRjsZ3aYAqFfc2i78w
+ NgScSWVF1N342XvdbTPf6y3pouTmC1nWv6Fztf5FJ6ydyRS7FqIgGv4J4hwKxkzy28NmFuPvPDY
+ Hht6JhNGV0HZxSbieaaXLdCgv98mtPxzizVMYgv0+/nNLEQy
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Marc Gonzalez <mgonzalez@freebox.fr> writes:
+There is no need to mention and/or to touch in any way the intermediate
+(source) clocks. Drop them from MSM8996 UFSHCD schema, making it follow
+the example lead by all other platforms.
 
-> On 28/05/2024 12:11, Kalle Valo wrote:
->
->> Marc Gonzalez writes:
->> 
->>> On 13/05/2024 16:16, Kalle Valo wrote:
->>>
->>>> Marc Gonzalez wrote:
->>>>
->>>>> The ath10k driver waits for an "MSA_READY" indicator
->>>>> to complete initialization. If the indicator is not
->>>>> received, then the device remains unusable.
->>>>>
->>>>> cf. ath10k_qmi_driver_event_work()
->>>>>
->>>>> Several msm8998-based devices are affected by this issue.
->>>>> Oddly, it seems safe to NOT wait for the indicator, and
->>>>> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
->>>>>
->>>>> Jeff Johnson wrote:
->>>>>
->>>>>   The feedback I received was "it might be ok to change all ath10k qmi
->>>>>   to skip waiting for msa_ready", and it was pointed out that ath11k
->>>>>   (and ath12k) do not wait for it.
->>>>>
->>>>>   However with so many deployed devices, "might be ok" isn't a strong
->>>>>   argument for changing the default behavior.
->>>>>
->>>>> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
->>>>> work-around in the driver. However, firmware-5.bin is parsed too late.
->>>>> So we are stuck with a DT property.
->>>>>
->>>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
->>>>> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->>>>> Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
->>>>> Acked-by: Rob Herring (Arm) <robh@kernel.org>
->>>>> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
->>>>
->>>> 2 patches applied to ath-next branch of ath.git, thanks.
->>>>
->>>> 71b6e321e302 dt-bindings: net: wireless: ath10k: add
->>>> qcom,no-msa-ready-indicator prop
->>>> 6d67d18014a8 wifi: ath10k: do not always wait for MSA_READY indicator
->>>
->>> Hello Kalle,
->>> What version of Linux will these be included in?
->>> (I don't see them in v6.10-rc1. Are they considered
->>> a new feature, rather than a fix, and thus 6.11?)
->> 
->> Yeah, these commits will go to v6.11. Because of the multiple trees
->> involved (ath-next -> wireless-next -> net-next -> linus) we need to
->> have ath.git pull request ready well before the merge window opens and
->> these commits missed the last pull request.
->> 
->> Yes, we are slow :)
->
-> My understanding of the merging process was that
->
-> - new features are queued for the next cycle,
-> so vN+1-rc1, or vN+2-rc1 if the submission came too late (after ~rc6) in cycle N
->
-> - fixes are queued for the fixes batch in the same cycle
->
-> This patch series is handled like a feature rather than a fix?
-> (To me, it fixed broken behavior in the FW, but I understand
-> if the nature of the changes require a more prudent approach.
-> Though they are disabled for everyone by default.)
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v5:
+- Rebased on top of linux-next
+- Dropped arm64 / DT patches applied by Bjorn
+- Link to v4: https://lore.kernel.org/r/20240408-msm8996-fix-ufs-v4-0-ee1a28bf8579@linaro.org
 
-So the path for ath10k/ath11k/ath12k fixes to current -rc release is:
+Changes in v4:
+- Rebased on top of linux-next to resolve conflict with UFS schema
+  changes
+- Link to v3: https://lore.kernel.org/r/20240218-msm8996-fix-ufs-v3-0-40aab49899a3@linaro.org
 
-ath-current -> wireless -> net -> linus
+Changes in v3:
+- dropped the patch conflicting with Yassine's patch that got accepted
+- Cc stable on the UFS change (Manivannan)
+- Fixed typos in the commit message (Manivannan)
+- Link to v2: https://lore.kernel.org/r/20240213-msm8996-fix-ufs-v2-0-650758c26458@linaro.org
 
-For new features going to the next release:
+Changes in v2:
+- Dropped patches adding RX_SYMBOL_1_CLK, MSM8996 uses single lane
+  (Krzysztof).
+- Link to v1: https://lore.kernel.org/r/20240209-msm8996-fix-ufs-v1-0-107b52e57420@linaro.org
+---
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-ath-next -> wireless-next -> net-next -> (in merge window) linus 
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index cd3680dc002f..25a5edeea164 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -46,11 +46,11 @@ properties:
+ 
+   clocks:
+     minItems: 7
+-    maxItems: 11
++    maxItems: 9
+ 
+   clock-names:
+     minItems: 7
+-    maxItems: 11
++    maxItems: 9
+ 
+   dma-coherent: true
+ 
+@@ -217,16 +217,14 @@ allOf:
+     then:
+       properties:
+         clocks:
+-          minItems: 11
+-          maxItems: 11
++          minItems: 9
++          maxItems: 9
+         clock-names:
+           items:
+-            - const: core_clk_src
+             - const: core_clk
+             - const: bus_clk
+             - const: bus_aggr_clk
+             - const: iface_clk
+-            - const: core_clk_unipro_src
+             - const: core_clk_unipro
+             - const: core_clk_ice
+             - const: ref_clk
+@@ -287,7 +285,7 @@ allOf:
+           maxItems: 2
+         clocks:
+           minItems: 7
+-          maxItems: 11
++          maxItems: 9
+ 
+ unevaluatedProperties: false
+ 
 
-To reduce conflicts between trees most of the patches I apply go to
--next, I usually take only important regression fixes to -current. In
-this case I didn't even consider taking the patches to -current as there
-were changes in DT and I just assumed this is for -next. If you
-considered otherwise I didn't realise it, sorry about that.
+---
+base-commit: 652f7c84aa3d99568e9e57d74b08cad927adba4e
+change-id: 20240209-msm8996-fix-ufs-f80ae6d4d8cf
 
-In future, if you think a patch should go to -current please mention it
-somewhere, preferably something like tagging it with "[PATCH wireless]"
-or "[PATCH ath-current]" etc. to document which tree it is for. Or just
-as a simple reply.
-
+Best regards,
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
