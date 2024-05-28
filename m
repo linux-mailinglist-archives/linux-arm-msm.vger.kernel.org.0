@@ -1,323 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-20855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0057F8D28DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 01:51:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7461F8D28E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 01:53:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB20C284E54
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 23:51:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2AB79285BB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 23:53:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 848AF13F432;
-	Tue, 28 May 2024 23:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8303613E029;
+	Tue, 28 May 2024 23:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V+jw15C8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MfNrSZt8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA3413DDD2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 23:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A716122089
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 23:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716940270; cv=none; b=YPmSbjuIW4xZX9o+xpdxLUmifPuiro80bqx9MmIfPY1+zigOE+NgEJ2H7nGhG47LxelBp2UzFIgGvggGa7d5JjilBqsTLRxt0t1VPxoINPrEKBwArfW/39Jz/kDXHZqWyJR3kCXgcyEgUPae/XfQi9WzVKGtzQAsVkvqmCz6dJY=
+	t=1716940379; cv=none; b=askpnNzgUmWakJ0L/ACOksGXuAxxqZ85NeQG1xijLF7TPzWH07yZXPxoe/603kOGRwxti1FOZ8UN90qZRMCeSC0Oe7WCSsXmn6JExlasg14Od9YELSZkJEFgTAarJE9EyhenhIdSfn6Hvx7/cmn9glzGgr9M3aKTT4LmAdSWoro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716940270; c=relaxed/simple;
-	bh=U6rd2u/yCnU0MQ4VXeRi1hcrtx+O94VJz7DpKLJXgOg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D47UGroIw91EWdMMt54xf036Tr3SwYItDwGKmWNfYSQLO0iO3ZutvCr2HFCArAAJoSa9fUwJWQFQ3BHtWBuXbwdMuwhvdYhy/Sz7QgvsKXNEXiA1fKawvAG24ean+SWTF3Bc0Aqiv4Io9vBcD+qaHfGuHFSgmFEEb9mHjoA6yPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V+jw15C8; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1716940379; c=relaxed/simple;
+	bh=zhBAUb36pf48/N0Xpw1fsuiV05YaoZWCcFJTlPimKO4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=amobLAqwP+ScA1iAHNkibtYkH/LS0V2uv+E/VC4mp8g3V5Jx8Lr8XlV9w+ofp0E2Jvdd+uWugI5jYZg1HU5A4soYsF7HIgFWOXBkp7YidNkVbi2IzGtnUBJhHyprIf1CreQZTOwYcX4aDAbDZWNALZQNHTaYWOaPT95aZYRzL/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MfNrSZt8; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4202ca70318so12997515e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 16:51:08 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52ab11ecdbaso209648e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 16:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716940267; x=1717545067; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dnSBP1y73hXcLVKI9OFBOJOQjY/3gyc0Iux1Jkwjjpo=;
-        b=V+jw15C8+aar+vke7hh19d3HSdFtotGesTwDabLAiIWPpsYkyOmbqFNVoK1LTc6ski
-         8ONRe5Qv5OnVBg6Ci/T2Esy6t3OiQLX/ugXiHJDzLeiIE2ebVDSElwjQ3EfpYwnUZ1re
-         dpkYlTrWCaO34j8keqaXwCZKx7iqMRsIUt5QhvGXFbAfJLejjXlY0baSaHpNUn34Jc5m
-         ctAeevP8knFXDO4ZDVgwnKdzdqmmJl+W0+qrNXXhBr50UAqIOmQfrPLksTvM5M6a3zyE
-         VzakXif8U9hpDuX2lsPRoXHKGdQOwOHScUWQxr9Rc9RCrnwaymXVh2VF3LD3yiVQENix
-         /z2g==
+        d=linaro.org; s=google; t=1716940376; x=1717545176; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UHZNDUUbr3q7e6NPW2DwrC8X2CnNixkR9Oi+CBBYDV0=;
+        b=MfNrSZt8WuFy1ZBjt3hDNn4Q8kcjaB0RIqrrTRRRb6CISQ1/REn5O6Jf5eBGT2+5nz
+         XFksHFIM7XViwu+MAj85VwIpMPtJWZwgNvtem1u97PEx7M8/7vxzeX1x9GS0MtCmH/BR
+         RljvWpVnWrk3m8FHcfeYEq5g379/IjALgwZtFnoT3qVeu9KQ4AVnp/Dk7fRWM/v17ibd
+         NtjyYC9OIXkEA5DZ+B2A65hN6w4RoHdb5vtdsYr89A5M7pnh4br8Msk7+sRRRP6p1FeR
+         otB9K7EizMk5vib6G7x3zBs+F9R02tsGthq0qYnvCn7CVG4fIwDUpEZLWWKp60cW5miG
+         oFYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716940267; x=1717545067;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dnSBP1y73hXcLVKI9OFBOJOQjY/3gyc0Iux1Jkwjjpo=;
-        b=GC7c+k96Xk8agDcc8z5imM8cqlk/pDS4nzQzndbc3E9F8B8dO2cNYFqSuD33wBT772
-         dVymysRV993kKmcKVeE7/4zlEzma3A4LBOMTmXZLsioTRhLs6+cGnV3EiLTgOjrnkFeC
-         rhe83qvIY/3cV1b9XRXW9a9x62VqZjuuv6R5CPo8SqPS7wZni3Hkzpl2YMuZy5AcnRPb
-         Og9CqXP5ujGNtNecQTx5moNO/iI/ux/7Smg9AhQKg/jj/Ow1fyaUlOg2RjGnS2APVZwm
-         x4ZCWPMXVYV2nMf+UsT16VbBQ+KONVkhGyz7dVGWbWbJRsAzIwZ/k1csnl3yz5oVuORk
-         7PZA==
-X-Forwarded-Encrypted: i=1; AJvYcCX7Z+qnldsoaFcQXNTu8Cl3HkuCOZ+XojdADC/Ns3FJ7psSaN6lkjrblIwcOrHVfjlAtJl3UK1jEHcDPGKXLbqb13YaLsOkcwte4vB0DQ==
-X-Gm-Message-State: AOJu0YyNNV5islH8cVTjhoNQVnwhraUjCcLQljJEGtnmvLzSmB9lrUXz
-	V/EPMoQwNdkXAjL/0TJCOHt0AS0v1Eu1n5pel+c7nJ3Pee4hW3ESqhmdXExbW8A=
-X-Google-Smtp-Source: AGHT+IGW+PMxhqpCnMYFAJtAcLClSa/LPe6M4D7yxH9tVsegfjt88HkF3gmo6+nhSpDmBiJRq2Ux+g==
-X-Received: by 2002:a05:600c:3595:b0:41a:c170:701f with SMTP id 5b1f17b1804b1-421089f9828mr115015805e9.38.1716940266996;
-        Tue, 28 May 2024 16:51:06 -0700 (PDT)
-Received: from [192.168.0.23] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42100eeb962sm193040335e9.1.2024.05.28.16.51.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 May 2024 16:51:06 -0700 (PDT)
-Message-ID: <2b76f27e-f223-4ff9-880e-9e232ce9ddc6@linaro.org>
-Date: Wed, 29 May 2024 00:51:04 +0100
+        d=1e100.net; s=20230601; t=1716940376; x=1717545176;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UHZNDUUbr3q7e6NPW2DwrC8X2CnNixkR9Oi+CBBYDV0=;
+        b=L4qJeSjinq1ckdOHrWsKZniMg7g0/NkMDdMEl673hP4QnpZMeYnA/zmvU0qw7Zg3t0
+         rxh3uB8n/uTScyEZmjGVCER/854N3JFdFA+tmjWbzBCleoVw5I5tmvwRxBqnBcbFeKtw
+         SSkcBc8XCgxbgSf9QczdhsoFuU5paKQvHF+x6Q4bEFc/zujiK2L0j26MBwa6dQYx/AYm
+         hTnZCQuL38BDvX1ERV443h1kRRjlA8oxlJEvUiMqu1N10byePX4RphvCPl2qY1WuoOnu
+         hXp9LeMeJtIwh0Ltw+tIPifdJ0DKCMxlszDPjL9/2fAZgXxI/zky+eYkyZzgTjcwfUR5
+         1b3w==
+X-Forwarded-Encrypted: i=1; AJvYcCXsRvvVpRR26q6S0uynM4EVjWCButkz2lJK2FRyhWC33llmvwDqSpxkdEe6WyIVTTA8MFndk52XOhl3F9ag4WLX8wGtcX8Lpu6C1f/Jdg==
+X-Gm-Message-State: AOJu0YxRidAPrQWHnGou911vtR+dv0RaGzBkrt5Lz9bomCworBS0EUYT
+	/OfApoUPnldEltnA3cCV83U3TXsBxEmB/oFrkOJ6sWGofFcZ/5EipK4OWIST1t8=
+X-Google-Smtp-Source: AGHT+IGqLAv4OZyUcAM8naoZFj20K0vlp1pzotZb6OElrE2WNXGbtTQKAWxUzgWmE+4EwKspTa0x6g==
+X-Received: by 2002:a05:6512:3f03:b0:529:b717:2a18 with SMTP id 2adb3069b0e04-529b7172fc6mr3374561e87.47.1716940375739;
+        Tue, 28 May 2024 16:52:55 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5297066bd0bsm1099869e87.165.2024.05.28.16.52.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 May 2024 16:52:55 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 0/3] drm/panel-edp: remove several legacy compatibles
+ used by the driver
+Date: Wed, 29 May 2024 02:52:53 +0300
+Message-Id: <20240529-edp-panel-drop-v2-0-fcfc457fc8dd@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/6] platform: arm64: add Lenovo Yoga C630 WOS EC
- driver
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Hans de Goede <hdegoede@redhat.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Nikita Travkin <nikita@trvn.ru>
-References: <20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org>
- <20240528-yoga-ec-driver-v4-2-4fa8dfaae7b6@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240528-yoga-ec-driver-v4-2-4fa8dfaae7b6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFVuVmYC/3XMQQqDMBCF4avIrDsliUawq96juIhmqgOShEkJL
+ eLdm7rv8n/wvh0yCVOGW7ODUOHMMdQwlwbm1YWFkH1tMMp0ypoWySdMLtCGXmJCpZwz7TC1cz9
+ BPSWhJ79P8DHWXjm/onxOv+jf+pcqGjWqzvreWK29Gu4bByfxGmWB8TiOL/RuDAatAAAA
+To: Douglas Anderson <dianders@chromium.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+ Jeffrey Hugo <quic_jhugo@quicinc.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1711;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=zhBAUb36pf48/N0Xpw1fsuiV05YaoZWCcFJTlPimKO4=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmVm5Wc00pr7mhb8XYoTjTxYcuglgy5D4WYfsxu
+ Exxp3CTvNCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZlZuVgAKCRCLPIo+Aiko
+ 1VkOB/0RzePb01tIc+8MNPG8I8IItb4ymjg3U/xVHeE3+VeY/roCzspzKY5EMESQQJix/QZ9B6s
+ vEnDGqxakmpkq6IrhIq1BapWaN9pQ/u2noeLdQDV/kCHn9uMIeU8/4NxnQ+hiIYkI03V79VSGuL
+ qysgRYWrHj3quiJuG8OBnpbw2Hi4h/a3shraRnZhBOTocXAiHY6H3pHdrkC9ScUHoSSQFx+mBAT
+ +SBMVYXuCKwgmrlVnDqnWsf0cT9g+Py+kpe8BF+p8HhdSO0TRudREkan+re9J7dv9YgpusN3Wa3
+ kA0xNPSJIlGlba0JZgAGAh1Ws5DhKPDx6d0Gruavnt83GXDi
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On 28/05/2024 21:44, Dmitry Baryshkov wrote:
-> Lenovo Yoga C630 WOS is a laptop using Snapdragon 850 SoC. Like many
-> laptops it uses embedded controller (EC) to perform various platform
+There are two ways to describe an eDP panel in device tree. The
+recommended way is to add a device on the AUX bus, ideally using the
+edp-panel compatible. The legacy way is to define a top-level platform
+device for the panel.
 
-an embedded controller
+Document that adding support for eDP panels in a legacy way is strongly
+discouraged (if not forbidden at all).
 
-> operations, including, but not limited, to Type-C port control or power
-> supply handlng.
-> 
-> Add the driver for the EC, that creates devices for UCSI and power
-> supply devices.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/platform/arm64/Kconfig                 |  14 ++
->   drivers/platform/arm64/Makefile                |   1 +
->   drivers/platform/arm64/lenovo-yoga-c630.c      | 279 +++++++++++++++++++++++++
->   include/linux/platform_data/lenovo-yoga-c630.h |  42 ++++
->   4 files changed, 336 insertions(+)
-> 
-> diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
-> index 8fdca0f8e909..8c103b3150d1 100644
-> --- a/drivers/platform/arm64/Kconfig
-> +++ b/drivers/platform/arm64/Kconfig
-> @@ -32,4 +32,18 @@ config EC_ACER_ASPIRE1
->   	  laptop where this information is not properly exposed via the
->   	  standard ACPI devices.
->   
-> +config EC_LENOVO_YOGA_C630
-> +	tristate "Lenovo Yoga C630 Embedded Controller driver"
-> +	depends on I2C
-> +	help
-> +	  Driver for the Embedded Controller in the Qualcomm Snapdragon-based
-> +	  Lenovo Yoga C630, which provides battery and power adapter
-> +	  information.
-> +
-> +	  This driver provides battery and AC status support for the mentioned
-> +	  laptop where this information is not properly exposed via the
-> +	  standard ACPI devices.
-> +
-> +	  Say M or Y here to include this support.
-> +
->   endif # ARM64_PLATFORM_DEVICES
-> diff --git a/drivers/platform/arm64/Makefile b/drivers/platform/arm64/Makefile
-> index 4fcc9855579b..b2ae9114fdd8 100644
-> --- a/drivers/platform/arm64/Makefile
-> +++ b/drivers/platform/arm64/Makefile
-> @@ -6,3 +6,4 @@
->   #
->   
->   obj-$(CONFIG_EC_ACER_ASPIRE1)	+= acer-aspire1-ec.o
-> +obj-$(CONFIG_EC_LENOVO_YOGA_C630) += lenovo-yoga-c630.o
-> diff --git a/drivers/platform/arm64/lenovo-yoga-c630.c b/drivers/platform/arm64/lenovo-yoga-c630.c
-> new file mode 100644
-> index 000000000000..3d1d5acde807
-> --- /dev/null
-> +++ b/drivers/platform/arm64/lenovo-yoga-c630.c
-> @@ -0,0 +1,279 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2024, Linaro Ltd
-> + * Authors:
-> + *    Bjorn Andersson
-> + *    Dmitry Baryshkov
-> + */
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/i2c.h>
-> +#include <linux/module.h>
-> +#include <linux/notifier.h>
-> +#include <linux/platform_data/lenovo-yoga-c630.h>
-> +
-> +#define LENOVO_EC_RESPONSE_REG		0x01
-> +#define LENOVO_EC_REQUEST_REG		0x02
-> +
-> +#define LENOVO_EC_UCSI_WRITE		0x20
-> +#define LENOVO_EC_UCSI_READ		0x21
-> +
-> +#define LENOVO_EC_READ_REG		0xb0
-> +#define LENOVO_EC_REQUEST_NEXT_EVENT	0x84
-> +
-> +struct yoga_c630_ec {
-> +	struct i2c_client *client;
-> +	struct mutex lock;
-> +	struct blocking_notifier_head notifier_list;
-> +};
-> +
-> +static int yoga_c630_ec_request(struct yoga_c630_ec *ec, u8 *req, size_t req_len,
-> +				u8 *resp, size_t resp_len)
-> +{
-> +	int ret;
-> +
-> +	WARN_ON(!mutex_is_locked(&ec->lock));
-> +
-> +	ret = i2c_smbus_write_i2c_block_data(ec->client, LENOVO_EC_REQUEST_REG,
-> +					     req_len, req);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	return i2c_smbus_read_i2c_block_data(ec->client, LENOVO_EC_RESPONSE_REG,
-> +					     resp_len, resp);
-> +}
-> +
-> +int yoga_c630_ec_read8(struct yoga_c630_ec *ec, u8 addr)
-> +{
-> +	u8 req[2] = { LENOVO_EC_READ_REG, };
-> +	int ret;
-> +	u8 val;
-> +
-> +	mutex_lock(&ec->lock);
-> +	req[1] = addr;
-> +	ret = yoga_c630_ec_request(ec, req, sizeof(req), &val, 1);
-> +	mutex_unlock(&ec->lock);
-> +
-> +	return ret < 0 ? ret : val;
-> +}
-> +EXPORT_SYMBOL_GPL(yoga_c630_ec_read8);
-> +
-> +int yoga_c630_ec_read16(struct yoga_c630_ec *ec, u8 addr)
-> +{
-> +	u8 req[2] = { LENOVO_EC_READ_REG, };
-> +	int ret;
-> +	u8 msb;
-> +	u8 lsb;
-> +
-> +	mutex_lock(&ec->lock);
-> +
-> +	req[1] = addr;
-> +	ret = yoga_c630_ec_request(ec, req, sizeof(req), &lsb, 1);
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	req[1] = addr + 1;
-> +	ret = yoga_c630_ec_request(ec, req, sizeof(req), &msb, 1);
-> +
-> +out:
-> +	mutex_unlock(&ec->lock);
-> +
-> +	return ret < 0 ? ret : msb << 8 | lsb;
-> +}
-> +EXPORT_SYMBOL_GPL(yoga_c630_ec_read16);
-> +
-> +u16 yoga_c630_ec_ucsi_get_version(struct yoga_c630_ec *ec)
-> +{
-> +	u8 req[3] = { 0xb3, 0xf2, 0x20};
+While we are at it, also drop legacy compatible strings and bindings for
+five panels. These compatible strings were never used by a DT file
+present in Linux kernel and most likely were never used with the
+upstream Linux kernel.
 
-You have a define above for the read_reg and write_reg commands, could 
-you not define 0xb3 as LENOVO_EC_GET_VERSION ?
+The following compatibles were never used by the devices supported by
+the upstream kernel and are a subject to possible removal:
 
-All of the other commands here seem to have a named define.
+- lg,lp097qx1-spa1
+- samsung,lsn122dl01-c01
+- sharp,ld-d5116z01b
 
-> +	int ret;
-> +	u8 msb;
-> +	u8 lsb;
-> +
-> +	mutex_lock(&ec->lock);
-> +	ret = yoga_c630_ec_request(ec, req, sizeof(req), &lsb, 1);
-> +	if (ret < 0)
-> +		goto out;
-> +
-> +	req[2]++;
+I'm considering dropping them later, unless there is a good reason not
+to do so.
 
-why not set reg[2] = 0x21;
-
-also is req[2] some kind of address ?
-
-> +	ret = yoga_c630_ec_request(ec, req, sizeof(req), &msb, 1);
-> +
-> +out:
-> +	mutex_unlock(&ec->lock);
-> +
-> +	return ret < 0 ? ret : msb << 8 | lsb;
-> +}
-> +EXPORT_SYMBOL_GPL(yoga_c630_ec_ucsi_get_version);
-> +
-> +int yoga_c630_ec_ucsi_write(struct yoga_c630_ec *ec,
-> +			    const u8 req[YOGA_C630_UCSI_WRITE_SIZE])
-> +{
-> +	int ret;
-> +
-> +	mutex_lock(&ec->lock);
-> +	ret = i2c_smbus_write_i2c_block_data(ec->client, LENOVO_EC_UCSI_WRITE,
-> +					     YOGA_C630_UCSI_WRITE_SIZE, req);
-> +	mutex_unlock(&ec->lock);
-> +
-> +	return ret < 0 ? ret : 0;
-> +}
-> +EXPORT_SYMBOL_GPL(yoga_c630_ec_ucsi_write);
-> +
-> +int yoga_c630_ec_ucsi_read(struct yoga_c630_ec *ec,
-> +			   u8 resp[YOGA_C630_UCSI_READ_SIZE])
-> +{
-> +	int ret;
-> +
-> +	mutex_lock(&ec->lock);
-> +	ret = i2c_smbus_read_i2c_block_data(ec->client, LENOVO_EC_UCSI_READ,
-> +					    YOGA_C630_UCSI_READ_SIZE, resp);
-> +	mutex_unlock(&ec->lock);
-> +
-> +	return ret < 0 ? ret : 0;
-> +}
-> +EXPORT_SYMBOL_GPL(yoga_c630_ec_ucsi_read);
-> +
-> +static irqreturn_t yoga_c630_ec_intr(int irq, void *data)
-> +{
-> +	u8 req[] = { LENOVO_EC_REQUEST_NEXT_EVENT };
-> +	struct yoga_c630_ec *ec = data;
-> +	u8 event;
-> +	int ret;
-> +
-> +	mutex_lock(&ec->lock);
-> +	ret = yoga_c630_ec_request(ec, req, sizeof(req), &event, 1);
-> +	mutex_unlock(&ec->lock);
-> +	if (ret < 0)
-> +		return IRQ_HANDLED;
-> +
-> +	pr_info("NOTIFY %x\n", event);
-
-why not dev_info() ?
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v2:
+- Actually drop support for five panels acked by Doug Andersson
+- Link to v1: https://lore.kernel.org/r/20240523-edp-panel-drop-v1-1-045d62511d09@linaro.org
 
 ---
-bod
+Dmitry Baryshkov (3):
+      drm/panel-edp: add fat warning against adding new panel compatibles
+      dt-bindings: display: panel-simple: drop several eDP panels
+      drm/panel-edp: drop several legacy panels
+
+ .../bindings/display/panel/panel-simple.yaml       |  10 --
+ drivers/gpu/drm/panel/panel-edp.c                  | 191 +++------------------
+ 2 files changed, 24 insertions(+), 177 deletions(-)
+---
+base-commit: 6dc544b66971c7f9909ff038b62149105272d26a
+change-id: 20240523-edp-panel-drop-00aa239b3c6b
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
