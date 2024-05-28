@@ -1,462 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-20752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D412A8D1BA8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 14:52:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F25A18D1BB4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 14:53:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AC4D2842C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 12:52:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8BD5284484
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 12:53:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A064F16D31F;
-	Tue, 28 May 2024 12:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1789216DEA5;
+	Tue, 28 May 2024 12:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YaKwJSpV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wfnDEyPu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0B116ABC5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 12:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E71A6F08A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 12:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716900764; cv=none; b=NizwA/luQRo/0SscwoE5XhppIwmO3OjW/UCDlFChi5IaPGL/534T8KteREM74lnq/C8TRmtD2C6h8V/XuLGZGjj90Z8fv0C8o4Eber9RBcHSywI7SPdwtyH3JODLPxCfn0RCmp4qEHcHagoMLpx72UWhVd75yfF+3jHZiMyFsFA=
+	t=1716900798; cv=none; b=UK+awC+YrY9y52g4r560crlDfdTQyFvZE3fSC/VdniNgTp6XNTMGomaug+l29C58UZZHLvQHRC8xZllDvRkga3/va8A239PL8n2doHicd0KNMh1D6pQGxWglmhOit2ey7CPqcsGdagaPSAzTljN778bpSTfsMBokKESySaBRCKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716900764; c=relaxed/simple;
-	bh=A4abQn4kVgiDXLd1AZj3AKY53MdNAupc35RVCQy1dic=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lvPNwlCrO24EPzUxeItYJVpC4vkpbKFNIx/4WbR3D3KRyHMTW253Qxl3eQksSvPE6Qud5wQUP/N7qz6OJPBKEihmsxIIcPQR6vgvV8ua5eHbIlrHGyisYOCXRXZEsH+hZ9n44gt+b9IZGf4X4g588598MF4p07QgdB3ntg22/Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YaKwJSpV; arc=none smtp.client-ip=209.85.167.41
+	s=arc-20240116; t=1716900798; c=relaxed/simple;
+	bh=nmYSDivuU1fGiaHNtpmlfGXSTR8QMXOhtvK7Fro/hPU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gMEjSag+8bNxg/Cy6YrV7LvZN6Q/sEbf/0/r/XnGD4UEFRNKGW7CzC0tTegpw9KPDs0JgzeH1jhENj2mX5ZuA17CytYVNvCvcSiJcwh032cNaA7G/D8gtHeuvG1im6/YKyNDu7w7UKoW0FfRC/5oVufqk2HZ9G8w6R/ki7dCK8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wfnDEyPu; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52742fdd363so903075e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 05:52:42 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5238b5c080cso920863e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 05:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716900760; x=1717505560; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wB/wjlbqtzodELxc2TMpE8q2DYVAWK5JGhZtWqIB69k=;
-        b=YaKwJSpVWsy4lVZ78cM5lh3XjH6nxqA5RGoqtgNGIrDbIVfw3S4Q1yT6v2G/9R2CWp
-         j2RR7PfVdnDwkX4qNvTBO8qJt3K2g7KrNuudOhSNleeHjNX+9EFQJMCwcb4lScCPRKj5
-         5nY/HuXU0JdJYu2UjQp2kI5V9Yp/TWlf4R7tJg0XX6OGZUFtlKedYZgFuIdRdQ+za8t2
-         Ytazzl7s5ifcx5qALGZxfBGQdYRuujtbazAu35pVYvepeZTaot9rzmklWyopDpUpmh72
-         TTKS24CUlI+fFy0urbv08i/X0UonjckVt3rGDsN9I34sgL4H87y4DR7Rjz5Azmh+lIZT
-         b/IQ==
+        d=linaro.org; s=google; t=1716900794; x=1717505594; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IhfLeEz31nnpbep1wtfE79deZVn4RTMnQcliKUfwmsk=;
+        b=wfnDEyPuX2cffwaxTSNsjQBE5A09Ff0g1vx+EfuWWMJzCNm86zQ5MjkZdrtVi9YisN
+         Y78RWXKmjraKp/baA5UCC/T2V4+hOGthPHeAwt/8Zk+EeV84LBR5TtNgeX9478VXtkmp
+         kJr15kbQZxVcD+JCE7GnyIJ0vLiI8IaNvkL8HXNTvLBBtlOeD8V8mu1Z3ZssBYcIwmyD
+         5tPQgASLDtG0y1BAA1oFA7H7+IotPsAG8/3sWCIqu03PJXwATSKkETCV36Ptl/9WYRF5
+         o8408ChVQiPpylARuPy+hg7smzJem7Nv7D+f/8nxOB7H5Ho4Fu8P0vOQDBiRkZ9lE+3t
+         x47w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716900760; x=1717505560;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wB/wjlbqtzodELxc2TMpE8q2DYVAWK5JGhZtWqIB69k=;
-        b=e5qlP0NE/gOfsSoCoMVhN9xg9UIqugdRPr5q2nU1AgrLaomd7oDWp52mcX/TrPenAR
-         4ids7sHaPmL143Bw/Fh63POyA2iQBfOrhCkvDN1sfGDeXy8DaT02ARzUyjZWyKbd7SOb
-         ZzI7fBec1KeQLTSNvGqipjiwCuSi+fJN3GdFEyCxoEBuW0rAmNyfn54PmhMaLPkkqsPP
-         yY2X3smIvUtLQ2rbIWwzHwJbJW4tXBgwATpocVMdWyxrRN6yTMBehI+wJkEWrzM3Ob9L
-         A20gUYYQzEBqGl9jQma9noeTKrrD2W08+AlAAeop+/rQTsEvQ1xUscdGYWxL1ISkl3S1
-         uMqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVxg5TelAd/eeZT0/VwxCUWAbkpE5Gy4hdBvwyIxupf+ESIAtZ09uku7QCU/ucTSNc05sh7PkDbOiALc659gS1u3lXuYGK+bkV7Mmffxg==
-X-Gm-Message-State: AOJu0Yzsd9KDLVXpQ5qYvMrRaIm6b2THd+g9apX2O+ljTlsnUnoMGOol
-	GxH48dK17vUs/CUiaJYUytX9IvHOGyXGpExkPma0hvuEDP/hAtsfuc8WGk/9po8=
-X-Google-Smtp-Source: AGHT+IFijw0lqcVR4WsFwNrg9Gb0NVLG1ojV8ScODxlCI+fUdBQd7peAavM3hm1+XhQVbj7U3PL3QA==
-X-Received: by 2002:a05:6512:1309:b0:522:297f:cb06 with SMTP id 2adb3069b0e04-529651988b4mr8122972e87.32.1716900760367;
-        Tue, 28 May 2024 05:52:40 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-529b7360d1fsm390968e87.157.2024.05.28.05.52.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 May 2024 05:52:40 -0700 (PDT)
-Date: Tue, 28 May 2024 15:52:38 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com
-Subject: Re: [PATCH v2 6/8] misc: fastrpc: Add support for unsigned PD
-Message-ID: <jqz3xnsxkolrjod3h4e745jsuvwifw3bafyabl5ari7wrw2ium@4lol5ghrf5fy>
-References: <20240528112956.5979-1-quic_ekangupt@quicinc.com>
- <20240528112956.5979-7-quic_ekangupt@quicinc.com>
+        d=1e100.net; s=20230601; t=1716900794; x=1717505594;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IhfLeEz31nnpbep1wtfE79deZVn4RTMnQcliKUfwmsk=;
+        b=afhSn2oDMHTbHtChgdcjbH34Wy8tZ1XxLgr4QkRpwbWJrLm/qQdTqU50VAUuh/oHvI
+         8BmbKJfAjgcQoIvE7Aieog9q06KjAOwKEzqYeSDp1LWkDO/NuyLNFK+LrGMOeNZL2emI
+         fsHeIBEfOCtf0UKrhqFVfObotAjSYP6q7dec5Dqy3SVj/LYmvMVtO+hWVnAd3qd60e+q
+         6SV08XjTU9IoPsGllTln+QFHKnbTDLQ/E6TJGdQ7Jhm8953LzmwjFUnW5LFk9BErgrAQ
+         UIsGOt4s4007idDaZAp1eNnrllxG3VSIbZ5qsvcmzZFqWof1piFBG4nsBzOOAvjbKjLt
+         WV3w==
+X-Gm-Message-State: AOJu0Yy31bV1p+gP4DFtsD6bmWSTKQw4jahi0zHt6sitJQpPXYLSK19r
+	R7nPutc13YNFJwF/0S+Lqxr8RT4Qn4JIa0NdmP0di6X80KMo3q61VPsyeH2/zpo=
+X-Google-Smtp-Source: AGHT+IH1jsEV56zssrINk6gB/epPAKvvSKLlj9VGr4Avz+U+gixZrxxt6NkzNDHCNSWzzaaBtLHF6g==
+X-Received: by 2002:a19:380a:0:b0:516:d18b:eae8 with SMTP id 2adb3069b0e04-52964caa6damr6901115e87.41.1716900793703;
+        Tue, 28 May 2024 05:53:13 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:c97:23a9:35bc:df2e:d894:2c76? ([2a00:f41:c97:23a9:35bc:df2e:d894:2c76])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-529712f1c0fsm949009e87.279.2024.05.28.05.53.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 May 2024 05:53:13 -0700 (PDT)
+Message-ID: <e8e714ac-610e-4507-82ed-27a38c7be8fb@linaro.org>
+Date: Tue, 28 May 2024 14:53:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240528112956.5979-7-quic_ekangupt@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/10] arm64: dts: qcom: sc8180x: Add USB MP controller
+ and phys
+To: Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-usb@vger.kernel.org,
+ Bjorn Andersson <quic_bjorande@quicinc.com>
+References: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
+ <20240525-sc8180x-usb-mp-v1-8-60a904392438@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240525-sc8180x-usb-mp-v1-8-60a904392438@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 28, 2024 at 04:59:52PM +0530, Ekansh Gupta wrote:
-> Unsigned PDs are sandboxed DSP processes used to offload computation
-> workloads to the DSP. Unsigned PD have less privileges in terms of
-> DSP resource access as compared to Signed PD.
+
+
+On 5/25/24 20:04, Bjorn Andersson wrote:
+> From: Bjorn Andersson <quic_bjorande@quicinc.com>
 > 
-> Unsigned PD requires more initial memory to spawn. Also most of
-> the memory request are allocated from userspace. Add support for
-> unsigned PD by increasing init memory size and handling mapping
-> request for cases other than DSP heap grow requests.
-
-The patch shows that FASTRPC_MODE_UNSIGNED_MODULE was already supported.
-So probably the patch isn't adding support, it is fixing something. In
-such a case, please fix commit message.
-
+> The SC8180X platform comes with a multiport DWC3 controller with two
+> ports, each connected to a pair of HighSpeed and QMP SuperSpeed PHYs.
 > 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> Describe these blocks.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  drivers/misc/fastrpc.c | 227 ++++++++++++++++++++++++++---------------
->  1 file changed, 147 insertions(+), 80 deletions(-)
+>   arch/arm64/boot/dts/qcom/sc8180x.dtsi | 146 ++++++++++++++++++++++++++++++++++
+>   1 file changed, 146 insertions(+)
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 1c0e5d050fd4..23dd20c22f6d 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -40,7 +40,7 @@
->  #define FASTRPC_INIT_HANDLE	1
->  #define FASTRPC_DSP_UTILITIES_HANDLE	2
->  #define FASTRPC_CTXID_MASK (0xFF0)
-> -#define INIT_FILELEN_MAX (2 * 1024 * 1024)
-> +#define INIT_FILELEN_MAX (5 * 1024 * 1024)
->  #define INIT_FILE_NAMELEN_MAX (128)
->  #define FASTRPC_DEVICE_NAME	"fastrpc"
->  
-> @@ -119,6 +119,11 @@
->  #define SENSORS_PDR_SLPI_SERVICE_NAME            SENSORS_PDR_ADSP_SERVICE_NAME
->  #define SLPI_SENSORPD_NAME                       "msm/slpi/sensor_pd"
->  
-> +enum fastrpc_userpd_type {
-> +	SIGNED_PD			= 1,
-> +	UNSIGNED_PD			= 2,
+> diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> index 9ef3fa40e1d8..0950dc7adb20 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> @@ -2511,6 +2511,34 @@ usb_sec_hsphy: phy@88e3000 {
+>   			status = "disabled";
+>   		};
+>   
+> +		usb_mp0_hsphy: phy@88e4000 {
 
-If the PD is either signed or unsigned, it's better to use bool instead.
+Even though the register names are MPn, I think this is a bit confusing..
 
-> +};
-> +
->  static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
->  						"sdsp", "cdsp"};
->  struct fastrpc_phy_page {
-> @@ -326,6 +331,7 @@ struct fastrpc_user {
->  	int tgid;
->  	int pd;
->  	bool is_secure_dev;
-> +	enum fastrpc_userpd_type userpd_type;
->  	char *servloc_name;
->  	/* Lock for lists */
->  	spinlock_t lock;
-> @@ -1515,7 +1521,6 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->  		u32 siglen;
->  	} inbuf;
->  	u32 sc;
-> -	bool unsigned_module = false;
->  
->  	args = kcalloc(FASTRPC_CREATE_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
->  	if (!args)
-> @@ -1527,9 +1532,10 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->  	}
->  
->  	if (init.attrs & FASTRPC_MODE_UNSIGNED_MODULE)
-> -		unsigned_module = true;
-> +		fl->userpd_type = UNSIGNED_PD;
->  
-> -	if (is_session_rejected(fl, unsigned_module)) {
-> +
-> +	if (is_session_rejected(fl, !(fl->userpd_type == SIGNED_PD))) {
+There's only one MP controller, so perhaps usb_mp_hsphy0?
 
-Even if it is a enum, fl->userpd_type != SIGNED_PD is easier to
-understand.
+[...]
 
->  		err = -ECONNREFUSED;
->  		goto err;
->  	}
-> @@ -1742,6 +1748,7 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
->  	fl->tgid = current->tgid;
->  	fl->cctx = cctx;
->  	fl->is_secure_dev = fdevice->secure;
-> +	fl->userpd_type = SIGNED_PD;
->  
->  	fl->sctx = fastrpc_session_alloc(cctx);
->  	if (!fl->sctx) {
-> @@ -2029,6 +2036,7 @@ static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
->  {
->  	struct fastrpc_buf *buf = NULL, *iter, *b;
->  	struct fastrpc_req_munmap req;
-> +	struct fastrpc_map *map = NULL, *iterm, *m;
->  	struct device *dev = fl->sctx->dev;
->  	int err = 0;
->  
-> @@ -2075,76 +2083,49 @@ static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
->  		}
->  		return err;
->  	}
-> -	dev_err(dev, "buffer not found addr 0x%09lx, len 0x%08llx\n",
-> +	spin_lock(&fl->lock);
-> +	list_for_each_entry_safe(iterm, m, &fl->maps, node) {
-> +		if (iterm->raddr == req.vaddrout) {
-> +			map = iterm;
-> +			break;
-> +		}
-> +	}
-> +	spin_unlock(&fl->lock);
-> +	if (!map) {
-> +		dev_err(dev, "buffer not found addr 0x%09llx, len 0x%08llx\n",
->  			req.vaddrout, req.size);
-> -	return -EINVAL;
-> -}
-> +		return -EINVAL;
-> +	}
->  
-> +	err = fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
-> +	if (err)
-> +		dev_err(dev, "unmmap\tpt fd = %d, 0x%09llx error\n",  map->fd, map->raddr);
+> +			clocks = <&gcc GCC_USB3_MP_PHY_AUX_CLK>,
+> +				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+> +				 <&gcc GCC_USB3_MP_PHY_COM_AUX_CLK>,
+> +				 <&gcc GCC_USB3_MP_PHY_PIPE_0_CLK>;
 
-Less spamming of the dmesg, please. Especially if the user can trigger
-it.
+PIPE_1_CLK
 
-> +	else
-> +		fastrpc_map_put(map);
->  
-> -static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
-> +	return err;
-> +}
-> +
-> +static int fastrpc_req_map_dsp(struct fastrpc_user *fl, u64 phys,
-> +			u64 size, u32 flag, uintptr_t vaddrin, u64 *raddr)
->  {
->  	struct fastrpc_invoke_args args[3] = { [0 ... 2] = { 0 } };
-> -	struct fastrpc_buf *buf = NULL;
->  	struct fastrpc_mmap_req_msg req_msg;
->  	struct fastrpc_mmap_rsp_msg rsp_msg;
->  	struct fastrpc_phy_page pages;
-> -	struct fastrpc_req_mmap req;
-> -	struct device *dev = fl->sctx->dev;
->  	int err;
->  	u32 sc;
->  
-> -	if (copy_from_user(&req, argp, sizeof(req)))
-> -		return -EFAULT;
-> -
-> -	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
-> -		dev_err(dev, "flag not supported 0x%x\n", req.flags);
-> -
-> -		return -EINVAL;
-> -	}
-> -
-> -	if (req.vaddrin) {
-> -		dev_err(dev, "adding user allocated pages is not supported\n");
-> -		return -EINVAL;
-> -	}
-> -
-> -	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR) {
-> -		if (!fl->spd || !fl->spd->ispdup) {
-> -			dev_err(dev, "remote heap request supported only for active static PD\n");
-> -			return -EINVAL;
-> -		}
-> -		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
-> -	} else {
-> -		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
-> -	}
-> -
-> -	if (err) {
-> -		dev_err(dev, "failed to allocate buffer\n");
-> -		return err;
-> -	}
-> -	buf->flag = req.flags;
-> -
-> -	/* Add memory to static PD pool, protection through hypervisor */
-> -	if ((req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR) && fl->cctx->vmcount) {
-> -		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
-> -
-> -		err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
-> -			&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
-> -		if (err) {
-> -			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
-> -					buf->phys, buf->size, err);
-> -			goto err_invoke;
-> -		}
-> -	}
->  	req_msg.pgid = fl->tgid;
-> -	req_msg.flags = req.flags;
-> -	req_msg.vaddr = req.vaddrin;
-> +	req_msg.flags = flag;
-> +	req_msg.vaddr = vaddrin;
->  	req_msg.num = sizeof(pages);
->  
->  	args[0].ptr = (u64) (uintptr_t) &req_msg;
->  	args[0].length = sizeof(req_msg);
->  
-> -	pages.addr = buf->phys;
-> -	pages.size = buf->size;
-> +	pages.addr = phys;
-> +	pages.size = size;
->  
->  	args[1].ptr = (u64) (uintptr_t) &pages;
->  	args[1].length = sizeof(pages);
-> @@ -2154,49 +2135,135 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->  
->  	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MMAP, 2, 1);
->  	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
-> -				      &args[0]);
-> +					  &args[0]);
-> +
->  	if (err) {
-> -		dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
-> -		goto err_invoke;
-> +		dev_err(fl->sctx->dev, "mmap error (len 0x%08llx)\n", size);
-> +		return err;
->  	}
-> +	*raddr = rsp_msg.vaddr;
->  
-> -	/* update the buffer to be able to deallocate the memory on the DSP */
-> -	buf->raddr = (uintptr_t) rsp_msg.vaddr;
-> +	return err;
-> +}
->  
-> -	/* let the client know the address to use */
-> -	req.vaddrout = rsp_msg.vaddr;
-> +static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
-> +{
-> +	struct fastrpc_buf *buf = NULL;
-> +	struct fastrpc_req_mmap req;
-> +	struct fastrpc_map *map = NULL;
-> +	struct device *dev = fl->sctx->dev;
-> +	u64 raddr = 0;
-> +	int err;
->  
-> +	if (copy_from_user(&req, argp, sizeof(req)))
-> +		return -EFAULT;
->  
-> -	spin_lock(&fl->lock);
-> -	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
-> -		list_add_tail(&buf->node, &fl->spd->rmaps);
-> -	else
-> -		list_add_tail(&buf->node, &fl->mmaps);
-> -	spin_unlock(&fl->lock);
-> +	if ((req.flags == ADSP_MMAP_ADD_PAGES ||
-> +			req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR) && (fl->userpd_type == SIGNED_PD)) {
+> +			clock-names = "aux", "ref", "com_aux", "pipe";
 
-align to the opening bracket, please.
+This could be a vertical list
 
-> +		if (req.vaddrin) {
-> +			dev_err(dev, "adding user allocated pages is not supported for signed PD\n");
-> +			return -EINVAL;
-> +		}
 > +
-> +		if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR) {
-> +			if (!fl->spd || !fl->spd->ispdup) {
-> +				dev_err(dev, "remote heap request supported only for active static PD\n");
-> +				return -EINVAL;
-> +			}
-> +			err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
-> +		} else {
-> +			err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
-> +		}
+> +			resets = <&gcc GCC_USB3_UNIPHY_MP1_BCR>,
+> +				 <&gcc GCC_USB3UNIPHY_PHY_MP1_BCR>;
+> +			reset-names = "phy", "phy_phy";
 > +
-> +		if (err) {
-> +			dev_err(dev, "failed to allocate buffer\n");
-> +			return err;
-> +		}
-> +		buf->flag = req.flags;
+> +			power-domains = <&gcc USB30_MP_GDSC>;
 > +
-> +		/* Add memory to static PD pool, protection through hypervisor */
-> +		if ((req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR) && fl->cctx->vmcount) {
-> +			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+> +			#clock-cells = <0>;
+> +			clock-output-names = "usb2_phy1_pipe_clk";
 > +
-> +			err = qcom_scm_assign_mem(buf->phys, (u64)buf->size,
-> +				&src_perms, fl->cctx->vmperms, fl->cctx->vmcount);
-> +			if (err) {
-> +				dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
-> +						buf->phys, buf->size, err);
-> +				goto err_invoke;
-> +			}
-> +		}
+> +			#phy-cells = <0>;
 > +
-> +		err = fastrpc_req_map_dsp(fl, buf->phys, buf->size, buf->flag,
-> +					req.vaddrin, &raddr);
-> +		if (err)
-> +			goto err_invoke;
+> +			status = "disabled";
+> +		};
 > +
-> +		/* update the buffer to be able to deallocate the memory on the DSP */
-> +		buf->raddr = (uintptr_t) raddr;
->  
-> +		/* let the client know the address to use */
-> +		req.vaddrout = raddr;
+>   		usb_sec_qmpphy: phy@88ee000 {
+>   			compatible = "qcom,sc8180x-qmp-usb3-dp-phy";
+>   			reg = <0 0x088ee000 0 0x18c>,
+> @@ -2662,6 +2738,76 @@ gem_noc: interconnect@9680000 {
+>   			qcom,bcm-voters = <&apps_bcm_voter>;
+>   		};
+>   
+> +		usb_mp: usb@a4f8800 {
+> +			compatible = "qcom,sc8180x-dwc3-mp", "qcom,dwc3";
+> +			reg = <0 0x0a4f8800 0 0x400>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +			dma-ranges;
 > +
-> +		spin_lock(&fl->lock);
-> +		if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
-> +			list_add_tail(&buf->node, &fl->spd->rmaps);
-> +		else
-> +			list_add_tail(&buf->node, &fl->mmaps);
-> +		spin_unlock(&fl->lock);
-> +		dev_dbg(dev, "mmap\t\tpt 0x%09lx OK [len 0x%08llx]\n",
-> +			buf->raddr, buf->size);
-> +	} else {
-> +		if ((req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR) && (fl->userpd_type != SIGNED_PD)) {
-> +			dev_err(dev, "secure memory allocation is not supported in unsigned PD\n");
-> +			return -EINVAL;
-> +		}
-> +		err = fastrpc_map_create(fl, req.fd, req.size, 0, &map);
-> +		if (err) {
-> +			dev_err(dev, "failed to map buffer, fd = %d\n", req.fd);
-> +			return err;
-> +		}
-> +
-> +		err = fastrpc_req_map_dsp(fl, map->phys, map->size, req.flags,
-> +					req.vaddrin, &raddr);
-> +		if (err)
-> +			goto err_invoke;
-> +
-> +		/* update the buffer to be able to deallocate the memory on the DSP */
-> +		map->raddr = (uintptr_t) raddr;
-> +
-> +		/* let the client know the address to use */
-> +		req.vaddrout = raddr;
-> +		dev_dbg(dev, "mmap\t\tpt 0x%09llx OK [len 0x%08llx]\n",
-> +			map->raddr, map->size);
-> +	}
->  	if (copy_to_user((void __user *)argp, &req, sizeof(req))) {
->  		err = -EFAULT;
->  		goto err_copy;
->  	}
->  
-> -	dev_dbg(dev, "mmap\t\tpt 0x%09lx OK [len 0x%08llx]\n",
-> -		buf->raddr, buf->size);
-> -
->  	return 0;
->  
->  err_copy:
-> -	spin_lock(&fl->lock);
-> -	list_del(&buf->node);
-> -	spin_unlock(&fl->lock);
-> -	fastrpc_req_munmap_impl(fl, buf);
-> -	buf = NULL;
-> +	if ((req.flags != ADSP_MMAP_ADD_PAGES &&
-> +		req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) || fl->userpd_type != SIGNED_PD) {
-> +		fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
-> +	} else {
-> +		spin_lock(&fl->lock);
-> +		list_del(&buf->node);
-> +		spin_unlock(&fl->lock);
-> +		fastrpc_req_munmap_impl(fl, buf);
-> +		buf = NULL;
-> +	}
->  err_invoke:
-> -	fastrpc_buf_free(buf);
-> +	if (map)
-> +		fastrpc_map_put(map);
-> +	if (buf)
-> +		fastrpc_buf_free(buf);
->  
->  	return err;
->  }
->  
-> -
->  static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_mem_unmap *req)
->  {
->  	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
-> -- 
-> 2.43.0
-> 
+> +			clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
+> +				 <&gcc GCC_USB30_MP_MASTER_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
+> +				 <&gcc GCC_USB30_MP_SLEEP_CLK>,
+> +				 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+> +				 <&gcc GCC_USB3_SEC_CLKREF_CLK>;
 
--- 
-With best wishes
-Dmitry
+This is used by the secondary DWC3 (non-MP). Are you sure?
+
+Actually, are we sure that these clocks are really supplying the DWC3s?
+
+> +			clock-names = "cfg_noc",
+> +				      "core",
+> +				      "iface",
+> +				      "sleep",
+> +				      "mock_utmi",
+> +				      "xo";
+> +
+> +			interconnects = <&aggre1_noc MASTER_USB3_2 0 &mc_virt SLAVE_EBI_CH0 0>,
+> +					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_USB3_2 0>;
+> +			interconnect-names = "usb-ddr", "apps-usb";
+> +
+> +			assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+> +					  <&gcc GCC_USB30_MP_MASTER_CLK>;
+> +			assigned-clock-rates = <19200000>, <200000000>;
+> +
+> +			interrupts-extended = <&intc GIC_SPI 656 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 655 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 658 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 657 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 59 IRQ_TYPE_EDGE_BOTH>,
+> +					      <&pdc 46 IRQ_TYPE_EDGE_BOTH>,
+> +					      <&pdc 71 IRQ_TYPE_EDGE_BOTH>,
+> +					      <&pdc 68 IRQ_TYPE_EDGE_BOTH>,
+> +					      <&pdc 7 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&pdc 30 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "pwr_event_1", "pwr_event_2",
+> +					  "hs_phy_1",	 "hs_phy_2",
+> +					  "dp_hs_phy_1", "dm_hs_phy_1",
+> +					  "dp_hs_phy_2", "dm_hs_phy_2",
+> +					  "ss_phy_1",	 "ss_phy_2";
+> +
+> +			power-domains = <&gcc USB30_MP_GDSC>;
+> +
+> +			resets = <&gcc GCC_USB30_MP_BCR>;
+> +
+> +			status = "disabled";
+> +
+> +			usb_mp_dwc3: usb@a400000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0 0x0a400000 0 0xcd00>;
+> +				interrupts = <GIC_SPI 654 IRQ_TYPE_LEVEL_HIGH>;
+> +				iommus = <&apps_smmu 0x60 0>;
+> +				snps,dis_u2_susphy_quirk;
+> +				snps,dis_enblslpm_quirk;
+
+sa8195-usb.dtsi lists a bunch more fluff:
+
+snps,has-lpm-erratum;
+snps,hird-threshold = /bits/ 8 <0x0>;
+snps,is-utmi-l1-suspend;
+snps,ssp-u3-u0-quirk;
+snps,dis-u1-entry-quirk;
+snps,dis-u2-entry-quirk;
+snps,dis_u3_susphy_quirk;
+snps,force-gen1;
+maximum-speed = "super-speed";
+
+the irq numbers look good
+
+Konrad
 
