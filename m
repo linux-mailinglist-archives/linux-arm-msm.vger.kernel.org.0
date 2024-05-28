@@ -1,75 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-20821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1515E8D24D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:40:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FB478D2512
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:46:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 38BC91C2765D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 19:40:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9F4C61C26550
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 19:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C608B1791ED;
-	Tue, 28 May 2024 19:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84413176FAE;
+	Tue, 28 May 2024 19:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iuyLYi3c"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUH3YT0r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89964176FAE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 19:39:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC3C2E639;
+	Tue, 28 May 2024 19:43:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716925167; cv=none; b=Gckb0wzvlWaw6+e0pfdybqfP3mkdshk8W6y3Uu/iabimNmhbcsUQOs3c3S7y+JQtfCvqS3FSsBklEAwoD2gubvl6jVcljXP8C3bcVUXhQMU4vuzUYZaLh3qkSWqY1v6Wg+2fofK+1BIrNBHl2m/oS9buR8IL4DBsaloJpnuWYxE=
+	t=1716925420; cv=none; b=hZvDsGo1QDK9WpI0Q1e0C6rPu34KYxoNaXCY5pHFRx21TOa2u4Kl+esD/HhKT6F++O1id7jMrh3kqtBuxQHTtl1Eaffc0ZDrzGyTxnelYD9ySPd0miuvW2qCMM9VjhYnXLEIEBBcFqvI4jw03gm22nvu2GTqQbp944QNFv8pRDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716925167; c=relaxed/simple;
-	bh=++B7C+LJPjhNPbyQwixveMzfLgpLwRSPYkfF+FF6az0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aDQKEa/tHwH3RDfG3/34NDA0oEtPFxHayg/hDD56SFjPrD8/zaLEZpXDbEjEong3CCLnJqW3gXY2TFYvFIr9JqvR/tUHGzJQbOI8K0bvE9A89vGCIE9UOXapYRN6N3a9R19aIe98qzvjzDTFV9YP51er1xpul0NaprIuPMjbIDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iuyLYi3c; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2e95a883101so15173311fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 12:39:24 -0700 (PDT)
+	s=arc-20240116; t=1716925420; c=relaxed/simple;
+	bh=vMgVK30cNI3c6myI3dh/lKotl174su6ZxGyEzgBQDMU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=p1JFWh4kMeXCMVd6ffvudI7ZzuI+0n2muvd1krkhCxj2TPzLJqdmQfTQjq+gcSEb+IzkC4YauiwIam5WGhUT5RY1TM2j4masoD1gEdMk2gZWzYPdUyAqNOgUJP45OxoOVc23uE4ogujdPqq1ttQ3/13Pyq7jLGzBQGAab3SU+TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lUH3YT0r; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4211245e889so9812885e9.2;
+        Tue, 28 May 2024 12:43:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716925163; x=1717529963; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dQZO5S8pgY4BnNrxpgnMhoHNDTox+OXu9IzRX/Zms64=;
-        b=iuyLYi3cipwt5vuYYoUs75oXOWJFWV4I4CWo9a8bZszZSEP2flNf+g45gIzA/vHupn
-         0tWyiJ+xKRZArh3GYDIqGgOEImzt0TcHzmxyRrxC+1dZMrnnr29h8p0QSdmcaYsISSRJ
-         rRw7FysarjoF/wxCHY7sG13aTOhs82FvAV1HkjYvli28PZvZlZmuT3/CWVlQnPwr6wPh
-         q470SylSUak7L6w1DK6lI62BBmxeecHa85Nj0SRchRFzaZv+qX4YBa6wbTna7ZktXCoN
-         S87aYBx0adzhezssGfHd1brNJ65RpstWHWBmLrkOGCb5kzcXoEybiZVN2/ygjTamXMLQ
-         xl7g==
+        d=gmail.com; s=20230601; t=1716925417; x=1717530217; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gOgU5Pv9vLAMtMzfb5HowXi9zg9SbrF3W9s32WW+p8M=;
+        b=lUH3YT0ra3bgsk3/+kcZYnutDziZInGnWMzBT0z3Sz5DKf1fF/kETEmOnCvFJqlmDZ
+         ak53rZJ1AWhkTYC1e1RTejCifgkw7a4Dmvf+2enYbx6kh8gyqcdilwhuwZe/iKqkLeyh
+         VhFL68Qw1YEv8Xrvs4ywnZ6e+zVtCSDo7fEbC18NgrPtsD8y97wrhT++sXZ8PtrJkawG
+         R5ccJ9vdWxHudg0cncvMtl0gABh9l1NPwEbC94QEoxnUUNtNSFebyg35RUjhbeerkRVA
+         xZA3Ab6F5Cfe/uiUaEVRzzIF2PjGePQ6xLMZHsgWkXYwxbF+n9ml1bgGOj7pD7zH366Z
+         Tzug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716925163; x=1717529963;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dQZO5S8pgY4BnNrxpgnMhoHNDTox+OXu9IzRX/Zms64=;
-        b=dWv3uvFkdXpRnApvbqQ77HGBufiOBkf/TkqTIitHhLUM7juB2u7J8+7aeeCGDWHnND
-         PCFPkIvK7kyTrZXQtYfqxvomAWdqeQ2zyoydzT02hPNhitnDrxqKYQHpmYA4MpAVWUaf
-         anNBkWL9F4KGOO1k44Znw6w3DRDko67JG4yqBWGCSUxSlty6DQiTNrGTJuTiEmUxhI9f
-         joDIkjwe3HUp1PmNHY0JGOdVneDcOju/m6kHch0QqP4XWdIbQRU14q+moYKkQA0ZzgVC
-         D/HKshrqH12kWL4DRTFthErPCItGwuEpFQxFZOJI8rwM4E/VeXyxavkKRlJDnL2IUT/q
-         GTgA==
-X-Forwarded-Encrypted: i=1; AJvYcCU6fUyVJb2isoP8JFjPvTMb3JGZD+El6zLlNigObSj4azB1oz/aL6J8mqHrIjgrZdzQZK5cXf0N7HI/B+kEH+CSU4Uwuc8U/vuHyLNpPw==
-X-Gm-Message-State: AOJu0YyQ7ABKcgtbszn8afx7xPSaFvI9wOkdsuMxbWemz3/9xib2CoTG
-	cf2TmP77hE+60IncV8q+pM62ViYRCGb4ghezo4FS2vh2X3IdOVcJ7NdMJcaahEw=
-X-Google-Smtp-Source: AGHT+IFzVkivM0pRCEKZghv4XGnWwGA0mQiuvUyi6E1/QDpYYlIClbXtlMaW/XW9dA6Jnk5pUgBkZQ==
-X-Received: by 2002:a05:6512:388b:b0:523:aac1:b559 with SMTP id 2adb3069b0e04-529663e6304mr8034729e87.44.1716925162743;
-        Tue, 28 May 2024 12:39:22 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-529711f96c9sm1045234e87.245.2024.05.28.12.39.22
+        d=1e100.net; s=20230601; t=1716925417; x=1717530217;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gOgU5Pv9vLAMtMzfb5HowXi9zg9SbrF3W9s32WW+p8M=;
+        b=JBVuEH6PDOehtX5KeTpHC3/GpaJp8MLSO4Fi4VxVE8Uz1cyfxiQQcY29QGSWGTrPUb
+         gCpV/WYMI6mhV4Gd66Dr2QzpSso7w09HGZHa7wbVjIWacon8rknRlL2ventzWWMMu8wY
+         ICKbdcRNrpAoAg8adhURMMZXl9QBJGygxU+e5qOkGNFo+uOlAXyhnblAWFixQQZ6nuGY
+         VMUg9l2lnUMZwVdY59vYELZQ8kAiOI4UOVQV3DN3V8vPS7UYn93wmsVFTLgb9jh9PVDr
+         Rmyt8bpyo6KJmZqmh1LXOGVuysJa3O7lt01qg37Z2LHohBuG/1i2M6jqpNw03h8f83Tf
+         SOHg==
+X-Forwarded-Encrypted: i=1; AJvYcCWrlU2oKRvsfzDnhsBNsS/8E/zUQLbxQCzCe0Pbik6uKJ7otfnzf4kL5Hf/Nf+LAjAUHZ4f7gWzvY+SqC5L8JkDYFf6IO6ArMSx9Tar
+X-Gm-Message-State: AOJu0YzrPAoyoWj63Nwu5uYXYOIABZMyjrBGqmWpNVZxZe4y9AatMJt/
+	XkcqtYtZuta/ZdJYVnD0zLc0d1MdEV4JQ2yjHXE+4F+YXXTjLHnr
+X-Google-Smtp-Source: AGHT+IGKbSgiilhOSBJxmKHEzGKuWzqlCk3N/VsqD/9S1jtOwU/1lBz6xW1FQ1871m5BxQiTTa4Fng==
+X-Received: by 2002:a7b:ce18:0:b0:420:18e9:86d5 with SMTP id 5b1f17b1804b1-421089f8242mr107646795e9.10.1716925416880;
+        Tue, 28 May 2024 12:43:36 -0700 (PDT)
+Received: from [192.168.1.130] (BC249212.unconfigured.pool.telekom.hu. [188.36.146.18])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42100f134cesm183709915e9.18.2024.05.28.12.43.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 May 2024 12:39:22 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 28 May 2024 22:39:20 +0300
-Subject: [PATCH v4 3/3] drm/display: split DSC helpers from DP helpers
+        Tue, 28 May 2024 12:43:36 -0700 (PDT)
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
+Date: Tue, 28 May 2024 21:43:30 +0200
+Subject: [PATCH] drm/msm/adreno: Add A306A support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,160 +75,122 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240528-panel-sw43408-fix-v4-3-330b42445bcc@linaro.org>
-References: <20240528-panel-sw43408-fix-v4-0-330b42445bcc@linaro.org>
-In-Reply-To: <20240528-panel-sw43408-fix-v4-0-330b42445bcc@linaro.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Sumit Semwal <sumit.semwal@linaro.org>, 
- Caleb Connolly <caleb.connolly@linaro.org>, 
- Alex Deucher <alexander.deucher@amd.com>, 
- =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- Jani Nikula <jani.nikula@linux.intel.com>, 
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
- Rodrigo Vivi <rodrigo.vivi@intel.com>, 
- Tvrtko Ursulin <tursulin@ursulin.net>, Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240528-a306a-v1-1-03a66dacd8c7@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAOEzVmYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDUyML3URjA7NEXROLVENzY3MjkxSzZCWg2oKi1LTMCrA50bG1tQDHRkq
+ pVwAAAA==
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
  Marijn Suijten <marijn.suijten@somainline.org>, 
- Vinod Koul <vkoul@kernel.org>, Caleb Connolly <caleb@connolly.tech>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4246;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=++B7C+LJPjhNPbyQwixveMzfLgpLwRSPYkfF+FF6az0=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ1qY0fPHnO5xiWeEW+I+fDaU8Na0PvviwqHK8n3TTG7K+
- VmWdYp1MhqzMDByMciKKbL4FLRMjdmUHPZhx9R6mEGsTCBTGLg4BWAiyoIcDHNiYj7J+75/vG5v
- yAX1ddUtC3avmR0c/0zV/vPzSr+r+VxSi9k6v3dXzX2WaXYlw67ZzmZpd5Ok2xuNUo8XJkGG+sF
- 6/qZv/luu2m0eX5bR1DFhcgHDe+OT+4rrp2TwTexMs6oTOFjo7cFbrXqC5ZzN2kM+iyQ3Tl25Pf
- r5GymFiea9b52273zBsnhj1EquOrlzLF0a74RuS5smXUnpDShefPJ6zfkHbzMmRTNc3r7IVccmg
- TP7IrdrX0rg1+rVp0v8Lvkqc7imMz19Hc7uwsrvvXDnYbulvJeC2Lc6tO/+FfD0tn+euf0EcUmN
- c/O+cJ97M1FMqy735ImQFslQ47otxb/Xii28zW1lNZcDAA==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Currently the DRM DSC functions are selected by the
-DRM_DISPLAY_DP_HELPER Kconfig symbol. This is not optimal, since the DSI
-code (both panel and host drivers) end up selecting the seemingly
-irrelevant DP helpers. Split the DSC code to be guarded by the separate
-DRM_DISPLAY_DSC_HELPER Kconfig symbol.
+From: Otto Pflüger <otto.pflueger@abscue.de>
 
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Add support for Adreno 306A GPU what is found in MSM8917 SoC.
+This GPU marketing name is Adreno 308.
+
+Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
+[use internal name of the GPU, reword the commit message]
+Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
 ---
- drivers/gpu/drm/amd/amdgpu/Kconfig | 1 +
- drivers/gpu/drm/display/Kconfig    | 6 ++++++
- drivers/gpu/drm/display/Makefile   | 3 ++-
- drivers/gpu/drm/i915/Kconfig       | 1 +
- drivers/gpu/drm/msm/Kconfig        | 1 +
- drivers/gpu/drm/panel/Kconfig      | 6 +++---
- 6 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c      | 14 +++++++++++---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 11 +++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  6 ++++++
+ 3 files changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/Kconfig b/drivers/gpu/drm/amd/amdgpu/Kconfig
-index 4232ab27f990..5933ca8c6b96 100644
---- a/drivers/gpu/drm/amd/amdgpu/Kconfig
-+++ b/drivers/gpu/drm/amd/amdgpu/Kconfig
-@@ -6,6 +6,7 @@ config DRM_AMDGPU
- 	depends on !UML
- 	select FW_LOADER
- 	select DRM_DISPLAY_DP_HELPER
-+	select DRM_DISPLAY_DSC_HELPER
- 	select DRM_DISPLAY_HDMI_HELPER
- 	select DRM_DISPLAY_HDCP_HELPER
- 	select DRM_DISPLAY_HELPER
-diff --git a/drivers/gpu/drm/display/Kconfig b/drivers/gpu/drm/display/Kconfig
-index 864a6488bfdf..f524cf95dec3 100644
---- a/drivers/gpu/drm/display/Kconfig
-+++ b/drivers/gpu/drm/display/Kconfig
-@@ -59,6 +59,12 @@ config DRM_DISPLAY_DP_TUNNEL_STATE_DEBUG
+diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+index 5273dc849838..b46ff49f47cf 100644
+--- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+@@ -145,6 +145,10 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
+ 		gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003);
+ 		gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x0000000a);
+ 		gpu_write(gpu, REG_A3XX_VBIF_OUT_WR_LIM_CONF0, 0x0000000a);
++	} else if (adreno_is_a306a(adreno_gpu)) {
++		gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003);
++		gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x00000010);
++		gpu_write(gpu, REG_A3XX_VBIF_OUT_WR_LIM_CONF0, 0x00000010);
+ 	} else if (adreno_is_a320(adreno_gpu)) {
+ 		/* Set up 16 deep read/write request queues: */
+ 		gpu_write(gpu, REG_A3XX_VBIF_IN_RD_LIM_CONF0, 0x10101010);
+@@ -237,7 +241,9 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
+ 	gpu_write(gpu, REG_A3XX_UCHE_CACHE_MODE_CONTROL_REG, 0x00000001);
  
- 	  If in doubt, say "N".
+ 	/* Enable Clock gating: */
+-	if (adreno_is_a305b(adreno_gpu) || adreno_is_a306(adreno_gpu))
++	if (adreno_is_a305b(adreno_gpu) ||
++	    adreno_is_a306(adreno_gpu) ||
++	    adreno_is_a306a(adreno_gpu))
+ 		gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xaaaaaaaa);
+ 	else if (adreno_is_a320(adreno_gpu))
+ 		gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xbfffffff);
+@@ -334,8 +340,10 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
+ 		gpu_write(gpu, REG_A3XX_CP_PFP_UCODE_DATA, ptr[i]);
  
-+config DRM_DISPLAY_DSC_HELPER
-+	bool
-+	depends on DRM_DISPLAY_HELPER
-+	help
-+	  DRM display helpers for VESA DSC (used by DSI and DisplayPort).
+ 	/* CP ROQ queue sizes (bytes) - RB:16, ST:16, IB1:32, IB2:64 */
+-	if (adreno_is_a305(adreno_gpu) || adreno_is_a306(adreno_gpu) ||
+-			adreno_is_a320(adreno_gpu)) {
++	if (adreno_is_a305(adreno_gpu) ||
++	    adreno_is_a306(adreno_gpu) ||
++	    adreno_is_a306a(adreno_gpu) ||
++	    adreno_is_a320(adreno_gpu)) {
+ 		gpu_write(gpu, REG_AXXX_CP_QUEUE_THRESHOLDS,
+ 				AXXX_CP_QUEUE_THRESHOLDS_CSQ_IB1_START(2) |
+ 				AXXX_CP_QUEUE_THRESHOLDS_CSQ_IB2_START(6) |
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index c3703a51287b..198b2b5b67fb 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -86,6 +86,17 @@ static const struct adreno_info gpulist[] = {
+ 		.gmem  = SZ_128K,
+ 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+ 		.init  = a3xx_gpu_init,
++	}, {
++		.chip_ids = ADRENO_CHIP_IDS(0x03000620),
++		.family = ADRENO_3XX,
++		.revn  = 308,
++		.fw = {
++			[ADRENO_FW_PM4] = "a300_pm4.fw",
++			[ADRENO_FW_PFP] = "a300_pfp.fw",
++		},
++		.gmem  = SZ_128K,
++		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
++		.init  = a3xx_gpu_init,
+ 	}, {
+ 		.chip_ids = ADRENO_CHIP_IDS(
+ 			0x03020000,
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 77526892eb8c..2645f6f4ad83 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -268,6 +268,12 @@ static inline bool adreno_is_a306(const struct adreno_gpu *gpu)
+ 	return adreno_is_revn(gpu, 307);
+ }
+ 
++static inline bool adreno_is_a306a(const struct adreno_gpu *gpu)
++{
++	/* a306a marketing name is a308 */
++	return adreno_is_revn(gpu, 308);
++}
 +
- config DRM_DISPLAY_HDCP_HELPER
- 	bool
- 	depends on DRM_DISPLAY_HELPER
-diff --git a/drivers/gpu/drm/display/Makefile b/drivers/gpu/drm/display/Makefile
-index 17d2cc73ff56..2ec71e15c3cb 100644
---- a/drivers/gpu/drm/display/Makefile
-+++ b/drivers/gpu/drm/display/Makefile
-@@ -6,7 +6,8 @@ drm_display_helper-y := drm_display_helper_mod.o
- drm_display_helper-$(CONFIG_DRM_DISPLAY_DP_HELPER) += \
- 	drm_dp_dual_mode_helper.o \
- 	drm_dp_helper.o \
--	drm_dp_mst_topology.o \
-+	drm_dp_mst_topology.o
-+drm_display_helper-$(CONFIG_DRM_DISPLAY_DSC_HELPER) += \
- 	drm_dsc_helper.o
- drm_display_helper-$(CONFIG_DRM_DISPLAY_DP_TUNNEL) += \
- 	drm_dp_tunnel.o
-diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
-index 5932024f8f95..117b84260b1c 100644
---- a/drivers/gpu/drm/i915/Kconfig
-+++ b/drivers/gpu/drm/i915/Kconfig
-@@ -11,6 +11,7 @@ config DRM_I915
- 	select SHMEM
- 	select TMPFS
- 	select DRM_DISPLAY_DP_HELPER
-+	select DRM_DISPLAY_DSC_HELPER
- 	select DRM_DISPLAY_HDCP_HELPER
- 	select DRM_DISPLAY_HDMI_HELPER
- 	select DRM_DISPLAY_HELPER
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 1931ecf73e32..6dcd26180611 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -111,6 +111,7 @@ config DRM_MSM_DSI
- 	depends on DRM_MSM
- 	select DRM_PANEL
- 	select DRM_MIPI_DSI
-+	select DRM_DISPLAY_DSC_HELPER
- 	default y
- 	help
- 	  Choose this option if you have a need for MIPI DSI connector
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 2ae0eb0638f3..3e3f63479544 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -340,7 +340,7 @@ config DRM_PANEL_LG_SW43408
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
--	select DRM_DISPLAY_DP_HELPER
-+	select DRM_DISPLAY_DSC_HELPER
- 	select DRM_DISPLAY_HELPER
- 	help
- 	  Say Y here if you want to enable support for LG sw43408 panel.
-@@ -549,7 +549,7 @@ config DRM_PANEL_RAYDIUM_RM692E5
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
--	select DRM_DISPLAY_DP_HELPER
-+	select DRM_DISPLAY_DSC_HELPER
- 	select DRM_DISPLAY_HELPER
- 	help
- 	  Say Y here if you want to enable support for Raydium RM692E5-based
-@@ -907,7 +907,7 @@ config DRM_PANEL_VISIONOX_R66451
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
--	select DRM_DISPLAY_DP_HELPER
-+	select DRM_DISPLAY_DSC_HELPER
- 	select DRM_DISPLAY_HELPER
- 	help
- 	  Say Y here if you want to enable support for Visionox
+ static inline bool adreno_is_a320(const struct adreno_gpu *gpu)
+ {
+ 	return adreno_is_revn(gpu, 320);
 
+---
+base-commit: 6dc544b66971c7f9909ff038b62149105272d26a
+change-id: 20240528-a306a-48e173724d6c
+
+Best regards,
 -- 
-2.39.2
+Barnabás Czémán <trabarni@gmail.com>
 
 
