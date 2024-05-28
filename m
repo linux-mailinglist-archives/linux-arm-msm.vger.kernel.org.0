@@ -1,98 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-20758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76BC78D1C0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:04:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 237558D1C10
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:04:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3184A286DD4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:04:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B78751F2307E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:04:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D03716EBE0;
-	Tue, 28 May 2024 13:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 001C716EC08;
+	Tue, 28 May 2024 13:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GXvYWQ8i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aGazNDdL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEFC13D61E;
-	Tue, 28 May 2024 13:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB69A16D9AC;
+	Tue, 28 May 2024 13:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716901250; cv=none; b=hh8OCWOif2JCZgWOfAHswh5BaeFt3XdYa6KmP2ERXiNolsKadjrxGzctaTHh+9V7AspfWKN/9TeQvvr2GLYUN6u2+ZqEQOXtOSLgTHhlcYmiDWTaN30t2lpzTiEVtfZ7AU3dX/j/2Zs9sPoki0ZYwQmWs5+UGIRd2cdOi0VTTf4=
+	t=1716901255; cv=none; b=rIZ6oW/Joqs/jk69bqCTcn6zkJAVutDXGt3sIJidJcOTF7PNW/X2eQOOlUPZHVz8+GD0tm0uv2wNxY/OO46k0nL42nuJrz2YI4RmdpVyJQjyA/DH7uEO65ugD2lI0f+wswI6nC6tEpnSu12FP74msSqwUT6YokWBrxmtFKhiaL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716901250; c=relaxed/simple;
-	bh=HABINTt9kxGsJQrrW5L33dqrIcuhqyUbsQjoUKDtfTE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EEmlhNLdq0P6tc10cmaGWD0j5iStcrwJ3pQ5Z2JbhB/CLuU72Q8jesS9aJthQo8w49cway30q3SvFuhuYxM0SjEy4vsx/K1/P8IB3yqpj2eUqs/E30eMHyEtx0fB/E+x5WRaooeQ4pTsyr3bs739E1TmF1DmUE09wf+9wk9mTSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GXvYWQ8i; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE944C3277B;
-	Tue, 28 May 2024 13:00:46 +0000 (UTC)
+	s=arc-20240116; t=1716901255; c=relaxed/simple;
+	bh=o5YaV/F8okH3+THu/qvPwFBoRhLEWm6VUfwNDyMYEKI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=c0zXZ8frjzxFGRs91GyinaJ5L/SE0sRLW+zHDyXIuDPKzrQHBvw4Rs9PoqcxBnglZZdxZ3V1pVAn524epf7s82AWrUUbvU7AC7RxFxmhPb2x0XA4CBwpH6fWj9it8qHP51EvQdfG1XOVRgS3ow7DeFRM7gE5VqqtTpx2a7Wn2is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aGazNDdL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587BBC3277B;
+	Tue, 28 May 2024 13:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716901249;
-	bh=HABINTt9kxGsJQrrW5L33dqrIcuhqyUbsQjoUKDtfTE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=GXvYWQ8ix2bhRXya9ikgbbM71NM3kkEmNFE+khWCZGOH0U9S3l2buGhJoFOeFORAV
-	 FmYFGJXXeF3mmkZYp+gfGRS/CFRro8RJjclHaxPmEzF1IovSNgXsEUX/3jCChEerl4
-	 HU9rBKNw5Ms0mGXzigIPNh7d5GT8tlyoRLu7ht8MWxnlA8xhd0A7IL3pqwsCdioDX9
-	 wwZAy8S3CkRjc62bT89Edapb72c8ob3w8QBWX93iRifHAWRm0YtkyJg53lpU3aLhMZ
-	 1PuCH/B57h6OG2pKvNFbGYIq1xWlWDfxsy6UErHh2pGQH+tKoPDtXYNK6RX4K0+FVf
-	 DarUFXeIb/BSA==
+	s=k20201202; t=1716901255;
+	bh=o5YaV/F8okH3+THu/qvPwFBoRhLEWm6VUfwNDyMYEKI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=aGazNDdL2OCx9AsxfndwJOeTFQIRvuAMMrjm1yMwbFNaiYPbsFlM9DGTAHazC/RHh
+	 H4rvHdcSUOcitAsglzj90rMz7kjxZ4QdLYORqe/OfRQUsHUqx5eO7zLzI+TLJgpQSJ
+	 aR/jTzJUisAjfjUldVkkSGMwbVBgkkR0Mtkm34HFwTuBOljY4sRkVMRLIjJFagis2l
+	 a82qytHg+gpwI7lagzL+e0q1U270hZa69Ah/3UEfCcsqEdQG2n1iIZl6ZtBP0wFu4z
+	 wHVdnfHFtOHNwEZZoMxh5thm0qb+KWB5FNcFMoXlfk5r8XNEYJ/ACWnNlG2LKAYGHs
+	 BS/6oM0R7atGA==
 From: Niklas Cassel <cassel@kernel.org>
-To: Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
 	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Niklas Cassel <cassel@kernel.org>
+	Bjorn Helgaas <bhelgaas@google.com>
 Cc: Damien Le Moal <dlemoal@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org
-Subject: [PATCH 0/3] Make pci/endpoint branch build
-Date: Tue, 28 May 2024 15:00:36 +0200
-Message-ID: <20240528130035.1472871-5-cassel@kernel.org>
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH 2/3] PCI: qcom-ep: Make use of dw_pcie_ep_deinit_notify()
+Date: Tue, 28 May 2024 15:00:38 +0200
+Message-ID: <20240528130035.1472871-7-cassel@kernel.org>
 X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240528130035.1472871-5-cassel@kernel.org>
+References: <20240528130035.1472871-5-cassel@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=829; i=cassel@kernel.org; h=from:subject; bh=HABINTt9kxGsJQrrW5L33dqrIcuhqyUbsQjoUKDtfTE=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGNJCrxZ7sJgwzLh48lJTRI3yVG3O99qv/j8tkLs7Yd1l2 8hvTolPOkpZGMS4GGTFFFl8f7jsL+52n3Jc8Y4NzBxWJpAhDFycAjCR3naG/yHnDU5u4JZL2nzY TtAl483Wqd8v9PKsdL8bEHzq7Y4NBlcYGU5mXv669NSjeQdOWN5l+LTrZ/GlGRx7VL9vmxE973l x0hcmAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=863; i=cassel@kernel.org; h=from:subject; bh=o5YaV/F8okH3+THu/qvPwFBoRhLEWm6VUfwNDyMYEKI=; b=owGbwMvMwCV2MsVw8cxjvkWMp9WSGNJCr5bMOniD3YDVY6GSWo0sc8/9j0tOnnihfeWSntuUx JWTMi887ChlYRDjYpAVU2Tx/eGyv7jbfcpxxTs2MHNYmUCGMHBxCsBENO0ZGVb9lwtQ6lq16lec 1EeVigb71mDN3PV9pUpLG5851zI3ZTP801z/L8VsKbt0+4d/iz+edDP327+A18H3wP9Ua/nrOvU NrAA=
 X-Developer-Key: i=cassel@kernel.org; a=openpgp; fpr=5ADE635C0E631CBBD5BE065A352FE6582ED9B5DA
 Content-Transfer-Encoding: 8bit
 
-The pci/next branch has currently not merged the latest pci/endpoint
-branch.
+By using dw_pcie_ep_deinit_notify(), the init and deinit notification is
+performed using the same API layer. This makes the driver more consistent.
 
-Perhaps this delay in creating a new pci/next branch is because the
-pci/endpoint branch currently fails to build.
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Fix the build error on the pci/endpoint branch such that it will be
-possible to queue further patches.
-
-
-Kind regards,
-Niklas
-
-Niklas Cassel (3):
-  PCI: dwc: ep: Add dw_pcie_ep_deinit_notify()
-  PCI: qcom-ep: Make use of dw_pcie_ep_deinit_notify()
-  PCI: tegra194: Make use of dw_pcie_ep_deinit_notify()
-
- drivers/pci/controller/dwc/pcie-designware-ep.c | 13 +++++++++++++
- drivers/pci/controller/dwc/pcie-designware.h    |  5 +++++
- drivers/pci/controller/dwc/pcie-qcom-ep.c       |  2 +-
- drivers/pci/controller/dwc/pcie-tegra194.c      |  2 +-
- 4 files changed, 20 insertions(+), 2 deletions(-)
-
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index b6a5010cc1a7..25bf790e9725 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -507,7 +507,7 @@ static void qcom_pcie_perst_assert(struct dw_pcie *pci)
+ 		return;
+ 	}
+ 
+-	pci_epc_deinit_notify(pci->ep.epc);
++	dw_pcie_ep_deinit_notify(&pci->ep);
+ 	dw_pcie_ep_cleanup(&pci->ep);
+ 	qcom_pcie_disable_resources(pcie_ep);
+ 	pcie_ep->link_status = QCOM_PCIE_EP_LINK_DISABLED;
 -- 
 2.45.1
 
