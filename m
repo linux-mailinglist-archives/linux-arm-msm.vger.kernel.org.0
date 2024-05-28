@@ -1,132 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-20713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7483C8D182D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 12:11:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0A548D18E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 12:50:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E8E85B26DCB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 10:11:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85DD72860D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 10:50:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF0B916130D;
-	Tue, 28 May 2024 10:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B30F16C458;
+	Tue, 28 May 2024 10:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UcNq45Mm"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="BQYtiEk1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CA7F9DA;
-	Tue, 28 May 2024 10:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6183916B753
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 10:49:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716891076; cv=none; b=nxkKr2ft9uJSnKcngU7PGNUZPVUreEWiIXvWEtHTEhRavZwzoZMG6A2BZJkWUvX4cGE/VWykMsvL9EuMnZM2OdcE97taNd986PHLmG+H9lkia8RHOLySuIrsSu7XvXnFGlXxj24TVnc882yY39m2VyizQ0qbo3oO6TcdRR1SMh0=
+	t=1716893400; cv=none; b=t5jvChlDwu542ky8GJu8c0LVpFKqSEKbKmo97aRNeaPK0PI/BdZVURAdhdcsgs7s/3schkSu23DiFIuqDAf9VjSmM3uV+AJxDRI+6TORGSouUNt/L8tTDdMu+mMhwMifsS7sCbCpNmFxwx1wM7CRuFAHBOiOf7xn4YUVXK1s0L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716891076; c=relaxed/simple;
-	bh=3ri47Jw8bG0xrz0cHD1t6SSVNIySHKS61lpPF53h+3s=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=iX/URjNCb+bvi/1QSAtRArNHauieVzybVd7fuJgW3Lq+9sAdO9/fmVXLaDN1vMJWfvPCNiWoNvfXt1UyH40jv//QBNs+LIVQbh3AQtqpwyJaZHjnjQbl5QsUf6rgS2+ePE2qbnLVWlSFhZXHylyiLLEzPXWmfjy0sgdRthd9GlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UcNq45Mm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3848C3277B;
-	Tue, 28 May 2024 10:11:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716891076;
-	bh=3ri47Jw8bG0xrz0cHD1t6SSVNIySHKS61lpPF53h+3s=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=UcNq45MmR80f7cpnqo6wlB59u/UPMXeA2qZWe17HnnDwofjLwb/jyu2ucUmG7HrwR
-	 TVdIYyKpguUruLYx1B5gLFLhlivJLKRFJxq9x9BaX3I+nqDvSS6eePT3x6sdVpys2U
-	 61tAs6AUmhpT8QdvpUpyiZVk3DGgeF/MnqpsUHDEcnN6pIN2mvUGyNfPK9XN8+N/w0
-	 5SstgHQlBn6qvkiI037eeAf3eqgMtJY0bHE+7X8zlpYXIn/lQwkFHrqVnCbk8Vkqud
-	 TPhhPW0qrnj6esSfQRQzzfJlP+BN+uoyS7w++RpTtPK2QGto3g1mRAAmVABGNBtVnu
-	 7kzjDGhmLq8Fg==
-From: Kalle Valo <kvalo@kernel.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Bjorn Andersson <andersson@kernel.org>,  Jeff Johnson
- <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
-  wireless <linux-wireless@vger.kernel.org>,  DT
- <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
- Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
-  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
- <avrac@freebox.fr>,  Konrad Dybcio <konrad.dybcio@linaro.org>,  Jami
- Kettunen <jamipkettunen@gmail.com>,  Jeffrey Hugo
- <quic_jhugo@quicinc.com>,  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-  Alexey Minnekhanov <alexeymin@postmarketos.org>
-Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
- qcom,no-msa-ready-indicator prop
-References: <54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
-	<171560975908.1690511.498631481702370762.kvalo@kernel.org>
-	<3464a980-36a7-4ed2-b2dc-be8fd9091b06@freebox.fr>
-Date: Tue, 28 May 2024 13:11:10 +0300
-In-Reply-To: <3464a980-36a7-4ed2-b2dc-be8fd9091b06@freebox.fr> (Marc
-	Gonzalez's message of "Tue, 28 May 2024 11:54:37 +0200")
-Message-ID: <87zfsa6ybl.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1716893400; c=relaxed/simple;
+	bh=xkwtv/ar7L7z1hGbFo/aekoVFoud4lD93MVDzRtiDUo=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=b9YklOQTDYMcIuW3H4XJ8NTIu/vFx+4FfJ5O7/mlkYobXqkOdOtiN29O6OK3KhoR2kCkCpUqhSWIE9IWFYzj0eAM9mv1zyNPpSF0ydMJFKFMCULNf2K1egXI3/GGVzJa5fJpCFIub9u+QRpGnqVrzvjVNTEO6jCBUDdwKEIgr34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=BQYtiEk1; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42108822e3cso22070145e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 03:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1716893396; x=1717498196; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SoaTaKESqCNq2RRTZbp/puYp7dOBR/SpLMVVBMPUbKE=;
+        b=BQYtiEk1dUXiYPFN7gSahgzdU28uSoCjrRiU4OUqdoBtDUEtwLxU9bmyMvBR5hu+OM
+         prtRdM9hgVNwm8p7CRybS20YxLqL0abaUqWpNo7qhlFJTSQz7rv8r1uArH/cBngiev8w
+         YOlJBdKsrDs2WmGwQh/u2VM6J6az11oluqyl9Sj/vr1O0H2n0+9XlBprtFswcEo2J4V8
+         3NOx2G/vPnOj34MD3+iMVYPzSb8x7bC2VbrqZ2vVn5t7KWRXuXEAKcEjmpXijWN1wzpL
+         NGuVf9IPBg7UlvZz8KOXB2KtwPjJtzM64RaT/Tga2XPef7AFgXv4Bao3AnXibBxkVf0/
+         EE0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716893396; x=1717498196;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SoaTaKESqCNq2RRTZbp/puYp7dOBR/SpLMVVBMPUbKE=;
+        b=wu7SSS7pgv8l2NCxM8vhVgOzfDUvcHQDiQVYFKHnfS2INKO/1JxWx5cTuyF/O3Istg
+         xwA39R/t+J05a/Wq3LGKVWHDrluyBd592r/OICjaI4VPI3cELJjUshCSXufn+vGUCTkX
+         ktTU88/I4TRkmrJ/A49+fLr/JUIWdeRqDGW70nqu5SwgqS99y1ico5T9D0YhWhURl35x
+         +7CTw4/yMqqkYQx/vhWIp9QYy15R5Zq6gNdZAucK1/r+a7ID0k38RCooxv51PPbjqXvl
+         QUakvta3jsMsJwgPwmBxZdCBG9CCctrrKG43RZYznV5XfqWcjEwnRUxaBli3qYIjp/jl
+         DfYg==
+X-Gm-Message-State: AOJu0YxdYBOgKHDh5i34NNwhrXvS9gNYyYokm8Y/2V/l/7m7C/d2CI82
+	Fl0TeG7ungZ+DYslp8SOj0/uGlTHe0djVDxk5SW98dEziWVqiWAd7gvExBhyNHc=
+X-Google-Smtp-Source: AGHT+IGewrMUbSSURVDW5W/6sj6A3tBXyhPbUTHqmyvZmpelqP045wp02w6f3gR0CZiMG43AH7dtNQ==
+X-Received: by 2002:a05:6000:1753:b0:354:fce5:4cc3 with SMTP id ffacd0b85a97d-354fce54d2dmr10916648f8f.19.1716893395715;
+        Tue, 28 May 2024 03:49:55 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557a0902fcsm11321509f8f.53.2024.05.28.03.49.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 May 2024 03:49:55 -0700 (PDT)
+Message-ID: <b4a71be9-b888-4396-9eef-28c4a4f2b149@freebox.fr>
+Date: Tue, 28 May 2024 12:49:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: msm8998: add venus node
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+To: Bjorn Andersson <andersson@kernel.org>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>,
+ linux-media <linux-media@vger.kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
+References: <1cf08b56-a247-431b-a24b-69f563f49240@freebox.fr>
+ <c2fca6c7-2421-42b4-a43d-68b251daf9b4@freebox.fr>
+ <e187c5ab-0241-4a45-8d74-a33ec12deec6@freebox.fr>
+Content-Language: en-US
+In-Reply-To: <e187c5ab-0241-4a45-8d74-a33ec12deec6@freebox.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Marc Gonzalez <mgonzalez@freebox.fr> writes:
+On 13/05/2024 10:51, Marc Gonzalez wrote:
 
-> On 13/05/2024 16:16, Kalle Valo wrote:
->
->> Marc Gonzalez wrote:
->> 
->>> The ath10k driver waits for an "MSA_READY" indicator
->>> to complete initialization. If the indicator is not
->>> received, then the device remains unusable.
->>>
->>> cf. ath10k_qmi_driver_event_work()
->>>
->>> Several msm8998-based devices are affected by this issue.
->>> Oddly, it seems safe to NOT wait for the indicator, and
->>> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
->>>
->>> Jeff Johnson wrote:
->>>
->>>   The feedback I received was "it might be ok to change all ath10k qmi
->>>   to skip waiting for msa_ready", and it was pointed out that ath11k
->>>   (and ath12k) do not wait for it.
->>>
->>>   However with so many deployed devices, "might be ok" isn't a strong
->>>   argument for changing the default behavior.
->>>
->>> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
->>> work-around in the driver. However, firmware-5.bin is parsed too late.
->>> So we are stuck with a DT property.
->>>
->>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
->>> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->>> Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
->>> Acked-by: Rob Herring (Arm) <robh@kernel.org>
->>> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
->> 
->> 2 patches applied to ath-next branch of ath.git, thanks.
->> 
->> 71b6e321e302 dt-bindings: net: wireless: ath10k: add
->> qcom,no-msa-ready-indicator prop
->> 6d67d18014a8 wifi: ath10k: do not always wait for MSA_READY indicator
->
-> Hello Kalle,
-> What version of Linux will these be included in?
-> (I don't see them in v6.10-rc1. Are they considered
-> a new feature, rather than a fix, and thus 6.11?)
+> On 07/05/2024 11:29, Marc Gonzalez wrote:
+> 
+>> From: Pierre-Hugues Husson <phhusson@freebox.fr>
+>>
+>> Now that the venus clocks are fixed, we can add the DT node.
+>>
+>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> Signed-off-by: Pierre-Hugues Husson <phhusson@freebox.fr>
+>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>> ---
+>>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 48 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> index 5f5b90a6e2bf1..3d3b1f61c0690 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> @@ -3010,6 +3010,54 @@ mdss_dsi1_phy: phy@c996400 {
+>>  			};
+>>  		};
+>>  
+>> +		venus: video-codec@cc00000 {
+>> +			compatible = "qcom,msm8998-venus";
+>> +			reg = <0x0cc00000 0xff000>;
+>> +			interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
+>> +			power-domains = <&mmcc VIDEO_TOP_GDSC>;
+>> +			clocks = <&mmcc VIDEO_CORE_CLK>,
+>> +				 <&mmcc VIDEO_AHB_CLK>,
+>> +				 <&mmcc VIDEO_AXI_CLK>,
+>> +				 <&mmcc VIDEO_MAXI_CLK>;
+>> +			clock-names = "core", "iface", "bus", "mbus";
+>> +			iommus = <&mmss_smmu 0x400>,
+>> +				 <&mmss_smmu 0x401>,
+>> +				 <&mmss_smmu 0x40a>,
+>> +				 <&mmss_smmu 0x407>,
+>> +				 <&mmss_smmu 0x40e>,
+>> +				 <&mmss_smmu 0x40f>,
+>> +				 <&mmss_smmu 0x408>,
+>> +				 <&mmss_smmu 0x409>,
+>> +				 <&mmss_smmu 0x40b>,
+>> +				 <&mmss_smmu 0x40c>,
+>> +				 <&mmss_smmu 0x40d>,
+>> +				 <&mmss_smmu 0x410>,
+>> +				 <&mmss_smmu 0x421>,
+>> +				 <&mmss_smmu 0x428>,
+>> +				 <&mmss_smmu 0x429>,
+>> +				 <&mmss_smmu 0x42b>,
+>> +				 <&mmss_smmu 0x42c>,
+>> +				 <&mmss_smmu 0x42d>,
+>> +				 <&mmss_smmu 0x411>,
+>> +				 <&mmss_smmu 0x431>;
+>> +			memory-region = <&venus_mem>;
+>> +			status = "disabled";
+>> +
+>> +			video-decoder {
+>> +				compatible = "venus-decoder";
+>> +				clocks = <&mmcc VIDEO_SUBCORE0_CLK>;
+>> +				clock-names = "core";
+>> +				power-domains = <&mmcc VIDEO_SUBCORE0_GDSC>;
+>> +			};
+>> +
+>> +			video-encoder {
+>> +				compatible = "venus-encoder";
+>> +				clocks = <&mmcc VIDEO_SUBCORE1_CLK>;
+>> +				clock-names = "core";
+>> +				power-domains = <&mmcc VIDEO_SUBCORE1_GDSC>;
+>> +			};
+>> +		};
+>> +
+>>  		mmss_smmu: iommu@cd00000 {
+>>  			compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
+>>  			reg = <0x0cd00000 0x40000>;
+> 
+> Hello Bjorn,
+> 
+> This patch is supposed to be merged through one of your trees, right?
 
-Yeah, these commits will go to v6.11. Because of the multiple trees
-involved (ath-next -> wireless-next -> net-next -> linus) we need to
-have ath.git pull request ready well before the merge window opens and
-these commits missed the last pull request.
+Bjorn, would you take patches 1 and 2 in your tree?
 
-Yes, we are slow :)
+Who would take patch 3?
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+Regards
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
