@@ -1,82 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-20764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0286E8D1C3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:12:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 402688D1C43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:14:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8618C1F24D57
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:12:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC0451F20FF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:14:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACA1A1DFEA;
-	Tue, 28 May 2024 13:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1775A16DEC7;
+	Tue, 28 May 2024 13:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rl5kBtq1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wcSp2+pt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E052F16415
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 13:12:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654A217E8F0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 13:14:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716901943; cv=none; b=Ky2RUrt0yBk1uTcbxEjcthPzNP3K0w2tXCEcXbeL/yMU6Oq7NbKe6ypb62P2izdd0Mrm/kkxj75qn4D0zxNjNYNgESWw5DcRl3qGnzxk2wGIoNMelNiEXLJsZyc9UXSsHERcsgFYyp55aTtbU3wPDGYbY7Sq2q3+BXgO/wdvg4A=
+	t=1716902092; cv=none; b=lYZRhRk92SJZz6dPkBpg0BsHWNyMg3z4ggWWNi3ywcahlz1LN8o50XhgG7TkC4RLiAQMCuJB61++Ddlg+rnEMhmFoea5YPvVJiplEfFlpClQQpNDXf1ZcPdSj88xjeIqAd8l9oNPUUrWZBmGsyLRt6BwnUjgXESRC9IQDzkLLVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716901943; c=relaxed/simple;
-	bh=iaHSfVk3cYotj/lpjrNnV72ctCzwvrJC062eqOjiZ64=;
+	s=arc-20240116; t=1716902092; c=relaxed/simple;
+	bh=SeWXVvF22D9ZJf9IgluXoTCpCnkYe9ToAThBJHwIzY4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a+1BHJ8cvu890tVBes3onozNmCQQeDdHHhXcVTVmVQBAwk2ANUVAU24lRUPIA6uH2oE3m/8an91GuFNpTQUos+uV6tpPff0hZ1dhrR+OwBp2ih+zyZMCn2AGbs9bbUgXtiHG3eh2prhof/HZ0+N/RG42vGQeCChlyqTczK+2M0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rl5kBtq1; arc=none smtp.client-ip=209.85.167.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=U26kfyNsygcD7NEQT/Hvm87KehiRkb7F/Hs0Mi41PtKA9vdZimQzuBgRnSaxjw3ZklHq9yWmac0f427wIUvbqFKW0zIekYRaKTk/haLB6t98fArjVI9QJdhzB6AB/1p8LujCqPcKfnW5fXLusnvW5NxYmI/5HX6MTT/5jZUyUnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wcSp2+pt; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-529614b8c29so1356557e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 06:12:21 -0700 (PDT)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5295bcb9bc1so941332e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 06:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716901940; x=1717506740; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1716902089; x=1717506889; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VeSY2ceVXmdz5zqyxr0C6Kr9UZqmvZCx0+drlbb4RkY=;
-        b=Rl5kBtq1cbzmSgYiWxECD6OpsjiHBs93onbqxBIa04gETjs4w4a5Mg1SmH1uZL8532
-         i3Lpi3GB9Td+Z8m7HIhKbHoBXAyOFKWzc3KweEFwK5xZhn/vaokGUIyBZtWQ8q3gg4Ak
-         QO7fZ5LrwALvOMMuMArbu0KaDPTC06rbvlncJHb+gzqKKa2KHAp8i3FVIoR5GTVe30ia
-         5wg60Zv64OCkTzKppQas+/TkVYT70cN3yFqK+/zQ4updmPPICUttnwwMRE2uRD81qiDy
-         PbNuwkXrL8XJ+/fLivuFqcDZFHgyaF7PAIk/3dMgw+CzJ2UB2Zw4vF1JehRSHvZ4t3Vf
-         KRLg==
+        bh=6gaAjPPNW+1o8Nq5Xk3MdnoecgKTcrll+0FrMoJS3ho=;
+        b=wcSp2+ptffLfjHTyNtjcjZc/W5nZ1N+1skE5toYnRLFsi47xpXEeC7knoKy6CGiPUH
+         klgx1HHIWUByaYtdggLq+ixvYdK0Eds6/n9E+hK5QRgmmqcMbF5GRpR0pV4QRYjj3xLJ
+         itMaD1Tuo/Y9HTbhNn5Q3k0bqKVej6MSEu/uwEV4mKhpBMlBtDBhhYJe1Tooq/JCR9uj
+         /PAHCPUrJGCgw+9BWjFc38wYZGjS24iXdTGwYy/BDPHzewfBZahRnIDkoyG5OGq627J0
+         TkxXP0oXeoour2671cnQlvEuzw4w/BEmb4YOm5XhlShXWpJN/1qODfMmzqF/XBymMOHY
+         FqrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716901940; x=1717506740;
+        d=1e100.net; s=20230601; t=1716902089; x=1717506889;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VeSY2ceVXmdz5zqyxr0C6Kr9UZqmvZCx0+drlbb4RkY=;
-        b=UTZreUJSUffmbxY59FyLW/qdmiuL7Zy6b5nbLrDgh8VZ65v463wi4zBDcSbcWLCZ0J
-         8WvGoP6GAHBAxTZ61y8pwNESwisUV1UW2jXTfJONyeQT1kO7ogbV0s0GkX+d9FISLcwj
-         yEZCgtc2FsWD3QUI4S1ws826+mPYfz+81wddbsAcbXF3MSd9Z16jOaXiOvcjeFsCiZNi
-         /HMG9Im/a/rMfN5HvGCgiLNv7i2DFyxm5EMsENzZ0CdtyLCp1H5q0w2UMvb4nEr3YoaT
-         nq53+jSP87JQcjufprNLdmRslY5EUrOpjZoEiJQq53AtudEvn8Ltg5/H9861E5vBJdK7
-         tEnw==
-X-Forwarded-Encrypted: i=1; AJvYcCXq297hZWceJ3GmCmCOZQG3rXHMyX87g41+mdmR8F0a7u4gXx6syNhBA8a/Bagy4J3SbEMEGmGpKccpy9tfvq5P+FAsMYBV9RLtdciFQw==
-X-Gm-Message-State: AOJu0Yyal4yHQDcLUVoqgSb3mOLqj6MLKjicRwHe/bPmXnWlg+sS9z/B
-	q3Xf8oirOHumiHmrmIHAZnurUY8RXfYGw8KZaaniuV9z4+Frs+6GGR89rcZXtXMV4AM/+TqoyV5
-	a
-X-Google-Smtp-Source: AGHT+IEQsnfewAV9/ZWWR29dWl1FWNwoP9P5zP+0yccPOd0kgBwvS7Qmct6DbXrltf+MWC5dAYOZPA==
-X-Received: by 2002:a05:6512:3ba6:b0:523:78de:11a3 with SMTP id 2adb3069b0e04-52965290530mr14260463e87.2.1716901939904;
-        Tue, 28 May 2024 06:12:19 -0700 (PDT)
+        bh=6gaAjPPNW+1o8Nq5Xk3MdnoecgKTcrll+0FrMoJS3ho=;
+        b=JlqM7Dx1nS52evudseLTQNz538u4qSDdWA/rieOA3ddJimmhf630YHl/O29q8hvP6G
+         CKK6uh6rw8MqePH5RKTdz6To2vVoUvLWC+S5aQ6AlaZSKPoQFZ87cUwsFdukVDiVB1AV
+         xaaJlHf+mptGDyToN67DVQncYbkNw6gcWBqt7XMB7sClDmu1NcoweMe7oVReTgFVxFnW
+         OFI1qKHDRS0WzeBC0jqrDlEq1FzoIh7GBe+LdqfkqZmsPRTrcMulmujJpJSpd7BZn350
+         eIgGdq4n778p6CPwLtIyWVHx4dA99bfIZbM3fs72N1v1JIPIM8QLWaEw1dXdZMlNkAoB
+         xqPw==
+X-Forwarded-Encrypted: i=1; AJvYcCVQuNasHQN6XXJsY8aIbhJWTIIDyBeeUS2AciXeS1L0351tF4owuomH/f9t9g6BW8IrzMinFEVhjZxF/c3oMlm07o0Gd7Ii6R3KRFfmbA==
+X-Gm-Message-State: AOJu0YwPBs/Tmo8pViCOxs9Ur0rCDoy82bguLbLIruWtPeAy3bSyKd/W
+	voul7eAeVCWhFtHdItc9JsmcNMb43D7aWjbYLKGXg9xUfSX70VMqhj4Pd320J6GOGJboFXW4rqT
+	G
+X-Google-Smtp-Source: AGHT+IECgbuCJq5CH9I+wOKcyKpG4gk5FMiLo2gVoFRgQ/xpYXkdBwseE2GUt86zkny6KhanGzA4zg==
+X-Received: by 2002:a05:6512:2017:b0:520:dc1c:3c5d with SMTP id 2adb3069b0e04-529668c9cc9mr6763082e87.42.1716902088640;
+        Tue, 28 May 2024 06:14:48 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5296f410fc1sm939673e87.117.2024.05.28.06.12.18
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-529b72ca748sm404584e87.285.2024.05.28.06.14.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 May 2024 06:12:19 -0700 (PDT)
-Date: Tue, 28 May 2024 16:12:17 +0300
+        Tue, 28 May 2024 06:14:47 -0700 (PDT)
+Date: Tue, 28 May 2024 16:14:46 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com
-Subject: Re: [PATCH v2 8/8] misc: fastrpc: Add system unsigned PD support
-Message-ID: <zwlzdhb5zn2wx6bew437hzj7l6nsj2ccekkkabatykmtzihotr@5ocy5wqxtoah>
-References: <20240528112956.5979-1-quic_ekangupt@quicinc.com>
- <20240528112956.5979-9-quic_ekangupt@quicinc.com>
+To: Ajit Pandey <quic_ajipan@quicinc.com>
+Cc: Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Vinod Koul <vkoul@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: Re: [PATCH V3 0/8] clk: qcom: Add support for DISPCC, CAMCC and
+ GPUCC on SM4450
+Message-ID: <5ppxcqdtyn7a3tyaorzlxhaxhqtse5xvjpecppjcmbxodmsz3m@5kr7uacez7u4>
+References: <20240528114254.3147988-1-quic_ajipan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,82 +91,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240528112956.5979-9-quic_ekangupt@quicinc.com>
+In-Reply-To: <20240528114254.3147988-1-quic_ajipan@quicinc.com>
 
-On Tue, May 28, 2024 at 04:59:54PM +0530, Ekansh Gupta wrote:
-> Trusted CPU applications currently offload to signed PDs on CDSP to
-> gain some additional services provided by root PD. Unsigned PDs have
-> access to limited root PD services that may not be sufficient for
-> all use-cases. Signed PDs have a higher dynamic loading latency
-> which impacts the performance of applications. Limited root PD
-> services could be opened up for unsigned PDs but that should be
-> restricted for untrusted processes. For this requirement, System
-> unsigned PD is introduced which will be same as Unsigned PD for
-> most part but will have access to more root PD services. Add
-> changes to offload trusted applications to System unsigned PD
-> when unsigned offload is requested.
+On Tue, May 28, 2024 at 05:12:46PM +0530, Ajit Pandey wrote:
+> This patch series add dt-bindings, driver and device tree support for DISPCC, CAMCC
+> and GPUCC on QCOM SM4450 platform and also includes a fix related to LUCID EVO PLL
+> config issue in clk-alpha-pll driver which is required for correct scaling of few
+> supported frequencies in graphics clock controllers on SM4450.
 > 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->  drivers/misc/fastrpc.c      | 9 +++++++++
->  include/uapi/misc/fastrpc.h | 2 ++
->  2 files changed, 11 insertions(+)
+> Changes in V3:
+> - [PATCH 1/8]: Updated commit tags order and added Reviewed-by: tags
+> - [PATCH 3/8]: Fixed reusing of pll0_config and added Reviewed-by: tags 
+> - [PATCH 6/8]: Updated commit text and added Reviewed-by tags
+> - [PATCH 8/8]: Updated node order for gpucc.
+> - Link to v2: https://lore.kernel.org/all/20240416182005.75422-1-quic_ajipan@quicinc.com/ 
+
+Nit: in future please retain previous changelogs too.
+
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 7f81a18b8aea..ebe20915392f 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -122,6 +122,7 @@
->  enum fastrpc_userpd_type {
->  	SIGNED_PD			= 1,
->  	UNSIGNED_PD			= 2,
-> +	SYSTEM_UNSIGNED_PD	= 3,
-
-Any reason why this is not indented properly? Maybe you have
-non-standard tab width?
-
-Also the usage of non-bool type makes sense here, not in the 'unisgned
-PD' patch. Please use bool beforehand and switch to an enum here.
-
->  };
->  
->  static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
-> @@ -1552,12 +1553,20 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->  	if (init.attrs & FASTRPC_MODE_UNSIGNED_MODULE)
->  		fl->userpd_type = UNSIGNED_PD;
->  
-> +	/* Disregard any system unsigned PD attribute from userspace */
-> +	init.attrs &= (~FASTRPC_MODE_SYSTEM_UNSIGNED_PD);
->  
->  	if (is_session_rejected(fl, !(fl->userpd_type == SIGNED_PD))) {
->  		err = -EACCES;
->  		goto err;
->  	}
->  
-> +	/* Trusted apps will be launched as system unsigned PDs */
-> +	if (!fl->untrusted_process && (fl->userpd_type != SIGNED_PD)) {
-> +		fl->userpd_type = SYSTEM_UNSIGNED_PD;
-> +		init.attrs |= FASTRPC_MODE_SYSTEM_UNSIGNED_PD;
-> +	}
-> +
->  	if (init.filelen > INIT_FILELEN_MAX) {
->  		err = -EINVAL;
->  		goto err;
-> diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-> index f33d914d8f46..3b3279bb2cf9 100644
-> --- a/include/uapi/misc/fastrpc.h
-> +++ b/include/uapi/misc/fastrpc.h
-> @@ -62,6 +62,8 @@ enum fastrpc_proc_attr {
->  	FASTRPC_MODE_SYSTEM_PROCESS	= (1 << 5),
->  	/* Macro for Prvileged Process */
->  	FASTRPC_MODE_PRIVILEGED		= (1 << 6),
-> +	/* Macro for system unsigned PD */
-> +	FASTRPC_MODE_SYSTEM_UNSIGNED_PD	= (1 << 17),
->  };
->  
->  /* Fastrpc attribute for memory protection of buffers */
+> Ajit Pandey (8):
+>   clk: qcom: clk-alpha-pll: Fix CAL_L_VAL override for LUCID EVO PLL
+>   dt-bindings: clock: qcom: add DISPCC clocks on SM4450
+>   clk: qcom: Add DISPCC driver support for SM4450
+>   dt-bindings: clock: qcom: add CAMCC clocks on SM4450
+>   clk: qcom: Add CAMCC driver support for SM4450
+>   dt-bindings: clock: qcom: add GPUCC clocks on SM4450
+>   clk: qcom: Add GPUCC driver support for SM4450
+>   arm64: dts: qcom: sm4450: add camera, display and gpu clock controller
+> 
+>  .../bindings/clock/qcom,sm4450-camcc.yaml     |   63 +
+>  .../bindings/clock/qcom,sm4450-dispcc.yaml    |   71 +
+>  .../bindings/clock/qcom,sm8450-gpucc.yaml     |    2 +
+>  arch/arm64/boot/dts/qcom/sm4450.dtsi          |   38 +
+>  drivers/clk/qcom/Kconfig                      |   27 +
+>  drivers/clk/qcom/Makefile                     |    3 +
+>  drivers/clk/qcom/camcc-sm4450.c               | 1688 +++++++++++++++++
+>  drivers/clk/qcom/clk-alpha-pll.c              |    2 +-
+>  drivers/clk/qcom/dispcc-sm4450.c              |  770 ++++++++
+>  drivers/clk/qcom/gpucc-sm4450.c               |  805 ++++++++
+>  include/dt-bindings/clock/qcom,sm4450-camcc.h |  106 ++
+>  .../dt-bindings/clock/qcom,sm4450-dispcc.h    |   51 +
+>  include/dt-bindings/clock/qcom,sm4450-gpucc.h |   62 +
+>  13 files changed, 3687 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm4450-camcc.yaml
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm4450-dispcc.yaml
+>  create mode 100644 drivers/clk/qcom/camcc-sm4450.c
+>  create mode 100644 drivers/clk/qcom/dispcc-sm4450.c
+>  create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
+>  create mode 100644 include/dt-bindings/clock/qcom,sm4450-camcc.h
+>  create mode 100644 include/dt-bindings/clock/qcom,sm4450-dispcc.h
+>  create mode 100644 include/dt-bindings/clock/qcom,sm4450-gpucc.h
+> 
 > -- 
-> 2.43.0
+> 2.25.1
 > 
 
 -- 
