@@ -1,157 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-20712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8E818D17EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 12:01:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7483C8D182D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 12:11:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E2E31F25DF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 10:01:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E8E85B26DCB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 10:11:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 388E916C874;
-	Tue, 28 May 2024 09:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF0B916130D;
+	Tue, 28 May 2024 10:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zSdza3la"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UcNq45Mm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA6616B739
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 09:59:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CA7F9DA;
+	Tue, 28 May 2024 10:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716890360; cv=none; b=An804T/wW0m6UT5O4ug4sfEpKe8rL1WIRXZzkuXdGJCMP7xodtVdyXqPUd16XNzmqh0oqZl17BqBrzOe7Z9C5l5TiooZdN39dgu6f1zxDLqhZlI62GjnO5s6eLiVG/Y/L8lRe6aKF248U4ZXVeMROQB3GDmJoCKoQ0lV5CU1H3o=
+	t=1716891076; cv=none; b=nxkKr2ft9uJSnKcngU7PGNUZPVUreEWiIXvWEtHTEhRavZwzoZMG6A2BZJkWUvX4cGE/VWykMsvL9EuMnZM2OdcE97taNd986PHLmG+H9lkia8RHOLySuIrsSu7XvXnFGlXxj24TVnc882yY39m2VyizQ0qbo3oO6TcdRR1SMh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716890360; c=relaxed/simple;
-	bh=LGIhCON7RwGoB5/JEr45SIhv70cKMYe/9XS35SkES+Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZEuVMUlR5e7GUEmvYNC03xn//r90hX+k3IkW2Cj2ZWMwQcy9j//em2GYbK86ISQur0E9Yxd5rwGAXZQ5ofeNc+4eIW1diKbRCTl4syqRCFQ98/CQLWcdr3BGw75xs7sKWrymw6kLw9H/eCHPCy+iLzkDXw5cilLSWxAyMUSN78g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zSdza3la; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2e72224c395so5427911fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 02:59:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716890356; x=1717495156; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fOHB0bGKjsCzyiTOasGxYrmiv1nfb2UcuoN8pI6JNDM=;
-        b=zSdza3laR78oECApOpTJUORy2cAhIrbE3lcrWp5+DEmzZGLc3PwLwo9tstn2853P2S
-         mT+py0pmSo5xXMBkl/MVA9fMzkLbziVJkgoN5v88N4kaOZXFRtolxOtiiKRTcq00I9RM
-         XpRxJPo/UGrNz8UxzuR5Km0jIe9UCpKHo6cS7ZmQbfaP/cXvGPAbKcWAjXsiJdnYCptC
-         SPrTHv05E0df+1KbfouqjZ8aWsJrfkRkCWmJB+Vt/oD8KegN5Oh/n9IUVdmwXm2KjLy/
-         saYp/B0kddBx3mBaPdUBKzE9VeZ4/dBLlBShEzbfpdhhnSZAc3G3txvjnHOnJ8O8Tipa
-         Yv1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716890356; x=1717495156;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fOHB0bGKjsCzyiTOasGxYrmiv1nfb2UcuoN8pI6JNDM=;
-        b=rtONWx7iA8q+WLHP5a9iMyeRsqT8JqH2wNd9iFNYjcdZsqsiHxGFgT/akr6nxnw+L6
-         cWpUgVw62bMC5gWMyBLlZGWyYt1JyUqkiB6zUYTKirOGnsmHb62YvShEZ14zAmncT4I9
-         vp8v9HtYr0k+e9xopJw6rHuv8vJ5TxoeWQukWgwQgEHcHjRJ8fPbWO5d+ML77Ri0yeDx
-         hqbV9Jfe7Lh9iNWlR/z55Qc0Q38OeOMjauk4LeASwcyN7rRiP9prPD2YJZxMr+Q6wg7i
-         ohmaeVrSlMWofDkXyS9J1QMyb5q8ZnpTSGxcCHI2muzYh4SeNR4Jws8bzPy+lCvg1k4K
-         M5Yg==
-X-Forwarded-Encrypted: i=1; AJvYcCVnjK2V8PHxnBI1U/d2S3pYB2T3f7EUKuAG6M/SC4DnlxRTJUdu8yWDghxc/7n6XBC+g2MAJ2/LyX6UOIepafAEFSsP1HfThYvCIp45aw==
-X-Gm-Message-State: AOJu0Yy26/WQdvSPmsa/+ZErJfPuoKK3kGn4i7nyPnDU0tzxrYSTo2+D
-	5nARuFsjq54aXBXIhI7QNEcegKJHLx0DbD4YiInrAy9k5jOs/0ELROFdkLtrMWlj0170f6VxP5O
-	jUhB5Ld19GAu/50tCEfuWJm5c53qwP2ZouXvmXQ==
-X-Google-Smtp-Source: AGHT+IEZJYr+NYpN1e2hcVYIpvKh++Em5UUPY+WUg+bF4xLU9EiG0nuQH84CetGWUAZkjEZpNzWVC6lOezqgm1EUpDo=
-X-Received: by 2002:a2e:80da:0:b0:2e9:798c:8525 with SMTP id
- 38308e7fff4ca-2e9798c866cmr27784281fa.26.1716890356147; Tue, 28 May 2024
- 02:59:16 -0700 (PDT)
+	s=arc-20240116; t=1716891076; c=relaxed/simple;
+	bh=3ri47Jw8bG0xrz0cHD1t6SSVNIySHKS61lpPF53h+3s=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=iX/URjNCb+bvi/1QSAtRArNHauieVzybVd7fuJgW3Lq+9sAdO9/fmVXLaDN1vMJWfvPCNiWoNvfXt1UyH40jv//QBNs+LIVQbh3AQtqpwyJaZHjnjQbl5QsUf6rgS2+ePE2qbnLVWlSFhZXHylyiLLEzPXWmfjy0sgdRthd9GlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UcNq45Mm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3848C3277B;
+	Tue, 28 May 2024 10:11:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716891076;
+	bh=3ri47Jw8bG0xrz0cHD1t6SSVNIySHKS61lpPF53h+3s=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=UcNq45MmR80f7cpnqo6wlB59u/UPMXeA2qZWe17HnnDwofjLwb/jyu2ucUmG7HrwR
+	 TVdIYyKpguUruLYx1B5gLFLhlivJLKRFJxq9x9BaX3I+nqDvSS6eePT3x6sdVpys2U
+	 61tAs6AUmhpT8QdvpUpyiZVk3DGgeF/MnqpsUHDEcnN6pIN2mvUGyNfPK9XN8+N/w0
+	 5SstgHQlBn6qvkiI037eeAf3eqgMtJY0bHE+7X8zlpYXIn/lQwkFHrqVnCbk8Vkqud
+	 TPhhPW0qrnj6esSfQRQzzfJlP+BN+uoyS7w++RpTtPK2QGto3g1mRAAmVABGNBtVnu
+	 7kzjDGhmLq8Fg==
+From: Kalle Valo <kvalo@kernel.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Bjorn Andersson <andersson@kernel.org>,  Jeff Johnson
+ <quic_jjohnson@quicinc.com>,  ath10k <ath10k@lists.infradead.org>,
+  wireless <linux-wireless@vger.kernel.org>,  DT
+ <devicetree@vger.kernel.org>,  MSM <linux-arm-msm@vger.kernel.org>,  Rob
+ Herring <robh+dt@kernel.org>,  Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,  Conor Dooley <conor+dt@kernel.org>,
+  Pierre-Hugues Husson <phhusson@freebox.fr>,  Arnaud Vrac
+ <avrac@freebox.fr>,  Konrad Dybcio <konrad.dybcio@linaro.org>,  Jami
+ Kettunen <jamipkettunen@gmail.com>,  Jeffrey Hugo
+ <quic_jhugo@quicinc.com>,  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+  Alexey Minnekhanov <alexeymin@postmarketos.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: net: wireless: ath10k: add
+ qcom,no-msa-ready-indicator prop
+References: <54ac2295-36b4-49fc-9583-a10db8d9d5d6@freebox.fr>
+	<171560975908.1690511.498631481702370762.kvalo@kernel.org>
+	<3464a980-36a7-4ed2-b2dc-be8fd9091b06@freebox.fr>
+Date: Tue, 28 May 2024 13:11:10 +0300
+In-Reply-To: <3464a980-36a7-4ed2-b2dc-be8fd9091b06@freebox.fr> (Marc
+	Gonzalez's message of "Tue, 28 May 2024 11:54:37 +0200")
+Message-ID: <87zfsa6ybl.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240527-msm-drm-dsc-dsi-video-upstream-4-v5-0-f797ffba4682@linaro.org>
- <20240527-msm-drm-dsc-dsi-video-upstream-4-v5-2-f797ffba4682@linaro.org> <57sr3ssi6nwermdqtnb2ackmu4tlxs4gcslvp4v6ndafnvbqhb@4npuqfpkzzan>
-In-Reply-To: <57sr3ssi6nwermdqtnb2ackmu4tlxs4gcslvp4v6ndafnvbqhb@4npuqfpkzzan>
-From: Jun Nie <jun.nie@linaro.org>
-Date: Tue, 28 May 2024 17:59:13 +0800
-Message-ID: <CABymUCOCcgfHsBaFBk63z+CLJu6Lee983nCM14PgPWZjkFFikQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/6] drm/msm/dpu: adjust data width for widen bus case
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B45=E6=
-=9C=8828=E6=97=A5=E5=91=A8=E4=BA=8C 08:48=E5=86=99=E9=81=93=EF=BC=9A
+Marc Gonzalez <mgonzalez@freebox.fr> writes:
+
+> On 13/05/2024 16:16, Kalle Valo wrote:
 >
-> On Mon, May 27, 2024 at 10:21:48PM +0800, Jun Nie wrote:
-> > data is valid for only half the active window if widebus
-> > is enabled
-> >
-> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 9 +++++++++
-> >  1 file changed, 9 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/=
-drm/msm/disp/dpu1/dpu_hw_intf.c
-> > index 225c1c7768ff..f97221423249 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> > @@ -168,6 +168,15 @@ static void dpu_hw_intf_setup_timing_engine(struct=
- dpu_hw_intf *intf,
-> >
-> >       data_width =3D p->width;
-> >
-> > +     /*
-> > +      * If widebus is enabled, data is valid for only half the active =
-window
-> > +      * since the data rate is doubled in this mode. But for the compr=
-ession
-> > +      * mode in DP case, the p->width is already adjusted in
-> > +      * drm_mode_to_intf_timing_params()
+>> Marc Gonzalez wrote:
+>> 
+>>> The ath10k driver waits for an "MSA_READY" indicator
+>>> to complete initialization. If the indicator is not
+>>> received, then the device remains unusable.
+>>>
+>>> cf. ath10k_qmi_driver_event_work()
+>>>
+>>> Several msm8998-based devices are affected by this issue.
+>>> Oddly, it seems safe to NOT wait for the indicator, and
+>>> proceed immediately when QMI_EVENT_SERVER_ARRIVE.
+>>>
+>>> Jeff Johnson wrote:
+>>>
+>>>   The feedback I received was "it might be ok to change all ath10k qmi
+>>>   to skip waiting for msa_ready", and it was pointed out that ath11k
+>>>   (and ath12k) do not wait for it.
+>>>
+>>>   However with so many deployed devices, "might be ok" isn't a strong
+>>>   argument for changing the default behavior.
+>>>
+>>> Kalle Valo first suggested setting a bit in firmware-5.bin to trigger
+>>> work-around in the driver. However, firmware-5.bin is parsed too late.
+>>> So we are stuck with a DT property.
+>>>
+>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>>> Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>> Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+>>> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+>>> Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+>> 
+>> 2 patches applied to ath-next branch of ath.git, thanks.
+>> 
+>> 71b6e321e302 dt-bindings: net: wireless: ath10k: add
+>> qcom,no-msa-ready-indicator prop
+>> 6d67d18014a8 wifi: ath10k: do not always wait for MSA_READY indicator
 >
-> Is there any reason for divergence here?
+> Hello Kalle,
+> What version of Linux will these be included in?
+> (I don't see them in v6.10-rc1. Are they considered
+> a new feature, rather than a fix, and thus 6.11?)
 
-Lots of parameters in dpu_hw_intf_setup_timing_engine() is calculated
-from timing->width,
-such as hsync_period and display_v_start. So the width cannot be
-adjusted beforehand in
-drm_mode_to_intf_timing_params(). Otherwise, we get below error.
+Yeah, these commits will go to v6.11. Because of the multiple trees
+involved (ath-next -> wireless-next -> net-next -> linus) we need to
+have ath.git pull request ready well before the merge window opens and
+these commits missed the last pull request.
 
-I guess the interface timing configuration differ in silicon, thus the
-software shall handle the
-difference. If we adjust the width beforehand for DSI, we get below error.
+Yes, we are slow :)
 
-[    6.625446] [drm:dpu_encoder_frame_done_timeout:2469] [dpu
-error]enc31 frame done timeout
-[    6.642369] [drm:dpu_encoder_phys_vid_wait_for_commit_done:525]
-[dpu error]vblank timeout: 4200c1
-[    6.642395] [drm:dpu_kms_wait_for_commit_done:493] [dpu error]wait
-for commit done returned -110
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-
->
-> > +      */
-> > +     if (p->wide_bus_en && !dp_intf)
-> > +             data_width =3D p->width >> 1;
-> > +
-> >       hsync_data_start_x =3D hsync_start_x;
-> >       hsync_data_end_x =3D  hsync_start_x + data_width - 1;
-> >
-> >
-> > --
-> > 2.34.1
-> >
->
-> --
-> With best wishes
-> Dmitry
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
