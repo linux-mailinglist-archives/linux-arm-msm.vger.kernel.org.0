@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-20795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DC208D229B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 19:41:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0FC38D22A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 19:42:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0BB66B2113E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 17:41:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 67CD72866C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 17:42:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AA61224FD;
-	Tue, 28 May 2024 17:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A589481D7;
+	Tue, 28 May 2024 17:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qrw1m/Mu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I/Xp5bRw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E1C224D1;
-	Tue, 28 May 2024 17:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA32A47F60;
+	Tue, 28 May 2024 17:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716918100; cv=none; b=uNrm7s+EkP+mCISsXPIR2t83UEzjAyH/jP4Y9ogO0xk3j0BygjTLjH5vrGPQXaq8kjBL4xDQSlOzV04M2QjCVpkj+BRoY/V6FXx2s6ZNqWjucOvfe76Kmn89O7ftbSgPKHv8iMm67h+vu9pxdclWQa++Yv37XrU5dK6rAkoyXR8=
+	t=1716918106; cv=none; b=DfPtZk7f2FpMs2XZFAHU1CZsaHn5PKXjaY+sSOVA0JVN2nlGTwxye7XDxDMv3aDkfHOJpqwWbesN1098YJ1k+darZvk6H79S7Y5QWOWp6pdepg/+TiY56/p8El8rSc4PXlsqlRKWwKJYPpjHQTFRM3b3gBrwJ4w5CfsZp+tEF6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716918100; c=relaxed/simple;
-	bh=/TVduV2ZbhY2J3w1XAChQvYpluvCRq1AayWS8C1G0NA=;
+	s=arc-20240116; t=1716918106; c=relaxed/simple;
+	bh=RLYbWmtB1JSsSqTY7dPzl/obl0aq3fUopxD+P3sLiE8=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=r5SdwB7FPxtQcXGbfZ/HglrXUNAZ6tPjzRyAUdbGpRUDkcHmJrtDZ1V4tO5i9Ayj7TdZR1LOQwstdy26ds/HwK0CcadBdLtPjlVJSTIDxBUhk18OJoWeM1RQDPFGBEpr5rfX03mLFIRgxafJN5JflI8/aHDh4HF5nke7kHtAh8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qrw1m/Mu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66164C3277B;
-	Tue, 28 May 2024 17:41:39 +0000 (UTC)
+	 Message-Id:Subject; b=I01LRYJOUO4uqDTLrGj9TbFBsc8BSL3M4J7QaQuTDzOvW/NRX499p6PrUMgNsGJ1w5ACLwNeReNmBEaSbmKDJTdnAoi4hft2yIAtF7gHy1plaekBeUzZNZhfao0r/hy/fbhv590ZHcwxi2o25ddxglF/VYkJi26tkCBvz3tU8cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/Xp5bRw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F78EC32782;
+	Tue, 28 May 2024 17:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716918099;
-	bh=/TVduV2ZbhY2J3w1XAChQvYpluvCRq1AayWS8C1G0NA=;
+	s=k20201202; t=1716918105;
+	bh=RLYbWmtB1JSsSqTY7dPzl/obl0aq3fUopxD+P3sLiE8=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=qrw1m/MuP3D+0ADSOQl2pR6tl/kLfl5zk/yTvtvHupE8yESkaXuqeVgwVCjU+C9bV
-	 QMIqbvEcGL9Y2RW15prtGxmGK3sDZTDoL9hERfT5ZIGw+o4T5QLQY8QIPUwMoDg7ye
-	 wX2fiMZvsOxqhm8ZltZbPwpBo/ixOWbTYWD4lHxFlxRB7a+82NIKPJ8wDxc40yy7MH
-	 8MKWP7ceB1eYUc6mtMnEViE4R9YNga0bIpkNhjhjvp6R9IhrC5OY8VmODayitW6yCS
-	 ZDFLV1haXsatv5BeLeAPvzdkKLbn6Qi9OizxvRoqOQO0crJAiz8rq6sdUCZnzy/jXD
-	 QiPNCZrAJhe+A==
-Date: Tue, 28 May 2024 12:41:38 -0500
+	b=I/Xp5bRwm2CmB1DjEPopS7cv+o9A3G5woq4FBaf3o60k1PKxJ9QSoeWj3e9TfOpxC
+	 vwNP6Ne0lfNrOp1cetrrdIDRMIvHzK9GfEJurIMsSsqZEZkEq274cNH6vLRfsQs82B
+	 2QnrAO5gtjo+YZoG+W91mS1EdgX2f6Pnmwai/k28Rnof9n/GAdHnVen9Vq3WRCDaex
+	 rXB77GDTMq8CIRDIsPzkbzVDxaLdrwAWbCXH9OPXWLVX7Qh22I2tMRePCP6PmHRQ6L
+	 Wb1dKsMEDxQ2vrPyGNaWyn47q0MCzC1h8vXIOj2E8w50nFiy7ECKKr83zgXJaPhf5G
+	 Abxys47sO/qRw==
+Date: Tue, 28 May 2024 12:41:44 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,60 +51,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
- Michael Turquette <mturquette@baylibre.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-usb@vger.kernel.org, 
- Bjorn Andersson <quic_bjorande@quicinc.com>, 
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+ Sebastian Reichel <sre@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
- Wesley Cheng <quic_wcheng@quicinc.com>, Conor Dooley <conor+dt@kernel.org>, 
- Stephen Boyd <sboyd@kernel.org>
-In-Reply-To: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
-References: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
-Message-Id: <171691793133.1180499.940663320144175999.robh@kernel.org>
-Subject: Re: [PATCH 00/10] arm64: dts: qcom: sc8180x: Enable the USB
- multiport controller
+ Hans de Goede <hdegoede@redhat.com>, devicetree@vger.kernel.org, 
+ linux-pm@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ linux-usb@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org
+In-Reply-To: <20240527-yoga-ec-driver-v3-0-327a9851dad5@linaro.org>
+References: <20240527-yoga-ec-driver-v3-0-327a9851dad5@linaro.org>
+Message-Id: <171691793418.1180687.12564348124831502092.robh@kernel.org>
+Subject: Re: [PATCH v3 0/6] power: supply: Lenovo Yoga C630 EC
 
 
-On Sat, 25 May 2024 11:03:53 -0700, Bjorn Andersson wrote:
-> The USB multiport controller found in SC8180X is used to driver the
-> camera in the Lenovo Flex 5G, and a couple of additional USB ports on
-> the Primus AUX board.
+On Mon, 27 May 2024 13:03:45 +0300, Dmitry Baryshkov wrote:
+> This adds binding, driver and the DT support for the Lenovo Yoga C630
+> Embedded Controller, to provide battery information.
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> Bjorn Andersson (10):
->       dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add sc8180x USB3 compatible
->       phy: qcom-qmp-usb: Add sc8180x USB UNIPHY
->       dt-bindings: clock: qcom: Add missing USB MP resets
->       clk: qcom: gcc-sc8180x: Add missing USB MP resets
->       dt-bindings: usb: qcom,dwc3: Add SC8180X compatibles
->       arm64: dts: qcom: sc8180x-pmics: Add second PMC8180 GPIO
->       arm64: dts: qcom: sc8180x: Align USB nodes with binding
->       arm64: dts: qcom: sc8180x: Add USB MP controller and phys
->       arm64: dts: qcom: sc8180x-primus: Enable the two MP USB ports
->       arm64: dts: qcom: sc8180x-lenovo-flex-5g: Enable USB multiport controller
+> Support for this EC was implemented by Bjorn, who later could not work
+> on this driver. I've picked this patchset up and updated it following
+> the pending review comments.
 > 
->  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        |   3 +
->  .../devicetree/bindings/usb/qcom,dwc3.yaml         |  29 ++++
->  .../arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts |  32 ++++
->  arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi        |  16 +-
->  arch/arm64/boot/dts/qcom/sc8180x-primus.dts        |  60 +++++++
->  arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 175 +++++++++++++++++++--
->  drivers/clk/qcom/gcc-sc8180x.c                     |   4 +
->  drivers/phy/qualcomm/phy-qcom-qmp-usb.c            |   3 +
->  include/dt-bindings/clock/qcom,gcc-sc8180x.h       |   4 +
->  9 files changed, 312 insertions(+), 14 deletions(-)
+> DisplayPort support is still not a part of this patchset. It uses EC
+> messages to provide AltMode information rather than implementing
+> corresponding UCSI commands. However to have a cleaner uAPI story, the
+> AltMode should be handled via the same Type-C port.
+> 
+> Merge strategy: the driver bits depend on the platform/arm64 patch,
+> which adds interface for the subdrivers. I'd either ask to get that
+> patch merged to the immutable branch, which then can be picked up by
+> power/supply and USB trees or, to make life simpler, ack merging all
+> driver bits e.g. through USB subsystem (I'm biased here since I plan to
+> send more cleanups for the UCSI subsystem, which would otherwise result
+> in cross-subsystem conflicts).
+> 
 > ---
-> base-commit: 3689b0ef08b70e4e03b82ebd37730a03a672853a
-> change-id: 20240524-sc8180x-usb-mp-4eb278df7ef1
+> Changes in v3:
+> - Split the driver into core and power supply drivers,
+> - Added UCSI driver part, handling USB connections,
+> - Fixed Bjorn's address in DT bindings (Brian Masney)
+> - Changed power-role for both ports to be "dual" per UCSI
+> - Link to v2: https://lore.kernel.org/linux-arm-msm/20230205152809.2233436-1-dmitry.baryshkov@linaro.org/
+> 
+> Changes in v2:
+> - Dropped DP support for now, as the bindings are in process of being
+>   discussed separately,
+> - Merged dt patch into the same patchseries,
+> - Removed the fixed serial number battery property,
+> - Fixed indentation of dt bindings example,
+> - Added property: reg and unevaluatedProperties to the connector
+>   bindings.
+> - Link to v1: https://lore.kernel.org/linux-arm-msm/20220810035424.2796777-1-bjorn.andersson@linaro.org/
+> 
+> ---
+> Bjorn Andersson (2):
+>       dt-bindings: power: supply: Add Lenovo Yoga C630 EC
+>       arm64: dts: qcom: c630: Add Embedded Controller node
+> 
+> Dmitry Baryshkov (4):
+>       platform: arm64: add Lenovo Yoga C630 WOS EC driver
+>       usb: typec: ucsi: add Lenovo Yoga C630 glue driver
+>       power: supply: lenovo_yoga_c630_battery: add Lenovo C630 driver
+>       arm64: dts: qcom: sdm845: describe connections of USB/DP port
+> 
+>  .../bindings/power/supply/lenovo,yoga-c630-ec.yaml |  83 ++++
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi               |  53 ++-
+>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      |  76 ++++
+>  drivers/platform/arm64/Kconfig                     |  14 +
+>  drivers/platform/arm64/Makefile                    |   1 +
+>  drivers/platform/arm64/lenovo-yoga-c630.c          | 279 ++++++++++++
+>  drivers/power/supply/Kconfig                       |   9 +
+>  drivers/power/supply/Makefile                      |   1 +
+>  drivers/power/supply/lenovo_yoga_c630_battery.c    | 476 +++++++++++++++++++++
+>  drivers/usb/typec/ucsi/Kconfig                     |   9 +
+>  drivers/usb/typec/ucsi/Makefile                    |   1 +
+>  drivers/usb/typec/ucsi/ucsi_yoga_c630.c            | 189 ++++++++
+>  include/linux/platform_data/lenovo-yoga-c630.h     |  42 ++
+>  13 files changed, 1232 insertions(+), 1 deletion(-)
+> ---
+> base-commit: 8314289a8d50a4e05d8ece1ae0445a3b57bb4d3b
+> change-id: 20240527-yoga-ec-driver-76fd7f5ddae8
 > 
 > Best regards,
 > --
-> Bjorn Andersson <quic_bjorande@quicinc.com>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
 > 
 > 
@@ -124,12 +162,12 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/sc8180x-lenovo-flex-5g.dtb qcom/sc8180x-primus.dtb' for 20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com:
+New warnings running 'make CHECK_DTBS=y qcom/sdm850-lenovo-yoga-c630.dtb' for 20240527-yoga-ec-driver-v3-0-327a9851dad5@linaro.org:
 
-arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dtb: clock-controller@af00000: clocks: [[41, 0], [42], [120, 0], [120, 1], [124, 0], [124, 1], [127, 0], [127, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
-arch/arm64/boot/dts/qcom/sc8180x-primus.dtb: clock-controller@af00000: clocks: [[41, 0], [42], [122, 0], [122, 1], [126, 0], [126, 1], [129, 0], [129, 1]] is too long
-	from schema $id: http://devicetree.org/schemas/clock/qcom,dispcc-sm8x50.yaml#
+arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dtb: pinctrl@3400000: ec-int-state: 'oneOf' conditional failed, one must be fixed:
+	'bias-disable', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
+	False schema does not allow True
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sdm845-pinctrl.yaml#
 
 
 
