@@ -1,60 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-20844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1AFB8D2721
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 23:35:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF4878D274E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 23:56:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 687091F260EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:35:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 37A57B21707
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:56:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D0E117BB03;
-	Tue, 28 May 2024 21:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAF8045BEC;
+	Tue, 28 May 2024 21:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeU4xdkR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MeOVer9D"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5BF17B4FA;
-	Tue, 28 May 2024 21:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5A41DA23;
+	Tue, 28 May 2024 21:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716932119; cv=none; b=h3Y7+YmkgL3bOOA9kvM1/fR1etxkHuEeCxOkBrVjPvWjq19Z10vqnIV9TjrzdOXIcdgmBmmYTkvB8sfVBbCUK2hCbDbI+6XdlkVCcfYzuv2fkqxa5BbPJ0Ksm+7LW4+H5sWyLz7KYfpz+X6tHJq/ueMUQdpa9tf/SRF5jAdjKtw=
+	t=1716933355; cv=none; b=GXkr/oWMgPpiO8XmQe6m/vu4BJptZGdKxnccAYXeA9ABb9vJmSbVKRWbi1Wny9Ztohaf/eInzqm7NzD0e5U836EXagRpxwTKC8TqjOqGwQ2o33qH0HdjUtU7GyfO3+B7G2cv6z3OscXef46ZAMoxatoGcN/uL4b+hbl2F3EBy4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716932119; c=relaxed/simple;
-	bh=TTH6TAAHwNlQVXAyaogzfwBqkN2ZRzQ1G1pQrDnBJck=;
+	s=arc-20240116; t=1716933355; c=relaxed/simple;
+	bh=tthgWJCVupl6ERWmdbjXbvx9AlEgF2aFcE/8hKqKCZA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aeXVN7Ij9eTczx8gKgJKkJhw9Bg4owjBXNNwT62ZXCO+81hSxxmVhy0zI61H5KSsz2owPW++lfM+me+ND92wJQ7cyTIyQA8P3CkOvamgVbCjgrqf659E8xCo9VrNGMfEQtFWf8b4pv/XLQcfbNtVZPa/7f6eus1vVS6Pz9uqWFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeU4xdkR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912C7C3277B;
-	Tue, 28 May 2024 21:35:17 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=HqRSQW+bQ9LpXQ1QcU/fL+aqC+XsfmTMEKXDddgi3fxzYT8arKR638orD9wAWxMLdebXbylDlPr8GauKVfMbkeCD09/txeB17GhMfs2GQVT5Cqv1baf3hNVbIy39A5W7QaYllfVdBPTvg8L6sVClJ9e3wEkgy8FUW7up6u5nsqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MeOVer9D; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8534C3277B;
+	Tue, 28 May 2024 21:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716932118;
-	bh=TTH6TAAHwNlQVXAyaogzfwBqkN2ZRzQ1G1pQrDnBJck=;
+	s=k20201202; t=1716933355;
+	bh=tthgWJCVupl6ERWmdbjXbvx9AlEgF2aFcE/8hKqKCZA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oeU4xdkRJ3X0RbaYEe79r7B1TPu84xeNqYBWKsrZxaMGxOC4XE9s7C/4kRLbJ0Aj0
-	 XEchBORaoDtvvgb/RDIptSSPBfgAUX9UqhFd0E3frxQikLwi35DH0omy5OuCWh3TAH
-	 0AxyXUmioNEpY0e4njH2E969CC7mvkf7YrMRz95tLZcaFXhwbXHiR7zMbvzgeX27SE
-	 fB12XzBMONchtmgAdH5sX+VDItHOlyPPDiv+A3Xcwre/07lWvk5CoQ9Cy2ojvuTg8u
-	 dkHdk9P65p7TglO/ZnmRyItggxNKVv+eGGzavQ/HF3CKHFhc/2EZ1Fp/fqch2jBKqw
-	 su59ULvI41eOw==
-Date: Tue, 28 May 2024 16:35:15 -0500
+	b=MeOVer9DpU1XjBV10SP47aXhFGt4HUm8faTIBQLbS7zPZ6585uXYSiNOiPJd2Os1n
+	 7pdwSwF+W+tRsf8WlrPBYcc03rvODX6OVYPrG2mPlquRlfUjnVMB/tuFKkFJssVJ0t
+	 UHUc0j8lAHd7cNboljjzXMDbXiEEIMPrcNoDmBMCgUlgnWFLuFz9hIN+Of0sxMZmMv
+	 Snv7bOHhWG5599Z124M2o4Jw1T00019os/KZX+SKkmhTn08pyZ3Ay8MBys9WvCsppK
+	 8CYFkM/yDGzYsLNwK+Gdi2HREUALIqkjReBoHcATe4d7J+NiDT+VqXCSgJHL0/nSqb
+	 ZsQnf+Jl/+2Dw==
+Date: Tue, 28 May 2024 16:55:52 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: cros-qcom-dts-watchers@chromium.org, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>, Mohammad Rafi Shaik <quic_mohs@quicinc.com>, 
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH DNM 2/2] arm64: dts: qcom: qcm6490-fairphone-fp5: Add
- DisplayPort sound support
-Message-ID: <hqwrfe2tcb6vlxybmn52k3j2xrxbt3vw5rqwudindbhj3s3nez@obkr3ayos6gm>
-References: <20240510-sc7280-apr-v1-0-e9eabda05f85@fairphone.com>
- <20240510-sc7280-apr-v1-2-e9eabda05f85@fairphone.com>
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, Will Deacon <will@kernel.org>, 
+	Waiman Long <longman@redhat.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Jonathan Corbet <corbet@lwn.net>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] soc: qcom: smem: Add
+ qcom_smem_bust_hwspin_lock_by_host()
+Message-ID: <nwoeg22jg5yd4amgqqegplygy6aickehvfc6eanmody74h6nss@cmixbwx6vpx4>
+References: <20240524-hwspinlock-bust-v2-0-fb88fd17ca0b@quicinc.com>
+ <20240524-hwspinlock-bust-v2-3-fb88fd17ca0b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,93 +65,87 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240510-sc7280-apr-v1-2-e9eabda05f85@fairphone.com>
+In-Reply-To: <20240524-hwspinlock-bust-v2-3-fb88fd17ca0b@quicinc.com>
 
-On Fri, May 10, 2024 at 02:27:09PM GMT, Luca Weiss wrote:
-> Add the required nodes for sound playback via a connected external
-> display (DisplayPort over USB-C).
+On Fri, May 24, 2024 at 06:26:42PM GMT, Chris Lew wrote:
+> Add qcom_smem_bust_hwspin_lock_by_host to enable remoteproc to bust the
+> hwspin_lock owned by smem. In the event the remoteproc crashes
+> unexpectedly, the remoteproc driver can invoke this API to try and bust
+> the hwspin_lock and release the lock if still held by the remoteproc
+> device.
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
 > ---
-> Depends on a bunch of patches upstream doing bringup of Display (DSI),
-> DisplayPort, GPU, and then finally audio could land. But we're blocked
-> on DPU 1:1:1 topology for all of that unfortunately.
+>  drivers/soc/qcom/smem.c       | 28 ++++++++++++++++++++++++++++
+>  include/linux/soc/qcom/smem.h |  2 ++
+>  2 files changed, 30 insertions(+)
 > 
-> And also machine driver for sound just exists a bit hackily.
+> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> index 7191fa0c087f..683599990387 100644
+> --- a/drivers/soc/qcom/smem.c
+> +++ b/drivers/soc/qcom/smem.c
+> @@ -359,6 +359,34 @@ static struct qcom_smem *__smem;
+>  /* Timeout (ms) for the trylock of remote spinlocks */
+>  #define HWSPINLOCK_TIMEOUT	1000
+>  
+> +/* The qcom hwspinlock id is always plus one from the smem host id */
+> +#define SMEM_HOST_ID_TO_HWSPINLOCK_ID(__x) ((__x) + 1)
+> +
+> +/**
+> + * qcom_smem_bust_hwspin_lock_by_host() - bust the smem hwspinlock for an smem host id
+> + * @host:	remote processor id
+> + *
+> + * Busts the hwspin_lock for the given smem host id. This helper is intended for remoteproc drivers
+> + * that manage remoteprocs with an equivalent smem driver instance in the remote firmware. Drivers
+> + * can force a release of the smem hwspin_lock if the rproc unexpectedly goes into a bad state.
 
-Thanks for sharing this, Luca. Can you please resubmit this once it's
-ready to be merged, so that I don't need to keep track of it?
+Please wrap these at 80 characters.
+
+> + *
+> + * Context: Process context.
+> + *
+> + * Returns: 0 on success, otherwise negative errno.
+> + */
+> +int qcom_smem_bust_hwspin_lock_by_host(unsigned host)
+> +{
+> +	if (!__smem)
+> +		return -EPROBE_DEFER;
+
+This would be called at a time where -EPROBE_DEFER isn't appropriate,
+the client should invoke qcom_smem_is_available() at probe time to guard
+against this.
+
+> +
+> +	/* This function is for remote procs, so ignore SMEM_HOST_APPS */
+> +	if (host == SMEM_HOST_APPS ||host >= SMEM_HOST_COUNT)
+
+Missing <space> after ||
 
 Regards,
 Bjorn
 
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 36 ++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> index 05bbf1da5cb8..2bbbcaeff95e 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> @@ -14,6 +14,8 @@
->  #include <dt-bindings/leds/common.h>
->  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/sound/qcom,q6afe.h>
-> +#include <dt-bindings/sound/qcom,q6asm.h>
->  #include "sc7280.dtsi"
->  #include "pm7250b.dtsi"
->  #include "pm7325.dtsi"
-> @@ -774,6 +776,12 @@ &pon_resin {
->  	status = "okay";
->  };
+> +		return -EINVAL;
+> +
+> +	return hwspin_lock_bust(__smem->hwlock, SMEM_HOST_ID_TO_HWSPINLOCK_ID(host));
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_smem_bust_hwspin_lock_by_host);
+> +
+>  /**
+>   * qcom_smem_is_available() - Check if SMEM is available
+>   *
+> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
+> index a36a3b9d4929..959eea0812bb 100644
+> --- a/include/linux/soc/qcom/smem.h
+> +++ b/include/linux/soc/qcom/smem.h
+> @@ -14,4 +14,6 @@ phys_addr_t qcom_smem_virt_to_phys(void *p);
 >  
-> +&q6afedai {
-> +	dai@104 {
-> +		reg = <DISPLAY_PORT_RX>;
-> +	};
-> +};
-> +
->  &qup_spi13_cs {
->  	drive-strength = <6>;
->  	bias-disable;
-> @@ -847,6 +855,34 @@ &sdhc_2 {
->  	status = "okay";
->  };
+>  int qcom_smem_get_soc_id(u32 *id);
 >  
-> +&sound {
-> +	compatible = "fairphone,fp5-sndcard";
-> +	model = "Fairphone 5";
+> +int qcom_smem_bust_hwspin_lock_by_host(unsigned host);
 > +
-> +	mm1-dai-link {
-> +		link-name = "MultiMedia1";
-> +		cpu {
-> +			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-> +		};
-> +	};
-> +
-> +	displayport-rx-dai-link {
-> +		link-name = "DisplayPort Playback";
-> +
-> +		cpu {
-> +			sound-dai = <&q6afedai DISPLAY_PORT_RX>;
-> +		};
-> +
-> +		platform {
-> +			sound-dai = <&q6routing>;
-> +		};
-> +
-> +		codec {
-> +			sound-dai = <&mdss_dp>;
-> +		};
-> +	};
-> +};
-> +
->  &spi13 {
->  	status = "okay";
->  
+>  #endif
 > 
 > -- 
-> 2.45.0
+> 2.25.1
 > 
 
