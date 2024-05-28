@@ -1,65 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-20687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46F578D12C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 05:36:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5476C8D12C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 05:36:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 784B21C216EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 03:36:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85BF51C219E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 03:36:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 253D813AA59;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5B7813C3D7;
 	Tue, 28 May 2024 03:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8YTMGPr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ESkmF3jP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEB318EA2;
-	Tue, 28 May 2024 03:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE22E18EB8;
+	Tue, 28 May 2024 03:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716867179; cv=none; b=Ca7y4Yf8R2JWmE+5hGc2/31U6DGZUBFYIt5N56KxZ56ZPIgarlL7FiYy6d14jRRGwwF7JuXH4zbk6LDTvbE/5B9//ZCIGCG+2kFK+4IS4qOmG5Be3iNuii00JRkvpVu3TeRbB+QPxjL/W55ddLRi9qg1MuxLi+ExbuS1KQ17X/4=
+	t=1716867179; cv=none; b=fhb2CQ4gQSnS79zEMXqlKuIPFTreyR5xDXNoSTFzlmM0hER684M9AjM9JeRPshjuABjrWHg+1AxP6snWuje4m4MjI/SLxmuOpjXOcTp8dTUNPLpxdHvDb7G62AeTdo5Vqao+JsmmAMdEKjOJIA5jHv/9Iimx3ldprneLYum10b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1716867179; c=relaxed/simple;
-	bh=53Zoo0TuTvasbIJ4R/5kxbQ7OqUI4K3hEKG1JuahvXA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sRGsFGyXE11QKOFRiplcmvlOVviuDOR6Z6UmqCWZ+VGgcvc7AZUJeXfmAFvvieNbEARbYll0Gco7ihxH7rofit5RT9Jmy1kXPGIFyhfbf7u5GEwrJc5ZJIvxPjODYtVWfFOe/zKJsKcowiavxkHirlhiiMwHsLodSEyTUlSDlbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8YTMGPr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C251DC4AF0C;
-	Tue, 28 May 2024 03:32:57 +0000 (UTC)
+	bh=K/dKkVUCW1Ko2qX++OZ/wrP6GisymfeJxvVh1lCuZSA=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MwgLbEyncj9tixcYi8UYtV5K4sD1Yp8bga/mTfpyo3w9FhNDaC2rl+KAAenKGKTQC7cmuyB0lZIZp+AOy79uDVedNuhgzhVf96rathN0K+iyM9nxdvz7K7LJQ/zc1YgmkZm7YSViX1YMtroM/faR7uud6AbgrOSvV4hx2ukkPDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ESkmF3jP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F799C4AF07;
+	Tue, 28 May 2024 03:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716867178;
-	bh=53Zoo0TuTvasbIJ4R/5kxbQ7OqUI4K3hEKG1JuahvXA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8YTMGPreyKZdWkW7R6ul+FCpfpFYGgwHlnD74oFX6xnHq79UfUdhruNxyk/T1Bqj
-	 h+d3Znhrom0mZuz+6n+3/N6HYXoOhG1YuN6GlLBUEUCP0MCtBKOiaJHQwxKPFZTJ/o
-	 0VEmcyRWfXCpd++hnBm7keTm9UwkqGjAuG7Ii+K281eiixWhHITJcyuWIXkJBhpi2v
-	 JQOn9Oaa+SJK/F0x7pkP8orN3TPu8bEppYBsppSQ6sWMVucB7MiGPoLYAtGsWxByar
-	 2fBSHktJPxkMC3/xFknpyD87yVddetZiJwKhXdcld6OKYerJJje4M0+idbTKFs16nk
-	 cr6Jc22+7UEHQ==
+	s=k20201202; t=1716867179;
+	bh=K/dKkVUCW1Ko2qX++OZ/wrP6GisymfeJxvVh1lCuZSA=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=ESkmF3jPCF3GnUwJZUHzC60RKIcfNsoGa9tHWxglROixfeSaZCIgrigL9fNBIdgdq
+	 QFauLNlmIGUp17XpN8c0O4crGgJdxkKE6WWYmd9CqV3q4JiykT43BuojHUkSmtbvpV
+	 LZU0CIG3pDMTjkR3MkSQelcjizDSBPKhQUaUobBgBivupvga3Mml8VMvhdIixv8SlG
+	 HolRrw8jRJNlw0NxeC9H0JXZsew/H8RdzB9HimiJDiomDIEmZo0iIaqHFzLxKLtRxK
+	 ZOxNqD6fVLwpYDqZmoJdr2eTZ5j8D5GE7bMY3IdBJeckQzX3ErXab8YlDG8dcKNZri
+	 rp+mu2PDxjzfg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Adam Honse <calcprogrammer1@gmail.com>,
-	Luca Weiss <luca@z3ntu.xyz>
-Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH v2 0/2] Add Samsung Galaxy Note 3 support
-Date: Mon, 27 May 2024 22:32:20 -0500
-Message-ID: <171686715168.523693.5892166453398806176.b4-ty@kernel.org>
+	Richard Acayan <mailingradian@gmail.com>
+Subject: Re: (subset) [PATCH 0/3] SDM670 shared memory and socinfo
+Date: Mon, 27 May 2024 22:32:21 -0500
+Message-ID: <171686715143.523693.6811535821413799635.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240314-samsung-hlte-v2-0-84094b41c033@z3ntu.xyz>
-References: <20240314-samsung-hlte-v2-0-84094b41c033@z3ntu.xyz>
+In-Reply-To: <20240524012023.318965-5-mailingradian@gmail.com>
+References: <20240524012023.318965-5-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,15 +65,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 14 Mar 2024 20:00:13 +0100, Luca Weiss wrote:
-> Add the dts for "hlte" which is a phablet from 2013.
+On Thu, 23 May 2024 21:20:24 -0400, Richard Acayan wrote:
+> This adds the smem region to the SDM670 device tree and adds the SDM670
+> SoC ID to the socinfo driver. In addition to socinfo, the shared memory
+> region is also used for SMP2P and the remote processors, but they are
+> not added yet.
 > 
+> Richard Acayan (3):
+>   dt-bindings: arm: qcom,ids: Add SoC ID for SDM670
+>   soc: qcom: socinfo: Add SDM670 SoC ID table entry
+>   arm64: dts: qcom: sdm670: add smem region
 > 
+> [...]
 
 Applied, thanks!
 
-[2/2] ARM: dts: qcom: msm8974: Add Samsung Galaxy Note 3
-      commit: b4f6c63bf34d8da1b769483bb1f4a603c53896ce
+[3/3] arm64: dts: qcom: sdm670: add smem region
+      commit: 265d9989df5012adc5bec8e894dff0572c195a0c
 
 Best regards,
 -- 
