@@ -1,111 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-20735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 517E88D1A1C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:47:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D81FB8D1A42
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:51:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A09C51F2303C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 11:47:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78FD01F2409F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 11:51:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7223616D32D;
-	Tue, 28 May 2024 11:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3078116C863;
+	Tue, 28 May 2024 11:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e23VPRCg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dQFdbWeh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC69613F431
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 11:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6586C16ABE4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 11:51:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716896749; cv=none; b=MmqG3o/yF6zKKf4eOVqTTpfTUV4FUDnbxeKoMESdIzw1TvjB+T6Ajp3diu5I9EXoXvm290gtxBcvB/LGWZ5r3fzFMA86E6I/9O6tt9e9wrBcqHA9FRof/wO4jRjQX05TXckdB7oDgXLGe6oLUS0q4uwqCa+rOUv3K4jaajl7icc=
+	t=1716897108; cv=none; b=tAUX1vH1rJW9jrdTylrikjPcLnf7z8ziOIcBKzKBkmcRzA4wskWblZRPrEnY1g56yXjHhOBHLLHCf04q+EPo7AbGfHrGIaNTo2MLax4TIqsqp4ZVwAl8/70WGP36UCN63NArPXZJcEIErajKpP4iJsqH6NHicJNJkL3VdywINEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716896749; c=relaxed/simple;
-	bh=R+MfTv0tx2Lzk88XPMMihqfsE0CrH+U9/0L7ZShtH2k=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=jEr5CgOZOvCondYR8VnyaO53mdQkUGmSP/8uRdomZZj7rGvEojYgpklVPtzRaE+cQQHIUW+kQYU07KzNiAxpOI7Z2FyJJEv9jRLkLS+7PyXL0xRhBZf4XbvzUhLSspApB/ktNA7ZhVV9KvSeU0+1oTbmjQJz6tLQYZHzs15RZHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e23VPRCg; arc=none smtp.client-ip=209.85.208.42
+	s=arc-20240116; t=1716897108; c=relaxed/simple;
+	bh=36uSHoMgxGER9AyqV5VeBnVW6VIdtXGcTbVwtzyKn44=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p10Oxz/wqA2Cm7gmKtvancSgQ6oRiozJdQ4cpJvsXkOZAc0nL+T9CVoHFK/V0pb87wBbkItUhEW6YRNz78lhp9Ni70Jt9OyvWTG2RxbxyhJ8urDdPPx/vjGcXzLVOxTuBI08Nseecp/pCmRtqTJ38tv8gElDYNbXiplzCxjmyic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dQFdbWeh; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5785d466c82so870765a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 04:45:47 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5238b5c07efso865726e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 04:51:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716896746; x=1717501546; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YDquBsdLvmzQxmvDh4J1njfPrwr/BCq5+dl34vP0JYE=;
-        b=e23VPRCggOqmIu5Mtn1VvGWcNYjBAMx0wAEm6Vs/MLz1swyF2cp7gpCLxX1Q0G2LWg
-         NPJNFZbnhNEUAavEf+WkYbp5BRRt4Zk1PWt+oAFW4kHKl1yNdE8GaYWNHcLtwHI1ZwBs
-         9RLvHtsxMpyp6nZm1nF+QklFSy0i0lrRC1aUtv3F7gL27gyzDxtmdE9OYH5mXWaieA1S
-         YAgAYRdbgBuo+uGh+XvBg3BdVofkqC4GFo9DrM15lUImu52+rDBnOtFW+uyF8C1VGNot
-         +6CmEQEQISgAyYoPmGD9WlRbD7caGM3pxqxHO0DZYtdR2RRQ5WegGKCLFi5TQZMPjhTt
-         EePQ==
+        d=linaro.org; s=google; t=1716897104; x=1717501904; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SR0swcG5+QwWCJaol74s1Py1ngSe4OivircoLN7dDJU=;
+        b=dQFdbWehASHf/tLujjkM/47lteoefuZtqD5HGb60XiOhOQk+YBzrjbSqixd/SLTKQ1
+         RL72TDdx7kDYyJLlmdY8HYfNRUK2QmX2TuqaTDvBiB/gHhu0nIXLqhKXXa+JU4lgyTwv
+         uVvMzpuAAsbhJVxkZ4o1eubOW4vr/Orp7wSU5izS6Xqpf6rrEenleC4pIDKTP+fRMVkL
+         nZewdk3MqlcfHd+ehT+LhP/UKPjkX8pdry9kofOM4YagsyjszdAka9JtqalmsPgeAKJp
+         LPG/4+T7I2nkS+k6DOAZDILc0E/MSZQTcbh/yBrIQCT8+KV+iOdl8pD0Felfob8xRrTQ
+         zl3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716896746; x=1717501546;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YDquBsdLvmzQxmvDh4J1njfPrwr/BCq5+dl34vP0JYE=;
-        b=wEFh3dlS9r2lCoXNNGR8W+4IXIqdLPWUiuE/O3MbH2EZZTaU9WRaE9gTcf2h1XPjEb
-         QdQn5lJ06koUX4k3CkN2Rv61KVQR/m42H2TCCu27rAsKfzuq72KgFpEmsMAG/z9iUldT
-         fvO/1J+qTbEFTf7fYoRaca7Jtv5PqsVv/cnap0p93nJ344PzK1LVtgl+jKxOOz19R0sg
-         63EHJTYn86rcVHPRVOAW31oqjxA2R9HX+Zt085Pf/NGfFTxBZpwSKxOF8YGbOzmDQHT8
-         NrTpNccO/iSG+VIrrzksoGcq/n6hTL4RIli3wRnc5w6cFWoHr6swQ01c8DTrc+B/KB5P
-         jQQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXsWgAnr9ocZAhgcSCvTOaL5IoxuT1wHNoq2pEDbgNe1WmYY921WVcNNwkPqutBhzP00NnNWgaOcdyqATVwIfDczi1x7oeBh+l9qXH9LQ==
-X-Gm-Message-State: AOJu0Yxkvjl0VXZtr5KdKoz2e/TQWXXJJJIMKWetZq3IYw85tm8PSkk6
-	c+qluYx9vH/OdNmflkE4fojL1TOw8xQm24buk6aQljW3/dYQV4qhfCUirn3E/ub1rvVKEjKf4LK
-	A
-X-Google-Smtp-Source: AGHT+IEQxDPgZFN7ZWwuI57tP0m82C0TYJ9eis/3zF5nq93vs+Y2XJ6pur8gwKCnx+Zw8XfhZ1lIcA==
-X-Received: by 2002:a17:906:3b0e:b0:a59:b359:3e14 with SMTP id a640c23a62f3a-a6264179bf9mr780122066b.10.1716896746013;
-        Tue, 28 May 2024 04:45:46 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626c81773bsm605825066b.30.2024.05.28.04.45.44
+        d=1e100.net; s=20230601; t=1716897104; x=1717501904;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SR0swcG5+QwWCJaol74s1Py1ngSe4OivircoLN7dDJU=;
+        b=BuAmMyEPfGmNhqm17vOGwLqHgG8/xEBYF4IeuckKpnWnXgUM5TnCuzYv2AI/cEjwxy
+         BBcnQnd7pVALnbv+tf+P3JLZVlz2+nw2CWbTsYMyhfuiO3UqwMrbsCFos8Q5CKrE1geD
+         8A7e6mepX8oOVvF0Cr405KazD4tLTDTay44TDXgv1ToHYRxTHVOBwTMfoaNMDy+bW3wQ
+         AY0R130dj2D1ebphTXJu6un3mfSlTPT3NRAxU70JYLwc4XuSkphVtM8G/jvU+UW1VGeh
+         ttluHPMddMK7a8jyniJXuv3i6cdsFywLhHmb/Gj3M8TkOacOklQTIx2yK7TJSCecJ1e3
+         ydEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUqpuqc7WBI67Xer1avMItAxw1EKx3c945l3/w+eSq5cQiZEWLjyhaMB5LheE+22FH+0ENlBHe2Ad8Af2rDV3REREqTNH53mXW9RomyUw==
+X-Gm-Message-State: AOJu0YwrO66Bdy//Hk3tApY8qLuqVi1TzMFvn/BTnIqyaNrGh8yQu0kE
+	z8GJ8RkXvLKJIx0YoaT1NGfeq6hokLSIUYvwQom/XkkXHoMRFRj0Ybgz8OaxsbU=
+X-Google-Smtp-Source: AGHT+IGtydr8Q+QTfb3HjbwnRs05//k8mxj1FHunYO466H8ygyz2l7N2XNJD5XCJREFfSTK3smXiaQ==
+X-Received: by 2002:a05:6512:3448:b0:51f:4096:dbca with SMTP id 2adb3069b0e04-52966ca92d9mr6185096e87.62.1716897104488;
+        Tue, 28 May 2024 04:51:44 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5297066b68csm941610e87.132.2024.05.28.04.51.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 May 2024 04:45:44 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To: Thorsten Blum <thorsten.blum@toblux.com>
-Cc: amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20240527084428.246396-3-thorsten.blum@toblux.com>
-References: <20240507222226.288074-2-thorsten.blum@toblux.com>
- <20240527084428.246396-3-thorsten.blum@toblux.com>
-Subject: Re: [RESEND PATCH v2] misc: fastrpc: Use memdup_user()
-Message-Id: <171689674447.20426.17026638543644613384.b4-ty@linaro.org>
-Date: Tue, 28 May 2024 12:45:44 +0100
+        Tue, 28 May 2024 04:51:44 -0700 (PDT)
+Date: Tue, 28 May 2024 14:51:42 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Jeffrey Hugo <quic_jhugo@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Bryan O Donoghue <bryan.odonoghue@linaro.org>, MSM <linux-arm-msm@vger.kernel.org>, 
+	linux-media <linux-media@vger.kernel.org>, Pierre-Hugues Husson <phhusson@freebox.fr>, 
+	Arnaud Vrac <avrac@freebox.fr>
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: msm8998: add venus node
+Message-ID: <xlsho2uayeay2yzws77donp7xrhwxndv6t6ehobevaszah23l2@risstyo3vhhv>
+References: <1cf08b56-a247-431b-a24b-69f563f49240@freebox.fr>
+ <c2fca6c7-2421-42b4-a43d-68b251daf9b4@freebox.fr>
+ <e187c5ab-0241-4a45-8d74-a33ec12deec6@freebox.fr>
+ <b4a71be9-b888-4396-9eef-28c4a4f2b149@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b4a71be9-b888-4396-9eef-28c4a4f2b149@freebox.fr>
 
-
-On Mon, 27 May 2024 10:44:30 +0200, Thorsten Blum wrote:
-> Switching to memdup_user() overwrites the allocated memory only once,
-> whereas kzalloc() followed by copy_from_user() initializes the allocated
-> memory to zero and then immediately overwrites it.
+On Tue, May 28, 2024 at 12:49:54PM +0200, Marc Gonzalez wrote:
+> On 13/05/2024 10:51, Marc Gonzalez wrote:
 > 
-> Fixes the following Coccinelle/coccicheck warning reported by
-> memdup_user.cocci:
+> > On 07/05/2024 11:29, Marc Gonzalez wrote:
+> > 
+> > Hello Bjorn,
+> > 
+> > This patch is supposed to be merged through one of your trees, right?
 > 
-> [...]
+> Bjorn, would you take patches 1 and 2 in your tree?
+> 
+> Who would take patch 3?
 
-Applied, thanks!
+Per MAINTAINERS:
 
-[1/1] misc: fastrpc: Use memdup_user()
-      commit: a16833330e2fa60912af6abebde711bf2c672cf9
+Mauro Carvalho Chehab <mchehab@kernel.org> (maintainer:MEDIA INPUT INFRASTRUCTURE (V4L/DVB))
+linux-media@vger.kernel.org (open list:QUALCOMM VENUS VIDEO ACCELERATOR DRIVER)
 
-Best regards,
+
 -- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
+With best wishes
+Dmitry
 
