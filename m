@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-20720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D303B8D197A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:31:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 144858D1980
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:32:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 600CF287128
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 11:31:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 464371C22601
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 11:32:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C80F16D31E;
-	Tue, 28 May 2024 11:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB1FC16D4CB;
+	Tue, 28 May 2024 11:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UaYpx5bp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FcQ8iV/l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBBA16C872;
-	Tue, 28 May 2024 11:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3426A16D4D8;
+	Tue, 28 May 2024 11:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716895831; cv=none; b=p0hzwI0ahLp0jimyAkXCTrjcw6Yy6mWl7ICRZnrnz5vFxX4s3GtfTdAPgpIpQdHie7wn9nSPn/yeX7iVtALzCSfjUfPwNApd33qcz9i2ldf8dx5ywQKM/+AHwp6cxQDR0qpK0PALP7MyRv2svo702aK+BseC/dzBF0Y3B4aPyD8=
+	t=1716895834; cv=none; b=ojc6R0DEHnmYTCj+PB8gnxWNSFjDnVLAUrg+d6e68JtXfyk5KLdcYxtROh5MexL5ta+5VwV87SQK/mInQZwTMyAZVWIX8OPtsfM1Jci1S9jhLIzNb/klUxzIbbDfWOP6Dnf/NeHZnpKuLMSgGlG/bTIJdBkS+SNFLcbtAAgaLB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716895831; c=relaxed/simple;
-	bh=NPlw+UgRXFCYW39MQ5raA1QAH3Z8ZdFUTg6r3oIjN3A=;
+	s=arc-20240116; t=1716895834; c=relaxed/simple;
+	bh=ItLh038yTXkpBO2JVPmLDXhnSPBcMqCuu4HfftVx0pc=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vt1AnVWxem4qBj6bc/MUOqyEqXprZ1nauALZn+3kpSsvxr/y3QKlHeCvY1UIe49l7Gz2WVr/wBinhzgaZ37emLtecfZ0q+sh6dwMCLuilT8/u1UYJHAltDLoxLY+zjo+kxPR98FJ/BFxhkF+3hGf3/RPKlbA0KtO0q5Fz5EusO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UaYpx5bp; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=q+MJdJ7JLYwacsfIF/bnbcomizeBk+eiMOsefIa6VAipvkR72r+8Y4HRhZxgH4pUQmHuHggAqmqtzbef812NEsLmNCAS+8M9BaBuU2uAN+MXhEKGwV+NYJzJ+8NPFqMV8mLRAFq5KTnwNo/3mdeEtvXQBEg29RE/0GaGmzz+748=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FcQ8iV/l; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44SBAa46016293;
-	Tue, 28 May 2024 11:30:27 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44SAXhWa021501;
+	Tue, 28 May 2024 11:30:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	90rs+1NhWIyzHw7JC+KSKG0OGHUhEX+N4aq6NhYEOqI=; b=UaYpx5bpE2r3qwdp
-	O4dHFbIG5XlNxRxLjotiMOGDzDIXtCP2vebQ17LjDo+JxhGjaEUFeTEUBdCj7yk2
-	5w1Hm61pRMfl9/2wHKZVe98FykUOczTncafBaSG5a+24n0Sr1ImFE4xN/XaVzsHW
-	jzjnZmYHY53RT3Oyq8/6xBaFJfTF9gzIX6aszNVfaLmA+pYWWo/f+YQ5+RWsfKCV
-	tUAj6qSAzAB+CR5pzNk+bWAQQ3nYt0ycdGpPDa8vnJCMozyxR+Q89xxBiYMaEj0Q
-	bzw48oxMY/S72PvG+GQOKqgUi5664AKjVSLKIm3qiAFyZexZEpRIwsK7HHLnsPFN
-	R3ZlRA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba2mwtx9-1
+	7FQ8GTcx+lE1HArNnPtx3PNwM1Jn9g53NbtM9+mUJoE=; b=FcQ8iV/lgjHnyoZk
+	nWAbQ8itxT7dYo/95TpjM4PV7/acyycN34ObVBweQeI17ivrh1Pj6MbSu7hZvU5+
+	mIGr0HbH5KLgsJXLnVyDV87wHWKQJogAqNYSPmPMW1nOTfmE8T2G8TIp2BrbhEgr
+	ncA30G1X9sBiqzWQ999BHB/32mUp/rgIQfu9+GaF5WRTm5EpvqFK6Veo0CNsohvk
+	OkbLckTdXCtwEYHhfbiO/3UCaDSxe7x8G6WA9fzYWJo2z2TAh5ZMeT1mkULe1J6H
+	hIlU6/W7BXiorQy5jxBw2QltqP3iLhR6VEfmgvLPpjdElKd/zemsNYH6w/nn9RYT
+	8eiJqQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba0pnud1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 May 2024 11:30:26 +0000 (GMT)
+	Tue, 28 May 2024 11:30:30 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44SBUP7d028042
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44SBUSf8002254
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 May 2024 11:30:25 GMT
+	Tue, 28 May 2024 11:30:28 GMT
 Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 28 May 2024 04:30:23 -0700
+ 15.2.1544.9; Tue, 28 May 2024 04:30:25 -0700
 From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
 CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
         <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>
-Subject: [PATCH v2 7/8] misc: fastrpc: Restrict untrusted apk to spawn
-Date: Tue, 28 May 2024 16:59:53 +0530
-Message-ID: <20240528112956.5979-8-quic_ekangupt@quicinc.com>
+Subject: [PATCH v2 8/8] misc: fastrpc: Add system unsigned PD support
+Date: Tue, 28 May 2024 16:59:54 +0530
+Message-ID: <20240528112956.5979-9-quic_ekangupt@quicinc.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240528112956.5979-1-quic_ekangupt@quicinc.com>
 References: <20240528112956.5979-1-quic_ekangupt@quicinc.com>
@@ -78,120 +78,81 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mfm0Nlufys3XcnQoCa3N8ZvEWrHhcLU4
-X-Proofpoint-ORIG-GUID: mfm0Nlufys3XcnQoCa3N8ZvEWrHhcLU4
+X-Proofpoint-ORIG-GUID: pGNstejnuWe-R7xw3aKQgXzHi7T7UM3u
+X-Proofpoint-GUID: pGNstejnuWe-R7xw3aKQgXzHi7T7UM3u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-28_07,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
- malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=790 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 bulkscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ mlxscore=0 spamscore=0 adultscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405170001 definitions=main-2405280087
 
-Untrusted application can attach to guestOS and staticPD if it can
-make root PD, sensors PD or audio PD attach request. This is a
-potential security issue as the untrusted application can crash
-rootPD or staticPD. Restrict attach to guestOS or staticPD request
-if request is being made using non-secure device node.
-
-Also for untrusted dynamic processes, DSP HAL process opens the
-device node on behalf of the application. Add a check to restrict
-such untrusted applications from offloading to signed PD.
+Trusted CPU applications currently offload to signed PDs on CDSP to
+gain some additional services provided by root PD. Unsigned PDs have
+access to limited root PD services that may not be sufficient for
+all use-cases. Signed PDs have a higher dynamic loading latency
+which impacts the performance of applications. Limited root PD
+services could be opened up for unsigned PDs but that should be
+restricted for untrusted processes. For this requirement, System
+unsigned PD is introduced which will be same as Unsigned PD for
+most part but will have access to more root PD services. Add
+changes to offload trusted applications to System unsigned PD
+when unsigned offload is requested.
 
 Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 ---
- drivers/misc/fastrpc.c | 35 +++++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ drivers/misc/fastrpc.c      | 9 +++++++++
+ include/uapi/misc/fastrpc.h | 2 ++
+ 2 files changed, 11 insertions(+)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 23dd20c22f6d..7f81a18b8aea 100644
+index 7f81a18b8aea..ebe20915392f 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -332,6 +332,7 @@ struct fastrpc_user {
- 	int pd;
- 	bool is_secure_dev;
- 	enum fastrpc_userpd_type userpd_type;
-+	bool untrusted_process;
- 	char *servloc_name;
- 	/* Lock for lists */
- 	spinlock_t lock;
-@@ -1274,20 +1275,24 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+@@ -122,6 +122,7 @@
+ enum fastrpc_userpd_type {
+ 	SIGNED_PD			= 1,
+ 	UNSIGNED_PD			= 2,
++	SYSTEM_UNSIGNED_PD	= 3,
+ };
  
- static bool is_session_rejected(struct fastrpc_user *fl, bool unsigned_pd_request)
- {
--	/* Check if the device node is non-secure and channel is secure*/
-+	/* Check if the device node is non-secure and channel is secure */
- 	if (!fl->is_secure_dev && fl->cctx->secure) {
- 		/*
- 		 * Allow untrusted applications to offload only to Unsigned PD when
- 		 * channel is configured as secure and block untrusted apps on channel
- 		 * that does not support unsigned PD offload
- 		 */
--		if (!fl->cctx->unsigned_support || !unsigned_pd_request) {
--			dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD\n");
--			return true;
--		}
-+		if (!fl->cctx->unsigned_support || !unsigned_pd_request)
-+			goto reject_session;
- 	}
-+	/* Check if untrusted process is trying to offload to signed PD */
-+	if (fl->untrusted_process && !unsigned_pd_request)
-+		goto reject_session;
- 
- 	return false;
-+reject_session:
-+	dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD\n");
-+	return true;
- }
- 
- static void fastrpc_mmap_remove_pdr(struct fastrpc_static_pd *spd)
-@@ -1376,6 +1381,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 	} inbuf;
- 	u32 sc;
- 
-+	if (!fl->is_secure_dev) {
-+		dev_err(&fl->cctx->rpdev->dev, "untrusted app trying to attach to privileged DSP PD\n");
-+		return -EACCES;
-+	}
-+
- 	args = kcalloc(FASTRPC_CREATE_STATIC_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
- 	if (!args)
- 		return -ENOMEM;
-@@ -1531,12 +1541,20 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 		goto err;
- 	}
- 
-+	/*
-+	 * Third-party apps don't have permission to open the fastrpc device, so
-+	 * it is opened on their behalf by DSP HAL. This is detected by
-+	 * comparing current PID with the one stored during device open.
-+	 */
-+	if (current->tgid != fl->tgid)
-+		fl->untrusted_process = true;
-+
+ static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+@@ -1552,12 +1553,20 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
  	if (init.attrs & FASTRPC_MODE_UNSIGNED_MODULE)
  		fl->userpd_type = UNSIGNED_PD;
  
++	/* Disregard any system unsigned PD attribute from userspace */
++	init.attrs &= (~FASTRPC_MODE_SYSTEM_UNSIGNED_PD);
  
  	if (is_session_rejected(fl, !(fl->userpd_type == SIGNED_PD))) {
--		err = -ECONNREFUSED;
-+		err = -EACCES;
+ 		err = -EACCES;
  		goto err;
  	}
  
-@@ -1818,6 +1836,11 @@ static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
- 	int tgid = fl->tgid;
- 	u32 sc;
- 
-+	if (!fl->is_secure_dev) {
-+		dev_err(&fl->cctx->rpdev->dev, "untrusted app trying to attach to privileged DSP PD\n");
-+		return -EACCES;
++	/* Trusted apps will be launched as system unsigned PDs */
++	if (!fl->untrusted_process && (fl->userpd_type != SIGNED_PD)) {
++		fl->userpd_type = SYSTEM_UNSIGNED_PD;
++		init.attrs |= FASTRPC_MODE_SYSTEM_UNSIGNED_PD;
 +	}
 +
- 	args[0].ptr = (u64)(uintptr_t) &tgid;
- 	args[0].length = sizeof(tgid);
- 	args[0].fd = -1;
+ 	if (init.filelen > INIT_FILELEN_MAX) {
+ 		err = -EINVAL;
+ 		goto err;
+diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
+index f33d914d8f46..3b3279bb2cf9 100644
+--- a/include/uapi/misc/fastrpc.h
++++ b/include/uapi/misc/fastrpc.h
+@@ -62,6 +62,8 @@ enum fastrpc_proc_attr {
+ 	FASTRPC_MODE_SYSTEM_PROCESS	= (1 << 5),
+ 	/* Macro for Prvileged Process */
+ 	FASTRPC_MODE_PRIVILEGED		= (1 << 6),
++	/* Macro for system unsigned PD */
++	FASTRPC_MODE_SYSTEM_UNSIGNED_PD	= (1 << 17),
+ };
+ 
+ /* Fastrpc attribute for memory protection of buffers */
 -- 
 2.43.0
 
