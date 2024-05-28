@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-20699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 616858D12E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 05:39:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E3E28D12EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 05:39:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91A921C2189E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 03:39:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2ECAB21EBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 03:39:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76B0A13F459;
-	Tue, 28 May 2024 03:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9583D140363;
+	Tue, 28 May 2024 03:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nkUG/Wdl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bUdsMDIN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483D513F44C;
-	Tue, 28 May 2024 03:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DAE13E050;
+	Tue, 28 May 2024 03:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716867193; cv=none; b=W8cz54gTZ/pwdfPM2AMW53GZxJK5RLpXBMDlerKnu1PGYMlr/rGX/iOHMaV/3VIwi1zP6DJc43s27sGQDUNkyyP2CEeijQ9JHTNkrK1zS74f+KPghVCtbF6imvPLLP+vzHzDu8FyCH28qsozF8Wb1hquAqvDOO8m9g68pUKA0j4=
+	t=1716867194; cv=none; b=Rln211YvIkUl98fIYfZ5vTK+ljdbFz4DvH2UjkqgckhFCfaFyrd+aD+VHlK+tjceRDhm/QV3wkby3+/R76eSJ2Q7rCDTKtaEIo22flQ+BfmNn3gumDj24bjEIwxwt9ylrfKV9nA8qHHT9NYUh41ztUweD5Y/D+tWVBN9OmvXlyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716867193; c=relaxed/simple;
-	bh=xB+JPer9B5FxmyGoXFUdxxsSU+BeUDcsb6psyhM0XRM=;
+	s=arc-20240116; t=1716867194; c=relaxed/simple;
+	bh=2mqemxQ+Qk8ChDSwJX0gNmpRRAq4bKzYIBgw6PAefmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RjAHVNw+JVfG6AOpKoD0d3KZPeUrtYWYyL7PzcC9ak1LJqMaH41ST8Vi5yJXkseIUAC0S5+I6dnlv11p8moDgo0v49enZxZyypkTCCD+WCf9VRQ5DFdvAKGPQ4vRhebetpFjTyWqUCkWzSiER9FyhHVnskF/v04TJJBOdGwruTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nkUG/Wdl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE2BC4AF07;
-	Tue, 28 May 2024 03:33:12 +0000 (UTC)
+	 MIME-Version:Content-Type; b=En7mNMAv+tbCLpgiB5ue+66xVRaRkNS8tXSZndeVcaBDj698FAj6VwdsS6io8fVdz5lQJUlfD+GzaJE4GHjfHBCp6l9TC7s0KeYWyAaQtBjxDCZcwgii3/rUN428bcPfHCnprgEQwCJACLsP/U4jboMiOz5Cg0J+TIJsAOB9Ovg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bUdsMDIN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B95C4AF09;
+	Tue, 28 May 2024 03:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716867193;
-	bh=xB+JPer9B5FxmyGoXFUdxxsSU+BeUDcsb6psyhM0XRM=;
+	s=k20201202; t=1716867194;
+	bh=2mqemxQ+Qk8ChDSwJX0gNmpRRAq4bKzYIBgw6PAefmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nkUG/WdlKUzYW4E5VDyFMQABpFcTkYgNU+3TGdi8IMJbf1hX07pFY7BVvA8GnxhRI
-	 hiPkioXs0DMVG5EAimdGUVm8vYhvhtFRmTmzgW183ykB7EBs5g7NYRREUMRYsPykm5
-	 U3HDNED8kp5YmVp7qGn837iT8V4Ei1CKLsggqLaDVy4X4efGCX5HlMa0RyxywPMJvk
-	 MnjJtJmCgC+86H/Hwx2KGXs4NguYu+K/9dSx/N84GooOK6oCEcdlf0r6XYashW1l/B
-	 zE1cgYM9oQaTNwsAHXMfpN98B3pyr5urLrzBM0DfUFgJneol8xoitCXkFctoIIFA+J
-	 NxpnWfUm/vTLA==
+	b=bUdsMDINAHwVqWKuNezYB9nX3OthnxGpwmIvNpthXgbEHqfV7xnWS+Xa/YAzLmtl7
+	 G8nG7Nl2MPuqvm83zQ2UGUNKXFms5HumQqdl6yoIaSQRNbAnFKpVF8RJmbgqZwuX2b
+	 jzFBRQxEmj4mQgFlvRmW8lKZh8QmrqzneD+sd9EC+3VfznWhiJjPfpSMWccFi0n/AM
+	 +JnH+hVQd3mZ0jvDoTtVJs13rhC/JALajTwlDUJlHdqkr9uy7uQZIaZlab3Xn11AjY
+	 NZAcLSLNE22+fOUJdD7ntvEaRBstUj5lTde9DhXbSbagtCcqxoJw13XevIT8Pl1/No
+	 lVQCfRnhHFcKQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: vkoul@kernel.org,
+To: konrad.dybcio@linaro.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	konrad.dybcio@linaro.org,
-	Rohit Agarwal <quic_rohiagar@quicinc.com>
+	dmitry.baryshkov@linaro.org,
+	Tengfei Fan <quic_tengfan@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
-	dmaengine@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/2] Add I2C and SPI busses for SDX75
-Date: Mon, 27 May 2024 22:32:32 -0500
-Message-ID: <171686715151.523693.6089743486707412009.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	kernel@quicinc.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm4450: Add cpufreq support
+Date: Mon, 27 May 2024 22:32:33 -0500
+Message-ID: <171686715154.523693.6573813091229179379.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240517100423.2006022-1-quic_rohiagar@quicinc.com>
-References: <20240517100423.2006022-1-quic_rohiagar@quicinc.com>
+In-Reply-To: <20240513093648.1746336-1-quic_tengfan@quicinc.com>
+References: <20240513093648.1746336-1-quic_tengfan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,23 +68,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 17 May 2024 15:34:21 +0530, Rohit Agarwal wrote:
-> This series adds the I2C and SPI busses found on the Qcom's
-> SoC SDX75.
-> 
-> Thanks,
-> Rohit.
-> 
-> Rohit Agarwal (2):
->   dt-bindings: dma: qcom,gpi: document the SDX75 GPI DMA Engine
->   arm64: dts: qcom: sdx75: Support for I2C and SPI
+On Mon, 13 May 2024 17:36:48 +0800, Tengfei Fan wrote:
+> Qualcomm platforms making use of CPUFreq HW Engine (EPSS/OSM) supply
+> clocks to the CPU cores. But this relationship is not represented in DTS
+> so far.
+> So let's make cpufreq node as the clock provider and CPU nodes as the
+> consumers. The clock index for each CPU node is based on the frequency
+> domain index.
+> Also add a description of a SM4450 cpufreq-epss controller and references
+> to it from CPU nodes.
 > 
 > [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: sdx75: Support for I2C and SPI
-      commit: e07c4a702eb0abbb200c07593cfc429338ec42bf
+[1/1] arm64: dts: qcom: sm4450: Add cpufreq support
+      commit: 15476ccd3dc6cea04048d159115c86a3d5042501
 
 Best regards,
 -- 
