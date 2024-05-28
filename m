@@ -1,65 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-20768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5282A8D1CE5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:27:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82A048D1CE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:27:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0871F1F24F88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:27:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B38001C23028
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:27:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DC0C16E894;
-	Tue, 28 May 2024 13:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B685616F26B;
+	Tue, 28 May 2024 13:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gVduIjSN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gyA91qXy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C60E1DFDE;
-	Tue, 28 May 2024 13:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8941D16F260;
+	Tue, 28 May 2024 13:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716902837; cv=none; b=T5jjuLptwgCazZbR4ZjvLk6/1Sj1LhIv4dD3WDMwEbal8y5hOZTin1r/GFLDhVDgbz2xUIFt8RS4LXLkzeIveGjb7BD+t64SDp+hPadLCYL77z2NEDk1Vsof+pjGWoi5ru95wbK9+aFSEKYiif5ew/loMQ3nl/r5QM/qK+vjBP8=
+	t=1716902838; cv=none; b=sTFQ6pP0ltaziYzWVPIMW/CWeAv03Th2gGYgIm2zP4PqvcstmJf8PuTuTvs34i7P4QL07h33QLDe+ex+KuR4e6pglQftcNd7QQMIc7PP/s4i9m/ElZgvNQcWSWvZmLBiK6TKX3BfEEhboK4eRj2E6urAVhO5cd9/MEfHhhXIW5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716902837; c=relaxed/simple;
-	bh=619v0KKVAgpbSe51y1nEnqE18vmDCAl7j7wv482S4vw=;
+	s=arc-20240116; t=1716902838; c=relaxed/simple;
+	bh=YYl1lOWO6cs9DwFClWb5j0oMwLGGEFuIrHYWUw8CDcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YPZkjNO4/+cfEo8NuajaGLGcolzUmmhVlgBVO93rku7WC0mufTpB2lmmOHncAywdhW1/0V7qG7QUXhGlspDnraIzhyXCGXJ3GYpJeqna3Q9OvSnrc75uK3S+jaYYO784ftCVNROPCUHtqUsaTx+vAZ7lQSzPK9AFO0ZzSQ1OMj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gVduIjSN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF04C3277B;
-	Tue, 28 May 2024 13:27:15 +0000 (UTC)
+	 MIME-Version:Content-Type; b=MCcNqpKfZ2W9TkSQJkCZvG38oFo0HGr4nPk9EfvskuGqAUjnVNl0zHD1ZBQ1dh9Wa+vAQZq+oQXIXg11BYdbJ1MtgVH6BTi1gK3zwWS1DkouVR8x0EeZXv8KrHMpCHgC124ijOYD/LsjdJkL+81zY6owWOGgLlrCP8fnR2wm720=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gyA91qXy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D601CC4AF07;
+	Tue, 28 May 2024 13:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716902836;
-	bh=619v0KKVAgpbSe51y1nEnqE18vmDCAl7j7wv482S4vw=;
+	s=k20201202; t=1716902838;
+	bh=YYl1lOWO6cs9DwFClWb5j0oMwLGGEFuIrHYWUw8CDcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVduIjSNToBd5Yf+innPoI9zUXLWJZv6AbuDsxX+uAG0QxvBwwPvsg6i5h/q2Y/ME
-	 P5Ek+GAdixLPzSiKt/rw6orn4Rz+i5ktD+D+ir+bng5uo9A5+k6XeB6nFsY18QGxSL
-	 AHUi0Y4CBcsUuDV+TTsf7HuD/qtwoP1y3xigQXsEDnJwWBgqPXKA/jzy/QgXEQszZ8
-	 ETCB1jZRbd1t2qFyOw/vXKzOtt/o2hz2hdqqi9T7xxBMQPscO5czd1NTjLAzNlxOdR
-	 OIS484XOdrSBg9eCcaVu3F/YmnEEDWQyyuYsKMRLQUyIFtNJ0uhkhAVn8ZlfIZJ5im
-	 WI8P9IEIA78Gw==
+	b=gyA91qXy+6j22T+01DxrQePC3ycTUMME26kcPYVDROrvn1ZmbTFXPEy28jpB3AZRY
+	 GiTcXuNJPGAv8UySufTIYi0M84shS10oJryd7dAqRgQxnHNwmoksmnAkhW+OerkJHn
+	 TUdiPoNmAk4STxXsn/iY9qkS507Q/901wjocEztXHmXbNZCe/aK0jSzsD1tey/BKxo
+	 X7CQbPayR5oC79kdscWKnhKrE28YaE7uJ84suqZ/GTUft0vJDaVPyao7d5INMrB2mS
+	 jGgqBCmMfCKXUTq6Up4s6Cb2CK7M9pPiU+3CTUYG4cRTMyGYboYEikytzxFoA/uVwI
+	 v1nnRb1MGax8A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Can Guo <quic_cang@quicinc.com>,
+	Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Andy Gross <agross@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: (subset) [PATCH v2 0/3] arm64: dts: qcom: msm8996: enable fastrpc and glink-edge
-Date: Tue, 28 May 2024 08:27:12 -0500
-Message-ID: <171690283118.533694.14995712306393401883.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH v4 0/4] scsi: ufs: qcom: fix UFSDHCD support on MSM8996 platform
+Date: Tue, 28 May 2024 08:27:13 -0500
+Message-ID: <171690283120.533694.5172412589591017621.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240418-msm8996-remoteproc-v2-0-b9ae852bf6bc@linaro.org>
-References: <20240418-msm8996-remoteproc-v2-0-b9ae852bf6bc@linaro.org>
+In-Reply-To: <20240408-msm8996-fix-ufs-v4-0-ee1a28bf8579@linaro.org>
+References: <20240408-msm8996-fix-ufs-v4-0-ee1a28bf8579@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,18 +77,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 18 Apr 2024 09:44:19 +0300, Dmitry Baryshkov wrote:
-> Enable the FastRPC and glink-edge nodes on MSM8996 platform. Tested on
-> APQ8096 Dragonboard820c.
+On Mon, 08 Apr 2024 03:04:30 +0300, Dmitry Baryshkov wrote:
+> First several patches target fixing the UFS support on the Qualcomm
+> MSM8996 / APQ8096 platforms, broken by the commit b4e13e1ae95e ("scsi:
+> ufs: qcom: Add multiple frequency support for MAX_CORE_CLK_1US_CYCLES").
+> Last two patches clean up the UFS DT device on that platform to follow
+> the bindings on other MSM8969 platforms. If such breaking change is
+> unacceptable, they can be simply ignored, merging fixes only.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[2/3] arm64: dts: qcom: msm8996: add glink-edge nodes
-      commit: 56ae780a4387d71dd709895acd95112d01f37fb4
-[3/3] arm64: dts: msm8996: add fastrpc nodes
-      commit: 1b80b83f893dd69efe3c3bf84cd9f661218ccfc0
+[1/4] arm64: dts: qcom: msm8996: specify UFS core_clk frequencies
+      commit: 02f838b7f8cdfb7a96b7f08e7f6716f230bdecba
+[2/4] arm64: dts: qcom: msm8996: set GCC_UFS_ICE_CORE_CLK freq directly
+      commit: 7e35767cb7876a8109d155086bc38974467dbb67
+[4/4] arm64: dts: qcom: msm8996: drop source clock entries from the UFS node
+      commit: d3d8b80845eb51266407aa39310dab0a42b7c6ad
 
 Best regards,
 -- 
