@@ -1,145 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-20762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D2C28D1C31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:10:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62F338D1C33
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:10:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE2151F235F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:10:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F2CC41F23855
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:10:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E42616DEDB;
-	Tue, 28 May 2024 13:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BFD416DED5;
+	Tue, 28 May 2024 13:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XmQsayfL"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="BcJl7hhh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6AD16D9DC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 13:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C564216DEA0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 13:10:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716901803; cv=none; b=mo6cRsf6CFl3MU1A77JdjEqtYx0B5r8XmrkHmrEjj1PB14X3OPRT+ztRHdyyHKtuunRrHuVrFYgYanuF6prs956kCa+u04d1dU8DfNzA3y/eigWJokfY29FuiHJf2CDo5WDweLWSkzdgcCs9SI28Vni1I4FqUilP625WMt5wU04=
+	t=1716901818; cv=none; b=PUM76PEj8m7OjUTZfMSiim37MCRqAlzDnJdJP96nA/tkowmuTlVpfk1XQiBPu8Eeb1T46Yp5LrrWKqvwdFHXJvNVa0iBnd/Xx0DH1b42oxIEHSVdC9USEaQMqlHrdeJPHEeEa4zKKBKicsLLAzcFBwyc2CpFAN0nz4d3FpwXAo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716901803; c=relaxed/simple;
-	bh=oJRSdItw2anLfw/4zZaFRaP3Dn6ne/abmv6YdE3q5AM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ut334bxU9/TNA9Gy/fvLq/ffvlYF7hCBE2t0TqKPR0IPLneAuKnS2rURx/xlU4TxJGw0P1Vl3npDJdToz86y45XSucP0wf+nKHFEujpZyaRootzPkT0aGGXIHLvdGxeWLLduiJpoXIk0YWdZfeeIqFI41YhIsHHG/VwfAKCdvLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XmQsayfL; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-529b4011070so1052460e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 06:10:01 -0700 (PDT)
+	s=arc-20240116; t=1716901818; c=relaxed/simple;
+	bh=cTlvu96+6BldpCT1C82whC3Wey7bqNjKh4l0KWF4cBA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nCOCF+tXF7asQJus45+NMr/uWH8i/3iVoOePMQduTP0Qidt/Ka8iBEVLv1sZILAMDHeJ41Tj3mz0d8YenbLHm6IMX93/jBqdK2ilvrfnZZrZGfGvV9IUm8BubIHZDll7KkQkBQbIWgXv4i/Kzi4Td3ElUwTNoYFTbiKU8m1cEnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=BcJl7hhh; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2e719bab882so8055111fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 06:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716901799; x=1717506599; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PPwsTBTSG17+Fbzi2z4l/C98UM+jSBGnmgHkuUq/dfg=;
-        b=XmQsayfLeDSkPS/1f9j2ZNaCnETid3Xyhe1IMqSQyOiKDQpa/7JaxQq0iwfxJvnZQI
-         j6oJIntPosG6E2pfczc1oyYhIIOTRdqfhqZu09WtS9yPf7XATBFLc1RvW4kZC5dRn2iA
-         /covHL5hkq7+gXezHJ4XBAxhtduW27rkjtD/6vDDcxl6i5emuHl4qavL2beY1sCtiqa9
-         Z7lXx0mbFelsDTyRVMMbZ8+krH2GuuymbZSVddvT1PsQqd4HsbCf41HtVOOLO69E1YUE
-         iELBkg6E3+/a/d+Kf/dcN0PIWKJsz+SCkIIEf9vzc0u5ViY/WiN9+2UCF1Dc/Usch8WF
-         Dl9Q==
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1716901814; x=1717506614; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ra2FdwYej7W/Hgw9jsqCv4AKdhsqtfsWR4HokTcGuJ0=;
+        b=BcJl7hhhq3Nf4BYTcl66fa4gYuZoahh2cK8Msgu0Z48fCPMh8HTdV0Voa2D8cCe6NN
+         NLfDWQFn5TAJlwPW2lI3WPDUOYp+DWZJQrrfIVvLsRc3kJmoGrIb4YGhn1mErnDpV8Gr
+         jPqP/Xqfdw9IpxFUBgSOwYyoPQT3S1BAOpX4GqCjsqgu97GXM69+RHLO3N3uNLL3Lvdy
+         bnDF6LhEOzkMIcXL+n0aS4uysxrh/KF5yWuiaAhhzqUjSz5EESfC5CHb1GBOf2ehoMO6
+         TkgAEMZ3TskygGRXsPwft2k5SWbFunmaaMvzn9WJAEM0MmybhHzr2kuichOx+9Q6X40g
+         HCUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716901799; x=1717506599;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PPwsTBTSG17+Fbzi2z4l/C98UM+jSBGnmgHkuUq/dfg=;
-        b=Hhr1/FzNEG+3Cisr3pVHrD+1z010ClsxpPGhEH9Z6FFKy3H2rIee+UeZQi4zGmJlZk
-         HxcoUveXc2W22ZLb62/R9EsCaeN7orVjCjQWud4tbXRzzCXqQsSG9OCb1f/G5EYDhGhW
-         g9c3sW5Not65+txSRl7Quk9Lwdg2bKZqmc/njvvWoP53td5ke/zlbolPap0A9AofNv3t
-         esRpQl0V23+t8RPYgJiPw/EIgVtUX58Ua8XEPn5sn0x2Q7tIITio8keATc+qcYhfDgzI
-         0ADmf5qPOvZIH+CYlw4TOF2pF1XJFiJZYh7WmWLnFKJFCfDJveYDhWwwaWngtf02npb4
-         w5NQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWSzn/RNSejSqhEpbyeCQm3sYrMUochRNKRsxeXb8DHDgwT9+KYi4ddKsAQoOvBnXxfWSoh5fZUxhb/h6XmXcEegUvJsX9EM/cflE27yQ==
-X-Gm-Message-State: AOJu0Yzr+gmwR0sbgWInWx2iEr/R42Z0ZKLWRNvPsR5EU2Xsmm/9Q0VT
-	GFD7mu+PxWwRX6rlGRMpAzLy+7YzMKcufSK0ddV80mDXUhJHCZZ6XO2gNBTl8kU=
-X-Google-Smtp-Source: AGHT+IG5b3vXE8/MoabYI/9hNRRALdcl2EYh3i90PULGycLtPuvRCTBGfdkvBEQL5r2PPaFh0SwboQ==
-X-Received: by 2002:a05:6512:acc:b0:529:593f:3f39 with SMTP id 2adb3069b0e04-52964caab87mr9168415e87.35.1716901799454;
-        Tue, 28 May 2024 06:09:59 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52970e1e75dsm944316e87.230.2024.05.28.06.09.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 May 2024 06:09:58 -0700 (PDT)
-Date: Tue, 28 May 2024 16:09:56 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: x1e80100-crd: Add pmic-glink node
- with all 3 connectors
-Message-ID: <wnja3vrlc7nnusdsi7zrb4yeej4oxslah4yac6xopojfe7hh2m@laexn6b5sxwr>
-References: <20240527-x1e80100-dts-pmic-glink-v1-0-7ea5c8eb4d2b@linaro.org>
- <20240527-x1e80100-dts-pmic-glink-v1-2-7ea5c8eb4d2b@linaro.org>
- <68e51df8-5553-4df7-91f8-65bef924a407@linaro.org>
+        d=1e100.net; s=20230601; t=1716901814; x=1717506614;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ra2FdwYej7W/Hgw9jsqCv4AKdhsqtfsWR4HokTcGuJ0=;
+        b=VM6vb5ekJHfQeyH7Xa04+swZDv+z9O4AIJkaxQRGzo3rPx/F2A3N6qNZAOneZfM8Jx
+         dmgkweGQwiv5Wzq+PEwM+1THAeDpXlrFzJOez7n5UTEPbGm9iP+hd+ZWlWXiyuIABt7d
+         HuavBmzGNCXRYZyBXVBH5mst5i52iiVrT8+qibKmeee3flYWF7AzNoQmQuyEDQxLJ5n5
+         wEc/b5WV8QByna5brh0o/k36CDW+TvihtXWNOwxCU/UPONb1J5mIVGEzdMfH/a8yxHnv
+         8hRkNw2bjQU8iR7/U+YFFcpFp626kVEJQ/rj1rwMdriENBl6bbCEHyDga0bi6mApzVuB
+         veqA==
+X-Gm-Message-State: AOJu0YwJkZYO1dByEwuBRYhLK6lpF+wCNgy8OUH6YkFY0H3BguyR+cJN
+	Q93tjf7L8FByIp1U6kvbZVJcs6g5CT1ZHY34L/jIJjvYduGV3p8BJVdgDHrGDHg=
+X-Google-Smtp-Source: AGHT+IFZzlt1sMDtZktVmHVc+8Cr2bF1XwXah6Oyj6JUtAXfbqz/W5OwEOl6JFtWkO/bYFCrferrRQ==
+X-Received: by 2002:a05:651c:1549:b0:2df:8387:ab70 with SMTP id 38308e7fff4ca-2e95b0c228amr87607821fa.14.1716901813876;
+        Tue, 28 May 2024 06:10:13 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42100f69850sm169831845e9.26.2024.05.28.06.10.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 May 2024 06:10:13 -0700 (PDT)
+Message-ID: <3dadf1cf-5860-431d-bede-e24facb82004@freebox.fr>
+Date: Tue, 28 May 2024 15:10:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <68e51df8-5553-4df7-91f8-65bef924a407@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] arm64: dts: qcom: msm8998: add HDMI GPIOs
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc: MSM <linux-arm-msm@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
+References: <8cc61db5-2920-4dd1-8132-5af434fb05b1@freebox.fr>
+ <36f22383-79a3-427e-bf17-35ce2e1dd620@linaro.org>
+ <c81feca0-3d56-4733-8eea-f8c574e99d9d@freebox.fr>
+ <dcd695bb-1ba4-438a-91a6-7be4a6a55814@linaro.org>
+Content-Language: en-US
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <dcd695bb-1ba4-438a-91a6-7be4a6a55814@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 28, 2024 at 02:28:08PM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 5/27/24 10:07, Abel Vesa wrote:
-> > Add the pmic-glink node and describe all 3 USB Type-C connectors. Do this
-> > for USB only, for now. The DP port will come at a later stage since it
-> > uses a retimer.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >   arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 143 ++++++++++++++++++++++++++++++
-> >   1 file changed, 143 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > index c5c2895b37c7..2fcc994cbb89 100644
-> > --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > @@ -49,6 +49,101 @@ chosen {
-> >   		stdout-path = "serial0:115200n8";
-> >   	};
-> > +	pmic-glink {
-> > +		compatible = "qcom,x1e80100-pmic-glink",
-> > +			     "qcom,sm8550-pmic-glink",
-> > +			     "qcom,pmic-glink";
-> > +		#address-cells = <1>;
-> > +		#size-cells = <0>;
-> > +		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
-> > +				    <&tlmm 123 GPIO_ACTIVE_HIGH>,
-> > +				    <&tlmm 125 GPIO_ACTIVE_HIGH>;
-> > +
-> > +		connector@0 {
-> 
-> Could you describe them somehow? e.g.
+On 28/05/2024 14:57, Konrad Dybcio wrote:
 
-Which reminds me that we should add OF bindings for physical_location
-driver.
+> On 5/28/24 14:45, Marc Gonzalez wrote:
+>
+>> On 28/05/2024 14:31, Konrad Dybcio wrote:
+>>
+>>> [...]
+>>>
+>>>> +			hdmi_cec_default: hdmi-cec-default-state {
+>>>> +				pins = "gpio31";
+>>>> +				function = "hdmi_cec";
+>>>> +				drive-strength = <2>;
+>>>> +				bias-pull-up;
+>>>> +			};
+>>>> +
+>>>> +			hdmi_cec_sleep: hdmi-cec-sleep-state {
+>>>> +				pins = "gpio31";
+>>>> +				function = "hdmi_cec";
+>>>> +				drive-strength = <2>;
+>>>> +				bias-pull-up;
+>>>> +			};
+>>>
+>>> It's super strange that both states are identical. Usually, the pull-up
+>>> is disabled and the GPIO is unmuxed (i.e. function = "gpio"). If that's
+>>> not the case for whatever reason, you can drop the sleep variants and
+>>> simply reference the leftover one from both pinctrl-0 and pinctrl-1.
+>>
+>> Patch is a direct translation of the vendor code:
+>> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-pinctrl.dtsi#L2324-2400
+>>
+>> I suppose it wouldn't be the first time that vendor code
+>> is doing something odd.
+>>
+>> Though, I'm a bit confused why you would single out hdmi-cec
+>> when hdmi_ddc is the same?
+> 
+> As in, me in the above message or the vendor devicetree?
+> 
+> If the former, it's just an example
+> 
+> If the latter, the muxing function differs so they must have their
+> own separate nodes
 
-> 
-> 
-> /* Left rear port */
-> connector @0 {
-> 
-> 
-> There is probably some better terminology to describe the one closer and
-> farther away from the user, do as you will..
-> 
-> For the QCP, they're numbered on the chassis
-> 
-> Konrad
+I meant:
 
--- 
-With best wishes
-Dmitry
+You (rightly) point out that
+hdmi_cec_default & hdmi_cec_sleep nodes are identical
+in my patch.
+
+I stated that, in fact,
+hdmi_ddc_default & hdmi_ddc_sleep nodes are ALSO identical
+in my patch.
+
+And the reason they are identical in my patch is because
+they are identical in the vendor code downstream:
+mdss_hdmi_cec_active & mdss_hdmi_cec_suspend
+mdss_hdmi_ddc_active & mdss_hdmi_ddc_suspend
+
+
+If I understand correctly, you are saying I should delete
+hdmi_cec_sleep and hdmi_ddc_sleep nodes, and refer
+to the default nodes in the hdmi pinctrl-1 prop?
+
+Regards
+
 
