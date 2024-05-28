@@ -1,65 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-20677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0558E8D129F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 05:33:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1AB18D12A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 05:34:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFDB51F21505
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 03:33:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5FF291F22288
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 03:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71B0E2E646;
-	Tue, 28 May 2024 03:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E3A03FB87;
+	Tue, 28 May 2024 03:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CUDc8FG3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mmZBDBrN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B4A2E64C;
-	Tue, 28 May 2024 03:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5CA3D0A9;
+	Tue, 28 May 2024 03:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716867164; cv=none; b=pxGZph+CsoGCcQRjdjLiT0g6kl4T6XeU4d5GJb8iDyuzIMdbGVBdL6OHXckgK8MNeD0RJgTmBWyA9SFLW+gbqd6pjb+Jk/C/W3FkV75Kq501U/oSyDJZUc560IBxuIkH22s0yaYfUn8cjXk8/aOBLQBkPG5ZlW8uWmtYbVXuinM=
+	t=1716867165; cv=none; b=mZKSS4KRFBBQWEppGuC39rT0tqhjVdJ1Yxf+eWk5koCMuFkXCJjNQF1iCHRzBXH84L1OhwZHSsJC5pcTdq6Y1vJphJgQ/bU80w6EReNsOod15jyu42dr5VAqMmhgzUEU3WYAuGT5303F4fvQCWTGK3t7gjXf0GnVD0bvrn+Ekr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716867164; c=relaxed/simple;
-	bh=BNUfSENnQ3Xnu31LgNHC6atOJLd8mgwLZdHa7Nnqm+c=;
+	s=arc-20240116; t=1716867165; c=relaxed/simple;
+	bh=xqR/ykcZzXNkdbRAVwaOEVJjZcLA5foqzYOMf+83rms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IdhyFjcm4uoOFPyPcOcWqNrjKz9zo+ZqJgxyOEsjoMFMq6qW3HCKmgL6GOLVZCnO922esOwX5g6D96SSVuaohLNZIhwJ2IOibyEjAlHsy48Xbs3GYScAgVhVjIqMU04J8jA6eq0GkAianlokvAObDQhA2/2kf2ViRwY6YitCWp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CUDc8FG3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9E6C32782;
-	Tue, 28 May 2024 03:32:42 +0000 (UTC)
+	 MIME-Version:Content-Type; b=kCnsOdGOfHgIx29UwajsmSn90t0qAIhDkjsDvcH4fKym4EHhfS/2FAGkjbq29NJaOxtz7QNF4CFZb/Ao/IJZ5NgGHcfXyrwtzVUxNmVSwphhn9bPj5m1rlP+AfuRm4Vn3eLE+qezS8t5EmppBvQ+X7ADlURYl5JVqj1pZbLDkjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mmZBDBrN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238D5C4AF0B;
+	Tue, 28 May 2024 03:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716867163;
-	bh=BNUfSENnQ3Xnu31LgNHC6atOJLd8mgwLZdHa7Nnqm+c=;
+	s=k20201202; t=1716867164;
+	bh=xqR/ykcZzXNkdbRAVwaOEVJjZcLA5foqzYOMf+83rms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CUDc8FG3Ys5ntlJxaUlHzTN0P01QD07feXHr6BfnuOz7n+sDDn1PLymcLoa5oKEH0
-	 fLLUZ5R/x3vh7aLrETM37RoX9Wbp54ZXbv6QymOxLbeDosZPjrcLPgkjfyVnUyYq6O
-	 956b86GTbXtEqqCWRgmSZOfyaPJ3oMsgDT8iSh59eD1YyNxkGsdlhJ343vYD3++3lB
-	 pI8Z7O6myx/qvNT7XNP6JyfGs1HtXMFpsXjvrJH6PnF7MEx6ONmO6iiDka4FKQdQqk
-	 3DZOgqXfJoYw/n+RQhrVicaE6scVoJ03UBPw64dM6CctOExIti1+/mR3QIm5VOJXBT
-	 pbh8rboP6ecpQ==
+	b=mmZBDBrNKQm3zt7Pe8UoX9j5lLUXnwfztoqCOR9CvpvDs4v6KbUMLiMIPJBkCeJBX
+	 g9vdtlag7iUoce6LLJvw6vRsjDZ+wxMRPxKRox/uUXe5xi6YUojT0xVXboqaJwum73
+	 bmN8OCYXGzL2M+AZ7Z5dhBk+xPf0lf/zc059mWHA5MtDVj1lWMSb5PetssvNMzpnmM
+	 pOWLOexhunyqsGom51iATAM/CQPEzBpNqj8cPPScD1646hkaf2V1+xPLr1E/48zT7Z
+	 XrGvJR9Y8BGEPeMCBFhJz68iAqoMwILCfYCKws3NDbaXe51wz2YPKbO0UawOtkJWV1
+	 vtpdeR/vLhQuA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: linux-kernel@vger.kernel.org,
+	kernel-janitors@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	luca@z3ntu.xyz,
-	Bryant Mairs <bryant@mai.rs>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: (subset) [PATCH v3 0/2] Add samsung-milletwifi
-Date: Mon, 27 May 2024 22:32:10 -0500
-Message-ID: <171686715163.523693.4500878990759287138.b4-ty@kernel.org>
+	linux-clk@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: Constify struct pll_vco
+Date: Mon, 27 May 2024 22:32:11 -0500
+Message-ID: <171686715155.523693.8017271555149377998.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240219214643.197116-1-bryant@mai.rs>
-References: <20240219214643.197116-1-bryant@mai.rs>
+In-Reply-To: <c3c9a75ed77a5ef2e9b72081e88225d84bba91cd.1715359776.git.christophe.jaillet@wanadoo.fr>
+References: <c3c9a75ed77a5ef2e9b72081e88225d84bba91cd.1715359776.git.christophe.jaillet@wanadoo.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,24 +65,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 19 Feb 2024 22:43:15 +0100, Bryant Mairs wrote:
-> This series adds support for samsung-milletwifi, the smaller cousin
-> to samsung-matisselte. I've used the manufacturer's naming convention
-> for consistency.
+On Fri, 10 May 2024 18:50:00 +0200, Christophe JAILLET wrote:
+> pll_vco structure are never modified. They are used as .vco_table in
+> "struct clk_alpha_pll".
 > 
-> Hardware currently supported:
-> - Display
-> - Cover detection
-> - Physical buttons
-> - Touchscreen and touchkeys
-> - Accelerometer
+> And in this structure, we have:
+> 	const struct pll_vco *vco_table;
+> 
+> Constifying these structures moves some data to a read-only section, so
+> increase overall security.
 > 
 > [...]
 
 Applied, thanks!
 
-[2/2] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 8.0 Wi-Fi
-      commit: 49b9981a0ecae2bbb298d8b0c2b8058220038691
+[1/1] clk: qcom: Constify struct pll_vco
+      commit: fcd9354ceb7ae52b11a93e8ac990ad4a8c3a0da7
 
 Best regards,
 -- 
