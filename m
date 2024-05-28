@@ -1,86 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-20792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5EE98D2225
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 19:03:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 795FE8D2235
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 19:14:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F729B24880
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 17:03:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1BAA28679A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 17:14:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFCEF174EC2;
-	Tue, 28 May 2024 17:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2A62173355;
+	Tue, 28 May 2024 17:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BeBmgUCb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bMFZs+x7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781AB173350;
-	Tue, 28 May 2024 17:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BC817333F;
+	Tue, 28 May 2024 17:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716915778; cv=none; b=Yn8PVpVeD0SIATuNGXkZwgZHhNo/0jIziUeHvKloPs77tLfBddUsVXPIDOm0yLOrni1ON3yawS/RSJTwaRA27jZj9T1cM5Ubk0CXp84ihBaW4DbB1Xv5rbwhWkCw7rlraVPW9q/de714JX5YEcQP79YSryLeBBTMaNV7OLvp3GQ=
+	t=1716916439; cv=none; b=LSBWWlYEVK6pIpvh7M/Vr7rci9b7yCBHIZGV2fjE4pWULQ/W4awiyljjBxKrRkls8LNYSHrLozbJNHHTBsofqQlYbzihPVWqLzEDPbaA9e78R5MZg78a8Y3EsJqgUUwp6ucVB3f6iTFniSbyYzZiESFKzZqtve82KJv4uM3u6j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716915778; c=relaxed/simple;
-	bh=d7VPMGIdqNLF45j8kC0Fc7trVtC0v2eVektCXeN9Rb0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uTzmVKV/xSyqmJ9SQimxliUO9gad5ee4ZwKHY7OSgB2AdpZepZln8X80AsIlGZYM9QORQNHKJr0LH4ELaRVNBGZYMpuWjWKDE23GwPOgL102QG6Ghe1u1wY6zl88RrKzToxpfaZxQjvbO1A0ome8XoGYATyGPzagufoqCtIdyHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BeBmgUCb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FF2C32786;
-	Tue, 28 May 2024 17:02:57 +0000 (UTC)
+	s=arc-20240116; t=1716916439; c=relaxed/simple;
+	bh=BF+bAtAxxwKCW4DJkeefBZDu0K+wuFNxBHFCPnA8enU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rtXAs8aDfiVjAwkGMxjkvt/L1fnsFpPTjH3QEWc1zqp/q47QQzelGEUHXOT9R2vLBEBAucDmpd4ff+pqNdjKDgRSfet4rzle9ZejgDOOtkRZjvH4lQc1f2NftksbOreyjlJPuT7xBcdL42ElgKSDfgVlDtuhJA0wYOMFI23IlTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bMFZs+x7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1717C3277B;
+	Tue, 28 May 2024 17:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716915778;
-	bh=d7VPMGIdqNLF45j8kC0Fc7trVtC0v2eVektCXeN9Rb0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BeBmgUCb7WE5D4mdFdFd46CcKQtcuwFi5wCdofu3HfeLY2e5HwLGI/mA2qpG7NLkB
-	 nVY9E41e4GuS9oxEP2bknp8AjInRaGumYDy2eRwkcozmldoCnseT6VR3YLtq8Fhlfe
-	 pnaiidPFrxU24qBR1oRWyv0TF3tsPcqI/4tvQ/G17wkKPMdPmaMjiWDBtHiARUKLSp
-	 KaD8kH/jzdAlwOoN5ouuGBsgQw6E6uaz6Q+9yvfEuG+E3NIH6lluyESobG9Q/DDW1z
-	 KAjkHhWyA51n4s1Z+eOuJyTNoJ/TfMNN1HZZfQAdMFv+2BAZIR8a9kAPv1kNB2UeQV
-	 X7k+tzucWZ/og==
+	s=k20201202; t=1716916439;
+	bh=BF+bAtAxxwKCW4DJkeefBZDu0K+wuFNxBHFCPnA8enU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bMFZs+x7bluwgOhDpFWlsScecIjnUIpA8wwy44nKxYfhDp21ArJ9EGTXYy1VxEqF1
+	 x9TXpM9QxBZGm4o1v1LqS9mcped9va6UK0lmdFFjkVQ9ubrudgoiehZ3Lz7aYPrcDS
+	 CZcV2KWPGVRc9MF9lJzhe3nDHeJLsvlpYexFNRC/2rCxoOXnChmiFs16/e7IXF/nqt
+	 F+AaJqFSCY3pOPE41ePOAPSLd5WO3qXFyNJl/Bc8i7b3U3AI+tfMNrgblQ08Yw03i1
+	 ZEfdCsCbwqcPqzrlId7esYThtQvQQznFeYTPpondJK/woStogcP0VwGFHXeCNnFk87
+	 kQ0K44ux1N8jg==
+Date: Tue, 28 May 2024 12:13:56 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Luca Weiss <luca@z3ntu.xyz>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/2] Allow gpio-hog nodes in qcom,pmic-gpio bindings (& dt fixup)
-Date: Tue, 28 May 2024 12:02:53 -0500
-Message-ID: <171691576752.544020.9360876610718267733.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240409-qcom-pmic-gpio-hog-v2-0-5ff812d2baed@z3ntu.xyz>
-References: <20240409-qcom-pmic-gpio-hog-v2-0-5ff812d2baed@z3ntu.xyz>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Hans de Goede <hdegoede@redhat.com>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Nikita Travkin <nikita@trvn.ru>
+Subject: Re: [PATCH v3 6/6] arm64: dts: qcom: c630: Add Embedded Controller
+ node
+Message-ID: <njgvpbk4b26qs7zp675xdlmh3pcha6pm2vvvhyrxvrimtltgfx@slyweemaxmhs>
+References: <20240527-yoga-ec-driver-v3-0-327a9851dad5@linaro.org>
+ <20240527-yoga-ec-driver-v3-6-327a9851dad5@linaro.org>
+ <bbsdvqjo2ikljnuvupolpdfstsaegfqyg2ct7bt24evcorcfjt@3fw5eicxxuik>
+ <CAA8EJpr9i=+uJGqxeeVYKwJeMqzQFg6FvqnChKNQqXLLVcB66w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpr9i=+uJGqxeeVYKwJeMqzQFg6FvqnChKNQqXLLVcB66w@mail.gmail.com>
 
-
-On Tue, 09 Apr 2024 20:36:35 +0200, Luca Weiss wrote:
-> Resolve the dt validation failure on Nexus 5.
+On Tue, May 28, 2024 at 06:12:58PM GMT, Dmitry Baryshkov wrote:
+> On Tue, 28 May 2024 at 18:06, Bjorn Andersson <andersson@kernel.org> wrote:
+> >
+> > On Mon, May 27, 2024 at 01:03:51PM GMT, Dmitry Baryshkov wrote:
+> > > From: Bjorn Andersson <andersson@kernel.org>
+> >
+> > Please align this with the S-o-b - feel free to use either form.
 > 
+> Ack. I'll check what went wrong.
+> 
+> >
+> > >
+> > > The Embedded Controller in the Lenovo Yoga C630 is accessible on &i2c1
+> > > and provides battery and adapter status, as well as altmode
+> > > notifications for the second USB Type-C port.
+> > >
+> > > Add a definition for the EC.
+> > >
+> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      | 76 ++++++++++++++++++++++
+> > >  1 file changed, 76 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> > > index 47dc42f6e936..d975f78eb3ab 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> > > @@ -370,6 +370,66 @@ zap-shader {
+> > >  &i2c1 {
+> > >       status = "okay";
+> > >       clock-frequency = <400000>;
+> > > +
+> > > +     embedded-controller@70 {
+> > > +             compatible = "lenovo,yoga-c630-ec";
+> > > +             reg = <0x70>;
+> > > +
+> > > +             interrupts-extended = <&tlmm 20 IRQ_TYPE_LEVEL_HIGH>;
+> > > +
+> > > +             pinctrl-names = "default";
+> > > +             pinctrl-0 = <&ec_int_state>;
+> > > +
+> > > +             #address-cells = <1>;
+> > > +             #size-cells = <0>;
+> > > +
+> > > +             connector@0 {
+> > > +                     compatible = "usb-c-connector";
+> > > +                     reg = <0>;
+> > > +                     power-role = "dual";
+> > > +                     data-role = "host";
+> >
+> > I was under the impression that this port is wired directly to the SoC
+> > and as such this would support data role switching as well.
+> >
+> > No concern with that, but just out of curiosity, is this not the case?
+> 
+> It is wired through the external Type-C port controller RTS5437, which
+> also controls the vbus pins, etc. The UCSI firmware reports both ports
+> as host-only and doesn't implement data role switching. So, having it
+> as "host" is a safe bet.
 > 
 
-Applied, thanks!
+Thanks for the explanation, that makes sense.
 
-[2/2] ARM: dts: qcom: msm8974-hammerhead: Update gpio hog node name
-      commit: 92b9ce5b11d7ba281f5bf0029185d5c891b29344
+> I must admit, I also hoped to be able to use this port in gadget mode,
+> but it seems to be nearly impossible.
+> 
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Someone must have managed to use the device in peripheral mode to get
+the firmware on there originally...just saying... ;)
+
+Regards,
+Bjorn
 
