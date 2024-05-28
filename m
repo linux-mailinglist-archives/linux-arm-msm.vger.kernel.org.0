@@ -1,151 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-20845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF4878D274E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 23:56:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C03158D27A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 00:02:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 37A57B21707
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 21:56:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C36E288553
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 22:02:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAF8045BEC;
-	Tue, 28 May 2024 21:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22BF013D29E;
+	Tue, 28 May 2024 22:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MeOVer9D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="akkpwfMz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5A41DA23;
-	Tue, 28 May 2024 21:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D634D11B;
+	Tue, 28 May 2024 22:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716933355; cv=none; b=GXkr/oWMgPpiO8XmQe6m/vu4BJptZGdKxnccAYXeA9ABb9vJmSbVKRWbi1Wny9Ztohaf/eInzqm7NzD0e5U836EXagRpxwTKC8TqjOqGwQ2o33qH0HdjUtU7GyfO3+B7G2cv6z3OscXef46ZAMoxatoGcN/uL4b+hbl2F3EBy4U=
+	t=1716933732; cv=none; b=BQ6BM3MerQGpuok6A2hiDjXbxx8Zek6jr3itjk/xdmVj5y1kye1XoZ2+BjrzGLJCq7L62R2nb2xb+f5CWEERAS2u97lMlXv/tp+2RLVr+lMXRodENyEFFbGBjltdCeUZAMqMAz62EfK37ewtNqYmQcczLtYPKtVWyzevxGMUDfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716933355; c=relaxed/simple;
-	bh=tthgWJCVupl6ERWmdbjXbvx9AlEgF2aFcE/8hKqKCZA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HqRSQW+bQ9LpXQ1QcU/fL+aqC+XsfmTMEKXDddgi3fxzYT8arKR638orD9wAWxMLdebXbylDlPr8GauKVfMbkeCD09/txeB17GhMfs2GQVT5Cqv1baf3hNVbIy39A5W7QaYllfVdBPTvg8L6sVClJ9e3wEkgy8FUW7up6u5nsqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MeOVer9D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8534C3277B;
-	Tue, 28 May 2024 21:55:53 +0000 (UTC)
+	s=arc-20240116; t=1716933732; c=relaxed/simple;
+	bh=U5GwIJ+LTWcl46Eo7bgV8feyU6acMOc6HfoXnN5Yyco=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=ouXRNIgB+Bx/+ioeWQlPf6zQwI7gQzJJIyIErtbaaLYGJoRqY7TQscCz3ziGg+3vGVOo5Fb5iF8Cjgs8+PEy00ktsOt1gYMzhtLdOLsNkxGSDRBxOR/QmQs8roQS1kBNDQFuaiQl76LJaYz7zjrWsiqMEcKGfIUsJuMTCbgR5zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=akkpwfMz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2979DC3277B;
+	Tue, 28 May 2024 22:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716933355;
-	bh=tthgWJCVupl6ERWmdbjXbvx9AlEgF2aFcE/8hKqKCZA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MeOVer9DpU1XjBV10SP47aXhFGt4HUm8faTIBQLbS7zPZ6585uXYSiNOiPJd2Os1n
-	 7pdwSwF+W+tRsf8WlrPBYcc03rvODX6OVYPrG2mPlquRlfUjnVMB/tuFKkFJssVJ0t
-	 UHUc0j8lAHd7cNboljjzXMDbXiEEIMPrcNoDmBMCgUlgnWFLuFz9hIN+Of0sxMZmMv
-	 Snv7bOHhWG5599Z124M2o4Jw1T00019os/KZX+SKkmhTn08pyZ3Ay8MBys9WvCsppK
-	 8CYFkM/yDGzYsLNwK+Gdi2HREUALIqkjReBoHcATe4d7J+NiDT+VqXCSgJHL0/nSqb
-	 ZsQnf+Jl/+2Dw==
-Date: Tue, 28 May 2024 16:55:52 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Chris Lew <quic_clew@quicinc.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, Will Deacon <will@kernel.org>, 
-	Waiman Long <longman@redhat.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] soc: qcom: smem: Add
- qcom_smem_bust_hwspin_lock_by_host()
-Message-ID: <nwoeg22jg5yd4amgqqegplygy6aickehvfc6eanmody74h6nss@cmixbwx6vpx4>
-References: <20240524-hwspinlock-bust-v2-0-fb88fd17ca0b@quicinc.com>
- <20240524-hwspinlock-bust-v2-3-fb88fd17ca0b@quicinc.com>
+	s=k20201202; t=1716933731;
+	bh=U5GwIJ+LTWcl46Eo7bgV8feyU6acMOc6HfoXnN5Yyco=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=akkpwfMzhaR/+ZdG5BDJaUxOSURRQqMTl+I89EQkEoAH/NK1uchEdODfklRVd3D6/
+	 rPRilbMN7VdBAZGTJT7ucUQ5aV5/zGpZxAaAf9lR5XLflRw/QuChheRUKwkUcQUSlx
+	 Ls0LEkc5YzztMYO1bpF25TT3Y0GAP4QtzCd9ItzxFjn1NQc7X9iKzAAdn1YesFapLO
+	 xz5cWpbxOapN6CzAaAd84Yw61OX8LGn3ZvywJBAcOFs6yAGWchjT9uBIj9kSfl1Fz7
+	 Te6c7y76fdXRKnXtr1TjtnCsw7gC6cz754v65f+GVOrj6jwhgnnYAB6BFAt6G+RubO
+	 3qKIJ7ABmKxSQ==
+Date: Tue, 28 May 2024 17:02:10 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240524-hwspinlock-bust-v2-3-fb88fd17ca0b@quicinc.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: devicetree@vger.kernel.org, Michael Turquette <mturquette@baylibre.com>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-clk@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org
+In-Reply-To: <20240528-qcom-gdscs-v1-2-03cf1b102a4f@linaro.org>
+References: <20240528-qcom-gdscs-v1-0-03cf1b102a4f@linaro.org>
+ <20240528-qcom-gdscs-v1-2-03cf1b102a4f@linaro.org>
+Message-Id: <171693372859.2295487.17922726923732511948.robh@kernel.org>
+Subject: Re: [PATCH 02/10] dt-bindings: clock: qcom,gcc-apq8064: use
+ non-power-domain version of GCC schema
 
-On Fri, May 24, 2024 at 06:26:42PM GMT, Chris Lew wrote:
-> Add qcom_smem_bust_hwspin_lock_by_host to enable remoteproc to bust the
-> hwspin_lock owned by smem. In the event the remoteproc crashes
-> unexpectedly, the remoteproc driver can invoke this API to try and bust
-> the hwspin_lock and release the lock if still held by the remoteproc
-> device.
+
+On Tue, 28 May 2024 23:43:20 +0300, Dmitry Baryshkov wrote:
+> On APQ8064 and MSM8960 the GCC doesn't provide power domains. Switch it
+> to use new qcom,gcc-nopd.yaml schema.
 > 
-> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/soc/qcom/smem.c       | 28 ++++++++++++++++++++++++++++
->  include/linux/soc/qcom/smem.h |  2 ++
->  2 files changed, 30 insertions(+)
+>  Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-> index 7191fa0c087f..683599990387 100644
-> --- a/drivers/soc/qcom/smem.c
-> +++ b/drivers/soc/qcom/smem.c
-> @@ -359,6 +359,34 @@ static struct qcom_smem *__smem;
->  /* Timeout (ms) for the trylock of remote spinlocks */
->  #define HWSPINLOCK_TIMEOUT	1000
->  
-> +/* The qcom hwspinlock id is always plus one from the smem host id */
-> +#define SMEM_HOST_ID_TO_HWSPINLOCK_ID(__x) ((__x) + 1)
-> +
-> +/**
-> + * qcom_smem_bust_hwspin_lock_by_host() - bust the smem hwspinlock for an smem host id
-> + * @host:	remote processor id
-> + *
-> + * Busts the hwspin_lock for the given smem host id. This helper is intended for remoteproc drivers
-> + * that manage remoteprocs with an equivalent smem driver instance in the remote firmware. Drivers
-> + * can force a release of the smem hwspin_lock if the rproc unexpectedly goes into a bad state.
 
-Please wrap these at 80 characters.
+My bot found errors running 'make dt_binding_check' on your patch:
 
-> + *
-> + * Context: Process context.
-> + *
-> + * Returns: 0 on success, otherwise negative errno.
-> + */
-> +int qcom_smem_bust_hwspin_lock_by_host(unsigned host)
-> +{
-> +	if (!__smem)
-> +		return -EPROBE_DEFER;
+yamllint warnings/errors:
 
-This would be called at a time where -EPROBE_DEFER isn't appropriate,
-the client should invoke qcom_smem_is_available() at probe time to guard
-against this.
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.example.dtb: clock-controller@900000: Unevaluated properties are not allowed ('#power-domain-cells' was unexpected)
+	from schema $id: http://devicetree.org/schemas/clock/qcom,gcc-apq8064.yaml#
 
-> +
-> +	/* This function is for remote procs, so ignore SMEM_HOST_APPS */
-> +	if (host == SMEM_HOST_APPS ||host >= SMEM_HOST_COUNT)
+doc reference errors (make refcheckdocs):
 
-Missing <space> after ||
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240528-qcom-gdscs-v1-2-03cf1b102a4f@linaro.org
 
-Regards,
-Bjorn
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-> +		return -EINVAL;
-> +
-> +	return hwspin_lock_bust(__smem->hwlock, SMEM_HOST_ID_TO_HWSPINLOCK_ID(host));
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_smem_bust_hwspin_lock_by_host);
-> +
->  /**
->   * qcom_smem_is_available() - Check if SMEM is available
->   *
-> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
-> index a36a3b9d4929..959eea0812bb 100644
-> --- a/include/linux/soc/qcom/smem.h
-> +++ b/include/linux/soc/qcom/smem.h
-> @@ -14,4 +14,6 @@ phys_addr_t qcom_smem_virt_to_phys(void *p);
->  
->  int qcom_smem_get_soc_id(u32 *id);
->  
-> +int qcom_smem_bust_hwspin_lock_by_host(unsigned host);
-> +
->  #endif
-> 
-> -- 
-> 2.25.1
-> 
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
