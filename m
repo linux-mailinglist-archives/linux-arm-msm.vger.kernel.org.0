@@ -1,201 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-20782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B66CD8D1F47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 16:52:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BB958D1F66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 17:00:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D8E281C21C70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 14:52:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F6891C22B9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 15:00:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D0DC16FF5E;
-	Tue, 28 May 2024 14:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 100F31E868;
+	Tue, 28 May 2024 15:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lzqO1xNX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yswwuHIz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22731DA32;
-	Tue, 28 May 2024 14:52:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE6D1E891
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 15:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716907961; cv=none; b=QkM6rHyefeuhnYXRGb8YY8Rnk/uDG0n35U5VG3VHMjtypZw7l5gxIdWC1veJP637GYTja4f7LmAUsRrBGLBCQWdcmbamCxvpGl6+MmHUboE213ZNvD3urV0GsFflOWwiRkNOe9yGg0sgb6nKcMqcNQUiww6ENnGV1ub0zDyTH5M=
+	t=1716908433; cv=none; b=UyU0XNlkV1kVXq9ku0eSWOd5xUC8U574uRCYC91ofpMeJ2MBfb7MqZIxJNpprYtUgRKsvby7jr5rAbMEh8WFVhketfrb0IEubFC6ZP2db8Ay8j/PaX/lwtpdI5/38nJG1ZX98rs0RezAc2ZnqcHekEiJq4+LpZgi/yYIpy/heH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716907961; c=relaxed/simple;
-	bh=lH2MumRnI7l3YLRPeM7BwNfpMOBnQbE+uH7AvcbBSzg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=pboIPhcriS5ei5K73aLwvWy161vLt3mjetZDvcP/sUeSTp0bOBhqVy+fpwCfYanbcM0Vqk1xYHkMYuTJbQWdnGB+c4jV1n+0vdJOkXMSj6qKa6O82ajywLjpXj2FhxHb8rTjKL8Bgdk+YDm1ppFLD94A0YR+aU4Lp3U1BlTkRjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lzqO1xNX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44SAUXuZ009025;
-	Tue, 28 May 2024 14:52:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dWcKuFlpB9O0H+5h3Iazox/MW/EgYPo9bqGQKEr5kUM=; b=lzqO1xNXDXJt9YKE
-	hdiB10isAAW9ccHigQT2WQmnzqTjysTUNgCm2QEo2ykZf1g8rkpGR3RkPUQqMX0W
-	xc7JwTKbYMu7o+9UvpnqadVao/Unpi4EM4eGCzB0AOv3ZYfGvPzaXmi+keFn0W0d
-	RUdL38EibXG8jQz2tIvXOvfX5Hly1GO0oepCyzQSwupbZpYkOKyKiDc1py1TQ7Aw
-	CZwA/0dkqk9kYhGPDvsX9aCSO7MvnHitYFgYINOs8+gpEqtqO8XAhhsU4WoRrJE2
-	Em5kFDnI4Mr69FjClK95qLTKLMo09K0kdgVHpXsOh3K715g8A11AcLSbqo29jCf0
-	CYaEow==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba0g6eqh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 May 2024 14:52:33 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44SEqWT2007769
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 May 2024 14:52:32 GMT
-Received: from [10.50.34.189] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 28 May
- 2024 07:52:26 -0700
-Message-ID: <434c6cfa-cede-4e62-a785-35a81ae0d30d@quicinc.com>
-Date: Tue, 28 May 2024 20:22:22 +0530
+	s=arc-20240116; t=1716908433; c=relaxed/simple;
+	bh=sFflAMdjoQiTbx603wKm7ggKrOJxx87UdHmFwYGLBA8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FmBcJ/ZFssxkOAcErUJ/ZuXUEZ43p0VZ0Vfl27Gzg7viZ5iMvUZaDjk7er6as/Nw9MVTlMO4oyJIAOFIbDIXbj4RnV1bCexRcwtudTlBPZMpbxEW2vU+pqlwQjgtVxg1EXK888mi9hFHtIm8zfTrFdImihBFEyiVIXtu8toe4lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yswwuHIz; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5238fe0cfc9so855286e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 08:00:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716908429; x=1717513229; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QQLDNg8O6+hQgxFwT/fnrp+FvryuIO9RpOZ2Sw+T6pE=;
+        b=yswwuHIzaE0IFWlD7DPy1QCalRyKXFAfZIuea937DT26ssIgQrPzkw1+IhPY0ct5fc
+         tGTIN5mgT3kudWhjvSTKtf6awJSiTtvS+1vL5N/UpAiCQcTKNrsjirKbTiNEkAobyqhL
+         ioi0IIODAk7f9hAPFP2cfKmjUbp/UbaEGJPO+NnevrAb1aIN239w9L86w6fg94l12vSV
+         BOYMjugu0hmkfTi728UvsNFXzO73RsGcoWDFhAKRSZKiWqItFXFA4M9Fd0DRbkJ1ChLl
+         +WuunQ9GcXMHh2tB08x8OZaoscBB2ExeIola9jjf9tjB4SuN0b8OtVmrib2HVqfSokkz
+         fRTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716908429; x=1717513229;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QQLDNg8O6+hQgxFwT/fnrp+FvryuIO9RpOZ2Sw+T6pE=;
+        b=RVARwBrK+3z/zSgMUUJlrL326fm2VBfhBGyv0yq9NjIMLNwbqf6lEFu+2tQhEnoD2v
+         6JLDMfeCrEasrltLudlZ7ecBb/F1Z/xvUbD2IOZiRb3ZhxF6/6PGe1l/rbgTzI9HCZbw
+         2boqquL1lAWkyfBRiupM0FAD3pCoMgsj6sv+de6yF3kwj1yXrcp5mWjx1LPruAUh6qFq
+         f7+bhYRDuAYSeP7caOzFEb41kSeTfEitWtFq1bT0kgDKa9PEDn9If0DxtrFYUgSN2/xF
+         3B85QkyOsiqd1H11/GMKqEBiGWHHYVJf/T6hiZW2yKcrUukkYWu/t8RjwVer4GpH+Mtd
+         00lQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXK8f0QBeY2EjZ3/T847DXQ6x6SYVqdpgOTAj86x5UZzAKFitTfZLunFEhUrAvrBhbSpJbMutyY8A5kdU8eLX2lvJSRhDPLwvhwdSXjcg==
+X-Gm-Message-State: AOJu0YxUYy+RUKQjIUezuiCaQRzJEMUaXdk3Ydloecz8bp79ivFqFLWh
+	w2C92q7juYncC79DDRZaAySIffmkF2mHtj2Fe4EWtmeF2lwjjq0EJJUVDR7gatE=
+X-Google-Smtp-Source: AGHT+IEdsa2UN60LrNCMqTsQotHyrgBv9khZry0/8qJNslmQLn76O0THVCU1dFsmQKPJk6FJvjosKg==
+X-Received: by 2002:a05:6512:3486:b0:51e:e5cf:9940 with SMTP id 2adb3069b0e04-529448abd40mr3832836e87.4.1716908428598;
+        Tue, 28 May 2024 08:00:28 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-529716ddfb9sm970448e87.306.2024.05.28.08.00.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 May 2024 08:00:28 -0700 (PDT)
+Date: Tue, 28 May 2024 18:00:26 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_abhinavk@quicinc.com, quic_nankam@quicinc.com, 
+	robh@kernel.org
+Subject: Re: [PATCH v4] arm64: dts: qcom: qcs6490-rb3gen2: enable hdmi bridge
+Message-ID: <rs7m73yzuvm5rf52tyax57r33iigalplr2z7rrxm7mktdqa3bf@ecapopn7ufho>
+References: <CAA8EJpo=Q4_=JU83-9ooSqiSr=xUeHh2awDhzq9q3Xd56h83zw@mail.gmail.com>
+ <20240528141954.7567-1-quic_vvalluru@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] interconnect: qcom: icc-rpmh: Add QoS
- configuration support
-To: Mike Tipton <quic_mdtipton@quicinc.com>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Kees Cook" <keescook@chromium.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        "Gustavo A . R . Silva" <gustavoars@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>, <quic_rlaggysh@quicinc.com>
-References: <20240325181628.9407-1-quic_okukatla@quicinc.com>
- <20240325181628.9407-2-quic_okukatla@quicinc.com>
- <d59896bb-a559-4013-a615-37bb43278b2e@linaro.org>
- <91f59477-1799-4db6-bcc2-3f0c5225d1c8@quicinc.com>
- <0a58e05a-7bf5-459a-b202-66d88c095b45@linaro.org>
- <20240508023716.GD25316@hu-mdtipton-lv.qualcomm.com>
-Content-Language: en-US
-From: Odelu Kukatla <quic_okukatla@quicinc.com>
-In-Reply-To: <20240508023716.GD25316@hu-mdtipton-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ht2cKHlyZnYYLulXR3pVrVp17xeQlZIp
-X-Proofpoint-ORIG-GUID: ht2cKHlyZnYYLulXR3pVrVp17xeQlZIp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-28_10,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 adultscore=0 spamscore=0
- mlxlogscore=984 malwarescore=0 lowpriorityscore=0 clxscore=1011
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405280111
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240528141954.7567-1-quic_vvalluru@quicinc.com>
 
-Hi Konrad,
+On Tue, May 28, 2024 at 07:49:54PM +0530, Venkata Prahlad Valluru wrote:
+> Rb3Gen2 has a lt9611uxc DSI-to-HDMI bridge on i2c0, with
+> reset gpio from pm7250b gpio2 and irq gpio from tlmm gpio24.
+> Bridge supplies are Vdd connected to input supply directly
+> and vcc to L11c. Enable HDMI output, bridge and corresponding
+> DSI output.
+> 
+> Signed-off-by: Venkata Prahlad Valluru <quic_vvalluru@quicinc.com>
+> ---
+> v4: added fixed regulator for vdd
 
-On 5/8/2024 8:07 AM, Mike Tipton wrote:
-> On Sat, Apr 13, 2024 at 09:31:47PM +0200, Konrad Dybcio wrote:
->> On 3.04.2024 10:45 AM, Odelu Kukatla wrote:
->>>
->>>
->>> On 3/27/2024 2:26 AM, Konrad Dybcio wrote:
->>>> On 25.03.2024 7:16 PM, Odelu Kukatla wrote:
->>>>> It adds QoS support for QNOC device and includes support for
->>>>> configuring priority, priority forward disable, urgency forwarding.
->>>>> This helps in priortizing the traffic originating from different
->>>>> interconnect masters at NoC(Network On Chip).
->>>>>
->>>>> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
->>>>> ---
->>
->> [...]
->>
->>>>> @@ -70,6 +102,7 @@ struct qcom_icc_node {
->>>>>  	u64 max_peak[QCOM_ICC_NUM_BUCKETS];
->>>>>  	struct qcom_icc_bcm *bcms[MAX_BCM_PER_NODE];
->>>>>  	size_t num_bcms;
->>>>> +	const struct qcom_icc_qosbox *qosbox;
->>>>
->>>> I believe I came up with a better approach for storing this.. see [1]
->>>>
->>>> Konrad
->>>>
->>>> [1] https://lore.kernel.org/linux-arm-msm/20240326-topic-rpm_icc_qos_cleanup-v1-4-357e736792be@linaro.org/
-> 
-> Note that I replied to this patch series as well. Similar comments here
-> for how that approach would apply to icc-rpmh.
-> 
->>>>
->>>
->>> I see in this series, QoS parameters are moved into struct qcom_icc_desc. 
->>> Even though we program QoS at Provider/Bus level, it is property of the node/master connected to a Bus/NoC.
->>
->> I don't see how it could be the case, we're obviously telling the controller which
->> endpoints have priority over others, not telling nodes whether the data they
->> transfer can omit the queue.
-> 
-> The QoS settings tune the priority of data coming out of a specific port
-> on the NOC. The nodes are 1:1 with the ports. Yes, this does tell the
-> NOC which ports have priority over others. But that's done by
-> configuring each port's priority in their own port-specific QoS
-> registers.
-> 
->>
->>> It will be easier later to know which master's QoS we are programming if we add in node data.
->>> Readability point of view,  it might be good to keep QoS parameters in node data.  
->>
->> I don't agree here either, with the current approach we've made countless mistakes
->> when converting the downstream data (I have already submitted some fixes with more
->> in flight), as there's tons of jumping around the code to find what goes where.
-> 
-> I don't follow why keeping the port's own QoS settings in that port's
-> struct results in more jumping around. It should do the opposite, in
-> fact. If someone wants to know the QoS settings applied to the qhm_qup0
-> port, then they should be able to look directly in the qhm_qup0 struct.
-> Otherwise, if it's placed elsewhere then they'd have to jump elsewhere
-> to find what that logical qhm_qup0-related data is set to.
-> 
-> If it *was* placed elsewhere, then we'd still need some logical way to
-> map between that separate location and the node it's associated with.
-> Which is a problem with your patch for cleaning up the icc-rpm QoS. In
-> its current form, it's impossible to identify which QoS settings apply
-> to which logical node (without detailed knowledge of the NOC register
-> layout).
-> 
-> Keeping this data with the node struct reduces the need for extra layers
-> of mapping between the QoS settings and the node struct. It keeps all
-> the port-related information all together in one place.
-> 
-> I did like your earlier suggestion of using a compound literal to
-> initialize the .qosbox pointers, such that we don't need a separate
-> top-level variable defined for them. They're only ever referenced by a
-> single node, so there's no need for them to be separate variables.
-> 
-> But I don't see the logic in totally separating the QoS data from the
-> port it's associated with.
-> 
->>
-I will update the patch as per your suggestion of keeping .qosbox initialization inside *qcom_icc_node* structure.
-I will post next version with this update and addressing other comments from v4.
+Please don't send new iterations as replies to the previous iteration.
+It might be ignored or mishandled by the tools.
 
-Thanks,
-Odelu
+> 
+> v3: - Updated commit text
+>     - Arranged nodes in alphabetical order
+>     - Fixed signoff
+>     - Fixed drive strength for lt9611_irq_pin
+>     - Removed 'label' from hdmi-connector, which is optional
+> 
+> v2: Addressed dtschema errors
+> 	- Fixed lt9611-irq
+> 	- vdd-supply error to be ignored, as it is connected to
+> 	  input supply directly, on rb3gen2
+> ---
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 94 ++++++++++++++++++++
+>  1 file changed, 94 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index a085ff5b5fb2..7f00fca131a2 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -52,6 +52,25 @@
+>  		};
+>  	};
+>  
+> +	hdmi-connector {
+> +		compatible = "hdmi-connector";
+> +		type = "a";
+> +
+> +		port {
+> +			hdmi_con: endpoint {
+> +				remote-endpoint = <&lt9611_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	lt9611_1v2: lt9611-vdd12-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "LT9611_1V2";
 
->> Konrad
+Is it the regulator / net name in schematics? Or is it also used by any
+other consumers?
+
+> +
+> +		regulator-min-microvolt = <1200000>;
+> +		regulator-max-microvolt = <1200000>;
+> +	};
+> +
+>  	reserved-memory {
+>  		xbl_mem: xbl@80700000 {
+>  			reg = <0x0 0x80700000 0x0 0x100000>;
+> @@ -530,6 +549,46 @@
+>  			   <GCC_WPSS_RSCP_CLK>;
+>  };
+>  
+> +&i2c0 {
+> +	clock-frequency = <400000>;
+> +	status = "okay";
+> +
+> +	lt9611_codec: hdmi-bridge@2b {
+> +		compatible = "lontium,lt9611uxc";
+> +		reg = <0x2b>;
+> +
+> +		interrupts-extended = <&tlmm 24 IRQ_TYPE_EDGE_FALLING>;
+> +		reset-gpios = <&pm7250b_gpios 2 GPIO_ACTIVE_HIGH>;
+> +
+> +		vdd-supply = <&lt9611_1v2>;
+> +		vcc-supply = <&vreg_l11c_2p8>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&lt9611_irq_pin &lt9611_rst_pin>;
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			port@0 {
+> +				reg = <0>;
+> +
+> +				lt9611_a: endpoint {
+> +					remote-endpoint = <&mdss_dsi0_out>;
+> +				};
+> +			};
+> +
+> +			port@2 {
+> +				reg = <2>;
+> +
+> +				lt9611_out: endpoint {
+> +					remote-endpoint = <&hdmi_con>;
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+>  &i2c1 {
+>  	status = "okay";
+>  
+> @@ -587,6 +646,21 @@
+>  	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
+>  };
+>  
+> +&mdss_dsi {
+> +	vdda-supply = <&vreg_l6b_1p2>;
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dsi0_out {
+> +	remote-endpoint = <&lt9611_a>;
+> +	data-lanes = <0 1 2 3>;
+> +};
+> +
+> +&mdss_dsi_phy {
+> +	vdds-supply = <&vreg_l10c_0p88>;
+> +	status = "okay";
+> +};
+> +
+>  &mdss_edp {
+>  	status = "okay";
+>  };
+> @@ -711,3 +785,23 @@
+>  	function = "gpio";
+>  	bias-disable;
+>  };
+> +
+> +&pm7250b_gpios {
+> +	lt9611_rst_pin: lt9611-rst-state {
+> +		pins = "gpio2";
+> +		function = "normal";
+> +
+> +		output-high;
+> +		input-disable;
+> +		power-source = <0>;
+> +	};
+> +};
+> +
+> +&tlmm {
+> +	lt9611_irq_pin: lt9611-irq-state {
+> +		pins = "gpio24";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +};
+> -- 
+> 2.17.1
+> 
+
+-- 
+With best wishes
+Dmitry
 
