@@ -1,108 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-20670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BE8D8D1121
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 02:48:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DAC58D1251
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 04:57:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F6BA282858
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 00:48:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD2E11F21552
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 02:57:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ED841C2E;
-	Tue, 28 May 2024 00:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0FAFF9D6;
+	Tue, 28 May 2024 02:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dAgSxrya"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="il4HGIDv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F882D272
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 00:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015F31798C;
+	Tue, 28 May 2024 02:57:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716857311; cv=none; b=CY89uyCLGOrKieqKtpQVMVSGxRtEbCf11I4CJJucRCeapU/rq/fqgofWiMgZ8vBUQ3jdRJaVNy1m8TWkZbOhzpT3ueX8IA6q7yLboy6QUkG8lZ8U+sLn00UcixYSXW2Wdnzsl9ey/BZ7IVnaYk+RTUf9SutmWxiocP9hZa5pKWw=
+	t=1716865063; cv=none; b=gosedaOSo7XbnOf1dwcC6NKZTHYBmOTnkvetNyZfXSIQ8VRy1jz40v5RWRYbnz/uPBIJYUKwksBV0H1ouwKIneJj9J6DGsi2Wa6AG9MkRWQQWkGyhqFa7KUSszvVnNMK35RdgneWbuUS7u9OmcoO1E5DWGJhnnuvb4BC6NtxQ/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716857311; c=relaxed/simple;
-	bh=e4u/acEE0ZMjC2PVgT7Neyq/Ki4uSj17Vukxh/E5AJE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b6Mhf1zC7vfXquzMFsGHsKO7wHI/UDdi/z/8a8lqg5c9B7ClXx4J2Yxpq+pIArRey81aRI9nou+khadsD5uj3nFWXNJfcbcokSEtCMx5ms4+70hGXcqjHzlCJ4rfwb082CHVGxOIOzYufCbsC9jsmhQhqHIQg/uxhy8Tux8O9so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dAgSxrya; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-529597d77b4so338094e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 May 2024 17:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716857308; x=1717462108; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WqyKqJsE6pp+l2O4SC+W159s+eImxbzOSm8NXJ1OA58=;
-        b=dAgSxryaHECVTJp17ExHlurSE9fg0colMo0OKrLr/JqO7RgkHog5KrRAvt3LNpnfWQ
-         Dm2+A6x9DJJrATgY4F2veex7a3gEQpGlHXhKiwT8h6HZWIyfYmbLld+p2EWgNimbzQFI
-         jqaFT4OdQXmSi4XbUWegSgME8en9TDKOy0ihXV9PHd7QvhaemDgreHbF/+GKjfiyQJkI
-         rGVyLoP5DFnUFWi9CzS4a48WWsApmae1G74JS7TywzySVAxZR0G+O515YG+L2sJM9Fzp
-         6pV8LTd0Y//ZGytu72DHy9kmqfDr9XOxIeD/bViBOhvLpEUYph+QdpjYGFWPKMq0awr9
-         cXtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716857308; x=1717462108;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WqyKqJsE6pp+l2O4SC+W159s+eImxbzOSm8NXJ1OA58=;
-        b=p0j+1Gd2EsvMSRVBhrg9gGKvr8B4foIA5pSNkRpao+vLQQ8I6P2oQXtjN7K7wJhk21
-         ZdQJ+mZNpjcvxM5B4LCIejC/ovdDLS7JMFNInYwCTwbFClbT+t/cldXfymJKCXrE1IK0
-         qaQOmbWowGbGJFK4bvQBoJArF5L8xOwBanen6ovZJN51imn5y53oAr4mDhB21w4lhipm
-         gIA7E03BipYSf8Mp+AqStwSVlAhlOp9EI9Yj8CVcJk8u6alpI8h2e9VbfXJ+ANNpEYEq
-         mCtnYMZ9v3aHjAL0Wezh9qCd4vlXyy1nCemEyup1Y5Gu0rdRK38aFxvtwdN8KZQMgYPE
-         v2DQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV4dBfXeh3KFqbJrbjNJlB/UFcbSbMMcndakpwQfjbQyvVUNsAebIpJQcM27LHglfOshwTwVg73I7EbheeUkCyYQJv3a0wVk9cMMLuDIA==
-X-Gm-Message-State: AOJu0YyY9Njts48GN3zlOYCPFajTue3i4QLcOkdo9Lm3kwwokj82BEPG
-	Pf3qFj7mjyNJaX7YUYYSH4P9NoTQf2BTQbbf1yCHfyfGQ4Xv1I0aU3KBVtLc+UM=
-X-Google-Smtp-Source: AGHT+IEkY3dLBPQpnDZeVlJ5g4IQ99DKVk9uniY+rjpvwvxmpQU+WYyWo8C0Uczxxy+AfmQzepE2XA==
-X-Received: by 2002:a19:6912:0:b0:51d:998e:e0c1 with SMTP id 2adb3069b0e04-5296410ad52mr7332337e87.13.1716857308562;
-        Mon, 27 May 2024 17:48:28 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5296ee4a58fsm816295e87.67.2024.05.27.17.48.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 May 2024 17:48:28 -0700 (PDT)
-Date: Tue, 28 May 2024 03:48:26 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 3/6] drm/msm/dpu: enable compression bit in cfg2 for
- DSC
-Message-ID: <zdlreka3shviepb3p7cq4ulv7f6e2lz7b4af3pdqntnbqikmhq@uoiyu473v5e5>
-References: <20240527-msm-drm-dsc-dsi-video-upstream-4-v5-0-f797ffba4682@linaro.org>
- <20240527-msm-drm-dsc-dsi-video-upstream-4-v5-3-f797ffba4682@linaro.org>
+	s=arc-20240116; t=1716865063; c=relaxed/simple;
+	bh=LWEXyrCsZhfgGNvfnW4zNLmRj7tKXbW/eXj75VT/WEY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iYbf/SFMFm4wpUt1I2eLDrC9eZeVF9Qy6rPfKS9Y+yiqBp/yhAqQhSf97WQ3WHZRpJMp3IwGbeZlp2JyPdN4N/E6XSE5f/tN8dj0GsTZFvsbupTBjEEpF/C7jyLB2UsXBlGaSS5IABE/AxyIc6HBzrdjwnxbge76dS5YO1oRwYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=il4HGIDv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44RN0DZ0006748;
+	Tue, 28 May 2024 02:57:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	TR+/RmrYswSWIeLL7ozOdlwx4mSPbqV2rhZIvfSXYBU=; b=il4HGIDv5P0ExeOh
+	cmLdYx6TjCYhzg83IGw5boo9UdH9IetRmm3hrXvsUgKRqiWdNvamrzjWfZimCjZR
+	Til0fvGkrkB6X9GYpHDy5wsXLCXJmNdCOKaIvUpuToxzj3eq8ZdqJLvkCmplxe86
+	6Fdxv40MmjVwlqkohrtovhaSLT1fPmBb6Vl6oJOcUu6t4ZJ/f83BdMkA8B5ofM0d
+	CeR0rcmgEKY1zgnW191iqGFJ9JvNYiYN/Ud/VDxfrFLC1WTFirNYYrCTRJd2rV4a
+	ynWjBw1PhYI4iCbGgGKPWyhSREVXTVrf03ouxsPoSh/IC7hJnKfQnBpzBueFke03
+	/FXi0A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ybadx4x7a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 May 2024 02:57:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44S2vYKi008196
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 May 2024 02:57:34 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 27 May
+ 2024 19:57:30 -0700
+Message-ID: <5d303643-1cbb-4fda-8fda-58d0002942e1@quicinc.com>
+Date: Tue, 28 May 2024 10:57:27 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240527-msm-drm-dsc-dsi-video-upstream-4-v5-3-f797ffba4682@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] dt-bindings: remoteproc: qcom,sa8775p-pas:
+ Document the SA8775p ADSP, CDSP and GPDSP
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Bartosz Golaszewski
+	<brgl@bgdev.pl>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof
+ Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad
+ Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>
+CC: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Srini
+ Kandagatla <srinivas.kandagatla@linaro.org>,
+        Alex Elder <elder@kernel.org>
+References: <20240527-topic-lemans-iot-remoteproc-v2-0-8d24e3409daf@linaro.org>
+ <20240527-topic-lemans-iot-remoteproc-v2-1-8d24e3409daf@linaro.org>
+ <ae768bb2-cb96-4a05-8752-66bc6bfdab1b@kernel.org>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <ae768bb2-cb96-4a05-8752-66bc6bfdab1b@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: f-RUIYzTg3JHfrL-KQH7kWbNnmH4wB9L
+X-Proofpoint-GUID: f-RUIYzTg3JHfrL-KQH7kWbNnmH4wB9L
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-27_06,2024-05-27_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
+ impostorscore=0 bulkscore=0 mlxlogscore=914 malwarescore=0
+ priorityscore=1501 mlxscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2405170001 definitions=main-2405280022
 
-On Mon, May 27, 2024 at 10:21:49PM +0800, Jun Nie wrote:
-> Enable compression bit in cfg2 register for DSC in the DSI case
+
+
+On 5/27/2024 4:56 PM, Krzysztof Kozlowski wrote:
+> On 27/05/2024 10:43, Bartosz Golaszewski wrote:
+>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>
+>> Document the components used to boot the ADSP, CDSP0, CDSP1, GPDSP0 and
+>> GPDSP1 on the SA8775p SoC.
+>>
+>> Co-developed-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> Missing SoB.
 > 
+>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> ...
+> 
+> 
+>> +
+>> +allOf:
+>> +  - $ref: /schemas/remoteproc/qcom,pas-common.yaml#
+>> +
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          enum:
+>> +            - qcom,sa8775p-adsp-pas
+>> +    then:
+>> +      properties:
+>> +        power-domains:
+>> +          items:
+>> +            - description: LCX power domain
+>> +            - description: LMX power domain
+>> +        power-domain-names:
+>> +          items:
+>> +            - const: lcx
+>> +            - const: lmx
+>> +
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          enum:
+>> +            - qcom,sa8775p-cdsp-pas
+> 
+> cdsp0
+> 
+>> +    then:
+>> +      properties:
+>> +        power-domains:
+>> +          items:
+>> +            - description: CX power domain
+>> +            - description: MXC power domain
+>> +            - description: NSP0 power domain
+>> +        power-domain-names:
+>> +          items:
+>> +            - const: cx
+>> +            - const: mxc
+>> +            - const: nsp0
+> 
+> Shouldn't this be just nsp, so both cdsp0 and cdsp1 entries can be
+> unified? That's the power domain from the device point of view, so the
+> device expects to be in some NSP domain, not explicitly NSPn.
+> 
+Both cdsp0 and cdsp1 entries can uniformly use nsp.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
 -- 
-With best wishes
-Dmitry
+Thx and BRs,
+Tengfei Fan
 
