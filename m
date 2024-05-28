@@ -1,179 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-20733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D48918D1A10
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:46:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E5588D1A1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 13:47:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EBB1B1C21D2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 11:46:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 851A7B280D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 May 2024 11:47:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 601BB16DED4;
-	Tue, 28 May 2024 11:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 367A816D320;
+	Tue, 28 May 2024 11:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nOXCFYb8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EHv+6h+0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA8916DED1;
-	Tue, 28 May 2024 11:45:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BF416D31A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 11:45:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716896712; cv=none; b=UZOlXhtUBvMKkvNzAlxOOkgbzTMld5B0qA+T5VkEXWQqIuEStFS/lFFgYgR1OEdbS0awPhJizCyiLnDwbxUICwIhKNub4onOllb8+2ye3s5itf5PTyUEQQhDUalFn0YEChgnTxb7kP3Ezc1VUL3PX3/b7gfh6yLnxiU4ZkcC7dw=
+	t=1716896749; cv=none; b=Ng6p0YTOvbjo7mxWL5IkLqERYTPqNVx/f54O6As00+gVoxdwzZPMdK3ztWg8T9MSQCb/owCgnuAaRgLrn8XZeMLr96yTer1M5vlkMiUem84mkLQbqPW0ckKvAv8pk8AX2hnmHgxD9c2NCrk1/l3n6Xj7yX2IX6uG4S56FEpCfno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716896712; c=relaxed/simple;
-	bh=jEDNSva3XwM2d3agP2RSYVB6KDLWXeJkvigh9TM0wy0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QGU3e/AMO5k66D8dn4/xEvDB0/2+D95V9xmk4NKaLoobuKA+yXWuybVifoOOjneTT2mfC42WkQJExX5jQAXJ6uBDLUCLAloi5VEwtR1//WyZsEpFjNoA8bvc57NfcTOSfb/78BLxe2r9v3nq7jUVZ0es/oX1aqYsnIXrCCXAwZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nOXCFYb8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44SBUQDd020826;
-	Tue, 28 May 2024 11:45:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FTeZODrBa4bdaFZ6POX/gfQa2LaI2nSTzegeTz1IsWM=; b=nOXCFYb86i9bT8c/
-	7Qu38WRXK5Ycsx9steNPPMYBw/LtAx+5lw6jW11GY1zQqr/+FzSS7hpTBU8gb9rm
-	ea6YlJ18IRx11AP5up4b/lFIGl14RbVq5USiP0HPSBR9MoZQHHqyOdQZBVO0uwx7
-	E2yt7cYxwRjXOHSZ65UlTseA3/CPCIqzlR6kZ0BJgRMJL5AzhmtkJu0lDeHDay7p
-	TrX+UuSnHCoBn5IRe7EQd0C3+i136A9ypALLg80/JStG0zUleAqwekVxPyN7rW9M
-	oadICLdYl8ve72v2yTmD3zxSUurDb6edTM5ukdTIg3WCb/QfE51aLHDQNWgGT5jV
-	I2yJPA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba2h5wec-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 May 2024 11:45:06 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44SBj2p2024407
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 May 2024 11:45:02 GMT
-Received: from hu-ajipan-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 28 May 2024 04:44:57 -0700
-From: Ajit Pandey <quic_ajipan@quicinc.com>
-To: Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
-	<sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-Subject: [PATCH V3 8/8] arm64: dts: qcom: sm4450: add camera, display and gpu clock controller
-Date: Tue, 28 May 2024 17:12:54 +0530
-Message-ID: <20240528114254.3147988-9-quic_ajipan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240528114254.3147988-1-quic_ajipan@quicinc.com>
-References: <20240528114254.3147988-1-quic_ajipan@quicinc.com>
+	s=arc-20240116; t=1716896749; c=relaxed/simple;
+	bh=Cyn0ZlNcviHjkEXTH9iWy+1yurJIkOQsTzZX3IFxF8c=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=FQjzv9bEOAEIpteiiHHqbxaYbue+TuT1ZjdjlUZY8OfQb7TsRXtd8gPSSzd8nI0b2Fkskzn9fVrblqhUl1+KFLTFmgGfDtddkcgLj7rudeZch4yIbTSZZ9hTiwmLGmQw1+FRGIpxEJPEToWFfxr8r8OnCv+q3AuWfGXB5YaIArw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EHv+6h+0; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a630ff4ac84so82367066b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 May 2024 04:45:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716896744; x=1717501544; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gs1QUfWnNTWVVMoflcEKhCp+Y3rJQ2FjHWIov/l5yc8=;
+        b=EHv+6h+0YQYO4PMI8m4utqV4k7fZHkFk1akdCzqCpVXvBVzrzMbcIU020BIYP7zzl+
+         XNnK7Rmh0+RojhhIfv6oJFcMKuiY/7xOof8I2XTS4xYupfVVMFxbWuwNPQ0npRWOkllF
+         PQyz7q5aa1coM7Z0fziGvA7J8xNRwdHVZgGHMLEI/R3Td/1CQo8KLEqGMaKnn8X+TldN
+         p/58LPvxf4AP5xlVeRBslmJb/dtds7MXG9XuAWH4oceSjGxWp5qclU094VM5/eBCRaD2
+         mZWvFxY4iDztRCUuCN9dJvW/zkkz7whBKsunP2XXQNApyfTvMrXDQwC/Hw1oCBZlsT1F
+         9lwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716896744; x=1717501544;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gs1QUfWnNTWVVMoflcEKhCp+Y3rJQ2FjHWIov/l5yc8=;
+        b=ITTL2ivvm9FDDxSA5/eXnCtsD8mYZFBeKbBm0pKnksRFPVRalzdUuOdJEcIvTBZk+s
+         5yfqMUUCgISE9VcFnJN1g3ga4eKRyXz+twQkA9OTUnIDzu4i2BBKykjU2ridHshEzYTG
+         f07J61pQZyBSTdaXxvDGmX26zAMjl8Au7gFEcpyPEfpV6wEBR1Yj6E04C6OF1CASa1qV
+         DHeV8YzXHc7wVmBzJM5KmHzfgpFV8wZjgrq8d8ZqPDFgt/lvZjqQ4vZoEnKrJvWCJLwO
+         GHVEb4Z/1gUO23MRyeCG01B46TUC73fPWWOFNwjcyLvB/bHm1tXVwmubpPQ7w0sQbunf
+         MMaA==
+X-Forwarded-Encrypted: i=1; AJvYcCXQMBBFTdEGB/d9OMBJncDVlybcckPjIFKpAjysL42ABTBvRR6mUcXSNhVDWpEb3x5X/Mu6NZvxUfgu0up1UBfNa2lXJuFyvQVwgBTaIg==
+X-Gm-Message-State: AOJu0YzCOf+wMTcra+uS7O7FDpuQNbDxydzcwethVFd1LFi17iaq4YUV
+	L/vFoR5VANSlk2lSC5WHmDKFyuOPgCuCvbGgHvzaEKZvvuC9kQZyDmIf6IYtB6xQ7N5+Vw6ACSG
+	n
+X-Google-Smtp-Source: AGHT+IFxlZlJ4wDQ2J0xN/ryGeuByEIqz96HUM0d+K0FdcFLDBc0ijzJee4UW8RAK2ccNbBjAMBr/Q==
+X-Received: by 2002:a17:906:b1c3:b0:a5c:df23:8c88 with SMTP id a640c23a62f3a-a6264f15bdemr680485466b.49.1716896744362;
+        Tue, 28 May 2024 04:45:44 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626c81773bsm605825066b.30.2024.05.28.04.45.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 May 2024 04:45:43 -0700 (PDT)
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To: arnd@arndb.de, Thorsten Blum <thorsten.blum@toblux.com>
+Cc: amahesh@qti.qualcomm.com, gregkh@linuxfoundation.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20240507222226.288074-2-thorsten.blum@toblux.com>
+References: <29b33c18-f123-4656-8507-406c87a12ec8@app.fastmail.com>
+ <20240507222226.288074-2-thorsten.blum@toblux.com>
+Subject: Re: [PATCH v2] misc: fastrpc: Use memdup_user()
+Message-Id: <171689674351.20426.8981962769310707800.b4-ty@linaro.org>
+Date: Tue, 28 May 2024 12:45:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: i4CPYSywcWjmch_VrJZBVbJ4ehvVr1dE
-X-Proofpoint-ORIG-GUID: i4CPYSywcWjmch_VrJZBVbJ4ehvVr1dE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-28_08,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- phishscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405280089
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.2
 
-Add device node for camera, display and graphics clock controller on
-Qualcomm SM4450 platform.
 
-Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm4450.dtsi | 38 ++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+On Wed, 08 May 2024 00:22:27 +0200, Thorsten Blum wrote:
+> Switching to memdup_user() overwrites the allocated memory only once,
+> whereas kzalloc() followed by copy_from_user() initializes the allocated
+> memory to zero and then immediately overwrites it.
+> 
+> Fixes the following Coccinelle/coccicheck warning reported by
+> memdup_user.cocci:
+> 
+> [...]
 
-diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-index 8d75c4f9731c..ef448e13b8a0 100644
---- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-@@ -4,7 +4,10 @@
-  */
- 
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sm4450-camcc.h>
-+#include <dt-bindings/clock/qcom,sm4450-dispcc.h>
- #include <dt-bindings/clock/qcom,sm4450-gcc.h>
-+#include <dt-bindings/clock/qcom,sm4450-gpucc.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-@@ -388,6 +391,41 @@ gcc: clock-controller@100000 {
- 				 <0>;
- 		};
- 
-+		gpucc: clock-controller@3d90000 {
-+			compatible = "qcom,sm4450-gpucc";
-+			reg = <0 0x3d90000 0 0xa000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,sm4450-camcc";
-+			reg = <0x0 0xade0000 0x0 0x20000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_CAMERA_AHB_CLK>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		dispcc: clock-controller@af00000 {
-+			compatible = "qcom,sm4450-dispcc";
-+			reg = <0 0x0af00000 0 0x20000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&gcc GCC_DISP_AHB_CLK>,
-+				 <&sleep_clk>,
-+				 <0>,
-+				 <0>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		qupv3_id_0: geniqup@ac0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0x00ac0000 0x0 0x2000>;
+Applied, thanks!
+
+[1/1] misc: fastrpc: Use memdup_user()
+      commit: a16833330e2fa60912af6abebde711bf2c672cf9
+
+Best regards,
 -- 
-2.25.1
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
 
