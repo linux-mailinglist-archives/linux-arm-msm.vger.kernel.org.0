@@ -1,182 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-21000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99BFF8D3E89
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 20:48:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E2158D3E92
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 20:53:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C53B21F21F00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 18:48:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B384E1F24D2E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 18:53:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7AE315B139;
-	Wed, 29 May 2024 18:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34DFD1C2301;
+	Wed, 29 May 2024 18:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YYNj6qob"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zM9fjI1P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB661CFB6;
-	Wed, 29 May 2024 18:48:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842101C0DCC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 18:52:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717008526; cv=none; b=SZ70ViqkfAk8R7X9xI7alwkLqTkNK9dG7of1bELXU+C4+QSEf927WWN3U/ae1EyKkxgTbGiPqf5dS2HSweZSca+m4oNHCzd7K1TUByIBEaAnLk/wItzdb4/JrCN2sx1jmNanh0CsyBaz87EU/WLp2NGbNrbk7bMk2U1PSK28BLw=
+	t=1717008775; cv=none; b=UgGbq14BjymDAhWVt1We6xizZaUETxYURcc71PvP4ikQHpjyY6JHS6IsrdbeaN3bHD1ZspWJRySW2Ic0UKySWy4peS6nNnqwIqEvnpDwyVqcOikO5+BJcRUULeHm4I0UWjYUzfA7zbWBjfSPg2vVrd/GgbS5kxfFGfFqPCMlxxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717008526; c=relaxed/simple;
-	bh=3N+yRNwAaot4RWsGxxpAHkl1rZ3X19BsknvqkoXEID8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oVv1Tise8qYUGM6cBSx/x2Zk4TL/P36uArpefySp6120n77g6uhmlKnCNLXarG5ZsUZTF+LMRPybXhVMVVdweuBin/4cSPoIp0I915Ez0njU+dBOkG1GPF2+kGbos3WAfoXamd4cGSV/N0Qce32+KPHF84yjYvJZmz210Qvf7Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YYNj6qob; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44TBVbJQ012157;
-	Wed, 29 May 2024 18:48:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ab81luCQi39eJfDPVl2fNVgypINjt9s7zOvtaAtxDg8=; b=YYNj6qobyCffIr2g
-	WnEBNc1XeMzQROmhvtKSiBwUJBZkv1vdyqn44Jc71ALpmMOAi04pP0GbJp6kd+wk
-	wu1ZZkRYC0ISAIF1zla//7Nw8rpn0yy2iowAa0pFsACqPQyo6EgxFmZjo26jUYs/
-	NtukDGd3MB68iJGDZT6UtytdIZOcvM1qEvLHRxjBBFBi4xPDpgu2okLRMpbAEgC4
-	MWe6T8KLTaQVLwQQC2/lBrVKU0HR+p98SJcNBW8GqY1Qk2fQQoh28a0dNt8YMFOX
-	YJed9XiOy830qKYWp5poffWMYkJQ116MsI5fo3nzPujVoAwawVtjt6+4HpBHbTYt
-	hO5XAg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yb9yja498-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 May 2024 18:48:18 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TImGmU026691
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 May 2024 18:48:16 GMT
-Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 May
- 2024 11:48:10 -0700
-Message-ID: <05306686-922c-6646-3308-ebd6bc3e1219@quicinc.com>
-Date: Wed, 29 May 2024 11:48:01 -0700
+	s=arc-20240116; t=1717008775; c=relaxed/simple;
+	bh=VCyLXfQw+vODJ+gWUnxnJTmwZOqAzSvyZikbefhPOtA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MXXXCQ5C5ReTkiP/kb73wRxr6VeH92diXV0sf1SJPOIXK9Edq82CTVPamYz8tAYE92LxfbzopAnavTx+hTQcth5yW8eR/trK52cxGCDZDGFGU9OlDfnaWWWP/qngL62jlyGc3u3xX1SH+L6if/9Pm+r8w5VI8QXvXa2MTMpxnHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zM9fjI1P; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4211249fbafso287665e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 11:52:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717008772; x=1717613572; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VCyLXfQw+vODJ+gWUnxnJTmwZOqAzSvyZikbefhPOtA=;
+        b=zM9fjI1PJgVf3I5U58hFLJCvNWRJPeAU3ubFCxPJ/C9i/YmkT9YCRB3CyX8sJWXFwt
+         7PhBoBOIT6GLphMoAKOcmOJ4kyREu4XIDyZJeiHB6T233Cv/6fQHvH1iFc4u7kLmyuwH
+         Sc+VWcZxbgT7cNajydCbpt//Z35CXhMcVsesb0wRJi/keZ8Nq3WJkjjvYk703g3JHrtK
+         7augOOp21v0kxpHbqJjMJ/zDJNIcbD4+Ck+f4TYhpF3/VXDeLIS3IWmtnV++c7qAsE1Z
+         eGw7UsXgVpAfcqpMFIoTwMqp1CbWZxxKWU/xi9P5b5KkBpavQkpF7KhlW6ZZUZfXidZJ
+         xJXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717008772; x=1717613572;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VCyLXfQw+vODJ+gWUnxnJTmwZOqAzSvyZikbefhPOtA=;
+        b=SoNipLZQtLVrrEzef5Fj8Ta0BgeZ16/S2HZK0zvAbA/FPELyB5OiSkRmIundscLJsZ
+         zIfFk6drgfmYmzq0lQEpieKV6a5pcBtWn7ctDivGfPcyhmr+G0oYpnsTMA3EfGyEAFhF
+         bh+d4igwE1rRV02jSvVaK+YBd5U4z4SSP+exi3glFBaBMV0clQILQyeGo3Xpq0x2b+P7
+         FnMsWWWf2wG5U8ywaqSOJhg5Gc30fGPplGpmyamzC+zVWHB+ftyWPCUOC2P4Vr58TpXp
+         QxekxCvPpL266PH5YIXT7gLhEzfvDbFCz4QUElifxF0tpevvzT8WkNe0ILWoeZQw2Ulu
+         gPHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXohOb+8SG7PbsX8mZUATrdOSCGT43n7CxMYrE8DGT4tEWLf/Y/nXTbggqr5CWCIRdWAHjAxA2BIFyTVfLHwLNNa4mdv2AoWyELJiCmLQ==
+X-Gm-Message-State: AOJu0YyDZYQBju5on+7jBAkakdqHeiq6bG2Kkr5TnC/h/3DCiKMSnTHG
+	NOPi3R+emp5joEZ051yVdl9JNW4DlmPyEaInE6dtUjBpuRY52ELGey+9LgWzqVQ=
+X-Google-Smtp-Source: AGHT+IFYV8lOdAq8BVnBAdwANSNE1at77ft2iuhi77Gbpa36U2AS+eGe4gpkadqc9c7yNfvtjizhyQ==
+X-Received: by 2002:a05:600c:4ecd:b0:420:1fd2:e611 with SMTP id 5b1f17b1804b1-421279294dcmr155055e9.27.1717008771805;
+        Wed, 29 May 2024 11:52:51 -0700 (PDT)
+Received: from [192.168.0.31] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-356c8daef27sm13465928f8f.115.2024.05.29.11.52.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 May 2024 11:52:51 -0700 (PDT)
+Message-ID: <6caa0d27-3abf-4198-97a9-42b0e564bbba@linaro.org>
+Date: Wed, 29 May 2024 19:52:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 4/6] drm/ci: uprev IGT
-To: Vignesh Raman <vignesh.raman@collabora.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: <dri-devel@lists.freedesktop.org>, <daniels@collabora.com>,
-        <helen.koike@collabora.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <robdclark@gmail.com>, <david.heidelberg@collabora.com>,
-        <guilherme.gallo@collabora.com>, <sergi.blanch.torne@collabora.com>,
-        <mcanal@igalia.com>, <linux-mediatek@lists.infradead.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-rockchip@lists.infradead.org>, <amd-gfx@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <intel-gfx@lists.freedesktop.org>,
-        <virtualization@lists.linux-foundation.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240529024049.356327-1-vignesh.raman@collabora.com>
- <20240529024049.356327-5-vignesh.raman@collabora.com>
- <bj6mpegmxo6i5o34xyxwiytdaokv2u6p5iu4eoek3ctqimwviy@jbo5aw7gy4ue>
- <12f14064-fd1c-4e9c-94ee-ba7d492a4056@collabora.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/13] mfd: pm8008: deassert reset on probe
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>,
+ Satya Priya <quic_c_skakit@quicinc.com>, Stephen Boyd <swboyd@chromium.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+References: <20240506150830.23709-1-johan+linaro@kernel.org>
+ <20240506150830.23709-4-johan+linaro@kernel.org>
+ <4468becb-dc03-4832-aa03-5f597023fcb2@linaro.org>
+ <ZjyX6iBqc50ic_oI@hovoldconsulting.com>
+ <ZldU_LqjkU-4uphO@hovoldconsulting.com>
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <12f14064-fd1c-4e9c-94ee-ba7d492a4056@collabora.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yAOcEUDxqMb3ILGVj-wikK1cqOlETKxm
-X-Proofpoint-ORIG-GUID: yAOcEUDxqMb3ILGVj-wikK1cqOlETKxm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-29_15,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 mlxscore=0 phishscore=0 mlxlogscore=999 spamscore=0
- clxscore=1011 impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405290129
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <ZldU_LqjkU-4uphO@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 29/05/2024 17:17, Johan Hovold wrote:
+> The irqchip registration will also fail if there's no from reply from
+> this address.
 
+That's acceptable too.
 
-On 5/29/2024 2:48 AM, Vignesh Raman wrote:
-> Hi Dmitry,
-> 
-> On 29/05/24 13:39, Dmitry Baryshkov wrote:
->> On Wed, May 29, 2024 at 08:10:47AM +0530, Vignesh Raman wrote:
->>> test-list.txt and test-list-full.txt are not generated for
->>> cross-builds and they are required by drm-ci for testing
->>> arm32 targets. This is fixed in igt-gpu-tools. So uprev
->>> IGT to include the commit which fixes this issue. Also
->>> disable building xe driver tests for non-intel platforms.
->>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
->>> ---
->>>
->>> v2:
->>>    - Split IGT uprev to seperate patch.
->>>
->>> v3:
->>>    - No changes.
->>>
->>> ---
->>>   drivers/gpu/drm/ci/build-igt.sh  | 4 ++++
->>>   drivers/gpu/drm/ci/gitlab-ci.yml | 2 +-
->>>   2 files changed, 5 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/ci/build-igt.sh 
->>> b/drivers/gpu/drm/ci/build-igt.sh
->>> index b7d2a49a6db3..eddb5f782a5e 100644
->>> --- a/drivers/gpu/drm/ci/build-igt.sh
->>> +++ b/drivers/gpu/drm/ci/build-igt.sh
->>> @@ -45,6 +45,10 @@ 
->>> MESON_OPTIONS="-Doverlay=disabled                    \
->>>                  -Dlibunwind=enabled                   \
->>>                  -Dprefix=/igt"
->>> +if [[ "$KERNEL_ARCH" = "arm64" ]] || [[ "$KERNEL_ARCH" = "arm" ]]; then
->>> +    MESON_OPTIONS="$MESON_OPTIONS -Dxe_driver=disabled"
->>> +fi
->>> +
->>>   mkdir -p /igt
->>>   meson build $MESON_OPTIONS $EXTRA_MESON_ARGS
->>>   ninja -C build -j${FDO_CI_CONCURRENT:-4} || ninja -C build -j 1
->>> diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml 
->>> b/drivers/gpu/drm/ci/gitlab-ci.yml
->>> index 8f32de63d92e..1b29c3b6406b 100644
->>> --- a/drivers/gpu/drm/ci/gitlab-ci.yml
->>> +++ b/drivers/gpu/drm/ci/gitlab-ci.yml
->>> @@ -5,7 +5,7 @@ variables:
->>>     UPSTREAM_REPO: git://anongit.freedesktop.org/drm/drm
->>>     TARGET_BRANCH: drm-next
->>> -  IGT_VERSION: d2af13d9f5be5ce23d996e4afd3e45990f5ab977
->>> +  IGT_VERSION: 0df7b9b97f9da0e364f5ee30fe331004b8c86b56
->>
->> Let's land this, then I'll ask to uprev to
->> dc2d7fb4f978048b87707ea9ec32da748b01b378, which fixes an issue with the
->> writeback tests on MSM devices.
-> 
-> Sure. Once this is merged, we can uprev to the latest IGT.
-> 
-> Regards,
-> Vignesh
-> 
-
-Thanks, yes moving to latest IGT after this is merged will be great.
-
->>
->>>     DEQP_RUNNER_GIT_URL: 
->>> https://gitlab.freedesktop.org/anholt/deqp-runner.git
->>>     DEQP_RUNNER_GIT_TAG: v0.15.0
->>> -- 
->>> 2.40.1
->>>
->>
+---
+bod
 
