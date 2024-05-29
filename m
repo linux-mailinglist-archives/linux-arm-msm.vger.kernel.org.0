@@ -1,296 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-20968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5825D8D3B31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 17:42:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D3A68D3B46
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 17:44:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C3D091F275CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 15:42:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B048C1C20D65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 15:44:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A56EC181D0A;
-	Wed, 29 May 2024 15:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D494137932;
+	Wed, 29 May 2024 15:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xPLZa1jp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NsrHniko"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D51D18133A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 15:41:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25471156F36;
+	Wed, 29 May 2024 15:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716997307; cv=none; b=jK79aNzAYrWT/FI3aVmFhIQAfw10HRbqhbu0zqbOPQ8ELbQ25p8VljIbWvKS/QxlzN4tb5io5mwEpbALjz/nPhZ5RtHV1vrLpCtPdE+hDBWoTB/1frttd8JaOApiPMO3zRNia8ZpqEVwX6p9FsgdXs3WtK+ATng2FWEM1VEED0Y=
+	t=1716997441; cv=none; b=ORUhA4ETOjccHEq0UM0ZTs6qh5unSr9J1Le9IwP/GP7ic2zrWd0Gpoq3lCBKbR+gIG5wd2Npq8UwiCJ2jzbluTZdYYdfHSz+20RFfu15qzt6H5n1njVvcWapHD+qmjHw3Ny7Y9jomqUK2FkebM0Wjif1LdUm+ZYgO91I1A6Oz1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716997307; c=relaxed/simple;
-	bh=6y1oCo4DKqnvTKrWAni22CK+MS7HQ51Og7J50Sv/9XA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dRpecLln5iCG4CzfIBXipHU3cSq8Ti9rSYoWkqADBHTREjmggC1T1bvktD9QpLz2PoUComyr18TFb5fC82zBouRJTV1Z4JQ9+mBOkf9Cji050GW5Y68wh/RIXV5tkuQtM2+PFH15Y3+ljpHGK9+3gqLV8xFlBI6TIZvs+OM27LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xPLZa1jp; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-354de3c5c61so1839566f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 08:41:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716997303; x=1717602103; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b4HbbIwVhQ8OurjkPgt7eXPYfY1OZfSmqAUwwAgEnTI=;
-        b=xPLZa1jpZnbDDLPJXbcxOcZnFG9NrtGT36cYfiBfCJ7RQMrRGjNdeLIXXpzeITYu5K
-         d+VHBNzphr3I8toFvHS7jYFijG7fSxRFFlu52OhYk/OyM1GujpSZDF2LqQU1FfVv2060
-         QmjI5ZbMdvei0svyl/xDbFvKCoCngyMq2JD+g55zRvVnn9tGptUy/A562k6qwCYy/7Ek
-         X1+fC2omcAC6JOGosfdntSxbnJePpPm+8gXF9QVGPo5jgDh+98n3fXjg4CM2h9ROVWtb
-         GuYBPLMCtWvj4y+haNIzbtpIYD4V9nMT/v5pUeGVLmlVvgO8AvAM06fQ6Cbru62/QVqx
-         83Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716997303; x=1717602103;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b4HbbIwVhQ8OurjkPgt7eXPYfY1OZfSmqAUwwAgEnTI=;
-        b=gzNsPSPD+HuDdCxGR2n6tEE2zY0jMKjPjcM3nT7r5QqP26XRt5mlu98q5lHIBtk0aS
-         RHgICdvEmAJU0OjmZ3eC07i8ALg36jDvMJXkoJNUIBGOAOXM9FfKEVhxAXkOsAFQAuIM
-         HbxqnA5bdFMWuyJU5R/C2cdS34YKGJlfmHoH7qF9gUFxZ/VTcxW4n60oaOY8LIEy9vZL
-         EjTp1Vsu9Y3N1IHCe9eWunQQM6h4xarn739liQD3XWKyWeBAi17R2AV1NOdfMUQk2HUG
-         XjRSzUKX4kosY2twVsO7AXbfoOM8DeTn/JtcBOiljzIe3mK91Eq99BE2cAd96HS6u69o
-         Y+HA==
-X-Forwarded-Encrypted: i=1; AJvYcCV2il1XNJQCvMtg9xdRBjhia9SeWlE9GnrDKK2S+F1yKK2rqIHZn3sttWJ2npC+ORni/INE9gga9AHo4EIdwdjemzRkrYW4OBTVjLh/mw==
-X-Gm-Message-State: AOJu0Yyf4oiJYK8e795QYeCrpj6S6EU634DnyL+ZZleyJmwBmLAem3ty
-	NKHRvKdy0fjcvOmDKJfYc6jMAQcoabvK+Kif+flOsBRLuIHQRmHxd/2l8FxI4L4=
-X-Google-Smtp-Source: AGHT+IEpOVwItJgJAC/fiw+Mn/s+t+akmGAuN5LPgv1nurAMVATmXM94o+j9J0fb3nZmeMzmoJmpMw==
-X-Received: by 2002:a5d:518a:0:b0:354:f4e6:f9cd with SMTP id ffacd0b85a97d-35526c34337mr12265772f8f.17.1716997302847;
-        Wed, 29 May 2024 08:41:42 -0700 (PDT)
-Received: from [192.168.0.3] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557a1c9303sm15266075f8f.88.2024.05.29.08.41.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 May 2024 08:41:42 -0700 (PDT)
-Message-ID: <afed0bee-de6e-4e86-8437-0518c616bd2c@linaro.org>
-Date: Wed, 29 May 2024 16:41:40 +0100
+	s=arc-20240116; t=1716997441; c=relaxed/simple;
+	bh=08fNsTA0hP2squzMcUZ1gfcOagY4GbLarrX5MFlRAK4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AMTeif38Db5eydgKpp9ogncgJWktGHMUy28JQNMy9TKMR4aHz7+tNdqY5qC3s/b8z44XYB1bGtbp540NbYpopTL+7moFQPpAaJu4UodWp4zSrphlkbt/73I2HBm6/AuG9bUn7Z2Gu7oMr6PBGBhIZpMLhGSsluQShNRPVIXus5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NsrHniko; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44T7MO5F015761;
+	Wed, 29 May 2024 15:43:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=/5j0RSsTR4kIAMCNUS3tzwzs
+	OLbYB58UqXMnwxQanJA=; b=NsrHnikokCHHUZiVGmh1QOvvREYrH4vpnnrn4gVG
+	vilu2Hswws7UVM28I7/1fClfHXhN2yD3vCjfrJrvp74RjJS3z+gLQRocMY89EdIR
+	JFwYzvOaX36qXVllNjujaUdXCEgKMaPcOZ+OSuBUxcFs1phlGjdQKTzP2Ei9NjFx
+	Jmz65wUm3UmpMzQH+6il6T0ToMVc0tVM285nwd9TMx86/u0y7FrBTHWUCVzGlWKG
+	334r+OsPu29i6nHMY+9aNZ9DkArZb8aUG5hWfo2jD1DTcLqobYiz+fXkF8+DqIGz
+	1ylPRbJ8QEW1Palwl8siuR+xkZI+lR6bkMeRTKVJI/5VMQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ydyws1233-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 May 2024 15:43:44 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TFhh95029906
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 May 2024 15:43:43 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 29 May 2024 08:43:43 -0700
+Date: Wed, 29 May 2024 08:43:42 -0700
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: Conor Dooley <conor@kernel.org>
+CC: Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Amrit Anand <quic_amrianan@quicinc.com>,
+        "Peter
+ Griffin" <peter.griffin@linaro.org>,
+        Caleb Connolly
+	<caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>, Doug Anderson
+	<dianders@chromium.org>,
+        Simon Glass <sjg@chromium.org>, Chen-Yu Tsai
+	<wenst@chromium.org>,
+        Julius Werner <jwerner@chromium.org>,
+        "Humphreys,
+ Jonathan" <j-humphreys@ti.com>,
+        Sumit Garg <sumit.garg@linaro.org>,
+        "Michal
+ Simek" <michal.simek@amd.com>,
+        <boot-architecture@lists.linaro.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH RFC v3 2/9] dt-bindings: board: Introduce board-id
+Message-ID: <20240529083435197-0700.eberman@hu-eberman-lv.qualcomm.com>
+References: <20240522162545887-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <20240522-board-ids-v4-2-a173277987f5@quicinc.com>
+ <20240525-aids-jersey-a56ce764b430@spud>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/6] usb: typec: ucsi: add Lenovo Yoga C630 glue driver
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Hans de Goede <hdegoede@redhat.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Nikita Travkin <nikita@trvn.ru>
-References: <20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org>
- <20240528-yoga-ec-driver-v4-3-4fa8dfaae7b6@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240528-yoga-ec-driver-v4-3-4fa8dfaae7b6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240525-aids-jersey-a56ce764b430@spud>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OVQG9LUwwImajzKmaDG6XO58T-VuwJxf
+X-Proofpoint-GUID: OVQG9LUwwImajzKmaDG6XO58T-VuwJxf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-29_12,2024-05-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405290108
 
-On 28/05/2024 21:44, Dmitry Baryshkov wrote:
-> The Lenovo Yoga C630 WOS laptop provides implements UCSI interface in
-> the onboard EC. Add glue driver to interface the platform's UCSI
-> implementation.
+On Sat, May 25, 2024 at 05:54:52PM +0100, Conor Dooley wrote:
+> On Wed, May 22, 2024 at 04:54:23PM -0700, Elliot Berman wrote:
+> > Device manufcturers frequently ship multiple boards or SKUs under a
+> > single softwre package. These software packages ship multiple devicetree
+> > blobs and require some mechanims to pick the correct DTB for the boards
+> > that use the software package. This patch introduces a common language
+> > for adding board identifiers to devicetrees.
+> > 
+> > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > ---
+> >  .../devicetree/bindings/board/board-id.yaml        | 71 ++++++++++++++++++++++
+> >  1 file changed, 71 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/board/board-id.yaml b/Documentation/devicetree/bindings/board/board-id.yaml
+> > new file mode 100644
+> > index 000000000000..894c1e310cbd
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/board/board-id.yaml
+> > @@ -0,0 +1,71 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/board/board-id.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Board identifiers
+> > +description: |
+> > +  This node contains a list of identifier values for the board(s) supported by
+> > +  this devicetree. Identifier values are either N-tuples of integers or a
+> > +  string. The number of items for an N-tuple identifer is determined by the
+> > +  property name. String identifiers must be suffixed with "-string".
+> > +
+> > +  Every identifier in the devicetree must have a matching value from the board
+> > +  to be considered a valid devicetree for the board. In other words: if
+> > +  multiple identifiers are present in the board-id and one identifier doesn't
+> > +  match against the board, then the devicetree is not applicable. Note this is
+> > +  not the case where the the board can provide more identifiers than the
+> > +  devicetree describes: those additional identifers can be ignored.
+> > +
+> > +  Identifiers in the devicetree can describe multiple possible valid values,
+> > +  such as revision 1 and revision 2.
+> > +
+> > +maintainers:
+> > +  - Elliot Berman <quic_eberman@quicinc.com>
+> > +
+> > +properties:
+> > +  $nodename:
+> > +    const: '/'
+> > +  board-id:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/usb/typec/ucsi/Kconfig          |   9 ++
->   drivers/usb/typec/ucsi/Makefile         |   1 +
->   drivers/usb/typec/ucsi/ucsi_yoga_c630.c | 189 ++++++++++++++++++++++++++++++++
->   3 files changed, 199 insertions(+)
 > 
-> diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
-> index bdcb1764cfae..680e1b87b152 100644
-> --- a/drivers/usb/typec/ucsi/Kconfig
-> +++ b/drivers/usb/typec/ucsi/Kconfig
-> @@ -69,4 +69,13 @@ config UCSI_PMIC_GLINK
->   	  To compile the driver as a module, choose M here: the module will be
->   	  called ucsi_glink.
->   
-> +config UCSI_LENOVO_YOGA_C630
-> +	tristate "UCSI Interface Driver for Lenovo Yoga C630"
-> +	depends on EC_LENOVO_YOGA_C630
-> +	help
-> +	  This driver enables UCSI support on the Lenovo Yoga C630 laptop.
-> +
-> +	  To compile the driver as a module, choose M here: the module will be
-> +	  called ucsi_yoga_c630.
-> +
->   endif
-> diff --git a/drivers/usb/typec/ucsi/Makefile b/drivers/usb/typec/ucsi/Makefile
-> index b4679f94696b..aed41d23887b 100644
-> --- a/drivers/usb/typec/ucsi/Makefile
-> +++ b/drivers/usb/typec/ucsi/Makefile
-> @@ -21,3 +21,4 @@ obj-$(CONFIG_UCSI_ACPI)			+= ucsi_acpi.o
->   obj-$(CONFIG_UCSI_CCG)			+= ucsi_ccg.o
->   obj-$(CONFIG_UCSI_STM32G0)		+= ucsi_stm32g0.o
->   obj-$(CONFIG_UCSI_PMIC_GLINK)		+= ucsi_glink.o
-> +obj-$(CONFIG_UCSI_LENOVO_YOGA_C630)	+= ucsi_yoga_c630.o
-> diff --git a/drivers/usb/typec/ucsi/ucsi_yoga_c630.c b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-> new file mode 100644
-> index 000000000000..ca1ab5c81b87
-> --- /dev/null
-> +++ b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-> @@ -0,0 +1,189 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2024, Linaro Ltd
-> + * Authors:
-> + *    Bjorn Andersson
-> + *    Dmitry Baryshkov
-> + */
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_data/lenovo-yoga-c630.h>
-> +
-> +#include "ucsi.h"
-> +
-> +struct yoga_c630_ucsi {
-> +	struct yoga_c630_ec *ec;
-> +	struct ucsi *ucsi;
-> +	struct notifier_block nb;
-> +	struct completion complete;
-> +	unsigned long flags;
-> +#define UCSI_C630_COMMAND_PENDING	0
-> +#define UCSI_C630_ACK_PENDING		1
-> +	u16 version;
-> +};
-> +
-> +static  int yoga_c630_ucsi_read(struct ucsi *ucsi, unsigned int offset,
-> +				void *val, size_t val_len)
-> +{
-> +	struct yoga_c630_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +	u8 buf[YOGA_C630_UCSI_READ_SIZE];
-> +	int ret;
-> +
-> +	ret = yoga_c630_ec_ucsi_read(uec->ec, buf);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (offset == UCSI_VERSION) {
-> +		memcpy(val, &uec->version, min(val_len, sizeof(uec->version)));
-> +		return 0;
-> +	}
-> +
-> +	if (offset == UCSI_CCI)
-> +		memcpy(val, buf,
-> +		       min(val_len, YOGA_C630_UCSI_CCI_SIZE));
-> +	else if (offset == UCSI_MESSAGE_IN)
-> +		memcpy(val, buf + YOGA_C630_UCSI_CCI_SIZE,
-> +		       min(val_len, YOGA_C630_UCSI_DATA_SIZE));
+> Does this need to be
+> properties:
+>   $nodename:
+>     const: board-id
+> ? That's the pattern I see for all top level nodes.
+> 
+> > +    type: object
+> > +    patternProperties:
+> > +      "^.*(?<!-string)$":
+> 
+> At least this regex now actually works :)
+> 
+> > +        $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> > +        description: |
+> > +          List of values that match boards this devicetree applies to.
+> > +          A bootloader checks whether any of the values in this list
+> > +          match against the board's value.
+> > +
+> > +          The number of items per tuple is determined by the property name,
+> > +          see the vendor-specific board-id bindings.
+> > +      "^.*-string$":
+> > +        $ref: /schemas/types.yaml#/definitions/string-array
+> 
+> Your description above doesn't match a string-array, just a single
+> string. That said I'm far from sold on the "thou shalt have -string"
+> edict. If every vendor is expected to go and define their own set of
+> properties (and provide their own callback in your libfdt PoC) there's
+> little to no reason to inflict property naming on them, AFAICT all that
+> is gained is a being able to share
+> 	if (string) {
+> 		return fdt_stringlist_contains(prop->data,
+> 					       fdt32_to_cpu(prop->len),
+> 					       data);
+> 	} else {
+> 		// exact data comparison. data_len is the size of each entry
+> 		if (fdt32_to_cpu(prop->len) % data_len || data_len % 4)
+> 			return -FDT_ERR_BADVALUE;
+> 
+> 		for (int i = 0; i < fdt32_to_cpu(prop->len); i += data_len) {
+> 			if (!memcmp(&prop->data[i], data, data_len))
+> 				return 1;
+> 		}
+> 
+> 		return 0;
+> 	}
+> in the libfdt PoC? I'd be expecting that a common mechanism would use
+> the same "callback" for boards shipped by both Qualcomm and
+> $other_vendor. Every vendor having different properties and only sharing
+> the board-id node name seems a wee bit like paying lip-service to a
+> common mechanism to me. What am I missing?
 
-For some reason I believe multi-lines like this, including function 
-calls that are split over lines should be encapsulated with {}
+One way I thought to get the real board-id values from firmware to OS
+loader is via DT itself. A firmware-provided DT provides the real
+board-id values. In this case, firmware doesn't have any way to say the
+board-id property is a string or a number, so I put that info in the DT
+property name.
 
-else if(x) {
-     memcpy(x,y,
-            z);
-}
+Another way I thought to get the real board-id values from firmware is
+via a UEFI protocol. In that case, we could easily share whether the
+value is a string or number and we can drop the "-string" suffix bit.
 
-If checkpatch doesn't complain about it feel free not to do that though.
+Thanks,
+Elliot
 
-> +	else
-> +		return -EINVAL;
-> +
-> +	return 0;
-> +}
-> +
-> +static  int yoga_c630_ucsi_async_write(struct ucsi *ucsi, unsigned int offset,
-> +				       const void *val, size_t val_len)
-> +{
-> +	struct yoga_c630_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +
-> +	if (offset != UCSI_CONTROL ||
-> +	    val_len != YOGA_C630_UCSI_WRITE_SIZE)
-> +		return -EINVAL;
-> +
-> +	return yoga_c630_ec_ucsi_write(uec->ec, val);
-> +}
-> +
-> +static  int yoga_c630_ucsi_sync_write(struct ucsi *ucsi, unsigned int offset,
-> +				      const void *val, size_t val_len)
-> +{
-> +	struct yoga_c630_ucsi *uec = ucsi_get_drvdata(ucsi);
-> +	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
-> +	int ret;
-> +
-> +	if (ack)
-> +		set_bit(UCSI_C630_ACK_PENDING, &uec->flags);
-> +	else
-> +		set_bit(UCSI_C630_COMMAND_PENDING, &uec->flags);
-> +
-> +	reinit_completion(&uec->complete);
-> +
-> +	ret = yoga_c630_ucsi_async_write(ucsi, offset, val, val_len);
-> +	if (ret)
-> +		goto out_clear_bit;
-> +
-> +	if (!wait_for_completion_timeout(&uec->complete, 5 * HZ))
-> +		ret = -ETIMEDOUT;
-> +
-> +out_clear_bit:
-> +	if (ack)
-> +		clear_bit(UCSI_C630_ACK_PENDING, &uec->flags);
-> +	else
-> +		clear_bit(UCSI_C630_COMMAND_PENDING, &uec->flags);
-> +
-> +	return ret;
-> +}
-> +
-> +const struct ucsi_operations yoga_c630_ucsi_ops = {
-> +	.read = yoga_c630_ucsi_read,
-> +	.sync_write = yoga_c630_ucsi_sync_write,
-> +	.async_write = yoga_c630_ucsi_async_write,
-> +};
-> +
-> +static int yoga_c630_ucsi_notify(struct notifier_block *nb,
-> +				 unsigned long action, void *data)
-> +{
-> +	struct yoga_c630_ucsi *uec = container_of(nb, struct yoga_c630_ucsi, nb);
-> +	u32 cci;
-> +	int ret;
-> +
-> +	if (action == LENOVO_EC_EVENT_USB || action == LENOVO_EC_EVENT_HPD) {
-> +		ucsi_connector_change(uec->ucsi, 1);
-> +		return NOTIFY_OK;
-> +	}
-> +
-> +	if (action != LENOVO_EC_EVENT_UCSI)
-> +		return NOTIFY_DONE;
-
-Is this disjunction on action a good candidate for a switch(){}
-
-
-> +
-> +	ret = uec->ucsi->ops->read(uec->ucsi, UCSI_CCI, &cci, sizeof(cci));
-> +	if (ret)
-> +		return NOTIFY_DONE;
-> +
-> +	if (UCSI_CCI_CONNECTOR(cci))
-> +		ucsi_connector_change(uec->ucsi, UCSI_CCI_CONNECTOR(cci));
-> +
-> +	if (cci & UCSI_CCI_ACK_COMPLETE &&
-> +	    test_bit(UCSI_C630_ACK_PENDING, &uec->flags))
-> +		complete(&uec->complete);
-> +	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
-> +	    test_bit(UCSI_C630_COMMAND_PENDING, &uec->flags))
-> +		complete(&uec->complete);
-
-IMO these multi-line clauses should end up with a {} around the complete 
-even though its not required.
-
-Emphasis on the O.
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
