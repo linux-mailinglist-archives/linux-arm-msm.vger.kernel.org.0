@@ -1,65 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-20996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1189E8D3E13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 20:10:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D21148D3E78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 20:39:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD0E0286C0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 18:10:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E6B0284B83
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 18:39:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 440721C2302;
-	Wed, 29 May 2024 18:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DA6A1C230E;
+	Wed, 29 May 2024 18:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QicqMx7Q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ouNulVwo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F4B1836DE;
-	Wed, 29 May 2024 18:10:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A661C1C2305;
+	Wed, 29 May 2024 18:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717006221; cv=none; b=sSClYK/HuyKWNum7phfVt7RM3Vj02MqPUo54Tq3e16rP74yyD4gwTDDHYvl7hELRFkr9N2s0ltvun6F20BgE+cdlx3RdK7doTvl0NRv3F2l3ipU+EeL5wkYpXMplFhfDWB4fx1xyk896JR1uzxqXY7eerYvwFQBBk9mTRXG6go0=
+	t=1717007984; cv=none; b=bgR8cNpTBW2ouoSxfYrHfiqmERyCK4K85KIzmCcZg5xlri/8GWYgh9gIcxCjsqVxk7I+yK1w7g9JIN7BZFn1/lFm4mrpkwaSZ+Tqt6g/P90rYszSK7jk2aAstnzK410Zuzx+2r8bIAaEofeirYBcr2rb5+pMLDKgl11q5Rb1QZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717006221; c=relaxed/simple;
-	bh=0kcDD/5ugp1alfrK4+zeqPWHZ6Ox9wD0gGIKPMAxpIg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=NiOKgqlRl+f8HSqXo+vFSLLpWrxrShSGF4e0OHb1HHa1fV9CUa8GrviKMSc1kM5pkYbc4nCr6xVpbIXX8Eo3RfcXhRFQlH+Hy3imio8lN/udB6+mKnNn/w5dHBQcqOe4vS6h7245xjz3g7rKtM/gt8zzSIRsec99Uznt4PeOLc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QicqMx7Q; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1717007984; c=relaxed/simple;
+	bh=DhNEauDfI97TAmjRWu2qRxUMXDkWyhLuWuOVMey/HyE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=hN3tVcNMpRP9stT6HNMJwqu9V9+6C0fv7n1KtEK9F6ea3TkH9dct8HDld66hqivV4w5BD2tcUtmkTpbNUtxYTPaoefhqYQ221vLpnCZj6AqtcZtNTtJ3jgN9SSsMLvgFqalJEUXQL0w2ADUc3e2deF3aW144eHWqnraljimmqAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ouNulVwo; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44TBHdm9012837;
-	Wed, 29 May 2024 18:10:02 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44TAEldM017183;
+	Wed, 29 May 2024 18:39:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4CscIOPSIzNF/B8vuaT4PurRNfIAAhpAp22/FUwa6ww=; b=QicqMx7QD6mdsxIL
-	opZ57MCOeAvyP046IyzXUsMcPjr86HcDI/m21Q8A+Yxb5PERR7euQm0Q6WR/phw8
-	24HumrXwCLHTmtxkPwtSCczMjB+BT5gk9db5jChcaCo+gKjk/QOk03KnrRLsij80
-	LHhgChrbCXQOWgWxfpVspLjqp+7lsnYm6u1nq7wxHSUuf3gPqXPUeW5G1O9LILqK
-	4UVUCegxKtZWT7nbNlKzcRaUf7fS6reH3Co64zxajRDQRofU9/LbiLjKb3mAz3jJ
-	SmhVI5YSKIqqUZ6y1AbjxS7F1E+QMEcaDugbpGbAfL6WOV/tj6GsQLGkDNjlGavv
-	YNdPPg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba0qhurr-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=q6mgGgupOvxmpqFBBvg9jB
+	QlqS0t6X5bAyhR+6y3Ers=; b=ouNulVwoaMnXsuTCbjYy85bQA8Rpx8A1Xb9Sys
+	h3UpNUvj1MtaxnxtXGPVr1YxEBgAcLtr1syDshx+Y0JpuNBsc+vKm6AIxtq2g7gq
+	FP6twFribyeEGuPaguOEm3AyAvRn1Q5dKCmbx/GWIoDiZP/e7nMI4iWTa7R+hPuL
+	44eDS9qq3K8VoQdG4dF8SEpH7l4HB7wRPQwbP1EKai6rPOTnP77SwMfegt0TcFPB
+	DCLQnXnIBSBXb0nMxGeLeo426WUS2J3BkZ4+WbpLxZRFwEy9oxAuKnlrw5QShTbG
+	WrPPI0AHlz9f66UKFfb3vIxT7927vvNY269wK50XjVTx8/IA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba2nj2cq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 May 2024 18:10:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TIA0V5023051
+	Wed, 29 May 2024 18:39:16 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TIdFue009060
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 May 2024 18:10:01 GMT
-Received: from hu-clew-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Wed, 29 May 2024 18:39:15 GMT
+Received: from hu-scheluve-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 29 May 2024 11:10:00 -0700
-From: Chris Lew <quic_clew@quicinc.com>
-Date: Wed, 29 May 2024 11:09:58 -0700
-Subject: [PATCH v3 4/4] remoteproc: qcom_q6v5_pas: Add hwspinlock bust on
- stop
+ 15.2.1544.9; Wed, 29 May 2024 11:39:14 -0700
+From: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+Date: Wed, 29 May 2024 11:39:04 -0700
+Subject: [PATCH] net: stmmac: dwmac-qcom-ethqos: Configure host DMA width
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,158 +65,86 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240529-hwspinlock-bust-v3-4-c8b924ffa5a2@quicinc.com>
-References: <20240529-hwspinlock-bust-v3-0-c8b924ffa5a2@quicinc.com>
-In-Reply-To: <20240529-hwspinlock-bust-v3-0-c8b924ffa5a2@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Baolin Wang
-	<baolin.wang@linux.alibaba.com>,
-        Peter Zijlstra <peterz@infradead.org>,
-        "Ingo
- Molnar" <mingo@redhat.com>, Will Deacon <will@kernel.org>,
-        Waiman Long
-	<longman@redhat.com>, Boqun Feng <boqun.feng@gmail.com>,
-        Jonathan Corbet
-	<corbet@lwn.net>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Chris Lew <quic_clew@quicinc.com>,
-        "Richard
- Maina" <quic_rmaina@quicinc.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1717006199; l=3424;
- i=quic_clew@quicinc.com; s=20240508; h=from:subject:message-id;
- bh=Fh1qjcjJVfLujRu9lV+ilZpdx4nr3R2fYPbCuSucud0=;
- b=rSI4BNpbFLSlMfe4BSfPwSXFFERdnA9hNZRn5X7NWLgT5aXlj/qia48D3MpjOhCfOULFqWbdr
- cZpOhCtr0lkAotxvR3KzsH3e4Cbd3+qWy8YU+UZjgN/faI9K+LF15cf
-X-Developer-Key: i=quic_clew@quicinc.com; a=ed25519;
- pk=lEYKFaL1H5dMC33BEeOULLcHAwjKyHkTLdLZQRDTKV4=
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Message-ID: <20240529-configure_ethernet_host_dma_width-v1-1-3f2707851adf@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAEh2V2YC/x3NywrDIBBG4VcJs64QpRbsq5QiwfkTZ1Eto71Ay
+ LtXuvw25+zUoIJG12knxVua1DJgTxOlvJQNRniY3OzOs7fepFpW2V6KiJ6hBT3m2nrkxxI/wj2
+ bdLGBvXchOKbReSpW+f4ft/tx/ADpmka/cwAAAA==
+To: Vinod Koul <vkoul@kernel.org>,
+        Alexandre Torgue
+	<alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>,
+        "David S.
+ Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        "Jakub
+ Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Jochen Henneberg <jh@henneberg-systemdesign.com>
+CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        "Sagar Cheluvegowda" <quic_scheluve@quicinc.com>
+X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yKndioMBwa7xc8se-FGAO4lSJwVPx5JN
-X-Proofpoint-ORIG-GUID: yKndioMBwa7xc8se-FGAO4lSJwVPx5JN
+X-Proofpoint-ORIG-GUID: r19ogSDgF-B-g4W12boA6fUbXRYbygwK
+X-Proofpoint-GUID: r19ogSDgF-B-g4W12boA6fUbXRYbygwK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-29_14,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 malwarescore=0 spamscore=0 adultscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405290127
+ definitions=2024-05-29_15,2024-05-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 spamscore=0
+ phishscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2405290129
 
-From: Richard Maina <quic_rmaina@quicinc.com>
-
-When remoteproc goes down unexpectedly this results in a state where any
-acquired hwspinlocks will remain locked possibly resulting in deadlock.
-In order to ensure all locks are freed we include a call to
-qcom_smem_bust_hwspin_lock_by_host() during remoteproc shutdown.
-
-For qcom_q6v5_pas remoteprocs, each remoteproc has an assigned smem
-host_id. Remoteproc can pass this id to smem to try and bust the lock on
-remoteproc stop.
-
-This edge case only occurs with q6v5_pas watchdog crashes. The error
-fatal case has handling to clear the hwspinlock before the error fatal
-interrupt is triggered.
-
-Signed-off-by: Richard Maina <quic_rmaina@quicinc.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+Fixes: 070246e4674b ("net: stmmac: Fix for mismatched host/device DMA address width")
+Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Change-Id: Ifdf3490c6f0dd55afc062974c05acce42d5fb6a7
+---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 54d8005d40a3..8458bcfe9e19 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -52,6 +52,7 @@ struct adsp_data {
- 	const char *ssr_name;
- 	const char *sysmon_name;
- 	int ssctl_id;
-+	unsigned int smem_host_id;
- 
- 	int region_assign_idx;
- 	int region_assign_count;
-@@ -81,6 +82,7 @@ struct qcom_adsp {
- 	int lite_pas_id;
- 	unsigned int minidump_id;
- 	int crash_reason_smem;
-+	unsigned int smem_host_id;
- 	bool decrypt_shutdown;
- 	const char *info_name;
- 
-@@ -399,6 +401,9 @@ static int adsp_stop(struct rproc *rproc)
- 	if (handover)
- 		qcom_pas_handover(&adsp->q6v5);
- 
-+	if (adsp->smem_host_id)
-+		ret = qcom_smem_bust_hwspin_lock_by_host(adsp->smem_host_id);
-+
- 	return ret;
- }
- 
-@@ -727,6 +732,7 @@ static int adsp_probe(struct platform_device *pdev)
- 	adsp->pas_id = desc->pas_id;
- 	adsp->lite_pas_id = desc->lite_pas_id;
- 	adsp->info_name = desc->sysmon_name;
-+	adsp->smem_host_id = desc->smem_host_id;
- 	adsp->decrypt_shutdown = desc->decrypt_shutdown;
- 	adsp->region_assign_idx = desc->region_assign_idx;
- 	adsp->region_assign_count = min_t(int, MAX_ASSIGN_COUNT, desc->region_assign_count);
-@@ -1196,6 +1202,7 @@ static const struct adsp_data sm8550_adsp_resource = {
- 	.ssr_name = "lpass",
- 	.sysmon_name = "adsp",
- 	.ssctl_id = 0x14,
-+	.smem_host_id = 2,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index e254b21fdb59..65d7370b47d5 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -93,6 +93,7 @@ struct ethqos_emac_driver_data {
+ 	bool has_emac_ge_3;
+ 	const char *link_clk_name;
+ 	bool has_integrated_pcs;
++	u32 dma_addr_width;
+ 	struct dwmac4_addrs dwmac4_addrs;
  };
  
- static const struct adsp_data sm8550_cdsp_resource = {
-@@ -1216,6 +1223,7 @@ static const struct adsp_data sm8550_cdsp_resource = {
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
- 	.ssctl_id = 0x17,
-+	.smem_host_id = 5,
- };
+@@ -276,6 +277,7 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
+ 	.has_emac_ge_3 = true,
+ 	.link_clk_name = "phyaux",
+ 	.has_integrated_pcs = true,
++	.dma_addr_width = 36,
+ 	.dwmac4_addrs = {
+ 		.dma_chan = 0x00008100,
+ 		.dma_chan_offset = 0x1000,
+@@ -845,6 +847,8 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 		plat_dat->flags |= STMMAC_FLAG_RX_CLK_RUNS_IN_LPI;
+ 	if (data->has_integrated_pcs)
+ 		plat_dat->flags |= STMMAC_FLAG_HAS_INTEGRATED_PCS;
++	if (data->dma_addr_width)
++		plat_dat->host_dma_width = data->dma_addr_width;
  
- static const struct adsp_data sm8550_mpss_resource = {
-@@ -1236,6 +1244,7 @@ static const struct adsp_data sm8550_mpss_resource = {
- 	.ssr_name = "mpss",
- 	.sysmon_name = "modem",
- 	.ssctl_id = 0x12,
-+	.smem_host_id = 1,
- 	.region_assign_idx = 2,
- 	.region_assign_count = 1,
- 	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
-@@ -1275,6 +1284,7 @@ static const struct adsp_data sm8650_cdsp_resource = {
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
- 	.ssctl_id = 0x17,
-+	.smem_host_id = 5,
- 	.region_assign_idx = 2,
- 	.region_assign_count = 1,
- 	.region_assign_shared = true,
-@@ -1299,6 +1309,7 @@ static const struct adsp_data sm8650_mpss_resource = {
- 	.ssr_name = "mpss",
- 	.sysmon_name = "modem",
- 	.ssctl_id = 0x12,
-+	.smem_host_id = 1,
- 	.region_assign_idx = 2,
- 	.region_assign_count = 3,
- 	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
+ 	if (ethqos->serdes_phy) {
+ 		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
 
+---
+base-commit: 1b10b390d945a19747d75b34a6e01035ac7b9155
+change-id: 20240515-configure_ethernet_host_dma_width-c619d552992d
+
+Best regards,
 -- 
-2.25.1
+Sagar Cheluvegowda <quic_scheluve@quicinc.com>
 
 
