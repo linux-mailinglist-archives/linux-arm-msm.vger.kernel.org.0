@@ -1,1088 +1,365 @@
-Return-Path: <linux-arm-msm+bounces-21033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 540138D4208
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 01:40:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39EA48D4213
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 01:45:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BD51285D8F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 23:40:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B1E011F2208C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 23:45:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11F7C20012B;
-	Wed, 29 May 2024 23:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF74D16EC13;
+	Wed, 29 May 2024 23:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="slkjf9sT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FBuEGCsu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB151CB337
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 23:39:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44A428E8;
+	Wed, 29 May 2024 23:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717025977; cv=none; b=c4rZQhlZFe6Wt+yTukmKXOYPqJctAi3mJnPl6tvUVa8YJ0gBfKW3DWniNZNVzN1hSukL2ORCNsNH492IxnFb2ra/vYaqageRcUu/1vhzLXpRsW45aQd7sKwkb75O71lVJeWSlKzjvpzQ0yq7NZ52PAI2TxfSoeuAsiWBNDKjZjA=
+	t=1717026325; cv=none; b=aGyKgqm8Nc8to4GuyI/jbO+uzGwZ1AUCkZrKgrWtLxlgBtQDXeXcnylancmW7K6txT4MdThyOrzN92f2bZZOexzhQGO3R4O8NSQPe46bfS50x2k83uE8mhiQh58yPESof3M3DdDuqDgo4gPxNwH1aLv+xbVE1iiTIWh6nU5ZPsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717025977; c=relaxed/simple;
-	bh=MkddwRWzqsPbubcrEeD1wBf5k43gXXGWwyKjgneuo4k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=J/Ki5I+9DIJD9ofsbI//6u1l2Qbk3YkgOn6HwCk7GXZvBVSjLVtepMsGPXU1AWa15ZY6OHng/BLZM16NRqhv/32dfUImnj9CqseZln41eG1WgUb7x8t3WsCVVRQYIO4iA557YGLDLTlCVXbhsOy3Dn68KCDPFl7Uvl7ECmbQ9F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=slkjf9sT; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-57a1fe6392eso3725a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 16:39:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717025973; x=1717630773; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fbV6kDbPFMo2dyMwLztktzfowCSXBlpPh2aRkZT441k=;
-        b=slkjf9sTBv6fueBYIOqsL2kice6bOi8pBplpTe4LAKMmwZhDiHa2tWdFM2gf1UWyAZ
-         rj296HqS7bRxoXwY4ldLq5TMb2/sglSUH0CGF31TQbFr8avDnVdnhDNmjvsLLtSsRuvM
-         JvDPLnKokSRhnlsswEGATVbIMWblDlsgPRARkb2C+vtDdgzaNiFB4ob2SXTAbLU/c/5m
-         0F29T0COZjtgl1V4ltU4wQNjJPA7u7fpBfjOx48IxHE+9ktTvyLEqmffP+LpJ91TIbFW
-         9ARHQ7HrzsO7c33pDbN2lJsAW/DgOaj6r+bu1mKYhU3e+NRLiEtE4laNBTMKFTbr6aHk
-         ZChQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717025973; x=1717630773;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fbV6kDbPFMo2dyMwLztktzfowCSXBlpPh2aRkZT441k=;
-        b=YQdlgH6KtQsAjhNuYacnPjvzgQivOp8g3VYBwWDlJI+ZYjeAKsPSzbmrLaZgO96Xbd
-         v1fPMFBFqlkBcXrnbYBWt1XCSDnzoBk7H+l9t9rcFZsPWQ6jvO2fbDm8TUfuDgtCNn8J
-         /XhXhOE7M7l/me021ZEQff5DT7mvDFJ5tAeBC/gMW5ueQknmvitsjP3Y5kdhr6lZVnfm
-         dExEd7qcdW3+DwXNYp+RTwGwz5w/4DzERBIbDw4xKPVoMsgZantjiAnejEPuDomYQ8hd
-         gEEoP1chslgqloTTd1v6ZY5jf7k5M8iHTCwpAejwyBIuxNxx6l4k/g3JTQDwqxEnO82v
-         4NKA==
-X-Forwarded-Encrypted: i=1; AJvYcCUKdBSgxFuyy0XwGU3mYnqDjQQQb99qpwDLqxQQmUYwxQaR17MFSS7wEmQJt/EXm9E/INz0NHheY/jsaUUJmKujA8l8OZ1ihlg7lAczIw==
-X-Gm-Message-State: AOJu0YzT7zQM9lRJn0mskYV/aDxXNK5MB0QupvjleaYpkL9/1BQPb+PV
-	eoIG+q248Rv65VMgyxfpYed/v1PlYWd9xhAF5rtgJF5VZjFdOBANydVqsD43RHQ=
-X-Google-Smtp-Source: AGHT+IH/PKu4RPGjXZ+ACBs45EAoaoy7tntJ88DB06jdmKDQlhs1uekKFV4rtpwJqp1953PVVEQMUA==
-X-Received: by 2002:a05:6402:2267:b0:579:c015:5376 with SMTP id 4fb4d7f45d1cf-57a17792478mr261488a12.4.1717025972705;
-        Wed, 29 May 2024 16:39:32 -0700 (PDT)
-Received: from [192.168.0.113] ([2a02:8109:aa0d:be00::8bb3])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-579cec28c0dsm5129759a12.66.2024.05.29.16.39.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 May 2024 16:39:32 -0700 (PDT)
-From: Caleb Connolly <caleb.connolly@linaro.org>
-Date: Thu, 30 May 2024 01:39:17 +0200
-Subject: [PATCH v3 2/2] arm64: dts: qcom: add QCM6490 SHIFTphone 8
+	s=arc-20240116; t=1717026325; c=relaxed/simple;
+	bh=8V87m9BEjjuwpSPM7y2tN//WhyCgi8Xxy0wX3IvsQaU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=npqTVKHK9zY9FIiPd+6UC49wr/lUCSWBcHoqYWcUXGwlbI5qGlK9BgBd/CJtHr+JkZ5fBwkyzgpgGvadYVcfQ55N2ku8bfhMQQDCLLtHugh7i+5ciBWGm/h2gNXHvCjxBOsdz54J8okb3R4IdqfhltRroszFWRb8111YPpZ3ydY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FBuEGCsu; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44TGtwUv015776;
+	Wed, 29 May 2024 23:45:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0V/J51ksjryewttimNdL8YTXP7fZivxPCL/jGXR7jas=; b=FBuEGCsukpJO2edC
+	WvBJeCR3EYT8lDWERRU5HD7cnvarZVh8j0gtpod5kaxRR2mAo1pEraPFi8Qi4VcJ
+	HmPqN9P05acDJeqW5BlFn15MXEzU1AxQ5sK4ilcW4gH5JiX/Lby84jriUPCfy+/M
+	klQrDVbIW9gtYJCVz8h9wWz0OJCk3jvTLePYOgdsYj2ZfUJ0sTCEu789myKgO5s3
+	UjIbAH17YwKlNbFjE8CNQZJFRoyMB0Wl4qFsyIzYa30Xq0AMNFjcXuSG826M6T08
+	lHS1Iw5gPABwBi4F2pbptTA+aRd/3KC1seLs84bzfjCbPFv/nh229y/XwTRd4+Kj
+	UUO1SA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ydyws28em-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 May 2024 23:45:07 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TNj6h9017030
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 May 2024 23:45:06 GMT
+Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 May
+ 2024 16:45:02 -0700
+Message-ID: <961cee30-33fa-5048-901e-b192a735b529@quicinc.com>
+Date: Wed, 29 May 2024 16:44:59 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2] Revert "drm/msm/dpu: drop
+ dpu_encoder_phys_ops.atomic_mode_set"
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240522-dpu-revert-ams-v2-1-b37825d708e1@linaro.org>
+ <d9a502a2-9ad3-3b95-670a-3a67887ef54b@quicinc.com>
+ <2qm32wkjdxynmovw5gd5xh4awy2gh4byt3ddkpvuvi4lq7f67d@y3dntcusfwxs>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <2qm32wkjdxynmovw5gd5xh4awy2gh4byt3ddkpvuvi4lq7f67d@y3dntcusfwxs>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240530-otter-bringup-v3-2-79e7a28c1b08@linaro.org>
-References: <20240530-otter-bringup-v3-0-79e7a28c1b08@linaro.org>
-In-Reply-To: <20240530-otter-bringup-v3-0-79e7a28c1b08@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Alexander Martinz <amartinz@shiftphones.com>, 
- Luca Weiss <luca.weiss@fairphone.com>, 
- ~postmarketos/upstreaming@lists.sr.ht, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Caleb Connolly <caleb@postmarketos.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=22606;
- i=caleb.connolly@linaro.org; h=from:subject:message-id;
- bh=W1+6YhnNXXrML0UJ8mYIU6Un1+QyK/RWf3Ahxh1SRrI=;
- b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBmV7yxp4T704IUiyvc/BMBgF86py2/fIywUgCDj
- f6MTmbLgZmJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZle8sQAKCRAFgzErGV9k
- tiWeD/9hoEgfwO6jr8MTO5fqtyUZmqEb4vhKrT6IlCHJ4JkGvR0NosaX0m1ymbG9F7gxU0HCY90
- r6PxWlPXf0U2Rln/LHQ+UNxLGNvi+zWF5HgeKUGeSl9qT0XSVDn+ErzGikst6cRLde3hmwsxzMQ
- xxT9HTw/sCvqsGgtVcDgbqXH3cSWV8bbnw/ge+PZ32kc8vm83usrrwhLlX3Mn2/zBvR+7e5yT29
- QA8AyzoK3cNZo+gFlXmxDVUVL5RvxG4bEf+6IAgnFbNOhd1XnNtdbSQqwBxdoyeNCJJLc9pGIm5
- PWYXj+3VswRF5uMOc4vC9ipUyHzCuvYyVXHV8bFb7ZTe9yszsP4QV0dEYtGx/lpDnKaU8yyS20C
- wqxwTZRA8CqY97T6MnVD8Y8+eL2clFLD3az4hhBL/tTyVMTv/czmS0Vyx1RrGemvAm1g5JVzGA+
- G2TfywyJ032K1AKL+K1pv3aj4pqGkhqzjsmhQZ90OwShRYZ5nLK1++2hBcnHc3zCVN+xp5T5/2N
- MBtNcXqhZTH9Dj42Vlq01GiCQz5MV6nscXIq167is88VJn3Z3gCkRUFUH+hQJlPA4TJxgwj+9wx
- HZiYPcrZ/Vz1bUVjqyLjH4Obbtm1DW0/CYHzfjuQugbM9TRnc7auhy0r4j8xSeu78Bj8Vj6RpO6
- /drLaFvzGu3y00A==
-X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
- fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 0qjVT5cKKimidTDb8js1SSqKaSK4tCPi
+X-Proofpoint-GUID: 0qjVT5cKKimidTDb8js1SSqKaSK4tCPi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-29_16,2024-05-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405290171
 
-From: Caleb Connolly <caleb@postmarketos.org>
 
-The SHIFTphone 8 is an upcoming QCM6490 smartphone, it has the following
-features:
 
-* 12GB of RAM, 512GB UFS storage
-* 1080p display.
-* Hardware kill switches for cameras and microphones
-* UART access via type-c SBU pins (enabled by an internal switch)
+On 5/24/2024 1:22 PM, Dmitry Baryshkov wrote:
+> On Fri, May 24, 2024 at 12:58:53PM -0700, Abhinav Kumar wrote:
+>>
+>>
+>> On 5/22/2024 3:24 AM, Dmitry Baryshkov wrote:
+>>> In the DPU driver blank IRQ handling is called from a vblank worker and
+>>> can happen outside of the irq_enable / irq_disable pair. Using the
+>>> worker makes that completely asynchronous with the rest of the code.
+>>> Revert commit d13f638c9b88 ("drm/msm/dpu: drop
+>>> dpu_encoder_phys_ops.atomic_mode_set") to fix vblank IRQ assignment for
+>>> CMD DSI panels.
+>>>
+>>> Call trace:
+>>>    dpu_encoder_phys_cmd_control_vblank_irq+0x218/0x294
+>>>     dpu_encoder_toggle_vblank_for_crtc+0x160/0x194
+>>>     dpu_crtc_vblank+0xbc/0x228
+>>>     dpu_kms_enable_vblank+0x18/0x24
+>>>     vblank_ctrl_worker+0x34/0x6c
+>>>     process_one_work+0x218/0x620
+>>>     worker_thread+0x1ac/0x37c
+>>>     kthread+0x114/0x118
+>>>     ret_from_fork+0x10/0x20
+>>>
+>>
+>> Thanks for the stack.
+>>
+>> Agreed that vblank can be controlled asynchronously through the worker.
+>>
+>> And I am guessing that the worker thread ran and printed this error message
+>> because phys_enc->irq[INTR_IDX_VSYNC] was not valid as modeset had not
+>> happened by then?
+> 
+> modeset happened, but the vblanks can be enabled and disabled
+> afterwards.
+> 
+>>
+>> 272 end:
+>> 273 	if (ret) {
+>> 274 		DRM_ERROR("vblank irq err id:%u pp:%d ret:%d, enable %s/%d\n",
+>> 275 			  DRMID(phys_enc->parent),
+>> 276 			  phys_enc->hw_pp->idx - PINGPONG_0, ret,
+>> 277 			  enable ? "true" : "false", refcount);
+>> 278 	}
+>>
+>> But how come this did not happen even with this revert.
+>>
+>> IOW, I am still missing how moving the irq assignment back to modeset from
+>> enable is fixing this?
+> 
+> It removes clearing of the IRQ fields in the irq_disable path, which
+> removes a requirement that vblank IRQ manipulations are called only
+> within the irq_enable/irq_disable brackets. I didn't have time to debug
+> this further on, so I think it's better to revert it now and return to
+> this cleanup later.
+> 
 
-Initial support includes:
+I see your point.
 
-* Framebuffer display
-* UFS and sdcard storage
-* Battery monitoring and USB role switching via pmic glink
-* Bluetooth
-* Thermals
-* Wifi
+So before we moved the irq assignment to enable/disable, modeset was 
+setting it up but nothing was clearing it.
 
-Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/Makefile                |   1 +
- arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts | 926 +++++++++++++++++++++++
- 2 files changed, 927 insertions(+)
+But after the change, disable was clearing it leading to the error.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f63abb43e9fe..4ee6990cee24 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -92,8 +92,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-maple.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-sony-xperia-yoshino-poplar.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8998-xiaomi-sagit.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-fairphone-fp5.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-idp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-new file mode 100644
-index 000000000000..687456f03d1a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-@@ -0,0 +1,926 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023, Luca Weiss <luca.weiss@fairphone.com>
-+ * Copyright (c) 2024, Caleb Connolly <caleb@postmarketos.org>
-+ */
-+
-+/dts-v1/;
-+
-+#define PM7250B_SID 8
-+#define PM7250B_SID1 9
-+
-+#include <dt-bindings/iio/qcom,spmi-adc7-pm7325.h>
-+#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sc7280.dtsi"
-+#include "pm7250b.dtsi"
-+#include "pm7325.dtsi"
-+#include "pm8350c.dtsi" /* PM7350C */
-+#include "pmk8350.dtsi" /* PMK7325 */
-+
-+/delete-node/ &rmtfs_mem;
-+
-+/ {
-+	model = "SHIFT SHIFTphone 8";
-+	compatible = "shift,otter", "qcom,qcm6490";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		serial0 = &uart5;
-+		serial1 = &uart7;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "serial0:115200n8";
-+
-+		framebuffer0: framebuffer@a000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x0 0xe1000000 0x0 (2400 * 1080 * 4)>;
-+			width = <1080>;
-+			height = <2400>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&volume_down_default>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume up";
-+			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	pmic-glink {
-+		compatible = "qcom,qcm6490-pmic-glink", "qcom,pmic-glink";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss_in: endpoint {
-+						remote-endpoint = <&usb_dp_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_sbu: endpoint {
-+						remote-endpoint = <&fsa4480_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	reserved-memory {
-+		cont_splash_mem: cont-splash@e1000000 {
-+			reg = <0x0 0xe1000000 0x0 0x2300000>;
-+			no-map;
-+		};
-+
-+		cdsp_mem: cdsp@88f00000 {
-+			reg = <0x0 0x88f00000 0x0 0x1e00000>;
-+			no-map;
-+		};
-+
-+		rmtfs_mem: rmtfs@f8500000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0x0 0xf8500000 0x0 0x600000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>, <QCOM_SCM_VMID_NAV>;
-+		};
-+	};
-+
-+	thermal-zones {
-+		camera-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 2>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		chg-skin-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm7250b_adc_tm 0>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		conn-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm7250b_adc_tm 1>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		quiet-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 1>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		rear-cam-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 4>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		sdm-skin-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 3>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		xo-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmk8350_adc_tm 0>;
-+
-+			trips {
-+				active-config0 {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm7325-rpmh-regulators";
-+		qcom,pmic-id = "b";
-+
-+		vreg_s1b: smps1 {
-+			regulator-min-microvolt = <1840000>;
-+			regulator-max-microvolt = <2040000>;
-+		};
-+
-+		vreg_s7b: smps7 {
-+			regulator-min-microvolt = <535000>;
-+			regulator-max-microvolt = <1120000>;
-+		};
-+
-+		vreg_s8b: smps8 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1500000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_RET>;
-+		};
-+
-+		vreg_l1b: ldo1 {
-+			regulator-min-microvolt = <825000>;
-+			regulator-max-microvolt = <925000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2b: ldo2 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3b: ldo3 {
-+			regulator-min-microvolt = <312000>;
-+			regulator-max-microvolt = <910000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6b: ldo6 {
-+			regulator-min-microvolt = <1140000>;
-+			regulator-max-microvolt = <1260000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7b: ldo7 {
-+			/* Constrained for UFS VCC, at least until UFS driver scales voltage */
-+			regulator-min-microvolt = <2952000>;
-+			regulator-max-microvolt = <2952000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8b: ldo8 {
-+			regulator-min-microvolt = <870000>;
-+			regulator-max-microvolt = <970000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9b: ldo9 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11b: ldo11 {
-+			regulator-min-microvolt = <1504000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12b: ldo12 {
-+			regulator-min-microvolt = <751000>;
-+			regulator-max-microvolt = <824000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13b: ldo13 {
-+			regulator-min-microvolt = <530000>;
-+			regulator-max-microvolt = <824000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l14b: ldo14 {
-+			regulator-min-microvolt = <1080000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15b: ldo15 {
-+			regulator-min-microvolt = <765000>;
-+			regulator-max-microvolt = <1020000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l16b: ldo16 {
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l17b: ldo17 {
-+			regulator-min-microvolt = <1700000>;
-+			regulator-max-microvolt = <1900000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l18b: ldo18 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l19b: ldo19 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm8350c-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vreg_s1c: smps1 {
-+			regulator-min-microvolt = <2190000>;
-+			regulator-max-microvolt = <2210000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s9c: smps9 {
-+			regulator-min-microvolt = <1010000>;
-+			regulator-max-microvolt = <1170000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l1c: ldo1 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1980000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2c: ldo2 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1950000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3c: ldo3 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4c: ldo4 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <3300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5c: ldo5 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <3300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6c: ldo6 {
-+			regulator-min-microvolt = <1650000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7c: ldo7 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8c: ldo8 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9c: ldo9 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10c: ldo10 {
-+			regulator-min-microvolt = <720000>;
-+			regulator-max-microvolt = <1050000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11c: ldo11 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12c: ldo12 {
-+			regulator-min-microvolt = <1650000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13c: ldo13 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+		};
-+	};
-+};
-+
-+&gcc {
-+	protected-clocks = <GCC_CFG_NOC_LPASS_CLK>,
-+			   <GCC_EDP_CLKREF_EN>,
-+			   <GCC_MSS_CFG_AHB_CLK>,
-+			   <GCC_MSS_GPLL0_MAIN_DIV_CLK_SRC>,
-+			   <GCC_MSS_OFFLINE_AXI_CLK>,
-+			   <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
-+			   <GCC_MSS_Q6_MEMNOC_AXI_CLK>,
-+			   <GCC_MSS_SNOC_AXI_CLK>,
-+			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
-+			   <GCC_QSPI_CORE_CLK>,
-+			   <GCC_QSPI_CORE_CLK_SRC>,
-+			   <GCC_SEC_CTRL_CLK_SRC>,
-+			   <GCC_WPSS_AHB_BDG_MST_CLK>,
-+			   <GCC_WPSS_AHB_CLK>,
-+			   <GCC_WPSS_RSCP_CLK>;
-+};
-+
-+&gpi_dma0 {
-+	status = "okay";
-+};
-+
-+&gpi_dma1 {
-+	status = "okay";
-+};
-+
-+&gpu {
-+	status = "okay";
-+};
-+
-+&gpu_zap_shader {
-+	firmware-name = "qcom/qcm6490/SHIFT/otter/a660_zap.mbn";
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+
-+	/* PM8008 PMIC @ 8 and 9 */
-+	/* rtc6226 FM receiver @ 64 */
-+
-+	typec-mux@42 {
-+		compatible = "fcs,fsa4480";
-+		reg = <0x42>;
-+
-+		vcc-supply = <&vreg_bob>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			fsa4480_sbu_mux: endpoint {
-+				remote-endpoint = <&pmic_glink_sbu>;
-+			};
-+		};
-+	};
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+
-+	/* tas2563 audio codec @ 4d */
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+
-+	/* TMS(?) NFC @ 28 */
-+	/* Ti drv2624 haptics @ 5a */
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+
-+	/* focaltech FT3658U @ 38 */
-+};
-+
-+&ipa {
-+	qcom,gsi-loader = "self";
-+	memory-region = <&ipa_fw_mem>;
-+	firmware-name = "qcom/qcm6490/SHIFT/otter/ipa_fws.mbn";
-+	status = "okay";
-+};
-+
-+&pm7250b_adc {
-+	channel@4d {
-+		reg = <ADC5_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "charger_skin_therm";
-+	};
-+
-+	channel@4f {
-+		reg = <ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "conn_therm";
-+	};
-+};
-+
-+&pm7250b_adc_tm {
-+	status = "okay";
-+
-+	charger-skin-therm@0 {
-+		reg = <0>;
-+		io-channels = <&pm7250b_adc ADC5_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	conn-therm@1 {
-+		reg = <1>;
-+		io-channels = <&pm7250b_adc ADC5_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+};
-+
-+&pm7325_gpios {
-+	volume_down_default: volume-down-default-state {
-+		pins = "gpio6";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		power-source = <1>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pmk8350_adc_tm {
-+	status = "okay";
-+
-+	xo-therm@0 {
-+		reg = <0>;
-+		io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	quiet-therm@1 {
-+		reg = <1>;
-+		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	cam-flash-therm@2 {
-+		reg = <2>;
-+		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	sdm-skin-therm@3 {
-+		reg = <3>;
-+		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+
-+	wide-rfc-therm@4 {
-+		reg = <4>;
-+		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM4_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time-us = <200>;
-+	};
-+};
-+
-+&pmk8350_rtc {
-+	status = "okay";
-+};
-+
-+&pmk8350_vadc {
-+	status = "okay";
-+
-+	channel@44 {
-+		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pmk8350_xo_therm";
-+	};
-+
-+	channel@144 {
-+		reg = <PM7325_ADC7_AMUX_THM1_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pm7325_quiet_therm";
-+	};
-+
-+	channel@145 {
-+		reg = <PM7325_ADC7_AMUX_THM2_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pm7325_cam_flash_therm";
-+	};
-+
-+	channel@146 {
-+		reg = <PM7325_ADC7_AMUX_THM3_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pm7325_sdm_skin_therm";
-+	};
-+
-+	channel@147 {
-+		reg = <PM7325_ADC7_AMUX_THM4_100K_PU>;
-+		qcom,ratiometric;
-+		qcom,hw-settle-time = <200>;
-+		qcom,pre-scaling = <1 1>;
-+		label = "pm7325_wide_rfc_therm";
-+	};
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&qup_spi13_cs {
-+	drive-strength = <6>;
-+	bias-disable;
-+};
-+
-+&qup_spi13_data_clk {
-+	drive-strength = <6>;
-+	bias-disable;
-+};
-+
-+&qup_uart5_rx {
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
-+&qup_uart5_tx {
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/qcm6490/SHIFT/otter/adsp.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/qcm6490/SHIFT/otter/cdsp.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_mpss {
-+	firmware-name = "qcom/qcm6490/SHIFT/otter/modem.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_wpss {
-+	firmware-name = "qcom/qcm6490/SHIFT/otter/wpss.mbn";
-+	status = "okay";
-+};
-+
-+&sdc2_clk {
-+	drive-strength = <16>;
-+	bias-disable;
-+};
-+
-+&sdc2_cmd {
-+	drive-strength = <10>;
-+	bias-pull-up;
-+};
-+
-+&sdc2_data {
-+	drive-strength = <10>;
-+	bias-pull-up;
-+};
-+
-+&sdhc_2 {
-+	vmmc-supply = <&vreg_l9c>;
-+	vqmmc-supply = <&vreg_l6c>;
-+
-+	pinctrl-0 = <&sdc2_clk>, <&sdc2_cmd>, <&sdc2_data>;
-+	pinctrl-1 = <&sdc2_clk_sleep>, <&sdc2_cmd_sleep>, <&sdc2_data_sleep>;
-+
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	/*
-+	* 48-52: protected by XPU, not sure why.
-+	*/
-+	gpio-reserved-ranges = <48 4>;
-+
-+	bluetooth_enable_default: bluetooth-enable-default-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		output-low;
-+		bias-disable;
-+	};
-+
-+	qup_uart7_sleep_cts: qup-uart7-sleep-cts-state {
-+		pins = "gpio28";
-+		function = "gpio";
-+		/*
-+		* Configure a bias-bus-hold on CTS to lower power
-+		* usage when Bluetooth is turned off. Bus hold will
-+		* maintain a low power state regardless of whether
-+		* the Bluetooth module drives the pin in either
-+		* direction or leaves the pin fully unpowered.
-+		*/
-+		bias-bus-hold;
-+	};
-+
-+	qup_uart7_sleep_rts: qup-uart7-sleep-rts-state {
-+		pins = "gpio29";
-+		function = "gpio";
-+		/*
-+		* Configure pull-down on RTS. As RTS is active low
-+		* signal, pull it low to indicate the BT SoC that it
-+		* can wakeup the system anytime from suspend state by
-+		* pulling RX low (by sending wakeup bytes).
-+		*/
-+		bias-pull-down;
-+	};
-+
-+	qup_uart7_sleep_tx: qup-uart7-sleep-tx-state {
-+		pins = "gpio30";
-+		function = "gpio";
-+		/*
-+		* Configure pull-up on TX when it isn't actively driven
-+		* to prevent BT SoC from receiving garbage during sleep.
-+		*/
-+		bias-pull-up;
-+	};
-+
-+	qup_uart7_sleep_rx: qup-uart7-sleep-rx-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		/*
-+		* Configure a pull-up on RX. This is needed to avoid
-+		* garbage data when the TX pin of the Bluetooth module
-+		* is floating which may cause spurious wakeups.
-+		*/
-+		bias-pull-up;
-+	};
-+
-+	sw_ctrl_default: sw-ctrl-default-state {
-+		pins = "gpio86";
-+		function = "gpio";
-+		bias-pull-down;
-+	};
-+};
-+
-+&uart5 {
-+	compatible = "qcom,geni-debug-uart";
-+	status = "okay";
-+};
-+
-+&uart7 {
-+	/delete-property/interrupts;
-+	interrupts-extended = <&intc GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>,
-+			<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
-+
-+	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>, <&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+
-+	bluetooth: bluetooth {
-+		compatible = "qcom,wcn6750-bt";
-+
-+		pinctrl-0 = <&bluetooth_enable_default>, <&sw_ctrl_default>;
-+		pinctrl-names = "default";
-+
-+		enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
-+
-+		vddio-supply = <&vreg_l19b>;
-+		vddaon-supply = <&vreg_s7b>;
-+		vddbtcxmx-supply = <&vreg_s7b>;
-+		vddrfacmn-supply = <&vreg_s7b>;
-+		vddrfa0p8-supply = <&vreg_s7b>;
-+		vddrfa1p7-supply = <&vreg_s1b>;
-+		vddrfa1p2-supply = <&vreg_s8b>;
-+		vddrfa2p2-supply = <&vreg_s1c>;
-+		vddasd-supply = <&vreg_l11c>;
-+
-+		max-speed = <3200000>;
-+	};
-+};
-+
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l7b>;
-+	vcc-max-microamp = <800000>;
-+	/*
-+	* Technically l9b enables an eLDO (supplied by s1b) which then powers
-+	* VCCQ2 of the UFS.
-+	*/
-+	vccq-supply = <&vreg_l9b>;
-+	vccq-max-microamp = <900000>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l10c>;
-+	vdda-pll-supply = <&vreg_l6b>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_hs_in>;
-+};
-+
-+&usb_dp_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_ss_in>;
-+};
-+
-+&usb_1_hsphy {
-+	vdda-pll-supply = <&vreg_l10c>;
-+	vdda18-supply = <&vreg_l1c>;
-+	vdda33-supply = <&vreg_l2b>;
-+
-+	qcom,hs-crossover-voltage-microvolt = <28000>;
-+	qcom,hs-output-impedance-micro-ohms = <2600000>;
-+	qcom,hs-rise-fall-time-bp = <5430>;
-+	qcom,hs-disconnect-bp = <1743>;
-+	qcom,hs-amplitude-bp = <2430>;
-+
-+	qcom,pre-emphasis-amplitude-bp = <20000>;
-+	qcom,pre-emphasis-duration-bp = <20000>;
-+
-+	qcom,squelch-detector-bp = <(-2090)>;
-+
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_qmpphy {
-+	vdda-phy-supply = <&vreg_l6b>;
-+	vdda-pll-supply = <&vreg_l1b>;
-+
-+	status = "okay";
-+};
-+
-+&wifi {
-+	qcom,ath11k-calibration-variant = "SHIFTphone_8";
-+
-+	status = "okay";
-+};
+Probably should have happened quite easily then?
 
--- 
-2.45.0
+Then if we kept only the assignment in enable and drop the parts in 
+disable it should have worked too.
 
+If you would like to post that separately after some more investigation, 
+I am fine with this for now,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+>>
+>>> Fixes: d13f638c9b88 ("drm/msm/dpu: drop dpu_encoder_phys_ops.atomic_mode_set")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>> Changes in v2:
+>>> - Expanded commit message to describe the reason for revert and added a
+>>>     call trace (Abhinav)
+>>> - Link to v1: https://lore.kernel.org/r/20240514-dpu-revert-ams-v1-1-b13623d6cd5f@linaro.org
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  2 ++
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  5 ++++
+>>>    .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   | 32 ++++++++++++----------
+>>>    .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   | 13 +++++++--
+>>>    .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    | 11 +++++++-
+>>>    5 files changed, 46 insertions(+), 17 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> index 119f3ea50a7c..a7d8ecf3f5be 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> @@ -1200,6 +1200,8 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>>>    		phys->hw_ctl = to_dpu_hw_ctl(hw_ctl[i]);
+>>>    		phys->cached_mode = crtc_state->adjusted_mode;
+>>> +		if (phys->ops.atomic_mode_set)
+>>> +			phys->ops.atomic_mode_set(phys, crtc_state, conn_state);
+>>>    	}
+>>>    }
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>>> index 002e89cc1705..30470cd15a48 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>>> @@ -69,6 +69,8 @@ struct dpu_encoder_phys;
+>>>     * @is_master:			Whether this phys_enc is the current master
+>>>     *				encoder. Can be switched at enable time. Based
+>>>     *				on split_role and current mode (CMD/VID).
+>>> + * @atomic_mode_set:		DRM Call. Set a DRM mode.
+>>> + *				This likely caches the mode, for use at enable.
+>>>     * @enable:			DRM Call. Enable a DRM mode.
+>>>     * @disable:			DRM Call. Disable mode.
+>>>     * @control_vblank_irq		Register/Deregister for VBLANK IRQ
+>>> @@ -93,6 +95,9 @@ struct dpu_encoder_phys;
+>>>    struct dpu_encoder_phys_ops {
+>>>    	void (*prepare_commit)(struct dpu_encoder_phys *encoder);
+>>>    	bool (*is_master)(struct dpu_encoder_phys *encoder);
+>>> +	void (*atomic_mode_set)(struct dpu_encoder_phys *encoder,
+>>> +			struct drm_crtc_state *crtc_state,
+>>> +			struct drm_connector_state *conn_state);
+>>>    	void (*enable)(struct dpu_encoder_phys *encoder);
+>>>    	void (*disable)(struct dpu_encoder_phys *encoder);
+>>>    	int (*control_vblank_irq)(struct dpu_encoder_phys *enc, bool enable);
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>> index 489be1c0c704..95cd39b49668 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>> @@ -142,6 +142,23 @@ static void dpu_encoder_phys_cmd_underrun_irq(void *arg)
+>>>    	dpu_encoder_underrun_callback(phys_enc->parent, phys_enc);
+>>>    }
+>>> +static void dpu_encoder_phys_cmd_atomic_mode_set(
+>>> +		struct dpu_encoder_phys *phys_enc,
+>>> +		struct drm_crtc_state *crtc_state,
+>>> +		struct drm_connector_state *conn_state)
+>>> +{
+>>> +	phys_enc->irq[INTR_IDX_CTL_START] = phys_enc->hw_ctl->caps->intr_start;
+>>> +
+>>> +	phys_enc->irq[INTR_IDX_PINGPONG] = phys_enc->hw_pp->caps->intr_done;
+>>> +
+>>> +	if (phys_enc->has_intf_te)
+>>> +		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_intf->cap->intr_tear_rd_ptr;
+>>> +	else
+>>> +		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
+>>> +
+>>> +	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
+>>> +}
+>>> +
+>>>    static int _dpu_encoder_phys_cmd_handle_ppdone_timeout(
+>>>    		struct dpu_encoder_phys *phys_enc)
+>>>    {
+>>> @@ -280,14 +297,6 @@ static void dpu_encoder_phys_cmd_irq_enable(struct dpu_encoder_phys *phys_enc)
+>>>    					  phys_enc->hw_pp->idx - PINGPONG_0,
+>>>    					  phys_enc->vblank_refcount);
+>>> -	phys_enc->irq[INTR_IDX_CTL_START] = phys_enc->hw_ctl->caps->intr_start;
+>>> -	phys_enc->irq[INTR_IDX_PINGPONG] = phys_enc->hw_pp->caps->intr_done;
+>>> -
+>>> -	if (phys_enc->has_intf_te)
+>>> -		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_intf->cap->intr_tear_rd_ptr;
+>>> -	else
+>>> -		phys_enc->irq[INTR_IDX_RDPTR] = phys_enc->hw_pp->caps->intr_rdptr;
+>>> -
+>>>    	dpu_core_irq_register_callback(phys_enc->dpu_kms,
+>>>    				       phys_enc->irq[INTR_IDX_PINGPONG],
+>>>    				       dpu_encoder_phys_cmd_pp_tx_done_irq,
+>>> @@ -318,10 +327,6 @@ static void dpu_encoder_phys_cmd_irq_disable(struct dpu_encoder_phys *phys_enc)
+>>>    	dpu_core_irq_unregister_callback(phys_enc->dpu_kms, phys_enc->irq[INTR_IDX_UNDERRUN]);
+>>>    	dpu_encoder_phys_cmd_control_vblank_irq(phys_enc, false);
+>>>    	dpu_core_irq_unregister_callback(phys_enc->dpu_kms, phys_enc->irq[INTR_IDX_PINGPONG]);
+>>> -
+>>> -	phys_enc->irq[INTR_IDX_CTL_START] = 0;
+>>> -	phys_enc->irq[INTR_IDX_PINGPONG] = 0;
+>>> -	phys_enc->irq[INTR_IDX_RDPTR] = 0;
+>>>    }
+>>>    static void dpu_encoder_phys_cmd_tearcheck_config(
+>>> @@ -698,6 +703,7 @@ static void dpu_encoder_phys_cmd_init_ops(
+>>>    		struct dpu_encoder_phys_ops *ops)
+>>>    {
+>>>    	ops->is_master = dpu_encoder_phys_cmd_is_master;
+>>> +	ops->atomic_mode_set = dpu_encoder_phys_cmd_atomic_mode_set;
+>>>    	ops->enable = dpu_encoder_phys_cmd_enable;
+>>>    	ops->disable = dpu_encoder_phys_cmd_disable;
+>>>    	ops->control_vblank_irq = dpu_encoder_phys_cmd_control_vblank_irq;
+>>> @@ -736,8 +742,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(struct drm_device *dev,
+>>>    	dpu_encoder_phys_cmd_init_ops(&phys_enc->ops);
+>>>    	phys_enc->intf_mode = INTF_MODE_CMD;
+>>> -	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
+>>> -
+>>>    	cmd_enc->stream_sel = 0;
+>>>    	if (!phys_enc->hw_intf) {
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> index ef69c2f408c3..636a97432d51 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> @@ -356,6 +356,16 @@ static bool dpu_encoder_phys_vid_needs_single_flush(
+>>>    	return phys_enc->split_role != ENC_ROLE_SOLO;
+>>>    }
+>>> +static void dpu_encoder_phys_vid_atomic_mode_set(
+>>> +		struct dpu_encoder_phys *phys_enc,
+>>> +		struct drm_crtc_state *crtc_state,
+>>> +		struct drm_connector_state *conn_state)
+>>> +{
+>>> +	phys_enc->irq[INTR_IDX_VSYNC] = phys_enc->hw_intf->cap->intr_vsync;
+>>> +
+>>> +	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
+>>> +}
+>>> +
+>>>    static int dpu_encoder_phys_vid_control_vblank_irq(
+>>>    		struct dpu_encoder_phys *phys_enc,
+>>>    		bool enable)
+>>> @@ -699,6 +709,7 @@ static int dpu_encoder_phys_vid_get_frame_count(
+>>>    static void dpu_encoder_phys_vid_init_ops(struct dpu_encoder_phys_ops *ops)
+>>>    {
+>>>    	ops->is_master = dpu_encoder_phys_vid_is_master;
+>>> +	ops->atomic_mode_set = dpu_encoder_phys_vid_atomic_mode_set;
+>>>    	ops->enable = dpu_encoder_phys_vid_enable;
+>>>    	ops->disable = dpu_encoder_phys_vid_disable;
+>>>    	ops->control_vblank_irq = dpu_encoder_phys_vid_control_vblank_irq;
+>>> @@ -737,8 +748,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(struct drm_device *dev,
+>>>    	dpu_encoder_phys_vid_init_ops(&phys_enc->ops);
+>>>    	phys_enc->intf_mode = INTF_MODE_VIDEO;
+>>> -	phys_enc->irq[INTR_IDX_VSYNC] = phys_enc->hw_intf->cap->intr_vsync;
+>>> -	phys_enc->irq[INTR_IDX_UNDERRUN] = phys_enc->hw_intf->cap->intr_underrun;
+>>>    	DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", p->hw_intf->idx);
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+>>> index d3ea91c1d7d2..356dca5e5ea9 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+>>> @@ -404,6 +404,15 @@ static void dpu_encoder_phys_wb_irq_disable(struct dpu_encoder_phys *phys)
+>>>    		dpu_core_irq_unregister_callback(phys->dpu_kms, phys->irq[INTR_IDX_WB_DONE]);
+>>>    }
+>>> +static void dpu_encoder_phys_wb_atomic_mode_set(
+>>> +		struct dpu_encoder_phys *phys_enc,
+>>> +		struct drm_crtc_state *crtc_state,
+>>> +		struct drm_connector_state *conn_state)
+>>> +{
+>>> +
+>>> +	phys_enc->irq[INTR_IDX_WB_DONE] = phys_enc->hw_wb->caps->intr_wb_done;
+>>> +}
+>>> +
+>>>    static void _dpu_encoder_phys_wb_handle_wbdone_timeout(
+>>>    		struct dpu_encoder_phys *phys_enc)
+>>>    {
+>>> @@ -640,6 +649,7 @@ static bool dpu_encoder_phys_wb_is_valid_for_commit(struct dpu_encoder_phys *phy
+>>>    static void dpu_encoder_phys_wb_init_ops(struct dpu_encoder_phys_ops *ops)
+>>>    {
+>>>    	ops->is_master = dpu_encoder_phys_wb_is_master;
+>>> +	ops->atomic_mode_set = dpu_encoder_phys_wb_atomic_mode_set;
+>>>    	ops->enable = dpu_encoder_phys_wb_enable;
+>>>    	ops->disable = dpu_encoder_phys_wb_disable;
+>>>    	ops->wait_for_commit_done = dpu_encoder_phys_wb_wait_for_commit_done;
+>>> @@ -685,7 +695,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(struct drm_device *dev,
+>>>    	dpu_encoder_phys_wb_init_ops(&phys_enc->ops);
+>>>    	phys_enc->intf_mode = INTF_MODE_WB_LINE;
+>>> -	phys_enc->irq[INTR_IDX_WB_DONE] = phys_enc->hw_wb->caps->intr_wb_done;
+>>>    	atomic_set(&wb_enc->wbirq_refcount, 0);
+>>>
+>>> ---
+>>> base-commit: 75fa778d74b786a1608d55d655d42b480a6fa8bd
+>>> change-id: 20240514-dpu-revert-ams-9410abc1ee48
+>>>
+>>> Best regards,
+> 
 
