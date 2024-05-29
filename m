@@ -1,64 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-20864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 664718D2A57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 04:03:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99D308D2A5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 04:03:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 976091C248B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 02:03:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C1CA1F2B6A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 02:03:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 561AC15B542;
-	Wed, 29 May 2024 02:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 135AE15B57F;
+	Wed, 29 May 2024 02:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dulBZi9y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FHKYa9xW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FCD15B0E5;
-	Wed, 29 May 2024 02:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D501A15B0EE;
+	Wed, 29 May 2024 02:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716948132; cv=none; b=ep/Dp+uYoWsr7E8N0IjrCg0hKhTL5rN4tGgxLC5rlni2zE9NfaKmr1DCZEqf2cHLMlitizpyfk1hH9EeXVSonz9P5DamDnrE/5Oe5x6UrWlnT46QfVM0Bn8A9jcAWRboNDGhmjFWFapTKGY3WAuoyKYDcjNiVQE56izsqYmzrOE=
+	t=1716948134; cv=none; b=LTpd07NaK+C53qkG/2zlql6tvGB7CnzE0BPJ7eAsmfhEAgrfQ7iHHXR9XqhIE6ukuH0NU5cucrP8wSNYiPfO2PFQ/57wCItZWzj+AbGlP3dPOH/77rYUZTKo08hLBCPSnPw8sSCSFm3Gy4YH69KnZRYs4sml7OOK/alDAcK787k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716948132; c=relaxed/simple;
-	bh=TmRu5x9pN5U3/yknFxdQqIi0uFTPU6OGHMDNrBQ9eYk=;
+	s=arc-20240116; t=1716948134; c=relaxed/simple;
+	bh=6wEr4j3nqrV3Xer+zYHvj/gdXXgSgZ5QOcoBvjj+iDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MAy9K8wSo1MrJbAcuWkdY9BrjlIWC4XZasMYT0i7Xby2204szf6ovjy2aoLRSGYPfXEJ6CKLi4lsXUBXtMOvJfyvRmGMmqCWaDkDxY6Z8DeSgpJOl88w4ovv7Gc1JGPOg++KfZue200hiz4WhKRm1jVqrL39CLLlTkH0p7US+CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dulBZi9y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A6BC3277B;
-	Wed, 29 May 2024 02:02:10 +0000 (UTC)
+	 MIME-Version:Content-Type; b=YscX9iVRFGwpro/JK0qM/vif1ucQ75JWllWvW5scFVQge7UROFmpXC6/lC3fM4dSd8i/9Tts7y0U0sXXbZULhHUxl8Yh16N4cT9vjKewQccT76YhHTKuaQ+uqjmvHsiinDB2UrEmmQNRVDr5KKJOGUQ9uh/V0ENLS9uUDH9oNMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FHKYa9xW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E97C4AF08;
+	Wed, 29 May 2024 02:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716948132;
-	bh=TmRu5x9pN5U3/yknFxdQqIi0uFTPU6OGHMDNrBQ9eYk=;
+	s=k20201202; t=1716948133;
+	bh=6wEr4j3nqrV3Xer+zYHvj/gdXXgSgZ5QOcoBvjj+iDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dulBZi9y0XtYq+DOvL3+gzB/3s8a0/HGFJkCkw4qpqpWQKHDcRo0Ru9a0O201ModW
-	 1fCpm/C+gW365hEI7xsycH8+bI9o4FQR8UHTfHHmzXT6aoQmuNwQLShohHTxx3++am
-	 pKj5E9mImHl902klIO2V9yi+TxMcfOJ699uuuIQrWf0JC3k/LxwqfC8AjEnD2Avi+I
-	 EwdqxuKtP0y5XDLIASHPsoFP+/K6KbUHv/s0U3J4CpcCxqwLct3zAGUceQTGF/Vprv
-	 Gr1E+boZAOxX0I93Zd/Ic4WO288nOyMIX8NXsrClnuiaDeSl5CGMnPTsLRCZLSldpu
-	 5leXlsHpPMg1A==
+	b=FHKYa9xW9fJs5D8XSB6pFDfJBcokOLNWhgM5hyb2xd03pAnHH3XVcNe1rT2+2o/AL
+	 uafM9N1A5gSsUfF/oSVuh5gqnS3v8ZlcBUjKSBB8CMSGzDMtp14E1EfwV/ioBXbZ5P
+	 3pCdwbQXeyrcCMn2G61Xz06ThlQV7ZrEwlO/QIzNt/lVaQvzE1OXmSEvewbQI8S1j2
+	 L514I8rkl9i9WrWlMNynpcm5a51gTQp+rm8P3cDOv3BWJtUkQ/0W+slY7JZeHhD8Kf
+	 /ICdyDCoMYw6Y7QtvQAViLWHpvzgboM4FMR3CCWlnfTVkkKfFXVRjRtI205h2mPEZG
+	 7s6RbLbLFxilw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
+To: ~postmarketos/upstreaming@lists.sr.ht,
 	phone-devel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gcc-sm6350: Fix gpll6* & gpll7 parents
-Date: Tue, 28 May 2024 21:01:51 -0500
-Message-ID: <171694812079.574781.7010704103668864122.b4-ty@kernel.org>
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	Luca Weiss <luca@z3ntu.xyz>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [PATCH 0/2] Mark qcom,ipc as deprecated in two schemas
+Date: Tue, 28 May 2024 21:01:52 -0500
+Message-ID: <171694812075.574781.12396513809519748834.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240508-sm6350-gpll-fix-v1-1-e4ea34284a6d@fairphone.com>
-References: <20240508-sm6350-gpll-fix-v1-1-e4ea34284a6d@fairphone.com>
+In-Reply-To: <20240425-qcom-ipc-deprecate-v1-0-a8d8034253ea@z3ntu.xyz>
+References: <20240425-qcom-ipc-deprecate-v1-0-a8d8034253ea@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,20 +72,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 08 May 2024 10:12:53 +0200, Luca Weiss wrote:
-> Both gpll6 and gpll7 are parented to CXO at 19.2 MHz and not to GPLL0
-> which runs at 600 MHz. Also gpll6_out_even should have the parent gpll6
-> and not gpll0.
+On Thu, 25 Apr 2024 21:14:29 +0200, Luca Weiss wrote:
+> The mboxes property has been supported in those bindings since a while
+> and was always meant to the replace qcom,ipc properties, so let's mark
+> qcom,ipc as deprecated - and update the examples to use mboxes.
 > 
-> Adjust the parents of these clocks to make Linux report the correct rate
-> and not absurd numbers like gpll7 at ~25 GHz or gpll6 at 24 GHz.
+> Related:
+> https://lore.kernel.org/linux-arm-msm/20240424-apcs-mboxes-v1-0-6556c47cb501@z3ntu.xyz/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: gcc-sm6350: Fix gpll6* & gpll7 parents
-      commit: 3414f41a13eb41db15c558fbc695466203dca4fa
+[2/2] dt-bindings: soc: qcom,smp2p: Mark qcom,ipc as deprecated
+      commit: 7ce966eb6f1288eb92bc2eb5df8933acee1ae6ed
 
 Best regards,
 -- 
