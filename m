@@ -1,142 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-20931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 861348D366F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:30:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C841E8D3688
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:37:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 38684285566
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 12:30:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 321AFB22452
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 12:37:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F2C6143864;
-	Wed, 29 May 2024 12:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3182B181B94;
+	Wed, 29 May 2024 12:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rqOHqJG6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bkhT7CTg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA36363;
-	Wed, 29 May 2024 12:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C2A181335;
+	Wed, 29 May 2024 12:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716985844; cv=none; b=gDQ5dg2rWsMkn4rEsXTV60E9wacVUOU0jdglnpQdX6pYV8PxfcX9jkleZXrPO6voyK4YPn/pZrwkszitWn2+6aDT5WH00oINBDTEB9CxoKHpf+zLuMVKYXcDP8T7gMxkr97G8IR8B13tolKId03YEJ5b7bJnyH43puD6O69Druw=
+	t=1716986237; cv=none; b=jTPEZf7tvLzdUbyYwl9831A0IuQZ8rop4kjdvPFpxKr4yhq8WzWrtEei0WpjPxOROTIPpf/eZ7n7B5kQmjtKZKhuz2sFI06UvpizliUDxw96FHx/+naj7Q4dLgvF70+WQfSPCVkvXosr6z3x+oq7iLxB/cHmuKLgTfE9pQi5KA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716985844; c=relaxed/simple;
-	bh=qysojHCt34lVFTw5o2Qb7u5ZiOetrK6Y8yCv6llDkDk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=POtsATQp7g8ClZd6wHQ8716Jrca9s1TCmDpoWxXM/7SDRalJhQVcZ8L7uKt3psV7xZhG60jDTNEMHlqyoU5VeOV2BPR+FPj9OVygt8WTBkT1ShSqMCmovX5tJHsQSxid3uX3f7nbxn5Ixn1h8K/OGfDyTBKRvCY3ZJOlkPv6jVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rqOHqJG6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28720C2BD10;
-	Wed, 29 May 2024 12:30:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716985843;
-	bh=qysojHCt34lVFTw5o2Qb7u5ZiOetrK6Y8yCv6llDkDk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rqOHqJG6pDRXPs0fuBXdRkc3NnC+xVkBeSDqxkWl3KxABGtlBElwcfkQW85zquJ7G
-	 jTvcRI+M+3cR3tZHyuhtl6cBwc2rl2NMc1O2bTYQizleqFkbVGkGqI0lZ+vP7iuc06
-	 d5gP5u7BBYEVDFuMjwP/ieHfNp634csCdEoBIxl/hQXok0Me8lFYnn9esa2UTwMYm4
-	 M2xejWyhHH5jJuTXKHFmvu+pi9B7onfIzIhDZSuRdErqLaTOJMH1z8M/72Hi3Oneuj
-	 zIf/1Lz1fspjD8A2vPqvjlCKiCVk1ijHbhgsDVweRU1KCVeAABl1eYRdFH3zE2Sgvp
-	 kUKHOc7ui6X9w==
-Message-ID: <e32117a4-9616-401f-bf50-23312ce15199@kernel.org>
-Date: Wed, 29 May 2024 14:30:36 +0200
+	s=arc-20240116; t=1716986237; c=relaxed/simple;
+	bh=rlMTMekw3Ehq4273XEVr2djMOG2nxUGrOGMCVlLYDvQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hXtnNlNPDY4e5QsR5n+cvfp2Sp44knH8g8CO4FjJvBcfoGcgDyNAOGhTXQFs34uijNxyTHmWpGVHT/iTX5VPSMVDO9fT8yWaBzSEg+r2be+s7VyxhJNrjgkQMjRcuyAlzKLAn7K+EIqNzkRFxRhnyJpHocZNhikUKCNNQPhRLwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bkhT7CTg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44T9xgF5013484;
+	Wed, 29 May 2024 12:37:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SVcFj1tIJtvIRvjJ2upGm8GFXRpx09i0de9qvDHr50A=; b=bkhT7CTgVXiFZnIx
+	vZXjqJ2jcVh0K8dDs1XZu8bqOqxNMQUzxVoggh0EdNb0gevPxpy18WpeYJomP5yp
+	BRHZ/Cv3VlrhQ6fMxItujIMumDCqfiW8LMkH3W5ObiLQdqhmCEFD1SpjDbUenkC7
+	sZlqE1RGPdZtqQo0dDBOVI3UcPDL0UVz+z3bcOApQgLJWDG1xcLIxzn2gQbQz8+5
+	uEThaVVD25mn4yB53hTbFVrT6fP9Qi4WEmMFqdlh9odTQsZhiGHphfPQPOmHh25H
+	atu2fU2dQa6yBzin4dYBpgBB5L0Ixn4WgxYxk769xHM6b9k8pZpodUON/Q4Gbbdc
+	cXw/mA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba2n0vn7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 May 2024 12:37:11 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TCbAuD002717
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 May 2024 12:37:10 GMT
+Received: from [10.216.41.231] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 May
+ 2024 05:37:00 -0700
+Message-ID: <8c317b50-c6c0-95e4-7d85-76516a387f85@quicinc.com>
+Date: Wed, 29 May 2024 18:06:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] dt-bindings: clock: qcom: split the non-PD schema
- for GCC
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
- Robert Marko <robimarko@gmail.com>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240528-qcom-gdscs-v1-0-03cf1b102a4f@linaro.org>
- <20240528-qcom-gdscs-v1-1-03cf1b102a4f@linaro.org>
- <9a1bbcbd-7f46-4266-8f08-5650a42234d4@kernel.org>
- <CAA8EJppu8kKC_zXRBAK9XAaPZ7SYShiZwpfQGYpC10Aj28Lxjw@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p: Add IMEM and PIL info
+ region
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <CAA8EJppu8kKC_zXRBAK9XAaPZ7SYShiZwpfQGYpC10Aj28Lxjw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+To: Tengfei Fan <quic_tengfan@quicinc.com>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20240529101929.3167610-1-quic_tengfan@quicinc.com>
+ <20240529101929.3167610-3-quic_tengfan@quicinc.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20240529101929.3167610-3-quic_tengfan@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qdxEmPyiVl7TKmt8PqEm8Hv-nVpxD7hE
+X-Proofpoint-ORIG-GUID: qdxEmPyiVl7TKmt8PqEm8Hv-nVpxD7hE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-29_07,2024-05-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
+ malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=633 suspectscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405290086
 
-On 29/05/2024 09:58, Dmitry Baryshkov wrote:
->>> -    const: 1
->>> -
->>> -  '#reset-cells':
->>> -    const: 1
->>> +allOf:
->>> +  - $ref: qcom,gcc-nopd.yaml
->>>
->>> +properties:
->>>    '#power-domain-cells':
->>>      const: 1
->>
->> So what's left here? One property? Not much benefit. Triple-schema
->> (include something to include something) does not make it readable. Just
->> do not require power-domain-cells in qcom,gcc.yaml.
+
+
+On 5/29/2024 3:49 PM, Tengfei Fan wrote:
+> Add a simple-mfd representing IMEM on SA8775p and define the PIL
+> relocation info region, so that post mortem tools will be able
+> to locate the loaded remoteprocs.
 > 
-> And add it to the required list on all relevant platforms? Ack, sounds
-> fine to me.
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/sa8775p.dtsi | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 5632fa896b93..eb33b1587802 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -3025,6 +3025,21 @@ tlmm: pinctrl@f000000 {
+>   			wakeup-parent = <&pdc>;
+>   		};
+>   
+> +		sram: sram@146d8000 {
+> +			compatible = "qcom,sa8775p-imem", "syscon", "simple-mfd";
+> +			reg = <0x0 0x146d8000 0x0 0x1000>;
+> +
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +
+> +			ranges = <0x0 0x0 0x146d8000 0x1000>;
 
-Yes.
+This could be moved up along with reg region.
 
-Best regards,
-Krzysztof
+-Mukesh
 
+> +
+> +			pil-reloc@94c {
+> +				compatible = "qcom,pil-reloc-info";
+> +				reg = <0x94c 0xc8>;
+> +			};
+> +		};
+> +
+>   		apps_smmu: iommu@15000000 {
+>   			compatible = "qcom,sa8775p-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+>   			reg = <0x0 0x15000000 0x0 0x100000>;
 
