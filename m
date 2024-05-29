@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64FD38D36C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:52:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3A688D36E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:57:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17B481F28F3A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 12:52:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A768D1C224DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 12:57:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BBE64C70;
-	Wed, 29 May 2024 12:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 689474C83;
+	Wed, 29 May 2024 12:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JthuC61T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qNZ87PUJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503A6E542;
-	Wed, 29 May 2024 12:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E9779D3;
+	Wed, 29 May 2024 12:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716987122; cv=none; b=T/ACaFutilRVbWDwYFXnjOT3WoH9uBwgZ1MyZgzw79G2t308uSYwGFKejEw1gVsVBHFYqJ8J/X2OYC2QAcq4bF80yGiInwOJH8BKoaleRNXLGD668FQpgOxXyEkprgx3soBMHbXeUCqpVx2m2O8t17/ydNVYJe1s55g3cTFo5fo=
+	t=1716987470; cv=none; b=IROBqZBmDWa+mvx+zAdmdtDTWIW48F08t5WJHCQkXUUDeGcKEg3MOPrxrFnObzC8VeGn1Ti/pJgPlJbnEzS+b0TUiKaW7Mkh+39WWA44uhHtpBLHL7nU0C518HLmuttK9iHMB68wtyqQJf5jdsn0hCs0JpRhG4oZzIbMzFjJtsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716987122; c=relaxed/simple;
-	bh=2xN2nhjcoBqArfdjwGUrZhd/afLWNNDtQEwRRsZVQfk=;
+	s=arc-20240116; t=1716987470; c=relaxed/simple;
+	bh=Kf2XD0U6dqkRaiIXSiX5t61ZvzMR1rEAHQmrTquShYc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V0BJmSashqyxvHhY5D1GUFrdu1eYxZtf3E+lIzAL9wOZF5YuDDLGojKMzYTPz64fnS42EpcIBZHbVlGSJo8tYW/ZxuixDrIwKf+qpRLThvb89aARgyZtzmxn9J0HrOzswaHmbEkVQZ/vEfGkW6ErtHwTbEcFXJu8kv+CWORB8x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JthuC61T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAF0C2BD10;
-	Wed, 29 May 2024 12:51:58 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=uG/J2/gE1BKSUuD/6KkPj21dxOcqJI7goc0YRuUC2hI+n0s8e6nJKH7HGfS+ChLnJHPLvUU/JD0SmpK8kPqYjWia63VsOgb0aOA+KFGnXE6sZwGXfivcA0UMGpS/fLJu4B25TFQB825nlJRABmx9PZh86knWKbjBZBJTaJKtrHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qNZ87PUJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50DAC2BD10;
+	Wed, 29 May 2024 12:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716987122;
-	bh=2xN2nhjcoBqArfdjwGUrZhd/afLWNNDtQEwRRsZVQfk=;
+	s=k20201202; t=1716987469;
+	bh=Kf2XD0U6dqkRaiIXSiX5t61ZvzMR1rEAHQmrTquShYc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JthuC61TEUUWj63P6Mpt3U/0rrHciiYlix/Cbvv3zyTVEsFRs8MXgzuEF5TfR958S
-	 egeOSX7+Vs3bem9LUuiUPlwWEy1AQ3sZ4iFJVzIWVJPmwXBv3kM+MvkemfWnFzkbT8
-	 uSxOK1UspVSN3Y9TIi/+eQFR2R/Isttj5rFedtPUaYkBBLe+XVEQv9VUOJf63IT5So
-	 FSIl2H+vJxPn/iqljiZrppvRz3YKJz7iAoAt4b0LHILllZ33P1LlKX70SILzhi2KJI
-	 hmwN8El4pXPIuxTPXo5f7gz0TQCs3YKYlV6WXpNLiEPVwwRmT59PivBCgXx0tkThyL
-	 ekH/dIHCizpHw==
-Message-ID: <5eea73ae-9bb4-4fd2-ac22-eb8c39a2aab7@kernel.org>
-Date: Wed, 29 May 2024 14:51:56 +0200
+	b=qNZ87PUJnddl+YKpyYkoqkIOY7lxogibjj0LcSsel5rTqUAJHzV9cS0cXF6UA9i6W
+	 n8YKQVHmqxrzAuin6o/k3NANI7Vb5tJu8EYnkGHzvVH4jku1PdLqZRi9BrLCb7pJgG
+	 ionX4DNbdk+zSyIO0SV1Un0NBoUL6CKhSFrsKOnAk1SPeJhuVY+tP56SvC38dR+u3Q
+	 wrlh9v056yQf6UUoJK0MJiU75I46ZFXw4rYpVGDEfw21TfVuAxtfu36D27WXAX6yml
+	 gAWiwoUYRfwi3vMagQywszbDODHLln3y45LaTBg76RKxyhB58un7qoiHRf60yjXTPS
+	 PmyDiJ3bLvCaQ==
+Message-ID: <c8e2d859-ff7c-4ea1-a731-b0f0500ba8c6@kernel.org>
+Date: Wed, 29 May 2024 14:57:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,spmi-pmic: Document PMC8380
- and SMB2360
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones <lee@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240529-topic-x1e_pmic-v1-0-9de0506179eb@linaro.org>
- <20240529-topic-x1e_pmic-v1-1-9de0506179eb@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: cache: qcom,llcc: Add SA8775p
+ description
+To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240529101534.3166507-1-quic_tengfan@quicinc.com>
+ <20240529101534.3166507-2-quic_tengfan@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,17 +104,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240529-topic-x1e_pmic-v1-1-9de0506179eb@linaro.org>
+In-Reply-To: <20240529101534.3166507-2-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/05/2024 13:17, Konrad Dybcio wrote:
-> These are just some more PMICs adjacent to X1 SoCs. Document them.
+On 29/05/2024 12:15, Tengfei Fan wrote:
+> Add the cache controller compatible and register region descriptions for
+> SA8775p platform.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
