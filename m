@@ -1,155 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-20905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A2FF8D30D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 10:18:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D70C68D31A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 10:38:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D97AF28A5FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 08:18:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 92398283F6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 08:38:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46125181CF7;
-	Wed, 29 May 2024 08:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F4773463;
+	Wed, 29 May 2024 08:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iv3lSvSC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xQgiv7fc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759E3169360
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 08:09:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B856044C7B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 08:38:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716970199; cv=none; b=HSJBu0BNVrEWA7Qm+grasA9dflGE7BWfTJDo+6JnBhEy81qTx9l6SlrAeNCgpjjhLaXImTnaX1PgSbfOwMLW2FOSJoqi3MZ2FiDX+Fw4vsTtbwM120bihpMsHnKwRChrBiSm/Fsu90VIQOAWOXUJNzwyEiFkCVxYT6Tbv6gtKsQ=
+	t=1716971908; cv=none; b=BcGXf99OzbVOYSvFbsXmCN9dKYlIRbYfMHECjTC6HHQ/orggLKWQXxQ3slV1lajaywB4qswLCYNDEEL5Dg6M7TDYWRgoq1x6ty0jIwR2N8y5yyRTqJrT2wCWxA0IssUcg27mjOKrLimd2KFfSma0fnC6D0CnQ11sr0aDERtELto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716970199; c=relaxed/simple;
-	bh=WgixO3taSRbE0QziVmAcwTsoz8TFfpyR0rpCo3iNMFE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cQO76pn4P6Goe7BWRtdz54VX0awYoC0t1TEI+z8Ge4CRhDzB90AEV/jg7fBS/5StGcX+lxP67RVwZ3+U/3NfYBVJw0wZdrqIvdReKQAASpftycF++RKJh0xy8R7UZVubDybdKm3NB+L8N43Xe4F2d4YKFsr9q7p3cWjdObthHYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iv3lSvSC; arc=none smtp.client-ip=209.85.167.46
+	s=arc-20240116; t=1716971908; c=relaxed/simple;
+	bh=FIHHFu50zC0KtqEF0nrsHQUV5eFyTtfNlZFvDFH8gqo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sK31feCQX1ct/rOzSGVwBoPEmpGKECDLRGYCI+5IXu5uotatcLf61bEeyO8mgIAm2JS1fTduIUMQRoKLdL+tPBezLqdPS19IHzhHm9uNzwJQqtnDLYrkxSzCF+Pt87W6W8BEKKlXOCLzuhUNUG0tUWfGK+8Q6PZmtpQoOL5nYkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xQgiv7fc; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52ac99930c6so611595e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 01:09:57 -0700 (PDT)
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52b03d66861so391332e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 01:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1716970195; x=1717574995; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=enlxS5GkWub7qfeq6FBQU5uJl3JqVotYfwFdD9Rt9Ng=;
-        b=iv3lSvSC/z0PFnpTx+FY84lC5mmepLlw6H3HBuPcbKK930vVA/rqavJdWTabZGWQar
-         IHk5doCbVcTe0ptr6zcfrXgn6jJxgBu9Fjf54q2QwAftBM9f4orRnObqO092JvqzOeBh
-         Ae6cgYHfSkydMYo0uM+fMXIROAOI1En1hhYC0noPG9JL8pCQkencdfbZ5rVQcQZjkBWg
-         /yJhpgsul0atSYcirNwVqYsftr5afBhO/E8nu48+JS7OfW8dMnqBFJ0CPdqAvFewlnOE
-         kjlDXluHm/Y4zIA/VkyWtHvSrsTMmbb5RScCFGutCQVOMS0+9Vhy7WRBVCRoX2BdBJM2
-         5p2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716970195; x=1717574995;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1716971905; x=1717576705; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=enlxS5GkWub7qfeq6FBQU5uJl3JqVotYfwFdD9Rt9Ng=;
-        b=mm8DHYk+M0jTceCTMOQ5wcREFns2YtEJgByE7as4RwI+gEEEjb6aqFbGhyQ3kgTxTY
-         eaE5JYmU7CfV/d1P07eiBjH5RswqrEEyAjVbgFaHsz2jt52STAVAGZWfwIpYHmoIRrY6
-         uwVAR29USBY6v7c1LQYdfKm+I0Ra/mQrbOuUnaVr6XWbcoOEIUWDE9tzcd3s70RwhAKo
-         psswhVbGg9Bt3HhpXw9CEzOfPs/U7rZ3yFpuH60rj66ApG4096kd2WycUNT4jUKAli0k
-         k5UO91qQ3ncC74HKL4HKU0dF7NCxkM/S4NerdxeBVQNSfYv5/n5buGhiv4rOMiDireYX
-         H9ow==
-X-Forwarded-Encrypted: i=1; AJvYcCXshqHrF5trmuxqgmUeqZuYK5qIyNpDtLASlmCQPFA7OvLO7HZPx2pGDZ7XJA6eSm6hfnvlvvQkR6eD1lU+BZUpqRQtWKyDt0GXT4t/sg==
-X-Gm-Message-State: AOJu0YyCcyW7yUrT0gyoAb2L3XV+4AhmSYk3FPbnhGc7WxLeW1+CIhSX
-	n2Guzh5BW6Nsgq/sY1DwC2Z9eYeVolacihW+FynD5AhnxZZutoAt1RREQvlTzQc=
-X-Google-Smtp-Source: AGHT+IHAAOSe1YF9ohma3qLilcNBhTgUrp5XW+R17Dfxhf/XQBKuTb9CXtbrrq9LBMBwT336LwrXXQ==
-X-Received: by 2002:a05:6512:3128:b0:522:33cd:64bd with SMTP id 2adb3069b0e04-52964aba466mr8988769e87.27.1716970195416;
-        Wed, 29 May 2024 01:09:55 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-529aa049e3csm859093e87.167.2024.05.29.01.09.54
+        bh=IqrQnHagTsqc8XSpxu+I+AI5vFFrCWmKxdpq/9RvgHQ=;
+        b=xQgiv7fcJUpWYxi1KqJwC0ESX4QUdVnhIAAO0cJ7J30olrqJaj7v17Kd8lFnZCMILG
+         DpUID0392TCnEFKd+f7h7HHqJyNqXjIEfvdCbEhXyPcDpSLO8ZpZz4OHRzvD8hTOtNcW
+         SYGw9TAklX1Jg+hfhvkEa/ib4PFHec/O9F/Gq8rClXmxlC4A6olFvXKAb9urS4fhZzEt
+         tGigLUK4v7JvivQHzrZxVkIpsMd7rCLfaVQhMciLQS6TAI+5cUVl7hButS8q1AxHRJOG
+         eyBcnk39iH73YVk0OTHDIJTj6zWlLjVTqalusphb0aoXLJ4HeBlI4/kuR0o06W/qZOAu
+         +y4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716971905; x=1717576705;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IqrQnHagTsqc8XSpxu+I+AI5vFFrCWmKxdpq/9RvgHQ=;
+        b=IiKP+L73Tz/YqthxBIWDrgZ4eBLABH2TaCUF3++7evkgmTp9/Uf1tDmTCyf/uOjJmp
+         mxIMTjDh8+cMuAdME22YKSaGImsonRmeyjmG4Hw+w3G/gpzDrr7pn5Ky6+778g+r2PW/
+         1ygogKNo33gSW7d/l4IdJR4u5zbDi4WXLOM76Ks+Ekfu4Pvb8P9cpUgBzufdprKwx+ab
+         IHD4+twD+w5DsyYCaJQqL/Bu0Bls18L8WWsFH2Bh5mtPb8mLAkLLHLF+t8sI8CBNVACw
+         gQ/DinL2vax3wCFN0Eeq6DBl+FuuztR7OoyPwlF19lWPWpBCJ6Mr2UAOh5eNz4mOE151
+         h3iQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVXeRMrVTTAuWK0UD819XyUQ1tTLCKtlTn0TmqyLRxMjgnXZm4fiMDSFNyUsIn+jiFOebdCD5QjEDiutOecXOJVoz8ttrbk95DSWSpm/Q==
+X-Gm-Message-State: AOJu0YxUaphYlKdlDJAeieXdL+Zm5R47cQPkV6CpSlfXshE4ACxnBJRc
+	V7ecZSFZrj7YBXAnggbvOYF5RNAhJSgCI/4lXjJskvicXsu6EuzbwTGL33EP0Oc=
+X-Google-Smtp-Source: AGHT+IFxNS9ivx6ftoot6k7b4A5XcOe5Biw65h+SXYi89WIc3qRRrD3Vy3EqpcmprR3+hTvfeKjCOg==
+X-Received: by 2002:a19:f613:0:b0:523:ef21:8e2c with SMTP id 2adb3069b0e04-529664dac67mr7731487e87.51.1716971904911;
+        Wed, 29 May 2024 01:38:24 -0700 (PDT)
+Received: from eriador.lan (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b3d918a5csm59684e87.257.2024.05.29.01.38.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 May 2024 01:09:55 -0700 (PDT)
-Date: Wed, 29 May 2024 11:09:53 +0300
+        Wed, 29 May 2024 01:38:24 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vignesh Raman <vignesh.raman@collabora.com>
-Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com, 
-	helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch, robdclark@gmail.com, 
-	david.heidelberg@collabora.com, guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com, 
-	mcanal@igalia.com, linux-mediatek@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org, 
-	virtualization@lists.linux-foundation.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 4/6] drm/ci: uprev IGT
-Message-ID: <bj6mpegmxo6i5o34xyxwiytdaokv2u6p5iu4eoek3ctqimwviy@jbo5aw7gy4ue>
-References: <20240529024049.356327-1-vignesh.raman@collabora.com>
- <20240529024049.356327-5-vignesh.raman@collabora.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Caleb Connolly <caleb@connolly.tech>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	kernel test robot <lkp@intel.com>
+Subject: Re: (subset) [PATCH v4 0/3] drm/panel: two fixes for lg-sw43408
+Date: Wed, 29 May 2024 11:38:22 +0300
+Message-ID: <171697189027.975427.12036219693814257280.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240528-panel-sw43408-fix-v4-0-330b42445bcc@linaro.org>
+References: <20240528-panel-sw43408-fix-v4-0-330b42445bcc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240529024049.356327-5-vignesh.raman@collabora.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 29, 2024 at 08:10:47AM +0530, Vignesh Raman wrote:
-> test-list.txt and test-list-full.txt are not generated for
-> cross-builds and they are required by drm-ci for testing
-> arm32 targets. This is fixed in igt-gpu-tools. So uprev
-> IGT to include the commit which fixes this issue. Also
-> disable building xe driver tests for non-intel platforms.
+On Tue, 28 May 2024 22:39:17 +0300, Dmitry Baryshkov wrote:
+> Fix two issues with the panel-lg-sw43408 driver reported by the kernel
+> test robot.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
-> ---
-> 
-> v2:
->   - Split IGT uprev to seperate patch.
-> 
-> v3:
->   - No changes.
-> 
-> ---
->  drivers/gpu/drm/ci/build-igt.sh  | 4 ++++
->  drivers/gpu/drm/ci/gitlab-ci.yml | 2 +-
->  2 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/ci/build-igt.sh b/drivers/gpu/drm/ci/build-igt.sh
-> index b7d2a49a6db3..eddb5f782a5e 100644
-> --- a/drivers/gpu/drm/ci/build-igt.sh
-> +++ b/drivers/gpu/drm/ci/build-igt.sh
-> @@ -45,6 +45,10 @@ MESON_OPTIONS="-Doverlay=disabled                    \
->                 -Dlibunwind=enabled                   \
->                 -Dprefix=/igt"
->  
-> +if [[ "$KERNEL_ARCH" = "arm64" ]] || [[ "$KERNEL_ARCH" = "arm" ]]; then
-> +    MESON_OPTIONS="$MESON_OPTIONS -Dxe_driver=disabled"
-> +fi
-> +
->  mkdir -p /igt
->  meson build $MESON_OPTIONS $EXTRA_MESON_ARGS
->  ninja -C build -j${FDO_CI_CONCURRENT:-4} || ninja -C build -j 1
-> diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
-> index 8f32de63d92e..1b29c3b6406b 100644
-> --- a/drivers/gpu/drm/ci/gitlab-ci.yml
-> +++ b/drivers/gpu/drm/ci/gitlab-ci.yml
-> @@ -5,7 +5,7 @@ variables:
->    UPSTREAM_REPO: git://anongit.freedesktop.org/drm/drm
->    TARGET_BRANCH: drm-next
->  
-> -  IGT_VERSION: d2af13d9f5be5ce23d996e4afd3e45990f5ab977
-> +  IGT_VERSION: 0df7b9b97f9da0e364f5ee30fe331004b8c86b56
-
-Let's land this, then I'll ask to uprev to
-dc2d7fb4f978048b87707ea9ec32da748b01b378, which fixes an issue with the
-writeback tests on MSM devices.
-
->  
->    DEQP_RUNNER_GIT_URL: https://gitlab.freedesktop.org/anholt/deqp-runner.git
->    DEQP_RUNNER_GIT_TAG: v0.15.0
-> -- 
-> 2.40.1
 > 
 
+Applied to drm-misc-fixes, thanks!
+
+[1/3] drm/panel/lg-sw43408: select CONFIG_DRM_DISPLAY_DP_HELPER
+      commit: 33defcacd207196a6b35857087e6335590adad62
+[2/3] drm/panel/lg-sw43408: mark sw43408_backlight_ops as static
+      commit: 8c318cb70c88aa02068db7518e852b909c9b400f
+
+Best regards,
 -- 
 With best wishes
 Dmitry
+
 
