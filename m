@@ -1,88 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-21004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2173B8D3F07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 21:48:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99AA88D3F1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 21:53:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A1791B22BB9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 19:48:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26F0A1F247AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 19:53:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AFFA1C2330;
-	Wed, 29 May 2024 19:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBA651C2333;
+	Wed, 29 May 2024 19:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TLIfSfyz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hkGYnJV2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14AA1C2329;
-	Wed, 29 May 2024 19:48:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237E2522A;
+	Wed, 29 May 2024 19:53:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717012096; cv=none; b=LsTTSLmxEuGnDZ4SwiHn0BkYZ6wfLIGAxc5Dn2TQg14IXUDlx+8UDijISPSnfJ9wN+t+oILWxTNl9QqbWU8s7rwtIduaNov2XpPekcdp7uZpozFT+nYRYJW1XIo3p+J5qiqLzz/DV9NC1Vcp909WU5TMiquk3R6YvIi9bNp8u8g=
+	t=1717012429; cv=none; b=olnJIi1aStju59FkSYGwt+9GTEHtfuMB6dYnbayQ2Gfx6fE4vSEaDYzqbr0gtumiyc1yEFT0kcoQ4lC/z4rkpsAJEOC+akC8bEFCreXXbJFuNBvtwVSE815FXXbz5Anha+O6AeiPKH4+NKm6XCdfF7b1k5FEOYJW/unyGVh8YcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717012096; c=relaxed/simple;
-	bh=qWhEwAr6AYrSEXs8Gky9nRQSfZTamh+Ys9gijsMJcIk=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=ar3waaQHaUx+uIGPk9XtGNK4SbrrDhPG4nml+b/Qiosrk8nTTSOmaBLrKYjB8Qb/NywBG0+8+6z31nMVw6Crqax1CERl+GArDWLAvOwE7ITCJmL2ADe9Cz6VpkKzlWbhuxVWZWRumJ0T8UmqX93bmAGoP8Gg5uReh+iZrWrWlLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TLIfSfyz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD0BC32781;
-	Wed, 29 May 2024 19:48:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717012096;
-	bh=qWhEwAr6AYrSEXs8Gky9nRQSfZTamh+Ys9gijsMJcIk=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=TLIfSfyzl/LE6/dXyGaWYNyxHPf99UPq9vGHjqcf4Xz+vTTQgX7DnBaKkN4hF7pb0
-	 VXrW8fvC6x5GHZGpAkeyktSF2Zyxpdi5GTrwFIFFucAj8Ay1uOnMKVRoJgzi0S7bNL
-	 1gQYp+E4Ee5ggdsvZcRzle1QikxlECZ+OZW/eXhZOQk1L91uSZhvYFeLpHz9Q21jYE
-	 wPa5ms2oLOz2eEF9e5diQhElr3D8ll0tEU22hCZvH+RcmU4cP6WW8eb95zLZ47XVWj
-	 /0BSsvItSDZ4Bbtm3Uc/d4YL0QIi8Hx/k0yZx7aIqNJmqxxIph0E5Qb6i3qZEeoshL
-	 AeJET7CYsl9Xw==
-Message-ID: <63d35ddacc113598f1822486b882552a.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1717012429; c=relaxed/simple;
+	bh=TgIN2Vko2QSfeAhaQWA7wstejia7wbLXf1FK1ROIXk0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JRfYZXFa8wKAXozxybQSonExIS8SBLcTcxCRde5fLBZQ4VuyxdC6Osn3iGCbpO2Izbpn8CYgAhbJFyuzy+SQ5wDWYTqj4APpzvxmsPpS+hOhoyT/zb2f2gz7Frxky8T4+wlbEGfYROImsUOGP9GRS7Vt22fZD8CyVuc5Zr6YrPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hkGYnJV2; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a63359aaaa6so2949066b.2;
+        Wed, 29 May 2024 12:53:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717012426; x=1717617226; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1m+eJ0+HTX5hevlSV4OPbUaaD5T4sWeJ+vrIGfi1+BU=;
+        b=hkGYnJV2SpsshZiT2LkD5opUJCFkC+gdGYq3PSJIxownC4hdckWUofZJ+1hmAO3+He
+         4mFTbf/Yobv1WCZug5NeiWtvKU6ads8sbAKGydvRXHWZCJ+tmLfNZQK7lboHZT1jVcup
+         fKShumFHCNwOQfKxgTjfBiAmDQnJg3XY/Eb+MtQ+mSOzZ09H+5DV7DLpR9jz0JTBD/8S
+         6bw3vGrNlRgNgfvcCYvW3byNlV4WCY0xA6zcVEVxdHXY9Pw7YSqHBPxkHdD1zJrUNcec
+         ooFwkdy0OE0yRrQxV8mNgS7w5ZtFRhs4iSHZpCF9lMW8+kXs4q9MNyAHQ9nterimdGNn
+         eXdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717012426; x=1717617226;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1m+eJ0+HTX5hevlSV4OPbUaaD5T4sWeJ+vrIGfi1+BU=;
+        b=iBlQcyAEj9m6ZrVp+jla9Ry3FD2lZFSxGhePt+VAnRZPm6UYXIrj5vKoINeJ1xrTZO
+         Vjs381UL4ERDQuXzDj3iRCeGJzS4MwGaPuIAipEsuoLBe+EKh4JGSEoJSZUiEkX2avsc
+         iWU5U4opZhyyEbmHSE7ozJ1Xr8Dtywb2afogbjkUO4OM9C6IEr0qfyfWV8YJxezC3KO4
+         a1cU+LcSV9MJXOgUziAM0flplS30tRzBwZ4+1zAAnT763qwDiZuYaIlhZ+xS1wYZfiC4
+         RyikTpl0PX6LW5yCbQ1XvpZ3lwttI/v39F2AAWXA2MYDkChwFXhAHuWD+fDUFkKnmVBt
+         BRYw==
+X-Forwarded-Encrypted: i=1; AJvYcCUO/O8Pa01AgYY7Tr1F9YLK19GgiiImWJMFaGxPIWxKCqI55m8PTd59dzGnKj7+uxwoMQgC7niZCPnqX+M5gTEu0XEM0cLg/vIh/SAVPdo+e0vU0eVj4Ezl/ZpHe+dBX3BI1ZOY1hyTNA3j1XL+8GKPlZD3XdQHKQ8TVkeAheCLX59KEY5TR1eJKTDwTjYCtiqgXNS23Qzr3ZCUri7bLE+3Qt4V
+X-Gm-Message-State: AOJu0Yyw998Gm6ply0ftDV4AGAFexSL2o9ZCX3H73ZG2BMJYIOA6bSLF
+	JafUNTNsTy7exBEsTAcIR1Vc115cc3YoUGvUdQ94tlqxlZHTiqXuGgGPBFxPeWr44/YhMarq3+6
+	aUlmWXsvVjtGFkUeWQtFZTkJVoes=
+X-Google-Smtp-Source: AGHT+IHdLo2Dle0xvU6wdDZvW+5ygpMdmBCnbICN8kcAYk7je6Y+Ci1/SHIdh8p+ng8bmsjWJmc5zj2MS6lW66x6EsY=
+X-Received: by 2002:a17:906:4087:b0:a5a:896e:d0b4 with SMTP id
+ a640c23a62f3a-a65e8e5d2e3mr11830466b.26.1717012426261; Wed, 29 May 2024
+ 12:53:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <20240529162958.18081-1-johan+linaro@kernel.org> <20240529162958.18081-13-johan+linaro@kernel.org>
+In-Reply-To: <20240529162958.18081-13-johan+linaro@kernel.org>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Wed, 29 May 2024 22:53:09 +0300
+Message-ID: <CAHp75Vcww07EkUDVSMSd+RviQ9_uku=w4pkCWUt8iGTW580eXg@mail.gmail.com>
+Subject: Re: [PATCH v2 12/14] mfd: pm8008: rework driver
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Stephen Boyd <swboyd@chromium.org>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ssnyujhgz64mbxawb43okjkdidd3tbxwjob36ikgbogy64xuqv@ckvir5vfqo63>
-References: <20240528114254.3147988-1-quic_ajipan@quicinc.com> <20240528114254.3147988-8-quic_ajipan@quicinc.com> <ssnyujhgz64mbxawb43okjkdidd3tbxwjob36ikgbogy64xuqv@ckvir5vfqo63>
-Subject: Re: [PATCH V3 7/8] clk: qcom: Add GPUCC driver support for SM4450
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-To: Ajit Pandey <quic_ajipan@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 29 May 2024 12:48:14 -0700
-User-Agent: alot/0.10
 
-Quoting Dmitry Baryshkov (2024-05-28 06:23:27)
-> On Tue, May 28, 2024 at 05:12:53PM +0530, Ajit Pandey wrote:
-> > Add Graphics Clock Controller (GPUCC) support for SM4450 platform.
-> >=20
-> > Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
-> > ---
-> >  drivers/clk/qcom/Kconfig        |   9 +
-> >  drivers/clk/qcom/Makefile       |   1 +
-> >  drivers/clk/qcom/gpucc-sm4450.c | 805 ++++++++++++++++++++++++++++++++
-> >  3 files changed, 815 insertions(+)
-> >  create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
->=20
-> [trimmed]
->=20
-> > +
-> > +     /* Keep some clocks always enabled */
-> > +     qcom_branch_set_clk_en(regmap, 0x93a4); /* GPU_CC_CB_CLK */
-> > +     qcom_branch_set_clk_en(regmap, 0x9004); /* GPU_CC_CXO_AON_CLK */
-> > +     qcom_branch_set_clk_en(regmap, 0x900c); /* GPU_CC_DEMET_CLK */
->=20
-> I pinged Stephen regarding these clocks. LGTM otherwise.
->=20
+On Wed, May 29, 2024 at 7:30=E2=80=AFPM Johan Hovold <johan+linaro@kernel.o=
+rg> wrote:
+>
+> Rework the pm8008 driver to match the new binding which no longer
+> describes internal details like interrupts and register offsets
+> (including which of the two consecutive I2C addresses the registers
+> belong to).
+>
+> Instead make the interrupt controller implementation internal and pass
+> interrupts to the subdrivers using MFD cell resources.
+>
+> Note that subdrivers may either get their resources, like register block
+> offsets, from the parent MFD or this can be included in the subdrivers
+> directly.
+>
+> In the current implementation, the temperature alarm driver is generic
+> enough to just get its base address and alarm interrupt from the parent
+> driver, which already uses this information to implement the interrupt
+> controller.
+>
+> The regulator driver, however, needs additional information like parent
+> supplies and regulator characteristics so in that case it is easier to
+> just augment its table with the regulator register base addresses.
+>
+> Similarly, the current GPIO driver already holds the number of pins and
+> that lookup table can therefore also be extended with register offsets.
+>
+> Note that subdrivers can now access the two regmaps by name, even if the
+> primary regmap is registered last so that it is returned by default when
+> no name is provided in lookups.
+>
+> Finally, note that the temperature alarm and GPIO subdrivers need some
+> minor rework before they can be used with non-SPMI devices like the
+> PM8008. The temperature alarm MFD cell name specifically uses a "qpnp"
+> rather than "spmi" prefix to prevent binding until the driver has been
+> updated.
 
-Looks OK to me. I assume that these clks don't get turned off when the
-GPU power domain is turned off. If that's the case then presumably we
-would need to turn these on and off during power transitions.
+...
+
+> +       dummy =3D devm_i2c_new_dummy_device(dev, client->adapter, client-=
+>addr + 1);
+> +       if (IS_ERR(dummy)) {
+> +               ret =3D PTR_ERR(dummy);
+> +               dev_err(dev, "failed to claim second address: %d\n", ret)=
+;
+> +               return ret;
+> +       }
+
+
+> +       ret =3D devm_regmap_add_irq_chip_fwnode(dev, fwnode, regmap, clie=
+nt->irq,
+>                                 IRQF_SHARED, 0, &pm8008_irq_chip, &irq_da=
+ta);
+> +       if (ret) {
+> +               dev_err(dev, "failed to add IRQ chip: %d\n", ret);
+> +               return ret;
+>         }
+
+I believe there is no harm to use
+
+  return dev_err_probe(...);
+
+for these. But it seems you don't like that API. Whatever, no-one will
+die, just additional work for the future :-)
+
+--=20
+With Best Regards,
+Andy Shevchenko
 
