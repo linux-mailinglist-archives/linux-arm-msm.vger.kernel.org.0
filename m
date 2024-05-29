@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-20891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04C3D8D2E4E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 09:34:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EDA58D2E6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 09:39:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ACC621F25DDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 07:34:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8FB86B24EBC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 07:39:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B34E616728C;
-	Wed, 29 May 2024 07:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E226167D81;
+	Wed, 29 May 2024 07:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k75xACUw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vhn6R5xS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8577C1E86E;
-	Wed, 29 May 2024 07:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6F915B0E5;
+	Wed, 29 May 2024 07:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716968067; cv=none; b=Fw1oVbvEnEjNQ8C3CiPMes8uA+cRmmXxBUppRP3+lIzwMY+tbQSb0MBtv3OSF/42XfnegfkJPm9ILsIDsxEqwv6llg5suHTQbDCFgCo9cof3z+jJEkqtgwJun7HydRabC4/1HxTDbz0nFRbIurtRBUP2qOPOV1Bd66t+nvvlEog=
+	t=1716968373; cv=none; b=Qa9ZmHHpm0XMOaYKREZk9hlCjxf75nUpj+iRziL4PSre2v/xQQfWs+mNX03BPJiSs6lEeCkAKEJoGyJLq4h2teQTEVVmRkNF/Cus7tX7b3DwoTR/6AaN9eEvjTnIuby9gyNVwCrlY1ZXPhlDx9+Uhs8MR2eWixpdWAz8tsBuTlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716968067; c=relaxed/simple;
-	bh=NU3L7wEtVonQX+gMO4rp6bkJYZjwK50sm29EzKGVkm8=;
+	s=arc-20240116; t=1716968373; c=relaxed/simple;
+	bh=ykHRax0v7EM9Ll2ZSkkIx7RMnl1r+kKYDcxmsoEY9vs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QelZWuRPCkpoM592nPwP5BMIdcsK+kFNjei/FoPCAOR03gi9pVqxX3kN7DqhlsRE+2A9/DSHdYf91ZbSwvbNcO2XHwaO+Sy4kxWj7Qd4bWlnxULzpUEqJV89hQaxYvALdTdLHh/T5hvNtZG5u0jTBkOO2xsbbn6kGG9osDZy/ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k75xACUw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D49C2BD10;
-	Wed, 29 May 2024 07:34:24 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=T28ITY+dfBdH0k0+LEbvn/dYKv/j6hvY4cyRaHY2f9UH9/pjBkjNESPKu00SJyd1hEWrmSr8ZR+ElUV8jjXH4Ob98HDjXeQn2z9y37SShyZivYP/NXotrIfrDv6uWZrAc/c1kxYEKkU5SiuTmzphQA4QA8TJO5x+hwxJNZOfMYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vhn6R5xS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1816FC2BD10;
+	Wed, 29 May 2024 07:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716968067;
-	bh=NU3L7wEtVonQX+gMO4rp6bkJYZjwK50sm29EzKGVkm8=;
+	s=k20201202; t=1716968372;
+	bh=ykHRax0v7EM9Ll2ZSkkIx7RMnl1r+kKYDcxmsoEY9vs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=k75xACUwMUzArxMX0ifHTbYj3cwIPhgx0o7i/TlVaXmDl+5bdfcejR3H0jSZeZWXd
-	 3Iqou70cC+aQIiXOkVeB+HzoI4KgCkiV6K7PjQDfXXbg9RpHQQY4kNuzUKMOhGETS6
-	 m4RyfLzQSdO+NhS/sLSY0oa1s2waY/7gRnv5ztmGFZ+f7CtnHsrRZwaOOmgAeu5nr7
-	 JlaujdioB6JjrHakemkdY71CHdfRi/ueNxuBqgKXcM4NatzCekN79xcgtqPtxr8KlA
-	 tu+Ty3xi7lHmAWY8rXWQsQuvgzbXhzLsbsAnGN5X53mLXPAEZsrzQ3VEO0+XvPDqO6
-	 u6jdqX5qmac4Q==
-Message-ID: <9a1bbcbd-7f46-4266-8f08-5650a42234d4@kernel.org>
-Date: Wed, 29 May 2024 09:34:22 +0200
+	b=Vhn6R5xSMexoG+2K13chydX0V2PuIPV+25/0Y8fx+tr9S+OragS0kMaWgzIJxtYTD
+	 Ft2bFyTqLolevN+GMpbZsIwgctrUoTAk3rAP0QmnefQmYGLWW5wyBs329Q4t0mplHk
+	 jf7pZkzNLuL9OO2k6PGUxJOkjxkS5lOFrNfRjLMh8jQLSQOt0T6xKI8fG1s9LiS1Ca
+	 /15Kbd0IqO+yefeP5sDdcFBFt+ChUQeMeoCFQRZVTs7jI32oasuJhzQ9c9vt1enaIE
+	 TwauMHJvMjunhNTa55ZIhEMefAjYw51kf5ezba80EsIjkHso+gQjCKnBf9jDQZvLY0
+	 oa7WFjKUhG08g==
+Message-ID: <a893eb89-1956-4ba2-84cc-e9b64b87524a@kernel.org>
+Date: Wed, 29 May 2024 09:39:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] dt-bindings: clock: qcom: split the non-PD schema
- for GCC
+Subject: Re: [PATCH 05/10] dt-bindings: clock: qcom,gcc-nopd.yaml: force node
+ name
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -62,7 +62,7 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240528-qcom-gdscs-v1-0-03cf1b102a4f@linaro.org>
- <20240528-qcom-gdscs-v1-1-03cf1b102a4f@linaro.org>
+ <20240528-qcom-gdscs-v1-5-03cf1b102a4f@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,42 +108,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240528-qcom-gdscs-v1-1-03cf1b102a4f@linaro.org>
+In-Reply-To: <20240528-qcom-gdscs-v1-5-03cf1b102a4f@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 28/05/2024 22:43, Dmitry Baryshkov wrote:
-> On some of Qualcomm platforms the Global Clock Controller (GCC) doesn't
-> provide power domains. Split no-PD version from the common qcom,gcc schema.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> Force GCC device nodes to have the name 'clock-controller'. Several
+> platforms used 'gcc' here.
 
+Well, only ones coming from Qualcomm being downstream-based:
 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> index 788825105f24..e7ec15b1780d 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-> @@ -14,27 +14,14 @@ description: |
->    Common bindings for Qualcomm global clock control module providing the
->    clocks, resets and power domains.
->  
-> -properties:
-> -  '#clock-cells':
-> -    const: 1
-> -
-> -  '#reset-cells':
-> -    const: 1
-> +allOf:
-> +  - $ref: qcom,gcc-nopd.yaml
->  
-> +properties:
->    '#power-domain-cells':
->      const: 1
+Author: Varadarajan Narayanan <quic_varada@quicinc.com>
+Date:   Thu Jun 29 11:48:33 2017 +0530
 
-So what's left here? One property? Not much benefit. Triple-schema
-(include something to include something) does not make it readable. Just
-do not require power-domain-cells in qcom,gcc.yaml.
+Author: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Date:   Sun Jan 19 18:43:20 2020 +0530
+
+(and there was also older with node name qcom,gcc, so clearly copy-paste
+from downstream sources)
+
+yet still we do not enforce names in individual schemas. You add it now
+and next month turns out there is a power-reset-clock-controller which
+could use gcc.yaml, but cannot because of node name enforcement.
 
 
 Best regards,
