@@ -1,70 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-20867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BB678D2A62
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 04:03:56 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9C728D2A67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 04:04:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4EFF28B996
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 02:03:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 40CD3B244EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 02:04:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1045215CD52;
-	Wed, 29 May 2024 02:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A09215CD76;
+	Wed, 29 May 2024 02:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lwFVivYO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hWvREqUP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99B515CD4C;
-	Wed, 29 May 2024 02:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169F415CD4C;
+	Wed, 29 May 2024 02:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716948137; cv=none; b=M7QHd73AxPsFJtg9Ya5KRclgYtJs4hnnRPQb/yzjo8B48AH1x8jKegeo2fRaR/zJoLSGe6nYaNI53YC+EoTde5QvQqqY3TBRas2vylUsb3Wgbqt93E0WVS5n+dUE72MngfHElkxnZd4IV4IUhoirk+I6vnogzBivDtPCvo4X1mw=
+	t=1716948138; cv=none; b=fCDOPfsO1oPHDPU+a3B1mozHOqzLd8ovGr4HyDUstXfi3viCraLoKktj3sLWehVc/Cm4GLIP61VKsH3T9rC1hvyhMUaZ5CL0yVB4c6E07JrVDEgjTYTz0Ntr2uwolh+D61vJtFNtj6HZSd/TZWsvVtUMAQ/isAF+bBfufXHiRO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716948137; c=relaxed/simple;
-	bh=kBuQ9fcA+VN6pPO3SFipaZrl1mBckkhQxMcU1vdmrT4=;
+	s=arc-20240116; t=1716948138; c=relaxed/simple;
+	bh=WzM1bY4byL4YUXM6AADhK0X6YuFPtIN4jhP8k24IFpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pNKCuIkWwJUxBTeoZUGdnrj/Aamw85Yg6p+APyD3K9mb9OZ9hRg+M0SBY0qaIETlU7gSm3u9BIByubu0c+FO7UKc0gHIluOY1ZknJn8kfPv7/lzOSbQ++MtskN3vhdzFVmT4RJ8uzv/UwYBO6EODKCafK1XJ8gMOA7L52yw2Kwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lwFVivYO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB112C4AF08;
-	Wed, 29 May 2024 02:02:14 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Xoj6GQxrkFGtk2ewHSdbkFQSJoyTV9WbsApErSu/2TC3e5NuXVF+Ncqcujx2Stuzc9YvbOu+ZVyhDjO2aYBTGXAh7d/1HXU364vN8YxIqwCI1m+/OS4HREquIY+yeq+vMoD26pCj/Ut4i1Ce8ThwLypWT+blFsADc0mjm5NHus0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hWvREqUP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1516C4AF09;
+	Wed, 29 May 2024 02:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716948136;
-	bh=kBuQ9fcA+VN6pPO3SFipaZrl1mBckkhQxMcU1vdmrT4=;
+	s=k20201202; t=1716948137;
+	bh=WzM1bY4byL4YUXM6AADhK0X6YuFPtIN4jhP8k24IFpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwFVivYOgH6ldsdLchXHx8VvhvKvJ2HOJXTIpYoe1syCLelhlDuql/2rPzZcCvm3w
-	 BwuBUY1hRH3dZr2/8875yzsE+sHEY2GLSzzfbMoqaJpsjpQO8IPtFOvO8lU4VPoSLQ
-	 X7Uxtp+B8ZABJb+ZWLVcO82zeHX2HSIj0EcbVfQwsaTihNVNvHXE0LbEknveDL7rpH
-	 WcsA3Mm23OfE/f8dWEXBajFO/lNQMmobJofNmst2lMBGuVgdfFv0vgAb/qJzMuTATQ
-	 uf0ia4VvpVsndQxmSY69Ta6/bTkNjTJahLInrlzTwsuDe7APARcC+NxGyW07Z57CkA
-	 4Ed6S8oh2mnSQ==
+	b=hWvREqUPpgsIjTmg1z6r8R0G7flnMe+fuxGSgmaIHVM+OczV6QcV1N20+YpaHFkDN
+	 Wjef2915xGIMwQJhUX/sySAOzEiI7OvHTWUwzQ0FG7CcpE4rW5e5jiejrYlPebpTqq
+	 Qz2j0Wp9CKPpQztflL/DwFcgT6jn8BTGeAjQfthCVLfux3nVtQhU/bBCN7keXazI38
+	 8PhSBeedzOKVp8iXHZQiSCna5oQA39mUIIzlm6bW0XBUqquV2YSK3AxUgLA4713160
+	 ROnk48xYiRTKLjN3ETcJPeQg1k8cAANAJyNsKFG7R4uD1iiZ1mY+g6lBI10RA/FQLf
+	 lfbK1zbhf4vPw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Kalle Valo <kvalo@kernel.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	ath10k <ath10k@lists.infradead.org>,
-	Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: wireless <linux-wireless@vger.kernel.org>,
-	DT <devicetree@vger.kernel.org>,
-	MSM <linux-arm-msm@vger.kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Pierre-Hugues Husson <phhusson@freebox.fr>,
-	Arnaud Vrac <avrac@freebox.fr>,
+To: Pavel Machek <pavel@ucw.cz>,
+	Lee Jones <lee@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Jami Kettunen <jamipkettunen@gmail.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>
-Subject: Re: (subset) [PATCH v3 0/3] Work around missing MSA_READY indicator for msm8998 devices
-Date: Tue, 28 May 2024 21:01:54 -0500
-Message-ID: <171694812078.574781.940205504715408568.b4-ty@kernel.org>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Gianluca Boiano <morf3089@gmail.com>
+Cc: linux-leds@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/3] This patch series introduces support for PMI8950 PWM in leds-qcom-lpg.
+Date: Tue, 28 May 2024 21:01:55 -0500
+Message-ID: <171694812071.574781.1418783685100932942.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
-References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
+In-Reply-To: <20240402-pmi8950-pwm-support-v1-0-1a66899eeeb3@gmail.com>
+References: <20240402-pmi8950-pwm-support-v1-0-1a66899eeeb3@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,22 +69,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 29 Apr 2024 16:01:41 +0200, Marc Gonzalez wrote:
-> Work around missing MSA_READY indicator in ath10k driver
-> (apply work-around for all msm8998 devices)
+On Tue, 02 Apr 2024 14:35:41 +0200, Gianluca Boiano wrote:
+> The first patch updates the device tree bindings for leds-qcom-lpg to
+> include support for PMI8950 PWM.
 > 
-> CHANGELOG v3
-> - Add a paragraph in binding commit to explain why we use
->   a DT property instead of a firmware feature bit.
-> - Warn if the "no_msa_ready_indicator" property is true,
->   but we actually receive the indicator.
+> The second patch adds a pwm node to the device tree for the PMI8950. This
+> node is found on some msm8953 devices, such as the Xiaomi Mido, and its
+> inclusion in the device tree will enable infrared LED functionality on
+> these devices.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: msm8998: set qcom,no-msa-ready-indicator for wifi
-      commit: 737abcabe97bb37e38be2504acd28ad779dbaf3d
+[2/3] arm64: dts: qcom: pmi8950: add pwm node
+      commit: 62aad66b57466287925d17e7ed0f6f14fd6c5459
 
 Best regards,
 -- 
