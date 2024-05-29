@@ -1,133 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-20973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43F658D3BBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 18:04:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2E348D3BCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 18:05:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D08E71F2704D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 16:04:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0041C1C211F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 16:05:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CC261836FE;
-	Wed, 29 May 2024 16:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5542181D1B;
+	Wed, 29 May 2024 16:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KeTsBLNJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zz3xb9b+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C07C8DE;
-	Wed, 29 May 2024 16:04:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C2C1836CC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 16:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716998674; cv=none; b=PwiUqykJEYzLb7l3URoInBV4eJ/YsLBoI8WZ6RkUzXE0Fc2EPVtrCqqtyuKt5vYnVQztM9SEsjqlqFQqPxF2ByvEoesCTnhq0AKfKZ2RiN78l2d3yj9BI5WJ+uRnxdKYw+e2fXY6VRr99uNsrCFKWeiv5/6bzWbx7GDCcZhRFLs=
+	t=1716998736; cv=none; b=WfYLJED3enjNkOvDbWKPxYL9wISscprbyRTk17fBVdwdOBrsUq+acIJbrcR+5LobLP1ok06g1ZQUQhSMlfLIqfdpkKuUsG/la7idk9Bn1ctm6wYQQvi6CpznhNL36Q3FCHwnT2TVfzLeX/LvSK3jpjNvsUkmLdGtsIyL7BDs9b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716998674; c=relaxed/simple;
-	bh=/EwIIXcKHGDW2AxegyIxUaFBTLYn3SLVszyabwPuc7k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s0PsEV7DMUJdev7pKZUvIAquD+Yhw6QfSzs0d48yEwdvHNesktCWkGGvqf7xBR68QpKGYtNF5jTD+cEPWczOqGmoeWZghVHkFm2QsLAx2mCLkIoITfU8Sm2uOeBRZDIvnArwQXp91Q67AgyLm7YEWpn2HkSD0pEMwIiSu9DTMMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KeTsBLNJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC97FC113CC;
-	Wed, 29 May 2024 16:04:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716998673;
-	bh=/EwIIXcKHGDW2AxegyIxUaFBTLYn3SLVszyabwPuc7k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KeTsBLNJlZ6RfKwKub6VxjJVm24VDMg0I+DAF8xec7yGSA6HeXUBvEwKNwkRrtBo3
-	 Z88dNiMtRZLwujOID2J5vfC9BM2+hEJrG+Vezj6K307PDiBybDPBauBRmx9llXIh6C
-	 Tq8MB53S+GIYy8mBWn6sbzhNjkOA4x9v+UkIN/Dg8TmT8IsZKq9C75tbMDGcKTyh/L
-	 CMXGAFjG7NwxGnuwn5J7JDwwoidZljXi0x67Oz6BnahBS4K7oSP2KCkIvfAdYT8w23
-	 FzYNpEj5v3X5gFH+BtzFbZvJgj7akBWf/bEp7dWrIxjAAuan+KkodCi6ao00UOuPOQ
-	 /xsey53jh72ZQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sCLmz-000000004KZ-0YvL;
-	Wed, 29 May 2024 18:04:33 +0200
-Date: Wed, 29 May 2024 18:04:33 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Cc: andersson@kernel.org, andy.shevchenko@gmail.com, broonie@kernel.org,
-	conor+dt@kernel.org, devicetree@vger.kernel.org,
-	johan+linaro@kernel.org, konrad.dybcio@linaro.org,
-	krzk+dt@kernel.org, lee@kernel.org, lgirdwood@gmail.com,
-	linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_c_skakit@quicinc.com, quic_gurus@quicinc.com, robh@kernel.org,
-	swboyd@chromium.org
-Subject: Re: [PATCH 12/13] regulator: add pm8008 pmic regulator driver
-Message-ID: <ZldSEZKusSVIHZJ3@hovoldconsulting.com>
-References: <ZjpMeVk_HiixZUEu@hovoldconsulting.com>
- <20240514134317.691887-1-quic_skakitap@quicinc.com>
+	s=arc-20240116; t=1716998736; c=relaxed/simple;
+	bh=5EqQiL0r6nrlB8yB3smf+mNsb51Fy6uJGMh8nFFXn3E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NBYDEK9p5VZ7elJ8l9vJILTdSemTydViqfQMxz9wILeyhDq9POjeZDGXwKKnbYYsR/HYi+QF1FMnamFH1UJkRVdkCcNqoga7Tl8mPTS6f7MhnL7HYy9IBIcfBdPkKpCC+tzwRJ0jxrbbx5o+nexL9k2KbwxG4esY/bf+IofqVrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zz3xb9b+; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4211249fbafso18941305e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 09:05:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716998733; x=1717603533; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qzg/EUp61JlYQ5Fn3RoqiX5YzTeWEt7sibQ+Ig9ys7c=;
+        b=zz3xb9b+8hH7dFFsUJuhdXgxwesTvJgzyqx6yn84U6iWHcaJtdB3WDxuPMZojS5UZO
+         upI6/oQMfBEi7R/K/c1eCmsQ29GYcswvzB164F6tTOjbtcCCFSNIkPgOrwciuWn7Ays1
+         qRThpvEo6KnTrAlt5Jsz9fm8R94VPwkJNfBr97EypnL6nvKZ63s+wFO2NVsElrZ4qFW6
+         Mp+K9Ef28LkRJz1lFoNuWvOvY+7i+TMpfCnIMzQFND0obzGVmpdkKckBRWKgPkcLcfG5
+         rAubOIc5FIMv9x6DEVf3AfwE0CptqkAmt2VZmQX32LzPcOxehxko/2srlVTR9iVuXviS
+         VDBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716998733; x=1717603533;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qzg/EUp61JlYQ5Fn3RoqiX5YzTeWEt7sibQ+Ig9ys7c=;
+        b=U5L8JnsbgxdviKp8zCx9WTgLreFdvbVw6W9t06hizzH+Tv6ADz1cmaRP+/x5okbEVD
+         d0p5vK/wX9uTVLIEF9GnDL1NqLwrj3FM1DY+O3j4y/CMjsN9dcK3ZoiHOPpjtD+4WMJ0
+         +WbTm1VawQPlkkACZYaCxq2ykxPDjXIXTR7apb2GEI3+/BuUAWT2dMaaBf5QSL+hYooq
+         o1fE9CtiA/dbJNtJvSgMVfw60+2cY0fJjsPhyBXVRk0yJ1rlKVfPuqlO5G8ezRAUMoNG
+         QldBwSth0BYXbeleZ81X96tBj15CKzkY9YvqDgOalEREzPqI1Qmxgb9V4Sbs4XyEmt1V
+         f6KA==
+X-Forwarded-Encrypted: i=1; AJvYcCXyqdxQv1JFB63wLv5EgRcH/6fe27vrD11VevxmaHQGy/juGSksudAOPxcxktnp1ewBewxzk3DZsFiOvXZNU1n78bGya245APNHKjjcow==
+X-Gm-Message-State: AOJu0YygKreymqeayUhaBV7sEeAs5gOrdjZOwO0BK0uYyfsveeCsknDd
+	oqzPXcHYQTDc9jWyFVEgLFL+TRPow3mqicoPxbMLjZm7vWIXBLMLA9btja2Vk6w=
+X-Google-Smtp-Source: AGHT+IFn5yfhHaTTN+Su9cNWOuzz33Y8aCh2kF8VjN3dvPJFe21uC4x828bSQeCJe0tkWLUWOBFKRA==
+X-Received: by 2002:a05:600c:3145:b0:419:f9ae:e50 with SMTP id 5b1f17b1804b1-42108a2145bmr119611935e9.37.1716998732678;
+        Wed, 29 May 2024 09:05:32 -0700 (PDT)
+Received: from [192.168.0.3] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-421089ccfacsm181684255e9.45.2024.05.29.09.05.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 May 2024 09:05:31 -0700 (PDT)
+Message-ID: <6326960a-ba5a-430c-a423-571a0a4a8502@linaro.org>
+Date: Wed, 29 May 2024 17:05:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240514134317.691887-1-quic_skakitap@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/6] arm64: dts: qcom: sdm845: describe connections of
+ USB/DP port
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Hans de Goede <hdegoede@redhat.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Nikita Travkin <nikita@trvn.ru>
+References: <20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org>
+ <20240528-yoga-ec-driver-v4-5-4fa8dfaae7b6@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240528-yoga-ec-driver-v4-5-4fa8dfaae7b6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 14, 2024 at 07:13:17PM +0530, Satya Priya Kakitapalli wrote:
-> > On Tue, May 07, 2024 at 01:48:30PM +0200, Konrad Dybcio wrote:
-> > > On 5/6/24 17:08, Johan Hovold wrote:
-> > > > From: Satya Priya <quic_c_skakit@quicinc.com>
-> > > > 
-> > > > Qualcomm Technologies, Inc. PM8008 is an I2C-controlled PMIC containing
-> > > > seven LDO regulators. Add a PM8008 regulator driver to support PMIC
-> > > > regulator management via the regulator framework.
-> > > > 
-> > > > Note that this driver, originally submitted by Satya Priya [1], has been
-> > > > reworked to match the new devicetree binding which no longer describes
-> > > > each regulator as a separate device.
-
-> > > > [1] https://lore.kernel.org/r/1655200111-18357-8-git-send-email-quic_c_skakit@quicinc.com
-> > > > 
-> > > > Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+On 28/05/2024 21:44, Dmitry Baryshkov wrote:
+> Describe links between the first USB3 host and the DisplayPort that is
+> routed to the same pins.
 > 
-> This is my old email which is discontinued, please use <quic_skakitap@quicinc.com>
-
-I've cleaned up and reworked the driver for v2 and changed the
-authorship to myself in the process, but I'll make sure to CC your new
-address when submitting.
-
-You should add an alias as Konrad suggested as you apparently have
-commits that use your old address.
-
-> > > > Cc: Stephen Boyd <swboyd@chromium.org>
-> > > > [ johan: rework probe to match new binding, amend commit message and
-> > > >           Kconfig entry]
-> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > > ---
-> > > 
-> > > I'm a bit lukewarm on calling this qcom-pm8008-regulator.. But then
-> > > qcom-i2c-regulator or qpnp-i2c-regulator may bite due to being overly
-> > > generic.. Would you know whether this code will also be used for e.g.
-> > > PM8010?
-> > 
-> > Yes, for any sufficiently similar PMICs, including SPMI ones. So
-> > 'qpnp-regulator' would be a generic name, but only Qualcomm knows what
-> > PMICs they have and how they are related -- the rest of us is left doing
-> > tedious code forensics to try to make some sense of this.
-> > 
-> > So just like for compatible strings, letting the first supported PMIC
-> > name the driver makes sense as we don't know when we'll want to add a
-> > second one for another set of devices (and we don't want to call that
-> > one 'qpnp-regulator-2'). On the other hand, these names are now mostly
-> > internal and can more easily be renamed later.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 53 +++++++++++++++++++++++++++++++++++-
+>   1 file changed, 52 insertions(+), 1 deletion(-)
 > 
-> There is a PMIC called PM8010 which also is implemented over I2C,
-> which could use the same pm8008 regulator driver.
-> Hence it is better to use device_id instead of a MODULE_ALIAS().
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 26b1638c76f9..5276ab0433b6 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
 
-Right, I've had PM8010 in mind all along, but it's hard to tell whether
-it will be using the same (sub)driver until code is submitted since you
-guys (Qualcomm) don't publish any documentation.
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-I've changed the regulator (and GPIO) drivers to use platform device id
-matching for now either way.
-
-Johan
 
