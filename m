@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-20939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9999D8D38EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 16:14:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A464B8D3923
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 16:26:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C5C91F23076
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:14:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A6CB1F233C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:26:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF02655782;
-	Wed, 29 May 2024 14:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC083157E9D;
+	Wed, 29 May 2024 14:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZfdBoOcG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IgcWFLIf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A2617F5;
-	Wed, 29 May 2024 14:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC01156F38
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 14:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716992052; cv=none; b=lBQa52qjgl8eysSFJ6ouUJux++rjenF+FyaRjuNC5xhXqAwyu5FF6dYcSYrqOrsKLs7mTp5HbISrbGQZZb6YXEhmm0yJNwuIUvcvRD9QxcqaBSozG+3/W+jU9NQBNLuvnrRBU6nB1bjMlIZX98Xc/uBwmdBNPODJM5Yv1f/MFxU=
+	t=1716992809; cv=none; b=W0gP1NbnN7ZflUFWMEqkQBhU1SjriPkwZTNdxMgMYWsuzsWjNFGDV85pzgh2DW/NxcLNyrVaQ87/nf329SHwL5Ze+mJ23g+HIg2p+KzoXfZ+PrYFk1/gN0G0tDyPDW/gv1/lZSS5zJsMhEpl9CSs9FpSIK7M9kZmPHtDYLaUvro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716992052; c=relaxed/simple;
-	bh=tvhpmBOBi6PpDi7Y2RpMDy0NHTDN0MtqyAIYHLm0Fow=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=P7guf+KlfIPw6YpRfwp5YuoYz/nQZtxiO0N0lOqYW6iyeZSaUC6OQZeO6tSwFpu1s4fisVNO8o1mkoPfFV2e9P4AHdhV7Kd2IcHcOBulst5IElCv2Y/4yixTzOoeOIJzrGXz94axP4bptFc6gt7bz55ciAGzPF+KC2ql4EoN02I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZfdBoOcG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44T4wxHx018858;
-	Wed, 29 May 2024 14:13:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yqfnQWiiXx8zP47bSxhpWvDYUchRl20DVMApVnujf00=; b=ZfdBoOcGmXDl3dZy
-	FPcOpKHlFYvqkW6k5wzPBS3eF4cXY9lBHrjUBQArvYN6+t2E9HS5hlopLDYAL5GG
-	OBFVjRWR8bb9Bz2qE1xg3O75AR3dM+DMx0SuinjQOYT3M3VyhMWm0k1WAgMsqqj1
-	nQO4K5od/lSXDe3nsyzjqCix/xW6jWwEDzsRypKAQhBOl9fHQ1tjt+Qfoz172yjK
-	su4pR+YAZw3Geggt9wd+ea+ghxezvrHPAEilYN+wfMMfA7YHdAFnfIW6hJkn07X2
-	TzrrXOXw7Fk3Qmt1rbdldRDEmcUotE0ARu6Hhy91nKqZY+mZlYjyP38wu8ruMXRB
-	4JwGzQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ybadx95jk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 May 2024 14:13:30 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TEDTZ4029610
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 May 2024 14:13:29 GMT
-Received: from [10.50.12.173] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 May
- 2024 07:13:20 -0700
-Message-ID: <d246bd64-18b3-4002-bc71-eccd67bbd61f@quicinc.com>
-Date: Wed, 29 May 2024 19:43:15 +0530
+	s=arc-20240116; t=1716992809; c=relaxed/simple;
+	bh=HwJzftLA1+dQNuWJ93GUEzlbuhARUmppvfMGRyd+Pgk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UsPtUoljmhkS6W+eZX0aED0LeEOvCGkSH5SOYdkHxWIDEYKLUnn1rysNKKjbyZ4zwJ2/97z7FKwX8ldFRhhK7yvJ9pnNUhYl+gKuBs8TQK0fXzOBebDA9/de1Qbbt5EGH8SOpL5Is+t6VVVRrc8kNBRTI3mdnKSg7npC4oJTook=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IgcWFLIf; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a635a74e0deso174473466b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 May 2024 07:26:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1716992806; x=1717597606; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=t9und5k3EPAWeDAxO2liROy1Lyi+UxLY0JPYPD1aV7w=;
+        b=IgcWFLIfsVZVC0+1kW4MrwMJW3vkgE/Bfuvyb4PF5vvzfILWc+seYxxssROaCW1bvU
+         0kp7+JsuhYWItd5+AVY39P+u55DO+j+xF8uIL9PRBdiDFEfuwvSeyQZlhpWuGZlLWJId
+         UyjPLD+O8GuLGdfqJ8E5qg5hIN0GqTY5kSG1e1orf6EoOIbkWM2mRC+Zs7Dmd/IXk1fF
+         Gp9betvTo+lYYrOn+RYNcoUlKTi+ZwUi044QmUaB8I8HyvZq9mS/goLBiTEVkXfGGJ7g
+         m7P3i8culHT5wRtWzQRDmZQZ+Sl20+v8OirUQO53ODOlAIAM8ZTLYW/db45OR9XmpeGh
+         KSuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716992806; x=1717597606;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t9und5k3EPAWeDAxO2liROy1Lyi+UxLY0JPYPD1aV7w=;
+        b=sEnrcZqqa06epHb75zHXjIImuDbJ1VEm/32jJ5mhz3FbrBWW0/t6V/RoT1yTDmoAez
+         5j8Q1+2wgJPyaxseR1gALMS3EeWLlGDOcXTVpwLsto2fVS28fguy/GKHm0H2o/aERyZn
+         Uv0uZ7wXlLBfIzRnSi6onwz4xdna7C4PgdK6wEFh4U44t382AdjLrEjxtg6vjZz9c8Lo
+         qdVWCfyJ8UgAMT7BlmxvHOiGlqm3ufsRngRDiAzZBi/8lTdmub9owJkqIm0YhzGhnNZJ
+         ngxXHau0ktEiBIebDeo23k3uyanullHiq2PRcN/y+tmLH3iK4GI7O7KgQUmIB54CSHYs
+         8VmQ==
+X-Gm-Message-State: AOJu0Ywn8bq8SlUesSRj9XG1XO/7WhNo+yzmKEiJE5sx/sd2tD7nZPVH
+	7KBl/0ZyubhI61glxOySHSxcHPdJhHlX2DEnnWK8NhOiOtrlcn8uK1DULcndNuw=
+X-Google-Smtp-Source: AGHT+IEJXSMs8i/ULaVvIYuF1LRfLKLZCFaSajGTqXU0ezQ+aYm+2catGB5oyDuks5MOauz4ino/XQ==
+X-Received: by 2002:a17:906:874c:b0:a59:c3e2:712f with SMTP id a640c23a62f3a-a6264192ff3mr1071760566b.9.1716992806572;
+        Wed, 29 May 2024 07:26:46 -0700 (PDT)
+Received: from [192.168.128.35] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a626cc4f56asm719071966b.115.2024.05.29.07.26.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 May 2024 07:26:46 -0700 (PDT)
+Message-ID: <8f3f1e88-426d-4254-a31c-afcb88fc08f3@linaro.org>
+Date: Wed, 29 May 2024 16:26:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,163 +76,100 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Add support for
- 2.5G SGMII
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-CC: Andrew Halaney <ahalaney@redhat.com>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <20231218071118.21879-1-quic_snehshah@quicinc.com>
- <4zbf5fmijxnajk7kygcjrcusf6tdnuzsqqboh23nr6f3rb3c4g@qkfofhq7jmv6>
- <8b80ab09-8444-4c3d-83b0-c7dbf5e58658@quicinc.com>
- <wvzhz4fmtheculsiag4t2pn2kaggyle2mzhvawbs4m5isvqjto@lmaonvq3c3e7>
- <8f94489d-5f0e-4166-a14e-4959098a5c80@quicinc.com>
- <ZlNi11AsdDpKM6AM@shell.armlinux.org.uk>
+Subject: Re: [PATCH v10 15/15] arm64: dts: qcom: sa8775p: add a dedicated
+ memory carveout for TZ
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Marko <robimarko@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Maximilian Luz <luzmaximilian@gmail.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>, Elliot Berman <quic_eberman@quicinc.com>,
+ Alex Elder <elder@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ kernel@quicinc.com
+References: <20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org>
+ <20240527-shm-bridge-v10-15-ce7afaa58d3a@linaro.org>
 Content-Language: en-US
-From: Sneh Shah <quic_snehshah@quicinc.com>
-In-Reply-To: <ZlNi11AsdDpKM6AM@shell.armlinux.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240527-shm-bridge-v10-15-ce7afaa58d3a@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ju5-ZsrkPL9R1SA-3neuqWKDaOGhTLpO
-X-Proofpoint-GUID: ju5-ZsrkPL9R1SA-3neuqWKDaOGhTLpO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-29_11,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- impostorscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0
- priorityscore=1501 mlxscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2405170001 definitions=main-2405290097
 
+On 27.05.2024 2:55 PM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Add a 20MB reserved memory region for use by SCM calls.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 31de73594839..c183527452d7 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -208,6 +208,7 @@ core3 {
+>  	firmware {
+>  		scm {
+>  			compatible = "qcom,scm-sa8775p", "qcom,scm";
+> +			memory-region = <&tz_ffi_mem>;
+>  		};
+>  	};
+>  
+> @@ -418,6 +419,12 @@ cdt_data_backup_mem: cdt-data-backup@91ba0000 {
+>  			no-map;
+>  		};
+>  
+> +		tz_ffi_mem: tz-ffi@91c00000 {
+> +			compatible = "shared-dma-pool";
+> +			reg = <0x0 0x91c00000 0x0 0x1400000>;
 
+How does that size relate to 
 
-On 5/26/2024 9:57 PM, Russell King (Oracle) wrote:
-> On Thu, Dec 21, 2023 at 02:23:57PM +0530, Sneh Shah wrote:
->> On 12/20/2023 9:29 PM, Andrew Halaney wrote:
->>> I'd evaluate if you can update that function to clear the ANE bit when
->>> the ane boolean is false. From the usage I see I feel that makes sense,
->>> but correct me if you think I'm wrong.
->>> At the very least let's use the defines from there, and possibly add a
->>> new function if clearing is not acceptable in dwmac_ctrl_ane().
->>>
->>> Stepping back, I was asking in general is the need to muck with ANE here
->>> is a Qualcomm specific problem, or is that a generic thing that should be
->>> handled in the core (and the phy_set_speed() bit stay here)? i.e. would
->>> any dwmac5 based IP need to do something like this for SPEED_2500?
->> I think disabling ANE for SPEED_2500 is generic not specific to qualcomm.
->> Even in dwxgmac2 versions also we need to disable ANE for SPEED_2500.
->> Autoneg clause 37 stadard doesn't support 2500 speed. So we need to
->> disable autoneg for speed 2500
-> 
-> (Going back over the history of this addition)
-> 
-> What 802.3 Clause 37 says is utterly _irrelevant_ when discussing Cisco
-> SGMII. Cisco took 802.3 1000base-X and modified it for their own
-> purposes, changing the format of the 16-bit control word, adding support
-> for symbol replication to support 100Mbps and 10Mbps, changing the link
-> timer, etc. SGMII is *not* 802.3 Clause 37.
-> 
-> I guess you are getting caught up in the widespread crud where
-> manufacturers stupidly abuse "SGMII" to mean maybe "Cisco SGMII" and
-> maybe "802.3 1000base-X" because both are "serial gigabit MII". Yes,
-> both are serial in nature, but Cisco SGMII is not 1000base-X and it
-> also is not 2500base-X.
-> 
-> What makes this even more difficult is that 2500base-X was never
-> standardised by the 802.3 committees until very late, so we've ended
-> up with manufacturers doing their own thing for years. We've ended up
-> with a mess of different implementations described in different ways
-> many of which boil down to being 2500base-X without inband AN. For
-> example, one manufacturer talks about "HS-SGMII", but doesn't permit
-> the interface to operate at the x10 and x100 symbol replications that
-> conventional Cisco SGMII uses for 100M and 10M speeds respectfully,
-> making it in effect no different from 2500base-X.
-> 
-> Now through into this mess various implementations that do not support
-> inband at 2.5G speeds, those that require inband at 2.5G speeds... one
-> can get into the situation where one pairs a PHY that requires inband
-> with a PCS that doesn't support it and the result doesn't work. This
-> is particularly problematical if the PHY is on a hotpluggable module
-> like a SFP.
-> 
-> It's a total trainwreck.
++	pool_config.max_size = SZ_256K;
 
+in patch 3?
 
-
-Qualcomm ethernet HW supports 2.5G speed in overclocked SGMII mode.
-we internally term it as OCSGMII.
-
-End goal of these patches is to enable SGMII with 2.5G speed support.
-The patch in these series enabled up SGMII with 2.5 for cases where we
-don't have external phy. ( mac-to-mac connectivity)
-The new patch posted extends this for the case when the MAC has an
-external phy connected. ( hence we are advertising fr 2.5G speed by adding
-2500BASEX as supported interface in phylink)
-
-
-> 
-> I do have some work-in-progress patches that attempt to sort this out
-> in phylink and identify incompatible situations.
-> 
-> See http://git.armlinux.org.uk/cgit/linux-arm.git/log/?h=net-queue
-> 
-> commits (I think)...
-> 
-> net: phylink: clean up phylink_resolve()
-> 
-> to:
-> 
-> net: phylink: switch to MLO_AN_PHY when PCS uses outband
-> 
-> and since I'm converting stmmac's hacky PCS that bypasses phylink to
-> a real phylink_pcs, the ethqos code as it stands presents a blocker
-> because of this issue. So, I'm intending to post a series in the next
-> few days (after the bank holiday) and will definitely need to be
-> tested on ethqos hardware.
-> 
-
-I am going over the list of these patches.
-
-> However, first we need to get to the bottom of your latest patch that
-> only sets PHY_INTERFACE_MODE_2500BASEX when plat_dat->flags has the
-> STMMAC_FLAG_HAS_INTEGRATED_PCS flag _set_, but the stmmac code very
-> oddly does _not_ use the built-in PCS if this flag is set. See:
-> 
-> 	stmmac_ethtool_get_link_ksettings()
-> 	stmmac_ethtool_set_link_ksettings()
-> 
-> and their use of pcs_link / pcs_duplex / pcs_speed. Also see
-> 
-> 	stmmac_common_interrupt()
-> 
-> and its use of pcs_link to control the carrier, the dwmac1000 and
-> dwmac4 code that reads the status from the GMAC, updating the
-> pcs_link / pcs_duplex / pcs_speed variables.
-
-In this version of qualcomm ethernet, PCS is not an independent HW
-block. It is integrated to MAC block itself. It has very limited
-configuration.Here PCS doesn't have it's own link speed/duplex
-capabities. Hence we are bypassing all this PCS related functionalities.
-
-
-I will update with more details on the integrated PCS block autoneg
-standard.
-> 
+Konrad
 
