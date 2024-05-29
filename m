@@ -1,124 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-20937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3A688D36E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:57:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 672EA8D38DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 16:13:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A768D1C224DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 12:57:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9884D1C22311
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:13:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 689474C83;
-	Wed, 29 May 2024 12:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D39D14B972;
+	Wed, 29 May 2024 14:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qNZ87PUJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YzVSqhMM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E9779D3;
-	Wed, 29 May 2024 12:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB34914B97D;
+	Wed, 29 May 2024 14:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716987470; cv=none; b=IROBqZBmDWa+mvx+zAdmdtDTWIW48F08t5WJHCQkXUUDeGcKEg3MOPrxrFnObzC8VeGn1Ti/pJgPlJbnEzS+b0TUiKaW7Mkh+39WWA44uhHtpBLHL7nU0C518HLmuttK9iHMB68wtyqQJf5jdsn0hCs0JpRhG4oZzIbMzFjJtsA=
+	t=1716991958; cv=none; b=BHHlxSMr0x0f0EFkx39TC8kYGNkTAKtVEoMjMhciSZjRF5HzOa+DjGid449gt8lMZ6584RZxautTRYXAu4wllj2Btl/kjZV2fuP2DyYUSxRE0i3CYqs5Gq3aFz6uQlFkVWl6teXC95hQMtaN7q6QK1CoK5bEThGwHFDbQpaNrf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716987470; c=relaxed/simple;
-	bh=Kf2XD0U6dqkRaiIXSiX5t61ZvzMR1rEAHQmrTquShYc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uG/J2/gE1BKSUuD/6KkPj21dxOcqJI7goc0YRuUC2hI+n0s8e6nJKH7HGfS+ChLnJHPLvUU/JD0SmpK8kPqYjWia63VsOgb0aOA+KFGnXE6sZwGXfivcA0UMGpS/fLJu4B25TFQB825nlJRABmx9PZh86knWKbjBZBJTaJKtrHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qNZ87PUJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50DAC2BD10;
-	Wed, 29 May 2024 12:57:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716987469;
-	bh=Kf2XD0U6dqkRaiIXSiX5t61ZvzMR1rEAHQmrTquShYc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qNZ87PUJnddl+YKpyYkoqkIOY7lxogibjj0LcSsel5rTqUAJHzV9cS0cXF6UA9i6W
-	 n8YKQVHmqxrzAuin6o/k3NANI7Vb5tJu8EYnkGHzvVH4jku1PdLqZRi9BrLCb7pJgG
-	 ionX4DNbdk+zSyIO0SV1Un0NBoUL6CKhSFrsKOnAk1SPeJhuVY+tP56SvC38dR+u3Q
-	 wrlh9v056yQf6UUoJK0MJiU75I46ZFXw4rYpVGDEfw21TfVuAxtfu36D27WXAX6yml
-	 gAWiwoUYRfwi3vMagQywszbDODHLln3y45LaTBg76RKxyhB58un7qoiHRf60yjXTPS
-	 PmyDiJ3bLvCaQ==
-Message-ID: <c8e2d859-ff7c-4ea1-a731-b0f0500ba8c6@kernel.org>
-Date: Wed, 29 May 2024 14:57:44 +0200
+	s=arc-20240116; t=1716991958; c=relaxed/simple;
+	bh=7NWEr5StuLmVJzguniP2zwAbQK9RarAUtHZ7MlPcfRQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iDS3PigHnqhnKp6VDFgvItCeKo6f8MSx0ReYxCRhVWRA6H0ab3syzT7D9I1E/RK5iEGswhVnBh59E0v2CrRjFZxCQTZxGgKco5QS9Udrdk07/73sQ7hJRh2eP4uEHMlDvlw5dL5SIpT8M2L+IGuliQTQKAJyWpXlBud8TnLLhqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YzVSqhMM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44TB3von022257;
+	Wed, 29 May 2024 14:12:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	sPvIvJ2IIY00uJkZe6YmwHumkZ4S2a0l8w41fyVrgOo=; b=YzVSqhMMQ53xi4bQ
+	u+oJUcItr1I6YcJ5EjeFoyX5a+7/VrXzy26M0I4Gws3/3iLPg/QnTxQfP+atfsYG
+	WN0zfFre/vIby8h0XBV4Z9yd/4PQYLuDXraoKby86MGJYCX90ymaka8qir98X6b+
+	mJVNjIPo/fC+EUpYym36jRJPLTykPe0l5vASDhx7mEEOpbMuw2wGzJULeUWkjhbq
+	XK54octCXJni229tVuAwnTuw9LaYklGHu9XlFPO3uHdr8weKOKtOlRtvopztJvAP
+	xlemZfjWJjxsro6yfqhYTu7P5vyqnYsZP2MP/vY0f+NWQIpx0SnrYaxK+imvbmqE
+	TqxJSQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba1k9553-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 May 2024 14:12:32 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TECVfB004147
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 May 2024 14:12:31 GMT
+Received: from [10.216.41.231] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 May
+ 2024 07:12:23 -0700
+Message-ID: <43068207-ed07-f616-9ecc-77372d9d4704@quicinc.com>
+Date: Wed, 29 May 2024 19:42:19 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: cache: qcom,llcc: Add SA8775p
- description
-To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240529101534.3166507-1-quic_tengfan@quicinc.com>
- <20240529101534.3166507-2-quic_tengfan@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8450: Add qfprom node
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240529101534.3166507-2-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Konrad Dybcio <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1709727995-19821-1-git-send-email-quic_mojha@quicinc.com>
+ <1709727995-19821-2-git-send-email-quic_mojha@quicinc.com>
+ <45fcf8fb-9d9b-4e6a-a7c5-9bfb96875e64@linaro.org>
+ <69a8c14c-109a-103a-b8dc-d8e303c0f0d5@quicinc.com>
+ <gxi4klvxzwwyrwb2b4h7kmii5dx5mxdypxowwz3kyllvq6grss@6lahaospwtsh>
+ <4jopw7qv2jlq7b5ljkxfhjjjdlqclruouentrvbjt43yybxyf6@qzsk4imnmq5m>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <4jopw7qv2jlq7b5ljkxfhjjjdlqclruouentrvbjt43yybxyf6@qzsk4imnmq5m>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: mGKwbwYvWS1ArAylhw4vIuIJcXnOKCgc
+X-Proofpoint-GUID: mGKwbwYvWS1ArAylhw4vIuIJcXnOKCgc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-29_11,2024-05-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ suspectscore=0 phishscore=0 clxscore=1011 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 spamscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405290097
 
-On 29/05/2024 12:15, Tengfei Fan wrote:
-> Add the cache controller compatible and register region descriptions for
-> SA8775p platform.
+
+
+On 5/28/2024 9:07 PM, Bjorn Andersson wrote:
+> On Sun, Mar 17, 2024 at 08:21:58PM GMT, Bjorn Andersson wrote:
+>> On Thu, Mar 14, 2024 at 10:13:59PM +0530, Mukesh Ojha wrote:
+>>> Sorry for the late reply, was on vacation.
+>>>
+>>> On 3/6/2024 9:24 PM, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 3/6/24 13:26, Mukesh Ojha wrote:
+>>>>> Add the qfprom node for sm8450 SoC.
+>>>>>
+>>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>>>>> ---
+>>>>>    arch/arm64/boot/dts/qcom/sm8450.dtsi | 7 +++++++
+>>>>>    1 file changed, 7 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> index b86be34a912b..02089a388d03 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+>>>>> @@ -4575,6 +4575,13 @@
+>>>>>                };
+>>>>>            };
+>>>>> +        qfprom: efuse@221c8000 {
+>>>>> +            compatible = "qcom,sm8450-qfprom", "qcom,qfprom";
+>>>>> +            reg = <0 0x221c8000 0 0x1000>;
+>>>>
+>>>> Is is really only 0x1000-long? Also, is the base you put
+>>>> here the ECC-corrected part (if that still exists)?
+>>>
+>>> No, its not.
+>>>
+>>> Entire fuse space is this.
+>>> 0x221C0000-0x221Cbfff
+>>>
+>>> ECC corrected range is this 0x221C2000-0x221C3fff and High level OS
+>>
+>> That's 0x2000. Does this then also imply that the ECC-corrected values
+>> are no longer mapped 1:1 with non-corrected, or why do they differ in
+>> size?
+>>
+>>> does have a access to ECC range however, they are not recommended for
+>>> SW usage.
+>>>
+>>> Above mentioned SW range(4) in the patch is  one and only accessible range
+>>> available out of 0-7 SW ranges(0x221C4000-0x221Cbfff with each
+>>> size 0x1000) and does not have ECC fuses.
+>>>
+>>
+>> So you're saying that in contrast to other platforms, the 4th software
+>> range, dedicated for HLOS, does not have a matching ECC-corrected
+>> shadow? If that's the case, then "not recommended for SW usage" sounds
+>> wrong.
+>>
+>>> All the downstream use cases are getting fulfilled with this.
+>>>
+>>
+>> You only need ECC if you're unlucky...
+>>
 > 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> ---
+> The patch is either incorrect or the commit message is lacking answers
+> to the questions from Konrad and myself.
+> 
+> Would have appreciated a reply here, but either way I'm marking this as
+> "changes requested" and dropping it from the queue.
 
+Apology for coming late on this., it just skipped from my tracking.. 
+Frankly, I don't have convincing answer apart from what reason are 
+exposed to kernel to read for SoCs like sm8[456]0 , will try to get
+the answer soon.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+-Mukesh
 
