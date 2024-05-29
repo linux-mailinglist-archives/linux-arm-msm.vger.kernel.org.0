@@ -1,134 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-20930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 032958D35D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 13:55:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 861348D366F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 14:30:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 94A8F1F24542
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 11:55:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 38684285566
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 12:30:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 475231802CD;
-	Wed, 29 May 2024 11:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F2C6143864;
+	Wed, 29 May 2024 12:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QvAdy3Vk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rqOHqJG6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C931BC57;
-	Wed, 29 May 2024 11:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA36363;
+	Wed, 29 May 2024 12:30:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716983704; cv=none; b=ElPL/MbdLXQHnbRprbxCQ04mVpQ8Y0tgBPn1m/1cZgupbfS4dIAgej1g47+uUd5jx9dZtAtlIZfHq6CNIfg5FpPxsopmDV61Dy2ZF5Zv5tn82C7D5POm9SH/73KBidZ4UmeYtUWqTjL0fuTWEkt3fsK2KXncwDZ9PD7IRLa3oQ0=
+	t=1716985844; cv=none; b=gDQ5dg2rWsMkn4rEsXTV60E9wacVUOU0jdglnpQdX6pYV8PxfcX9jkleZXrPO6voyK4YPn/pZrwkszitWn2+6aDT5WH00oINBDTEB9CxoKHpf+zLuMVKYXcDP8T7gMxkr97G8IR8B13tolKId03YEJ5b7bJnyH43puD6O69Druw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716983704; c=relaxed/simple;
-	bh=p7wQtzPc0gskeZlqdHZkaIR8z402TtfibTSQeobi72Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NRjPlttJQw+M8boY8Uf0wXr62AnVka4LCO+GNHDOeGX80JxflmawjXmmpp/RqcTYBiI8FqZNWKU3nJAA+A8LpKevYyZIgEjPjXGoPw/RHMRZy3tB5m6WSWc/crHg/dQEBNK8IINOIqxxmYsJ/SQA5rQ3BlEd29sLoGr3RCnlGBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QvAdy3Vk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44T9jhqN011441;
-	Wed, 29 May 2024 11:54:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SP7r+/9vOIiDhIdLbDBVBorrd8fvJYwJfnczReif0ZY=; b=QvAdy3Vks2lxWAdP
-	LKqn0Og9ORaR3o0voQdEmqpgtL7iXO6T4Vblm4lvFI2sna9dj85AA+pI0W1st3Hp
-	YFcuWUQPld5FcYs5f+g+pavKl35s/CgT18gmxEoUU8aMj7avrrH1+kU7JDTNJsdZ
-	I2p3TEzsJ4xDMeVTvHjxCEXdXoLT6rL9P+ih4aFBaexk6nR+t6G2soOpQI3EICl5
-	izAVJsfjs8RmZnHfDVhUgN1kYVVXDszHoP+jse8D2PnoEhvKVKH4ateE3CWYMqIw
-	VdAFmzzM4mu1MAqV+tXy+itVnpXpZyuOyG/Zs3VA9Rr8+LmPmy/Bz0x1K/4f3gqY
-	06oG5A==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba0qgu95-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 May 2024 11:54:58 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44TBsvnQ011684
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 May 2024 11:54:57 GMT
-Received: from [10.216.41.231] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 29 May
- 2024 04:54:54 -0700
-Message-ID: <d85bf913-b6dc-e9fd-7c54-fe52b79c2593@quicinc.com>
-Date: Wed, 29 May 2024 17:24:29 +0530
+	s=arc-20240116; t=1716985844; c=relaxed/simple;
+	bh=qysojHCt34lVFTw5o2Qb7u5ZiOetrK6Y8yCv6llDkDk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=POtsATQp7g8ClZd6wHQ8716Jrca9s1TCmDpoWxXM/7SDRalJhQVcZ8L7uKt3psV7xZhG60jDTNEMHlqyoU5VeOV2BPR+FPj9OVygt8WTBkT1ShSqMCmovX5tJHsQSxid3uX3f7nbxn5Ixn1h8K/OGfDyTBKRvCY3ZJOlkPv6jVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rqOHqJG6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28720C2BD10;
+	Wed, 29 May 2024 12:30:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1716985843;
+	bh=qysojHCt34lVFTw5o2Qb7u5ZiOetrK6Y8yCv6llDkDk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rqOHqJG6pDRXPs0fuBXdRkc3NnC+xVkBeSDqxkWl3KxABGtlBElwcfkQW85zquJ7G
+	 jTvcRI+M+3cR3tZHyuhtl6cBwc2rl2NMc1O2bTYQizleqFkbVGkGqI0lZ+vP7iuc06
+	 d5gP5u7BBYEVDFuMjwP/ieHfNp634csCdEoBIxl/hQXok0Me8lFYnn9esa2UTwMYm4
+	 M2xejWyhHH5jJuTXKHFmvu+pi9B7onfIzIhDZSuRdErqLaTOJMH1z8M/72Hi3Oneuj
+	 zIf/1Lz1fspjD8A2vPqvjlCKiCVk1ijHbhgsDVweRU1KCVeAABl1eYRdFH3zE2Sgvp
+	 kUKHOc7ui6X9w==
+Message-ID: <e32117a4-9616-401f-bf50-23312ce15199@kernel.org>
+Date: Wed, 29 May 2024 14:30:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2] firmware: qcom_scm: Add a padded page to ensure DMA
- memory from lower 4GB
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1716564705-9929-1-git-send-email-quic_mojha@quicinc.com>
- <h6omxqre7pod3ztn7x3sckjbgcg32u4btfmtxwn2rkjw7uwsgd@ncdmu5ed4gm3>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/10] dt-bindings: clock: qcom: split the non-PD schema
+ for GCC
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Robert Marko <robimarko@gmail.com>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240528-qcom-gdscs-v1-0-03cf1b102a4f@linaro.org>
+ <20240528-qcom-gdscs-v1-1-03cf1b102a4f@linaro.org>
+ <9a1bbcbd-7f46-4266-8f08-5650a42234d4@kernel.org>
+ <CAA8EJppu8kKC_zXRBAK9XAaPZ7SYShiZwpfQGYpC10Aj28Lxjw@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <h6omxqre7pod3ztn7x3sckjbgcg32u4btfmtxwn2rkjw7uwsgd@ncdmu5ed4gm3>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <CAA8EJppu8kKC_zXRBAK9XAaPZ7SYShiZwpfQGYpC10Aj28Lxjw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aL52d0rawomMSiGPufVMQOfTYaQNQGXX
-X-Proofpoint-ORIG-GUID: aL52d0rawomMSiGPufVMQOfTYaQNQGXX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-29_07,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 malwarescore=0 spamscore=0 adultscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405290081
 
-
-
-On 5/27/2024 2:16 AM, Bjorn Andersson wrote:
-> On Fri, May 24, 2024 at 09:01:45PM GMT, Mukesh Ojha wrote:
->> For SCM protection, memory allocation should be physically contiguous,
->> 4K aligned, and non-cacheable to avoid XPU violations. This granularity
->> of protection applies from the secure world. Additionally, it's possible
->> that a 32-bit secure peripheral will access memory in SoCs like
->> sm8{4|5|6}50 for some remote processors. Therefore, memory allocation
->> needs to be done in the lower 4 GB range. To achieve this, Linux's CMA
->> pool can be used with dma_alloc APIs.
+On 29/05/2024 09:58, Dmitry Baryshkov wrote:
+>>> -    const: 1
+>>> -
+>>> -  '#reset-cells':
+>>> -    const: 1
+>>> +allOf:
+>>> +  - $ref: qcom,gcc-nopd.yaml
+>>>
+>>> +properties:
+>>>    '#power-domain-cells':
+>>>      const: 1
 >>
->> However, dma_alloc APIs will fall back to the buddy pool if the requested
->> size is less than or equal to PAGE_SIZE. It's also possible that the remote
->> processor's metadata blob size is less than a PAGE_SIZE. Even though the
->> DMA APIs align the requested memory size to PAGE_SIZE, they can still fall
->> back to the buddy allocator, which may fail if `CONFIG_ZONE_{DMA|DMA32}`
->> is disabled.
+>> So what's left here? One property? Not much benefit. Triple-schema
+>> (include something to include something) does not make it readable. Just
+>> do not require power-domain-cells in qcom,gcc.yaml.
 > 
-> Does "fail" here mean that the buddy heap returns a failure - in some
-> case where dma_alloc would have succeeded, or that it does give you
-> a PAGE_SIZE allocation which doesn't meeting your requirements?
+> And add it to the required list on all relevant platforms? Ack, sounds
+> fine to me.
 
-Yes, buddy will also try to allocate memory and may not get PAGE_SIZE 
-memory in lower 4GB(for 32bit capable device) if CONFIG_ZONE_{DMA|DMA32} 
-is disabled. However, DMA memory would have successful such case if
-padding is added to size to cross > PAGE_SIZE.
+Yes.
 
-> 
->  From this I do find the behavior of dma_alloc unintuitive, do we know if
-> there's a reason for the "equal to PAGE_SIZE" case you describe here?
+Best regards,
+Krzysztof
 
-I am not a memory expert but the reason i can think of could be, <= 
-PAGE_SIZE can anyway possible to be requested outside DMA coherent api's
-with kmalloc and friends api and that could be the reason it is falling
-back to buddy pool in DMA api.
-
--Mukesh
 
