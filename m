@@ -1,66 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-20866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-20867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5F778D2A5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 04:03:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BB678D2A62
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 04:03:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 91DBE28B432
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 02:03:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4EFF28B996
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 May 2024 02:03:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B17915B989;
-	Wed, 29 May 2024 02:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1045215CD52;
+	Wed, 29 May 2024 02:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BVsnwEk/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lwFVivYO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EF315B97C;
-	Wed, 29 May 2024 02:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99B515CD4C;
+	Wed, 29 May 2024 02:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716948135; cv=none; b=DebIv9vvNHPcqSzXKmRTngtXJcAX/xjkUd0H5+3+TdL/I2lRIdZD1s7CpgDKIkuUCL8oLuSAsS06HSLlkVEtrUVCN3+wjTtxaJTXt3QoeI6fX3rM1yD2le3pj6PmZEHsgjlBf4NY0rBg4+fvBgXuFt5Axwjb/cgSkGBxWrgsTi8=
+	t=1716948137; cv=none; b=M7QHd73AxPsFJtg9Ya5KRclgYtJs4hnnRPQb/yzjo8B48AH1x8jKegeo2fRaR/zJoLSGe6nYaNI53YC+EoTde5QvQqqY3TBRas2vylUsb3Wgbqt93E0WVS5n+dUE72MngfHElkxnZd4IV4IUhoirk+I6vnogzBivDtPCvo4X1mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716948135; c=relaxed/simple;
-	bh=Ht98n3uyX7/ET9LzMfbLEeZ6yp0xwk/rw4foIuFmNsw=;
+	s=arc-20240116; t=1716948137; c=relaxed/simple;
+	bh=kBuQ9fcA+VN6pPO3SFipaZrl1mBckkhQxMcU1vdmrT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RpaSW49R/mEumFfGOpUh0gUoV1ppIv+3pHIMGxbsYOBC8BrjVTiiJc9e9oMlkkdAFzP54TtDW4sIb32PyElOsoHmXKcFkcYgeUi7IYcwfU0eRU2rzQh+TqUhxkuzz11lpG7d4KcZJ7vMS+7Tg+DiLOBCBvaJm6mEtApOohE0jf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVsnwEk/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC7DC4AF07;
-	Wed, 29 May 2024 02:02:13 +0000 (UTC)
+	 MIME-Version:Content-Type; b=pNKCuIkWwJUxBTeoZUGdnrj/Aamw85Yg6p+APyD3K9mb9OZ9hRg+M0SBY0qaIETlU7gSm3u9BIByubu0c+FO7UKc0gHIluOY1ZknJn8kfPv7/lzOSbQ++MtskN3vhdzFVmT4RJ8uzv/UwYBO6EODKCafK1XJ8gMOA7L52yw2Kwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lwFVivYO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB112C4AF08;
+	Wed, 29 May 2024 02:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716948134;
-	bh=Ht98n3uyX7/ET9LzMfbLEeZ6yp0xwk/rw4foIuFmNsw=;
+	s=k20201202; t=1716948136;
+	bh=kBuQ9fcA+VN6pPO3SFipaZrl1mBckkhQxMcU1vdmrT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVsnwEk/85Rc/xqcdVeJNV2FSVWKDLZvWv/YT1ZxnlWADsciI6kpbXQA8D1FPtTj2
-	 QXCo69FAwzFK9oARFMEChJjJVtE80AlDjz3blNAJrdbe6KMr3wXP6nCdEFvMpOlnhh
-	 zLBubSncSrKyWkPKsFjaMa2/wKE5VxuK4UcpOPFVDGYq8GLJgT5MGseXUmsonTpirA
-	 aP1hxkL3lEOkSukZCw5srS84mZ1qTn8BJ8GK94pDgj/2dCd7ETfoBoKUFGXDUZ5ux5
-	 BAgW53Qn6BvgZfmtY8agX08OwJqWFVMCkNpRYjQ4nuUtajVMK2FKb5FY8j5T657chq
-	 NlsjLsFhsSNjg==
+	b=lwFVivYOgH6ldsdLchXHx8VvhvKvJ2HOJXTIpYoe1syCLelhlDuql/2rPzZcCvm3w
+	 BwuBUY1hRH3dZr2/8875yzsE+sHEY2GLSzzfbMoqaJpsjpQO8IPtFOvO8lU4VPoSLQ
+	 X7Uxtp+B8ZABJb+ZWLVcO82zeHX2HSIj0EcbVfQwsaTihNVNvHXE0LbEknveDL7rpH
+	 WcsA3Mm23OfE/f8dWEXBajFO/lNQMmobJofNmst2lMBGuVgdfFv0vgAb/qJzMuTATQ
+	 uf0ia4VvpVsndQxmSY69Ta6/bTkNjTJahLInrlzTwsuDe7APARcC+NxGyW07Z57CkA
+	 4Ed6S8oh2mnSQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+To: Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	ath10k <ath10k@lists.infradead.org>,
+	Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: wireless <linux-wireless@vger.kernel.org>,
+	DT <devicetree@vger.kernel.org>,
+	MSM <linux-arm-msm@vger.kernel.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Luca Weiss <luca@z3ntu.xyz>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/3] Convert qcom,hfpll documentation to yaml + related changes
-Date: Tue, 28 May 2024 21:01:53 -0500
-Message-ID: <171694812070.574781.3127154907434506746.b4-ty@kernel.org>
+	Pierre-Hugues Husson <phhusson@freebox.fr>,
+	Arnaud Vrac <avrac@freebox.fr>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jami Kettunen <jamipkettunen@gmail.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>
+Subject: Re: (subset) [PATCH v3 0/3] Work around missing MSA_READY indicator for msm8998 devices
+Date: Tue, 28 May 2024 21:01:54 -0500
+Message-ID: <171694812078.574781.940205504715408568.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240218-hfpll-yaml-v2-0-31543e0d6261@z3ntu.xyz>
-References: <20240218-hfpll-yaml-v2-0-31543e0d6261@z3ntu.xyz>
+In-Reply-To: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
+References: <ebbda69c-63c1-4003-bf97-c3adf3ccb9e3@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,16 +75,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sun, 18 Feb 2024 21:57:24 +0100, Luca Weiss wrote:
-> Finally touch the hfpll doc and convert it to yaml, and do some related
-> changes along the way.
+On Mon, 29 Apr 2024 16:01:41 +0200, Marc Gonzalez wrote:
+> Work around missing MSA_READY indicator in ath10k driver
+> (apply work-around for all msm8998 devices)
 > 
+> CHANGELOG v3
+> - Add a paragraph in binding commit to explain why we use
+>   a DT property instead of a firmware feature bit.
+> - Warn if the "no_msa_ready_indicator" property is true,
+>   but we actually receive the indicator.
 > 
+> [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: qcs404: Use qcs404-hfpll compatible for hfpll
-      commit: 839936d9676bdc2e4dde63631131feb8870fa4d2
+[3/3] arm64: dts: qcom: msm8998: set qcom,no-msa-ready-indicator for wifi
+      commit: 737abcabe97bb37e38be2504acd28ad779dbaf3d
 
 Best regards,
 -- 
