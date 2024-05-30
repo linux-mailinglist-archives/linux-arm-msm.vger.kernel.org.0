@@ -1,130 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-21119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2BAF8D4E06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:33:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B0238D4E0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:34:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E3FF5B20DF7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:33:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E49181F21253
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:34:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAF5C176231;
-	Thu, 30 May 2024 14:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C759417C21C;
+	Thu, 30 May 2024 14:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ieQgh+8J"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="UY6jCxw7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0A116EC1E;
-	Thu, 30 May 2024 14:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D99016EC1E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 14:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717079584; cv=none; b=Ze2afb8/b0QhwU8kLRfrRSh4EeFxK03G1BC2wLw7phGCWMsQFL4u5X702Fgt6G6SKRbLnHHEeBuy+3EabhHtPFRCltsPpYQKx75xgV7llVXqjRNgvQwcvRVjWTjd5gSvFQIJsdhklRZ6WYEwkgI38H1p3iLZYC3BzOahIVqXamw=
+	t=1717079663; cv=none; b=iY5Da7+b//4DqY6CQ1b/iska9h7H7gYSKfOulVp5HPE6s0BjJAMG+5+ZfG9E7RgXdq/Lo5XH7FiDSi9B0qcYP/2E0vUIpTJhD7Di7Dym1tcXA/LgqQZiXC6z4LVYCfHOAyxusRq9pKdRaW7i0u7hbnVEQpl1jxcEg1R65U35Fcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717079584; c=relaxed/simple;
-	bh=FgNZ6UjOzMWytcVycdPrNhtaXn45l9qWzklpNQ44q/g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gjtl3G8F65D+IAF96jpJFiQ8VW+lrHARAK6+o3m9xBx+IksS1Z8+Fp8vkigdS6aMVPVSlp3tpbSrlhHIF9WCWZURbE3kt8n05h3UoBicWrndf83iAdr9qboGgpaM11RPswaeKCruCHVwX1ntsYoSlCuNdo7CQHkfjcjS7HDOqhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ieQgh+8J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E047C2BBFC;
-	Thu, 30 May 2024 14:32:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717079584;
-	bh=FgNZ6UjOzMWytcVycdPrNhtaXn45l9qWzklpNQ44q/g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ieQgh+8J1zMd+M7lZKkSMAAW+nBzU7iyminVY9mOzC4OvUHf76yVw0iUFzkm7v6Cz
-	 H9OtSrjVMLk8g4rAZAqChoL4sADAT2SLccwSJwgZure+lRUweRMgkccCh6v6JiKPif
-	 2SzjvDkobOkdS2uQf1dpAyNAf0hlQyYbpcfg/KpXu4Ah5a4up2e0n3W97oBbklQwrb
-	 pVTBRLlgyHeh3B20/aJu+0wjKFMm1PT3HZFgmneyGZBvNvaWycAQjZItGv8rx2QEnz
-	 sN1fr7Rm4cmUus6x1WYwpoULzIOeES1gLQYNwCaGtIP+fLIVDJiM009oWCV5UsFznr
-	 DxiyTi/Ls9Eig==
-Date: Thu, 30 May 2024 20:02:54 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-Cc: jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
-	manivannan.sadhasivam@linaro.org, andersson@kernel.org,
-	agross@kernel.org, konrad.dybcio@linaro.org,
-	quic_msarkar@quicinc.com, quic_kraravin@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 0/3] pci: qcom: Add 16GT/s equalization and margining
- settings
-Message-ID: <20240530143254.GE2770@thinkpad>
-References: <20240501163610.8900-1-quic_schintav@quicinc.com>
+	s=arc-20240116; t=1717079663; c=relaxed/simple;
+	bh=Lr42HS19H39Jg+IU3og7cv+Dzp46hLgy1NFduKRJYvM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oNr4T2D+OV/aYCibx7WTjUI87ra3WcN7XH7DBv87X5qiWgX4/TeIg4ZHRCyZclzCENfL2NOEO1LReCiLjC3aO/sttYlhr4MylG9v5V5sq6/q20vuc75p1fbfBUy1oO1gYfYgN3B4rxGbP2ZFr5NcTSOc+b68k01G1UBnqfE6cJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=UY6jCxw7; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-43e23ce7b07so4880881cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 07:34:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1717079658; x=1717684458; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SC6nWvS6ksIVK7SPyvfcXHHq7DHpEEdDXC/BUNLhAHQ=;
+        b=UY6jCxw7Lk1SQALETVI3z3POLOF6PdPDSnAN43zIlY5TkXy4wIM3rWAXkor8WPVTW0
+         +FDYyWld50d4vnD/69LIADvwYkaT1fTtXtkY/uZCsbzvI6k4Bv0wEZDR4qGCilGLnSjL
+         j75mk4HFvQcfZSHt2trFBc3rUmnIDQBWgBPWw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717079658; x=1717684458;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SC6nWvS6ksIVK7SPyvfcXHHq7DHpEEdDXC/BUNLhAHQ=;
+        b=mbtFr5FzHUcGKI6HqGfDSFYZEVPlzAluI6fMjUY3tzH82GKaonRpiuCbASojAIjYN1
+         wNQCl8ubAMlIRCwIjNdsyWuEATn59U+bOWuOqDmbYwIraRqc8F1BlZhicFokJMHbdun9
+         yEOo+t2gKN9+uRYy+2YSfy23zNsxY2xl2fW8pHmkaC6DZjTX5/w9lu3vqEysXyjm8/5B
+         61rapGihizZ8EQzP9n1/fQXeQPKv3Zgr/t8ORbVZLJQGBWCIjRVg9pjGQDBa9toC50Mr
+         BqaN3Eh38Vyt+CtwjDwRfw3R1DqjQPW9VPQwgVZy5hQ2cHWqZFokv7ecxF/4kD1rlPBz
+         P5Pg==
+X-Forwarded-Encrypted: i=1; AJvYcCU9m06Gki0bMAW8iXGQJsqbKSheyibB5VIWpt7a3zToc1qeWeqaeBuvMawfH8nG3NrZJQYbuNdrvOhKzO/pysB31WPd7dm3nU69MPD7Ug==
+X-Gm-Message-State: AOJu0Yy3854W1/2SYv88Shy7tbndSxE6NJZnjusGOV4VVJQDjrQ/C34C
+	MyjKFt8NI5DXebB4YkNJdBTaapSSt+X8XFP563fa6ygeQ/Cc6Q2hFNyDW46m3VkUoUtuBeLrkdw
+	=
+X-Google-Smtp-Source: AGHT+IEXpUo3C95M/tp3DRvfQzyBlWXd5dR43a8h1iHXluWsdo3BMj11ZkaWvFnfHEBVu/OttmZxzw==
+X-Received: by 2002:a05:622a:1a9a:b0:43a:f441:75ab with SMTP id d75a77b69052e-43fe92bb699mr26235961cf.22.1717079658321;
+        Thu, 30 May 2024 07:34:18 -0700 (PDT)
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com. [209.85.160.175])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-794e52c1517sm119760385a.59.2024.05.30.07.34.16
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 May 2024 07:34:16 -0700 (PDT)
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-43dfe020675so363511cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 07:34:16 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXMga/u+yR5W/9flWWB5smEZmHr34abxUVwJm5Pdmq1AQgZJR3MhonI6COivpsHOW9FF0PR68DX+dukEMFz+rYvPZ7Fhfd6A7wTfEx7eg==
+X-Received: by 2002:a05:622a:544e:b0:43a:b51c:46ca with SMTP id
+ d75a77b69052e-43feb5182fdmr2765661cf.29.1717079656252; Thu, 30 May 2024
+ 07:34:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240501163610.8900-1-quic_schintav@quicinc.com>
+References: <20240529-edp-panel-drop-v2-0-fcfc457fc8dd@linaro.org> <20240529-edp-panel-drop-v2-1-fcfc457fc8dd@linaro.org>
+In-Reply-To: <20240529-edp-panel-drop-v2-1-fcfc457fc8dd@linaro.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Thu, 30 May 2024 07:33:59 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Uw+KYQQ2xFLhNdWSW0sNX9uV_zSAVO2uBWY4JEcaO2bA@mail.gmail.com>
+Message-ID: <CAD=FV=Uw+KYQQ2xFLhNdWSW0sNX9uV_zSAVO2uBWY4JEcaO2bA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] drm/panel-edp: add fat warning against adding new
+ panel compatibles
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Sam Ravnborg <sam@ravnborg.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-rockchip@lists.infradead.org, Jeffrey Hugo <quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 01, 2024 at 09:35:31AM -0700, Shashank Babu Chinta Venkata wrote:
-> Add 16GT/s specific equalization and rx lane margining settings. These
-> settings are inline with respective PHY settings for 16GT/s 
-> operation. 
-> 
-> In addition, current QCOM EP and RC drivers do not share common
-> codebase which would result in code duplication. Hence, adding
-> common files for code reusability among RC and EP drivers.
-> 
+Hi,
 
-For the next revision, please rebase on top of [1].
+On Tue, May 28, 2024 at 4:52=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Add a fat warning against adding new panel compatibles to the panel-edp
+> driver. All new users of the eDP panels are supposed to use the generic
+> "edp-panel" compatible device on the AUX bus. The remaining compatibles
+> are either used by the existing DT or were used previously and are
+> retained for backwards compatibility.
+>
+> Suggested-by: Doug Anderson <dianders@chromium.org>
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/panel/panel-edp.c | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/pa=
+nel-edp.c
+> index 6db277efcbb7..95b25ec67168 100644
+> --- a/drivers/gpu/drm/panel/panel-edp.c
+> +++ b/drivers/gpu/drm/panel/panel-edp.c
+> @@ -1776,7 +1776,23 @@ static const struct of_device_id platform_of_match=
+[] =3D {
+>         {
+>                 /* Must be first */
+>                 .compatible =3D "edp-panel",
+> -       }, {
+> +       },
+> +       /*
+> +        * Do not add panels to the list below unless they cannot be hand=
+led by
+> +        * the generic edp-panel compatible.
+> +        *
+> +        * The only two valid reasons are:
+> +        * - because of the panel issues (e.g. broken EDID or broken
+> +        *   identification),
+> +        * - because the platform which uses the panel didn't wire up the=
+ AUX
+> +        *   bus properly.
+> +        *
+> +        * In all other cases the platform should use the aux-bus and dec=
+lare
+> +        * the panel using the 'edp-panel' compatible as a device on the =
+AUX
+> +        * bus. The lack of the aux-bus support is not a valid case. Plat=
+forms
+> +        * are urged to be converted to declaring panels in a proper way.
 
-- Mani
+I'm still at least slightly confused by the wording. What is "the lack
+of the aux-bus support". I guess this is different from the valid
+reason of "the platform which uses the panel didn't wire up the AUX
+bus properly" but I'm not sure how. Maybe you can explain?
 
-[1] https://lore.kernel.org/linux-pci/20240518-opp_support-v13-2-78c73edf50de@quicinc.com/
+I guess I'd write it like this:
 
-> v3 -> v4:
-> - Addressed review comments from Mani and Konrad.
-> - Preceded subject line with pci: qcom: tags
-> 
-> v2 -> v3:
-> - Replaced FIELD_GET/FIELD_PREP macros for bit operations.
-> - Renamed cmn to common.
-> - Avoided unnecessary argument validations.
-> - Addressed review comments from Konrad and Mani.
-> 
-> v1 -> v2:
-> - Capitilized commit message to be inline with history 
-> - Dropped stubs from header file.
-> - Moved Designware specific register offsets and masks to
->   pcie-designware.h header file.
-> - Applied settings based on bus data rate rather than link generation.
-> - Addressed review comments from Bjorn and Frank.
-> 
-> Shashank Babu Chinta Venkata (3):
->   PCI: qcom: Refactor common code
->   PCI: qcom: Add equalization settings for 16 GT/s
->   PCI: qcom: Add RX margining settings for 16 GT/s
-> 
->  drivers/pci/controller/dwc/Kconfig            |   5 +
->  drivers/pci/controller/dwc/Makefile           |   1 +
->  drivers/pci/controller/dwc/pcie-designware.h  |  30 ++++
->  drivers/pci/controller/dwc/pcie-qcom-common.c | 144 ++++++++++++++++++
->  drivers/pci/controller/dwc/pcie-qcom-common.h |  14 ++
->  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  44 ++----
->  drivers/pci/controller/dwc/pcie-qcom.c        |  74 ++-------
->  7 files changed, 218 insertions(+), 94 deletions(-)
->  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-common.c
->  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-common.h
-> 
-> -- 
-> 2.43.2
-> 
+    /*
+     * Do not add panels to the list below unless they cannot be handled by
+     * the generic edp-panel compatible.
+     *
+     * The only two valid reasons are:
+     * - because of the panel issues (e.g. broken EDID or broken
+     *   identification).
+     * - because the platform which uses the panel didn't wire up the AUX
+     *   bus properly. NOTE that, though this is a marginally valid reason,
+     *   some justification needs to be made for why the platform can't
+     *   wire up the AUX bus properly.
+     *
+     * In all other cases the platform should use the aux-bus and declare
+     * the panel using the 'edp-panel' compatible as a device on the AUX
+     * bus.
+     */
 
--- 
-மணிவண்ணன் சதாசிவம்
+What do you think? In any case, it probably doesn't matter much. The
+important thing is some sort of warning here telling people not to add
+to the table. In that sense:
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
