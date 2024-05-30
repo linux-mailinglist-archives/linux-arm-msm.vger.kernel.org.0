@@ -1,91 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-21121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 834288D4E0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:34:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B41DA8D4E13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:35:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1AE1D1F21B2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:34:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BA47D1F21237
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:35:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F3CA17C9F2;
-	Thu, 30 May 2024 14:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 203EC17C21C;
+	Thu, 30 May 2024 14:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Bc6FuVwV"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="BzytVopY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F04169AC6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 14:34:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D81816EC1E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 14:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717079671; cv=none; b=pKkITpztCKdv1cCDDGu/eTXupD29s6jSbPLxwKvBqPv3QybqUOg8PgOauRyKq4fXwSA4TP/80eJiG6SHPUCtInduhOyYt8WHfKFsTpt/CPwl2+ER5DoNmwstmaHUofIhfUwY3EORzO7o0BLWNFQ2Y5DMxlBMBsUdN6xkKS46vds=
+	t=1717079685; cv=none; b=YkDKIMUVtJUG7gIyYlHNFfhddhsGKjC0k2QCw2j+g58VU3jQtfDEB49L7DURw6PvQxXUOEeaF2aV6Sb7fbHSVnD5XfL4CDUUrc8e+WnaBjfOxXq2e9qmHtuTAi6bLLISre5Bu8T7FhC5oNTVX4mfniAZkQY/H5V83/4RHTYCMjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717079671; c=relaxed/simple;
-	bh=Lwga7v9P8IhYm9C+t/qXY4lKZ6jl1JNqRADDxFAQ/SI=;
+	s=arc-20240116; t=1717079685; c=relaxed/simple;
+	bh=1qCz4gxX5VkDo8qBKe707hsmEHKhe8QwQY8YDu0jtPQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XeZkcMGJqBi5EwAui/WRFfl705LNGD3UKBCM3OBMwJNp/C05mgdyNEPcUZ5MR0xFFp7WeduhEWU0II3m3kWo977vg/zb48xlYMOiS8kc7YppxYOeZ14Wt/HZw+xYKJSUp+UgYnhUJ37cd8pTyfV4XJW5U5ct5nQDTB/0IrlAhvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Bc6FuVwV; arc=none smtp.client-ip=209.85.222.178
+	 To:Cc:Content-Type; b=O7lKRsoFeC9YM5j/4tmO478hH7AZ40x3+fuPoZzTtVLIiigRKNLV5b1ODcxGVADH7hYUnlo2HehhT32Sm1XX5exZ7SSWGWn0+/H00K0lIhKkrxVwvwMAnmDlqn7vq/7XmG0gWfiPTQns8Wzan5TRPmoWab89RKywxagfg7P8R4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=BzytVopY; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-794e5e77ca2so66755985a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 07:34:29 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-57a033c2ec2so999534a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 07:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1717079667; x=1717684467; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1717079680; x=1717684480; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hX/wC7qXXog0qac360LVKqW+SM9R51AMBt2HpIW0OBk=;
-        b=Bc6FuVwVgiLqPE14Sa5vCiTBbos1mgQtriWfQL1f4EDQRLpnywNpzCjucYYZTT4T7C
-         V0O3Ijg8qDjY8OM7Yqrtb3y/WW+1Nu43B4XioVWgki0/ZOLj+f3wVoQN9rjoe6aPVRtq
-         hAP9I83Wqw0CL1408RbEWUNH6PKCcXjbLQCII=
+        bh=nexbWWHw4HmMZ2rLkky2t/GA+e/X7pKJTR1LckTnZc4=;
+        b=BzytVopYGiiIDs516Mq6IQ7lDpNcdzSTE+7AmXp1dijLc2UDyhG6dNCkDWKbyRksjP
+         JcpNn5Yp8FdzFmZT/mN8tNlCCCe62EIehsg6xEv7q3OqyCD+8uOLziM/2KmIJRiA/vTI
+         q7Rl+UzvUMtM9Ti/5VFPUHsgPLWmhVi3T95ek=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717079667; x=1717684467;
+        d=1e100.net; s=20230601; t=1717079680; x=1717684480;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hX/wC7qXXog0qac360LVKqW+SM9R51AMBt2HpIW0OBk=;
-        b=LnxndmekTgeRaHFthDr6wGy9+pxTl5Zkt+3Sb07/hI/HyQp2DAChpPga2/JBYCguZR
-         j4LBs46iG2lFTuhQLtvJ7QBueZog6p+OLMR3A6lXH0Oy9YzP3XXkbvqM3ozheeHJS8zl
-         VfwQKN80S0CJhioMhtYVADoIWxsqY2BpSdJrL7DXWQHvg2mgxSN82awppBHIIcCsf4nb
-         swuVK+3hs/bvvjZ0xKMm2ROuySBtj9Ns2VxAfNi4BAXAsAKPwLA6bUvq2xcl188ftAxb
-         wppQekIktFOjq/dNJMDYgnipCbFVZ084kPpYSsNefvqSvSUKzfoB/SrqlyytxJ4b1CMa
-         dRVg==
-X-Forwarded-Encrypted: i=1; AJvYcCUavzYlRUizIiF8r0Yv52W8P+UVx0at+/NmxvhxsSsepeuI7c1iWWzwicJOjiU6d2ryP05awET7cnbge5sGn/jbno+/0OKed6CaCPeZ2g==
-X-Gm-Message-State: AOJu0Ywa/4Mo6tlF4GJ4ZfwYRVl96Ry5JA13WLWfpcRBpNglhbg51nRy
-	owZFJntZeM1JWu1oeF1x+x5ZYxwLJvGr993uVqZC/AE+2CUxF0SvRREVRl8yLWJCZWD6/ht5Pq4
-	=
-X-Google-Smtp-Source: AGHT+IH3vkwVcYp1OEC5dk1FDb4etjeve2HpKimXKzZj0RtQ7eRh/aUneLKoilQ5GoCfCRkE9dfJMQ==
-X-Received: by 2002:a05:620a:934c:b0:793:1b3e:dd19 with SMTP id af79cd13be357-794e9e32c8emr233148285a.76.1717079667576;
-        Thu, 30 May 2024 07:34:27 -0700 (PDT)
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com. [209.85.160.174])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-794abca58e6sm558746085a.18.2024.05.30.07.34.26
+        bh=nexbWWHw4HmMZ2rLkky2t/GA+e/X7pKJTR1LckTnZc4=;
+        b=BtXKFBmqw5j7S9QqZ9hf102j3C4BvhxttV1VVPHh2fjOJrfb/PCZ8e6lT9w4IqbrHn
+         TlxNSCcOEV9XU37vN6TEQl2OAiiLaxbjQnIBf9IkUThcykp99U1fXBUxbKHgx574nOB3
+         tjYmi+U28IqKsVH55eejXuySn6MyoytwOWBCokxxu+QN7Ejtz4b/0Y3k7fSvXQM/DaEr
+         5GeNDjmO+XhnTKstUfpTsOENdw54n2bEgRs11e0vs43RnfsOrynJNEdXNL9qn9Qbysa0
+         W4vMKb2gMnY7pcJTSCZhq8IubjTnbeC8gKfh5MoGsekXrrHVyE3LZi+J+K9xMBzGqzbt
+         st1w==
+X-Forwarded-Encrypted: i=1; AJvYcCW/jHCQeqY9EaolmaG6p++hyGAMPmCBJlLBKd0m1l0n/Q6oM53lgxucKPwD5TZrxPVMx4JoT24ZHNbZl7h887842N2o1wgIUq2btZ5dkw==
+X-Gm-Message-State: AOJu0Ywu/nQ/mc63doc9ubD+gFhv3kSJ1axjAZUW6btZCHfyudBnjiu9
+	1PjjMLETLC8uw0F8blJQve8S7sNb2TDxxHkRhWujJ9odb+9xJoyTr43C6mQsQTDZefcQHwpQKpp
+	HUg==
+X-Google-Smtp-Source: AGHT+IF5xgt3TYZv8YTFJcVBAZ2zsjQDf33WVNySQZPIVJ0V5LgjrpZJMfwzvvjqTgaqYADMZRM0nA==
+X-Received: by 2002:a50:8d18:0:b0:578:6198:d6ff with SMTP id 4fb4d7f45d1cf-57a17969954mr1587375a12.33.1717079680532;
+        Thu, 30 May 2024 07:34:40 -0700 (PDT)
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com. [209.85.208.46])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-578524bc4d8sm9857607a12.94.2024.05.30.07.34.39
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 May 2024 07:34:26 -0700 (PDT)
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-43f87dd6866so386681cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 07:34:26 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCX8O7+NJPtSo1pCBvM+I26PI5GEF6G3ln4c/Gh9BGWe5mSuYQdy5esyjQJNsiBYWAI5wvnqVn1iIKyWSMOV5cGRQ/yeEmJ0oyj4wZQmeQ==
-X-Received: by 2002:a05:622a:260c:b0:43f:f0e9:5f25 with SMTP id
- d75a77b69052e-43ff0e96040mr383391cf.25.1717079665507; Thu, 30 May 2024
- 07:34:25 -0700 (PDT)
+        Thu, 30 May 2024 07:34:39 -0700 (PDT)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-57a16f4b8bfso16334a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 07:34:39 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUPYV5wF9GYT4mWdxyyRuRNv3q0YWw2Ovq4SJOBxTkgMNM3Xf3FOLVWpfhUxUWWmIDMuRLnhq2dfGEwNv1G4trWEzgaXkPfBC5caXdqRQ==
+X-Received: by 2002:aa7:c14a:0:b0:57a:2276:2a86 with SMTP id
+ 4fb4d7f45d1cf-57a22762bcfmr100726a12.4.1717079678834; Thu, 30 May 2024
+ 07:34:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240529-edp-panel-drop-v2-0-fcfc457fc8dd@linaro.org> <20240529-edp-panel-drop-v2-2-fcfc457fc8dd@linaro.org>
-In-Reply-To: <20240529-edp-panel-drop-v2-2-fcfc457fc8dd@linaro.org>
+References: <20240529-edp-panel-drop-v2-0-fcfc457fc8dd@linaro.org> <20240529-edp-panel-drop-v2-3-fcfc457fc8dd@linaro.org>
+In-Reply-To: <20240529-edp-panel-drop-v2-3-fcfc457fc8dd@linaro.org>
 From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 30 May 2024 07:34:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XjkuRQ_bPYiNi2Jab2vDpegUBA2PesFfix5NgvF-pF+A@mail.gmail.com>
-Message-ID: <CAD=FV=XjkuRQ_bPYiNi2Jab2vDpegUBA2PesFfix5NgvF-pF+A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] dt-bindings: display: panel-simple: drop several
- eDP panels
+Date: Thu, 30 May 2024 07:34:16 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VZCeawkF+c8yhwMuR3_LF3Z0swT1L-_r9kRccaxJqUTg@mail.gmail.com>
+Message-ID: <CAD=FV=VZCeawkF+c8yhwMuR3_LF3Z0swT1L-_r9kRccaxJqUTg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] drm/panel-edp: drop several legacy panels
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
 	Sam Ravnborg <sam@ravnborg.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -101,17 +100,17 @@ Hi,
 On Tue, May 28, 2024 at 4:53=E2=80=AFPM Dmitry Baryshkov
 <dmitry.baryshkov@linaro.org> wrote:
 >
-> The panel-simple.yaml includes legacy bindings for several eDP panels
-> which were never used in DT files present in Linux tree and most likely
-> have never been used with the upstream kernel. Drop compatibles for
-> these panels in favour of using a generic "edp-panel" device on the AUX
-> bus.
+> The panel-edp driver supports legacy compatible strings for several eDP
+> panels which were never used in DT files present in Linux tree and most
+> likely have never been used with the upstream kernel. Drop compatibles
+> for these panels in favour of using a generic "edp-panel" device on the
+> AUX bus.
 >
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../devicetree/bindings/display/panel/panel-simple.yaml        | 10 ----=
+>  drivers/gpu/drm/panel/panel-edp.c | 173 ++------------------------------=
 ------
->  1 file changed, 10 deletions(-)
+>  1 file changed, 7 insertions(+), 166 deletions(-)
 
 All of these are fine as per my research [1].
 
