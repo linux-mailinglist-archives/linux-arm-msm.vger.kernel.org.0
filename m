@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-21075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10D918D4868
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 11:24:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FC278D48E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 11:48:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05EED1F240F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 09:24:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B0E311C21F16
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 09:48:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FAD2155381;
-	Thu, 30 May 2024 09:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 093E879FD;
+	Thu, 30 May 2024 09:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hDSof6zO"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="RTkoO4AL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC95F17E470;
-	Thu, 30 May 2024 09:22:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E101114B084
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 09:48:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717060948; cv=none; b=jIFUrq5ohOMrVcJ+nTabUS80nUzmgRezrjv63iXsWOcQZRR5jMPi0m3LVJLP9bWQrrCj70sR52tkiErSte5s/w7cI2G5FEbrys7l0w/ymnBncoA9Gg/+Od0cbBa545G7hdZPdS2OKBAHWNF5puZ5t2S0Q+rxw7ti3LnGGOJNmtc=
+	t=1717062484; cv=none; b=Fwln6rdTLeKFtOsfr31rGobZejrQLI6bslG44QmZf8ra4EkEvAHyhZKLVDyX+TiRhxVRro5Y9VdG2/+6RoKZqEjMkhSClakPDp2FMymmxr2iogTaXbUUM1gmtcyiv6iR1frvXoFnMvQqWDBnjHn6MR83NDGSCZ5vE3dg56WE1k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717060948; c=relaxed/simple;
-	bh=o6on7Ay76lNedf1rgAFZrKGDIJrohSK9WuqeTe+/5Sk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=d47oVWB0QovVjeZ+AaI1USx/I6xgGepghnOt0niINRiEmmbFQri75MXT3uvrQYup/wOXFTrb/6c+uLMpVb1/TFkzF0xvv37UO54u+DvOxif2trAAkffWSdaDM6j2BOWIvpBMH+TCiZyunXs/sZUKog1hfzW39jCKBJEad7OigR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hDSof6zO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44U8qm6O031447;
-	Thu, 30 May 2024 09:22:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aYbB2pi60UoXXErdg/yVR37inV1Y++t0aeMaaumeWnc=; b=hDSof6zOEtAWzfJs
-	FExPCzZWURlP7vMRQtdVAQKE1B3dQMcZNJKfTbX3q/M2bUjguOm+ZArb0Y6WeVQG
-	l349vWE34Cm8V8PNn+G2WMOrbUoXDwDzqb4kiZA8duI4vvVDzlo+5/Idj4b5q4JE
-	SFvPVIG+CZ5QHwOvclO9qv7Ol8FcIeVqPT50Q9ubsXpamX7IAn4Tm28xX+Kp8lGo
-	DnNNI6fIA8mUtA3Y3YvkcxgepaIxxsz+4V6YTje5wfH6Vt2PDjVbbDHy7GJVVB2s
-	ppTd8IKLFomD00iX9wLNjdcw4YEXEm0ZW0Fq31/BYArS0kAUTQ/mreJm59UdjeqE
-	XsbmoQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba0xbjjf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 May 2024 09:22:06 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44U9M4nO017406
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 May 2024 09:22:04 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 30 May
- 2024 02:21:56 -0700
-Message-ID: <9992067e-51c5-4a55-8d66-55a102a001b6@quicinc.com>
-Date: Thu, 30 May 2024 14:51:56 +0530
+	s=arc-20240116; t=1717062484; c=relaxed/simple;
+	bh=YATmH40oB4qgdcAInJg9EAo9JMTjsJPP/ZOthKAQp2E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DAljmhVlXNA6gULS2ChKUHu/tNBCqfS+JADGJJojKSHTTqpf05j0y6/ovDfhOcxZ3HEQSk9kWdSBGrSo3xWI37/vSNKUPBqBRon2gAFdjqfBtLnHm8g/k8ilqODtPdJAzbOapqEv7OWY44FKn5X+/4VvKW0XY+oqYTPeXHCudGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=RTkoO4AL; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-35dc7d0387cso666668f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 02:48:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1717062480; x=1717667280; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2pMMndQo0Yg4u3ej2HOS1ixNtUd/Tv/4Lxi94E6B51k=;
+        b=RTkoO4ALwY0ezNUoRovH3RuaU03G797cuDjvLdWMtkzccN9dO6SugZAHVG8ywbugow
+         3r1PkHo8HsbG+NzJM4Oi3QTNLaKORlVzxQRwyCqOvigyyj8tXq3FJLz6J6SMMi7mhB5O
+         biEoL8W0ZbmStIneLXExST2a5Zz3ps9c0xlYATbT2vIte5T8yzYdeGl5xK+Fu2mK2mVD
+         82dJkdPM8uelu2Or1bVXmBCebfBwJTnO6gbbrA/HTC16sS0JLL6IV3lvvDyV47yt0IFY
+         nWDPW71F3trCgeSHpc2jT0n3fF7d72k3jRMC1aHruMfu83C/QWSWdAdueY3ZLMF1DekT
+         gTaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717062480; x=1717667280;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2pMMndQo0Yg4u3ej2HOS1ixNtUd/Tv/4Lxi94E6B51k=;
+        b=VenTEgr0b6bdN48SdEDsZQbZ2B6e6BC7Ak4vAq0Ci2bVArek/F51qoX6SFlwYisZyZ
+         gDD6k7odRYZIoEDDrgfwIZ/xO2CH5ID303k26HEN7D9BhBjfHCZ9aLjyvuk0N0gS+zla
+         VBUPDkwB62TrOiE/h6Syby+a8ZlZMYPG+/Dmr4LA0MwOgGIqA4fj4qL1tykNG4VuYP5q
+         tLNRBV4SHNwfALhxybXMmrTxOfoagYDXu4zTiINKfs3EZ1qEhcRzrJhF5BLrGujNvScl
+         wjnemkYD42DDNBNd2YTHYvSLBufc2suFcAh+zU0SGTeied1GfhRlRujxRtKoOL9HhTcY
+         SI1A==
+X-Forwarded-Encrypted: i=1; AJvYcCW1OWbk3kBIkpp7tFiP2obQy+NDzyizYvf6AMS9hQ6tKkZbPfUSQOGHLhzFx7ty62x3m9Fl6G/2O9+wYfCc2HKLRr4htMNIEEVfZkey/w==
+X-Gm-Message-State: AOJu0Yxn30nIcWv9yyu+MVqvPNyhvMroLMlkWjJVq6pN6frbXHEGfQ/2
+	c+QavOAGqqAwC5mt3eyheDHV7/q1WfXvdvX5rie89NuRW0UIIucH/1i8kHLKoq8=
+X-Google-Smtp-Source: AGHT+IGmVWJIHpVS6zUzWQMTWFF7Uf2JRClJM21btErmVANQCNf/7aiObxoWiYzf0ACbQ1o7s8mC7w==
+X-Received: by 2002:adf:e30b:0:b0:354:f3f4:c007 with SMTP id ffacd0b85a97d-35dc0095526mr1477892f8f.29.1717062480021;
+        Thu, 30 May 2024 02:48:00 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3557dcf001esm17118609f8f.97.2024.05.30.02.47.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 May 2024 02:47:59 -0700 (PDT)
+Message-ID: <a9e4dba6-2317-4b6f-968f-d607937f5157@freebox.fr>
+Date: Thu, 30 May 2024 11:47:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,165 +76,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 3/5] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Konrad Dybcio <konrad.dybcio@linaro.org>, <will@kernel.org>,
-        <robin.murphy@arm.com>, <joro@8bytes.org>, <jsnitsel@redhat.com>,
-        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
-        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
-        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
-        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>
-References: <20240123144543.9405-1-quic_bibekkum@quicinc.com>
- <20240123144543.9405-4-quic_bibekkum@quicinc.com>
- <CAF6AEGs3_wBNo58EbGicFoQuq8--fDohTGv1JSFgoViygLS5Lg@mail.gmail.com>
- <f2222714-1e00-424e-946d-c314d55541b8@quicinc.com>
- <51b2bd40-888d-4ee4-956f-c5239c5be9e9@linaro.org>
- <0a867cd1-8d99-495e-ae7e-a097fc9c00e9@quicinc.com>
- <7140cdb8-eda4-4dcd-b5e3-c4acdd01befb@linaro.org>
- <omswcicgc2kqd6gp4bebd43sklfs2wqyaorhfyb2wumoeo6v74@gaay3p5m46xi>
- <CAF6AEGub2b5SRw7kDUGfKQQ35VSsMkQ9LNExSkyHHczdFa2T4Q@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: log iommu init failure
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ MSM <linux-arm-msm@vger.kernel.org>, freedreno@lists.freedesktop.org,
+ Sean Paul <sean@poorly.run>, Bryan O Donoghue <bryan.odonoghue@linaro.org>,
+ Luca Weiss <luca.weiss@fairphone.com>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>
+References: <64ec16b9-c680-408c-b547-5debae2f7f87@freebox.fr>
+ <dkmtnizbuyswyvocczjfgmhsuedawliabycig4urw42a65hu3j@jglxzumuzamd>
 Content-Language: en-US
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <CAF6AEGub2b5SRw7kDUGfKQQ35VSsMkQ9LNExSkyHHczdFa2T4Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Zv56DuGmLk9dDdlVJg2xCwqgGbqtk7Ah
-X-Proofpoint-ORIG-GUID: Zv56DuGmLk9dDdlVJg2xCwqgGbqtk7Ah
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-30_06,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- mlxlogscore=999 priorityscore=1501 clxscore=1015 bulkscore=0 phishscore=0
- malwarescore=0 mlxscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2405300069
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <dkmtnizbuyswyvocczjfgmhsuedawliabycig4urw42a65hu3j@jglxzumuzamd>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 16/05/2024 10:43, Marijn Suijten wrote:
 
-
-On 5/28/2024 9:38 PM, Rob Clark wrote:
-> On Tue, May 28, 2024 at 6:06 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
+> On 2024-05-15 17:09:02, Marc Gonzalez wrote:
+>
+>> When create_address_space() fails (e.g. when smmu node is disabled)
+>> msm_gpu_init() silently fails:
 >>
->> On Tue, May 28, 2024 at 02:59:51PM +0200, Konrad Dybcio wrote:
->>>
->>>
->>> On 5/15/24 15:59, Bibek Kumar Patro wrote:
->>>>
->>>>
->>>> On 5/10/2024 6:32 PM, Konrad Dybcio wrote:
->>>>> On 10.05.2024 2:52 PM, Bibek Kumar Patro wrote:
->>>>>>
->>>>>>
->>>>>> On 5/1/2024 12:30 AM, Rob Clark wrote:
->>>>>>> On Tue, Jan 23, 2024 at 7:00 AM Bibek Kumar Patro
->>>>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>>>
->>>>>>>> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
->>>>>>>> the TLB to fetch just the next page table. MMU-500 features ACTLR
->>>>>>>> register which is implementation defined and is used for Qualcomm SoCs
->>>>>>>> to have a custom prefetch setting enabling TLB to prefetch the next set
->>>>>>>> of page tables accordingly allowing for faster translations.
->>>>>>>>
->>>>>>>> ACTLR value is unique for each SMR (Stream matching register) and stored
->>>>>>>> in a pre-populated table. This value is set to the register during
->>>>>>>> context bank initialisation.
->>>>>>>>
->>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>>>>>> ---
->>>>>
->>>>> [...]
->>>>>
->>>>>>>> +
->>>>>>>> +               for_each_cfg_sme(cfg, fwspec, j, idx) {
->>>>>>>> +                       smr = &smmu->smrs[idx];
->>>>>>>> +                       if (smr_is_subset(smr, id, mask)) {
->>>>>>>> +                               arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR,
->>>>>>>> +                                               actlrcfg[i].actlr);
->>>>>>>
->>>>>>> So, this makes ACTLR look like kind of a FIFO.  But I'm looking at
->>>>>>> downstream kgsl's PRR thing (which we'll need to implement vulkan
->>>>>>> sparse residency), and it appears to be wanting to set BIT(5) in ACTLR
->>>>>>> to enable PRR.
->>>>>>>
->>>>>>>            val = KGSL_IOMMU_GET_CTX_REG(ctx, KGSL_IOMMU_CTX_ACTLR);
->>>>>>>            val |= FIELD_PREP(KGSL_IOMMU_ACTLR_PRR_ENABLE, 1);
->>>>>>>            KGSL_IOMMU_SET_CTX_REG(ctx, KGSL_IOMMU_CTX_ACTLR, val);
->>>>>>>
->>>>>>> Any idea how this works?  And does it need to be done before or after
->>>>>>> the ACTLR programming done in this patch?
->>>>>>>
->>>>>>> BR,
->>>>>>> -R
->>>>>>>
->>>>>>
->>>>>> Hi Rob,
->>>>>>
->>>>>> Can you please help provide some more clarification on the FIFO part? By FIFO are you referring to the storing of ACTLR data in the table?
->>>>>>
->>>>>> Thanks for pointing to the downstream implementation of kgsl driver for
->>>>>> the PRR bit. Since kgsl driver is already handling this PRR bit's
->>>>>> setting, this makes setting the PRR BIT(5) by SMMU driver redundant.
->>>>>
->>>>> The kgsl driver is not present upstream.
->>>>>
->>>>
->>>> Right kgsl is not present upstream, it would be better to avoid configuring the PRR bit and can be handled by kgsl directly in downstream.
->>>
->>> No! Upstream is not a dumping ground to reduce your technical debt.
->>>
->>> There is no kgsl driver upstream, so this ought to be handled here, in
->>> the iommu driver (as poking at hardware A from driver B is usually not good
->>> practice).
+>> msm_dpu c901000.display-controller: failed to load adreno gpu
+>> msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops a3xx_ops): -19
 >>
->> I'd second the request here. If another driver has to control the
->> behaviour of another driver, please add corresponding API for that.
-> 
-> We have adreno_smmu_priv for this purpose ;-)
-> 
-
-Thanks Rob for pointing to this private interface structure between smmu
-and gpu. I think it's similar to what you're trying to implement here
-https://lore.kernel.org/all/CAF6AEGtm-KweFdMFvahH1pWmpOq7dW_p0Xe_13aHGWt0jSbg8w@mail.gmail.com/#t
-I can add an api "set_actlr_prr()" with smmu_domain cookie, page pointer 
-as two parameters. This api then can be used by drm/msm driver to carry 
-out the prr implementation by simply calling this.
-Would this be okay Rob,Konrad,Dmitry?
-Let me know if any other suggestions you have in mind as well regarding
-parameters and placement.
-
-Thanks & regards,
-Bibek
-
-> BR,
-> -R
-> 
->>>
->>>>
->>>>>> Thanks for bringing up this point.
->>>>>> I will send v10 patch series removing this BIT(5) setting from the ACTLR
->>>>>> table.
->>>>>
->>>>> I think it's generally saner to configure the SMMU from the SMMU driver..
->>>>
->>>> Yes, agree on this. But since PRR bit is not directly related to SMMU
->>>> configuration so I think it would be better to remove this PRR bit
->>>> setting from SMMU driver based on my understanding.
->>>
->>> Why is it not related? We still don't know what it does.
->>>
->>> Konrad
+>> Log create_address_space() failure.
 >>
->> --
->> With best wishes
->> Dmitry
+>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> 
+> Thanks!
+> 
+> Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+> And, after checking the below:
+> 
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+>> ---
+>>  drivers/gpu/drm/msm/msm_gpu.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+>> index 655002b21b0d5..f1e692866cc38 100644
+>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+>> @@ -941,6 +941,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+>>  		DRM_DEV_INFO(drm->dev, "%s: no IOMMU, fallback to VRAM carveout!\n", name);
+>>  	else if (IS_ERR(gpu->aspace)) {
+>>  		ret = PTR_ERR(gpu->aspace);
+>> +		DRM_DEV_ERROR(drm->dev, "could not create address space: %d\n", ret);
+> 
+> Maybe this wasn't done before because this also includes `-EPROBE_DEFER`, so you
+> might want to wrap this in
+> 
+> 	if (ret != -EPROBE_DEFER)
+> 		DRM_DEV_ERROR...
+> 
+> But then dev_err_probe() was built specifically to be less verbose about this
+> (and track defer reasons).  While this is an init and not probe function, it's
+> called from struct component_ops->bind where it should be okay to call that,
+> as long as you have access to the component `struct device*` and not its master
+> (IIRC).
+
+
+Hello Marijn,
+
+I have moved on to HDMI.
+
+Feel free to take full ownership of this submission,
+as I won't have the energy to get it accepted.
+
+Regards,
+
+Marc
+
 
