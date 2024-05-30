@@ -1,109 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-21097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 652FA8D4B31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 13:59:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB8218D4BB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:33:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E9D0FB24227
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 11:59:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 631C1284F85
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 12:33:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D8CA17FACF;
-	Thu, 30 May 2024 11:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mqg3IB16"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E048813210D;
+	Thu, 30 May 2024 12:33:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5FA339AC;
-	Thu, 30 May 2024 11:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5CE18309F;
+	Thu, 30 May 2024 12:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717070384; cv=none; b=VxphU/Vn/VwdJTrrlQ/1rANEuuZwUPr/A97mRLQz4eqNzBR8ENc44v8L2PzNZaELxZJu9iYuBTdyl9QpufmHaZ75e3jKxr4nm5BCay040ssF4JfXp0KM46ViaxI2f66RbzpxyNa8tETB6WyK6zQdWduhQrdwhNeEBalVCcdImSA=
+	t=1717072402; cv=none; b=Mz7Tg3+Cp2pq5QDFq8+snv10nhI918OngvDq/J92zqH1h4sOC62/60Of2j1mIr21cKKl7cBHuohZFn1DIfsfXqRTfQaKYFm50/0CieNnikCU+bJFvi57n+FplXk2pPIYnGxVgfr9xbBhH5baYWc5KfY/eyJd2LY+1gqrN5aG8hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717070384; c=relaxed/simple;
-	bh=8kTTWP9KKerLOBH7sOJ6kRkd4l+zeLLm8E8cdaSboqw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pj7qrUk4UuS3nHWiDev6yzIYiCr29dwQd4wU5ktywrhg1nuua13BWaIRdH+ZFb9il7hczE8o1D6RmiNt4+tlH93ZybovlS4zy7zkY1FF8AoZ+UVkaypCyOXiJKA//eYM7JOVIkKfavZtmyO2HOwHbZTdxI91uF9LSajvG2SVtvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mqg3IB16; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234A9C2BBFC;
-	Thu, 30 May 2024 11:59:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717070383;
-	bh=8kTTWP9KKerLOBH7sOJ6kRkd4l+zeLLm8E8cdaSboqw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Mqg3IB16KCl4iVocK2ANNDet9sKxP/D79issOs52V4nylRTLMcYW5Sadf2dCM89Ea
-	 oe+lEU+VT8Ne+JUOwW78a/nnoTjigbrxhc+G85t00kpKd6qYFCIALfsI7o5rpaowvU
-	 GKK4GnibMg+2ejVQZlQVG9AOA1d6OsVe0oxGqpob+iwjhZrA/dRYbNyd5j+xMtj9MV
-	 XP+RAidre1R6cTdhwoVkuf5gdGCac2GfSM/jTbiHHHE4AvTQ+hu5G+npa7bbxH7fDs
-	 fyE2rtDDApUdFRI/kuSYfr+qnAJXo7lLYpYP0PlYd8UC0Kshzb5ZA18Koo7WAjT3N3
-	 99NH0dFwBvqzg==
-Date: Thu, 30 May 2024 12:59:37 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Lee Jones <lee@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Das Srinagesh <quic_gurus@quicinc.com>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v2 13/14] regulator: add pm8008 pmic regulator driver
-Message-ID: <9f126943-2d73-491a-9267-6585e10aea8d@sirena.org.uk>
-References: <20240529162958.18081-1-johan+linaro@kernel.org>
- <20240529162958.18081-14-johan+linaro@kernel.org>
+	s=arc-20240116; t=1717072402; c=relaxed/simple;
+	bh=2D+tP+irQK0VLIbOTiKIw++x+RqzlOCBamg7qaJLCtg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DyztHDKWnbj5hc7mF0hEHCRYlDYvatqFWRgP50M77DgPwBxHKWgE42z0kH1ojJ5pAFYxcjiQZ4vk+XuR1jDqeZrGlRDUVn7rGnMAdjSkCLL8Znp57FO0kLAI+0QgAWTAer0LqdtI35cnFu4GQ4X3lgTF3mtkG7/ifNFhqpXLHRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F6EC2BBFC;
+	Thu, 30 May 2024 12:33:19 +0000 (UTC)
+Message-ID: <6823bc58-9461-4a54-b5b3-7ea5c46fc68b@xs4all.nl>
+Date: Thu, 30 May 2024 14:33:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0mJZbpVe58dxAH3V"
-Content-Disposition: inline
-In-Reply-To: <20240529162958.18081-14-johan+linaro@kernel.org>
-X-Cookie: To err is human, to moo bovine.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/18] media: dvb-frontend/mxl5xx: Refactor struct
+ MBIN_FILE_T
+To: Ricardo Ribalda <ribalda@chromium.org>,
+ Michael Tretter <m.tretter@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Michal Simek <michal.simek@amd.com>, Andy Walls <awalls@md.metrocast.net>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+References: <20240527-cocci-flexarray-v3-0-cda09c535816@chromium.org>
+ <20240527-cocci-flexarray-v3-3-cda09c535816@chromium.org>
+Content-Language: en-US, nl
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20240527-cocci-flexarray-v3-3-cda09c535816@chromium.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 27/05/2024 23:08, Ricardo Ribalda wrote:
+> Replace a single element array, with a single element field.
+> 
+> The following cocci warning is fixed:
+> drivers/media/dvb-frontends/mxl5xx_defs.h:171:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+> 
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> ---
+>  drivers/media/dvb-frontends/mxl5xx.c      | 2 +-
+>  drivers/media/dvb-frontends/mxl5xx_defs.h | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/dvb-frontends/mxl5xx.c b/drivers/media/dvb-frontends/mxl5xx.c
+> index 91e9c378397c..a15c0438b07a 100644
+> --- a/drivers/media/dvb-frontends/mxl5xx.c
+> +++ b/drivers/media/dvb-frontends/mxl5xx.c
+> @@ -893,7 +893,7 @@ static int do_firmware_download(struct mxl *state, u8 *mbin_buffer_ptr,
+>  	status = write_register(state, FW_DL_SIGN_ADDR, 0);
+>  	if (status)
+>  		return status;
+> -	segment_ptr = (struct MBIN_SEGMENT_T *) (&mbin_ptr->data[0]);
+> +	segment_ptr = (struct MBIN_SEGMENT_T *)(&mbin_ptr->data);
+>  	for (index = 0; index < mbin_ptr->header.num_segments; index++) {
+>  		if (segment_ptr->header.id != MBIN_SEGMENT_HEADER_ID) {
+>  			dev_err(state->i2cdev, "%s: Invalid segment header ID (%c)\n",
+> diff --git a/drivers/media/dvb-frontends/mxl5xx_defs.h b/drivers/media/dvb-frontends/mxl5xx_defs.h
+> index 097271f73740..3c5d75ed8fea 100644
+> --- a/drivers/media/dvb-frontends/mxl5xx_defs.h
+> +++ b/drivers/media/dvb-frontends/mxl5xx_defs.h
+> @@ -168,7 +168,7 @@ struct MBIN_FILE_HEADER_T {
+>  
+>  struct MBIN_FILE_T {
+>  	struct MBIN_FILE_HEADER_T header;
+> -	u8 data[1];
+> +	u8 data;
 
---0mJZbpVe58dxAH3V
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+From what I can tell, shouldn't this be 'data[]'? It really appears to be a flexible array.
 
-On Wed, May 29, 2024 at 06:29:57PM +0200, Johan Hovold wrote:
-> The Qualcomm PM8008 is an I2C-controlled PMIC containing seven LDO
-> regulators.
->=20
-> The driver is based on a driver submitted by Satya Priya, but it has
-> been cleaned up and reworked to match the new devicetree binding which
-> no longer describes each regulator as a separate device.
+Regards,
 
-Reviewed-by: Mark Brown <broonie@kernel.org>
+	Hans
 
---0mJZbpVe58dxAH3V
-Content-Type: application/pgp-signature; name="signature.asc"
+>  };
+>  
+>  struct MBIN_SEGMENT_HEADER_T {
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZYaigACgkQJNaLcl1U
-h9DPVQf/XpPDBDoyoV/qBv6jdSFnaUIVIhIJ4t3WR8qJ42MxLVJrRWkbEAhgShfN
-vsROxh3DsaBpC64ahrFPKK7Opv61SdIVtfAf6anp/jYW1yxFaHZa8GKyATVvgRYp
-iC+iwOY6AiJKtVjXRc6a4cXbWUclQ1bqDOTgLaGeZ/HkrAB8mAXEOM+vaX4JXqPN
-TAFCxBWMzBdeOFAghdfOukV0024rkqMKNw1BqOFLkdk0IKtzvt+/34eq/6kgD3V7
-2ALbIM/GdGcU+9VRj+YVsh8TOXKPchwSnBNnYPGWBca9X/83i5jgNIz1HpqNfJDd
-0RziAuWoiECj/mAekCSP56G4wjnRVg==
-=VPPI
------END PGP SIGNATURE-----
-
---0mJZbpVe58dxAH3V--
 
