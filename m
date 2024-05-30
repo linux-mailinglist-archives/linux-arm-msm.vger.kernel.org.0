@@ -1,162 +1,316 @@
-Return-Path: <linux-arm-msm+bounces-21139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E83B68D501F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 18:49:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0348E8D5026
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 18:51:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 158D41C2115F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:49:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADCF72846A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:51:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 819113A8D8;
-	Thu, 30 May 2024 16:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44D003B1A1;
+	Thu, 30 May 2024 16:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wIsyQRLi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KT114ktS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB0D2F873
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 16:48:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9398836AF8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 16:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717087737; cv=none; b=XXOLYv9X2ntGD5owcV9cwUs55P3orVW7+XvPQHxe5+tj7tmCY0NyA3S2KU6fenXl6DhImHDGRnblgmcqXV+YHF3LokcYUOT/ukwvHwjx5fkWgxDK1o915yyf9tvIXvm2CSgVxYf6MSKe7+va+222F2NwhviQ1luYXQfGWI4XbhI=
+	t=1717087870; cv=none; b=nO8/YDo6UXWLwMPOr46r8GJk2h9gQOMK7SLK2imuW0c9bTLXOGLJyyFayeu0VAScOjKP73ZHOdqz38fsFW05+ZyHIoY0d3iVxCOqdZaBKipYSpCUhVNU5fUboJe9lX3e3Ni0NNmvrgv6MRuGT+9toB0aa0THbDvA2GKWVwm0ibM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717087737; c=relaxed/simple;
-	bh=Ly2L242GxHMIF6bws/UEb4G+Luoe3LUDH/lBlpCDr0Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Adse2pjbCTJ/FIlrFmyNSdGGe2O7BK8TpBtaRWz7LkzSy4BkgpvyvRj9rRnxmfLfX99Dsjd5Y/M9MRwJQJ7jGhbIfeTWyyHQN6J8AiR+V7bWnYUNJttGypNmShL9jTo4aNyD0RMjqRKz77yzgfCBzL963hpqHCDQbu5KZ02nw60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wIsyQRLi; arc=none smtp.client-ip=209.85.208.49
+	s=arc-20240116; t=1717087870; c=relaxed/simple;
+	bh=so41Lub8ThE33Ip0KxnSvZTX2i7sQPgod5c1Skc8Wbc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HRn3i2+QWI45ce2RPfi7Fj3GBBW3bjtMCs9Zdxdf/lRHtddM4rpbCvVbHP5W3z9A1qfzmoOBpo8NHDqEyLJE9+7X2MUmkA0PTWHjWLO+J77/kXpwgiRs+frH5cDFyTAnDUBKM7MjTZSOm1R+r09syEAhIgJ2/TL6mQUCuOZ0jjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KT114ktS; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-57a1fe639a5so1000984a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 09:48:54 -0700 (PDT)
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-62a2424ecdaso11307907b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 09:51:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717087733; x=1717692533; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Om7hhoOcUSUWV8gAap1fMTgLyjeDTgTrOUFgaKi03cU=;
-        b=wIsyQRLi0emGlIpAzN3LA0ClAocAaD72is0N3Pf4UU7dx/+1Sjm2y9kd55db/tBp/3
-         QbIiXSeoqnrIzmvAi8s9a54moTugdiOr0zO+7LNgXdYWGXkrVBavjbuj9gDodkvRaDIi
-         TzG3YlVI2VDIYoVEj3ljJaZqFLALi9scR0IiiBbgGddVNSA1+hTwUGwCsGPXROE7CUHX
-         MYzt/tHViTVk+Q+vbgAmGyQZ3/LZoACfFVs7LHaBd9VBBLTsQD/rAeJfEFY7TWxX1KUX
-         423N1JrrBKRPczcqPpX6hv6OX17oKTncz6V9qf2GJauyLCTUafL4m64ShUwB10r9aK/D
-         1qNg==
+        d=linaro.org; s=google; t=1717087867; x=1717692667; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Aqi+Bly9+fI8LTSCHofvqlMYXb/ts7Xr0psf1+hii0g=;
+        b=KT114ktSQbQSeL1Jbw1MbWTn56YA0fQ39eLnfqjo9GN8Uj6APhcs6GH6nMTmyvtVQp
+         SEouU+eOTrzmdYmJ0p8B4JOHnfmdbOQGQIwDZNkaZlXpiIIUyUFGfLxVDcBO1sbJp0zX
+         7yCKPhrN4IcXzZqRKL8rrHzIBY7TiFPo7e8iDz3vD2IgLfoX2tIXS6zJ1ZxiixTcDNxa
+         8l0mNuzOZGDmE26SZQ2KQoCvVY65AWG3GB46IkkaHjAbM94MPUBux9iABSY9uLAnLlT9
+         /P1ji8y1z4R+PIakQUmYYu4GOs67AcduQE58AHz063WS5h1DANqdUQKg7WAWu3RJZk9R
+         y6/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717087733; x=1717692533;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1717087867; x=1717692667;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Om7hhoOcUSUWV8gAap1fMTgLyjeDTgTrOUFgaKi03cU=;
-        b=QgMIn2EoU1Xpzpbwrqz0n6KlFnCEYWoQ++6aWt6/Ixz9NKgCaeCWcBBnhMcRI/qn7J
-         2sAYFA/Qb90D2MTvF2k5W8+rpVchik1fLhohf3vEWf3inLpOyCrHU4DfHhieEindeyx3
-         TZn0yeTTz/pRrsSK8qRUgu7ExNxBedauybfgJiV9QNZ9Y8Uu+rhx3M4s9zwQCNI8S/Os
-         Vdv89A5WvxpV2HsXL9TXtEm39+9pFMsk8vig3BK1XXRyP19m9iNrWUYBnmiW25UosLI+
-         ayi4ZndyHXmocr1aVi7X2V+M+BBJuEYVtpmf5GQMH03n8k9MtI7TtFe45itlZgKhiAwM
-         iAWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUSKAfS3S/mjl/Ev3144IQN8lM0Qmc6HqP3Oy61Bak9lSinRFDxoQmCe+AXAUerCDvkinfyKrxxtu8RRq5oQxJyZJJI0Rc2UqHgPTG/yQ==
-X-Gm-Message-State: AOJu0Yw91asTxN8g3emsRYVSoYhQJ8qXL37xNHSh8A4hARYvkoEAJTMM
-	RBY7c7xmvz6vsUMS4745zG4/YJqgM6FkQ3nQO7oYSgFCetlep6pC0yrEEpUPlhc=
-X-Google-Smtp-Source: AGHT+IGOdW0rL+CG+2TxT+B5IJwuYU4JCsP/KJ3DZR0Uqrkb20mrEsEOuuSMX9bBLg43COFnBMG4eQ==
-X-Received: by 2002:a17:906:f5a9:b0:a63:3702:def0 with SMTP id a640c23a62f3a-a65e8e4083amr240447366b.30.1717087732909;
-        Thu, 30 May 2024 09:48:52 -0700 (PDT)
-Received: from [127.0.1.1] ([188.27.161.69])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6555bc091asm164155566b.138.2024.05.30.09.48.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 May 2024 09:48:52 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Thu, 30 May 2024 19:48:44 +0300
-Subject: [PATCH] clk: qcom: gcc-x1e80100: Fix halt_check for all 3 USB PHY
- pipe clocks
+        bh=Aqi+Bly9+fI8LTSCHofvqlMYXb/ts7Xr0psf1+hii0g=;
+        b=uVquxqODyeR3opIU3Nshm2f66awf1Ni+/jcQn+GzVFHrl3uqfBSooqkgOdZnkoy4d6
+         3B+BhgLSzdRQhv8p7t1KBZJYOPHFbMPdQuOOKXxS5Iz4NZD40eksDqjw0aQgyxWq7f7X
+         mP2X8KHwx3QucWJinhrvciFnK8GcjbSfoqOCb5Y15peLSp67vvsNgqTZo/kJQ3DW5Cwe
+         omHnQNNhe1p2hyZtX5fBvIUft57TGhdClSRb0MkOWaIw8lO7C8UZXno4kh3+EQZIQld2
+         +f0st/I7Z61FIMVSWyGUIMUd7MWaZUwQknSN3gcQp0SfzQOXo2Dn7dyZn/aYriokhHm5
+         yjCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVw0RToJI0vZNgqPYclQXV65Gprb8D7ZZE+iFOqsjGWiv+kURAkh6zhAxHuF33b6hc7yR5l/b5d4NAr1nLA2UT1Im8wMsTpih4LsIpIIw==
+X-Gm-Message-State: AOJu0YzcEdILzOLgU5H+81GNIo/D4DNnqzwoRpnHlmJ/a9OjLSi9D1vP
+	/0XgJp1AAE5yofXNQnHzDoQvUNASdfHePo3OO2qO4NLNP4HK4FRbvl8w0hRdMhR3xD4prxg6The
+	Km8rbpC0LW1BiLg8EBzlaBj238eFu4iklxPXZbw==
+X-Google-Smtp-Source: AGHT+IEuen8OmFxtuj4ZTgSRHBzI1g5POIAvSBNhxH9SD/FeOP3UDyFdtxweAcS82F8ez2dxE61/qfptaa8jH8eMSzo=
+X-Received: by 2002:a5b:dce:0:b0:dee:6323:e8f2 with SMTP id
+ 3f1490d57ef6-dfa5a693338mr2769319276.47.1717087867294; Thu, 30 May 2024
+ 09:51:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240530-x1e80100-clk-gcc-fix-halt-check-for-usb-phy-pipe-clks-v1-1-16c6f4dccbd5@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAOutWGYC/x2N0QrCMBAEf6XcswuX1kjxV8SH5rw0oaUNiUql9
- N+NPg7s7OxUNEctdG12yvqOJa5LBXNqSMKwjIr4qEwtt2e2HWMz2rNhhswTRhH4uCEM8xMSVCb
- 4NeNVHFL4IMWkv12B+l68dfbSGUf1O2Wt3r97ux/HF+D383OHAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org, 
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1839; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=Ly2L242GxHMIF6bws/UEb4G+Luoe3LUDH/lBlpCDr0Q=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmWK3tl6uah8YmriTt3lwjpsK8x6CjrQVSP9BIS
- odeQ7reUGaJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZlit7QAKCRAbX0TJAJUV
- VuptEAC5WMgOjmsUB8qckUbsaskWG7PgeQwoMiZftXJw1gCuaEOOw6UtJJeSxGc5kVgvMgR2hft
- JvEvmNOZswIN/m0gTBcZcpC8DnGiIInTfbMDKkdkGP9/0EMG9VMJ4JpptjS//XrQUN6pAKMv42U
- tuioLIWwfrgCpFheWQhw4XSToWBzFgvuqJMYLhsqBvFDt5AApOXl9L+43b7rwoJMKXeCYK9jAPS
- fBdi6Fd1rfLHs1IwPzGQNSsWXI7QLcdLHlGqTzyAas/QLfKMAk+2lxBc1OWyHyaNTopyOPzCzfb
- LWnE+1IS6gvDy0iG4eYwxwmWF9JGSgI2DBs5sRXrjzWAVtREb7u6wbv9NfSFW6YZcQX8s06BarG
- yN9Go/2Pcd0RlcWcs56zpAIcMO4nKr3JlNU/CxWAOB9ne+Cphpw+DvThX7ZE9LNHI+RCwMnDjNi
- g1e8qkKLsuIDKa+m6spe0+qZRi0qmSucPahTkZJm7hWFciku+Et8rEKDSLLF1c+1xqcX1HdOD3e
- JjmdwKua3RK6tww7/e9iLWpTXUoHJ7sEQ2v3tAg4yTL1rZ82KXU6fGKglSSDjkP50KWrxFfJ7PZ
- LAE6s1iZ7QbLcIDEb4+B0BUVzsolewU7DY1P34exI+9XI+aq+vNuiv4LFgY/9HxV/eL8zdDDbsm
- KZVA65W0E073lHw==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+References: <8cc61db5-2920-4dd1-8132-5af434fb05b1@freebox.fr>
+ <o6wwzb4qblelfpfsrmqhoovjnyvymf42p2ilv4bzn4le3nklbv@kj3qklez7izy>
+ <40903165-c965-4c6c-a3bf-104b1088730b@freebox.fr> <CAA8EJppg9ftnQVrZhEO9Ro2Ji6whCgQLaJrr0yCzV-2hF2HEtQ@mail.gmail.com>
+ <8475b07d-8d44-4969-9c15-2926a6397b1c@freebox.fr>
+In-Reply-To: <8475b07d-8d44-4969-9c15-2926a6397b1c@freebox.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 30 May 2024 19:50:55 +0300
+Message-ID: <CAA8EJprA4R5pkLTocpCWVn-HkUYeFSas7UBrU0rvt55KJ=d56g@mail.gmail.com>
+Subject: Re: [PATCH v1] arm64: dts: qcom: msm8998: add HDMI GPIOs
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Jeffrey Hugo <quic_jhugo@quicinc.com>, MSM <linux-arm-msm@vger.kernel.org>, 
+	DT <devicetree@vger.kernel.org>, Bryan O Donoghue <bryan.odonoghue@linaro.org>, 
+	Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
+Content-Type: text/plain; charset="UTF-8"
 
-Since the pipe clocks are fed by the QMP PHYs, they are not under the
-GCC control, therefore the halt bit might not get. This will lead to
-the clock driver reporting the clock as stuck, but that is inaccurate.
-So instead of waiting for the halt bit to get set, just use the
-HALT_DELAY flag.
+On Thu, 30 May 2024 at 19:45, Marc Gonzalez <mgonzalez@freebox.fr> wrote:
+>
+> On 30/05/2024 15:06, Dmitry Baryshkov wrote:
+>
+> > This device was neither validated nor described properly in the DT
+> > schema. There are several other issues here.
+>
+> Do you mean dtbs_check or dt_binding_check or something else?
 
-Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/clk/qcom/gcc-x1e80100.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+dtbs_check
 
-diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
-index 1404017be918..afff7cd14848 100644
---- a/drivers/clk/qcom/gcc-x1e80100.c
-+++ b/drivers/clk/qcom/gcc-x1e80100.c
-@@ -5186,7 +5186,7 @@ static struct clk_regmap_mux gcc_usb3_prim_phy_pipe_clk_src = {
- 
- static struct clk_branch gcc_usb3_prim_phy_pipe_clk = {
- 	.halt_reg = 0x39068,
--	.halt_check = BRANCH_HALT_VOTED,
-+	.halt_check = BRANCH_HALT_DELAY,
- 	.hwcg_reg = 0x39068,
- 	.hwcg_bit = 1,
- 	.clkr = {
-@@ -5257,7 +5257,7 @@ static struct clk_regmap_mux gcc_usb3_sec_phy_pipe_clk_src = {
- 
- static struct clk_branch gcc_usb3_sec_phy_pipe_clk = {
- 	.halt_reg = 0xa1068,
--	.halt_check = BRANCH_HALT_VOTED,
-+	.halt_check = BRANCH_HALT_DELAY,
- 	.hwcg_reg = 0xa1068,
- 	.hwcg_bit = 1,
- 	.clkr = {
-@@ -5327,7 +5327,7 @@ static struct clk_regmap_mux gcc_usb3_tert_phy_pipe_clk_src = {
- 
- static struct clk_branch gcc_usb3_tert_phy_pipe_clk = {
- 	.halt_reg = 0xa2068,
--	.halt_check = BRANCH_HALT_VOTED,
-+	.halt_check = BRANCH_HALT_DELAY,
- 	.hwcg_reg = 0xa2068,
- 	.hwcg_bit = 1,
- 	.clkr = {
+>
+> I think I changed everything you pointed out.
+> (I tried to remain as close as possible to msm8996.)
 
----
-base-commit: 9d99040b1bc8dbf385a8aa535e9efcdf94466e19
-change-id: 20240530-x1e80100-clk-gcc-fix-halt-check-for-usb-phy-pipe-clks-ef8cf5b5631b
+Yes, this is better now.
 
-Best regards,
+>
+> diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> index 47e97669821c3..9fc49ae9ee387 100644
+> --- a/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> @@ -19,6 +19,7 @@ properties:
+>        - qcom,hdmi-tx-8974
+>        - qcom,hdmi-tx-8994
+>        - qcom,hdmi-tx-8996
+> +      - qcom,hdmi-tx-8998
+
+If you scroll the file down, you'll see that this is not enough.
+
+>
+>    clocks:
+>      minItems: 1
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+> index 83fe4b39b56f4..78607ee3e2e84 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
+> @@ -14,6 +14,7 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,hdmi-phy-8996
+> +      - qcom,hdmi-phy-8998
+>
+>    reg:
+>      maxItems: 6
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> index e5f051f5a92de..268bb83efccce 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> @@ -1434,6 +1434,34 @@ blsp2_spi6_default: blsp2-spi6-default-state {
+>                                 drive-strength = <6>;
+>                                 bias-disable;
+>                         };
+> +
+> +                       hdmi_cec_default: hdmi-cec-default-state {
+> +                               pins = "gpio31";
+> +                               function = "hdmi_cec";
+> +                               drive-strength = <2>;
+> +                               bias-pull-up;
+> +                       };
+> +
+> +                       hdmi_ddc_default: hdmi-ddc-default-state {
+> +                               pins = "gpio32", "gpio33";
+> +                               function = "hdmi_ddc";
+> +                               drive-strength = <2>;
+> +                               bias-pull-up;
+> +                       };
+> +
+> +                       hdmi_hpd_default: hdmi-hpd-default-state {
+> +                               pins = "gpio34";
+> +                               function = "hdmi_hot";
+> +                               drive-strength = <16>;
+> +                               bias-pull-down;
+> +                       };
+> +
+> +                       hdmi_hpd_sleep: hdmi-hpd-sleep-state {
+> +                               pins = "gpio34";
+> +                               function = "hdmi_hot";
+> +                               drive-strength = <2>;
+> +                               bias-pull-down;
+> +                       };
+>                 };
+>
+>                 remoteproc_mss: remoteproc@4080000 {
+> @@ -2757,7 +2785,7 @@ mmcc: clock-controller@c8c0000 {
+>                                  <&mdss_dsi0_phy 0>,
+>                                  <&mdss_dsi1_phy 1>,
+>                                  <&mdss_dsi1_phy 0>,
+> -                                <0>,
+> +                                <&hdmi_phy 0>,
+>                                  <0>,
+>                                  <0>,
+>                                  <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
+> @@ -2862,6 +2890,14 @@ dpu_intf2_out: endpoint {
+>                                                         remote-endpoint = <&mdss_dsi1_in>;
+>                                                 };
+>                                         };
+> +
+> +                                       port@2 {
+> +                                               reg = <2>;
+> +
+> +                                               dpu_intf3_out: endpoint {
+> +                                                       remote-endpoint = <&hdmi_in>;
+> +                                               };
+> +                                       };
+>                                 };
+>                         };
+>
+> @@ -3017,6 +3053,90 @@ mdss_dsi1_phy: phy@c996400 {
+>
+>                                 status = "disabled";
+>                         };
+> +
+> +                       hdmi: hdmi-tx@c9a0000 {
+> +                               compatible = "qcom,hdmi-tx-8998";
+> +                               reg =   <0x0c9a0000 0x50c>,
+> +                                       <0x00780000 0x6220>,
+> +                                       <0x0c9e0000 0x2c>;
+> +                               reg-names = "core_physical",
+> +                                           "qfprom_physical",
+> +                                           "hdcp_physical";
+> +
+> +                               interrupt-parent = <&mdss>;
+> +                               interrupts = <8>;
+> +
+> +                               clocks = <&mmcc MDSS_MDP_CLK>,
+> +                                        <&mmcc MDSS_AHB_CLK>,
+> +                                        <&mmcc MDSS_HDMI_CLK>,
+> +                                        <&mmcc MDSS_HDMI_DP_AHB_CLK>,
+> +                                        <&mmcc MDSS_EXTPCLK_CLK>;
+> +                               clock-names =
+> +                                       "mdp_core",
+> +                                       "iface",
+> +                                       "core",
+> +                                       "alt_iface",
+> +                                       "extp";
+
+Ok, you have dropped several clocks, which I think might be required
+for the device to function. For example, msm8996 doesn't have
+MNOC_AHB_CLK, while msm8998 has it. It might be that we should be
+enabling the clock via the interconnect driver instead (or maybe it is
+handled by RPM?).
+
+Let's hope that we can sort the clocks. I have no other issues remaining.
+
+> +
+> +                               phys = <&hdmi_phy>;
+> +                               #sound-dai-cells = <1>;
+> +
+> +                               pinctrl-names = "default", "sleep";
+> +                               pinctrl-0 = <&hdmi_hpd_default
+> +                                            &hdmi_ddc_default
+> +                                            &hdmi_cec_default>;
+> +                               pinctrl-1 = <&hdmi_hpd_sleep
+> +                                            &hdmi_ddc_default
+> +                                            &hdmi_cec_default>;
+> +
+> +                               status = "disabled";
+> +
+> +                               ports {
+> +                                       #address-cells = <1>;
+> +                                       #size-cells = <0>;
+> +
+> +                                       port@0 {
+> +                                               reg = <0>;
+> +                                               hdmi_in: endpoint {
+> +                                                       remote-endpoint = <&dpu_intf3_out>;
+> +                                               };
+> +                                       };
+> +
+> +                                       port@1 {
+> +                                               reg = <1>;
+> +                                               hdmi_out: endpoint {
+> +                                               };
+> +                                       };
+> +                               };
+> +                       };
+> +
+> +                       hdmi_phy: hdmi-phy@c9a0600 {
+> +                               compatible = "qcom,hdmi-phy-8998";
+> +                               reg = <0x0c9a0600 0x18b>,
+> +                                     <0x0c9a0a00 0x38>,
+> +                                     <0x0c9a0c00 0x38>,
+> +                                     <0x0c9a0e00 0x38>,
+> +                                     <0x0c9a1000 0x38>,
+> +                                     <0x0c9a1200 0x0e8>;
+> +                               reg-names = "hdmi_pll",
+> +                                           "hdmi_tx_l0",
+> +                                           "hdmi_tx_l1",
+> +                                           "hdmi_tx_l2",
+> +                                           "hdmi_tx_l3",
+> +                                           "hdmi_phy";
+> +
+> +                               #clock-cells = <0>;
+> +                               #phy-cells = <0>;
+> +
+> +                               clocks = <&mmcc MDSS_AHB_CLK>,
+> +                                        <&gcc GCC_HDMI_CLKREF_CLK>,
+> +                                        <&rpmcc RPM_SMD_XO_CLK_SRC>;
+> +                               clock-names = "iface",
+> +                                             "ref",
+> +                                             "xo";
+> +
+> +                               status = "disabled";
+> +                       };
+>                 };
+>
+>                 venus: video-codec@cc00000 {
+>
+>
+> I get /dev/tty1 on the TV.
+>
+> And the following command displays test patterns as expected:
+> # modetest -Mmsm -a -s 33:#0 -P 34@82:1920x1080+0+0@XR24 -P 40@82:200x200+35+300@AR24 -P 46@82:200x200+310+300@AR24
+> setting mode 1920x1080-60.00Hz on connectors 33, crtc 82
+> testing 1920x1080@XR24 on plane 34, crtc 82
+> testing 200x200@AR24 on plane 40, crtc 82
+> testing 200x200@AR24 on plane 46, crtc 82
+>
+>
+> Regards
+>
+
+
 -- 
-Abel Vesa <abel.vesa@linaro.org>
-
+With best wishes
+Dmitry
 
