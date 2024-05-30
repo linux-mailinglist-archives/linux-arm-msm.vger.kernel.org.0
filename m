@@ -1,168 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-21134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 502B88D4F66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 17:49:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C7D6C8D4FEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 18:36:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07BA3282220
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 15:49:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83151282F16
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:36:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F1DB1CD2C;
-	Thu, 30 May 2024 15:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B15D2C1AE;
+	Thu, 30 May 2024 16:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="VYWHc88Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oZeSbWJE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CEE1F94C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 15:49:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C57C1DDCE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 16:35:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717084148; cv=none; b=GS5Tbz9K6ejaEyeC193m7D1vO9uXQuP/AB4WVwzDCd0y+njyG395gTA9eqd1mVfMrmSbIgEcikeCNXSyHpV9D7m8VzERZpLYtcjyU8la7orj6wOjKTRPphGyYZ1TsGgJvqV/TVWIML3ofhPwTfHuopJfFwUJWZ90t3IXF019je8=
+	t=1717086959; cv=none; b=Xndf+qenLRAHpd0DJweDmE+cqOKjEbXTBJkvS2oWKIeJ3CbTdoXwdUbV8Te0dSmLr5XJrZSR7gzOPPpY7Tw33l4RLtp5/Y+X0JWwq+++6JqZndaNEM/FdCnLzQPkbkWGoyLwPj5Mua8wz5uHiI4ggZpu6oInv4gFD96HdF3xYyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717084148; c=relaxed/simple;
-	bh=V496EBsN/8sDzK0xPf/lafp2vL/Y6Qrr0P9nD/nTSvw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Lq/FbPe5idZfDhTAcf2xRsQzvmoHagPxNTlqgxdPNYzowzsG+58SprCcfFo8TbH13niIXo57XsfdcRO8W8eY1G3bzG40rWAYbB3VBclZvV8Y0Pt4a5Z/2QAQlEDJNFmobL7AqAdh1UFfxNkKyoYpPMtsZLZaTReHIlpcFUv2gEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=VYWHc88Y; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1f62fae8c1aso1099465ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 08:49:06 -0700 (PDT)
+	s=arc-20240116; t=1717086959; c=relaxed/simple;
+	bh=BKr5PiPt2rkHAKd77k/CQfzajkgBPMNpBIQmCz2Ij10=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=t6rf+hD8GfdDqbORP6CIeEHnQpRc0sVqJAbbYNA/YPjRf5aYKcd8fuRZYmDpEpRVaS8drnKSjPpBx4gWvHCDYxAgNuyI67KVBkV905EZh8pv9IqTW6cMLwYeyaHuuxmadLZNii8p9wgAbyVZFbJz60Su8dIsrUePMkE2rMjjtYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oZeSbWJE; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-578626375ffso1285693a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 09:35:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1717084146; x=1717688946; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KrjPSd85eM16lzQd2l+Jx3zs8iJGA94JtJTphdKIu1w=;
-        b=VYWHc88YFhmzlWLphmiLx3Ty+2A/zi11zvAjO73Zim25Zt+Ngg3aDwj8S4uvXKJlqI
-         9uTokSnAN2NNMIi0OCl5LBR6mlHi1N49O8+IiWOvq8Kxjp4RraInXDnequjqZmm8Xmfy
-         hgb0/XdeGxj4VTZuvOwMrweNZJDpY53a0ByUg=
+        d=linaro.org; s=google; t=1717086955; x=1717691755; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lSTTlQ9inxclMtvN9VfD3xxa8EKPAm+Tvw7rOPw/hy0=;
+        b=oZeSbWJE5aVYMXaChcD86nl4pVROI3Xym4gFCIVV7XMHmRFwUpzr0wnc8x8KAcgFbU
+         n4DIJfVW06M10cS3QtLJIYxvGg72GRxVgn6hJSQNEd8arSiR+sXCMfAL2yajM0bU5Q6V
+         BiMbApQSFvJUUiXleKSogb+3CqusW5G/AUoqkvTV0ECzrT8fMESNEg85HNa2/TooOkK5
+         P4JH2VwxMOuuUsDM7lckr2eg4f2EpRAfWXObv5Kovf0vhPmVtzQyoJVWUsiDtsLyUWEA
+         9jtsd0oMwUAvQw+wrCiC9sn1SaVjKAI8QkrDNH1vrb6kU/38O8AUiRyvsgu72TFjpi60
+         JSGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717084146; x=1717688946;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1717086955; x=1717691755;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KrjPSd85eM16lzQd2l+Jx3zs8iJGA94JtJTphdKIu1w=;
-        b=VBqmk5ra517UvsP6ZX18ihw/CrLUtywTDXZaDv8IBIRhNIKDQ5k7/+AiB+yBY01W/t
-         c98+E2d0cGopDQwnbTIInnKWwbEvA/YJ6qf3nXgDGv/aJNllx/8Q9t4zOpukk8K33hPj
-         RZFWecAFKA3VD6WYqUl54HROCu6sUlzyzcScLtSQYjck1rDCvQEv5P1Q3urHCoJC++H2
-         4uue21QaEiPAmCYwwjTCuOHD6GTBx9e6Qb/VyvIFtLh/xT29PxoJtfIfnN5s7Y0aeF4U
-         j6aiO2HqN5Pat9CYyniOPjQTrLmk/vLOl4NLWTRtHHF+gsspNnrEsl1pLRtvhKc+nrf/
-         /ODA==
-X-Forwarded-Encrypted: i=1; AJvYcCXn23W8k02vmcOOa1lOgLMLcrFK4fWLlEn1qAakIml+ueMrcn3kHhNTeGw//zBw7BRXv6GJxz2uwiyYshrQVB6l2/5WVmbtk+xxoINt5Q==
-X-Gm-Message-State: AOJu0YzrX5mnKP4Ncrd0hNrxHzvssSfZsBdZIyCfB1SxjTOTnuA8YIAp
-	395a6Urz5rWW1pY7zWYzdAjCqCF5CrMF0yt7vesKnujGamgFmoeCYDo/3VPRDg==
-X-Google-Smtp-Source: AGHT+IGn2tzzPa7fMTUghoHMSFR9I59iuxYacjgwwItgbhIUyfqhgbSLtvHe2FUJBmr5tdAjh0x3OQ==
-X-Received: by 2002:a17:902:d512:b0:1f3:1200:ceb3 with SMTP id d9443c01a7336-1f619b2cd29mr28968425ad.51.1717084146231;
-        Thu, 30 May 2024 08:49:06 -0700 (PDT)
-Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:564b:72b6:4827:cf6a])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f44c994a66sm120156915ad.182.2024.05.30.08.49.04
+        bh=lSTTlQ9inxclMtvN9VfD3xxa8EKPAm+Tvw7rOPw/hy0=;
+        b=d/thEqOhVPt/Bm93JfJZc0dK7/1vdjr9GXYlD0GUpIu6Ds/hAL4iN/grZjEiKvquTG
+         GFy+s9Xm0MEG9iV6V11Wgl93O68147hBiHXzRAiEdrClG9uYOjt60udU1QwXPJdQgdG5
+         O//u4UJ5I+LCJ6L9pDTJp+ZJkEuxTiSDcGYjasoPrdJkYd1eRaInPkbBH/gGg/m83ynv
+         7w/hLBkBisY9ecDHKX1OLhRLox8rc3HavHlFDCyaxk/pXzv0+yYRkXTOwF484T98a+4q
+         GnCVNG3B/wGEZUPVKKj5MvUvmjKnl7lRO4NQjUIQVPhH+xkbU42ca/Xm4G4JhCD0ZUwT
+         gm3w==
+X-Gm-Message-State: AOJu0Yybh2knSiwxw+t65W3RLM3KtbhikXRucJ+3O2qc1e3qR2p0lYfM
+	v7mXu/xu8KPUKo1Sn/tlu5Cz7+ftW2DtEVLWqc2ycR15i93+zGszyjGxCHw6qC4=
+X-Google-Smtp-Source: AGHT+IEo32/cA/dSF07Tv2ymu0/GefsB88XimfHTzqH0KHRvy5LxPbMTmBDMy5UeTbi9GGapG80n1A==
+X-Received: by 2002:a50:8dc6:0:b0:572:cfa4:3ccb with SMTP id 4fb4d7f45d1cf-57a177925bdmr1460160a12.8.1717086954441;
+        Thu, 30 May 2024 09:35:54 -0700 (PDT)
+Received: from [127.0.1.1] ([188.27.161.69])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a10670df6sm1888885a12.69.2024.05.30.09.35.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 May 2024 08:49:05 -0700 (PDT)
-From: Douglas Anderson <dianders@chromium.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	John Ogness <john.ogness@linutronix.de>,
-	linux-arm-msm@vger.kernel.org,
-	Tony Lindgren <tony@atomide.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Guanbing Huang <albanhuang@tencent.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org
-Subject: [PATCH v2] serial: port: Don't block system suspend even if bytes are left to xmit
-Date: Thu, 30 May 2024 08:48:46 -0700
-Message-ID: <20240530084841.v2.1.I2395e66cf70c6e67d774c56943825c289b9c13e4@changeid>
-X-Mailer: git-send-email 2.45.1.288.g0e0cd299f1-goog
+        Thu, 30 May 2024 09:35:53 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: x1e80100: Fix the supplies to the
+ USB1 SS[0-2] PHYs
+Date: Thu, 30 May 2024 19:35:44 +0300
+Message-Id: <20240530-x1e80100-dts-fix-usb-phy-supplies-v1-0-6eb72a546227@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOCqWGYC/x2NQQqDQAwAvyI5N5BdtYpfKR50jTUgumxULOLfG
+ zwODDMXKCdhhSa7IPEhKuti4F4ZhKlbvowyGIMnX1CZE56Oa3JEOGyKo5y4a49x+qHuMc6WwpC
+ HPpRV3fnxDdaJic17Hp/2vv85EUeccwAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>, 
+ Sibi Sankar <quic_sibis@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=720; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=BKr5PiPt2rkHAKd77k/CQfzajkgBPMNpBIQmCz2Ij10=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmWKriSWeEJowqq1va4I17wsNuerfZAKtLIw5GW
+ LxmzVHlRA2JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZliq4gAKCRAbX0TJAJUV
+ VhS2D/9cljoWFGK2BPHutAD3JkFv2ZtCi/jICADD8QCadd1Ci6egcuC2LoTYd0YyBcQVbTE//kj
+ 5w+oIM6FpKOJLJNPNRJFVhZ2sRmlhR6BBM5RICZpDcmE1Dlrf+P407GbW8XaIdf7pZhO2JGef8U
+ 2zL9RBCIlMyOPaGGN/oahoxcNhkuWNZKPhe8JI+8W9vR0tLjn8+8Cr2u9uhCSLlsa9a4Ac6swEL
+ /joSia/rb6aEsEh4+6GIjOPANGoisalmXEyb1rQp5sup5cqY+P8P/hREXLCkzx3KFKuYcoZGPZn
+ eIpSey2dlXbw37BV28QWpRc2QeXZi7Xzf5AY60h+GacqhifYUDDNwsjP1nx81jrY5rlnI/TK/Mq
+ vgVwdXZrMjkeRm0/EJ4wOuJKob7P2Kj0hjvY4OAs8Aquif1E53NbSjpywc8pYkcerK9ZJNizrMg
+ 3cOoD6gbjMVsS1ksfIs+JV9WG+kLQjdVou/Ikz1dpE7l5ftywfjKMwezaaVrUkFRlac2AZNqk5P
+ hdnaz4XsrjHGrzU/s2ovSDDuYRLJ0c9fQ4mArE0s0vQFTpd4lGxa0+N15/eXXRlVJ4VDAYuLZ7C
+ B0HnsDCpckbTHjrcByLTSXh3rKu8ZBi31uCX6BKJUEaXwPpUFI5Pz3+jjbx5TTBhqJgeBPxmDxN
+ AnuQLI3bnPWgoyw==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Recently, suspend testing on sc7180-trogdor based devices has started
-to sometimes fail with messages like this:
+According to documentation, the current supplies for the USB1 SS0,
+SS1 and SS2 both QMP combo PHYS and eUSB2 PHYs are all wrong. Fix
+them accordingly.
 
-  port a88000.serial:0.0: PM: calling pm_runtime_force_suspend+0x0/0xf8 @ 28934, parent: a88000.serial:0
-  port a88000.serial:0.0: PM: dpm_run_callback(): pm_runtime_force_suspend+0x0/0xf8 returns -16
-  port a88000.serial:0.0: PM: pm_runtime_force_suspend+0x0/0xf8 returned -16 after 33 usecs
-  port a88000.serial:0.0: PM: failed to suspend: error -16
-
-I could reproduce these problems by logging in via an agetty on the
-debug serial port (which was _not_ used for kernel console) and
-running:
-  cat /var/log/messages
-...and then (via an SSH session) forcing a few suspend/resume cycles.
-
-Tracing through the code and doing some printf()-based debugging shows
-that the -16 (-EBUSY) comes from the recently added
-serial_port_runtime_suspend().
-
-The idea of the serial_port_runtime_suspend() function is to prevent
-the port from being _runtime_ suspended if it still has bytes left to
-transmit. Having bytes left to transmit isn't a reason to block
-_system_ suspend, though. If a serdev device in the kernel needs to
-block system suspend it should block its own suspend and it can use
-serdev_device_wait_until_sent() to ensure bytes are sent.
-
-The DEFINE_RUNTIME_DEV_PM_OPS() used by the serial_port code means
-that the system suspend function will be pm_runtime_force_suspend().
-In pm_runtime_force_suspend() we can see that before calling the
-runtime suspend function we'll call pm_runtime_disable(). This should
-be a reliable way to detect that we're called from system suspend and
-that we shouldn't look for busyness.
-
-Fixes: 43066e32227e ("serial: port: Don't suspend if the port is still busy")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
-In v1 [1] this was part of a 2-patch series. I'm now just sending this
-patch on its own since the Qualcomm GENI serial driver has ended up
-having a whole pile of problems that are taking a while to unravel.
-It makes sense to disconnect the two efforts. The core problem fixed
-by this patch and the geni problems never had any dependencies anyway.
+Abel Vesa (2):
+      arm64: dts: qcom: x1e80100-crd: Fix USB PHYs regulators
+      arm64: dts: qcom: x1e80100-qcp: Fix USB PHYs regulators
 
-[1] https://lore.kernel.org/r/20240523162207.1.I2395e66cf70c6e67d774c56943825c289b9c13e4@changeid/
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 15 ++++++++++++---
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 15 ++++++++++++---
+ 2 files changed, 24 insertions(+), 6 deletions(-)
+---
+base-commit: 9d99040b1bc8dbf385a8aa535e9efcdf94466e19
+change-id: 20240530-x1e80100-dts-fix-usb-phy-supplies-c3cbc578a2f6
 
-Changes in v2:
-- Fix "regulator" => "regular" in comment.
-- Fix "PM Runtime" => "runtime PM" in comment.
-- Commit messages says how serdev devices should ensure bytes xfered.
-
- drivers/tty/serial/serial_port.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/tty/serial/serial_port.c b/drivers/tty/serial/serial_port.c
-index 91a338d3cb34..93ca94426162 100644
---- a/drivers/tty/serial/serial_port.c
-+++ b/drivers/tty/serial/serial_port.c
-@@ -64,6 +64,16 @@ static int serial_port_runtime_suspend(struct device *dev)
- 	if (port->flags & UPF_DEAD)
- 		return 0;
- 
-+	/*
-+	 * We only want to check the busyness of the port if runtime PM is
-+	 * enabled. Specifically runtime PM will be disabled by
-+	 * pm_runtime_force_suspend() during system suspend and we don't want
-+	 * to block system suspend even if there is data still left to
-+	 * transmit. We only want to block regular runtime PM transitions.
-+	 */
-+	if (!pm_runtime_enabled(dev))
-+		return 0;
-+
- 	uart_port_lock_irqsave(port, &flags);
- 	if (!port_dev->tx_enabled) {
- 		uart_port_unlock_irqrestore(port, flags);
+Best regards,
 -- 
-2.45.1.288.g0e0cd299f1-goog
+Abel Vesa <abel.vesa@linaro.org>
 
 
