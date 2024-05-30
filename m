@@ -1,79 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-21067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 509468D477B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 10:50:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0199B8D4780
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 10:51:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 037BA1F21D39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 08:50:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A1791C20A86
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 08:51:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12A50155349;
-	Thu, 30 May 2024 08:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF1656F2F4;
+	Thu, 30 May 2024 08:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TKozrd/s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qJdjKfxu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01F9155336;
-	Thu, 30 May 2024 08:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEA81761BF;
+	Thu, 30 May 2024 08:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717059002; cv=none; b=PvZo/2IkEFrx35EO1n7R7a/lL/eaFhNlZLjHNKPzQUbT6NiekjBneAgRu8COTxesXV8WfAQZb/8e/ATQ8aYjBkOKM2Qz1m6j5MvHDqXC7x3n/o9fOAXF4WoM/OQVKeXBDlaoV8ef/2LOMQOiswW6/SRcUlbJHu9N5k32hT3YrlA=
+	t=1717059088; cv=none; b=pM5pOmuI0jY9qJcL0o8kCPy13fOTOHrByS+FoyL1ltgVKs56ppZafWodf9AMI7WfB/czVPz4VGVY3CvHMwIXF5To3mz9BGgmtN2rtVr4oOMBi1WwK/giYDa+exLe7aUWAxk1oZNoSWRonZxMDIuV7lZ+mNVRTQ/sOvN2oyKJaGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717059002; c=relaxed/simple;
-	bh=2DXQrqvVhn7otPeeh3pzCu9NQCv4f7YT6NDKPqdXedE=;
-	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=TqIxDuMg90gEddmNpF2l0rJlLhXFweHvlckV+qBvaZigX4wFp+Q5H448AwWORpWm38vCFtOhOxtU5fh/FE/nY4gDwo3JqoEPZKC12xz8gRnHfHK06HzZjT3nR6OaMj3bAzkHTA8GchYIRu8aW25w9KX9aw8c/H4cGnhB49Cz5ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TKozrd/s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4720C2BBFC;
-	Thu, 30 May 2024 08:50:00 +0000 (UTC)
+	s=arc-20240116; t=1717059088; c=relaxed/simple;
+	bh=12lD408jDSRLnkwKIW9yHUd+rx1knohzy66UIp2Jx8Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GD3MFwK1RkS6KN6wbFjg0yhW/BgjZg/ecoIZEaXYn0nZhIW3vFP4zDHwVoMF/Qfc+RaL6iCiWKD6DeB12QSNxu6b/50LLrdNN94TGmjus65tej17MdfhYguXiUGXKmdRVazBxX9fSDizLrmlRX9rMXfVTzvuCI1jpCh6bfPcqtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qJdjKfxu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F18C2BBFC;
+	Thu, 30 May 2024 08:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717059001;
-	bh=2DXQrqvVhn7otPeeh3pzCu9NQCv4f7YT6NDKPqdXedE=;
-	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
-	b=TKozrd/sfuLL8YZ3I/qoW8DNZRo0fy62JLiLLByUT572EOQX/IHePNikrojJDnhJZ
-	 930TYhi9LNdQZdXCkQ0veUcNqonnm45usg+yWOZrz3TCfGsff38o+piGnlbrC3XlCe
-	 5qa4uhXWDe7q7BXs7YgmxRNr8e1ZB0CxGh2dc4ZrjUyHDaWmDXnA7eNKCzSx6E8ZmT
-	 L0iSEO2gRlCkGXBETlPtO7Ln+WYTtfsM5LRx5FNu/8eSl+iZLpNbUfzq95omOmz/pE
-	 B+z22BvS8j2dMZwnyfXT7+zgvi6TC96O+RcIR2coO9xBRaSQVQUiSCxImNA1jTlgyZ
-	 4UWXu2nHsy/Dg==
-Message-ID: <61893982881596ef18a206f2f3ed152e@kernel.org>
-Date: Thu, 30 May 2024 08:49:58 +0000
-From: "Maxime Ripard" <mripard@kernel.org>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v3 2/7] drm/bridge-connector: switch to using drmm
- allocations
-In-Reply-To: <20240530-bridge-hdmi-connector-v3-2-a1d184d68fe3@linaro.org>
-References: <20240530-bridge-hdmi-connector-v3-2-a1d184d68fe3@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>, "Andrzej Hajda" <andrzej.hajda@intel.com>, "Daniel
- Vetter" <daniel@ffwll.ch>, "David Airlie" <airlied@gmail.com>, "Jernej
- Skrabec" <jernej.skrabec@gmail.com>, "Jonas Karlman" <jonas@kwiboo.se>, "Laurent
- Pinchart" <Laurent.pinchart@ideasonboard.com>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Marijn
- Suijten" <marijn.suijten@somainline.org>, "Maxime Ripard" <mripard@kernel.org>, "Neil
- Armstrong" <neil.armstrong@linaro.org>, "Rob Clark" <robdclark@gmail.com>, "Robert
- Foss" <rfoss@kernel.org>, "Sean Paul" <sean@poorly.run>, "Thomas Zimmermann" <tzimmermann@suse.de>
-Content-Transfer-Encoding: 7bit
+	s=k20201202; t=1717059088;
+	bh=12lD408jDSRLnkwKIW9yHUd+rx1knohzy66UIp2Jx8Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qJdjKfxu8S49zrrbS8zrKI3n+RFs0HhC2z+kEIfl1woQ8vqzCl52oHIKHIh+aTEt3
+	 bmsvFlq7lvLJCdt9SYyECsLXZ+s3W67FLjY3L0n08O+vzNbZct9vQEnV6XYD/lVrtt
+	 LCWzq1hFjXCyhN5ilyruZzp2ZDqFTUYfbOqfBfLRmKD9WCfjBijHdaD9dTq6qWiVpm
+	 /Ykf4etC7QbQZS4lIBKwbV9mHATzNcN74L8bMZ/lmZ6e61T9dnv1a0sE2pOav0eaQu
+	 /fXV1j7ZcDzPbKIHZLRUlQiPxGcONkVRlp+5qdtH83OHuXDXCG65I8eow0keU4z6m/
+	 QWaOdL6k8ykbA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sCbVP-000000004g3-2xc6;
+	Thu, 30 May 2024 10:51:28 +0200
+Date: Thu, 30 May 2024 10:51:27 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Das Srinagesh <quic_gurus@quicinc.com>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v2 03/14] mfd: pm8008: deassert reset on probe
+Message-ID: <Zlg-D5yfrafbUei1@hovoldconsulting.com>
+References: <20240529162958.18081-1-johan+linaro@kernel.org>
+ <20240529162958.18081-4-johan+linaro@kernel.org>
+ <CAHp75VdnTQJFfqOdxC99gWckxebdUr4hV0wp3ZTs1Pey7q_fsA@mail.gmail.com>
+ <Zlgz3nDjfRO5LYnY@hovoldconsulting.com>
+ <CAHp75VewzRUiKQvQ9D9HWPOo6Yfqtv+AV+AVTPQO=foRzMoegw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHp75VewzRUiKQvQ9D9HWPOo6Yfqtv+AV+AVTPQO=foRzMoegw@mail.gmail.com>
 
-On Thu, 30 May 2024 02:12:25 +0300, Dmitry Baryshkov wrote:
-> Turn drm_bridge_connector to using drmm_kzalloc() and
-> drmm_connector_init() and drop the custom destroy function. The
-> drm_connector_unregister() and fwnode_handle_put() are already handled
-> by the drm_connector_cleanup() and so are safe to be dropped.
+On Thu, May 30, 2024 at 11:34:55AM +0300, Andy Shevchenko wrote:
+> On Thu, May 30, 2024 at 11:08 AM Johan Hovold <johan@kernel.org> wrote:
+> > On Wed, May 29, 2024 at 10:45:40PM +0300, Andy Shevchenko wrote:
+> > > On Wed, May 29, 2024 at 7:30 PM Johan Hovold <johan+linaro@kernel.org> wrote:
+> > > >
+> > > > Request and deassert any (optional) reset gpio during probe in case it
+> > > > has been left asserted by the boot firmware.
+> > > >
+> > > > Note the reset line is not asserted to avoid reverting to the default
+> > > > I2C address in case the firmware has configured an alternate address.
 > 
+> ...
 > 
-> [ ... ]
+> > > > +       /*
+> > > > +        * The PMIC does not appear to require a post-reset delay, but wait
+> > > > +        * for a millisecond for now anyway.
+> > > > +        */
+> > >
+> > > > +       usleep_range(1000, 2000);
+> > >
+> > > fsleep() ?
+> >
+> > No, I'd only use fsleep() when the argument is variable.
+> 
+> Okay, this is basically the same issue as with use of dev_err_probe()
+> with known errors. fsleep() hides the choice between let's say
+> msleep() / usleep_range() / udelay() from the caller. This, in
+> particular, might allow shifting constraints if the timer core is
+> changed or becomes more granular. It's independent to the variable or
+> constant parameter(s). Whatever, I'm not going to insist.
 
-Acked-by: Maxime Ripard <mripard@kernel.org>
+I prefer that developers are aware of what they are doing and understand
+the difference between, say, usleep_range() and udelay(), instead of
+hiding things away in obscure helper functions.
 
-Thanks!
-Maxime
+Johan
 
