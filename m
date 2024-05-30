@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-21152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D4AC8D507C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 19:06:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 48E0F8D508D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 19:08:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8EE081C2092B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 17:06:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6C2661C22A14
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 17:08:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F09E93FBB2;
-	Thu, 30 May 2024 17:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 737D8433D4;
+	Thu, 30 May 2024 17:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HSTU9l1s"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gPSnDGvK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5040B224DE;
-	Thu, 30 May 2024 17:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967D045BE4;
+	Thu, 30 May 2024 17:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717088777; cv=none; b=QzWxtsx8Hqo3P4QqDByQLLwfRnY/DN1w+K5rlUtH8N6CUOIQL2IbDCEuEqMPgkS/Af7meCcTYwVC73JHfvaDNJq5k2Hz4XJ5M4lLV1YTjNjzz/scgv7b8uJ/BlXbwuAgKAGamDmcv1Voaq/5EOPa4Dn+Xg7A+alNTrxIe1cvXCg=
+	t=1717088876; cv=none; b=uZCA2Z0vOQgqliflV1//kDIRJWCUOdKtfJ9kWfolGUY0edbDv70hAnL+QH9ikmM5D609sljQx9IDRiTtSoM7aRnKgW1CI4cc3099GLK8UyMWWpju0qNSlAIUwwQg8oZDJiKQKx5Ff9EbNp6vIgGKD7NKEjeqs17GCTDjr++Ny6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717088777; c=relaxed/simple;
-	bh=NXLUfYeAt+KW40KaODAH3OyjjVWz8At5SnRU9pT24dQ=;
-	h=Content-Type:Mime-Version:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=dCaeKdwg2ColRYuyXbfq9oDUXol6MXFcei/fGOZT73PmtjVL4GuyJAO0jfvmjrNky3tOcC183BC3Xin+mZVKKQRlHt/ed0OEAAiSkcUdhh85G/t9ULK18vNjnPjT1XYPqA7F52EY9rh58RxXPf2b5XmfWHcjn90Nn6vj2mMinLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HSTU9l1s; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1717088876; c=relaxed/simple;
+	bh=WcBgmLB800gWG14w0nx6MPzcQdMu6AzZ6ketuWKY9+s=;
+	h=Content-Type:Mime-Version:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=ibOYoVYU2TG/XUstubGx8gBpxRHsFpXoSTtnd1VVnp2VHtJjq5NKgBoKd9gxfcXofniS7YeueiRVofExwN/Pd0w1Z47aBUd65jLMxqx5wcv0Jn39RZajb0WuDtzxIEHQ9STX+Q33PEoehyEq2GzVZj35Hov4ubkuf1sqP9WJ/cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gPSnDGvK; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4202ca70270so14469655e9.3;
-        Thu, 30 May 2024 10:06:16 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2e95a75a90eso11519951fa.2;
+        Thu, 30 May 2024 10:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717088775; x=1717693575; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
+        d=gmail.com; s=20230601; t=1717088873; x=1717693673; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pSoUzpghMgKgPNRSR5S6LQ+u83p2do0Jb8qm1RA2ZPk=;
-        b=HSTU9l1svsWldED07tO2QLZv3cytQoEEYsdPpGVY0KBKXGDetGtB3uoA6ejYXeEBnb
-         msGwrEegHZ/qPyAIscopS9xfE39SPLnthRiNbXgrx89MX8OdyZAEPWwP3eY6vqtRI3q0
-         jCnsVAbOOOlFLl0N2EY+cTQG0sES2b4A0SwFWbHeSnHM7dmemxCwivXRjwcZKX+SGl44
-         Mx1ptdLn+joFcc0lm5ytCLtIks1q9GY7HOe1pvLWyEL5bay5C49hJX5+Hol1XGlk4Rok
-         x6LTrTLFkrZ0K6vqn6iDHbMwX6RLYe/Iu6csoda058ubDzMsORXE/iYJ+sGjg76gUduG
-         PqAQ==
+        bh=S754fL6eVqgTIUZX2+nFqHKkShFVnRKXXFJgDcc1ZDI=;
+        b=gPSnDGvKQav99DE9NlpcI4PYeaAMSdL8r8Y1cpOJfRm0qNw4EXxaE2ltpfVmiY9NQF
+         pQg3snkuEU/p9i+ylooLVLTAnPZNiGchXduEMxiEOAA18CUsSEDCECT9hVz3erYM7DTl
+         6xCAiEYAsypc3leqHyUq2mmsbS/R3SqbOKbfT+aIOCauT4lKTrn6iX/oLjfnB3ii0aq1
+         OEgpNTCe6Xr0LXI2Y8JRznyIrlZLh6p4llfPAC5DCmJoza/UHWSki1dVokG3fG9bSECX
+         fv6j6uSY3fdXM2rrxy+svePxZqLiWy7ZgvWjZ17i/nejbBxwOcHnvwrG0sPx8ohzpf99
+         J2SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717088775; x=1717693575;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
+        d=1e100.net; s=20230601; t=1717088873; x=1717693673;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pSoUzpghMgKgPNRSR5S6LQ+u83p2do0Jb8qm1RA2ZPk=;
-        b=PK/futEYEN0qbocPGaYFBTo/8a5vw98PkCk3jKQimNyv5TQTHaCpHQLSuo+RUdbn3g
-         TVMieT0k0TqaVAYE9idN/X0U7SnmwYV/bt12nO40H4zMM29nZcDfuv7HhJv+WrMpb3sm
-         ooMVzZgYs7pZMFPL19d4MeICF0SxCo+FMhqx7ul4ooRuMfS67nAlZhhCw0cDvTU1F+mM
-         yiS8uTrl0fsKMqY/erGtxi5AtSK/wpu1FxAdWXo0n1ZAQu9HrwgSgGBEI0fYecoRXsuE
-         s0nkIZzF+WJapBv5zMCRCfw2HaoSOTAIiWezF5zFO/OOI4nruLLTiRFqEHZFDKzkY/UD
-         twkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWxgTfiC0BDJqldRqzun9TD8NdAd4bFsZa7p3qMEbBFDeu0Ibl+xhPFiO0XW46PcHTRIthJl3vkoafxys4OXX1f4Yez84a2FqngHbTebjAHy55pZp8fL8zZ1puTx+/Jzgw07IScbO9hCfrPf5p7hSyuwIMrBgnlZDOWfIYd0K+OAHxxGXeRXg==
-X-Gm-Message-State: AOJu0YyFTrdXjj7LyYrXTnTPTLnF/G6JfZRxCP5FQzJxihtw7Th3cIbu
-	MXDFvNCYocKtXXepqv8BfS45V/9tk4t0FvN3kpFNf82/kCzhXL2G
-X-Google-Smtp-Source: AGHT+IE07+jFmD4tsq0YkWo2ZvEXF5/9W5Sn0y4kUj7pi2LLryIUNFMmQtrQNqIVHInfXzsH/nPW/A==
-X-Received: by 2002:a05:6000:dd0:b0:35d:cc6e:9fab with SMTP id ffacd0b85a97d-35dcc6ea738mr1227194f8f.30.1717088774477;
-        Thu, 30 May 2024 10:06:14 -0700 (PDT)
+        bh=S754fL6eVqgTIUZX2+nFqHKkShFVnRKXXFJgDcc1ZDI=;
+        b=L5s24eHkdTpnb9+euTsS0NLSwiX+/reudZnwIy1jyyJVAsizqSl+57BRiT/BVEqT1a
+         YjBBKOeG5XPOVcmyH7u4oJ+chAVX7OfJPQ1tT7NEYHDf4dpCVlJ9xuqKQDbDGkzHVVxo
+         SSETwOgWmXA30/e5EoY8CkLMF5M9BZQoDBJTEZPc1rkIqEdsqbbKt3DAhNTL0MquSk8r
+         uDNXL+LJKjdwWt1jOdNH2JkC5UE10wbFbHI1WKg/uItSz3FEJvOahtqNtmbOherkeo/c
+         tmsVj/buRKRwY5fk+tMmVSnp7MXqbspjCktSNLYWHRxiLZPZ8/HNqmkGzzI+KHQt+Ag4
+         00YQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUfMF3jv/MUAo/1OHRcEYh+RX8b0LC57SK4S0H8o/aH6j2EcbbzLoKEJVbxeKLdW98BGmzlTuTioXM1J4QZO0aLIluFe7atH5axhetQ58kPcJ5r0wUUPbXAX86lD+TmIyiXB8id7xP8Do81jorlflfufLdybUKrhN4XuVKseRpsZn29yBzG2Z8oUtZ9mAIn1VuYXOmT824iIIOPHr9UNN7zhg==
+X-Gm-Message-State: AOJu0Yx76JdIMSiL3GRTGMpB7TIqnNLwVtwTUAq5+/zwmm5pYlcIEZ/5
+	zqzikU3QLHA/O3YBXsHOI1aG5M8yTdbV3F6q8XSrvMqTIcTY9ZaB
+X-Google-Smtp-Source: AGHT+IHwjTCFVGR50yNchGzCdFfdFMN0b/atDi7Tr/wiD7aw8w8AAvWmC3KTr7YpU1+nPKK4cCRg1g==
+X-Received: by 2002:a2e:a417:0:b0:2ea:844b:1b16 with SMTP id 38308e7fff4ca-2ea84830962mr16211881fa.34.1717088872356;
+        Thu, 30 May 2024 10:07:52 -0700 (PDT)
 Received: from localhost (p200300e41f162000f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f16:2000:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dbdc776c3sm2833601f8f.61.2024.05.30.10.06.13
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-421270ad410sm30167835e9.45.2024.05.30.10.07.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 May 2024 10:06:13 -0700 (PDT)
+        Thu, 30 May 2024 10:07:51 -0700 (PDT)
 Content-Type: multipart/signed;
- boundary=e14441a93509a3d277ebc86de6e5514a086381ac1db1c0825d540e138362;
+ boundary=e8d29550c8c6ecc345e96308e31e05adf5d0599eed8c116befc5ef55e617;
  micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -75,103 +75,112 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
-Date: Thu, 30 May 2024 19:06:13 +0200
-Message-Id: <D1N564M136RW.3CRPYTGKMW1NP@gmail.com>
-From: "Thierry Reding" <thierry.reding@gmail.com>
-To: "Jonathan Corbet" <corbet@lwn.net>, "Dmitry Baryshkov"
- <dmitry.baryshkov@linaro.org>, "Rob Clark" <robdclark@gmail.com>, "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>, "Dmitry Baryshkov"
- <dmitry.baryshkov@linaro.org>, "Sean Paul" <sean@poorly.run>, "Marijn
- Suijten" <marijn.suijten@somainline.org>
-Cc: <workflows@vger.kernel.org>, <linux-doc@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "Masahiro Yamada" <masahiroy@kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
- <freedreno@lists.freedesktop.org>
+Date: Thu, 30 May 2024 19:07:51 +0200
+Message-Id: <D1N57DK5Z2XU.2VP8OXFUMC709@gmail.com>
+Cc: "Mauro Carvalho Chehab" <mchehab@kernel.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@linaro.org>, "Jonathan Corbet" <corbet@lwn.net>, "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>, "Sean Paul" <sean@poorly.run>, "Marijn
+ Suijten" <marijn.suijten@somainline.org>, <workflows@vger.kernel.org>,
+ <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Masahiro
+ Yamada" <masahiroy@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
 Subject: Re: [PATCH] docs: document python version used for compilation
+From: "Thierry Reding" <thierry.reding@gmail.com>
+To: "Rob Clark" <robdclark@gmail.com>, "Jani Nikula" <jani.nikula@intel.com>
 X-Mailer: aerc 0.16.0-1-0-g560d6168f0ed-dirty
 References: <20240509-python-version-v1-1-a7dda3a95b5f@linaro.org>
- <87o79faq4a.fsf@meer.lwn.net>
-In-Reply-To: <87o79faq4a.fsf@meer.lwn.net>
+ <878r0ijdh5.fsf@intel.com> <20240510102036.3ea40b37@sal.lan>
+ <87o79ehtbz.fsf@intel.com>
+ <CAF6AEGvTkL=JxGDaOab9XpJ4htWQnBA1dTEOUxBUTAavM0DB4w@mail.gmail.com>
+In-Reply-To: <CAF6AEGvTkL=JxGDaOab9XpJ4htWQnBA1dTEOUxBUTAavM0DB4w@mail.gmail.com>
 
---e14441a93509a3d277ebc86de6e5514a086381ac1db1c0825d540e138362
+--e8d29550c8c6ecc345e96308e31e05adf5d0599eed8c116befc5ef55e617
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
 
-On Thu May 9, 2024 at 6:48 PM CEST, Jonathan Corbet wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
->
-> > The drm/msm driver had adopted using Python3 script to generate registe=
-r
-> > header files instead of shipping pre-generated header files. Document
-> > the minimal Python version supported by the script.
+On Fri May 10, 2024 at 10:04 PM CEST, Rob Clark wrote:
+> On Fri, May 10, 2024 at 3:09=E2=80=AFAM Jani Nikula <jani.nikula@intel.co=
+m> wrote:
 > >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  Documentation/process/changes.rst | 1 +
-> >  1 file changed, 1 insertion(+)
+> > On Fri, 10 May 2024, Mauro Carvalho Chehab <mchehab@kernel.org> wrote:
+> > > Em Fri, 10 May 2024 11:08:38 +0300
+> > > Jani Nikula <jani.nikula@intel.com> escreveu:
+> > >
+> > >> On Thu, 09 May 2024, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =
+wrote:
+> > >> > The drm/msm driver had adopted using Python3 script to generate re=
+gister
+> > >> > header files instead of shipping pre-generated header files. Docum=
+ent
+> > >> > the minimal Python version supported by the script.
+> > >> >
+> > >> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > >> > ---
+> > >> >  Documentation/process/changes.rst | 1 +
+> > >> >  1 file changed, 1 insertion(+)
+> > >> >
+> > >> > diff --git a/Documentation/process/changes.rst b/Documentation/pro=
+cess/changes.rst
+> > >> > index 5685d7bfe4d0..8d225a9f65a2 100644
+> > >> > --- a/Documentation/process/changes.rst
+> > >> > +++ b/Documentation/process/changes.rst
+> > >> > @@ -63,6 +63,7 @@ cpio                   any              cpio --v=
+ersion
+> > >> >  GNU tar                1.28             tar --version
+> > >> >  gtags (optional)       6.6.5            gtags --version
+> > >> >  mkimage (optional)     2017.01          mkimage --version
+> > >> > +Python (optional)      3.5.x            python3 --version
+> > >>
+> > >> Python 3.5 reached end-of-life 3=C2=BD years ago [1]. What's the poi=
+nt in
+> > >> using anything older than the oldest supported version of Python,
+> > >> i.e. 3.8 at this time?
+> > >
+> > > What's the point of breaking compilation with on older distros?
+> > > The idea of minimal versions here is to specify the absolute minimum
+> > > version that it is required for the build to happen. If 3.5 is
+> > > the minimal one, then be it.
 > >
-> > diff --git a/Documentation/process/changes.rst b/Documentation/process/=
-changes.rst
-> > index 5685d7bfe4d0..8d225a9f65a2 100644
-> > --- a/Documentation/process/changes.rst
-> > +++ b/Documentation/process/changes.rst
-> > @@ -63,6 +63,7 @@ cpio                   any              cpio --versio=
-n
-> >  GNU tar                1.28             tar --version
-> >  gtags (optional)       6.6.5            gtags --version
-> >  mkimage (optional)     2017.01          mkimage --version
-> > +Python (optional)      3.5.x            python3 --version
-> >  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
+> > AFAICT 3.5 was an arbitrary rather than a deliberate choice. We should
+> > at least be aware *why* we'd be sticking to old versions.
+> >
+> > Minimum versions here also means sticking to features available in said
+> > versions, for Python just as well as for GCC or any other tool. That's
+> > not zero cost.
 >
-> Is it really optional - can you build the driver without it?
+> At this point, the cost to having a lower minimum version is pretty
+> small, so I'm not worrying too much about it.
 >
-> This document needs some help... I'm missing a number of things that are
-> *not* marked as "optional" (jfsutils, reiserfsprogs, pcmciautils, ppp,
-> ...) and somehow my system works fine :)  It would be nice to document
-> *why* users might need a specific tool.
->
-> But I guess we aren't going to do that now.  I can apply this, but I do
-> wonder about the "optional" marking.
+> Maybe once kernel developers discover mako, and start generating more
+> at build time, we'll have to re-evaluate. ;-)
 
-I guess it depends a bit on what exactly "optional" implies. It's
-optional in the sense that you can easily disable the driver and then
-build without Python.
-
-So does "optional" mean that allmodconfig for all platforms builds
-without the dependency? Or does it mean some definition of "core" kernel
-builds for a set of defined platforms?
-
-Maybe this really needs to be annotated with the exact Kconfig options
-that need this. Although that could get out of hands rather quickly. At
-some point we may have to list a *lot* of these options.
-
-Alternatively, maybe Kconfig could be taught about build dependencies?
+You're making an interesting point. Does the build dependency here
+denote Python (& standard library) or do we assume that if people have
+Python installed that they can also install arbitrary extra packages?
+Would a Mako dependency need to be explicitly mentioned here?
 
 Thierry
 
---e14441a93509a3d277ebc86de6e5514a086381ac1db1c0825d540e138362
+--e8d29550c8c6ecc345e96308e31e05adf5d0599eed8c116befc5ef55e617
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmZYsgUACgkQ3SOs138+
-s6Freg/+LIh2+rKXPwb4yFREYQAFPpMlCXnGsILcqDxUm9SJdjAtMH9brNBWjjLu
-+2fpXg9D2/DrUhtsW/hBYht1Y74Mvu+x32N9vc2P1IVwy02AQzCjjNUeT5COq7Av
-GSVCn2funNAcTlXW0yLzywErepa9A5ba9Qynf2g/NirW7QygF0eyBWKj7bViybd9
-JNVmpOFg/7YmATQbqxN3EAVbU96LTPxXEgnf38X2CBnBOkc7cSVlGnpXvxcCa/MC
-uqA/JX5PPNbDR/ZKmVvhqrxLML11RXGEmNcxsWk8PMiEAV3sa/atjht/arY99TC0
-3ln92bZj2efq/UOgkhbBMbEs69yG8gRaJUM7gKtmuU+8yy8KPm/xXJlzVCQ+t9j7
-IV5OqhWze/yjaGLxcZ66zYvg5Roue5T537/C4wM1w2ksBG7CnqRn0Gd1ofskMNI3
-NU7lZlfi5rU9oytk2CPK4EKW+QrUu5WgW2AZcRPOw1lCBnh4B4fJv4Z2BjFRp9xT
-qxq5wduTgt43EtWrrR/15mke+P3l5gXdTeLMdA+M1TfU5z/UMGIQuahfaP8mO8XF
-odg/vESBCl/jLwIYfuIskPsLHLEnund3PdLuHynSYoClnzeinm0KvkQIxaZs/QAA
-C2sHCEAPWK7buSeUieAtzZh/9IeHFz9VP4gxwifN3NEgnBHhmlc=
-=73sE
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmZYsmcACgkQ3SOs138+
+s6GwDhAAk7AgMlJlfnIXUZpOj/rOLWcb600MiHHFNHwSQCe4Uth9OdBvDjdFqsUH
+IOsRHerjzQEwlXmSafIOpXa2PZIdyxpGhW5b3regoBNfy9BeGgQLPyFwcQht6qh2
+VI2nrMek6YghkNYEOJgj/mR3pKgPdubbvenIHKRqjoOVO+dviJfnRCWGyBAmD/A7
+vBa21JJQ8xMZ4+uBFmwGfD6z3wzmNJejyeMTrSEspmmWzp1EouxwEy/gtUPv4xKQ
+zC1HEk/hWUEYaFgY0zgsT+HH80QhfpO2A93RM/DhcON8UPG0zkPXjNGy7PR49kAm
+8dHvyVnT42uD2ziXfp6sDAlCw5StvmPNyEDxltCBmZXWlana1DkQZarfNuBpuTBl
+Uf1C2GBc1I9AjH0Dui+jdzBurfBTRi0p5OTMh4xtfTuBKLQnNwCZ+Loc+Ft4uzX1
+ziaoZtR9q2PpElDhruxNAHH19a7DpfB71HYvcnhkrlpCH85ivsFIGditzYlMxuOK
+uoMZchMwVyzqptRpyKHsfgaIYNWffFB/vmLI27m4HrRYGl5qg4tx7te8FK9RP7cC
+mSM7KS36BA/BlJV9dLePmcKHylabI1HgJRKQ5nwFo5TyCHIh00EEpC01k7hcW/N3
+qrVTwB7kDgm0w1udks5zBp0D9+xquWiRWF9uVpwLQOvTfzcp434=
+=RSh3
 -----END PGP SIGNATURE-----
 
---e14441a93509a3d277ebc86de6e5514a086381ac1db1c0825d540e138362--
+--e8d29550c8c6ecc345e96308e31e05adf5d0599eed8c116befc5ef55e617--
 
