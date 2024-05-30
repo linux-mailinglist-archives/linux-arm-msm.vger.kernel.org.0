@@ -1,299 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-21106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 013FA8D4C44
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 15:06:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ED918D4C85
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 15:22:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 84A6DB2176D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 13:06:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8B552B2156B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 13:22:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8038417CA1C;
-	Thu, 30 May 2024 13:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 202D4183076;
+	Thu, 30 May 2024 13:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sp09dpKq"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Xl8QsRfe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2064.outbound.protection.outlook.com [40.107.93.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87E1176183
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 13:06:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717074395; cv=none; b=gyaLGJCyXKS8lSEo27JtxxfxKRYl1AB/4n2cfs+1IFaXxRUlyL/IvoBHST8gaGN3PrqlTRL7YpA2XCU16vDjMUBrMxlRJpASfA6rjBnbXIOmtPu/iQb6ITB3H+4qPqqR6SqYZNBNYscy2sSLWJihYXDvBmoP9eKhtOLEH2YU+pw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717074395; c=relaxed/simple;
-	bh=Nw0C7nJcyUywfnIdk5x6lVQBDyyMPTOBhrJFjwkBj5o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZsijMGFGC0mXL5bOlpanizLdai05r5IBkWPQEphguaufmMOhJpj4pbeLvOGUf4FPWZfRD+j17I/Rz1CYG6xyOTAkDwkjr99O3gtV9Os8HTVwYNergL/ib3dT9nLi0/eGqGRfLaipkx+ahpV82is8RW/rR/2QZz8T29q6r1bkHpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sp09dpKq; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dfa43862f68so835001276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 06:06:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717074393; x=1717679193; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=c6esGYOm6PWwF6+ztUwretfZOooGDQ0PyXFzrTPWScg=;
-        b=sp09dpKq1D0jfY1qpvqcDYPiH93ZGQjkLBEzUo7SwMQXeJsfEiNf86tmcrIVESqzJ8
-         U0xc0SgHdZt2uRo1IxQAfurvih0GtKXzctXI+YS4hGyeRBC54iLq/H6ZZ5c+swKRX/iN
-         oaSSNh89Sr3O9yTq55vWsufe5WjCuiw1hkq1/kdGKQ+MmUl2WzVB8UuxxhwAms/UI8p6
-         kMFtPiebfFinuD8BuGQqiHwecnWuk82KoBeKMPG/qyc1R2KWMhP2n6uau6MSkrQtfhdH
-         OvgxcbxO9C+rZFxSPuvp2ZSc1ASgQC/2STOsoEb6ATf04cenRHS05N/QLFgVgxQEvf6l
-         RosQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717074393; x=1717679193;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=c6esGYOm6PWwF6+ztUwretfZOooGDQ0PyXFzrTPWScg=;
-        b=ETCV0Pyuw5RyuS8DvZnQGSu9pdqVqod+OsyB0L6enEObfvAWlSOlioo8H5+YRWxYc5
-         Yzm/HXkqOJcbe9i1e9L4KGzchrOb6dTthqWEn3sK0zWsGwIQSkp8v5e1ZdIZaoY2w3an
-         eeEz34ANFygEbin2EF2JGx9tHnQQejeJnCzU+twyYv4DboOFAU0iailadK7xvFnSPovj
-         juQcxs9vJeArUE78ZzniAijkgo7gq3SclH4w/jfcOg09tIHiivDJsgoPto7B7ZBMynTM
-         Eb+fVCRLbo16dz+u3BIp0OFHNsroZ//xqO4f9Gem05z5O9hKoZkUIRG7jn940krLZy30
-         cVPg==
-X-Forwarded-Encrypted: i=1; AJvYcCU8XPlLzqtD1O4pD4HsmAIFfHrPELeFBzDfO0k572/yHZChzit+dXwul+HI1G8j89mO/JHSq/udFDz4VkSfVA4PTk/H8rN+WkTfE0v+ow==
-X-Gm-Message-State: AOJu0YwW/RY98HNfr/vpFaFSjy8vU4hjESYB2L8u+K/UkKK7C+lTRg0H
-	37l0XNe2WrV+BdDKbo4HZuYpZf/zyP58ntxbNJsVckTjtlpMaDQs4typSY4rDXsTwqLyM+davtP
-	YyG7qF8/WKI4e5/PgYG7CuD2zU01y/kPGeImxiw==
-X-Google-Smtp-Source: AGHT+IFT6pgQIgXCcXr5rSzAh+MQxyaTahQt5/PdQ4obFkNsrqbdk3YkEI5qrwZxs1AJ0akRdan8JTXioBuyH18Zj3U=
-X-Received: by 2002:a25:b947:0:b0:df4:e704:ea10 with SMTP id
- 3f1490d57ef6-dfa5a8026e4mr1861377276.63.1717074391881; Thu, 30 May 2024
- 06:06:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFD317E455;
+	Thu, 30 May 2024 13:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.64
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717075339; cv=fail; b=Q2UZbca7ZPGVeZjx16FGnma9+TL+d2FvZXV5V66/zNdhdXAxR3+rRgLlH/EMm2rM9owpcwRC9MCYcQfU80F3/Zz+Rupvy9N32Z6r7Pve+U5fPBTcmCRf06hip+STjMLLnb4SXtnYH2QvlyHwWu1h/mIoDspme7Suu+OYdszu1V8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717075339; c=relaxed/simple;
+	bh=Gg+bOhs5H1s5gYtausB/QiKf3AqPHuNWvB2OnlOrekk=;
+	h=Message-ID:Date:Subject:From:To:Cc:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=YFKe2IH3Fjko+qgfZWJ4kWGuWimBBOJbTcbTG1TlDrWoeVfLmqSEDqjs4J4DkmyOmX4gHIbryH95H+zFfYOsJoA1Xg5G0cZAnA8TFl79gexkObHgc3kHQKayF58D1Y2OTjV+H6TF7Q98EC2TVfqmIPh7x3ruR4xVIU6prrkxp+g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Xl8QsRfe; arc=fail smtp.client-ip=40.107.93.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=kZ685quThb+/NPGbgsnd+YZcUTrO7sq5colfygAyQMPJCveBV36u1yeI1wNF4u+yZPIw8kXKagBohA1qltPYe4xRsIPZX0e+caDq4gqPRaRemUIpMhWr4/q7nYIJQBNKpcpa+HdsYSnR73mBN3nGlTdomWHtVGx7mc+pDYBYwPxMc6W31az73nF2oK77DxWsecvQQqNpyPVQa00jqt8VN6vQsBWASAtZdsfuCzKhvrqMyBD5hc9LSyruiudIVsZ3xhAEVnoIzhcbx57f/gT4VvqoTGFFHL259LjrPwevjAkhtfHg/+8gqjy7hf1Dc50LHqCFFWZVL/XM4kDB1H3eYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Vp+Q9W9pKixlVsnZ8vL6wY29gOQ4rvU4Q4rAhSV/Omk=;
+ b=F2evHi+MHnL+jfHX3EVxKKjHTGXv649PBBuV0bAdEf6Q+MPGVK4zQTC9DiyMc0eLp8wlCoJJPBpQW/iMOQ/BucQnOfiarz3ff8MSXs8N/PzGcwXMRZ/XC/Nzs7Nl/YBMENiSGakE55VQnLuo6sOiP137eyoVpCXCzTU59eMnAr4CGYhv1v1vQI1f/HBGiG4BGfLbEpoe6RKvyTboSfiGnqWl03X/gZo1krWwSWQXk9q4+EqDgPzxZ7PzInWCZu9lxnr3Kl/m1tm7fSL1z/bUhGt/hu6Y5pr06pnFxVb0MsL1I3/Zjx/PHJAetiFuD+4VvFj8sPIcFDRBUhFi0GeoEA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Vp+Q9W9pKixlVsnZ8vL6wY29gOQ4rvU4Q4rAhSV/Omk=;
+ b=Xl8QsRfePIemmb36SpEDChLno1oBWAifB+/xuBo25tgN9IukJEeEJyDaJpIuTxi2wDSZk9Cnr2cTwAWg0/6PfBj0HXFIKK0NuzcD4ECNDjWNJTsFJSqM5/ikAEC1KxzC1O8QCralXhNln7KfYTb+Zs+b8kb1MSds/uRGCz8Avp3NFYgWDy1eDMS96s9IEc6ft5xTMLbsv5vD7t/MJjGQoq8ZxjXXqW/w8jzB+60I6Ae2ASYqJ/Td+Ak0o68VstAEcz9BpPWXlZUXITUO9eTJjLtQRnQCEFNVApTwfLlL890wPSNKYpds7BTmqhXOgHheVM8fti3d+dMlGWV2BS/kYg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
+ SA1PR12MB8644.namprd12.prod.outlook.com (2603:10b6:806:384::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Thu, 30 May
+ 2024 13:22:12 +0000
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::ae68:3461:c09b:e6e3]) by CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::ae68:3461:c09b:e6e3%5]) with mapi id 15.20.7587.035; Thu, 30 May 2024
+ 13:22:12 +0000
+Message-ID: <d0cc1f6b-1bd5-4557-90cd-6c77f8f1293e@nvidia.com>
+Date: Thu, 30 May 2024 14:17:45 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm: Fix gen_header.py for python earlier than v3.9
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
+ <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org
+References: <20240508091751.336654-1-jonathanh@nvidia.com>
+ <83b6e1aa-c8ec-0bd7-2c98-20705741b76a@quicinc.com>
+ <780207c9-fcf1-460e-b16a-aad60c12ac71@nvidia.com>
+Content-Language: en-US
+In-Reply-To: <780207c9-fcf1-460e-b16a-aad60c12ac71@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P123CA0494.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1ab::13) To CO6PR12MB5444.namprd12.prod.outlook.com
+ (2603:10b6:5:35e::8)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <8cc61db5-2920-4dd1-8132-5af434fb05b1@freebox.fr>
- <o6wwzb4qblelfpfsrmqhoovjnyvymf42p2ilv4bzn4le3nklbv@kj3qklez7izy> <40903165-c965-4c6c-a3bf-104b1088730b@freebox.fr>
-In-Reply-To: <40903165-c965-4c6c-a3bf-104b1088730b@freebox.fr>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 30 May 2024 16:06:19 +0300
-Message-ID: <CAA8EJppg9ftnQVrZhEO9Ro2Ji6whCgQLaJrr0yCzV-2hF2HEtQ@mail.gmail.com>
-Subject: Re: [PATCH v1] arm64: dts: qcom: msm8998: add HDMI GPIOs
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Jeffrey Hugo <quic_jhugo@quicinc.com>, MSM <linux-arm-msm@vger.kernel.org>, 
-	DT <devicetree@vger.kernel.org>, Bryan O Donoghue <bryan.odonoghue@linaro.org>, 
-	Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|SA1PR12MB8644:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3b1dca15-96de-4365-3b01-08dc80ab8419
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|376005|1800799015;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?U2ZFZXNqU0NGaHFZcC9jdlRmUUhLYXFhSlpUdTVISUpUcGt4cG5kQXFwUjJU?=
+ =?utf-8?B?aXQwWEtaQS9xS0xXRXFYTnAzR3Q5MkJ1NDFINmQzVld2REJHRU5VVDM5Z1BM?=
+ =?utf-8?B?dHJ3R1pnaDVuMVRCd2xlbkdYNTJzTjFyMUR0VU5DN2hXK0tjN3hvUTRvREhE?=
+ =?utf-8?B?Q3hzSzlEcTh1OVVPS0dNSFI1NXFWdDBKQ1ZsNWVsQmxwQ08xS1R2UFNZc2FH?=
+ =?utf-8?B?M3ZqUHpEdElXSTh2TmdoVjhiU2tiVHRNMTdHLzdjMmhLTmVrUFprOHJPOWht?=
+ =?utf-8?B?OWVTa0JBRHZ5bm5RVWVJWGdiUGN1RzNiakJmTXMxMy8wWGNhcWtOVmM3cXhu?=
+ =?utf-8?B?aVVDd0o5Q2hZL2cvd3RMRmxFUGdJWDA3dCtHUlR4MStlZDN6L3ZTVjVDY0lI?=
+ =?utf-8?B?ZFZvZkFLdElWek5pMHpRZFlxZlpNKzlVVCs4VGhaN3o4VzV2bCs4b3lYZ21s?=
+ =?utf-8?B?bFd4cUpYc3pqNmlHU05ibjlyS05KWjBNVjZVSjE3VnVscGVjOGR3bVVDMCtS?=
+ =?utf-8?B?cGZ5UGQ2cmtxd3FXM1J4K1lScTBpZ2k4cC9mRW1YRktXVThOTEhaV3B0N1FD?=
+ =?utf-8?B?U0JQWFl6MUQyS1RXR0xLNEVQQk1LaUhXMTdMNHgzY05sMmt4RkR2TkVZQkFt?=
+ =?utf-8?B?bzQ4c2N6SWhpUU9mbEorUWg1TXNnb3NGbXVlVHNTMDFXbFBHZTRRbXB5ZXJk?=
+ =?utf-8?B?THloazhKM2ZaWTgvWEJNMkwvK0t1MW8xQlhsd2xIS0s1NDh3SnZybklsNUhs?=
+ =?utf-8?B?WW0xL0sxS3RodGhSamxlai9kcTlUUlBwYTYrSmF5TkhDNzRtS01KVDB5NUJo?=
+ =?utf-8?B?RWpnd09JM2ppNlZ6RVV1em9abWlHa3QxT1NCZTdzVkRFVXI3U1RLR3pBdzRO?=
+ =?utf-8?B?MDhlL29sdG90cmpyL1U2eS9Mc3JiM1FHNVNZQm5VdEFNdk5SZm9NR3kyUDVa?=
+ =?utf-8?B?blBIRVdzalJzWmo3NEN6bVBaVkVZU0ZvNGV5U2xxTk5EUTRoSWxHa2lWL3hK?=
+ =?utf-8?B?SjZQcU14QlRWQTNGQUx1UCtlZUFRTTBBVHNzRVpvb0tNM2c3cmJ6ZWtIejY5?=
+ =?utf-8?B?akdIUkhIcHdxekY3TXpzR2Q2OTFqWElKcjN0ZE1jVDR4Z2ZoeUVBMTkwamVD?=
+ =?utf-8?B?aDI2bFM4WlVxTUloVTZDQWhWSW5xWEVSaW5XS0plbStORVdsaHZKY3c4VHlT?=
+ =?utf-8?B?d0tGTUU5aVdYTlpHUFNhNjRjS3A0Nk9NTzdjWmxPY2JFT2lTOGoyZjlXZ0dI?=
+ =?utf-8?B?akVQTHZ4Nit4TGViK2RiMjlrdWF6dC9ENWtPVzJSZytVem42VUtxNEp1U3ZI?=
+ =?utf-8?B?VUdGa1E1VElveStJZXc0eWt2SEdFbjRQYXdCL0FFZDVjZDgxQVRZRkh3YlQw?=
+ =?utf-8?B?U3dBNXhtaVRkTVgyWTZUMVNuUHNWL0RLQlk2ZWFWaGdESHZ0TTNoMjcyZXI1?=
+ =?utf-8?B?a1RrMkt4bHRCWlRBQjdZbXFBZVI4aW01SnRqWHlsYURaSElDWUtnN3JpUkNj?=
+ =?utf-8?B?d0tmbHp1NlBiaTkwUEhMZEhmcng5cUZoSTBwS1Z0THgzelRpR2ZtVmtNWEU1?=
+ =?utf-8?B?aWUxWU41dUpockJOdnFoclJ6aXpaZ2FSU0dLblA5T1pQOUZZMUh1eS9WaVF2?=
+ =?utf-8?B?UU00MnduOVBGa2hJd1FTYTYrQzBCV2g2S0NTN3VJeXZETEhtTEZJa25xdmdZ?=
+ =?utf-8?B?aXhQcnYrR1RPNEVvejEzdWtMVDRBSGZod0w5Vm1rMjBSSlErQWExNU1nPT0=?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(376005)(1800799015);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ckNZMkxQdnJIS0ZEQnV2RXRrVjRiT1RuaGFFWTk4VHNJajBBaXc1TTE4R0xr?=
+ =?utf-8?B?R2daNGwrMVhOZEdxL2h4Slg0cjdQcWIrYWI5VWdFaXRiUUR3Y1l3UUhCcVFU?=
+ =?utf-8?B?NFhLRUwxKzl4c3lNNHZob0pBMTk4dzVmRmZZcVFxbzZiZVF1RjNOVXdCeXls?=
+ =?utf-8?B?OWdsNFkzUnFoOHlyVnBrTVFFd1FmQ29GYnUvd0N2UDdOSzVFc3JHQjN3ZWVl?=
+ =?utf-8?B?MmtPeW4yY3ViSkZVR253VnNzUVZnZk5LZER5b1d3Z2FpY0JHRTh1dm8wSWVI?=
+ =?utf-8?B?VHlhcjFYa3UwandXTVNhbUowWGd0RFNWZytVY1hqZ0MvMnFvK1NsWUJWaUhx?=
+ =?utf-8?B?aEtJWHltR2tTaFVFRVNOcXZNMTJaRlQ0Kys5a2tYQVY0dzAxWHd2RmdXNFd6?=
+ =?utf-8?B?dXk3c0xtS1BpMnFEd1BsUVMyN1l2MUZpSVU5M1pmOEJUemRQOFA1dTFiWmxH?=
+ =?utf-8?B?NFoxUElCVElENk5vaS9UeDZWWUM3bFIxM2VSNk9JYUFKKzFqK3M1MkhOR1pK?=
+ =?utf-8?B?Nk1WaXBlS3lLeGdTMTJnWDFIRk5lRXpGdEJJOU9YbWwvc1NuNEpHYjc2WkF4?=
+ =?utf-8?B?ZmZLZDRrZ1ZkMHl1Q1FiMXRpY0RPcWlrcnlNRnlnUGFneXJUTVRveTR1aWxp?=
+ =?utf-8?B?SDBHcXpoMXBCWkFtc2Z2YWhzTVFxMFhjZ25YMzZiR20rZjRZRGw2Mlh5NU8y?=
+ =?utf-8?B?K2I5bERhdWhRRnlJYk0vcEZic3VDOG9HcEFuWW5mMjZkdWEvbHl2VXBuMzVm?=
+ =?utf-8?B?OFdUMUJ1QVR0NmZ2ZTRBWjNHdHRnMlBTSGpuM0hVSWY4MHpwQ0g4eU1EeFh2?=
+ =?utf-8?B?MU5aWkNUV1NWOFBBTVhzTkdCcUFuWEMxS3o0anE5cGhBeFVyalJwdE1Pak9E?=
+ =?utf-8?B?UU1sdHRlU2ZacmxJQzJkTkJKTGN5VHMzb2pRbUdlUVh2dzcrTklMSEJiU29G?=
+ =?utf-8?B?WjZ3YS9URGYwZVZld2R4WmQxMkt6RXFVcjVpa24vc2FhYTFDV2t0YVZTTXJO?=
+ =?utf-8?B?c0J6bEpCVGNtNUVzdEVXS01zZkM4U2NJU2FKWmFZRHBZZ0JIQ0t6c05mczNQ?=
+ =?utf-8?B?N0ZNQ2xiWDhlQ1Z6NVR6dkFBMjYwbGV0N092UUVtakczeFdlRFRQdkNVdVRR?=
+ =?utf-8?B?Zitlb05yK2NiSDVNSWJKUm5wcUFvVjcyS1lKRU9pRldUTTdNV1hYSUh4M1ox?=
+ =?utf-8?B?Mi8ybkJ3ZkszWWtqSWc5YnZPV0RNZ3ZIcDlsRHBFd29yVG9OM0pPT2lmZjFP?=
+ =?utf-8?B?K1AzR0JwL0VTZTJqbkRUcGJrNjRxNmlER1E1eWZrNlpWS2UzZmkvN0RoUGs1?=
+ =?utf-8?B?SzcrN2FaQkRDd2VNcDNwUXk5c2Y1WWk5ditWTXppZ3RoZysyQXJiOVJsZ1dV?=
+ =?utf-8?B?ZmoxOGNjWG0yZllJdFk2UjU0ZlhFNlBKMDJFL1VTL1ZDTzlCcTRpcHpJZFpM?=
+ =?utf-8?B?dXEySzVUSFdrdmR0dmpjc0IwRXZIa0c0ZHJ1MUVUUnBuUzZoUDFJekR5Ym5a?=
+ =?utf-8?B?Mm15REUzdXc5djF6cm9JRldIbFI0NDZ5MCtUS3d0S2xmWWg5K0ZuOXFsSUlH?=
+ =?utf-8?B?MWc3RHlyMzVOQnV2TW1YWURiQ1k1SUZzaUdWRzRDOXByVTViUWNNdUc3aDZI?=
+ =?utf-8?B?VE9qcFRiRzBOOTlOM0lxT0E5QXRsbzEzMXVXOW5RaEFHZ2laTUE1ZWc3TTVa?=
+ =?utf-8?B?bnVxQWs1TjArZGdaUm5iZG13aklnREtJUTBDeWljKzJaY3cwY1BlWHZEN3BT?=
+ =?utf-8?B?QmZxNFFEV1VWSWVmdnNBMTRvRWRUTnowMnMvL24vRmRyZmw2a0JqTkxDTGpK?=
+ =?utf-8?B?SFBJM1hpRnZaOHpuSlRxaHhLK0t5YU9zaVpYK2F4aG9lYXNySkNqQXlHTnFi?=
+ =?utf-8?B?c3BwMEtCb0dmUUNNSmZzMW9iLzVxc2RpOW0xS3dWM3dPdTYzL2w0VHJ6UTlt?=
+ =?utf-8?B?TnpVY2xYUzZHRm5uZHd2UTM5Y2o4MVJFWHdCQmhndG1HZWx6SWpwMUVaSGM3?=
+ =?utf-8?B?bFdLZ1R3QnRMRWhTV1pqSGE5bmZWTmUvcFJEL2dNTGJVdDJic2xVQTFKMHpZ?=
+ =?utf-8?B?YWpHRGx0OGZEZlJWQnpId0lzMFoxdk5VejJiZVBBcVQrSy8xbGk0K3FTWm1Y?=
+ =?utf-8?Q?x5AVsqCBqwnvbCgtv2ZwX4QYo?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3b1dca15-96de-4365-3b01-08dc80ab8419
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2024 13:22:12.6768
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5Jh5zNlHD4uLzEJfCqPAwvA6hlfNvNm2USpfmkBt4m5Zo/sMju54A3OWhkDNdxTk+e9NWlouqclcQHeWEH3Qog==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8644
 
-On Thu, 30 May 2024 at 15:34, Marc Gonzalez <mgonzalez@freebox.fr> wrote:
->
-> On 28/05/2024 02:45, Dmitry Baryshkov wrote:
->
-> > While I don't see anything wrong with this patch, maybe it's better to
-> > include it into the patchset that adds all HDMI nodes to the msm8998.dtsi.
->
-> Here is my current diff:
-> Do I just need to split it up, and it's good to go?
-> (Doubtful++)
->
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
-> index 83fe4b39b56f4..78607ee3e2e84 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml
-> @@ -14,6 +14,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,hdmi-phy-8996
-> +      - qcom,hdmi-phy-8998
->
->    reg:
->      maxItems: 6
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index e5f051f5a92de..182d80c2ab942 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -1434,6 +1434,34 @@ blsp2_spi6_default: blsp2-spi6-default-state {
->                                 drive-strength = <6>;
->                                 bias-disable;
->                         };
-> +
-> +                       hdmi_cec_default: hdmi-cec-default-state {
-> +                               pins = "gpio31";
-> +                               function = "hdmi_cec";
-> +                               drive-strength = <2>;
-> +                               bias-pull-up;
-> +                       };
-> +
-> +                       hdmi_ddc_default: hdmi-ddc-default-state {
-> +                               pins = "gpio32", "gpio33";
-> +                               function = "hdmi_ddc";
-> +                               drive-strength = <2>;
-> +                               bias-pull-up;
-> +                       };
-> +
-> +                       hdmi_hpd_default: hdmi-hpd-default-state {
-> +                               pins = "gpio34";
-> +                               function = "hdmi_hot";
-> +                               drive-strength = <16>;
-> +                               bias-pull-down;
-> +                       };
-> +
-> +                       hdmi_hpd_sleep: hdmi-hpd-sleep-state {
-> +                               pins = "gpio34";
-> +                               function = "hdmi_hot";
-> +                               drive-strength = <2>;
-> +                               bias-pull-down;
-> +                       };
->                 };
->
->                 remoteproc_mss: remoteproc@4080000 {
-> @@ -2757,7 +2785,7 @@ mmcc: clock-controller@c8c0000 {
->                                  <&mdss_dsi0_phy 0>,
->                                  <&mdss_dsi1_phy 1>,
->                                  <&mdss_dsi1_phy 0>,
-> -                                <0>,
-> +                                <&hdmi_phy 0>,
->                                  <0>,
->                                  <0>,
->                                  <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
-> @@ -2862,6 +2890,14 @@ dpu_intf2_out: endpoint {
->                                                         remote-endpoint = <&mdss_dsi1_in>;
->                                                 };
->                                         };
-> +
-> +                                       port@2 {
-> +                                               reg = <2>;
-> +
-> +                                               dpu_intf3_out: endpoint {
-> +                                                       remote-endpoint = <&hdmi_in>;
-> +                                               };
-> +                                       };
->                                 };
->                         };
->
-> @@ -3017,6 +3053,103 @@ mdss_dsi1_phy: phy@c996400 {
->
->                                 status = "disabled";
->                         };
-> +
-> +                       hdmi: hdmi-tx@c9a0000 {
-> +                               compatible = "qcom,hdmi-tx-8998";
-> +                               reg =   <0x0c9a0000 0x50c>,
-> +                                       <0x00780000 0x6220>,
-> +                                       <0x0c9e0000 0x2c>;
-> +                               reg-names = "core_physical",
-> +                                           "qfprom_physical",
-> +                                           "hdcp_physical";
-> +
-> +                               interrupt-parent = <&mdss>;
-> +                               interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
+Abhinav,
 
-Just <8>. MDSS doesn't have IRQ types.
+On 08/05/2024 21:52, Jon Hunter wrote:
+> 
+> On 08/05/2024 17:46, Abhinav Kumar wrote:
+>>
+>>
+>> On 5/8/2024 2:17 AM, Jon Hunter wrote:
+>>> Building the kernel with python3 versions earlier than v3.9 fails 
+>>> with ...
+>>>
+>>>   Traceback (most recent call last):
+>>>     File "drivers/gpu/drm/msm/registers/gen_header.py", line 970, in 
+>>> <module>
+>>>       main()
+>>>     File "drivers/gpu/drm/msm/registers/gen_header.py", line 951, in 
+>>> main
+>>>       parser.add_argument('--validate', 
+>>> action=argparse.BooleanOptionalAction)
+>>>   AttributeError: module 'argparse' has no attribute 
+>>> 'BooleanOptionalAction'
+>>>
+>>> The argparse attribute 'BooleanOptionalAction' is only supported for
+>>> python v3.9 and later. Fix support for earlier python3 versions by
+>>> explicitly defining '--validate' and '--no-validate' arguments.
+>>>
+>>> Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+>>> ---
+>>>   drivers/gpu/drm/msm/registers/gen_header.py | 3 ++-
+>>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>
+>> Thanks for your patch, I had sent something similar y'day.
+>>
+>> If you are alright with 
+>> https://patchwork.freedesktop.org/patch/593057/, we can use that one.
+> 
+> 
+> Yes that's fine with me.
 
-> +
-> +                               clocks = <&mmcc MDSS_MDP_CLK>,
-> +                                        <&mmcc MNOC_AHB_CLK>,
-> +                                        <&mmcc MDSS_AHB_CLK>,
-> +                                        <&mmcc MDSS_AXI_CLK>,
-> +                                        <&mmcc MISC_AHB_CLK>,
-> +                                        <&mmcc MDSS_HDMI_CLK>,
-> +                                        <&mmcc MDSS_HDMI_DP_AHB_CLK>,
-> +                                        <&mmcc MDSS_EXTPCLK_CLK>;
-> +                               clock-names =
-> +                                       "mdp_core",
-> +                                       "mnoc",
-> +                                       "iface",
-> +                                       "bus",
-> +                                       "iface_mmss",
-> +                                       "core",
-> +                                       "alt_iface",
-> +                                       "extp";
 
-This device was neither validated nor described properly in the DT
-schema. There are several other issues here.
+Any update on this? All our farm builders are unable to build either 
+-next or mainline currently.
 
-> +
-> +                               phys = <&hdmi_phy>;
-> +                               phy-names = "hdmi_phy";
-> +
-> +                               pinctrl-names = "default", "sleep";
-> +                               pinctrl-0 = <&hdmi_hpd_default
-> +                                            &hdmi_ddc_default
-> +                                            &hdmi_cec_default>;
-> +                               pinctrl-1 = <&hdmi_hpd_sleep
-> +                                            &hdmi_ddc_default
-> +                                            &hdmi_cec_default>;
-> +
-> +                               power-domains = <&rpmpd MSM8998_VDDCX>;
-
-Is it? I don't see this in msm-4.4
-
-> +
-> +                               #sound-dai-cells = <1>;
-> +
-> +                               status = "disabled";
-> +
-> +                               ports {
-> +                                       #address-cells = <1>;
-> +                                       #size-cells = <0>;
-> +
-> +                                       port@0 {
-> +                                               reg = <0>;
-> +                                               hdmi_in: endpoint {
-> +                                                       remote-endpoint = <&dpu_intf3_out>;
-> +                                               };
-> +                                       };
-> +
-> +                                       port@1 {
-> +                                               reg = <1>;
-> +                                               hdmi_out: endpoint {
-> +                                               };
-> +                                       };
-> +                               };
-> +                       };
-> +
-> +                       hdmi_phy: hdmi-phy@c9a0600 {
-> +                               compatible = "qcom,hdmi-phy-8998";
-> +                               reg = <0x0c9a0600 0x18b>,
-> +                                     <0x0c9a0a00 0x38>,
-> +                                     <0x0c9a0c00 0x38>,
-> +                                     <0x0c9a0e00 0x38>,
-> +                                     <0x0c9a1000 0x38>,
-> +                                     <0x0c9a1200 0x0e8>;
-> +                               reg-names = "hdmi_pll",
-> +                                           "hdmi_tx_l0",
-> +                                           "hdmi_tx_l1",
-> +                                           "hdmi_tx_l2",
-> +                                           "hdmi_tx_l3",
-> +                                           "hdmi_phy";
-> +
-> +                               #clock-cells = <0>;
-> +                               #phy-cells = <0>;
-> +
-> +                               clocks =
-> +                                       <&mmcc MDSS_AHB_CLK>,
-> +                                       <&gcc GCC_HDMI_CLKREF_CLK>,
-> +                                       <&xo>;
-
-This is most likely RPM_SMD_XO_CLK_SRC or maybe RPM_SMD_LN_BB_CLK1
-
-> +                               clock-names =
-> +                                       "iface",
-> +                                       "ref",
-> +                                       "xo";
-> +                               power-domains = <&rpmpd MSM8998_VDDMX>;
-
-Is it?
-
-> +
-> +                               status = "disabled";
-> +                       };
->                 };
->
->                 venus: video-codec@cc00000 {
->
-
+Jon
 
 -- 
-With best wishes
-Dmitry
+nvpublic
 
