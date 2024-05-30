@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-21170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D879B8D5614
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 01:13:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A4CF8D5616
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 01:13:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 076881C228C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 23:13:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46E4F288172
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 23:13:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E364183991;
-	Thu, 30 May 2024 23:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40151186286;
+	Thu, 30 May 2024 23:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ANYtWMoT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xRdvSvFs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A11C1862A3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E95186283
 	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 23:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717110780; cv=none; b=YOO8ty5M+02XftfG1d/X1tSU5zD8k2L0mhQ2QR008CQ/cBsezmLkvf2KPqIS6Ak880OEzI/GNa41VdkBXBvT9LzPqoFqX1zAvl0638WQ+C/j7GWfq3Ean6WQGEKeBq/yukf3t11PA96z4CjS1PsCeREi7p71JvBdD+v9blN1tvw=
+	t=1717110782; cv=none; b=KFFPRbQPI8mI+bKzWfdDatlNSCbr+siPMRUctOML8XpUCg6MNWELAstl4uvDyK6RHhONTh1D+w34fuOG4L8EtOGuj++zqCAFkfgFST9G9sdy9aL7r3acynwUsq9eZ8CYPr4nQLJl2hcd/akWZRu/C19Ley8N+0GrcJvWzMSIhOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717110780; c=relaxed/simple;
-	bh=VvftgDyvPN2Jo+dzgQt64qBzdF1Q5SyfOzczZqaDLmk=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Y+bHZG2dsUYS0Ae0qnaRXEBBy3YgTA7XZmVIfe94M1jG4Cw4pZX+MHQTd5RxjawJuk5DlJwvU3ez0QO8BTx+JbcWAZZIm8fWL3HuKKvfiN4AGYid034ZBRg4K5crPRCIoqqRrhlJUziG2VOzU7ihsGsGvQGPu0//eAi7mbOI9vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ANYtWMoT; arc=none smtp.client-ip=209.85.208.182
+	s=arc-20240116; t=1717110782; c=relaxed/simple;
+	bh=4lQZmh/WvHEEtNKJULb6yxMuO5RvAavVpXvzoItg+EA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=bAVFK0KjQIEAjH5DDPcXgxHUdeqfIM8AQEXxgj/u1uGz7Oj/+YCCRHLi5ep0MWNB4Iec6i66VK+pzim+4EwVdH8ZQMLBuaSi1Q7KUtzccmXJZ9oiLjrGCCksk+Zxjjg4XXYEMR75NXgurSpCuPtoWyOVPGM42Mwz1enEK/LtWKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xRdvSvFs; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2e968e77515so18612041fa.0
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52b894021cbso62441e87.0
         for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 16:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717110777; x=1717715577; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BxC+zkRQtnEbqEOZ0TSkFRxCG7VsNA8jgi0zgdIyDnk=;
-        b=ANYtWMoTj+68KuCoaImQ0oC5aK35mEENfqBIpfryoCEWpv3fdDD0B0WakwxzHZCYhz
-         V4cWiqCN8Op1cRpk0X+neRO68ZxA+4CkoXaxSp6D9kwlDF6DcI3n+3og4z90y8YfKciY
-         E7O8/MsQgjwh73/SO7KzMXn49kJlElOPNos1e1xmvLtdhAn6HwsrhdK3o/ntbF6Orrh/
-         eXkjZsVxvCeyp+Xq7ib0WIjuPArmiIBPKNCljyCjHD6Ax47F55Ocrv0kpbZwUHkOlen8
-         FAC5VLU9UC3o78qElvkXOq3I+YxL87m5Jvh+nDOcoLhSnp5yaiM01kkDCXDeWuPLq4Hb
-         bu6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717110777; x=1717715577;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1717110778; x=1717715578; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BxC+zkRQtnEbqEOZ0TSkFRxCG7VsNA8jgi0zgdIyDnk=;
-        b=E/H9QhwgR5x6aX+YSb4gmqiefvmdMHpvImxiSGChM+6wbNUQJGJqZfATlAcrTbBBUC
-         DRn2WEBbOZQu3IPHGPfOoL+N+6zHO5KdcUw7pKwfwoVt/ZAzuee3EIPlfKOxNXLTpmXp
-         GGgVGHX+Q/IyMbtAIS0zneRkLo94FI93wDn4b297tw3xJdNiBtRfuVKpxVFC+yCzssmI
-         wAFQtZ9f3EMKLU69VshOdhr7Gn9CYn+hIUHDhjLOl5nQM9jTjMiRcxL+YBm29+ee1izP
-         6Bqo+ta67sQoARzFP/hK1twPce3sQ1WklpiiYpnWtfz6dWtdRKanU1SCjnSgK8JyZklP
-         nSZg==
-X-Forwarded-Encrypted: i=1; AJvYcCULwa5HRAPLVJd/Ctmn19mFsECD0fuFBD01otxZOgq2hACQFPEt4ZpGiC/T2X7HFfVKRqlhASoyPqh/Dv+rsU/M2L+Xz3pBTkopYdUW2g==
-X-Gm-Message-State: AOJu0Yx4cbQ9YI9yyhSwiqbKmh8BY9MbPs6NghvQmcyCjdW+F1K2Mkpd
-	YENaBPTznGApiVIurrI1A1Uve3I0uOWbz7Qsu8TcjRVXAG8u/ePfMXAxaa1BGkj1GD3Pi41oELA
-	f
-X-Google-Smtp-Source: AGHT+IGGLsAMHbk6z9ggkIBZMdQMqoAHVm39g6bHGA+HdZAGC5BH/XBCKbp32FpXhgClt94lctQK5g==
-X-Received: by 2002:a05:6512:2085:b0:529:bc99:1cd8 with SMTP id 2adb3069b0e04-52b896d917bmr39787e87.59.1717110777383;
+        bh=9MDjCsFEZ1HcOeGBvBo6CqtfbFIZh3loCrt4ShZMr9A=;
+        b=xRdvSvFsr1nIilt6sb9Fb18P65j3+6NdU5xcfguGZ1AmKxggaDaSGB35d/urMJLbM4
+         VNN15I1YclFKU/5ov2NrppvaFMvQZxouyWdVdmGfUnsdGFnBw6FyjVpUZjE0g4rzXNID
+         Q9VWRZ6l+UJMsEdfuNqdqOWtm3c3UcpCXQtGYvrv3/6X1+NdfOr7qmMUbL0wEV9XyUVW
+         MVgyO/CTxpA3quxwMn3gA4Xa48cuBKVG+vL1YB2hEV8D63jVSUdLldQtFmJ4PZXOho0O
+         hNBV/+R6f/17/zF21Nw9pqw/gCnKKpmBw80TqwIvEEdwDWmggI3Dg6u5HEoIRvaBI2eG
+         jwCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717110778; x=1717715578;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9MDjCsFEZ1HcOeGBvBo6CqtfbFIZh3loCrt4ShZMr9A=;
+        b=uKBg9JRF8UTXdpxmXgoWOCnnXXsdcijcy39Qf2g756WLYT1Sa13frePXStZXMOak3z
+         aRXS6O4SNZiV/oMpSibaRPp+r9ZL+Q2f7K4yUyRXxju9cdUt65elQXDqMa5vDkkCjbAr
+         4LVKLKSMc5VRD9gSIBE7GwcSru4YrmrzhzZqh2mNlzGsurHU13F2oLwbu1mI0EQjt3Lr
+         E6JGOVktR84kLkk3VrEYEeWfuv8w5iJN2ItEZMBWlC9eZ+MSgxXVPriqsmd8bzkeOiuv
+         Jq5yPXwwwHYRz7BVWXTlh2tTwt6nAlB0VW4z/pGfcjw0eP1/Z2jZ3fEjqBrCWGnPm+TW
+         thFg==
+X-Forwarded-Encrypted: i=1; AJvYcCXpqvLdPJGMba3SoqHtwhcvuxDmZH1iFDwAY7PAV/cRy1C98giuY+XhPdgZLJMskkmJdzHuSHutr5r+xQr02Dum6MVuiBywGyjbhGMHBw==
+X-Gm-Message-State: AOJu0YxCEp+qfs/7e1D8yAHhtDyCWjwPqR4Qivs4gzXmlNV9Wv57ddip
+	UWBHICMSveOHYGNJmeIctXGjRtHucPAbK/j8XSiyAR4iJiAxqhbRKA3iPm2Dcv4=
+X-Google-Smtp-Source: AGHT+IHCDHK4srNC/bDT9MhZqbsXJoODdHwGipAby7uMsyyVOOryiOsA8heWPcUKRMYQXg7XBalJbg==
+X-Received: by 2002:a05:6512:39c5:b0:516:cc2d:f6a1 with SMTP id 2adb3069b0e04-52b896dc4f6mr55540e87.51.1717110777989;
         Thu, 30 May 2024 16:12:57 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d75d96sm119005e87.120.2024.05.30.16.12.56
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d75d96sm119005e87.120.2024.05.30.16.12.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 30 May 2024 16:12:57 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v3 0/3] drm/panel-edp: remove several legacy compatibles
- used by the driver
-Date: Fri, 31 May 2024 02:12:54 +0300
-Message-Id: <20240531-edp-panel-drop-v3-0-4c98b2b95e3a@linaro.org>
+Date: Fri, 31 May 2024 02:12:55 +0300
+Subject: [PATCH v3 1/3] drm/panel-edp: add fat warning against adding new
+ panel compatibles
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,10 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPYHWWYC/3WMSwrCMBQAr1Ky9kk+TbWuvIe4SPNpH5QkJBKU0
- rubdqWIyxmYWUi2CW0ml2YhyRbMGHwFcWiInpQfLaCpTDjlLZVcgDURovJ2BpNCBEqV4qIfhO4
- GUqOYrMPnPrzdK0+YHyG99n9hm/27KgwY0FaajkvGDO2vM3qVwjGkkWyvwj/7/qfnQMFpp1t5c
- vpszFe/rusbZq2K++0AAAA=
+Message-Id: <20240531-edp-panel-drop-v3-1-4c98b2b95e3a@linaro.org>
+References: <20240531-edp-panel-drop-v3-0-4c98b2b95e3a@linaro.org>
+In-Reply-To: <20240531-edp-panel-drop-v3-0-4c98b2b95e3a@linaro.org>
 To: Douglas Anderson <dianders@chromium.org>, 
  Neil Armstrong <neil.armstrong@linaro.org>, 
  Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
@@ -93,67 +92,65 @@ Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
  Jeffrey Hugo <quic_jhugo@quicinc.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1895;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1789;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=VvftgDyvPN2Jo+dzgQt64qBzdF1Q5SyfOzczZqaDLmk=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmWQf4bgvbfxFD+03kBTAzGeWGmj39F9t7kiqCY
- mEAskW2zLeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZlkH+AAKCRCLPIo+Aiko
- 1b/LB/9dVqU653u3o+awrMXOsZ2xSPBHZpil6qLXw6GtARRG1dtdPHMwF2rxdPdl6v62vVz/zgt
- xEA0N8hJPiquSjd22b4m+xShUbX4PMurjMqHnhxDX4+M1tWGeri67i4SkB1AZHxqTcb1076jJcq
- Y46FhaBvHYCToEdZnSJDXBKCcaYqw5DBL0hBpv5BjT4wRlsIW1HldEBHV+g2JGcVDoUu3C2j6P9
- ZfM/vgWE/UatGfLdjV6As/gGbDOV72Ts+LOPl0/wb/zp3Cob6JKWrM9sywDlM2fSzf6oOf76BF5
- FJlGkS4BpBJHSzoa+fmoJVUKLBGHOYSLNw4OMLrnsG924fo5
+ bh=4lQZmh/WvHEEtNKJULb6yxMuO5RvAavVpXvzoItg+EA=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmWQf4M0YInguykUXTyMqVJtog/s/TjQywd/DDP
+ akfvNNiTlSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZlkH+AAKCRCLPIo+Aiko
+ 1XozCACoI/M4YGZsyLd+SYKu+kRIbTJFiN7yHHoXU5cPCqg2X/+3kZgtkcWXK818KF48F17uK7/
+ Z60m/kj7JmLjRJQz4g38OKf6BBSasiPJLvQ89Fywc5eN0eXlnvkMsMJWOHSZvmzRZb9iJS/wM44
+ Os2BWDA88429zTZaZTNroO7icIk7Mt60YK6cg5vuiQaw0IJdRiAy7h7RT5wL3jbm7mSqHmhtXB1
+ G/el0ZqZ4DJmLPH9+5uNXUi0vMSYIopCpwu3VXievEE1ynyAh9agsecAjuzgFwQTtKwT5dDqzBN
+ qB84Xt/VVYqp9cQ6NLyDUwMH6bUW8bsnRv9DeNKy4V6qExLx
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-There are two ways to describe an eDP panel in device tree. The
-recommended way is to add a device on the AUX bus, ideally using the
-edp-panel compatible. The legacy way is to define a top-level platform
-device for the panel.
+Add a fat warning against adding new panel compatibles to the panel-edp
+driver. All new users of the eDP panels are supposed to use the generic
+"edp-panel" compatible device on the AUX bus. The remaining compatibles
+are either used by the existing DT or were used previously and are
+retained for backwards compatibility.
 
-Document that adding support for eDP panels in a legacy way is strongly
-discouraged (if not forbidden at all).
-
-While we are at it, also drop legacy compatible strings and bindings for
-five panels. These compatible strings were never used by a DT file
-present in Linux kernel and most likely were never used with the
-upstream Linux kernel.
-
-The following compatibles were never used by the devices supported by
-the upstream kernel and are a subject to possible removal:
-
-- lg,lp097qx1-spa1
-- samsung,lsn122dl01-c01
-- sharp,ld-d5116z01b
-
-I'm considering dropping them later, unless there is a good reason not
-to do so.
-
+Suggested-by: Doug Anderson <dianders@chromium.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v3:
-- Rephrased the warning comment, following some of Doug's suggestions.
-- Link to v2: https://lore.kernel.org/r/20240529-edp-panel-drop-v2-0-fcfc457fc8dd@linaro.org
+ drivers/gpu/drm/panel/panel-edp.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-Changes in v2:
-- Actually drop support for five panels acked by Doug Andersson
-- Link to v1: https://lore.kernel.org/r/20240523-edp-panel-drop-v1-1-045d62511d09@linaro.org
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 6db277efcbb7..ce2ea204a41e 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1776,7 +1776,24 @@ static const struct of_device_id platform_of_match[] = {
+ 	{
+ 		/* Must be first */
+ 		.compatible = "edp-panel",
+-	}, {
++	},
++	/*
++	 * Do not add panels to the list below unless they cannot be handled by
++	 * the generic edp-panel compatible.
++	 *
++	 * The only two valid reasons are:
++	 * - Because of the panel issues (e.g. broken EDID or broken
++	 *   identification).
++	 * - Because the eDP drivers didn't wire up the AUX bus properly.
++	 *   NOTE that, though this is a marginally valid reason,
++	 *   some justification needs to be made for why the platform can't
++	 *   wire up the AUX bus properly.
++	 *
++	 * In all other cases the platform should use the aux-bus and declare
++	 * the panel using the 'edp-panel' compatible as a device on the AUX
++	 * bus.
++	 */
++	{
+ 		.compatible = "auo,b101ean01",
+ 		.data = &auo_b101ean01,
+ 	}, {
 
----
-Dmitry Baryshkov (3):
-      drm/panel-edp: add fat warning against adding new panel compatibles
-      dt-bindings: display: panel-simple: drop several eDP panels
-      drm/panel-edp: drop several legacy panels
-
- .../bindings/display/panel/panel-simple.yaml       |  10 --
- drivers/gpu/drm/panel/panel-edp.c                  | 192 +++------------------
- 2 files changed, 25 insertions(+), 177 deletions(-)
----
-base-commit: 6dc544b66971c7f9909ff038b62149105272d26a
-change-id: 20240523-edp-panel-drop-00aa239b3c6b
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
