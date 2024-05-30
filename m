@@ -1,349 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-21113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A85208D4D62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:00:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08D4F8D4D71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:05:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 555B42833D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:00:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD0EB1F222C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D1E2176253;
-	Thu, 30 May 2024 14:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE8EB186E45;
+	Thu, 30 May 2024 14:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="pa02Lxj+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L/B8RX2Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B6A186E40
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 14:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D584D186E4B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 14:05:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717077602; cv=none; b=kQnFeQWsHFicKO4gmfEOwHf7zv4nfIdI+cbNWH4yFvitC9gCsOxy9iYyMtOZDgY6fN7GXA/Cd/bXpD3Ki7fpg8FRQRl3u81bWI+ZiZw7c/1IV+n9Tpj2Qox0HkKH46JTkXiSMrZ7XWAn7/GvqcuBDKgiV3BBBMDXUpC5bWmuo0k=
+	t=1717077934; cv=none; b=e/qAXmvYW8D9rsrXoZbkDMZdkCvFGaTg5u3ZcQgFM3JP5Ew0cvvRaUR0qyKxpGU0SpQDzzAV0B5lUVSQJGz0OcvZx6oTeHosZkr8p9/5oKbBdZV821Rz7S3XtCq3+S0vuC8LgQBVHv493ONNUUTBkJiCw1oF3VGTrjf+EGu7EFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717077602; c=relaxed/simple;
-	bh=Nu+pWteWMgH/QEwoWCbIFqPC/H4vkxZKSBzcueZdV10=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdlUq9fEuqBEzTHU22j8bqi5EifLJywosMQ1jL2ZAbsD38hXd9/kUrcda8LmIKVdqRjO/88/7SwZ6ZUrsAelLGfi1m92I/r/hf4il2gqQxa2v+LX+egSxT0lq4MM2/LnrDKJEKz8HmCEmzrnRB2UcCS0ixK1WZiHd5kwcDkZFlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=pa02Lxj+; arc=none smtp.client-ip=185.67.36.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id 8C6C324002B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 15:59:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-	t=1717077592; bh=Nu+pWteWMgH/QEwoWCbIFqPC/H4vkxZKSBzcueZdV10=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
-	 Content-Transfer-Encoding:Autocrypt:OpenPGP:From;
-	b=pa02Lxj+yzDjgdn1wmtFu9GJP6CKpjDMXU2HJfqMtU2yhEieXy4K+vF3Ohh2Sxb2K
-	 +cC0v2krsqfYMYyvGvHisOKi1IlhpaXskYSWdpa/LFGDRFXRvN3bRHrY6zofl2sDQ6
-	 isG5avjVWLgwgbmQHlrOgjm52B6nHAeJDtsm+qxmVZJgs1V0EHKACzh0WG+bAJdvvT
-	 4ZA/m+4E4YzHOljIxSn7cS9exKWXIN5k1OUaW4cAJNiAbnTUjCy1rqNXRAqcEr6963
-	 +jOLqtaz4zXudjKWkjrOZXPlJxoH9v645xt56ETPsXa/U9U963HbrF/IG6SnsxD0MG
-	 Bpo9E8RPZc44A==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4Vqntv2gpxz9rxS;
-	Thu, 30 May 2024 15:59:51 +0200 (CEST)
-From: Alexander Reimelt <alexander.reimelt@posteo.de>
-To: andersson@kernel.org,
-	petr.vorel@gmail.com,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] arm64: dts: qcom: msm8992-lg-h815: Initial support for LG G4 (H815)
-Date: Thu, 30 May 2024 13:57:42 +0000
-Message-ID: <20240530135922.23326-3-alexander.reimelt@posteo.de>
-In-Reply-To: <20240530135922.23326-1-alexander.reimelt@posteo.de>
-References: <20240403104415.30636-1-alexander.reimelt@posteo.de>
- <20240530135922.23326-1-alexander.reimelt@posteo.de>
+	s=arc-20240116; t=1717077934; c=relaxed/simple;
+	bh=ESd0gNsxszqbQaloGtME7oCQ3PNGImKH+e9qTcBH1qk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=JqXqQeAqqg3K/aoM0Ty7lhELz/b6XEomhajvzaRYjrIna7Y2fzoMbvj27sj6DbMklzFftwWRxzoGw5LgX7/Er8l1E3aV3ptZSI2oKgjHYm9KPUmmBYC7MfzJfhxrg1F0KctAEbxyAssAF2yu6eooxIpaVCtb86HIOR6W9qwVkLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L/B8RX2Y; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-57a1e980a65so700971a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 07:05:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717077931; x=1717682731; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ozNVAnxqE0lL+qF5HV2h+4/UhN7PSqlhKtJqHseh0HI=;
+        b=L/B8RX2YxSaggGp7tw6FdKibbb1unU3VPPON/2IXs3mh+d50C+Fs6Olj3BGQGD5L6q
+         /+38Nkwht8CgJhrrK4NZqszbRS0XqIy7lnEX8y28t6KB5wGKH7bFwYyyPLY0hJip9wlX
+         u2GWI2xeVoilzIsioojVNWS+ECDBzLr+CErKNjDMm/ms5IK+b5Vd4s+dfNWQ/He8Pykb
+         TAUvNL+U4Zu6JVBo6hwwywcE/s50PqlHsN9A5v6AdnQxvmZH/L7dw6HAWtl7wxwY1IxA
+         nsGT43SXv9v+CpJTwqXu5nKuym1H7+P81ND8iVhXqJbP0lZDsJyJ5XX2+BKyAeSr3jni
+         Xojg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717077931; x=1717682731;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ozNVAnxqE0lL+qF5HV2h+4/UhN7PSqlhKtJqHseh0HI=;
+        b=XO1zJlJbxEdk7FruOJI0IFaNxIFiv6WW6RJNV6jBj51ZQ0zVvyDFDYEikFzP1dn5oW
+         w5h6TmP7VTY4AjA9lth2cVwDaUxgj9q52EIOyzL6whZaoTI2GVMRO8TQMgXJcco0w9PN
+         lwKeLJT9VNWiRdICzpIJJKUvfYH4eKkSWtKVDYovMXLxFEtln/+/DbuiDorOjQPnN15A
+         zHOMvzXfKvAy+6JJxkzqONDq3JxelLJKT1F2UDT4COc4n9oEaskVBQZ598Em7mvk3/vw
+         QPmDGLIjOxQ0drm5dku5/PLaWQMWIhkF5+tMSNsMWcKlQdLRV7nIh/p4TXlcHh01ZTYW
+         ebTg==
+X-Gm-Message-State: AOJu0YxAIRdu4f3dzNaI1tylAf5yUROxTlBPSfkb3irs58pZZVeDQvDa
+	L+/7RFFYPadzDhAbpqfpTqCLwrs/1Y8sPeQ3dfMai0HQPw9PT0dPN2+UpIR4r58=
+X-Google-Smtp-Source: AGHT+IF/EgUdnO2R7u5brYgNfOJ73YaN+O9YN+pDX7gvTyYiHIa/WTphpHtPpGYtAukA9aMRxwrvhw==
+X-Received: by 2002:a17:906:2550:b0:a66:7666:fc64 with SMTP id a640c23a62f3a-a667666ffcemr88422766b.4.1717077930807;
+        Thu, 30 May 2024 07:05:30 -0700 (PDT)
+Received: from [127.0.1.1] ([188.27.161.69])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a663848c9aasm49630566b.207.2024.05.30.07.05.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 May 2024 07:05:30 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Thu, 30 May 2024 17:05:24 +0300
+Subject: [PATCH] clk: qcom: gcc-x1e80100: Set parent rate for USB3 sec and
+ tert PHY pipe clks
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Autocrypt: addr=alexander.reimelt@posteo.de;
-  keydata=xjMEZg0fSRYJKwYBBAHaRw8BAQdAIcaNTdj3NWDe5HQPCUs6oYyQygAJWP9LCzhr+C7RwMrNG2Fs
-  ZXhhbmRlci5yZWltZWx0QHBvc3Rlby5kZcKZBBMWCgBBFiEEM+Wy6sI/mP5S0zIFHqi3OKk8uRIF
-  AmYNH0kCGwMFCQWjo9cFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQHqi3OKk8uRJ8ogD9
-  EVg4zgfmC2SqXCgms6LETAzVX4CrAS8yMhyd7Md921cA/R8lhm9B96RYgA7MvFPFJb1T6JFY75Jg
-  QLXrtIE5llwHzjgEZg0fSRIKKwYBBAGXVQEFAQEHQBGDuxZLOTvppxyM4G18fSR6xzT0xkkPOia7
-  Bh6L1vAAAwEIB8J+BBgWCgAmFiEEM+Wy6sI/mP5S0zIFHqi3OKk8uRIFAmYNH0kCGwwFCQWjo9cA
-  CgkQHqi3OKk8uRIa1wD8CZDdCAKXstgXY96eeSSP7MecEF5TBdmWOiVgjlEIpoEA/RnGuDaj06B1
-  F51wyGAjYXSmn5qFoNHu3yXyLUkFz1ME
-OpenPGP: url=https://posteo.de/keys/alexander.reimelt@posteo.de.asc
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240530-x1e80100-clk-gcc-usb3-sec-tert-set-parent-rate-v1-1-7b2b04cad545@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAKOHWGYC/x2NwQrCMBAFf6Xs2YXdpAX1V8RDTF9rUGLZpFIo/
+ XeDt5nLzE4FllDo2u1k+KaSPrmJnjqKz5BncBqbkxPXy+CFN8VZVITj+8VzjLyWh+eCyBVWG1R
+ egiFXtlDBvZNwgVP1o1KLLoYpbf/h7X4cPxJIJf+AAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1259; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=ESd0gNsxszqbQaloGtME7oCQ3PNGImKH+e9qTcBH1qk=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmWIel1xURmFNij+ie/FjjZdjHt5Q7HW7elDTa7
+ lANeTceYDSJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZliHpQAKCRAbX0TJAJUV
+ VnMiEACLXvkhX7K/Kz112drtLnDhAMbNb6HDLeh++fS2QCXs9qI+bIjcbdPR6/30p/LtLiLWIJb
+ cNK46wGJVKbF2oXJlCr4ESUl0lbRlFXM5RRafqQl8DUWiFpYkRDkqpDa3l3nSf+ola7xybzXgsY
+ F5V7jgqIRTeYb4HjYsJ/3TB+YLEgejcaVhksIHEbi2Nk8Cczc0X4M9TkJYWl2oRg7frJtffiC2K
+ VJAbg3WTVGwFP0a/cUK9AEqaAWLHfD4z8gk8qZDHylXYu0vbC5wtb58lpmfXTB8v3hws6qJR9H8
+ O6aqeWGh8Y/L+4+O+cwtKri95vnQEmRPsTUoQrqi2SA/qhEGfTH4uctL4HXkmgLHh9HJMp6Vs5Y
+ GOyiB8b8PhFXXV3W3S42oGLE194Pq/kBlNI3gWhM8a12+SUfwIwAtwrfgmEWm7E3gC12+rNLAhg
+ oHqyu7C0FyXM4Bm1fM7y5WWNGdbL8tpPUQBxc6OmWe5DzwGHKTwzZL2XtNAUemLc7uGrwCimIFa
+ +2dmQChazyn6oDAWyUQ8MeUOJE+jRWOwGfY+oFUOm1NpeTr0TKdXRpgosj1/eUdKjkkmtmsn4xt
+ w6YLx9za4BQJKWqHIcGMX++JtUCMcrJJe+CnkZG5vp54+8ENcD/LNr13FAE1Jx/b0BIxgrdZbyl
+ zWF9Hj8ix0ZoohQ==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-To make it easier for downstream projects and avoid duplication of work.
-Makes the device bootable and enables all buttons, hall sensor, eMMC and SD-Card.
+Allow the USB3 second and third GCC PHY pipe clocks to propagate the
+rate to the pipe clocks provided by the QMP combo PHYs. The first
+instance is already doing that.
 
-Signed-off-by: Alexander Reimelt <alexander.reimelt@posteo.de>
+Fixes: ("161b7c401f4b clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile            |   1 +
- arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts | 234 +++++++++++++++++++
- 2 files changed, 235 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
+ drivers/clk/qcom/gcc-x1e80100.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 7d40ec5e7d21..5b7f8741006f 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -62,6 +62,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8956-sony-xperia-loire-kugo.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8956-sony-xperia-loire-suzu.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-10.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-bullhead-rev-101.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-lg-h815.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-xiaomi-libra.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8994-huawei-angler-rev-101.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
-new file mode 100644
-index 000000000000..5f55abec82aa
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
-@@ -0,0 +1,234 @@
-+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+/*
-+ * MSM8992 LG G4 (h815) device tree.
-+ *
-+ * Copyright (c) 2024, Alexander Reimelt <alexander.reimelt@posteo.de>
-+ */
-+
-+/dts-v1/;
-+
-+#include "msm8992.dtsi"
-+#include "pm8994.dtsi"
-+#include "pmi8994.dtsi"
-+#include <dt-bindings/leds/common.h>
-+
-+/* different mapping */
-+/delete-node/ &cont_splash_mem;
-+
-+/* disabled downstream */
-+/delete-node/ &dfps_data_mem;
-+
-+/ {
-+	model = "LG G4 (H815)";
-+	compatible = "lg,h815", "qcom,msm8992";
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <251 0>;
-+	qcom,pmic-id = <0x10009 0x1000a 0x00 0x00>;
-+	qcom,board-id = <0xb64 0>;
-+
-+	/* psci is broken */
-+	/delete-node/ psci;
-+
-+	chosen {};
-+
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		spin-table@6000000 {
-+			reg = <0 0x6000000 0 0x1000>;
-+			no-map;
-+		};
-+
-+		ramoops@ff00000 {
-+			compatible = "ramoops";
-+			reg = <0x0 0xff00000 0x0 0x100000>;
-+			console-size = <0x20000>;
-+			pmsg-size = <0x20000>;
-+			record-size = <0x10000>;
-+			ecc-size = <0x10>;
-+		};
-+
-+		cont_splash_mem: fb@3400000 {
-+			compatible = "framebuffer";
-+			reg = <0 0x3400000 0 0xc00000>;
-+			no-map;
-+		};
-+
-+		crash_fb_mem: crash-fb@4000000 {
-+			reg = <0 0x4000000 0 0xc00000>;
-+			no-map;
-+		};
-+	};
-+
-+	gpio-hall-sensor {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&hall_sensor_default>;
-+		pinctrl-names = "default";
-+
-+		label = "Hall Effect Sensor";
-+
-+		event-hall-sensor {
-+			gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
-+			label = "hall effect sensor";
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		key-vol-up {
-+			label = "volume up";
-+			gpios = <&pm8994_gpios 3 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			wakeup-source;
-+			debounce-interval = <15>;
-+		};
-+	};
-+};
-+
-+&CPU0 {
-+	enable-method = "spin-table";
-+};
-+
-+&CPU1 {
-+	enable-method = "spin-table";
-+};
-+
-+&CPU2 {
-+	enable-method = "spin-table";
-+};
-+
-+&CPU3 {
-+	enable-method = "spin-table";
-+};
-+
-+&CPU4 {
-+	enable-method = "spin-table";
-+};
-+
-+&CPU5 {
-+	enable-method = "spin-table";
-+};
-+
-+&pm8994_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm8994-regulators";
-+
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+		vdd_s5-supply = <&vph_pwr>;
-+		vdd_s7-supply = <&vph_pwr>;
-+		vdd_l1-supply = <&pmi8994_s1>;
-+		vdd_l2_26_28-supply = <&pm8994_s3>;
-+		vdd_l3_11-supply = <&pm8994_s3>;
-+		vdd_l4_27_31-supply = <&pm8994_s3>;
-+		vdd_l5_7-supply = <&pm8994_s5>;
-+		vdd_l6_12_32-supply = <&pm8994_s5>;
-+		vdd_l8_16_30-supply = <&vph_pwr>;
-+		vdd_l9_10_18_22-supply = <&pmi8994_bby>;
-+		vdd_l13_19_23_24-supply = <&pmi8994_bby>;
-+		vdd_l14_15-supply = <&pm8994_s5>;
-+		vdd_l17_29-supply = <&pmi8994_bby>;
-+		vdd_l20_21-supply = <&pmi8994_bby>;
-+		vdd_l25-supply = <&pm8994_s5>;
-+		vdd_lvs1_2-supply = <&pm8994_s4>;
-+
-+		pm8994_s3: s3 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		/* sdhc1 vqmmc and bcm */
-+		pm8994_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-system-load = <325000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8994_s5: s5 {
-+			regulator-min-microvolt = <2150000>;
-+			regulator-max-microvolt = <2150000>;
-+		};
-+
-+		/* sdhc2 vqmmc */
-+		pm8994_l13: l13 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-system-load = <22000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		/* sdhc1 vmmc */
-+		pm8994_l20: l20 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-system-load = <570000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		/* sdhc2 vmmc */
-+		pm8994_l21: l21 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-system-load = <800000>;
-+			regulator-allow-set-load;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,rpm-pmi8994-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_bst_byp-supply = <&vph_pwr>;
-+
-+		pmi8994_s1: s1 {
-+			regulator-min-microvolt = <1025000>;
-+			regulator-max-microvolt = <1025000>;
-+		};
-+
-+		/* S2 & S3 - VDD_GFX */
-+
-+		pmi8994_bby: boost-bypass {
-+			regulator-min-microvolt = <3150000>;
-+			regulator-max-microvolt = <3600000>;
-+		};
-+	};
-+};
-+
-+&sdhc1 {
-+	mmc-hs400-1_8v;
-+	vmmc-supply = <&pm8994_l20>;
-+	vqmmc-supply = <&pm8994_s4>;
-+	non-removable;
-+	status = "okay";
-+};
-+
-+&sdhc2 {
-+	vmmc-supply = <&pm8994_l21>;
-+	vqmmc-supply = <&pm8994_l13>;
-+	cd-gpios = <&pm8994_gpios 8 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	hall_sensor_default: hall-sensor-default-state {
-+		pins = "gpio75";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
+diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
+index 1404017be918..8c72fdc99fd9 100644
+--- a/drivers/clk/qcom/gcc-x1e80100.c
++++ b/drivers/clk/qcom/gcc-x1e80100.c
+@@ -5269,6 +5269,7 @@ static struct clk_branch gcc_usb3_sec_phy_pipe_clk = {
+ 				&gcc_usb3_sec_phy_pipe_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -5339,6 +5340,7 @@ static struct clk_branch gcc_usb3_tert_phy_pipe_clk = {
+ 				&gcc_usb3_tert_phy_pipe_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+
+---
+base-commit: 9d99040b1bc8dbf385a8aa535e9efcdf94466e19
+change-id: 20240530-x1e80100-clk-gcc-usb3-sec-tert-set-parent-rate-420a9e2113d1
+
+Best regards,
 -- 
-2.45.1
+Abel Vesa <abel.vesa@linaro.org>
 
 
