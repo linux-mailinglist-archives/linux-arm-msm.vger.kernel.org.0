@@ -1,67 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-21077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A9838D4979
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 12:20:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A94B98D497D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 12:21:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 582D71F23BCE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 10:20:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3F801C21E54
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 10:21:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A3B2176AAE;
-	Thu, 30 May 2024 10:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51C5617C7C0;
+	Thu, 30 May 2024 10:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ja8hHTD7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BaYv9gNW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8029C169AEC;
-	Thu, 30 May 2024 10:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF84617C7A1;
+	Thu, 30 May 2024 10:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717064449; cv=none; b=tuu85r/j+UZhNmtgvdaD3bUYiLEvyvQTAw/M9EpLmPv7qNajmoxYffkGS0NG1k03Ya+f5uUNInFdjtJnT7I2X03z3eHqney9ClMyjaP88i9om2U5egJhLf9T/K8+Vl9rsVYAJGiw1xbDQdkNYqH5HTpgi/HT9Vn/O/rtMEwXzls=
+	t=1717064451; cv=none; b=F3JH40He9xlCnfKgf/3y42TnfCil8GUy2owaT2u/Cc9xQQI1NxfhPz4IlUAldaqKTJlqiUz37CyXR35pbtnFz8mhdwKWBYGAPdBjmz2CYMKGEAGsgQFHxTGoqRYhqCb/di/w/l7y1spAIe+SSVCDuhNeYKXchTZxvd8TK99lZWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717064449; c=relaxed/simple;
-	bh=X6yULDb5Q4np7YwYvsB5/phufIqg+HnW8U4B/6CiPzU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=G3fuoc3uUOaHRTfMayc89Kj0XzUWgrnUGuAvBSWZz8ZBmvmPK7QN/cr/PjVD037Ac7Y/RXjnWUfq2ryf5542/KQY4LecX52I2A0bMtBdED0UP2ScaFrAcDhY86QFj43xl1RppKKwCZo0Z0bvqDeFBNBvD0rI6D8esh5plAt74II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ja8hHTD7; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1717064451; c=relaxed/simple;
+	bh=H2jWcvpKqbzAnp9/j0WSN87+yx8nAalCoyjprgqfvk4=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Pfd1iEU0zkJbyM7Muj2SAoHvdl/noUN/a7lWJ0EI8VvTv/PzrQfGDkM1QhEQpDMfvKDCSbfyuLRXarYS5YGY96vVSQvdxQdHDaPN/Sw/1+E1fLpTsIaiDtczWe8IEnk0EM4hXw3vzE3jz9MKbakR3u3M6u1OfeFn7xYYEogc+XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BaYv9gNW; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44TMuvNX016844;
-	Thu, 30 May 2024 10:20:44 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44U5aOMA015776;
+	Thu, 30 May 2024 10:20:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=ultLYi/rM3daNOi+9Cb0N+
-	7i/j8LC6jUNavdEC4qz2Y=; b=ja8hHTD7sevflaXy1GChll6P3qqRJVZGPKWOAr
-	p6NxCHWFlDH1GbqF2JtPsvCfc4U+fDrBIvNrTghfk8xJnCdUrgf9wnyPcP3eIdUy
-	HlAVO0My+y7bE1obqWSYQUKXyMivrK+AVTtd0K7Dc2bgG5Vv0A80JjhjW6r7mfv3
-	KYr8C+QT3+HvmQbV/Y8LtReEjOcx8mkzSpcJx8EubksuMZkUkzfHoC3UbSy8W864
-	Qbs6hDM4x5JxLJ/KW77MMd5FPC29ik5/KdigXyJUqLAZ/ENF3Gq5kc+bnw1oHOmp
-	Bqz3/ZJzOHkxsqxVT/Vb1Z+FAM2+B2ewCNHtkCJwePuc/qNA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba0pufpn-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZgcGq+gGLMZzRgJ3mrjkWIPtheOdd4pHy1h0aokwgUM=; b=BaYv9gNWdfda6yIY
+	Kd1oV8pAA7imQkBcswUXiyl943Hae/iKtFbMnv5P2vgnhA+/iNlezyMlvZDaZlY/
+	aPRlGAt9Nni9yRn87gqmNhlEpRJcU4RBvk2cavzFLqY+mJbKRn9LE9tAsNMEv1k6
+	N2fwf6Hak8J5iZ3C9zyxTsoWxA6uB1EGuY8AR+GuYem9QAfIxSruLgiaXZ/bAo0B
+	sMS7MaJNtfeqKxln2T1RZ6jgEBOKg9xCf+jJgIc5eSnpzWZnzAq57/ggygx2Q4S7
+	3PBIXeu0dxgiHHjIaEmoA2Zt78Ak4F9/ZHkez0mn9nOpZLMlTAi/Bw21rKqfpSmG
+	+tLdqg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ydyws3ach-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 May 2024 10:20:44 +0000 (GMT)
+	Thu, 30 May 2024 10:20:46 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44UAKhiU004472
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44UAKk9x008411
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 May 2024 10:20:43 GMT
+	Thu, 30 May 2024 10:20:46 GMT
 Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 30 May 2024 03:20:40 -0700
+ 15.2.1544.9; Thu, 30 May 2024 03:20:43 -0700
 From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
 CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>
-Subject: [PATCH v3 0/9] Add missing features to FastRPC driver
-Date: Thu, 30 May 2024 15:50:18 +0530
-Message-ID: <20240530102032.27179-1-quic_ekangupt@quicinc.com>
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 1/9] misc: fastrpc: Add missing dev_err newlines
+Date: Thu, 30 May 2024 15:50:19 +0530
+Message-ID: <20240530102032.27179-2-quic_ekangupt@quicinc.com>
 X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240530102032.27179-1-quic_ekangupt@quicinc.com>
+References: <20240530102032.27179-1-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,58 +80,76 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: MMgBlNSobccp-vN9zlcGbavbSyvn4D94
-X-Proofpoint-GUID: MMgBlNSobccp-vN9zlcGbavbSyvn4D94
+X-Proofpoint-ORIG-GUID: piKBNdm0SwQXFy2Bk2vYyG3ahpMWNdPg
+X-Proofpoint-GUID: piKBNdm0SwQXFy2Bk2vYyG3ahpMWNdPg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-30_07,2024-05-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=574 bulkscore=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
- mlxscore=0 spamscore=0 adultscore=0 phishscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405170001 definitions=main-2405300078
 
-This patch series adds the listed features that have been missing
-in upstream fastRPC driver.
-- Add missing bug fixes.
-- Add static PD restart support for audio and sensors PD using
-  PDR framework.
-- Redesign and improve remote heap management.
-- Add fixes for unsigned PD. Unsigned PD can be enabled
-  using userspace API:
-  https://git.codelinaro.org/linaro/qcomlt/fastrpc/-/blob/master/src/fastrpc_apps_user.c?ref_type=heads#L1173
-- Add check for untrusted applications and allow trusted processed to
-  offload to system unsigned PD.
-  https://git.codelinaro.org/srinivas.kandagatla/fastrpc-qcom/-/commit/dfd073681d6a02efa080c5066546ff80c609668a
+Few dev_err calls are missing newlines. This can result in unrelated
+lines getting appended which might make logs difficult to understand.
+Add trailing newlines to avoid this.
 
-Changes in v2:
-- Added separate patch to add newlines in dev_err.
-- Added a bug fix in fastrpc capability function.
-- Added a new patch to save and restore interrupted context.
-- Fixed config dependency for PDR support.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+---
+ drivers/misc/fastrpc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Changes in v3:
-- Dropped interrupted context patch.
-- Splitted few of the bug fix patches.
-- Added Fixes tag wherever applicable.
-- Updated proper commit message for few of the patches.
-
-Ekansh Gupta (9):
-  misc: fastrpc: Add missing dev_err newlines
-  misc: fastrpc: Fix DSP capabilities request
-  misc: fastrpc: Fix memory corruption in DSP capabilities
-  misc: fastrpc: Add static PD restart support
-  misc: fastrpc: Redesign remote heap management
-  misc: fastrpc: Fix unsigned PD support
-  misc: fastrpc: Restrict untrusted app to attach to privileged PD
-  misc: fastrpc: Restrict untrusted app to spawn signed PD
-  misc: fastrpc: Add system unsigned PD support
-
- drivers/misc/Kconfig        |   2 +
- drivers/misc/fastrpc.c      | 635 +++++++++++++++++++++++++++++-------
- include/uapi/misc/fastrpc.h |   2 +
- 3 files changed, 526 insertions(+), 113 deletions(-)
-
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 4c67e2c5a82e..4028cb96bcf2 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -325,7 +325,7 @@ static void fastrpc_free_map(struct kref *ref)
+ 			err = qcom_scm_assign_mem(map->phys, map->size,
+ 				&src_perms, &perm, 1);
+ 			if (err) {
+-				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
++				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
+ 						map->phys, map->size, err);
+ 				return;
+ 			}
+@@ -816,7 +816,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+ 		map->attr = attr;
+ 		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &src_perms, dst_perms, 2);
+ 		if (err) {
+-			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
++			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
+ 					map->phys, map->size, err);
+ 			goto map_err;
+ 		}
+@@ -1222,7 +1222,7 @@ static bool is_session_rejected(struct fastrpc_user *fl, bool unsigned_pd_reques
+ 		 * that does not support unsigned PD offload
+ 		 */
+ 		if (!fl->cctx->unsigned_support || !unsigned_pd_request) {
+-			dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD");
++			dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD\n");
+ 			return true;
+ 		}
+ 	}
+@@ -1285,7 +1285,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 							&src_perms,
+ 							fl->cctx->vmperms, fl->cctx->vmcount);
+ 			if (err) {
+-				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
++				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
+ 					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+ 				goto err_map;
+ 			}
+@@ -1337,7 +1337,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 						(u64)fl->cctx->remote_heap->size,
+ 						&src_perms, &dst_perms, 1);
+ 		if (err)
+-			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
++			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
+ 				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+ 	}
+ err_map:
 -- 
 2.43.0
 
