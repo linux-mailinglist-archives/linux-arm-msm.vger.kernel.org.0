@@ -1,159 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-21101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34ED88D4BD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:45:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15C728D4BE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:46:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 817681F22CE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 12:45:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE7081F22F53
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 12:46:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 899A61E521;
-	Thu, 30 May 2024 12:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 960C3132126;
+	Thu, 30 May 2024 12:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOApEJQs"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Uc/tiW0C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8181E492;
-	Thu, 30 May 2024 12:45:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96F61527B3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 12:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717073146; cv=none; b=BAZOPFgcrXq1oEHpb0lh9cDSl3WDZZietdqnPHj9IU3MDhImcsEmzZgdVoNY4LbmOvirA2gASjwB7oJCUFLQ1S825uMU5vGmc+wQumKHuIvN9uH7PMj/UIusU7p+X7IbZI7BFtbzN+1R3EnRSwmSeOtoBiLGNRuLtUh2Vg1b87M=
+	t=1717073154; cv=none; b=Nh1jr6U1LGJoHERMe74txoJ/QLpA4VEb9uFBeKlW9xTjxLgTGA3pOentFLZ1jADB+TFiLQOHH8n1p2ETmlG4Z94R0Kd4I+P//jpDyQhZve17QxplpXatydSzZbZVU/HXbdIstwhhPY/+LT4kWpdQamLq655jxVx5T33hvt2grx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717073146; c=relaxed/simple;
-	bh=xoXwZ15smUADprLqqulMhMKFFHjrjeZ9K2+p6YC1+Rg=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=bS0caGtfyTyMyAQvSdNFp0WSCAV/hNIIxeYN7/c6IhWBIhTtEf9+qttx7Xc8uurNRgFBQ+CiA2nnO6fsp5cZiyeifNEcPn8PGg48BZDSaPwBlF4WHdziXj5g5aNbVYZNgHcGx3/2z72ic15gtPhrg65EG4o9IMHaRKct83tbkcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOApEJQs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9828AC2BBFC;
-	Thu, 30 May 2024 12:45:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717073145;
-	bh=xoXwZ15smUADprLqqulMhMKFFHjrjeZ9K2+p6YC1+Rg=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=FOApEJQs2hHMKxXHGrdoiYlgsX6GLgB4214MgH+NPEpdd0GtjCjSlalQkK+0mGdMj
-	 RNVMfU3fs3+gI2QAn2cAD8+JrVAEjDBqm2L03X9dJcwUX6Kb1CO4rG3fPduOP7w/SR
-	 iidY/r1I1FYZv63t2JCd5MdpfU4XYgodNAsSsSHs3XgwhJmsQyWKlGDEIm9+r1WPwO
-	 uIpC878tWZM4076plTEeaRUdSEafv1GDJlvX1M24f8H5+SHkSpnVAuCkzW4DaEvslk
-	 Cmo7wPzpJbAR/gugFqGc2WQevrZxwZ2I1yQUQ22gaEGH0EMtsNZpID+pjj9XSd+wJH
-	 UE3dlObiaKmWA==
-Date: Thu, 30 May 2024 07:45:44 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1717073154; c=relaxed/simple;
+	bh=HRUEQmfSaGcy8riYD1ZU+cNZq81h9VbUC7zbRbBsabM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qFmJJSO6k7zEIRIyKC7f3LCzHZ4Wq7r0t1ueBBq1VfE7dw7U/0S76W4buvYQXxGwIB/Y446mUyFLZcotprYEFNUCjMAnzcm/euvzE2SPvmhGxo19e2oJJxFFSa7aHL1U6nhocBnBXT8kqINQS6Zuc5WfXbKrPOT28TpNM/kpIAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Uc/tiW0C; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1717073153; x=1748609153;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=HRUEQmfSaGcy8riYD1ZU+cNZq81h9VbUC7zbRbBsabM=;
+  b=Uc/tiW0Cuk/xHVKP0SGwcmT3Hv89mGRZ5mb0l4j+0DiymZbbLyaKpHE6
+   xOuTC11Ot0sy1EqA9j42H9P4yh2HONvugpWq5ah6jiY/isUnrbazq630P
+   9VSZED5rn52HTdYoAykMpN4g5vrI+hxhEv4RoZeATcLcOHqErrkcr2zBX
+   3P+23ZC3bJPNr6/yfo/0i4Ma6wVXYfTZdK3xO1ekC4+22HF3HP7ToOrDh
+   Z0JuCJwjN2sdk97vZVJjoBkKYZN1XEFjX3b4oGN4xAGsJIOER7wRQKT+z
+   iDH2C3tsV7yM7C/rmByN0vWhFSr4FO128OOFHVZ2lRA2XTdNcVCCyXGJY
+   w==;
+X-CSE-ConnectionGUID: 4WOQ3wj9QcuI8LDqvFewBA==
+X-CSE-MsgGUID: lGEl9q+2TVC6m3W9ayq7+g==
+X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="11801695"
+X-IronPort-AV: E=Sophos;i="6.08,201,1712646000"; 
+   d="scan'208";a="11801695"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2024 05:45:52 -0700
+X-CSE-ConnectionGUID: QTNHrGm6TpmiiLujmgY1eg==
+X-CSE-MsgGUID: ytNZWW0TSamchW+7HdxQZQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,201,1712646000"; 
+   d="scan'208";a="36287493"
+Received: from unknown (HELO localhost) ([10.237.66.160])
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2024 05:45:48 -0700
+From: Jani Nikula <jani.nikula@intel.com>
+To: Doug Anderson <dianders@chromium.org>, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 08/11] drm/msm/dp: switch to struct drm_edid
+In-Reply-To: <CAD=FV=XgpD_JqxpVezZ=RzudwxLJb+gN3Br8U03ONLGv9n_JmQ@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <cover.1715691257.git.jani.nikula@intel.com>
+ <93d6c446ed4831dadfb4a77635a67cf5f27e19ff.1715691257.git.jani.nikula@intel.com>
+ <i7labithttzkv62nybrtpucoklycz76ykgj2zjf3qnwycjjsyt@wck7s5uxg2bt>
+ <CAD=FV=XgpD_JqxpVezZ=RzudwxLJb+gN3Br8U03ONLGv9n_JmQ@mail.gmail.com>
+Date: Thu, 30 May 2024 15:45:45 +0300
+Message-ID: <871q5jii2u.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Caleb Connolly <caleb.connolly@linaro.org>
-Cc: devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Luca Weiss <luca.weiss@fairphone.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-kernel@vger.kernel.org, Caleb Connolly <caleb@postmarketos.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Alexander Martinz <amartinz@shiftphones.com>, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20240530-otter-bringup-v3-0-79e7a28c1b08@linaro.org>
-References: <20240530-otter-bringup-v3-0-79e7a28c1b08@linaro.org>
-Message-Id: <171707307103.1811716.12806393621772090873.robh@kernel.org>
-Subject: Re: [PATCH v3 0/2] qcom: initial support for the SHIFTphone 8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, 20 May 2024, Doug Anderson <dianders@chromium.org> wrote:
+> Hi,
+>
+> On Sun, May 19, 2024 at 2:01=E2=80=AFAM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On Tue, May 14, 2024 at 03:55:14PM +0300, Jani Nikula wrote:
+>> > Prefer the struct drm_edid based functions for reading the EDID and
+>> > updating the connector.
+>> >
+>> > Simplify the flow by updating the EDID property when the EDID is read
+>> > instead of at .get_modes.
+>> >
+>> > Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+>> >
+>> > ---
+>>
+>> The patch looks good to me, I'd like to hear an opinion from Doug (added
+>> to CC).
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>
+>> What is the merge strategy for the series? Do you plan to pick up all
+>> the patches to drm-misc or should we pick up individual patches into
+>> driver trees?
+>
+> I'm not sure I have too much to add here aside from what you guys have
+> already talked about. I'm OK with:
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-On Thu, 30 May 2024 01:39:15 +0200, Caleb Connolly wrote:
-> The SHIFTphone 8 is an upcoming QCM6490 smartphone, it has the following
-> features:
-> 
-> * 12GB of RAM, 512GB UFS storage
-> * 1080p display.
-> * Hardware kill switches for cameras and microphones
-> * UART access via type-c SBU pins (enabled by an internal switch)
-> 
-> Initial support includes:
-> 
-> * Framebuffer display
-> * UFS and sdcard storage
-> * Battery monitoring and USB role switching via pmic glink
-> * Bluetooth
-> * Thermals
-> 
-> Wifi works but requires some commits to be reverted to prevent a
-> firmware crash.
-> 
-> The serial port on the device can be accessed via the usb-cereal
-> adapter, it must first be enabled by flipping the switch under the
-> display. Additional info can be found on the postmarketOS wiki page.
-> 
-> https://wiki.postmarketos.org/wiki/SHIFT_SHIFTphone_8_(shift-otter)
-> 
-> ---
-> Changes in v3:
-> - Enable wifi
-> - Fix protected-clocks indentation in gcc
-> - Link to v2: https://lore.kernel.org/r/20240520-otter-bringup-v2-0-d717d1dab6b8@linaro.org
-> 
-> Changes in v2:
-> - Fix authorship
-> - Address Luca's feedback
-> - Link to v1: https://lore.kernel.org/r/20240508-otter-bringup-v1-0-c807d3d931f6@linaro.org
-> 
-> ---
-> Caleb Connolly (2):
->       dt-bindings: arm: qcom: Add QCM6490 SHIFTphone 8
->       arm64: dts: qcom: add QCM6490 SHIFTphone 8
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml  |   1 +
->  arch/arm64/boot/dts/qcom/Makefile                |   1 +
->  arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts | 926 +++++++++++++++++++++++
->  3 files changed, 928 insertions(+)
-> ---
-> change-id: 20240507-otter-bringup-388cf3aa7ca5
-> base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
-> 
-> // Caleb (they/them)
-> 
-> 
-> 
+I assume you'll want to pick this up for msm instead of me merging to
+drm-misc.
 
+BR,
+Jani.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/qcm6490-shift-otter.dtb' for 20240530-otter-bringup-v3-0-79e7a28c1b08@linaro.org:
-
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: pcie@1c08000: interrupts: [[0, 307, 4], [0, 308, 4], [0, 309, 4], [0, 312, 4], [0, 313, 4], [0, 314, 4], [0, 374, 4], [0, 375, 4]] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: pcie@1c08000: interrupt-names:0: 'msi' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: pcie@1c08000: interrupt-names: ['msi0', 'msi1', 'msi2', 'msi3', 'msi4', 'msi5', 'msi6', 'msi7'] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: phy@88e3000: 'orientation-switch' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: usb@8cf8800: interrupt-names: ['pwr_event', 'hs_phy_irq', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dtb: video-codec@aa00000: iommus: [[65, 8576, 32]] is too short
-	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#
-
-
-
-
-
+--=20
+Jani Nikula, Intel
 
