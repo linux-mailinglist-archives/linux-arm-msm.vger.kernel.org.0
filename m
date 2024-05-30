@@ -1,63 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-21147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46CFC8D5063
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 19:02:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B94C8D5067
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 19:02:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6EC2B1C2232B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 17:02:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFD651F226CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 17:02:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DEFA335A7;
-	Thu, 30 May 2024 17:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F05A433DD;
+	Thu, 30 May 2024 17:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ELRmdWVc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I/U5QU7Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC5E4437F;
-	Thu, 30 May 2024 17:02:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B79C3FB94
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 17:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717088531; cv=none; b=A+79mXaA5IE/aCmKW2cGlCaBjia1YLZwAs2zmH+WhjHXuccUL91kN04BUWsg36ig+vyA4J5qxNWQB899i0DXXENdgHn51T9ilh9qOHz/lG8CuAtXErJ1MRWzhF7aNDVKeZyb5rsHPGjncn5ReBOxP6AODP077+4UYGLLd8VWTaI=
+	t=1717088565; cv=none; b=BDVvgAKKRTt1HHvNMprvGz//iY04Do4KqBnxCqdLSGAopi8AgqGMaZ+Zv9JXaSkP/2kthX4tggmzGijIcIDK4PWO2U9N4E36/9NEfnEhFp21PEd8NxcQZciCxlX/MJEOJDfwLywSEBmXh2Ed1PHVmzIQZVjPqQD1j0rSXkgaDqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717088531; c=relaxed/simple;
-	bh=Y+dNeNwHLWJuDYTR22EuD82dxXfuR5X20/eIghxEJvI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=OixitlUfCntUrVk2dBn9Eh4+wdFcNqS73s3fyLcVNXQYYGGjnqTtPdEQBKwZG9g/+v7osadOcXqe+t6qCqQbsQfc2Hu4ALn2ppdbAMurCGUOOrNQ3lUOILA1ogocCeVtP0Wln6u/pjYw0t38USmCiJWg5qg7wlxYxg5YECIWKF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ELRmdWVc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE11C2BBFC;
-	Thu, 30 May 2024 17:02:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717088531;
-	bh=Y+dNeNwHLWJuDYTR22EuD82dxXfuR5X20/eIghxEJvI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=ELRmdWVcVht3hQRkSSBZBhP0GKj+v0E66aLlM0y8OWMOD3qkHfD1/y3cvV6Uq2J6d
-	 A4YwA5h+cSfd5x4pPrDcLyXV5DG4E0VJkNYEaKxaF3cSqkfzYYEi+EpOGUACXp02fW
-	 SUTt+Yp8icr4XQlw9mHVWwnMdODAQZJCJOw2nz5R5ljxNR46Jf7qOYcsqDzlA9+7K3
-	 8qcbGdvXaL7Hcd3cMR+Ph/jR0ASo7Boc5/FvTi+xkSaAwhqkqjpsUOQg6U6m+u6fof
-	 1KrSOt7k/jIMncy+/kbGP72BFGdMqOTqsTWSvd8PmEP7EfGUGLwiiU36Tin/Z5OBWO
-	 MN5BRP59C/gFQ==
-Date: Thu, 30 May 2024 12:02:08 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-Cc: jingoohan1@gmail.com, gustavo.pimentel@synopsys.com,
-	manivannan.sadhasivam@linaro.org, andersson@kernel.org,
-	agross@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org,
-	quic_msarkar@quicinc.com, quic_kraravin@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] PCI: qcom: Add equalization settings for 16 GT/s
-Message-ID: <20240530170208.GA550711@bhelgaas>
+	s=arc-20240116; t=1717088565; c=relaxed/simple;
+	bh=NdeAZFb/TEcSPW596tqV59n63pD22xeumxgqmJWgrkA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RdxAnpXMQIuuU1AW9k4CwLLIiBaMpJN+0YLpG1PShToQzj1sWgfa3NSg+9F1D5X7GhVZ0HquN+qKAYblRjJ4c7aF6gPl2VQr8lSYiHWigUmXsBhwV2LBo0NGOTmMIdZPNhHb0fPQHa59ANUJbLj68eEvOL8O0BGgYnaVULVci6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I/U5QU7Y; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52a6ef5e731so1756555e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 10:02:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717088561; x=1717693361; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xXYZN/m1C6PG6AKOiFq8myIP4DlpPrlE9EpwRqlB3rc=;
+        b=I/U5QU7YBRAFFV1+xlZ4rHsPBF1WB5JG7G7PQ95yyFbphN6K/3HJ+cZE//1cRogBL5
+         fGvhWxzSuXwoxA4eVBAau0Bh0JQG2554EmZBkroYkDFFCA7iTUcmnRRyUlRiewww/zVi
+         kjrgTeTxAsed5DJjJQb8xpIePlE7eJ/Wn07CVP9Tvb0L2AoaRFnb6PxCD3jJapOjZlcm
+         1dhqEHPAbH3/jntx0BfNUHIZipuWs4lHZKMy020r1eBacLvDLDW0+el/9A5k4HbQjBGt
+         Oir76rXgC3DoqkFs0Ygy90lP+f3o2fDeZLynK12RNXBmIKHOPSrwEC4nonq1YAgWFv4h
+         SzZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717088561; x=1717693361;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xXYZN/m1C6PG6AKOiFq8myIP4DlpPrlE9EpwRqlB3rc=;
+        b=LukYiHAaYA4r0weiblfJmfYg9ksE9UixWTmb3OeLBdHoUcYhEsPIvk7MKPvO+CFRdi
+         Wr+d1mD3DzVEjDWgaVuiEw5BjUsGeNqMsFCfkbHascTqQYPn5NfZdgGcmByNO5k/5/j/
+         cuteo3W4sgsfbKkWTSDKkQIPeOKLHuB8CMYsGkYMO0bymOAx2JRA+Dbs5MHpw18vTM+8
+         3PcnIKIDmDWtxN1lXI46tQuHb8c3BJCjQSCfSmXCPddvWTVRMupZ2Riv/a5T2lsBstlW
+         FMBAJ//j1pd/u+Tc4U5mUPhBuRQQtyUqRbBC+TRjfEhexT61Y9RIlia8Z2+RSls/FqPY
+         vIeg==
+X-Forwarded-Encrypted: i=1; AJvYcCXelc2D7sn9r6/4eUHJox8QTUEMmWpIK02OQqWTmBDdoEY08njYmx16tKfaJ5Ud0Xvc6IUIye35JjLrawxYMUWnimh0uLpeTwjlZUo62A==
+X-Gm-Message-State: AOJu0Ywvf/GpaUxrZoUlx8Tw7I/TCq+nh/vka/ggm/Q2p+cWEJ0Z4A2q
+	8eDu2VnvpceOBm0I0X1iFh3dw8KnSFoKImgaw5bIGp2Jv8pcB2/N1VkwaDXNuhc=
+X-Google-Smtp-Source: AGHT+IGfsP4JlJIU3M/U8H0MbKgZB3+fSFpnjQllEv3/kyjSgbEmTlO5kxEjkv7SgLcb/drvXLwjlQ==
+X-Received: by 2002:ac2:5594:0:b0:52a:1987:baf7 with SMTP id 2adb3069b0e04-52b7d428977mr1743551e87.26.1717088560648;
+        Thu, 30 May 2024 10:02:40 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d8e413sm14912e87.285.2024.05.30.10.02.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 May 2024 10:02:40 -0700 (PDT)
+Date: Thu, 30 May 2024 20:02:38 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sm7225-fairphone-fp4: Enable
+ USB role switching
+Message-ID: <p2k7fyqew7u72yjv64cvbzacpgh2sf2lexb3heuvls65wu7whf@34bcxd7jbqna>
+References: <20240530-fp4-tcpm-v3-0-612d4bbd5e09@fairphone.com>
+ <20240530-fp4-tcpm-v3-3-612d4bbd5e09@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,166 +87,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240501163610.8900-3-quic_schintav@quicinc.com>
+In-Reply-To: <20240530-fp4-tcpm-v3-3-612d4bbd5e09@fairphone.com>
 
-On Wed, May 01, 2024 at 09:35:33AM -0700, Shashank Babu Chinta Venkata wrote:
-> During high data transmission rates such as 16 GT/s , there is an
-
-s|GT/s ,|GT/s,|
-
-> increased risk of signal loss due to poor channel quality and
-> interference. This can impact receiver's ability to capture signals
-> accurately. Hence, signal compensation is achieved through appropriate
-> lane equilization settings at both transmitter and receiver. This will
-
-s/equilization/equalization/
-
-How do you get these settings at both transmitter and receiver?  Or
-maybe you mean this patch sets the equalization settings in the qcom
-device, whether the device is a Root Port or an Endpoint?
-
-I don't see this patch updating "dev" and "pci_upstream_bridge(dev)",
-so if you have a qcom Root Port leading to some non-qcom Endpoint,
-AFAICS only the Root Port would be updated.  If that's all that's
-necessary, that's perfectly fine.  It's just that the commit log
-suggests that we update both ends of a link, and the patch only
-appears to update one end (unless you have a qcom Root Port leading to
-a qcom Endpoint, and the Endpoint is operated by an embedded Linux
-running the qcom-ep driver, of course).
-
-> result in increasing PCIe signal strength.
+On Thu, May 30, 2024 at 05:05:49PM +0200, Luca Weiss wrote:
+> Configure the Type-C and VBUS regulator on PM7250B and wire it up to the
+> USB PHY, so that USB role and orientation switching works.
 > 
-> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+> For now USB Power Delivery properties are skipped / disabled, so that
+> the (presumably) bootloader-configured charger doesn't get messed with
+
+From my understanding the no-pd, typec-power-opmode disable
+PD negotiation over the USB-C. If a device gets connected to the power
+supply, it will still negotiate something like 5V / 1.5A.
+
+> and we can charge the phone with at least some amount of power.
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  drivers/pci/controller/dwc/pcie-designware.h  | 12 ++++++
->  drivers/pci/controller/dwc/pcie-qcom-common.c | 37 +++++++++++++++++++
->  drivers/pci/controller/dwc/pcie-qcom-common.h |  1 +
->  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  3 ++
->  drivers/pci/controller/dwc/pcie-qcom.c        |  3 ++
->  5 files changed, 56 insertions(+)
+>  .../dts/qcom/sm6350-sony-xperia-lena-pdx213.dts    |  1 +
+>  arch/arm64/boot/dts/qcom/sm6350.dtsi               | 50 +++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 58 +++++++++++++++++++++-
+>  3 files changed, 108 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 26dae4837462..ed0045043847 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -122,6 +122,18 @@
->  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
->  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
->  
-> +#define GEN3_EQ_CONTROL_OFF			0x8a8
 
-s/0x8a8/0x8A8/ to follow existing style of file.
+Usually the SoC changes come in a separate patch, but I won't insist on
+that.
 
-> +#define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
-> +#define GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE	BIT(4)
-> +#define GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC	GENMASK(23, 8)
-> +#define GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL	BIT(24)
-> +
-> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-s/0x8ac/0x8AC/ to follow existing style of file.
-
-> +#define GEN3_EQ_FMDC_T_MIN_PHASE23		GENMASK(4, 0)
-> +#define GEN3_EQ_FMDC_N_EVALS			GENMASK(9, 5)
-> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA	GENMASK(13, 10)
-> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA	GENMASK(17, 14)
-> +
->  #define PCIE_PORT_MULTI_LANE_CTRL	0x8C0
->  #define PORT_MLTI_UPCFG_SUPPORT		BIT(7)
->  
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
-> index 228d9eec0222..16c277b2e9d4 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
-> @@ -16,6 +16,43 @@
->  #define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
->  		Mbps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]))
->  
-> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci)
-> +{
-> +	u32 reg;
-> +
-> +	/*
-> +	 * GEN3_RELATED_OFF register is repurposed to apply equilaztion
-
-s/equilaztion/equalization/
-
-> +	 * settings at various data transmission rates through registers
-> +	 * namely GEN3_EQ_*. RATE_SHADOW_SEL bit field of GEN3_RELATED_OFF
-> +	 * determines data rate for which this equilization settings are
-
-s/this/these/
-s/equilization/equalization/
-
-> +	 * applied.
-> +	 */
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
-> +	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
-> +	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
-> +	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK, 0x1);
-> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
-> +
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
-> +	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
-> +		GEN3_EQ_FMDC_N_EVALS |
-> +		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
-> +		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
-> +	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
-> +	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
-> +
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
-> +	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
-> +		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
-> +		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
-> +		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
-> +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_eq_settings);
-> +
->  struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path)
->  {
->  	struct icc_path *icc_mem_p;
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
-> index da1760c7e164..5c01f6c18b3b 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-common.h
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
-> @@ -10,3 +10,4 @@
->  struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path);
->  int qcom_pcie_common_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem);
->  void qcom_pcie_common_icc_update(struct dw_pcie *pci, struct icc_path *icc_mem);
-> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci);
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index f0c61d847643..7940222d35f6 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -438,6 +438,9 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->  		goto err_disable_resources;
->  	}
->  
-> +	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT)
-> +		qcom_pcie_common_set_16gt_eq_settings(pci);
-> +
->  	/*
->  	 * The physical address of the MMIO region which is exposed as the BAR
->  	 * should be written to MHI BASE registers.
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 0095c42aeee0..525942f2cf98 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -263,6 +263,9 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
->  {
->  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
->  
-> +	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT)
-> +		qcom_pcie_common_set_16gt_eq_settings(pci);
-> +
->  	/* Enable Link Training state machine */
->  	if (pcie->cfg->ops->ltssm_enable)
->  		pcie->cfg->ops->ltssm_enable(pcie);
-> -- 
-> 2.43.2
-> 
+-- 
+With best wishes
+Dmitry
 
