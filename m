@@ -1,156 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-21065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC9DD8D4770
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 10:47:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 068F38D4779
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 10:49:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C831BB219E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 08:47:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7DEA3B20D8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 08:49:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47C5574064;
-	Thu, 30 May 2024 08:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74CC86F31A;
+	Thu, 30 May 2024 08:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mHxAtcWw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lBSF5qn6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D8B6F313;
-	Thu, 30 May 2024 08:46:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0616F318;
+	Thu, 30 May 2024 08:49:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717058812; cv=none; b=abtpfXGM1vWa9UrizL0hEH8Cy69SgKhwuwaNV+aq4DOKCe7R1SywS6Q+lR7DWZhW4cSn5c+MYa1JWi+ueE+Uuj9kek7i7yI4jenlaUQCBUjQv0Sl9RTjAbALZBuQAaEPH6BIXuJo6OH3uPSnmzappziDdIPWfko3VivKgn6ZsnQ=
+	t=1717058969; cv=none; b=NEYvJINg4ZQcRW3AJDxbqMiXtW2F0T9o176eljkUmRwh5qWD9J1AAJayfj7tD3uHX3eaS4jGshBlOyqx5Skq/6GbvzcwL4DgEPMzHAx9UW8Ac6/Ou7zJPZfb3Qy1TzQPMApCPxY67gf8kwxEKytRTFAdQcjmuQpFl8ANW3Xnh3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717058812; c=relaxed/simple;
-	bh=dbK4t3fcfO5MCPpp7yG+qUDyTmsM+unfwZsYS1LnJQs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ebh/jTk+JG9pSaD+gEONV/1kxjynBVkfG8/9QPd+RiAWTrcrm5exhYNQMB9NknQEY0keZ5puX+vUS6/qEFwq0L3AJ71JpGNN430ARJmcMYNTol+5HGZdoW1T1e3pDHBQi1efz4M/rSbsaV3irbeftOXLfsI9lFjqS0p9Lk5KQLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mHxAtcWw; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5785eab8d5dso623232a12.3;
-        Thu, 30 May 2024 01:46:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717058809; x=1717663609; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4bhN+9CMSJhPBVcatrdGXA5dYbFmER5HACIQLCV17l8=;
-        b=mHxAtcWwObhM9gv3Q/7MiK+o2wyyJiTaA0qpyyOoBGbeph0T3EaFZA7rARbMjNmfO1
-         03yxVyJhCMJUzKyC8PYPtFiF3snxPNGmL4fLY8fYFnBUWn1CIzkVYMPp3wxG6iBix8JO
-         b43kjuowOtGV18HI41r6htSvwZn2l/gH4a5aIxlJR9cUFnxywMIdzj8e84FYKQgbqVgR
-         ix6JLlG+GzMmwLYrMrbBJmsNVZ4LbWq6C15SBPPA7xG6z9ubXYVQCJAXOkjReFfbnx5y
-         CyfhozYjbX71U/tsaZaXWTPuiQqYXEOm0rDmwcTiGmj36uh+27n+2LV6/8hltmjOOZGZ
-         q+cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717058809; x=1717663609;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4bhN+9CMSJhPBVcatrdGXA5dYbFmER5HACIQLCV17l8=;
-        b=AJL0GzP3PT6nmuRNzwaHvXq0/D1OtzSHyr4ET2p7B9uQJrgr55dHSflUq2JP8p4ar0
-         DG2RUwS5HIn3e2dfYDzV3pIkfVyjQ/0xC/Fzt4sUGV91Udk1YaNqMMoZ9bttea7Cjr1u
-         Uq+wxTmfj8xTqQuB4Sqpt+WmfBJDM3ZADwLc470YNmyy4yKLwFlUlqk6jyBW+pIM+iZN
-         Hw7Dn8DDTABzCy+ucNBcEH82fErlbqoTBd87RQNTgQz1A+EdDdFzSGQf+Teiy0M92rP0
-         0bGbjy6+46umunqXrG1L/njDqiQn8H1CFV2IQUiMqEjwvkAYCy7z5BbL3BOEEc3lSCSr
-         q+zg==
-X-Forwarded-Encrypted: i=1; AJvYcCVh6YDp8YKcu2CPmhU6nIsYKaWILTT4BkNFc/DuOFel5LJfa/lZir0nJScixxa5I3Ag9vVNWhsEjMBxW3me6EZ/Ss5JmZM/yPBV9kjxD4G+fsra0HLfyuz9Nz8N78q3pCTT7Nupyo4yfDeEMBcFRauVaGdQ4vQZKQknMZ5jnF2MiND+C2DZ1MRxEyYNvKjAfRjRVaqtEOL4c3Rfjyr69TI5T1T4
-X-Gm-Message-State: AOJu0YwfboMSX5gzVegiJSqpbSSw6wPhF2bIX7x6SkPwqyMyXE4oiGhe
-	dWJlmi01T6xv1O64iqg1qG9ddv7m4wjYvj/9wK6JXJ//xkqJOxl6QNLLqupt61iUxUKMmEhU5nA
-	LteExpvDkQzOk3cRlJHYObEiRzEM=
-X-Google-Smtp-Source: AGHT+IGhZ222SnMQhbyry0HvJsj0ueGZeaBYgylnVGd8CghV9Z2CLJAbhqXu1kJEO+fB5jS3vjmgtGOM8H/CKvZBbsU=
-X-Received: by 2002:a17:906:d92:b0:a59:a64c:9a26 with SMTP id
- a640c23a62f3a-a65e8e507d8mr83036566b.23.1717058808692; Thu, 30 May 2024
- 01:46:48 -0700 (PDT)
+	s=arc-20240116; t=1717058969; c=relaxed/simple;
+	bh=RMlDUxJiGobRFguc3DRtHWTv7WiNMiDof+uoZrSLUA8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fi3K37CEiwEN//WMPCmp1dkrGACIzw/0anDGrIKGvqdFkajx0IUvcKFObZF5XCZaTlmoQmD0pfCYMFY01jIlrgENa9kd4/wT+7UcK+7zRbj/3fjOmgxszkRKrXKWOUo0VgwCOMV/pjyOa8zZ5ATm3cUvYuIf415q6ETSVyahsz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lBSF5qn6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF8BC3277B;
+	Thu, 30 May 2024 08:49:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717058968;
+	bh=RMlDUxJiGobRFguc3DRtHWTv7WiNMiDof+uoZrSLUA8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lBSF5qn63ZTxet3h/KgfI84iXyPbcZ7m5UVIGT4Zh94nALn7/QyNuPD566qQJSpK5
+	 +j7sNiyUcFxomJhas0mIMXGD4wU7YBq4nefDAv6hrMcyG6D/I5uulEmMIElQnPrrlw
+	 CPgQOb52Zg3a/Kq0j9RjknhjnLKzCEyUgyPBeEFSZW64HY2+nYJJpCJ2RM1Ro9dY14
+	 3+hqt3XtD4GEqQFHT0v+c4IMSKpJeonXM7jWz6mC3UyEyDovCwxvWajQsz4UlqxkIO
+	 qJR8XxIAf/QhhsBC66Ej7PaXU59n7GQJAfT1ET3FK1KcAb0w4CfmIr6kWZ8eTTR926
+	 rATiKQfQzbyRA==
+Date: Thu, 30 May 2024 10:49:26 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/7] drm/connector: hdmi: accept NULL for Audio
+ Infoframe
+Message-ID: <20240530-daffy-satisfied-sheep-5b9e16@houat>
+References: <20240530-bridge-hdmi-connector-v3-0-a1d184d68fe3@linaro.org>
+ <20240530-bridge-hdmi-connector-v3-1-a1d184d68fe3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240529162958.18081-1-johan+linaro@kernel.org>
- <20240529162958.18081-14-johan+linaro@kernel.org> <CAHp75VcC5t1FynFeHGd+57=AeXKE8u0uduzOfozsG3MEzCPpDQ@mail.gmail.com>
- <Zlg1bGOs3V3TkHck@hovoldconsulting.com>
-In-Reply-To: <Zlg1bGOs3V3TkHck@hovoldconsulting.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Thu, 30 May 2024 11:46:12 +0300
-Message-ID: <CAHp75VeiVSxJwjxXyNueinudOfj-WHZEUg32VBTW4PfCfB9Q+g@mail.gmail.com>
-Subject: Re: [PATCH v2 13/14] regulator: add pm8008 pmic regulator driver
-To: Johan Hovold <johan@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>, 
-	Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Stephen Boyd <swboyd@chromium.org>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="takwrixyv5pp4e4s"
+Content-Disposition: inline
+In-Reply-To: <20240530-bridge-hdmi-connector-v3-1-a1d184d68fe3@linaro.org>
+
+
+--takwrixyv5pp4e4s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 30, 2024 at 11:14=E2=80=AFAM Johan Hovold <johan@kernel.org> wr=
-ote:
-> On Wed, May 29, 2024 at 11:02:57PM +0300, Andy Shevchenko wrote:
-> > On Wed, May 29, 2024 at 7:30=E2=80=AFPM Johan Hovold <johan+linaro@kern=
-el.org> wrote:
+Hi,
 
-...
+On Thu, May 30, 2024 at 02:12:24AM GMT, Dmitry Baryshkov wrote:
+> Allow passing NULL as audio infoframe as a way to disable Audio
+> Infoframe generation.
+>=20
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/display/drm_hdmi_state_helper.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gp=
+u/drm/display/drm_hdmi_state_helper.c
+> index ce96837eea65..5356723d21f5 100644
+> --- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+> +++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+> @@ -681,7 +681,7 @@ EXPORT_SYMBOL(drm_atomic_helper_connector_hdmi_update=
+_infoframes);
+>  /**
+>   * drm_atomic_helper_connector_hdmi_update_audio_infoframe - Update the =
+Audio Infoframe
+>   * @connector: A pointer to the HDMI connector
+> - * @frame: A pointer to the audio infoframe to write
+> + * @frame: A pointer to the audio infoframe to write or NULL to disable =
+sending the frame
+>   *
+>   * This function is meant for HDMI connector drivers to update their
+>   * audio infoframe. It will typically be used in one of the ALSA hooks
+> @@ -704,10 +704,16 @@ drm_atomic_helper_connector_hdmi_update_audio_infof=
+rame(struct drm_connector *co
+> =20
+>  	mutex_lock(&connector->hdmi.infoframes.lock);
+> =20
+> -	memcpy(&infoframe->data, frame, sizeof(infoframe->data));
+> -	infoframe->set =3D true;
+> +	if (frame) {
+> +		memcpy(&infoframe->data, frame, sizeof(infoframe->data));
+> +		infoframe->set =3D true;
+> +
+> +		ret =3D write_infoframe(connector, infoframe);
+> +	} else {
+> +		infoframe->set =3D false;
+> =20
+> -	ret =3D write_infoframe(connector, infoframe);
+> +		ret =3D clear_infoframe(connector, infoframe);
+> +	}
 
-> > > +#include <linux/array_size.h>
-> > > +#include <linux/bits.h>
-> > > +#include <linux/device.h>
-> > > +#include <linux/math.h>
-> > > +#include <linux/module.h>
-> >
-> > > +#include <linux/of.h>
-> > > +#include <linux/platform_device.h>
-> > > +#include <linux/regmap.h>
-> > > +#include <linux/regulator/driver.h>
-> >
-> > + types.h
->
-> This one is already pulled in indirectly and I'm not going to respin for
-> this.
->
-> > + asm/byteorder.h
->
-> Already explicitly included in the code you left out.
+I'm not entirely sure your commit matches your commit log? It looks like
+you follow the same pattern than the other infoframes and call
+write_infoframe if there's one, or clear_infoframe if there isn't.
 
-Is there any guarantee it will be like this? I don't think so. That's
-why there is an IWYU principle to give more flexibility of reshuffling
-the (core) headers. And I believe you know that we have way too far
-dependency hell in the headers in the kernel. Have you seen what Ingo
-tried to do and what the potential achievements are?
+So we're never passing NULL to disable? clear_infoframe is called.
 
-...
+Maxime
 
-> > > +               rdev =3D devm_regulator_register(dev, desc, &config);
-> > > +               if (IS_ERR(rdev)) {
-> > > +                       ret =3D PTR_ERR(rdev);
-> > > +                       dev_err(dev, "failed to register regulator %s=
-: %d\n",
-> > > +                                       desc->name, ret);
-> > > +                       return ret;
-> >
-> > It's possible to use
-> >
-> >   return dev_err_probe(...);
-> >
-> > even for non-probe functions.
+--takwrixyv5pp4e4s
+Content-Type: application/pgp-signature; name="signature.asc"
 
-(this should be "non-probe deferred functions")
+-----BEGIN PGP SIGNATURE-----
 
-> This is a probe function(), but as I've told you repeatedly I'm not
-> going to use dev_err_probe() here.
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZlg9kQAKCRAnX84Zoj2+
+dk3pAYCbS/9eXzTy0YlUFvQaOXrLJprI9gx8B2mCC+SSaUyqq6oITErczWwScJwQ
+fgXhMFIBgJOU255qv1o/4bocu6tu2hF/D9FGax6f1ae+MKrdPFUmJ0PhyEX/zJY/
+D+quLGMFQg==
+=gGq3
+-----END PGP SIGNATURE-----
 
-Yeah, I got it, some developers are leaving in the previous decades to
-make code very verbose for no benefit, no problem.
-
---=20
-With Best Regards,
-Andy Shevchenko
+--takwrixyv5pp4e4s--
 
