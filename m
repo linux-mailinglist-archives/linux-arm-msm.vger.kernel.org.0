@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-21068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0199B8D4780
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 10:51:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBFF38D478E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 10:56:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A1791C20A86
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 08:51:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 699C31F223F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 08:56:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF1656F2F4;
-	Thu, 30 May 2024 08:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A765D6F311;
+	Thu, 30 May 2024 08:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qJdjKfxu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MrDPeC2x"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEA81761BF;
-	Thu, 30 May 2024 08:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BB76F301;
+	Thu, 30 May 2024 08:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717059088; cv=none; b=pM5pOmuI0jY9qJcL0o8kCPy13fOTOHrByS+FoyL1ltgVKs56ppZafWodf9AMI7WfB/czVPz4VGVY3CvHMwIXF5To3mz9BGgmtN2rtVr4oOMBi1WwK/giYDa+exLe7aUWAxk1oZNoSWRonZxMDIuV7lZ+mNVRTQ/sOvN2oyKJaGY=
+	t=1717059388; cv=none; b=VcVybITCTwQgDal5FhlCFXx3rguDG3Pq3KIMziBMArBd94PyjXXbFzw2SKkT0wgMMwZUWLYWOKKAZH+e8Q/3nrJbeAvrszJZWFkgjxHoZOC/GaTWsoQ14EkVf0rYQvkasn4q/m22s839HFLd1VEROKIX5CfCg7FtXAenOnNBPfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717059088; c=relaxed/simple;
-	bh=12lD408jDSRLnkwKIW9yHUd+rx1knohzy66UIp2Jx8Q=;
+	s=arc-20240116; t=1717059388; c=relaxed/simple;
+	bh=fum/BPvWuDHoboZhfPtwEwo9cUCkLkyCgJcO+Gf/NjA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GD3MFwK1RkS6KN6wbFjg0yhW/BgjZg/ecoIZEaXYn0nZhIW3vFP4zDHwVoMF/Qfc+RaL6iCiWKD6DeB12QSNxu6b/50LLrdNN94TGmjus65tej17MdfhYguXiUGXKmdRVazBxX9fSDizLrmlRX9rMXfVTzvuCI1jpCh6bfPcqtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qJdjKfxu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F18C2BBFC;
-	Thu, 30 May 2024 08:51:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=pwi6T4Jb12nZ0Xrz8CyaasEanfmkrQLXYPMuPs6hrDzjpYHbPFcw62KSgu9cruCv4AJjogdbqmfiZqG8c5+KfzLTZFD0FLye65RRhWY/xZKzj/wF5WsdwKki151BUb/bskXIY8B5E6Tiiz4zzMo7wAPdfTKIj+TevZtPsinLkaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MrDPeC2x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5B2C32786;
+	Thu, 30 May 2024 08:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717059088;
-	bh=12lD408jDSRLnkwKIW9yHUd+rx1knohzy66UIp2Jx8Q=;
+	s=k20201202; t=1717059388;
+	bh=fum/BPvWuDHoboZhfPtwEwo9cUCkLkyCgJcO+Gf/NjA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qJdjKfxu8S49zrrbS8zrKI3n+RFs0HhC2z+kEIfl1woQ8vqzCl52oHIKHIh+aTEt3
-	 bmsvFlq7lvLJCdt9SYyECsLXZ+s3W67FLjY3L0n08O+vzNbZct9vQEnV6XYD/lVrtt
-	 LCWzq1hFjXCyhN5ilyruZzp2ZDqFTUYfbOqfBfLRmKD9WCfjBijHdaD9dTq6qWiVpm
-	 /Ykf4etC7QbQZS4lIBKwbV9mHATzNcN74L8bMZ/lmZ6e61T9dnv1a0sE2pOav0eaQu
-	 /fXV1j7ZcDzPbKIHZLRUlQiPxGcONkVRlp+5qdtH83OHuXDXCG65I8eow0keU4z6m/
-	 QWaOdL6k8ykbA==
+	b=MrDPeC2xAruMf0dsLELM9FoeYWMHVJCNCBGH8lb4co9Con9cFEHZl3zEt26HxOX8T
+	 wv5V3SUq47QQghlMVGMwD8CnghcgGDPdi4zmEr9c8WuXg+Lln3jXBRoQipd/aGL8ZP
+	 eJoNUKhq1dJZIPdSRcI3plFu8KT/4nF7XHpDS6lgqYAfmARlrH7Eic/3Bwb4nq5PPE
+	 y5vEzRHuvWd49tf3Qhq7Qv68aDHDVq8RIXizIQqPSxm0Q0oXvE2VZSIih4F0VgfgCB
+	 MU5L1amHuAmAPgNUsKyEi88dsPNotrHJwnerM5k+0fwZy6TOXzgQzXdI4xW6fMZ1eA
+	 gafO4//xKUfIg==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1sCbVP-000000004g3-2xc6;
-	Thu, 30 May 2024 10:51:28 +0200
-Date: Thu, 30 May 2024 10:51:27 +0200
+	id 1sCbaG-000000004kF-0kIr;
+	Thu, 30 May 2024 10:56:28 +0200
+Date: Thu, 30 May 2024 10:56:28 +0200
 From: Johan Hovold <johan@kernel.org>
 To: Andy Shevchenko <andy.shevchenko@gmail.com>
 Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
@@ -63,13 +63,13 @@ Cc: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
 	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v2 03/14] mfd: pm8008: deassert reset on probe
-Message-ID: <Zlg-D5yfrafbUei1@hovoldconsulting.com>
+Subject: Re: [PATCH v2 13/14] regulator: add pm8008 pmic regulator driver
+Message-ID: <Zlg_PP3PomxYGJ8A@hovoldconsulting.com>
 References: <20240529162958.18081-1-johan+linaro@kernel.org>
- <20240529162958.18081-4-johan+linaro@kernel.org>
- <CAHp75VdnTQJFfqOdxC99gWckxebdUr4hV0wp3ZTs1Pey7q_fsA@mail.gmail.com>
- <Zlgz3nDjfRO5LYnY@hovoldconsulting.com>
- <CAHp75VewzRUiKQvQ9D9HWPOo6Yfqtv+AV+AVTPQO=foRzMoegw@mail.gmail.com>
+ <20240529162958.18081-14-johan+linaro@kernel.org>
+ <CAHp75VcC5t1FynFeHGd+57=AeXKE8u0uduzOfozsG3MEzCPpDQ@mail.gmail.com>
+ <Zlg1bGOs3V3TkHck@hovoldconsulting.com>
+ <CAHp75VeiVSxJwjxXyNueinudOfj-WHZEUg32VBTW4PfCfB9Q+g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,42 +79,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHp75VewzRUiKQvQ9D9HWPOo6Yfqtv+AV+AVTPQO=foRzMoegw@mail.gmail.com>
+In-Reply-To: <CAHp75VeiVSxJwjxXyNueinudOfj-WHZEUg32VBTW4PfCfB9Q+g@mail.gmail.com>
 
-On Thu, May 30, 2024 at 11:34:55AM +0300, Andy Shevchenko wrote:
-> On Thu, May 30, 2024 at 11:08 AM Johan Hovold <johan@kernel.org> wrote:
-> > On Wed, May 29, 2024 at 10:45:40PM +0300, Andy Shevchenko wrote:
+On Thu, May 30, 2024 at 11:46:12AM +0300, Andy Shevchenko wrote:
+> On Thu, May 30, 2024 at 11:14 AM Johan Hovold <johan@kernel.org> wrote:
+> > On Wed, May 29, 2024 at 11:02:57PM +0300, Andy Shevchenko wrote:
 > > > On Wed, May 29, 2024 at 7:30 PM Johan Hovold <johan+linaro@kernel.org> wrote:
-> > > >
-> > > > Request and deassert any (optional) reset gpio during probe in case it
-> > > > has been left asserted by the boot firmware.
-> > > >
-> > > > Note the reset line is not asserted to avoid reverting to the default
-> > > > I2C address in case the firmware has configured an alternate address.
 > 
 > ...
 > 
-> > > > +       /*
-> > > > +        * The PMIC does not appear to require a post-reset delay, but wait
-> > > > +        * for a millisecond for now anyway.
-> > > > +        */
+> > > > +#include <linux/array_size.h>
+> > > > +#include <linux/bits.h>
+> > > > +#include <linux/device.h>
+> > > > +#include <linux/math.h>
+> > > > +#include <linux/module.h>
 > > >
-> > > > +       usleep_range(1000, 2000);
+> > > > +#include <linux/of.h>
+> > > > +#include <linux/platform_device.h>
+> > > > +#include <linux/regmap.h>
+> > > > +#include <linux/regulator/driver.h>
 > > >
-> > > fsleep() ?
+> > > + types.h
 > >
-> > No, I'd only use fsleep() when the argument is variable.
+> > This one is already pulled in indirectly and I'm not going to respin for
+> > this.
+> >
+> > > + asm/byteorder.h
+> >
+> > Already explicitly included in the code you left out.
 > 
-> Okay, this is basically the same issue as with use of dev_err_probe()
-> with known errors. fsleep() hides the choice between let's say
-> msleep() / usleep_range() / udelay() from the caller. This, in
-> particular, might allow shifting constraints if the timer core is
-> changed or becomes more granular. It's independent to the variable or
-> constant parameter(s). Whatever, I'm not going to insist.
+> Is there any guarantee it will be like this? I don't think so. That's
+> why there is an IWYU principle to give more flexibility of reshuffling
+> the (core) headers. And I believe you know that we have way too far
+> dependency hell in the headers in the kernel. Have you seen what Ingo
+> tried to do and what the potential achievements are?
 
-I prefer that developers are aware of what they are doing and understand
-the difference between, say, usleep_range() and udelay(), instead of
-hiding things away in obscure helper functions.
+The driver is using cpu_to_le16() from asm/byteorder.h so the __le16
+type definition will be pulled in.
+
+> 
+> ...
+> 
+> > > > +               rdev = devm_regulator_register(dev, desc, &config);
+> > > > +               if (IS_ERR(rdev)) {
+> > > > +                       ret = PTR_ERR(rdev);
+> > > > +                       dev_err(dev, "failed to register regulator %s: %d\n",
+> > > > +                                       desc->name, ret);
+> > > > +                       return ret;
+> > >
+> > > It's possible to use
+> > >
+> > >   return dev_err_probe(...);
+> > >
+> > > even for non-probe functions.
+> 
+> (this should be "non-probe deferred functions")
+> 
+> > This is a probe function(), but as I've told you repeatedly I'm not
+> > going to use dev_err_probe() here.
+> 
+> Yeah, I got it, some developers are leaving in the previous decades to
+> make code very verbose for no benefit, no problem.
+
+And some developers write unreadable code just to save a few lines of
+code. I prefer clarity.
 
 Johan
 
