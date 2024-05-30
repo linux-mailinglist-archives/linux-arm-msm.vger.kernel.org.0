@@ -1,193 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-21123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A98908D4E51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:48:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 190498D4E60
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 16:49:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4DEA1C212E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:48:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 415281C210AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 May 2024 14:49:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5DE117D8A7;
-	Thu, 30 May 2024 14:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 703F517C9E4;
+	Thu, 30 May 2024 14:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MF/HR1HP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NEiRWGzA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9128D17D8A6;
-	Thu, 30 May 2024 14:47:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B310F143C40;
+	Thu, 30 May 2024 14:49:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717080478; cv=none; b=r6uUuA+uLU73KLnvewF3W7WxtBHJ67+teLR6nFuG9LuC3jaTjNQevTNoXgXWCmk/ad3TXjeDMxvsGeAPiLJt5FVSb+vgND0AQ18ySpPyib4jyqKXJg3zHXqhyb7en88Z3bKdulAozPUjs4OR+bIM9tqTF2IPnzowndz4VDptWcU=
+	t=1717080592; cv=none; b=QD6CePrAiv0o5mF28TlZCUIrj02llQsfCe2HavoRriRctk0f61sruAbXI0CPAHpBSj6kxTjL1SktJgNU2/KmNuC4uT5lbd+W9Z3qyL/oaZOHmWMoYBvDFLzSe3G9GGaLm+iocC7KGZA1tXBdmwzEjNAkcCsAZTNDZVpBlc7YOEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717080478; c=relaxed/simple;
-	bh=0YtxMgJS9VghyYhRb60rtBUg4WCZN3CLjIawzdARKwU=;
+	s=arc-20240116; t=1717080592; c=relaxed/simple;
+	bh=hi5q5eR3luXu0JMBSCQpSKn2pC1+yDtt03BNLMulJM0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dxn/0KFTCisKJ/U35RVmrjYZjMPXnJ1DS1yAsThUu47wTnUFKm5AHhYfozJW6X8wTXvGJ/qZrrjLdXb+w5gbxN+YsX+MzA9I/2uxD6P/541g2uEKij9DfMz0stuQAj9i/z/fka5Q+uZ7iKKN7Ud6ywHtuqYvJLtT1umTHXQI4TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MF/HR1HP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444A6C2BBFC;
-	Thu, 30 May 2024 14:47:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717080478;
-	bh=0YtxMgJS9VghyYhRb60rtBUg4WCZN3CLjIawzdARKwU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MF/HR1HP/m3XZlqOeBpT0r2512CquhGyBGTC3WMFzQQXDQ9ILKP5g1WYBCXOzJGLz
-	 +xlqWxQuMFeFA6t2EvaQgTEIv9d6AMccLM9f+zRUwYJXJb+nllidonx2B9hHsK101J
-	 4MRuFjEqFe0x+pqGtRb8UIVpK2iOxxfHEJHQxIxmMf3CiWm4P8T1uYZ2vMKrgt0Qor
-	 p1npNlYt1jsi5whPMW+O88Bp8xfzdq2LB6QVyVOEEl6VcIiJcK7Q0VAIcE74lRICc0
-	 syuxcjn4Bwe4JnvpmdpmBlQ6cwdbUeMHoltLGPJy7OAHjm7jEKm/VVaSWPv8sjSYEM
-	 eZSRJq3V9HyOQ==
-Date: Thu, 30 May 2024 20:17:49 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: devi priya <quic_devipriy@quicinc.com>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	mturquette@baylibre.com, sboyd@kernel.org,
-	manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH V5 6/6] PCI: qcom: Add support for IPQ9574
-Message-ID: <20240530144730.GG2770@thinkpad>
-References: <20240512082858.1806694-1-quic_devipriy@quicinc.com>
- <20240512082858.1806694-7-quic_devipriy@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ocHkHR0ER51wpOVJ/eC7I2XHcankHZBSeh0ATND9eKpnbGxyKTPDxFIUHvTUCrJ+v/RlD0pEMlcQRM0fI79fkANbINEVrXvXixTrtm1R4gbPggQGKyLAmF9DBzcePpLUX3bKgficagpGiNjFY6+8HLey2wPyOvckcMTtWplRkKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NEiRWGzA; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a673a60f544so23441766b.3;
+        Thu, 30 May 2024 07:49:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717080589; x=1717685389; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IFZxm9XZ09eTU3EN3teoJoprrvy9B6+gk/P+tYdPxNs=;
+        b=NEiRWGzAst3mqbe5+4waZhP4XK1YKIYyE83FbMHAE9sSzNM30yPyBpzTvO7x7/gp/P
+         PEiAGcYm+fynaxRuEOkiSnMcarVpSqrpuwG2Z39RPa4qARsAR1lnXAFZR+qYDQdzTNYh
+         yYQQ6RXV4XfPnjdCH8pT1cDDpEPZc6DtsN+kqPFkhhEu1D6TwooFI9JZuJyXju6T69N1
+         ebODmnF3WuyTFI487t7wzu0pD7nL6Mw0ejwABUNm5VzJysHzOMVwyA8qGZlhBftRT81c
+         GGcHaWpNNG8sVKr1WA/IFtgP13sd9NoIzbZD6SBmV8E9gARCDVSZXnIKx+koMLz5YmSf
+         cxDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717080589; x=1717685389;
+        h=in-reply-to:content-disposition:mime-version:references:reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IFZxm9XZ09eTU3EN3teoJoprrvy9B6+gk/P+tYdPxNs=;
+        b=VY3ZzYTVdUXV/AeUtn5rhAP6vKvieJMi1I/VfOv786W0sjg27MEabnY8HppRe3aT/V
+         QOyE/2exLH/38hxUenIR/+SH0GhNrTHlBKm0WTUFnSkwAP42iovykLqp/S9Uj9+/Np53
+         lsQ1FnPpMTbh9mjM1I+S8v0hrFxRmyTGVZuYkI5OdL9CVcCMmE9DXPqnxCrlL0i8a9MQ
+         i5ymlFk68u6SIaAuJXLH0woE1ru4AH/tZUwJO8xpLQgfORMru06FNJZbbEUMp4e1sHOu
+         jlW3SmRrz71IVEoVI1U+tnr1wKRI4jROvab7PsBhEjUxpRB3tQTpPvyq+Eh4gkoE1Jjr
+         KDsA==
+X-Forwarded-Encrypted: i=1; AJvYcCWsLHPNo2pX/UURUnXa9DTmZq8ynvFs9yBwZcFTMaPM2gpc66ihp1lg9dKvgokt/lix7yHvSCJzxSRoMoaP1cJCYRifGARcXLc4l/A8m+GhDjJgOW73Q/hWsv6CAeCtKUVoFYFATNXtkl+C1C7vbGoCtj9Wir1lrpoSQzurdeDJP6gIF0bsxCM=
+X-Gm-Message-State: AOJu0YwPDN8C9tK02XogT2zZ+v53fT1bSYKxrw7XSJmz6RNhvGHzkyiW
+	0MWg4j4RHOCL7PdFqG4ul9A6T+h/kO9UbujxQSRSq6lvMlQ/G3cu
+X-Google-Smtp-Source: AGHT+IEjTFZLB1C4nSOWFYxlPMd96XW7noVUv2mE3O+pRtIwQ0MefglECcJHcYxto5VQTRAUD9SZvA==
+X-Received: by 2002:a17:906:845:b0:a59:ba2b:590e with SMTP id a640c23a62f3a-a65e9100ea0mr147055766b.48.1717080588763;
+        Thu, 30 May 2024 07:49:48 -0700 (PDT)
+Received: from pevik ([37.48.49.148])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a637f1349efsm210047866b.210.2024.05.30.07.49.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 May 2024 07:49:48 -0700 (PDT)
+Date: Thu, 30 May 2024 16:49:45 +0200
+From: Petr Vorel <petr.vorel@gmail.com>
+To: Alexander Reimelt <alexander.reimelt@posteo.de>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Add LG G4 (h815)
+Message-ID: <20240530144945.GA513050@pevik>
+Reply-To: Petr Vorel <petr.vorel@gmail.com>
+References: <20240403104415.30636-1-alexander.reimelt@posteo.de>
+ <20240530135922.23326-1-alexander.reimelt@posteo.de>
+ <20240530135922.23326-2-alexander.reimelt@posteo.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240512082858.1806694-7-quic_devipriy@quicinc.com>
+In-Reply-To: <20240530135922.23326-2-alexander.reimelt@posteo.de>
 
-On Sun, May 12, 2024 at 01:58:58PM +0530, devi priya wrote:
-> The IPQ9574 platform has 4 Gen3 PCIe controllers:
-> two single-lane and two dual-lane based on SNPS core 5.70a
-> 
-> The Qcom IP rev is 1.27.0 and Synopsys IP rev is 5.80a
-> Added a new compatible 'qcom,pcie-ipq9574' and 'ops_1_27_0'
-> which reuses all the members of 'ops_2_9_0' except for the post_init
-> as the SLV_ADDR_SPACE_SIZE configuration differs between 2_9_0
-> and 1_27_0.
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
+Hi all,
+
+> International variant of the LG G4 from 2015.
+
+> Signed-off-by: Alexander Reimelt <alexander.reimelt@posteo.de>
 > ---
->  Changes in V5:
-> 	- Rebased on top of the below series which adds support for fetching
-> 	  clocks from the device tree
-> 	  https://lore.kernel.org/linux-pci/20240417-pci-qcom-clk-bulk-v1-1-52ca19b3d6b2@linaro.org/
-> 
->  drivers/pci/controller/dwc/pcie-qcom.c | 36 +++++++++++++++++++++++---
->  1 file changed, 32 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 3d2eeff9a876..af36a29c092e 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -106,6 +106,7 @@
->  
->  /* PARF_SLV_ADDR_SPACE_SIZE register value */
->  #define SLV_ADDR_SPACE_SZ			0x10000000
-> +#define SLV_ADDR_SPACE_SZ_1_27_0		0x08000000
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-Can you please explain what this value corresponds to? Even though there is an
-old value, I didn't get much info earlier on what it is.
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 66beaac60e1d..76aefd4aac67 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -237,6 +237,7 @@ properties:
+>        - items:
+>            - enum:
+>                - lg,bullhead
+> +              - lg,h815
+>                - microsoft,talkman
+>                - xiaomi,libra
+>            - const: qcom,msm8992
 
-- Mani
+Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
 
->  
->  /* PARF_MHI_CLOCK_RESET_CTRL register fields */
->  #define AHB_CLK_EN				BIT(0)
-> @@ -1095,16 +1096,13 @@ static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
->  	return clk_bulk_prepare_enable(res->num_clks, res->clks);
->  }
->  
-> -static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
-> +static int qcom_pcie_post_init(struct qcom_pcie *pcie)
->  {
->  	struct dw_pcie *pci = pcie->pci;
->  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
->  	u32 val;
->  	int i;
->  
-> -	writel(SLV_ADDR_SPACE_SZ,
-> -		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
-> -
->  	val = readl(pcie->parf + PARF_PHY_CTRL);
->  	val &= ~PHY_TEST_PWR_DOWN;
->  	writel(val, pcie->parf + PARF_PHY_CTRL);
-> @@ -1144,6 +1142,22 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
->  	return 0;
->  }
->  
-> +static int qcom_pcie_post_init_1_27_0(struct qcom_pcie *pcie)
-> +{
-> +	writel(SLV_ADDR_SPACE_SZ_1_27_0,
-> +	       pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
-> +
-> +	return qcom_pcie_post_init(pcie);
-> +}
-> +
-> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
-> +{
-> +	writel(SLV_ADDR_SPACE_SZ,
-> +	       pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
-> +
-> +	return qcom_pcie_post_init(pcie);
-> +}
-> +
->  static int qcom_pcie_link_up(struct dw_pcie *pci)
->  {
->  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> @@ -1297,6 +1311,15 @@ static const struct qcom_pcie_ops ops_2_9_0 = {
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
->  };
->  
-> +/* Qcom IP rev.: 1.27.0  Synopsys IP rev.: 5.80a */
-> +static const struct qcom_pcie_ops ops_1_27_0 = {
-> +	.get_resources = qcom_pcie_get_resources_2_9_0,
-> +	.init = qcom_pcie_init_2_9_0,
-> +	.post_init = qcom_pcie_post_init_1_27_0,
-> +	.deinit = qcom_pcie_deinit_2_9_0,
-> +	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
-> +};
-> +
->  static const struct qcom_pcie_cfg cfg_1_0_0 = {
->  	.ops = &ops_1_0_0,
->  };
-> @@ -1334,6 +1357,10 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
->  	.no_l0s = true,
->  };
->  
-> +static const struct qcom_pcie_cfg cfg_1_27_0 = {
-> +	.ops = &ops_1_27_0,
-> +};
-> +
->  static const struct dw_pcie_ops dw_pcie_ops = {
->  	.link_up = qcom_pcie_link_up,
->  	.start_link = qcom_pcie_start_link,
-> @@ -1603,6 +1630,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
->  	{ .compatible = "qcom,pcie-ipq8074", .data = &cfg_2_3_3 },
->  	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
-> +	{ .compatible = "qcom,pcie-ipq9574", .data = &cfg_1_27_0 },
->  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
->  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
->  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
-> -- 
-> 2.34.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Kind regards,
+Petr
 
