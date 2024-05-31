@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-21234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 542B18D5E84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:37:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE10E8D5EA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:42:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF107B2988B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:37:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB17D1C21A12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:42:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4F311422BC;
-	Fri, 31 May 2024 09:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 461C1135A4A;
+	Fri, 31 May 2024 09:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NGVNquEo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s7Ty+uoX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F32138490
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 09:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCE11422BC;
+	Fri, 31 May 2024 09:42:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717148191; cv=none; b=BO17gYaPELoeQoAMqUDO3feDZFb29e5ImQpqUmpX7LnCV3Ggcedj5HtL4KKogrNwEQXu+S4dchMgvpuSbJsW82QUHeK5ZCyxqjVsYJ7jJl8Pp+rDdiohZsll+imVwzusFc28baPLqBZPc7pa4StxF8MpGEZc6Nc274xS8hMByrg=
+	t=1717148564; cv=none; b=WwMYnvbKHkb5lYWB0rcKr1/Fh0nZnPu+UT/cLVj2IE/9hXCVDyWpfrWz3iVpZXnJqikBRyozAWLPkwIVhr8eCTDP8a1ZiPLkUtRJrEJUFNjZ5IAKhYRPpRmcUAcz+g9zJSOnwHmV/nr9oAvGZiR8oCzo3JhxrbBb+rQj1p+OD+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717148191; c=relaxed/simple;
-	bh=ypzlDlyeD6OBpBGbfrvhK4Qr2DmtcCy4TkdN/A9qKAU=;
+	s=arc-20240116; t=1717148564; c=relaxed/simple;
+	bh=fwe48fdEyxtM78DaKv0uecMaewTnPGzm3zCWWlB2UG4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=up7Y3bPA17wszQtVryRNzACwBBHF5TRODKcXw8zHob0AHvzWW6IzgIhFdQj4V8+XWJuN0XAYZzPFV/A+XfKMVlByYTxykfW7g1/H5uumZAvnuNnPh+yYrDPABru5ErMuQDgeDdcJe85A02qPlp/9Alzcf/uT4RD6eVhTvrWm9Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NGVNquEo; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2e6f2534e41so9978611fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 02:36:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717148188; x=1717752988; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rcdLBOINP87SaDpYnAUw0WSUnmkqMYhFo7uH6mOOQg4=;
-        b=NGVNquEoTCylOpy4qwRLeNXGpUeOOF1OTWLNeVC+CKFM1RQrpn4ggVx7hFinEl6KFz
-         z69NVkq9J3bs6uM/0yAUC5eR95E79Mz7VWC47YolVjbOJLSqWvBh2h6pGifaSbgD8c6v
-         eNMI1dtYsXw3Do96CmMKB6ZLiQK3OgAoqeeAeYEQuTmp7Wf4gHGBautxUTI/YWHAWY+t
-         B7vclE7q9TO3G82rKOBg9h7sFB3wqarZ3iQmtGjlpmIlfsRsuyYtTJslQLhZT7Rhr2jF
-         CrWaCuDgxNVPUpKpCTo7ceiFlNsH4UF4No8+/HnVfrqK6F2In6mbYOGNqTOKb0PF/4PS
-         uv2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717148188; x=1717752988;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rcdLBOINP87SaDpYnAUw0WSUnmkqMYhFo7uH6mOOQg4=;
-        b=NCBWvkCP/kcey7zFRP87pbMeBnXGZpAcmAd0ds1uuJN4H37XEUbLOVrfDgyaX18zQj
-         05l37VtCSwrFKWQethCSpU9HtNE3NJYFIycM4VAYtv2L2lABXle+LZYyJHgYQ6P3oLKX
-         jrYEHBDIcF0SJ0KicrXoQkqdzyQfeA3qVre3icIG6iaso7LQy1iSJDu0JfvYWD6GBE4t
-         p6SC9c8ecLlJBaXSr780bTZ7W+MAQlAS3mtTEPbYtoUOyZX6r3CPd56juBBCkS9QN758
-         NY1j+upxuSwjMavCUwPgl8ufvQgR7bWixEFEaVur81ay81o5xzb8N64D/dKb88LWxtwt
-         4PqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVJGmEHVIcl9vb68DE8dIGStNkK3m45o1MD6Y/XxEnfeFHZSZBRkP98gUKdr5IpsMIInwCPanpL3U4MIkEVoCH1rx66PCwwhcWVEjN3zA==
-X-Gm-Message-State: AOJu0YyPR6QH7fSV3Gfyak8FKC6Gsf1/NxhXfbzXOzpigx0wqd2ugWLz
-	PPPvQyPn9/a/t/oQXHq4y9lsW9WIe82ouJRV8CBWPKqt4ynGCKe5IVOxUi5G0xw=
-X-Google-Smtp-Source: AGHT+IHlP6EtO9x8mgVBl8nidavrwbrS9YJKsrW3JUzRcWNGSEwVfabm8K60LFQ7LqI61N3Uu90TfA==
-X-Received: by 2002:a2e:870d:0:b0:2e9:8a16:fe31 with SMTP id 38308e7fff4ca-2ea950aee36mr10497401fa.2.1717148188184;
-        Fri, 31 May 2024 02:36:28 -0700 (PDT)
-Received: from [192.168.86.191] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4212b838b83sm19727145e9.10.2024.05.31.02.36.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 02:36:27 -0700 (PDT)
-Message-ID: <6bdd3a9e-2c02-4b65-89ac-918a1157b120@linaro.org>
-Date: Fri, 31 May 2024 10:36:27 +0100
+	 In-Reply-To:Content-Type; b=Whd9vREOgRuyVvixaPCvnyKWvQ2crs+RnPRZwmserSf/77u6A5AGeRR+GkUB4iZjCYofQo8M/rELZ54dLB4HzB7b+i7gyK4m39V2jij8scjh8C+GNsiAQ9sDXB8VV8QA4oMpHdtt+k7hgvfbmu2zjel4UVRuxYvAmE+txheuP+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s7Ty+uoX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09111C116B1;
+	Fri, 31 May 2024 09:42:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717148563;
+	bh=fwe48fdEyxtM78DaKv0uecMaewTnPGzm3zCWWlB2UG4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=s7Ty+uoXLvEgVfhVx0EW1vSARSSxSra/XkurNNTOeP34hzDuhoetIFKqKe2F9qIn2
+	 GMeaa23igZdl2rgHBgv0rTJXR9p2jb8p2pB6iLEFQnOkPMcfJEYcpWam/Hqpn9+uc3
+	 7vbiMGcfa5C2ItMb9voKgRu5+zoXihCp7H5FUFYckHvLbk69Vjn6hqXa7YwO/5Hrg3
+	 0l3juHIRxYHuvYl95I2EUOXSzs3cYeUCGk6qXHj0YaxOtmRFJ5AvGmwjmbNjdkXtyZ
+	 m3kUdzhgutMDIkimA05hN9agIXLtE9NAhhJjr5KI0o0Yd8XP5PSiZKQCmkVMKmfaVn
+	 7G6V221AGMKrQ==
+Message-ID: <e63d2838-d34e-4ed7-b935-2feef0eb80ee@kernel.org>
+Date: Fri, 31 May 2024 11:42:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,55 +50,74 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/9] misc: fastrpc: Fix memory corruption in DSP
- capabilities
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>, linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
- linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
- stable <stable@kernel.org>
-References: <20240530102032.27179-1-quic_ekangupt@quicinc.com>
- <20240530102032.27179-4-quic_ekangupt@quicinc.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: soc: qcom: add qcom,sa8775p-imem
+ compatible
+To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_kbajaj@quicinc.com, kernel@quicinc.com
+References: <20240531093531.238075-1-quic_tengfan@quicinc.com>
+ <20240531093531.238075-2-quic_tengfan@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20240530102032.27179-4-quic_ekangupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240531093531.238075-2-quic_tengfan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-
-On 30/05/2024 11:20, Ekansh Gupta wrote:
-> DSP capabilities request is sending bad size to utilities skel
-What you exactly mean by this?
-
-Curretly driver is sending 1024 bytes of buffer, why is DSP not happy 
-with this size?
-
-> call which is resulting in memory corruption. Pass proper size
-What does proper size mean?
-> to avoid the corruption.
+On 31/05/2024 11:35, Tengfei Fan wrote:
+> Add qcom,sa8775p-imem compatible name support.
 > 
-> Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
-> Cc: stable <stable@kernel.org>
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
->   drivers/misc/fastrpc.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 61389795f498..3e1ab58038ed 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1695,6 +1695,7 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_user *fl, uint32_t *dsp_attr
->   
->   	/* Capability filled in userspace */
->   	dsp_attr_buf[0] = 0;
-> +	dsp_attr_buf_len -= 1;
+>  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
 
-is DSP expecting 255 *4 bytes instead of 256 *4?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
---srini
+Best regards,
+Krzysztof
 
->   
->   	args[0].ptr = (u64)(uintptr_t)&dsp_attr_buf_len;
->   	args[0].length = sizeof(dsp_attr_buf_len);
 
