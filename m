@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-21275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C16F8D62EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 15:25:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F00158D62F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 15:25:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D9101C26C79
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 13:25:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F60D1F22424
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 13:25:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9EA4158D7A;
-	Fri, 31 May 2024 13:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C40D158D6B;
+	Fri, 31 May 2024 13:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c9fCqrDD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vNCSS1gb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782EB158D60;
-	Fri, 31 May 2024 13:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B67276026;
+	Fri, 31 May 2024 13:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717161914; cv=none; b=kjerSQT8h7dW8+rfw36All4N64aWO3OTA84QPo8VbPPSJ2TzWCB4t3XWBDJpgCZduQ6Hss6wjmZEoTlYiARNTdBbJwr5jtEN2PsLT7bekMM/1QqxcM0wQaAy3F5XeSsWVuoZnIH8LjvdAvaAyrnOIAKlZaeHiEVUCHi5p7004Lk=
+	t=1717161937; cv=none; b=ATRCpSkWtC4MQZSjCnIX6MqULCbp5gZBvtwzJr7bxfSqqOu3AqD6/UAkv0Qg9l8A/OqnghRHR/eRGcUdj5Mt50XlXR2CmGaJtOWG/JQTc2RGHtapFvVF30RRh5ITPz7fX4L0q3irvxcYfgtqFWC5tH1qMPgp01hUXr+dpSetT1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717161914; c=relaxed/simple;
-	bh=cueAODkRxqJRit7eEEdVaeRibbkuTyDNGo1WXEQTdtk=;
+	s=arc-20240116; t=1717161937; c=relaxed/simple;
+	bh=IwbcUNclfH9zOqY8or5FNfP/+MJg41Siz/nfgaSvpg0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bEn6NsPJNZHN/nIWX8oSe3cox0DD58Pemb4313za9O3RpygAt/vcU2SJyzAGb1xa/faRhYfOzPQ8TSbdWTf/QhzmQCVj5j8219/yLVGxxjBdzuf48ohv/HgK6ZKSdTfriHYEguw9v444q7n4btwYeXrzFskBKQClujznvJ6YU6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c9fCqrDD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7970FC116B1;
-	Fri, 31 May 2024 13:25:10 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=iP0OpFTO/S5Ve/2s47TTAOuFV/YpOjLcBGN2/TauWRLn3kW0dctNf8CfjEvS9qIV25gpjKsA4ztdV0Fftn++AzzuHeFZk6rYDx+DZrSA6Mc/q1bUwbRrDYb4Yx6iuWfyV9azGyM8UatsNMoUhkxQm30TMtQLR6QHgS921NaVjp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vNCSS1gb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8326AC116B1;
+	Fri, 31 May 2024 13:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717161914;
-	bh=cueAODkRxqJRit7eEEdVaeRibbkuTyDNGo1WXEQTdtk=;
+	s=k20201202; t=1717161936;
+	bh=IwbcUNclfH9zOqY8or5FNfP/+MJg41Siz/nfgaSvpg0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=c9fCqrDDhlUOpkWpw1MwTUhVzPlofHZKd/TeyhOdqOw74vL+rbhMjrToKqWduKSCd
-	 VFlMUhCWVW6PU1oLhVwZp1hgeE2N1WE8T45x0y3DIOl56uUAc6x4FCPCGNIpzU4ftK
-	 e1ES5rxsm5nCqtsHzuoWqXgY2zNzCrJUeSvmYi3k7BhCmybaT8dHDYD9XTbtVUgNsE
-	 id4Tn4r5J9LtRX6HWODp6t14RRx7jR8jigIvj25h2s2UG0Utw4+JOKqCNCYC07gXKR
-	 yDJPvfu5MN8/tuVZhPfo7/v8Ar3v/kVmR4VL/YslEaxZgNWMqMWPS9u6zHEnXnJ2SM
-	 t6zVop3bfzEtQ==
-Message-ID: <1958d99a-6c4c-4d7b-9f0e-842a053615dc@kernel.org>
-Date: Fri, 31 May 2024 15:25:08 +0200
+	b=vNCSS1gbqy9lfT5/IBvWMdarMYHafzgEX+twWWfCe4OxCtMlKX/9V0xDBUoeFt0aJ
+	 DygM6C4RODXDJcBNZrNEq1f1AhyzrVzxCcfvlxrLBXhFYS6Yy9gec4pGZHs5EKTkOp
+	 SfIU8mM9fefr4ZhGDSuyJZilz3+3o7HnPEt9HJjn9ctXzYr5Yl2yvPPdWabAfTJdqA
+	 oc4dNV9a9fE620D/4W8SaeBy/N576pjJR0UkvrXbfv6moF3C5ULDzjDQhr73cYO56V
+	 YUiOgbAjKJj9Fx16EG4sG+q1gTApne6DSD2r6rml7BCknKmBWeReGw5qYLYrecP5EZ
+	 2g89qT5mPGKAw==
+Message-ID: <58f670ff-4c12-4579-8284-61e3197612ee@kernel.org>
+Date: Fri, 31 May 2024 15:25:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/14] dt-bindings: clock: qcom,gcc: sort out
- power-domains support
+Subject: Re: [PATCH v2 03/14] dt-bindings: clock: add schema for
+ qcom,gcc-mdm9615
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -60,10 +60,9 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
  Robert Marko <robimarko@gmail.com>, Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240529-qcom-gdscs-v2-0-69c63d0ae1e7@linaro.org>
- <20240529-qcom-gdscs-v2-2-69c63d0ae1e7@linaro.org>
+ <20240529-qcom-gdscs-v2-3-69c63d0ae1e7@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,21 +108,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240529-qcom-gdscs-v2-2-69c63d0ae1e7@linaro.org>
+In-Reply-To: <20240529-qcom-gdscs-v2-3-69c63d0ae1e7@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 29/05/2024 16:47, Dmitry Baryshkov wrote:
-> On some of Qualcomm platforms the Global Clock Controller (GCC) doesn't
-> provide power domains. Move requirement for the '#power-domain-cells'
-> out of the common qcom,gcc.yaml into individual schema files. For the
-> platforms that do not provide power-domains, explicitly forbid having
-> the '#power-domain-cells' property.
+> Add schema for the Global Clock Controller (GCC) present on the Qualcomm
+> MDM9615 platform.
 > 
-> Suggested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-
+>  .../bindings/clock/qcom,gcc-mdm9615.yaml           | 50 ++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
+> 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
