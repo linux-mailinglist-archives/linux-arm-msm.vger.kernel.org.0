@@ -1,181 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-21205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEAB88D5CDD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 10:37:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26B008D5CED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 10:39:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7BAB1288F4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 08:37:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EFDAC1C241D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 08:39:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C8FF150980;
-	Fri, 31 May 2024 08:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79569150997;
+	Fri, 31 May 2024 08:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BL7WjIlQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zDCj0g5c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1809C14F9EE;
-	Fri, 31 May 2024 08:36:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D2F15098C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 08:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717144605; cv=none; b=nUxfIlkkY0XQxtDGdqU/q9I3Tw1gTYTtN5Li9exQUCGcN8eCQ3Hzql+X3rgp2CkcWqTQUNgdGzDA+nFb74kCzCuXFduHAK4e3tey/It3TYNw/A25n/GUZ7Xm78wKSYcRH766pgfxdHeCJj2obUr0+5L02tkuXm9Qed5SDz+4wt8=
+	t=1717144743; cv=none; b=rFxVy75w3Q4CeSMo0isLGnhqRciVy0s6seAlpxCTqPSHWQQBb1Ta92oROKox42pjmmdp4nH0OT56Tr5gNgd5dTh7cbczJx7WC8W3simGoJqA3M/w0+KHXZII617vSyj3H1YyX33VtvCYHnXC8jcD/6irrMyL+GB10UhKnJ/NflM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717144605; c=relaxed/simple;
-	bh=M29kEJ6dg69bMDHvyOUQgPml98WWax7KA+31KDr2z6o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uf4uHOMmMk1YP/Ocv4zUvLLfGik87RUYxSy4xCMXEcEYDc+n1rq8DxJY6V7Zfowmn4Hh8d9NWbSnQhQLDONcoxPc6W3reRqWwvclCGbeQDLAddkPcp16UkWOMxgZN6JSXsOdDV3NA3jxxS9MTSLAra01rzdHFsJ8/x+Wv3E4X3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BL7WjIlQ; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717144605; x=1748680605;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=M29kEJ6dg69bMDHvyOUQgPml98WWax7KA+31KDr2z6o=;
-  b=BL7WjIlQYod9uJUs4LgyGNdXRJAoUaY9oT32wUMWBNtQri1d/bE4hMMq
-   DYzac1lYLoIwaHmbRdltqvmfdN+wX9yp02hTdGbxQMidUqy6s0jtm4fIZ
-   9VNlSp2fZ22t7A/j3e9FAWTmf06+mhjMfqrGM9/6DszIEPlIcnoylO4r8
-   qReyH3GyhwncvTvPN3z0xypBBtg9Lbr63OdHpSvd31+7c/QcCYF8NPbma
-   Y8Zm5RuP6c3ciaKwzVrAGhiqmDOe8F8pxQNmm47UY4i0WP+RPUT+j41tF
-   CUoLpC1VbpwLnbQUG952Bcj6SgyLbCH1skt/MzNne3Osm/4OwzCr9m54p
-   w==;
-X-CSE-ConnectionGUID: wM6aTOULQlmljqQKOxZkvw==
-X-CSE-MsgGUID: 8AwtI8bRTWelgZfzUbBLNA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="31173899"
-X-IronPort-AV: E=Sophos;i="6.08,203,1712646000"; 
-   d="scan'208";a="31173899"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2024 01:36:44 -0700
-X-CSE-ConnectionGUID: KTBX4n38RQOpaoGrgPPyrw==
-X-CSE-MsgGUID: czHILSlrTOKLA0SaEXOLzg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,203,1712646000"; 
-   d="scan'208";a="40540438"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2024 01:36:40 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1sCxkb-0000000CQ0b-0T9w;
-	Fri, 31 May 2024 11:36:37 +0300
-Date: Fri, 31 May 2024 11:36:36 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Douglas Anderson <dianders@chromium.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>, linux-arm-msm@vger.kernel.org,
-	John Ogness <john.ogness@linutronix.de>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	Tony Lindgren <tony@atomide.com>,
-	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: Re: [PATCH v2 6/7] serial: qcom-geni: Fix suspend while active UART
- xfer
-Message-ID: <ZlmMFBxkMlINr2JO@smile.fi.intel.com>
-References: <20240530224603.730042-1-dianders@chromium.org>
- <20240530154553.v2.6.I0f81a5baa37d368f291c96ee4830abca337e3c87@changeid>
+	s=arc-20240116; t=1717144743; c=relaxed/simple;
+	bh=ZFMmpYdHQGeJ/z9gZHfYAifXybdEhkawr1UnA1qVQ4Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RDxE3lM3Lnk4zXFDUrAT3JS6XXW8bsHR5mXCu9rE3HOGcvRuofOQn5pQIWAyfTlx4bzz+B4RCPPbtRSRPAA2TXCnkQ39z+LsrlaETGNQ3p7MLx5NXwNrfvajbguPetF+ZSESkA4kocg6SkQzllm1Lma9RKkc+rNDEnts2Rz4RUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zDCj0g5c; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1f612d7b0f5so11164965ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 01:39:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717144741; x=1717749541; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lnrY2pbNU0k+0zlhxzJD+ASA3BY00naiFRrmZ3gNEAM=;
+        b=zDCj0g5cPLeHHMm1K8ZNjnITlyqFja02cUVLPpIXwURvAehG+ss/gAgVfSB8fbQL9d
+         +muHz6OwOVjM641HWh/FLmrwxT+2aLF9nofx35ZNrLrDHa4yYYFJ82KtjCBO/3SNU0FY
+         phJICaw2bflPEPhzoYH/n6V3MatQi4l1wzNULnMRcJBiweuzILycH+ueUmdfhEtwHe0I
+         3OdwatEItB09rAHP5r/sBaRIz9YG+zBZWW/ajn4UqGgRinVu0Byp0FS8kgpu6GHfsqFi
+         yABXg669NWVP0rE3+KjVPcMVgq176gVqkjbSAfYKFffh7vxui861nI9roPnNv1o9WvkX
+         TESA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717144741; x=1717749541;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lnrY2pbNU0k+0zlhxzJD+ASA3BY00naiFRrmZ3gNEAM=;
+        b=dI5WwkreBcvs3aUn7F2koh8cVDTWwfGizpefHm9F7bL5m+auuCA2ORHCevbIeljC/+
+         /lXvnSXbzR/BK0sbO7wJdZuZlviJ39gjMUjRNqOX5mxo8XLPOfOb2IqRl0NCTHmz2Guj
+         Jkb3eZyK1RlQXCS9IhMQOd2DpMLpG5IDzlnEaACTtsFAjE7o5YT7KZxKfumgr1zkQvm7
+         pLVgSekVQ/qi1xSSF9iCrPxHQGroSyYGUr6WcxgbCNdq+GOIkmDPTUJj92GFxfBlMIgs
+         yXYCPzQA4nF8Z0ydwR3ejSfKFdF7H957vgxwYCBEEPmZbkp/Snz1SikbUGAZ1PrArUV4
+         sQng==
+X-Forwarded-Encrypted: i=1; AJvYcCVwhzTkM1zaUM68/MU99Ydbcy4RxICJrKUC+3yZIzylKJ4XZggq5OSNh7455bLWk8Eybe7Mnqg/KnubMhgIxaOtZWQsIlGxOSfAcGNc9w==
+X-Gm-Message-State: AOJu0Yz4cXx2RDdSJa0JQxwVf03gbeFqZ0dDp++8M5EMAHf8StbMmoSf
+	ZYVIl8eD1BH/EpAg5ipmKL+FpZjFPvjKNOANSuASoSQSUY9Vw5Pe/1BP+WHhixHW25OFeYtEa5q
+	umrUq9A27LmUddBYXnhppRHGT54lHLjD+gYcBbA==
+X-Google-Smtp-Source: AGHT+IG8vPZtTUMBJ/SeUxjWqwTa+oxGvQfRE7eRFeFHpKg0Ap4gr+tU2wNSF5RwNuTIuL/3twCwLRR9PNjRGv0nJ00=
+X-Received: by 2002:a17:902:ec92:b0:1f3:62c:247f with SMTP id
+ d9443c01a7336-1f61be15ccemr63399965ad.11.1717144741002; Fri, 31 May 2024
+ 01:39:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240530154553.v2.6.I0f81a5baa37d368f291c96ee4830abca337e3c87@changeid>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20240529100926.3166325-1-quic_tengfan@quicinc.com>
+ <20240529100926.3166325-5-quic_tengfan@quicinc.com> <s5gt3p6zsd5ebrkop4dhd33tykln33f6ahu3pibymecxsmakyd@lg5wfgec6dat>
+ <205de8b7-507f-45c9-83ce-6eceb1466cb2@quicinc.com>
+In-Reply-To: <205de8b7-507f-45c9-83ce-6eceb1466cb2@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 31 May 2024 11:38:48 +0300
+Message-ID: <CAA8EJpqFq=6YFcUpjdkKikN54iQ76i8Rk_z+mLH1Tt0zFFmciQ@mail.gmail.com>
+Subject: Re: [PATCH v9 4/4] arm64: dts: qcom: aim300: add AIM300 AIoT
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com, 
+	Qiang Yu <quic_qianyu@quicinc.com>, Ziyue Zhang <quic_ziyuzhan@quicinc.com>, 
+	quic_chenlei@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, May 30, 2024 at 03:45:58PM -0700, Douglas Anderson wrote:
-> On devices using Qualcomm's GENI UART it is possible to get the UART
-> stuck such that it no longer outputs data. Specifically, I could
-> reproduce this problem by logging in via an agetty on the debug serial
-> port (which was _not_ used for kernel console) and running:
->   cat /var/log/messages
-> ...and then (via an SSH session) forcing a few suspend/resume cycles.
-> 
-> Digging into this showed a number of problems that are all related.
-> 
-> The root of the problems was with qcom_geni_serial_stop_tx_fifo()
-> which is called as part of the suspend process. Specific problems with
-> that function:
-> - When we cancel an in-progress "tx" command it doesn't appear to
->   fully drain the FIFO. That meant qcom_geni_serial_tx_empty()
->   continued to report that the FIFO wasn't empty. The
->   qcom_geni_serial_start_tx_fifo() function didn't re-enable
->   interrupts in this case so we'd never start transferring again.
-> - We cancelled the current "tx" command but we forgot to zero out
->   "tx_remaining". This confused logic elsewhere in the driver
-> - From experimentation, it appears that cancelling the "tx" command
->   could drop some of the queued up bytes. While maybe not the end of
->   the world, it doesn't seem like we should be dropping bytes when
->   stopping the FIFO, which is defined more of a "pause".
-> 
-> One idea to fix the above would be to add FIFO draining to
-> qcom_geni_serial_stop_tx_fifo(). However, digging into the
-> documentation in serial_core.h for stop_tx() makes this seem like the
-> wrong choice. Specifically stop_tx() is called with local interrupts
-> disabled. Waiting for a FIFO (which might be 64 bytes big) to drain at
-> 115.2 kbps doesn't seem like a wise move.
-> 
-> Ideally qcom_geni_serial_stop_tx_fifo() would be able to pause the
-> transmitter, but nothing in the documentation for the GENI UART makes
-> me believe that is possible.
-> 
-> Given the lack of better choices, we'll change
-> qcom_geni_serial_stop_tx_fifo() to simply disable the
-> TX_FIFO_WATERMARK interrupt and call it a day. This seems OK as per
-> the serial core docs since stop_tx() is supposed to stop transferring
-> bytes "as soon as possible" and there doesn't seem to be any possible
-> way to stop transferring sooner. As part of this, get rid of some of
-> the extra conditions on qcom_geni_serial_start_tx_fifo() which simply
-> weren't needed and are now getting in the way. It's always fine to
-> turn the interrupts on if we want to receive and it'll be up to the
-> IRQ handler to turn them back off if somehow they're not needed. This
-> works fine.
-> 
-> Unfortunately, doing just the above change causes new/different
-> problems with suspend/resume. Now if you suspend while an active
-> transfer is happening you can find that after resume time you're no
-> longer receiving UART interrupts at all. It appears to be important to
-> drain the FIFO and send a "cancel" command if the UART is active to
-> avoid this. Since we've already decided that
-> qcom_geni_serial_stop_tx_fifo() shouldn't be doing this, let's add the
-> draining / cancelling logic to the shutdown() call where it should be
-> OK to delay a bit. This is called as part of the suspend process via
-> uart_suspend_port().
-> 
-> Finally, with all of the above, the test case where we're spamming the
-> UART with data and going through suspend/resume cycles doesn't kill
-> the UART and doesn't drop bytes.
-> 
-> NOTE: though I haven't gone back and validated on ancient code, it
-> appears from code inspection that many of these problems have existed
-> since the start of the driver. In the very least, I could reproduce
-> the problems on vanilla v5.15. The problems don't seem to reproduce
-> when using the serial port for kernel console output and also don't
-> seem to reproduce if nothing is being printed to the console at
-> suspend time, so this is presumably why they were not noticed until
-> now.
+On Fri, 31 May 2024 at 11:35, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
+>
+>
+>
+> On 5/29/2024 11:18 PM, Dmitry Baryshkov wrote:
+> > On Wed, May 29, 2024 at 06:09:26PM +0800, Tengfei Fan wrote:
+> >> Add AIM300 AIoT Carrier board DTS support, including usb, UART, PCIe,
+> >> I2C functions support.
+> >> Here is a diagram of AIM300 AIoT Carrie Board and SoM
+> >>   +--------------------------------------------------+
+> >>   |             AIM300 AIOT Carrier Board            |
+> >>   |                                                  |
+> >>   |           +-----------------+                    |
+> >>   |power----->| Fixed regulator |---------+          |
+> >>   |           +-----------------+         |          |
+> >>   |                                       |          |
+> >>   |                                       v VPH_PWR  |
+> >>   | +----------------------------------------------+ |
+> >>   | |                          AIM300 SOM |        | |
+> >>   | |                                     |VPH_PWR | |
+> >>   | |                                     v        | |
+> >>   | |   +-------+       +--------+     +------+    | |
+> >>   | |   | UFS   |       | QCS8550|     |PMIC  |    | |
+> >>   | |   +-------+       +--------+     +------+    | |
+> >>   | |                                              | |
+> >>   | +----------------------------------------------+ |
+> >>   |                                                  |
+> >>   |                    +----+          +------+      |
+> >>   |                    |USB |          | UART |      |
+> >>   |                    +----+          +------+      |
+> >>   +--------------------------------------------------+
+> >>
+> >> Co-developed-by: Qiang Yu <quic_qianyu@quicinc.com>
+> >> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> >> Co-developed-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> >> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+> >> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> >>   .../boot/dts/qcom/qcs8550-aim300-aiot.dts     | 322 ++++++++++++++++++
+> >>   2 files changed, 323 insertions(+)
+> >>   create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
+> >
+> > [trimmed]
+> >
+> >> +&remoteproc_adsp {
+> >> +    firmware-name = "qcom/qcs8550/adsp.mbn",
+> >> +                    "qcom/qcs8550/adsp_dtbs.elf";
+> >
+> > Please excuse me, I think I missed those on the previous run.
+> >
+> > adsp_dtb.mbn
+>
+> Currently, waht we have released is adsp_dtbs.elf. If we modify it to
+> adsp_dtb.mbn, it may cause the ADSP functionality can not boot normally.
 
-...
+Released where? linux-firmware doesn't have such a file. And the modem
+partition most likely has a different path for it anyway.
 
-> +	qcom_geni_serial_poll_bitfield(uport, SE_GENI_M_GP_LENGTH, 0xffffffff,
+>
+> >
+> >> +    status = "okay";
+> >> +};
+> >> +
+> >> +&remoteproc_cdsp {
+> >> +    firmware-name = "qcom/qcs8550/cdsp.mbn",
+> >> +                    "qcom/qcs8550/cdsp_dtbs.elf";
+> >
+> > cdsp_dtb.mbn
+>
+> CDSP also as above ADSP.
+>
+> >
 
-It's easy to miscount f:s, GENMASK()?
+> >> +
+> >> +    te_active: te-active-state {
+> >> +            pins = "gpio86";
+> >> +            function = "mdp_vsync";
+> >> +            drive-strength = <2>;
+> >> +            bias-pull-down;
+> >> +    };
+> >> +
+> >> +    te_suspend: te-suspend-state {
+> >> +            pins = "gpio86";
+> >> +            function = "mdp_vsync";
+> >> +            drive-strength = <2>;
+> >> +            bias-pull-down;
+> >> +    };
+> >
+> > What is the difference between these two?
+>
+> TE pin needs to be pulled down for both active and suspend states. There
+> is no difference.
 
-> +				       port->tx_total - port->tx_remaining);
+So why do you need two different states for it?
+
+
+
+
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+With best wishes
+Dmitry
 
