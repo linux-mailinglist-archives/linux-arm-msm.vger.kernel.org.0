@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-21269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5D218D61F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:40:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 061128D6204
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:41:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 11CF1B234A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 12:39:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 61A2B1F27CE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 12:41:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 614D9158DC1;
-	Fri, 31 May 2024 12:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 386E11586D2;
+	Fri, 31 May 2024 12:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CZ74ppkH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ldGx+YGr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A756E158A37
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 12:38:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC5A158A3F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 12:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717159091; cv=none; b=tC+306Gh31PPSEComJbIHPn9cuRDy4gBoiRPuL538W6WpfA7NbiC90cwpgkHQPhX+Pf+I8WCoCEVl8D1wTf3GjnEhRAj+GgAxWU/ChytfWFcLSPaST039J4qhrys3otjPiizs6i5BGc7DsiRjW55nvT3LplSht28EM1kkkO9xNI=
+	t=1717159231; cv=none; b=pAjAjskvR/s7g+L7ALWlHia4vhWI1QkZv1deelBsViY7K0oOm3ho7j4l/MkwpBn3ee2ySKLAU6qc4cvcQVIszXqA/kcdxsogUdioAHFSBvqk0Dp71RNt1T/EGuRENBeY4EVBnwenwILRCGCpQPRDcqQRrWqJdq5BDILNSEXO1m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717159091; c=relaxed/simple;
-	bh=4vLBGvVnHAnKmOa4OubUm5uxUfa+Q+USI+QFNvbihRU=;
+	s=arc-20240116; t=1717159231; c=relaxed/simple;
+	bh=op1s5LXJeDvIiFLVtFiSUNyEX/0wUdZkoRh3R8wmvrk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sAGc1MomKyY+QnpLhsAl8WUkpxFCmN+ZA8MqgrYkBHRJ9hMecExptob1Lre6h9OQWjkEnz0zjq0pDZfE7rkT2Pwna5zWWYKQymaxJtvXTY61jDXBMxYLvZEtc5G4FPB8iljOBn1rY6RqFI8mATFHDFmdfv92jjWD+cmEQ57OdEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CZ74ppkH; arc=none smtp.client-ip=209.85.218.50
+	 In-Reply-To:Content-Type; b=l9JQhC7bzdYYeFSCtcGDXMKLutUxdcuq0OAPT0mHJD+abafdA5w/E26jhJv7Clsx89WTwWIVG9tS+jhHFpSAtwChq6ocLWkxuvAFh2WXBv9DLFJtYD/L0SXHVma2jxkfBbJWd6FIEGt17b9J474MZn4dpZT0cZ1W5h8sewE09EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ldGx+YGr; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a6890ace9b6so29915066b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 05:38:09 -0700 (PDT)
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a6269ad9a6fso101331266b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 05:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717159088; x=1717763888; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717159228; x=1717764028; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=bKfOxPrq22Dykg9czPhtJUcNoZdQTkpeJKshafenJHk=;
-        b=CZ74ppkHcQGmkTxNWR8I0Gk/camysgG/HF9yvtzlpkaDgKqCqqnLUJ6n+2lXLX68mP
-         iE60xesSyjPsK+BVqIEb1nqx5nEEILVsuO8et9bcpOrRIMjhszD4YW4dcjiUmt8uODpk
-         74+hMtfFKGEt3Pj/Gx7e3LWCJqt5kjELKxMBosZ7OEabYKrp+DAe2vQVEXyLz1odBZ0C
-         JZCXcJN9kXNy7Ei68vXZwWRWFIPNItb9RUMC+/OwMMk4hf6Kf2Mi4VdVVjahXDRJSCEi
-         3/tgAR3Mzxl5PE55ht0fx7Q6QOUglqlSU4ButK6IKSNhR843TmYqz0202svXPJwgoWVB
-         /7Lw==
+        bh=Xr4ROrwcZrcWqPJ95GYGx0z7Cv4z3SOwstAiFPVmsvE=;
+        b=ldGx+YGr5I2gyFGB/hW1lYOU/RzmbipqHz3s/pBE558sdnGisTYDVKC0LpmntZ9+fK
+         etR1q+iWHn9/0fAZ6wIFYRaQUOXlM+ilt1goqL14E5HKi6xmh6wRoDEaLwlYvtemtyvN
+         Kba0CDxSEmImIMPWGmwaOp8MrA+BIJcqYA+PTHgtSaPZaJaWQgYZQ/dSrm7FQZPVc24y
+         uTvtF3hRZtSiOIjE8W2bAQ6gUSk6AY5H/fp8qxghJSGyeykBnjMoRwN4Z+YKUycKH66O
+         CnbRcJA1gs+PZH3VeBbxIIVMTjTmVHCLYvMKXYFo3cgGQssSLMkdVUW9k+8F3aYgffwd
+         3gpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717159088; x=1717763888;
+        d=1e100.net; s=20230601; t=1717159228; x=1717764028;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bKfOxPrq22Dykg9czPhtJUcNoZdQTkpeJKshafenJHk=;
-        b=qp6f6lhcDpoFV1P5IIm4Rz/oHZvJ7GKoXF2m/fFLODT37R0ZFA046f5ub4hCsU6c1Z
-         nHaNQPdlC3EHVvHuxwVtoUR3MwmOc0J31HzLKVYBunm1Ob+M7L3DUzccGt6ZXKD1anT3
-         VEeRr9yYBjIgIGtMU6ATBAumixHMFdCKPfkTtolGdPCik6GJuzbXWJ0tTwP6AvMK7xH7
-         bnZmzj3r71q6JoXHqz33LMWBeiUpCnmsXS0JcrGfaWT9Ak1eKpWJkuO1qqlNQp76d6DO
-         +O7SSX4fmciQ1zc8Am/QNnKioJQM+ymb+c88ccTPz8rCVsEdFSBMXaNzD1jXJbaw2BFa
-         Q4+g==
-X-Forwarded-Encrypted: i=1; AJvYcCVOk8j4+mxZQTTwzGzOjishWhdzxRAGfigJmRJH5BwziPIX10918uUTV/9awN+tcM3/XGh+SMHAv72+CmAmFBfCVKQlBvI2AsinYt2SAQ==
-X-Gm-Message-State: AOJu0Yz7TdyO6TBM0CC9NOPeY+n9I/zFeEkSUt1NLlFMzE79i1zxUtRr
-	oxixdL0YtfV337B5POj9ynkw5yoLWOIX0lNpppE2WLVJAbGQHMC/5p6HvdUq10QgHDQTDOau3q/
-	7MUU=
-X-Google-Smtp-Source: AGHT+IHuwxxm+rWgogEQN0YtMEo9BZiQVwkTCW9oGhNmBCYwplNp5EbKHHR2d5KwoRmDCRzbM5FccA==
-X-Received: by 2002:a17:906:1e55:b0:a63:36c0:eaaf with SMTP id a640c23a62f3a-a682022c9f4mr127263466b.20.1717159088042;
-        Fri, 31 May 2024 05:38:08 -0700 (PDT)
+        bh=Xr4ROrwcZrcWqPJ95GYGx0z7Cv4z3SOwstAiFPVmsvE=;
+        b=DL70ppz7yhpWllcCuk6uWODtV57zTo4JScCOS4DWz54TU59OsH+WZfhs6tb+vGfyeX
+         Lu8N/TLzkj3ZrKImdhf4AVeVyGpCN62KaUpKKKnXa1OezO1YvnF5KYI9l23+Lzv93BH5
+         SwoovRl6HTtT5Ia5/DiivHpJrZb8loCIJ0B8auFWMXFOXEZB7QVTUzTnGH2E9xzIB1oH
+         6ajAJ7oS4ih38PpYBLqbrOJSXiqQ9n8rZQDLEkSo3BpYPYKte8oFszrxsIxuNHeAz1CO
+         BSc/uj0OiXf8PVyqH0GZBZiwSDEZ38flZ0VxWt42FxlpYl2fmhPaR4W9b6JGnSRlMrB1
+         zfXA==
+X-Forwarded-Encrypted: i=1; AJvYcCVG+pGXtRDk7ZjvMBsJSd8C/wFu95uCtw0ZTBa16ODE3zV19///W3CogCMbJnFrhNrXOl4vtogR79ES295MUs+pjKk6BcLcuenrl2Tc1A==
+X-Gm-Message-State: AOJu0YwTykhPJ4DWUPiHKjPPQ40UWE+az5gOCK17k/OFsfa8gGfnJ6Fg
+	LJYWYgs+MMZRsP9AiyBW03+6ZTwjUQ0LE8KgRw+kOX1IcxXFM0/PSCQ94H4izf4=
+X-Google-Smtp-Source: AGHT+IEsfT48tFHWLoL4tXmC/aQoVny3jpqEWLohZR2KED+a33g+XlLwB+vlllg6ZOS3lwfNrrYyug==
+X-Received: by 2002:a17:906:c511:b0:a68:8853:36e3 with SMTP id a640c23a62f3a-a6888533738mr73438966b.21.1717159227971;
+        Fri, 31 May 2024 05:40:27 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67e73f9bacsm82754766b.59.2024.05.31.05.38.06
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67eb6214efsm82677266b.220.2024.05.31.05.40.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 05:38:07 -0700 (PDT)
-Message-ID: <eaa0c93a-ed28-421e-8302-c98f862d1149@linaro.org>
-Date: Fri, 31 May 2024 14:38:05 +0200
+        Fri, 31 May 2024 05:40:27 -0700 (PDT)
+Message-ID: <ed5754fa-29c9-4a3e-b961-decadfcd7fc9@linaro.org>
+Date: Fri, 31 May 2024 14:40:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,17 +77,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] arm64: dts: qcom: pm7250b: Add node for PMIC VBUS
- booster
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20240530-fp4-tcpm-v3-0-612d4bbd5e09@fairphone.com>
- <20240530-fp4-tcpm-v3-1-612d4bbd5e09@fairphone.com>
+Subject: Re: [PATCH v10 15/15] arm64: dts: qcom: sa8775p: add a dedicated
+ memory carveout for TZ
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Marko <robimarko@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Maximilian Luz <luzmaximilian@gmail.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>, Elliot Berman <quic_eberman@quicinc.com>,
+ Alex Elder <elder@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kernel@quicinc.com
+References: <20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org>
+ <20240527-shm-bridge-v10-15-ce7afaa58d3a@linaro.org>
+ <8f3f1e88-426d-4254-a31c-afcb88fc08f3@linaro.org>
+ <CAMRc=MdxP5MWPhbq6u8WHRpm04F0iijeTpG0q3D9q52e7xfcsw@mail.gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -126,20 +133,58 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240530-fp4-tcpm-v3-1-612d4bbd5e09@fairphone.com>
+In-Reply-To: <CAMRc=MdxP5MWPhbq6u8WHRpm04F0iijeTpG0q3D9q52e7xfcsw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 30.05.2024 5:05 PM, Luca Weiss wrote:
-> Add the required DTS node for the USB VBUS output regulator, which is
-> available on PM7250B. This will provide the VBUS source to connected
-> peripherals.
+On 29.05.2024 4:39 PM, Bartosz Golaszewski wrote:
+> On Wed, May 29, 2024 at 4:26 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> On 27.05.2024 2:55 PM, Bartosz Golaszewski wrote:
+>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>
+>>> Add a 20MB reserved memory region for use by SCM calls.
+>>>
+>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 7 +++++++
+>>>  1 file changed, 7 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>> index 31de73594839..c183527452d7 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>>> @@ -208,6 +208,7 @@ core3 {
+>>>       firmware {
+>>>               scm {
+>>>                       compatible = "qcom,scm-sa8775p", "qcom,scm";
+>>> +                     memory-region = <&tz_ffi_mem>;
+>>>               };
+>>>       };
+>>>
+>>> @@ -418,6 +419,12 @@ cdt_data_backup_mem: cdt-data-backup@91ba0000 {
+>>>                       no-map;
+>>>               };
+>>>
+>>> +             tz_ffi_mem: tz-ffi@91c00000 {
+>>> +                     compatible = "shared-dma-pool";
+>>> +                     reg = <0x0 0x91c00000 0x0 0x1400000>;
+>>
+>> How does that size relate to
+>>
+>> +       pool_config.max_size = SZ_256K;
+>>
+>> in patch 3?
+>>
+>> Konrad
 > 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
+> Short answer: it doesn't.
+> 
+> Slightly less short answer: this is the limit of *this* specific TZMem
+> pool which in turn gets its memory from the shared DMA pool. We can
+> have multiple TZMem pools and they all share this DMA pool.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+OK makes sense, thanks
 
 Konrad
 
