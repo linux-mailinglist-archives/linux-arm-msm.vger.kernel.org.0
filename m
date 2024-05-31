@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-21296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E226A8D63E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:01:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DB698D6411
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:10:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A7B91C211C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:01:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73CF51C22F7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:10:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77E3E15B139;
-	Fri, 31 May 2024 13:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2852D15B96C;
+	Fri, 31 May 2024 14:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h4a+ix5e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ET7OlImU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0EB15B0E6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 13:59:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36CE15B96A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 14:10:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717163991; cv=none; b=ntny5GoXQEh4bfGGmk48ZufjKE6zH8ETZ3QLaCzVExlQHVIvgYDgJsLDVKGUmRVSdsrbdDAeLvDQLpqtPqVGmrTb5PehF480XragMe7HyH2pylSuMaAZxxqoaa788GbVRWYRGRGTI11/nGi5z1Ok/Un63K7SOUWXJ7ft+VD0/gc=
+	t=1717164621; cv=none; b=f7fcHk7UuxPDckzb0qYuhIn+QlGXYktbxMKS96X1qpXyhX/W7iLi1sJDdoxbo/P3qJLWolIG3K+RmfO5oqhKeNRPluRB2TTWi3OjUS08mfeIUvtDBOSqFQAiuu8qH4YwjGKUfTMxaMxQzOjZMbcP3bPNEbIKaG+Al8JB7xNdQ24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717163991; c=relaxed/simple;
-	bh=h02Ka1HysIyKS5g2Uq+iVaLlyHSNVDz/id4I0QxLhxM=;
+	s=arc-20240116; t=1717164621; c=relaxed/simple;
+	bh=pl0/I3EHG1MNSwfiG2WKhtpIiXvt4CVQzdjtT0GtYA8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n5pP8w41Mbzehwg0oStQul7sm49TcvcSWSoEz7Jc4tcjYFk7R0YGd26156CfTiA1SGzFtvOMq3GjqJCN5oS5egZH7x0GDz6f0HC8rrGCB+qkd0UaYarDzODi+YLf7JwRZ9raL05iJmE1HdvWW3Qbc5lLYHH/o/FFma82B3tBTGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h4a+ix5e; arc=none smtp.client-ip=209.85.208.176
+	 In-Reply-To:Content-Type; b=mX3jcYNxvStJpIrw+7V8Vgnb4YABMuGDuVz+dq5OY5BTqQiCVBF0bAqjTI2IkYWalq6B3wMtHO86KHUq1cNrbZ73gmtxKy8P0yFcJq1eUiYf5VYWg41FlvAuNBT5n39YjbrtIiabgdR6H6OTDuSzhVs9Ic8OKyyWz2Cec9x5XUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ET7OlImU; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2e95a60dfcdso25092681fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 06:59:49 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2e95a883101so27169381fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 07:10:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717163988; x=1717768788; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717164617; x=1717769417; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2V7WBS25SmdsXaMTYWzCA59w0mTNLYNiYWousfxzfmw=;
-        b=h4a+ix5e/l0koQszcn09chqE3mAhV42Z47pImpDU//LmXUu1UUDujFvI0I2cYvXRuy
-         COZ+HjTXamFOajDcBEEc5N+tQVoLCQBN64Wk/bNb37C5TiK2AccY+72NasjqSZcRzjJc
-         4mxVL8oY/01YJfa4JNMDM810YMFACjNoEpYRyypYzUO5H9W4dgSBmYh+COXgChDhzVIX
-         8eC8En/IMz16vAqBLyutM7oQNcOxqHloGg30nwEyuADqtTKv2gRWmRgnm1REGS+OeGtE
-         w+2BPV+t1OSypv4FYkLbyK5deUC30vMRrtf6HmVE0p8KmP448oW7AMUvBKwGtdSeZbHl
-         O9qg==
+        bh=mPR2LyWHC7V2mHiJFgdpx8J9fEtaa30lYWGVtYQNHIM=;
+        b=ET7OlImUw4gPrqHMnlCM93gUv6ePZ9IKVid+uAWY+gkhK3VAP/mi0nF1sLR26inAhf
+         wFUFJPWtw3BuzbTzHtBKOuTKjOzlGU8GBvmH5X9fu9mrlOkSxTz92SYvU56LQrO82Lp0
+         c9+z+2avmL8MCNlsQCF20/+MzKzQPLU0glj7B1CSNehMQff7t4H/I5Lok4hQiiE/Vcrz
+         gS3nz5wzxd2HCf+DNUveyHkYdWn1ojRkySa1Xom1VDSZz3yP52fKxN398Kkv0KoQFQQS
+         nHxKB3/Tj8pmF1IgnUXsahQ4TzDFYwgcO6IYQK9t1NC3b6/HmzA1SDY9FJ4dTg/iXuSi
+         IbSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717163988; x=1717768788;
+        d=1e100.net; s=20230601; t=1717164617; x=1717769417;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2V7WBS25SmdsXaMTYWzCA59w0mTNLYNiYWousfxzfmw=;
-        b=LCfvAjImEnHCiND4OWjDv7+kizBbOS4hdjrG7AwuOBvBLFgU8OvLOKSuS3C6vY8tGU
-         BQAukRpJWRLgYp0IuSWRt5Q82DC6QXvBoBxMlJ6l7VYlEpRJ+lG7dAxCLLMClWJQz6Hr
-         VtcdU0ufmOpS9o0qWc9jpt4uFGu1q0gzdpEpWDmXH7NpM7evMVwRDcmMGzAHVEw4aCfk
-         8O5kIIi/rn0qV9qRRgHp1RcnJwsCobCGdSUSW8/OK58aa36d/IpW+bVeC0AuATs08SIO
-         RS0bTE3zyV8cu+1Orhe8eQfcHvGLUKd2NmFutBrv5kIB6iJrBmr/qEdlKDswblGGMngf
-         RXXw==
-X-Gm-Message-State: AOJu0Yxmk3kRPYHwth9dzrhS6uipGlKNO0xgk9IhoQ5EY0V+RhOCeeCm
-	8IPkQUDRQdDZgrWPoaVLoCSF4LGIbkLBAkoVi/upfeWXRZsy2ir5nhkrRgGf5Bw=
-X-Google-Smtp-Source: AGHT+IH45MWOZoKvccPjHZHoSKYSNAYfQazCqR62AEuhUS9Z5/GzyMWu/eiLRM0ik0wFZv1Mv/Lg3Q==
-X-Received: by 2002:a2e:90d6:0:b0:2e9:756f:cdee with SMTP id 38308e7fff4ca-2ea951f94f1mr14696341fa.48.1717163987803;
-        Fri, 31 May 2024 06:59:47 -0700 (PDT)
+        bh=mPR2LyWHC7V2mHiJFgdpx8J9fEtaa30lYWGVtYQNHIM=;
+        b=fC8ENAgtO+7yIClOrBL1faPP/CbLnZvCAjte8/ZQVU3EjSoX/ChxVAW0mfxjmjd0rq
+         7nNEQnLs+TWU1mOrpfkgcTuwtpXp5/n7YiwQpHFSilmpweg+h+JlouA0CWO1KimHYlP4
+         sjz0oVg48zHLBMMnLAeYp/oa7JLK0bHGlSYupUuKaqDNVzlV0cMTteZnxDxbzfBb71DR
+         yZzB+/59Fuy1xDKqpfpjsCA7kcvGU6AseFV/I37/oozSfI6BEq86LwkM04QknzLswo8n
+         aLlpV85KuliC/ZmHfixQCPAK+yRvVUD1EqLImoltDvIhXEEWzQIAaaNgttfE06aPmMcG
+         9zhw==
+X-Gm-Message-State: AOJu0YxQAZl0lrh1V8MRwDIg39E23B3IJZdJjbDcjjnCfQkX8QgdYRUX
+	wMgei9Av+3/dHyxNSYoHC7NSCJvA2ZpPSoHwixSTQ9zEWwYixD/TJV5gKRo/Nbs=
+X-Google-Smtp-Source: AGHT+IFn7A4k4LEyrEzijYgpXSx5Ms0q7JVabh6m86OjALv+pELNTDwZYtDeZmRYSLYtm3cGKEvllg==
+X-Received: by 2002:a2e:9149:0:b0:2e4:14a0:4d15 with SMTP id 38308e7fff4ca-2ea951d59f4mr14325421fa.51.1717164616720;
+        Fri, 31 May 2024 07:10:16 -0700 (PDT)
 Received: from [192.168.2.24] ([110.93.11.116])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd04da29csm1933114f8f.55.2024.05.31.06.59.46
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4212b101419sm20193715e9.1.2024.05.31.07.10.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 06:59:47 -0700 (PDT)
-Message-ID: <6add7e35-a290-44cb-9a3d-376ace65c058@linaro.org>
-Date: Fri, 31 May 2024 15:59:45 +0200
+        Fri, 31 May 2024 07:10:16 -0700 (PDT)
+Message-ID: <5ee9142e-2e7a-4e5a-9225-20b71eb07ce9@linaro.org>
+Date: Fri, 31 May 2024 16:10:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: clock: qcom: Add SA8775P video clock
+Subject: Re: [PATCH 09/13] dt-bindings: clock: qcom: Add SA8775P camera
  controller
 To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -88,7 +88,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, quic_jkona@quicinc.com,
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20240531090249.10293-1-quic_tdas@quicinc.com>
- <20240531090249.10293-8-quic_tdas@quicinc.com>
+ <20240531090249.10293-10-quic_tdas@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -135,99 +135,76 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240531090249.10293-8-quic_tdas@quicinc.com>
+In-Reply-To: <20240531090249.10293-10-quic_tdas@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/05/2024 11:02, Taniya Das wrote:
-> Add device tree bindings for the video clock controller on Qualcomm
-> SA8775P platform.
+> Add device tree bindings for the camera clock controller
+> on Qualcomm SA8775P platform.
 > 
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  .../bindings/clock/qcom,sa8775p-videocc.yaml  | 75 +++++++++++++++++++
->  .../dt-bindings/clock/qcom,sa8775p-videocc.h  | 47 ++++++++++++
->  2 files changed, 122 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,sa8775p-videocc.h
+>  .../bindings/clock/qcom,sa8775p-camcc.yaml    |  76 +++++++++++++
+>  .../dt-bindings/clock/qcom,sa8775p-camcc.h    | 107 ++++++++++++++++++
+>  2 files changed, 183 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sa8775p-camcc.h
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
 > new file mode 100644
-> index 000000000000..3edb29d0e5eb
+> index 000000000000..0f8e4ee5e386
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
-> @@ -0,0 +1,75 @@
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
+> @@ -0,0 +1,76 @@
 > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sa8775p-videocc.yaml#
+> +$id: http://devicetree.org/schemas/clock/qcom,sa8775p-camcc.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Qualcomm Video Clock & Reset Controller on SA8775P
+> +title: Qualcomm Camera Clock & Reset Controller on SA8775P
 > +
 > +maintainers:
 > +  - Taniya Das <quic_tdas@quicinc.com>
 > +
 > +description: |
-> +  Qualcomm video clock control module provides the clocks, resets and power
-> +  domains on SA8775P.
+> +  Qualcomm camera clock control module provides the clocks, resets and power
+> +  domains on SA8775p.
 > +
-> +  See also:: include/dt-bindings/clock/qcom,sa8775p-videocc.h
-
-Just single ':'
-
+> +  See also::
+> +    include/dt-bindings/clock/qcom,sa8775p-camcc.h
 > +
 > +properties:
 > +  compatible:
 > +    enum:
-> +      - qcom,sa8775p-videocc
-
-I am not sure if you are sure what you are doing... so to clarify:
-SA8775p is going significant bindings rework, so in general please post
-bindings matching new firmware (so SCMI consensus) or something which
-will be stable.
-
-Don't post something which tomorrow will need changes.
-
-Does this binding fits new style or is going to be considered stable?
-
-> +
-> +  reg:
-> +    maxItems: 1
+> +      - qcom,sa8775p-camcc
 > +
 > +  clocks:
 > +    items:
-> +      - description: Video AHB clock from GCC
+> +      - description: Camera AHB clock from GCC
 > +      - description: Board XO source
 > +      - description: Board active XO source
-> +      - description: Sleep Clock source
+> +      - description: Sleep clock source
+
+Same comments (see my patchset adding qcom,gcc.yaml ref).
+
 > +
 > +  power-domains:
 > +    maxItems: 1
 > +    description:
-> +      MMCX power domain.
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  '#reset-cells':
-> +    const: 1
-> +
-> +  '#power-domain-cells':
-> +    const: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - power-domains
-> +  - '#clock-cells'
-> +  - '#reset-cells'
-> +  - '#power-domain-cells'
+> +      A phandle and PM domain specifier for the MMCX power domain.
 
-Drop redundant properties and reference qcom,gcc.yaml.
+Here and in other patches, just replace it with
+items:
+ - description: MMCX power domain
 
-> +#endif
+(two lines instead of three, dropping redundant pieces of sentence)
+
+In general, please avoid making redundant code. We all understand how it
+works and efficient binding or code is better than obfuscated long
+sentence saying that phandle is a phandle.
+
 
 Best regards,
 Krzysztof
