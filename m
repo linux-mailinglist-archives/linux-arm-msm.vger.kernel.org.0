@@ -1,104 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-21318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 346ED8D668E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 18:16:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 623EC8D66A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 18:18:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 65A9A1C2348A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:16:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA5551F224C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:18:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 159F91761B8;
-	Fri, 31 May 2024 16:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C95C3D57E;
+	Fri, 31 May 2024 16:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VMfbo/Pk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="llSl65jg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9D9176187;
-	Fri, 31 May 2024 16:14:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5D2768EC;
+	Fri, 31 May 2024 16:18:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717172079; cv=none; b=kP0T8gOo/FoXhHFePcBGHgArD/NaCPaqPmJG1v904584LgCEVtHte4Fh26Zt1jHMXGPfaH10xkrAMeHg6hkypVAW+8aUF52gHs/u5jGyoQqZqpnb+bULc2slkKF0VJPyB2wtQ/c20xvSWcSY1VdCzybgzlwcEKi9m6pl+/LKYrk=
+	t=1717172320; cv=none; b=LjiI7jAswEu9OTLFkEM7Vlc/JGPQu8iZ97cxmLcVXKbQzP43k9nFbQae2//GMRdqN/uKF7Toeo1gwqoALTNoQb2BDjROiX5+iphXncu46umLtCepjnPXzfPGvs6MaTDcPFbu4HL+EeGDRuPUVGYgRVQ432wa+da6tevQwFrO28I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717172079; c=relaxed/simple;
-	bh=QdzlEyMDhhnNbePJUWmMm+1/sM2F1xaHRBUXUSNsT1c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=heK0GoCOLixrik9Nbkxami0EQaxlpArup4U/FyhbQhOmpEeHye8UhZDhII+sySFouTBQ6opTF2+1yQ6EwKrZwjh0K3DjYDyI1Y6zR90mr3YPduUgPlUzScBK54RkSSi3/37Re0iamWuTmbJEl1R4cfW+5OIafcUHLXMZa3we9dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VMfbo/Pk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6ECC4AF09;
-	Fri, 31 May 2024 16:14:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717172078;
-	bh=QdzlEyMDhhnNbePJUWmMm+1/sM2F1xaHRBUXUSNsT1c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VMfbo/PkJZXLjoSvSALFUeQNFcjVwL+/keE0mRGIzlnsx29xKsfizstNisWtcNwXO
-	 X2XB8sAfudxx9gmPoBLZ1C2zvht2W+s0k4IG37vFpZCMLSal+KCgQV3QzpUmzwLt4J
-	 s6mCstHLL0pB5+SjwfSV1JEIsDABEdoRC0tQVdzjjw53PsspkE6HoW/6fOqLWyhR5G
-	 0JVoWAZkmjXIyoIjEDZZ49Mm2qHZHNT8o560N6Q8jaPyK0JtF7vAegrlQhLJ+Nzgb2
-	 F5TIZP9TzQ9vmRvv37VINXY9mek7B1MFTjNU8fkMLM2q3SwHgsIn+s0b3eOph6T7T3
-	 hdvQIPnVJGdnQ==
-Date: Fri, 31 May 2024 17:14:33 +0100
-From: Lee Jones <lee@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,spmi-pmic: Document PMC8380
- and SMB2360
-Message-ID: <20240531161433.GU1005600@google.com>
-References: <20240529-topic-x1e_pmic-v1-0-9de0506179eb@linaro.org>
- <20240529-topic-x1e_pmic-v1-1-9de0506179eb@linaro.org>
+	s=arc-20240116; t=1717172320; c=relaxed/simple;
+	bh=Hj0vEj7c6cwkA2oKS33jVheiYDaPMJ2IGapRx0pjAt4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QkVQamxboS6pzdpZQgfItjupRKYdf+fucMJzZxXYKVKEpzjwyGRzRg5qsk+cZVvXbbhKrIDHpB+z3V5JHMG8f/jIdhHDicuaWUopFnFOPLxHRSxra0ggxsm168vqikc9ddha2Bj3LUulDtqaz2o9BqvKwFR8viM2IgNO39Zw4Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=llSl65jg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44VBU6U8003487;
+	Fri, 31 May 2024 16:18:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	sIzFseeuuSm8HDVz4Niia26WaDuHcYXYVvYEjMLmYRo=; b=llSl65jgBGSzOihl
+	TE+3umfmpofxGgqxapf1wsjiZLdCQYiTKbobCUT8RM32lXueZ9vxKrX0aXUA5W5P
+	iwrexnFIFBkLoCsYBMo9r94haIMbqdX8X9XMW4WjPq+fIyo+oZwUcWsq7v89Vk2t
+	zhZOhLt1AtqF3Ku6fRhqP5BQbfEQOQJO627rtH7fDbQT2iTcVQ2VSth6cC8NpOf0
+	kRxVh4NQfg+Z1BtIpz890Zh8lO9OSoyud8QJ89//bFWoc6DpeyVe/jQypDexiN0J
+	Cz7v5/U8xWYBEqSrOZPifBF1Zof7sp8YGECw222ouNrdERSUsqYlzRGCYoCXMRzi
+	dOPgHA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yesw5kee4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 16:18:10 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44VGI8Kw013354
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 16:18:09 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 31 May
+ 2024 09:18:07 -0700
+Message-ID: <7428a2f7-befc-6db8-76f4-3ca8dc12d31c@quicinc.com>
+Date: Fri, 31 May 2024 10:18:07 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240529-topic-x1e_pmic-v1-1-9de0506179eb@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v3 0/3] drm/panel-edp: remove several legacy compatibles
+ used by the driver
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Douglas Anderson
+	<dianders@chromium.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        "Jessica
+ Zhang" <quic_jesszhan@quicinc.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie
+	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC: <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-rockchip@lists.infradead.org>
+References: <20240531-edp-panel-drop-v3-0-4c98b2b95e3a@linaro.org>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20240531-edp-panel-drop-v3-0-4c98b2b95e3a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: KDqy62VT-sUlJKS5paT22JNBEFfhfxT7
+X-Proofpoint-GUID: KDqy62VT-sUlJKS5paT22JNBEFfhfxT7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-31_12,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 phishscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 clxscore=1011 spamscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405310122
 
-On Wed, 29 May 2024, Konrad Dybcio wrote:
-
-> These are just some more PMICs adjacent to X1 SoCs. Document them.
+On 5/30/2024 5:12 PM, Dmitry Baryshkov wrote:
+> There are two ways to describe an eDP panel in device tree. The
+> recommended way is to add a device on the AUX bus, ideally using the
+> edp-panel compatible. The legacy way is to define a top-level platform
+> device for the panel.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+> Document that adding support for eDP panels in a legacy way is strongly
+> discouraged (if not forbidden at all).
 > 
-> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> index b7f01cbb8fff..a2b2fbf77d5c 100644
-> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-> @@ -75,6 +75,7 @@ properties:
->            - qcom,pma8084
->            - qcom,pmc8180
->            - qcom,pmc8180c
-> +          - qcom,pmc8380
->            - qcom,pmd9635
->            - qcom,pmi632
->            - qcom,pmi8950
-> @@ -95,6 +96,7 @@ properties:
->            - qcom,pmx65
->            - qcom,pmx75
->            - qcom,smb2351
-> +          - qcom,smb2360
+> While we are at it, also drop legacy compatible strings and bindings for
+> five panels. These compatible strings were never used by a DT file
+> present in Linux kernel and most likely were never used with the
+> upstream Linux kernel.
+> 
+> The following compatibles were never used by the devices supported by
+> the upstream kernel and are a subject to possible removal:
+> 
+> - lg,lp097qx1-spa1
+> - samsung,lsn122dl01-c01
+> - sharp,ld-d5116z01b
 
-Abel already added this in:
+Ok to drop the sharp one I added.  It should be able to be handled by 
+the (newish) edp-panel, but I think the TI bridge driver needs some work 
+for the specific platform (no I2C connection) to verify.
 
-  dt-bindings: mfd: qcom-spmi-pmic: Document SMB2360 PMIC
-
-I've made changes to the commit message to reflect it.
-
--- 
-Lee Jones [李琼斯]
+-Jeff
 
