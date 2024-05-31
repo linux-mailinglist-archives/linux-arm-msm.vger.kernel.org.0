@@ -1,85 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-21345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C5D18D693F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 20:53:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0E788D69B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 21:21:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3DCAE1C21AF7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 18:53:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 592AC282422
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 19:21:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 935497EEF5;
-	Fri, 31 May 2024 18:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33D471C6AE;
+	Fri, 31 May 2024 19:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LPU2yyuK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FGqxP/ba"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCA17E761;
-	Fri, 31 May 2024 18:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6584017D371
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 19:20:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717181610; cv=none; b=W4jm0eq++NEXv+5UBt8brub9Lk+e/uYv7SAiq5OByUj9ODwKi0y2d4LPeOZLV+QE5kLqVpiZFYLDwYcYUo5jBChYhGS3UasZ22h/caUZvvKdFLJcLcPDQZb9jUAPKKggfbvMpsRPYnklelK70V3YWFVHB4Y18EcFvtuFPAnxdOM=
+	t=1717183244; cv=none; b=EtINy5F0YYizMIr8VRiUsZwIExoFfVRJWeqeF9eEhEGwVGqfeBsh/lAikdY4MP4xRAtp1GCbB46kFdvY8agHBYaEHZ4bMZCMexxGpwWiG9RPnwwmu3vx++7/rrafDB9TUJewepG7fq09BtQ2FUDLbT+MaEZDkp7NQvak4ew76JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717181610; c=relaxed/simple;
-	bh=kP2teycQbL2Gc6/fKZ6aB8TWymQ7VtmJws0fyRjuoSs=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=QpVd5S9qxuCTuObxuiVBJLyjR8az3756BIZndaOxYPebQ6WmycfbHuLsN8XxXquVwAS6HV80cok97cD3aFOc5Ec7vcCFAFkfkQasn+4BY6DQMiKF1abldf0fMUukfWihCPt3T5krZbpkAC/03/WxoWfG6trTwEiYIidPu4tTxxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LPU2yyuK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CCCC116B1;
-	Fri, 31 May 2024 18:53:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717181610;
-	bh=kP2teycQbL2Gc6/fKZ6aB8TWymQ7VtmJws0fyRjuoSs=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=LPU2yyuKc1kxS15QMNDL0ebEIhqNUtLH5hw1khLndbJVeXI/e4OBBbK7z3kn+9OhP
-	 BT5PD/PIsBAdW4rDlLBe3gQjqFShgjLw6TvJoqd6zUH8r7IvMwaf72SCgQ9kQhsRMu
-	 56XdZg8e2r2leNQZ8wfNsNpMrykucZ+gUXN91EOZNHmyaGMh/rTxR179x5AtQRwhxC
-	 MoUbH1oGToEwEhUo+KbEKgPmQQ7xMUAMhjCtLYC8ngeeDd4bp3i6JbLdL+spBaWCR8
-	 cN2/tDvITUgArD5GbLNmMb0pB+ZGXNc23+SutWhroGl0hggOT1SrIuPW6y1QV+W018
-	 u1AUCaZI/Y/pg==
-From: Kalle Valo <kvalo@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
- <konrad.dybcio@linaro.org>,  Loic Poulain <loic.poulain@linaro.org>,
-  Mathieu Poirier <mathieu.poirier@linaro.org>,  Rob Herring
- <robh@kernel.org>,  Krzysztof Kozlowski <krzk+dt@kernel.org>,  Conor
- Dooley <conor+dt@kernel.org>,  linux-kernel@vger.kernel.org,
-  linux-arm-msm@vger.kernel.org,  wcn36xx@lists.infradead.org,
-  linux-wireless@vger.kernel.org,  linux-remoteproc@vger.kernel.org,
-  devicetree@vger.kernel.org,  Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 02/12] wifi: wcn36xx: make use of QCOM_FW_HELPER
-References: <20240521-qcom-firmware-name-v1-0-99a6d32b1e5e@linaro.org>
-	<20240521-qcom-firmware-name-v1-2-99a6d32b1e5e@linaro.org>
-Date: Fri, 31 May 2024 21:53:25 +0300
-In-Reply-To: <20240521-qcom-firmware-name-v1-2-99a6d32b1e5e@linaro.org>
-	(Dmitry Baryshkov's message of "Tue, 21 May 2024 12:45:22 +0300")
-Message-ID: <87ed9hvmmy.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1717183244; c=relaxed/simple;
+	bh=YciA7wnf/xEiXXV3DT2yhdi7reJOqCO68pkmWpqxoZM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bt9xSerHqxoiMOeF/63OgWeDe8hxbqPj8UNFLtoQ28naGQFrNiqJ/f5L5Evnn99ZqY+n3cLXLgrDw7BgelFX6px9PIyUsXnEm3S1OUGZteSyNh6mJBn5MtiF5SeQvKccsFmN9wiV4EwwaxX/y7jUfjwj29UkWu8Q26PdU678Iqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FGqxP/ba; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44V9pdKr020271;
+	Fri, 31 May 2024 19:20:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kqKB2jYXheZELMsA21rtGvK2W27mOFwUt2NJ8nuCxOw=; b=FGqxP/baQmYSUOUs
+	U8GuvOc571bueu6P5VEjJZymka2ZHLrOTtVewHspZOs66xQ7rFOQ9gglT5lMhPvl
+	ZOPjbt3p2QRNyJXX4A9uifYpGeezwnPUVjR6MG5dBmW/0lKZKeAzAyWjPe5gRM3A
+	JYHUieZOFz+G2ZqHpWc6WiznOOxWFUIYyEsek0hRV1Eq8mvkdWmNCgLyE5nI+HkJ
+	Kr775/8XQWJ86RHMCBzwa2/uf94Xr2tO99nhslqzvqJ1PouLommyGoUPWE1VaHMB
+	gI5kzvsJEfeu54VHR3MxmuipiX6/9FRaszFw1uLRulzgvT8rKUwTIY8SK8wyHEVn
+	0K6pEw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba2hfut8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 19:20:31 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44VJKUSA008363
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 19:20:30 GMT
+Received: from [10.110.101.193] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 31 May
+ 2024 12:20:26 -0700
+Message-ID: <9e0e22b0-965b-00b2-c837-904dd342e87f@quicinc.com>
+Date: Fri, 31 May 2024 12:20:24 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 05/13] drm/msm/dpu: move scaling limitations out of the
+ hw_catalog
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-6-dmitry.baryshkov@linaro.org>
+ <6a335026-77c1-a112-69af-a8d9d86d5528@quicinc.com>
+ <CAA8EJpqKkTOkhrgJexw-D5TbgGYjBoUup3FHC80boR_cAUb2dA@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqKkTOkhrgJexw-D5TbgGYjBoUup3FHC80boR_cAUb2dA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QleXmQWfyTgdO-XAxI8JypqGcNxrBtXJ
+X-Proofpoint-ORIG-GUID: QleXmQWfyTgdO-XAxI8JypqGcNxrBtXJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-31_12,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ phishscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405310147
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-> Make the driver use qcom_fw_helper to autodetect the path to the
-> calibration data file.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Not a fan of one sentence commit messages. It would be nice to explain a
-bit more in the commit message, for instance answering to the question
-'why?' and maybe provide a short example how this is supposed to work?
+On 5/31/2024 1:16 AM, Dmitry Baryshkov wrote:
+> On Fri, 31 May 2024 at 04:02, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+>>> Max upscale / downscale factors are constant between platforms. In
+>>> preparation to adding support for virtual planes and allocating SSPP
+>>> blocks on demand move max scaling factors out of the HW catalog and
+>>> handle them in the dpu_plane directly. If any of the scaling blocks gets
+>>> different limitations, this will have to be handled separately, after
+>>> the plane refactoring.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 12 ------------
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 ----
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 16 +++++++++++++---
+>>>    3 files changed, 13 insertions(+), 19 deletions(-)
+>>>
+>>
+>> <Snip>
+>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> index 70d6a8989e1a..6360052523b5 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> @@ -785,12 +785,15 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+>>>        return 0;
+>>>    }
+>>>
+>>> +#define MAX_UPSCALE_RATIO    20
+>>> +#define MAX_DOWNSCALE_RATIO  4
+>>> +
+>>>    static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>                                  struct drm_atomic_state *state)
+>>>    {
+>>>        struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+>>>                                                                                 plane);
+>>> -     int ret = 0, min_scale;
+>>> +     int ret = 0, min_scale, max_scale;
+>>>        struct dpu_plane *pdpu = to_dpu_plane(plane);
+>>>        struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>>>        u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+>>> @@ -822,10 +825,17 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>        pipe_hw_caps = pipe->sspp->cap;
+>>>        sblk = pipe->sspp->cap->sblk;
+>>>
+>>> -     min_scale = FRAC_16_16(1, sblk->maxupscale);
+>>> +     if (sblk->scaler_blk.len) {
+>>> +             min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+>>> +             max_scale = MAX_DOWNSCALE_RATIO << 16;
+>>> +     } else {
+>>> +             min_scale = 1 << 16;
+>>> +             max_scale = 1 << 16;
+>>
+>> You can use DRM_PLANE_NO_SCALING instead.
+> 
+> Ack
+> 
+>>
+>>> +     }
+>>> +
+>>>        ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+>>>                                                  min_scale,
+>>> -                                               sblk->maxdwnscale << 16,
+>>> +                                               max_scale,
+>>>                                                  true, true);
+>>
+>> I am missing something here.
+>>
+>> As per the documentation of this API, min and max are the scaling limits
+>> of both directions and not max_upscale and max_downscale.
+>>
+>> **
+>> 837  * drm_atomic_helper_check_plane_state() - Check plane state for
+>> validity
+>> 838  * @plane_state: plane state to check
+>> 839  * @crtc_state: CRTC state to check
+>> 840  * @min_scale: minimum @src:@dest scaling factor in 16.16 fixed point
+>> 841  * @max_scale: maximum @src:@dest scaling factor in 16.16 fixed point
+>> 842  * @can_position: is it legal to position the plane such that it
+>>
+>>
+>> But this change is passing max_upscale and max_downscale as the min and
+>> max resp. Isnt that wrong?
+> 
+> First of all, please notice that I'm not changing the values that are
+> passed to the function. What was being passed beforehand gets passed
+> after this commit. I just moved it out of the catalog.
+> 
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+Ack.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> Second, if we take a look at drm_calc_scale(), we can see that it
+> calculates src / dst and checks that it is within the min_scale and
+> max_scale boundaries, just like documented.
+> In our case, the boundaries are (I'm omitting 16.16 math):
+> - upscale 20 times. dst = 20 * src, scale = src/dst = 1/20
+> - downscale 4 times. dst = 1/4 * src, scale = src/dst = 4
+> 
+> So, from the point of view of drm_calc_scale(), the min_scale is
+> 1/MAX_UPSCALE, max_scale = MAX_DOWNSCALE and the values the code is
+> passing are correct.
+> 
+
+That part is fine. Agreed.
+
+But I do think, that API is not correct if the scaling limits are 
+different in the Horizontal Vs Vertical direction as today it assumes 
+the limits are same in both. Anyway, thats outside the scope of this 
+patch. So I am good for now.
+
+>>
+>>
+>>>        if (ret) {
+>>>                DPU_DEBUG_PLANE(pdpu, "Check plane state failed (%d)\n", ret);
+> 
+> 
+> 
 
