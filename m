@@ -1,138 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-21320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E3928D66AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 18:21:23 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B1058D66B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 18:23:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9EFDF1C22A42
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:21:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1CE6B2171E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:23:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA4EE8061D;
-	Fri, 31 May 2024 16:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26C052CCB7;
+	Fri, 31 May 2024 16:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="a3G1jFCH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b7vMdJSK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306F637144
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 16:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E05286636
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 16:22:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717172479; cv=none; b=pkda9TNbM9ju4NSQiGB4vySM1LQFpiovz+sDsJiUnebIKeSnA6BIIDSKyJo5S7x4VDh/f4IURrAjbJPBB4btyBsKP9f/BMC3g0sLcLC3Ji+EFCkJtU+73AorTlZrR6eaexTgaFw9htKbSaYkgz8TsxuFO+b5q/h89zLe5N+QXfw=
+	t=1717172577; cv=none; b=Bn//q8/lWjCcV6v/KZ2VcSg5U/bd+xTG4Zm8aEjI9LDbbbZ6vFlHwC+7hbFKGKbCAkx2L80o49/5ZL6b+g/a1K2ok/95TE1a2fSNoOhKPeEkr+kzB7ogvYVG6Qz/FP4nMDUAU0Q46qIYgWfMoBQrNHbckzfUeM/NSFODsaDjrqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717172479; c=relaxed/simple;
-	bh=nvY8T8Ok0QulhK6MiIwjO6JnMW3LaS4gATuYYnuUhy4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OjuSGVHsedce0BfgAQ6IHXu12Tz7oHt2Fp/7drlLk5kN26VO8Ea4zlU7VOMM9cJPSzRWa+CN0Ny+KfKSK32Uuaxd2JZBr0ID/AoifpfboboXJOc7+/m/burvACTLGdtG3vxUsCaymlpvNrkQKfkaHjpkQal8ruzI2p7mcqtVwrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=a3G1jFCH; arc=none smtp.client-ip=209.85.222.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-794f61f7423so70036785a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 09:21:17 -0700 (PDT)
+	s=arc-20240116; t=1717172577; c=relaxed/simple;
+	bh=wRuzukfHTuY9txqqlUqVEoBDYzEHtslcBcqDMPuKaD4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jWFrPTQVStVXhPiJXFLY2hx4p0C5TfpmZa+JplXGhNUjM7JkHlVlNdPxAMF+QlCcHqhsVa7dIGunGWZR3Fx6tjkCWZOwmyCjfqPzMIpD3dc/+UmWov7eib/R+2Yr+fGkJnUaMj112PTJemsdLx+p7s4t2XHAl3O4GFbvKty1xOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b7vMdJSK; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52b03d66861so2476391e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 09:22:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1717172477; x=1717777277; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=siXueITpdXmllfrhOnciz2l6HSxbQMeuCE6GtcEy6a8=;
-        b=a3G1jFCHy1Ghhw6/DTUruHZJv13CKYdwDR6RGLDvZPdrsB/O1JKklDGGvOPmXTfkHo
-         Ip9Vd08iHkY4XiUC4ShUqPJoCja4vfJ2TK0lJ2hgsofy4BUxkWa0uZHF3zDeY1x/t0Ab
-         D+bPL3xYzn8406NTmelVDDOv5XjLDNYs7yJ2c=
+        d=linaro.org; s=google; t=1717172573; x=1717777373; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WU9HOi116oLiCRDppMSgfPzQnRzV0fHJZl34KYHTbeo=;
+        b=b7vMdJSKFvZpNoxy84XjSRcL1tNkGMKbKpvyS1mepLDzgMus7le6Y4/RQ25AmYTfMB
+         wMvDr294PtddE75Ninc7+aoJBa2GUHHdEIT0Us38MKGE9iJ7BdwErHoJYZF00azHZd2t
+         3WQp82CNLCTm9kNZTeBFvrrnCYGBZXZT/Hb6s7BMc9R6ELzh0+NpuLiaK3jdXeDl0KQU
+         F3B66cW2uadQ7XhCUyt1AH4ReuXvKKOkgKHn/IX6JAP6N7sC9nFa57yBxw1t0G6ncOsf
+         sZZw6b5GbJBt3pKyEq7wk2kyTPGG2qqUDh0knIu/gbjadK/sM5YTWiWFoyhohSz2E9ls
+         ziCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717172477; x=1717777277;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=siXueITpdXmllfrhOnciz2l6HSxbQMeuCE6GtcEy6a8=;
-        b=hqmnVzzxdlIOt3cE8vyG3Xs0C2rnezHbp7nM7mpgpsf4m9z8HPmUL92QKX7IsZ4BFZ
-         n2vSO+VEPt8XM6OdvXlCbaxVh1KnvmM31lOxUox7OffmkeKAhoDhL/YMEuACmxXQwxYM
-         xSO+CjQM+UlpJMgNdBqio+vGm6zAf0QQwNZPJrNXR9je3tYJbpu0SzPTiiH3E+IHcuxf
-         O13HdRiA+3+pe8Bohqd88a+kE7i8reSrvPmoVN4nBTl9Tjfd/bdNLYVW8v+uZl5+RxCW
-         Y8wqfP80K15rf5c8SOFp3fos5dcEsi+sPaT2H83DqWq8VoekRQTYrn1HubX3VGFXyZqr
-         wauA==
-X-Forwarded-Encrypted: i=1; AJvYcCU8ljVyBu6+AR5MVf7JGnIOI4SAwV+QiCrNxQX0TQCdoMF1ddjjnSSHeUTQSd8Q4HCePOrdncxU1dEZmZw0sqjpbka/v/UhfQivlt5CiQ==
-X-Gm-Message-State: AOJu0YyTe+j8F8zJcFHE0ut0+fkauCWiUTqi3UMJMC7849PCHQ4XQvhl
-	e5EYJs2CICOZGz09MX0ZPBUcYrYthtyS03i1DAiulp2kZ6gNeX633tOdhXYzp8lJ8jSxHYngc+W
-	cLUQn
-X-Google-Smtp-Source: AGHT+IFJflgLPEwQ9zrtBjyoDkFE2hnGL/zqt/X4BXkFDW6KhXWpe4aoRKFy6cWBeCa8gguWtZ8DrQ==
-X-Received: by 2002:a05:620a:21c4:b0:794:f22e:c171 with SMTP id af79cd13be357-794f5c73de5mr238876585a.31.1717172476641;
-        Fri, 31 May 2024 09:21:16 -0700 (PDT)
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com. [209.85.160.175])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-794f3017cafsm68775685a.65.2024.05.31.09.21.15
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1717172573; x=1717777373;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WU9HOi116oLiCRDppMSgfPzQnRzV0fHJZl34KYHTbeo=;
+        b=EvnHZ5TIpwbtKgCb++36HaU1WS5ABm9soDRt3c1zsG5p6mvp0mNRrpaCvtc7z0FMoj
+         mIDpOIaHlYIWlaCEFuXwSINV3Kmg+mA2Ve+aCNxAqRDfLWbJf8X1hE9UHFVyt5L/nIg0
+         Cdu17Ql9PvfgIdMmQxOEgWwckrwRoTNlaajlDGmSmANhndvl9SHkWpZAQmLA6DkSR0RJ
+         DLM4rpIQ0jNJz2qsoBRnyIixpKIlOMmmOeMkDVPSWkafDKtAsM8J4oi4uTlVkWZZ7x3z
+         VZSkL3Q/V7C0S8h7Hzygfaw4xz2s3jRGgbhjoHkLJRqnIk2GIBHM7mzsHCly8m2j8E01
+         Fi8A==
+X-Forwarded-Encrypted: i=1; AJvYcCU/KEFYq9ismE5AKY5aDs9NfXSToIHuuoEouLAjK9A3KjGm4UpOYYnVyDrDPpah6rQVpXL9ldzD1jFLWvnYlwCMWOu7WUAl2nIgsI2Kog==
+X-Gm-Message-State: AOJu0Yw8QCRliocnG3NGEeJCZMBFULW6m9wHjW0Tt24XV1xzpIBzRFaH
+	9JTvZ6o1MZcLKDCg4dMhuoNAA1lmvXVnXRr8BFB/9Eu/DpttGv7CwbaLp1355Xs=
+X-Google-Smtp-Source: AGHT+IGZUoNx/1dQAVFESaKpl/hXh+mkCRbaj3zxnaE0lHE3CM6IhRyVNT/hOJYxM6CIhhcE2RwxhQ==
+X-Received: by 2002:ac2:4d90:0:b0:529:b6b4:7e3c with SMTP id 2adb3069b0e04-52b8970c17dmr1550674e87.45.1717172573230;
+        Fri, 31 May 2024 09:22:53 -0700 (PDT)
+Received: from [192.168.0.3] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd064bba6sm2161697f8f.104.2024.05.31.09.22.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 09:21:16 -0700 (PDT)
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-43f87dd6866so435701cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 09:21:15 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWy9MP/eMRLwqqDFPKy0oWHdtPjMSaC73X+X/8PnveVtnygSYSwUlaUL223FSoh+vbwV0yt6qVk2V7MiVaUiJb346AZLW+yO/qC8Hlc+Q==
-X-Received: by 2002:a05:622a:4a14:b0:43f:b19e:d3ba with SMTP id
- d75a77b69052e-43ff2c5399bmr3052241cf.8.1717172475232; Fri, 31 May 2024
- 09:21:15 -0700 (PDT)
+        Fri, 31 May 2024 09:22:52 -0700 (PDT)
+Message-ID: <3f9e58f2-86e4-4ac4-bf48-22d12d5ae4e9@linaro.org>
+Date: Fri, 31 May 2024 17:22:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240531-edp-panel-drop-v3-0-4c98b2b95e3a@linaro.org> <7428a2f7-befc-6db8-76f4-3ca8dc12d31c@quicinc.com>
-In-Reply-To: <7428a2f7-befc-6db8-76f4-3ca8dc12d31c@quicinc.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 31 May 2024 09:20:56 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xcq-p5OxSnDJVF-Wp88ZfXOaOKJmh941ymy-f0wkhdhw@mail.gmail.com>
-Message-ID: <CAD=FV=Xcq-p5OxSnDJVF-Wp88ZfXOaOKJmh941ymy-f0wkhdhw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] drm/panel-edp: remove several legacy compatibles
- used by the driver
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/14] mfd: pm8008: fix regmap irq chip initialisation
+To: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Das Srinagesh <quic_gurus@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Stephen Boyd <swboyd@chromium.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Andy Shevchenko <andy.shevchenko@gmail.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org
+References: <20240529162958.18081-1-johan+linaro@kernel.org>
+ <20240529162958.18081-3-johan+linaro@kernel.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240529162958.18081-3-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 29/05/2024 17:29, Johan Hovold wrote:
+> The regmap irq array is potentially shared between multiple PMICs and
+> should only contain static data.
+> 
+> Use a custom macro to initialise also the type fields and drop the
+> unnecessary updates on each probe.
+> 
+> Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>   drivers/mfd/qcom-pm8008.c | 64 ++++++++++++++-------------------------
+>   1 file changed, 23 insertions(+), 41 deletions(-)
+> 
+> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+> index 3ac3742f438b..f71c490f25c8 100644
+> --- a/drivers/mfd/qcom-pm8008.c
+> +++ b/drivers/mfd/qcom-pm8008.c
+> @@ -56,15 +56,25 @@ static unsigned int pm8008_config_regs[] = {
+>   	INT_POL_LOW_OFFSET,
+>   };
+>   
+> -static struct regmap_irq pm8008_irqs[] = {
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_UVLO,	PM8008_MISC,	BIT(0)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_OVLO,	PM8008_MISC,	BIT(1)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_OTST2,	PM8008_MISC,	BIT(2)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_OTST3,	PM8008_MISC,	BIT(3)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_LDO_OCP,	PM8008_MISC,	BIT(4)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_TEMP_ALARM,	PM8008_TEMP_ALARM, BIT(0)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_GPIO1,	PM8008_GPIO1,	BIT(0)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_GPIO2,	PM8008_GPIO2,	BIT(0)),
+> +#define _IRQ(_irq, _off, _mask, _types)			\
+> +	[_irq] = {					\
+> +		.reg_offset = (_off),			\
+> +		.mask = (_mask),			\
+> +		.type = {				\
+> +			.type_reg_offset = (_off),	\
+> +			.types_supported = (_types),	\
+> +		},					\
+> +	}
+> +
+> +static const struct regmap_irq pm8008_irqs[] = {
+> +	_IRQ(PM8008_IRQ_MISC_UVLO,    PM8008_MISC,	BIT(0), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_MISC_OVLO,    PM8008_MISC,	BIT(1), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_MISC_OTST2,   PM8008_MISC,	BIT(2), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_MISC_OTST3,   PM8008_MISC,	BIT(3), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_MISC_LDO_OCP, PM8008_MISC,	BIT(4), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_TEMP_ALARM,   PM8008_TEMP_ALARM,BIT(0), IRQ_TYPE_SENSE_MASK),
+> +	_IRQ(PM8008_IRQ_GPIO1,	      PM8008_GPIO1,	BIT(0), IRQ_TYPE_SENSE_MASK),
+> +	_IRQ(PM8008_IRQ_GPIO2,	      PM8008_GPIO2,	BIT(0), IRQ_TYPE_SENSE_MASK),
+>   };
+>   
+>   static const unsigned int pm8008_periph_base[] = {
+> @@ -143,38 +153,9 @@ static struct regmap_config qcom_mfd_regmap_cfg = {
+>   	.max_register	= 0xFFFF,
+>   };
+>   
+> -static int pm8008_probe_irq_peripherals(struct device *dev,
+> -					struct regmap *regmap,
+> -					int client_irq)
+> -{
+> -	int rc, i;
+> -	struct regmap_irq_type *type;
+> -	struct regmap_irq_chip_data *irq_data;
+> -
+> -	for (i = 0; i < ARRAY_SIZE(pm8008_irqs); i++) {
+> -		type = &pm8008_irqs[i].type;
+> -
+> -		type->type_reg_offset = pm8008_irqs[i].reg_offset;
+> -
+> -		if (type->type_reg_offset == PM8008_MISC)
+> -			type->types_supported = IRQ_TYPE_EDGE_RISING;
+> -		else
+> -			type->types_supported = (IRQ_TYPE_EDGE_BOTH |
+> -				IRQ_TYPE_LEVEL_HIGH | IRQ_TYPE_LEVEL_LOW);
+> -	}
+ick
 
-On Fri, May 31, 2024 at 9:18=E2=80=AFAM Jeffrey Hugo <quic_jhugo@quicinc.co=
-m> wrote:
->
-> On 5/30/2024 5:12 PM, Dmitry Baryshkov wrote:
-> > There are two ways to describe an eDP panel in device tree. The
-> > recommended way is to add a device on the AUX bus, ideally using the
-> > edp-panel compatible. The legacy way is to define a top-level platform
-> > device for the panel.
-> >
-> > Document that adding support for eDP panels in a legacy way is strongly
-> > discouraged (if not forbidden at all).
-> >
-> > While we are at it, also drop legacy compatible strings and bindings fo=
-r
-> > five panels. These compatible strings were never used by a DT file
-> > present in Linux kernel and most likely were never used with the
-> > upstream Linux kernel.
-> >
-> > The following compatibles were never used by the devices supported by
-> > the upstream kernel and are a subject to possible removal:
-> >
-> > - lg,lp097qx1-spa1
-> > - samsung,lsn122dl01-c01
-> > - sharp,ld-d5116z01b
->
-> Ok to drop the sharp one I added.  It should be able to be handled by
-> the (newish) edp-panel, but I think the TI bridge driver needs some work
-> for the specific platform (no I2C connection) to verify.
+A no-brainer improvement.
 
-Is the platform supported upstream? If so, which platform is it? Is
-the TI bridge chip the ti-sn65dsi86? If so, I'm confused how you could
-use that bridge chip without an i2c connection, but perhaps I'm
-misunderstanding. :-P
-
-Thanks!
-
--Doug
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
