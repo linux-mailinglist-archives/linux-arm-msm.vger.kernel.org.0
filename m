@@ -1,166 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-21358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A53038D6A2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 21:55:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 915B08D6A51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 22:07:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0B9DB20C08
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 19:55:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43E732865B3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 20:07:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 022C27FBBD;
-	Fri, 31 May 2024 19:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE98817D376;
+	Fri, 31 May 2024 20:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EGRRAnyn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f3hjcWYg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0E0380
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 19:55:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CF21946F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 20:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717185333; cv=none; b=eGCLVGEoPyv59u/W1A6XcsGUHLV1vTppN4g/KlCwWpG+gHC0b4Jr2QznpLcRIlhQl6pwL1P9/EUYVS1zAgP73Fvhd8KsFhT8sazVZ8f15qjldHY+K/+hsCt/qNcYlssPPoXmBj9O+25hHp+mSE2R1/pCnetXWW2uL4yJqiK5n0U=
+	t=1717186053; cv=none; b=KoaSCudGgPPUCR63yH5HMx7X42exiT6gN9tZ29s88jKGKiQwIqIfsTHFW/Sx6UoMdNk5UrgTis5+hEMpyBpljCn0+hodyl0qkPQYGUytltkhQ1DwgCwL4hag4D0j8q0W5Z8aSUFCywS0Dk74EuUejX3eRbr+j0o+ZMJiFBSMrHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717185333; c=relaxed/simple;
-	bh=X+W2TzIrXrsijhv99v8qX9im0q8qFS0iVU1HH5EZ9Uk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TNi3mKfAyVKxEUTNF1P63EmehpxCmWMyYaVj545yTvITzjhkIGdLSBmd7nqn8y7yI3vxgbL+snQewZN1fYt8iuYlXtEB7hlh92QoK3Su3K/D8eRTWDfRdWJL9N7n/0pr1fnt2DwjHdJLuFsszsHY37KlYOvn0tNScq/SwFBKOOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EGRRAnyn; arc=none smtp.client-ip=209.85.167.45
+	s=arc-20240116; t=1717186053; c=relaxed/simple;
+	bh=36zFVcTmlsZC5jCJ+t9fJ702goiQM4w/FVsM7AmEFY0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nam/Tx0WHHiEroRIuCdGkXSWSLqrPHUGzuQW42ZD384D1F9F2qFrzs74McS0/G/mDSSa+/Vy/21G7sDpAgHp4SmH7lKWB32f8K7Y6yMiePG14kOC296cqaGHEV9pKB/9EpQZmb9DBcGxPsl3aZP+aM+DiqtxdQtd+ZxKX32NI14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f3hjcWYg; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52b83225088so1843400e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 12:55:32 -0700 (PDT)
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2e95abc7259so26997741fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 13:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717185330; x=1717790130; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vDm4GFL7/RAcoZja5ASG+bsrJl52LSpMWwgkVjK9dlM=;
-        b=EGRRAnynOKkNqHNuGaIXlZ2RqwvsBMz4FFULoHaXJYkcAXflVNCvgNRutYEjQyiZxB
-         yDpDVSDZfOw1Fo25oWpvDHQaPaxqw52LxEueF6duovh5esxJ5Qp5lN37waX/vfCVzaoo
-         trIqiKKc9aQ+p0BGAnCNwHnJeeLrdou7YQ8ZfFZdo4rBfehQFsBXp4V4PiAF7WfPaOj3
-         8YANCjs/KgSUrFb/rQx65oFmNHziHXi3xn4nUam57Cz44KNFBQtpP0U6QA5lzmPWAgTg
-         +3S59BNY/riJhiGrRoWN1bxJBbajcMpZoGykZD6EXp/zMFXceTmyaZxNQ0S7CZXyExBS
-         IM7Q==
+        d=linaro.org; s=google; t=1717186050; x=1717790850; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KcofRFte0GyR0msF9Wv8UBxmndCayJNvBiLxyEUuupA=;
+        b=f3hjcWYgd5TtUmTSpvRAv0j+k0P3nSXos08jcmL6UcDq2LlR+2BputaXZqycUF4Dv1
+         ZSEKYs14QKtBwL7CPTuBlBi5/lZiR0MxKMr5rg+qpUxpqhdgcnLm3Vr6SHc9cKDNMfUT
+         8F3PjqR+QvEdkgwcpisyWyQBx2fJjG+QzBZkX4NgYNCO4hmQJA5N7ZdPzAkXy+FoP3n5
+         4q00k0eIpSQgRQJ49etTUEIvP9QdjldJZAOAZDyRZpsT7VDmwdrPHsEf2VK0j2BaNqYb
+         uVtW1yJRKMEi90xxcxCF4e245saEYyDoBqhgkQ6aXS3NbYPMIxjUimwW8u9diYLz6jf0
+         1MLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717185330; x=1717790130;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vDm4GFL7/RAcoZja5ASG+bsrJl52LSpMWwgkVjK9dlM=;
-        b=sADl3TBbA3+D3Lx190rIiqqqRPoJ9WnCD+jd74ysSUP8jnJLw3OIAGwOU/PS2WtsBA
-         ettonKm1+mTtnjJk2h+N9+YSRqGCKH5p/GLdujS3ZQHHJaLTxawinfMU7nxgPhItMRDS
-         u5vrCikYHa/Osyw/3XpwMSi6hvMcm75vCG6DZrJYa4MH/XnOOrkYnrenqwr391MEP7rS
-         oksjI5QnXfPXLova3DQQzSLQKfZCNa+jhk6Tp1DMDxMd9/5k/DfJtbfEE+ES3U6fLr5M
-         DqjuLwl3lrMpyNCjRBU82/YKVYSGD7oUfk5Fy6Y5tSnVC5YkUCKOnJguxH/BtSu2tTbX
-         rX4g==
-X-Forwarded-Encrypted: i=1; AJvYcCURQ8RtZolMGKk11BnwQJbzynT1DdmQCXh9B8HtuL1nUN9b7F8lVIsH7OEC7ATLZRZohCmx/br4pmsGsE5aCTGTWcpWcB6318CSWx+Uaw==
-X-Gm-Message-State: AOJu0YxecHnojVU9y/9dMnJmaCN4zMIDx/B79pBWrYoTXgHQwCt4JcvR
-	oXJ/r+9l28GW4v96ChQkAL+s+sdfDgZOW9c5VOEotGJkQoZcVGC2uDrG47JiiY0=
-X-Google-Smtp-Source: AGHT+IHXtouAwX7+XSqiud/KH4Qt8bdHoyhHs20i1HvALR/kGNz0/Jitv9ceS0LX3AcIuCNwRck8pg==
-X-Received: by 2002:ac2:46f1:0:b0:52b:7c7e:303 with SMTP id 2adb3069b0e04-52b896da828mr1585439e87.49.1717185330369;
-        Fri, 31 May 2024 12:55:30 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d89743sm426201e87.263.2024.05.31.12.55.29
+        d=1e100.net; s=20230601; t=1717186050; x=1717790850;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KcofRFte0GyR0msF9Wv8UBxmndCayJNvBiLxyEUuupA=;
+        b=k4xttGb1Lqk9I5xNWKttkNh2iWblOOckdK6CSnp48oyQIKozsbBKG8yVuPJGuXNZJL
+         1ev61J3LQcCaSVpVexcF698yyvMR1VPQuaCTdIsx09IbmYdZorktXldPlRwwwwFMBs9H
+         HTwADmCLks4/srQOoU5k1FrYz6wd5GqhjILOsm+dT1CCch8QJXHFQQUu7AMJn1FmI0wE
+         kCmBO3VLk/r3kVMtVskrGFRM3G5tcOT1xfZtvV9tPZMXZCOMnIJ4CZeh2wyJMHIh8YH/
+         x4XeWdHBjH93+YinG6v7aNKym2DIOA+sbcvsaqCMSpivBLaoDLvuNP8uvkxeAIRrJXLt
+         TTEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVvhNsD5t8li2hFlXIq7ckOL/THdCfHMgTcUEuDAOxne875CuWHndoSLhZMRWULwro/cEDWYppeRX+k2WVb19cblx90jusCbtGNavDkmw==
+X-Gm-Message-State: AOJu0YwPrRaJU9gFcYQF0LzCw5Z1JOBRpF6HjpjWz6ZAW8MUvoGDWzF8
+	3j2R/Lav9Zy8vxP1BEmT+xVrkvCQb/uRVU5zP5D1lAeJhUXOAiDQWiOw1VguESA=
+X-Google-Smtp-Source: AGHT+IEq0rqMyJRWqu330Hbon3ZStUGPoUuf3R9JcX9UQvJLtbu+ng3qi1SZEjwPtukkYhXWvxq/NQ==
+X-Received: by 2002:a2e:a99b:0:b0:2e9:714d:6d1 with SMTP id 38308e7fff4ca-2ea951b6206mr26740331fa.39.1717186050193;
+        Fri, 31 May 2024 13:07:30 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ea91cf0b83sm4022111fa.116.2024.05.31.13.07.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 May 2024 12:55:30 -0700 (PDT)
-Date: Fri, 31 May 2024 22:55:28 +0300
+        Fri, 31 May 2024 13:07:29 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Rajendra Nayak <quic_rjendra@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>, 
-	Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100: Make the PCIe 6a PHY
- support 4 lanes mode
-Message-ID: <myy42ljw4wz4kwxonio5lktlq52uuqmshhg7bql5raau4kh7ol@6w72pm5k2pzm>
-References: <20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org>
- <20240531-x1e80100-dts-fixes-pcie6a-v1-2-1573ebcae1e8@linaro.org>
+Subject: [PATCH v4 0/9] drm/msm: make use of the HDMI connector
+ infrastructure
+Date: Fri, 31 May 2024 23:07:23 +0300
+Message-Id: <20240531-bridge-hdmi-connector-v4-0-5110f7943622@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240531-x1e80100-dts-fixes-pcie6a-v1-2-1573ebcae1e8@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPstWmYC/3XNQQ6CMBAF0KuQrq2ZdqCAK+9hXAAdYBJtTTFEQ
+ 7i7hcSoMSz/z/w3kxgoMA3ikEwi0MgDexdDuktE01euI8k2ZqFBp4CQyzqwjW1vrywb7xw1dx9
+ kTphnKRmjLIi4vQVq+bG6p3PMPQ/x7Lm+GdXSvsViQxyVBFlCbUrMMtAGjhd2VfB7HzqxkKP+Z
+ sotRkdGYQE1VUiU/zP4YTKELQYjUymritSaoiX8YeZ5fgG44zdzSQEAAA==
+To: Andrzej Hajda <andrzej.hajda@intel.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3783;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=36zFVcTmlsZC5jCJ+t9fJ702goiQM4w/FVsM7AmEFY0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmWi3/3K7+5ZMvVMAb3zLYeRysohwEcabaQF9Xs
+ ovhcEFZaISJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZlot/wAKCRCLPIo+Aiko
+ 1WrmB/48O8bX4lGayq8oD3NfGpi6hk9SyyeZP2nZnh4CdCHH215baV0j9LxTHghDjvleUbiXSSX
+ umPwH5d491BS6tAztUEvsxca6o6ZUGHxS833GqbmkC97J4N/siAtqUWU1gthvdcG+Lw/yKt8IVi
+ 6lzKrmoZKccfAOfM6DGrtvAzMw/DqWynirCMpHzhxzUi5QZ7PpV1K1QPT+2kI27RkM+1qzQy0QG
+ /XfddlXrESBsReDVUxQn093G0Pq3fR1IIonqFdfawNm/LKG/K4dVEWYifYUoH3+Z8l6mryvaLSM
+ 9gIiL2uCrGjvfNYvxBTLaajOMxdbao/vWGYHlttI+b+QYSqH
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Fri, May 31, 2024 at 08:00:32PM +0300, Abel Vesa wrote:
-> So the PCIe 6 can be configured in 4-lane mode or 2-lane mode. For
-> 4-lane mode, it fetches the lanes provided by PCIe 6b. For 2-lane mode,
-> PCIe 6a uses 2 lanes and then PCIe 6b uses the other 2 lanes. Configure
-> it in 4-lane mode and then each board can configure it depending on the
-> design. Both the QCP and CRD boards, currently upstream, use the 6a for
-> NVMe in 4-lane mode. Also, mark the controller as 4-lane as well.
-> 
-> Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 14 +++++++++-----
->  1 file changed, 9 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index fe7ca2a73f9d..17e4c5cda22d 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -2838,7 +2838,7 @@ pcie6a: pci@1bf8000 {
->  			dma-coherent;
->  
->  			linux,pci-domain = <7>;
-> -			num-lanes = <2>;
-> +			num-lanes = <4>;
->  
->  			interrupts = <GIC_SPI 773 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 774 IRQ_TYPE_LEVEL_HIGH>,
-> @@ -2903,19 +2903,21 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->  		};
->  
->  		pcie6a_phy: phy@1bfc000 {
-> -			compatible = "qcom,x1e80100-qmp-gen4x2-pcie-phy";
-> -			reg = <0 0x01bfc000 0 0x2000>;
-> +			compatible = "qcom,x1e80100-qmp-gen4x4-pcie-phy";
-> +			reg = <0 0x01bfc000 0 0x2000>,
-> +			      <0 0x01bfe000 0 0x2000>;
->  
->  			clocks = <&gcc GCC_PCIE_6A_PHY_AUX_CLK>,
->  				 <&gcc GCC_PCIE_6A_CFG_AHB_CLK>,
->  				 <&rpmhcc RPMH_CXO_CLK>,
->  				 <&gcc GCC_PCIE_6A_PHY_RCHNG_CLK>,
-> -				 <&gcc GCC_PCIE_6A_PIPE_CLK>;
-> +				 <&gcc GCC_PCIE_6A_PIPEDIV2_CLK>;
->  			clock-names = "aux",
->  				      "cfg_ahb",
->  				      "ref",
->  				      "rchng",
-> -				      "pipe";
-> +				      "pipe",
-> +				      "pipediv2";
+This patchset sits on top Maxime's HDMI connector patchset ([1]).
 
-I see 5 clocks and 6 clock-names here.
+Currently this is an RFC exploring the interface between HDMI bridges
+and HDMI connector code. This has been lightly verified on the Qualcomm
+DB820c, which has native HDMI output. If this approach is considered to
+be acceptable, I'll finish MSM HDMI bridge conversion (reworking the
+Audio Infoframe code). Other bridges can follow the same approach (we
+have lt9611 / lt9611uxc / adv7511 on Qualcomm hardware).
 
->  
->  			resets = <&gcc GCC_PCIE_6A_PHY_BCR>,
->  				 <&gcc GCC_PCIE_6A_NOCSR_COM_PHY_BCR>;
-> @@ -2927,6 +2929,8 @@ pcie6a_phy: phy@1bfc000 {
->  
->  			power-domains = <&gcc GCC_PCIE_6_PHY_GDSC>;
->  
-> +			qcom,4ln-config-sel = <&tcsr 0x1a000 0>;
-> +
->  			#clock-cells = <0>;
->  			clock-output-names = "pcie6a_pipe_clk";
->  
-> 
-> -- 
-> 2.34.1
-> 
+[1] https://patchwork.freedesktop.org/series/122421/
 
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v4:
+- Reworked drm_bridge_connector functions to remove ternary operators
+  and to reduce indentation level (Maxime)
+- Added hdmi_ prefix to all HDMI-related drm_bridge_funcs calls (Maxime)
+- Made vendor and product mandatory to the HDMI bridges (Maxime)
+- Documented that max_bpc can be 8, 10 or 12 (Maxime)
+- Changed hdmi->pixclock to be set using tmds_char_rate instead of
+  calculating that manually (Maxime)
+- Changed mode_valid to use helper function instead of manually
+  doing mode->clock * 1000
+- Removed hdmi_mode in favour of connector->display_info.is_hdmi
+- Link to v3: https://lore.kernel.org/r/20240530-bridge-hdmi-connector-v3-0-a1d184d68fe3@linaro.org
+
+Changes in v3:
+- Rebased on top of the merged HDMI connector patchset.
+- Changed drm_bridge_connector to use drmm_connector_init() (Maxime)
+- Added a check that write_infoframe callback is present if
+  BRIDGE_OP_HDMI is set.
+- Moved drm_atomic_helper_connector_hdmi_check() call from
+  drm_bridge_connector to the HDMI bridge driver to remove dependency
+  from drm_kms_helpers on the optional HDMI state helpers.
+- Converted Audio InfoFrame handling code.
+- Added support for HDMI Vendor Specific and SPD InfoFrames.
+- Link to v2: https://lore.kernel.org/r/20240309-bridge-hdmi-connector-v2-0-1380bea3ee70@linaro.org
+
+Changes in v2:
+- Dropped drm_connector_hdmi_setup(). Instead added
+  drm_connector_hdmi_init() to be used by drm_bridge_connector.
+- Changed the drm_bridge_connector to act as a proxy for the HDMI
+  connector  infrastructure. This removes most of the logic from
+  the bridge drivers.
+- Link to v1: https://lore.kernel.org/r/20240308-bridge-hdmi-connector-v1-0-90b693550260@linaro.org
+
+---
+Dmitry Baryshkov (9):
+      drm/connector: hdmi: accept NULL for Audio Infoframe
+      drm/bridge-connector: switch to using drmm allocations
+      drm/bridge-connector: implement glue code for HDMI connector
+      drm/msm/hdmi: switch to atomic bridge callbacks
+      drm/msm/hdmi: turn mode_set into atomic_enable
+      drm/msm/hdmi: make use of the drm_connector_hdmi framework
+      drm/msm/hdmi: get rid of hdmi_mode
+      drm/msm/hdmi: update HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE definition
+      drm/msm/hdmi: also send the SPD and HDMI Vendor Specific InfoFrames
+
+ drivers/gpu/drm/display/drm_hdmi_state_helper.c |  14 +-
+ drivers/gpu/drm/drm_bridge_connector.c          | 109 +++++++--
+ drivers/gpu/drm/drm_debugfs.c                   |   2 +
+ drivers/gpu/drm/msm/Kconfig                     |   2 +
+ drivers/gpu/drm/msm/hdmi/hdmi.c                 |  46 +---
+ drivers/gpu/drm/msm/hdmi/hdmi.h                 |  18 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_audio.c           |  74 ++----
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c          | 310 +++++++++++++++++++-----
+ drivers/gpu/drm/msm/registers/display/hdmi.xml  |   2 +-
+ include/drm/drm_bridge.h                        |  83 +++++++
+ 10 files changed, 472 insertions(+), 188 deletions(-)
+---
+base-commit: 80100af925a09ff99fcd6604a5fd8101dd0d17fd
+change-id: 20240307-bridge-hdmi-connector-7e3754e661d0
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
