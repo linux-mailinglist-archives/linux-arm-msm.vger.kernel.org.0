@@ -1,198 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-21257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37FCC8D6012
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 12:54:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2EE78D60D2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 13:38:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC6711F258DA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 10:54:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A5D328A669
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:38:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B78EC156257;
-	Fri, 31 May 2024 10:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E34D157499;
+	Fri, 31 May 2024 11:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ocDdwhwh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PFhkgnfH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2557F18756A;
-	Fri, 31 May 2024 10:54:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32728173C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 11:38:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717152882; cv=none; b=pOw6rZLOOqEo+QupE59P/1aeislo0dB7SRItY0eL1MaJdPGyCAyLNW5dc4RcpTp89Cg+PSGpfnLsg5vizGXjLlCNiAOQIsoPXccoXupJbuIfFGNPAlZVTcOW6RFFqOwP8OAFoTumWV5gSr65v7RQ75M94qOBioxjv4TlhIeQmgE=
+	t=1717155491; cv=none; b=fapY/cg3TE6boadw39GX36RmlIENBmod4pk32XUCxBU5OmGJRhN5+OPhAe7OZnPtvjO/76IABCl4iQHWg5nOevJt5nILeqZ4Y+EGn1BZlNB9/K4b9ZLmCY8ehgtjztsT63prljdF8HFAAt1MVjDpxi2bvefI+9DxLqd69OY6InM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717152882; c=relaxed/simple;
-	bh=k2udwgRnRNnhEpAUX0hw5im1I9SWALjW5nHxAe+CqDk=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=l2vm+0LQqjiW1xyB4p9dzKzCbbljikWouGdKrWvtPhDfyIwq/xpVxnOi19VGYV8GAyLS6FEwiwTOvQsjpsDMoX482znSp7C4lJL6z0+14v7EdTY9ImcgYr4/vr1O0WCnRAjdcpPtazLtwet6b4XhfEeJEBze8zH17wUVw4Wufqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ocDdwhwh; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44V73dN9019268;
-	Fri, 31 May 2024 10:54:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=40IoWb0CnW8ZkNBhg8uS3w
-	2AH/q/T00qehZjBzQ97gI=; b=ocDdwhwhB/rC3UYe6aXvGB0KD3UrxNwaQvDnHZ
-	n/PxNhRjI8ha9BbfOW7unoaJYziM7Wrb2tvFekW8TYVpI+vafxE/+qN1kRVt/Ukd
-	HSH0tX/oxSVT+3fnG4IIG56rck8sqnGlY9StqJnGH66RWYbHF02xefyfRJQRe4by
-	IfqrbiiqolFkYrpYjgj9yRyySZ2YKmbx+s3zIsqDYg1wa0HELmBUmBtsFV+//VBj
-	JJ/0g/Y3n/u6dxJsb9nfGkRCw8TfazOO9qUkmLEfqEMbFVclv4KjzTq/XbG1KxTs
-	Ar4ZvrVBzb3Gvirb2hcOxKUpWdkc0kqklnSQvm8GNE28ESQA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba0geunx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 10:54:36 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44VAsZv1020943
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 10:54:35 GMT
-Received: from hu-kshivnan-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 31 May 2024 03:54:32 -0700
-From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Ramakrishna Gottimukkula" <quic_rgottimu@quicinc.com>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Subject: [PATCH] soc: qcom: icc-bwmon: Add tracepoints in bwmon_intr_thread
-Date: Fri, 31 May 2024 16:24:04 +0530
-Message-ID: <20240531105404.879267-1-quic_kshivnan@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1717155491; c=relaxed/simple;
+	bh=KzxFueSVmNEoiNc+OTEKRiu2AQKgXCyeCA4qnKLprZc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CBrLpo5AX9gSPUj2bYV0S0yKouLHyVfkH1xtFCotGXcW3xVmn32+IpFmAvFAVOwPfinQcdTylIRzdVE9hSUX7dkz98601vXheKiQFc4bM0u2D5BXbL5aNfLjfOZLYqEBAbQuosln884aiY34YmkBv+m53UjowKFH5/jZ/qbe+tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PFhkgnfH; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57a342201ebso682140a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 04:38:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717155488; x=1717760288; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=iNuoN1tAu0HSQS+G/RZ/dRXYB+icJAiyT6fdiYq4XYA=;
+        b=PFhkgnfHWvhYlM+tc6WQUxT3KRnN6ytevyTiVH/7UC84D9IFioM+zP5c+cLP042Hao
+         JeX1gHMF+9RhtMs/heZoG0g1wPJVoF7/22K4JLfJEDrHzWvCE1HkICIGIb5/7SmBTKiM
+         KH/idONQCDKI/7VQQgBv360zbqJ2uO0934pttwkcANOK4vLkyA8Tq4yRWmEcBFsAMb9D
+         RSsNFZc06w/mSfD2kUfSy5PnmHQqHk1LNnZ6lwYM0s1Q3jS3hz1domwOhQaS+51PyRdx
+         ZmEd4+ev7uVkNp/dvyYrg0UrhSZ6vS2D4PFBOm7H54kq9eOJvDzM61ofxw05qVDgIyF8
+         /aiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717155488; x=1717760288;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iNuoN1tAu0HSQS+G/RZ/dRXYB+icJAiyT6fdiYq4XYA=;
+        b=Rg3tXS6EQSeXEADGAamER1v5p/7vU9OAZEB5kfn9mA3caMLG27uwR4Ym3tt1+snx28
+         6GC//4FSB/aJImNbulidSdh8nTvNpWafvI8aSfRb0hWtrARqb+B0hQ0J+FS01VJn05OJ
+         JadSD19Jp3v0Rt5IXdSz0PoYxUP5Myy55vDNX3tJRwPUD0kswp0RV3HDjTn5D+b/sPCM
+         Ndja+jebBMsDe2Nlk0Nx7UwlHw96VDNt6/ShM9qkTwDlDDWMHjE2g+CEjsOcFPOfRoGO
+         zaR6M3ElChp+p5l30tHrbwP+kQgVR3JQI9tl92etnd2712VeBVEbMOc4HGmRzY5zjhqX
+         3hDw==
+X-Forwarded-Encrypted: i=1; AJvYcCV+M2N2PB8v+h2ynIqs5COeVrRrMWA5II4BErcXM2d2VGnjxeWQkd5/+5VIsYwUn1R7oy4YPHMiknw7cH3eAERLwyEVrHiidR8eJIzIlw==
+X-Gm-Message-State: AOJu0YxUbJYpk8pinLepgiHlFOttuKuKT53BMteB/BkH56RMmraCWGgO
+	1KM1e4Ct+KbL9M0kfpErFVlJTeHlzQrMVDzSod9SzV6egk4ABwgDjZ8dUlaupSg=
+X-Google-Smtp-Source: AGHT+IEB9Zjhm+bJIPzNKCbqEzPDhy6cnhe6m1N9nggGknOW+0Col3bm16ru72Z75E4WiduBDf84Zg==
+X-Received: by 2002:a50:874f:0:b0:57a:27f5:1273 with SMTP id 4fb4d7f45d1cf-57a36571e62mr1041811a12.37.1717155488119;
+        Fri, 31 May 2024 04:38:08 -0700 (PDT)
+Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a31c9bc79sm915069a12.89.2024.05.31.04.38.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 May 2024 04:38:07 -0700 (PDT)
+Message-ID: <7beb86d3-2d80-4c69-bad9-c0b050b73c79@linaro.org>
+Date: Fri, 31 May 2024 13:38:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: X2amfJl0g7t4mpCldKxR6Y5wA1USnbPj
-X-Proofpoint-ORIG-GUID: X2amfJl0g7t4mpCldKxR6Y5wA1USnbPj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-31_07,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 adultscore=0 spamscore=0
- mlxlogscore=999 malwarescore=0 lowpriorityscore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405310080
+User-Agent: Mozilla Thunderbird
+Subject: Re: (subset) [PATCH 0/3] arm64: qcom: SA8775p: Add llcc support
+To: Rob Herring <robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: krzk+dt@kernel.org, conor+dt@kernel.org,
+ Tengfei Fan <quic_tengfan@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240529101534.3166507-1-quic_tengfan@quicinc.com>
+ <171703961686.615222.7092607304287257293.b4-ty@kernel.org>
+ <20240531014151.GA3684019-robh@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240531014151.GA3684019-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add tracepoint for tracing the measured traffic, up_kbps
-and down_kbps in bwmon. This information is valuable for
-understanding what bwmon hw measures at the system cache
-level and at the DDR level which is helpful in debugging
-bwmon behavior.
+On 31.05.2024 3:41 AM, Rob Herring wrote:
+> On Wed, May 29, 2024 at 10:27:00PM -0500, Bjorn Andersson wrote:
+>>
+>> On Wed, 29 May 2024 18:15:31 +0800, Tengfei Fan wrote:
+>>> The SA8775p platform has LLCC as the system cache controller. It
+>>> includes 6 LLCC instances and 1 broadcast interface.
+>>>
+>>>
+>>
+>> Applied, thanks!
+>>
+>> [3/3] arm64: dts: qcom: sa8775p: Add llcc support for the SA8775p platform
+>>       commit: 809c20b1ffc80200bfcbbeceb0d946a3e0eed3a4
+> 
+> I'm confused why you didn't pick up the driver and binding?
 
-Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
----
- MAINTAINERS                        |  1 +
- drivers/soc/qcom/icc-bwmon.c       |  4 ++-
- drivers/soc/qcom/trace_icc-bwmon.h | 49 ++++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+), 1 deletion(-)
- create mode 100644 drivers/soc/qcom/trace_icc-bwmon.h
+He did, although to a different tree (qcom/arm64-for-x.y vs qcom/drivers-for-x.y)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9ed4d3868539..dc864e3870b1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -18135,6 +18135,7 @@ M:	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
- F:	Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-+F:	drivers/soc/qcom/trace_icc-bwmon.h
- F:	drivers/soc/qcom/icc-bwmon.c
-
- QUALCOMM IOMMU
-diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-index 656706259353..dedf0070654b 100644
---- a/drivers/soc/qcom/icc-bwmon.c
-+++ b/drivers/soc/qcom/icc-bwmon.c
-@@ -17,6 +17,8 @@
- #include <linux/pm_opp.h>
- #include <linux/regmap.h>
- #include <linux/sizes.h>
-+#define CREATE_TRACE_POINTS
-+#include "trace_icc-bwmon.h"
-
- /*
-  * The BWMON samples data throughput within 'sample_ms' time. With three
-@@ -681,7 +683,7 @@ static irqreturn_t bwmon_intr_thread(int irq, void *dev_id)
-
- 	if (bwmon->target_kbps == bwmon->current_kbps)
- 		goto out;
--
-+	trace_qcom_bwmon_update(dev_name(bwmon->dev), bw_kbps, up_kbps, down_kbps);
- 	dev_pm_opp_set_opp(bwmon->dev, target_opp);
- 	bwmon->current_kbps = bwmon->target_kbps;
-
-diff --git a/drivers/soc/qcom/trace_icc-bwmon.h b/drivers/soc/qcom/trace_icc-bwmon.h
-new file mode 100644
-index 000000000000..977e46ade4b8
---- /dev/null
-+++ b/drivers/soc/qcom/trace_icc-bwmon.h
-@@ -0,0 +1,49 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM icc_bwmon
-+
-+#if !defined(_TRACE_ICC_BWMON_H) || defined(TRACE_HEADER_MULTI_READ)
-+#define _TRACE_ICC_BWMON_H
-+#include <linux/tracepoint.h>
-+
-+TRACE_EVENT(qcom_bwmon_update,
-+
-+	TP_PROTO(const char *name,
-+		 unsigned int meas_kbps, unsigned int up_kbps, unsigned int down_kbps),
-+
-+	TP_ARGS(name, meas_kbps, up_kbps, down_kbps),
-+
-+	TP_STRUCT__entry(
-+		__string(name, name)
-+		__field(unsigned int, meas_kbps)
-+		__field(unsigned int, up_kbps)
-+		__field(unsigned int, down_kbps)
-+	),
-+
-+	TP_fast_assign(
-+		__assign_str(name, name);
-+		__entry->meas_kbps = meas_kbps;
-+		__entry->up_kbps = up_kbps;
-+		__entry->down_kbps = down_kbps;
-+	),
-+
-+	TP_printk("name=%s meas_kbps=%u up_kbps=%u down_kbps=%u",
-+		__get_str(name),
-+		__entry->meas_kbps,
-+		__entry->up_kbps,
-+		__entry->down_kbps)
-+);
-+
-+#endif /* _TRACE_ICC_BWMON_H */
-+
-+#undef TRACE_INCLUDE_PATH
-+#define TRACE_INCLUDE_PATH ../../drivers/soc/qcom/
-+
-+#undef TRACE_INCLUDE_FILE
-+#define TRACE_INCLUDE_FILE trace_icc-bwmon
-+
-+#include <trace/define_trace.h>
---
-2.25.1
-
+Konrad
 
