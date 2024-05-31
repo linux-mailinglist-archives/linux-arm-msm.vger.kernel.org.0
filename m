@@ -1,374 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-21308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 082538D656F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 17:14:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91EB38D657A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 17:15:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2A4D288BD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 15:14:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 440BA28DC8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 15:15:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25CA674BE2;
-	Fri, 31 May 2024 15:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AD1D77A1E;
+	Fri, 31 May 2024 15:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KCEpMIhy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EXb9hhmW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC4074E3D;
-	Fri, 31 May 2024 15:13:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9862774435
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 15:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717168418; cv=none; b=jt19rj4W6FypS99RqxawNb26ul+TKj+ExbSg5ziUZlmsufjtUj7gE9DfsJ9ZMet0TkMaTntIxsbBzJp6WXoDNNepL3iUf+4xw9Unk76QxBcal5yvjtKl+pvbaw5dCEwXCALliPscCTNRmqxjOoZC6oqKthQ4+m0sWmzZ6876wDo=
+	t=1717168503; cv=none; b=CWdThkyuYO026f6Ms7j43WZXPFoQS/szVjblypfdDxKZdOOLMyZomWIKIcec/y+MHsk+Bz+HqszOC++OjxPL0463qHAVjoQ8+KLUbBJZWhNbL92ts9zi0D4bi/ZiNoM7ykwemquAna4xG9E9DhwGaxUk4GF/zmzeTTMe0xqkVZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717168418; c=relaxed/simple;
-	bh=6nPDK0mxpYsWJ6HFcH3NKwrXj8AR0/HGDru3QUYz1Fo=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=jT1oua5l2/vkdu6q/4v+u2Ev8i+1ocJ7ok/KZqV5tX8QKRlx+m1YeYKizt1F4IQsPTjJpWUHvgb429ERlEeZi9TNDE4vY58HGUEDSEifUJA82aqtk7JF1D642oXJ90i1E2OBPPwy9TyaUjtt6jdDwclYnk2EqaYeGUSD9ayGq6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KCEpMIhy; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717168416; x=1748704416;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=6nPDK0mxpYsWJ6HFcH3NKwrXj8AR0/HGDru3QUYz1Fo=;
-  b=KCEpMIhyRDM9sXd7CCkm485JX4fa/F7kThFL+kmWfwRxQKeiwQ5rtjvh
-   Neyt+8ArSBCq7EudRbrPqqvau9ZpfN7oj+6lr0Pcyb6+qpun8v4lC/hSU
-   W2eFFbiv60Iov1jiaIOV7NUDODLOckgBnqJEPEGDmOyTs3ohVhV8G5CDp
-   /aaPmTkRRPdT650hdTSEBW//jiOx4ty1EFdF/Qbl/eCuNYeYnqslFzY4+
-   2x7FJiDPsx894flZqyeoN5utytu7iLUMiCtodfz8LUnlaq2U/20IRChl3
-   AFJcmtAEHTbGTzJltuHZVpa5/EQu5bR03KXdAvwXDL7pJZW7bv2Zxk5Lf
-   w==;
-X-CSE-ConnectionGUID: +eDpn7WDT7O1fDODteqhzg==
-X-CSE-MsgGUID: O/sXWrZ6Qd+wLsiivzn4cw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="13534190"
-X-IronPort-AV: E=Sophos;i="6.08,204,1712646000"; 
-   d="scan'208";a="13534190"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2024 08:13:35 -0700
-X-CSE-ConnectionGUID: XDBG4tgmTxesqIo669ObQA==
-X-CSE-MsgGUID: PFZaJqeiR5Kf5OSbn4Yn9Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,204,1712646000"; 
-   d="scan'208";a="36271538"
-Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.247.152])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2024 08:13:30 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Fri, 31 May 2024 18:13:26 +0300 (EEST)
-To: Douglas Anderson <dianders@chromium.org>
-cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-    Jiri Slaby <jirislaby@kernel.org>, linux-arm-msm@vger.kernel.org, 
-    John Ogness <john.ogness@linutronix.de>, 
-    =?ISO-8859-15?Q?Uwe_Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>, 
-    Tony Lindgren <tony@atomide.com>, Stephen Boyd <swboyd@chromium.org>, 
-    linux-serial <linux-serial@vger.kernel.org>, 
-    Yicong Yang <yangyicong@hisilicon.com>, 
-    Johan Hovold <johan+linaro@kernel.org>, 
-    LKML <linux-kernel@vger.kernel.org>, 
-    Bjorn Andersson <andersson@kernel.org>, 
-    Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-    Konrad Dybcio <konrad.dybcio@linaro.org>, 
-    Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: Re: [PATCH v2 6/7] serial: qcom-geni: Fix suspend while active UART
- xfer
-In-Reply-To: <20240530154553.v2.6.I0f81a5baa37d368f291c96ee4830abca337e3c87@changeid>
-Message-ID: <5e4b2c9a-aa78-6ee6-f570-baf343cf2569@linux.intel.com>
-References: <20240530224603.730042-1-dianders@chromium.org> <20240530154553.v2.6.I0f81a5baa37d368f291c96ee4830abca337e3c87@changeid>
+	s=arc-20240116; t=1717168503; c=relaxed/simple;
+	bh=6AWdQDWgGJAq7nQG8SBrgo8ckqxBhzid+AdmIGtHuRQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g0gCLQKLBkGMPR+Oa+QsB/dHkcu6enhBcHmorBGgCD2KNwvdFrqtOqKueyB1Esp9wFoPXjSQEAi/oXs8+McRMt2EnYTEWRkUMGNF5dYmZPAKS2f0LCbu8jeC9uotu2z5zAcTWNljU7f06ZseIeSDdRfFGz5C3GoHk7SSh/cjqTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EXb9hhmW; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52b8d483a08so414499e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 08:15:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717168499; x=1717773299; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cYZlx/SHZV2mJQqNcs4xl6IWMBcVCucCDsZplS2erlM=;
+        b=EXb9hhmWLiGJLp3skyXGhVYbUHyhoAQn9Ni162xNDd40WZd2jU0lLjCKnnqyFTrjIC
+         23fzJAWFtxb+4LIKz4WcFwju72Hl5k+qYjHVE0p+uUbkpGImfK5tzGmStKUIA8gtRW1O
+         u74msF8YHz70Eso+3WWOmwmPYbBT2So4WCEuHK5jXY9lFjZvUiwtRcTmPDZzlpKgU870
+         DfgF+3XtvYuHp9ukjsYtv7DMHW6ROkxFvLLoKjuPkR6+vyALV0IDYCP8pYTlS67v2UGR
+         jk+GAtS3hHIMRjXBh8/Nx9OwYEZWh+5n9EYw7xt3Skjh/a0qkf+fFcOYX6i/dE6dVii6
+         1Zbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717168499; x=1717773299;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cYZlx/SHZV2mJQqNcs4xl6IWMBcVCucCDsZplS2erlM=;
+        b=wISZCq9cXLWUoJabQJiOMr1WSuMpH8G8WLD1xcFDYQpa7EIlx8NZrcciJ1mBpdHgkM
+         UlIeBNvlGsPeV19r8y+clwqF3VmSRSF8z2bnVN3j54A8YnG3dF7DqrWixfO4KsdMOB1x
+         P4ml7HwLjsCbY4xvFCE32pBHd27Ru3tamDNz3v6V59tkICIcBqWfe2n0L4hpfKhBzhl/
+         MXuKuCjK6CjusqWKeFDctRjZwSqXR2ev74E8VUj51Tg5XCrUjmvW5IFi5hlOFHPbZr30
+         V3u4MXztz+fxIXXHZFd/cAeUxfyRJcz8OoUcXJAaVHcgYuLH6DK3F8UGk2Yz6LxV3BT3
+         wz3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUw3bViWkD5eWSjAMjuyYVfchCkNXNhl92BphMivFVoCqHOcGEw9LvNCHjzrGl4YDd3qfBY6tp7wwBb6zQq9pG35FD3Ty0eqY9DNsb3gw==
+X-Gm-Message-State: AOJu0YyDMXH7VsEy0vnLU7REHUJDqhK/XoO3q3VVqoP+uFdAoUoNYlkp
+	qy7wRs7l9g7P4oha9JaSTWb2LlX0pBbFpiVqlQhi6x6vHyzYfN+3oJyNN3uHeF8=
+X-Google-Smtp-Source: AGHT+IF3amjM7QbVKYZ487znDKdasgDtKWEpQZIm7AlZ0+nSfEili6eJCyHnqfDTJiqUUlkLLYvqFw==
+X-Received: by 2002:ac2:4568:0:b0:525:502a:acc6 with SMTP id 2adb3069b0e04-52b896bfa82mr1410726e87.52.1717168498685;
+        Fri, 31 May 2024 08:14:58 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d7efa3sm357687e87.199.2024.05.31.08.14.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 May 2024 08:14:58 -0700 (PDT)
+Date: Fri, 31 May 2024 18:14:56 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+	Jonathan Marek <jonathan@marek.ca>, Del Regno <angelogioacchino.delregno@somainline.org>, 
+	Loic Poulain <loic.poulain@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/16] dt-bindings: clock: qcom: reference qcom-gcc.yaml
+Message-ID: <l73uszlhnhyamfuwm7f6bbmockttwihsylkkgbyedkdseznlka@mtr5c7r4nqt4>
+References: <20240531-dt-bindings-qcom-gcc-v1-0-b37d49fe1421@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240531-dt-bindings-qcom-gcc-v1-0-b37d49fe1421@linaro.org>
 
-On Thu, 30 May 2024, Douglas Anderson wrote:
+On Fri, May 31, 2024 at 03:52:18PM +0200, Krzysztof Kozlowski wrote:
+> Hi,
+> 
+> Unify Qualcomm clock controllers by referencing qcom,gcc.yaml where
+> applicable.  Several existing bindings for these display/GPU/CAM clock
+> controllers already do it.
 
-> On devices using Qualcomm's GENI UART it is possible to get the UART
-> stuck such that it no longer outputs data. Specifically, I could
-> reproduce this problem by logging in via an agetty on the debug serial
-> port (which was _not_ used for kernel console) and running:
->   cat /var/log/messages
-> ...and then (via an SSH session) forcing a few suspend/resume cycles.
-> 
-> Digging into this showed a number of problems that are all related.
-> 
-> The root of the problems was with qcom_geni_serial_stop_tx_fifo()
-> which is called as part of the suspend process. Specific problems with
-> that function:
-> - When we cancel an in-progress "tx" command it doesn't appear to
->   fully drain the FIFO. That meant qcom_geni_serial_tx_empty()
->   continued to report that the FIFO wasn't empty. The
->   qcom_geni_serial_start_tx_fifo() function didn't re-enable
->   interrupts in this case so we'd never start transferring again.
-> - We cancelled the current "tx" command but we forgot to zero out
->   "tx_remaining". This confused logic elsewhere in the driver
-> - From experimentation, it appears that cancelling the "tx" command
->   could drop some of the queued up bytes. While maybe not the end of
->   the world, it doesn't seem like we should be dropping bytes when
->   stopping the FIFO, which is defined more of a "pause".
-> 
-> One idea to fix the above would be to add FIFO draining to
-> qcom_geni_serial_stop_tx_fifo(). However, digging into the
-> documentation in serial_core.h for stop_tx() makes this seem like the
-> wrong choice. Specifically stop_tx() is called with local interrupts
-> disabled. Waiting for a FIFO (which might be 64 bytes big) to drain at
-> 115.2 kbps doesn't seem like a wise move.
-> 
-> Ideally qcom_geni_serial_stop_tx_fifo() would be able to pause the
-> transmitter, but nothing in the documentation for the GENI UART makes
-> me believe that is possible.
-> 
-> Given the lack of better choices, we'll change
-> qcom_geni_serial_stop_tx_fifo() to simply disable the
-> TX_FIFO_WATERMARK interrupt and call it a day. This seems OK as per
-> the serial core docs since stop_tx() is supposed to stop transferring
-> bytes "as soon as possible" and there doesn't seem to be any possible
-> way to stop transferring sooner. As part of this, get rid of some of
-> the extra conditions on qcom_geni_serial_start_tx_fifo() which simply
-> weren't needed and are now getting in the way. It's always fine to
-> turn the interrupts on if we want to receive and it'll be up to the
-> IRQ handler to turn them back off if somehow they're not needed. This
-> works fine.
-> 
-> Unfortunately, doing just the above change causes new/different
-> problems with suspend/resume. Now if you suspend while an active
-> transfer is happening you can find that after resume time you're no
-> longer receiving UART interrupts at all. It appears to be important to
-> drain the FIFO and send a "cancel" command if the UART is active to
-> avoid this. Since we've already decided that
-> qcom_geni_serial_stop_tx_fifo() shouldn't be doing this, let's add the
-> draining / cancelling logic to the shutdown() call where it should be
-> OK to delay a bit. This is called as part of the suspend process via
-> uart_suspend_port().
-> 
-> Finally, with all of the above, the test case where we're spamming the
-> UART with data and going through suspend/resume cycles doesn't kill
-> the UART and doesn't drop bytes.
-> 
-> NOTE: though I haven't gone back and validated on ancient code, it
-> appears from code inspection that many of these problems have existed
-> since the start of the driver. In the very least, I could reproduce
-> the problems on vanilla v5.15. The problems don't seem to reproduce
-> when using the serial port for kernel console output and also don't
-> seem to reproduce if nothing is being printed to the console at
-> suspend time, so this is presumably why they were not noticed until
-> now.
+The series looks good to me with a single point in mind. You are writing
+that dispcc/videocc/etc are a variant of GCC. However GCC is a Global
+Clock Controller. What about renaming qcom,gcc.yaml to
+qcom,cc-common.yaml ? Then the rest makes total sense to me.
 
-Hi,
-
-This was quite tiring to read. :-) It's has lots of useful information but 
-it could be structured better.
-
-Could you try to rewrite this entire description so that it's easier to 
-find the problem and final solution information from it. Start with those 
-two things, and in that part, try to avoid detouring to extra branches you 
-took while finding and solving the problem.
-
-You can place how the problem can be reproduced after you've described the 
-root cause & final solution first. Extra information why some other 
-approaches do not work is also useful information, but please place it 
-after the final solution has been covered first.
-
-Also, try to avoid I/you/we, use imperative tone.
+> 
+> No external dependencies, this CAN be applied independently, but require
+> power-domain-cells in each binding, just like Dmitry's new set is doing.
+> 
+> https://lore.kernel.org/all/20240529-qcom-gdscs-v2-0-69c63d0ae1e7@linaro.org/
+> 
+> Best regards,
+> Krzysztof
+> 
+> ---
+> Krzysztof Kozlowski (16):
+>       dt-bindings: clock: qcom,sm8450-videocc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,videocc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,dispcc-sc8280xp: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,dispcc-sm6350: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,dispcc-sm8x50: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,gpucc-sdm660: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,gpucc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,msm8998-gpucc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,qcm2290-dispcc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,sc7180-dispcc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,sc7280-dispcc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,sdm845-dispcc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,sm6115-dispcc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,sm8450-dispcc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,sm8550-dispcc: reference qcom,gcc.yaml
+>       dt-bindings: clock: qcom,sm8450-gpucc: reference qcom,gcc.yaml
+> 
+>  .../bindings/clock/qcom,dispcc-sc8280xp.yaml         | 20 ++++----------------
+>  .../bindings/clock/qcom,dispcc-sm6350.yaml           | 20 ++++----------------
+>  .../bindings/clock/qcom,dispcc-sm8x50.yaml           | 18 ++----------------
+>  .../devicetree/bindings/clock/qcom,gpucc-sdm660.yaml | 20 ++++----------------
+>  .../devicetree/bindings/clock/qcom,gpucc.yaml        | 20 ++++----------------
+>  .../bindings/clock/qcom,msm8998-gpucc.yaml           | 20 ++++----------------
+>  .../bindings/clock/qcom,qcm2290-dispcc.yaml          | 20 ++++----------------
+>  .../bindings/clock/qcom,sc7180-dispcc.yaml           | 20 ++++----------------
+>  .../bindings/clock/qcom,sc7280-dispcc.yaml           | 20 ++++----------------
+>  .../bindings/clock/qcom,sdm845-dispcc.yaml           | 20 ++++----------------
+>  .../bindings/clock/qcom,sm6115-dispcc.yaml           | 20 ++++----------------
+>  .../bindings/clock/qcom,sm8450-dispcc.yaml           | 20 ++++----------------
+>  .../devicetree/bindings/clock/qcom,sm8450-gpucc.yaml | 20 ++++----------------
+>  .../bindings/clock/qcom,sm8450-videocc.yaml          | 20 ++++----------------
+>  .../bindings/clock/qcom,sm8550-dispcc.yaml           | 20 ++++----------------
+>  .../devicetree/bindings/clock/qcom,videocc.yaml      | 19 +++----------------
+>  16 files changed, 61 insertions(+), 256 deletions(-)
+> ---
+> base-commit: b0afb900b7d235d879f8e8e4babfe77d9db76f2f
+> change-id: 20240531-dt-bindings-qcom-gcc-e2955fd60004
+> 
+> Best regards,
+> -- 
+> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 
 -- 
- i.
-
-
-> Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> There are still a number of problems with GENI UART after this but
-> I've kept this change separate to make it easier to understand.
-> Specifically on mainline just hitting "Ctrl-C" after dumping
-> /var/log/messages to the serial port hangs things after the kfifo
-> changes. Those issues will be addressed in future patches.
-> 
-> Changes in v2:
-> - Totally rework / rename patch to handle suspend while active xfer
-> 
->  drivers/tty/serial/qcom_geni_serial.c | 97 +++++++++++++++++++++------
->  1 file changed, 75 insertions(+), 22 deletions(-)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index d7814f9e5c26..10aeb0313f9b 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -131,6 +131,7 @@ struct qcom_geni_serial_port {
->  	bool brk;
->  
->  	unsigned int tx_remaining;
-> +	unsigned int tx_total;
->  	int wakeup_irq;
->  	bool rx_tx_swap;
->  	bool cts_rts_swap;
-> @@ -337,11 +338,14 @@ static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
->  
->  static void qcom_geni_serial_setup_tx(struct uart_port *uport, u32 xmit_size)
->  {
-> +	struct qcom_geni_serial_port *port = to_dev_port(uport);
->  	u32 m_cmd;
->  
->  	writel(xmit_size, uport->membase + SE_UART_TX_TRANS_LEN);
->  	m_cmd = UART_START_TX << M_OPCODE_SHFT;
->  	writel(m_cmd, uport->membase + SE_GENI_M_CMD0);
-> +
-> +	port->tx_total = xmit_size;
->  }
->  
->  static void qcom_geni_serial_poll_tx_done(struct uart_port *uport)
-> @@ -361,6 +365,64 @@ static void qcom_geni_serial_poll_tx_done(struct uart_port *uport)
->  	writel(irq_clear, uport->membase + SE_GENI_M_IRQ_CLEAR);
->  }
->  
-> +static void qcom_geni_serial_drain_tx_fifo(struct uart_port *uport)
-> +{
-> +	struct qcom_geni_serial_port *port = to_dev_port(uport);
-> +
-> +	/*
-> +	 * If the main sequencer is inactive it means that the TX command has
-> +	 * been completed and all bytes have been sent. Nothing to do in that
-> +	 * case.
-> +	 */
-> +	if (!qcom_geni_serial_main_active(uport))
-> +		return;
-> +
-> +	/*
-> +	 * Wait until the FIFO has been drained. We've already taken bytes out
-> +	 * of the higher level queue in qcom_geni_serial_send_chunk_fifo() so
-> +	 * if we don't drain the FIFO but send the "cancel" below they seem to
-> +	 * get lost.
-> +	 */
-> +	qcom_geni_serial_poll_bitfield(uport, SE_GENI_M_GP_LENGTH, 0xffffffff,
-> +				       port->tx_total - port->tx_remaining);
-> +
-> +	/*
-> +	 * If clearing the FIFO made us inactive then we're done--no need for
-> +	 * a cancel.
-> +	 */
-> +	if (!qcom_geni_serial_main_active(uport))
-> +		return;
-> +
-> +	/*
-> +	 * Cancel the current command. After this the main sequencer will
-> +	 * stop reporting that it's active and we'll have to start a new
-> +	 * transfer command.
-> +	 *
-> +	 * If we skip doing this cancel and then continue with a system
-> +	 * suspend while there's an active command in the main sequencer
-> +	 * then after resume time we won't get any more interrupts on the
-> +	 * main sequencer until we send the cancel.
-> +	 */
-> +	geni_se_cancel_m_cmd(&port->se);
-> +	if (!qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> +				       M_CMD_CANCEL_EN, true)) {
-> +		/* The cancel failed; try an abort as a fallback. */
-> +		geni_se_abort_m_cmd(&port->se);
-> +		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> +						M_CMD_ABORT_EN, true);
-> +		writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
-> +	}
-> +	writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
-> +
-> +	/*
-> +	 * We've cancelled the current command. "tx_remaining" stores how
-> +	 * many bytes are left to finish in the current command so we know
-> +	 * when to start a new command. Since the command was cancelled we
-> +	 * need to zero "tx_remaining".
-> +	 */
-> +	port->tx_remaining = 0;
-> +}
-> +
->  static void qcom_geni_serial_abort_rx(struct uart_port *uport)
->  {
->  	u32 irq_clear = S_CMD_DONE_EN | S_CMD_ABORT_EN;
-> @@ -681,37 +743,18 @@ static void qcom_geni_serial_start_tx_fifo(struct uart_port *uport)
->  {
->  	u32 irq_en;
->  
-> -	if (qcom_geni_serial_main_active(uport) ||
-> -	    !qcom_geni_serial_tx_empty(uport))
-> -		return;
-> -
->  	irq_en = readl(uport->membase +	SE_GENI_M_IRQ_EN);
->  	irq_en |= M_TX_FIFO_WATERMARK_EN | M_CMD_DONE_EN;
-> -
->  	writel(irq_en, uport->membase +	SE_GENI_M_IRQ_EN);
->  }
->  
->  static void qcom_geni_serial_stop_tx_fifo(struct uart_port *uport)
->  {
->  	u32 irq_en;
-> -	struct qcom_geni_serial_port *port = to_dev_port(uport);
->  
->  	irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
->  	irq_en &= ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN);
->  	writel(irq_en, uport->membase + SE_GENI_M_IRQ_EN);
-> -	/* Possible stop tx is called multiple times. */
-> -	if (!qcom_geni_serial_main_active(uport))
-> -		return;
-> -
-> -	geni_se_cancel_m_cmd(&port->se);
-> -	if (!qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> -						M_CMD_CANCEL_EN, true)) {
-> -		geni_se_abort_m_cmd(&port->se);
-> -		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> -						M_CMD_ABORT_EN, true);
-> -		writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
-> -	}
-> -	writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
->  }
->  
->  static void qcom_geni_serial_handle_rx_fifo(struct uart_port *uport, bool drop)
-> @@ -1093,7 +1136,15 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
->  }
->  
->  
-> -static void qcom_geni_serial_shutdown(struct uart_port *uport)
-> +static void qcom_geni_serial_shutdown_dma(struct uart_port *uport)
-> +{
-> +	disable_irq(uport->irq);
-> +
-> +	qcom_geni_serial_stop_tx(uport);
-> +	qcom_geni_serial_stop_rx(uport);
-> +}
-> +
-> +static void qcom_geni_serial_shutdown_fifo(struct uart_port *uport)
->  {
->  	disable_irq(uport->irq);
->  
-> @@ -1102,6 +1153,8 @@ static void qcom_geni_serial_shutdown(struct uart_port *uport)
->  
->  	qcom_geni_serial_stop_tx(uport);
->  	qcom_geni_serial_stop_rx(uport);
-> +
-> +	qcom_geni_serial_drain_tx_fifo(uport);
->  }
->  
->  static int qcom_geni_serial_port_setup(struct uart_port *uport)
-> @@ -1560,7 +1613,7 @@ static const struct uart_ops qcom_geni_console_pops = {
->  	.startup = qcom_geni_serial_startup,
->  	.request_port = qcom_geni_serial_request_port,
->  	.config_port = qcom_geni_serial_config_port,
-> -	.shutdown = qcom_geni_serial_shutdown,
-> +	.shutdown = qcom_geni_serial_shutdown_fifo,
->  	.type = qcom_geni_serial_get_type,
->  	.set_mctrl = qcom_geni_serial_set_mctrl,
->  	.get_mctrl = qcom_geni_serial_get_mctrl,
-> @@ -1582,7 +1635,7 @@ static const struct uart_ops qcom_geni_uart_pops = {
->  	.startup = qcom_geni_serial_startup,
->  	.request_port = qcom_geni_serial_request_port,
->  	.config_port = qcom_geni_serial_config_port,
-> -	.shutdown = qcom_geni_serial_shutdown,
-> +	.shutdown = qcom_geni_serial_shutdown_dma,
->  	.type = qcom_geni_serial_get_type,
->  	.set_mctrl = qcom_geni_serial_set_mctrl,
->  	.get_mctrl = qcom_geni_serial_get_mctrl,
-> 
+With best wishes
+Dmitry
 
