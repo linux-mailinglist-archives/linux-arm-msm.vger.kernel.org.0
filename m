@@ -1,187 +1,306 @@
-Return-Path: <linux-arm-msm+bounces-21189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF1E78D5777
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 03:03:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C94968D5786
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 03:05:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 258031F222FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 01:03:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80F902888E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 01:05:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 578E0211C;
-	Fri, 31 May 2024 01:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 020C64C89;
+	Fri, 31 May 2024 01:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f9h1QTPB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZ2imBoO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF24963C7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 01:02:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138AED51E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 01:05:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717117375; cv=none; b=dV9iF0d1VX54Of7VA/IDrYAoqm2kzJbt6Xp0sKjhODjKK5zFy0N9PmKIdtWw5biIboX3jvkAkReOcs0i+cL6ZWzcvYWikVtWuIfBEYVsdyanoxcfEXUqHaPy/okfzFGYfr43n16a0AgIEMh+IzJLcD8SQhKJxQuAvv9O/SWFJXM=
+	t=1717117513; cv=none; b=TbffS/FTVm2P5jPHSkoAOxEspLAkhnB9GkdKPc8mztS9VPJncxOjxoM71Jxgb1cZO8B1J+YSAgRShY9vH4q5xhY7ZjV2w8Un7fqwmKjUnVkfKfmpVzo3mPBI0BddD7gyrxUouI9QbbafnSB0cKLfv7MBil6gZr0YJomYyAXNZ0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717117375; c=relaxed/simple;
-	bh=7Mt2A154fHrbdyHK2g8RJhK4gMDge7So5tSVydQbnlE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=osI3TOMazmWQPl6apaRGbouDDj6YgD1E3ODZBxdO1uRnW7M6Ts0eFaKzBN0mC4CCrMuUJP2kCSrGJAe1GJRGgBH6vy65uIIFBUHZ1dkLADWnkuTeh2di8sF41bfar9DBa5sVAuH/UaZXeJEgTNwTtVC705gotrtd9FTp+/2fgEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f9h1QTPB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44UHDn25024256;
-	Fri, 31 May 2024 01:02:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BPPcczdJf/UcAPn07oic5fGsvewdXZJnmPMWlsGhOlU=; b=f9h1QTPBKU3D5JQy
-	InbK+9m3ORbXRVBDhs1qVNWjGKTdgrwoxs5CKuXraJ9oCqpWDH5oLa67CwSCoSfk
-	KUnigxlrZDHSEKFgvHGG8YxCwv5r8wTwB929qiugvnpPLClMBs4iN7Dvd3wVe7Oc
-	zBZuIOGnKGOL19eN8YVWQS+sczbPPjV5aniPXBsMt8B/DiWNk+bYofThlh1nsFux
-	WOOfZrBZL8lR/TaAfGRfxS3bvMPRFWvcEpR5EwGyODQR2do3vtAGWYjHFiXKqcC1
-	qZaDeaRRqBrW7JEpWc8JhHuHLLkGMskHn93kkcyP42Yw5ewcoWvIWVS0WshFsstn
-	wSkcSw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ybadxdjnm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 01:02:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44V12ew4027294
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 01:02:40 GMT
-Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 30 May
- 2024 18:02:36 -0700
-Message-ID: <6a335026-77c1-a112-69af-a8d9d86d5528@quicinc.com>
-Date: Thu, 30 May 2024 18:02:34 -0700
+	s=arc-20240116; t=1717117513; c=relaxed/simple;
+	bh=uXfDEOjLv+ehvyI9BLqFEZ08MZc+Pu/2A0MFNLqubJw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qPWj/YTExHkZeS9tjA0glN2FLM/LRdObvKKKPpTcIo6zv/8eCXxP0CoRzHyrgrrGwwHTrwxX4J7eh+nx4nATUloa0fPTyLpbblMd/A77nAESElh8ErA2b9AyQLrqHcv9T75IKk1QYGaBTpbaZizuMJ0VDTPVx5i4S6XslWoZc9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZ2imBoO; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52b80e5688aso1657434e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 18:05:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717117510; x=1717722310; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LVbzQgiFaGguV//d78RBj3pAHXG3P0yCT4npYfngP5s=;
+        b=PZ2imBoOD/Gla9oPGISBS5VRkqhq4CUqBmcLJRO2cnQe+5z/wQ7vLCAr6t+0LFL9GI
+         JZviynR6AAOPVyaqj9w7lN4wf+ydNABI/O3xrrMGDrOcjpWUJXpj0gHVMqpJ0cuM3d2e
+         r9MOwBMb5aNcMx9vfb32/ldlfY0Tqr4p89tmWHXJqTe1rtaCuHecSWKLz/CK+lIf8uni
+         3/VcSepRvfxq0lMeH/O4+A8Xf4XZDVYdLlytmnnmVV3oR4Js986SJKnHvScJSdb5nHQU
+         1lK7D6kjEId1n5NiojZar5VxtGWC35D2tcPmWAG31+dAryUD1fEtG1UBcgjFon0Sbf/m
+         43wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717117510; x=1717722310;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LVbzQgiFaGguV//d78RBj3pAHXG3P0yCT4npYfngP5s=;
+        b=nMdxUgh/Fbj0GBizzhKbdqYqGbcP8EaU+JYIEZWiSXFpZVHda8jzcdldjYeOU41ZS6
+         9Yvszmk0UqmdQ5+svLsvGrj1HEoDAkSRJhaMx1ARX4O1GqT29cwn9io02o/xpI965/Q5
+         Bkxm+ZhguAH9ZFm/1QqiCanPZi+H+LQFRPlYEBE5WP7ueVGYuBvSnRKnIBIfXmlFuDkl
+         /sesY5D2CupHmQ7qtUpn7ddkFvU4ZrNlkMsFnAhCXTHiouI6CIo4e/peH2ZtaeyPoKgr
+         m3UkyMvQF1X0e5LW0QCd6Yym2mhj1yHS2sxd+my7V8/fRn4p/hch5sabomA6NCt9Z7bI
+         r82w==
+X-Forwarded-Encrypted: i=1; AJvYcCUU/cm3rDoa2kJvHARYLcOtc7RdLcIb0lUAyia9IiAyMH+F/98eRzDa4dcxvTEOPwDJetmKpRtfChojuyPdYaJj6EOTOscC2ZxCgiT0ng==
+X-Gm-Message-State: AOJu0Yz6LawY9Ibqarru+3Lkm8G08DoJJl9a6HkxLJY+LGAzXcSWHplK
+	9+4IetnWG7i/qfNWBk8gIwShkP8lDZ4/FA30ELkKNlrAQ122cCe1lTD83Vnf2V4=
+X-Google-Smtp-Source: AGHT+IHomuQLV/a1+46r2/bjrhxItgrwS1B7Si5a5leUogKwVcxPn4v1vNxtZhU6lKWRVAcVsxarfw==
+X-Received: by 2002:ac2:5548:0:b0:52b:88e8:1c82 with SMTP id 2adb3069b0e04-52b895a385fmr190738e87.47.1717117510049;
+        Thu, 30 May 2024 18:05:10 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d75fd6sm142407e87.157.2024.05.30.18.05.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 May 2024 18:05:09 -0700 (PDT)
+Date: Fri, 31 May 2024 04:05:08 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Hans de Goede <hdegoede@redhat.com>, 
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Nikita Travkin <nikita@trvn.ru>
+Subject: Re: [PATCH v4 4/6] power: supply: lenovo_yoga_c630_battery: add
+ Lenovo C630 driver
+Message-ID: <ndrp6ghnoibfm3t7qk7zuwfcukixh6uzqykj7vitobtiqntin6@ud242mjaivfl>
+References: <20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org>
+ <20240528-yoga-ec-driver-v4-4-4fa8dfaae7b6@linaro.org>
+ <6d957019-ccec-4129-9e6d-33204de88dd5@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 05/13] drm/msm/dpu: move scaling limitations out of the
- hw_catalog
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
- <20240314000216.392549-6-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240314000216.392549-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QNXNN7eTdiT5GMQmuvh7p6VYdKB_UxZ2
-X-Proofpoint-GUID: QNXNN7eTdiT5GMQmuvh7p6VYdKB_UxZ2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-30_21,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- impostorscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0
- priorityscore=1501 mlxscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2405170001 definitions=main-2405310006
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6d957019-ccec-4129-9e6d-33204de88dd5@linaro.org>
 
-
-
-On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
-> Max upscale / downscale factors are constant between platforms. In
-> preparation to adding support for virtual planes and allocating SSPP
-> blocks on demand move max scaling factors out of the HW catalog and
-> handle them in the dpu_plane directly. If any of the scaling blocks gets
-> different limitations, this will have to be handled separately, after
-> the plane refactoring.
+On Wed, May 29, 2024 at 04:51:54PM +0100, Bryan O'Donoghue wrote:
+> On 28/05/2024 21:44, Dmitry Baryshkov wrote:
+> > On the Lenovo Yoga C630 WOS laptop the EC provides access to the adapter
+> > and battery status. Add the driver to read power supply status on the
+> > laptop.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/power/supply/Kconfig                    |   9 +
+> >   drivers/power/supply/Makefile                   |   1 +
+> >   drivers/power/supply/lenovo_yoga_c630_battery.c | 479 ++++++++++++++++++++++++
+> >   3 files changed, 489 insertions(+)
+> > 
+> > diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
+> > index 3e31375491d5..55ab8e90747d 100644
+> > --- a/drivers/power/supply/Kconfig
+> > +++ b/drivers/power/supply/Kconfig
+> > @@ -167,6 +167,15 @@ config BATTERY_LEGO_EV3
+> >   	help
+> >   	  Say Y here to enable support for the LEGO MINDSTORMS EV3 battery.
+> > +config BATTERY_LENOVO_YOGA_C630
+> > +	tristate "Lenovo Yoga C630 battery"
+> > +	depends on OF && EC_LENOVO_YOGA_C630
+> > +	help
+> > +	  This driver enables battery support on the Lenovo Yoga C630 laptop.
+> > +
+> > +	  To compile the driver as a module, choose M here: the module will be
+> > +	  called lenovo_yoga_c630_battery.
+> > +
+> >   config BATTERY_PMU
+> >   	tristate "Apple PMU battery"
+> >   	depends on PPC32 && ADB_PMU
+> > diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
+> > index 58b567278034..8ebbdcf92dac 100644
+> > --- a/drivers/power/supply/Makefile
+> > +++ b/drivers/power/supply/Makefile
+> > @@ -32,6 +32,7 @@ obj-$(CONFIG_BATTERY_DS2782)	+= ds2782_battery.o
+> >   obj-$(CONFIG_BATTERY_GAUGE_LTC2941)	+= ltc2941-battery-gauge.o
+> >   obj-$(CONFIG_BATTERY_GOLDFISH)	+= goldfish_battery.o
+> >   obj-$(CONFIG_BATTERY_LEGO_EV3)	+= lego_ev3_battery.o
+> > +obj-$(CONFIG_BATTERY_LENOVO_YOGA_C630) += lenovo_yoga_c630_battery.o
+> >   obj-$(CONFIG_BATTERY_PMU)	+= pmu_battery.o
+> >   obj-$(CONFIG_BATTERY_QCOM_BATTMGR)	+= qcom_battmgr.o
+> >   obj-$(CONFIG_BATTERY_OLPC)	+= olpc_battery.o
+> > diff --git a/drivers/power/supply/lenovo_yoga_c630_battery.c b/drivers/power/supply/lenovo_yoga_c630_battery.c
+> > new file mode 100644
+> > index 000000000000..76152ad38d46
+> > --- /dev/null
+> > +++ b/drivers/power/supply/lenovo_yoga_c630_battery.c
+> > @@ -0,0 +1,479 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * Copyright (c) 2022-2024, Linaro Ltd
+> > + * Authors:
+> > + *    Bjorn Andersson
+> > + *    Dmitry Baryshkov
+> > + */
+> > +#include <linux/auxiliary_bus.h>
+> > +#include <linux/delay.h>
+> > +#include <linux/module.h>
+> > +#include <linux/platform_data/lenovo-yoga-c630.h>
+> > +#include <linux/power_supply.h>
+> > +
+> > +struct yoga_c630_psy {
+> > +	struct yoga_c630_ec *ec;
+> > +	struct device *dev;
+> > +	struct device_node *of_node;
+> > +	struct notifier_block nb;
+> > +	struct mutex lock;
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 12 ------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 ----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 16 +++++++++++++---
->   3 files changed, 13 insertions(+), 19 deletions(-)
+> Do locks still not require a
 > 
+> struct mutex lock; /* this mutex locks this thing */
 
-<Snip>
+Not required, but let me add the doc.
 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 70d6a8989e1a..6360052523b5 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -785,12 +785,15 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
->   	return 0;
->   }
->   
-> +#define MAX_UPSCALE_RATIO	20
-> +#define MAX_DOWNSCALE_RATIO	4
-> +
->   static int dpu_plane_atomic_check(struct drm_plane *plane,
->   				  struct drm_atomic_state *state)
->   {
->   	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
->   										 plane);
-> -	int ret = 0, min_scale;
-> +	int ret = 0, min_scale, max_scale;
->   	struct dpu_plane *pdpu = to_dpu_plane(plane);
->   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
->   	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
-> @@ -822,10 +825,17 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	pipe_hw_caps = pipe->sspp->cap;
->   	sblk = pipe->sspp->cap->sblk;
->   
-> -	min_scale = FRAC_16_16(1, sblk->maxupscale);
-> +	if (sblk->scaler_blk.len) {
-> +		min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
-> +		max_scale = MAX_DOWNSCALE_RATIO << 16;
-> +	} else {
-> +		min_scale = 1 << 16;
-> +		max_scale = 1 << 16;
+> 
+> > +
+> > +	struct power_supply *adp_psy;
+> > +	struct power_supply *bat_psy;
+> > +
+> > +	unsigned long last_status_update;
+> > +
+> > +	bool adapter_online;
+> > +
+> > +	bool unit_mA;
+> > +
+> > +	bool bat_present;
+> > +	unsigned int bat_status;
+> > +	unsigned int design_capacity;
+> > +	unsigned int design_voltage;
+> > +	unsigned int full_charge_capacity;
+> > +
+> > +	unsigned int capacity_now;
+> > +	unsigned int voltage_now;
+> > +
+> > +	int current_now;
+> > +	int rate_now;
+> > +};
+> > +
+> > +#define LENOVO_EC_CACHE_TIME		(10 * HZ)
+> > +
+> > +#define LENOVO_EC_ADPT_STATUS		0xa3
+> > +#define LENOVO_EC_ADPT_PRESENT		BIT(7)
+> > +#define LENOVO_EC_BAT_ATTRIBUTES	0xc0
+> > +#define LENOVO_EC_BAT_ATTR_UNIT_IS_MA	BIT(1)
+> > +#define LENOVO_EC_BAT_STATUS		0xc1
+> > +#define LENOVO_EC_BAT_REMAIN_CAPACITY	0xc2
+> > +#define LENOVO_EC_BAT_VOLTAGE		0xc6
+> > +#define LENOVO_EC_BAT_DESIGN_VOLTAGE	0xc8
+> > +#define LENOVO_EC_BAT_DESIGN_CAPACITY	0xca
+> > +#define LENOVO_EC_BAT_FULL_CAPACITY	0xcc
+> > +#define LENOVO_EC_BAT_CURRENT		0xd2
+> > +#define LENOVO_EC_BAT_FULL_FACTORY	0xd6
+> > +#define LENOVO_EC_BAT_PRESENT		0xda
+> > +#define LENOVO_EC_BAT_FULL_REGISTER	0xdb
+> > +#define LENOVO_EC_BAT_FULL_IS_FACTORY	BIT(0)
+> > +
+> > +/* the mutex should already be locked */
+> > +static int yoga_c630_psy_update_bat_info(struct yoga_c630_psy *ecbat)
+> > +{
+> > +	struct yoga_c630_ec *ec = ecbat->ec;
+> > +	int val;
+> > +
+> > +	val = yoga_c630_ec_read8(ec, LENOVO_EC_BAT_PRESENT);
+> > +	if (val < 0)
+> > +		return val;
+> > +	ecbat->bat_present = !!(val & BIT(0));
+> > +	if (!ecbat->bat_present)
+> > +		return val;
+> > +
+> > +	val = yoga_c630_ec_read8(ec, LENOVO_EC_BAT_ATTRIBUTES);
+> > +	if (val < 0)
+> > +		return val;
+> > +	ecbat->unit_mA = val & LENOVO_EC_BAT_ATTR_UNIT_IS_MA;
+> > +
+> > +	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_DESIGN_CAPACITY);
+> > +	if (val < 0)
+> > +		return val;
+> > +	ecbat->design_capacity = val * 1000;
+> > +
+> > +	msleep(50);
+> 
+> What's this for ? Also do you really want to hold a mutex for 50
+> milliseconds ?
 
-You can use DRM_PLANE_NO_SCALING instead.
+DSDT has these delays after each read, so I can only assume it is required.
+Sleeping outside of the mutex() would mean that a concurrent thread
+might break into this delay and query the EC.
 
-> +	}
-> +
->   	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
->   						  min_scale,
-> -						  sblk->maxdwnscale << 16,
-> +						  max_scale,
->   						  true, true);
-
-I am missing something here.
-
-As per the documentation of this API, min and max are the scaling limits 
-of both directions and not max_upscale and max_downscale.
-
-**
-837  * drm_atomic_helper_check_plane_state() - Check plane state for 
-validity
-838  * @plane_state: plane state to check
-839  * @crtc_state: CRTC state to check
-840  * @min_scale: minimum @src:@dest scaling factor in 16.16 fixed point
-841  * @max_scale: maximum @src:@dest scaling factor in 16.16 fixed point
-842  * @can_position: is it legal to position the plane such that it
+[skipped]
 
 
-But this change is passing max_upscale and max_downscale as the min and 
-max resp. Isnt that wrong?
+> > +static int yoga_c630_psy_probe(struct auxiliary_device *adev,
+> > +				   const struct auxiliary_device_id *id)
+> > +{
+> > +	struct yoga_c630_ec *ec = adev->dev.platform_data;
+> > +	struct power_supply_config adp_cfg = {};
+> > +	struct device *dev = &adev->dev;
+> > +	struct yoga_c630_psy *ecbat;
+> > +	int ret;
+> > +
+> > +	ecbat = devm_kzalloc(&adev->dev, sizeof(*ecbat), GFP_KERNEL);
+> > +	if (!ecbat)
+> > +		return -ENOMEM;
+> > +
+> > +	ecbat->ec = ec;
+> > +	ecbat->dev = dev;
+> > +	mutex_init(&ecbat->lock);
+> > +	ecbat->of_node = adev->dev.parent->of_node;
+> > +	ecbat->nb.notifier_call = yoga_c630_psy_notify;
+> > +
+> > +	auxiliary_set_drvdata(adev, ecbat);
+> > +
+> > +	adp_cfg.drv_data = ecbat;
+> > +	adp_cfg.of_node = ecbat->of_node;
+> > +	adp_cfg.supplied_to = (char **)&yoga_c630_psy_bat_psy_desc_mA.name;
+> > +	adp_cfg.num_supplicants = 1;
+> > +	ecbat->adp_psy = devm_power_supply_register_no_ws(dev, &yoga_c630_psy_adpt_psy_desc, &adp_cfg);
+> > +	if (IS_ERR(ecbat->adp_psy)) {
+> > +		dev_err(dev, "failed to register AC adapter supply\n");
+> > +		return PTR_ERR(ecbat->adp_psy);
+> > +	}
+> > +
+> > +	mutex_lock(&ecbat->lock);
+> 
+> Do you really need this lock here in your probe() function ? What's the
+> parallel path of execution you are mitigating against here ?
+
+Notifications from the battery driver can already happen at this point.
+Also once the fist power supply is registered, userspace can potentially
+access it, triggering EC access and updates of the PSY registration.
+
+> 
+> > +
+> > +	ret = yoga_c630_psy_update_bat_info(ecbat);
+> > +	if (ret)
+> > +		goto err_unlock;
+> > +
+> > +	ret = yoga_c630_psy_register_bat_psy(ecbat);
+> > +	if (ret)
+> > +		goto err_unlock;
+> > +
+> > +	mutex_unlock(&ecbat->lock);
+> > +
 
 
->   	if (ret) {
->   		DPU_DEBUG_PLANE(pdpu, "Check plane state failed (%d)\n", ret);
+-- 
+With best wishes
+Dmitry
 
