@@ -1,76 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-21260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE0A58D610C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 13:56:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64B108D6113
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 13:57:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 102F21C22FED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:56:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B9AE2830A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:57:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A35D157E94;
-	Fri, 31 May 2024 11:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3DBA157E9B;
+	Fri, 31 May 2024 11:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w4BCKKTE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g93vQSf9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF8E157E7A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 11:55:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F74215748F;
+	Fri, 31 May 2024 11:57:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717156555; cv=none; b=Z1+b2O/nG+wYkmM7JLZ7MvWDTCYrewiWl6gp6MKr3cTI5J27LrtCR+xk4omPFuZY1Bru+fXGA43RwnO0t5kCUQCRm45hCKqLrsXf1DIwrC/6fg4aoj28aB/69zGTeiUT5HeOiGjcwUvwYV2wzx/kS1to1KZHQecIUHJhQCb1wsM=
+	t=1717156646; cv=none; b=fAg6LQj+TUVkBRS1gz8FyOKTWsii7bh3vwU1xFi9RuBP2zBhmFHfIOF1iTHF3CYjX+Zb2LQiXR8VZsXSCqlQaQ7arsRar6FDNJ6FFrjg+BEGxSEMP7WJD7ycOFPpuRP3rLwJ23/zALRL0hyzwKUt+5QW/FyWZEnw3uATSMuc0VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717156555; c=relaxed/simple;
-	bh=MTwwBV2T5cVxGloQBIIu8tZJst21kS52eDYdXv08W78=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qWv8hg+iKAB4xsKLQRNafwZ7pPvxC8cYh7krqpPHVIT8LpHYmQH0OBFjPy0ebFfCxpHFyrbG0Sv2I8JR2b2nSsOvgq3Uj7g37522RYDuLgN/LzeCh49dgsgNHKFCNMrdRn50AkKwq6/nestlIHVpe81DDsoLZDXloELix3btSgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w4BCKKTE; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-57a20c600a7so2043252a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 04:55:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717156552; x=1717761352; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=MTwwBV2T5cVxGloQBIIu8tZJst21kS52eDYdXv08W78=;
-        b=w4BCKKTEIFROBX2zBoqFw+WPVN30ZB9yETNZPQOSsREam0/dTsQY6rdUQv3nwDa8jx
-         dKEjhNI5BAW2YUjnxe3P7K5nSDMccjZZqTvpx4+HH+eWY5lqlblOO4FRGrLwu7BXI/lc
-         PWmupmDmHCNs5bboA1qeyOKnywLvrgtDsijXRFwvhr5eEkcUCidbx4erivA1+dRm70Bq
-         Lxo2uJ6IkFvuLuuIDG/kEH74Lf+jGidO25T06RZotjem2OIsie1SLIwJBvyZssRQTWB7
-         wKr+PCB7kgea1Olvsk9pX3sH//tqJ21kNaVnUrgBJcUEp/THaBE8eunt1rMsWZ63NObi
-         pJDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717156552; x=1717761352;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MTwwBV2T5cVxGloQBIIu8tZJst21kS52eDYdXv08W78=;
-        b=EyDG164K9Zo9jzensomrLpXBpOdVoK+9/p7KeJ9bReCNXyed++vTJTcTYVd8KPfy7l
-         z+f9d/xfGgilCwfU5+GQQ3Ydc2t0i9WjT4nYqy9dEb41OvSQ4OfjK1P5pr7tf3yvkvI7
-         w5KSKk6wbV4RbVwxSLc74t/giDJhk5bvUvDmsQrqfQgaUGpPQcj8sq4ee1zLgxRZhkV3
-         VCp/3lRFKZKZdCW/WVfu5lLwuWmeGcTHilFH9G4AKrPXlIywSQZHxtpezQ1b3wVcqYaE
-         1TKXfO/i3PxhOQAcDyrvrmgzd5NEr+EJYLtIo8Hgy12AjhSDcvUPO6U2iCDL1i8b0ZBB
-         W6kQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWe7t/L7fLXPjjijCaA7h+j8It4+iSiX6wrUIrbeA+eB1aYFQ4tKHDb2Us0+CGUoUpcX/bSfdDy6+viaAxxa60TemqfZsWXm70msfOr1w==
-X-Gm-Message-State: AOJu0YzgRuz7qUOGVu/dIqe5SulKkYbEeB6WIc+CBXaFXLjVulewFirB
-	6jinb8PFCO7F91MzHfWClwUfxpVegWb3mnz91Sdk2Dkyk8WjRM9YLbLci5h+cYjFo2yLaGS3nt9
-	hOZk=
-X-Google-Smtp-Source: AGHT+IHocPLIN+ojTku/nwSK4uiv5CIu5ToaTHs7R9ZMZ7XNlrQDXD32rVzSuLvxytyaUDULDp4eWA==
-X-Received: by 2002:a50:aa93:0:b0:57a:2537:a730 with SMTP id 4fb4d7f45d1cf-57a36382342mr1270321a12.4.1717156551670;
-        Fri, 31 May 2024 04:55:51 -0700 (PDT)
-Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a31c6d4absm914236a12.72.2024.05.31.04.55.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 04:55:51 -0700 (PDT)
-Message-ID: <7fb5511e-e20b-47dd-8cc3-fb2975db7c63@linaro.org>
-Date: Fri, 31 May 2024 13:55:49 +0200
+	s=arc-20240116; t=1717156646; c=relaxed/simple;
+	bh=jK6YYEy/7Igoejw2c2fzU6CRCWo7OrhStRnGrEA4778=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YpEWbaZA5gAAHJ+JsLfNAAfd2TXb8BBhzVMwV4deM+ElvaIio4eUmFq/1y2JttP6S4BoCO7/neq/g4X22IWKI14fXBO2yVtrP9i4AQvEpC5ZHigX29pJM8aT/78R+BTqxEIJZDqLpYv6iTwk+//AWKiGW0C7GP8WlBQ674aRclE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g93vQSf9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44V8lHAr006252;
+	Fri, 31 May 2024 11:57:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QLXCf+uuiqWX0T+eAEfBRmO10Kpgb3O9apvffaCdJmA=; b=g93vQSf9dgKTHatG
+	Am/8jpuemv3UW6BDgRKTST76WOniM8PKa3t1AgfRk0Xdc++DThS/2XEGkI0xIvZQ
+	U+mrbpRfA7MUasPTZwePgCKfsJ5q7DlWSU29P+75RVwkrJmRjKPi8hrWc49OIKsN
+	2UB1b05HbTpCraKFhDk2S88QxwaLBJ1vpDiHteIn2gPITKbEaI80qDo9A0vQrJmK
+	KmeJ5vEppgX3Gcrr+eL/9ReWG6cQ8ceNQzD15uZhcU+o0T3pVB9ZjV53k/kfaBlO
+	q6NYTFGsXFq5bvX4Dxs/ZiVthmDMK2Fw0Y2EaaT5jW44cu/4teoEbAQNNd7F4e93
+	XbyXQA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba2hembv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 11:57:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44VBvA7b010803
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 11:57:10 GMT
+Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 31 May
+ 2024 04:56:55 -0700
+Message-ID: <1df48a42-3b4e-4eb4-971b-cd4be001ba27@quicinc.com>
+Date: Fri, 31 May 2024 17:26:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,76 +65,116 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-x1e80100: Fix halt_check for all 3 USB PHY
- pipe clocks
-To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rajendra Nayak <quic_rjendra@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240530-x1e80100-clk-gcc-fix-halt-check-for-usb-phy-pipe-clks-v1-1-16c6f4dccbd5@linaro.org>
+Subject: Re: [PATCH V5 RESEND 5/5] venus: pm_helpers: Use
+ dev_pm_genpd_set_hwmode to switch GDSC mode on V6
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Michael
+ Turquette" <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Ulf
+ Hansson" <ulf.hansson@linaro.org>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Len Brown
+	<len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Andy
+ Gross" <agross@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20240413152013.22307-1-quic_jkona@quicinc.com>
+ <20240413152013.22307-6-quic_jkona@quicinc.com>
+ <5c78ad52-524b-4ad7-b149-0e7252abc2ee@linaro.org>
+ <b96ef82c-4033-43e0-9c1e-347ffb500751@quicinc.com>
+ <a522f25f-bb38-4ae1-8f13-8e56934e5ef5@linaro.org>
+ <dbd1b86c-7b5f-4b92-ab1f-fecfe1486cfc@quicinc.com>
+ <621dbaaa-6b86-45b5-988e-a6d9c39b13d7@linaro.org>
+ <d36c1163-a3f0-4034-a430-91986e5bbce8@linaro.org>
+ <ef194e5c-f136-4dba-bfe0-2c6439892e34@linaro.org>
+ <d2e55523-f8fd-4cbe-909c-57de241107e8@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240530-x1e80100-clk-gcc-fix-halt-check-for-usb-phy-pipe-clks-v1-1-16c6f4dccbd5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <d2e55523-f8fd-4cbe-909c-57de241107e8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BLsjDIiK3CsLckqGqMKAgMBG7h5L6Pat
+X-Proofpoint-ORIG-GUID: BLsjDIiK3CsLckqGqMKAgMBG7h5L6Pat
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-31_08,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ phishscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
+ mlxlogscore=921 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405310088
 
-On 30.05.2024 6:48 PM, Abel Vesa wrote:
-> Since the pipe clocks are fed by the QMP PHYs, they are not under the
-> GCC control, therefore the halt bit might not get. This will lead to
-> the clock driver reporting the clock as stuck, but that is inaccurate.
-> So instead of waiting for the halt bit to get set, just use the
-> HALT_DELAY flag.
 
-I can see this being a good fix, however the commit message could use
-some massaging.
 
-The issue you're facing is that you can't toggle these branch clocks before
-the QMPPHY has been fully initialized (as that initialization sequence
-contains, among other things, setting up the internal PLL). We're doing the
-HALT_SKIP thing to hack away the complexity of coming back to this. In a
-perfect world, we'd "defer" the toggle requests and all code that makes
-these, but it sounds overly complex for what it is. So in essence, the
-clock could really be stuck.
+On 5/10/2024 6:31 PM, Bryan O'Donoghue wrote:
+> On 01/05/2024 10:14, Bryan O'Donoghue wrote:
+>> On 30/04/2024 21:01, Konrad Dybcio wrote:
+>>> On 24.04.2024 11:50 AM, Bryan O'Donoghue wrote:
+>>>> On 24/04/2024 10:45, Jagadeesh Kona wrote:
+>>>>>
+>>>>> Thanks Bryan for testing this series. Can you please confirm if 
+>>>>> this issue is observed in every run or only seen during the first 
+>>>>> run? Also please let me know on which platform this issue is observed?
+>>>>>
+>>>>> Thanks,
+>>>>> Jagadeesh
+>>>>
+>>>> rb5/sm8250
+>>>>
+>>>> My observation was on a previous _boot_ the stuttering was worse. 
+>>>> There is in the video capture three times that I count where the 
+>>>> video halts briefly, I guess we need to vote or set an OPP so the 
+>>>> firmware knows not to power-collapse quite so aggressively.
+>>>
+>>> We seem to be having some qualcomm-wide variance on perf/pwr usage on 
+>>> some
+>>> odd boots.. Any chance you could try like 5 times and see if it was a 
+>>> fluke?
+>>>
+>>> Konrad
+>>
+>> Sure.
+>>
+>> The first time I tried it, it was much worse.
+>>
+>> The second time, captured in the video is only noticeable because I 
+>> was *looking* for this specific error i.e. I don't think I would have 
+>> noticed the error on the second run, had I not seen the first run.
+>>
+>> I'll find some time to do 5x with and 5x without.
+>>
+>> ---
+>> bod
+> 
+> ping bod please remember to do this thanks
+> 
 
-And FWIW, you missed gcc_usb3_mp_phy_pipe_[01]_clk, and these are orphans
-which could use some fixing up as well.
+Hi Bryan, Could you please let me know if you got a chance to check the 
+above? Thank you!
 
-Konrad
+Thanks,
+Jagadeesh
 
