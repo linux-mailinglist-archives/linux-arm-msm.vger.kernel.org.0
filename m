@@ -1,106 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-21264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B5F38D6177
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:12:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92B158D6199
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:21:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2EF121C232F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 12:12:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2FF541F25DCE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 12:21:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6C311581F9;
-	Fri, 31 May 2024 12:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC5451586C2;
+	Fri, 31 May 2024 12:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="aHII+BlE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ok60HvB3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mainlining.org [94.241.141.152])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ECB29A0;
-	Fri, 31 May 2024 12:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.241.141.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD7B158204;
+	Fri, 31 May 2024 12:20:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717157571; cv=none; b=bPRHFsbM6IiJ9Lv0xt9uMX/jPrDeI5DglujNh71jTi6aFN2LyeJS6OlKnwG7OPMHJKGbBGq9+wzCoVAVuDZK9cDUjlpHogUPs4gPqKAbuxuJCpvwBMf15UYGtO/6rAo7FlN1SwPglASaaRh9aA4qTktl7gSq2deAc0JXDNaOn/w=
+	t=1717158058; cv=none; b=vBYis+iTImvPHwB1aHmsjPub0tx+X8qyTQ4B/De3zRMPY6Q6JkSxslYNgKza/OOvkYS3NG5eAO/YnnEnHhSuU69UkSdmhtnM8KhGJ/ImsVHmJiQiRh05WQW0+evj29Kw2NS9NLivsiVtY6WcEMYNLUY2kprTjCTXSSH3kSmcb1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717157571; c=relaxed/simple;
-	bh=sNwq9j0seUAAM0TlDZhbME8CPsDh4g2j1l5gla81evc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=L6kCC30a+WkBQeO4lq9TaFE1Vyfa9Ge3NXDG4RUtTBg/+wSnHxXn+gu5j1u3rLqXLsT21UYDOcymSHgTsopzTVaIE3f+MhYfu/LenWku1da9uUYTZnRSERQX0pQMbyQCRCFXI1+hQ+nZTWmByx+QNS/rFJTgikgJaoKkvGwO2Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=aHII+BlE; arc=none smtp.client-ip=94.241.141.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.188.26] (ipb21bf7ea.dynamic.kabel-deutschland.de [178.27.247.234])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 09D1CE1FB4;
-	Fri, 31 May 2024 12:06:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1717157195;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=365GHuWbQyUl6ukwGlIrpFAaKYKPH0Juz+u4AfNJ4+M=;
-	b=aHII+BlECXTNdaRd2bvpCG6OehJvPxLj0/U3tGLo/MLmrUUb+D87U2eFC91TzYTu6JhF7D
-	KVUSyaeNS3vlSNkK/UI64W2d2b0RzuRkbKnQQ8nbah7K3llkkCgfWOb6NIdebetD5MHGso
-	Xs6p8UWdnnUjQniax7muMORH0ZON2iDduyh2DczrlCU2ahL9wj0llFNHCeWMasLW8luW2C
-	+YWx4NsBCRs3uJpDsGQAft72lQN6/a3i7Mti1JBUbY9O/mrrhk8Uqj4ThAFNvNo7kKK/57
-	bV3P8TUwyzM/sCVOyrlh9DfZzQKzD75DDaVHSVSHPf9OAZK1T3pcDLfVO9VwBA==
-From: David Wronek <david@mainlining.org>
-Date: Fri, 31 May 2024 14:05:59 +0200
-Subject: [PATCH] arm64: dts: qcom: sm8550-samsung-q5q: fix typo
+	s=arc-20240116; t=1717158058; c=relaxed/simple;
+	bh=CLb4nc7zHy/4lA+iIunEoR/yXcUjZMPWGPs38C1AKzw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dTXig1V1uXdDYL8lm5M0rTsr7cfWCbQWiSwft2EoZlaL7NX6pidIlt8ZU+KLF92V8W97F2h5HKw6Vxk38ydrCGwsSMjDy8lJo1Z64fcyYsoimeIPRJ5DzgjzW3us+a4Gpa/hYN0I6FGl0QYa5Zg3cIOVxqKxQSGJYz5RL7M8bVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ok60HvB3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF54C116B1;
+	Fri, 31 May 2024 12:20:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717158058;
+	bh=CLb4nc7zHy/4lA+iIunEoR/yXcUjZMPWGPs38C1AKzw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Ok60HvB3ccfGBiUvGIXKfl0wl6tmGKLLF0HT0mcVsLNfKkj5GqpLJ8x6rkfCx3cog
+	 WtIEv7kHodTz/nQqQrhcsQvWbn4s3p+A0f1NRFEUuDJmLFsagp/S49cy/1GIREu8DQ
+	 dZKC+LsPQzAO23Umsic10EL2F6RvHOlbKCI+lvqBzhHuvQC8uwFfnrW/8Gc9Cf+3E+
+	 1IC6jzWy06tp/ePmYwWKFkS2aEuLxXiV6OYKFpGhIGw1MfEE5Lmd1JTypZp7yrkP9L
+	 CrLfdqOh7Z7/tm61SY9Vc1tOTTXGloRev74x5HMte+C7SE+dn1oP/17HyMsNy5b5Nq
+	 mLvNs1Nmsy1gA==
+Message-ID: <fb1f7539-d96c-4c66-8c7f-d232dd163e6f@kernel.org>
+Date: Fri, 31 May 2024 14:20:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sm8550-samsung-q5q: fix typo
+To: David Wronek <david@mainlining.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240531-fix-typo-q5q-v1-1-95f10a8eff9b@mainlining.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240531-fix-typo-q5q-v1-1-95f10a8eff9b@mainlining.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240531-fix-typo-q5q-v1-1-95f10a8eff9b@mainlining.org>
-X-B4-Tracking: v=1; b=H4sIACa9WWYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDU2ND3bTMCt2SyoJ83ULTQl3TFGMTEyPjJPOkJBMloJaColSgPNi46Nj
- aWgBRksprXgAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, David Wronek <david@mainlining.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1717157194; l=948;
- i=david@mainlining.org; s=20240531; h=from:subject:message-id;
- bh=sNwq9j0seUAAM0TlDZhbME8CPsDh4g2j1l5gla81evc=;
- b=te3JsqLcyA2g3BK4ZBdiENlHG97kZ+Wym6ylsy25J/ENSEY/3pPHqH1nW13eDMppwe3GQsiYD
- e2VLLNJMmd2CprD7SJ2GJIcfW2W2GqQ7M4BU36+NVL8gk2p4iolUuNS
-X-Developer-Key: i=david@mainlining.org; a=ed25519;
- pk=XqkgbOfXJSEnyKxaC8p47fQE9Mm3634OwptSTONhdSk=
 
-It looks like "cdsp_mem" was pasted in the license header by accident.
-Fix the typo by removing it.
+On 31/05/2024 14:05, David Wronek wrote:
+> It looks like "cdsp_mem" was pasted in the license header by accident.
+> Fix the typo by removing it.
+> 
+> Signed-off-by: David Wronek <david@mainlining.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts | 2 +-
 
-Signed-off-by: David Wronek <david@mainlining.org>
----
- arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Fixes: ba2c082a401f ("arm64: dts: qcom: sm8550: Add support for Samsung Galaxy Z Fold5")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-index 4654ae1364ba..3d351e90bb39 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-@@ -1,4 +1,4 @@
--// SPDX-License-cdsp_memIdentifier: BSD-3-Clause
-+// SPDX-License-Identifier: BSD-3-Clause
- /*
-  * Copyright (c) 2024, Alexandru Marc Serdeliuc <serdeliuk@yahoo.com>
-  * Copyright (c) 2024, David Wronek <david@mainlining.org>
-
----
-base-commit: 0e1980c40b6edfa68b6acf926bab22448a6e40c9
-change-id: 20240531-fix-typo-q5q-5d34423b7bb4
 
 Best regards,
--- 
-David Wronek <david@mainlining.org>
+Krzysztof
 
 
