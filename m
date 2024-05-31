@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-21272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F48F8D62E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 15:23:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 403FB8D62E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 15:23:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0AA721F24EEF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 13:23:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E6EBE1F23A7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 13:23:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69363158A1D;
-	Fri, 31 May 2024 13:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC3FC158A1D;
+	Fri, 31 May 2024 13:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RcKIUPxC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PVRjEy7Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9814158A17
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 13:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF6B76026
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 13:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717161796; cv=none; b=q16Ukuy3iniqimE6fpjPW3z5zeJjpomOOf6RfFFrhxpi8QU3wgG7wREMYn1VkuRaqZGZsVIDWsZ5+EH2jBNnz/xr8DwHQQtyRPs+ZlifwPQFUeqTfJiwDMRQ+D8MbB5zVmDPC+AG1aF1OP7vrO0c5MjoOHTP/SmT39YPPev8mhY=
+	t=1717161824; cv=none; b=WLperxHqaheF4OJbqVEn6zX+sPCoQSub8OhiJSZGnq0oYEiDmwbeFxDtMvrrgI4wG4pY4ZkTwaSR3btxnJ0y/H5Z6+BGH5oPmLnlqoDjwVDbYd5NxZgH2S3ds4FpS45C8czMoneaZMeD629d8qwPtVKcSkcmE7l2/3ox+WbYOmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717161796; c=relaxed/simple;
-	bh=8r9CDem7Kd8oF4q6YPYnMih7jmdP9hI2Js+nDr9y/g8=;
+	s=arc-20240116; t=1717161824; c=relaxed/simple;
+	bh=J/5xarbHmKs23PKC0G8SvwPDfV57tQoEsVg0PBA7W6g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fBzZx8UkhfcaqUrFZAKJRbFKmCBZ8QMbRJGYq621t01xfOffTFZ9rj03FQDGd6rvqVvjmXbWIjHhvftKNJ6cHA/hZM3i4YzMGYiuWyxSI8yHRIpbTjfKVDotkwzXtU9dUfV1Dhp5xRR7XWbIU085n4sqNMdRTvotAx8usce3sOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RcKIUPxC; arc=none smtp.client-ip=209.85.218.43
+	 In-Reply-To:Content-Type; b=KZ4/HJPq9yXaAZIPU3oeceEAF41tsDUkK56kVGR6UguaKWqLh5k+W5EE5bAVqkc9GHTEqJvPsPi7cR5oCSq9vOpoV9OpO7zrC/eZmvHmcpHBtXTmCuBpwlesUC/ln13pOuTj17168o5KP0r4+hW0CNz47kYQAQWFerNLSuwPHBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PVRjEy7Z; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a66e9eac48fso146389266b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 06:23:14 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-578517c7ae9so2211614a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 06:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717161793; x=1717766593; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717161821; x=1717766621; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=STix1dJXVxMghu73EX9zT2PylPHwrWELMf06LOWBhdA=;
-        b=RcKIUPxCkr1CxHnMuKwUpR2ktcnRcOz35x2EUGJekvxzO4m+fzlg+Haeu3Y0hVjVbk
-         oOgGIZDsWH4m6A3RlmPCJbQwmEvR22A/rfR4R91TvywhIhHfdKJSfIfoIBmwowLV19/P
-         4YR9iat0x8D8THInDm0GPklZHTjLN1eFw/3ByaBAbbnGCLZhaRaDGlKLQUPurqpFGN6f
-         nLcfKEXhlXO/d/OVUoplYEo5m2GRGFli2cdqW5Lvg87JxyzOTbBtJI0VS6S3wrGHnemA
-         xDSTkmgnEerOGQcPaK6d3Z7vy4TRiQGmyN4p0pE7mywvISdD+2zzQTvsZFhl4ozVKCef
-         l4ZQ==
+        bh=eOa5yFH0/hR29lSG2WYAF7/povnjbX5ZLlqA4ovF7HE=;
+        b=PVRjEy7Zleys/VXKFHqeJjXK4sNB/UPQM5f9YbXjT4dI3rbYxih+McmBe0KlGxzk+n
+         BWYkD6OUViZgL21OPT3RVxDiobO4fWalSyEuvCY3d7T5Vnma7x4CzN5kNqwu4W0fJRE1
+         PTD8QyheeYCqXaXOWXZCF1Ra6WJnl+SN6p+YwJ9OInLKCFqIR9YSXsDRy909XPcFoK6T
+         Pmu6US10H9iwxlmna7q6tRobMUndz6QGFagU5yyji5hNBjhBk8AAmMgUp1ddcQrxLPjY
+         FtR69NtZI2r8TzGlCA5N9cHBAFoDmnPjTJo4H9qdUoeGa/B3r/2EcBmAJv8th4u9q4EA
+         AQPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717161793; x=1717766593;
+        d=1e100.net; s=20230601; t=1717161821; x=1717766621;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=STix1dJXVxMghu73EX9zT2PylPHwrWELMf06LOWBhdA=;
-        b=wozB76Ls4PlFNoM4izE1CHM3WEX98O3Z7RBcjROqQqs6wnJUmqIfakf9lQ84qYSeCd
-         i5aVySu0fA9LNS9X3GS9qMhNilzGIFpNFmjJuMNCzpP3QleAtuVLGJtxpimfDLyOe0O9
-         +gE01Z1c7Lwsi1JeOlPPnIpIPBkT2r9TCCXflY8bvSBoHt391DigRtQrNt0H0nUV/TFb
-         a4xCix23GyAvJisTstnt3wyARcZv5fKAs9vVWi2VCZO0KDCfhYjPYp5h7/2RplWdAVaq
-         XKUQ6BYe6IqOGnSW8dJs+wVecI9AsUaoliDVPYGbBnpBq57zcp2vVfangsRJnW8ovY4p
-         5ggQ==
-X-Gm-Message-State: AOJu0YyLovwLoM7mwS/L3Wc9jsUpU1rsnqIQhNaSEZL5l8L6021fK40L
-	6tYLu89JrJdfWBnBqM6gosiBPq3yg3YlM1iaf5x56v8co+I3wp+dfGRh6qXyj1Y=
-X-Google-Smtp-Source: AGHT+IG6w9uC4RvKnKHCYwm6+Kwf0FjnMWOFoz/JqPbc7RNwGHUYQ4UZVR8hrtC+oxY7ezKmnlw3JQ==
-X-Received: by 2002:a17:906:4e87:b0:a66:d1a1:f92f with SMTP id a640c23a62f3a-a681fe4e434mr147770666b.14.1717161793038;
-        Fri, 31 May 2024 06:23:13 -0700 (PDT)
+        bh=eOa5yFH0/hR29lSG2WYAF7/povnjbX5ZLlqA4ovF7HE=;
+        b=lVE2NjgDyIMKXjCNytSRSo6WsWcJ4KcG+vwXzQ/5t/9wCJ7QpuYo3Ajv0xG8esTW+5
+         Xd9pbBppRWk4qLxTwMc00kcZc006dj7AMsYAMC78hOO93TfvIASygUnUUeOY48NLrvsK
+         dHjOSpXRAqrryCXjsqsDEpumdYGbIqsuzEXjIu2eIFPOueWtGGaoiX3PATiWFs3o4BrH
+         RDEvEC858N8PCha6L+fTaZOsDhgEcaHS4zYfMklDg8w8UtHsgKZp3JLP94Tu/w3IB2wH
+         OWNdd2tAd/Kl0N2tExD9UadbKKLyBrkeYV5m+28FqhouzyRL9+TZ//NgkJ7Q9vA7iikv
+         mYnA==
+X-Gm-Message-State: AOJu0Yzn/+0qWi1DvCouHrdRDxnVRMyOmndpLYibLWiabzUo5uPBfAkU
+	jTMGRX98cpA6MBbpaXgZ7foDITXkLGfJMdfPQEvIUKieM9Ga9YAs1ABE4+hsCTU=
+X-Google-Smtp-Source: AGHT+IFJSsR7mUw69xQl/kktYJpUkc+X/0SK8XPc2Bv2Zo9tmbdkLxz23s5OW+k4/XgihhEvkA5HpQ==
+X-Received: by 2002:a17:906:2509:b0:a63:4e95:5639 with SMTP id a640c23a62f3a-a6821d64767mr118620766b.47.1717161821417;
+        Fri, 31 May 2024 06:23:41 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67ea67b506sm86629966b.98.2024.05.31.06.23.10
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67eb34432fsm86771166b.193.2024.05.31.06.23.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 06:23:12 -0700 (PDT)
-Message-ID: <2fd8bcea-8bea-48ea-8052-d7fe6c1e8f59@linaro.org>
-Date: Fri, 31 May 2024 15:23:09 +0200
+        Fri, 31 May 2024 06:23:40 -0700 (PDT)
+Message-ID: <b053edd8-2b85-4a32-ae99-c656f0b32e5a@linaro.org>
+Date: Fri, 31 May 2024 15:23:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,8 +76,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/13] clk: qcom: gpucc-sa8775p: Park RCG's clk source at
- XO during disable
+Subject: Re: [PATCH 06/13] clk: qcom: gpucc-sa8775p: Update wait_val fields
+ for GPU GDSC's
 To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -87,7 +87,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, quic_jkona@quicinc.com,
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20240531090249.10293-1-quic_tdas@quicinc.com>
- <20240531090249.10293-6-quic_tdas@quicinc.com>
+ <20240531090249.10293-7-quic_tdas@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -125,21 +125,22 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240531090249.10293-6-quic_tdas@quicinc.com>
+In-Reply-To: <20240531090249.10293-7-quic_tdas@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31.05.2024 11:02 AM, Taniya Das wrote:
-> The RCG's clk src has to be parked at XO while disabling as per the
-> HW recommendation, hence use clk_rcg2_shared_ops to achieve the same.
-> Also gpu_cc_cb_clk is recommended to be kept always ON, hence use
-> clk_branch2_aon_ops to keep the clock always ON.
+> Update wait_val fields as per the default hardware values of the GDSC as
+> otherwise it would lead to GDSC FSM state stuck causing power on/off
+> failures of the GSDC.
 > 
 > Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
 
-Should the same fixes apply to 8350?
+Without having a good source to check the values:
+
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
