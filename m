@@ -1,153 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-21312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40C6D8D65B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 17:30:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED9AE8D664E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 18:07:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E93D31F21E29
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 15:30:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A928D283BE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:07:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1110557CA7;
-	Fri, 31 May 2024 15:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C95615D5AA;
+	Fri, 31 May 2024 16:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="g+yjWoVQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m9GAWTwS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7970A4C7C;
-	Fri, 31 May 2024 15:30:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BBC15B578
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 16:06:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717169427; cv=none; b=KxNYqM5Ama1tRB88aRp432zPq5Kjj7KRqyGLZlmMHfU28xh3u/ZuJcwuzvyBs64/sRdRUGsifiERzZcTKmBo/+8QRzRMJLZYLS/kOJVh5Hngfxv0A5aOhgy1usKe8ixXTUcfbEPOyGM8mhyc0u//Hye2J0OxHaDvGnJhodXgChY=
+	t=1717171618; cv=none; b=hb7F1TjqbahRq7je8TyOST+11dFnrwTBpPaI1055boP/APgZeGMwRt9md2Kv72RTE/UvFIlP6sSinsg6CDgq55wraKEn9Yh9L4hLcdDyCs1KilVZpeIr9QB9HGb1J+7YAn1e49HnivqKFwTMwy5NAsIlsseJ2sJDaGGS8yl/5zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717169427; c=relaxed/simple;
-	bh=LMKo8cO4a5a84Rip7QNsCoS0nQcXswBiCLWRnMnn6yQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b6rfwoAIi25iZ7Mi1p7+pHDCRp9Q88QTeJpzg0QLbkh4rV0V+y1SCz4t5be7+DRrsuSx6mICRlEhrGLSk1OsEyw8UqxyViIzsokAifqMKqui2bSzU7WjhkC9gllzoRVw4hExqCreNCdMDQxitW+gxJCUk7YLHAyqi67Pw3c1k4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=g+yjWoVQ; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717169426; x=1748705426;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=LMKo8cO4a5a84Rip7QNsCoS0nQcXswBiCLWRnMnn6yQ=;
-  b=g+yjWoVQWyyKapB2k4A0YXAIfY61qZfPY1Zt+4HpcYgVJhQFhqRKMbu4
-   /xm2IhOYP5PlLfksTiYv1pdK7EwW7kiDpTc8+9NBWZ6R0jcCMkdzL+JmU
-   9rG8FsyH0hws4wiUH2KZ1WoGg3T08h1DkOgmUX9z8CmvDNcOJtIVrp1/N
-   GJIEFHDLHnv/KhrCTPp/8tUoIz3b7ibsw9awQjCxkijcThRCyAXvCKnua
-   rTYkSJ1Rleh9WrhTg+jPtLPnAMeV50DKjjfMiaPZ8Mn6lyPB9mjVxVUUu
-   01XD/KmCBvTIpbpNoLBUVbptXQ7h4+9XmNl4WdUZVXIS/sMhJTA/xVnks
-   w==;
-X-CSE-ConnectionGUID: S5qer6VeQqKTjOua9K04vA==
-X-CSE-MsgGUID: AaJyaOCUTWmgNCX6qO+qxQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11088"; a="17514218"
-X-IronPort-AV: E=Sophos;i="6.08,204,1712646000"; 
-   d="scan'208";a="17514218"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2024 08:30:25 -0700
-X-CSE-ConnectionGUID: l5lsMTrXSpaytGx0KmxbDA==
-X-CSE-MsgGUID: vMNB4v87Tj2UN1JX9a5lsQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,204,1712646000"; 
-   d="scan'208";a="36209148"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2024 08:30:19 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1sD4Ct-0000000CVRR-3uji;
-	Fri, 31 May 2024 18:30:15 +0300
-Date: Fri, 31 May 2024 18:30:15 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Douglas Anderson <dianders@chromium.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	John Ogness <john.ogness@linutronix.de>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org, Tony Lindgren <tony@atomide.com>,
-	stable@vger.kernel.org,
-	Tony Lindgren <tony.lindgren@linux.intel.com>,
-	Bing Fan <tombinfan@tencent.com>,
-	Guanbing Huang <albanhuang@tencent.com>,
-	Thomas Gleixner <tglx@linutronix.de>, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org
-Subject: Re: [PATCH v3] serial: port: Don't block system suspend even if
- bytes are left to xmit
-Message-ID: <ZlntB9t6glOZC_HX@smile.fi.intel.com>
-References: <20240531080914.v3.1.I2395e66cf70c6e67d774c56943825c289b9c13e4@changeid>
+	s=arc-20240116; t=1717171618; c=relaxed/simple;
+	bh=grSrVDhSfTbD009pKZqLVmksSuvVt7nHFbOAVP58svo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=K95Rwy2zkHgeAe9HQ/Qi40AOK4ethTKzaApNmmNzf0zb/BmvEUXrl1b9cghoz75P8KsF//+99sRYfVeOCntUB3HlbAcrgiRfxP65vPE+KHmEeUf85c7l1byzIp3wjzsu8Hvc0wRu7mAmuv1FWdT2xQUySCo9G/a/ttBvG+4S4kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m9GAWTwS; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a62db0c8c9cso238657766b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 09:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717171614; x=1717776414; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lAlOyuxLq40uKFygEFg6vCKpbB0JOMz+nnMl6D3JEa8=;
+        b=m9GAWTwS9sEqkrJQwiojPPZN85o9mSQk42iC6YLK+eoNXPmdjlpdtA5WnH+NLP4E/T
+         /9iKJFc+orE1AzKXEUXU/taocwoELo/uvCykxP6zq8UPiyVaiDkMEQBpPTMPOApcciQY
+         jjtYKFW7DuzxjqyZeyYWmL3cAxReRKxSmWobEcacwVlbkltIEad4rxadwJJv2TnIpwag
+         6oXZK5mxE/N06og07Qu6xkNGZS8zBT1BBh20ps0Tk0NMeNKoofJALn0fzgkuPTBgkI2G
+         4ESXeNKaa21qq97lwIu9qrdXd8v15DKJpSZTXeAeqlbO+ET/FO418Tk2JDLMKYi5zKvR
+         +iZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717171614; x=1717776414;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lAlOyuxLq40uKFygEFg6vCKpbB0JOMz+nnMl6D3JEa8=;
+        b=WzUUSwWlHiUXLRE8zkyewq5CL1mUQ3Eh4bvKpk80ZIuCQFvjeERYYfib3oqDOpDooF
+         zVs2lwbUx9gSdrP2S0JLFE4C7LdTPYfLFzBwm6lsgXKF1MyWaxZ22+JvVksFTOnzT1Ko
+         U9OJlk21cO3M9X77aC0zDaTIB75Kmiv0iPo0AYgS0kLPKJVp/+zN/1SgFBsHJAd7cp0D
+         69zIndynkDst7/70Nzmel73RGgVJCPyKYJdB4LzN/9YHK5+9M2Ip8tMB12a2f1oM4Avt
+         v84a1gudt2LEIR8IBBzK75OJOgR7U7QezBo/JXp6dS8x+qoG3PNy2nufMh6rIG0+1Hs+
+         K++g==
+X-Forwarded-Encrypted: i=1; AJvYcCVdXi7kUZm5YuFSBy19/M7qM4Q4wE0lqko9EkPVfAx+7kqdeTNyj9BmVXPsRw08o22isuHy/J6NRL4EcePdsoy51gymZgtCdkfCDKo6Kg==
+X-Gm-Message-State: AOJu0YyEpPQqUefQpO2Qs7kteB6cxIukn6hvyD6q0iX3fZoYxgY0TtUR
+	v4wbwnLxLgJBCf3C/IVP8KcyqZvKBjugvO+pRgBGYAuY/stqOUaLM0HM+5MZ3Dg=
+X-Google-Smtp-Source: AGHT+IH0GwuBKMyEd7qzHgXQK6TawsZtYrpdIeATwNspSXc/G36o6tAJpE8Z9zi1e8gFHLgQatIzjg==
+X-Received: by 2002:a17:906:22d3:b0:a61:ac3e:2b4c with SMTP id a640c23a62f3a-a68209f9535mr204682366b.40.1717171613800;
+        Fri, 31 May 2024 09:06:53 -0700 (PDT)
+Received: from [127.0.1.1] ([188.27.161.69])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67e73fc1b3sm100802566b.74.2024.05.31.09.06.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 May 2024 09:06:53 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/2] phy: qcom: qmp-pcie: Add support for Gen4 4-lane mode
+ for X1E80100
+Date: Fri, 31 May 2024 19:06:43 +0300
+Message-Id: <20240531-x1e80100-phy-add-gen4x4-v1-0-5c841dae7850@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240531080914.v3.1.I2395e66cf70c6e67d774c56943825c289b9c13e4@changeid>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJP1WWYC/x3MQQqAIBBA0avIrBsYUyO6SrSwnGo2FgphRHdPW
+ r7F/w9kTsIZBvVA4kuyHLFCNwqW3ceNUUI1tNRackZj0dyTJsJzv9GHgBtHWyyuvjfknSM3d1D
+ rM/Eq5T+P0/t+K4+2tGkAAAA=
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=870; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=grSrVDhSfTbD009pKZqLVmksSuvVt7nHFbOAVP58svo=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmWfWWvNZyiI9ri2SCtVX2wfHjvNyelu8aaTLZK
+ 83w8uDrJpaJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZln1lgAKCRAbX0TJAJUV
+ VtktEACsB0QeRG0nfQy0mlvsp5CDJXhoWS3qoGUhJfVVJCyiysZQwHeGoIPgNrI3n4WzY2a0E5S
+ mesVvMoNSnopY5uxL1qibkiEnvffRtwB9O8GqKqogRIr9tlmG/3NfylM+f/DHLgWyFReYXZX2XL
+ 77XdRpaw/VvtsRuSXE6OBPxbhheRS1PF0T8faJT0CTTCp5AbBeYmUXXYJuYQfIuZs+tcq6EBT8L
+ tfbb1Ir2ogA4qTdkVeKrEUKMYW26fKmJ+qN6Y5Ypb63LLslTQMzphtcYxU6jOE/uMOjndkPqGv6
+ Tv5h+F+lxRe6l9gRZ5APbY++NgbPFYGhb62kfYRltsxnRofRmHyNe/BGnDU/JUu6+BCDp6Zt5z0
+ hB0QevQAzyEardkpuj8O6hoQZMowRly/GliYPUhP33kRDNMSUWTPT7A6yOJo20wR3IuwNq9DYH+
+ 1SYdLsF73mKcO9t+k4aeONBBkdN60DFNomjFl0LUy4jA47zSf1tf4b5SoPAgielcMDWJCnxdGCN
+ Zmt09DkmCIepuo+rXVFzRqMWQKuL/KavRuXSbbvVHAShLF2D4FSpPNmhf73xFxf+wVwmwGvJL9m
+ hiTRALa3Fl2uU4BwYBi1QDDrl38sms/qrspJtIC/SFp/DiEOA8Ag6mHcyV/xK3WO4r1byoZnDkc
+ s3q51jZzCfvpZxA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Fri, May 31, 2024 at 08:09:18AM -0700, Douglas Anderson wrote:
-> Recently, suspend testing on sc7180-trogdor based devices has started
-> to sometimes fail with messages like this:
-> 
->   port a88000.serial:0.0: PM: calling pm_runtime_force_suspend+0x0/0xf8 @ 28934, parent: a88000.serial:0
->   port a88000.serial:0.0: PM: dpm_run_callback(): pm_runtime_force_suspend+0x0/0xf8 returns -16
->   port a88000.serial:0.0: PM: pm_runtime_force_suspend+0x0/0xf8 returned -16 after 33 usecs
->   port a88000.serial:0.0: PM: failed to suspend: error -16
-> 
-> I could reproduce these problems by logging in via an agetty on the
-> debug serial port (which was _not_ used for kernel console) and
-> running:
->   cat /var/log/messages
-> ...and then (via an SSH session) forcing a few suspend/resume cycles.
-> 
-> Tracing through the code and doing some printf()-based debugging shows
-> that the -16 (-EBUSY) comes from the recently added
-> serial_port_runtime_suspend().
-> 
-> The idea of the serial_port_runtime_suspend() function is to prevent
-> the port from being _runtime_ suspended if it still has bytes left to
-> transmit. Having bytes left to transmit isn't a reason to block
-> _system_ suspend, though. If a serdev device in the kernel needs to
-> block system suspend it should block its own suspend and it can use
-> serdev_device_wait_until_sent() to ensure bytes are sent.
-> 
-> The DEFINE_RUNTIME_DEV_PM_OPS() used by the serial_port code means
-> that the system suspend function will be pm_runtime_force_suspend().
-> In pm_runtime_force_suspend() we can see that before calling the
-> runtime suspend function we'll call pm_runtime_disable(). This should
-> be a reliable way to detect that we're called from system suspend and
-> that we shouldn't look for busyness.
-> 
-> Fixes: 43066e32227e ("serial: port: Don't suspend if the port is still busy")
-> Cc: stable@vger.kernel.org
-> Reviewed-by: Tony Lindgren <tony.lindgren@linux.intel.com>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+On both QCP and CRD board currently supported upstream, the NVMe sits
+on the PCIe 6. Until now that has been configured in dual lane mode
+only. The schematics reveal that the NVMe is actually using 4 lanes.
+So add support for the 4-lane mode and document the compatible for it.
 
-...
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Abel Vesa (2):
+      dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100 QMP PCIe PHY Gen4 x4
+      phy: qcom: qmp-pcie: Add X1E80100 Gen4 4-lane mode support
 
-> +	/*
-> +	 * Nothing to do on pm_runtime_force_suspend(), see
-> +	 * DEFINE_RUNTIME_DEV_PM_OPS.
+ .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   |  3 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 42 ++++++++++++++++++++++
+ 2 files changed, 45 insertions(+)
+---
+base-commit: 0e1980c40b6edfa68b6acf926bab22448a6e40c9
+change-id: 20240531-x1e80100-phy-add-gen4x4-fa830a5505b6
 
-	 * DEFINE_RUNTIME_DEV_PM_OPS().
-
-(in case you need to send a new version)
-
-> +	 */
-> +	if (!pm_runtime_enabled(dev))
-> +		return 0;
-
+Best regards,
 -- 
-With Best Regards,
-Andy Shevchenko
-
+Abel Vesa <abel.vesa@linaro.org>
 
 
