@@ -1,160 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-21330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2A968D6747
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 18:51:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E01E28D6789
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 19:00:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8185284446
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:51:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7FC761F26FBC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 17:00:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FDA415D5AA;
-	Fri, 31 May 2024 16:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45922770F3;
+	Fri, 31 May 2024 17:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C1jqMh91"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ip/boUXM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBCC3BBE9;
-	Fri, 31 May 2024 16:51:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC231B948
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 17:00:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717174298; cv=none; b=EJ9Zt3fvkqMfepQyhKHC8o4Hwh3Nn0u/UbzEhb03L8MLllKGXvpboUy6vgv2tcYSRh4YPWr544jwFmejwFcGbZeYdveivrEGBvuyXG2/9BuKGm0+wUg8IIMKHahmL1H9axmhhoP0420GnVZJtagUNu2kDoUotjuOA1TZxLaUBj0=
+	t=1717174844; cv=none; b=K/dINOX/SiO2AKvTqFpX5xuRHhd0Ec4/kWLI0o/HCfsmVjALs9eXKU4QW2hX9s9VIxcT1kZy0cBJQPST4pUBnyRs1wmtn5RSg8zvBTKPk6J9Qv6TpA5OMah9ZYjA59H7eJ/apZVq1DrZru8RuJ3pJBzLaAlFMJKFmA3GbHymsxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717174298; c=relaxed/simple;
-	bh=h7uNey51G/xDeXWUKoGBGTUHWG2cZT6j7q/nM/6Vh5s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qZWPBmI2bn+fmSfEhkP1+t3S/py3DerMbI84Uojuhi46WcI8CPbwOqBwKtbdw4Lp8rmfYiLyLBAR5DqbZLiueDw/TytMtS+Nr8uRDACzsdAxypputmFHtV5M91pB1X2TkZOnpqWumF+lvp6CkKej4EoOdco5gGdmQmngFMFUimM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C1jqMh91; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44V9DVbd016906;
-	Fri, 31 May 2024 16:51:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2yALGhrqIJdnboggYEQ7s0oOkdMXFFvfY29GvTJKsx4=; b=C1jqMh91/HCNLsYp
-	6vA0b0uij5adV0DIGh+mSk2889fAxxDFCLr2tEFroOAekW1b1SAR9R0h8CxXf/3s
-	qNLZTplUe2tBKjI+dRyPBEdO0GkzhRPsBtNBP63nOKbwAsUDu3OSUm8RH+/hAh60
-	0b14QBs37+7EEtSSY1IIFOQapbMiJ9B/RHwPwyxU7hSrSoDe8KHYv+s50BJtfsqT
-	NEC7McfWpq3/h+LgAfd716kHhmnQouXV9wZpoVL56718AxTZOxzuHH7Y60JH+o3V
-	CNksDFkaKKHohU0kpyZyp56R/+kOUTd8yz8FnkweMwrdv7D2FlOov7n3O+U9kVB9
-	unkUNw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yf23stb7t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 16:51:19 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44VGpIGm017814
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 16:51:18 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 31 May
- 2024 09:51:17 -0700
-Message-ID: <197777e0-e6e1-7004-be27-edb98f8a235e@quicinc.com>
-Date: Fri, 31 May 2024 10:51:16 -0600
+	s=arc-20240116; t=1717174844; c=relaxed/simple;
+	bh=fIeqrahHamzqAOuwtO2KCKUJFMB0YRDzT6MQCXBL9Gk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fenNu9olki0nSuMUOZmsm6Bh1Xb6g+FWGMZ/30EhncCoqag2mbvr9tZfkeQ5XFEvE7wgoeNaZA+keflQyUpQ65Hq2pb6kWlEj4GSYh+NIe1UZQj4s/N1VOCdiwrpxJIHulScj10CRHBb5rOXcqrnyDz+UFt25/85OEGThD4GPt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ip/boUXM; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52b89fcdcc7so1175983e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 10:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717174840; x=1717779640; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BR3RnQ2dpazbPHt7W2rPdeCNZdanLVGVJZddcGpPEKs=;
+        b=Ip/boUXMXhWVg0yg16kumf9d4rlGE4WYDR3tyteMhRlY1VsOJqUTZlvAmqiWjELvVm
+         n9xu9WR/Dcx+UkyeahzaVA8J3dCOU246fvZT1FovOp/qiFOw+waEn3zgmsPqs5GM44h6
+         KWbrsBhdseHbwmFWbDWI+ZoLo+s6+g0xEn9gGduHniXr4KCOdK7jdQgkuY/4GO4VHtgO
+         72bUy1pvoijDCUVyHI5KqLGnZXKI7RRPr8fY3225gdnJQfy+YJvcc1w63UKnPeYYhfG8
+         PNfpJ8MGz7CcXss23AmkvbKL2WKs02Y/SYTH2F3oxYm39VnSLWSP3KmkxMhIE8EOnV3p
+         ueEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717174840; x=1717779640;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BR3RnQ2dpazbPHt7W2rPdeCNZdanLVGVJZddcGpPEKs=;
+        b=RqdlM0REZDEb6xIBrQeHio20wdR7gmkcxXdrO5FBfIrTEHAWXRTkt90Ki80Ca5yEYg
+         fq9aq1SThb9svSYmw6CZa30AuNvQVQrwn2RlLxf90zphNBkECp7l5j0az6vi8nUqvuw2
+         1+YQG6DhLhJSmNc4rohfMeiL5FNe45YqXA0KoAOaJOJRv9/PUIV0ueUte+1mFZVOTSZM
+         db8SsYeKPQOW8GFQTiSWLkGQdiOg/M5H+gC6WUMQ9r/DRQzwZmgdMrk9yRIlDsjRTryO
+         FshzvqIa1Ce/MR2ie9Lh86cuSW05pnZAr/GVDMaARbE+S6/nqotSdxfXC7Ir4gL8qtek
+         gYdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWdaQx5wDAtRwePJIHdpzRBplmbbictyyy+tiHAGHw4kXWBbYH796Rw3MDNqiL9sdvzMmjjVE+J6dvU6lEkJef596ucJbomtrrXAEdDXg==
+X-Gm-Message-State: AOJu0Yy2/dRddG6OAEOhqpyZWWBrg/yP2IMj4laE5mw4Ffod7gmsLEwF
+	VK/tcQRXNFXbOwASpef67/+iVStGYkTPgRq0xNPs64xENNkz15jzjf0kZCQB/zk=
+X-Google-Smtp-Source: AGHT+IGnObsT6iACs9tefCWQY07ak7M2CYjMVWSx3xfV5m2mTosHDQ7wN3Vy2jWa50mohwPAmeDQIw==
+X-Received: by 2002:a19:c514:0:b0:52b:798e:74e8 with SMTP id 2adb3069b0e04-52b895b573emr1535855e87.39.1717174839848;
+        Fri, 31 May 2024 10:00:39 -0700 (PDT)
+Received: from [127.0.1.1] ([188.27.161.69])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67e73f9a22sm105533166b.60.2024.05.31.10.00.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 May 2024 10:00:39 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: x1e80100: Fix the PCIe 6a node
+Date: Fri, 31 May 2024 20:00:30 +0300
+Message-Id: <20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v3 0/3] drm/panel-edp: remove several legacy compatibles
- used by the driver
-Content-Language: en-US
-To: Doug Anderson <dianders@chromium.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        "Sam
- Ravnborg" <sam@ravnborg.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-rockchip@lists.infradead.org>
-References: <20240531-edp-panel-drop-v3-0-4c98b2b95e3a@linaro.org>
- <7428a2f7-befc-6db8-76f4-3ca8dc12d31c@quicinc.com>
- <CAD=FV=Xcq-p5OxSnDJVF-Wp88ZfXOaOKJmh941ymy-f0wkhdhw@mail.gmail.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <CAD=FV=Xcq-p5OxSnDJVF-Wp88ZfXOaOKJmh941ymy-f0wkhdhw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UnRxngflkST1yO4Wn85mX4qBzF_yXrRa
-X-Proofpoint-GUID: UnRxngflkST1yO4Wn85mX4qBzF_yXrRa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-31_12,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- adultscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 phishscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405310127
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAC4CWmYC/x3LQQqDQAxG4atI1g0k1qmDVyldTMffmo2ViRRBv
+ HsHlx+Pd5CjGJyG5qCCn7l9lwq9NZTntHzANlZTK20n4a68K6KoCI+b82Q7nNdseCSWPIV3H1L
+ UCKr/WnD1uj9f5/kHow5GLGsAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>, 
+ Sibi Sankar <quic_sibis@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=842; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=fIeqrahHamzqAOuwtO2KCKUJFMB0YRDzT6MQCXBL9Gk=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmWgIwIRv27F/7z+/AsjgCw2VXeojKfrLKbWyBm
+ LoEeL6IpvKJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZloCMAAKCRAbX0TJAJUV
+ VvruEACprPeRq77jEQQl8bewPxvPeaCniOC92FJiti+4Hlgg/fkRRg/H0pP3OD7ni4Gg4iqTB8x
+ MIzbQFnOBpQJAWKPZF/C37ypit0oJ2PjjFIbPtxqmZlX1NSZ05On2fB/9FRZCQieQBCOJXP2gCB
+ vYszPhesgLRJX87+dWh+wM9N2Ems8NC/OIUU1V6XO4uwf5BuqkhM6j/ZNw6kBZBDDxLFRvYe3EU
+ CcEnc5FpyVd4wB/lntGgofVlRm1aujW+hD5FLR8VKtq9iI1bFHjN2LWUIXuLQG/I7hQzfJwzcyQ
+ HF+IPf3HGfc0diiLZOSgGlwV7XbDSb+ZSj8KKlAqErPjp+uTHko8Kyy42p8+XBCGiQIwXxBHFOD
+ g23Td3zRdYD9y2QOFZ8Yi5MmJj9t/3xF3AfMyRidxJClIWXrjPQX32R2fJ+dAG9g7hteSUJt7cs
+ 9QSOTlzMYfo97Eo0UyK9FrJVD7Ai3Am8YIvmw2v7Drq1Iu6WebJc5n4/mmkP0zRuNbWZYXo4ZLs
+ sn7XQ8gUcLYypwwopv/vuT2WF7KINT9QEYG9YG6fsXT3sgI/g2S49wuH5X9qIWZm7Oz5zEHzIdE
+ h/W9GmxFCs6pKdVPqaT4CM63Dne2ns2TsCTUiUCuXdsWGNN7MOmCVWanRnZdL3gzcMVFBeEsF0W
+ 8nUhafiMBFb94CQ==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 5/31/2024 10:20 AM, Doug Anderson wrote:
-> Hi,
-> 
-> On Fri, May 31, 2024 at 9:18 AM Jeffrey Hugo <quic_jhugo@quicinc.com> wrote:
->>
->> On 5/30/2024 5:12 PM, Dmitry Baryshkov wrote:
->>> There are two ways to describe an eDP panel in device tree. The
->>> recommended way is to add a device on the AUX bus, ideally using the
->>> edp-panel compatible. The legacy way is to define a top-level platform
->>> device for the panel.
->>>
->>> Document that adding support for eDP panels in a legacy way is strongly
->>> discouraged (if not forbidden at all).
->>>
->>> While we are at it, also drop legacy compatible strings and bindings for
->>> five panels. These compatible strings were never used by a DT file
->>> present in Linux kernel and most likely were never used with the
->>> upstream Linux kernel.
->>>
->>> The following compatibles were never used by the devices supported by
->>> the upstream kernel and are a subject to possible removal:
->>>
->>> - lg,lp097qx1-spa1
->>> - samsung,lsn122dl01-c01
->>> - sharp,ld-d5116z01b
->>
->> Ok to drop the sharp one I added.  It should be able to be handled by
->> the (newish) edp-panel, but I think the TI bridge driver needs some work
->> for the specific platform (no I2C connection) to verify.
-> 
-> Is the platform supported upstream? If so, which platform is it? Is
-> the TI bridge chip the ti-sn65dsi86? If so, I'm confused how you could
-> use that bridge chip without an i2c connection, but perhaps I'm
-> misunderstanding. :-P
+Currently, the PCIe 6a is being used on both upstream boards for NVMe
+in a 4-lane mode configuration, HW-wise. Fix the node accordingly to
+reflect the HW schematics and improve the performance.
 
-Yes, the platform is upstream.  The 8998 laptops (clamshell).  It is the 
-ti-sn65si86.  I suspect the I2C connection was not populated for cost 
-reasons, then determined its much more convenient to have it as every 
-generation after that I've seen has the I2C.
+The phy counter part is here:
+https://lore.kernel.org/all/20240531-x1e80100-phy-add-gen4x4-v1-0-5c841dae7850@linaro.org/
 
-If you check the datasheet closely, the I2C connection is optional.  You 
-can also configure the bridge inband using DSI commands.  This is what 
-the FW and Windows does.
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Abel Vesa (2):
+      arm64: dts: qcom: x1e80100: Fix PCIe 6a reg offsets and add MHI
+      arm64: dts: qcom: x1e80100: Make the PCIe 6a PHY support 4 lanes mode
 
-So, the DT binding needs to make the I2C property optional (this should 
-be backwards compatible).  The driver needs to detect that the I2C 
-connection is not provided, and fall back to DSI commands.  Regmap would 
-be nice for this, but I got pushback on the proposal.  Then I got 
-sidetracked looking at other issues.
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
+---
+base-commit: 0e1980c40b6edfa68b6acf926bab22448a6e40c9
+change-id: 20240531-x1e80100-dts-fixes-pcie6a-0cf5b75a818e
 
--Jeff
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
 
