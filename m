@@ -1,76 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-21300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 301158D647B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:26:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 229498D6480
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 16:27:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92EF91F223D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:26:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC784286C09
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:27:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 781B81BF40;
-	Fri, 31 May 2024 14:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7E51C6B4;
+	Fri, 31 May 2024 14:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yFhP3Kl2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YJ9dtygA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FA41C6B4
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 14:26:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE14D1B812;
+	Fri, 31 May 2024 14:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717165566; cv=none; b=u7NKEx6VE8+gxJPJuX78pml13lVcUIl37BUFmRbD68+bNiILJ9gK5zC0YwOa3PUbVtd0a3xNY+84wmXVTRD6cq13Z0iY4AcF8DNILOfRpDbPMn9K1mpNn7Wh9wGIDvYNfCQNt8iAIzOcp4oAKRuKr/x9aJ1GsMs5VHIp1BJAu7g=
+	t=1717165645; cv=none; b=ba0PclPEU4fBjSWrmoRVkO+5w7ybbCdh1inLcw796EJM9yN9qsqr8LZA4uNtdTYcT0lmY+EY4KRQIJHhPvIXWpqoCN1nB5wYgzvvTAPVwqa9afWk5eNlAqOdmLthUrPeP1uxhr7ZvofA1D+TtaWBpDWKDSVMx/CAHCQAlFfWJjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717165566; c=relaxed/simple;
-	bh=LqRcRR1cFi1+thtnTUt29DnULSfs9Z8g1CGzHs6MSzM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PcHmWlaUXBjVO+qiCU/W26wN8V1Dk6uePmuf7uouU3qpFFEs1s0yzVc0DMb9k4K00vcW+kh2og2Ta8qox0T5csXsDWC6iE38ndTPGqPZEMsT9qOL4kPpVjzrjc++I8GYpqOK1btWAkMqZJ13vcBjL0AqfqQwB/Qm2MvA9taTuio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yFhP3Kl2; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52b8b638437so781693e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 07:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717165563; x=1717770363; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=TFd7dzhMFZkIzJzGiLdET+zEuG1GiWj/+wfLNFxwkBg=;
-        b=yFhP3Kl24gu2TI/vB4R3o+qc7gEIlb4beXVBcXn1mGUPYmmYVqtu8BpzyVyEmVB3hj
-         jsQ0/wsW3n6dnlpfw+gGeBMhip+dHxCyn0YbZK0tB+mx9PoqZuO2PSoRgJIEL7/e5idB
-         VNECOq4BSvweoZSf9jSCTnEnCgDTnMcrGYULzRrwJ9tme/i2HFCAx1d10NIkiYn/HA6C
-         +hkXpl+/3+GLg32HV9hnm8pUJe9WYaQY2ZJLcTtLgYLiXxDctSLwNt0/Eq+5ejBrBx1e
-         41hQWVE/1LQg0xoIed1/T/xwGqLBDverk7OLTJ8cSzdCMZTG0UJ/U48inv9JwVnCrpVS
-         7mcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717165563; x=1717770363;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TFd7dzhMFZkIzJzGiLdET+zEuG1GiWj/+wfLNFxwkBg=;
-        b=fYMfA+tjFk4L7WYlz0pLK1grOZtu87SapNIF4u2tbdETcFb9Oz3INfm/FokW3IbcJa
-         Z2DY4LS5oNSXoEHZVYQhfiyhTe5lgw1qIZSgTNEQG8B1O4lHRQCbjKmg55InJrLkPD/r
-         Nwc43Df3cGHffED7Z4GuHJTAPlKz+vDBrquP2rr2fMkkxRj6pUuCHZYNA1eAaxKvpTUc
-         VD82W2/EqlLZWRxMxHHnRe9QFn0z+oheJIkC0xIQz2XZdBgVKTVzeisk3XCmpZ97jFQy
-         1hMPMivH1CBSjkSqTOQQrEP9tmJcaFEqkUdiME3+TFjnJKSoYRd4mMTHclcbyoks5Q7U
-         aq0g==
-X-Forwarded-Encrypted: i=1; AJvYcCWy7aSkRHABgBXMdlQPbZODHKIKUKOxVeDscfqYR5kp69S5Uhi2RyKLs7rJP6eQUG2q73gx2C27nM362O0Hcrrb+fKHdJO4QzRdybQQRg==
-X-Gm-Message-State: AOJu0YyTGCadMx4+xFhByIzdGi8nOQsafkoOl2KEfqPG3zPe+2zcdeMH
-	NYgHCQfyW+e/wWPAIW4xZcoX3dkcl4U0jWbUcHmbQn2cE2rdvT+XScW/bgcVhgtvUw3aVrfhMu1
-	F4Hg=
-X-Google-Smtp-Source: AGHT+IFc4CdzwrD/1uDBczJOhAz9Yly8TMnZUxBNCzlrntRUhMCMlLQJIqLJ7jUAXAiUvLODNW4HjA==
-X-Received: by 2002:a19:4314:0:b0:523:72b8:8002 with SMTP id 2adb3069b0e04-52b896b4832mr1292417e87.30.1717165562633;
-        Fri, 31 May 2024 07:26:02 -0700 (PDT)
-Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a31be6525sm1085330a12.56.2024.05.31.07.26.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 07:26:02 -0700 (PDT)
-Message-ID: <e5f6e9bd-e19e-4997-a646-f3ddee84a5c8@linaro.org>
-Date: Fri, 31 May 2024 16:26:00 +0200
+	s=arc-20240116; t=1717165645; c=relaxed/simple;
+	bh=n7YEdd11QRP/OOwY4XoPE4WkASBPeP/8wqIEQykbh5Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=urMrZ5lx9yG2l8czVpQmEvC/v14/x0Fy6EOQrT/l7+LPe/dXcWrWKsXtaCxbCeG8QYGWoQhrFoQK959MYTonPcloTmrL3IJBHiRC54AP/YahDc7LhdQ/Zi8occyOsZSOcOLRCgmaFjUpOrYX+3QIBTZ+wJQvXr0fFyiF5F6089g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YJ9dtygA; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44V4lbgJ015681;
+	Fri, 31 May 2024 14:27:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	A4Mj8x/aCM3XhdQ9xf9ggG0TXxFkcWcMDxerZnHJ5eU=; b=YJ9dtygAMca15Jfs
+	No+ccb4/s5xhijZxvt6/W/M1wRskJy8P9aD50hgOwV86cShzsqwVdrVIcJAwbxlJ
+	xL3/BcXB3DRBse2dniIqkQ8E5N2qYbb4YE+1nA7WjF+v6h6UY5HRFmzt5VARYH16
+	HX0EBTNP1TVhICzIi33TIy35QD3gRMYb7a9riVaL/SLfnJwiK6a1jWy7S7ZqVQPB
+	Cl0ECXe+YLWzt7qV3H5a+jbbQznUoedKkMX5FsxozqoffJpJBsM2+RKc55gJt58n
+	Lz4odvaR/wiChsIJ9sEYRp92VRhmatxjJI+4/eamJKW1n2WXg2cVTimSaNUAPLO1
+	WS+hmw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ydyws6rwf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 14:27:11 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44VERAPj002260
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 14:27:10 GMT
+Received: from [10.216.8.21] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 31 May
+ 2024 07:27:05 -0700
+Message-ID: <d61ede0b-f689-46af-9bc8-e715784b86c0@quicinc.com>
+Date: Fri, 31 May 2024 19:57:01 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,62 +66,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/2] Disable SS instances in park mode for SC7180/ SC7280
-To: Doug Anderson <dianders@chromium.org>
-Cc: Krishna Kurapati <quic_kriskura@quicinc.com>,
- cros-qcom-dts-watchers@chromium.org, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Stephen Boyd <swboyd@chromium.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Matthias Kaehlcke <mka@chromium.org>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+To: Doug Anderson <dianders@chromium.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+CC: <cros-qcom-dts-watchers@chromium.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>, Bjorn Andersson
+	<andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephen Boyd
+	<swboyd@chromium.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Matthias Kaehlcke <mka@chromium.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
 References: <20240530082556.2960148-1-quic_kriskura@quicinc.com>
  <CAD=FV=UhrCKCv5R-LAAugrLXFp=cDcj2=Pp9-N3qk5pk2=sGEg@mail.gmail.com>
  <e732257d-cd16-4e81-9a20-af481184ce0e@linaro.org>
  <CAD=FV=XO_8SwDLJfoNwwCKEO6CZyMRMY_BdsWMLPBkpczErppA@mail.gmail.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
 In-Reply-To: <CAD=FV=XO_8SwDLJfoNwwCKEO6CZyMRMY_BdsWMLPBkpczErppA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: VvL8KsKv2ymPW9_VKpspcZA-EDrhIw6_
+X-Proofpoint-GUID: VvL8KsKv2ymPW9_VKpspcZA-EDrhIw6_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-31_10,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=712
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405310107
 
-On 31.05.2024 4:17 PM, Doug Anderson wrote:
+
+
+On 5/31/2024 7:47 PM, Doug Anderson wrote:
 > Hi,
 > 
 > On Fri, May 31, 2024 at 5:33 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
@@ -150,12 +123,12 @@ On 31.05.2024 4:17 PM, Doug Anderson wrote:
 >>>> Fix this up by disabling SS instances in park mode for SC7280 and SC7180.
 >>>>
 >>>> Krishna Kurapati (2):
->>>>   arm64: dts: qcom: sc7180: Disable SS instances in park mode
->>>>   arm64: dts: qcom: sc7280: Disable SS instances in park mode
+>>>>    arm64: dts: qcom: sc7180: Disable SS instances in park mode
+>>>>    arm64: dts: qcom: sc7280: Disable SS instances in park mode
 >>>>
->>>>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
->>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 1 +
->>>>  2 files changed, 2 insertions(+)
+>>>>   arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
+>>>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 1 +
+>>>>   2 files changed, 2 insertions(+)
 >>>
 >>> FWIW, the test case I used to reproduce this:
 >>>
@@ -182,10 +155,10 @@ On 31.05.2024 4:17 PM, Doug Anderson wrote:
 >> 8280 isn't affected). My setup was:
 >>
 >> - USB3 5GB/s hub plugged into one of the side USBs
->>   - on-hub 1 Gb /s network hub connected straight to my router with a
->>     600 / 60 Mbps link, spamming speedtest-cli and dd-over-ssh
->>   - M.2 SSD connected over a USB adapter, nearing 280 MB/s speeds (the
->>     adapter isn't particularly speedy)
+>>    - on-hub 1 Gb /s network hub connected straight to my router with a
+>>      600 / 60 Mbps link, spamming speedtest-cli and dd-over-ssh
+>>    - M.2 SSD connected over a USB adapter, nearing 280 MB/s speeds (the
+>>      adapter isn't particularly speedy)
 >>
 >> So it stands to reason that it might not have been enough to trigger it.
 > 
@@ -202,19 +175,19 @@ On 31.05.2024 4:17 PM, Doug Anderson wrote:
 > your cpufreq in sysfs and see if that makes a difference in
 > reproducing. ;-) ...or maybe somehow SC8280XP has a newer version of
 > the IP where they've fixed this?
-
-Well, great minds think alike :P I did cap it to f_min on all cores, but
-that didn't change the situation. Might have been worth to check out powering
-off all cores except 0.. I might do that at one point.
-
-My guess is that with a process node change, they might have used some
-newer/better ip revision though. Remains to be seen.
-
-Konrad
-
 > 
 > It would be interesting if someone with a SDM845 dragonboard could try
 > replicating since that seems highly likely to reproduce, at least.
 > 
-> -Doug
+
+Hi Konrad, Doug,
+
+  Usually on downstream we set this quirk only for all Gen-1 targets 
+(not particularly for this testcase) but to avoid these kind of 
+controller going dead issues. I can filter out the gen-1 targets (other 
+than sc7280/sc7180) and send a separate series to add this quirk in all 
+of them.
+
+Regards,
+Krishna,
 
