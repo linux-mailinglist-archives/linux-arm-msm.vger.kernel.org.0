@@ -1,57 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-21372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB0408D6C9D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 00:52:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EE918D6CA5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 01:02:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 751AF1F22166
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 22:52:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CD76CB20D72
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 23:02:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DB888248D;
-	Fri, 31 May 2024 22:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF2A2824B0;
+	Fri, 31 May 2024 23:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W2J+cUbZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IT0ggGGC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64193207;
-	Fri, 31 May 2024 22:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769BA381BD;
+	Fri, 31 May 2024 23:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717195928; cv=none; b=Lf52oMzNvTqAdx2hqCBiwLrB8Led9kghcA2RATQop2iaLiCWKWoJOIbu0tuerPLIVcmoZ08VdSXK82ssuR5u83d1qhekSHCHmd0+pZsE34uirFma80mZUTAAeM8uOgBFcYKEoKFKBF9CiIALNF4sLAYDmAr8ykyN3vu61F1Ov2o=
+	t=1717196526; cv=none; b=eyBujr5JstwUjl1crmMcDv9QiFaqGh4SOLfvt9h1uIrrzuAFCyVzKvoGqJ0LNvLpBhEw+Dg7UZykCr+7kG+JDgihJLto4O2aMOD1Si66R4iSxMuOs5inQze8xaOIB+yQ6PJXQmyqc8yDOdZjGByEWSfZ/S0STw3kUcRGnkzWurA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717195928; c=relaxed/simple;
-	bh=GBPyE45nrogn+zGrWB4VZvx6JNf2uRpYn1HKgzi4c/g=;
+	s=arc-20240116; t=1717196526; c=relaxed/simple;
+	bh=TIq2oxFZ0F5FduDHYaUGP8LeNkvPsFc5NiUBBapUT5M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=scHmt9brjuADklW1Seh9YzqaRJzxi6zekfZTCVNXdkIWjVF6e2FG9tWcn5FAH53r2zeIHmh8RwJdZKj3o29WpR1dD0pHm31etsccRva1t/zO4mIgc2WmIxQ2HnWScsdsOKgX5YXw3wvzodvxDZ5Tj1fbAt+wpW8mjXFiGgFRCUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W2J+cUbZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5112C116B1;
-	Fri, 31 May 2024 22:52:06 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=PRBWSMAlZTCsvpTogGPqAszwZY1SkrIA8bVMwo1EkaodDdhwxGPrZ0/R/ksdiybq8VVpVZDYhvU2Ut/Qv/sSuacoEPcLdpfCrX2U7e51ZlHfshDx6/oi30n73GmhlR0Nw0E74fe3at/sHtbqi7jBXVBKVLVTzY9DSKfbaFYqtrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IT0ggGGC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26F7C116B1;
+	Fri, 31 May 2024 23:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717195927;
-	bh=GBPyE45nrogn+zGrWB4VZvx6JNf2uRpYn1HKgzi4c/g=;
+	s=k20201202; t=1717196526;
+	bh=TIq2oxFZ0F5FduDHYaUGP8LeNkvPsFc5NiUBBapUT5M=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=W2J+cUbZIsYSalGWrDl6d2BjMNMrhWmwUj+BGYt8Hd5IxN0AKx8/aZYCMzBQC3AdW
-	 o2bw656fonhCXD5IGM3M8SEtkhTJ2iEBf06wVVIhiXsSgXe1x/xjoPTbF3L4zjhxDk
-	 XFkZYWfdi5eW3l93r9vFq9DvrWtWlBTBoZg1Iz/3HAMrfCxk3tll5YENIe7GutmbOp
-	 y/KtkNO2PdRq3px3sbgf8kL9wNanCYR5JgG1D0O5xwTJsMBB2z4cbvVoGiElE+mJTN
-	 H4YJP7NtUxKNacrHNX6aII4WVRjrkp34yyJCS4w6gjP/lRWejyV1QhY0xyDHPHFAqJ
-	 MY+bM7iYu1s6Q==
-Date: Fri, 31 May 2024 17:52:04 -0500
+	b=IT0ggGGCjifOXXPJfY0DnkI9p3PEq9J1uGadB5fL0fcLg68IYmnIe896J2sd02Bv8
+	 9WPJaUbR4043Uz6cqS/wfOqEKPXagsbo1ukaBSseB+CSfhBv0pu4lAVjaoZW/tJ83a
+	 VtWQL4PFh44/8Dudk6XpnoHqC2oE8wYbRCXplStcASeSJ71aFyqBHOYym1ZOiNwKDt
+	 PYwzZF56IgUxZuFP4Z/I+1V7wbkyiPZuMC2o4r6Mmd4MK+wuAGn3VNQ/rM/hk6+SfC
+	 zE+bwl5caqjTpY4GGQTmxa8PIgfa2pF9TMkERbjIt1pHf7bcl2omjbyEgaZyPG3Ioo
+	 1AK5calN1FIdA==
+Date: Fri, 31 May 2024 18:02:02 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Taniya Das <quic_tdas@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Andy Gross <agross@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, quic_jkona@quicinc.com, 
-	quic_imrashai@quicinc.com
-Subject: Re: [PATCH] pmdomain: qcom: rpmhpd: Skip retention level for Power
- Domains
-Message-ID: <4dap2yus4dvn6u25foq4dc3bpejxpgxqlhqqgxd3jpkcpewo6z@t3mt72ggwieu>
-References: <20240531114148.8550-1-quic_tdas@quicinc.com>
+To: Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc: cros-qcom-dts-watchers@chromium.org, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Stephen Boyd <swboyd@chromium.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, quic_ppratap@quicinc.com, quic_jackp@quicinc.com, 
+	Doug Anderson <dianders@google.com>, stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7180: Disable SS instances in
+ park mode
+Message-ID: <ctmgikoes6p2sbvdxp3jmiseipzqsinbxjg7xewxl5jurh7r7w@s4lxchehtork>
+References: <20240530082556.2960148-1-quic_kriskura@quicinc.com>
+ <20240530082556.2960148-2-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,87 +64,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240531114148.8550-1-quic_tdas@quicinc.com>
+In-Reply-To: <20240530082556.2960148-2-quic_kriskura@quicinc.com>
 
-On Fri, May 31, 2024 at 05:11:48PM GMT, Taniya Das wrote:
-> In the cases where the power domain connected to logics is allowed to
-> transition from a level(L)-->power collapse(0)-->retention(1) or
-> vice versa retention(1)-->power collapse(0)-->level(L)  will cause the
-> logic to lose the configurations. The ARC does not support retention
-> to collapse transition on MxC rails.
-> 
-> The targets from SM8450 onwards the PLL logics of clock controllers are
-> connected to MxC rails and the recommended configurations are carried
-> out during the clock controller probes. The MxC transition as mentioned
-> above should be skipped to ensure the PLL settings are intact across
-> clock controller power on & off.
-> 
-> On older generation of targets which supports only Mx the logic is never
-> collapsed and it is parked always at RETENTION, thus this issue is never
-> observed on those targets.
-> 
+On Thu, May 30, 2024 at 01:55:55PM GMT, Krishna Kurapati wrote:
+> On SC7180, in host mode, it is observed that stressing out controller
+> in host mode results in HC died error and only restarting the host
 
-Cc: stable@vger.kernel.org # v5.17
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Could you please include a copy of that error message, so that others
+searching for that error message will be able to find this commit?
+
+Also, there's three "in host mode"s in this sentence.
+
+> mode fixes it. Disable SS instances in park mode for these targets to
+
+Please spell SS SuperSpeed.
 
 Regards,
 Bjorn
 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> ---
->  drivers/pmdomain/qcom/rpmhpd.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> ---
->  drivers/pmdomain/qcom/rpmhpd.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+> avoid host controller being dead.
 > 
-> diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
-> index de9121ef4216..d2cb4271a1ca 100644
-> --- a/drivers/pmdomain/qcom/rpmhpd.c
-> +++ b/drivers/pmdomain/qcom/rpmhpd.c
-> @@ -40,6 +40,7 @@
->   * @addr:		Resource address as looped up using resource name from
->   *			cmd-db
->   * @state_synced:	Indicator that sync_state has been invoked for the rpmhpd resource
-> + * @skip_retention_level: Indicate that retention level should not be used for the power domain
->   */
->  struct rpmhpd {
->  	struct device	*dev;
-> @@ -56,6 +57,7 @@ struct rpmhpd {
->  	const char	*res_name;
->  	u32		addr;
->  	bool		state_synced;
-> +	bool            skip_retention_level;
->  };
->  
->  struct rpmhpd_desc {
-> @@ -173,6 +175,7 @@ static struct rpmhpd mxc = {
->  	.pd = { .name = "mxc", },
->  	.peer = &mxc_ao,
->  	.res_name = "mxc.lvl",
-> +	.skip_retention_level = true,
->  };
->  
->  static struct rpmhpd mxc_ao = {
-> @@ -180,6 +183,7 @@ static struct rpmhpd mxc_ao = {
->  	.active_only = true,
->  	.peer = &mxc,
->  	.res_name = "mxc.lvl",
-> +	.skip_retention_level = true,
->  };
->  
->  static struct rpmhpd nsp = {
-> @@ -819,6 +823,9 @@ static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
->  		return -EINVAL;
->  
->  	for (i = 0; i < rpmhpd->level_count; i++) {
-> +		if (rpmhpd->skip_retention_level && buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
-> +			continue;
-> +
->  		rpmhpd->level[i] = buf[i];
->  
->  		/* Remember the first corner with non-zero level */
+> Reported-by: Doug Anderson <dianders@google.com>
+> Cc: <stable@vger.kernel.org>
+> Fixes: 0b766e7fe5a2 ("arm64: dts: qcom: sc7180: Add USB related nodes")
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 2b481e20ae38..cc93b5675d5d 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -3063,6 +3063,7 @@ usb_1_dwc3: usb@a600000 {
+>  				iommus = <&apps_smmu 0x540 0>;
+>  				snps,dis_u2_susphy_quirk;
+>  				snps,dis_enblslpm_quirk;
+> +				snps,parkmode-disable-ss-quirk;
+>  				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+>  				phy-names = "usb2-phy", "usb3-phy";
+>  				maximum-speed = "super-speed";
 > -- 
-> 2.17.1
+> 2.34.1
 > 
 
