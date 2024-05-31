@@ -1,134 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-21255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 026838D5FA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 12:23:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 499718D5FC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 12:33:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F7EB1C223E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 10:23:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 67344B21C5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 10:33:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B17B8156649;
-	Fri, 31 May 2024 10:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BA24155A5D;
+	Fri, 31 May 2024 10:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hBQN/lY5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RmIPKbMk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C86A1422C4;
-	Fri, 31 May 2024 10:23:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBFF3DBB7;
+	Fri, 31 May 2024 10:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717151014; cv=none; b=Uq/Mj6E0R9a/4PrwrU48wKAaEeEQal/GDyU9mtSr0oEjIp0ybtFEFq1Xa9DNLtEn5rLqB7RuGJJrligOBY+vzsRSHtxK/JXFE9mrcZcSzG5QcOlmmCDcoR3edp8T751CzIItff8KpRhUTvoEwm9BF6EKJLtJPt9aBmJFr09JWBw=
+	t=1717151581; cv=none; b=dSv1i0S9BhMMIaivz2muCNSbiK53gCQj1SLwAhBC25qunl/GTBiCG9ZMNMe5DX4NXLxRXGRLxtB69VJUf6hvjSX0njwxbRg96vRDOckYe4XQwi09jm/Ll6xw47sKgxXKI1kacs3hpc0VDQmC6t81dyY4/CsWwHxYbu4lrYs/Q58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717151014; c=relaxed/simple;
-	bh=VV5qOddNmdGb5hbGPBWN40mCjvxeB+Een3gim9Zo6j8=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VLf8v5pu33K+k+6FeIoiCRFha5tZX40OINbfaW+HiCPbRvlnw3/9Gstdkw1QFkpVgZbKrS19ChxtShyXLBCP85XL5ehwWcXOdKATDd2/8JDSHds7yh+zFLGduH1cogQL0UoA8BEqRk4/hgpgXaoonkWx/faA1nL5BLjflE/TmvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hBQN/lY5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44V4odpo015761;
-	Fri, 31 May 2024 10:23:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Y5pXRlCuO0KRrfkLfNBjExbb
-	+2MXeP7nYhg/mgEQHso=; b=hBQN/lY57FbrcgBCvm7oRh7fEqkjLQtdiQgufb8i
-	cc9eXqxDqsDJgxelth3Bg7f7kK37t+VXh1WkwRo0SC9hkvlJJAm16K7xUgj1uxAE
-	PHavYDIWBFbkBrEnA8K/1oJ+P6Ink3patZgxz+g7+ASi5HeJOvXWT9CU8E2yfbhr
-	yMd4CsU930KzHtFBuzdl1in7Km8GpA+jUAOSySdQqckmWlwi3+7H+Yo5c3QCGOeM
-	ZEl6cSjQyfzTSE34o4CtMzGIeAGGr/RCedcnqxUnEHmWOHete0nXNnnvlrMeuIv1
-	YAJhHETlgpn/ovTejv66RwI/wundcOU+wsq9T56wCLlRPQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ydyws69gk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 10:23:29 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44VANSqj005999
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 10:23:28 GMT
-Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 31 May 2024 03:23:24 -0700
-From: Taniya Das <quic_tdas@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <quic_jkona@quicinc.com>, <quic_imrashai@quicinc.com>,
-        <devicetree@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: qcs6490-rb3gen2: Update the LPASS audio node
-Date: Fri, 31 May 2024 15:52:52 +0530
-Message-ID: <20240531102252.26061-5-quic_tdas@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240531102252.26061-1-quic_tdas@quicinc.com>
-References: <20240531102252.26061-1-quic_tdas@quicinc.com>
+	s=arc-20240116; t=1717151581; c=relaxed/simple;
+	bh=zS1pUrMFJYbBgJHf7inMI3R6nDBmusfMV1wVhQY5wE4=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=GqU/NC3S3tiampSrVzI1BV06LJDpP7iUkFA3UpR7+7WtTwGU6tQ7pBsFhWA02MMfsXSIATLBUSJZPBclslTpUPMCMZ5eS51AYLNbreUMtJelORGF0a/jpq4A4GoLvItyLxS+K0aJ7IE31dmMOIy9+eR6B8LBw0OmzspYvr7WRto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RmIPKbMk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B15FC116B1;
+	Fri, 31 May 2024 10:33:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717151580;
+	bh=zS1pUrMFJYbBgJHf7inMI3R6nDBmusfMV1wVhQY5wE4=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=RmIPKbMkTl4jPWa7LwDnYhaXtpFK792OMWTGtvMq8hPunLB/AXqz1frtbHg4JTkIQ
+	 dCxGWhGRo4msS7r+0cFQcwYMIAWOTnfN5nU5VfECJCAVZNuWs9M8VihVUTKRJJUBOk
+	 CSigrA1woT9oMCZ1DUfCff+g/yUY0alMgH1VQ9EVcRca3MujEQdACR5pE3xfe8Hz0n
+	 6pR1DH5p9B5Cp56Qr5agogcRnal+Ac2jiuzjKcCmKVrX3XnseGAXrDqs1NM2eux3Qh
+	 q0h0PQ8365NmFFLH9AC+NwGTIttCCgqVVWGGl/FkqVYDeLu9qwVfCNv2TK107KkZ+6
+	 5A56fjdzLZ/uQ==
+Date: Fri, 31 May 2024 05:32:59 -0500
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bOMm6E3n3ePE9Xdeg1FQHDIxLoDkk1-Z
-X-Proofpoint-GUID: bOMm6E3n3ePE9Xdeg1FQHDIxLoDkk1-Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-31_06,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=988
- priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405310077
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: linux-clk@vger.kernel.org, quic_jkona@quicinc.com, 
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Stephen Boyd <sboyd@kernel.org>
+In-Reply-To: <20240531090249.10293-12-quic_tdas@quicinc.com>
+References: <20240531090249.10293-1-quic_tdas@quicinc.com>
+ <20240531090249.10293-12-quic_tdas@quicinc.com>
+Message-Id: <171715157923.946292.1937976037620674033.robh@kernel.org>
+Subject: Re: [PATCH 11/13] dt-bindings: clock: qcom: Add SA8775P display
+ controller
 
-Update the lpassaudio node to support the new compatible as the
-lpassaudio needs to support the reset functionality on the
-QCM6490 board and the rest of the Audio functionality would be
-provided from the LPASS firmware.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+On Fri, 31 May 2024 14:32:47 +0530, Taniya Das wrote:
+> Add device tree bindings for the display clock controller
+> on Qualcomm SA8775P platform.
+> 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,sa8775p-dispcc.yaml   | 88 +++++++++++++++++++
+>  .../dt-bindings/clock/qcom,sa8775p-dispcc.h   | 87 ++++++++++++++++++
+>  2 files changed, 175 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-dispcc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,sa8775p-dispcc.h
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index c4cde4328e3d..9d033700378d 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: BSD-3-Clause
- /*
-- * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- /dts-v1/;
-@@ -726,3 +726,8 @@
- 	function = "gpio";
- 	bias-disable;
- };
-+
-+&lpass_audiocc {
-+	compatible = "qcom,qcm6490-lpassaudiocc";
-+	/delete-property/ power-domains;
-+};
--- 
-2.17.1
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/clock/qcom,sa8775p-dispcc.example.dtb: /example-0/clock-controller@af00000: failed to match any schema with compatible: ['qcom,sa8755p-dispcc0']
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240531090249.10293-12-quic_tdas@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
