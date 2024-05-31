@@ -1,108 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-21196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5BD58D5B8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:33:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A5928D5BA0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:38:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0310F1C20D6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 07:33:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0739D28713A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 07:38:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFB0C74049;
-	Fri, 31 May 2024 07:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A55D37405E;
+	Fri, 31 May 2024 07:38:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="BCPckN5Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4982C74047;
-	Fri, 31 May 2024 07:33:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F6F174057;
+	Fri, 31 May 2024 07:38:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717140809; cv=none; b=hmpEOxyPIhYIRwED+pZ46ATARP7q/nRR77iyUtqrpaCQmdheq/l3mmT+zYzz8Zk+av6tvJ01KUT7tXHesLxAdh65YXHyIow8gsaxpfeRe72KrV+h/OPYYnQzRq+0SbuShE1wwFrcEEwy0rCL+2TNvEQffr3P5/u3G3fiaxCRRmY=
+	t=1717141105; cv=none; b=JDEiK/vOybc72MiAyuPESHERbu1XT2KWvC+xsmzRkdUFzo4m9lRxhlc7S3NosmFk7KsKmmyT5DL6zQeVNaU/1Y1t6O2sndApvHI5/11ZGF3DwM53+/DefYRWQu438V2QciN2fqM6a3+uWDYNqrtMcvGUYoOI3IeVuoDeYz25XtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717140809; c=relaxed/simple;
-	bh=MRK+h1WZYjHuu1URYD6M3YcSUxV8DuY5UvqxFU3Arco=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fLi41JNFu4vqwRUhFRwSc3PR0Obhd08+Mi4cysWr2+BKcBkApbyr53K/1HjHCu3wpfr5L00uJ1WHBcqUZLM8+9gMHXJ1OkFODj44g9iPH1Km0f3Id0lrEXbA541Jwn/mvkSdfXxussQnvncRK/32aFP8lHvi5IQlFhPH+iCP8ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-62a08092c4dso16308297b3.0;
-        Fri, 31 May 2024 00:33:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717140806; x=1717745606;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qj6EusQ3A409SsVzLb4gC8GqQaE/mFAcX8PaYZZXXLw=;
-        b=JceygU38JHpZckXkKFZCw2qyrNFL0JL+USD0MVdIbGnVUvue+kR3PjiB8XbGdfBsjM
-         0KO6CYGiJwycKIksF7nQeM/Ftcp8zoRc6I0r9n4wxUD1rfLwW4d85syCtukMczKjPPoI
-         WfbJL1m4o40JGT+HqHKsoiuSZ29oe2Bbv/5inBZXqi3AjbzEaXFwKBCP0ygQcsunvw+l
-         uz9Ldp6K4HKEFmjmmHFv6pKNgyA8g2fdpIWkJchLCwYLnv1v8O7WYELnCubxLqjFytDF
-         9HhumcwszBYiz8ox+1/wwMu2hgBGEIR0zejHPlw7IRu/97Tb97qAsLblM+MCu0Np5bnU
-         bCFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWrphmlhzi8QxhBhM1wBFLPzGHb7gcsbzwwb3TIkBX7dnwXu16XayXt3/jV+uuuuWAniqBm14CPm6/yyQGJdoViEs5Vp7K5lMpsEH+q7Tok+zexvsS07JZLzcJFbOAplyc9E6ScXpoDBYVpFlfn655QkEpxpxMbuY4UE2LsDrGDP5tSsCjq90iNuwBVpVYo5GN0zexabVEBh/NjQbbiElsPEg==
-X-Gm-Message-State: AOJu0YzJPSI9ZK0tOXDBlsYG1SXaffzzT7a3q4nqzUqaI4YhbGxZhJMV
-	aQjCx2YN1D29Hjr1RZ3+NXhhYQVVe0rHxmJXfovGyP/DtsGednhmf+iRGOUt
-X-Google-Smtp-Source: AGHT+IFmOC9gyYJlnq2XG+VOY995hsrtRsSVtZMswMEQHLjPlqRyZzDo2GAIE0QjImTFYKu91eqFEg==
-X-Received: by 2002:a81:b609:0:b0:622:df58:2cf6 with SMTP id 00721157ae682-62c7982af56mr9370827b3.50.1717140804270;
-        Fri, 31 May 2024 00:33:24 -0700 (PDT)
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com. [209.85.219.181])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-62c765b8d35sm2404337b3.17.2024.05.31.00.33.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 00:33:24 -0700 (PDT)
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-df4f05e5901so1809109276.0;
-        Fri, 31 May 2024 00:33:24 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUfRImCO7HuQMzOP7ify0lkE/bh6P66/iVMUkVlVJ/vZFA4IrZOAaLjxcPvhUJAa0UPYYdJBgH1buRHw7oRfxLGr+Wn21YXa3bkaCxv3TJ+CDl9iBoyacuRRULTzj8bq87DAYgRbKQAlwmQ+6GVZMwBVPJO5YamnZNwDanYatWOx+bDEoDs1kmnE9CKxZrqNlPeQ0y0FO8wikBPNzAirCD8+g==
-X-Received: by 2002:a25:d047:0:b0:dfa:56a9:8869 with SMTP id
- 3f1490d57ef6-dfa73c48294mr1121789276.34.1717140803859; Fri, 31 May 2024
- 00:33:23 -0700 (PDT)
+	s=arc-20240116; t=1717141105; c=relaxed/simple;
+	bh=js5resTiNiwmEEem06d/OuXesOvzyPwOVOw2TBNTQbI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=ANIlJ+vJcX7JK5REfh91i7hkdmZwUZa8ev9CLiR/ILtrS3T43Bql87qHsfbEjhc4N/MXabgjF45JS4AgO77s7lYiLxP+xf2Y9dXPZYXccSuDKzA9vRnk8IY0EIz+/Eaw5TZBuhZ/iNNDUnr2hv87iCJZtEiNqk5eSdHmZsUb12U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=BCPckN5Y reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=0RpQFpiJt8CzmW+XjzYB0uoC6szcClZV35OrD8T37uk=; b=B
+	CPckN5YRlbjf2sLpOtaYcpqabr6qCrqYwbbpbR1hMt+0JKVIVPQ0hWzL8B9aP2DP
+	DOyKx5aH4cfFS7D1o2Jw06BjgoNxuWIHAr4olB8lx9Q3y6E3fc3hYG1xeqR9F4Rr
+	VOnP7oilp9x1pWCz4yiDjEAiJ1AC3Lg+OLrYYFNjfo=
+Received: from slark_xiao$163.com ( [112.97.59.81] ) by
+ ajax-webmail-wmsvr-40-117 (Coremail) ; Fri, 31 May 2024 15:37:44 +0800
+ (CST)
+Date: Fri, 31 May 2024 15:37:44 +0800 (CST)
+From: "Slark Xiao" <slark_xiao@163.com>
+To: manivannan.sadhasivam@linaro.org, loic.poulain@linaro.org
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re:[PATCH v2] bus: mhi: host: Add Foxconn SDX72 related support
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <20240520070633.308913-1-slark_xiao@163.com>
+References: <20240520070633.308913-1-slark_xiao@163.com>
+X-NTES-SC: AL_Qu2aBf2fvkgt4iaYZOkfm0kaj+c/WMGzu/8m3oFXO51wjD/pywQrRn54L3f89cW2Ey6orCOsUCBfx8BTf4BKYYY0gpe02UgZEjAjz22mxWjh+A==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240509-python-version-v1-1-a7dda3a95b5f@linaro.org>
- <87o79faq4a.fsf@meer.lwn.net> <D1N564M136RW.3CRPYTGKMW1NP@gmail.com>
-In-Reply-To: <D1N564M136RW.3CRPYTGKMW1NP@gmail.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Fri, 31 May 2024 09:33:12 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVA7MU8LMUW6rR=VWtCDs8erpKgx30woL5eUucRYiK-Fg@mail.gmail.com>
-Message-ID: <CAMuHMdVA7MU8LMUW6rR=VWtCDs8erpKgx30woL5eUucRYiK-Fg@mail.gmail.com>
-Subject: Re: [PATCH] docs: document python version used for compilation
-To: Thierry Reding <thierry.reding@gmail.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	workflows@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Masahiro Yamada <masahiroy@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <1ecf7fb9.74d7.18fcd954b9e.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD3n39IfllmFNUdAA--.22369W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiNQjvZGV4H26udAAAsA
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-Hi Thierry,
-
-On Thu, May 30, 2024 at 7:07=E2=80=AFPM Thierry Reding <thierry.reding@gmai=
-l.com> wrote:
-> Alternatively, maybe Kconfig could be taught about build dependencies?
-
-git grep "depends on \$(" -- "*Kconf*"
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+SGkgTWFuaSwKRG8geW91IG1pc3MgdGhpcyBjb21taXQ/CkkgZGlkbid0IGdldCBhbnkgcmVzcG9u
+c2UgeWV0LiAKCkF0IDIwMjQtMDUtMjAgMTU6MDY6MzMsICJTbGFyayBYaWFvIiA8c2xhcmtfeGlh
+b0AxNjMuY29tPiB3cm90ZToKPkFsaWduIHdpdGggUWNvbSBTRFg3MiwgYWRkIHJlYWR5IHRpbWVv
+dXQgaXRlbSBmb3IgRm94Y29ubiBTRFg3Mi4KPkFuZCBhbHNvLCBhZGQgZmlyZWhvc2Ugc3VwcG9y
+dCBzaW5jZSBTRFg3Mi4KPgo+U2lnbmVkLW9mZi1ieTogU2xhcmsgWGlhbyA8c2xhcmtfeGlhb0Ax
+NjMuY29tPgo+LS0tCj52MjogKDEpLiBVcGRhdGUgdGhlIGVkbCBmaWxlIHBhdGggYW5kIG5hbWUg
+KDIpLiBTZXQgU0RYNzIgc3VwcG9ydAo+dHJpZ2dlciBlZGwgbW9kZSBieSBkZWZhdWx0Cj4tLS0K
+PiBkcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jIHwgMzIgKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrCj4gMSBmaWxlIGNoYW5nZWQsIDMyIGluc2VydGlvbnMoKykKPgo+ZGlm
+ZiAtLWdpdCBhL2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMgYi9kcml2ZXJzL2J1
+cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jCj5pbmRleCAwODg0NGVlNzk2NTQuLjBiNDgzYzdjNzZh
+MSAxMDA2NDQKPi0tLSBhL2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMKPisrKyBi
+L2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMKPkBAIC0zOTksNiArMzk5LDggQEAg
+c3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfY2hhbm5lbF9jb25maWcgbWhpX2ZveGNvbm5fc2R4NTVf
+Y2hhbm5lbHNbXSA9IHsKPiAJTUhJX0NIQU5ORUxfQ09ORklHX0RMKDEzLCAiTUJJTSIsIDMyLCAw
+KSwKPiAJTUhJX0NIQU5ORUxfQ09ORklHX1VMKDMyLCAiRFVOIiwgMzIsIDApLAo+IAlNSElfQ0hB
+Tk5FTF9DT05GSUdfREwoMzMsICJEVU4iLCAzMiwgMCksCj4rCU1ISV9DSEFOTkVMX0NPTkZJR19V
+TF9GUCgzNCwgIkZJUkVIT1NFIiwgMzIsIDApLAo+KwlNSElfQ0hBTk5FTF9DT05GSUdfRExfRlAo
+MzUsICJGSVJFSE9TRSIsIDMyLCAwKSwKPiAJTUhJX0NIQU5ORUxfQ09ORklHX0hXX1VMKDEwMCwg
+IklQX0hXMF9NQklNIiwgMTI4LCAyKSwKPiAJTUhJX0NIQU5ORUxfQ09ORklHX0hXX0RMKDEwMSwg
+IklQX0hXMF9NQklNIiwgMTI4LCAzKSwKPiB9Owo+QEAgLTQxOSw2ICs0MjEsMTYgQEAgc3RhdGlj
+IGNvbnN0IHN0cnVjdCBtaGlfY29udHJvbGxlcl9jb25maWcgbW9kZW1fZm94Y29ubl9zZHg1NV9j
+b25maWcgPSB7Cj4gCS5ldmVudF9jZmcgPSBtaGlfZm94Y29ubl9zZHg1NV9ldmVudHMsCj4gfTsK
+PiAKPitzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9jb250cm9sbGVyX2NvbmZpZyBtb2RlbV9mb3hj
+b25uX3NkeDcyX2NvbmZpZyA9IHsKPisJLm1heF9jaGFubmVscyA9IDEyOCwKPisJLnRpbWVvdXRf
+bXMgPSAyMDAwMCwKPisJLnJlYWR5X3RpbWVvdXRfbXMgPSA1MDAwMCwKPisJLm51bV9jaGFubmVs
+cyA9IEFSUkFZX1NJWkUobWhpX2ZveGNvbm5fc2R4NTVfY2hhbm5lbHMpLAo+KwkuY2hfY2ZnID0g
+bWhpX2ZveGNvbm5fc2R4NTVfY2hhbm5lbHMsCj4rCS5udW1fZXZlbnRzID0gQVJSQVlfU0laRSht
+aGlfZm94Y29ubl9zZHg1NV9ldmVudHMpLAo+KwkuZXZlbnRfY2ZnID0gbWhpX2ZveGNvbm5fc2R4
+NTVfZXZlbnRzLAo+K307Cj4rCj4gc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfcGNpX2Rldl9pbmZv
+IG1oaV9mb3hjb25uX3NkeDI0X2luZm8gPSB7Cj4gCS5uYW1lID0gImZveGNvbm4tc2R4MjQiLAo+
+IAkuY29uZmlnID0gJm1vZGVtX2ZveGNvbm5fc2R4NTVfY29uZmlnLAo+QEAgLTQ0OCw2ICs0NjAs
+MTcgQEAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfcGNpX2Rldl9pbmZvIG1oaV9mb3hjb25uX3Nk
+eDY1X2luZm8gPSB7Cj4gCS5zaWRlYmFuZF93YWtlID0gZmFsc2UsCj4gfTsKPiAKPitzdGF0aWMg
+Y29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5fc2R4NzJfaW5mbyA9IHsK
+PisJLm5hbWUgPSAiZm94Y29ubi1zZHg3MiIsCj4rCS5lZGwgPSAiZm94L3NkeDcybS9lZGwubWJu
+IiwKPisJLmVkbF90cmlnZ2VyID0gdHJ1ZSwKPisJLmNvbmZpZyA9ICZtb2RlbV9mb3hjb25uX3Nk
+eDcyX2NvbmZpZywKPisJLmJhcl9udW0gPSBNSElfUENJX0RFRkFVTFRfQkFSX05VTSwKPisJLmRt
+YV9kYXRhX3dpZHRoID0gMzIsCj4rCS5tcnVfZGVmYXVsdCA9IDMyNzY4LAo+Kwkuc2lkZWJhbmRf
+d2FrZSA9IGZhbHNlLAo+K307Cj4rCj4gc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfY2hhbm5lbF9j
+b25maWcgbWhpX212M3hfY2hhbm5lbHNbXSA9IHsKPiAJTUhJX0NIQU5ORUxfQ09ORklHX1VMKDAs
+ICJMT09QQkFDSyIsIDY0LCAwKSwKPiAJTUhJX0NIQU5ORUxfQ09ORklHX0RMKDEsICJMT09QQkFD
+SyIsIDY0LCAwKSwKPkBAIC02ODAsNiArNzAzLDE1IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgcGNp
+X2RldmljZV9pZCBtaGlfcGNpX2lkX3RhYmxlW10gPSB7Cj4gCS8qIERXNTkzMmUgKHNkeDYyKSwg
+Tm9uLWVTSU0gKi8KPiAJeyBQQ0lfREVWSUNFKFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMGY5
+KSwKPiAJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9mb3hjb25uX3NkeDY1
+X2luZm8gfSwKPisJLyogVDk5VzUxNSAoc2R4NzIpICovCj4rCXsgUENJX0RFVklDRShQQ0lfVkVO
+RE9SX0lEX0ZPWENPTk4sIDB4ZTExOCksCj4rCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25n
+X3QpICZtaGlfZm94Y29ubl9zZHg3Ml9pbmZvIH0sCj4rCS8qIERXNTkzNGUoc2R4NzIpLCBXaXRo
+IGVTSU0gKi8KPisJeyBQQ0lfREVWSUNFKFBDSV9WRU5ET1JfSURfRk9YQ09OTiwgMHhlMTFkKSwK
+PisJCS5kcml2ZXJfZGF0YSA9IChrZXJuZWxfdWxvbmdfdCkgJm1oaV9mb3hjb25uX3NkeDcyX2lu
+Zm8gfSwKPisJLyogRFc1OTM0ZShzZHg3MiksIE5vbi1lU0lNICovCj4rCXsgUENJX0RFVklDRShQ
+Q0lfVkVORE9SX0lEX0ZPWENPTk4sIDB4ZTExZSksCj4rCQkuZHJpdmVyX2RhdGEgPSAoa2VybmVs
+X3Vsb25nX3QpICZtaGlfZm94Y29ubl9zZHg3Ml9pbmZvIH0sCj4gCS8qIE1WMzEtVyAoQ2ludGVy
+aW9uKSAqLwo+IAl7IFBDSV9ERVZJQ0UoUENJX1ZFTkRPUl9JRF9USEFMRVMsIDB4MDBiMyksCj4g
+CQkuZHJpdmVyX2RhdGEgPSAoa2VybmVsX3Vsb25nX3QpICZtaGlfbXYzMV9pbmZvIH0sCj4tLSAK
+PjIuMjUuMQo=
 
