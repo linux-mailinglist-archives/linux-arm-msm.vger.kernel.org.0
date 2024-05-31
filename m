@@ -1,303 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-21185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2AD98D56DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 02:22:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56C658D56F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 02:29:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 395111F21CD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 00:22:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13AEF28652B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 00:29:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA4FF17F3;
-	Fri, 31 May 2024 00:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD3951367;
+	Fri, 31 May 2024 00:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VXLlzU0i"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nQz4l9No"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C3D1103
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 00:22:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D7E6AB6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 00:28:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717114974; cv=none; b=IPKVTAAh005WDLPp3yK5L8vB9qICTyzaVLNgTpiiuftXLJeeK85bnOzHhZsd3an5SNoW0mKwayL/NNH4SFHM0uqxaNMUHpdk4d82nMRc3Isjsu07uPVLUJZ8vWafheLlCORY844NK92vvoPIexJ6bu/mVrdx4TDLdi8NBdEkaEk=
+	t=1717115338; cv=none; b=dxL2KWgx8p+jtLu/bj+hvOWS/0OASmuUxUj9anRfyH3qYYsgH1zd4L4h8l8KHrMxcz5ecAdLhbnXIObcxe5TxyZqN5ViJxW/GSb5eefm8hKmODFR9F868K0RquMppBLnZOAaXv8XoBZlMu+sXOpg8l9BDX/OFvAohXvS6cI7Q+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717114974; c=relaxed/simple;
-	bh=a+MTHRbQZmyET4RE0SkjiFYdjs368VfVHQLAD7aFXJg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IoFexvgzHX4MHErMZFdceZZxrKJrO3XnaksLvObxLWLm+D/8UWnP1XKZaNeueQXx7E0bQwhvNnTD7yccEipT0SQVtvBSObQrYS9thTt81gbGqHffotWj24Rn913WBjigwjwFKXbXuz6W9lsMS5xcuHkcEDW+S8Y4bzwor/dXsSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VXLlzU0i; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52b840a001dso1020593e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 17:22:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717114971; x=1717719771; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0yVVKFhmIVyi/gwbSmn3VSSTQQqssFlSlOSpKOH7IJg=;
-        b=VXLlzU0i3WzR4ZBScI9I1du86ITe1/++yytMBiCicYyoFgn5TWyQP/KBM8rBaX7bEm
-         K6X0Y/FBV6iTa4pyok/4/JubT0CDILaA5q55YO2zSgSzDNvnyW7ILJXs/9jvvJnr4ZRP
-         yw1cCmjHxxmzHZh146HwrENngKNQAeCVBVfqSkYavcbv8N2b6X0PDxz3gBNIQKI+sEPZ
-         OwHgrhkFNezkr9m9VWel7Xj1tXPB0d5sbw+mNgfcdU5jxiyWRi63hLABcUzGKRc2hRYM
-         KYPyiyrLFw/RkGnIzHA4ic+kRP6NT2wj2TbJKroz2MCM5Tn0GJwDRuijKAovNCAB8e0s
-         Y9cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717114971; x=1717719771;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0yVVKFhmIVyi/gwbSmn3VSSTQQqssFlSlOSpKOH7IJg=;
-        b=PsnazmChKfQyadPFdgJaPFgMizNbvDGZG89tbcFsBG7u+30BtUkG+TyIAAD+g8ErmY
-         pUcef4AXeA6VoBmM71IDSIt7tXXVhv7oQbVglqErv6DvvpHmUCpwElZozk6R1P5U5MoF
-         9PJUbbbBgVHkVdDQ3xZYk38UbuIC4zesyH0O5+nmsfNLRptIbrb2d2WCFJBq++5LReoF
-         v5ZxKHnTz4GXXCDzwF02Yc7s9js9H1DZhzFkbTqvCC0bEi1M3qcTlXnZnl31XV5aLRby
-         g9403X08ePxk+pmtLi/bES3y40beBL79HtWm29htzxY2iY9hFigcZjSu2Tq6CPLReB/a
-         PQOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUl5RDwJMulSy38qAp0vX613bsS9ptDlbKgb+N++Wof8hsM+DZ/hQwv+1gVO09WdTK6aSdVHevnR6hNJstRs0s6kmXUrOcR7JlEf1Qglg==
-X-Gm-Message-State: AOJu0YzP2rqdNivuZSdXeYEhhvuu3Auez7888YuKJwacG45Y9oo4yf8G
-	2tCti2VqeUSIEc6tD9pFcnD3pAkttrkZI1YXAByzKZAmIkMZUBoQw13T6rI4s1Q=
-X-Google-Smtp-Source: AGHT+IGwyTjaK7sTOD0lwTEcc8h2FpDlgvXSpJCoPLo5Nq2Xn4TWRqpsowc5anXlgkfZ9x1bVaT+CA==
-X-Received: by 2002:a19:7519:0:b0:523:9811:b0d6 with SMTP id 2adb3069b0e04-52b8959c577mr100931e87.15.1717114970664;
-        Thu, 30 May 2024 17:22:50 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d34cdasm135780e87.50.2024.05.30.17.22.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 May 2024 17:22:49 -0700 (PDT)
-Date: Fri, 31 May 2024 03:22:48 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Hans de Goede <hdegoede@redhat.com>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Nikita Travkin <nikita@trvn.ru>
-Subject: Re: [PATCH v4 3/6] usb: typec: ucsi: add Lenovo Yoga C630 glue driver
-Message-ID: <bo6jvoew3s37g753nclbx3badpnnhxs53myuaqb3whr5zb4tf3@fcra5ic6y6wo>
-References: <20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org>
- <20240528-yoga-ec-driver-v4-3-4fa8dfaae7b6@linaro.org>
- <afed0bee-de6e-4e86-8437-0518c616bd2c@linaro.org>
+	s=arc-20240116; t=1717115338; c=relaxed/simple;
+	bh=OegCpIEhEa5kzzPE5+WDyHbYJqAAr6xLTwREsYDkMXk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SX6N+0HOf4O6iCigGEQARMAmBQgoWj4fpfkyMzpjfortMQ+hBt6fLHOnWApMWgpRZDfVC/eatVkOL3mY0oZus/kj9YudD+++v+AiiqCUqgYxmp496KBrxGgjw7MY2r51kFzEujle5H0RI1F+2gwVVXV8hs9x1y++gVfqV/nVIFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nQz4l9No; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44UGuVGT001837;
+	Fri, 31 May 2024 00:28:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PdTUToQ/qpxd7Kzu0XBI0vZWZYujTF4o6iJ1w3qa+XE=; b=nQz4l9NoXn/mDlz6
+	cytTKdzzGWKyhRI8Di1qLlVmfukd5TrkhypQ1tnDN3/y5ir3nA4MrNv7U7nZmP50
+	lGLzKoD4lkBhF+qMtBzLFyfzPmQSfaeWR2SHH5hz+dgsmb4qqdTx0dwrcGbNJcvc
+	Ix+j1HRysqaiUAnt4z1InFv8680GTBur5GkpGQ9gu4Ef5Gj20kTmTLfqHTeTSG4w
+	6H7ltYftPQUEwCxz9/IL941gYpnJ5CfSxvKH1qLKF1WaHhZtV378EPK3WACUte+/
+	q0NYCr2zp2XMPmdRtNo3l6fwKkKyYI3/fBHn3ZsKhzOjwXNu1YuNTIELbHzPXUxh
+	T+SqNA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yba0gdkw4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 00:28:42 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44V0SfO0025519
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 00:28:41 GMT
+Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 30 May
+ 2024 17:28:36 -0700
+Message-ID: <8b2bb781-f91d-5dd1-6307-4d39b00b0f5c@quicinc.com>
+Date: Thu, 30 May 2024 17:28:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <afed0bee-de6e-4e86-8437-0518c616bd2c@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 03/13] drm/msm/dpu: move pstate->pipe initialization to
+ dpu_plane_atomic_check
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-4-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240314000216.392549-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xKi6_QBCrl0iqsBer2APStF-9iL5w8zW
+X-Proofpoint-ORIG-GUID: xKi6_QBCrl0iqsBer2APStF-9iL5w8zW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-30_17,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 adultscore=0 spamscore=0
+ mlxlogscore=999 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405310000
 
-On Wed, May 29, 2024 at 04:41:40PM +0100, Bryan O'Donoghue wrote:
-> On 28/05/2024 21:44, Dmitry Baryshkov wrote:
-> > The Lenovo Yoga C630 WOS laptop provides implements UCSI interface in
-> > the onboard EC. Add glue driver to interface the platform's UCSI
-> > implementation.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/usb/typec/ucsi/Kconfig          |   9 ++
-> >   drivers/usb/typec/ucsi/Makefile         |   1 +
-> >   drivers/usb/typec/ucsi/ucsi_yoga_c630.c | 189 ++++++++++++++++++++++++++++++++
-> >   3 files changed, 199 insertions(+)
-> > 
-> > diff --git a/drivers/usb/typec/ucsi/Kconfig b/drivers/usb/typec/ucsi/Kconfig
-> > index bdcb1764cfae..680e1b87b152 100644
-> > --- a/drivers/usb/typec/ucsi/Kconfig
-> > +++ b/drivers/usb/typec/ucsi/Kconfig
-> > @@ -69,4 +69,13 @@ config UCSI_PMIC_GLINK
-> >   	  To compile the driver as a module, choose M here: the module will be
-> >   	  called ucsi_glink.
-> > +config UCSI_LENOVO_YOGA_C630
-> > +	tristate "UCSI Interface Driver for Lenovo Yoga C630"
-> > +	depends on EC_LENOVO_YOGA_C630
-> > +	help
-> > +	  This driver enables UCSI support on the Lenovo Yoga C630 laptop.
-> > +
-> > +	  To compile the driver as a module, choose M here: the module will be
-> > +	  called ucsi_yoga_c630.
-> > +
-> >   endif
-> > diff --git a/drivers/usb/typec/ucsi/Makefile b/drivers/usb/typec/ucsi/Makefile
-> > index b4679f94696b..aed41d23887b 100644
-> > --- a/drivers/usb/typec/ucsi/Makefile
-> > +++ b/drivers/usb/typec/ucsi/Makefile
-> > @@ -21,3 +21,4 @@ obj-$(CONFIG_UCSI_ACPI)			+= ucsi_acpi.o
-> >   obj-$(CONFIG_UCSI_CCG)			+= ucsi_ccg.o
-> >   obj-$(CONFIG_UCSI_STM32G0)		+= ucsi_stm32g0.o
-> >   obj-$(CONFIG_UCSI_PMIC_GLINK)		+= ucsi_glink.o
-> > +obj-$(CONFIG_UCSI_LENOVO_YOGA_C630)	+= ucsi_yoga_c630.o
-> > diff --git a/drivers/usb/typec/ucsi/ucsi_yoga_c630.c b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-> > new file mode 100644
-> > index 000000000000..ca1ab5c81b87
-> > --- /dev/null
-> > +++ b/drivers/usb/typec/ucsi/ucsi_yoga_c630.c
-> > @@ -0,0 +1,189 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Copyright (c) 2022-2024, Linaro Ltd
-> > + * Authors:
-> > + *    Bjorn Andersson
-> > + *    Dmitry Baryshkov
-> > + */
-> > +#include <linux/auxiliary_bus.h>
-> > +#include <linux/module.h>
-> > +#include <linux/platform_data/lenovo-yoga-c630.h>
-> > +
-> > +#include "ucsi.h"
-> > +
-> > +struct yoga_c630_ucsi {
-> > +	struct yoga_c630_ec *ec;
-> > +	struct ucsi *ucsi;
-> > +	struct notifier_block nb;
-> > +	struct completion complete;
-> > +	unsigned long flags;
-> > +#define UCSI_C630_COMMAND_PENDING	0
-> > +#define UCSI_C630_ACK_PENDING		1
-> > +	u16 version;
-> > +};
-> > +
-> > +static  int yoga_c630_ucsi_read(struct ucsi *ucsi, unsigned int offset,
-> > +				void *val, size_t val_len)
-> > +{
-> > +	struct yoga_c630_ucsi *uec = ucsi_get_drvdata(ucsi);
-> > +	u8 buf[YOGA_C630_UCSI_READ_SIZE];
-> > +	int ret;
-> > +
-> > +	ret = yoga_c630_ec_ucsi_read(uec->ec, buf);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	if (offset == UCSI_VERSION) {
-> > +		memcpy(val, &uec->version, min(val_len, sizeof(uec->version)));
-> > +		return 0;
-> > +	}
-> > +
-> > +	if (offset == UCSI_CCI)
-> > +		memcpy(val, buf,
-> > +		       min(val_len, YOGA_C630_UCSI_CCI_SIZE));
-> > +	else if (offset == UCSI_MESSAGE_IN)
-> > +		memcpy(val, buf + YOGA_C630_UCSI_CCI_SIZE,
-> > +		       min(val_len, YOGA_C630_UCSI_DATA_SIZE));
-> 
-> For some reason I believe multi-lines like this, including function calls
-> that are split over lines should be encapsulated with {}
-> 
-> else if(x) {
->     memcpy(x,y,
->            z);
-> }
-> 
-> If checkpatch doesn't complain about it feel free not to do that though.
 
-No, checkpatch --strict doesn't complain
 
+On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+> In preparation for virtualized planes support, move pstate->pipe
+> initialization from dpu_plane_reset() to dpu_plane_atomic_check(). In
+> case of virtual planes the plane's pipe will not be known up to the
+> point of atomic_check() callback.
 > 
-> > +	else
-> > +		return -EINVAL;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static  int yoga_c630_ucsi_async_write(struct ucsi *ucsi, unsigned int offset,
-> > +				       const void *val, size_t val_len)
-> > +{
-> > +	struct yoga_c630_ucsi *uec = ucsi_get_drvdata(ucsi);
-> > +
-> > +	if (offset != UCSI_CONTROL ||
-> > +	    val_len != YOGA_C630_UCSI_WRITE_SIZE)
-> > +		return -EINVAL;
-> > +
-> > +	return yoga_c630_ec_ucsi_write(uec->ec, val);
-> > +}
-> > +
-> > +static  int yoga_c630_ucsi_sync_write(struct ucsi *ucsi, unsigned int offset,
-> > +				      const void *val, size_t val_len)
-> > +{
-> > +	struct yoga_c630_ucsi *uec = ucsi_get_drvdata(ucsi);
-> > +	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
-> > +	int ret;
-> > +
-> > +	if (ack)
-> > +		set_bit(UCSI_C630_ACK_PENDING, &uec->flags);
-> > +	else
-> > +		set_bit(UCSI_C630_COMMAND_PENDING, &uec->flags);
-> > +
-> > +	reinit_completion(&uec->complete);
-> > +
-> > +	ret = yoga_c630_ucsi_async_write(ucsi, offset, val, val_len);
-> > +	if (ret)
-> > +		goto out_clear_bit;
-> > +
-> > +	if (!wait_for_completion_timeout(&uec->complete, 5 * HZ))
-> > +		ret = -ETIMEDOUT;
-> > +
-> > +out_clear_bit:
-> > +	if (ack)
-> > +		clear_bit(UCSI_C630_ACK_PENDING, &uec->flags);
-> > +	else
-> > +		clear_bit(UCSI_C630_COMMAND_PENDING, &uec->flags);
-> > +
-> > +	return ret;
-> > +}
-> > +
-> > +const struct ucsi_operations yoga_c630_ucsi_ops = {
-> > +	.read = yoga_c630_ucsi_read,
-> > +	.sync_write = yoga_c630_ucsi_sync_write,
-> > +	.async_write = yoga_c630_ucsi_async_write,
-> > +};
-> > +
-> > +static int yoga_c630_ucsi_notify(struct notifier_block *nb,
-> > +				 unsigned long action, void *data)
-> > +{
-> > +	struct yoga_c630_ucsi *uec = container_of(nb, struct yoga_c630_ucsi, nb);
-> > +	u32 cci;
-> > +	int ret;
-> > +
-> > +	if (action == LENOVO_EC_EVENT_USB || action == LENOVO_EC_EVENT_HPD) {
-> > +		ucsi_connector_change(uec->ucsi, 1);
-> > +		return NOTIFY_OK;
-> > +	}
-> > +
-> > +	if (action != LENOVO_EC_EVENT_UCSI)
-> > +		return NOTIFY_DONE;
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 26 +++++++++++------------
+>   1 file changed, 12 insertions(+), 14 deletions(-)
 > 
-> Is this disjunction on action a good candidate for a switch(){}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 9c52fe3c0261..70d6a8989e1a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -795,6 +795,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>   	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+>   	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> +	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
 
-Ack, refactored the function by extracting the UCSI notification code
-and then using the switch-case.
+We already have kms from a few lines above. No need for getting it again.
 
-> > +
-> > +	ret = uec->ucsi->ops->read(uec->ucsi, UCSI_CCI, &cci, sizeof(cci));
-> > +	if (ret)
-> > +		return NOTIFY_DONE;
-> > +
-> > +	if (UCSI_CCI_CONNECTOR(cci))
-> > +		ucsi_connector_change(uec->ucsi, UCSI_CCI_CONNECTOR(cci));
-> > +
-> > +	if (cci & UCSI_CCI_ACK_COMPLETE &&
-> > +	    test_bit(UCSI_C630_ACK_PENDING, &uec->flags))
-> > +		complete(&uec->complete);
-> > +	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
-> > +	    test_bit(UCSI_C630_COMMAND_PENDING, &uec->flags))
-> > +		complete(&uec->complete);
-> 
-> IMO these multi-line clauses should end up with a {} around the complete
-> even though its not required.
-> 
-> Emphasis on the O.
+Rest LGTM.
 
-I added an empty line inbetween, then it's easier to comprehent event
-without curly brackets.
-
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
--- 
-With best wishes
-Dmitry
+>   	struct dpu_sw_pipe *pipe = &pstate->pipe;
+>   	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+>   	const struct drm_crtc_state *crtc_state = NULL;
+> @@ -805,13 +806,22 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	uint32_t max_linewidth;
+>   	unsigned int rotation;
+>   	uint32_t supported_rotations;
+> -	const struct dpu_sspp_cfg *pipe_hw_caps = pstate->pipe.sspp->cap;
+> -	const struct dpu_sspp_sub_blks *sblk = pstate->pipe.sspp->cap->sblk;
+> +	const struct dpu_sspp_cfg *pipe_hw_caps;
+> +	const struct dpu_sspp_sub_blks *sblk;
+>   
+>   	if (new_plane_state->crtc)
+>   		crtc_state = drm_atomic_get_new_crtc_state(state,
+>   							   new_plane_state->crtc);
+>   
+> +	pipe->sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
+> +	r_pipe->sspp = NULL;
+> +
+> +	if (!pipe->sspp)
+> +		return -EINVAL;
+> +
+> +	pipe_hw_caps = pipe->sspp->cap;
+> +	sblk = pipe->sspp->cap->sblk;
+> +
+>   	min_scale = FRAC_16_16(1, sblk->maxupscale);
+>   	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+>   						  min_scale,
+> @@ -828,7 +838,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>   	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>   	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> -	r_pipe->sspp = NULL;
+>   
+>   	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+>   	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+> @@ -1292,7 +1301,6 @@ static void dpu_plane_reset(struct drm_plane *plane)
+>   {
+>   	struct dpu_plane *pdpu;
+>   	struct dpu_plane_state *pstate;
+> -	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>   
+>   	if (!plane) {
+>   		DPU_ERROR("invalid plane\n");
+> @@ -1314,16 +1322,6 @@ static void dpu_plane_reset(struct drm_plane *plane)
+>   		return;
+>   	}
+>   
+> -	/*
+> -	 * Set the SSPP here until we have proper virtualized DPU planes.
+> -	 * This is the place where the state is allocated, so fill it fully.
+> -	 */
+> -	pstate->pipe.sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
+> -	pstate->pipe.multirect_index = DPU_SSPP_RECT_SOLO;
+> -	pstate->pipe.multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> -
+> -	pstate->r_pipe.sspp = NULL;
+> -
+>   	__drm_atomic_helper_plane_reset(plane, &pstate->base);
+>   }
+>   
 
