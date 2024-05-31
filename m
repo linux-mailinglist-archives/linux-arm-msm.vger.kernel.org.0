@@ -1,253 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-21368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1D328D6A76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 22:09:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87D3C8D6AAC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 22:30:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7957D1F273CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 20:09:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E2A52899A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 20:30:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 465EF183988;
-	Fri, 31 May 2024 20:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40AAD7E591;
+	Fri, 31 May 2024 20:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DBN3lU2x"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="g6CWUhfC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CF21822DD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 20:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F046D2940B;
+	Fri, 31 May 2024 20:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717186061; cv=none; b=afNAYG/pwuG8l5sXuV7Ha8aUXh0o1r1X1pJ7zc8mc6PkEc9qub0Ccl/I4vwnSovcZ/9junzwPjydmKXHcdf84qhwkN11vJb4Om1sTUCvh0GKtRlg5ROLqV9IZLllwWSve2Vy+8+up8hedySBMSrMBx7B+S/TclNW9fqSuwjJ3Gg=
+	t=1717187420; cv=none; b=ceKOLuJK0M/u1T7lhn10qjxNk3e/BMqv/CmUKbbzFIGFTQYBeI1Zy+FrRA5Hejp4zT9ulbm+LoNXVk8eWHzu3qaVXrAy+pAd7MKJG9OPMqg9NAbzj5EoBK3KqdZguwOawXG1oEKa5vn7CUrtDL5jOYUpWbK34XRtiFqY9P5ivQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717186061; c=relaxed/simple;
-	bh=OmtXhjZ3Qtpb8oKDdME4LcvLFljKS2x7aDOlRaG8IZU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kL4Kre78h1z1u/+bq4CqXID5edS4Md6NxGLYtdWdcARfv0xpMH2jw15jXzaKSXhU4WOJN8qf4YSs5u9Yl/Sb+Vt8QIUTpERr0hfQv7s06J2f8QS/8nonZF0czqMTjg7DnKAkjV0u5GxePTKsNtlgr38Q2ua+AsNfz9J+SO3LP54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DBN3lU2x; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2e95a74d51fso37298161fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 13:07:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717186057; x=1717790857; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xk2JZtrRtwrwL4+NkRD4qshhppX0yY2US+tv9P72R1s=;
-        b=DBN3lU2xzAY9akukVQ6gRcISPxTuTOycnlSGfDI2dvp6WLt8W/fnyKPqAsH0uFAmaQ
-         IGkxLgxS55DpdfAOLnffjzxE7u/BPSIev4PYCvnEErtd6kmsprXxKCb7jxi52aFoO5EF
-         Bg5KqZVMWv57pAscWjPCRlzeBxEcVsYrr+Onqo5BzsJoHOF5cQx6Tw19Rv8rGepfQSx6
-         eCAiwBJ3uFJQimUURRvdAiKsmXcQLlWSe9a75D0dLPnQASoZBRdrNq/981dVnIBOJ/W5
-         XyqiH1U5IZgVVvLmb3JDm9YGTpMHQX/kWbBppNA7bnLDcslskQo+1hGsu0SQqJWbrJpv
-         ng4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717186057; x=1717790857;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Xk2JZtrRtwrwL4+NkRD4qshhppX0yY2US+tv9P72R1s=;
-        b=Jf1tDwgjfHZoXMNlScFQQNWN1xVfljSqQ/fA6wwjOOYE5ptKtQUqsfZCePlSGjBCwu
-         JIWS1i7vPkT4bOqGdsqFMMkcqjzwqpCuJreXRt3d7JYqE1os4tA5JB0uASdl6G5Kgxza
-         s1U3oGCunL620gKp6XcNadpRg2gKj/Wa+fMYTp27V1PGJaw58RpI5OkmLXdIvHua8Udy
-         fOJ67b2Z75slb11ZN1In6cT11pi/FkjqS4d8LQ8Y287DD91gQ9AsavJcOXpqYLE6roeR
-         eizLKAUkkzfMP27SxR0kV/43kSh2zcA1twxmlGeUC5G8YjvBZATQxqcGNpLuUHPOC468
-         yGhg==
-X-Forwarded-Encrypted: i=1; AJvYcCUm9EzGUDNiVx0yo/M6S7jwa13d+OsQ4gGXhTwX4dq6GIV1KerLBEWD8zRQfxC2cz/F9QXXeBX+9+uBNFnSmb9C1Bq8iBnvyOXKbpibDA==
-X-Gm-Message-State: AOJu0YxiYQ+xl3XfpP9k2pDtRQxv+xR2ny3tdQyiQaEVVqTGzbIWM0PV
-	eP9sQbD91v5veKW1wD+z6McFBmf5L8odTy/DsVprL8LC1Upls/BWuAMbdDY2xNA=
-X-Google-Smtp-Source: AGHT+IFRD2RAUhETt5GmKj4NUTgPNO1iLEY35FHrVeaC1n8sq/OEOXGOfyA8SqPqfUwlY1OycDWcuQ==
-X-Received: by 2002:a05:651c:1059:b0:2e6:be3c:9d4d with SMTP id 38308e7fff4ca-2ea9510e113mr26142781fa.12.1717186057247;
-        Fri, 31 May 2024 13:07:37 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ea91cf0b83sm4022111fa.116.2024.05.31.13.07.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 May 2024 13:07:36 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 31 May 2024 23:07:32 +0300
-Subject: [PATCH v4 9/9] drm/msm/hdmi: also send the SPD and HDMI Vendor
- Specific InfoFrames
+	s=arc-20240116; t=1717187420; c=relaxed/simple;
+	bh=FyXrGKtxtK1Ia++Up7p7wWt6dTZYsv9GlxJsgvwjMZ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TD1Ut9+zXQW37Gm8Nga6G6nHiTkcNzrf+pL4fV/neVhGtMvt4JyKVWtqqIw0eqzhoEvJApoOkRXpIprqL6rSwzwDFdLekEY7x/X3nIqAvdARAK3nmknWS+8wTDlAUD8uolxNdzcbaxR+eafn9Z0qOtV6Mr9nfb1is9s4ep/Qw+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=g6CWUhfC; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1717187418; x=1748723418;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=FyXrGKtxtK1Ia++Up7p7wWt6dTZYsv9GlxJsgvwjMZ0=;
+  b=g6CWUhfCoGHQpbhW0ZS+VnOw/11uR2qnPEHZug3sQoispNJO3eAcf8MQ
+   O3DaefJUpspBtTLyIMgo2Jgt+IG9ChmuvSbI6slCMc8fiDBfjPzDmjv76
+   d9f5nToxfPLWnYn1ETbwMhkuo3xZH0nIssWijGPTLLkFxA784l5/T6/dd
+   D3D6TJ4JOrAKPJgYBV/Y5EcbRM3o7KcD8X8DKCbVTY8hpaaieOQ6rcskv
+   5EQi9mScWMCq8FH3JKW+ywEjppjZFB63q1r/bBD18nWRSfd+bObreJGiN
+   sTDR7T5hwGq251DBnvERXUzPfMTdDeCZ01WVmT5wW5QNQ7oUvNdTfjrFX
+   A==;
+X-CSE-ConnectionGUID: eI1aGrTYRTeTduhvMjSsYA==
+X-CSE-MsgGUID: /a6n6twJTaWI9hOB3pdTew==
+X-IronPort-AV: E=McAfee;i="6600,9927,11089"; a="17544901"
+X-IronPort-AV: E=Sophos;i="6.08,205,1712646000"; 
+   d="scan'208";a="17544901"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2024 13:30:17 -0700
+X-CSE-ConnectionGUID: VFIwyAj9SgmeTuHViMNcug==
+X-CSE-MsgGUID: Og9p9johTY22w0ElFeLTWw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,205,1712646000"; 
+   d="scan'208";a="40711149"
+Received: from unknown (HELO 0610945e7d16) ([10.239.97.151])
+  by fmviesa003.fm.intel.com with ESMTP; 31 May 2024 13:30:15 -0700
+Received: from kbuild by 0610945e7d16 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sD8tA-000Hmr-2d;
+	Fri, 31 May 2024 20:30:12 +0000
+Date: Sat, 1 Jun 2024 04:29:37 +0800
+From: kernel test robot <lkp@intel.com>
+To: Shivnandan Kumar <quic_kshivnan@quicinc.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Shivnandan Kumar <quic_kshivnan@quicinc.com>
+Subject: Re: [PATCH] soc: qcom: icc-bwmon: Add tracepoints in
+ bwmon_intr_thread
+Message-ID: <202406010409.xiR31FVt-lkp@intel.com>
+References: <20240531105404.879267-1-quic_kshivnan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240531-bridge-hdmi-connector-v4-9-5110f7943622@linaro.org>
-References: <20240531-bridge-hdmi-connector-v4-0-5110f7943622@linaro.org>
-In-Reply-To: <20240531-bridge-hdmi-connector-v4-0-5110f7943622@linaro.org>
-To: Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4619;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=OmtXhjZ3Qtpb8oKDdME4LcvLFljKS2x7aDOlRaG8IZU=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ1qUHmOs3zv3HzrSh5vv6Puem/94qpnJQncHH45k58lcP
- b/5FyzoZDRmYWDkYpAVU2TxKWiZGrMpOezDjqn1MINYmUCmMHBxCsBEOI3Z/7vpsxyRLTr613x2
- u5rT+gslhbZs9UuMrO8JJieIPHY6ED798pnW2JcXZwk8We4XWX327m5/Fu0fBW9utD5wOuAww7L
- Bx4bX94nQgdOSczSXJPkb2vjfu7smniPkbVJ0V8MiJjdGtx3CxSceXNeOz9HaIKmR/KHH90h02l
- njeAl/1pOFl/r6GBv2nxHdEWHA+zhXQfnY+h8H9+sJTlRIs3zhUZhVktHGHKa7bsdPD58q4YNff
- v7L+XJtkl5QXz5PNfPvfY3KM7pY50/N5+t5/iVcK8aa98uPOvELymrPm42UT/xbWSg285bLitWd
- vu+9potFTylyO1b59dZTr3YHzquf5iuXCqRkv9bW19oBAA==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240531105404.879267-1-quic_kshivnan@quicinc.com>
 
-Extend the driver to send SPD and HDMI Vendor Specific InfoFrames.
+Hi Shivnandan,
 
-While the HDMI block has special block to send HVS InfoFrame, use
-GENERIC0 block instead. VENSPEC_INFO registers pack frame data in a way
-that requires manual repacking in the driver, while GENERIC0 doesn't
-have such format requirements. The msm-4.4 kernel uses GENERIC0 to send
-HDR InfoFrame which we do not at this point anyway.
+kernel test robot noticed the following build errors:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 93 ++++++++++++++++++++++++++++++++++
- 1 file changed, 93 insertions(+)
+[auto build test ERROR on linus/master]
+[also build test ERROR on v6.10-rc1 next-20240531]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index 9258d3100042..ad6258a2017a 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -69,6 +69,8 @@ static void power_off(struct drm_bridge *bridge)
- }
- 
- #define AVI_IFRAME_LINE_NUMBER 1
-+#define SPD_IFRAME_LINE_NUMBER 1
-+#define VENSPEC_IFRAME_LINE_NUMBER 3
- 
- static int msm_hdmi_config_avi_infoframe(struct hdmi *hdmi,
- 					 const u8 *buffer, size_t len)
-@@ -142,6 +144,74 @@ static int msm_hdmi_config_audio_infoframe(struct hdmi *hdmi,
- 	return 0;
- }
- 
-+static int msm_hdmi_config_spd_infoframe(struct hdmi *hdmi,
-+					 const u8 *buffer, size_t len)
-+{
-+	u32 buf[7] = {};
-+	u32 val;
-+	int i;
-+
-+	if (len != HDMI_INFOFRAME_SIZE(SPD) || len - 3 > sizeof(buf)) {
-+		DRM_DEV_ERROR(&hdmi->pdev->dev,
-+			"failed to configure SPD infoframe\n");
-+		return -EINVAL;
-+	}
-+
-+	/* checksum gets written together with the body of the frame */
-+	hdmi_write(hdmi, REG_HDMI_GENERIC1_HDR,
-+		   buffer[0] |
-+		   buffer[1] << 8 |
-+		   buffer[2] << 16);
-+
-+	memcpy(buf, &buffer[3], len - 3);
-+
-+	for (i = 0; i < ARRAY_SIZE(buf); i++)
-+		hdmi_write(hdmi, REG_HDMI_GENERIC1(i), buf[i]);
-+
-+	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-+	val |= HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
-+		 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
-+		 HDMI_GEN_PKT_CTRL_GENERIC1_LINE(SPD_IFRAME_LINE_NUMBER);
-+	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-+
-+	return 0;
-+}
-+
-+static int msm_hdmi_config_hdmi_infoframe(struct hdmi *hdmi,
-+					  const u8 *buffer, size_t len)
-+{
-+	u32 buf[7] = {};
-+	u32 val;
-+	int i;
-+
-+	if (len < HDMI_INFOFRAME_HEADER_SIZE + HDMI_VENDOR_INFOFRAME_SIZE ||
-+	    len - 3 > sizeof(buf)) {
-+		DRM_DEV_ERROR(&hdmi->pdev->dev,
-+			"failed to configure HDMI infoframe\n");
-+		return -EINVAL;
-+	}
-+
-+	/* checksum gets written together with the body of the frame */
-+	hdmi_write(hdmi, REG_HDMI_GENERIC0_HDR,
-+		   buffer[0] |
-+		   buffer[1] << 8 |
-+		   buffer[2] << 16);
-+
-+	memcpy(buf, &buffer[3], len - 3);
-+
-+	for (i = 0; i < ARRAY_SIZE(buf); i++)
-+		hdmi_write(hdmi, REG_HDMI_GENERIC0(i), buf[i]);
-+
-+	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-+	val |= HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
-+		 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
-+		 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
-+		 HDMI_GEN_PKT_CTRL_GENERIC0_LINE(VENSPEC_IFRAME_LINE_NUMBER);
-+	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-+
-+	return 0;
-+}
-+
- static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
- 					   enum hdmi_infoframe_type type)
- {
-@@ -176,6 +246,25 @@ static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
- 
- 		break;
- 
-+	case HDMI_INFOFRAME_TYPE_SPD:
-+		val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-+		val &= ~(HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
-+			 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
-+			 HDMI_GEN_PKT_CTRL_GENERIC1_LINE__MASK);
-+		hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-+
-+		break;
-+
-+	case HDMI_INFOFRAME_TYPE_VENDOR:
-+		val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-+		val &= ~(HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
-+			 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
-+			 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
-+			 HDMI_GEN_PKT_CTRL_GENERIC0_LINE__MASK);
-+		hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-+
-+		break;
-+
- 	default:
- 		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
- 	}
-@@ -197,6 +286,10 @@ static int msm_hdmi_bridge_write_infoframe(struct drm_bridge *bridge,
- 		return msm_hdmi_config_avi_infoframe(hdmi, buffer, len);
- 	case HDMI_INFOFRAME_TYPE_AUDIO:
- 		return msm_hdmi_config_audio_infoframe(hdmi, buffer, len);
-+	case HDMI_INFOFRAME_TYPE_SPD:
-+		return msm_hdmi_config_spd_infoframe(hdmi, buffer, len);
-+	case HDMI_INFOFRAME_TYPE_VENDOR:
-+		return msm_hdmi_config_hdmi_infoframe(hdmi, buffer, len);
- 	default:
- 		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
- 		return 0;
+url:    https://github.com/intel-lab-lkp/linux/commits/Shivnandan-Kumar/soc-qcom-icc-bwmon-Add-tracepoints-in-bwmon_intr_thread/20240531-185658
+base:   linus/master
+patch link:    https://lore.kernel.org/r/20240531105404.879267-1-quic_kshivnan%40quicinc.com
+patch subject: [PATCH] soc: qcom: icc-bwmon: Add tracepoints in bwmon_intr_thread
+config: um-allyesconfig (https://download.01.org/0day-ci/archive/20240601/202406010409.xiR31FVt-lkp@intel.com/config)
+compiler: gcc-13 (Ubuntu 13.2.0-4ubuntu3) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240601/202406010409.xiR31FVt-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202406010409.xiR31FVt-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from include/trace/trace_events.h:419,
+                    from include/trace/define_trace.h:102,
+                    from drivers/soc/qcom/trace_icc-bwmon.h:49,
+                    from drivers/soc/qcom/icc-bwmon.c:21:
+>> include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h:39:1: error: macro "__assign_str" passed 2 arguments, but takes just 1
+      39 | );
+         | ^~             
+   In file included from include/trace/trace_events.h:375:
+   include/trace/stages/stage6_event_callback.h:34: note: macro "__assign_str" defined here
+      34 | #define __assign_str(dst)                                               \
+         | 
+   include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h: In function 'trace_event_raw_event_qcom_bwmon_update':
+>> include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h:28:17: error: '__assign_str' undeclared (first use in this function)
+      28 |                 __assign_str(name, name);
+         |                 ^~~~~~~~~~~~
+   include/trace/trace_events.h:402:11: note: in definition of macro 'DECLARE_EVENT_CLASS'
+     402 |         { assign; }                                                     \
+         |           ^~~~~~
+   include/trace/trace_events.h:44:30: note: in expansion of macro 'PARAMS'
+      44 |                              PARAMS(assign),                   \
+         |                              ^~~~~~
+   include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h:13:1: note: in expansion of macro 'TRACE_EVENT'
+      13 | TRACE_EVENT(qcom_bwmon_update,
+         | ^~~~~~~~~~~
+   include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h:27:9: note: in expansion of macro 'TP_fast_assign'
+      27 |         TP_fast_assign(
+         |         ^~~~~~~~~~~~~~
+   include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h:28:17: note: each undeclared identifier is reported only once for each function it appears in
+      28 |                 __assign_str(name, name);
+         |                 ^~~~~~~~~~~~
+   include/trace/trace_events.h:402:11: note: in definition of macro 'DECLARE_EVENT_CLASS'
+     402 |         { assign; }                                                     \
+         |           ^~~~~~
+   include/trace/trace_events.h:44:30: note: in expansion of macro 'PARAMS'
+      44 |                              PARAMS(assign),                   \
+         |                              ^~~~~~
+   include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h:13:1: note: in expansion of macro 'TRACE_EVENT'
+      13 | TRACE_EVENT(qcom_bwmon_update,
+         | ^~~~~~~~~~~
+   include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h:27:9: note: in expansion of macro 'TP_fast_assign'
+      27 |         TP_fast_assign(
+         |         ^~~~~~~~~~~~~~
+   In file included from include/trace/trace_events.h:469:
+   include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h: At top level:
+>> include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h:39:1: error: macro "__assign_str" passed 2 arguments, but takes just 1
+      39 | );
+         | ^~             
+   include/trace/stages/stage6_event_callback.h:34: note: macro "__assign_str" defined here
+      34 | #define __assign_str(dst)                                               \
+         | 
+
+
+vim +/__assign_str +39 include/trace/../../drivers/soc/qcom//trace_icc-bwmon.h
+
+    14	
+    15		TP_PROTO(const char *name,
+    16			 unsigned int meas_kbps, unsigned int up_kbps, unsigned int down_kbps),
+    17	
+    18		TP_ARGS(name, meas_kbps, up_kbps, down_kbps),
+    19	
+    20		TP_STRUCT__entry(
+    21			__string(name, name)
+    22			__field(unsigned int, meas_kbps)
+    23			__field(unsigned int, up_kbps)
+    24			__field(unsigned int, down_kbps)
+    25		),
+    26	
+    27		TP_fast_assign(
+  > 28			__assign_str(name, name);
+    29			__entry->meas_kbps = meas_kbps;
+    30			__entry->up_kbps = up_kbps;
+    31			__entry->down_kbps = down_kbps;
+    32		),
+    33	
+    34		TP_printk("name=%s meas_kbps=%u up_kbps=%u down_kbps=%u",
+    35			__get_str(name),
+    36			__entry->meas_kbps,
+    37			__entry->up_kbps,
+    38			__entry->down_kbps)
+  > 39	);
+    40	
 
 -- 
-2.39.2
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
