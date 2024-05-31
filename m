@@ -1,192 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-21206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26B008D5CED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 10:39:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 189E28D5D72
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:03:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EFDAC1C241D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 08:39:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 94342B236AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:03:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79569150997;
-	Fri, 31 May 2024 08:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E19115573C;
+	Fri, 31 May 2024 09:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zDCj0g5c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KWfhAKx9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D2F15098C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 08:39:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC8B1420D0;
+	Fri, 31 May 2024 09:03:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717144743; cv=none; b=rFxVy75w3Q4CeSMo0isLGnhqRciVy0s6seAlpxCTqPSHWQQBb1Ta92oROKox42pjmmdp4nH0OT56Tr5gNgd5dTh7cbczJx7WC8W3simGoJqA3M/w0+KHXZII617vSyj3H1YyX33VtvCYHnXC8jcD/6irrMyL+GB10UhKnJ/NflM=
+	t=1717146217; cv=none; b=BMLDezvetSdoDXdnVL3hfuL5N8XLddPhiswJQ8KDtYoLQkc/ObNtp5RmfzUdVji5mu5KeD0i6M+EjXm3jD4ep5q4NyUGlNlx1v2aY1bOPFg4GkffmdQ3Xfw1jT2P3FJL2flIBMBRodLTXHQEN+YGqB+z90+pRKbZdT4a8VjSEnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717144743; c=relaxed/simple;
-	bh=ZFMmpYdHQGeJ/z9gZHfYAifXybdEhkawr1UnA1qVQ4Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RDxE3lM3Lnk4zXFDUrAT3JS6XXW8bsHR5mXCu9rE3HOGcvRuofOQn5pQIWAyfTlx4bzz+B4RCPPbtRSRPAA2TXCnkQ39z+LsrlaETGNQ3p7MLx5NXwNrfvajbguPetF+ZSESkA4kocg6SkQzllm1Lma9RKkc+rNDEnts2Rz4RUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zDCj0g5c; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1f612d7b0f5so11164965ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 01:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717144741; x=1717749541; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lnrY2pbNU0k+0zlhxzJD+ASA3BY00naiFRrmZ3gNEAM=;
-        b=zDCj0g5cPLeHHMm1K8ZNjnITlyqFja02cUVLPpIXwURvAehG+ss/gAgVfSB8fbQL9d
-         +muHz6OwOVjM641HWh/FLmrwxT+2aLF9nofx35ZNrLrDHa4yYYFJ82KtjCBO/3SNU0FY
-         phJICaw2bflPEPhzoYH/n6V3MatQi4l1wzNULnMRcJBiweuzILycH+ueUmdfhEtwHe0I
-         3OdwatEItB09rAHP5r/sBaRIz9YG+zBZWW/ajn4UqGgRinVu0Byp0FS8kgpu6GHfsqFi
-         yABXg669NWVP0rE3+KjVPcMVgq176gVqkjbSAfYKFffh7vxui861nI9roPnNv1o9WvkX
-         TESA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717144741; x=1717749541;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lnrY2pbNU0k+0zlhxzJD+ASA3BY00naiFRrmZ3gNEAM=;
-        b=dI5WwkreBcvs3aUn7F2koh8cVDTWwfGizpefHm9F7bL5m+auuCA2ORHCevbIeljC/+
-         /lXvnSXbzR/BK0sbO7wJdZuZlviJ39gjMUjRNqOX5mxo8XLPOfOb2IqRl0NCTHmz2Guj
-         Jkb3eZyK1RlQXCS9IhMQOd2DpMLpG5IDzlnEaACTtsFAjE7o5YT7KZxKfumgr1zkQvm7
-         pLVgSekVQ/qi1xSSF9iCrPxHQGroSyYGUr6WcxgbCNdq+GOIkmDPTUJj92GFxfBlMIgs
-         yXYCPzQA4nF8Z0ydwR3ejSfKFdF7H957vgxwYCBEEPmZbkp/Snz1SikbUGAZ1PrArUV4
-         sQng==
-X-Forwarded-Encrypted: i=1; AJvYcCVwhzTkM1zaUM68/MU99Ydbcy4RxICJrKUC+3yZIzylKJ4XZggq5OSNh7455bLWk8Eybe7Mnqg/KnubMhgIxaOtZWQsIlGxOSfAcGNc9w==
-X-Gm-Message-State: AOJu0Yz4cXx2RDdSJa0JQxwVf03gbeFqZ0dDp++8M5EMAHf8StbMmoSf
-	ZYVIl8eD1BH/EpAg5ipmKL+FpZjFPvjKNOANSuASoSQSUY9Vw5Pe/1BP+WHhixHW25OFeYtEa5q
-	umrUq9A27LmUddBYXnhppRHGT54lHLjD+gYcBbA==
-X-Google-Smtp-Source: AGHT+IG8vPZtTUMBJ/SeUxjWqwTa+oxGvQfRE7eRFeFHpKg0Ap4gr+tU2wNSF5RwNuTIuL/3twCwLRR9PNjRGv0nJ00=
-X-Received: by 2002:a17:902:ec92:b0:1f3:62c:247f with SMTP id
- d9443c01a7336-1f61be15ccemr63399965ad.11.1717144741002; Fri, 31 May 2024
- 01:39:01 -0700 (PDT)
+	s=arc-20240116; t=1717146217; c=relaxed/simple;
+	bh=Avphpw4pEyJkzJ1Davm8WACDIUtPlK6hl0fu05JomEI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mrlsOLCeFsutXgBBnSlFG/NCgqSkQ0YyVZDW4PFRwwDZBj5pxigo3u4B3zldPNs29bBTwgGx3Y3sGOmAjUkKqeqrY1Ab5Nm6O5bsTYwKdDd5DfC95iS0vrqsaFq8zJrmCvwA2FAzDHi6EwGLXNC2YsajiVzps/jvzk5xrz0GhAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KWfhAKx9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44UMGGxM015853;
+	Fri, 31 May 2024 09:03:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=BoO+194ArcepsZQDIP7Z3fcG35b6SSKIofkw3pIP+hw=; b=KW
+	fhAKx9AbkMO4oSYUtWfR60VRxz1Q9359JbZjA12kA55TPgq77uQtmOQ+lotZt+Nx
+	BMrFZZkJVuc4C3dRneG7r3KhuCXoDCaXvzC2zSedx2dSBSKhZSHAbp39TH2TJ0Fz
+	Rpow7aaIWF/K+SbIQw+sJEYWNs1SY71tDMlD09uGVuNCjkyurZeNkdgnuCDHd362
+	HUw9oU7x3OHjXLdv2Y4OtsVNFJLVg3OZFgOSziOpPqZhmBYKljwmogd1G0+zpki1
+	mTOVqJIB43AOkMK5Jes7pZPLGr1Sm3xo39dElryr08wODS2RA6uZWtf8lUxP9ihJ
+	r9ngBGjnvi018WJDsgZg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yf23ss66a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 09:03:31 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44V93S2n023918
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 May 2024 09:03:28 GMT
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 31 May 2024 02:03:24 -0700
+From: Taniya Das <quic_tdas@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_jkona@quicinc.com>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH 00/13] Add support for SA8775P Multimedia clock controllers
+Date: Fri, 31 May 2024 14:32:36 +0530
+Message-ID: <20240531090249.10293-1-quic_tdas@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240529100926.3166325-1-quic_tengfan@quicinc.com>
- <20240529100926.3166325-5-quic_tengfan@quicinc.com> <s5gt3p6zsd5ebrkop4dhd33tykln33f6ahu3pibymecxsmakyd@lg5wfgec6dat>
- <205de8b7-507f-45c9-83ce-6eceb1466cb2@quicinc.com>
-In-Reply-To: <205de8b7-507f-45c9-83ce-6eceb1466cb2@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 31 May 2024 11:38:48 +0300
-Message-ID: <CAA8EJpqFq=6YFcUpjdkKikN54iQ76i8Rk_z+mLH1Tt0zFFmciQ@mail.gmail.com>
-Subject: Re: [PATCH v9 4/4] arm64: dts: qcom: aim300: add AIM300 AIoT
-To: Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com, 
-	Qiang Yu <quic_qianyu@quicinc.com>, Ziyue Zhang <quic_ziyuzhan@quicinc.com>, 
-	quic_chenlei@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: i7JV4XHqO_wpSNbFHevhl9eO8G0tnHrt
+X-Proofpoint-GUID: i7JV4XHqO_wpSNbFHevhl9eO8G0tnHrt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-05-31_05,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ adultscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 mlxlogscore=741 bulkscore=0 mlxscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2405310066
 
-On Fri, 31 May 2024 at 11:35, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
->
->
->
-> On 5/29/2024 11:18 PM, Dmitry Baryshkov wrote:
-> > On Wed, May 29, 2024 at 06:09:26PM +0800, Tengfei Fan wrote:
-> >> Add AIM300 AIoT Carrier board DTS support, including usb, UART, PCIe,
-> >> I2C functions support.
-> >> Here is a diagram of AIM300 AIoT Carrie Board and SoM
-> >>   +--------------------------------------------------+
-> >>   |             AIM300 AIOT Carrier Board            |
-> >>   |                                                  |
-> >>   |           +-----------------+                    |
-> >>   |power----->| Fixed regulator |---------+          |
-> >>   |           +-----------------+         |          |
-> >>   |                                       |          |
-> >>   |                                       v VPH_PWR  |
-> >>   | +----------------------------------------------+ |
-> >>   | |                          AIM300 SOM |        | |
-> >>   | |                                     |VPH_PWR | |
-> >>   | |                                     v        | |
-> >>   | |   +-------+       +--------+     +------+    | |
-> >>   | |   | UFS   |       | QCS8550|     |PMIC  |    | |
-> >>   | |   +-------+       +--------+     +------+    | |
-> >>   | |                                              | |
-> >>   | +----------------------------------------------+ |
-> >>   |                                                  |
-> >>   |                    +----+          +------+      |
-> >>   |                    |USB |          | UART |      |
-> >>   |                    +----+          +------+      |
-> >>   +--------------------------------------------------+
-> >>
-> >> Co-developed-by: Qiang Yu <quic_qianyu@quicinc.com>
-> >> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> >> Co-developed-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> >> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> >> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> >>   .../boot/dts/qcom/qcs8550-aim300-aiot.dts     | 322 ++++++++++++++++++
-> >>   2 files changed, 323 insertions(+)
-> >>   create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
-> >
-> > [trimmed]
-> >
-> >> +&remoteproc_adsp {
-> >> +    firmware-name = "qcom/qcs8550/adsp.mbn",
-> >> +                    "qcom/qcs8550/adsp_dtbs.elf";
-> >
-> > Please excuse me, I think I missed those on the previous run.
-> >
-> > adsp_dtb.mbn
->
-> Currently, waht we have released is adsp_dtbs.elf. If we modify it to
-> adsp_dtb.mbn, it may cause the ADSP functionality can not boot normally.
+Update GCC, GPUCC clock controllers and add support for multimedia
+clock controllers on Qualcomm SA8775P platform.
 
-Released where? linux-firmware doesn't have such a file. And the modem
-partition most likely has a different path for it anyway.
+Taniya Das (13):
+  clk: qcom: gcc-sa8775p: Remove support for UFS hw ctl clocks
+  clk: qcom: gcc-sa8775p: Update the GDSC wait_val fields and flags
+  clk: qcom: gcc-sa8775p: Set FORCE_MEM_CORE_ON for
+    gcc_ufs_phy_ice_core_clk
+  clk: qcom: gpucc-sa8775p: Remove the CLK_IS_CRITICAL and ALWAYS_ON
+    flags
+  clk: qcom: gpucc-sa8775p: Park RCG's clk source at XO during disable
+  clk: qcom: gpucc-sa8775p: Update wait_val fields for GPU GDSC's
+  dt-bindings: clock: qcom: Add SA8775P video clock controller
+  clk: qcom: Add support for Video clock controller on SA8775P
+  dt-bindings: clock: qcom: Add SA8775P camera controller
+  clk: qcom: Add support for Camera Clock Controller on SA8775P
+  dt-bindings: clock: qcom: Add SA8775P display controller
+  clk: qcom: Add support for Display Controllers on SA8775P
+  arm64: dts: qcom: Add support for multimedia clock controllers
 
->
-> >
-> >> +    status = "okay";
-> >> +};
-> >> +
-> >> +&remoteproc_cdsp {
-> >> +    firmware-name = "qcom/qcs8550/cdsp.mbn",
-> >> +                    "qcom/qcs8550/cdsp_dtbs.elf";
-> >
-> > cdsp_dtb.mbn
->
-> CDSP also as above ADSP.
->
-> >
+ .../bindings/clock/qcom,sa8775p-camcc.yaml    |   76 +
+ .../bindings/clock/qcom,sa8775p-dispcc.yaml   |   88 +
+ .../bindings/clock/qcom,sa8775p-videocc.yaml  |   75 +
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts     |    2 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         |   59 +
+ drivers/clk/qcom/Kconfig                      |   31 +
+ drivers/clk/qcom/Makefile                     |    3 +
+ drivers/clk/qcom/camcc-sa8775p.c              | 1849 +++++++++++++++++
+ drivers/clk/qcom/dispcc0-sa8775p.c            | 1481 +++++++++++++
+ drivers/clk/qcom/dispcc1-sa8775p.c            | 1481 +++++++++++++
+ drivers/clk/qcom/gcc-sa8775p.c                |  154 +-
+ drivers/clk/qcom/gpucc-sa8775p.c              |   41 +-
+ drivers/clk/qcom/videocc-sa8775p.c            |  576 +++++
+ .../dt-bindings/clock/qcom,sa8775p-camcc.h    |  107 +
+ .../dt-bindings/clock/qcom,sa8775p-dispcc.h   |   87 +
+ .../dt-bindings/clock/qcom,sa8775p-videocc.h  |   47 +
+ 16 files changed, 6027 insertions(+), 130 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-dispcc.yaml
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
+ create mode 100644 drivers/clk/qcom/camcc-sa8775p.c
+ create mode 100644 drivers/clk/qcom/dispcc0-sa8775p.c
+ create mode 100644 drivers/clk/qcom/dispcc1-sa8775p.c
+ create mode 100644 drivers/clk/qcom/videocc-sa8775p.c
+ create mode 100644 include/dt-bindings/clock/qcom,sa8775p-camcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sa8775p-dispcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sa8775p-videocc.h
 
-> >> +
-> >> +    te_active: te-active-state {
-> >> +            pins = "gpio86";
-> >> +            function = "mdp_vsync";
-> >> +            drive-strength = <2>;
-> >> +            bias-pull-down;
-> >> +    };
-> >> +
-> >> +    te_suspend: te-suspend-state {
-> >> +            pins = "gpio86";
-> >> +            function = "mdp_vsync";
-> >> +            drive-strength = <2>;
-> >> +            bias-pull-down;
-> >> +    };
-> >
-> > What is the difference between these two?
->
-> TE pin needs to be pulled down for both active and suspend states. There
-> is no difference.
+--
+2.17.1
 
-So why do you need two different states for it?
-
-
-
-
-
--- 
-With best wishes
-Dmitry
 
