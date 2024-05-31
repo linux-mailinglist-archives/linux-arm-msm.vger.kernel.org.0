@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-21270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 061128D6204
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 14:41:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 043928D62DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 15:22:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 61A2B1F27CE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 12:41:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A33B7289DDF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 13:22:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 386E11586D2;
-	Fri, 31 May 2024 12:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98440158A1A;
+	Fri, 31 May 2024 13:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ldGx+YGr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aX2aQ8Jd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC5A158A3F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 12:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB27158A12
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 13:22:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717159231; cv=none; b=pAjAjskvR/s7g+L7ALWlHia4vhWI1QkZv1deelBsViY7K0oOm3ho7j4l/MkwpBn3ee2ySKLAU6qc4cvcQVIszXqA/kcdxsogUdioAHFSBvqk0Dp71RNt1T/EGuRENBeY4EVBnwenwILRCGCpQPRDcqQRrWqJdq5BDILNSEXO1m8=
+	t=1717161728; cv=none; b=E43mFbeRIp7E9TeyhBxZaulieq8+7whdMQeBKp8ns4e/JR/vjrTqNLK76wRk/jVBynceqKZ2Ra/zfQDvbli06OI2VGgMBrJUvhS/njoIfojFD/T9IFp17XlXKPkK4yfNdS48cVvFLGCKw1ShEvPPYvoFuNjfNONynbv2Ru/0Qh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717159231; c=relaxed/simple;
-	bh=op1s5LXJeDvIiFLVtFiSUNyEX/0wUdZkoRh3R8wmvrk=;
+	s=arc-20240116; t=1717161728; c=relaxed/simple;
+	bh=4dHB2dowiT08SV6IgdUjc53AlAF/i7AVqlLqibLtUa8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l9JQhC7bzdYYeFSCtcGDXMKLutUxdcuq0OAPT0mHJD+abafdA5w/E26jhJv7Clsx89WTwWIVG9tS+jhHFpSAtwChq6ocLWkxuvAFh2WXBv9DLFJtYD/L0SXHVma2jxkfBbJWd6FIEGt17b9J474MZn4dpZT0cZ1W5h8sewE09EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ldGx+YGr; arc=none smtp.client-ip=209.85.218.53
+	 In-Reply-To:Content-Type; b=qYYi0pppauk4s7AJwdn6883t+pjNpHYdVj8/+swoFI7yv/YO68RLhHg5m4+VIJi1pyGLwgguEfE/Kb2m+phZiX+IAZm20QBTtuxVDwmhZaN5rqlcwab+jUQ9S2BT4whxdxgZlTpNQKV228egwekZnbuzqZiXETKCXuYKGDd94v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aX2aQ8Jd; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a6269ad9a6fso101331266b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 05:40:29 -0700 (PDT)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-57a2f032007so1391561a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 06:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717159228; x=1717764028; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717161725; x=1717766525; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xr4ROrwcZrcWqPJ95GYGx0z7Cv4z3SOwstAiFPVmsvE=;
-        b=ldGx+YGr5I2gyFGB/hW1lYOU/RzmbipqHz3s/pBE558sdnGisTYDVKC0LpmntZ9+fK
-         etR1q+iWHn9/0fAZ6wIFYRaQUOXlM+ilt1goqL14E5HKi6xmh6wRoDEaLwlYvtemtyvN
-         Kba0CDxSEmImIMPWGmwaOp8MrA+BIJcqYA+PTHgtSaPZaJaWQgYZQ/dSrm7FQZPVc24y
-         uTvtF3hRZtSiOIjE8W2bAQ6gUSk6AY5H/fp8qxghJSGyeykBnjMoRwN4Z+YKUycKH66O
-         CnbRcJA1gs+PZH3VeBbxIIVMTjTmVHCLYvMKXYFo3cgGQssSLMkdVUW9k+8F3aYgffwd
-         3gpA==
+        bh=5n6R8EWpr3FnxdLpXXtMb3F/ClJ+I9eAwAdha4U+a2k=;
+        b=aX2aQ8JdlqiJd2zo9jC2GaOJTYeZHOgmSF4gadOCKfnsHv/URSEji1ncnzJUtonrD3
+         J5q7yqdlhQevaN/SzDFcrGlP80JczFZ9tJ/UpBveVhmr6ao5OsWcFuG76WubM8ylwm0+
+         HMlpdk35xfu35/AvWXpAi7U7Z01iKQVuTn3AP3VHt90P9w6vaARfKFXvnImwamdmmZFu
+         Ja3OQJStP6im38/25xmMNhNj0c7+46Yn7S2EpldYTkpRgGzv6C9aqIaESvX1zrBNcUsw
+         C4U6SCiJE7ut8InaQxcY2ElCO5WHSG4xNUI7FGJPAHBQEtKjO2Wee8pvsoJWFiXjKeZX
+         i+6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717159228; x=1717764028;
+        d=1e100.net; s=20230601; t=1717161725; x=1717766525;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xr4ROrwcZrcWqPJ95GYGx0z7Cv4z3SOwstAiFPVmsvE=;
-        b=DL70ppz7yhpWllcCuk6uWODtV57zTo4JScCOS4DWz54TU59OsH+WZfhs6tb+vGfyeX
-         Lu8N/TLzkj3ZrKImdhf4AVeVyGpCN62KaUpKKKnXa1OezO1YvnF5KYI9l23+Lzv93BH5
-         SwoovRl6HTtT5Ia5/DiivHpJrZb8loCIJ0B8auFWMXFOXEZB7QVTUzTnGH2E9xzIB1oH
-         6ajAJ7oS4ih38PpYBLqbrOJSXiqQ9n8rZQDLEkSo3BpYPYKte8oFszrxsIxuNHeAz1CO
-         BSc/uj0OiXf8PVyqH0GZBZiwSDEZ38flZ0VxWt42FxlpYl2fmhPaR4W9b6JGnSRlMrB1
-         zfXA==
-X-Forwarded-Encrypted: i=1; AJvYcCVG+pGXtRDk7ZjvMBsJSd8C/wFu95uCtw0ZTBa16ODE3zV19///W3CogCMbJnFrhNrXOl4vtogR79ES295MUs+pjKk6BcLcuenrl2Tc1A==
-X-Gm-Message-State: AOJu0YwTykhPJ4DWUPiHKjPPQ40UWE+az5gOCK17k/OFsfa8gGfnJ6Fg
-	LJYWYgs+MMZRsP9AiyBW03+6ZTwjUQ0LE8KgRw+kOX1IcxXFM0/PSCQ94H4izf4=
-X-Google-Smtp-Source: AGHT+IEsfT48tFHWLoL4tXmC/aQoVny3jpqEWLohZR2KED+a33g+XlLwB+vlllg6ZOS3lwfNrrYyug==
-X-Received: by 2002:a17:906:c511:b0:a68:8853:36e3 with SMTP id a640c23a62f3a-a6888533738mr73438966b.21.1717159227971;
-        Fri, 31 May 2024 05:40:27 -0700 (PDT)
+        bh=5n6R8EWpr3FnxdLpXXtMb3F/ClJ+I9eAwAdha4U+a2k=;
+        b=olx2NBk05Z3yHVy1rD6LMHfDORRC5W6vYBHVeNPZFSXEz9eM0ZIv9U762MLQ9iEx4F
+         GTK5silEMCJ6GlimAOdBVH345KwoAFN672QdZigJ0K5//r311OKD2ts5LPy52pB2DvwO
+         kn0BDfZnhJYdA1lWpR692jurJ/gia0LH6OkPj7Y2HYWrg2ek0ckt8HivqrLliLWRIEHP
+         C1mrOTakfel+mQorHPz9bDd26uTUXTDXxIJGgJYmcJR2D86ppQ18F4orgwMV3dL9iuGH
+         qrMiMcqnYmSGdElLwbUE+J3ikDg2hnoRqX9Jg5o9TX/k3RzOQqZDibeEGX1gHJTBP84y
+         8b2w==
+X-Gm-Message-State: AOJu0YyeiByLyqVlQBybiuiLopFLHFvUTo++ioQOh9PAfNj5OpRwes7h
+	B+iAmoSbJK/9DWBglHmDwNdrKejzirRsh2exireuSxtckv4Nm2HJdsFaXouPj/c=
+X-Google-Smtp-Source: AGHT+IGuQBIu0beKUp0DIAfM6UMiMTeXT65eB+2f22NRmeuVdDnGjQURLzk7WMAAhyJKajlbiDnheQ==
+X-Received: by 2002:a17:907:1596:b0:a67:6d99:d6be with SMTP id a640c23a62f3a-a681fc5c781mr108251766b.15.1717161725098;
+        Fri, 31 May 2024 06:22:05 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67eb6214efsm82677266b.220.2024.05.31.05.40.25
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a31c6d325sm1014416a12.65.2024.05.31.06.22.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 May 2024 05:40:27 -0700 (PDT)
-Message-ID: <ed5754fa-29c9-4a3e-b961-decadfcd7fc9@linaro.org>
-Date: Fri, 31 May 2024 14:40:24 +0200
+        Fri, 31 May 2024 06:22:04 -0700 (PDT)
+Message-ID: <9163bc46-983f-4d5a-b009-c12ddd5a5c8a@linaro.org>
+Date: Fri, 31 May 2024 15:22:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,25 +76,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 15/15] arm64: dts: qcom: sa8775p: add a dedicated
- memory carveout for TZ
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Marko <robimarko@gmail.com>,
- Das Srinagesh <quic_gurus@quicinc.com>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Maximilian Luz <luzmaximilian@gmail.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, Elliot Berman <quic_eberman@quicinc.com>,
- Alex Elder <elder@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, kernel@quicinc.com
-References: <20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org>
- <20240527-shm-bridge-v10-15-ce7afaa58d3a@linaro.org>
- <8f3f1e88-426d-4254-a31c-afcb88fc08f3@linaro.org>
- <CAMRc=MdxP5MWPhbq6u8WHRpm04F0iijeTpG0q3D9q52e7xfcsw@mail.gmail.com>
+Subject: Re: [PATCH 02/13] clk: qcom: gcc-sa8775p: Update the GDSC wait_val
+ fields and flags
+To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, quic_jkona@quicinc.com,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240531090249.10293-1-quic_tdas@quicinc.com>
+ <20240531090249.10293-3-quic_tdas@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -133,58 +125,47 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAMRc=MdxP5MWPhbq6u8WHRpm04F0iijeTpG0q3D9q52e7xfcsw@mail.gmail.com>
+In-Reply-To: <20240531090249.10293-3-quic_tdas@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 29.05.2024 4:39 PM, Bartosz Golaszewski wrote:
-> On Wed, May 29, 2024 at 4:26 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 27.05.2024 2:55 PM, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> Add a 20MB reserved memory region for use by SCM calls.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 7 +++++++
->>>  1 file changed, 7 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> index 31de73594839..c183527452d7 100644
->>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> @@ -208,6 +208,7 @@ core3 {
->>>       firmware {
->>>               scm {
->>>                       compatible = "qcom,scm-sa8775p", "qcom,scm";
->>> +                     memory-region = <&tz_ffi_mem>;
->>>               };
->>>       };
->>>
->>> @@ -418,6 +419,12 @@ cdt_data_backup_mem: cdt-data-backup@91ba0000 {
->>>                       no-map;
->>>               };
->>>
->>> +             tz_ffi_mem: tz-ffi@91c00000 {
->>> +                     compatible = "shared-dma-pool";
->>> +                     reg = <0x0 0x91c00000 0x0 0x1400000>;
->>
->> How does that size relate to
->>
->> +       pool_config.max_size = SZ_256K;
->>
->> in patch 3?
->>
->> Konrad
+On 31.05.2024 11:02 AM, Taniya Das wrote:
+> Update the GDSC wait_val fields as per the default hardware values as
+> otherwise they would lead to GDSC FSM state to be stuck and causing
+> failures to power on/off. Also add the GDSC flags as applicable and
+> add support to control PCIE GDSC's using collapse vote registers.
 > 
-> Short answer: it doesn't.
+> Fixes: 08c51ceb12f7 ("clk: qcom: add the GCC driver for sa8775p")
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  drivers/clk/qcom/gcc-sa8775p.c | 40 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
 > 
-> Slightly less short answer: this is the limit of *this* specific TZMem
-> pool which in turn gets its memory from the shared DMA pool. We can
-> have multiple TZMem pools and they all share this DMA pool.
+> diff --git a/drivers/clk/qcom/gcc-sa8775p.c b/drivers/clk/qcom/gcc-sa8775p.c
+> index 7bb7aa3a7be5..71fa95f59a0a 100644
+> --- a/drivers/clk/qcom/gcc-sa8775p.c
+> +++ b/drivers/clk/qcom/gcc-sa8775p.c
+> @@ -4203,74 +4203,114 @@ static struct clk_branch gcc_video_axi1_clk = {
+>  
+>  static struct gdsc pcie_0_gdsc = {
+>  	.gdscr = 0xa9004,
+> +	.collapse_ctrl = 0x4b104,
+> +	.collapse_mask = BIT(0),
+> +	.en_rest_wait_val = 0x2,
+> +	.en_few_wait_val = 0x2,
+> +	.clk_dis_wait_val = 0xf,
+>  	.pd = {
+>  		.name = "pcie_0_gdsc",
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
 
-OK makes sense, thanks
+I have some old dt for this platform, and it doesn't mention the downstream
+counterpart flag for it (qcom,support-cfg-gdscr), so please double-check
+whether you really want to poll gdcsr + 0x4.
+
+The magic values I trust you have better sources for, the collapse off/masks
+look good.
 
 Konrad
 
