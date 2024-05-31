@@ -1,213 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-21219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C84088D5DA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:07:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51AFE8D5DB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:08:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DF9B6B2496C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:07:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DAD4E1F241B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B015156649;
-	Fri, 31 May 2024 09:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B9F21586F4;
+	Fri, 31 May 2024 09:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XQRZ20Gt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aGvPsU60"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971E0156646;
-	Fri, 31 May 2024 09:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D57156980;
+	Fri, 31 May 2024 09:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717146271; cv=none; b=Jhn/3nrrIdWVNbn73yQlQ+Auq936tfagBrm2Rm257iEkN83F4JyzK0Q2r/iZl/KBncRLvTH8y5/DsFYpRD054fNUdrT4jPbbRT3C07M0wG72n9xGJ10hup32EY7C7NNJhXaEm3ktqERkDkhkQUvceZ4Be4pSBa+8/t03Uum9q+M=
+	t=1717146311; cv=none; b=LobLQiudN9haiZLSkkfj796v8lHztKqhg7vvalW0Lpp3neJobkw0GCqzKMwEMKXq29XfL41fYUGoh0Mt3+KbdE6+iQkxYAMKBwRHE1jJyFhOLJc+Te4WK4P1aRST2md52TdcXnsE/AAwfEiUy4cJM430Ba7KugaQu90uDMDi3i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717146271; c=relaxed/simple;
-	bh=RQ16RDaLTXWQhQODnz91g4g1UZXiWj4A88rkCbB7RZ8=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fs0wYddrrHtl0X/0Jj+27Ov3JaUpQV+Zlp05yvlKOMwXu8WEXIpCIWp3kwhzOCT/FLQy/gD13BqLwqRlpNdJA1ClluwQ1bxzYD1k1UGt0Z8Aw48KMPn/C9VysoLVbjijX2cln+I03UN11NSsxACSg9CJjoxL+xlvUyC0aN4C5eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XQRZ20Gt; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1717146311; c=relaxed/simple;
+	bh=ZQPGyWk58dtkH8TyKhLhlGonzK2+ErMUnyPwNu2UZao=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Ip6/AbOzmxYRvMK1z/hO+5TEQ66w0PPoqNN+Ki7KKdcRUTPlvEvu89PXSR5WwHv+okwA61mSbLHDEzGTGBVFQE4O3E6RIS6DNhmbsBXP7WN8CeICMsOgF9VA+NcRgcHd2OkNa9eNT01Ei5V9hqnxxixz1e56aQfgRGh+3s4lq4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aGvPsU60; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44V12Wub003501;
-	Fri, 31 May 2024 09:04:25 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44V23uh0003481;
+	Fri, 31 May 2024 09:04:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=4SJuNprWp3vXhTTumfGksTWu
-	F1zW7NLmnaEjDruIw3E=; b=XQRZ20GtCeNQcD9dWYPB0S/YqqHQPbpGASYWnCeX
-	A5Nffq07ro4mZDWOzLTZci8ReOwl6dGArTgf5wyNSswTMwOoo/E+VIX9zBJ/zAkd
-	S/drFVt0V7R1GDamZ07gHGlGIVYUkD2HIFUhO6BhDY/Ta+cZT26fEvjhDLvOzSKY
-	bUTJwoBtDCwFDGuF+97eQG6rFCN7iRLp2HUtTeYw1cFpc+DAQ5xOAr0oKl0DHTvH
-	7HEJsRhbynqof5KcwBABSbdhnAu3fIh6ACL5DuzVJWgQmCRR3kJn4FYzC77/ubQU
-	b8TGciSZllOJxcGRgbYBEDZroZ+gJYarXjxsvia9MV/bOQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yesw5jd4g-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=EcnyoOtoHZV8gKifoNOhF6
+	6xLuIhNpDLaEP7oKF8kUY=; b=aGvPsU60hEzCny7k8jis+43xnRhtUBIkA18AJy
+	tFf3E8aVYK9DM8P0DcQ0Tsbx84PxQMVC0FYkV2v9HMa0h6N7gMVYyXgEWsTyXJmP
+	gBo2nddnDziR4SW1Y89BWkD76q3VYMO+X7J8kyMqrxT3DAkkW11XfWKH+mm7SxzA
+	XH0gm1RgYPA0HfwuXh8lqG3ZeMVOueO4PQ+GtPgtKJH5BJV52KX3FaI7pxa8GsH+
+	XG7ci1MUBoXwt/VR6MY+L5JZ5EcdA+IHdkSvkpkM2MfOIrwQfpNalOCRP21kWM+V
+	UlvpH4A+gy0+AbHQ3AIo5VXCW2+74FbALrtrK304fRBTuqrw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yesw5jd56-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 09:04:25 +0000 (GMT)
+	Fri, 31 May 2024 09:04:43 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44V94Ooo025114
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44V94g22005283
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 09:04:24 GMT
-Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+	Fri, 31 May 2024 09:04:42 GMT
+Received: from tengfan-gv.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 31 May 2024 02:04:20 -0700
-From: Taniya Das <quic_tdas@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_jkona@quicinc.com>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Subject: [PATCH 13/13] arm64: dts: qcom: Add support for multimedia clock controllers
-Date: Fri, 31 May 2024 14:32:49 +0530
-Message-ID: <20240531090249.10293-14-quic_tdas@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240531090249.10293-1-quic_tdas@quicinc.com>
-References: <20240531090249.10293-1-quic_tdas@quicinc.com>
+ 15.2.1544.9; Fri, 31 May 2024 02:04:35 -0700
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <dmitry.baryshkov@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        Tengfei Fan
+	<quic_tengfan@quicinc.com>
+Subject: [PATCH v3 0/2] [PATCH v2 0/2] arm64: dts: qcom: sm8550: Update some usb properties
+Date: Fri, 31 May 2024 17:04:20 +0800
+Message-ID: <20240531090422.158813-1-quic_tengfan@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mioY2dzV0aY_nowP5Im3mC8RMd5YvM8E
-X-Proofpoint-GUID: mioY2dzV0aY_nowP5Im3mC8RMd5YvM8E
+X-Proofpoint-ORIG-GUID: dqyrzse_ON5vLNjML5e0Rx0Dws593Bug
+X-Proofpoint-GUID: dqyrzse_ON5vLNjML5e0Rx0Dws593Bug
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-05-31_05,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 phishscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 clxscore=1015 spamscore=0 mlxscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1 lowpriorityscore=0
+ mlxlogscore=220 phishscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 clxscore=1015 spamscore=1 mlxscore=1
  adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405170001 definitions=main-2405310066
 
-Add support for camera, display0, display1 and video clock
-controllers on SA8775P platform. While at it, update the
-sleep_clk frequency.
+Move usb-role-switch to SoC dtsi, and remove usb default dr_mode.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts |  2 +-
- arch/arm64/boot/dts/qcom/sa8775p.dtsi     | 59 +++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-index 26ad05bd3b3f..4684da376565 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-@@ -542,7 +542,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32764>;
-+	clock-frequency = <32000>;
- };
- 
- &spi16 {
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index eae0de9720b5..7f62738671da 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -6,8 +6,11 @@
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sa8775p-camcc.h>
-+#include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
- #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
- #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
-+#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
- #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-@@ -2904,6 +2907,47 @@
- 			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		videocc: clock-controller@abf0000 {
-+			compatible = "qcom,sa8775p-videocc";
-+			reg = <0x0 0x0abf0000 0x0 0x10000>;
-+			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd SA8775P_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,sa8775p-camcc";
-+			reg = <0x0 0x0ade0000 0x0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd SA8775P_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		dispcc0: clock-controller@af00000 {
-+			compatible = "qcom,sa8775p-dispcc0";
-+			reg = <0x0 0x0af00000 0x0 0x20000>;
-+			clocks = <&gcc GCC_DISP_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>,
-+				 <0>, <0>, <0>, <0>,
-+				 <0>, <0>, <0>, <0>;
-+			power-domains = <&rpmhpd SA8775P_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,sa8775p-pdc", "qcom,pdc";
- 			reg = <0x0 0x0b220000 0x0 0x30000>,
-@@ -3424,6 +3468,21 @@
- 			#freq-domain-cells = <1>;
- 		};
- 
-+		dispcc1: clock-controller@22100000 {
-+			compatible = "qcom,sa8775p-dispcc1";
-+			reg = <0x0 0x22100000 0x0 0x20000>;
-+			clocks = <&gcc GCC_DISP_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>,
-+				 <0>, <0>, <0>, <0>,
-+				 <0>, <0>, <0>, <0>;
-+			power-domains = <&rpmhpd SA8775P_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		ethernet1: ethernet@23000000 {
- 			compatible = "qcom,sa8775p-ethqos";
- 			reg = <0x0 0x23000000 0x0 0x10000>,
+v2 -> v3:
+  - Update comment message
+v1 -> v2:
+  - Splitting a patch into two patches based on functionality
+  - Remove some changes that have already been mainlined
+  - Update patch commit message
+
+previous discussion here:
+[1] v2: https://lore.kernel.org/linux-arm-msm/20240529100256.3158447-1-quic_tengfan@quicinc.com
+[2] v1: https://lore.kernel.org/linux-arm-msm/20240513084701.1658826-1-quic_tengfan@quicinc.com
+
+Tengfei Fan (2):
+
+Tengfei Fan (2):
+  arm64: dts: qcom: sm8550: Move usb-role-switch to SoC dtsi
+  arm64: dts: qcom: sm8550: Remove usb default dr_mode
+
+ arch/arm64/boot/dts/qcom/sm8550-hdk.dts                     | 5 -----
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts                     | 5 -----
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts                     | 5 -----
+ arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts | 5 -----
+ arch/arm64/boot/dts/qcom/sm8550.dtsi                        | 1 +
+ 5 files changed, 1 insertion(+), 20 deletions(-)
+
+
+base-commit: 0e1980c40b6edfa68b6acf926bab22448a6e40c9
 -- 
-2.17.1
+2.25.1
 
 
