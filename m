@@ -1,332 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-21356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A7408D6A26
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 21:49:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 586528D6A0C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 21:45:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4C6D11C2592C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 19:49:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B8CC1C22B2B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 19:45:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3AFF183985;
-	Fri, 31 May 2024 19:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88751178369;
+	Fri, 31 May 2024 19:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XEmQpatw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EraagKYz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D261C1822D5;
-	Fri, 31 May 2024 19:47:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A3B15625A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 19:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717184857; cv=none; b=qZ8KGZQctoimzI8Mxi+RtzfnuMarWOolFgOvGGYzm5YD+zJBSwrT+bcEP0a5rGWfSjN77iBf8oVReiFvYt6tkhueQy7g0Ml/R+zixk0xZ5qNrDAcxUeBTjkWVS61Fk46GcI+V3fm1htrWvdun6huXcwc6m6Z8WbyYqpQyjtdhBI=
+	t=1717184714; cv=none; b=fZdLtkQ3J3k3FmGY+BglXIayGFo0gc+gBT/ge0ITBubUqIOmodyTD2Y86vZV7IAJzuftUKkpTA9jed+kK1yhmXjcZW7Kmi8jOE1uiPWSdqEfmIaCLWVVGDTqon78NrsSDY6F7NW5RWtIAARLFK4wH4isWvPH1xUupHs9xDfp3R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717184857; c=relaxed/simple;
-	bh=+Kmjinln59NpN7Q278lsMn6Hoz1SKSjg7Oeoq61MfdQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkSovhxZAZuYijZvyRhuqmaZ8dF+SfeWdeAXNfIADAKjykWydv0fs6zmEVs3q83rhZaqRfp3D/4LlRC0/0KrdVIh2WSmbhcno7M4oSlWJtdFrNY8qHTn29FciAO+pL4tvlFzpF0DNjJgJO0YADCauRdGQea881a2l5sqY+tBSes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XEmQpatw; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717184856; x=1748720856;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=+Kmjinln59NpN7Q278lsMn6Hoz1SKSjg7Oeoq61MfdQ=;
-  b=XEmQpatwKxEZJV4fMazxMj8UtQAeeeiodd0w+x6eV9xOYBuYMzeZg3Ij
-   V/1jL2Ek+eTq1AjivV/pLmzchh+kkLpYK0e4A2QUuDzHpgw+32ph1eCDR
-   dyU2bx7+2YdvuaXXeyBaRe334lQaKri8VAnEPmNoEis2Z3hVKiFvphLvu
-   /6YfwYNXGgZbI6KU646gyA0dO41u8RtdUdBJHG9zakjgSG64qTadCG7yV
-   fcgwezlfCwoZ2hblnF8ztqgPYJfBvJZS4vZGBRI9Ejyx5jd42gb1gzK80
-   v7GQfsAjLPvE7ixm59ppaQDzas8Mli9sJeJpRP2xLh7daIUPIanXIVaFc
-   w==;
-X-CSE-ConnectionGUID: fmeG26a7R2eCuqoKxz4T6w==
-X-CSE-MsgGUID: U6doNzo3QY2HDDB+MPCUmw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11089"; a="39144724"
-X-IronPort-AV: E=Sophos;i="6.08,205,1712646000"; 
-   d="scan'208";a="39144724"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 May 2024 12:47:34 -0700
-X-CSE-ConnectionGUID: hw1ymnlbQK28Dn858UKVUg==
-X-CSE-MsgGUID: 3XTF4lsMS1inXn9dTvNUbw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,205,1712646000"; 
-   d="scan'208";a="67452632"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by fmviesa001.fm.intel.com with ESMTP; 31 May 2024 12:47:30 -0700
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 5F60E6CB; Fri, 31 May 2024 22:47:25 +0300 (EEST)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	linux-spi@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Serge Semin <fancer.lancer@gmail.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	=?UTF-8?q?N=C3=ADcolas=20F=20=2E=20R=20=2E=20A=20=2E=20Prado?= <nfraprado@collabora.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v1 8/8] spi: Rework per message DMA mapped flag to be per transfer
-Date: Fri, 31 May 2024 22:42:40 +0300
-Message-ID: <20240531194723.1761567-9-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.43.0.rc1.1336.g36b5255a03ac
-In-Reply-To: <20240531194723.1761567-1-andriy.shevchenko@linux.intel.com>
-References: <20240531194723.1761567-1-andriy.shevchenko@linux.intel.com>
+	s=arc-20240116; t=1717184714; c=relaxed/simple;
+	bh=q2vdq+xrn/yBkQC/+5e6XUJEECAkvzznWce0rAQSwx0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qT/FPbhUwLevLmVl0fO3ZJd8MOHSJ+62z3ug5aYaP2x2FG9+Z0yykeXcCg49gjbOBTufA6QI6AcX/Wgctg35veKqEhgNnYZqES6QBd6ZLzkaCaPzgv6CrQAkbAXSuETDeKqsSgMDR5YZrTOnm1tvtMLys3xZBapf7lxRjsWa6Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EraagKYz; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52b82d57963so2025965e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 12:45:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717184710; x=1717789510; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=A11vsUli/DmN5lqzHDZQ4RXR2rDo8e190xdHexvyrmc=;
+        b=EraagKYzwqJamR3uMor6o9e5gAGCBvh3/Oz4FYmqI0CKoNbnhB+1QNQDPvad/4Iogl
+         VZpnHQFxIuz50llgbuzh3F55IOZxOnO1ubKJuHbNR56k9wseCAu1Kriv66FUKmyYjk9P
+         GvYLPdb8j1SPZ2yGfTYrv3MaE3gb735OqMtLCrhDuJp5EGMpLQakF98BTSa6LYSYPSSf
+         clRsp63aXBAr34HeN31LHV5+PMulUk1HwC8GKLDqICWIkZLl2LSehTlJbrwFxP8RO+C4
+         K1ic2bXBSjdlj8tYVMiC7Ry0VnZBjS9CIkDdZk38SC8sR5rrNTjm3SNRvSTujU+90ZGW
+         x6uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717184710; x=1717789510;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A11vsUli/DmN5lqzHDZQ4RXR2rDo8e190xdHexvyrmc=;
+        b=c/loxZ6Kk0YdUOl27qThpXthvKNcVjGXjqv09Sud04WBojAkH/n0b/txXaOjWUl575
+         Rm11mscD6+kH+i5cJsIfIT22jpEzuE8x9LdpKGHspyPc9nfX+0gFc9euP8BlOFymPZRV
+         +r+O9grK+CCln0/LyU4KKSkTP2QS0YDP7UK0saN4WWu90Fc6iwu0TWFcfPQU34uXBfjM
+         ELEdJjfM5L6RmM9UuEN7NUV6i2tZvWUUcJKyuXdDe+T9Kt8qoJc+8PJPjo5YoY8IsE4/
+         tgse+Ck+GjgZXyiw4JiC/9GS+6M6Q3G00jD5fJh+mIFfT5zKlyfgtSmdow1R3iHM40Kq
+         GXwg==
+X-Forwarded-Encrypted: i=1; AJvYcCU1GdQx26s8+hxf00YY5+j7ZjraZUNHt1ghf43hNHXvdHuu55YkL8arZET656JR8irinXIJZ8zeiVbxBN8ISy5QlwCsJjBUcT1C6rtYAQ==
+X-Gm-Message-State: AOJu0YyKUhIQcSZ9YxyyzKrtSLsBBG2pYW7D2cEsc/ZYVOoHUUyFk4KV
+	9xgLxwcYGEfNoF7r9I5BzKVBGNuFTlq7ros6SwCb3XhnejmzBlc++0NxQtrWz+w=
+X-Google-Smtp-Source: AGHT+IEheBo27F4lk78f4S625ji98poF0LnY6huzs/8CXZpOwabBlWL1BBh+G2Q+E6Acl3rELSR6nQ==
+X-Received: by 2002:a05:6512:3b25:b0:52a:d87f:60e3 with SMTP id 2adb3069b0e04-52b896f7eebmr2327096e87.57.1717184710290;
+        Fri, 31 May 2024 12:45:10 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d760e1sm416833e87.153.2024.05.31.12.45.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 May 2024 12:45:09 -0700 (PDT)
+Date: Fri, 31 May 2024 22:45:07 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 05/13] drm/msm/dpu: move scaling limitations out of
+ the hw_catalog
+Message-ID: <fvvqa2ltfv5gnkvsfsionfphzlki43ayzahegwsudq7v7isfx6@iuok6zbwptxj>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-6-dmitry.baryshkov@linaro.org>
+ <6a335026-77c1-a112-69af-a8d9d86d5528@quicinc.com>
+ <CAA8EJpqKkTOkhrgJexw-D5TbgGYjBoUup3FHC80boR_cAUb2dA@mail.gmail.com>
+ <9e0e22b0-965b-00b2-c837-904dd342e87f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9e0e22b0-965b-00b2-c837-904dd342e87f@quicinc.com>
 
-The granularity of DMA mappings is transfer and moreover,
-the direction is also important as it can be unidirect.
+On Fri, May 31, 2024 at 12:20:24PM -0700, Abhinav Kumar wrote:
+> 
+> 
+> On 5/31/2024 1:16 AM, Dmitry Baryshkov wrote:
+> > On Fri, 31 May 2024 at 04:02, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> > > 
+> > > 
+> > > 
+> > > On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+> > > > Max upscale / downscale factors are constant between platforms. In
+> > > > preparation to adding support for virtual planes and allocating SSPP
+> > > > blocks on demand move max scaling factors out of the HW catalog and
+> > > > handle them in the dpu_plane directly. If any of the scaling blocks gets
+> > > > different limitations, this will have to be handled separately, after
+> > > > the plane refactoring.
+> > > > 
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 12 ------------
+> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  4 ----
+> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 16 +++++++++++++---
+> > > >    3 files changed, 13 insertions(+), 19 deletions(-)
+> > > > 
+> > > 
+> > > <Snip>
+> > > 
+> > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > index 70d6a8989e1a..6360052523b5 100644
+> > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > > > @@ -785,12 +785,15 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+> > > >        return 0;
+> > > >    }
+> > > > 
+> > > > +#define MAX_UPSCALE_RATIO    20
+> > > > +#define MAX_DOWNSCALE_RATIO  4
+> > > > +
+> > > >    static int dpu_plane_atomic_check(struct drm_plane *plane,
+> > > >                                  struct drm_atomic_state *state)
+> > > >    {
+> > > >        struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+> > > >                                                                                 plane);
+> > > > -     int ret = 0, min_scale;
+> > > > +     int ret = 0, min_scale, max_scale;
+> > > >        struct dpu_plane *pdpu = to_dpu_plane(plane);
+> > > >        struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+> > > >        u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+> > > > @@ -822,10 +825,17 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+> > > >        pipe_hw_caps = pipe->sspp->cap;
+> > > >        sblk = pipe->sspp->cap->sblk;
+> > > > 
+> > > > -     min_scale = FRAC_16_16(1, sblk->maxupscale);
+> > > > +     if (sblk->scaler_blk.len) {
+> > > > +             min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+> > > > +             max_scale = MAX_DOWNSCALE_RATIO << 16;
+> > > > +     } else {
+> > > > +             min_scale = 1 << 16;
+> > > > +             max_scale = 1 << 16;
+> > > 
+> > > You can use DRM_PLANE_NO_SCALING instead.
+> > 
+> > Ack
+> > 
+> > > 
+> > > > +     }
+> > > > +
+> > > >        ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+> > > >                                                  min_scale,
+> > > > -                                               sblk->maxdwnscale << 16,
+> > > > +                                               max_scale,
+> > > >                                                  true, true);
+> > > 
+> > > I am missing something here.
+> > > 
+> > > As per the documentation of this API, min and max are the scaling limits
+> > > of both directions and not max_upscale and max_downscale.
+> > > 
+> > > **
+> > > 837  * drm_atomic_helper_check_plane_state() - Check plane state for
+> > > validity
+> > > 838  * @plane_state: plane state to check
+> > > 839  * @crtc_state: CRTC state to check
+> > > 840  * @min_scale: minimum @src:@dest scaling factor in 16.16 fixed point
+> > > 841  * @max_scale: maximum @src:@dest scaling factor in 16.16 fixed point
+> > > 842  * @can_position: is it legal to position the plane such that it
+> > > 
+> > > 
+> > > But this change is passing max_upscale and max_downscale as the min and
+> > > max resp. Isnt that wrong?
+> > 
+> > First of all, please notice that I'm not changing the values that are
+> > passed to the function. What was being passed beforehand gets passed
+> > after this commit. I just moved it out of the catalog.
+> > 
+> 
+> Ack.
+> 
+> > Second, if we take a look at drm_calc_scale(), we can see that it
+> > calculates src / dst and checks that it is within the min_scale and
+> > max_scale boundaries, just like documented.
+> > In our case, the boundaries are (I'm omitting 16.16 math):
+> > - upscale 20 times. dst = 20 * src, scale = src/dst = 1/20
+> > - downscale 4 times. dst = 1/4 * src, scale = src/dst = 4
+> > 
+> > So, from the point of view of drm_calc_scale(), the min_scale is
+> > 1/MAX_UPSCALE, max_scale = MAX_DOWNSCALE and the values the code is
+> > passing are correct.
+> > 
+> 
+> That part is fine. Agreed.
+> 
+> But I do think, that API is not correct if the scaling limits are different
+> in the Horizontal Vs Vertical direction as today it assumes the limits are
+> same in both.
 
-The current cur_msg_mapped flag doesn't fit well the DMA mapping
-and syncing calls and we have tons of checks around on top of it.
-So, instead of doing that rework the code to use per transfer per
-direction flag to show if it's DMA mapped or not.
+Agree. But if we ever need to support different scaling limits, it would
+be easy to extend the API.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/spi/internals.h |  2 +-
- drivers/spi/spi.c       | 73 +++++++++++++++--------------------------
- include/linux/spi/spi.h | 11 ++++---
- 3 files changed, 35 insertions(+), 51 deletions(-)
+> Anyway, thats outside the scope of this patch. So I am good
+> for now.
+> 
+> > > 
+> > > 
+> > > >        if (ret) {
+> > > >                DPU_DEBUG_PLANE(pdpu, "Check plane state failed (%d)\n", ret);
+> > 
+> > 
+> > 
 
-diff --git a/drivers/spi/internals.h b/drivers/spi/internals.h
-index 47a87c2a6979..1f459b895891 100644
---- a/drivers/spi/internals.h
-+++ b/drivers/spi/internals.h
-@@ -45,7 +45,7 @@ static inline bool spi_xfer_is_dma_mapped(struct spi_controller *ctlr,
- 					  struct spi_transfer *xfer)
- {
- 	return ctlr->can_dma && ctlr->can_dma(ctlr, spi, xfer) &&
--	       ctlr->cur_msg_mapped;
-+	       (xfer->tx_sg_mapped || xfer->rx_sg_mapped);
- }
- 
- #endif /* __LINUX_SPI_INTERNALS_H */
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index c1e8cde426e5..9721adf048b5 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -1220,11 +1220,6 @@ void spi_unmap_buf(struct spi_controller *ctlr, struct device *dev,
- 	spi_unmap_buf_attrs(ctlr, dev, sgt, dir, 0);
- }
- 
--/* Dummy SG for unidirect transfers */
--static struct scatterlist dummy_sg = {
--	.page_link = SG_END,
--};
--
- static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
- {
- 	struct device *tx_dev, *rx_dev;
-@@ -1263,8 +1258,8 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
- 						attrs);
- 			if (ret != 0)
- 				return ret;
--		} else {
--			xfer->tx_sg.sgl = &dummy_sg;
-+
-+			xfer->tx_sg_mapped = true;
- 		}
- 
- 		if (xfer->rx_buf != NULL) {
-@@ -1278,8 +1273,8 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
- 
- 				return ret;
- 			}
--		} else {
--			xfer->rx_sg.sgl = &dummy_sg;
-+
-+			xfer->rx_sg_mapped = true;
- 		}
- 	}
- 	/* No transfer has been mapped, bail out with success */
-@@ -1288,7 +1283,6 @@ static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
- 
- 	ctlr->cur_rx_dma_dev = rx_dev;
- 	ctlr->cur_tx_dma_dev = tx_dev;
--	ctlr->cur_msg_mapped = true;
- 
- 	return 0;
- }
-@@ -1299,57 +1293,46 @@ static int __spi_unmap_msg(struct spi_controller *ctlr, struct spi_message *msg)
- 	struct device *tx_dev = ctlr->cur_tx_dma_dev;
- 	struct spi_transfer *xfer;
- 
--	if (!ctlr->cur_msg_mapped || !ctlr->can_dma)
--		return 0;
--
- 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
- 		/* The sync has already been done after each transfer. */
- 		unsigned long attrs = DMA_ATTR_SKIP_CPU_SYNC;
- 
--		if (!ctlr->can_dma(ctlr, msg->spi, xfer))
--			continue;
-+		if (xfer->rx_sg_mapped)
-+			spi_unmap_buf_attrs(ctlr, rx_dev, &xfer->rx_sg,
-+					    DMA_FROM_DEVICE, attrs);
-+		xfer->rx_sg_mapped = false;
- 
--		spi_unmap_buf_attrs(ctlr, rx_dev, &xfer->rx_sg,
--				    DMA_FROM_DEVICE, attrs);
--		spi_unmap_buf_attrs(ctlr, tx_dev, &xfer->tx_sg,
--				    DMA_TO_DEVICE, attrs);
-+		if (xfer->tx_sg_mapped)
-+			spi_unmap_buf_attrs(ctlr, tx_dev, &xfer->tx_sg,
-+					    DMA_TO_DEVICE, attrs);
-+		xfer->tx_sg_mapped = false;
- 	}
- 
--	ctlr->cur_msg_mapped = false;
--
- 	return 0;
- }
- 
--static void spi_dma_sync_for_device(struct spi_controller *ctlr, struct spi_message *msg,
-+static void spi_dma_sync_for_device(struct spi_controller *ctlr,
- 				    struct spi_transfer *xfer)
- {
- 	struct device *rx_dev = ctlr->cur_rx_dma_dev;
- 	struct device *tx_dev = ctlr->cur_tx_dma_dev;
- 
--	if (!ctlr->cur_msg_mapped)
--		return;
--
--	if (!ctlr->can_dma(ctlr, msg->spi, xfer))
--		return;
--
--	dma_sync_sgtable_for_device(tx_dev, &xfer->tx_sg, DMA_TO_DEVICE);
--	dma_sync_sgtable_for_device(rx_dev, &xfer->rx_sg, DMA_FROM_DEVICE);
-+	if (xfer->tx_sg_mapped)
-+		dma_sync_sgtable_for_device(tx_dev, &xfer->tx_sg, DMA_TO_DEVICE);
-+	if (xfer->rx_sg_mapped)
-+		dma_sync_sgtable_for_device(rx_dev, &xfer->rx_sg, DMA_FROM_DEVICE);
- }
- 
--static void spi_dma_sync_for_cpu(struct spi_controller *ctlr, struct spi_message *msg,
-+static void spi_dma_sync_for_cpu(struct spi_controller *ctlr,
- 				 struct spi_transfer *xfer)
- {
- 	struct device *rx_dev = ctlr->cur_rx_dma_dev;
- 	struct device *tx_dev = ctlr->cur_tx_dma_dev;
- 
--	if (!ctlr->cur_msg_mapped)
--		return;
--
--	if (!ctlr->can_dma(ctlr, msg->spi, xfer))
--		return;
--
--	dma_sync_sgtable_for_cpu(rx_dev, &xfer->rx_sg, DMA_FROM_DEVICE);
--	dma_sync_sgtable_for_cpu(tx_dev, &xfer->tx_sg, DMA_TO_DEVICE);
-+	if (xfer->rx_sg_mapped)
-+		dma_sync_sgtable_for_cpu(rx_dev, &xfer->rx_sg, DMA_FROM_DEVICE);
-+	if (xfer->tx_sg_mapped)
-+		dma_sync_sgtable_for_cpu(tx_dev, &xfer->tx_sg, DMA_TO_DEVICE);
- }
- #else /* !CONFIG_HAS_DMA */
- static inline int __spi_map_msg(struct spi_controller *ctlr,
-@@ -1365,13 +1348,11 @@ static inline int __spi_unmap_msg(struct spi_controller *ctlr,
- }
- 
- static void spi_dma_sync_for_device(struct spi_controller *ctrl,
--				    struct spi_message *msg,
- 				    struct spi_transfer *xfer)
- {
- }
- 
- static void spi_dma_sync_for_cpu(struct spi_controller *ctrl,
--				 struct spi_message *msg,
- 				 struct spi_transfer *xfer)
- {
- }
-@@ -1643,13 +1624,13 @@ static int spi_transfer_one_message(struct spi_controller *ctlr,
- 			reinit_completion(&ctlr->xfer_completion);
- 
- fallback_pio:
--			spi_dma_sync_for_device(ctlr, msg, xfer);
-+			spi_dma_sync_for_device(ctlr, xfer);
- 			ret = ctlr->transfer_one(ctlr, msg->spi, xfer);
- 			if (ret < 0) {
--				spi_dma_sync_for_cpu(ctlr, msg, xfer);
-+				spi_dma_sync_for_cpu(ctlr, xfer);
- 
--				if (ctlr->cur_msg_mapped &&
--				   (xfer->error & SPI_TRANS_FAIL_NO_START)) {
-+				if ((xfer->tx_sg_mapped || xfer->rx_sg_mapped) &&
-+				    (xfer->error & SPI_TRANS_FAIL_NO_START)) {
- 					__spi_unmap_msg(ctlr, msg);
- 					ctlr->fallback = true;
- 					xfer->error &= ~SPI_TRANS_FAIL_NO_START;
-@@ -1671,7 +1652,7 @@ static int spi_transfer_one_message(struct spi_controller *ctlr,
- 					msg->status = ret;
- 			}
- 
--			spi_dma_sync_for_cpu(ctlr, msg, xfer);
-+			spi_dma_sync_for_cpu(ctlr, xfer);
- 		} else {
- 			if (xfer->len)
- 				dev_err(&msg->spi->dev,
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index eec7199bcda5..ea54ab10b914 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -448,7 +448,6 @@ extern struct spi_device *spi_new_ancillary_device(struct spi_device *spi, u8 ch
-  * @cur_msg_need_completion: Flag used internally to opportunistically skip
-  *	the @cur_msg_completion. This flag is used to signal the context that
-  *	is running spi_finalize_current_message() that it needs to complete()
-- * @cur_msg_mapped: message has been mapped for DMA
-  * @fallback: fallback to PIO if DMA transfer return failure with
-  *	SPI_TRANS_FAIL_NO_START.
-  * @last_cs_mode_high: was (mode & SPI_CS_HIGH) true on the last call to set_cs.
-@@ -709,7 +708,6 @@ struct spi_controller {
- 	bool				running;
- 	bool				rt;
- 	bool				auto_runtime_pm;
--	bool				cur_msg_mapped;
- 	bool                            fallback;
- 	bool				last_cs_mode_high;
- 	s8				last_cs[SPI_CS_CNT_MAX];
-@@ -982,6 +980,8 @@ struct spi_res {
-  *      transfer this transfer. Set to 0 if the SPI bus driver does
-  *      not support it.
-  * @transfer_list: transfers are sequenced through @spi_message.transfers
-+ * @tx_sg_mapped: If true, the @tx_sg is mapped for DMA
-+ * @rx_sg_mapped: If true, the @rx_sg is mapped for DMA
-  * @tx_sg: Scatterlist for transmit, currently not for client use
-  * @rx_sg: Scatterlist for receive, currently not for client use
-  * @ptp_sts_word_pre: The word (subject to bits_per_word semantics) offset
-@@ -1078,10 +1078,13 @@ struct spi_transfer {
- #define SPI_TRANS_FAIL_IO	BIT(1)
- 	u16		error;
- 
--	dma_addr_t	tx_dma;
--	dma_addr_t	rx_dma;
-+	bool		tx_sg_mapped;
-+	bool		rx_sg_mapped;
-+
- 	struct sg_table tx_sg;
- 	struct sg_table rx_sg;
-+	dma_addr_t	tx_dma;
-+	dma_addr_t	rx_dma;
- 
- 	unsigned	dummy_data:1;
- 	unsigned	cs_off:1;
 -- 
-2.43.0.rc1.1336.g36b5255a03ac
-
+With best wishes
+Dmitry
 
