@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-21235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE10E8D5EA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:42:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7CD18D5EC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 11:48:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB17D1C21A12
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:42:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72EB5287456
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 09:48:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 461C1135A4A;
-	Fri, 31 May 2024 09:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B023A13774B;
+	Fri, 31 May 2024 09:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s7Ty+uoX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GwkMn/s+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCE11422BC;
-	Fri, 31 May 2024 09:42:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DDD78C69
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 09:48:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717148564; cv=none; b=WwMYnvbKHkb5lYWB0rcKr1/Fh0nZnPu+UT/cLVj2IE/9hXCVDyWpfrWz3iVpZXnJqikBRyozAWLPkwIVhr8eCTDP8a1ZiPLkUtRJrEJUFNjZ5IAKhYRPpRmcUAcz+g9zJSOnwHmV/nr9oAvGZiR8oCzo3JhxrbBb+rQj1p+OD+A=
+	t=1717148888; cv=none; b=ZF3PdQFZS9N5n5ovDaCmI7cmcVfRveRm0su27RMys3xLsdP7g/WzA+XjPR7Qb5Pd+vrdmek0jv4J791xr5YHTx5Ir1FC7BxXp135vNHR0Dc33FkT4M+gtWda8AAecQDaS3qEZKPQXskclz7Fd8jjuJ6zyXa7Q/ZoX16TW6bWFlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717148564; c=relaxed/simple;
-	bh=fwe48fdEyxtM78DaKv0uecMaewTnPGzm3zCWWlB2UG4=;
+	s=arc-20240116; t=1717148888; c=relaxed/simple;
+	bh=iY0Y8pGOe7NKlzuhxWSHCXrnuMnl+pFzytg+XGfJ2Fc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Whd9vREOgRuyVvixaPCvnyKWvQ2crs+RnPRZwmserSf/77u6A5AGeRR+GkUB4iZjCYofQo8M/rELZ54dLB4HzB7b+i7gyK4m39V2jij8scjh8C+GNsiAQ9sDXB8VV8QA4oMpHdtt+k7hgvfbmu2zjel4UVRuxYvAmE+txheuP+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s7Ty+uoX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09111C116B1;
-	Fri, 31 May 2024 09:42:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717148563;
-	bh=fwe48fdEyxtM78DaKv0uecMaewTnPGzm3zCWWlB2UG4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=s7Ty+uoXLvEgVfhVx0EW1vSARSSxSra/XkurNNTOeP34hzDuhoetIFKqKe2F9qIn2
-	 GMeaa23igZdl2rgHBgv0rTJXR9p2jb8p2pB6iLEFQnOkPMcfJEYcpWam/Hqpn9+uc3
-	 7vbiMGcfa5C2ItMb9voKgRu5+zoXihCp7H5FUFYckHvLbk69Vjn6hqXa7YwO/5Hrg3
-	 0l3juHIRxYHuvYl95I2EUOXSzs3cYeUCGk6qXHj0YaxOtmRFJ5AvGmwjmbNjdkXtyZ
-	 m3kUdzhgutMDIkimA05hN9agIXLtE9NAhhJjr5KI0o0Yd8XP5PSiZKQCmkVMKmfaVn
-	 7G6V221AGMKrQ==
-Message-ID: <e63d2838-d34e-4ed7-b935-2feef0eb80ee@kernel.org>
-Date: Fri, 31 May 2024 11:42:39 +0200
+	 In-Reply-To:Content-Type; b=QXICgONwtBY355OA6xBcQ0O+6rzhrxP+2u0B06+dy9wx3S1uYUfFiVRx4c67HZclnn2HDKglN4SAmVrv0+6MNWaQivTiu/ruvxRB0Sa2AI9RuVTonUnrb241j1KNX1E6BIgh96XT5npLJoollrBudqn6SOBZClDLruhQvjgkM2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GwkMn/s+; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3588cb76276so1069243f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 02:48:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717148885; x=1717753685; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3QphDfY5f+dlpkjZJqpKBufDO6kEZfbPYC8lG8WaDP0=;
+        b=GwkMn/s+V7/EOe3FUyHWdzwUUtQwqD9D3XpruOy/4uoeXDAfjFewUfj5ZgB0cYST0y
+         oWw0+FQ1BrbQcoLXlStIBwQUQEoUpiuYBAKwey3RfjlHfL5ZMpCZM2Th8JasECLMJSuO
+         E8qYW38sj1avZJORNE5w4RKKXfBNk4zWABtBV2BjpRiJFX4ILkQTVnp+ZWon9XKwvroQ
+         Uy4XnbLy6lR+TOn+ai4IdHdR3xTZx1Js6kISAuG+3cn6H0GjnT/v4LcBR8g4UdzdiAI8
+         K07rOjj/HEBaMfiLRXhn7Gh2vTS5uane4biUDnWwkIfKXBHq6n5uxm4anXXDkzN5H178
+         Vt3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717148885; x=1717753685;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3QphDfY5f+dlpkjZJqpKBufDO6kEZfbPYC8lG8WaDP0=;
+        b=TtX3NSqxr/DRTZtIz5SX6WiqaOKovvkzCeaMOtttq4iPKaMlJz5GBSSlyfJ+4ggIW5
+         /sLhvEXqT/hf4kIGHShGbNUASLjAtUc+cqylSRAEmwd2tvkf9ZuYy4LdUx6LOfl1uZzT
+         bbcG94VXQ2tAwlIBP8axvxgSnDwGaIU7F7z3+yu3m/3Dp2usClHOnIM+TEkNXGkll2np
+         aN/U1LIG5l299lMWO6j4wy5Pbx+i1W2wBZncOay5XRBU3M+QhDi0Ts0G7tWUkPmjKHsa
+         01a3RBDYL34siXxinG/0ohNIVyTVzKpUXIFCwAVail75FOfJnF+27Yp7TDcyoKApCBUi
+         mNQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXiPQie1jPEv6OYYadhqy2uJzWoINjr/zdzDYsaBAvwylJqH3c8qhNvlX4Otz799owllry8MMHgh3FT1VyJYzcdInKoxzhbyM3DP+4WBA==
+X-Gm-Message-State: AOJu0Yxl2PGG85DT/Zd+rJV54v8KLi/ZwKLcw6gR1bN8BiM3Klp36T4J
+	hFZQvYPUo/DOOt+qId3NlZlVetKX/TXe1CwxOhjsRTbT6W8c0GrpK/fLiyQpN18=
+X-Google-Smtp-Source: AGHT+IFAQRuZmhDxjGlW6esaOhNk56To1ieBo/3ULHIoW0dljiOjAH1mTqztqjhXIUNxR9S9PL+8Cw==
+X-Received: by 2002:a5d:4aca:0:b0:358:d9d4:1026 with SMTP id ffacd0b85a97d-35dc7e3e320mr4172508f8f.17.1717148885258;
+        Fri, 31 May 2024 02:48:05 -0700 (PDT)
+Received: from [192.168.86.191] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-35dd062ee31sm1461077f8f.87.2024.05.31.02.48.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 May 2024 02:48:04 -0700 (PDT)
+Message-ID: <8fd4ba90-bd9a-4520-a287-f2119a37acb9@linaro.org>
+Date: Fri, 31 May 2024 10:48:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,74 +76,71 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: soc: qcom: add qcom,sa8775p-imem
- compatible
-To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_kbajaj@quicinc.com, kernel@quicinc.com
-References: <20240531093531.238075-1-quic_tengfan@quicinc.com>
- <20240531093531.238075-2-quic_tengfan@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 7/9] misc: fastrpc: Restrict untrusted app to attach to
+ privileged PD
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>, linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+ linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+ stable <stable@kernel.org>
+References: <20240530102032.27179-1-quic_ekangupt@quicinc.com>
+ <20240530102032.27179-8-quic_ekangupt@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240531093531.238075-2-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20240530102032.27179-8-quic_ekangupt@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 31/05/2024 11:35, Tengfei Fan wrote:
-> Add qcom,sa8775p-imem compatible name support.
+
+
+On 30/05/2024 11:20, Ekansh Gupta wrote:
+> Untrusted application with access to only non-secure fastrpc device
+> node can attach to root_pd or static PDs if it can make the respective
+> init request. This can cause problems as the untrusted application
+> can send bad requests to root_pd or static PDs. Add changes to reject
+> attach to privileged PDs if the request is being made using non-secure
+> fastrpc device node.
 > 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")
+> Cc: stable <stable@kernel.org>
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
+>   drivers/misc/fastrpc.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index d9d9f889e39e..73fa0e536cf9 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1344,6 +1344,11 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>   	} inbuf;
+>   	u32 sc;
+>   
+> +	if (!fl->is_secure_dev) {
+> +		dev_dbg(&fl->cctx->rpdev->dev, "untrusted app trying to attach to privileged DSP PD\n");
+> +		return -EACCES;
+> +	}
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Please move these checks to fastrpc_device_ioctl which makes it clear 
+that these are only supported with secure device nodes.
 
-Best regards,
-Krzysztof
+I would also prefer this to be documented in the the uapi headers.
 
+
+--srini
+> +
+>   	args = kcalloc(FASTRPC_CREATE_STATIC_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
+>   	if (!args)
+>   		return -ENOMEM;
+> @@ -1769,6 +1774,11 @@ static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
+>   	int tgid = fl->tgid;
+>   	u32 sc;
+>   
+> +	if (!fl->is_secure_dev) {
+> +		dev_dbg(&fl->cctx->rpdev->dev, "untrusted app trying to attach to privileged DSP PD\n");
+> +		return -EACCES;
+> +	}
+> +
+>   	args[0].ptr = (u64)(uintptr_t) &tgid;
+>   	args[0].length = sizeof(tgid);
+>   	args[0].fd = -1;
 
