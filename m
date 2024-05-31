@@ -1,177 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-21333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79DF18D678E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 19:01:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 199608D679B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 19:04:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C6231C2441C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 17:01:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5E051B22B7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 17:04:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26260176ABD;
-	Fri, 31 May 2024 17:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C886616F83D;
+	Fri, 31 May 2024 17:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HGQc1jhI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G71wsKMY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718CE172793
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 17:00:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EED7770F3;
+	Fri, 31 May 2024 17:04:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717174846; cv=none; b=n1TaBDlZ++5EmvunV92Fr+Ij85BX+eEP7il5kUh6YVJRBuc+pcdp6j+9Zt/iAv+qmK7JzkCpvJZyIKjxa1B20qkd4JVvkI7r40JjZ9fN51QWVzBzqx/GpFrzVxBRdYHTTrckg0sq/LwBAJhz0ZHS/yHsU6i+l7g10GcPzLtLdCk=
+	t=1717175040; cv=none; b=kIe91jLmKgA/GnVlFAB+12GQC5Z48QGZ23XQJCvy6XH5UtQJXu4l8eHgVXimyBTegLOWRCkhmwhRK5HS5cWMWgxk6NgtTHsGLpXefGchSIw1aM5h5wVU0Cu6k9MPaJ5dKuj+JqroNlluqvXHBmVv2TwHnirr4At3GkMfqfjaepY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717174846; c=relaxed/simple;
-	bh=1pUM/4LzJCDPYUEd3pPvnIewA7UpkqQbAeUUXYz1Tjc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=teZrRxPqNGF+ZzlB0hAqkDvl74bl6OCYdc7LHHpQwPQ0RGSEK4AR947NoKFzRi0Ein0S9PaBifEKU+F7yJ1tui7OUIlJQmybpBlhuVqEl2vqcFZWjLCVuvEf7tV8qjqY3FBUj+N/b1X/I49zD3nSMczoBIoPS/rZvBU40bvhZ2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HGQc1jhI; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a68952bade2so55528966b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 10:00:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717174843; x=1717779643; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8RvWgfQcQbuDCgGWUKetp1c/1qaJujsfwtgdILldRIk=;
-        b=HGQc1jhIZa45G1Do3u6Mubox6kNJFbD7R2BLfw0X6jclCSKob40l0+fmaa+sQWqyOD
-         X3OyAuM2QnVGzztRrrQtc0PoUhDFVbXKJPxFsl4Vw6jTPbVQM3Cnge6BIR2GXg+efdDQ
-         rlF9y924UsoalRO25HEReRuH6JosyWeqC2/Vmn26XQ5eK6Xrq2Divr40ZPl2GZQXMNi+
-         LW36KtJR4aDqSCQKW1/Ye7xgEgAwjFKfn3oEDc6wsFKMdG+bTh+8YrdhGKG4DXkoEz0u
-         R84VZJF5KFImLHp/BAnREXNail0nKKTxWB1BTrI9npvglALMsA75lSTCeF7NJTNRxb/A
-         MGMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717174843; x=1717779643;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8RvWgfQcQbuDCgGWUKetp1c/1qaJujsfwtgdILldRIk=;
-        b=YrxHIRzqhxAGonBr//UmLg8r5FtozQ3LRGsWOH+HXkqEh/Ud4abErwPYRHSQkSQ8jF
-         B45sGSQdI20AQs+kcAH/LMgwAP+PBxhc+j28vQkGCfL/A8NzzPPU6qq9y9OCK7ko5S/j
-         dZ1vTPwD3ntlDnFjfT0WBYIg7hVDf1D/g9u5pwc9dR7jaYSVJ2bz/G6lq1rvArM6MbEK
-         N1m4KR0teiafcWMywHO8JEQWb/knjqRWXfnbVisbJGVcNXN0zMIMPWTsGwd5sqdWeFAc
-         +5gItLtFv2PPfptjtUvbc9+4/3LR2mIT/28bYl2sQpB8sHU1KkMrYGJOPo6ZbnFnEqcO
-         I6Pw==
-X-Forwarded-Encrypted: i=1; AJvYcCU4UdO7mG3lc4dDrPoLgIVPrGTCsqmD9c7JN9n9+wKXb3Q1wGzs3wcwM/PyjurC5Px8LyEqoImwymZfpPulD5wkY4Df5/qX2dLjsmm9mA==
-X-Gm-Message-State: AOJu0YzBwjgOk6vo9UNkLobrcC3hN2QVM82XopQawoXk7IBZvsviRUMW
-	ZhadoRFNJoLnbkzP468WlGUEhfJiApwJNDcL4I8Ngub/cfTNgBZR7F/KmcAWhTU=
-X-Google-Smtp-Source: AGHT+IFcQZGWvx4mTX70DHfOXQ6Y+dwwpe+FVJqr1aoFnH3uCubXyjdfCw4LL1F4v3RTRsM9ShdDCA==
-X-Received: by 2002:a17:906:3c06:b0:a5a:1a:b0e6 with SMTP id a640c23a62f3a-a681fc5ce7emr219899766b.9.1717174842576;
-        Fri, 31 May 2024 10:00:42 -0700 (PDT)
-Received: from [127.0.1.1] ([188.27.161.69])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67e73f9a22sm105533166b.60.2024.05.31.10.00.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 May 2024 10:00:42 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Fri, 31 May 2024 20:00:32 +0300
-Subject: [PATCH 2/2] arm64: dts: qcom: x1e80100: Make the PCIe 6a PHY
- support 4 lanes mode
+	s=arc-20240116; t=1717175040; c=relaxed/simple;
+	bh=0YvlLspqtLIryUdRJ9NcPOInVAGbrmGXs+zKX9/mp5U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O0TIHAYUjtF/NtgJyQkn+Umociz4DNUaItiXUPsfmqFTYkIOZAqc/3XL8hZnTdrkcWztaIYMdGg3OPol7cZmLy3ypuUiSqIcy1eXFd65gSH6qrltIZVGzge51S0VfuBiQWpWigM7/mXyuh6dwz8bJ1OTlnC/dVcnPC3//HOg/yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G71wsKMY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFE4C116B1;
+	Fri, 31 May 2024 17:03:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717175040;
+	bh=0YvlLspqtLIryUdRJ9NcPOInVAGbrmGXs+zKX9/mp5U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=G71wsKMYMF/A3oTgEmvH6NnN+Si6Cay7mE1t+advWfGF9GaR5IVC756gEjUbDIrMH
+	 yC2R+wd7saUIaPMyoc7grmg3o/sIn3t0BqHm4jtQW5Sm48D2i08oZ5rj3iMNHrbxeV
+	 GRV+smQ2abOEJKv0PoM93MPRzam6sSp7S/USNp5zebrcFF+viQKUbh4f5epF1BSPWK
+	 KrIkMYik7lVQ1CkTCGhwsR/+j1FuKUAHh1eo0M3d7JojvWS9Z4VgthfdahXoYo6mT4
+	 fJJD0yWUXfkZELKoPK1QXg8N6rlZ1rfxTi5NUrm6aG+AFbro7+N2NU7mER6Z+BVhuZ
+	 nbqxgFn7nO3sg==
+Date: Fri, 31 May 2024 18:03:53 +0100
+From: Lee Jones <lee@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Das Srinagesh <quic_gurus@quicinc.com>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
+Subject: Re: [PATCH v2 02/14] mfd: pm8008: fix regmap irq chip initialisation
+Message-ID: <20240531170353.GB1204315@google.com>
+References: <20240529162958.18081-1-johan+linaro@kernel.org>
+ <20240529162958.18081-3-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240531-x1e80100-dts-fixes-pcie6a-v1-2-1573ebcae1e8@linaro.org>
-References: <20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org>
-In-Reply-To: <20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>, 
- Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2178; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=1pUM/4LzJCDPYUEd3pPvnIewA7UpkqQbAeUUXYz1Tjc=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmWgI1Bd6Eclj0ezKyGl5ZYD3aiJquCHn6Dl6gM
- uuosgL7RCKJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZloCNQAKCRAbX0TJAJUV
- Viq2EADDwrkm5p1u8yij7aGc/LcZuRSWiPorDu7esQ/BXsaJLSmxP1BBF+Nlh9N6I5PSSnitYJA
- dJmdRstqSUF+anohoOndw4wcDoUIU6heLHGuTbmx8FCGU1NtJNoajiThIQcl81jVEf+qfx621Z0
- blDM3qcr1mxaQ5HEmP7cdZmR+dbmBCKITbHe0u5wdIZco1bRXM7PYVz/FMB7Derrx/oBJZt0p0G
- Qv6FNXwDwQC2UYmnm7rJlWar+1ZdxBn8K8giX4+KMybsEzBskNdPI7nKCmkEsds/zdmRJmBrpWo
- OUb44CgiicxAo58xTore8URPrxnWPA8Q0fWLXLUauXusDgigoppaOCvfYWja7ocum6+pQe6ANSu
- SYo8aG8uP8vutoR8WYZotYBL/HOmVTzHUR7/kET1cQcbHlG1WzoZ7Rnc1gXllt5+CQmdU70Mhxw
- IBkG8ZMpQHZYuVblyxqWdoWxTsz+MMBrZTObIlMWbao54It4q6K7cLe2nAg/+bV7pMZk29fanU8
- Zxq9JjKsAPZ7luoGxgKpvepKXuJOPnp1Cp4WC5ar/Cqc1rkbbb0rggqfG1bSBVuDD96nc+v/Klv
- l+yq0HBZEHBMdFqdYZXlBpPqnogQvJByWtP8zQu3I0tgr8UCaY3DbdTaYna7wji97q/VlJR/9uZ
- d4ury2UCo6h8Row==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240529162958.18081-3-johan+linaro@kernel.org>
 
-So the PCIe 6 can be configured in 4-lane mode or 2-lane mode. For
-4-lane mode, it fetches the lanes provided by PCIe 6b. For 2-lane mode,
-PCIe 6a uses 2 lanes and then PCIe 6b uses the other 2 lanes. Configure
-it in 4-lane mode and then each board can configure it depending on the
-design. Both the QCP and CRD boards, currently upstream, use the 6a for
-NVMe in 4-lane mode. Also, mark the controller as 4-lane as well.
+On Wed, 29 May 2024, Johan Hovold wrote:
 
-Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+> The regmap irq array is potentially shared between multiple PMICs and
+> should only contain static data.
+> 
+> Use a custom macro to initialise also the type fields and drop the
+> unnecessary updates on each probe.
+> 
+> Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/mfd/qcom-pm8008.c | 64 ++++++++++++++-------------------------
+>  1 file changed, 23 insertions(+), 41 deletions(-)
+> 
+> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+> index 3ac3742f438b..f71c490f25c8 100644
+> --- a/drivers/mfd/qcom-pm8008.c
+> +++ b/drivers/mfd/qcom-pm8008.c
+> @@ -56,15 +56,25 @@ static unsigned int pm8008_config_regs[] = {
+>  	INT_POL_LOW_OFFSET,
+>  };
+>  
+> -static struct regmap_irq pm8008_irqs[] = {
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_UVLO,	PM8008_MISC,	BIT(0)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_OVLO,	PM8008_MISC,	BIT(1)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_OTST2,	PM8008_MISC,	BIT(2)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_OTST3,	PM8008_MISC,	BIT(3)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_MISC_LDO_OCP,	PM8008_MISC,	BIT(4)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_TEMP_ALARM,	PM8008_TEMP_ALARM, BIT(0)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_GPIO1,	PM8008_GPIO1,	BIT(0)),
+> -	REGMAP_IRQ_REG(PM8008_IRQ_GPIO2,	PM8008_GPIO2,	BIT(0)),
+> +#define _IRQ(_irq, _off, _mask, _types)			\
+> +	[_irq] = {					\
+> +		.reg_offset = (_off),			\
+> +		.mask = (_mask),			\
+> +		.type = {				\
+> +			.type_reg_offset = (_off),	\
+> +			.types_supported = (_types),	\
+> +		},					\
+> +	}
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index fe7ca2a73f9d..17e4c5cda22d 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2838,7 +2838,7 @@ pcie6a: pci@1bf8000 {
- 			dma-coherent;
- 
- 			linux,pci-domain = <7>;
--			num-lanes = <2>;
-+			num-lanes = <4>;
- 
- 			interrupts = <GIC_SPI 773 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 774 IRQ_TYPE_LEVEL_HIGH>,
-@@ -2903,19 +2903,21 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 		};
- 
- 		pcie6a_phy: phy@1bfc000 {
--			compatible = "qcom,x1e80100-qmp-gen4x2-pcie-phy";
--			reg = <0 0x01bfc000 0 0x2000>;
-+			compatible = "qcom,x1e80100-qmp-gen4x4-pcie-phy";
-+			reg = <0 0x01bfc000 0 0x2000>,
-+			      <0 0x01bfe000 0 0x2000>;
- 
- 			clocks = <&gcc GCC_PCIE_6A_PHY_AUX_CLK>,
- 				 <&gcc GCC_PCIE_6A_CFG_AHB_CLK>,
- 				 <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_PCIE_6A_PHY_RCHNG_CLK>,
--				 <&gcc GCC_PCIE_6A_PIPE_CLK>;
-+				 <&gcc GCC_PCIE_6A_PIPEDIV2_CLK>;
- 			clock-names = "aux",
- 				      "cfg_ahb",
- 				      "ref",
- 				      "rchng",
--				      "pipe";
-+				      "pipe",
-+				      "pipediv2";
- 
- 			resets = <&gcc GCC_PCIE_6A_PHY_BCR>,
- 				 <&gcc GCC_PCIE_6A_NOCSR_COM_PHY_BCR>;
-@@ -2927,6 +2929,8 @@ pcie6a_phy: phy@1bfc000 {
- 
- 			power-domains = <&gcc GCC_PCIE_6_PHY_GDSC>;
- 
-+			qcom,4ln-config-sel = <&tcsr 0x1a000 0>;
-+
- 			#clock-cells = <0>;
- 			clock-output-names = "pcie6a_pipe_clk";
- 
+Any reason why this can't be generic and be tucked away somewhere in a
+header file?
+
+> +static const struct regmap_irq pm8008_irqs[] = {
+> +	_IRQ(PM8008_IRQ_MISC_UVLO,    PM8008_MISC,	BIT(0), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_MISC_OVLO,    PM8008_MISC,	BIT(1), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_MISC_OTST2,   PM8008_MISC,	BIT(2), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_MISC_OTST3,   PM8008_MISC,	BIT(3), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_MISC_LDO_OCP, PM8008_MISC,	BIT(4), IRQ_TYPE_EDGE_RISING),
+> +	_IRQ(PM8008_IRQ_TEMP_ALARM,   PM8008_TEMP_ALARM,BIT(0), IRQ_TYPE_SENSE_MASK),
+> +	_IRQ(PM8008_IRQ_GPIO1,	      PM8008_GPIO1,	BIT(0), IRQ_TYPE_SENSE_MASK),
+> +	_IRQ(PM8008_IRQ_GPIO2,	      PM8008_GPIO2,	BIT(0), IRQ_TYPE_SENSE_MASK),
+>  };
+>  
+>  static const unsigned int pm8008_periph_base[] = {
+> @@ -143,38 +153,9 @@ static struct regmap_config qcom_mfd_regmap_cfg = {
+>  	.max_register	= 0xFFFF,
+>  };
+>  
+> -static int pm8008_probe_irq_peripherals(struct device *dev,
+> -					struct regmap *regmap,
+> -					int client_irq)
+> -{
+> -	int rc, i;
+> -	struct regmap_irq_type *type;
+> -	struct regmap_irq_chip_data *irq_data;
+> -
+> -	for (i = 0; i < ARRAY_SIZE(pm8008_irqs); i++) {
+> -		type = &pm8008_irqs[i].type;
+> -
+> -		type->type_reg_offset = pm8008_irqs[i].reg_offset;
+> -
+> -		if (type->type_reg_offset == PM8008_MISC)
+> -			type->types_supported = IRQ_TYPE_EDGE_RISING;
+> -		else
+> -			type->types_supported = (IRQ_TYPE_EDGE_BOTH |
+> -				IRQ_TYPE_LEVEL_HIGH | IRQ_TYPE_LEVEL_LOW);
+> -	}
+> -
+> -	rc = devm_regmap_add_irq_chip(dev, regmap, client_irq,
+> -			IRQF_SHARED, 0, &pm8008_irq_chip, &irq_data);
+> -	if (rc) {
+> -		dev_err(dev, "Failed to add IRQ chip: %d\n", rc);
+> -		return rc;
+> -	}
+> -
+> -	return 0;
+> -}
+> -
+>  static int pm8008_probe(struct i2c_client *client)
+>  {
+> +	struct regmap_irq_chip_data *irq_data;
+>  	int rc;
+>  	struct device *dev;
+>  	struct regmap *regmap;
+> @@ -187,9 +168,10 @@ static int pm8008_probe(struct i2c_client *client)
+>  	i2c_set_clientdata(client, regmap);
+>  
+>  	if (of_property_read_bool(dev->of_node, "interrupt-controller")) {
+> -		rc = pm8008_probe_irq_peripherals(dev, regmap, client->irq);
+> +		rc = devm_regmap_add_irq_chip(dev, regmap, client->irq,
+> +				IRQF_SHARED, 0, &pm8008_irq_chip, &irq_data);
+>  		if (rc)
+> -			dev_err(dev, "Failed to probe irq periphs: %d\n", rc);
+> +			dev_err(dev, "failed to add IRQ chip: %d\n", rc);
+>  	}
+>  
+>  	return devm_of_platform_populate(dev);
+> -- 
+> 2.44.1
+> 
 
 -- 
-2.34.1
-
+Lee Jones [李琼斯]
 
