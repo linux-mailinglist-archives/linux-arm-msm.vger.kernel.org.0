@@ -1,119 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-21187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C08FB8D56F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 02:32:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFEF68D576B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 02:59:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 771FF286FAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 00:32:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1B8D1C22A68
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 May 2024 00:59:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6F2A15B3;
-	Fri, 31 May 2024 00:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 011C95C89;
+	Fri, 31 May 2024 00:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OelYT71v"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LYwyhbK3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540CC360
-	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 00:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B0F4C8F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 31 May 2024 00:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717115543; cv=none; b=VvphknpAVB3Gk/yRKofaDtR52w6L8ui01/QEFnLgaVEeqCeTNa2ErkFuKpoYcht1C9YsrCo3QN5SUk7cRhDe6f7zR9Yy8vG6BdPTNaCfcDXwfVjJoHNsIQXWkXjVD21dXFpmjeTvYwaX9aKdZ7kLxjJYPqN0CVaBK9xwShekcbY=
+	t=1717117142; cv=none; b=NhEn7cQBY+WWYofmCQs5HksByVXzK21jQRvlFwSg8c/DsJKDKLqJNkZLpTFQN12jUhxUXw3ksfNlILPfWipRbpigKE/w0ecrih62IsVJ0jbV3w7+q9TzsdClSHzRlEg99/GTA5AH70zd7cwEdfuAlf0439KTclBwJ5WQYyy27nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717115543; c=relaxed/simple;
-	bh=sfFx4Y+VbYzVRTRoT2mM5KgdMQW33Ap3TFAT0WAPmDM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gCdwrgG+2oVoCp7CsGoUm7uaKAUzBcaYKaIpohQQAvMoKTKdCzXSssB4qvtBPE9V+ZsrQArzFYoV1iSWtPD+BX47ZwVv0Pr604eTDbtCKj6M7ELKGgigaRBLn+QsYcDDDYrxOzS48xVU/yGIA5WUFJ2rfMsMlyDMjUeruOEJGzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OelYT71v; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 44UCuCA9003486;
-	Fri, 31 May 2024 00:32:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LYYKh5O4pJF5nTde079Kp2HZD3FHF0DFk9mmvkBMQ5E=; b=OelYT71v5/LkpHJ4
-	tlr3+ZK71iLp0IE/R1OMR2uEFHI4aWRO4H/eWGywkixptPNcMt+z0yFL4Eob056/
-	6a1C45SkP6dJXdOdmyIDtbvPqQrsYHH3DcKwBEwftdHOlFJ6fBgtGMVFfADfWde6
-	SVOvneSPhe9g63iX29dzF93xCJZNFZR1sgzpAsfhfUngOZX/OF8wXEyAQxKS244i
-	5G8jaZLonhD7XyWx131n99nwE0YutzJ+lsbAE0x+6udpfdpwB+7ttx3280+vvmRQ
-	0SZUjq1Q1rNElUSsu9tP9TBFcq+YmrmzJv1Yij9UUBPK9PSl5FmqNprMVNkDKyhh
-	PEkrHA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yesw5hdut-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 00:32:13 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 44V0WCem024849
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 May 2024 00:32:12 GMT
-Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 30 May
- 2024 17:32:08 -0700
-Message-ID: <1a087652-a15c-83d4-de72-ebe305c1aad6@quicinc.com>
-Date: Thu, 30 May 2024 17:32:06 -0700
+	s=arc-20240116; t=1717117142; c=relaxed/simple;
+	bh=bG+7N/6ZBRzyPqoSKv4Si9VHH6RWf6RrJ2vJAjp+SIw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M4Ez1oEXYNmlEPjibLgSWpGyPx4rUBL3UsZUrgUwJy7eQhmduEBREvWfF9tTMwK5QMpVJcVUpZGvYnE1ME0C0gcnjFF3NG3YdRzbXOzLmjNIHSY2uqbERzgE5AiVFOJ8nADFzr1me1mAxO9HES1ThCDVavlTHu1d6A7pzVsHuKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LYwyhbK3; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52b78ef397bso1537289e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 May 2024 17:59:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717117139; x=1717721939; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QnFCRKDrZ3vO/pkEAc8zl9OdD2pxO44AabYMP/pb1KM=;
+        b=LYwyhbK3t8UrsGk/nheTSAJ3TWN+Fo8uaufQ66JBi4cdbZHqUpgMTXixrqOxstULvh
+         Gb/QUDbZlKyDcnSa+fzerkNU1Ksf7w10TJw4ZNVn2iizFiVEX3thRB0kR5utUN33j9Q3
+         QX2OfgAgVbwxNUvRaWOlb0Ar6i8qviMKqFDIyGGnTXtHmk0QppRfTU84mKwGYFO4p3Km
+         5OnMl3YtCmAr9HlCz/5dpy4s8X24yWcn9ROh0accSf0bhCj4zi35j/Ens4sbgxKKszLU
+         AB4xdp9YcfpzF1OTIBh7A854fw9GaaHhkta7y968jRygOuI70Jk7Ja/Xbm35mFjua1Zr
+         bubA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717117139; x=1717721939;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QnFCRKDrZ3vO/pkEAc8zl9OdD2pxO44AabYMP/pb1KM=;
+        b=Y3BFjfMRtkWhakEnTA8X/TEyBemtIowm847i1izs0arEBoI/A3ZCMv6RJfZ2DWcswJ
+         /CYIktJq7rbFIiCD3hcTcHdNlcpo5CrXii4+l+4lNcuUgwRSin7EfKmhtyABc4ii2LAP
+         KMreHnzC2lVT/TKukvE+wXiEE0g6OeiPNNHQTvmBJ5WrgAAmd2oe1eLXQFfokoSbWpFH
+         +jle5S3BaI/KkLdCaF6pVcZnmSq0h8wulm7G0QR6NatxOheNk/1V6T/sa92S+89wi04B
+         VvK61U/GiesjgHh0YAG6pRrhmtMvwy03OyRLq/8qHSB3JS1o1aDvT+YBhrlAnM5VpyXd
+         houw==
+X-Forwarded-Encrypted: i=1; AJvYcCUbHocYIlUb1aUV74wbsG27jVxKRsSDWjcJkSoqyVbftDab5GED9zL6veAn7j9HRd9jTDHn+u+kW8tf0TawSOX1AlHhuNrdVfux94ciYA==
+X-Gm-Message-State: AOJu0Ywg0Bot8thggiqYWSkaEmxYc7GFYvYchjA+ZaXYxrMEeQC8EIjZ
+	NYW03WFC0xUhwuMfIjb79E8khaPGSGb4QSJ/TKQnA2KSX4itRaIPAbwEOSQ9B+81ZACaPfGZVVR
+	b
+X-Google-Smtp-Source: AGHT+IHW0DtGLMnQVs266dCybPR/6QxvGMTnPIV7eNFOlCzbPInTMDNv6MIo4HjAP0v2fgbbnnu7jA==
+X-Received: by 2002:ac2:46f4:0:b0:52b:8366:27c6 with SMTP id 2adb3069b0e04-52b88783f7amr136279e87.23.1717117139073;
+        Thu, 30 May 2024 17:58:59 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d3f835sm143476e87.115.2024.05.30.17.58.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 May 2024 17:58:58 -0700 (PDT)
+Date: Fri, 31 May 2024 03:58:57 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>
+Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Hans de Goede <hdegoede@redhat.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
+	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Nikita Travkin <nikita@trvn.ru>
+Subject: Re: [PATCH v4 4/6] power: supply: lenovo_yoga_c630_battery: add
+ Lenovo C630 driver
+Message-ID: <hggfy3pwu4du7msmeg2hz6y5i4kvogpbwzw33lcubhso7angob@q7llvdyz4x2b>
+References: <20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org>
+ <20240528-yoga-ec-driver-v4-4-4fa8dfaae7b6@linaro.org>
+ <d24f720d-66e1-7fa1-5a99-6fa1defebf2c@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 04/13] drm/msm/dpu: drop virt_formats from SSPP
- subblock configuration
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
- <20240314000216.392549-5-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240314000216.392549-5-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: U1QBdPkzR55QR_AcxehXort-EQ41niTZ
-X-Proofpoint-GUID: U1QBdPkzR55QR_AcxehXort-EQ41niTZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-05-30_21,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=702 phishscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 clxscore=1015 spamscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2405310001
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d24f720d-66e1-7fa1-5a99-6fa1defebf2c@linux.intel.com>
 
-
-
-On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
-> The virt_formats / virt_num_formats are not used by the current driver
-> and are not going to be used in future since formats for virtual planes
-> are handled in a different way, by forbidding unsupported combinations
-> during atomic_check. Drop those fields now.
+On Wed, May 29, 2024 at 06:41:36PM +0300, Ilpo Järvinen wrote:
+> On Tue, 28 May 2024, Dmitry Baryshkov wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 8 --------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 4 ----
->   2 files changed, 12 deletions(-)
-> 
+> > On the Lenovo Yoga C630 WOS laptop the EC provides access to the adapter
+> > and battery status. Add the driver to read power supply status on the
+> > laptop.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/power/supply/Kconfig                    |   9 +
+> >  drivers/power/supply/Makefile                   |   1 +
+> >  drivers/power/supply/lenovo_yoga_c630_battery.c | 479 ++++++++++++++++++++++++
+> >  3 files changed, 489 insertions(+)
+> > 
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > +
+> > +	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_DESIGN_CAPACITY);
+> > +	if (val < 0)
+> > +		return val;
+> > +	ecbat->design_capacity = val * 1000;
+> 
+> Check linux/units.h if some WATT related one matches to that literal 1000.
+
+I'd rather not do that. The capacity might be either in microWatt-hours
+or in microAmp-hours. Using WATT will be confusing in the second case.
+
+> > +	msleep(50);
+> > +
+> > +	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_VOLTAGE);
+> > +	if (val < 0)
+> > +		return val;
+> > +	ecbat->voltage_now = val * 1000;
+> 
+> Ditto.
+
+No, Volts and Amps don't have units in <linux/units.h>
+
+> 
+> > +	msleep(50);
+> > +
+> > +	val = yoga_c630_ec_read16(ec, LENOVO_EC_BAT_CURRENT);
+> > +	if (val < 0)
+> > +		return val;
+> > +	current_mA = sign_extend32(val, 15);
+> > +	ecbat->current_now = current_mA * 1000;
+> > +	ecbat->rate_now = current_mA * (ecbat->voltage_now / 1000);
+> 
+> Ditto.
+
+The same
+
+> 
+> > +	msleep(50);
+> > +
+> > +	if (!ecbat->unit_mA)
+> > +		ecbat->capacity_now *= 10;
+> > +
+> > +	ecbat->last_status_update = jiffies;
+
+-- 
+With best wishes
+Dmitry
 
