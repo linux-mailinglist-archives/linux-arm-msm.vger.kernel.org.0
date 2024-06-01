@@ -1,111 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-21379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D75078D7081
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 17:00:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7AD88D70D7
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 17:22:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80B0A1F2211D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 15:00:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8445628340D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 15:22:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A8381E86F;
-	Sat,  1 Jun 2024 15:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD057152793;
+	Sat,  1 Jun 2024 15:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=danishpraka.sh header.i=@danishpraka.sh header.b="rqZM/y3i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iNsQ5pJH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-15.pe-b.jellyfish.systems (out-15.pe-b.jellyfish.systems [198.54.127.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3534D152533;
-	Sat,  1 Jun 2024 15:00:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.54.127.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDEF14EC58;
+	Sat,  1 Jun 2024 15:22:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717254004; cv=none; b=rnu6oF+c6BrFPzIZIRVj6e2UUbR2+QV86chQ/vvyBA/+51vUCW3kknleZVpBPqS6JYD7iM6Z99FooM+E/Koa0w7riAxG3xw5JKWyWxYGE7w8mjmMZeYcz0l1ZXpD0QRvb3wnKNduFKKsimcb8VX00GliEl6VAZNuokcHv+BIcnE=
+	t=1717255346; cv=none; b=eNnuhiYw71b4EXUM5Cw0lqzoYLkbfdRmrPV6PnexD+lbEaRefyvWtRSS+lL4oMGYQe08E9RNDBks1Nz2v09OO4qluXdjZbGFcTcB4qux9Qpv69iNJFKpC1BywHSTSCSMRZ8OscdZWcfMU2N2YUkth6KxpJxYtgBuo1GFEFVJBzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717254004; c=relaxed/simple;
-	bh=lo3WERO5Od+lCrB7tZFl4JPJAq2xflULTe7KYhW0Ip4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQ5tsXZE/6zlFPRM4G9p80JPB2Up3iQc0nmuGX2lBcd3OCM5xRoYbfyAbbKr7IwXisZcrgNjqoyr+B9XgOsxPGedhkklecfRSmxZ0+SSTxuVC6+WeHnYMZz2rT50Xn02R5ZY/AXGsPSuMHgpJRTW4vzO8wyxU4rHho6yURZGTro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=danishpraka.sh; spf=pass smtp.mailfrom=danishpraka.sh; dkim=fail (0-bit key) header.d=danishpraka.sh header.i=@danishpraka.sh header.b=rqZM/y3i reason="key not found in DNS"; arc=none smtp.client-ip=198.54.127.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=danishpraka.sh
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=danishpraka.sh
-Received: from output-router-d5c465c44-45n78 (new-01.privateemail.com [198.54.118.220])
-	by pe-b.jellyfish.systems (Postfix) with ESMTPA id 4Vs2z80JgnzGq2w;
-	Sat,  1 Jun 2024 14:52:52 +0000 (UTC)
-Received: from MTA-07.privateemail.com (unknown [10.50.14.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by NEW-01.privateemail.com (Postfix) with ESMTPS id EB84D18000D0;
-	Sat,  1 Jun 2024 10:52:51 -0400 (EDT)
-Received: from mta-07.privateemail.com (localhost [127.0.0.1])
-	by mta-07.privateemail.com (Postfix) with ESMTP id C2E2918000B0;
-	Sat,  1 Jun 2024 10:52:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=danishpraka.sh;
-	s=default; t=1717253571;
-	bh=lo3WERO5Od+lCrB7tZFl4JPJAq2xflULTe7KYhW0Ip4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rqZM/y3iohM9HsGn1TL+LI2bnfmZBtSDmTndpPLP5aColQqUihT4nopGxg9WBwE9Z
-	 1hB13aEVLuf3WMdV+xW4vqPvHvWIqumpiCEmpmgBJnLTYC96oxrvsPHYMhmaXbmPyb
-	 G+uNScvNqe4p9K+z360D+1exRHkQpuVoph96Ng62KovldpxMBMOFMuVmNXIWiTwZns
-	 9DAtrZ/FUnhOUfyYLe4UV1aCRL5knt3sP348n/gHXN+OdCkY4sHgemNJA4hj3/Ig1x
-	 pIoqtgNbYi17KQa9TGCUb/rd58VI+5iBaXgtVPFE8G+eqzLxb4iYb5dxBJFBjjS2LT
-	 IDXsBXgSe9ecw==
-Received: from localhost.localdomain (unknown [122.171.21.36])
-	by mta-07.privateemail.com (Postfix) with ESMTPA;
-	Sat,  1 Jun 2024 10:52:37 -0400 (EDT)
-From: Danish Prakash <contact@danishpraka.sh>
-To: 
-Cc: Shuah Khan <skhan@linuxfoundation.org>,
-	Danish Prakash <contact@danishpraka.sh>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Carl Vanderlip <quic_carlv@quicinc.com>,
-	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-	Oded Gabbay <ogabbay@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	linux-arm-msm@vger.kernel.org (open list:QUALCOMM CLOUD AI (QAIC) DRIVER),
-	dri-devel@lists.freedesktop.org (open list:QUALCOMM CLOUD AI (QAIC) DRIVER),
-	linux-doc@vger.kernel.org (open list:DOCUMENTATION),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] Documentation/accel/qaic: Fix typo
-Date: Sat,  1 Jun 2024 20:21:24 +0530
-Message-ID: <20240601145216.32232-1-contact@danishpraka.sh>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <16b1bcb5-00c6-4b59-a880-188bed32d175@linuxfoundation.org>
-References: <16b1bcb5-00c6-4b59-a880-188bed32d175@linuxfoundation.org>
+	s=arc-20240116; t=1717255346; c=relaxed/simple;
+	bh=d1fhBJMNp7LfOS3u+BYRG62udbvv8i/BuoCejdIOb4E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pOU1SjT/YmAB8v4Z/yBLvnUrCmk1xEWYsMAcEl1UrS39U0Duuu49JAv2+8S3mhdpXLs5HTyjDDNxPtOZrkrX9j5cppqO2zIOdfgqLA1ShteegB98aVRWVMjhlOvAQkzxUMK0OeIKJTYdYGp9cUAbKjcry1+NHLkUlb7WLvJkT+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iNsQ5pJH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635BFC116B1;
+	Sat,  1 Jun 2024 15:22:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717255346;
+	bh=d1fhBJMNp7LfOS3u+BYRG62udbvv8i/BuoCejdIOb4E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iNsQ5pJHLNaFmvGOIzJNrxIfcRRUKN1Lk0r522q0/NyLvReE8u8xIyiNOCAuh9W4r
+	 GuzKgphlTs7UbhDk9pAgVkXBVaq9L372gBV8arJwEuh8OR8C5G6T+cvlvrH9vDxwA8
+	 RDVnsXe7P3cjkDNjnDniTxHwkvIk8NDwW9Vti4mgmlrU25bDjH4+nXa0byeP3T9brr
+	 Vd1rDj+kS1wi4tKvEGaRI71SeNAsC18BS89P2Vh99EZJPxcv5DSZQwh6ctcaAKOWgy
+	 qhRz2cTZOUsPFbNeRIXaBlUrOh//LdsMblAHPnJqktvObb8UQgpJrpQcltV92WDJ6V
+	 CJGznVzi4Iumw==
+Message-ID: <fc09ed1b-a0ce-4540-b197-d77dff7a63c1@kernel.org>
+Date: Sat, 1 Jun 2024 17:21:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Document the X1E80100 QMP PCIe PHY Gen4 x4
+To: Abel Vesa <abel.vesa@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240531-x1e80100-phy-add-gen4x4-v1-0-5c841dae7850@linaro.org>
+ <20240531-x1e80100-phy-add-gen4x4-v1-1-5c841dae7850@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240531-x1e80100-phy-add-gen4x4-v1-1-5c841dae7850@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Fixed a typo in the docs where 'phsyical'
-was corrected to 'physical'.
+On 31/05/2024 18:06, Abel Vesa wrote:
+> The PCIe 6th instance from X1E80100 can be used in both 4-lane mode or
+> 2-lane mode. Document the 4-lane mode as a separate compatible.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-Signed-off-by: Danish Prakash <contact@danishpraka.sh>
----
- Documentation/accel/qaic/qaic.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/accel/qaic/qaic.rst b/Documentation/accel/qaic/qaic.rst
-index efb7771273bb..628bf2f7a416 100644
---- a/Documentation/accel/qaic/qaic.rst
-+++ b/Documentation/accel/qaic/qaic.rst
-@@ -93,7 +93,7 @@ commands (does not impact QAIC).
- uAPI
- ====
- 
--QAIC creates an accel device per phsyical PCIe device. This accel device exists
-+QAIC creates an accel device per physical PCIe device. This accel device exists
- for as long as the PCIe device is known to Linux.
- 
- The PCIe device may not be in the state to accept requests from userspace at
--- 
-2.45.1
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+
+Best regards,
+Krzysztof
 
 
