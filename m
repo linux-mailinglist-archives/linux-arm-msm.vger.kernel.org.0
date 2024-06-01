@@ -1,285 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-21378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96F628D6F9E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 13:55:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D75078D7081
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 17:00:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EAA6DB22398
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 11:54:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80B0A1F2211D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Jun 2024 15:00:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FBBB14F9E7;
-	Sat,  1 Jun 2024 11:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A8381E86F;
+	Sat,  1 Jun 2024 15:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="h42B65Ct"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=danishpraka.sh header.i=@danishpraka.sh header.b="rqZM/y3i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out-15.pe-b.jellyfish.systems (out-15.pe-b.jellyfish.systems [198.54.127.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE87674418;
-	Sat,  1 Jun 2024 11:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3534D152533;
+	Sat,  1 Jun 2024 15:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.54.127.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717242879; cv=none; b=Qyi/GkHo1+uPDyqeXaVe0aZgqJ0Atc4K2C26LQY2FWYOdNxSXGKeFWmVQac3KcRqq6OmgG4gPqtu89EZJvI0R2YfqjV4vUMc8pWDvVVJmGygeomtTLbnZu+iEYhp8uKpRlKfRIf3/fhLDKplwPpS60lX1CDPRdbsO+yxPV6D53s=
+	t=1717254004; cv=none; b=rnu6oF+c6BrFPzIZIRVj6e2UUbR2+QV86chQ/vvyBA/+51vUCW3kknleZVpBPqS6JYD7iM6Z99FooM+E/Koa0w7riAxG3xw5JKWyWxYGE7w8mjmMZeYcz0l1ZXpD0QRvb3wnKNduFKKsimcb8VX00GliEl6VAZNuokcHv+BIcnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717242879; c=relaxed/simple;
-	bh=2Kcxwb2F9CVt435hR4lFrcovKuZoNWLP/iWamePe9uw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qwNeXx4AQPA++rcIuDIcZxPx/5gZb9KFHtNfUZ0X/zLsxFgr67B2/mIdkuA1wQg6DImV0hRuJ2FSkFcwZiidF62Rs+n+k9I2qqp4ybz15DV6k/BPSL+Qx0fxlqc988FzV1PsDgRj7oV5Xkaz5gDCgjpnExa3RN/TgKwFZQp4KXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=h42B65Ct; arc=none smtp.client-ip=185.70.43.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1717242875; x=1717502075;
-	bh=AZP4En4IzH8eijQiKVXJZFEEvxHYp9iC45HR+AG84b8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=h42B65Ct4GWnaU7nGC+gQrjnQd8H6gKGlMQVQ8xFWeRy8X+6m/xruVYdJSyd5KJUF
-	 /nD3SUJAnnIg8mVbPMZbOzm3Ah3kO+upg2FSZSiyUtMC1S/Wu7Gknn3PCEbvR7Vdbq
-	 w920QQ+cz2vy/9ahaYa90nAZGDxAl8nFNA6wuUphDpzpPd3bvsOPNuiTmtOn+0Dhal
-	 VCMgdSXowHK84hHNct7NAbmW7caNB1NbGD78xen7RpS3PmKwXj2ukWcjSfY/MlL1ea
-	 0zZzEf0j5OM/5B4oUi3jSWv/QrC0OqcGhx8j1G9Z1JewyBK9tNpMRhk5a+76ehpZWx
-	 OaAMrkr++fVrA==
-Date: Sat, 01 Jun 2024 11:54:32 +0000
-To: linux-kernel@vger.kernel.org
-From: Raymond Hackley <raymondhackley@protonmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Siddharth Manthan <siddharth.manthan@gmail.com>, Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Jakob Hauser <jahau@rocketmail.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8916-samsung-fortuna/rossa: Add PMIC and charger
-Message-ID: <20240601115321.25314-4-raymondhackley@protonmail.com>
-In-Reply-To: <20240601115321.25314-1-raymondhackley@protonmail.com>
-References: <20240601115321.25314-1-raymondhackley@protonmail.com>
-Feedback-ID: 49437091:user:proton
-X-Pm-Message-ID: 1ff21548d92eca535490bc8b4cfbabd5bea5f223
+	s=arc-20240116; t=1717254004; c=relaxed/simple;
+	bh=lo3WERO5Od+lCrB7tZFl4JPJAq2xflULTe7KYhW0Ip4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=lQ5tsXZE/6zlFPRM4G9p80JPB2Up3iQc0nmuGX2lBcd3OCM5xRoYbfyAbbKr7IwXisZcrgNjqoyr+B9XgOsxPGedhkklecfRSmxZ0+SSTxuVC6+WeHnYMZz2rT50Xn02R5ZY/AXGsPSuMHgpJRTW4vzO8wyxU4rHho6yURZGTro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=danishpraka.sh; spf=pass smtp.mailfrom=danishpraka.sh; dkim=fail (0-bit key) header.d=danishpraka.sh header.i=@danishpraka.sh header.b=rqZM/y3i reason="key not found in DNS"; arc=none smtp.client-ip=198.54.127.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=danishpraka.sh
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=danishpraka.sh
+Received: from output-router-d5c465c44-45n78 (new-01.privateemail.com [198.54.118.220])
+	by pe-b.jellyfish.systems (Postfix) with ESMTPA id 4Vs2z80JgnzGq2w;
+	Sat,  1 Jun 2024 14:52:52 +0000 (UTC)
+Received: from MTA-07.privateemail.com (unknown [10.50.14.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by NEW-01.privateemail.com (Postfix) with ESMTPS id EB84D18000D0;
+	Sat,  1 Jun 2024 10:52:51 -0400 (EDT)
+Received: from mta-07.privateemail.com (localhost [127.0.0.1])
+	by mta-07.privateemail.com (Postfix) with ESMTP id C2E2918000B0;
+	Sat,  1 Jun 2024 10:52:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=danishpraka.sh;
+	s=default; t=1717253571;
+	bh=lo3WERO5Od+lCrB7tZFl4JPJAq2xflULTe7KYhW0Ip4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rqZM/y3iohM9HsGn1TL+LI2bnfmZBtSDmTndpPLP5aColQqUihT4nopGxg9WBwE9Z
+	 1hB13aEVLuf3WMdV+xW4vqPvHvWIqumpiCEmpmgBJnLTYC96oxrvsPHYMhmaXbmPyb
+	 G+uNScvNqe4p9K+z360D+1exRHkQpuVoph96Ng62KovldpxMBMOFMuVmNXIWiTwZns
+	 9DAtrZ/FUnhOUfyYLe4UV1aCRL5knt3sP348n/gHXN+OdCkY4sHgemNJA4hj3/Ig1x
+	 pIoqtgNbYi17KQa9TGCUb/rd58VI+5iBaXgtVPFE8G+eqzLxb4iYb5dxBJFBjjS2LT
+	 IDXsBXgSe9ecw==
+Received: from localhost.localdomain (unknown [122.171.21.36])
+	by mta-07.privateemail.com (Postfix) with ESMTPA;
+	Sat,  1 Jun 2024 10:52:37 -0400 (EDT)
+From: Danish Prakash <contact@danishpraka.sh>
+To: 
+Cc: Shuah Khan <skhan@linuxfoundation.org>,
+	Danish Prakash <contact@danishpraka.sh>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Carl Vanderlip <quic_carlv@quicinc.com>,
+	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-arm-msm@vger.kernel.org (open list:QUALCOMM CLOUD AI (QAIC) DRIVER),
+	dri-devel@lists.freedesktop.org (open list:QUALCOMM CLOUD AI (QAIC) DRIVER),
+	linux-doc@vger.kernel.org (open list:DOCUMENTATION),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] Documentation/accel/qaic: Fix typo
+Date: Sat,  1 Jun 2024 20:21:24 +0530
+Message-ID: <20240601145216.32232-1-contact@danishpraka.sh>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <16b1bcb5-00c6-4b59-a880-188bed32d175@linuxfoundation.org>
+References: <16b1bcb5-00c6-4b59-a880-188bed32d175@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: ClamAV using ClamSMTP
 
-The phones listed below have Richtek RT5033 PMIC and charger.
-Add them to the device trees.
-- Samsung Galaxy Core Prime LTE
-- Samsung Galaxy Grand Prime
+Fixed a typo in the docs where 'phsyical'
+was corrected to 'physical'.
 
-Cc: Jakob Hauser <jahau@rocketmail.com>
-Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+Signed-off-by: Danish Prakash <contact@danishpraka.sh>
 ---
- .../dts/qcom/msm8216-samsung-fortuna3g.dts    |  6 +++
- .../qcom/msm8916-samsung-fortuna-common.dtsi  | 47 +++++++++++++++++++
- .../dts/qcom/msm8916-samsung-gprimeltecan.dts | 41 ++++++++++++++++
- .../qcom/msm8916-samsung-grandprimelte.dts    |  6 +++
- .../boot/dts/qcom/msm8916-samsung-rossa.dts   |  6 +++
- 5 files changed, 106 insertions(+)
+ Documentation/accel/qaic/qaic.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8216-samsung-fortuna3g.dts b/arch/=
-arm64/boot/dts/qcom/msm8216-samsung-fortuna3g.dts
-index e7f6df229f9a..fba68bf8bf79 100644
---- a/arch/arm64/boot/dts/qcom/msm8216-samsung-fortuna3g.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8216-samsung-fortuna3g.dts
-@@ -10,6 +10,12 @@ / {
- =09chassis-type =3D "handset";
- };
-=20
-+&battery {
-+=09charge-term-current-microamp =3D <200000>;
-+=09constant-charge-current-max-microamp =3D <1000000>;
-+=09constant-charge-voltage-max-microvolt =3D <4350000>;
-+};
-+
- &st_accel {
- =09status =3D "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi b=
-/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-index b5b7beab2209..81b3e0760154 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-fortuna-common.dtsi
-@@ -27,6 +27,12 @@ tz-apps@85a00000 {
- =09=09};
- =09};
-=20
-+=09battery: battery {
-+=09=09compatible =3D "simple-battery";
-+=09=09precharge-current-microamp =3D <450000>;
-+=09=09precharge-upper-limit-microvolt =3D <3500000>;
-+=09};
-+
- =09clk_pwm_backlight: backlight {
- =09=09compatible =3D "pwm-backlight";
- =09=09pwms =3D <&clk_pwm 0 100000>;
-@@ -234,6 +240,8 @@ fuel-gauge@35 {
-=20
- =09=09pinctrl-0 =3D <&fg_alert_default>;
- =09=09pinctrl-names =3D "default";
-+
-+=09=09power-supplies =3D <&charger>;
- =09};
- };
-=20
-@@ -259,6 +267,38 @@ touchscreen: touchscreen@20 {
-=20
- &blsp_i2c6 {
- =09status =3D "okay";
-+
-+=09pmic@34 {
-+=09=09compatible =3D "richtek,rt5033";
-+=09=09reg =3D <0x34>;
-+
-+=09=09interrupts-extended =3D <&tlmm 62 IRQ_TYPE_EDGE_FALLING>;
-+
-+=09=09pinctrl-0 =3D <&pmic_int_default>;
-+=09=09pinctrl-names =3D "default";
-+
-+=09=09regulators {
-+=09=09=09rt5033_reg_safe_ldo: SAFE_LDO {
-+=09=09=09=09regulator-min-microvolt =3D <4900000>;
-+=09=09=09=09regulator-max-microvolt =3D <4900000>;
-+=09=09=09=09regulator-always-on;
-+=09=09=09};
-+
-+=09=09=09/*
-+=09=09=09 * Needed for camera, but not used yet.
-+=09=09=09 * Define empty nodes to allow disabling the unused
-+=09=09=09 * regulators.
-+=09=09=09 */
-+=09=09=09LDO {};
-+=09=09=09BUCK {};
-+=09=09};
-+
-+=09=09charger: charger {
-+=09=09=09compatible =3D "richtek,rt5033-charger";
-+=09=09=09monitored-battery =3D <&battery>;
-+=09=09=09richtek,usb-connector =3D <&usb_con>;
-+=09=09};
-+=09};
- };
-=20
- &blsp_uart2 {
-@@ -403,6 +443,13 @@ nfc_i2c_default: nfc-i2c-default-state {
- =09=09bias-disable;
- =09};
-=20
-+=09pmic_int_default: pmic-int-default-state {
-+=09=09pins =3D "gpio62";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
- =09sdc2_cd_default: sdc2-cd-default-state {
- =09=09pins =3D "gpio38";
- =09=09function =3D "gpio";
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gprimeltecan.dts b/ar=
-ch/arm64/boot/dts/qcom/msm8916-samsung-gprimeltecan.dts
-index 589dd006a746..677e4e286ac0 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-gprimeltecan.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gprimeltecan.dts
-@@ -21,6 +21,12 @@ tz-apps@85500000 {
- =09};
- };
-=20
-+&battery {
-+=09charge-term-current-microamp =3D <200000>;
-+=09constant-charge-current-max-microamp =3D <1000000>;
-+=09constant-charge-voltage-max-microvolt =3D <4350000>;
-+};
-+
- &bosch_accel {
- =09status =3D "okay";
- };
-@@ -30,6 +36,9 @@ &bosch_magn {
- };
-=20
- &blsp_i2c6 {
-+=09/* pmic@34 is on i2c_nfc instead */
-+=09/delete-node/ pmic@34;
-+
- =09nfc@27 {
- =09=09compatible =3D "samsung,s3fwrn5-i2c";
- =09=09reg =3D <0x27>;
-@@ -48,6 +57,38 @@ nfc@27 {
-=20
- &i2c_nfc {
- =09/* nfc@27 is on &blsp_i2c6 */
-+
-+=09pmic@34 {
-+=09=09compatible =3D "richtek,rt5033";
-+=09=09reg =3D <0x34>;
-+
-+=09=09interrupts-extended =3D <&tlmm 62 IRQ_TYPE_EDGE_FALLING>;
-+
-+=09=09pinctrl-0 =3D <&pmic_int_default>;
-+=09=09pinctrl-names =3D "default";
-+
-+=09=09regulators {
-+=09=09=09rt5033_reg_safe_ldo: SAFE_LDO {
-+=09=09=09=09regulator-min-microvolt =3D <4900000>;
-+=09=09=09=09regulator-max-microvolt =3D <4900000>;
-+=09=09=09=09regulator-always-on;
-+=09=09=09};
-+
-+=09=09=09/*
-+=09=09=09 * Needed for camera, but not used yet.
-+=09=09=09 * Define empty nodes to allow disabling the unused
-+=09=09=09 * regulators.
-+=09=09=09 */
-+=09=09=09LDO {};
-+=09=09=09BUCK {};
-+=09=09};
-+
-+=09=09charger: charger {
-+=09=09=09compatible =3D "richtek,rt5033-charger";
-+=09=09=09monitored-battery =3D <&battery>;
-+=09=09=09richtek,usb-connector =3D <&usb_con>;
-+=09=09};
-+=09};
- };
-=20
- &mpss_mem {
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandprimelte.dts b/a=
-rch/arm64/boot/dts/qcom/msm8916-samsung-grandprimelte.dts
-index cffad734c4df..582bfcb09684 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-grandprimelte.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-grandprimelte.dts
-@@ -10,6 +10,12 @@ / {
- =09chassis-type =3D "handset";
- };
-=20
-+&battery {
-+=09charge-term-current-microamp =3D <200000>;
-+=09constant-charge-current-max-microamp =3D <1000000>;
-+=09constant-charge-voltage-max-microvolt =3D <4350000>;
-+};
-+
- &bosch_accel {
- =09status =3D "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa.dts b/arch/arm6=
-4/boot/dts/qcom/msm8916-samsung-rossa.dts
-index ebaa13c6b016..1981bb71f6a9 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-rossa.dts
-@@ -10,6 +10,12 @@ / {
- =09chassis-type =3D "handset";
- };
-=20
-+&battery {
-+=09charge-term-current-microamp =3D <150000>;
-+=09constant-charge-current-max-microamp =3D <700000>;
-+=09constant-charge-voltage-max-microvolt =3D <4400000>;
-+};
-+
- &mpss_mem {
- =09/* Firmware for rossa needs more space */
- =09reg =3D <0x0 0x86800000 0x0 0x5800000>;
---=20
-2.39.2
-
+diff --git a/Documentation/accel/qaic/qaic.rst b/Documentation/accel/qaic/qaic.rst
+index efb7771273bb..628bf2f7a416 100644
+--- a/Documentation/accel/qaic/qaic.rst
++++ b/Documentation/accel/qaic/qaic.rst
+@@ -93,7 +93,7 @@ commands (does not impact QAIC).
+ uAPI
+ ====
+ 
+-QAIC creates an accel device per phsyical PCIe device. This accel device exists
++QAIC creates an accel device per physical PCIe device. This accel device exists
+ for as long as the PCIe device is known to Linux.
+ 
+ The PCIe device may not be in the state to accept requests from userspace at
+-- 
+2.45.1
 
 
