@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-21388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15EB98D739B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 05:54:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 315E78D739E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 05:55:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C573D282B48
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 03:54:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 613931C211C2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 03:55:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 078BE2D058;
-	Sun,  2 Jun 2024 03:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CD9F374FA;
+	Sun,  2 Jun 2024 03:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YPpk3eGB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V6amt8V0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6182C684;
-	Sun,  2 Jun 2024 03:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101AD374DD;
+	Sun,  2 Jun 2024 03:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717300437; cv=none; b=Dk6NAPohOSOLFEZ3Ygx233W1eFyuzlWiHUI3n/X4pkdS5DxOduz3+OyKJx5BMvJS7VBon9JC1xWbhxNG2ZMCWq5tJpp4xklI93xaOxy+TWQkUcZ9eHXCYkfZKu+FcXtDEBDubQ6/dtcp1xvB5Z4Rm3r6kcUmpQGlQ4rS0mnk2Oc=
+	t=1717300439; cv=none; b=Oax86Rm4fISxdaNDjBjgQuxcJo6zHDag/sI8P9/IffIvae3yDjRa+6RlnZDtsz0Lni8CFqQrSZyi98CWM7DKd8Sx+SVYG+X+oK/CX5kJRdsiPi79UZL/86sg/zaAyyH8RgOF9ErzSJZYODWfCST8Sw6ewAbzRWkx16YBcy8GJ9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717300437; c=relaxed/simple;
-	bh=0FO7HQk1B3IW1VhjRWBeL2++zaYULQjVh2dhKPf5UsE=;
+	s=arc-20240116; t=1717300439; c=relaxed/simple;
+	bh=KZuafHnWGVEW/qEf4aAVgGvZYgEcJIEKMNDxYSu+DRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=luQjHRfRQiRiVYSqzt6HUW7Uzok+KRyLhbtz0JbQHnZxuuVGQdqyWxDg86GVdrPXmayOduVQyHStuCptanwa+wDJNMWjgVgX7J8Jr3FxiwIA1oJhKtaMpIL/jZBEJbkksJmtDRZKreoRhc+oGhJYiji5drhHgy2YrHJdVMu9/Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YPpk3eGB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F04C4AF0B;
-	Sun,  2 Jun 2024 03:53:56 +0000 (UTC)
+	 MIME-Version:Content-Type; b=ah+E9H70awHIf6kG9Qx5sjdN/ubznXk5nvX1IPQyhRluCZIw/Dfo/R1Wq8Lvvb/3pJ66j8YBFc/SFJAmlNcvVw6IAFOEPOmy+rqTYSDfqLML6bD5HLwome0YawwOLG0lAJF0p//krJRpisHYyAd7ademukbrTXi7b1UuhQux4WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V6amt8V0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77B2C4AF0E;
+	Sun,  2 Jun 2024 03:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717300437;
-	bh=0FO7HQk1B3IW1VhjRWBeL2++zaYULQjVh2dhKPf5UsE=;
+	s=k20201202; t=1717300438;
+	bh=KZuafHnWGVEW/qEf4aAVgGvZYgEcJIEKMNDxYSu+DRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPpk3eGBUsWw17aOb+oGiU9U14pYUGfjvQG2vHMblb8CmP6bOR41NJ11KI6tJCwBn
-	 Wl4BpAtsJjpDMeREFF7fDEsV/rsaxqWF63yZnDmmAo5af9AShv5i8o6PES67vDCBMi
-	 xv1HM3UAKqnvzcA2urvaNMLhGmi9oZ9dm5swAJROFlAJgMyISNZah/EQOleOnTN2v2
-	 9yA5cygGVHOD6JKHQ+u7lFfAOpaz5TYJGoAW4+LHCB0q60S5yDQyv7gO94pSpJRD2p
-	 O++PQwvReGvCgPQT7J/1dFHt5eUHCq2iujWlDUM2WbdCHSsW0kZ+qs4oBtwiVCBkVq
-	 P0UrXjFqF/roA==
+	b=V6amt8V0HnIjHaosG7Ir3l3Ah7xUkTEeQcOCsri+g+VD9ff9ihf/0yyHIMzjJFRbU
+	 cJwsrW1IP52DSXrvrb+r0RgfVI9HCn0Z4C09u+2YGSkcMe0/5ND8L0BHKqibFEgiVq
+	 yY7BaoGwX9FhygHoLes1RAQySW0wEQYlegqDkIV90vbPIesM14av1/6g+qlY7V5Q8T
+	 HyEv9MKm8AHva7mGbCT/aMfdqr9M87yloGSFpV7Pk0W4qUF19phRd3J/R2rcnNWaKx
+	 5r9+NLso829F0LbArfAe7qIgPtLcmb9S3E0Np87U6JrT8bXf7XAWVriRuG/6oLncGK
+	 TjYa3+Qk8YU+A==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh@kernel.org>,
@@ -53,12 +53,12 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH v2 0/3] Add TCPM support for PM7250B and Fairphone 4
-Date: Sat,  1 Jun 2024 22:53:43 -0500
-Message-ID: <171730042576.665897.6341252590136883474.b4-ty@kernel.org>
+Subject: Re: [PATCH v3 0/3] Add TCPM support for PM7250B and Fairphone 4
+Date: Sat,  1 Jun 2024 22:53:44 -0500
+Message-ID: <171730042586.665897.530218516306617254.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240329-fp4-tcpm-v2-0-d7f8cd165355@fairphone.com>
-References: <20240329-fp4-tcpm-v2-0-d7f8cd165355@fairphone.com>
+In-Reply-To: <20240530-fp4-tcpm-v3-0-612d4bbd5e09@fairphone.com>
+References: <20240530-fp4-tcpm-v3-0-612d4bbd5e09@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,7 +69,7 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 29 Mar 2024 13:26:18 +0100, Luca Weiss wrote:
+On Thu, 30 May 2024 17:05:46 +0200, Luca Weiss wrote:
 > This series adds support for Type-C Port Management on the Fairphone 4
 > which enables USB role switching and orientation switching.
 > 
