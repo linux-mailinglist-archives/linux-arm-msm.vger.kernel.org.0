@@ -1,66 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-21401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81B0A8D741C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 09:27:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73E248D74FB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 13:45:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 142F0B2103A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 07:27:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED2BC1F21441
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 11:45:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89F621BF53;
-	Sun,  2 Jun 2024 07:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AE3D38F97;
+	Sun,  2 Jun 2024 11:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="U6QQ9w/s"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YmrbmibJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-24.smtpout.orange.fr [80.12.242.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6475D2837D;
-	Sun,  2 Jun 2024 07:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD8538DF2;
+	Sun,  2 Jun 2024 11:45:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717313223; cv=none; b=cNx+p+PAcEN/wzUKpsfsSCw+VkytnU9/iZZui2uTP/+Lu5obFbpddUaXkB1ZNHM4G9fRMLzxJ17rxYOkRLKfdVn3nsd/IuGmCEcUVf8YzL1zoRnT1+ZtGEc/gRt/KFspK8I9f788lyatZVNVc+YyrHVl0lZBZPKayVxCQzwa5Qs=
+	t=1717328717; cv=none; b=TnuGAr7eCgHY4PC0Dd24yIug/Ta8P8MZdts2/F4XYcjxChGkstpZMRRJnvR2t+34KSt6BewETFJuaabzZvOcqOAMbasMtNm+ZP60muNiKxFbc53C0vhnG1OE6m+nHfIajZwKsUTZEms1e/qgWnrZZaIpxKTh21sY10gh3RcFSzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717313223; c=relaxed/simple;
-	bh=5vU+UUp8i0XytBBbtP1BYFK/1J0LMLna6iSlUbFykX0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mdvPQMkK6wR6osYeGMKJDFyVsiF+zc5f4dVewbtL6s4PkywA7SvochQBlUVPKQVmPcPiIf/NdM8Hh+jUwMNITfatcRm3+KvfynbeIrEh8xG/Wf0g5uqDmEVdze6vLNX808duoNGhWAqbBcjy42NKIfk2Tc9FJgLHYZRvNfIbne8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=U6QQ9w/s; arc=none smtp.client-ip=80.12.242.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from fedora.home ([86.243.17.157])
-	by smtp.orange.fr with ESMTPA
-	id DfcBsRFnPRv3WDfcBsxUGF; Sun, 02 Jun 2024 09:26:52 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1717313212;
-	bh=uZOPGxZkjH03hL+S3wWEoYW4v++R64OY2Pp65PCtFlk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=U6QQ9w/sy8dhSwP67oABpb93JfZHE6zv46FYWd4eAcxy7/WC+20cN8S/iUlgeVPT6
-	 BrxY5tvmE4cOItOwlqRSxDqDaSrKP7N/2EajXwsDxWpfRHs1muyZUyh+uMb9EUVYif
-	 rs3obQ88J6BmyqfEpNsqrZ/WarFgsGLvTw4xfaw3G0g3iaH0xNyotq5OikjA/EawBu
-	 Ad98CNSv0AqPb7xHzupSqDLU3ATAT8Jt1lo1ENR6d9uKcbDwwVmClczb+QQ20NxDBb
-	 7TsOEygf34r1lPkcsdnEoHxKa+i0Hdq3/NYFhVwH5tyVDAyERf/tDoreNaiDl1+syS
-	 uPd0+Gcrt3lVA==
-X-ME-Helo: fedora.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 02 Jun 2024 09:26:52 +0200
-X-ME-IP: 86.243.17.157
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] Constify struct dec_bufsize_ops and enc_bufsize_ops
-Date: Sun,  2 Jun 2024 09:26:45 +0200
-Message-ID: <9bc4b28a55c42fa4a125c3e03d4c8b0f208550b4.1717313173.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.45.1
+	s=arc-20240116; t=1717328717; c=relaxed/simple;
+	bh=wPCp7HcMegI7VYgSk7MAXbnf/xHxgUKglji2mKcI6Kw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VKd/kjziDJPHG8pIhCjE+EASO29/LvcHPv8ILRLI2wa0R0iJ8XPRTLP8sRvClloHSNMFUKaBMWGLkVJ3X4r+1bP5IWKWPb6OGqFzuGLKTa5OER2qeBsKKGHkkJ/AX/3tnKcpkO49rSggI6MJmEcr7oZjjEyvULpW5rdCOhyeYbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YmrbmibJ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4529f5qY024902;
+	Sun, 2 Jun 2024 11:45:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=7t2NXDyp026l3fKwmbHkyS
+	+wMjUw8rpzuC3VGniDBXQ=; b=YmrbmibJL1rpECYRoMhYizQh7xFGaGPe9n7xI5
+	GNXd+cUibS5irc01BILKo/IHCKAofyZjoPipFvikotcTxsnWnqYKRLi6JM9d7wpr
+	SjbkcfGAPxFPXAnDHYop+vQRhKYUDJhALv+q6ZygV97OdKPj3hosWphgdslgNMii
+	tqQYXlnDmnLw/Kn2RStkW0q8MBX8gX6ulINimdyqSrK6UoQpeeVxYvG+bsKcPEq0
+	DBRnOI+lO8Viic0KybOtZ8hpI1wlgA420F7yoaZJluPQWPAt6XXby6FUj4XLbyjV
+	3IzbKbiYEPJs2Abthavcs8VMHbP0jH2CDGuueoLCP+4I6DJw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw5t1xgk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 02 Jun 2024 11:45:10 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 452Bj94k029818
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 2 Jun 2024 11:45:09 GMT
+Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 2 Jun 2024 04:45:04 -0700
+From: Jagadeesh Kona <quic_jkona@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        "Satya
+ Priya Kakitapalli" <quic_skakitap@quicinc.com>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>
+Subject: [PATCH V4 0/8] Add support for videocc and camcc on SM8650
+Date: Sun, 2 Jun 2024 17:14:31 +0530
+Message-ID: <20240602114439.1611-1-quic_jkona@quicinc.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,110 +86,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WP_O0fU9f4MAOc1qSntMVDrr74YSkdRC
+X-Proofpoint-GUID: WP_O0fU9f4MAOc1qSntMVDrr74YSkdRC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-06-01_19,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ clxscore=1011 malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406020099
 
-"struct dec_bufsize_ops and "struct enc_bufsize_ops" are not modified in
-this driver.
+Add support for video and camera clock controllers on Qualcomm SM8650
+platform.
 
-Constifying these structures moves some data to a read-only section, so
-increase overall security.
+Changes in V4:
+[PATCH 1/8]: Updated commit text. Replaced :: with : in SM8450 videocc
+             YAML file as Krzysztof's comment in V3
+[PATCH 5/8]: Replaced :: with : in SM8450 camcc YAML file. Updated commit
+             text and dropped Fixes tag as per Johan's comments in V3
+Added R-By tags received till V3
 
-On a x86_64, with allmodconfig:
-Before:
-   text	   data	    bss	    dec	    hex	filename
-  12494	    822	      0	  13316	   3404	drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.o
+Changes in V3:
+[PATCH 1/8]: Split incorrect header file name in SM8450 videocc bindings
+             into a separate patch and added fixes tag
+[PATCH 2/8]: Added new header file for SM8650 videocc to define the extra clocks
+             and resets on top of SM8450 videocc bindings, Dropped Krzysztof
+             R-By tag due to these changes
+[PATCH 3/8]: Updated SM8550 videocc driver to use new SM8650 videocc header file,
+             added Dmitry and Konrad R-By tags
+[PATCH 4/8]: Updated offset variable name to sleep_clk_offset in probe and added
+             Dmitry R-By tag
+[PATCH 5/8]: This patch is newly added to fix the incorrect order for SC8280XP
+             camcc header file in bindings
+[PATCH 6/8]: Fixed the incorrect alphabetical order for SM8650 camcc compatible
+             and header files, added Krzysztof R-By tag and Vladimir Acked-By tags
+[PATCH 7/8]: No changes, added R-By tags received till V2 series
+[PATCH 8/8]: Dropped required-opps property in videocc and camcc nodes and
+             updated DT file to use new SM8650 videocc header file, added Vladimir R-By tag
 
-After:
-   text	   data	    bss	    dec	    hex	filename
-  12766	    566	      0	  13332	   3414	drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.o
+Changes in V2:
+ - Updated commit text for videocc dt-bindings patch as Krzysztof suggested
+ - Moved videocc XO clk ares to a separate patch and added fixes tag as per
+   review comments
+ - Inverted the logic in videocc probe to add new SM8650 specific videocc
+   clocks based on SM8650 compatible string as Dmitry suggested
+ - Used module_platform_driver() for SM8650 camcc driver
+ - Updated driver name from cam_cc-sm8650 to camcc-sm8650 as Bryan suggested
+ - Used qcom_branch_set_clk_en() helper to enable clocks in camcc sm8650 probe
+ - Added Krzysztof and Bryan Reviewed-by tags to dt-bindings and camcc patches
+   received in V1
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
- .../platform/qcom/venus/hfi_plat_bufs_v6.c    | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Previous series:
+V3: https://lore.kernel.org/all/20240430142757.16872-1-quic_jkona@quicinc.com/
+V2 RESEND: https://lore.kernel.org/all/20240321092529.13362-1-quic_jkona@quicinc.com/
+V2: https://lore.kernel.org/all/20240220135121.22578-1-quic_jkona@quicinc.com/
+V1: https://lore.kernel.org/linux-kernel/20240206113145.31096-1-quic_jkona@quicinc.com/T/
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-index f5a655973c08..6289166786ec 100644
---- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-@@ -1063,51 +1063,51 @@ struct enc_bufsize_ops {
- 	u32 (*persist)(void);
- };
- 
--static struct dec_bufsize_ops dec_h264_ops = {
-+static const struct dec_bufsize_ops dec_h264_ops = {
- 	.scratch = h264d_scratch_size,
- 	.scratch1 = h264d_scratch1_size,
- 	.persist1 = h264d_persist1_size,
- };
- 
--static struct dec_bufsize_ops dec_h265_ops = {
-+static const struct dec_bufsize_ops dec_h265_ops = {
- 	.scratch = h265d_scratch_size,
- 	.scratch1 = h265d_scratch1_size,
- 	.persist1 = h265d_persist1_size,
- };
- 
--static struct dec_bufsize_ops dec_vp8_ops = {
-+static const struct dec_bufsize_ops dec_vp8_ops = {
- 	.scratch = vpxd_scratch_size,
- 	.scratch1 = vp8d_scratch1_size,
- 	.persist1 = vp8d_persist1_size,
- };
- 
--static struct dec_bufsize_ops dec_vp9_ops = {
-+static const struct dec_bufsize_ops dec_vp9_ops = {
- 	.scratch = vpxd_scratch_size,
- 	.scratch1 = vp9d_scratch1_size,
- 	.persist1 = vp9d_persist1_size,
- };
- 
--static struct dec_bufsize_ops dec_mpeg2_ops = {
-+static const struct dec_bufsize_ops dec_mpeg2_ops = {
- 	.scratch = mpeg2d_scratch_size,
- 	.scratch1 = mpeg2d_scratch1_size,
- 	.persist1 = mpeg2d_persist1_size,
- };
- 
--static struct enc_bufsize_ops enc_h264_ops = {
-+static const struct enc_bufsize_ops enc_h264_ops = {
- 	.scratch = h264e_scratch_size,
- 	.scratch1 = h264e_scratch1_size,
- 	.scratch2 = enc_scratch2_size,
- 	.persist = enc_persist_size,
- };
- 
--static struct enc_bufsize_ops enc_h265_ops = {
-+static const struct enc_bufsize_ops enc_h265_ops = {
- 	.scratch = h265e_scratch_size,
- 	.scratch1 = h265e_scratch1_size,
- 	.scratch2 = enc_scratch2_size,
- 	.persist = enc_persist_size,
- };
- 
--static struct enc_bufsize_ops enc_vp8_ops = {
-+static const struct enc_bufsize_ops enc_vp8_ops = {
- 	.scratch = vp8e_scratch_size,
- 	.scratch1 = vp8e_scratch1_size,
- 	.scratch2 = enc_scratch2_size,
-@@ -1186,7 +1186,7 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
- 	u32 codec = params->codec;
- 	u32 width = params->width, height = params->height, out_min_count;
- 	u32 out_width = params->out_width, out_height = params->out_height;
--	struct dec_bufsize_ops *dec_ops;
-+	const struct dec_bufsize_ops *dec_ops;
- 	bool is_secondary_output = params->dec.is_secondary_output;
- 	bool is_interlaced = params->dec.is_interlaced;
- 	u32 max_mbs_per_frame = params->dec.max_mbs_per_frame;
-@@ -1260,7 +1260,7 @@ static int bufreq_enc(struct hfi_plat_buffers_params *params, u32 buftype,
- 		      struct hfi_buffer_requirements *bufreq)
- {
- 	enum hfi_version version = params->version;
--	struct enc_bufsize_ops *enc_ops;
-+	const struct enc_bufsize_ops *enc_ops;
- 	u32 width = params->width;
- 	u32 height = params->height;
- 	bool is_tenbit = params->enc.is_tenbit;
+Jagadeesh Kona (8):
+  dt-bindings: clock: qcom: Update SM8450 videocc header file name
+  dt-bindings: clock: qcom: Add SM8650 video clock controller
+  clk: qcom: videocc-sm8550: Add support for videocc XO clk ares
+  clk: qcom: videocc-sm8550: Add SM8650 video clock controller
+  dt-bindings: clock: qcom: Update the order of SC8280XP camcc header
+  dt-bindings: clock: qcom: Add SM8650 camera clock controller
+  clk: qcom: camcc-sm8650: Add SM8650 camera clock controller driver
+  arm64: dts: qcom: sm8650: Add video and camera clock controllers
+
+ .../bindings/clock/qcom,sm8450-camcc.yaml     |    7 +-
+ .../bindings/clock/qcom,sm8450-videocc.yaml   |    6 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          |   26 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sm8650.c               | 3591 +++++++++++++++++
+ drivers/clk/qcom/videocc-sm8550.c             |  156 +-
+ include/dt-bindings/clock/qcom,sm8650-camcc.h |  195 +
+ .../dt-bindings/clock/qcom,sm8650-videocc.h   |   23 +
+ 9 files changed, 4005 insertions(+), 8 deletions(-)
+ create mode 100644 drivers/clk/qcom/camcc-sm8650.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8650-camcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8650-videocc.h
+
 -- 
-2.45.1
+2.43.0
 
 
