@@ -1,59 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-21397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37A0B8D73CB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 06:22:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2692E8D73CE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 06:23:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AAEA1B20FD0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 04:22:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7DBE1F217CF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 04:23:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13330BE47;
-	Sun,  2 Jun 2024 04:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93182C8FB;
+	Sun,  2 Jun 2024 04:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cLP2XK2z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UwBfu0bR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B8CAD2D;
-	Sun,  2 Jun 2024 04:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67057AD2D;
+	Sun,  2 Jun 2024 04:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717302145; cv=none; b=A94gKkL+FEJ6qiSQx3H0Tq44Oafp6kWYiJm/fJntxyznOfORWhijxDSg9IDQOqAJIHTh6yvv4R7GvgHPsQAN1N3t89kh+iJA0gY3HM+05dPtW2m4SjSzcYgm7l7GgfJletYpsTTz+HV5xL0CArnU4kKNHJLkAzOr07+YuTKgJNY=
+	t=1717302215; cv=none; b=MZ7jnnVJnnqNuvXFwFLtW4qltl/xeZIimQ0lLcDZAQRarsOB0t5Q95TW+aCCyO0GAbO20Uq9VNiGDjWPy+I85sypzIfyep3xBlSq9Pmg4LV+Gv8y6p7EqVRIz3dWB6UXq32Wu14ZM6moJyTOBrqqqX6v+cstGqb2Ao2ePGocQD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717302145; c=relaxed/simple;
-	bh=VEzcGnfYuLgpyvwW9Sbdi6HU0+XOzlYljls9InAkb0k=;
+	s=arc-20240116; t=1717302215; c=relaxed/simple;
+	bh=t3NPqJkk+SwSAxF9jIi4Udg7haRJ/INOmuYkJneaTVM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=drS5jzwEgAbZp1Va84niOM0DJMiyJHFSMI/U8kMLXy2eDg2tLCf2VQH2VbHWLvRjX7E8yEsP3NjRwiDqNkVxkYLK0lFEAzMNjaz36mbtJo6q1iuGEm3zIaLD2aJ01m49cQnOGYtuX1AOvCnTkMG+w+oa4zpdL0FpM/mWrQnNzhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cLP2XK2z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D7DC2BBFC;
-	Sun,  2 Jun 2024 04:22:21 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=KH7AZsGvABrNFOKtOofvYLTpilA3u0rDw4P4ZuB87jeYBj+sOh0tFNeN8NaBPciF3YRMbGm6swazer+boWWp1m4LoBUq8Nej1Yy5cmqhzZLTrRPn8LQ8iAp6Y9cQN+/yxOsqHkDuqttf4/ill0XCSa+Z7Yp+pJeu9iV/FSfnkGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UwBfu0bR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5526C2BBFC;
+	Sun,  2 Jun 2024 04:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717302143;
-	bh=VEzcGnfYuLgpyvwW9Sbdi6HU0+XOzlYljls9InAkb0k=;
+	s=k20201202; t=1717302215;
+	bh=t3NPqJkk+SwSAxF9jIi4Udg7haRJ/INOmuYkJneaTVM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cLP2XK2z6zP7apu84C5Y08umAPl/cH2cM1ohr9g/Duw1mlp1PJLFj71XGj0blcz8+
-	 n/cyxrg2v9Xnu0tW+X/BddZxCJEGQ9Ivtj8F/PtJBzbUTCL9ucVwcVLs+LDc0mMyKj
-	 Wv6sBJyqdjECtlj26NXOa7lrT7KkteP+2r9TkLdlN1Zq5Hm8hQvGnJjomXM/azBXty
-	 ubEs1NUFVeOI5QqcIBdAGqJ8ntJIr8e2569s/w4RpyvIdoEwZSG+u/1/CpyHpP2GsN
-	 TKbyLLQqaXjc1Ebgejs9xhhYJftzX/ibapjJOV23RWfJ6GB1YihofW17D8KqxDMuPB
-	 zdKcxOpwqf2ww==
-Date: Sat, 1 Jun 2024 23:22:18 -0500
+	b=UwBfu0bRIw4YSjrdPS+0JfY/vcvheGz6Afhx2SJjOWDow/xVIGO8CjhI6+OITNut0
+	 qfVYsyxmpvcyjK3D5z7a/pCvMqJsMdxPXpY78Rdmqg5QZxKECvYLzdfcg8+4t6bGwC
+	 FrFrHvx6NOsaoQmg67FWFvI1pRwKp83yurhWP31mupnxdWsc43H4+5kYFSoWaX1dUm
+	 5hwmhH0sR6OV+r/ja5rxElVijKKlZK271XfGhjth4JhSfpP3pDh69z1Mle919ye1D9
+	 4UjyYjeA9hXkFpxK1NvsL8Z2BmSnVH78aBZS4S2EbsER0uuazqLWBkmzbPIm9HuhiS
+	 qTGXw+rCouvdQ==
+Date: Sat, 1 Jun 2024 23:23:32 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Taniya Das <quic_tdas@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, quic_jkona@quicinc.com, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 00/13] Add support for SA8775P Multimedia clock
- controllers
-Message-ID: <ivssjgpuex3ckva55tndsqsioo7ysopjrhlvtbv2ot7stjkx2p@opluyh34wy5r>
-References: <20240531090249.10293-1-quic_tdas@quicinc.com>
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	John Ogness <john.ogness@linutronix.de>, 
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org, 
+	Yicong Yang <yangyicong@hisilicon.com>, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-kernel@vger.kernel.org, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v2 1/7] soc: qcom: geni-se: Add
+ GP_LENGTH/IRQ_EN_SET/IRQ_EN_CLEAR registers
+Message-ID: <nuxdwhd6vdickuctf75wjan3x6vtwkbypydhj5d5wewkafe66n@h5aduxfym6iz>
+References: <20240530224603.730042-1-dianders@chromium.org>
+ <20240530154553.v2.1.Ife7ced506aef1be3158712aa3ff34a006b973559@changeid>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,74 +65,65 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240531090249.10293-1-quic_tdas@quicinc.com>
+In-Reply-To: <20240530154553.v2.1.Ife7ced506aef1be3158712aa3ff34a006b973559@changeid>
 
-On Fri, May 31, 2024 at 02:32:36PM GMT, Taniya Das wrote:
-> Update GCC, GPUCC clock controllers and add support for multimedia
-> clock controllers on Qualcomm SA8775P platform.
+On Thu, May 30, 2024 at 03:45:53PM GMT, Douglas Anderson wrote:
+> For UART devices the M_GP_LENGTH is the TX word count. For other
+> devices this is the transaction word count.
+> 
+> For UART devices the S_GP_LENGTH is the RX word count.
+> 
+> The IRQ_EN set/clear registers allow you to set or clear bits in the
+> IRQ_EN register without needing a read-modify-write.
 > 
 
-Most of the patches in this series does not depend on each other and
-some of them could have been merged already, if they weren't stacked in
-the middle of the series.
+Acked-by: Bjorn Andersson <andersson@kernel.org>
 
-Please lump patches together into series only when there is a dependency
-between them.
-
-The one exception here is the dts change at the end that has a
-dependency on the multiple binding updates. You can choose to either
-split this into multiple updates, or send it separately once the clock
-changes has been accepted.
-
-Thanks,
+Regards,
 Bjorn
 
-> Taniya Das (13):
->   clk: qcom: gcc-sa8775p: Remove support for UFS hw ctl clocks
->   clk: qcom: gcc-sa8775p: Update the GDSC wait_val fields and flags
->   clk: qcom: gcc-sa8775p: Set FORCE_MEM_CORE_ON for
->     gcc_ufs_phy_ice_core_clk
->   clk: qcom: gpucc-sa8775p: Remove the CLK_IS_CRITICAL and ALWAYS_ON
->     flags
->   clk: qcom: gpucc-sa8775p: Park RCG's clk source at XO during disable
->   clk: qcom: gpucc-sa8775p: Update wait_val fields for GPU GDSC's
->   dt-bindings: clock: qcom: Add SA8775P video clock controller
->   clk: qcom: Add support for Video clock controller on SA8775P
->   dt-bindings: clock: qcom: Add SA8775P camera controller
->   clk: qcom: Add support for Camera Clock Controller on SA8775P
->   dt-bindings: clock: qcom: Add SA8775P display controller
->   clk: qcom: Add support for Display Controllers on SA8775P
->   arm64: dts: qcom: Add support for multimedia clock controllers
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> Since these new definitions are used in the future UART patches the
+> hope is that they could be acked by Qualcomm folks and then go through
+> the same tree as the UART patches that need them.
 > 
->  .../bindings/clock/qcom,sa8775p-camcc.yaml    |   76 +
->  .../bindings/clock/qcom,sa8775p-dispcc.yaml   |   88 +
->  .../bindings/clock/qcom,sa8775p-videocc.yaml  |   75 +
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts     |    2 +-
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |   59 +
->  drivers/clk/qcom/Kconfig                      |   31 +
->  drivers/clk/qcom/Makefile                     |    3 +
->  drivers/clk/qcom/camcc-sa8775p.c              | 1849 +++++++++++++++++
->  drivers/clk/qcom/dispcc0-sa8775p.c            | 1481 +++++++++++++
->  drivers/clk/qcom/dispcc1-sa8775p.c            | 1481 +++++++++++++
->  drivers/clk/qcom/gcc-sa8775p.c                |  154 +-
->  drivers/clk/qcom/gpucc-sa8775p.c              |   41 +-
->  drivers/clk/qcom/videocc-sa8775p.c            |  576 +++++
->  .../dt-bindings/clock/qcom,sa8775p-camcc.h    |  107 +
->  .../dt-bindings/clock/qcom,sa8775p-dispcc.h   |   87 +
->  .../dt-bindings/clock/qcom,sa8775p-videocc.h  |   47 +
->  16 files changed, 6027 insertions(+), 130 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-dispcc.yaml
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
->  create mode 100644 drivers/clk/qcom/camcc-sa8775p.c
->  create mode 100644 drivers/clk/qcom/dispcc0-sa8775p.c
->  create mode 100644 drivers/clk/qcom/dispcc1-sa8775p.c
->  create mode 100644 drivers/clk/qcom/videocc-sa8775p.c
->  create mode 100644 include/dt-bindings/clock/qcom,sa8775p-camcc.h
->  create mode 100644 include/dt-bindings/clock/qcom,sa8775p-dispcc.h
->  create mode 100644 include/dt-bindings/clock/qcom,sa8775p-videocc.h
+> Changes in v2:
+> - New
 > 
-> --
-> 2.17.1
+>  include/linux/soc/qcom/geni-se.h | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
+> index 0f038a1a0330..8d07c442029b 100644
+> --- a/include/linux/soc/qcom/geni-se.h
+> +++ b/include/linux/soc/qcom/geni-se.h
+> @@ -88,11 +88,15 @@ struct geni_se {
+>  #define SE_GENI_M_IRQ_STATUS		0x610
+>  #define SE_GENI_M_IRQ_EN		0x614
+>  #define SE_GENI_M_IRQ_CLEAR		0x618
+> +#define SE_GENI_M_IRQ_EN_SET		0x61c
+> +#define SE_GENI_M_IRQ_EN_CLEAR		0x620
+>  #define SE_GENI_S_CMD0			0x630
+>  #define SE_GENI_S_CMD_CTRL_REG		0x634
+>  #define SE_GENI_S_IRQ_STATUS		0x640
+>  #define SE_GENI_S_IRQ_EN		0x644
+>  #define SE_GENI_S_IRQ_CLEAR		0x648
+> +#define SE_GENI_S_IRQ_EN_SET		0x64c
+> +#define SE_GENI_S_IRQ_EN_CLEAR		0x650
+>  #define SE_GENI_TX_FIFOn		0x700
+>  #define SE_GENI_RX_FIFOn		0x780
+>  #define SE_GENI_TX_FIFO_STATUS		0x800
+> @@ -101,6 +105,8 @@ struct geni_se {
+>  #define SE_GENI_RX_WATERMARK_REG	0x810
+>  #define SE_GENI_RX_RFR_WATERMARK_REG	0x814
+>  #define SE_GENI_IOS			0x908
+> +#define SE_GENI_M_GP_LENGTH		0x910
+> +#define SE_GENI_S_GP_LENGTH		0x914
+>  #define SE_DMA_TX_IRQ_STAT		0xc40
+>  #define SE_DMA_TX_IRQ_CLR		0xc44
+>  #define SE_DMA_TX_FSM_RST		0xc58
+> -- 
+> 2.45.1.288.g0e0cd299f1-goog
 > 
 
