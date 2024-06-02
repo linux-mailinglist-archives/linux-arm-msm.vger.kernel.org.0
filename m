@@ -1,62 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-21399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1FC28D73D6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 06:29:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C5B98D73EF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 07:49:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98253281E46
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 04:29:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37EAE281AE3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 05:49:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0FC910A3D;
-	Sun,  2 Jun 2024 04:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 660921CD2F;
+	Sun,  2 Jun 2024 05:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tzGP96jh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dEEdMbWH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE6679C2;
-	Sun,  2 Jun 2024 04:29:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F151CD16
+	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jun 2024 05:49:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717302558; cv=none; b=dw2b80nHxOwPiheMlNkSt0CTyykMw0AsBQPbTa98eEZlf+8LdnfcorHOH1MddezfcywTtKR5oahB4TWEnre0XMSQCbLW4qRAriPc+/062rJ/Gn9c73qx3n1QO9F5G0SnrnxQbCEA+bpiLll2KWazgAiZbwWlzFcgIsPy5nZWvkY=
+	t=1717307371; cv=none; b=pnUMrUYDg92HeL/sLBDh2WxQ7B1KkwH7ePktAuuRBVfTRe+v3kLVlkW/TkHPQW8r6Ovui5OSxIZHXl7xmiYQcicTpuIu3HkMgqHZdpYrQNJiekhqxYHQijzlIJp05j8fTAX+Xq6CMT1jbBZpDdL47CWRv5IwMgU/Y3X+2gvu7rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717302558; c=relaxed/simple;
-	bh=oYpwUgb3R9s21VRsk1J9qoySXDBYWtk7Ai56w1NOPwM=;
+	s=arc-20240116; t=1717307371; c=relaxed/simple;
+	bh=S5zfxGoD0u3tBX7WTi3pbIcGb/gN6RB7VM+Jl3fS25I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j29MeOCoF68ADA6x+Lhi9sAy+YhoVMcDRHl2hnxXsDtMTx2EU6gkVT6Z3cycBwMAnHjOEpUWmvEpeKFgZlL5S7Si6bV537ZuW326Fkb1G85YcFXfjJ74KCDPyAEitYBgSqCEJ7waspkQFLIfCK/6prwNDJ2ORB75u15RXMHg228=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tzGP96jh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BB2C2BBFC;
-	Sun,  2 Jun 2024 04:29:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717302557;
-	bh=oYpwUgb3R9s21VRsk1J9qoySXDBYWtk7Ai56w1NOPwM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tzGP96jhia4fn4mO1OIp3fqdmG7bjAFymlOTMwLkOW9c8n/Kc9VlrZ41tTUx9oe8z
-	 Kz1WGF9z41vlJW5ZfjsAE6XDAXyaMbhJbZZt0g9j7hX6fJ+F5iXV4JwwNvNPaSV5TB
-	 slG6HBdr78658hTU2gzuKDKwGXEtI6KlLIDkPiBoy4EqDTe9BeerCyusDyjT71Zn6l
-	 LOM8QBR0U1EgpKDidX009FSidAQkXS2B4yEnc5Lmx7i9wfMC5ZI9djpD+xOQHgupVU
-	 eD+3akz/e+MV13A6LIfpWw1sjyhAoV2xAs+T21Z2P9/OhMKzSeEJUKUKL+A93UooJ6
-	 283MPinGsm4/w==
-Date: Sat, 1 Jun 2024 23:29:14 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
-	Jonathan Marek <jonathan@marek.ca>, Del Regno <angelogioacchino.delregno@somainline.org>, 
-	Loic Poulain <loic.poulain@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	 Content-Type:Content-Disposition:In-Reply-To; b=cEVKlScuOSoh1uf7KIMKx4yo5XCLYOudSmBwCpHZhBclC2Yef3k+3m7y+QiO8XXynnrhpGld64TkRXfmknhi8JjjniA9kDCBdP2LiEQGsmNoD2VscpssihV21g0UNxf08SklZgeEFfnY+39eQHhnktNoIT4vHb573PCtosRHKfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dEEdMbWH; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a683868f463so238381366b.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Jun 2024 22:49:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717307368; x=1717912168; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MavawcbK/TMPV5EqBDmNojVHFfhCMUbwiSiZcjCdMBQ=;
+        b=dEEdMbWHS+2xmxBJq1iCKsZL5ym0dBkkGPP3rMDfiJzHbZc0oxkh4Irl7EPJ5brIeh
+         XPaoya6KEp0abSP5ZjTilqeEjDASXUUt0VVL/ptQiJXqrzboi6X7NVmT+itW6/mVtZHG
+         05HlaszGSgUKrfhCS3DCA86v+StMwXbqreZuUWafT8YZQMXQRlGs0r3eoJny8ycri0AB
+         +9NxBsWLxVTyn+6fetRFeTKxYqc5gW9+IklMz23cts+EcQYEzEpuHLQsA1A8xHdYRb9o
+         WsYReFcih2r63lju5c5YzobZZTl/ON4PjMRCV1UY7wynspedlQc19RQ43AffdGhEJJHS
+         FFBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717307368; x=1717912168;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MavawcbK/TMPV5EqBDmNojVHFfhCMUbwiSiZcjCdMBQ=;
+        b=e0gZMVcgBjQ77HmJCm7457uEnfA9/PPpsus62BlS5o72dAQAb2XILw4AgUUKa3Gf8U
+         ih9UQmEnSSVcYDXvSny0VmPt4Rmv+35K6R/IluqIX4QDs4f3imoTPmfaDZ4BqZ4TBCJp
+         TigF8lRuz3jmI5LzC8mTTXhhhWAlaFX+WUyhpBiFFX0NSBA6AgBFpMl+45mlG0/Qg0T0
+         p/nVsUH2aNHXxgTP8wjp9Jy+oE0Wbx0gB8G0BxnaEAYNNgAok7+I8LrhwUAaro1vskNW
+         6sp+PiPPPnxmkDGqMwGHUf4+4l+m50wNWyYQ1hZjEmORincclQHcBkOX4Kr348WRmfED
+         MzUA==
+X-Forwarded-Encrypted: i=1; AJvYcCVYP0DqYIHffvuPOMV1ZIfyXNiHhTxKzzp0GfxGws1koHOeIOYzyuknGkWf3LLW4Tcszx1ACchYR9DAY+K/M/WCWIT5IkyAGI+KgMriRw==
+X-Gm-Message-State: AOJu0YwVsE4iYoQ5Ma/ao2ZRQO7ymPzmTdnboc1Nn8zgBIdHwGuDvU+E
+	IslkP45uOk+YDxf+/1Wz2OsHhT4wvyi3/9XcW6aEaaoR9w0py4r9p0ARz8Isvh3tFThYqIv6Td2
+	N
+X-Google-Smtp-Source: AGHT+IH9FF9p3WS/bkS5Rwx2qGx7t+VkpS8ZMjcquQyTyU410/RKXSXcsKTTlfJmJ9PVRV8OGp4U7Q==
+X-Received: by 2002:a17:907:119d:b0:a68:6c51:f571 with SMTP id a640c23a62f3a-a686c6138b0mr374437366b.74.1717307367772;
+        Sat, 01 Jun 2024 22:49:27 -0700 (PDT)
+Received: from linaro.org ([188.27.161.69])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a68b4b09cb9sm156347066b.178.2024.06.01.22.49.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Jun 2024 22:49:27 -0700 (PDT)
+Date: Sun, 2 Jun 2024 08:49:25 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/16] dt-bindings: clock: qcom: reference qcom-gcc.yaml
-Message-ID: <dqk2jxt44lh3e4hlkfflqjyzmaujwtrzgxe7kem2soua3yryxt@hykweb47ku37>
-References: <20240531-dt-bindings-qcom-gcc-v1-0-b37d49fe1421@linaro.org>
- <l73uszlhnhyamfuwm7f6bbmockttwihsylkkgbyedkdseznlka@mtr5c7r4nqt4>
- <8ac8cc27-6c39-45fe-bdc2-40a310c815cc@linaro.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-qcp: Fix USB PHYs
+ regulators
+Message-ID: <ZlwH5aZ1CwDnB90S@linaro.org>
+References: <20240530-x1e80100-dts-fix-usb-phy-supplies-v1-0-6eb72a546227@linaro.org>
+ <20240530-x1e80100-dts-fix-usb-phy-supplies-v1-2-6eb72a546227@linaro.org>
+ <fjawzjf5squniqse43r3xwshguwhcg5ofqzcjvmrn5v2ji3e7x@eve4fhsftnhw>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,46 +90,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8ac8cc27-6c39-45fe-bdc2-40a310c815cc@linaro.org>
+In-Reply-To: <fjawzjf5squniqse43r3xwshguwhcg5ofqzcjvmrn5v2ji3e7x@eve4fhsftnhw>
 
-On Fri, May 31, 2024 at 05:19:19PM GMT, Krzysztof Kozlowski wrote:
-> On 31/05/2024 17:14, Dmitry Baryshkov wrote:
-> > On Fri, May 31, 2024 at 03:52:18PM +0200, Krzysztof Kozlowski wrote:
-> >> Hi,
-> >>
-> >> Unify Qualcomm clock controllers by referencing qcom,gcc.yaml where
-> >> applicable.  Several existing bindings for these display/GPU/CAM clock
-> >> controllers already do it.
+On 24-06-01 17:58:19, Bjorn Andersson wrote:
+> On Thu, May 30, 2024 at 07:35:46PM GMT, Abel Vesa wrote:
+> > The 1.2v HS PHY shared regulator is actually LDO2 from PM8550ve id J.
+> > Also add the missing supplies to QMP PHYs.
 > > 
-> > The series looks good to me with a single point in mind. You are writing
-> > that dispcc/videocc/etc are a variant of GCC. However GCC is a Global
-> > Clock Controller. 
+> > Fixes: 22b82135c02d ("arm64: dts: qcom: x1e80100-qcp: Enable more support")
 > 
-> Yeah, that's simplification from my side and assumption that at first
-> they designed GCC and then they copied the design to other blocks.
+> This isn't the right hash. I'm fixing this one up, but please check make
+> sure your fixes are based on merged commits.
 > 
 
-That may or may not be the case, who knows... I also don't have a strong
-opinion about tying it all to gcc.yaml if that work...
+Sorry about that. Will double check next time.
 
-But the claim in the commit messages should the be that we inherit
-gcc.yaml because it's convenient, not because all clock controllers are
-derived from gcc.
+Thanks for fixing it.
 
-Regards,
-Bjorn
-
-> > What about renaming qcom,gcc.yaml to
-> > qcom,cc-common.yaml ? Then the rest makes total sense to me.
-> 
-> Several gpu/disp/cam clock controllers already include qcom,gcc.yaml, so
-> I would say this should not be a requirement for this patchset.
-> 
-> We can rename, although it always is a bit of churn - git log needs
-> special option, backporting is a bit trickier.
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+> Regards,
+> Bjorn
 
