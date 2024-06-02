@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-21398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2692E8D73CE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 06:23:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1FC28D73D6
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 06:29:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7DBE1F217CF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 04:23:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98253281E46
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 04:29:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93182C8FB;
-	Sun,  2 Jun 2024 04:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0FC910A3D;
+	Sun,  2 Jun 2024 04:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UwBfu0bR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tzGP96jh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67057AD2D;
-	Sun,  2 Jun 2024 04:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE6679C2;
+	Sun,  2 Jun 2024 04:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717302215; cv=none; b=MZ7jnnVJnnqNuvXFwFLtW4qltl/xeZIimQ0lLcDZAQRarsOB0t5Q95TW+aCCyO0GAbO20Uq9VNiGDjWPy+I85sypzIfyep3xBlSq9Pmg4LV+Gv8y6p7EqVRIz3dWB6UXq32Wu14ZM6moJyTOBrqqqX6v+cstGqb2Ao2ePGocQD0=
+	t=1717302558; cv=none; b=dw2b80nHxOwPiheMlNkSt0CTyykMw0AsBQPbTa98eEZlf+8LdnfcorHOH1MddezfcywTtKR5oahB4TWEnre0XMSQCbLW4qRAriPc+/062rJ/Gn9c73qx3n1QO9F5G0SnrnxQbCEA+bpiLll2KWazgAiZbwWlzFcgIsPy5nZWvkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717302215; c=relaxed/simple;
-	bh=t3NPqJkk+SwSAxF9jIi4Udg7haRJ/INOmuYkJneaTVM=;
+	s=arc-20240116; t=1717302558; c=relaxed/simple;
+	bh=oYpwUgb3R9s21VRsk1J9qoySXDBYWtk7Ai56w1NOPwM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KH7AZsGvABrNFOKtOofvYLTpilA3u0rDw4P4ZuB87jeYBj+sOh0tFNeN8NaBPciF3YRMbGm6swazer+boWWp1m4LoBUq8Nej1Yy5cmqhzZLTrRPn8LQ8iAp6Y9cQN+/yxOsqHkDuqttf4/ill0XCSa+Z7Yp+pJeu9iV/FSfnkGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UwBfu0bR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5526C2BBFC;
-	Sun,  2 Jun 2024 04:23:33 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=j29MeOCoF68ADA6x+Lhi9sAy+YhoVMcDRHl2hnxXsDtMTx2EU6gkVT6Z3cycBwMAnHjOEpUWmvEpeKFgZlL5S7Si6bV537ZuW326Fkb1G85YcFXfjJ74KCDPyAEitYBgSqCEJ7waspkQFLIfCK/6prwNDJ2ORB75u15RXMHg228=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tzGP96jh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BB2C2BBFC;
+	Sun,  2 Jun 2024 04:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717302215;
-	bh=t3NPqJkk+SwSAxF9jIi4Udg7haRJ/INOmuYkJneaTVM=;
+	s=k20201202; t=1717302557;
+	bh=oYpwUgb3R9s21VRsk1J9qoySXDBYWtk7Ai56w1NOPwM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UwBfu0bRIw4YSjrdPS+0JfY/vcvheGz6Afhx2SJjOWDow/xVIGO8CjhI6+OITNut0
-	 qfVYsyxmpvcyjK3D5z7a/pCvMqJsMdxPXpY78Rdmqg5QZxKECvYLzdfcg8+4t6bGwC
-	 FrFrHvx6NOsaoQmg67FWFvI1pRwKp83yurhWP31mupnxdWsc43H4+5kYFSoWaX1dUm
-	 5hwmhH0sR6OV+r/ja5rxElVijKKlZK271XfGhjth4JhSfpP3pDh69z1Mle919ye1D9
-	 4UjyYjeA9hXkFpxK1NvsL8Z2BmSnVH78aBZS4S2EbsER0uuazqLWBkmzbPIm9HuhiS
-	 qTGXw+rCouvdQ==
-Date: Sat, 1 Jun 2024 23:23:32 -0500
+	b=tzGP96jhia4fn4mO1OIp3fqdmG7bjAFymlOTMwLkOW9c8n/Kc9VlrZ41tTUx9oe8z
+	 Kz1WGF9z41vlJW5ZfjsAE6XDAXyaMbhJbZZt0g9j7hX6fJ+F5iXV4JwwNvNPaSV5TB
+	 slG6HBdr78658hTU2gzuKDKwGXEtI6KlLIDkPiBoy4EqDTe9BeerCyusDyjT71Zn6l
+	 LOM8QBR0U1EgpKDidX009FSidAQkXS2B4yEnc5Lmx7i9wfMC5ZI9djpD+xOQHgupVU
+	 eD+3akz/e+MV13A6LIfpWw1sjyhAoV2xAs+T21Z2P9/OhMKzSeEJUKUKL+A93UooJ6
+	 283MPinGsm4/w==
+Date: Sat, 1 Jun 2024 23:29:14 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Douglas Anderson <dianders@chromium.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	John Ogness <john.ogness@linutronix.de>, 
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
-	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org, 
-	Yicong Yang <yangyicong@hisilicon.com>, Johan Hovold <johan+linaro@kernel.org>, 
-	linux-kernel@vger.kernel.org, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v2 1/7] soc: qcom: geni-se: Add
- GP_LENGTH/IRQ_EN_SET/IRQ_EN_CLEAR registers
-Message-ID: <nuxdwhd6vdickuctf75wjan3x6vtwkbypydhj5d5wewkafe66n@h5aduxfym6iz>
-References: <20240530224603.730042-1-dianders@chromium.org>
- <20240530154553.v2.1.Ife7ced506aef1be3158712aa3ff34a006b973559@changeid>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
+	Jonathan Marek <jonathan@marek.ca>, Del Regno <angelogioacchino.delregno@somainline.org>, 
+	Loic Poulain <loic.poulain@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/16] dt-bindings: clock: qcom: reference qcom-gcc.yaml
+Message-ID: <dqk2jxt44lh3e4hlkfflqjyzmaujwtrzgxe7kem2soua3yryxt@hykweb47ku37>
+References: <20240531-dt-bindings-qcom-gcc-v1-0-b37d49fe1421@linaro.org>
+ <l73uszlhnhyamfuwm7f6bbmockttwihsylkkgbyedkdseznlka@mtr5c7r4nqt4>
+ <8ac8cc27-6c39-45fe-bdc2-40a310c815cc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,65 +65,46 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240530154553.v2.1.Ife7ced506aef1be3158712aa3ff34a006b973559@changeid>
+In-Reply-To: <8ac8cc27-6c39-45fe-bdc2-40a310c815cc@linaro.org>
 
-On Thu, May 30, 2024 at 03:45:53PM GMT, Douglas Anderson wrote:
-> For UART devices the M_GP_LENGTH is the TX word count. For other
-> devices this is the transaction word count.
+On Fri, May 31, 2024 at 05:19:19PM GMT, Krzysztof Kozlowski wrote:
+> On 31/05/2024 17:14, Dmitry Baryshkov wrote:
+> > On Fri, May 31, 2024 at 03:52:18PM +0200, Krzysztof Kozlowski wrote:
+> >> Hi,
+> >>
+> >> Unify Qualcomm clock controllers by referencing qcom,gcc.yaml where
+> >> applicable.  Several existing bindings for these display/GPU/CAM clock
+> >> controllers already do it.
+> > 
+> > The series looks good to me with a single point in mind. You are writing
+> > that dispcc/videocc/etc are a variant of GCC. However GCC is a Global
+> > Clock Controller. 
 > 
-> For UART devices the S_GP_LENGTH is the RX word count.
-> 
-> The IRQ_EN set/clear registers allow you to set or clear bits in the
-> IRQ_EN register without needing a read-modify-write.
+> Yeah, that's simplification from my side and assumption that at first
+> they designed GCC and then they copied the design to other blocks.
 > 
 
-Acked-by: Bjorn Andersson <andersson@kernel.org>
+That may or may not be the case, who knows... I also don't have a strong
+opinion about tying it all to gcc.yaml if that work...
+
+But the claim in the commit messages should the be that we inherit
+gcc.yaml because it's convenient, not because all clock controllers are
+derived from gcc.
 
 Regards,
 Bjorn
 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> Since these new definitions are used in the future UART patches the
-> hope is that they could be acked by Qualcomm folks and then go through
-> the same tree as the UART patches that need them.
+> > What about renaming qcom,gcc.yaml to
+> > qcom,cc-common.yaml ? Then the rest makes total sense to me.
 > 
-> Changes in v2:
-> - New
+> Several gpu/disp/cam clock controllers already include qcom,gcc.yaml, so
+> I would say this should not be a requirement for this patchset.
 > 
->  include/linux/soc/qcom/geni-se.h | 6 ++++++
->  1 file changed, 6 insertions(+)
+> We can rename, although it always is a bit of churn - git log needs
+> special option, backporting is a bit trickier.
 > 
-> diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
-> index 0f038a1a0330..8d07c442029b 100644
-> --- a/include/linux/soc/qcom/geni-se.h
-> +++ b/include/linux/soc/qcom/geni-se.h
-> @@ -88,11 +88,15 @@ struct geni_se {
->  #define SE_GENI_M_IRQ_STATUS		0x610
->  #define SE_GENI_M_IRQ_EN		0x614
->  #define SE_GENI_M_IRQ_CLEAR		0x618
-> +#define SE_GENI_M_IRQ_EN_SET		0x61c
-> +#define SE_GENI_M_IRQ_EN_CLEAR		0x620
->  #define SE_GENI_S_CMD0			0x630
->  #define SE_GENI_S_CMD_CTRL_REG		0x634
->  #define SE_GENI_S_IRQ_STATUS		0x640
->  #define SE_GENI_S_IRQ_EN		0x644
->  #define SE_GENI_S_IRQ_CLEAR		0x648
-> +#define SE_GENI_S_IRQ_EN_SET		0x64c
-> +#define SE_GENI_S_IRQ_EN_CLEAR		0x650
->  #define SE_GENI_TX_FIFOn		0x700
->  #define SE_GENI_RX_FIFOn		0x780
->  #define SE_GENI_TX_FIFO_STATUS		0x800
-> @@ -101,6 +105,8 @@ struct geni_se {
->  #define SE_GENI_RX_WATERMARK_REG	0x810
->  #define SE_GENI_RX_RFR_WATERMARK_REG	0x814
->  #define SE_GENI_IOS			0x908
-> +#define SE_GENI_M_GP_LENGTH		0x910
-> +#define SE_GENI_S_GP_LENGTH		0x914
->  #define SE_DMA_TX_IRQ_STAT		0xc40
->  #define SE_DMA_TX_IRQ_CLR		0xc44
->  #define SE_DMA_TX_FSM_RST		0xc58
-> -- 
-> 2.45.1.288.g0e0cd299f1-goog
+> 
+> Best regards,
+> Krzysztof
 > 
 
