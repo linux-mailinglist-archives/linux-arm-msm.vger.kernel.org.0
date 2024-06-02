@@ -1,61 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-21395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B2218D73BB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 06:12:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAD8A8D73C2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 06:17:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9E69281F87
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 04:12:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE2F81C20E7D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 04:17:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 346C9BA42;
-	Sun,  2 Jun 2024 04:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5231018AEA;
+	Sun,  2 Jun 2024 04:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eHDW2pag"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIomnF28"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A1BA94C;
-	Sun,  2 Jun 2024 04:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2719618026;
+	Sun,  2 Jun 2024 04:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717301562; cv=none; b=kMWyDn4xA6vNC8ebRXl6bYmhVBelWIzwX/BLivbhSTTOmyekp7+YOboRHOYSdZsZkpihgcDJ2qvRajdQNc0NheEi6EZUnlphvPbvfHODrRJhdUdcDr4PTPBwFs6cWiSaFhjC/1d07D1qwNjCBW/F/DTcevb0sQEYNTT52BMAJW8=
+	t=1717301824; cv=none; b=mUxbCIWKamZ3obxBSTC4AJJmUds6tGJqkfxPcbGhv7wSl5rcSEtqwOsH/r/bThN/JU39YHgh82AjHSeMVOlQEnh2g6PohpprPLOqPTLr3ZsHNrhctJSDStDYYLa8q38p8KEKF0TpiXEcpIpS5Ejr7DXOOAjVWVV/1AYdZ4z+Gb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717301562; c=relaxed/simple;
-	bh=sU54eC6NHiXDr/NN9k45qNK6jPMCVgfdE4ghAPwJrKo=;
+	s=arc-20240116; t=1717301824; c=relaxed/simple;
+	bh=pFzVliexukYVMzuAmF3jByk9BbrXHNnhdUcuGLAVzAk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aeyIZEYFySH4MUEVKOJMgCRTl/Q271Z8deaDEIkxFozesuW2tZWlYtkIgmzFQ9vXKqQZcFsbS5efzV3W2/rV1NZPc56XmVX/5h0wPQM6HQQ8avwDkAom2CW2/BYk26QfFBrcta2AVj1MG8HXsLFDszEvqqI/hoo87uPD2UJUt4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eHDW2pag; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8D8C2BBFC;
-	Sun,  2 Jun 2024 04:12:40 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=atUH6yyV/wAg7wRHLQGIE5ILP4VoGnsJaQgdh4KDxHrxFPpimlcRjDTVSwntv2XgYSsx6kZ/N6QKrVkM1zKhx2s6U1sp0ux22jPuoDakDiOYf9yMvReKHvARDoLTXXnMz2ClTEiFt2YQ7JJ0J9Ky6jA4pv8IbsLNcaD2AmcPmv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIomnF28; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B671AC2BBFC;
+	Sun,  2 Jun 2024 04:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717301561;
-	bh=sU54eC6NHiXDr/NN9k45qNK6jPMCVgfdE4ghAPwJrKo=;
+	s=k20201202; t=1717301823;
+	bh=pFzVliexukYVMzuAmF3jByk9BbrXHNnhdUcuGLAVzAk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eHDW2pagSA/qS37YtV8NJaoz/sSXpkE4g1RhMawOY9l7CeHlZOdNC382849L9pi/q
-	 7upec5iuE2hlTS2EVR1+oz4or0bwQqo7etkcbrpMfR3DwbN6odI93DB1t0Eeu8/1UY
-	 rfl25bmBMFfznt0Wne8D6L+4SpDUmyLdt34Wu7vwfynU9ORh1cB0auB0AUUYUqn7XK
-	 CBFYAHQaaU+1h16/7vqa+E7mV42oz4L9OKLTxZL+vUA0Zj+djCDxkN86WgEGg2Mj+M
-	 sPYKnbkU/YqaS1o/fCI3H/V2DugqRXPwUGkQKajqaN5LAbAlkC6fDXDMfuMO57wHte
-	 alR1pt1SyGKYA==
-Date: Sat, 1 Jun 2024 23:12:38 -0500
+	b=HIomnF28y6JtnviYS8vNBnC/DedBJnF6DGVi/L4MR0dQksLtQXHbZE6+7zWz0YYjn
+	 5ZmxxLs+yEupWQMKjvJYjHoSGzfuOUXW48uws41DVqa2wlw0GYv1q6zvixiOkBywet
+	 r1nBTzg6kG3mwg5PAcLfxL62rrVZNN6X9bGccTO8s9p/qJBfvHcS0/NGL8/gnTF7My
+	 JcYpzLomSk4Fp8zsEj2cYK8uyEecoqZHJijAHKumyhyb4ZsREUiv+lbbHA0JkfKEku
+	 1R9ppLm80nccKyMEDznv8fZQP6NodCu+HEuJ4H2HVUq/ij2QlObQYdQTTrSefPla/d
+	 RVZCBrpjfQkoA==
+Date: Sat, 1 Jun 2024 23:17:00 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	quic_jkona@quicinc.com, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 04/13] clk: qcom: gpucc-sa8775p: Remove the
- CLK_IS_CRITICAL and ALWAYS_ON flags
-Message-ID: <woi4vzsc2mgug26rluvzt6ayoawfsus6ow2kqnmfnnqlwf2lty@sirpsaf2anuz>
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, quic_jkona@quicinc.com, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 13/13] arm64: dts: qcom: Add support for multimedia clock
+ controllers
+Message-ID: <zheryfbthco5ngjam7dtchjp5rez2mdmvdbdclvrc3h4laxlaq@eudxnu7lkott>
 References: <20240531090249.10293-1-quic_tdas@quicinc.com>
- <20240531090249.10293-5-quic_tdas@quicinc.com>
- <0f56831e-8572-46f5-89cf-d1e990813a02@linaro.org>
+ <20240531090249.10293-14-quic_tdas@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,61 +63,127 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0f56831e-8572-46f5-89cf-d1e990813a02@linaro.org>
+In-Reply-To: <20240531090249.10293-14-quic_tdas@quicinc.com>
 
-On Fri, May 31, 2024 at 11:59:04AM GMT, Krzysztof Kozlowski wrote:
-> On 31/05/2024 11:02, Taniya Das wrote:
-> > The gpu clocks and GDSC have been marked critical from the clock driver
-> > which is not desired for functionality. Hence remove the CLK_IS_CRITICAL
-> > and ALWAYS_ON flags.
-> > 
-> > Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
-> > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> > ---
-> >  drivers/clk/qcom/gpucc-sa8775p.c | 27 +++++++++++----------------
-> >  1 file changed, 11 insertions(+), 16 deletions(-)
-> > 
-> > diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
-> > index 1167c42da39d..f965babf4330 100644
-> > --- a/drivers/clk/qcom/gpucc-sa8775p.c
-> > +++ b/drivers/clk/qcom/gpucc-sa8775p.c
-> > @@ -1,6 +1,6 @@
-> >  // SPDX-License-Identifier: GPL-2.0-only
-> >  /*
-> > - * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> > + * Copyright (c) 2021-2022, 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> 
-> That's not a fix.
-> 
-> >   * Copyright (c) 2023, Linaro Limited
-> >   */
-> >  
-> > @@ -280,7 +280,7 @@ static struct clk_branch gpu_cc_ahb_clk = {
-> >  				&gpu_cc_hub_ahb_div_clk_src.clkr.hw,
-> >  			},
-> >  			.num_parents = 1,
-> > -			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-> > +			.flags = CLK_SET_RATE_PARENT,
-> 
-> I fail to see why this is a fix. They were marked as critical on
-> purpose. It was needed, wasn't it?
-> 
-> Provide jsutification for commits, not just sprinkle Fixes tag all around.
-> 
+On Fri, May 31, 2024 at 02:32:49PM GMT, Taniya Das wrote:
+> Add support for camera, display0, display1 and video clock
+> controllers on SA8775P platform. While at it, update the
+> sleep_clk frequency.
 
-This is indeed a fix, as marking clocks CLK_IS_CRITICAL prevents any
-power-domain associated with the clock controller from suspending. In
-other words, the current behavior is broken.
-
-@Taniya, "not desired for functionality" does not carry any useful
-information explaining why this change is made. Please update the commit
-message.
+Whenever you feel like starting a sentence with "While at it", it's
+probably a separate commit - and indeed so in this case. This will also
+give you the opportunity to claim why you're changing its value...
 
 Regards,
 Bjorn
 
 > 
-> Best regards,
-> Krzysztof
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts |  2 +-
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi     | 59 +++++++++++++++++++++++
+>  2 files changed, 60 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> index 26ad05bd3b3f..4684da376565 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> @@ -542,7 +542,7 @@
+>  };
+>  
+>  &sleep_clk {
+> -	clock-frequency = <32764>;
+> +	clock-frequency = <32000>;
+>  };
+>  
+>  &spi16 {
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index eae0de9720b5..7f62738671da 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -6,8 +6,11 @@
+>  #include <dt-bindings/interconnect/qcom,icc.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> +#include <dt-bindings/clock/qcom,sa8775p-camcc.h>
+> +#include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
+>  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
+>  #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
+> +#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
+>  #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
+>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+>  #include <dt-bindings/power/qcom-rpmpd.h>
+> @@ -2904,6 +2907,47 @@
+>  			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
+> +		videocc: clock-controller@abf0000 {
+> +			compatible = "qcom,sa8775p-videocc";
+> +			reg = <0x0 0x0abf0000 0x0 0x10000>;
+> +			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> +				 <&sleep_clk>;
+> +			power-domains = <&rpmhpd SA8775P_MMCX>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		camcc: clock-controller@ade0000 {
+> +			compatible = "qcom,sa8775p-camcc";
+> +			reg = <0x0 0x0ade0000 0x0 0x20000>;
+> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> +				 <&sleep_clk>;
+> +			power-domains = <&rpmhpd SA8775P_MMCX>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		dispcc0: clock-controller@af00000 {
+> +			compatible = "qcom,sa8775p-dispcc0";
+> +			reg = <0x0 0x0af00000 0x0 0x20000>;
+> +			clocks = <&gcc GCC_DISP_AHB_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> +				 <&sleep_clk>,
+> +				 <0>, <0>, <0>, <0>,
+> +				 <0>, <0>, <0>, <0>;
+> +			power-domains = <&rpmhpd SA8775P_MMCX>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,sa8775p-pdc", "qcom,pdc";
+>  			reg = <0x0 0x0b220000 0x0 0x30000>,
+> @@ -3424,6 +3468,21 @@
+>  			#freq-domain-cells = <1>;
+>  		};
+>  
+> +		dispcc1: clock-controller@22100000 {
+> +			compatible = "qcom,sa8775p-dispcc1";
+> +			reg = <0x0 0x22100000 0x0 0x20000>;
+> +			clocks = <&gcc GCC_DISP_AHB_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> +				 <&sleep_clk>,
+> +				 <0>, <0>, <0>, <0>,
+> +				 <0>, <0>, <0>, <0>;
+> +			power-domains = <&rpmhpd SA8775P_MMCX>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+>  		ethernet1: ethernet@23000000 {
+>  			compatible = "qcom,sa8775p-ethqos";
+>  			reg = <0x0 0x23000000 0x0 0x10000>,
+> -- 
+> 2.17.1
 > 
 
