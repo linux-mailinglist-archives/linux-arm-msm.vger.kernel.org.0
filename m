@@ -1,112 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-21411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 900608D75CB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 15:49:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 227C38D7666
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 16:41:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C306B21C59
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 13:49:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40AF51C21A80
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 14:40:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDD9A3BBFB;
-	Sun,  2 Jun 2024 13:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B18924644C;
+	Sun,  2 Jun 2024 14:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LXR6BTbH"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="LIWkbNCd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from msa.smtpout.orange.fr (msa-210.smtpout.orange.fr [193.252.23.210])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606912746F
-	for <linux-arm-msm@vger.kernel.org>; Sun,  2 Jun 2024 13:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51862AEE0;
+	Sun,  2 Jun 2024 14:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.252.23.210
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717336183; cv=none; b=hMHITavPTrk75J+J7YP/HhuckopwJqRIKVns7UiHewnRXUZCvG+mO3JrqFn0oyYBq82LLdR0XTpL7lGQBWEeOyTYS4/1RnualTTE8Cb/+05DsaV9/xdgeHcZGtonQorSiiofGIbP0/jd1ZaLFnMnESScOrzVR3FAB8s7uskNYXM=
+	t=1717339087; cv=none; b=MdiWH1GT+ZfwWC9AkCkeulfs8KWKpqHrLvl0ueqYBdgtOdrRYQofyqLp/9JqkyjMx6oCYLj9ZW7nzAdvq+3ye40VluYKAj+7vA2TcombHucWvsPxRNv31UrrOtSSpnSrxwPN4FeDKEWXKarGTrUc97khaJiqBu6E05Xjn/7pmR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717336183; c=relaxed/simple;
-	bh=OFBLy/93aDcasO+7L2Af/xULO+GOP6Ah177EDibhun0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YtvSeohpbFqWrgdTf6cKyLbP8BaMytj+RLepDV8vza1iI2ZsWEPw83WsR6t7AWTWF1/ioeJ3r0zB3ecRK/Tx8AbPKKGw27iMENI0ClmNtl7pjBA63HxJ+9IswVSdH8wWCR3qhGgvEdRXJnHglPJJF4WlR7HVIxc6rapIzCiKjq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LXR6BTbH; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52b82d57963so3352484e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Jun 2024 06:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717336180; x=1717940980; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RK+gSspnDvIjQ8g7XKh+hwU9n45tiCyCGsEgB2oOglo=;
-        b=LXR6BTbHkE/GeQ+iE/7+lWWLaUBANMlELk2e8im2xKHxF/7032gWxpWpvWS1jAUaOs
-         +LLADlmTl/n/uAKsAk5V6AfL9GGI0rEL2htjnDmoRac2pRxucAsx7rn2FITgu1qXLHkZ
-         ydzR7dyMWCa5S95WE24E2Uijk4BsdONj1Axc4COCna3k1MFVwfMWF9bDzJWUUP+dRuPo
-         oGcNHrLtL5EzvPiz6kWnvD4h7lMoXWTZLxlAwO9mQJtplnpTcbO1yFQ17VqCoAcKqk5V
-         dZFDFchgbzL5iBR+d8dFq2UpDZ2a0zPsPt12ZP7/cWR5b4mzEFnm41CZhgY1n3CLMDro
-         vGzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717336180; x=1717940980;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RK+gSspnDvIjQ8g7XKh+hwU9n45tiCyCGsEgB2oOglo=;
-        b=df2+RV9KDwt7pE86v01/b0QxEY7ZhGGuCJKCR3tI8wZoVUihRkScptLp3T13p/2R7Q
-         e3ESkUDIGA1wkguybR0mcPYvk4SxDI8LZj1Wqx0GBbOZDw2f9IAnsJlk+K9xdZF32AHj
-         GlBeohyAsTerAnYWAfZLdhZAMdlgpsDrgweE7SrY5lpVgpZGTqgGFxBqiAIvg0BfES0R
-         1Mn0QHZ4DhcyK+I3Ft4i14Xf9oduqQ4XDIA6iuQaVcpy4+CaIeOg+i1Av98KnEjY0YXG
-         6xZyOAKINVVlCzsNdtL49NTEACo1O1koZZebHwV/ayKut6TlN1b8ej5HYky8GHCmsrwT
-         2ddA==
-X-Forwarded-Encrypted: i=1; AJvYcCW1VIFjkxi1I/lHOend1cx683ZlPeQUejbK2Wyj893WQXJENV/ZV51nqdDWS49xO8IllXWjjBNBvmkX7I1YMlhpVrzgyB/ZR0e4u2yK4g==
-X-Gm-Message-State: AOJu0Yw6jRq4qSJro68T85JAMEQovsX4zpVzczXhpAlkmzKg4Pg8QBQG
-	RSYwRVTxSNjX1rK+vqvnKuLgR3BrsV/gb27q29XLPwJMou2Q7hc1BQG8MWTgu3A=
-X-Google-Smtp-Source: AGHT+IFHtYW/9mmf4mBFaBwKb2/rlrKnB1nEhfK0SBxsg0mk+z6IYwfe5eM8PmYnq+8HBzEZeU9iBA==
-X-Received: by 2002:ac2:4246:0:b0:521:6c38:6949 with SMTP id 2adb3069b0e04-52b896dab8cmr4494872e87.45.1717336180547;
-        Sun, 02 Jun 2024 06:49:40 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d8e557sm956327e87.297.2024.06.02.06.49.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Jun 2024 06:49:39 -0700 (PDT)
-Date: Sun, 2 Jun 2024 16:49:38 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>
-Subject: Re: [PATCH V4 8/8] arm64: dts: qcom: sm8650: Add video and camera
- clock controllers
-Message-ID: <fxh3urdpdugkdgqureddxurgusqrexomi2v4h77enm5ncvoa52@nkh2p7e6dsto>
-References: <20240602114439.1611-1-quic_jkona@quicinc.com>
- <20240602114439.1611-9-quic_jkona@quicinc.com>
+	s=arc-20240116; t=1717339087; c=relaxed/simple;
+	bh=LVysQP63kxgkOPJHDyBMkif3ydpiiR5UrzTv9VFOl8M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PbStoFn79rYOap8TCWHYaNF2qLEdhQm5f42AvsgA8KX+Ap0Mj2tbk2G9jsWpY+Z0lgc5qOQMWMNoo927GOKJwYhzooS+NYOY0gAGDOnQ9E+EU+NPiffe8lrY2E09tsHcU8wEMY/+fJ59nc9mC7ljpiDt9fszqw+O4sXJg83IiFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=LIWkbNCd; arc=none smtp.client-ip=193.252.23.210
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from fedora.home ([86.243.17.157])
+	by smtp.orange.fr with ESMTPA
+	id DmCns7nHE13tqDmCnsrjoC; Sun, 02 Jun 2024 16:29:07 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1717338547;
+	bh=dcmvFoYnZSeTd8Kj+AiRlBV6qhwSnFlJXOzqirkIDKI=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=LIWkbNCd6zg0rtja3DStnWdGogy3nvoA9T+e2ySWipMxQ9jydRKgLoHXT/kDBMLQY
+	 CbLbVJHriAfr6I94ftpHLQpJYuAVzTTRGk9u9pohxEP9CrgVlCr4z3fgsW+89cH0IO
+	 447SIjK5yUp5tzZ4Hxsnghpj+d4uvtJjz8/tQ6LpDYT9nbwk6pBk9FBTBzQJDdG0J+
+	 sy8h1EvOzojsc8fI7NeXV1MzBswZE+7/vqy0CsoQhWfwlRD4Amo6aI6SxP91i90pAQ
+	 7zvWE1s/BPtThw82pWhoCrqOLREqTi4HjcWEmVA1i98UpHR4o6EgE3zmzBgmi4nDpz
+	 +OTZSaCoEB+mQ==
+X-ME-Helo: fedora.home
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sun, 02 Jun 2024 16:29:07 +0200
+X-ME-IP: 86.243.17.157
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	kernel-janitors@vger.kernel.org,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2] media: venus: Constify struct dec_bufsize_ops and enc_bufsize_ops
+Date: Sun,  2 Jun 2024 16:27:34 +0200
+Message-ID: <9bc4b24a55c42fa49125cae0304c8b0f208550b1.1717313173.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240602114439.1611-9-quic_jkona@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Sun, Jun 02, 2024 at 05:14:39PM +0530, Jagadeesh Kona wrote:
-> Add device nodes for video and camera clock controllers on Qualcomm
-> SM8650 platform.
-> 
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 26 ++++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
-> 
+"struct dec_bufsize_ops and "struct enc_bufsize_ops" are not modified in
+this driver.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Constifying these structures moves some data to a read-only section, so
+increase overall security.
 
+On a x86_64, with allmodconfig:
+Before:
+   text	   data	    bss	    dec	    hex	filename
+  12494	    822	      0	  13316	   3404	drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.o
 
+After:
+   text	   data	    bss	    dec	    hex	filename
+  12766	    566	      0	  13332	   3414	drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.o
+
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+Changes in v2:
+   - Add missing prefix in the subject
+
+v1: https://lore.kernel.org/all/9bc4b28a55c42fa4a125c3e03d4c8b0f208550b4.1717313173.git.christophe.jaillet@wanadoo.fr/
+
+While looking at lore to find the reference above, I found that this
+patch had already been sent by Rikard Falkeborn <rikard.falkeborn@gmail.com>
+See: https://lore.kernel.org/all/20211212123534.4473-1-rikard.falkeborn@gmail.com/
+
+So, if applied, credits should be for him.
+So feel free to add a Co-Developed-by:, Reported-by:, Suggested-by: or
+whatever makes sense, including removing my Signed-off-by: to put his if
+it sounds better to do it this way.
+
+ .../platform/qcom/venus/hfi_plat_bufs_v6.c    | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+index f5a655973c08..6289166786ec 100644
+--- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
++++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+@@ -1063,51 +1063,51 @@ struct enc_bufsize_ops {
+ 	u32 (*persist)(void);
+ };
+ 
+-static struct dec_bufsize_ops dec_h264_ops = {
++static const struct dec_bufsize_ops dec_h264_ops = {
+ 	.scratch = h264d_scratch_size,
+ 	.scratch1 = h264d_scratch1_size,
+ 	.persist1 = h264d_persist1_size,
+ };
+ 
+-static struct dec_bufsize_ops dec_h265_ops = {
++static const struct dec_bufsize_ops dec_h265_ops = {
+ 	.scratch = h265d_scratch_size,
+ 	.scratch1 = h265d_scratch1_size,
+ 	.persist1 = h265d_persist1_size,
+ };
+ 
+-static struct dec_bufsize_ops dec_vp8_ops = {
++static const struct dec_bufsize_ops dec_vp8_ops = {
+ 	.scratch = vpxd_scratch_size,
+ 	.scratch1 = vp8d_scratch1_size,
+ 	.persist1 = vp8d_persist1_size,
+ };
+ 
+-static struct dec_bufsize_ops dec_vp9_ops = {
++static const struct dec_bufsize_ops dec_vp9_ops = {
+ 	.scratch = vpxd_scratch_size,
+ 	.scratch1 = vp9d_scratch1_size,
+ 	.persist1 = vp9d_persist1_size,
+ };
+ 
+-static struct dec_bufsize_ops dec_mpeg2_ops = {
++static const struct dec_bufsize_ops dec_mpeg2_ops = {
+ 	.scratch = mpeg2d_scratch_size,
+ 	.scratch1 = mpeg2d_scratch1_size,
+ 	.persist1 = mpeg2d_persist1_size,
+ };
+ 
+-static struct enc_bufsize_ops enc_h264_ops = {
++static const struct enc_bufsize_ops enc_h264_ops = {
+ 	.scratch = h264e_scratch_size,
+ 	.scratch1 = h264e_scratch1_size,
+ 	.scratch2 = enc_scratch2_size,
+ 	.persist = enc_persist_size,
+ };
+ 
+-static struct enc_bufsize_ops enc_h265_ops = {
++static const struct enc_bufsize_ops enc_h265_ops = {
+ 	.scratch = h265e_scratch_size,
+ 	.scratch1 = h265e_scratch1_size,
+ 	.scratch2 = enc_scratch2_size,
+ 	.persist = enc_persist_size,
+ };
+ 
+-static struct enc_bufsize_ops enc_vp8_ops = {
++static const struct enc_bufsize_ops enc_vp8_ops = {
+ 	.scratch = vp8e_scratch_size,
+ 	.scratch1 = vp8e_scratch1_size,
+ 	.scratch2 = enc_scratch2_size,
+@@ -1186,7 +1186,7 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
+ 	u32 codec = params->codec;
+ 	u32 width = params->width, height = params->height, out_min_count;
+ 	u32 out_width = params->out_width, out_height = params->out_height;
+-	struct dec_bufsize_ops *dec_ops;
++	const struct dec_bufsize_ops *dec_ops;
+ 	bool is_secondary_output = params->dec.is_secondary_output;
+ 	bool is_interlaced = params->dec.is_interlaced;
+ 	u32 max_mbs_per_frame = params->dec.max_mbs_per_frame;
+@@ -1260,7 +1260,7 @@ static int bufreq_enc(struct hfi_plat_buffers_params *params, u32 buftype,
+ 		      struct hfi_buffer_requirements *bufreq)
+ {
+ 	enum hfi_version version = params->version;
+-	struct enc_bufsize_ops *enc_ops;
++	const struct enc_bufsize_ops *enc_ops;
+ 	u32 width = params->width;
+ 	u32 height = params->height;
+ 	bool is_tenbit = params->enc.is_tenbit;
 -- 
-With best wishes
-Dmitry
+2.45.1
+
 
