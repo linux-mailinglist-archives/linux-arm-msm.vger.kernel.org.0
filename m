@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-21392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 427208D73A5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 05:55:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8850E8D73A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 05:55:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA4031F23C36
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 03:55:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B9E341C21280
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Jun 2024 03:55:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F76839FFE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0016F3BB24;
 	Sun,  2 Jun 2024 03:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i1CZxkLf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G8mVZnH5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D912339FED;
-	Sun,  2 Jun 2024 03:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBD73B2A2;
+	Sun,  2 Jun 2024 03:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717300442; cv=none; b=bkBuMsz3jgcSJG99gsDvVZP5ieCkQ5x2bmsb07+2SvtLvVKK8QdUcb4K65EQivKfqQ6TJbOyxSq8DMQDnXlxZwm9198p3l/68fZcDzBg5jLKnmtmFH0RnG89pWixyhmggV7lDtZ0q7a+0UiZIEf7uPoW+6RsSI2KJhvpHZYYyFs=
+	t=1717300442; cv=none; b=mQUCPF1oRRJDfA3dFObmdFAMBNXTuO6opxNj4zUuR7tuVy3ybckXFIfSbItcum/v7aHphhxdeuNP+XJVUN/LaY3Z90FgDl4vVvNi6AG3KCokCflNG3k46y3PDd2L3A0K+9V/Wc/PrSrUFPowwqZRzj2keOLTqB7OZbIliK7RBOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717300442; c=relaxed/simple;
-	bh=rVJRjrKplsyyf+18NeAzuWrAp1qX4/rJPbES79MQe2E=;
+	bh=pCsS5ItjtVSjKnYxIpks10S712aXGTHVX+1+zeNy078=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eCOT0sPqTwhIRF3/qpIjrNKv663ebCW5nyLvoAAZO9N2WiTc8cStKk6OYMWVbRV2SL7mWNyHzki4yF638i2/a1G1JCo7IgVUrIlLX41gAKAKIHW5TifcTQPjuxOPHm9agHb4aZteanvMGfXcJQ75v4eA5+M739ysdHxAQGCx0PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i1CZxkLf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AE8C2BBFC;
-	Sun,  2 Jun 2024 03:54:00 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Ruq7FX8WYFjBXEfRrtwznt5iexEAvmtFAsN1eEsJmbc9sbgWEKV8hwfW21FaEzoGe3Za3LabTMzn6One+g6aBYmE3o/Ib6EhIsEnPTc675bi6g6yxykhe2Z87K3rRPlTHZyK09qYpzqQCEJ1cegS25w6KK6Et9Q85LanvmKXNz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G8mVZnH5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F344DC4AF07;
+	Sun,  2 Jun 2024 03:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717300441;
-	bh=rVJRjrKplsyyf+18NeAzuWrAp1qX4/rJPbES79MQe2E=;
+	s=k20201202; t=1717300442;
+	bh=pCsS5ItjtVSjKnYxIpks10S712aXGTHVX+1+zeNy078=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1CZxkLfm5rSg71q4Jye4wDyWDAT8xGhAmqn3gXAI5GBEk7IA4eeKg5pTVo81h0rj
-	 aKrDpUAyfFi7rphZ47WbAUJDB88yzQsDFYoBeJBidGpdEQebYdrN58DZzpJt+2F8sr
-	 9xdRu3aCEsQ553MFZybeNFYsyCNFjZN3/Zk/G5jWazoDf++riq2pvRuwNirhsOY5pE
-	 8bPUJNJ8DxdB3hxcs3Vg2yhPaXW3yvuwFjhkKlbFyy2YNBtVCyPPBFfSPu7xq5iXQc
-	 lerp+tuiiXpwlVLQy3IsZM8Qtg8HyBZjCokacTgQZYsvywpDKnF/t/JmCp4iHZdmqS
-	 XmyYrCDt7/lxw==
+	b=G8mVZnH5M/7h+DHAxDCufggmP+Bv7lqzLCW6ZOeVFajPPOFp7twZjHzxFnLS1jVlY
+	 YK+ohfPJZqhIkUBJFZeq1ceMadJloFcVDXaZZsCx/ocX5VofjlIzy/naRLpA1shX9q
+	 5dkfNABQN9VfxidqTH3mqhqov4Tk0Zb0lHmOzjcwgH+pqyY4Bik/OyxcJiuCBsYqZC
+	 AOwKRjYHNWRC6JBTz1qKI2JFXT7nrJSA6+VdiKv1YBNlYqPFGSbIEgKvMdfykHyFb7
+	 /i+GvpgeNo9sxYXeAJypKKjhU4PIQJO33r2K9SzOOXXYIHQHZBHzfolRzwxMc0gBL0
+	 /EH2sQUxeSG9g==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konrad.dybcio@linaro.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	dmitry.baryshkov@linaro.org,
-	Tengfei Fan <quic_tengfan@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Unnathi Chalicheemala <quic_uchalich@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	kernel@quicinc.com
-Subject: Re: [PATCH v3 0/2] [PATCH v2 0/2] arm64: dts: qcom: sm8550: Update some usb properties
-Date: Sat,  1 Jun 2024 22:53:47 -0500
-Message-ID: <171730042583.665897.17136966514595004729.b4-ty@kernel.org>
+Subject: Re: (subset) [PATCH v6 0/5] LLCC: Support for Broadcast_AND region
+Date: Sat,  1 Jun 2024 22:53:48 -0500
+Message-ID: <171730042577.665897.8196444348725965878.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240531090422.158813-1-quic_tengfan@quicinc.com>
-References: <20240531090422.158813-1-quic_tengfan@quicinc.com>
+In-Reply-To: <cover.1717014052.git.quic_uchalich@quicinc.com>
+References: <cover.1717014052.git.quic_uchalich@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,17 +67,28 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 31 May 2024 17:04:20 +0800, Tengfei Fan wrote:
-> Move usb-role-switch to SoC dtsi, and remove usb default dr_mode.
+On Fri, 31 May 2024 09:45:23 -0700, Unnathi Chalicheemala wrote:
+> This series adds:
+> 1. Device tree register mapping for Broadcast_AND region in SM8450,
+> SM8550, SM8650.
+> 2. LLCC driver updates to reflect addition of Broadcast_AND regmap.
 > 
+> To support CSR programming, a broadcast interface is used to program all
+> channels in a single command. Until SM8450 there was only one broadcast
+> region (Broadcast_OR) used to broadcast write and check for status bit
+> 0. From SM8450 onwards another broadcast region (Broadcast_AND) has been
+> added which checks for status bit 1.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: sm8550: Move usb-role-switch to SoC dtsi
-      commit: 32a7b1d7c72bc846f417c457476efcfc4d283c6b
-[2/2] arm64: dts: qcom: sm8550: Remove usb default dr_mode
-      commit: 54bbf0a8ef45734531b12cc50528568e4220d1be
+[3/5] arm64: dts: qcom: sm8450: Add Broadcast_AND register in LLCC block
+      commit: c566143137aaacfed1af09d8710edab1971c312d
+[4/5] arm64: dts: qcom: sm8550: Add Broadcast_AND register in LLCC block
+      commit: 2a71a2eb1f5ec438f0ac1c7e294cd7ed32119af3
+[5/5] arm64: dts: qcom: sm8650: Add Broadcast_AND register in LLCC block
+      commit: a7823576f7f7b1cb0a595332ab6b0b38e15f45a7
 
 Best regards,
 -- 
