@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-21440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF5218D7BF8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 08:55:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A25D58D7C26
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 09:05:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 047471C217AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 06:55:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A4F01F22B87
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 07:05:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF65D376E6;
-	Mon,  3 Jun 2024 06:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20FC23A29F;
+	Mon,  3 Jun 2024 07:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mwcw+0/n"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="citrhnIt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1592D60C;
-	Mon,  3 Jun 2024 06:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F7038DF9;
+	Mon,  3 Jun 2024 07:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717397718; cv=none; b=Ewu4j9ng9myoIoHyo08ml8Wjh6+X40clnG4knCxJgz29jAseZ86eiBNcQnxF0lvpYqU9beK8XUY9RVZE9gJs917hTePEYmRxVuvVsC3ss4ZyviF5uOEHRN6Qj9lLlE2FnLchr8bcQ9DOgE2oNMn/2xvG7U+tZN8Doik4IV9VbSQ=
+	t=1717398355; cv=none; b=WaBlCdR8AlrRpsb+LQnr+HVHYkdF0SdfLGbRhUcccnFkeUPgoBphthwAxMLFGsZQFJ3bsw5ScNi7zy2+z5WbTiMyb//us0q6Elg+RpSi5Xm3wa7n7EK7yzZMt0NfNXCVsCYYjqANhOCCx/cnAyudji2KeOgkaAp3rVZ15QzeuK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717397718; c=relaxed/simple;
-	bh=pyRQtkhhfLcJlAEDvXUS6mlZcNFVvKq64xR2x+dpuG0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kln6EwX70vn/19AnFcI4sWCA4SOSEIqqgS6hI9zeE9w44I1RXaTXPRgd7YVOYTW0zlPk9Sir720/7unTocb2rS8BpqhvvjCWt0Yr4UVgpuRf/y43n68t8lrE0oGvMC2hCYQCuQtRYpru1No7ss6hmF4xDfUTKUoDzJDyjwNq8+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mwcw+0/n; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4626C32786;
-	Mon,  3 Jun 2024 06:55:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717397717;
-	bh=pyRQtkhhfLcJlAEDvXUS6mlZcNFVvKq64xR2x+dpuG0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mwcw+0/nFdTTsEhyHXChMzJr6DVmgayCA6X6CQO79dda4zMnBcstCvZPNgkvUIljd
-	 i1jDpqBCWO+4z2qTIH64ld4jn4gx81L4M9b5OVsRnoFAGYFBurgvjPCBUKcfeXvpGy
-	 ZVplbRJ+iaH9A0RYupcMEloNLlm/TO5rQer8WRpiR3nX/XLNJXdHLzN55bjw+vWVk2
-	 13QDpsNP8pBRGwc+4J5gA0azzaFCJF/DIXcF/YDx6jtVr98jIxbN5QnImvfl9GlXLj
-	 zSlmr4QMhzBxqyDdDRfyVyPVjbYmWy6FJA6aaTEB3lpLJ9SsJiU4mlqqLRHJW5tsOR
-	 FBbsNBEs9weFA==
-Message-ID: <a1b45024-8caa-4ef6-b679-b08e718053ce@kernel.org>
-Date: Mon, 3 Jun 2024 08:55:12 +0200
+	s=arc-20240116; t=1717398355; c=relaxed/simple;
+	bh=ttICkqoSC11UNFdnvMl8nl57VJdDNwXaIH2tA6j08ZI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DTJepUYfVgBmPdWR+CZ1RY9S7B/5RoQaybQfvsDS2J4fvmJ7ULZaeYQZ1Ya6k5G9Iej1edMMkty5vWTt84o8Z26LAhNK4JZH0sbSO8BaFec7xQSUWS7QoSo1JaOwN8K2xi9FCQfF9RRNcvL3PTc/a/XFOmgz88hdsufUL5ccOgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=citrhnIt; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4531tFAS014135;
+	Mon, 3 Jun 2024 07:05:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ttICkqoSC11UNFdnvMl8nl57VJdDNwXaIH2tA6j08ZI=; b=citrhnItrVvJ6q30
+	LYUft5hvMyahQDnbVxE3p9TpDwxE6RMGCVla11JAeSU/5edYcS6dilFPCOv5fBnw
+	pLJrEY7Z5iT8avNsipxWuDCawWxA01LgxtopEW4eNj679eGw/Zept2PzLg04RsiY
+	pEpkwEHLcdNaQVNu+d9NMAegunOq034oZ84aR5pPcdwFKR6nPx4ZePNwD518HogQ
+	Uj1lql/Avjr+GLN2oolRQcEhfE4imc7nK/zcqVDmHVJv0oqmUQ6g8mEDY062MITf
+	lohX+FNeU5ZqTslRxpvr+MKSxDbzej0PHuexE1OP2MT1RxyOLMKOLwaQTAmN1VtO
+	4wuu0g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw42u5fw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Jun 2024 07:05:46 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 45375jmw032687
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Jun 2024 07:05:45 GMT
+Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
+ 00:05:43 -0700
+Message-ID: <7e316c16-47a3-4a87-81da-529bb857f4db@quicinc.com>
+Date: Mon, 3 Jun 2024 12:35:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,95 +65,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: add HTC One (M8)
-To: alex@me.ssier.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Luca Weiss <luca@z3ntu.xyz>, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20240603-m8-support-v1-0-c7b6a1941ed2@me.ssier.org>
- <20240603-m8-support-v1-1-c7b6a1941ed2@me.ssier.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 2/9] misc: fastrpc: Fix DSP capabilities request
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240603-m8-support-v1-1-c7b6a1941ed2@me.ssier.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On 03/06/2024 08:28, Alexandre Messier via B4 Relay wrote:
-> From: Alexandre Messier <alex@me.ssier.org>
-> 
-> Add a compatible for the HTC One (M8), which is based on the
-> MSM8974Pro SoC.
-> 
-> Signed-off-by: Alexandre Messier <alex@me.ssier.org>
-> ---
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>
+CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        stable
+	<stable@kernel.org>
+References: <20240530102032.27179-1-quic_ekangupt@quicinc.com>
+ <20240530102032.27179-3-quic_ekangupt@quicinc.com>
+ <32750882-2e4c-44b7-af6d-a1ec0857b69a@linaro.org>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <32750882-2e4c-44b7-af6d-a1ec0857b69a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: SpyguWXz4PkUYPT4WNKDY-QmIEnMIIpQ
+X-Proofpoint-ORIG-GUID: SpyguWXz4PkUYPT4WNKDY-QmIEnMIIpQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-06-02_15,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 clxscore=1015 bulkscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406030058
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-
----
-
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-Best regards,
-Krzysztof
+On 5/31/2024 3:03 PM, Srinivas Kandagatla wrote:
+>
+>
+> On 30/05/2024 11:20, Ekansh Gupta wrote:
+>> Incorrect remote arguments are getting passed when requesting for
+>> capabilities from DSP. Also there is no requirement to update the
+>> PD type as it might cause problems for any PD other than user PD.
+>> In addition to this, the collected capability information is not
+>> getting copied properly to user. Add changes to address these
+>> problems and get correct DSP capabilities.
+>>
+>> Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
+>> Cc: stable <stable@kernel.org>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>>   drivers/misc/fastrpc.c | 7 +++----
+>>   1 file changed, 3 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 4028cb96bcf2..61389795f498 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -1700,9 +1700,8 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_user *fl, uint32_t *dsp_attr
+>>       args[0].length = sizeof(dsp_attr_buf_len);
+>>       args[0].fd = -1;
+>>       args[1].ptr = (u64)(uintptr_t)&dsp_attr_buf[1];
+>> -    args[1].length = dsp_attr_buf_len;
+>> +    args[1].length = dsp_attr_buf_len * sizeof(uint32_t);
+> This does not look correct,
+>
+> we have allocated buffer of size FASTRPC_MAX_DSP_ATTRIBUTES_LEN which is
+> already (sizeof(u32) * FASTRPC_MAX_DSP_ATTRIBUTES)
+>
+> now this patch multiplies with again sizeof(uint32_t), this is going to send dsp incorrect size for buffer and overrun the buffer size.
+As the argument passed to this function is number of attributes instead of length, this won't cause another multiplication with (uint32_t).
+>
+>
+>
+>>       args[1].fd = -1;
+>> -    fl->pd = USER_PD;
+> another patch may be.
+Sure.
+>
+>>         return fastrpc_internal_invoke(fl, true, FASTRPC_DSP_UTILITIES_HANDLE,
+>>                          FASTRPC_SCALARS(0, 1, 1), args);
+>> @@ -1730,7 +1729,7 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
+>>       if (!dsp_attributes)
+>>           return -ENOMEM;
+>>   -    err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES_LEN);
+>> +    err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES);
+>
+> You change this again to send FASTRPC_MAX_DSP_ATTRIBUTES instead of FASTRPC_MAX_DSP_ATTRIBUTES_LEN but why?
+Copying the comment sent to Dmitry's queries:
+args[0] is expected to carry the information about the total number of attributes to be copied from DSP
+and not the information about the size to be copied. Passing the size information leads to a failure
+suggesting bad arguments passed to DSP.
+>
+>
+>>       if (err == DSP_UNSUPPORTED_API) {
+>>           dev_info(&cctx->rpdev->dev,
+>>                "Warning: DSP capabilities not supported on domain: %d\n", domain);
+>> @@ -1783,7 +1782,7 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
+>>       if (err)
+>>           return err;
+>>   -    if (copy_to_user(argp, &cap.capability, sizeof(cap.capability)))
+>> +    if (copy_to_user(argp, &cap, sizeof(cap)))
+>
+> Why are we copying the full struct here? All that user needs is cap.capability?
+as argp sent from user during ioctl is the capability structure, the same argp is copied to a local fastrpc_ioctl_capability structure(cap) to get the domain and attribute_id information. Copying just the capability member to argp will cause problem when the user tries to read the capability. While testing the capability, I was observing this failure and it is resolved once we copy the information properly.
+>
+>
+>
+> --srini
+>
+>
+>>           return -EFAULT;
+>>         return 0;
+>
 
 
