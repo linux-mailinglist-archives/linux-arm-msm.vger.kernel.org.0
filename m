@@ -1,208 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-21497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 029758D8807
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 19:35:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6980D8D88DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 20:48:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7ECCA1F229D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 17:35:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BA6E6B2192F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 18:48:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F361413776C;
-	Mon,  3 Jun 2024 17:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3652C137902;
+	Mon,  3 Jun 2024 18:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="arwB9k2c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MtO6To6f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B9841366;
-	Mon,  3 Jun 2024 17:34:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8690DF9E9;
+	Mon,  3 Jun 2024 18:48:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717436098; cv=none; b=FCfTHfEDddyBQEn1WhZnWryYKueBt1KPLCbSY+3BereApdu77pBzVVv3L5aKUkaPr3fKJMD3vRAG3zd7Q5LLW+b2reG/syj4QAVUYt0dpSeiVT1CjjEJNZhQWruUVcdAapozOdsZbudnrk7PsEiue9rH2ggaKjvft+KM0at6uXE=
+	t=1717440523; cv=none; b=aDHpVOIEPYXoFQ3rA9hL13+d1WXWgvQWRHaez7cxofq3DmaGACd7gt/3Y8oHUhSicPqY2ddfLDofiA/Iuo3SDwPv3Rr0U4RpbbN4wb1k1rJr8+3D//G/8EuKzayCE//BKBG/NJmrrluKM2PXiwSKHz/FEzncG72z6V+wrLBZK7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717436098; c=relaxed/simple;
-	bh=DKulNpWMB5g4h3LO0UnPAP8vpdAsv+ZuVpLPHeUsdwQ=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=M5XH+hIln6mlA4WGV/JhOO/EonsIduLgZHDrUlZAeQ7PmkPS4batJRkkVZEsNCt64qWewd77f3Nsn0WvmmDYM/IIm/SLCqu9RodrycAo2f5o+S8DJtw/YaN54OgdCj4NXt+ct9P12fTPu41eIuKs77zxP/F7AcOa+AxicHiMpgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=arwB9k2c; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
-Received: from smtpclient.apple (d66-183-91-182.bchsia.telus.net [66.183.91.182])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 4684920681D5;
-	Mon,  3 Jun 2024 10:25:13 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4684920681D5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1717435514;
-	bh=4DfOU8aQl0aDoujS+l1W8I9cPbB9Sd5aNNyJFDGp/QQ=;
-	h=Subject:From:In-Reply-To:Date:Cc:References:To:From;
-	b=arwB9k2cp5qmOpH04JZQJkpaQ68dKr6NHq6/nWjIeKTEglSLJZbHneTkxRo0iYye3
-	 dopPLk66Mp6Cqqtct/3LWOtVyWSXCVY5VMtnmDbdTLbXrzM1H6t1A8KCeQ5Sp+gzGS
-	 Acr7rY4qAUIDkO+vSD/92kHIH7AgZovgYBJ1BnFc=
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1717440523; c=relaxed/simple;
+	bh=K3G21/24zzUUViCEIjLWZ1Tg2KRYA6Z2/ct1+J+l1fQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bK1JqL0RW8ussHMfz+ESJPEUIoWfxfJTBtIctWIWPmk2hb744AoG7iqlin6TQHqtcdllSGJzq3VqlZqaWiXGWXBwLRS/33sIKxcXBzT6sECyahwBYvc5AWiT0Wgqlhas01HYiI6qGq0Aq42flO3cd32ejE5QybNaZTOZTbNYOb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MtO6To6f; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4538vsuB011909;
+	Mon, 3 Jun 2024 18:48:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	efodBSu3WxBGbSpwkD4Q7QpyR//IjG3Ok/8+uKaU8ww=; b=MtO6To6fZUGKErfC
+	CHSOBNLAgpY0uWUiuN5DLkrMZPjhRQ8pz9zkG2Mf1nAPlRF74wyuIP3Xa82FbIKf
+	f47WOqBzCP90ddsXWRqEFOyKvDldTI4nxozmjXsOSLSayhTdH/OEIae9jCj9HIsO
+	GdwMYPoVYsMmfxje7L+xdJitZeuFncna0fuZLbSiJxrIAXPc/IxCE+NnXMm9jwjk
+	GcAaGwgtvUbVyNxEFwehuSHNl/O6utzCBngb0FCsDUskEZteeGNjHF8KSWF8Q3pN
+	L8MH8+NLE3yYXNmDBCuShZ7HUM0q/3hjdl/oodQyW6sDV1h9PaquskWAry9Uv2fM
+	f+CLZA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw4bcqrt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Jun 2024 18:48:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453ImNlo021742
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Jun 2024 18:48:23 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
+ 11:48:18 -0700
+Message-ID: <89a56998-51f2-0dc3-54e8-2bc2217d265d@quicinc.com>
+Date: Tue, 4 Jun 2024 00:18:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Re: [PATCH 9/9] mmc: Convert from tasklet to BH workqueue
-From: Allen Pais <apais@linux.microsoft.com>
-In-Reply-To: <7e618af0-51a7-4941-a386-0ac68c66d358@microchip.com>
-Date: Mon, 3 Jun 2024 10:25:02 -0700
-Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tejun Heo <tj@kernel.org>,
- Kees Cook <keescook@chromium.org>,
- Vinod Koul <vkoul@kernel.org>,
- marcan@marcan.st,
- sven@svenpeter.dev,
- florian.fainelli@broadcom.com,
- Ray Jui <rjui@broadcom.com>,
- Scott Branden <sbranden@broadcom.com>,
- Paul Cercueil <paul@crapouillou.net>,
- Eugeniy.Paltsev@synopsys.com,
- manivannan.sadhasivam@linaro.org,
- Viresh Kumar <vireshk@kernel.org>,
- Frank.Li@nxp.com,
- Leo Li <leoyang.li@nxp.com>,
- zw@zh-kernel.org,
- Zhou Wang <wangzhou1@hisilicon.com>,
- haijie1@huawei.com,
- Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Sean Wang <sean.wang@mediatek.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- angelogioacchino.delregno@collabora.com,
- =?utf-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
- Logan Gunthorpe <logang@deltatee.com>,
- Daniel Mack <daniel@zonque.org>,
- Haojian Zhuang <haojian.zhuang@gmail.com>,
- Robert Jarzmik <robert.jarzmik@free.fr>,
- andersson@kernel.org,
- konrad.dybcio@linaro.org,
- Orson Zhai <orsonzhai@gmail.com>,
- baolin.wang@linux.alibaba.com,
- Lyra Zhang <zhang.lyra@gmail.com>,
- Patrice CHOTARD <patrice.chotard@foss.st.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Chen-Yu Tsai <wens@csie.org>,
- =?utf-8?Q?Jernej_=C5=A0krabec?= <jernej.skrabec@gmail.com>,
- peter.ujfalusi@gmail.com,
- kys@microsoft.com,
- haiyangz@microsoft.com,
- wei.liu@kernel.org,
- decui@microsoft.com,
- jassisinghbrar@gmail.com,
- mchehab@kernel.org,
- maintainers@bluecherrydvr.com,
- ulf.hansson@linaro.org,
- manuel.lauss@gmail.com,
- mirq-linux@rere.qmqm.pl,
- jh80.chung@samsung.com,
- oakad@yahoo.com,
- hayashi.kunihiko@socionext.com,
- mhiramat@kernel.org,
- brucechang@via.com.tw,
- HaraldWelte@viatech.com,
- pierre@ossman.eu,
- duncan.sands@free.fr,
- stern@rowland.harvard.edu,
- oneukum@suse.com,
- openipmi-developer@lists.sourceforge.net,
- dmaengine@vger.kernel.org,
- asahi@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org,
- linux-rpi-kernel@lists.infradead.org,
- linux-mips@vger.kernel.org,
- imx@lists.linux.dev,
- linuxppc-dev@lists.ozlabs.org,
- linux-mediatek@lists.infradead.org,
- linux-actions@lists.infradead.org,
- linux-arm-msm@vger.kernel.org,
- linux-riscv@lists.infradead.org,
- linux-sunxi@lists.linux.dev,
- linux-tegra@vger.kernel.org,
- linux-hyperv@vger.kernel.org,
- linux-rdma@vger.kernel.org,
- linux-media@vger.kernel.org,
- linux-mmc@vger.kernel.org,
- linux-omap@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org,
- linux-s390@vger.kernel.org,
- netdev@vger.kernel.org,
- linux-usb@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <61F36002-C765-410C-8EF9-203593C269FF@linux.microsoft.com>
-References: <20240327160314.9982-1-apais@linux.microsoft.com>
- <20240327160314.9982-10-apais@linux.microsoft.com>
- <7e618af0-51a7-4941-a386-0ac68c66d358@microchip.com>
-To: Aubin Constans <aubin.constans@microchip.com>
-X-Mailer: Apple Mail (2.3774.600.62)
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V4 2/2] cpufreq: scmi: Register for limit change
+ notifications
+Content-Language: en-US
+To: Vincent Guittot <vincent.guittot@linaro.org>
+CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <morten.rasmussen@arm.com>,
+        <dietmar.eggemann@arm.com>, <lukasz.luba@arm.com>,
+        <pierre.gondois@arm.com>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_mdtipton@quicinc.com>, <linux-arm-msm@vger.kernel.org>
+References: <20240328074131.2839871-1-quic_sibis@quicinc.com>
+ <20240328074131.2839871-3-quic_sibis@quicinc.com>
+ <CAKfTPtDtnCm2NqhiXZLODXH5A9Hc9ryP==3LFZUcNnKE4J+PEg@mail.gmail.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <CAKfTPtDtnCm2NqhiXZLODXH5A9Hc9ryP==3LFZUcNnKE4J+PEg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qDl1N6TAfhcADbzTCjj104iEoB-_YvRp
+X-Proofpoint-GUID: qDl1N6TAfhcADbzTCjj104iEoB-_YvRp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-06-03_15,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 mlxscore=0 impostorscore=0
+ bulkscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406030154
 
 
 
-> On Jun 3, 2024, at 5:38=E2=80=AFAM, Aubin Constans =
-<aubin.constans@microchip.com> wrote:
->=20
-> On 27/03/2024 17:03, Allen Pais wrote:
->> EXTERNAL EMAIL: Do not click links or open attachments unless you =
-know the content is safe
->> The only generic interface to execute asynchronously in the BH =
-context is
->> tasklet; however, it's marked deprecated and has some design flaws. =
-To
->> replace tasklets, BH workqueue support was recently added. A BH =
-workqueue
->> behaves similarly to regular workqueues except that the queued work =
-items
->> are executed in the BH context.
->> This patch converts drivers/infiniband/* from tasklet to BH =
-workqueue.
->> Based on the work done by Tejun Heo <tj@kernel.org>
->> Branch: https://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git =
-for-6.10
->> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+On 5/28/24 14:38, Vincent Guittot wrote:
+> Hi Sibi,
+> 
+
+Hey Vincent,
+Thanks for taking time to review the series :)
+
+> On Thu, 28 Mar 2024 at 08:42, Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>>
+>> Register for limit change notifications if supported and use the throttled
+>> frequency from the notification to apply HW pressure.
+>>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 >> ---
->>  drivers/mmc/host/atmel-mci.c                  | 35 ++++-----
-> [...]
->=20
-> For atmel-mci, judging from a few simple tests, performance is =
-preserved.
-> E.g. writing to a SD Card on the SAMA5D3-Xplained board:
-> time dd if=3D/dev/zero of=3D/opt/_del_me bs=3D4k count=3D64k
->=20
->     Base 6.9.0 : 0.07user 5.05system 0:18.92elapsed 27%CPU
->  Patched 6.9.0+: 0.12user 4.92system 0:18.76elapsed 26%CPU
->=20
-> However, please resolve what checkpatch is complaining about:
-> scripts/checkpatch.pl --strict =
-PATCH-9-9-mmc-Convert-from-tasklet-to-BH-workqueue.mbox
->=20
->  WARNING: please, no space before tabs
->  #72: FILE: drivers/mmc/host/atmel-mci.c:367:
->  +^Istruct work_struct ^Iwork;$
->=20
-> Same as discussions on the USB patch[1] and others in this series, I =
-am also in favour of "workqueue" or similar in the comments, rather than =
-just "work".
+>>
+>> v4:
+>> * Use a interim variable to show the khz calc. [Lukasz]
+>> * Use driver_data to pass on the handle and scmi_dev instead of using
+>>    global variables. Dropped Lukasz's Rb due to adding these minor
+>>    changes.
+>>
+>>   drivers/cpufreq/scmi-cpufreq.c | 44 ++++++++++++++++++++++++++++++++++
+>>   1 file changed, 44 insertions(+)
+>>
+>> diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
+>> index 3b4f6bfb2f4c..d946b7a08258 100644
+>> --- a/drivers/cpufreq/scmi-cpufreq.c
+>> +++ b/drivers/cpufreq/scmi-cpufreq.c
+>> @@ -21,11 +21,18 @@
+>>   #include <linux/types.h>
+>>   #include <linux/units.h>
+>>
+>> +struct scmi_cpufreq_driver_data {
+>> +       struct scmi_device *sdev;
+>> +       const struct scmi_handle *handle;
+>> +};
+>> +
+>>   struct scmi_data {
+>>          int domain_id;
+>>          int nr_opp;
+>>          struct device *cpu_dev;
+>> +       struct cpufreq_policy *policy;
+>>          cpumask_var_t opp_shared_cpus;
+>> +       struct notifier_block limit_notify_nb;
+>>   };
+>>
+>>   static struct scmi_protocol_handle *ph;
+>> @@ -174,6 +181,22 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
+>>          NULL,
+>>   };
+>>
+>> +static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
+>> +{
+>> +       struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
+>> +       struct scmi_perf_limits_report *limit_notify = data;
+>> +       struct cpufreq_policy *policy = priv->policy;
+>> +       unsigned int limit_freq_khz;
+>> +
+>> +       limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
+>> +
+>> +       policy->max = clamp(limit_freq_khz, policy->cpuinfo.min_freq, policy->cpuinfo.max_freq);
+>> +
+>> +       cpufreq_update_pressure(policy);
+> 
+> I noticed your patch while looking for other things in the archive but
+> I don't think this is the right way to do it.
+> 
+> cpufreq_update_pressure() aims to set to the scheduler the aggregation
+> of all cappings set to cpufreq through the pm_qos and
+> freq_qos_add_request(). Calling this function directly in scmi
+> notification callback will overwrite the pm_qos aggregation. And at
+> the opposite, any update of a pm_qos constraint will overwrite scmi
+> notification. Instead you should better set a pm_qos constraint like
+> others
 
- Will send out a new version.
+Sure, I'll drop update_pressue and use the freq_qos_update_request to
+update the policy->max_freq_req with the new policy->max.
 
-Thank you very much for testing and providing your review.
+-Sibi
 
-- Allen
-
->=20
-> Apart from that:
-> Tested-by: Aubin Constans <aubin.constans@microchip.com>
-> Acked-by: Aubin Constans <aubin.constans@microchip.com>
->=20
-> Thanks.
->=20
-> [1]: =
-https://lore.kernel.org/linux-mmc/CAOMdWSLipPfm3OZTpjZz4uF4M+E_8QAoTeMcKBX=
-awLnkTQx6Jg@mail.gmail.com/
-
+> 
+>> +
+>> +       return NOTIFY_OK;
+>> +}
+>> +
+>>   static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>>   {
+>>          int ret, nr_opp, domain;
+>> @@ -181,6 +204,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>>          struct device *cpu_dev;
+>>          struct scmi_data *priv;
+>>          struct cpufreq_frequency_table *freq_table;
+>> +       struct scmi_cpufreq_driver_data *data = cpufreq_get_driver_data();
+>>
+>>          cpu_dev = get_cpu_device(policy->cpu);
+>>          if (!cpu_dev) {
+>> @@ -294,6 +318,17 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
+>>                  }
+>>          }
+>>
+>> +       priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
+>> +       ret = data->handle->notify_ops->devm_event_notifier_register(data->sdev, SCMI_PROTOCOL_PERF,
+>> +                                                       SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
+>> +                                                       &domain,
+>> +                                                       &priv->limit_notify_nb);
+>> +       if (ret)
+>> +               dev_warn(cpu_dev,
+>> +                        "failed to register for limits change notifier for domain %d\n", domain);
+>> +
+>> +       priv->policy = policy;
+>> +
+>>          return 0;
+>>
+>>   out_free_opp:
+>> @@ -366,12 +401,21 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
+>>          int ret;
+>>          struct device *dev = &sdev->dev;
+>>          const struct scmi_handle *handle;
+>> +       struct scmi_cpufreq_driver_data *data;
+>>
+>>          handle = sdev->handle;
+>>
+>>          if (!handle)
+>>                  return -ENODEV;
+>>
+>> +       data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+>> +       if (!data)
+>> +               return -ENOMEM;
+>> +
+>> +       data->sdev = sdev;
+>> +       data->handle = handle;
+>> +       scmi_cpufreq_driver.driver_data = data;
+>> +
+>>          perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
+>>          if (IS_ERR(perf_ops))
+>>                  return PTR_ERR(perf_ops);
+>> --
+>> 2.34.1
+>>
+>>
 
