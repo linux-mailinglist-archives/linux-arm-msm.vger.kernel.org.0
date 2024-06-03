@@ -1,84 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-21448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6DD28D7D58
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 10:29:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A47978D7DCE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 10:48:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 79A60B22E48
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 08:28:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6053B284181
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 08:48:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2AA55821A;
-	Mon,  3 Jun 2024 08:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D25F25EE78;
+	Mon,  3 Jun 2024 08:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OojbpjCX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rUHoZvRg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA63446CF;
-	Mon,  3 Jun 2024 08:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56D93D551;
+	Mon,  3 Jun 2024 08:48:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717403334; cv=none; b=bz/awlw5nxviFSSPyBw0xH3Vp0NcR8qWRoBkDPoJ5gTtP8S6Qdr20lPJdsg61lRF7q0hyEoXXr0pEzcFhxIl0nh7OJ3VHHA0MsvU2jQqzBw0VZoBod2afxDtMhIppSuosAJuDkh6yw/2XHSLeuyQicM6I7BZbzfk1Tavo/W+lrM=
+	t=1717404500; cv=none; b=K/62TFicGr/D29YRvm+hg4DcefKRR8/9dYMtuB7LZseeijizLjgAIWJGnn4wiFR2XZTkoEQGb0lMr5FIwZwngo5PSR8HJfSlr1qNHj6zR8Liufm8Smf2Zw205YJ54KVEBtYuymoRNEIgX7AbCnhx3Pp1/s/9xXLL1EeBXqOt2L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717403334; c=relaxed/simple;
-	bh=ffVlScCpAYPRmdmKFbEOAujMESyVwditKSQy2fdkHos=;
+	s=arc-20240116; t=1717404500; c=relaxed/simple;
+	bh=u56cQQyMmZ3JOBwf5RvEi1tVKT1f2xyCDIc7eW/pGqI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XPGzymmsGnUin+eDl44O2eU3ilLwv6whFK2iHRLS501qdMR1/Z/9HVUtRR3Myc6hka6DP2qxCdUi5xFiMBaxlPMPwuGFrBAlqp0drt6Jjy0QxE2W//Hd+VcH6wOFZwbYHij93SmG7n6/bkA+wPVzokeXlA1cD6rbUl1A9pbHI8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OojbpjCX; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52965199234so4579214e87.2;
-        Mon, 03 Jun 2024 01:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717403331; x=1718008131; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FAQKsZD6ySxnro4HriCuC0HGqYP8pUAOiGJhD7pGAsY=;
-        b=OojbpjCX14hj526jWDGJkwUcjraIjdI7D5TX10RHx6XI7LdAcBKCxmfUsSRMXb/2gC
-         0X5CDMr2ti/CGHhlaUStA0n1tI277VUdpOovu75I49lm1i61LYqOZ4Bc4+Bz4e+iw+34
-         FF1l2Hu3vB4/3PcK0O5NffjIGTr5upahBqkHtnAP7mExX2Adg+T055GMwI6dapL7sFrc
-         N7HxfGwMLeVh9LxoYZzO0p3nQgBXUvDkmYkmO47LCRnY1jelRDVEb12+ueE8PZvO6WSP
-         LKywx80tXUv4Wp3KjRFMvJ/kos8kbzRQvFNZkn89GAgKTPAqXZ5YkjR6VJtZJO5XGqeQ
-         YpzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717403331; x=1718008131;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FAQKsZD6ySxnro4HriCuC0HGqYP8pUAOiGJhD7pGAsY=;
-        b=lqfMoj3EQ+DtHhntZfyMTBT5tk3IKIttG8wiF0V0xelTdwomzvVu+e6jZ6eO8yAq9J
-         6GqjLL6Aj4AmX7TS0Q8BwT7LNjONSY2TCE+VVbtM213gPMr124sSRq2aMFSySufoxfQ7
-         6AR/t6Hr7L0QHNjNLMsMeZU7Dk+DW5+NOmEAaG1+7va9zvFQfow+JVNdlMJ29eAwGaJS
-         SybjcCV4qV84RlsB4WHug0SIS8ETAHk7hgP7aa2vLoq7POE1YwVpnD+oAR7lG0QbSosF
-         oYm9MhdoD2Z76lf0v6MWPy0OkwAkCjcViqIoGDv8S+IcddX6LwP3WDwIZ3wdufOC4Ql3
-         bSQw==
-X-Forwarded-Encrypted: i=1; AJvYcCUBCNjlgRBwWZKy/3tX6dLBBFu5Blbgvf+vsdnmYqdqTPQ/1k9B9catAEu1K4dGlLRCySAknomLFQSKETJjGCiGqsx6o0w92yyB+dy9DFc8i/Ipc0eas0zgJ8tjrONQ+1n7OSzUhWZ2K1FDP7qeqM/rBTqTNW7qnLba5Zc2Vg4P9Qv3BcjbFQ==
-X-Gm-Message-State: AOJu0YzdNbeV8QHm102peZepJsms56yabrp0t2vEspJmWBoyik/T0o8P
-	i1/u9A4z/DtlPvm2/slj3LWVa1OsqCnJV/MFmz54PwLa5wnlx0sa
-X-Google-Smtp-Source: AGHT+IGLymVGTulZH/jz3LCEQ/QQZxXVr2EOUbsidXeOKtvuqSLnZ4TyppGavOqAdilZiEzJ0iuirw==
-X-Received: by 2002:ac2:5f95:0:b0:52b:86cf:91b2 with SMTP id 2adb3069b0e04-52b896bfcf6mr5498131e87.46.1717403330769;
-        Mon, 03 Jun 2024 01:28:50 -0700 (PDT)
-Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b94c13625sm548697e87.71.2024.06.03.01.28.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jun 2024 01:28:50 -0700 (PDT)
-Date: Mon, 3 Jun 2024 11:28:47 +0300
-From: Serge Semin <fancer.lancer@gmail.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Mark Brown <broonie@kernel.org>, 
-	Yang Yingliang <yangyingliang@huawei.com>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, 
-	Thangaraj Samynathan <thangaraj.s@microchip.com>, linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, Daniel Mack <daniel@zonque.org>, 
-	Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, 
-	=?utf-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4=?= Prado <nfraprado@collabora.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v1 2/8] spi: dw: Use new spi_xfer_is_dma_mapped() helper
-Message-ID: <4p24kjtplk6bk7amhwsrvvtryeeblitnd46lhlapwqudykayzn@3ki4zl4oknua>
-References: <20240531194723.1761567-1-andriy.shevchenko@linux.intel.com>
- <20240531194723.1761567-3-andriy.shevchenko@linux.intel.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=AsaVsUvG6v+ZXi8d8ub3ruqe6aS8I8Ubl8MBr6XGm1BhgXUcNyEOCOMWTZjcE4bhHUygSfYWe986nzalGUYRFk+n5v6T2RP+Rzos9x+Bj8QaP9bO/kLv2MZTeQt/yes6FWG9voWdtZs9AIFyCMmi5kyp8GOQIYNwQIFQxwjUTeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rUHoZvRg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEDFC2BD10;
+	Mon,  3 Jun 2024 08:48:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717404500;
+	bh=u56cQQyMmZ3JOBwf5RvEi1tVKT1f2xyCDIc7eW/pGqI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rUHoZvRgYkMgQFilzW1kNsTwulNMZ6G7id+p04gQc+4FfxaYqRGxYNAHaBmdHb7Sx
+	 g0MDQH7PSRPgUH/3JthcwLhpImsFH1EdILhJ3dFBeU881CD0LCekAe1kNg0qeO+ARU
+	 XzX60mvv+dqRhE405fxY6GlbFd6jCY2udGPzLlqACRtqwnSxXQpfw7nLIryj8R8UEA
+	 F0gIWGG/lIGwaj0dIQ/+nLKUJOqLEhrtMjuPosLZhRlY3wmAd42CCkKLiDYH+aIVzq
+	 +Om5/89OWCBM5Q5hDBSFOpnv6wuuhadpjvL3akvUqMBtTEQugDL7t8pwSV1iefAhUN
+	 eBwvabFNDWHwA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sE3MX-000000007TS-3GLQ;
+	Mon, 03 Jun 2024 10:48:17 +0200
+Date: Mon, 3 Jun 2024 10:48:17 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: x1e80100-crd: Add pmic-glink node
+ with all 3 connectors
+Message-ID: <Zl2DUXWUN0088-Af@hovoldconsulting.com>
+References: <20240527-x1e80100-dts-pmic-glink-v1-0-7ea5c8eb4d2b@linaro.org>
+ <20240527-x1e80100-dts-pmic-glink-v1-2-7ea5c8eb4d2b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,45 +68,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240531194723.1761567-3-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20240527-x1e80100-dts-pmic-glink-v1-2-7ea5c8eb4d2b@linaro.org>
 
-On Fri, May 31, 2024 at 10:42:34PM +0300, Andy Shevchenko wrote:
-> Replace a few lines of code by calling a spi_xfer_is_dma_mapped() helper.
+On Mon, May 27, 2024 at 11:07:28AM +0300, Abel Vesa wrote:
+> Add the pmic-glink node and describe all 3 USB Type-C connectors. Do this
+> for USB only, for now. The DP port will come at a later stage since it
+> uses a retimer.
 > 
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-
-Nice cleanup. Thanks!
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-
--Serge(y)
-
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  drivers/spi/spi-dw-core.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 143 ++++++++++++++++++++++++++++++
+>  1 file changed, 143 insertions(+)
 > 
-> diff --git a/drivers/spi/spi-dw-core.c b/drivers/spi/spi-dw-core.c
-> index ddfdb903047a..431788dd848c 100644
-> --- a/drivers/spi/spi-dw-core.c
-> +++ b/drivers/spi/spi-dw-core.c
-> @@ -19,6 +19,7 @@
->  #include <linux/string.h>
->  #include <linux/of.h>
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> index c5c2895b37c7..2fcc994cbb89 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> @@ -49,6 +49,101 @@ chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
 >  
-> +#include "internals.h"
->  #include "spi-dw.h"
->  
->  #ifdef CONFIG_DEBUG_FS
-> @@ -438,8 +439,7 @@ static int dw_spi_transfer_one(struct spi_controller *host,
->  	transfer->effective_speed_hz = dws->current_freq;
->  
->  	/* Check if current transfer is a DMA transaction */
-> -	if (host->can_dma && host->can_dma(host, spi, transfer))
-> -		dws->dma_mapped = host->cur_msg_mapped;
-> +	dws->dma_mapped = spi_xfer_is_dma_mapped(host, spi, transfer);
->  
->  	/* For poll mode just disable all interrupts */
->  	dw_spi_mask_intr(dws, 0xff);
-> -- 
-> 2.43.0.rc1.1336.g36b5255a03ac
-> 
+> +	pmic-glink {
+> +		compatible = "qcom,x1e80100-pmic-glink",
+> +			     "qcom,sm8550-pmic-glink",
+> +			     "qcom,pmic-glink";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
+> +				    <&tlmm 123 GPIO_ACTIVE_HIGH>,
+> +				    <&tlmm 125 GPIO_ACTIVE_HIGH>;
+
+With this series applied, I'm getting the following error on boot of the
+CRD:
+
+	ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: PPM init failed, stop trying
+
+Known issue? Do you need to enable some quirk in the UCSI driver?
+
+Johan
 
