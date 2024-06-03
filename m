@@ -1,66 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-21490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8D468D84E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 16:26:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 26D888D84EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 16:27:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDCD11C2160A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 14:26:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57EC21C218C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 14:27:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB8E912EBF2;
-	Mon,  3 Jun 2024 14:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04A4A12E1F2;
+	Mon,  3 Jun 2024 14:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uF7mpjO1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nziQ/mVX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A13812EBC2;
-	Mon,  3 Jun 2024 14:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA01132110;
+	Mon,  3 Jun 2024 14:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717424803; cv=none; b=qTIg/uKQBmmPMxl9pVw4BxZVx9hKzSZ9yxZray9uSz64CmvIFURd84n8NSxWrixFFWg5UWsK6V4DszQnjhAcALfv5G4R5yAAh5z89qpwLj+YJaexKIspimPDzSSTt8y4XreYE+5eWpx+qQP0GaBduW1NPeAr0St1jOS59d9U6Xo=
+	t=1717424811; cv=none; b=cBXNuOUJJj3Ak+I+fOiwom9p53VBnAobCjBc0v4MCpIBwjzWXhYV9CA6ZhmvtFSzE71hvm4eF5GwajEWPCFr7YBZftvsEeUVo9fkBqrt7WpBc46Jce30BaBmbVePsN3JlxXaG0N9LH6oE56NQpZxPLkGM5Bu99ZfVyzDHctDPXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717424803; c=relaxed/simple;
-	bh=mzZQjszM9qLA+McsUnJwdEB659wLnZJXh3P3zEeI1wk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=i87XDpV8IxvZdO08b4nCD7sGHX89bjqChGe/vCcJszzOdbXzN7YTywfdHOJNUS6CmZBqaPvJ+u0UEviDEBrF3acILFkUTpJrdFPPCZLpgMo0Iu1YPu2qk5V6pc1616svGB28AY0+qzJ8ncTYJDnkhx+tP8htld1Zgxlh5gmUhfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uF7mpjO1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38219C2BD10;
-	Mon,  3 Jun 2024 14:26:37 +0000 (UTC)
+	s=arc-20240116; t=1717424811; c=relaxed/simple;
+	bh=axgOU2f60G0C43RP1CrPbQ4L1znDGnP/69ACpWN0I38=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=tWv1g5uvuqmkOqvHUdKssb03TAuFpIHBKrDXyo778WHp6aDkeIXD5PvY7vdnl8eSKAzFQxqWT2KYqtTIVbgVUi15fVfXsBaKc8Z+4ro3sN4piQdkR1RXV7J57RXQyn2iHbu8FuZcprSPfsy3hX72xzeXkg92XSlbYF242PJXX70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nziQ/mVX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FCEC2BD10;
+	Mon,  3 Jun 2024 14:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717424803;
-	bh=mzZQjszM9qLA+McsUnJwdEB659wLnZJXh3P3zEeI1wk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=uF7mpjO1nlKl+IjvGnzdDBsKCoRmz5xQjnUM5K9gAbLsnd16EeV4AKyNq1wAbZtHu
-	 0XagtJ54UHRwUOuNbqv/dINNcJQ47Wq+wEKMeIpCl6PmGnef4s6Zk1k1Osl5GurXRg
-	 qUXWXWI5CqA1+eV34JP677LJXsBtU7EKNQUTUVs/5ZLxRjDf+EoiCyl5JKc2rWTly7
-	 rFqZIF+A69SfRAOG9x8BEdsYDal5b6AQFwNZF2lubP4yNewwxaIjegtayNpK5A8QJA
-	 wGxKohOjkQBxGa1meoxC9t8N8BlHtHLiJrL42ePFaYDdMhR0xqliDUjaEF99IQpErd
-	 IC6UXRUN/IQ3w==
+	s=k20201202; t=1717424811;
+	bh=axgOU2f60G0C43RP1CrPbQ4L1znDGnP/69ACpWN0I38=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=nziQ/mVXp7YCNa7p4zsni3uaJ3zs9YhugkQBFdbHAS/9jJ8XhXpqeimMgVzz0cxlq
+	 C7c4Hy89R/6ZW4SyO4GmPdkf/y05AbxgcXYNONDPNFcbYvb6bhYjxIq5LTYqbOhriO
+	 7A74qQWsotYogJsqml0n7f01l8Upy2ligRZrIgMs1byEiZw7yg3FcpEGsgPoQZZSAy
+	 r/7ei65O8uBcEGznjUL53Un+QiqZclw4v0zmpxuUk6djf543JXoYJHgRcSC3xn/D9o
+	 JTsVFdLlPQnD+FGKiZTnoIveEvKQC+IAY4NoHZ6Hysu9BYZV1gAkcIwQfBFbEKRvlR
+	 +IWGh2HFYtxrg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Kishon Vijay Abraham I <kishon@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Wesley Cheng <quic_wcheng@quicinc.com>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-clk@vger.kernel.org, linux-usb@vger.kernel.org, 
- Bjorn Andersson <quic_bjorande@quicinc.com>
-In-Reply-To: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
-References: <20240525-sc8180x-usb-mp-v1-0-60a904392438@quicinc.com>
-Subject: Re: (subset) [PATCH 00/10] arm64: dts: qcom: sc8180x: Enable the
- USB multiport controller
-Message-Id: <171742479784.106728.422190017656643757.b4-ty@kernel.org>
-Date: Mon, 03 Jun 2024 19:56:37 +0530
+To: kishon@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+ conor+dt@kernel.org, dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org, 
+ quic_msarkar@quicinc.com, quic_qianyu@quicinc.com, abel.vesa@linaro.org, 
+ quic_cang@quicinc.com, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devi priya <quic_devipriy@quicinc.com>
+In-Reply-To: <20240516032436.2681828-1-quic_devipriy@quicinc.com>
+References: <20240516032436.2681828-1-quic_devipriy@quicinc.com>
+Subject: Re: [PATCH V4 0/4] Add support for PCIe PHY in IPQ9574
+Message-Id: <171742480737.106728.8115956533813966138.b4-ty@kernel.org>
+Date: Mon, 03 Jun 2024 19:56:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,19 +64,32 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Sat, 25 May 2024 11:03:53 -0700, Bjorn Andersson wrote:
-> The USB multiport controller found in SC8180X is used to driver the
-> camera in the Lenovo Flex 5G, and a couple of additional USB ports on
-> the Primus AUX board.
+On Thu, 16 May 2024 08:54:32 +0530, devi priya wrote:
+> This series adds support for a single-lane and two-lane PCIe PHYs
+> found on Qualcomm IPQ9574 platform.
 > 
+> [V4]
+> 	Picked up the R-b/A-b tags.
+> 	Split the phy driver and headers to individual patches.
+> [V3]
+> 	https://lore.kernel.org/linux-arm-msm/20240512082541.1805335-1-quic_devipriy@quicinc.com/
+> [V2]
+> 	https://lore.kernel.org/linux-arm-msm/20230519085723.15601-1-quic_devipriy@quicinc.com/
+> [V1]
+> 	https://lore.kernel.org/linux-arm-msm/20230421124150.21190-1-quic_devipriy@quicinc.com/
 > 
+> [...]
 
 Applied, thanks!
 
-[01/10] dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add sc8180x USB3 compatible
-        commit: 4dc7e51a9e40f07dc0da7eea05577633984ea9f2
-[02/10] phy: qcom-qmp-usb: Add sc8180x USB UNIPHY
-        commit: b279a835192834565db5025205394e3ef943fbd2
+[1/4] dt-bindings: phy: qcom,ipq8074-qmp-pcie: Document the IPQ9574 QMP PCIe PHYs
+      commit: 29f09daab910c797f5468afda91a51e3e29de7ee
+[2/4] phy: qcom-qmp: Add missing offsets for Qserdes PLL registers.
+      commit: f1aaa788b997ba8a7810da0696e89fd3f79ecce3
+[3/4] phy: qcom-qmp: Add missing register definitions for PCS V5
+      commit: 71ae2acf1d7542ecd21c6933cae8fe65d550074b
+[4/4] phy: qcom-qmp-pcie: Add support for IPQ9574 g3x1 and g3x2 PCIEs
+      commit: 2f2f5c13cc5ea87f1dd2debfd06fe5f624e5c0fd
 
 Best regards,
 -- 
