@@ -1,110 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-21510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2513E8D8A8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 21:54:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 185158D8AA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 21:58:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 558421C238F6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 19:54:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A34A1C236EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 19:58:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5679213A876;
-	Mon,  3 Jun 2024 19:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDF1B13A878;
+	Mon,  3 Jun 2024 19:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZH1W2WnO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RaMqEoqy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C299F20ED;
-	Mon,  3 Jun 2024 19:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9EB20ED;
+	Mon,  3 Jun 2024 19:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717444463; cv=none; b=CDs+59+Y+XcQi2FP8wwiwsxGoIa2VPct9uB2uDnTeApbBosWLzh1AbdaMr1P4iAf3qrdz7A3sgjZ+Gpp3X0ny/1kd1ecAY9+olhRtwnpwSTVi4gNlobV4SLj6BF+3QgbCk1l/uR1orn3h0exnMVh5RIhUed7l46MEvfqxWC2ajg=
+	t=1717444700; cv=none; b=lhDRnTH2olMoXMOJmSa6dLu5PL9LCQdbKkFGhZV8xbUvQLq0NiJsVJHWRZKUSY4j8iodXiN3SdBr35evVzg+6sV43HWzUDXl0b8xufsbm56GK+Zxux72MrcvPUfLZylxuOGMiHFHSKpWlOesocuFIg+6Ae0StWlF19yRVJ7x4ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717444463; c=relaxed/simple;
-	bh=e5m7Kn4ioMIeYs9Jnk1vXY28Wu0K4/ZqmMFp2F5Q8Wo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bEFgloF33KLFKjYOI5mkG660JMztbmSzZsIzSdOIspP/15Tjchu4usaZR6nPc12rlyzI4g5wL92UgbkYxcp4L+iNn8dWT0VqVVdy20WE/Y+AGrT5sbzlybXp5Hy6bKyZrNBcjGENErkj6TTOCbsmOdfDSJJNyF/lh9fBY/kUXH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZH1W2WnO; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717444462; x=1748980462;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=e5m7Kn4ioMIeYs9Jnk1vXY28Wu0K4/ZqmMFp2F5Q8Wo=;
-  b=ZH1W2WnOiSUG6H8YXRFqChdMKKUf25cBMRxptIhpz2gf8y17TJ72Jq8J
-   ozfVyvtRcGIPKHRA3gkHCuqkcPTse3p6lqOiGHDnZuV4NB/70bvTWYTp/
-   gIU3y9akbzm69bHDqPwNH/axVJm2rNNO9Sq9dhMaoYytC/QVHv7/1a4Qr
-   Vt/0725xjEkAd/Xs0SOMLLz+EQEGXNsKNxna6gckCqkxVM9YUgnKksgWa
-   GPuG4UnS+OpITVPYt1PjPxEz5vDeF11p0EZlZUrgx7xLzTpE5Xy3DHOTR
-   jD+3tiayM4lTO3jmxdtOquXI8unIDEYFG1vBl387JSE3UsG7+GPwElC8g
-   A==;
-X-CSE-ConnectionGUID: oiPXffbvR+KlwcYrYjmbtw==
-X-CSE-MsgGUID: zL6V4iOfSJ6c/FnZShk71w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11092"; a="13707120"
-X-IronPort-AV: E=Sophos;i="6.08,212,1712646000"; 
-   d="scan'208";a="13707120"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2024 12:54:21 -0700
-X-CSE-ConnectionGUID: 1go9N50LTaC9DlhD1lLMQw==
-X-CSE-MsgGUID: Q2PdtJQET1GkYEqYGUH3Dg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,212,1712646000"; 
-   d="scan'208";a="37612029"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2024 12:54:18 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1sEDl0-0000000DNN9-1Wh1;
-	Mon, 03 Jun 2024 22:54:14 +0300
-Date: Mon, 3 Jun 2024 22:54:14 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Mark Brown <broonie@kernel.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	=?iso-8859-1?Q?N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado <nfraprado@collabora.com>
-Subject: Re: [PATCH v1 0/8] spi: Rework DMA mapped flag
-Message-ID: <Zl4fZq-zj5v9EI10@smile.fi.intel.com>
-References: <20240531194723.1761567-1-andriy.shevchenko@linux.intel.com>
- <7c54ed90-538c-4b32-91f4-85bf6c27cd6c@linaro.org>
+	s=arc-20240116; t=1717444700; c=relaxed/simple;
+	bh=Jv0wPuxLn2IQz24vgyugJvpXmcF7+iYuRiPa7kIs1QU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=nMW8piQSrU8WSuKqA2lSHdypTqs0xnpesA/XIzpoLDF8YqSiMiK6sx39n3/cHmHDwdQqSF57CrzHfo/x4lnrOgPJTS7/sHu6S53EdyjMYr3SwnoFfIip9FuwL+OlcYCNBLPu9u8j+p0US2xcgzeVGTyNEcEgTy7mMxB59LDOo70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RaMqEoqy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 453CBSfW021825;
+	Mon, 3 Jun 2024 19:58:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=sIsUCiNIgn3qUYEH9v2KuI
+	DucBsR0bH+FVI6oGRdiaE=; b=RaMqEoqyo+9XdqH85m6lKdFGCnsIL9M1aniytZ
+	atHvKD3cpmCD8m1kAu+pzAjcvxLXlxMAk/CQC3oeRp96MkuKtALjYT3tJO8ord9U
+	Jk+5GP3rLEucbDyIbR7TxZa09ywZlX8607o8aObrphse0wMLX+QNfFaKR90z4hVF
+	whAXt5lLHjWFwfTk2gdzI+bL8NSWHfhjDrTcu4OBUARp16MCN0FiGIYwCVXLdZCQ
+	LQ7OkmvaYSoEOHmra2GqA7DDk0k2QseQ7SyLlTwa485g21KxNm0a0H4hfE7pprTp
+	OuiMhy530Wa5eRnH2+7ilXP2foDUOmQbfISc/OAiZR5w+Taw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw7dmup3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Jun 2024 19:58:13 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453JwCMe020715
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Jun 2024 19:58:12 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
+ 12:58:09 -0700
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+Date: Mon, 3 Jun 2024 12:58:08 -0700
+Subject: [PATCH] misc: fastrpc: add missing MODULE_DESCRIPTION() macro
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7c54ed90-538c-4b32-91f4-85bf6c27cd6c@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240603-md-misc-fastrpc-v1-1-6e6d73d08315@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAE8gXmYC/x3MTQrCMBBA4auUWTsQ2xB/riIuknRiB0wsMyqF0
+ rt3dPkt3ltBSZgUrt0KQl9WfjXD8dBBnmJ7EPJoht713gU3YB2xsmYsUd8yZ0zB++IvJwpnAqt
+ mocLL/3i7m1NUwiSx5en3eXL7LFgtJoFt2wEpFXrAgAAAAA==
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari
+	<amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <kernel-janitors@vger.kernel.org>,
+        Jeff Johnson
+	<quic_jjohnson@quicinc.com>
+X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: G-FtRymav2VaB9gHqOae5bPDvBcbP8ME
+X-Proofpoint-GUID: G-FtRymav2VaB9gHqOae5bPDvBcbP8ME
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-06-03_16,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=975 impostorscore=0 malwarescore=0 phishscore=0 adultscore=0
+ clxscore=1011 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406030161
 
-On Mon, Jun 03, 2024 at 11:10:54AM +0200, Neil Armstrong wrote:
-> On 31/05/2024 21:42, Andy Shevchenko wrote:
+make allmodconfig && make W=1 C=1 reports:
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/misc/fastrpc.o
 
-...
+Add the missing invocation of the MODULE_DESCRIPTION() macro.
 
-> I applied the serie on next-20240603, it worked fine:
-> 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+---
+ drivers/misc/fastrpc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thank you!
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 4c67e2c5a82e..e040cb5470c4 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -2478,5 +2478,6 @@ static void fastrpc_exit(void)
+ }
+ module_exit(fastrpc_exit);
+ 
++MODULE_DESCRIPTION("Qualcomm FastRPC");
+ MODULE_LICENSE("GPL v2");
+ MODULE_IMPORT_NS(DMA_BUF);
 
--- 
-With Best Regards,
-Andy Shevchenko
-
+---
+base-commit: a693b9c95abd4947c2d06e05733de5d470ab6586
+change-id: 20240603-md-misc-fastrpc-b644f497e68e
 
 
