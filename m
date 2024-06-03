@@ -1,159 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-21471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A92818D7FA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 12:05:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ED1A8D7FB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 12:08:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C4656B26008
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 10:05:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E4E11F22F85
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 10:08:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DDA582496;
-	Mon,  3 Jun 2024 10:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dRqrGnuX"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B515A823A6;
+	Mon,  3 Jun 2024 10:08:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1DE81AB5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jun 2024 10:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C507177A1E;
+	Mon,  3 Jun 2024 10:08:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717409092; cv=none; b=CJ3qz9e4X6a1LfG31fRLIcwB2p1yPENHnLmdCoB1kNCorkET0tMjLPw7p1l3uj6Eknm1iGNp6BIWXws+FbQ0uRihMC2cVdSBUYtPInFPVaCvsqt4cXNX3h65TYJG1XTNm1zlwpYUmVd4yoXY3dN5x5PBhV4D+IAIAfX3ER0vP18=
+	t=1717409284; cv=none; b=UMAhA1Pb020xISq8ecoZQF1WoYXsc6jjjYRPlCC/PxavAcoMcQ5ItcGIaz+JFuo/4WHPN6Ys1bBBmKc8v+YI7BxR6qlWSPtuKl89nN/8QF0sPVGaVv0YKk3qjOHzMG7UmLJu/pFe79k15bGn9m9cCrHxbcO1cblMGT6PBP7Diz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717409092; c=relaxed/simple;
-	bh=tKfwQNhdpAS8ePAKsxjBO9dzocIt1W3bKnnwgrstodM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G3ZTMupUmErz+dNn1DlBN8zo2X2+R9jky1EjvI4bpA7pomazAk5T58c7uwBC7W1fdDYEPqLTFwBn9aCwYmIDFx5TsY4slxbrhcvXLy1hAkILVAVOICzdjB8+9iML6jak/NCTTG24Ntggrhawr+h4JCaPq67eiJXbbUVindhiGyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dRqrGnuX; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52b912198f1so2590642e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2024 03:04:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717409087; x=1718013887; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wigpiq3UYcvYdqkrQhN7qI4WVcDObAutfXNLBLWz1Qs=;
-        b=dRqrGnuXf83ezATcTAd3nD6wwbGozWp8rkJ2UMDol1s1QBp54UT/iVhrZbXlHGUGov
-         jrmbZb0Nrnk5IxoeEWWHT2sxzqYkJEqS4oax7h9BJvGsZSeWM0aXXXakiRpHjXsedI2p
-         EGDjLdv2zMZyAba05qNFQ+RGGjVevaqDdnMZjxZr5l/KP4tjQCtec/vkUI384EXA9aBS
-         kN60Rx/RV5GlpkrWygXiQe/vGRlxncGd3TKeATo1x/R7zq9D7Aqfh/u+vDVl6+mRMfSY
-         RTOK3XF8tY66Q1sYNt3mhcDvmRqFS/wdSq4xwLS6E9oP/leu6rKRevf0sR7AmyGzdZsw
-         344Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717409087; x=1718013887;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Wigpiq3UYcvYdqkrQhN7qI4WVcDObAutfXNLBLWz1Qs=;
-        b=fvzYrrPA5ubu3He4VtGbum1lFQ3X8hoSRUfGAANCd7gmgLEe1EY1gzoh5ElkWDjGXW
-         cuNBSL7c9Q2fBioCzG28qMu/9KJflhuzB7ZkuH4oNE/SNzk7V0cVkmxM4Ia6HCjC4pnu
-         1GIJUj9Z+Ur8LuRMzbt1dnHPTnkPUUGR1A4AqcFINkdwZJfm39oVlYCyQq9O1MVg2Lfs
-         qchwdmS7eUR6E1KkMEi967wdHHaXf9qvvHgaOsnmR/EbKNTE5S22vEO10nBMq2V3J7DM
-         KfFgYvsJw/hLZcoYOjpIrWMabXg8r5Z+8ytJOu3bP3aG5Z5pCv+Ktx4eY6zweFaCobBJ
-         bnsA==
-X-Forwarded-Encrypted: i=1; AJvYcCVrg2xQFISTkd0BDb7nQmthu8M43lCi9JC6fwKJlBz6jlV+Wlxa3pFdv5fEg90+k1Z32E4gXF2jApY9RtGDFH/H+CPYI9FlrxGum6Vheg==
-X-Gm-Message-State: AOJu0YyGsEt4EHpDA9Jp4MR7FRhJzU2t6AGy2TRUpQB/cegkvyWb73rE
-	/3Wg5UNW/uI+fej7adVRnpLV0k1OD4XJeUIVkpfWMB7I5+4MMFolYhpZ8lejTCg=
-X-Google-Smtp-Source: AGHT+IF5KnG1FbQl2ZMSS1dblXe8W7iYWQvh17DRwDMEgS5aDyUVIouCkrUQXkbLDkWxPZaBVQnv9g==
-X-Received: by 2002:a05:6512:239f:b0:52b:9037:996d with SMTP id 2adb3069b0e04-52b90379aafmr4283607e87.46.1717409087167;
-        Mon, 03 Jun 2024 03:04:47 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b92e66010sm666446e87.102.2024.06.03.03.04.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jun 2024 03:04:46 -0700 (PDT)
-Date: Mon, 3 Jun 2024 13:04:45 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/9] drm/connector: hdmi: accept NULL for Audio
- Infoframe
-Message-ID: <th7i4ugpnbifmthtam7p5nmtclygx6asvzzyibzl2oxdsxxnmj@rd7dujgjxzuv>
-References: <20240531-bridge-hdmi-connector-v4-0-5110f7943622@linaro.org>
- <20240531-bridge-hdmi-connector-v4-1-5110f7943622@linaro.org>
- <20240603-therapeutic-warm-fox-890bee@houat>
+	s=arc-20240116; t=1717409284; c=relaxed/simple;
+	bh=8qBYXdJrDRJA+p+7GoU2rvppnvWsbbP8MLHmqvz8jA8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mPqpo8hE8oKRfayW5eYkxhBixzmaGRf0EMT+Gu+UryHG/rYalEhoMQMtsrHwSzEejGUjjxsGN01szUf4p06EQwMxhNx18vdvx3rYAGfbfznjWvWmszDtblyDtDpGPU879FYKln4P5Yf39gmioMRGYBwCExbVQvDjisuEc5mxPIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5FB711042;
+	Mon,  3 Jun 2024 03:08:26 -0700 (PDT)
+Received: from [192.168.1.100] (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1CCB23F792;
+	Mon,  3 Jun 2024 03:08:00 -0700 (PDT)
+Message-ID: <1802b338-e2e5-4b9b-b914-869651fa886c@arm.com>
+Date: Mon, 3 Jun 2024 11:07:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240603-therapeutic-warm-fox-890bee@houat>
-
-On Mon, Jun 03, 2024 at 11:09:40AM +0200, Maxime Ripard wrote:
-> Hi,
-> 
-> Sorry for not answering your mail on the previous version sooner.
-> 
-> On Fri, May 31, 2024 at 11:07:24PM GMT, Dmitry Baryshkov wrote:
-> > Allow passing NULL as audio infoframe as a way to disable Audio
-> > Infoframe generation.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/gpu/drm/display/drm_hdmi_state_helper.c | 14 ++++++++++----
-> >  1 file changed, 10 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-> > index ce96837eea65..5356723d21f5 100644
-> > --- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-> > +++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-> > @@ -681,7 +681,7 @@ EXPORT_SYMBOL(drm_atomic_helper_connector_hdmi_update_infoframes);
-> >  /**
-> >   * drm_atomic_helper_connector_hdmi_update_audio_infoframe - Update the Audio Infoframe
-> >   * @connector: A pointer to the HDMI connector
-> > - * @frame: A pointer to the audio infoframe to write
-> > + * @frame: A pointer to the audio infoframe to write or NULL to disable sending the frame
-> 
-> I'm still two-minded about this. I think I would like a separate helper
-> better, to also make things consistent with the HDMI helpers.
-> 
-> Most importantly, it looks like you're not using it at all in your series?
-
-It should have been a part of msm_hdmi_audio_disable(), but it seems
-with all the refactorings I forgot to use it. I'll check again the
-behaviour and either drop this patch or add a separate helper and fix
-other comments below.
-
-> 
-> >   * This function is meant for HDMI connector drivers to update their
-> >   * audio infoframe. It will typically be used in one of the ALSA hooks
-> > @@ -704,10 +704,16 @@ drm_atomic_helper_connector_hdmi_update_audio_infoframe(struct drm_connector *co
-> >  
-> >  	mutex_lock(&connector->hdmi.infoframes.lock);
-> >  
-> > -	memcpy(&infoframe->data, frame, sizeof(infoframe->data));
-> > -	infoframe->set = true;
-> > +	if (frame) {
-> > +		memcpy(&infoframe->data, frame, sizeof(infoframe->data));
-> > +		infoframe->set = true;
-> > +
-> > +		ret = write_infoframe(connector, infoframe);
-> > +	} else {
-> > +		infoframe->set = false;
-> >  
-> > -	ret = write_infoframe(connector, infoframe);
-> > +		ret = clear_infoframe(connector, infoframe);
-> > +	}
-> 
-> We should probably clear infoframe->data here too
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] coresight: dummy: Add reserve atid support for
+ dummy source
+To: Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, songchai <quic_songchai@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+References: <20240603094354.2348-1-quic_jinlmao@quicinc.com>
+ <20240603094354.2348-4-quic_jinlmao@quicinc.com>
+Content-Language: en-US
+From: James Clark <james.clark@arm.com>
+In-Reply-To: <20240603094354.2348-4-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
--- 
-With best wishes
-Dmitry
+
+On 03/06/2024 10:43, Mao Jinlong wrote:
+> Some dummy source has static trace id configured in HW and it cannot
+> be changed via software programming. Configure the trace id in device
+> tree and reserve the id when device probe.
+> 
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>  .../sysfs-bus-coresight-devices-dummy-source  | 15 +++++
+>  drivers/hwtracing/coresight/coresight-dummy.c | 58 +++++++++++++++++--
+>  2 files changed, 69 insertions(+), 4 deletions(-)
+>  create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+> 
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+> new file mode 100644
+> index 000000000000..d93c198115c9
+> --- /dev/null
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+> @@ -0,0 +1,15 @@
+> +What:		/sys/bus/coresight/devices/dummy_source<N>/enable_source
+> +Date:		June 2024
+> +KernelVersion:	6.9
+> +Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
+> +Description:	(RW) Enable/disable tracing of dummy source. A sink should be activated
+> +		before enabling the source. The path of coresight components linking
+> +		the source to the sink is configured and managed automatically by the
+> +		coresight framework.
+> +
+> +What:		/sys/bus/coresight/devices/dummy_source<N>/traceid
+> +Date:		June 2024
+> +KernelVersion:	6.9
+> +Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
+> +Description:	(R) Show the trace ID that will appear in the trace stream
+> +		coming from this trace entity.
+> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
+> index ac70c0b491be..1f7133ac2c0b 100644
+> --- a/drivers/hwtracing/coresight/coresight-dummy.c
+> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
+> @@ -11,10 +11,12 @@
+>  #include <linux/pm_runtime.h>
+>  
+>  #include "coresight-priv.h"
+> +#include "coresight-trace-id.h"
+>  
+>  struct dummy_drvdata {
+>  	struct device			*dev;
+>  	struct coresight_device		*csdev;
+> +	u8				traceid;
+>  };
+>  
+>  DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
+> @@ -67,6 +69,32 @@ static const struct coresight_ops dummy_sink_cs_ops = {
+>  	.sink_ops = &dummy_sink_ops,
+>  };
+>  
+> +/* User can get the trace id of dummy source from this node. */
+> +static ssize_t traceid_show(struct device *dev,
+> +			    struct device_attribute *attr, char *buf)
+> +{
+> +	unsigned long val;
+> +	struct dummy_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	val = drvdata->traceid;
+> +	return scnprintf(buf, PAGE_SIZE, "%#lx\n", val);
+> +}
+> +static DEVICE_ATTR_RO(traceid);
+> +
+> +static struct attribute *coresight_dummy_attrs[] = {
+> +	&dev_attr_traceid.attr,
+> +	NULL,
+> +};
+> +
+> +static const struct attribute_group coresight_dummy_group = {
+> +	.attrs = coresight_dummy_attrs,
+> +};
+> +
+> +static const struct attribute_group *coresight_dummy_groups[] = {
+> +	&coresight_dummy_group,
+> +	NULL,
+> +};
+> +
+>  static int dummy_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+> @@ -74,6 +102,11 @@ static int dummy_probe(struct platform_device *pdev)
+>  	struct coresight_platform_data *pdata;
+>  	struct dummy_drvdata *drvdata;
+>  	struct coresight_desc desc = { 0 };
+> +	int ret, trace_id;
+> +
+> +	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> +	if (!drvdata)
+> +		return -ENOMEM;
+>  
+>  	if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
+>  
+> @@ -85,6 +118,24 @@ static int dummy_probe(struct platform_device *pdev)
+>  		desc.subtype.source_subtype =
+>  					CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
+>  		desc.ops = &dummy_source_cs_ops;
+> +		desc.groups = coresight_dummy_groups;
+> +
+> +		ret = coresight_get_source_traceid(dev, &trace_id);
+> +		if (!ret) {
+> +			ret = coresight_trace_id_get_system_id(trace_id);
+> +			if (ret < 0)
+> +				return ret;
+> +
+> +			drvdata->traceid = ret;
+> +		} else {
+> +			trace_id = coresight_trace_id_get_system_id(0);
+> +			if (trace_id < 0) {
+> +				ret = trace_id;
+> +				return ret;
+> +			}
+> +			drvdata->traceid = (u8)trace_id;
+> +		}
+> +
+
+It's a bit weird to use ret in one version and trace_id in the other.
+And one casts to (u8) but the other doesn't. I'm sure it all compiles to
+the same in the end but it would be a bit more readable if it was more
+consistent.
+
+>  	} else if (of_device_is_compatible(node, "arm,coresight-dummy-sink")) {
+>  		desc.name = coresight_alloc_device_name(&sink_devs, dev);
+>  		if (!desc.name)
+> @@ -103,10 +154,6 @@ static int dummy_probe(struct platform_device *pdev)
+>  		return PTR_ERR(pdata);
+>  	pdev->dev.platform_data = pdata;
+>  
+> -	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> -	if (!drvdata)
+> -		return -ENOMEM;
+> -
+>  	drvdata->dev = &pdev->dev;
+>  	platform_set_drvdata(pdev, drvdata);
+>  
+> @@ -126,7 +173,10 @@ static void dummy_remove(struct platform_device *pdev)
+>  {
+>  	struct dummy_drvdata *drvdata = platform_get_drvdata(pdev);
+>  	struct device *dev = &pdev->dev;
+> +	struct device_node *node = dev->of_node;
+>  
+> +	if (of_device_is_compatible(node, "arm,coresight-dummy-source"))
+> +		coresight_trace_id_put_system_id(drvdata->traceid);
+>  	pm_runtime_disable(dev);
+>  	coresight_unregister(drvdata->csdev);
+>  }
 
