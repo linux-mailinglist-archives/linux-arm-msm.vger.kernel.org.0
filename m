@@ -1,128 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-21493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E470C8D8759
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 18:35:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1489E8D8769
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 18:44:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D66328992D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 16:35:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 349081C215A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 16:44:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FF5913541B;
-	Mon,  3 Jun 2024 16:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73B33136995;
+	Mon,  3 Jun 2024 16:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dljAJy3f"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rJhXjDmZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A397E8;
-	Mon,  3 Jun 2024 16:35:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FE88060D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jun 2024 16:44:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717432524; cv=none; b=pU6iqQ4YzVTZis6xSAN30828v+t3AfjeER7GN4HPaVSlbYR0ZOFpTddHoHr2mUtiet202qGMeuhZucgkkjO+a/lZq+dFzs+z1BP+xm/6xv9DkGocHlt7r74pj3+JOEoHTD9bltKSjP2/1eYSfTSrXr+lzYFP2ND65KxXXgnGDeM=
+	t=1717433047; cv=none; b=u/mYPEwKmi/9C2rnLpSkYns8Fw3bHkHwDpYCJOKyvCWluECXM3054eRMxMa56JI+fIZQPElshiI5pSfm6rrQX2PrANherObzEgsM3T/NcCfQix1JMamUq92VAPmR/pHGGdGOUDN1oMtFFeKnTAXepRuaiKL7ym4z4oto9Y+B9T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717432524; c=relaxed/simple;
-	bh=BO3aVJ0FfkEKoNFzLUlb3mwvrU9V3ipNtcJaX7DM/Ys=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XUVL1uwRzZhrnWq6L5pclXoxg2tQDUdMWrrgj9ra3B6SRU2APsP0xsAoRWAGT3CtwBsKmH7eMV+oWwkGxDUavMXV3KX/yvBcSMkb9xha3MR/YYaYGxYJ9j3B+JAN3S4lNJxX8xQd2Inis5AEl/2WLDadSQYt01mw07coiUxngOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dljAJy3f; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 453C5K9P009078;
-	Mon, 3 Jun 2024 16:35:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VladUwHMx4+LGUlSn+CNhK4B9YObfz94IGIKwRIcgiM=; b=dljAJy3f/Lz929yF
-	bjSOATzpw8uaZUJ1mq6PNWEvm16PKKaFCj9BBDmAsoSsfmBCxApyaZc0Nx/btNbG
-	qfYGVOB/+VaV7TQn5ltrtumQto6i9yFeWAuyuNE02VwppoJTfqJ4M4zVlJmoXJkH
-	+Zs9xfSl/ofnIUTyLJQYX+NE93MEmFn42FscGgLO7oX33Qf/W+3cDhHJhG964H+a
-	TYNOj2BR/0OtONTqy3exSnsyLOGn8tuWU/eEdJdFLenM2HonhnUtWw2L6UbJYFr5
-	LoaCledEc3ggw5uIJPFaBAZ5TsFk5NiND7uIkHI457Et0J2m62lhw6rYAgq1t1UM
-	6cjUtQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw7dmesp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Jun 2024 16:35:18 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453GZGsV008159
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Jun 2024 16:35:16 GMT
-Received: from [10.110.33.27] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
- 09:35:13 -0700
-Message-ID: <5adaf1ec-7e10-49f8-9b2c-ece932a835fd@quicinc.com>
-Date: Mon, 3 Jun 2024 09:35:08 -0700
+	s=arc-20240116; t=1717433047; c=relaxed/simple;
+	bh=j9efUysIbU+0fDZp59JmxjJMpgDLHkYjIzf8rBgtCHo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=A5iE4CR0rlabidOnNFdFqyZ84WMWyNU4i2bQwokCyNeuQ1fqX3ejQ3QK7Ph5Fufs93brU4ni0kWvcKkgdANHXT6HKmL8InOexhY5bUFy81uKPb44QJnGB7sbxJCGMr6huTgqOP/iMN2cPu0G1uEJx1nAACy3jb54PrvasVvYCRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rJhXjDmZ; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f62a628b4cso28822075ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2024 09:44:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717433045; x=1718037845; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kQJCX2mLLjVwtGvAcK2JVSlXXTTlVczYVL9TcQ37x9I=;
+        b=rJhXjDmZ9qsdMDC3KEeOWHBB/U6XvzuwFHaGSdsPm0HTLjLDItRq4Q5dq1m8P+VxbI
+         J0I+GmHfbtMIl/vDqrVt/KP0VJKH8qK1cozyTuDYusIbzoXjL5Mr8Y/S6ohewV7SSOBP
+         jt41vgl3P50jOkRr7VHfQ7EXTbHYRh759nIRqgJEbMCmABjBf8acO2kObAMr28RZBjfr
+         9bIguu1tdQfEBOHS9L6BOhwxXajnRzXm2ADXtqVSQJnAwkbsYuXQ1sXAzkCDSnR5gwkz
+         OYHs6jivPj7RQ0Dt7FlP6RGLtxmB3hLzcQDyGcCmZESAvK9MhaCsZe0FGLYnAUvoX01/
+         o99Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717433045; x=1718037845;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kQJCX2mLLjVwtGvAcK2JVSlXXTTlVczYVL9TcQ37x9I=;
+        b=kizj8+1YBZd2mPmoe+4BX+YVmUPWTS7YKwFLFQg0jfldgHQLUilF27kFOHYp+8XDtP
+         2E3F1QLF6i5HFIcfbb22yRft0indyXqPzMnCr1KN5tNaQNu8NPqrWuAfMaawsXx9KK7+
+         qbMoP0TSd4cF9yypn1O/83hkP955zccIJl4voonjUhEU250WwUX/XGYU6ubXshWgTdkL
+         hhBSEtmxsjmJICLwn9sEFN+b6WBL0bvy18f4wW/Le36TDIiOOD6hQyeK0wSKZzo7m6ia
+         TuuoVMPa63NK5wj10gpGXlRwYJ6vYSeXECFU8C5eqpEWBTLkp26Y9yWC8urGPi74X+i2
+         nq6Q==
+X-Gm-Message-State: AOJu0Yykl3c/eUUWkOJ+MIwDHI/vvGaNxQgqDAeB5WMR0ShdgwItuMzJ
+	CQRsBIefT/onx0Ljh+86xlpLNNn9kVul5b59FPim8XvHAKUSPQClU+d3D5qUgA==
+X-Google-Smtp-Source: AGHT+IGYx+sx85xzgEc86M80PuqE2ZoS4273PGYCLxOQNlGQ9YXpPTVaa2w3bk5t3yHX6kqLl4+hdA==
+X-Received: by 2002:a17:902:e546:b0:1f6:5bba:f134 with SMTP id d9443c01a7336-1f65bbaf520mr68933315ad.46.1717433045079;
+        Mon, 03 Jun 2024 09:44:05 -0700 (PDT)
+Received: from localhost.localdomain ([120.60.128.29])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f632401919sm67523825ad.248.2024.06.03.09.44.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Jun 2024 09:44:04 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: mhi@lists.linux.dev
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	stable@vger.kernel.org
+Subject: [PATCH] bus: mhi: ep: Do not allocate memory for MHI objects from DMA zone
+Date: Mon,  3 Jun 2024 22:13:54 +0530
+Message-Id: <20240603164354.79035-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: (subset) [PATCH v6 0/5] LLCC: Support for Broadcast_AND region
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <cover.1717014052.git.quic_uchalich@quicinc.com>
- <171730042577.665897.8196444348725965878.b4-ty@kernel.org>
-Content-Language: en-US
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-In-Reply-To: <171730042577.665897.8196444348725965878.b4-ty@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tFYtsQJ0OHMoNJ_3SbZr_3oDYerD8arS
-X-Proofpoint-GUID: tFYtsQJ0OHMoNJ_3SbZr_3oDYerD8arS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-06-03_13,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=888 impostorscore=0 malwarescore=0 phishscore=0 adultscore=0
- clxscore=1015 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406030136
+Content-Transfer-Encoding: 8bit
 
-On 6/1/2024 8:53 PM, Bjorn Andersson wrote:
-> 
-> On Fri, 31 May 2024 09:45:23 -0700, Unnathi Chalicheemala wrote:
->> This series adds:
->> 1. Device tree register mapping for Broadcast_AND region in SM8450,
->> SM8550, SM8650.
->> 2. LLCC driver updates to reflect addition of Broadcast_AND regmap.
->>
->> To support CSR programming, a broadcast interface is used to program all
->> channels in a single command. Until SM8450 there was only one broadcast
->> region (Broadcast_OR) used to broadcast write and check for status bit
->> 0. From SM8450 onwards another broadcast region (Broadcast_AND) has been
->> added which checks for status bit 1.
->>
->> [...]
-> 
-> Applied, thanks!
-> 
-Thanks Bjorn, Krzystof and Konrad for the reviews!
-> [3/5] arm64: dts: qcom: sm8450: Add Broadcast_AND register in LLCC block
->       commit: c566143137aaacfed1af09d8710edab1971c312d
-> [4/5] arm64: dts: qcom: sm8550: Add Broadcast_AND register in LLCC block
->       commit: 2a71a2eb1f5ec438f0ac1c7e294cd7ed32119af3
-> [5/5] arm64: dts: qcom: sm8650: Add Broadcast_AND register in LLCC block
->       commit: a7823576f7f7b1cb0a595332ab6b0b38e15f45a7
-> 
-> Best regards,
+MHI endpoint stack accidentally started allocating memory for objects from
+DMA zone since commit 62210a26cd4f ("bus: mhi: ep: Use slab allocator
+where applicable"). But there is no real need to allocate memory from this
+naturally limited DMA zone. This also causes the MHI endpoint stack to run
+out of memory while doing high bandwidth transfers.
+
+So let's switch over to normal memory.
+
+Cc: stable@vger.kernel.org # 6.8
+Fixes: 62210a26cd4f ("bus: mhi: ep: Use slab allocator where applicable")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/ep/main.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+index f8f674adf1d4..4acfac73ca9a 100644
+--- a/drivers/bus/mhi/ep/main.c
++++ b/drivers/bus/mhi/ep/main.c
+@@ -90,7 +90,7 @@ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct m
+ 	struct mhi_ring_element *event;
+ 	int ret;
+ 
+-	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
++	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
+ 	if (!event)
+ 		return -ENOMEM;
+ 
+@@ -109,7 +109,7 @@ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_stat
+ 	struct mhi_ring_element *event;
+ 	int ret;
+ 
+-	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
++	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
+ 	if (!event)
+ 		return -ENOMEM;
+ 
+@@ -127,7 +127,7 @@ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_e
+ 	struct mhi_ring_element *event;
+ 	int ret;
+ 
+-	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
++	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
+ 	if (!event)
+ 		return -ENOMEM;
+ 
+@@ -146,7 +146,7 @@ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_e
+ 	struct mhi_ring_element *event;
+ 	int ret;
+ 
+-	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
++	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
+ 	if (!event)
+ 		return -ENOMEM;
+ 
+@@ -438,7 +438,7 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
+ 		read_offset = mhi_chan->tre_size - mhi_chan->tre_bytes_left;
+ 		write_offset = len - buf_left;
+ 
+-		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL | GFP_DMA);
++		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL);
+ 		if (!buf_addr)
+ 			return -ENOMEM;
+ 
+@@ -1481,14 +1481,14 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+ 
+ 	mhi_cntrl->ev_ring_el_cache = kmem_cache_create("mhi_ep_event_ring_el",
+ 							sizeof(struct mhi_ring_element), 0,
+-							SLAB_CACHE_DMA, NULL);
++							0, NULL);
+ 	if (!mhi_cntrl->ev_ring_el_cache) {
+ 		ret = -ENOMEM;
+ 		goto err_free_cmd;
+ 	}
+ 
+ 	mhi_cntrl->tre_buf_cache = kmem_cache_create("mhi_ep_tre_buf", MHI_EP_DEFAULT_MTU, 0,
+-						      SLAB_CACHE_DMA, NULL);
++						      0, NULL);
+ 	if (!mhi_cntrl->tre_buf_cache) {
+ 		ret = -ENOMEM;
+ 		goto err_destroy_ev_ring_el_cache;
+-- 
+2.25.1
+
 
