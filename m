@@ -1,152 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-21442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE54E8D7C8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 09:37:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BA408D7C99
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 09:39:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E08111C21F04
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 07:37:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E56F3283624
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 07:39:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 676F24F1F8;
-	Mon,  3 Jun 2024 07:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F13347F6B;
+	Mon,  3 Jun 2024 07:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ow+ndGbe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CSRirevb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BC34DA06;
-	Mon,  3 Jun 2024 07:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6AC47A4C;
+	Mon,  3 Jun 2024 07:39:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717400236; cv=none; b=Bi/9XQy0km6nAs/zODUeATGfVrYQmA67P5j8eciNuNJ4DpmHUK7dIBbFYpqhdn8JF5X1j8IDyoT2z+bY3m0j6I9pehqiwiZkpBfBtIKvKpmtjckUccRKGJVy0DmV4F3MMbWD4IvxtUU2FquqdC7uXm/r21A6gLNIKhHxNHdPsig=
+	t=1717400342; cv=none; b=RJwsEJ7spy9YX2K+mYYcU01sa/o5pCqRvURJVBwZtdzGEPvahFMm+PHQok1xI73ioIXUW4AHSFYj3ILv7s7jHOcmTo4wvQrK3AkXCw+xsMyi6pKCSX6LNFeVIYUAzQRpTP4asjnMiZcfgSe4K+btyzUXilAIuHwr4AbzzKuGOhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717400236; c=relaxed/simple;
-	bh=YrD1TeY+Zqn5mqS68Rc/BXAkFalRcdLmLF90a5+aRf4=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GGAT81tx7GUpsaN8JyDhMMR14pT/lzR5Mtw4LYc9ws5KhwHYFDvMeEyeFPkMj/eMnahp6rpwBHiehDKdC10z3drX4YYo/SihNvOvDahydCWie2U5DVw+FLXDfIy0dc8oc8hFJ4KmOGruu1ead5sCmvRLJag4+PM6kbI66vOii5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ow+ndGbe; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1717400342; c=relaxed/simple;
+	bh=3OdgjKpZPkAQHLcck0rkvVYntYujmuP6aMxqQFcAWrw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=f5uXeeZsWhVubHMtEhu3pY97h3OIUcNEMxu2cQWPtNG2ZRckmc9wDn6DId0FMGOCho600UTcHTURxOgHUv0pZYInhmPLiQHiA+7BybF4F5+SdMglR8U4SEyjAPZsXhu4C6uw7661AS1UeRii+0WFM5JN9gBkVCjuFbdiDvVtUsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CSRirevb; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 452Lu1gi000710;
-	Mon, 3 Jun 2024 07:37:11 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 452NYVca009764;
+	Mon, 3 Jun 2024 07:38:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=elIZI+0QGYBcCHC97gkGU8
-	OEiqo46K6nDcE6IeB7xhs=; b=ow+ndGbeid/o3aIiwDCtDJpUZLIZRvCL1OoEIV
-	jlFJ2DTNiSVz+Lpo3hSOzrvO7U3zjOHiditGtl4nb2Aq1XnZhby+ucTaEaDvUuU2
-	fiVQco/FaR7w7eHLv0hR2gn1UsgB7IoqXeKv6fip2SsQygGq1siTbkPfeOLy/S3R
-	LS26YLgOPXKrA4ujjQ2Ho/gCWpW0TiVYbyEKDatq2E/n2UVDloKRME/OCH8+CMOP
-	1OCiX1ZxN0DiMDL4Sy1ovaUliIbRbDhtgMvw/Q+DyzmV1U7ANHrG2/Re1hQRDYBg
-	G7Tv57VI5B0HpD9XcyOt4sX3up6OQoTPJfh53VrxVgssak0Q==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw5kkegk-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WxEi7sRy7iK+COlhc2ROTwcgjGcfbLpHiMuNpxfg+T8=; b=CSRirevbxgEOMAfp
+	EYvrbbTEp18R+tPNkiX1sUqCi8zr0LG8cR3hIgjyCy8vDIjkttfQ9rTscm0w7d0U
+	j5SRl2jebaAI1WhAj8nLsJRPSRyKay7kEflU4PvD+FMP42AOnQCaEd2R8MzJqGRi
+	zxNF2D/zRjS8ErEsrJN6fcu8ER5hsaXYBDSRfXur0cagm47SwMWOWsJYoP35T1o6
+	5ddi3MJZ3SDSXBYJNZQTf2MBJbC2X/4rV3Mm+KQuUd3UanCL0+FZDz7hQaGbL8ku
+	PbXkNSb3p8egYkhXk9lLnheBp7SAyGXcDSFWR3Ci8PQen0Xn5cRzl+uliLsiB1A2
+	KKfglg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw3r3fq7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Jun 2024 07:37:10 +0000 (GMT)
+	Mon, 03 Jun 2024 07:38:54 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4537bAqe013568
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4537croY014756
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Jun 2024 07:37:10 GMT
-Received: from hu-deesin-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 3 Jun 2024 00:37:06 -0700
-From: Deepak Kumar Singh <quic_deesin@quicinc.com>
-To: <quic_bjorande@quicinc.com>, <andersson@kernel.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <quic_sarannya@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        "Deepak
- Kumar Singh" <quic_deesin@quicinc.com>
-Subject: [PATCH V1] rpmsg: glink: Make glink smem interrupt wakeup capable
-Date: Mon, 3 Jun 2024 13:06:48 +0530
-Message-ID: <20240603073648.3475123-1-quic_deesin@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	Mon, 3 Jun 2024 07:38:53 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
+ 00:38:46 -0700
+Message-ID: <89c5c663-df8a-43d4-91b3-0a84b0c9a324@quicinc.com>
+Date: Mon, 3 Jun 2024 15:38:44 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 4/4] arm64: dts: qcom: aim300: add AIM300 AIoT
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        Qiang Yu <quic_qianyu@quicinc.com>,
+        Ziyue Zhang
+	<quic_ziyuzhan@quicinc.com>, <quic_chenlei@quicinc.com>
+References: <20240529100926.3166325-1-quic_tengfan@quicinc.com>
+ <20240529100926.3166325-5-quic_tengfan@quicinc.com>
+ <s5gt3p6zsd5ebrkop4dhd33tykln33f6ahu3pibymecxsmakyd@lg5wfgec6dat>
+ <205de8b7-507f-45c9-83ce-6eceb1466cb2@quicinc.com>
+ <CAA8EJpqFq=6YFcUpjdkKikN54iQ76i8Rk_z+mLH1Tt0zFFmciQ@mail.gmail.com>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <CAA8EJpqFq=6YFcUpjdkKikN54iQ76i8Rk_z+mLH1Tt0zFFmciQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sr0nk5k29uS2yIlRr3w11-nlJf5Hd-sf
-X-Proofpoint-ORIG-GUID: sr0nk5k29uS2yIlRr3w11-nlJf5Hd-sf
+X-Proofpoint-ORIG-GUID: 17CZvZQvUzItZmzYtah8R3pekd3KxjMK
+X-Proofpoint-GUID: 17CZvZQvUzItZmzYtah8R3pekd3KxjMK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-06-03_04,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1011 phishscore=0
- mlxscore=0 priorityscore=1501 adultscore=0 bulkscore=0 spamscore=0
- mlxlogscore=716 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 mlxscore=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 mlxlogscore=999
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405170001 definitions=main-2406030063
 
-There are certain usecases which require glink interrupt to be
-wakeup capable. For example if handset is in sleep state and
-usb charger is plugged in, dsp wakes up and sends glink interrupt
-to host for glink pmic channel communication. Glink is suppose to
-wakeup host processor completely for further glink data handling.
-IRQF_NO_SUSPEND does not gurantee complete wakeup, system may again
-enter sleep after interrupt handling and glink data may not be
-handled by pmic client driver.
 
-To ensure data handling by client configure glink smem device as
-wakeup source and attach glink interrupt as wakeup irq. Remove
-IRQF_NO_SUSPEND flag as it is no longer required.
 
-Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
----
- drivers/rpmsg/qcom_glink_smem.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+On 5/31/2024 4:38 PM, Dmitry Baryshkov wrote:
+> On Fri, 31 May 2024 at 11:35, Tengfei Fan <quic_tengfan@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 5/29/2024 11:18 PM, Dmitry Baryshkov wrote:
+>>> On Wed, May 29, 2024 at 06:09:26PM +0800, Tengfei Fan wrote:
+>>>> Add AIM300 AIoT Carrier board DTS support, including usb, UART, PCIe,
+>>>> I2C functions support.
+>>>> Here is a diagram of AIM300 AIoT Carrie Board and SoM
+>>>>    +--------------------------------------------------+
+>>>>    |             AIM300 AIOT Carrier Board            |
+>>>>    |                                                  |
+>>>>    |           +-----------------+                    |
+>>>>    |power----->| Fixed regulator |---------+          |
+>>>>    |           +-----------------+         |          |
+>>>>    |                                       |          |
+>>>>    |                                       v VPH_PWR  |
+>>>>    | +----------------------------------------------+ |
+>>>>    | |                          AIM300 SOM |        | |
+>>>>    | |                                     |VPH_PWR | |
+>>>>    | |                                     v        | |
+>>>>    | |   +-------+       +--------+     +------+    | |
+>>>>    | |   | UFS   |       | QCS8550|     |PMIC  |    | |
+>>>>    | |   +-------+       +--------+     +------+    | |
+>>>>    | |                                              | |
+>>>>    | +----------------------------------------------+ |
+>>>>    |                                                  |
+>>>>    |                    +----+          +------+      |
+>>>>    |                    |USB |          | UART |      |
+>>>>    |                    +----+          +------+      |
+>>>>    +--------------------------------------------------+
+>>>>
+>>>> Co-developed-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>> Co-developed-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+>>>> Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+>>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>>>>    .../boot/dts/qcom/qcs8550-aim300-aiot.dts     | 322 ++++++++++++++++++
+>>>>    2 files changed, 323 insertions(+)
+>>>>    create mode 100644 arch/arm64/boot/dts/qcom/qcs8550-aim300-aiot.dts
+>>>
+>>> [trimmed]
+>>>
+>>>> +&remoteproc_adsp {
+>>>> +    firmware-name = "qcom/qcs8550/adsp.mbn",
+>>>> +                    "qcom/qcs8550/adsp_dtbs.elf";
+>>>
+>>> Please excuse me, I think I missed those on the previous run.
+>>>
+>>> adsp_dtb.mbn
+>>
+>> Currently, waht we have released is adsp_dtbs.elf. If we modify it to
+>> adsp_dtb.mbn, it may cause the ADSP functionality can not boot normally.
+> 
+> Released where? linux-firmware doesn't have such a file. And the modem
+> partition most likely has a different path for it anyway.
 
-diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
-index 7a982c60a8dd..f1b553efab13 100644
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -22,6 +22,7 @@
- #include <linux/regmap.h>
- #include <linux/workqueue.h>
- #include <linux/list.h>
-+#include <linux/pm_wakeirq.h>
- 
- #include <linux/rpmsg/qcom_glink.h>
- 
-@@ -306,8 +307,7 @@ struct qcom_glink_smem *qcom_glink_smem_register(struct device *parent,
- 
- 	smem->irq = of_irq_get(smem->dev.of_node, 0);
- 	ret = devm_request_irq(&smem->dev, smem->irq, qcom_glink_smem_intr,
--			       IRQF_NO_SUSPEND | IRQF_NO_AUTOEN,
--			       "glink-smem", smem);
-+			       IRQF_NO_AUTOEN, "glink-smem", smem);
- 	if (ret) {
- 		dev_err(&smem->dev, "failed to request IRQ\n");
- 		goto err_put_dev;
-@@ -346,6 +346,8 @@ struct qcom_glink_smem *qcom_glink_smem_register(struct device *parent,
- 
- 	smem->glink = glink;
- 
-+	device_init_wakeup(dev, true);
-+	dev_pm_set_wake_irq(dev, smem->irq);
- 	enable_irq(smem->irq);
- 
- 	return smem;
-@@ -365,6 +367,8 @@ void qcom_glink_smem_unregister(struct qcom_glink_smem *smem)
- 	struct qcom_glink *glink = smem->glink;
- 
- 	disable_irq(smem->irq);
-+	dev_pm_clear_wake_irq(&smem->dev);
-+	device_init_wakeup(&smem->dev, false);
- 
- 	qcom_glink_native_remove(glink);
- 
+Firmware releases can be obtained from 
+https://qpm-git.qualcomm.com/home2/git/qualcomm/qualcomm-linux-spf-1-0_test_device_public.git 
+after users sign up for free accounts on both 
+https://qpm-git.qualcomm.com and https://chipmaster2.qti.qualcomm.com.
+
+> 
+>>
+>>>
+>>>> +    status = "okay";
+>>>> +};
+>>>> +
+>>>> +&remoteproc_cdsp {
+>>>> +    firmware-name = "qcom/qcs8550/cdsp.mbn",
+>>>> +                    "qcom/qcs8550/cdsp_dtbs.elf";
+>>>
+>>> cdsp_dtb.mbn
+>>
+>> CDSP also as above ADSP.
+>>
+>>>
+> 
+>>>> +
+>>>> +    te_active: te-active-state {
+>>>> +            pins = "gpio86";
+>>>> +            function = "mdp_vsync";
+>>>> +            drive-strength = <2>;
+>>>> +            bias-pull-down;
+>>>> +    };
+>>>> +
+>>>> +    te_suspend: te-suspend-state {
+>>>> +            pins = "gpio86"
+>>>> +            function = "mdp_vsync";
+>>>> +            drive-strength = <2>;
+>>>> +            bias-pull-down;
+>>>> +    };
+>>>
+>>> What is the difference between these two?
+>>
+>> TE pin needs to be pulled down for both active and suspend states. There
+>> is no difference.
+> 
+> So why do you need two different states for it?
+
+Dividing into two different states can provide a clearer expression of 
+whether the corresponging functionality is avtive or suspend.
+
+We can also find similar settings in the other SM8550 and SM8650 
+platform dts files, such as sm8550-qrd.dts and sm8650-qrd.dts.
+
+[1] sm8550-qrd.dts: 
+https://elixir.bootlin.com/linux/v6.9.3/source/arch/arm64/boot/dts/qcom/sm8550-qrd.dts#L1052
+
+[2] sm8650-qrd.dts: 
+https://elixir.bootlin.com/linux/v6.9.3/source/arch/arm64/boot/dts/qcom/sm8650-qrd.dts#L1098
+
+> 
+> 
+> 
+> 
+> 
+
 -- 
-2.34.1
-
+Thx and BRs,
+Tengfei Fan
 
