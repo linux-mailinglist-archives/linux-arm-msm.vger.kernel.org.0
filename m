@@ -1,169 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-21494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1489E8D8769
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 18:44:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6D828D87A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 19:07:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 349081C215A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 16:44:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C00B1F22DC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 17:07:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73B33136995;
-	Mon,  3 Jun 2024 16:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F41CC136E05;
+	Mon,  3 Jun 2024 17:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rJhXjDmZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FdADIN2e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FE88060D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jun 2024 16:44:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A91D1369A0;
+	Mon,  3 Jun 2024 17:06:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717433047; cv=none; b=u/mYPEwKmi/9C2rnLpSkYns8Fw3bHkHwDpYCJOKyvCWluECXM3054eRMxMa56JI+fIZQPElshiI5pSfm6rrQX2PrANherObzEgsM3T/NcCfQix1JMamUq92VAPmR/pHGGdGOUDN1oMtFFeKnTAXepRuaiKL7ym4z4oto9Y+B9T4=
+	t=1717434414; cv=none; b=Kbmos2Fy8SS60F8jWCGghIoyFvefXU7XoaQ7vhx7H7M44ORWrGPaV+oVeNJtzL+5VVthibKlvMHGyYq+36dXzV4vHEH9OlqqbTIR9a4pJVu9lX+BD/Nw79EXN8THVp+fYVy7PVa9RX49PenDdte+LmjPQH3vGJeJ2rIaJ0CQe0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717433047; c=relaxed/simple;
-	bh=j9efUysIbU+0fDZp59JmxjJMpgDLHkYjIzf8rBgtCHo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=A5iE4CR0rlabidOnNFdFqyZ84WMWyNU4i2bQwokCyNeuQ1fqX3ejQ3QK7Ph5Fufs93brU4ni0kWvcKkgdANHXT6HKmL8InOexhY5bUFy81uKPb44QJnGB7sbxJCGMr6huTgqOP/iMN2cPu0G1uEJx1nAACy3jb54PrvasVvYCRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rJhXjDmZ; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f62a628b4cso28822075ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2024 09:44:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717433045; x=1718037845; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kQJCX2mLLjVwtGvAcK2JVSlXXTTlVczYVL9TcQ37x9I=;
-        b=rJhXjDmZ9qsdMDC3KEeOWHBB/U6XvzuwFHaGSdsPm0HTLjLDItRq4Q5dq1m8P+VxbI
-         J0I+GmHfbtMIl/vDqrVt/KP0VJKH8qK1cozyTuDYusIbzoXjL5Mr8Y/S6ohewV7SSOBP
-         jt41vgl3P50jOkRr7VHfQ7EXTbHYRh759nIRqgJEbMCmABjBf8acO2kObAMr28RZBjfr
-         9bIguu1tdQfEBOHS9L6BOhwxXajnRzXm2ADXtqVSQJnAwkbsYuXQ1sXAzkCDSnR5gwkz
-         OYHs6jivPj7RQ0Dt7FlP6RGLtxmB3hLzcQDyGcCmZESAvK9MhaCsZe0FGLYnAUvoX01/
-         o99Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717433045; x=1718037845;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kQJCX2mLLjVwtGvAcK2JVSlXXTTlVczYVL9TcQ37x9I=;
-        b=kizj8+1YBZd2mPmoe+4BX+YVmUPWTS7YKwFLFQg0jfldgHQLUilF27kFOHYp+8XDtP
-         2E3F1QLF6i5HFIcfbb22yRft0indyXqPzMnCr1KN5tNaQNu8NPqrWuAfMaawsXx9KK7+
-         qbMoP0TSd4cF9yypn1O/83hkP955zccIJl4voonjUhEU250WwUX/XGYU6ubXshWgTdkL
-         hhBSEtmxsjmJICLwn9sEFN+b6WBL0bvy18f4wW/Le36TDIiOOD6hQyeK0wSKZzo7m6ia
-         TuuoVMPa63NK5wj10gpGXlRwYJ6vYSeXECFU8C5eqpEWBTLkp26Y9yWC8urGPi74X+i2
-         nq6Q==
-X-Gm-Message-State: AOJu0Yykl3c/eUUWkOJ+MIwDHI/vvGaNxQgqDAeB5WMR0ShdgwItuMzJ
-	CQRsBIefT/onx0Ljh+86xlpLNNn9kVul5b59FPim8XvHAKUSPQClU+d3D5qUgA==
-X-Google-Smtp-Source: AGHT+IGYx+sx85xzgEc86M80PuqE2ZoS4273PGYCLxOQNlGQ9YXpPTVaa2w3bk5t3yHX6kqLl4+hdA==
-X-Received: by 2002:a17:902:e546:b0:1f6:5bba:f134 with SMTP id d9443c01a7336-1f65bbaf520mr68933315ad.46.1717433045079;
-        Mon, 03 Jun 2024 09:44:05 -0700 (PDT)
-Received: from localhost.localdomain ([120.60.128.29])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f632401919sm67523825ad.248.2024.06.03.09.44.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jun 2024 09:44:04 -0700 (PDT)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: mhi@lists.linux.dev
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	stable@vger.kernel.org
-Subject: [PATCH] bus: mhi: ep: Do not allocate memory for MHI objects from DMA zone
-Date: Mon,  3 Jun 2024 22:13:54 +0530
-Message-Id: <20240603164354.79035-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1717434414; c=relaxed/simple;
+	bh=RY1WYN6cyHnotKNU1hXoCr5Ce/KAlfwP7sNSVgTCxCo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=XHV7KM2jAoMUlXNWPunwNZersBuZd2rOf7IKTnRyP2lPKRjFM4wnnTszVnXLXJ/OFEctWKhxP/NN37DEc3W2iv7757V/65R7/oFbMcvhB3vb7QUClkrOTF5i2ymklh6FDsiX5XlXi1D68Ra5jL874sJPbLYpkZ/0lQoMlyyRkJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FdADIN2e; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4539eufJ024997;
+	Mon, 3 Jun 2024 17:06:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ICMf/9JLkxi/FO5S6Y9Y6a
+	BSw70Y8KV0kSaF/eUypwg=; b=FdADIN2eDIIzMUPtXb81R/V4yD/FZHlkkb+XtC
+	VYbzH6AX1Z6WNPKBp/zisQBM/rN0l08OVHRbBCU8sR3RXn260qCcsS641l1J6R1W
+	6Iucg3A5FzkXWoA8HEu7oaejNRBT+Z+MS6GMW8A2HTGeU+mvyzHaUJ4yVzfsS6lW
+	7r+AotnFW1PxuwMTCjpRo+8g+e6QsKAoXA6UupJLBxYdg3SRawvrAjS9d0kCl97V
+	KwRbJB+9ztGEKcXf4urcarE0PuikjN3AJ56XAQ2zPlunpQ8fMFFaQkJBdExNG5sR
+	EtIXBH1zPKTzeG/0U3s2aort4dQjl7iC6GC/c9Ku4FkU0i7g==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw5wmghq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 03 Jun 2024 17:06:47 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453H6ksa020553
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 3 Jun 2024 17:06:46 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
+ 10:06:43 -0700
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+Date: Mon, 3 Jun 2024 10:06:42 -0700
+Subject: [PATCH] dmaengine: qcom: add missing MODULE_DESCRIPTION() macros
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240603-md-drivers-dma-qcom-v1-1-d1bd919352bf@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIACH4XWYC/32OSw6CMBCGr0K6dkwLDYgr72FYlHaQSaTIFBoM4
+ e4WDuDyy//cREAmDOKebYIxUqDRJ1CXTNje+BcCucQil7mWpVQwOHBMETmAGwxMdhzA1lLdtHa
+ VlIVIyQ9jR+vZ+mwStyYgtGy87Y+uN/llhcGEGfmw9xTmkb/nh6iO0P+5qEBBnRdO6aLtSqwe0
+ 0KWvL0mVTT7vv8AT17EXtcAAAA=
+To: Sinan Kaya <okaya@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        <kernel@quicinc.com>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel-janitors@vger.kernel.org>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>
+X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nImHPoARgubnAwgl6cSF-eCJZzlNA07P
+X-Proofpoint-ORIG-GUID: nImHPoARgubnAwgl6cSF-eCJZzlNA07P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
+ definitions=2024-06-03_13,2024-05-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1011
+ lowpriorityscore=0 mlxlogscore=999 bulkscore=0 spamscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406030141
 
-MHI endpoint stack accidentally started allocating memory for objects from
-DMA zone since commit 62210a26cd4f ("bus: mhi: ep: Use slab allocator
-where applicable"). But there is no real need to allocate memory from this
-naturally limited DMA zone. This also causes the MHI endpoint stack to run
-out of memory while doing high bandwidth transfers.
+make allmodconfig && make W=1 C=1 reports:
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/dma/qcom/hdma_mgmt.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/dma/qcom/hdma.o
 
-So let's switch over to normal memory.
+Add the missing invocations of the MODULE_DESCRIPTION() macro, using
+the descriptions from the associated Kconfig items.
 
-Cc: stable@vger.kernel.org # 6.8
-Fixes: 62210a26cd4f ("bus: mhi: ep: Use slab allocator where applicable")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 ---
- drivers/bus/mhi/ep/main.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/dma/qcom/hidma.c      | 1 +
+ drivers/dma/qcom/hidma_mgmt.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-index f8f674adf1d4..4acfac73ca9a 100644
---- a/drivers/bus/mhi/ep/main.c
-+++ b/drivers/bus/mhi/ep/main.c
-@@ -90,7 +90,7 @@ static int mhi_ep_send_completion_event(struct mhi_ep_cntrl *mhi_cntrl, struct m
- 	struct mhi_ring_element *event;
- 	int ret;
+diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
+index 721b4ac0857a..4d2cd8d9ec74 100644
+--- a/drivers/dma/qcom/hidma.c
++++ b/drivers/dma/qcom/hidma.c
+@@ -957,4 +957,5 @@ static struct platform_driver hidma_driver = {
+ };
  
--	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
- 	if (!event)
- 		return -ENOMEM;
+ module_platform_driver(hidma_driver);
++MODULE_DESCRIPTION("Qualcomm Technologies HIDMA Channel support");
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/dma/qcom/hidma_mgmt.c b/drivers/dma/qcom/hidma_mgmt.c
+index bb883e138ebf..4805ce390ffa 100644
+--- a/drivers/dma/qcom/hidma_mgmt.c
++++ b/drivers/dma/qcom/hidma_mgmt.c
+@@ -331,4 +331,5 @@ static struct platform_driver hidma_mgmt_driver = {
+ };
  
-@@ -109,7 +109,7 @@ int mhi_ep_send_state_change_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_stat
- 	struct mhi_ring_element *event;
- 	int ret;
- 
--	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
- 	if (!event)
- 		return -ENOMEM;
- 
-@@ -127,7 +127,7 @@ int mhi_ep_send_ee_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_ee_type exec_e
- 	struct mhi_ring_element *event;
- 	int ret;
- 
--	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
- 	if (!event)
- 		return -ENOMEM;
- 
-@@ -146,7 +146,7 @@ static int mhi_ep_send_cmd_comp_event(struct mhi_ep_cntrl *mhi_cntrl, enum mhi_e
- 	struct mhi_ring_element *event;
- 	int ret;
- 
--	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL | GFP_DMA);
-+	event = kmem_cache_zalloc(mhi_cntrl->ev_ring_el_cache, GFP_KERNEL);
- 	if (!event)
- 		return -ENOMEM;
- 
-@@ -438,7 +438,7 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
- 		read_offset = mhi_chan->tre_size - mhi_chan->tre_bytes_left;
- 		write_offset = len - buf_left;
- 
--		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL | GFP_DMA);
-+		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL);
- 		if (!buf_addr)
- 			return -ENOMEM;
- 
-@@ -1481,14 +1481,14 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
- 
- 	mhi_cntrl->ev_ring_el_cache = kmem_cache_create("mhi_ep_event_ring_el",
- 							sizeof(struct mhi_ring_element), 0,
--							SLAB_CACHE_DMA, NULL);
-+							0, NULL);
- 	if (!mhi_cntrl->ev_ring_el_cache) {
- 		ret = -ENOMEM;
- 		goto err_free_cmd;
- 	}
- 
- 	mhi_cntrl->tre_buf_cache = kmem_cache_create("mhi_ep_tre_buf", MHI_EP_DEFAULT_MTU, 0,
--						      SLAB_CACHE_DMA, NULL);
-+						      0, NULL);
- 	if (!mhi_cntrl->tre_buf_cache) {
- 		ret = -ENOMEM;
- 		goto err_destroy_ev_ring_el_cache;
--- 
-2.25.1
+ module_platform_driver(hidma_mgmt_driver);
++MODULE_DESCRIPTION("Qualcomm Technologies HIDMA DMA engine interface");
+ MODULE_LICENSE("GPL v2");
+
+---
+base-commit: 83814698cf48ce3aadc5d88a3f577f04482ff92a
+change-id: 20240601-md-drivers-dma-qcom-c901844d7003
 
 
