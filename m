@@ -1,320 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-21483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE3D18D837A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 15:07:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D32D28D8397
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 15:13:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DE3D1F22742
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 13:07:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6319EB235F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 13:13:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6E2D548F7;
-	Mon,  3 Jun 2024 13:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4952412C81D;
+	Mon,  3 Jun 2024 13:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="uzd9w5Gz"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="VZLilN10"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D0812C528
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jun 2024 13:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAFB12C552;
+	Mon,  3 Jun 2024 13:12:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717419969; cv=none; b=nK750De9qwHoaASPL9+n55sbe7Af8r398GLZPn0ytVTKsOkfl7AlAffY4EJcdxQmjQmkLRg1fD7/9BKJq4NSFpDudv+5BWzSE5lEma8Y4c/zdic5AB9RwAHfl44XK6i0RFHwAy0N3gKOsA3Cp7Yuca9mMjdqp6Y73GVC4xEFUm0=
+	t=1717420372; cv=none; b=DwbnyEHn/Si7puYphvs8oPPwM+awhH/wxGSMThbSp2vXtLZcrEsVddVjs5q7h5Rt0Pb3C6+Jj5W9HBG/a/3aC8AGxzgg5TERoCAiy6Bb/kvsJaY3EdwRh1wHqpOOvJIsZo6lbmdJUr0KedDcDIU8dha8BWFmI1oCkqpxoaLlRR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717419969; c=relaxed/simple;
-	bh=rIoHNncUzQwmdZtbaoaG/UgZWuOCuFlhG+xp+917xaI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A5P/HgeXjRDoha8ieSP0VOHB2dOCavtNTRqvBozxKK0o1W2SC0TxMkYQC7XmXSxPyu7qOq+PxOy6o4fqOHDY4hx8vSq1vJtuOzXtOZHAQPDSC2+f+a4PAaVBoNKFdfinQA16PR8apHMFPpHadM/S8Yc9JBSjWXQrBVvoQmW9RHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=uzd9w5Gz; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4212f0444efso23026715e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2024 06:06:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1717419965; x=1718024765; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hjkNyBUo0lMKNRCC9ZF0oTBBAWPG4p5sfhg0+41OQlg=;
-        b=uzd9w5GzcCo9x7oBXlPbCIMr2X5DS1WLJ9orhnu+8qCVuYzCPoOxTnZ8AuQV1VGHX6
-         HQybZZyajhwayf6G/Xzzm036y08PFq2xZZAmSW75nqlSelTfsd1Xw8BDax2PX0+uwF6v
-         +ndztjY95OrVGaDoKrXOq9VqPFlfm+Css+f7PoTT9x+citsNet+CcNPnyuLYd/V6zG6b
-         TdC9x0hLuQtJnUfXV+lC48C//2um4I5VZa044NEI+RJ0P2ny/tjsMqM2JME+3A+WLmeS
-         FsK6Yv512jBgPP47ykiBCWMrFB48JZBK0e53/siIcsUGxgBa7CYmzQ4KH6tR79p7o7+g
-         TuIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717419965; x=1718024765;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hjkNyBUo0lMKNRCC9ZF0oTBBAWPG4p5sfhg0+41OQlg=;
-        b=AscJOtcW0cy+3grS8OSv4OIDAyEBPKhWh6V8FLldWM5rr8Ms25ulJec5Kc7VKPvvIQ
-         UEFFV5fnKhtOjlwyTwZ71nN2lYy9F9zuYP0ZckqnTyF61vkmmh7ulk9L2HEujcMuhVyC
-         otfNG/OikWkAqIKKMebBa+eEfw769amh/KnA5OomShmcWjOeMwjL7irTx9Iqp8Vpejob
-         l5Mu/+bMBartz3Eo1C1OayamLLicm+ummmsFlTsCssaqXTn1H4prpYvOkTzhXrkAodbK
-         7rLPgGKHqJ+Almv1nbCIBaLrXijQWxrheG/W3gtZ6/F6sTWNlcXFBm3gpMZ43gRfPnLK
-         0uxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX2/tSNeaIHsgocBPdBPp5P487JgL9MOOOwFWDd8qwlAXDpYf4M9XrUpXp2Ufdg/wnC8w/VeM0lk5BzaXHDh88L10T9wvlVweb/v9+smA==
-X-Gm-Message-State: AOJu0YwQ7CG4ii1AgEhxqZg/fpuMdc5Rr9M2F8IP9fRxzAVA+5utKDoq
-	IO25ITLEfqjOy15M5lE9rke/DYaGgfGNTpiRQB0jyh7KBV/WxMGRiNePYPoylpU=
-X-Google-Smtp-Source: AGHT+IEQJOos/XIWtiWrTPyvQqQY9591yTBgKqFTk+XSuFS27GoJ5zoJKMusOevjHBl95PDJRs3byw==
-X-Received: by 2002:a05:600c:3c8b:b0:41f:eba9:ced4 with SMTP id 5b1f17b1804b1-4212e049fb9mr74468595e9.16.1717419965035;
-        Mon, 03 Jun 2024 06:06:05 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42141cb1b2csm5097095e9.33.2024.06.03.06.06.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Jun 2024 06:06:04 -0700 (PDT)
-Message-ID: <395ded49-ae21-4316-870f-a0fd9e3cecd1@freebox.fr>
-Date: Mon, 3 Jun 2024 15:06:04 +0200
+	s=arc-20240116; t=1717420372; c=relaxed/simple;
+	bh=TPJLmt3ZrmFBEWUtmDZxOS+cU6lfWa/vurifkDD3zBI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mFBmvdX51xd8vxrkSQlDLf6q1XLc8Koux5sqSnmnCNYWxCtQBLSt9RIbmdn2FQ+M5ajphieyQw/Y6OJBEEbK1E0kSRVNY0Fw3J3M/DgJA0zbt7ponLlQoPnqmkFLZ0JGwoRviSe3M5kKtv0sf/Hgfo2ITlgx5di23CJEQcI9OVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=VZLilN10; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=WhhGfCPkfrQU2JoEdJcZxodwFT3ecp3HOxHwD/uFSGM=; b=VZLilN100eULAlRILI4fDmUatt
+	gnST2qjGNUghl9VUfc4/1jsip4W5IzU9dCyX3LAAsluelL06MIRia+4e7YBlpd98Ogv4pNbtG3MR4
+	9mLtW6KfVjHiWinSCQy9pCX7/BXCGapxkz8LjNzvFjGozog+VQmfhcTXZt963k5zKwEDITkmY3MFn
+	4EWCWHSvIMMIiWNZA+C7JCH3uUI4aWGJqaDu6GGREJiAyxr3HAS6Wo2V9Hf2ojr3sfRLuxVs1nJca
+	o/bWHkl3Khb3amJCxKRAAJ8DfJGQWsqtwxIkUsGv7ANoEPOBaudTyqV+u6FjZopVfl8caM3+RtnEz
+	ImLgMosw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:36062)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1sE7UE-0002lD-0z;
+	Mon, 03 Jun 2024 14:12:30 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1sE7UC-0000Sh-Sn; Mon, 03 Jun 2024 14:12:28 +0100
+Date: Mon, 3 Jun 2024 14:12:28 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Andrew Halaney <ahalaney@redhat.com>, Vinod Koul <vkoul@kernel.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	kernel@quicinc.com
+Subject: Re: [PATCH net-next] net: stmmac: dwmac-qcom-ethqos: Add support for
+ 2.5G SGMII
+Message-ID: <Zl3BPHqREyZ5v92U@shell.armlinux.org.uk>
+References: <20231218071118.21879-1-quic_snehshah@quicinc.com>
+ <4zbf5fmijxnajk7kygcjrcusf6tdnuzsqqboh23nr6f3rb3c4g@qkfofhq7jmv6>
+ <8b80ab09-8444-4c3d-83b0-c7dbf5e58658@quicinc.com>
+ <wvzhz4fmtheculsiag4t2pn2kaggyle2mzhvawbs4m5isvqjto@lmaonvq3c3e7>
+ <8f94489d-5f0e-4166-a14e-4959098a5c80@quicinc.com>
+ <ZlNi11AsdDpKM6AM@shell.armlinux.org.uk>
+ <d246bd64-18b3-4002-bc71-eccd67bbd61f@quicinc.com>
+ <ZleLb+dtJ8Uspq4S@shell.armlinux.org.uk>
+ <0ef00c92-b88f-48df-b9ba-2973c62285af@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: msm8998: add HDMI GPIOs
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>, MSM <linux-arm-msm@vger.kernel.org>,
- DT <devicetree@vger.kernel.org>,
- Bryan O Donoghue <bryan.odonoghue@linaro.org>,
- Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>
-References: <8cc61db5-2920-4dd1-8132-5af434fb05b1@freebox.fr>
- <o6wwzb4qblelfpfsrmqhoovjnyvymf42p2ilv4bzn4le3nklbv@kj3qklez7izy>
- <40903165-c965-4c6c-a3bf-104b1088730b@freebox.fr>
- <CAA8EJppg9ftnQVrZhEO9Ro2Ji6whCgQLaJrr0yCzV-2hF2HEtQ@mail.gmail.com>
- <8475b07d-8d44-4969-9c15-2926a6397b1c@freebox.fr>
- <CAA8EJprA4R5pkLTocpCWVn-HkUYeFSas7UBrU0rvt55KJ=d56g@mail.gmail.com>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <CAA8EJprA4R5pkLTocpCWVn-HkUYeFSas7UBrU0rvt55KJ=d56g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0ef00c92-b88f-48df-b9ba-2973c62285af@quicinc.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On 30/05/2024 18:50, Dmitry Baryshkov wrote:
-
-> Ok, you have dropped several clocks, which I think might be required
-> for the device to function. For example, msm8996 doesn't have
-> MNOC_AHB_CLK, while msm8998 has it. It might be that we should be
-> enabling the clock via the interconnect driver instead (or maybe it is
-> handled by RPM?).
+On Mon, Jun 03, 2024 at 04:57:15PM +0530, Sneh Shah wrote:
+> On 5/30/2024 1:39 AM, Russell King (Oracle) wrote:
+> > From what you're saying:
+> > - if using the dwmac1000 core, then for the registers at GMAC_PCS_BASE
+> >   (0xc0 offset)...
+> > - if using the dwmac4 core, then for registers at GMAC_PCS_BASE
+> >   (0xe0 offset)...
+> > ... is it true that only the GMAC_AN_CTRL() register is implemented
+> > and none of the other registers listed in stmmac_pcs.h?
+> > 
+> > In terms of interrupts when the link status changes, how do they
+> > present? Are they through the GMAC_INT_RGSMIIS interrupt only?
+> > What about GMAC_INT_PCS_LINK or GMAC_INT_PCS_ANE? Or in the case
+> > of the other core, is it through the PCS_RGSMIIIS_IRQ interrupt
+> > only? Similarly, what about PCS_LINK_IRQ or PCS_ANE_IRQ?
 > 
-> Let's hope that we can sort the clocks. I have no other issues remaining.
+> we only have GMAC_AN_CTRL and GMAC_AN_STATUS register.
+> There is no separate IRQ line for PCS link or autoneg. 
+> It is notified via MAC interrupt line only.
 
-For quick reference:
+From the sound of it, this is just the standard PCS that everyone else
+would use in DW ETHQoS, with the exception that you can run it at 2.5G
+without inband signalling.
 
-msm8996-sde.dtsi (VENDOR)
+Thanks for clarifying that. I think we can just use the phylink PCS
+that I'm proposing for your case, with the exception of also adding
+support for 2.5G speeds, which I will need to sort out.
 
-	sde_hdmi_tx: qcom,hdmi_tx_8996@9a0000 {
-		compatible = "qcom,hdmi-tx-8996";
+So, I think I need to get my patch set that query the inband
+capabilities of the PCS and PHY into net-next before we can move
+forward with 2.5G speeds here.
 
-		reg =	<0x009a0000 0x50c>,
-			<0x00070000 0x6158>,
-			<0x009e0000 0xfff>;
-		reg-names = "core_physical",
-			"qfprom_physical",
-			"hdcp_physical";
-		clocks = <&clock_mmss clk_mdss_mdp_vote_clk>,
-			 <&clock_mmss clk_mdss_ahb_clk>,
-			 <&clock_mmss clk_mdss_hdmi_clk>,
-			 <&clock_mmss clk_mdss_hdmi_ahb_clk>,
-			 <&clock_mmss clk_mdss_extpclk_clk>;
-		clock-names =
-			"mdp_core_clk",
-			"iface_clk",
-			"core_clk",
-			"alt_iface_clk",
-			"extp_clk";
-		interrupt-parent = <&sde_kms>;
-		interrupts = <8 0>;
-		hpd-gdsc-supply = <&gdsc_mdss>;
-		qcom,hdmi-tx-hpd-gpio = <&pm8994_mpps 4 0>;
-		pinctrl-names = "default", "sleep";
-		pinctrl-0 = <&mdss_hdmi_hpd_active
-			     &mdss_hdmi_ddc_active
-			     &mdss_hdmi_cec_active>;
-		pinctrl-1 = <&mdss_hdmi_hpd_suspend
-			     &mdss_hdmi_ddc_suspend
-			     &mdss_hdmi_cec_suspend>;
+Thanks.
 
-		sde_hdmi_audio: qcom,sde-hdmi-audio-rx {
-			compatible = "qcom,msm-hdmi-audio-codec-rx";
-		};
-	};
-
-
-
-msm8996.dtsi (MAINLINE)
-
-			mdss_hdmi: hdmi-tx@9a0000 {
-				compatible = "qcom,hdmi-tx-8996";
-				reg = <0x009a0000 0x50c>,
-				      <0x00070000 0x6158>,
-				      <0x009e0000 0xfff>;
-				reg-names = "core_physical",
-					    "qfprom_physical",
-					    "hdcp_physical";
-
-				interrupt-parent = <&mdss>;
-				interrupts = <8>;
-
-				clocks = <&mmcc MDSS_MDP_CLK>,
-					 <&mmcc MDSS_AHB_CLK>,
-					 <&mmcc MDSS_HDMI_CLK>,
-					 <&mmcc MDSS_HDMI_AHB_CLK>,
-					 <&mmcc MDSS_EXTPCLK_CLK>;
-				clock-names =
-					"mdp_core",
-					"iface",
-					"core",
-					"alt_iface",
-					"extp";
-
-				phys = <&mdss_hdmi_phy>;
-				#sound-dai-cells = <1>;
-
-				status = "disabled";
-
-				ports {
-					#address-cells = <1>;
-					#size-cells = <0>;
-
-					port@0 {
-						reg = <0>;
-						mdss_hdmi_in: endpoint {
-							remote-endpoint = <&mdp5_intf3_out>;
-						};
-					};
-				};
-			};
-
-
-
-msm8998-sde.dtsi (VENDOR)
-
-	sde_hdmi_tx: qcom,hdmi_tx_8998@c9a0000 {
-		cell-index = <0>;
-		compatible = "qcom,hdmi-tx-8998";
-		reg =	<0xc9a0000 0x50c>,
-			<0x780000 0x621c>,
-			<0xc9e0000 0x28>;
-		reg-names = "core_physical", "qfprom_physical", "hdcp_physical";
-		interrupt-parent = <&sde_kms>;
-		interrupts = <8 0>;
-		interrupt-controller;
-		#interrupt-cells = <1>;
-		qcom,hdmi-tx-ddc-clk-gpio = <&tlmm 32 0>;
-		qcom,hdmi-tx-ddc-data-gpio = <&tlmm 33 0>;
-		qcom,hdmi-tx-hpd-gpio = <&tlmm 34 0>;
-		qcom,hdmi-tx-hpd5v-gpio = <&tlmm 133 0>;
-		pinctrl-names = "default", "sleep";
-		pinctrl-0 = <&mdss_hdmi_hpd_active
-			&mdss_hdmi_ddc_active
-			&mdss_hdmi_5v_active>;
-		pinctrl-1 = <&mdss_hdmi_hpd_suspend
-			&mdss_hdmi_ddc_suspend
-			&mdss_hdmi_5v_suspend>;
-		hpd-gdsc-supply = <&gdsc_mdss>;
-		qcom,supply-names = "hpd-gdsc";
-		qcom,min-voltage-level = <0>;
-		qcom,max-voltage-level = <0>;
-		qcom,enable-load = <0>;
-		qcom,disable-load = <0>;
-
-		clocks = <&clock_mmss clk_mmss_mnoc_ahb_clk>,
-			 <&clock_mmss clk_mmss_mdss_ahb_clk>,
-			 <&clock_mmss clk_mmss_mdss_hdmi_clk>,
-			 <&clock_mmss clk_mmss_mdss_mdp_clk>,
-			 <&clock_mmss clk_mmss_mdss_hdmi_dp_ahb_clk>,
-			 <&clock_mmss clk_mmss_mdss_extpclk_clk>,
-			 <&clock_mmss clk_mmss_mnoc_ahb_clk>,
-			 <&clock_mmss clk_mmss_misc_ahb_clk>,
-			 <&clock_mmss clk_mmss_mdss_axi_clk>;
-		clock-names = "hpd_mnoc_clk", "hpd_iface_clk",
-				"hpd_core_clk", "hpd_mdp_core_clk",
-				"hpd_alt_iface_clk", "core_extp_clk",
-				"mnoc_clk","hpd_misc_ahb_clk",
-				"hpd_bus_clk";
-
-		/*qcom,mdss-fb-map = <&mdss_fb2>;*/
-		qcom,pluggable;
-	};
-
-
-
-IIUC the discussion on IRC, the additional clocks are required,
-so the binding should be more like this:
-
-+++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-@@ -19,14 +19,15 @@ properties:
-       - qcom,hdmi-tx-8974
-       - qcom,hdmi-tx-8994
-       - qcom,hdmi-tx-8996
-+      - qcom,hdmi-tx-8998
- 
-   clocks:
-     minItems: 1
--    maxItems: 5
-+    maxItems: 8
- 
-   clock-names:
-     minItems: 1
--    maxItems: 5
-+    maxItems: 8
- 
-   reg:
-     minItems: 1
-@@ -151,6 +152,27 @@ allOf:
-             - const: extp
-         hdmi-mux-supplies: false
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,hdmi-tx-8998
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 8
-+        clock-names:
-+          items:
-+            - const: mdp_core
-+            - const: mnoc
-+            - const: iface
-+            - const: bus
-+            - const: iface_mmss
-+            - const: core
-+            - const: alt_iface
-+            - const: extp
-
-
-
-So this is good?
-
-                                clocks = <&mmcc MDSS_MDP_CLK>,
-                                         <&mmcc MNOC_AHB_CLK>,
-                                         <&mmcc MDSS_AHB_CLK>,
-                                         <&mmcc MDSS_AXI_CLK>,
-                                         <&mmcc MISC_AHB_CLK>,
-                                         <&mmcc MDSS_HDMI_CLK>,
-                                         <&mmcc MDSS_HDMI_DP_AHB_CLK>,
-                                         <&mmcc MDSS_EXTPCLK_CLK>;
-                                clock-names =
-                                        "mdp_core",
-                                        "mnoc",
-                                        "iface",
-                                        "bus",
-                                        "iface_mmss",
-                                        "core",
-                                        "alt_iface",
-                                        "extp";
-
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
