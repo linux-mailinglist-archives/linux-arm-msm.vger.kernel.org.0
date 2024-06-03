@@ -1,131 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-21450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EB158D7DD9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 10:50:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08D998D7E26
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 11:09:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2330D1F24C45
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 08:50:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B34D428004C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 09:09:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F0BE6EB56;
-	Mon,  3 Jun 2024 08:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABC755EE80;
+	Mon,  3 Jun 2024 09:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RvLIL4y4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T648A4jU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71203D551
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jun 2024 08:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801154DA06;
+	Mon,  3 Jun 2024 09:09:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717404605; cv=none; b=VI5kb7376xXDRm7iuvKyShhGOkN9JJzPlu852GeLI6CNXM/3a0fGJrrR0o35+nLwtbvC9scXNLa04WTRZ/X7Z0BDLXoQdGHQ899ZaTnZMg7tU3KuwNebeo8JRZNRXTPm6D8lQP2ChWrHj/asv0Ket9YVRmlfOfg6vg7evwURfCI=
+	t=1717405783; cv=none; b=M4qvbCtIXrk5iYp1QjDCi8S/dgdWIVo5iRKRhk7R8y03mq71+7czsTbTbrjcrLl9R0Jqazq1wb71SwXXw0R2teXV3xQ8hVPGA75FrgacryR93h73sG2zFpVqh9u4N4mjvkyDZF7CCruARb9Xi19FEEdcH08Y6UybTLmEpoL4B1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717404605; c=relaxed/simple;
-	bh=dfoQFsA6SLL4wcUbcBXpinLax5A25U36hCg32xNjGxI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dnMdaGjlSwRRA1SWvJYEDX0X/VAX2Fzef158WbPnQHK3RaJeMUSeUPb3voNutj6tpvboaCTYNVhegFbbVHGLbJW7rilJqDmTExQitnyblN4b/kPnJDfOsa43yMq2AkKXLzkUQ+jLun1zLS4tzMW+QUpxWZv5yv3MHa1y3thzh88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RvLIL4y4; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-62a08099115so38358507b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2024 01:50:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717404603; x=1718009403; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TH62Yup3G9u8vLN8Ga3Ij8RqgPg+rX8ETtG6ob+WsZQ=;
-        b=RvLIL4y4zBQ5prmsgP2CaA6A+uwEUtXRNc58oP1U+YicLPhc2aI5/s3KiTGSQwF7KK
-         K5O/j5W6WDHKqyIQ9/84Rtgw8u0kCA8Z+ZQLgby5vkyme2OgNsFTK/99CTfYet79LxyL
-         oJGv/fWzI2m1KmH8RQsneW0ppPQpAhr4Ov6D9BDE2b10cqty/2AhAq2sujraBY2tdxIs
-         L3ycutcpTMv8BcLgdy5Y8NP01OcylZ6eJfRIktv7Th1+Ny5gCZ4yf6AJerVisOt9bIQN
-         2H4wdgM1xlXB3wG6n+4A4XNu+VQ8stqT/ZfcqTIf8hqb4OCMmQVvU8L2EdMV36TDzcg/
-         tQCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717404603; x=1718009403;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TH62Yup3G9u8vLN8Ga3Ij8RqgPg+rX8ETtG6ob+WsZQ=;
-        b=eA6EkTap1+2c5mw2vmnrbzdkLCkO4VTEAK7ouTGOKyTlx4U6FDhxEOS+MSDjLEMqG/
-         L03pE9tj/q0rfxMV0X0y/V7//rSVy1mXEbwhCl8U5Upap00UGZCv/q+SXQszf176A5BA
-         PWBxs1F3u+WSl5Wjz7YGY7YSXgL5kHZ6qM0gcqBmQan9GrFOKN1cmMmvpt/GOD+vQVj0
-         mowPOYyimv9rgC3mf1ru4WdLYpFbvb+5p6wd/1zLuR1umWP6Y2ee+qk+vI4GTOpSKucq
-         UShxRZroWy5IVwWKYLkouxD7Ci+9VsFjBrgSK91PT7s28vE4kBqJq/jiz64fUshCLPVz
-         AL4w==
-X-Forwarded-Encrypted: i=1; AJvYcCWIVGHFDq+WhhGuX44Rd3Fsg4kmVpIOJSkBvmZH3edqMxaZPwVbcfMH15Ou8nVdjMbKab1eoUn/5BsEam7a+nbRB/JFwb/VV+1rD+Tdbw==
-X-Gm-Message-State: AOJu0Yzriix+nlWfATrcGwko9BdAS+PJhvJLQKhTdlLe8ucUH87vWuEA
-	otc9ht0BM1GrolHfNNxHWUW/jRcazJBTqnjRV/2RhsmCCTYVbKAA/LEz/EjiIB9+sBPRW55K4+w
-	RaYsEd2EOMSeoTB6G8ziZmHo3xEIrFNj9+CLu/A==
-X-Google-Smtp-Source: AGHT+IF8k6LvzxBQXvPeOtqCn1OCAasXTKSxbvnfog6OJ7lM/2LaGW7ZCPHxo6bcXahe6A5T83BMVLsZ3/yavZ95yUg=
-X-Received: by 2002:a25:ab45:0:b0:de8:a770:4812 with SMTP id
- 3f1490d57ef6-dfa73db2ab8mr7409755276.40.1717404602753; Mon, 03 Jun 2024
- 01:50:02 -0700 (PDT)
+	s=arc-20240116; t=1717405783; c=relaxed/simple;
+	bh=zts/QRsUM8k00Nfd4l4iKWD2XkKbZM/dD/eqgptURNI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TLi0TwBCml6yxAfelvfWHovUKPGLBq3t05BCuFDyAwEbHX7BRahymfCyjiHvPBozlqxv31JEAy4qKUIzMAzpynC0TvZNS/4UFnem8NGpvz9MZAEZqWm52SxnH9saUg6u3464IXJM9UZM71CAb/21vI13M5iFENcEr7fNZyv6Rsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T648A4jU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1C2C2BD10;
+	Mon,  3 Jun 2024 09:09:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717405783;
+	bh=zts/QRsUM8k00Nfd4l4iKWD2XkKbZM/dD/eqgptURNI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=T648A4jUN6PelkRNGIl7hxRPXuYGfhKc0w4IhBdXrxin6cs+UrZQ3iATqdbNlnwO/
+	 KxPcKK6ZCShnQ+GaQC9n4ex2n28ltok8NIJ0V6EW3e5v0aeJ5IiClJmujEzx+TQ0+h
+	 MdNWLKLm+Y90vuEh2SCvq/zRyhx6SMrakl0xnH5uxMsRGDdKPYTn1eXvCNhUCML2GX
+	 Uw3VAizHiVNE0Di3sUDp6fp+o6LOQH/4uWYxowr8Cwj9t37ro+AAZMe665XGis/Zo/
+	 3uVRKrB0nlv0jcHFZUcP9ITZznCVPZYLtDhwhYOUqjxAqrDTksyuEDzOUnq4TpKu3T
+	 Wa/Ig9liJjoyw==
+Date: Mon, 3 Jun 2024 11:09:40 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/9] drm/connector: hdmi: accept NULL for Audio
+ Infoframe
+Message-ID: <20240603-therapeutic-warm-fox-890bee@houat>
+References: <20240531-bridge-hdmi-connector-v4-0-5110f7943622@linaro.org>
+ <20240531-bridge-hdmi-connector-v4-1-5110f7943622@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240527-x1e80100-dts-pmic-glink-v1-0-7ea5c8eb4d2b@linaro.org>
- <20240527-x1e80100-dts-pmic-glink-v1-2-7ea5c8eb4d2b@linaro.org> <Zl2DUXWUN0088-Af@hovoldconsulting.com>
-In-Reply-To: <Zl2DUXWUN0088-Af@hovoldconsulting.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 3 Jun 2024 11:49:51 +0300
-Message-ID: <CAA8EJpp2hK1P86vrZOwXfNBz3nBXugCcERE9yBRCaCE3aDbqOA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: x1e80100-crd: Add pmic-glink node
- with all 3 connectors
-To: Johan Hovold <johan@kernel.org>
-Cc: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="cjo537cz6gzry5k7"
+Content-Disposition: inline
+In-Reply-To: <20240531-bridge-hdmi-connector-v4-1-5110f7943622@linaro.org>
 
-On Mon, 3 Jun 2024 at 11:48, Johan Hovold <johan@kernel.org> wrote:
->
-> On Mon, May 27, 2024 at 11:07:28AM +0300, Abel Vesa wrote:
-> > Add the pmic-glink node and describe all 3 USB Type-C connectors. Do this
-> > for USB only, for now. The DP port will come at a later stage since it
-> > uses a retimer.
-> >
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 143 ++++++++++++++++++++++++++++++
-> >  1 file changed, 143 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > index c5c2895b37c7..2fcc994cbb89 100644
-> > --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > @@ -49,6 +49,101 @@ chosen {
-> >               stdout-path = "serial0:115200n8";
-> >       };
-> >
-> > +     pmic-glink {
-> > +             compatible = "qcom,x1e80100-pmic-glink",
-> > +                          "qcom,sm8550-pmic-glink",
-> > +                          "qcom,pmic-glink";
-> > +             #address-cells = <1>;
-> > +             #size-cells = <0>;
-> > +             orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
-> > +                                 <&tlmm 123 GPIO_ACTIVE_HIGH>,
-> > +                                 <&tlmm 125 GPIO_ACTIVE_HIGH>;
->
-> With this series applied, I'm getting the following error on boot of the
-> CRD:
->
->         ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: PPM init failed, stop trying
->
-> Known issue? Do you need to enable some quirk in the UCSI driver?
 
-Not that I know. The message is caused by the UCSI not responding to
-the PPM_RESET command. A trace from pmic-glink would be helpful.
+--cjo537cz6gzry5k7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-With best wishes
-Dmitry
+Hi,
+
+Sorry for not answering your mail on the previous version sooner.
+
+On Fri, May 31, 2024 at 11:07:24PM GMT, Dmitry Baryshkov wrote:
+> Allow passing NULL as audio infoframe as a way to disable Audio
+> Infoframe generation.
+>=20
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/display/drm_hdmi_state_helper.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gp=
+u/drm/display/drm_hdmi_state_helper.c
+> index ce96837eea65..5356723d21f5 100644
+> --- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+> +++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+> @@ -681,7 +681,7 @@ EXPORT_SYMBOL(drm_atomic_helper_connector_hdmi_update=
+_infoframes);
+>  /**
+>   * drm_atomic_helper_connector_hdmi_update_audio_infoframe - Update the =
+Audio Infoframe
+>   * @connector: A pointer to the HDMI connector
+> - * @frame: A pointer to the audio infoframe to write
+> + * @frame: A pointer to the audio infoframe to write or NULL to disable =
+sending the frame
+
+I'm still two-minded about this. I think I would like a separate helper
+better, to also make things consistent with the HDMI helpers.
+
+Most importantly, it looks like you're not using it at all in your series?
+
+>   * This function is meant for HDMI connector drivers to update their
+>   * audio infoframe. It will typically be used in one of the ALSA hooks
+> @@ -704,10 +704,16 @@ drm_atomic_helper_connector_hdmi_update_audio_infof=
+rame(struct drm_connector *co
+> =20
+>  	mutex_lock(&connector->hdmi.infoframes.lock);
+> =20
+> -	memcpy(&infoframe->data, frame, sizeof(infoframe->data));
+> -	infoframe->set =3D true;
+> +	if (frame) {
+> +		memcpy(&infoframe->data, frame, sizeof(infoframe->data));
+> +		infoframe->set =3D true;
+> +
+> +		ret =3D write_infoframe(connector, infoframe);
+> +	} else {
+> +		infoframe->set =3D false;
+> =20
+> -	ret =3D write_infoframe(connector, infoframe);
+> +		ret =3D clear_infoframe(connector, infoframe);
+> +	}
+
+We should probably clear infoframe->data here too
+
+Maxime
+
+--cjo537cz6gzry5k7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZl2ITQAKCRAnX84Zoj2+
+dqkOAX9UmBzsHTKxHZS1nYELnt3AKt9186dxlneShEm4OxdrXK29/MwOCb+UL69k
+SkvYtVkBfiYyBRgWMuoXlPMgdMZe/SKJIwO19JoO1q6utvRCW6k9RMmkiAFCjD1d
+J6ZyAccWMA==
+=wp6q
+-----END PGP SIGNATURE-----
+
+--cjo537cz6gzry5k7--
 
