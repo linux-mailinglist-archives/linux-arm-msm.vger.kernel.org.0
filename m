@@ -1,197 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-21506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97BF18D8A2C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 21:28:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 513588D8A3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 21:33:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22B3B1F25AD2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 19:28:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C65328DEDE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 19:33:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB33E13B5A2;
-	Mon,  3 Jun 2024 19:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1D3113A879;
+	Mon,  3 Jun 2024 19:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mf9yPV/Y"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="STtEaLYw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5585B13B588;
-	Mon,  3 Jun 2024 19:27:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F08A3770D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jun 2024 19:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717442854; cv=none; b=akhGiHJqQySggrUvCvdR+S5wstmaVpsrOvj0EkjMoPHCOxsHCOX+bcu8W0dtHmAbwkilWH6qnoWnVwVB4CZurACHUzOC24klue1LK2tIaomwaTWOhnHklW3R0hWi8Ho8qvRxYtB1tkaDPjDpNJ3SJG+1WOsQ0xQO+Ca7PZhA234=
+	t=1717443205; cv=none; b=jjLs1cTpD4ZOScu5K8aK71LbAX0L17ONu1hgsqy32hQMKD3MW4/dVapUtF/wyweWCMa3eJV7YPEDZLhRtlTb0aGYZD9bq9Q617Mw/yXBfOFSiI+ZHEPII4iHPlRHNfhIyT2IQj5hiImFd/YHyflHvwxL1+r5xHNVWIJSxO31zjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717442854; c=relaxed/simple;
-	bh=HLsZL7u7067moMzrolBSvWIvdWRJpnhHQVzFAgy6EF8=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ApybYcY1ZIqn6pGF0R2NzQDm+uMn7Ga7m+JNW+vfM/t2ijvT5e28J9jMCno6lf0nHCpRI0aEvIZ5v5ghLzu2f4ORGygCi5B8oRHIj4JNpPX+XuQnHDJtbaYahq1/QCNbLYKD9863iVBkryBInpbmqUWfOU6T77f5Y/qYjvYTnac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mf9yPV/Y; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1717443205; c=relaxed/simple;
+	bh=rgiK1AT5L3dsGiglm2FV0M+aj4xyA+vrRuIioT92bQY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ghS2FofQh4ccEE2LdRkTTShNjjBltkcgAr/tyLaczrZU0eYuscfg69ppj5GZf0Vlq+DcqfPjgMLZ5A8vdl+QSSBnRcRMdQumju28LXLJrO3phfYtgCYuxx95NW4ozhNN9YHx53V9hGeDgp3IeIkUCtfwHGstjWgleYfwu1dww8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=STtEaLYw; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 453C6dar019807;
-	Mon, 3 Jun 2024 19:27:21 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 453Bm083014353;
+	Mon, 3 Jun 2024 19:33:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3Wbde8YI0XAKicrSrvhYlvfySXEfjzTuZ3lNB6UsJas=; b=Mf9yPV/Y9FRwwvxE
-	asnj66DNYgBxAOyN58Q1y2HhZLYmTzmWaJ6jbixwPcH04Vu8gclcXK+tWr5HA89Q
-	x68t2lhswXTX92GF2FAhFXIFKo5Do1kbOqFiJra/gvMEOe1YFUGkDV4rXXV1Vwle
-	SE+CoUmjNQE2TB08cWpVixDJOKPcFf6hXYDYLJ5UoWxrCnVVA54weP/R+CLC0ZNT
-	H9qmd6pPzKPtWjqgK2dKyuYr29WMz5Sf8GlPechc1auuxrQMHFPIH0HzgwNi89lX
-	nXsxcI6A9eOLhaLqQ+4cnjGydFM0OaeHfSrl0EIk7AdjBGGhlzStbBWdi+wk20M3
-	IaP9Jg==
+	u0kUpQtc8tuN9AI/78ZnesneETit8OFrp4wVdbQ6/4E=; b=STtEaLYwH/vA053I
+	AMPJzcZSOgc+diesNaOmAzpk4aexwy73UcauZdQVLyo3crxIjJxDL4YAeEYgVBOo
+	qZft37cT7MJnL+zK8SGbKoQ/MY2OeuSgifRke65DU3pFlSpJDJTQIAC/EwEro7Jx
+	kUw4YhMFveK4JkMgkMa/SOnOlGo2oysFRLqXF07DGgAXSVOs/ZNycmkuuFrF5sOk
+	JyL/7gbZ9DOVC7RJZOEaRk5onG/3ZpaWUlIXGJkzOPu5sWTTqCjt0Qo0JlV/C8XA
+	vmoWJ7nAsHmC6iEhzcFMvHvbsNd0Rt/qCeOlUvJHWdR3RU6IZBzTwXYQWrJ2kpTu
+	OHLnxw==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw5t4k9a-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw4an2xu-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Jun 2024 19:27:21 +0000 (GMT)
+	Mon, 03 Jun 2024 19:33:15 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453JRKRb000495
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453JXDQ5008820
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Jun 2024 19:27:20 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 3 Jun 2024 12:27:15 -0700
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <morten.rasmussen@arm.com>,
-        <dietmar.eggemann@arm.com>, <lukasz.luba@arm.com>,
-        <pierre.gondois@arm.com>, <vincent.guittot@linaro.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_mdtipton@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH V5 1/1] cpufreq: scmi: Register for limit change notifications
-Date: Tue, 4 Jun 2024 00:56:54 +0530
-Message-ID: <20240603192654.2167620-2-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240603192654.2167620-1-quic_sibis@quicinc.com>
-References: <20240603192654.2167620-1-quic_sibis@quicinc.com>
+	Mon, 3 Jun 2024 19:33:13 GMT
+Received: from [10.110.31.89] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
+ 12:33:10 -0700
+Message-ID: <abf21aa8-1e4c-14f7-f6ed-ec847ee58ca2@quicinc.com>
+Date: Mon, 3 Jun 2024 12:33:08 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 6/9] drm/msm/dpu: drop call to
+ _dpu_crtc_setup_lm_bounds from atomic_begin
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan+linaro@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240603-dpu-mode-config-width-v2-0-16af520575a6@linaro.org>
+ <20240603-dpu-mode-config-width-v2-6-16af520575a6@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240603-dpu-mode-config-width-v2-6-16af520575a6@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mRYQMOihypBlEXyrnlrXqo8nHX_SJgnJ
-X-Proofpoint-GUID: mRYQMOihypBlEXyrnlrXqo8nHX_SJgnJ
+X-Proofpoint-GUID: DKleauMdrnXhPQgJHenzEWYL3J3DKia6
+X-Proofpoint-ORIG-GUID: DKleauMdrnXhPQgJHenzEWYL3J3DKia6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
  definitions=2024-06-03_15,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- spamscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- clxscore=1015 malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406030158
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=752 lowpriorityscore=0 malwarescore=0 priorityscore=1501
+ suspectscore=0 mlxscore=0 bulkscore=0 spamscore=0 adultscore=0
+ clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406030159
 
-Register for limit change notifications if supported and use the throttled
-frequency from the notification to apply HW pressure.
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
 
-v5:
-* Drop patch 1 and use pm_qos to update constraints. [Vincent]
-* Use sdev instead of cpu_dev in dev_warn. [Christian]
-* Pass sdev directly through private data. [Christian]
-* Dropping Rb's for now.
+On 6/2/2024 2:39 PM, Dmitry Baryshkov wrote:
+> The dpu_crtc_atomic_check() already calls _dpu_crtc_setup_lm_bounds().
+> There is no need to call it from dpu_crtc_atomic_begin().
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 2 --
+>   1 file changed, 2 deletions(-)
+> 
 
- drivers/cpufreq/scmi-cpufreq.c | 36 ++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
-
-diff --git a/drivers/cpufreq/scmi-cpufreq.c b/drivers/cpufreq/scmi-cpufreq.c
-index b87fd127aa43..0edfa55d8e49 100644
---- a/drivers/cpufreq/scmi-cpufreq.c
-+++ b/drivers/cpufreq/scmi-cpufreq.c
-@@ -16,6 +16,7 @@
- #include <linux/export.h>
- #include <linux/module.h>
- #include <linux/pm_opp.h>
-+#include <linux/pm_qos.h>
- #include <linux/slab.h>
- #include <linux/scmi_protocol.h>
- #include <linux/types.h>
-@@ -25,7 +26,9 @@ struct scmi_data {
- 	int domain_id;
- 	int nr_opp;
- 	struct device *cpu_dev;
-+	struct cpufreq_policy *policy;
- 	cpumask_var_t opp_shared_cpus;
-+	struct notifier_block limit_notify_nb;
- };
- 
- static struct scmi_protocol_handle *ph;
-@@ -174,6 +177,25 @@ static struct freq_attr *scmi_cpufreq_hw_attr[] = {
- 	NULL,
- };
- 
-+static int scmi_limit_notify_cb(struct notifier_block *nb, unsigned long event, void *data)
-+{
-+	struct scmi_data *priv = container_of(nb, struct scmi_data, limit_notify_nb);
-+	struct scmi_perf_limits_report *limit_notify = data;
-+	struct cpufreq_policy *policy = priv->policy;
-+	unsigned int limit_freq_khz;
-+	int ret;
-+
-+	limit_freq_khz = limit_notify->range_max_freq / HZ_PER_KHZ;
-+
-+	policy->max = clamp(limit_freq_khz, policy->cpuinfo.min_freq, policy->cpuinfo.max_freq);
-+
-+	ret = freq_qos_update_request(policy->max_freq_req, policy->max);
-+	if (ret < 0)
-+		pr_warn("failed to update freq constraint: %d\n", ret);
-+
-+	return NOTIFY_OK;
-+}
-+
- static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- {
- 	int ret, nr_opp, domain;
-@@ -181,6 +203,7 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 	struct device *cpu_dev;
- 	struct scmi_data *priv;
- 	struct cpufreq_frequency_table *freq_table;
-+	struct scmi_device *sdev = cpufreq_get_driver_data();
- 
- 	cpu_dev = get_cpu_device(policy->cpu);
- 	if (!cpu_dev) {
-@@ -294,6 +317,17 @@ static int scmi_cpufreq_init(struct cpufreq_policy *policy)
- 		}
- 	}
- 
-+	priv->limit_notify_nb.notifier_call = scmi_limit_notify_cb;
-+	ret = sdev->handle->notify_ops->devm_event_notifier_register(sdev, SCMI_PROTOCOL_PERF,
-+							SCMI_EVENT_PERFORMANCE_LIMITS_CHANGED,
-+							&domain,
-+							&priv->limit_notify_nb);
-+	if (ret)
-+		dev_warn(&sdev->dev,
-+			 "failed to register for limits change notifier for domain %d\n", domain);
-+
-+	priv->policy = policy;
-+
- 	return 0;
- 
- out_free_opp:
-@@ -372,6 +406,8 @@ static int scmi_cpufreq_probe(struct scmi_device *sdev)
- 	if (!handle)
- 		return -ENODEV;
- 
-+	scmi_cpufreq_driver.driver_data = sdev;
-+
- 	perf_ops = handle->devm_protocol_get(sdev, SCMI_PROTOCOL_PERF, &ph);
- 	if (IS_ERR(perf_ops))
- 		return PTR_ERR(perf_ops);
--- 
-2.34.1
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
