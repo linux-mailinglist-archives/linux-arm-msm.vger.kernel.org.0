@@ -1,131 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-21522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5BD78DB6C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 23:27:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (unknown [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AEA58F9A51
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 23:41:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43DDB1F23759
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 21:27:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8D20281A10
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Jun 2024 21:40:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A78013BC0C;
-	Mon,  3 Jun 2024 21:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B08E80603;
+	Mon,  3 Jun 2024 21:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g9JL9KwO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a3C6O/6x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBF713BAD9
-	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jun 2024 21:27:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488784F1EE
+	for <linux-arm-msm@vger.kernel.org>; Mon,  3 Jun 2024 21:40:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717450024; cv=none; b=TWlzHd1ew93L8wvTKKUpz5Gw/TL+Ueg3IPUkdyDpyJXueV0K8MkrK+GZSgP9VPa80/TsreSw28N8mx2UV0lmuQiwtgoiXbF6+u4mfUAc4FRcqk/f2MULMU8qUJfYsHY9t1lKvt9hkEtgcbXux7XbAqzIyBw11eNuacyrsDlupJI=
+	t=1717450817; cv=none; b=ja3nftkrnbn5PtpivRlng9T2lqm3c1DguncZizbBWPKBTtFOs7TL5Gs4ipX91/ioi+eSjuO/BwwiR/OF2RrBDtHkic3Yipz6w7UnZPi9X82zgRquEcV1P6mDtRKlQsqjxeBGz6boqxpUkLpQRa24HUb/epmMUOpG70CGlybjsxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717450024; c=relaxed/simple;
-	bh=B6RTxNG3qSeWdnrss15uJxMkYMUg2WM2scr2cXyOxDw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nI9B2Q29D6qvZc473OANE/khYUvrc753klVQAJzQtAMSz3TV27MvDIi10Eqm754i25Oc4SVLqDfWYEOwijUj1DhuygBv/205M0/X7bNOPRQtQdA93tvKUT0MWFPuI42hVHjfx4Yt1SboC5CPwzdktf8oPGEoX/y75nu6l8eIjcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g9JL9KwO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 453Bm0E1014353;
-	Mon, 3 Jun 2024 21:26:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2Vsg/7i4TrMa5VqqJmBGZbSvUazxMubExhCzCHIm2Sg=; b=g9JL9KwOTPVO07FD
-	zPgxRjAPfdw9kcIrFp+ilmjnbSlrc0wUYsblmzaoz4GriZ0/IrXWXix1sKxaOkzx
-	keTboGGHuBwbkkh0GTBb6pJvPrZpOiU/1SsVCpdTFSx84z1VEbRS+fhoo+35BJbp
-	0BImZdyfU+0jOt/ZM3JG6gL6DjrnXKwPVL62Fmq+tyujFsukg9sOCV4UZkJ21EFm
-	Ary+mdenkmqBuLD8kywagZwlyBfNTGPWvDjtsQJYu2GiXWIYf8ZQ37wvn8srJ9HX
-	LCVxl8rh8/en9H3yRytAbdzz/3UfhYp6cNQPquG5f0l1KnVbByv71ur9MifXvGXA
-	s4zLzQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw4an9hr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Jun 2024 21:26:53 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453LQqoS029796
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Jun 2024 21:26:52 GMT
-Received: from [10.110.31.89] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 3 Jun 2024
- 14:26:49 -0700
-Message-ID: <d1287bcb-5410-c44b-3ac1-62b404c1fbe7@quicinc.com>
-Date: Mon, 3 Jun 2024 14:26:47 -0700
+	s=arc-20240116; t=1717450817; c=relaxed/simple;
+	bh=BCZK9HvzCWKQPKFwHKeBxT5zYGBAMgJmDn/puB4RzmA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WC9EEXOpPwHaQKrGDnOgRyxT5H7bhQHj5BDoZFK9BZTqdga+iXYWLtF1/GU3334l6nNWV24Gq0Kk7Dekuj/ZxiqYhZ/RaDtNw57JirbWHo1XEwf88IC1PUNhh0L7/auTMatYgYc8UcseWusfRK0u8HQdvPNJWN/qF5jTmcWzCRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a3C6O/6x; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2eaa80cb4d3so39082171fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Jun 2024 14:40:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717450813; x=1718055613; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3llFp6XU62QuqTiOvMfdzgxuqUgZrpZeZJw1lK9U1xg=;
+        b=a3C6O/6xOvXFEkYAXFBVCjiHyGbkAmnfMh1KOL4dkBLrKtJgTT1HKrI2u7XT0Hti23
+         X/kxicVDtW8djoH3JhvunRvkjj/obJpXsp3WhuVZbchV+kqYSmeDZaz2qxOJPSfVgBE0
+         4yDRPIX79A5HZjAF5O0wWK++Q9tkzvDtDCP37w5u2yr0BOzw3DDUqC7sna7g0Z7cqwbm
+         wXUQlJFNQALlrZPy3mmOD+odPa6nNGEwq9FtvlGqUTGgYRzS2tPp4lYL9t+Er1wc5pjd
+         ei/mWM8mr9ljnL5hU8n385K9YBPIph4fqxVLdxpIxKH9KhNWCOOc6WFJEvuKwYrm1kZO
+         drNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717450813; x=1718055613;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3llFp6XU62QuqTiOvMfdzgxuqUgZrpZeZJw1lK9U1xg=;
+        b=XJob/VR07YigPvKNAQHY6B10gWMqJY6TAjwy17KJDUren5QqGBP4r3AuaYA9EWIMGy
+         2hwkJrkXcXlEdjUFZ6CUMnKcceBulzn7wk+ME8kTI7xyPhQBfSLcqMnjcznKiaNkf2dL
+         FRzxA/AaT68OQXJ+XinkyLgDYmtxx6idYvbp5X+P6bTuVPo086QczYRJUaAMqN2rYWOq
+         Ir7nZOHtSnVTV6jbhTF8FY3GDQWKzTTExfaeMqXLiSp03VSj+JzzvFgCRlOE0Z87KAbG
+         d+wyYjWevrFf1vm4BzbrXA1Wu318MINxLabmlACnqJs9poVrx1QvtkZM/wv/tfcauUEg
+         hlqw==
+X-Forwarded-Encrypted: i=1; AJvYcCWJX+8bmpcJFrb4Q3lXJhUuhbEP9wCHy8kyvBjKZp+5j2KThPcNuGSHnI60mzEiYn6fjKb7maNenXfYJXevhFUXeBn/0i8cCP1peibkxw==
+X-Gm-Message-State: AOJu0YzkI2aGXxRkRBq8A/q3lxIlbhykMHdOCxkulTqN9RZ3MUSzhd1V
+	AYbp+WTwSCuHJuGKfk57Ym4Ag411q+G+08U9BtgtfduhhJNvLskCKtJgVGc9qRc=
+X-Google-Smtp-Source: AGHT+IF8w25sByMAnhCrm0+slEMM4u8+QRDWCNHlVFFQ6GFKpbT4RCVbJBdiYhEi+BeqNtX5KbGNRQ==
+X-Received: by 2002:a2e:9907:0:b0:2e5:685a:85b5 with SMTP id 38308e7fff4ca-2ea950e7b63mr89166921fa.1.1717450813268;
+        Mon, 03 Jun 2024 14:40:13 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ea91cf107fsm13085771fa.122.2024.06.03.14.40.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Jun 2024 14:40:12 -0700 (PDT)
+Date: Tue, 4 Jun 2024 00:40:11 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 7/9] drm/msm/dpu: check for overflow in
+ _dpu_crtc_setup_lm_bounds()
+Message-ID: <zxta54l7bny2buyc35bhhfh5pusujb5acs2bk4qt5yrzo4uwbb@jgvcuc54lzww>
+References: <20240603-dpu-mode-config-width-v2-0-16af520575a6@linaro.org>
+ <20240603-dpu-mode-config-width-v2-7-16af520575a6@linaro.org>
+ <64c6e6a5-7ab2-cdf7-131a-7a1f79c48e0c@quicinc.com>
+ <CAA8EJpp8WbXYTvtL0Xwxrn_eXsPfGTGz9bigtwHFjXunnM_cHg@mail.gmail.com>
+ <37b56f66-4e71-51cc-a09d-fe4e1469f665@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 9/9] drm/msm/dpu: sync mode_config limits to the FB
- limits in dpu_plane.c
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan+linaro@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240603-dpu-mode-config-width-v2-0-16af520575a6@linaro.org>
- <20240603-dpu-mode-config-width-v2-9-16af520575a6@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240603-dpu-mode-config-width-v2-9-16af520575a6@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6-uPctjtj6AywfqVv0SSeJKSRF8m7r74
-X-Proofpoint-ORIG-GUID: 6-uPctjtj6AywfqVv0SSeJKSRF8m7r74
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-06-03_17,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=982 lowpriorityscore=0 malwarescore=0 priorityscore=1501
- suspectscore=0 mlxscore=0 bulkscore=0 spamscore=0 adultscore=0
- clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406030173
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <37b56f66-4e71-51cc-a09d-fe4e1469f665@quicinc.com>
 
-
-
-On 6/2/2024 2:39 PM, Dmitry Baryshkov wrote:
-> Lift mode_config limits set by the DPU driver to the actual FB limits as
-> handled by the dpu_plane.c. Move 2*max_lm_width check where it belongs,
-> to the drm_crtc_helper_funcs::mode_valid() callback.
+On Mon, Jun 03, 2024 at 02:24:27PM -0700, Abhinav Kumar wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 15 +++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  |  9 ++-------
->   2 files changed, 17 insertions(+), 7 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index c5e874a3656a..8cf063e4c09d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1236,6 +1236,20 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
->   	return 0;
->   }
->   
+> On 6/3/2024 2:16 PM, Dmitry Baryshkov wrote:
+> > On Mon, 3 Jun 2024 at 23:57, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> > > 
+> > > 
+> > > 
+> > > On 6/2/2024 2:39 PM, Dmitry Baryshkov wrote:
+> > > > Check in _dpu_crtc_setup_lm_bounds() that CRTC width is not overflowing
+> > > > LM requirements.
+> > > > 
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 15 ++++++++++++---
+> > > >    1 file changed, 12 insertions(+), 3 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > index e3b1e5f55a92..c5e874a3656a 100644
+> > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > @@ -711,12 +711,13 @@ void dpu_crtc_complete_commit(struct drm_crtc *crtc)
+> > > >        _dpu_crtc_complete_flip(crtc);
+> > > >    }
+> > > > 
+> > > > -static void _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
+> > > > +static int _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
+> > > >                struct drm_crtc_state *state)
+> > > 
+> > > Perhaps now we need to rename this to _dpu_crtc_setup_and_check_lm_bounds()?
+> > 
+> > Ack, I'll rename it.
+> > 
+> > > 
+> > > Also, prior to this change, we never had a bounds check for each LM
+> > > which we should have had . Does this qualify for a Fixes tag?
+> > 
+> > Probably no. We currently have a limit in the drm_mode_config, which
+> > ensures that the CRTC isn't too wide.
+> > 
+> 
+> The limit in drm_mode_config is to ensure we will not go beyond
+> 2*max_mixer_width for the mode as we support only upto 2 LMs.
+> 
+> This check is making sure that even for the single LM, we do not go beyond
+> the max_mixer_width which is valid imo.
 
-With the added checks in dpu_crtc_mode_valid(), I am fine with this as 
-it will retain the previous limits in drm_mode_config.
+For the case where 2*LM mode is not possible? Yes, it seems to be a
+valid case. But in such case I'd prefer to rework this patch and pull it
+to the top of the series. I'll take a look.
 
-Hence,
+> 
+> > > 
+> > > With those two questions addressed,
+> > > 
+> > > Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > 
+> > > >    {
+> > > >        struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
+> > > >        struct drm_display_mode *adj_mode = &state->adjusted_mode;
+> > > >        u32 crtc_split_width = adj_mode->hdisplay / cstate->num_mixers;
+> > > > +     struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
+> > > >        int i;
+> > > > 
+> > > >        for (i = 0; i < cstate->num_mixers; i++) {
+> > > > @@ -727,7 +728,12 @@ static void _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
+> > > >                r->y2 = adj_mode->vdisplay;
+> > > > 
+> > > >                trace_dpu_crtc_setup_lm_bounds(DRMID(crtc), i, r);
+> > > > +
+> > > > +             if (drm_rect_width(r) > dpu_kms->catalog->caps->max_mixer_width)
+> > > > +                     return -E2BIG;
+> > > >        }
+> > > 
+> > > > +
+> > > > +     return 0;
+> > > >    }
+> > > > 
+> > > >    static void _dpu_crtc_get_pcc_coeff(struct drm_crtc_state *state,
+> > > > @@ -1195,8 +1201,11 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+> > > >        if (crtc_state->active_changed)
+> > > >                crtc_state->mode_changed = true;
+> > > > 
+> > > > -     if (cstate->num_mixers)
+> > > > -             _dpu_crtc_setup_lm_bounds(crtc, crtc_state);
+> > > > +     if (cstate->num_mixers) {
+> > > > +             rc = _dpu_crtc_setup_lm_bounds(crtc, crtc_state);
+> > > > +             if (rc)
+> > > > +                     return rc;
+> > > > +     }
+> > > > 
+> > > >        /* FIXME: move this to dpu_plane_atomic_check? */
+> > > >        drm_atomic_crtc_state_for_each_plane_state(plane, pstate, crtc_state) {
+> > > > 
+> > 
+> > 
+> > 
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+-- 
+With best wishes
+Dmitry
 
