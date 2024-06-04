@@ -1,164 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-21622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CA4F8FB6D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:21:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50CB48FB6D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:22:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2738DB2784F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:20:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE8D81F25202
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:22:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B626143C6B;
-	Tue,  4 Jun 2024 15:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DCD11420A3;
+	Tue,  4 Jun 2024 15:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eWwVuLMg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KlRMA5jw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5076A13D524
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 15:20:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DBC4C91;
+	Tue,  4 Jun 2024 15:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717514433; cv=none; b=dOtWAxaegd2D2mZVK9f+gyY46pS9nLzJgnEQ0CK6EV1Qmt/Fxu46B0D3GQWJlXMJv6oKCWo/llUPX4enS7XgsJkcrBBkxxqtEO7TQcLKT6Paa+M3SfFyBY3gN+Jede9FXL6KYBdk0eM3wKS7VhAwBUMiauGl/0A9SZY1+WbQOYA=
+	t=1717514531; cv=none; b=g2yRIC/Wi+dqmsEWPTmsBijM17+Nv29jheO0MB7VLdbzUOzWgVM9rogZdxDGK1UUxqigOQIzXfKtmQHvAEHl0dCt5jF4oXsPO5OjcK2JE4gwvdtMyMNmA0HdfPTq6nu2Mbs94eM6bMm7l75bx1KKfkuvRs+udHP1XMESBTh7THQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717514433; c=relaxed/simple;
-	bh=DRlJ5yB+jL9oj7S5uPqNBdhic3bTfsOGq2BvTaqTig4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SUT6jlVWFzonWmN/p+UV9qt+WtKT+bo3By90AMAmWBlttQQzD9jEAIkRxGZYKWsxFm7fcvGGfiexNTzUIEU4N9Zjr1r2R4JdcAwAx/v3VNDcXG2BEOanRDClJ6t1LiCTpWr1RqPU6jSfxaxeAIprQtP1j5IdU+HyxE1qCpRr78s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eWwVuLMg; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57a68b0fbd0so2227672a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 08:20:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717514429; x=1718119229; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qu+Ktqbr70Fl0EXEKSWGa6Z8asWwZOwbqMGQT7blGcw=;
-        b=eWwVuLMgc2nKIgKtITzK+Pcns6XQG+JAqelrF4128Bmp/bOWkuYxeQ3adbGdeq/Zrj
-         4LmEjPPGSim06jLKmpvGZfOKE0zPDeBz8z6s4nxbR7HhULyKbfFnkUMobkL3oAfW8See
-         UF4jpG3ZvmZ0mgUMDAC0zuW0UzGKnx2YFtyzvhrZVha9uycgs2wzW4GhU+rF9STdzv4l
-         DSB+g8+4u7BcfnM0GMpK7pMH+xSrRqATEFmDNp9wX56KWRcxREt8H/YSVsKhTnSgo8J0
-         Hy773YFejQ70g+tHTJfF1kq3Mod1WkFCWvJ56uFaFK+C3Ul7Qd2EECiTH/opNqd4l9wX
-         tQ/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717514429; x=1718119229;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qu+Ktqbr70Fl0EXEKSWGa6Z8asWwZOwbqMGQT7blGcw=;
-        b=UaI/kw+j9D+rTgE5qTSdLZh1GmyqGTwU/F2FyhUWjdwyyy0FIba85Prdbfjy4Onvkd
-         JvaCqAcpm02x+zh/V1S0+RCOGwe3Z8W8g+rcmjgAerBGte22Gdu1pVHPKXZ7uDE2uU80
-         iKiIqqf64Fp+Fnu9PuJPpy9p6/2+nWCT9kAf8vqrZ4fwa1I/yXnkcyk8o92d+0CfsS2c
-         iddjt2mQ4tnKBeZfDG6mwGq4Uirn8WpUV7SfcqCWe4OjlgoK52J5PX87y7QFB1VDtAYK
-         1pBHkR39Rk1hwwg3r1M4CvwZrV3nPRbabWCi3eSjRsl0Msjv4sAkXzVI0JmvH9hYBeMC
-         9CVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWQiBIPENrGELgBq8AZNrA/iDMJ91gSyRpCcCfJ2wWfBkNUavGaHOmt5eFBu6C0oMyKbDD8qeACpenvov+hq9gO93rxLaR3QZGuX4KDzA==
-X-Gm-Message-State: AOJu0YzBYY1kNCEWCLVssgzsQzelil9H7SGkchxf5/xWgdd3tjD02+6t
-	WkIFW15wZ15aj+YVdh4rhuYSTmESk3gohL/ZK4XtgejuXDB4km2Kh1wM2IGzlIzshXlRGCg2eZP
-	f
-X-Google-Smtp-Source: AGHT+IFT/gu+iXIw1FyazFLHgySd1ZeZkBXTazh7KSbQtI8SI2vRyQvZs4QXU0Ws+N/sE/bijqRglg==
-X-Received: by 2002:a50:d011:0:b0:57a:254f:67bf with SMTP id 4fb4d7f45d1cf-57a6ae8e518mr3135539a12.27.1717514428495;
-        Tue, 04 Jun 2024 08:20:28 -0700 (PDT)
-Received: from [127.0.1.1] ([188.27.161.69])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a31bbbe18sm7540793a12.37.2024.06.04.08.20.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 08:20:27 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Tue, 04 Jun 2024 18:20:24 +0300
-Subject: [PATCH v2] arm64: dts: qcom: x1e80100: Fix PCIe 6a reg offsets and
- add MHI
+	s=arc-20240116; t=1717514531; c=relaxed/simple;
+	bh=i37zzyVngEVftThnTr0XIEMfXfr0oJ3rTWotIrQxhec=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=asQgMaDcOB8ERTIdrUYxKqA5WdbZdD6C319zp6c6o38RVlQYidEtI5lzth9avkctFRQmqH9+IYJRGOGjts+eZMlxlNxt/PyNECVlBGMREMpjiyxRElbtQDwJZYuAc/fnperRg6ny1XwFz5lkcyGEeYAz0GGirfnLr6deJOBcndQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KlRMA5jw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BF3C2BBFC;
+	Tue,  4 Jun 2024 15:22:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717514530;
+	bh=i37zzyVngEVftThnTr0XIEMfXfr0oJ3rTWotIrQxhec=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=KlRMA5jw/rssb3MWW96YE4k81ilgJ3FecME3snpmO+K2C5Z4KfnNVnddHKLUHXbt5
+	 7rETmWmOCYkSINdlCDRMafyq0lx8KihJysrzDJg4jWbtbGSpDTE3JrtzXwbVtmQkb1
+	 sL4uMwSvKzhNaQ+rWf77f24lImfrGMyu9Hle4qtjazxQb0bvhM9raNNBMlJlBSGV/A
+	 xo992e3HDfyHY9mOWM3GyIdx2lOyTSlORCnth6zw9nwXkd6dPjv6fvye7LCIoBc5is
+	 kdw5WPU3Jt1nUMcjFRIxq0y9O9n5yujTmw0GfyStMVgzmLVKh+RyKrUb2b1EXiE7Yu
+	 ghyurpYC1Czew==
+Message-ID: <c9cc5a0e-35b5-47a6-b271-46cac9e19872@kernel.org>
+Date: Tue, 4 Jun 2024 17:22:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] dt-bindings: display/msm/dsi: allow specifying TE
+ source
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Krishna Manikandan <quic_mkrishn@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+References: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
+ <20240520-dpu-handle-te-signal-v1-1-f273b42a089c@linaro.org>
+ <224fa477-07ba-e7b2-2f7d-8f7d21f4a0c7@quicinc.com>
+ <CAA8EJpp8kRPKboHNHwD+R5f1AcndjaQdGG=Q4ygmRE9VMNievQ@mail.gmail.com>
+ <5cde2f43-89ab-d2d4-d68e-605f8f5d1da7@quicinc.com>
+ <CAA8EJpoMtr6OGjL8qq-cHadQSOVyDAaL8=2TLvOjBbYV2Z7+Mg@mail.gmail.com>
+ <d1a9be5d-b0a0-73bc-c66f-6d45049fbaf1@quicinc.com>
+ <CAA8EJppFZQTghtyweGG_8zSqqZpEp=ho0bXuRxgyU2qGL4+ppA@mail.gmail.com>
+ <4b604c91-7b1f-46b3-6b41-fe7d45190b78@quicinc.com>
+ <tymwexyhuujgrz2cvxkruimst3ff4mnevcm2k4h6qdmpmb7yqp@zqbwwc5t66ya>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <tymwexyhuujgrz2cvxkruimst3ff4mnevcm2k4h6qdmpmb7yqp@zqbwwc5t66ya>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240604-x1e80100-dts-fixes-pcie6a-v2-1-0b4d8c6256e5@linaro.org>
-X-B4-Tracking: v=1; b=H4sIALcwX2YC/42NSw6CMBCGr0Jm7ZgZsEJceQ/DopQBJjGUtKTBE
- O5u5QQuv/+5Q5SgEuFR7BAkaVQ/ZygvBbjJzqOg9pmhpPJGpmLcWBpiIuzXiINuEnFxKneL5Ab
- T1cY23Ajk/hLk9HP91WaeNK4+fM6rxD/1n9XESMimrqRzVnLs+dbZBn/1YYT2OI4vUR0/m8MAA
- AA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>, 
- Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1755; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=DRlJ5yB+jL9oj7S5uPqNBdhic3bTfsOGq2BvTaqTig4=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmXzC5FC1IMRZJNSzyPlX31zXD+CdMbSWI6a+p8
- Ws82r7lu/GJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZl8wuQAKCRAbX0TJAJUV
- Vs9iEAC6OQ4ab0nzj5ojscz7+5NTPP+3zCXCBOk8CV5VAEUjUwcoVaL3vLFpe2jgPAEnuEuLDG9
- 7WethkERUKPF99kNhJaoEJOs/ny3z5hWxskk9IZ+lKXZZ7EcvQ2qtu8oXSNzdhYG8BQVWvH1+ke
- noG607lzURYgNi9KMck5xWmTR0xXIO0HREuFMj642/kXKbkRkkbZQmZiEt2WjJQAnRKhbrYm3JR
- XrneQHBaKmF+nE24CQodXxFRoAUKS/Atf0tqPEG3Aht/UTYGTk/byqLXbrFJM8OzTjWoGXJjDy5
- AKpAaj1a06FyGcRtIb/M1lGFsWQN6MorUtdL7KywMFnEkmf03Xd9+fyGNHUi2JTDejNIhIumyQP
- 7BfUbXKtvhjE7fFFM+hdcb/fK4+DVQaRz5t3/9WDa91aoE9TCfYNFol0alEt73ct5veCN34246B
- VWjtO2YBk/n304P1qkQZ+6I9sP2sN1KW5oAP3twXCT/BNc3sFtHIXoWr27PYbjfCTl9sj90q1qJ
- 4+XhTaMLxNcwXCwCb7+Tc2KHG6F6BYgke37/7R8O4uv0T8/MjOIGC8ljPrM+lc571Hp7gUPc8Gv
- bwFRNXWPSyHleL8DidVp8F1Eddb5noipfjQvHgy6R/T1nlu5cqXm12/JzziyZCCfEgCCyG/bltD
- 6Ax2kQhZ9Mojs9w==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-The actual size of the DBI region is 0xf20 and the start of the
-ELBI region is 0xf40, according to the documentation. So fix them.
-While at it, add the MHI region as well.
+On 04/06/2024 17:14, Dmitry Baryshkov wrote:
+>>>>>>
+>>>>>> I didnt follow why this is a link property. Sorry , I didnt follow the
+>>>>>> split part.
+>>>>>
+>>>>> There is a link between the DSI host and the panel. I don't want to
+>>>>> end up in a situation when the properties of the link are split
+>>>>> between two different nodes.
+>>>>>
+>>>>
+>>>> It really depends on what the property denotes. I do not think this
+>>>> should be the reason to do it this way.
+>>>
+>>> It denotes how the panel signals DPU that it finished processing the
+>>> data (please excuse me for possibly inaccurate description). However
+>>> there is no direct link between the panel and the DPU. So we should be
+>>> using a link between DSI host and the panel.
+>>>
+>>
+>> Yes, I totally agree that we should be using a link between DSI host and the
+>> panel.
+>>
+>> My question from the beginning has been why the output port?
+>>
+>> It looks like to me we need to have another input port to the controller
+>> then?
+>>
+>> One from DPU and the other from panel?
+> 
+> Dear DT maintainers, could you please comment on the OF graph entries?
+> Are they considered to be unidirectional or bidirectional?
+> 
+> Would you suggest adding another arc to the OF graph in our case or is
+> it fine to have a signal generated by the panel in the 'panel_in' port?
 
-Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
-Changes in v2:
-- Dropped the 4-lane mode switch patch entire.
-- Fetched Konrad's R-b tag
-- Link to v1: https://lore.kernel.org/r/20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index cf8d8d5b1870..fe7ca2a73f9d 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2818,15 +2818,17 @@ pcie6a: pci@1bf8000 {
- 			device_type = "pci";
- 			compatible = "qcom,pcie-x1e80100";
- 			reg = <0 0x01bf8000 0 0x3000>,
--			      <0 0x70000000 0 0xf1d>,
--			      <0 0x70000f20 0 0xa8>,
-+			      <0 0x70000000 0 0xf20>,
-+			      <0 0x70000f40 0 0xa8>,
- 			      <0 0x70001000 0 0x1000>,
--			      <0 0x70100000 0 0x100000>;
-+			      <0 0x70100000 0 0x100000>,
-+			      <0 0x01bfb000 0 0x1000>;
- 			reg-names = "parf",
- 				    "dbi",
- 				    "elbi",
- 				    "atu",
--				    "config";
-+				    "config",
-+				    "mhi";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
- 			ranges = <0x01000000 0 0x00000000 0 0x70200000 0 0x100000>,
-
----
-base-commit: d97496ca23a2d4ee80b7302849404859d9058bcd
-change-id: 20240531-x1e80100-dts-fixes-pcie6a-0cf5b75a818e
+Which pin are we talking about? DSI or panel? Commit msg suggests DSI,
+so property is in DSI node part. Seems logical to me.
 
 Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
+Krzysztof
 
 
