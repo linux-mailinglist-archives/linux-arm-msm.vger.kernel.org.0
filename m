@@ -1,139 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-21630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2424B8FB78F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:37:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DB638FB7AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:42:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A2E2A1F29A95
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:37:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17A01285F50
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:42:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 625851420C9;
-	Tue,  4 Jun 2024 15:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A10A0144D23;
+	Tue,  4 Jun 2024 15:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bpnD4v30"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1p0RL9O1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A15BE4A;
-	Tue,  4 Jun 2024 15:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D47E144303;
+	Tue,  4 Jun 2024 15:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717515424; cv=none; b=MoqnUkK8xiJzRP6ZZ0YnfwYlAzm93KgFaSYWdpmRZApdgi2zzywqcQKT9BumCdXfpX+5I6k+sgJFGy0dgGmYJ9PUZ3P0uRvfW7+Vg//XNqQNxvcSVPE52vCeL1pF1nFABezTA4LfDtdNu4006675lDweDvlU1ZFg8EpwslAsObk=
+	t=1717515749; cv=none; b=sgxijqImJpsq58BnlGfeI7umX9GhDlv0TsaTe7tmam+80MsbI+2P8vdslokI1iHXEVJk7vwROpDkMmRnjOKwYu330e4GwsRIvo/RP/CCr9o33MmoOOe/oZbgwBpiRlXAYMxB26cclPtIlZCc6Wa3yEriCNBKxAlnh46wyKzdj0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717515424; c=relaxed/simple;
-	bh=i5Opr9uV9c/U9jJT7KnK+VYf+CdAHYn/eadS67CS/TI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=u4jGeFr50QQma5ij5Ah7/185/vMmY6E41Auwc2v22od4Tf9fAp/EXl7+HKJVnbBLaHfgrdFIWRoWmRn12AIAVvzYUQTxGQ3zAg8woigPrHcz1tJaoenRAm9etHUEN/ZElMV0+GyOsyaTNzWB+b9X15QMfwjtTNaPfscTsLikvTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bpnD4v30; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 454BuHZO028942;
-	Tue, 4 Jun 2024 15:36:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	y6gETlu7f5dKxifVOSv/zKkJhlaYM/3Wj/YcQKndnSU=; b=bpnD4v30Phd72tX/
-	IWK/wm4N8NB7FmMO1RVKG16LHUyRgiZEWOPn+stpVvwahaTFUCkUdLE+n7AhwEBY
-	7YgOMM0m6ekBGJ//SJPCCpNTNI5YdII/YiCUr0776bfssa2o2Hi/z5zkgW5SNGuz
-	YfeiJsiupdDfsOfoJRJs4DiKzE7Mz2G/WsN+o2wfOl8RewxvRbTZ5mf8SCg4Y8ql
-	8CSLcYckv0fGhoWNh87zIH/1XYd1q2M0jafZqHA9lbJoDl5DXO3tY0KuIeXqW/CW
-	E1jahGhYz+fNYc5S1YPnF3UF6VdFrpfyH0uc6mTisijlAOZXE1iDc3pYykNOwsvC
-	NTxGcA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw6qq6ek-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Jun 2024 15:36:48 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 454Famfb008098
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Jun 2024 15:36:48 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Jun 2024
- 08:36:46 -0700
-Message-ID: <459ef672-82c8-abcd-5c7a-5c1b4db7e1e3@quicinc.com>
-Date: Tue, 4 Jun 2024 09:36:45 -0600
+	s=arc-20240116; t=1717515749; c=relaxed/simple;
+	bh=gvxpfHQ65oWsKW/gpsh/uvOZGyM//B6SX2D/4rQ0Nsc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NlwVQTTYvgoIMsEYPvFrQvG9MxB8eOpDjkoHlIqxiJrK9K1lHQOtwj9UxrJSEhtGfJQuFsxFvy7Jc2NGZR9WCVY6Wrf2iW0tzErYhsutb6tmHUX8rKh/DQERthyFJDZrz92SLZ2vlP+rvtn6KlpE9T+yIzYaIH4z//L4aw4NckI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1p0RL9O1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB18C2BBFC;
+	Tue,  4 Jun 2024 15:42:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1717515749;
+	bh=gvxpfHQ65oWsKW/gpsh/uvOZGyM//B6SX2D/4rQ0Nsc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=1p0RL9O1txeF88r7BI4R3mZCPecX9o5eCeU291B62J/7N4Hkguvf1lfLd3cqQUs8P
+	 4Y1/0W4FQ0ElqLZ7UU0nmattnWlXk/Z10eyZip8sZHsKgLIIU/ogQGQB9n7FHaJ/iv
+	 fP0oOcb6nC636FrLvgUA+RegIdHHg80BK9dpAXYI=
+Date: Tue, 4 Jun 2024 17:38:24 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Joy Chakraborty <joychakr@google.com>
+Cc: Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Vincent Shih <vincent.sunplus@gmail.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Rafal Milecki <rafal@milecki.pl>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Michal Simek <michal.simek@amd.com>, asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-amlogic@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-sunxi@lists.linux.dev, manugautam@google.com
+Subject: Re: [PATCH v3 1/1] nvmem: Change return type of reg read/write to
+ ssize_t
+Message-ID: <2024060445-amaze-sitter-88da@gregkh>
+References: <20240510082929.3792559-1-joychakr@google.com>
+ <20240510082929.3792559-2-joychakr@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] Documentation/accel/qaic: Fix typo
-Content-Language: en-US
-To: Danish Prakash <contact@danishpraka.sh>
-CC: Shuah Khan <skhan@linuxfoundation.org>,
-        Carl Vanderlip
-	<quic_carlv@quicinc.com>,
-        Pranjal Ramajor Asha Kanojiya
-	<quic_pkanojiy@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>, "Jonathan
- Corbet" <corbet@lwn.net>,
-        "open list:QUALCOMM CLOUD AI (QAIC) DRIVER"
-	<linux-arm-msm@vger.kernel.org>,
-        "open list:QUALCOMM CLOUD AI (QAIC) DRIVER"
-	<dri-devel@lists.freedesktop.org>,
-        "open list:DOCUMENTATION"
-	<linux-doc@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <16b1bcb5-00c6-4b59-a880-188bed32d175@linuxfoundation.org>
- <20240601145216.32232-1-contact@danishpraka.sh>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20240601145216.32232-1-contact@danishpraka.sh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RA-9bEaNRUYS_YgtWAAZOy4iUliYcgXV
-X-Proofpoint-ORIG-GUID: RA-9bEaNRUYS_YgtWAAZOy4iUliYcgXV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-04_09,2024-06-04_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 mlxlogscore=999 clxscore=1015 impostorscore=0 malwarescore=0
- mlxscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406040125
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240510082929.3792559-2-joychakr@google.com>
 
-For future reference, since this is the second revision of this change, 
-the subject should have "[PATCH v2]".
-
-On 6/1/2024 8:51 AM, Danish Prakash wrote:
-> Fixed a typo in the docs where 'phsyical' > was corrected to 'physical'.
-
-Commit text should be in the present simple tense.  You currently are 
-using past tense here.  "Fixed" -> "Fix", etc.
-
-> Signed-off-by: Danish Prakash <contact@danishpraka.sh>
-> ---
-
-Since this is a single change and not a series, you should have a change 
-log here which identifies what is different in this revision.
-
->   Documentation/accel/qaic/qaic.rst | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On Fri, May 10, 2024 at 08:29:29AM +0000, Joy Chakraborty wrote:
+> Change return type of reg_read() and reg_write() callback to ssize_t for
+> nvmem suppliers to return number of bytes read/written to the nvmem core.
 > 
-> diff --git a/Documentation/accel/qaic/qaic.rst b/Documentation/accel/qaic/qaic.rst
-> index efb7771273bb..628bf2f7a416 100644
-> --- a/Documentation/accel/qaic/qaic.rst
-> +++ b/Documentation/accel/qaic/qaic.rst
-> @@ -93,7 +93,7 @@ commands (does not impact QAIC).
->   uAPI
->   ====
->   
-> -QAIC creates an accel device per phsyical PCIe device. This accel device exists
-> +QAIC creates an accel device per physical PCIe device. This accel device exists
->   for as long as the PCIe device is known to Linux.
->   
->   The PCIe device may not be in the state to accept requests from userspace at
+> Currently nvmem core assumes the amount of data read/written is equal
+> to what it has requested from the supplier, this return code facilitates
+> better error handling in the nvmem core.
+> 
+> Signed-off-by: Joy Chakraborty <joychakr@google.com>
 
+I thought this would be two patches, one to change the return type, and
+the second to change the logic involved here (making it easier to notice
+the logic changes.)  But it seems ok to me:
+
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
