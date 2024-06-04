@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-21600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCA6D8FB25F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 14:35:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 374258FB26B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 14:40:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BB591F215A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 12:35:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68A761C23AD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 12:40:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D410E14600B;
-	Tue,  4 Jun 2024 12:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D80861474B2;
+	Tue,  4 Jun 2024 12:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EBmysDV9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G/Ea3iyB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B7A145FFD
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 12:34:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A7D14659C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 12:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717504492; cv=none; b=ujDeDIRElhJLD9ZSBrPMVkebIELcCrx1cjpaEqi3PjHZxt7TWl+m69dchppuVSJ2Ob1YlbfD7MbR4TH65a19aJlcClk1x2FXSN50aWCXwDcCWo/woTEbClAzCNcYmgJGQ4ZlaLsekfrtzOWyZBMZw0yx4hZV81e/Y+LXhEj89eY=
+	t=1717504727; cv=none; b=bYUK/tG2EDX0rcWCVYcupZTRzunx0dTSyjBCbYy65oCiIeRCoMYGJsJoLXRQnJ2LHgwECc9x0215ZA89b9YUYt3/2VjTQ0Sd1p38VguvmfcR3+oGOz3MufTQYf1T1w7rw2q/OjfLyWNL6wPFOE98uWykxvSjMGTK7coozPSY+GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717504492; c=relaxed/simple;
-	bh=D12OKosGzyIeqTc+4pWeca5gTMNF5feXU3hrQibnKMc=;
+	s=arc-20240116; t=1717504727; c=relaxed/simple;
+	bh=+uiMXEG+EZule7VdPnnx+fU2SmeBWfCCqxuavrdMkio=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W4W3a+ZqdDTMQQGTUw9pXBQzEpeKmt5qSs+x6Npgoi7D5+Fm2PL1eiXqNXms9Wy0RhyebFKt3lDEW4TCVDe2nhy3SPv8Ir1hGV4MJ/XyQWwCrX+AAK/QIB5uBtT5q7gjHpPgERMdehtN5oyRCppNlNdAVYDRJ58mK6vCtu5NFt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EBmysDV9; arc=none smtp.client-ip=209.85.167.49
+	 In-Reply-To:Content-Type; b=YuN1JTnH9HWz7juwo9L6REyq7v5H3c8E7Pw/CWKnkkN2U2w/bPv4c8cXMtV0oKuCkqlVCF3ZK50ydK+A95A7O36bIJWBUDD2QEsNarkRKruxABRUhoiLH/wbRpVyI+Umpjg+3V5Ra9QrNLS8JDjuQKbN4m9HEWAiuoqvusedDRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G/Ea3iyB; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52b8e0e98adso1457335e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 05:34:50 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-57a526c6a2cso3390534a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 05:38:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717504488; x=1718109288; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717504724; x=1718109524; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tiCJzW0mABhhqOX0xPBmtvojGJknZUCeql9nyaZxqZo=;
-        b=EBmysDV91P1oNLddtce2x3XQgSi5dWWBzLNYkElqo27PVedG4Vxs94kYb2rC9b/dRE
-         n8GXEAnvVcmbHBXOqVWqmf/CCoCZ7Y4jGI1Sr5+3FqzNkhOHF6azvSO848Pso3J8IxcA
-         4PJ7qrKsxZnbkcrgussNxR70+OGcD8EcPqFjnXfx8IWzet5N5lGIrhIZDeSeVebYLBIl
-         t6O8n6oBYaAAUH0utbGrz45PSl8D7k3pBtBG778jJCpa7uiOhj413ufDIMBB2BtpMuKM
-         HbFjWq2M8AOS38iwfl09Um7CTrE0r5A89t/OoQtf4pQ4I52vkeBazTyMwwX4LhNKfSub
-         Gdfw==
+        bh=zBuKKqkxYHyIgRStro7NrXTT71EaUUMEHnaPxL+Wr1w=;
+        b=G/Ea3iyBNGnW4EYW3lA/f9c9vHKCM1CZgf4B6E9IA2z4eKvfM6xd0qsvVA5YrI4y6w
+         UUH+MwjjBHaj1kdnJ9ruAwhoTXaY9j1Pk5Z8faE1H0s4x768bslB4Hvz52Q3MgW3X4a0
+         dCja4Vn/wAWOa7/QQToalu0nzdMsqrgphEDkqf+8U8ztOlw/jBmNzpGuYXTgUAcCxvu2
+         GOdLyke5AhfkPvb/Tem/n1NY5k+rQzr9zcnPbWP3LrQLXA5wAFiwRy90UoE8RDNTGCNa
+         a9CoiTOOB/vpc0UiWHd/dWUmfbsEZ2WkVgkkDWNlu/hWrgSj3ehyF/PIKva9NkjI/JR4
+         JuMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717504488; x=1718109288;
+        d=1e100.net; s=20230601; t=1717504724; x=1718109524;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tiCJzW0mABhhqOX0xPBmtvojGJknZUCeql9nyaZxqZo=;
-        b=gBvi1pUTyJpQ43JXjuUl1Hv7f3zOb7vcUgog4h3VesMjGVh0zHQE4EW5bhzD76bYvS
-         wirTfFDPB70yBSNrXX3L5johQYX+gAEobHBlrtok/rOtlNgLML5A9h68TylTg+HL9hP4
-         FOevYfr5SE7JRjhBlVzzrgFPkxjiIob2pLp+RsvMDGeBz0/MYbtratTujHODwXnj82ym
-         K22urqJn/PFW12XHk+5mt5ReMQycqeAxseUS6aK/OK6QcAMVk+/J6oQomydAi9Q0dBAD
-         MNfszU9mGlK10jn5RtMbVflViSYbSQ5NqmzoNQoV7knIW8ZorAvl47GeENaAOZpo9yaw
-         q3Qg==
-X-Gm-Message-State: AOJu0Yx4GYrIYX/LncHF3JynwXXUiQ5TpN43R1zkyQiNqUY1wmbyfYK1
-	tpn7jQTbsIjYXPflHQiXG+Akr8jhUbOItdInUxkbS7b1SLoi4tbnncqNHHhObro=
-X-Google-Smtp-Source: AGHT+IFMlnLrkbtlCj/co4zLXjzRgVcjYZ1SkibwhwTsqzQ4YEGr3GUwA7ZNAwAXPr7PlXbkEBi8Aw==
-X-Received: by 2002:a05:6512:3b25:b0:529:ac49:45d1 with SMTP id 2adb3069b0e04-52b896f1c02mr10925107e87.66.1717504488428;
-        Tue, 04 Jun 2024 05:34:48 -0700 (PDT)
-Received: from ?IPV6:2a02:8109:aa0d:be00::8090? ([2a02:8109:aa0d:be00::8090])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a86a6a5d3sm609356a12.65.2024.06.04.05.34.47
+        bh=zBuKKqkxYHyIgRStro7NrXTT71EaUUMEHnaPxL+Wr1w=;
+        b=nkhYWfo3d0hC9GdZ8PHifO3PYILsi5YFNh9D0hIfmCcPPcEH/QUn8S1hryaszW31J1
+         5jsxDGz/St+ndeHLc4+oBX58s0C5TOH7HEUIVmJVLKFHS//14cebL9vtRsrLibnzJ39u
+         pU5u3fC1KjZwQL0G1ianlFMFFwja6sazNuGG8X066kfLc3neNZ0HZSL2j78qoEFhasHL
+         iiVbmygpGVGQYMk1O9ylPs3ztkRspOiiwzgclq88zIHI+XEh3Vob79fBoGjU1TQPrZjB
+         ytHmujx5wGjheZEAR1DkVDRwi5XSYG3pVPfeI3GficmyKSqoOKuUttsIFKOJZtRLY4Vt
+         xUVw==
+X-Forwarded-Encrypted: i=1; AJvYcCUnFKBOpst64Z0XziN7LIGQBY0DfxwUaNT7qEb1BZOQ2TKmoebAMDsrIfrgtBzPFkSyFZHldRy+MMvjbwc9IZhbGZL5B6YO52U+MhcD+w==
+X-Gm-Message-State: AOJu0YyhlakNHzWkj04tYdtvj36qOVwpychs2N533+fK2L0xqLoCiVWM
+	1NpT8Qnc5bqy9fG6Hb1+sd58A0qBYLMFddmaXjh/Y4qIv3XAY3S2CjfrAJFZEg4=
+X-Google-Smtp-Source: AGHT+IFgYFCnESUw6iN6J+ZbQ2mgU4JikyHrl7BKDBQRaTZ5P417GpeMSdUA1tYffFqVseAU4uAeWg==
+X-Received: by 2002:a50:9548:0:b0:572:a16f:294 with SMTP id 4fb4d7f45d1cf-57a3644b930mr7917381a12.30.1717504724455;
+        Tue, 04 Jun 2024 05:38:44 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:909a:a11e:a035:2af2:8d85:1f72? ([2a00:f41:909a:a11e:a035:2af2:8d85:1f72])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a81f1dbd9sm1152023a12.93.2024.06.04.05.38.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jun 2024 05:34:48 -0700 (PDT)
-Message-ID: <b49e8615-9230-450b-acf2-c2ccff4d9201@linaro.org>
-Date: Tue, 4 Jun 2024 14:34:46 +0200
+        Tue, 04 Jun 2024 05:38:43 -0700 (PDT)
+Message-ID: <402aa998-8b3c-4c3c-8dcb-f128b6ddac46@linaro.org>
+Date: Tue, 4 Jun 2024 14:38:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,53 +76,59 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] misc: fastrpc: add missing MODULE_DESCRIPTION() macro
-To: Jeff Johnson <quic_jjohnson@quicinc.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Amol Maheshwari <amahesh@qti.qualcomm.com>, Arnd Bergmann <arnd@arndb.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, kernel-janitors@vger.kernel.org
-References: <20240603-md-misc-fastrpc-v1-1-6e6d73d08315@quicinc.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100: Make the PCIe 6a PHY
+ support 4 lanes mode
+To: Johan Hovold <johan@kernel.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Rajendra Nayak
+ <quic_rjendra@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org>
+ <20240531-x1e80100-dts-fixes-pcie6a-v1-2-1573ebcae1e8@linaro.org>
+ <Zl28nvnpGFRsYpGh@hovoldconsulting.com>
+ <d93fe55e-7c65-48cb-bdaf-5e15bc22be30@linaro.org>
+ <Zl8GoRoY9lXRtg2R@hovoldconsulting.com>
 Content-Language: en-US
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20240603-md-misc-fastrpc-v1-1-6e6d73d08315@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <Zl8GoRoY9lXRtg2R@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 03/06/2024 21:58, Jeff Johnson wrote:
-> make allmodconfig && make W=1 C=1 reports:
-> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/misc/fastrpc.o
+On 6/4/24 14:20, Johan Hovold wrote:
+> On Tue, Jun 04, 2024 at 02:00:10PM +0200, Konrad Dybcio wrote:
+>> On 6/3/24 14:52, Johan Hovold wrote:
 > 
-> Add the missing invocation of the MODULE_DESCRIPTION() macro.
+>>> As I just mentioned in my reply on the PHY patch, this does not seem to
+>>> work on the CRD were the link still come up as 2-lane (also with the
+>>> clocks fixed):
+>>>
+>>> 	qcom-pcie 1bf8000.pci: PCIe Gen.4 x2 link up
+>>>
+>>> So something appears to be wrong here or in the PHY changes.
+>>
+>> Is the device on the other end x4-capable? Or does it not matter in
+>> this log line?
 > 
-> Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+> Yes, of course. It's the CRD as I wrote above, and you can tell from
+> other log entries:
+> 
+> 	pci 0007:01:00.0: 31.506 Gb/s available PCIe bandwidth, limited by 16.0 GT/s PCIe x2 link at 0007:00:00.0 (capable of 63.012 Gb/s with 16.0 GT/s PCIe x4 link)
+> 
+> lspci and what Windows reports.
+Ok, good. I was scared of double-sourcing of parts that are not identical
+in spec..
 
-Reviewed-by; Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->   drivers/misc/fastrpc.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 4c67e2c5a82e..e040cb5470c4 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -2478,5 +2478,6 @@ static void fastrpc_exit(void)
->   }
->   module_exit(fastrpc_exit);
->   
-> +MODULE_DESCRIPTION("Qualcomm FastRPC");
->   MODULE_LICENSE("GPL v2");
->   MODULE_IMPORT_NS(DMA_BUF);
-> 
-> ---
-> base-commit: a693b9c95abd4947c2d06e05733de5d470ab6586
-> change-id: 20240603-md-misc-fastrpc-b644f497e68e
-> 
-> 
+[1] suggests this wasn't ever achieved.. which makes the cover letter of
+this series a bit misleading..
 
--- 
-// Caleb (they/them)
+What does the TCSR check return? If 0, can you hardcode it to 1 and see if
+the link comes up at x4?
+
+Konrad
+
+[1] https://lore.kernel.org/all/Zl8H0KOrfuF91kpZ@linaro.org/
 
