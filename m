@@ -1,144 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-21668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6982C8FBBA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 20:28:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55E6E8FBBD8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 20:49:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 225BC28632B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 18:28:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE6A21F22D85
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 18:49:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86B8614A60A;
-	Tue,  4 Jun 2024 18:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F086813F425;
+	Tue,  4 Jun 2024 18:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="UfKRuEKu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MTXX0GZD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D2D339AB
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 18:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445C218028;
+	Tue,  4 Jun 2024 18:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717525681; cv=none; b=K6SxjV/oMmYrjJaqBaaHAuIiGa9Tp+elG5lnHqx/nPgP1Q7T7YDlvZ42vdbmjxHDCn96wbcLbpRJthtYjvXNv8zhw7UDy1MIEuVpDEbxmBfgY5rlpEcxXEHp+rW5V4ZtCkG55gc8b9DYVK7Rqmlzm8lha5Zwq1+x5bkxypIPVLo=
+	t=1717526968; cv=none; b=d9NUBy37eQGVe8wedFjhXu9/415zDsnYMoGDwDGt90/3Gf9MVEuHa2BWTh0IQ6txw444eYlgXFOeA+zBbgNazdDb0WZcV+WXBe7kUlchEQT0UAh7MCrmx9MESJOCbrNRUHEHfGCvKuMf4+7lMdY6Kj9YDmz4RaEJ6dW6R4m+Zj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717525681; c=relaxed/simple;
-	bh=tgO7W51+bHcDvjyP/YA64C67mrFqdBGIc+5LxIoRFGo=;
+	s=arc-20240116; t=1717526968; c=relaxed/simple;
+	bh=a1zun8HL6lepv1ujLISq6+xEZ0ZnO4qy/lSJiqqhavo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=meqAbzTTjOQSThVQYx1ehkL4iyXNedhFHnCXZLsW4Q63Ra0jx4f7MVtFm2dGVkFQsLJbRlNbExQCMqN+OZ4AzaatKHmRF/XAJNmIrp6r9pJptIinPb+i0fZiKTsCP9v/ElQ4m8RS8tXpKEVFKE/DuQ/dx0rfkh7yGQTMLA+2fIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=UfKRuEKu; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52b98fb5c32so3844246e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 11:27:59 -0700 (PDT)
+	 To:Cc:Content-Type; b=CmCP2fONInsC6xeyjUvbYM397GES5HFBNZfZNii5ju16yeireA3yk8+3zBN59xxyKv7A5nFst+ATg0rVQ1n2/q3QvnFmMqrzW4Is4VqozVwc/qfVynTga+FovajDKwNJaSaIsVdhukKGv1qqODgMX6zDBvxnjUlFHa3Ss+tktZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MTXX0GZD; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-572c65cea55so230848a12.0;
+        Tue, 04 Jun 2024 11:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1717525678; x=1718130478; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1717526966; x=1718131766; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KtWwyHQ/s1Mo+jSgQ3jPju5LLIQLxY5LIc0kGaj+Rp0=;
-        b=UfKRuEKulQPRJ1eQ1jv5CPwj5N48I2Hd/0RecNZvR1umL2CaLMmHTBGRewMLx8xPVy
-         G8ohgactJFSAKbfIQPzAjtKfd0Sxw9ZtghZ+gPnY03Zy3F/AuVdbxqpIYaBWAInoXrKp
-         gIaaWDULocIxS0mx9djiuvA+RM3Ihq3jAZBVqt9hPjKydR8f38k2Ee3Uek4sOlzndqk/
-         dD4Azb1LLUXGqSiMu5p5k1byuGyaulNDQJDToit2cIh1xnjFr2Vmb2+SP6i40KeANUvt
-         HughqwuP0jI2ouIrSLA5Pi2guWDS3j1FF1vd4CKJq38kHz60Q3jIWz1rgtycCn6OtAv+
-         yGQQ==
+        bh=Bb27sFgRlG0Tk9BuaJtsYRuhNJ3jYbY3tEhCWfnKOSg=;
+        b=MTXX0GZDZta/N8f78Syfoxt7FmPFFY9lurDnHtuvlz/LzOtd6tMN6gLVDzfljOk6f/
+         tyDoYVDP6BlWYSQ/nOYEXdSwHoZJOggEFQ4QC+HuS21K96qNma8gKBABIhWwSFO5Vn7a
+         ppM6tGmRaOPstF/qpIQn4XZQ9tIuxp0TZlQHsM9jTGJUR9hoE7+R7dVeg2yed6JLJYO9
+         Z98tE8K+f/ed7TUuJOb4URynwsTkFLtlV/G3R778RuWkkRE8o/MLWinPYn+t6jB41A55
+         YvpR4x/IO2UPEH/MeG03SqALsHofpssYp+RWLfPkhNr4RLCKNX65qbFL6Cj6jX3Q0Cyt
+         PU+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717525678; x=1718130478;
+        d=1e100.net; s=20230601; t=1717526966; x=1718131766;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KtWwyHQ/s1Mo+jSgQ3jPju5LLIQLxY5LIc0kGaj+Rp0=;
-        b=AYiSbUB8JmubYLarpdL/2lwGnrSx0omRLZ3CUJSfhOaOX/EIcWiAAATqul7D1h4VD6
-         JV7+6/ZawhO5TrIJKtimlSZkAY2+VZ/Nge0nsFepK7Kel2cR0R6+26/IrddTfY7vXSLl
-         96xKGcG3y6NFulBvuuDW5/9oIgz5u6GJiB5CS4E6MhJazhrqE+gPet4HvE3baqPg0s7h
-         RgNTCPoatOFLDcX60glptKEjjRghc3Emc50AMmvSatkyt025OmNiVvFFReSMrvnSrvaq
-         vAjTGtIKmYOj5Y1WLhUGLWh5gOBW96KGNiwQUBfZoHBUfV49fuXeDd9kvrugr/96aYYh
-         +gmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX+1639xSPrsyU7cbSdGHvaWlQkl5RpdOMR+9AGhS28t2ZzhTWHmtFzBaJ+qRZddvqqjpSbnC7dusNE/N+3FY4aknSHWkZ9BVtDmmLbZg==
-X-Gm-Message-State: AOJu0Ywut6RD34UEiquGj7yQJU0aH/WVPwOXz/IoqwjvX9WR3/iul67p
-	QTmvPKhoPZBpj0cUHvlOlkV5s37a5s5vpe2LngpnNdXBfz817j2tyyxB/CwEDPXVB2GM4O9vjE3
-	hv2yF3h3rLylNeUmmFfSys6MBnQuI1vDIoX1BBQ==
-X-Google-Smtp-Source: AGHT+IEIBmN6Pbw21C48aFo92GeQIhF5kiBTsuKNdmIGqw2sOD28tsikvtBG3m69ha2Gd5/MsgbO+7NQyJOTbJOSXRc=
-X-Received: by 2002:a05:6512:2253:b0:523:9515:4b74 with SMTP id
- 2adb3069b0e04-52bab4ca5e9mr311493e87.14.1717525678190; Tue, 04 Jun 2024
- 11:27:58 -0700 (PDT)
+        bh=Bb27sFgRlG0Tk9BuaJtsYRuhNJ3jYbY3tEhCWfnKOSg=;
+        b=HNGKUeRgg4tycRdoqB4dtz/VJiKkle5YLenZ1PxiCVPD+mdXng/Te4iuWxZjDnYG/S
+         kLoGiyKwBvUaSPkM1SB4OD3SkUEyg+4aUX9JGlpt4dVCDMCuMv98rgJSHA/Oq5SKYLNU
+         G1gAl8+/VMN3qaYGqPliqKtUMt1qXqqsDm4Ws+3HCxhXWkI12+L9SGOsiQLo3kJGOA3a
+         3D+fjekOCb6dyzve/ELPw08/vQrZyaVnGEgs2QihDO7b4MjoEXovSk4zydpv96IRl9wG
+         esb65ejYmIjguxhkxxHEkLgYKT7uHD3jLJJuiRDYhWD8EXt/k0oNQVjm74NK5zztTtdG
+         KxUg==
+X-Forwarded-Encrypted: i=1; AJvYcCXWO+arFEkNzPZXCESGs5SNTgxIX6M6Z0aF+hmcIRSNBWNZePWCcKN105fu4SUlTMSUiyBO95WlIbS59sYowvxna4OxDuqNkR9wL6vXEFR3HMN8TgAVP/9spp70xfzFfpGW96PsZ0nqbwyWAw==
+X-Gm-Message-State: AOJu0YxFCfedSqOMLWInXKDvrBZMjOO3ssgqKl1ou3oeSbTZCeVzM4X2
+	JCgymRaUSHrRxmOOOSxSvWtJKwahvZC5KQ/1+ZutTBnm/q0uy330BakzAlgZQ4j+tlB4NNTPUfC
+	3857f7tSIqparAO/qVcijCPm+rbs=
+X-Google-Smtp-Source: AGHT+IFWkdL+wQ72daSRO1P7tTzDvc9m9YMF90o5MlhZaIpy3wrX/gSyeDidoV+f0/qTjEPQhAglVyN6XWP5BsXJN00=
+X-Received: by 2002:a50:8a92:0:b0:574:ec3d:262a with SMTP id
+ 4fb4d7f45d1cf-57a8b6a4d4emr430003a12.5.1717526965479; Tue, 04 Jun 2024
+ 11:49:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240528-pwrseq-v8-10-d354d52b763c@linaro.org> <20240604174326.GA733165@bhelgaas>
-In-Reply-To: <20240604174326.GA733165@bhelgaas>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 4 Jun 2024 20:27:47 +0200
-Message-ID: <CAMRc=Mf_n9xcFHofq5Q_X3xs=2jDeor1zfFAd=bM0FywyhFUJA@mail.gmail.com>
-Subject: Re: [PATCH v8 10/17] power: sequencing: implement the pwrseq core
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	Kalle Valo <kvalo@kernel.org>, Jeff Johnson <jjohnson@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Elliot Berman <quic_eberman@quicinc.com>, Caleb Connolly <caleb.connolly@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Alex Elder <elder@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
-	Jeff Johnson <quic_jjohnson@quicinc.com>, ath12k@lists.infradead.org, 
-	linux-pm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, kernel@quicinc.com, 
-	Amit Pundir <amit.pundir@linaro.org>
+References: <20240123144543.9405-1-quic_bibekkum@quicinc.com>
+ <20240123144543.9405-4-quic_bibekkum@quicinc.com> <CAF6AEGs3_wBNo58EbGicFoQuq8--fDohTGv1JSFgoViygLS5Lg@mail.gmail.com>
+ <f2222714-1e00-424e-946d-c314d55541b8@quicinc.com> <51b2bd40-888d-4ee4-956f-c5239c5be9e9@linaro.org>
+ <0a867cd1-8d99-495e-ae7e-a097fc9c00e9@quicinc.com> <7140cdb8-eda4-4dcd-b5e3-c4acdd01befb@linaro.org>
+ <omswcicgc2kqd6gp4bebd43sklfs2wqyaorhfyb2wumoeo6v74@gaay3p5m46xi>
+ <CAF6AEGub2b5SRw7kDUGfKQQ35VSsMkQ9LNExSkyHHczdFa2T4Q@mail.gmail.com> <9992067e-51c5-4a55-8d66-55a102a001b6@quicinc.com>
+In-Reply-To: <9992067e-51c5-4a55-8d66-55a102a001b6@quicinc.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 4 Jun 2024 11:49:13 -0700
+Message-ID: <CAF6AEGsxKwzX6it4vipggOdGqNVzPbwMj6a0h871a=GfwUp0Cg@mail.gmail.com>
+Subject: Re: [PATCH v9 3/5] iommu/arm-smmu: introduction of ACTLR for custom
+ prefetcher settings
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jsnitsel@redhat.com, 
+	quic_bjorande@quicinc.com, mani@kernel.org, quic_eberman@quicinc.com, 
+	robdclark@chromium.org, u.kleine-koenig@pengutronix.de, robh@kernel.org, 
+	vladimir.oltean@nxp.com, quic_pkondeti@quicinc.com, quic_molvera@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	iommu@lists.linux.dev, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 4, 2024 at 7:43=E2=80=AFPM Bjorn Helgaas <helgaas@kernel.org> w=
-rote:
+On Thu, May 30, 2024 at 2:22=E2=80=AFAM Bibek Kumar Patro
+<quic_bibekkum@quicinc.com> wrote:
 >
-> On Tue, May 28, 2024 at 09:03:18PM +0200, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+>
+> On 5/28/2024 9:38 PM, Rob Clark wrote:
+> > On Tue, May 28, 2024 at 6:06=E2=80=AFAM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> >>
+> >> On Tue, May 28, 2024 at 02:59:51PM +0200, Konrad Dybcio wrote:
+> >>>
+> >>>
+> >>> On 5/15/24 15:59, Bibek Kumar Patro wrote:
+> >>>>
+> >>>>
+> >>>> On 5/10/2024 6:32 PM, Konrad Dybcio wrote:
+> >>>>> On 10.05.2024 2:52 PM, Bibek Kumar Patro wrote:
+> >>>>>>
+> >>>>>>
+> >>>>>> On 5/1/2024 12:30 AM, Rob Clark wrote:
+> >>>>>>> On Tue, Jan 23, 2024 at 7:00=E2=80=AFAM Bibek Kumar Patro
+> >>>>>>> <quic_bibekkum@quicinc.com> wrote:
+> >>>>>>>>
+> >>>>>>>> Currently in Qualcomm  SoCs the default prefetch is set to 1 whi=
+ch allows
+> >>>>>>>> the TLB to fetch just the next page table. MMU-500 features ACTL=
+R
+> >>>>>>>> register which is implementation defined and is used for Qualcom=
+m SoCs
+> >>>>>>>> to have a custom prefetch setting enabling TLB to prefetch the n=
+ext set
+> >>>>>>>> of page tables accordingly allowing for faster translations.
+> >>>>>>>>
+> >>>>>>>> ACTLR value is unique for each SMR (Stream matching register) an=
+d stored
+> >>>>>>>> in a pre-populated table. This value is set to the register duri=
+ng
+> >>>>>>>> context bank initialisation.
+> >>>>>>>>
+> >>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> >>>>>>>> ---
+> >>>>>
+> >>>>> [...]
+> >>>>>
+> >>>>>>>> +
+> >>>>>>>> +               for_each_cfg_sme(cfg, fwspec, j, idx) {
+> >>>>>>>> +                       smr =3D &smmu->smrs[idx];
+> >>>>>>>> +                       if (smr_is_subset(smr, id, mask)) {
+> >>>>>>>> +                               arm_smmu_cb_write(smmu, cbndx, A=
+RM_SMMU_CB_ACTLR,
+> >>>>>>>> +                                               actlrcfg[i].actl=
+r);
+> >>>>>>>
+> >>>>>>> So, this makes ACTLR look like kind of a FIFO.  But I'm looking a=
+t
+> >>>>>>> downstream kgsl's PRR thing (which we'll need to implement vulkan
+> >>>>>>> sparse residency), and it appears to be wanting to set BIT(5) in =
+ACTLR
+> >>>>>>> to enable PRR.
+> >>>>>>>
+> >>>>>>>            val =3D KGSL_IOMMU_GET_CTX_REG(ctx, KGSL_IOMMU_CTX_ACT=
+LR);
+> >>>>>>>            val |=3D FIELD_PREP(KGSL_IOMMU_ACTLR_PRR_ENABLE, 1);
+> >>>>>>>            KGSL_IOMMU_SET_CTX_REG(ctx, KGSL_IOMMU_CTX_ACTLR, val)=
+;
+> >>>>>>>
+> >>>>>>> Any idea how this works?  And does it need to be done before or a=
+fter
+> >>>>>>> the ACTLR programming done in this patch?
+> >>>>>>>
+> >>>>>>> BR,
+> >>>>>>> -R
+> >>>>>>>
+> >>>>>>
+> >>>>>> Hi Rob,
+> >>>>>>
+> >>>>>> Can you please help provide some more clarification on the FIFO pa=
+rt? By FIFO are you referring to the storing of ACTLR data in the table?
+> >>>>>>
+> >>>>>> Thanks for pointing to the downstream implementation of kgsl drive=
+r for
+> >>>>>> the PRR bit. Since kgsl driver is already handling this PRR bit's
+> >>>>>> setting, this makes setting the PRR BIT(5) by SMMU driver redundan=
+t.
+> >>>>>
+> >>>>> The kgsl driver is not present upstream.
+> >>>>>
+> >>>>
+> >>>> Right kgsl is not present upstream, it would be better to avoid conf=
+iguring the PRR bit and can be handled by kgsl directly in downstream.
+> >>>
+> >>> No! Upstream is not a dumping ground to reduce your technical debt.
+> >>>
+> >>> There is no kgsl driver upstream, so this ought to be handled here, i=
+n
+> >>> the iommu driver (as poking at hardware A from driver B is usually no=
+t good
+> >>> practice).
+> >>
+> >> I'd second the request here. If another driver has to control the
+> >> behaviour of another driver, please add corresponding API for that.
 > >
-> > Implement the power sequencing subsystem allowing devices to share
-> > complex powering-up and down procedures. It's split into the consumer
-> > and provider parts but does not implement any new DT bindings so that
-> > the actual power sequencing is never revealed in the DT representation.
+> > We have adreno_smmu_priv for this purpose ;-)
+> >
 >
-> > +++ b/drivers/power/sequencing/core.c
->
-> > + * Unit - a unit is a discreet chunk of a power sequence. For instance=
- one unit
->
-> s/discreet/discrete/
->
-> > +static struct pwrseq_unit *pwrseq_unit_incref(struct pwrseq_unit *unit=
-)
-> > +{
-> > +     kref_get(&unit->ref);
-> > +
-> > +     return unit;
-> > +}
-> > +
-> > +static void pwrseq_unit_release(struct kref *ref);
-> > +
-> > +static void pwrseq_unit_decref(struct pwrseq_unit *unit)
-> > +{
-> > +     kref_put(&unit->ref, pwrseq_unit_release);
-> > +}
->
-> No existing callers of kref_get() and kref_put() use names that
-> include "incref" or "decref".  Many include "get" and "put", so maybe
-> there would be some value in using that pattern?
+> Thanks Rob for pointing to this private interface structure between smmu
+> and gpu. I think it's similar to what you're trying to implement here
+> https://lore.kernel.org/all/CAF6AEGtm-KweFdMFvahH1pWmpOq7dW_p0Xe_13aHGWt0=
+jSbg8w@mail.gmail.com/#t
+> I can add an api "set_actlr_prr()" with smmu_domain cookie, page pointer
+> as two parameters. This api then can be used by drm/msm driver to carry
+> out the prr implementation by simply calling this.
+> Would this be okay Rob,Konrad,Dmitry?
+> Let me know if any other suggestions you have in mind as well regarding
+> parameters and placement.
 
-These symbols are not exported and I personally dislike the get/put
-pattern. Best I can do is _ref/_unref like what kref does.
+Hey Bibek, quick question.. is ACTLR preserved across a suspend/resume
+cycle?  Or does it need to be reprogrammed on resume?  And same
+question for these two PRR related regs:
 
-Bart
+  /* Global SMMU register offsets */
+  #define KGSL_IOMMU_PRR_CFG_LADDR        0x6008
+  #define KGSL_IOMMU_PRR_CFG_UADDR        0x600c
+
+(ie. high/low 32b of the PRR page)
+
+I was starting to type up a patch to add PRR configuration, but
+depending on whether it interacts with suspend/resume, it might be
+better form arm-smmu-qcom.c to just always enable and configure PRR
+(including allocating a page to have an address to program into
+PRR_CFG_LADDR/UADDR), and instead add an interface to return the PRR
+page?  I think there is no harm in unconditionally configuring PRR for
+gpu smmu.
+
+BR,
+-R
+
+> Thanks & regards,
+> Bibek
+>
+> > BR,
+> > -R
+> >
+> >>>
+> >>>>
+> >>>>>> Thanks for bringing up this point.
+> >>>>>> I will send v10 patch series removing this BIT(5) setting from the=
+ ACTLR
+> >>>>>> table.
+> >>>>>
+> >>>>> I think it's generally saner to configure the SMMU from the SMMU dr=
+iver..
+> >>>>
+> >>>> Yes, agree on this. But since PRR bit is not directly related to SMM=
+U
+> >>>> configuration so I think it would be better to remove this PRR bit
+> >>>> setting from SMMU driver based on my understanding.
+> >>>
+> >>> Why is it not related? We still don't know what it does.
+> >>>
+> >>> Konrad
+> >>
+> >> --
+> >> With best wishes
+> >> Dmitry
 
