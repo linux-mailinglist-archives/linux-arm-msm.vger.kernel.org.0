@@ -1,75 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-21604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61A498FB30D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 14:57:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 601AA8FB461
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:51:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13E232852A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 12:57:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 836F91C21B73
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 13:51:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85DFB146A9D;
-	Tue,  4 Jun 2024 12:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED2C8611B;
+	Tue,  4 Jun 2024 13:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SHnxR0f3"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="oS2M85NQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE604144D39
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 12:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B3FDDB2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 13:50:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717505738; cv=none; b=tEm7ghYAN38El2nf4emPyJG6Lp6x60op4wVBvPYINtcAoeC9OohTvxoCNEneE+U6L48FzsqPXX9mAz7ceGQ+UFD71H9Cqq5vJhoHQuy2VfVFRPZ1vZaYdynht4s2vXEySWgcU9rgeucdpFtj7nljrdQGBAQn86KOxablnUtX4WI=
+	t=1717509055; cv=none; b=h+3OIjkb6H5na+QUQ8SOis4RS7W05PcHlWtuHaNt4l20ZQ6eqam+jesyO4/Pe2fJnN+1GRCALY3dz2PpFtbdzLAsEKus/8TmSKUiYWRWFkLjrLOiA0TaIJx8i2aoH0lyDU/3+ZVGGKXmuukx/VcAL5IshVTk8iUozqnkBcX/PiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717505738; c=relaxed/simple;
-	bh=V0vCL6gVkhzAyZZo+oJsCeJeNNIlPl7HtsS1Su1kgQI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CuA/uwuky6Bxs12uMiLU/gK20AjMT5rCm6U6trHTtL1ykb8/Hkn7JcFxwwqWMgL0pF95j/opG1T0Bng8zHzA1Oz6hkXO7mVNMPt+40kludHZeiu7f1plHUMDErDiTrRlCccfASfJl5kLkbeDsh1h/PkdHfTDz9oAKzLNhe1h8cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SHnxR0f3; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-57a4ea8058bso3572129a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 05:55:36 -0700 (PDT)
+	s=arc-20240116; t=1717509055; c=relaxed/simple;
+	bh=QkhGlalB7DEY5agt86PPhG98UI0wY+31FL2gxcCl5uk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=lm/d3VbIzQmtP/q1sXZbBFyHaqagfwDpIO/Dne44RkJu1Qk5kYBypQBTVvlSAGxb5FG/1Snj37KTZbNbqk/i50AMp+xnAjjlFlyyTFf9mQg5oVpABWcuaDk0iA6M3yaGiO/0CPOfkDnHJS644McDPolpUiX+nE3Th7cIDoUwqt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=oS2M85NQ; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42120fc8cbfso43469625e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 06:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717505735; x=1718110535; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CuBOud40nBOggoAWfa0+Eb9qxrfGYqM4K+kdHXRtdok=;
-        b=SHnxR0f3f/eU2/9IpCfHNwpBuiGCWzuq4zshgc5MNDPEmAyV7g1B7HhuguAmHhuaIz
-         ZiHBrzhD4ysLNPMyWR6mjYcDkGuj+qdIs9RBdBO8xB/qHETk/+8whqn5kWAitl41VQhr
-         tKmXN4SoOw6sji9FRuuLr6hD0ntJHruRuVnceFlU/a7eBUCtTVvpFbFp1kBlLc0++kGC
-         V55LkloIlxmWEUoC47k5vGngmBDV8hFOznZ/nwZAJiFUIRw9lAWdB6wWNbrm7OYyK9tQ
-         OWOEgG/hvmMp/kbatitGCDgf4af/d99T3n1NoZEeUp9a7IjT1PJTR+JZUDPmBFxX+fAi
-         9vGg==
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1717509050; x=1718113850; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:cc:to:subject:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lJZIlN4XgnK9tDXCSYK6tAuRSp4UM2QNTlG/GA4rHi0=;
+        b=oS2M85NQJCgUAXezHzRxEqoRMKqVjsXegrCDn3+iwBAT0fdskPWdVL16I0o7LLvkPP
+         /G3VlDdPCtREYQ7uHp5cnlY0gzHZHW2nog5xxnwS9vU+hNX/q5qo7QNlMUHdD1VtYYhr
+         CnuMEPymGpB0xvicHU4gQFx3IopHryWW5DV0dwkcOM6uRVG4qlF7f5a71BiB8GOpLVRL
+         yd0S5fW2E7UTzsJNEfajFCC5yYXQj1NjimANd2cVcB9yPMt071TfaTqApZiYH1C/P0Jp
+         i69o6w6SIU8kHtmnAfDLGpk1NdZZUMZJBw5PFdGCtNPg2TNG9BNoVxWD2+zutdeNMHaZ
+         njpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717505735; x=1718110535;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CuBOud40nBOggoAWfa0+Eb9qxrfGYqM4K+kdHXRtdok=;
-        b=ujrA5KFg9QtTuxQJ1nairSW/+9HAfpf0UfxryuVE65hklJr84iZPg0O/NpvMxkUyd1
-         iCrYAXpjBp9Osh+Iaefbbkx2b9it+sEDkBQuAFzkCloFA7hibaNDbtHmn2P437LnYAsq
-         ZeXPat3DwyAywTZ0twxlr8T2ZFZWaGyLzMYGMbeYcwnU2/D6vIcQANvcPnI0sKeKUeDJ
-         pikKc6Wtx3DrUa6oK5C1zjKA0s+Z9dp7JRijPNs62Wa0nAmiTMQ4/PyapSF/KKb1HekF
-         l5s+p7Px5NGmxeGO4WgsG4dUI5VDJUHimpiFaRPAiOtt/QrpfXKYDrdDhQZmMTkDSw7D
-         F8Bw==
-X-Forwarded-Encrypted: i=1; AJvYcCXGc1eLUEC10j9De3dFeuewZdcb7tocgsivaRNRs67PBvPy+TbYN1u6LIqM/WquXD3N65X1xOuMtTTVLppCi5dxlHbmly886BVNl5Y9EA==
-X-Gm-Message-State: AOJu0YxBbL4A6Uzw4ahIKiUshEDIbGYIVmm/6RLg2bMT1RBxuHVw2yiM
-	tshFmaJ3ekiak3cYmiI/pTsIYVWJeypcreiV7j629EsRQ2nsB/eebPT0xFjVzw5AIXeTXnn7w/s
-	nxA8=
-X-Google-Smtp-Source: AGHT+IG1rAoHsAHyRqKPmOSjqv99/sZwppXItf/q+FZevk0x6ZqV4EBji8R7gKbvE/UOP0Zpec+vYg==
-X-Received: by 2002:a50:d541:0:b0:57a:231e:2cf5 with SMTP id 4fb4d7f45d1cf-57a364384afmr8146953a12.32.1717505735060;
-        Tue, 04 Jun 2024 05:55:35 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:909a:a11e:a035:2af2:8d85:1f72? ([2a00:f41:909a:a11e:a035:2af2:8d85:1f72])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a31bb83f0sm7291474a12.35.2024.06.04.05.55.32
+        d=1e100.net; s=20230601; t=1717509050; x=1718113850;
+        h=content-transfer-encoding:content-language:cc:to:subject:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=lJZIlN4XgnK9tDXCSYK6tAuRSp4UM2QNTlG/GA4rHi0=;
+        b=KJjEOEy0PAsvVs5+pUevqfl4IACo8U7EHDwjCbTkgtJfCbJulSTcKKuibgYfHxL/Kt
+         6cdLUBNxFnL2ifce6M8U7lXtrcVP6GjQYgJwtIpGB/i99PILBJcS7dRIe27z4Wx1FWca
+         AL1LcxQNaWLE/jlvx73E8jdF63SGNMxbwJTWe7VHw7NJZ4eADn7ikLQxpyJXXH2L05LH
+         lXEznmhbvzEGfB9x4uBb8EbelbTyP6W+jdfySTO6MrcFdNvCq4DQwD0v2N1IqSDQmW8R
+         5fAveuPRODh5aGRzhqesrJwSmmblARnbQGR8O2/AL+JClwQqfHbsaw4nGn/K9M8VLqDi
+         Eq2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUiHUbcMu3vP8DAGZTcdSalxcQvY8zpjAc16V5Q/R8ECDPXZ4+axW4KMkG/uGlkPx4KkXpjEwmx8ODVlN4Tvo/OMNph3Jj77RSmf4CZNg==
+X-Gm-Message-State: AOJu0YxHuDg8pRpJmNcxGNM1ncAcEdxTV9LKmOkapAiE8rSzCNSjklGg
+	HRzNk/95YCMcMIDEuTNjffdYRMtRvHElvXm/SyAIa64beq8zptQcHGUetscP7nI=
+X-Google-Smtp-Source: AGHT+IHQZBq9gGi04QHPhWrIeVoppGhM4cBpGMsNRG5Tm6dNoMEyFQ9kGxrHF/G1xHo1JxNtiYUrpA==
+X-Received: by 2002:a05:600c:c09:b0:418:ee2:5911 with SMTP id 5b1f17b1804b1-4213d3068f9mr54739485e9.28.1717509050485;
+        Tue, 04 Jun 2024 06:50:50 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42133227f8asm139569755e9.19.2024.06.04.06.50.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jun 2024 05:55:34 -0700 (PDT)
-Message-ID: <dd1be285-d94b-448e-85d3-d5dce27f9ac0@linaro.org>
-Date: Tue, 4 Jun 2024 14:55:31 +0200
+        Tue, 04 Jun 2024 06:50:50 -0700 (PDT)
+Message-ID: <a2cb1290-9e01-4136-9592-ce439b1096b6@freebox.fr>
+Date: Tue, 4 Jun 2024 15:44:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,92 +75,75 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100: Make the PCIe 6a PHY
- support 4 lanes mode
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Rajendra Nayak
- <quic_rjendra@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org>
- <20240531-x1e80100-dts-fixes-pcie6a-v1-2-1573ebcae1e8@linaro.org>
- <Zl28nvnpGFRsYpGh@hovoldconsulting.com>
- <d93fe55e-7c65-48cb-bdaf-5e15bc22be30@linaro.org>
- <Zl8GoRoY9lXRtg2R@hovoldconsulting.com>
- <402aa998-8b3c-4c3c-8dcb-f128b6ddac46@linaro.org>
- <Zl8MUpfy/2Khw+wD@linaro.org>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+Subject: [PATCH v2 0/4] HDMI TX support in msm8998
+To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ MSM <linux-arm-msm@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <Zl8MUpfy/2Khw+wD@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+DT bits required for HDMI TX support in APQ8098 (msm8998 cousin)
+
+$ make -j20 dtbs_check
+  DTC_CHK arch/arm64/boot/dts/qcom/msm8998-mtp.dtb
+/home/mgonzalez/linux/arch/arm64/boot/dts/qcom/msm8998-mtp.dtb: pcie@1c00=
+000: False schema does not allow {'compatible': ['qcom,pcie-msm8998', 'qc=
+om,pcie-msm8996'], 'reg': [[29360128, 8192], [452984832, 3869], [45298870=
+4, 168], [454033408, 1048576]], 'reg-names': ['parf', 'dbi', 'elbi', 'con=
+fig'], 'device_type': ['pci'], 'linux,pci-domain': [[0]], 'bus-range': [[=
+0, 255]], '#address-cells': [[3]], '#size-cells': [[2]], 'num-lanes': [[1=
+]], 'phys': [[36]], 'phy-names': ['pciephy'], 'status': ['okay'], 'ranges=
+': [[16777216, 0, 0, 455081984, 0, 1048576], [33554432, 0, 456130560, 456=
+130560, 0, 13631488]], '#interrupt-cells': [[1]], 'interrupts': [[0, 405,=
+ 4]], 'interrupt-names': ['msi'], 'interrupt-map-mask': [[0, 0, 0, 7]], '=
+interrupt-map': [[0, 0, 0, 1, 1, 0, 0, 135, 4], [0, 0, 0, 2, 1, 0, 0, 136=
+, 4], [0, 0, 0, 3, 1, 0, 0, 138, 4], [0, 0, 0, 4, 1, 0, 0, 139, 4]], 'clo=
+cks': [[37, 94], [37, 91], [37, 92], [37, 93], [37, 95]], 'clock-names': =
+['pipe', 'aux', 'cfg', 'bus_master', 'bus_slave'], 'power-domains': [[37,=
+ 0]], 'iommu-map': [[256, 38, 5248, 1]], 'perst-gpios': [[39, 35, 1]], 'p=
+cie@0': {'device_type': ['pci'], 'reg': [[0, 0, 0, 0, 0]], 'bus-range': [=
+[1, 255]], '#address-cells': [[3]], '#size-cells': [[2]], 'ranges': True}=
+, '$nodename': ['pcie@1c00000']}
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+/home/mgonzalez/linux/arch/arm64/boot/dts/qcom/msm8998-mtp.dtb: pcie@1c00=
+000: Unevaluated properties are not allowed ('#address-cells', '#interrup=
+t-cells', '#size-cells', 'bus-range', 'device_type', 'interrupt-map', 'in=
+terrupt-map-mask', 'linux,pci-domain', 'num-lanes', 'pcie@0', 'ranges' we=
+re unexpected)
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+/home/mgonzalez/linux/arch/arm64/boot/dts/qcom/msm8998-mtp.dtb: phy@c0120=
+00: 'vdd-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
+/home/mgonzalez/linux/arch/arm64/boot/dts/qcom/msm8998-mtp.dtb: clock-con=
+troller@c8c0000: clocks: [[34, 0], [37, 178], [150, 1], [150, 0], [151, 1=
+], [151, 0], [152], [0], [0], [0], [37, 184]] is too long
+	from schema $id: http://devicetree.org/schemas/clock/qcom,mmcc.yaml#
 
 
+Arnaud Vrac (1):
+  arm64: dts: qcom: add HDMI nodes for msm8998
 
-On 6/4/24 14:45, Abel Vesa wrote:
-> On 24-06-04 14:38:40, Konrad Dybcio wrote:
->>
->>
->> On 6/4/24 14:20, Johan Hovold wrote:
->>> On Tue, Jun 04, 2024 at 02:00:10PM +0200, Konrad Dybcio wrote:
->>>> On 6/3/24 14:52, Johan Hovold wrote:
->>>
->>>>> As I just mentioned in my reply on the PHY patch, this does not seem to
->>>>> work on the CRD were the link still come up as 2-lane (also with the
->>>>> clocks fixed):
->>>>>
->>>>> 	qcom-pcie 1bf8000.pci: PCIe Gen.4 x2 link up
->>>>>
->>>>> So something appears to be wrong here or in the PHY changes.
->>>>
->>>> Is the device on the other end x4-capable? Or does it not matter in
->>>> this log line?
->>>
->>> Yes, of course. It's the CRD as I wrote above, and you can tell from
->>> other log entries:
->>>
->>> 	pci 0007:01:00.0: 31.506 Gb/s available PCIe bandwidth, limited by 16.0 GT/s PCIe x2 link at 0007:00:00.0 (capable of 63.012 Gb/s with 16.0 GT/s PCIe x4 link)
->>>
->>> lspci and what Windows reports.
->> Ok, good. I was scared of double-sourcing of parts that are not identical
->> in spec..
->>
-> 
-> On my CRD, there is a KBG50ZNS256G.
-> 
->> [1] suggests this wasn't ever achieved.. which makes the cover letter of
->> this series a bit misleading..
-> 
-> True ...
-> 
->>
->> What does the TCSR check return? If 0, can you hardcode it to 1 and see if
->> the link comes up at x4?
-> 
-> TCSR check returns 1. But that is not enough. The PCIe controller needs to
-> handles some stuff about margining. See the following patchset.
-> 
-> https://lore.kernel.org/linux-pci/20240501163610.8900-3-quic_schintav@quicinc.com/
-> 
-> But even with this, I'm not able to get 4-lanes mode to work (yet).
-> So it must be something else in the controller driver that is needed.
+Marc Gonzalez (3):
+  dt-bindings: display/msm: hdmi: add qcom,hdmi-phy-8998
+  dt-bindings: display/msm: hdmi: add qcom,hdmi-tx-8998
+  arm64: dts: qcom: msm8998: add HDMI GPIOs
 
-The margining settings AFAIU shouldn't be necessary for just getting the
-link, but to ensure there aren't many errors while transacting..
+ Documentation/devicetree/bindings/display/msm/hdmi.yaml      |  26 +++++=
++++++-
+ Documentation/devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml |   1 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi                        | 128 +++++=
++++++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 152 insertions(+), 3 deletions(-)
 
-> 
-> IIRC, this is the first Qualcomm platform that would support Gen4 with
-> 4-lanes upstream. Maybe I'm wrong.
-
-Seems so
-
-Another idea I had, maybe the PCIE_PORT_LINK_CONTROL &
-PCIE_LINK_WIDTH_SPEED_CONTROL registers differ on qcom gen4 controllers..
-
-Can you check the documentation and see if the defines in
-drivers/pci/controller/dwc/pcie-designware.h still hold true?
-
-Konrad
+--=20
+2.34.1
 
