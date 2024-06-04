@@ -1,177 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-21618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F13168FB64A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 16:55:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95F0E8FB676
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:01:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A500E287C23
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 14:55:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8BE91C22F07
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:01:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79E1D13957E;
-	Tue,  4 Jun 2024 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CA9A12BE81;
+	Tue,  4 Jun 2024 15:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pdaPpWP/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b/2iz4Nz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB0012C528
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 14:55:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9462B9C5;
+	Tue,  4 Jun 2024 15:01:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717512923; cv=none; b=OLfUy9dZ81KZBChKkOZcQXvyVPrCuYGRxfyEi+GInOWzE/jLFtANRL6DRDzqs9W6YtjkFbV82Trb8xhc7Qu5prC9AmJLZA3KOoX2MDBTBlXUdxNt3ORv1AltF6sgH7Yq5vmq/PluRqYy+bsmsreTRY2uy3syrWjvDKXZJfOKcQI=
+	t=1717513309; cv=none; b=rBCKxp79VYxCr+1vo823xvuKYkdKK2nH7NKdSlBrCZISLlEE6R2HN3MRuWrivBrYzT0IA5UU2U/c5ikJBrHJH88yNQHJ1RMxegHj5N8MKXO2+6jkqihpVsqbWsLbGh6ibQuzmw0Z9BYjuyUgIF5/mPPCfpgKWmZ8ujG//v9M8Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717512923; c=relaxed/simple;
-	bh=8xaZLloQYqQtknTDovx04HPDGACoZTE8AbPDGau6vV4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WetKpBlE4uy9/rsQKRR/APxYi1xXjbykjjmTqOqasquTwjBG4oejejd0Xn19NvxQMeCwrPCn+zWYbRwzsljPlqW22TDVi4IJyd14rHJmSeyJF9Mt2SutmYs3VncjiHkLu1DtrfMrb3cfVuAqQhhUMxnHPcPbX2rhRHVdz7DRprg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pdaPpWP/; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2eaafda3b90so29706101fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 07:55:21 -0700 (PDT)
+	s=arc-20240116; t=1717513309; c=relaxed/simple;
+	bh=FBKiAGtmKJHWNrtxjlG2jSJk1wPquEKW9T6nmOhWZEw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z8KxlJ76NG1mDnZiIytN+xhztkkTDq6O467IE2/rWU1XcwMXZlLjt9aXeLy+EmoTPj/JTzNxwgqbOKQcqA00nHJtk2ThjJg1CwGbuk7HoBXznAsTof2NZtL78HDSPOfIQHg5Q5FKNJmNYEtGTKREv4+7QngGM4rGRhB8F4BnkOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b/2iz4Nz; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1f44b42d1caso43315525ad.0;
+        Tue, 04 Jun 2024 08:01:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717512920; x=1718117720; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kLNdPFPac+SFgbJFTdkAXzLcUkAub2hF475OhZIL36Y=;
-        b=pdaPpWP/pR7zppEOz+GmDjGwZoFxaaegajlJaH6YXguycMcr/dOIUvMoABQtRDO4UB
-         B6tTchUDqlR5YP/+Dd86KMQ7WDQA+ZVQB+WvQAQzjN0V4yTaqVpsz7f7LxR5RWsf2gNX
-         84JcXX75ENwjo32E9WlM35c3Sjgtqqmujo1znn4D4aj7Kl53v9CMEzznfEz4XGkjaGSY
-         xYhmP1pc8mcdIdwK2PgLF3biapHl+a4/KW8Qp9KfhnfJjGUldADKk9C/h2uLgH5Td6dm
-         ME9PvRf54VhMf8vuWFU/l638ZMzPN9BxXsvI715jHbqZ0VB27T18ZT2pFaKs70AMitdi
-         pLfA==
+        d=gmail.com; s=20230601; t=1717513307; x=1718118107; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+zzDBNu/Km1bywTdzn1zNJ2Ca7zC5GTmKmM9CZqf88E=;
+        b=b/2iz4NzNpSYvpte8HqOw58iz17gwmscwpZmea9mBnIAZ2e8WxfD7KhjFnJbpTMgX5
+         GA4+bG+LfA533IT89IFVbwKovsWiieSrVvIwDYfoqNCmWY6Y/mTI/xlg0bidhz+k4z3O
+         H5sbRLYXKrJIpA6QeYiVpV2sa1TblCWrlpETPhGo97j5+tmEzsvdBoRpUpy35VgUvFLs
+         ZWOIgCaRnrEr0Rt09UihrgdHPFbt+5zpJHhSoyy7apcliuDBA8GYsUeM7dUL3FCeuJFl
+         7UfpDdcwOjpL3uQZ+cyFKZoeVU7IzkwMIf58SMG92G4yOgTY409tvrNIl++joTac6QWC
+         87Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717512920; x=1718117720;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kLNdPFPac+SFgbJFTdkAXzLcUkAub2hF475OhZIL36Y=;
-        b=F+/TfYTKZVGe1ucOUL9ryR7ncOHnSud+MqD1hE3lHsL294tR1MHgGGccMHLtPLVhqH
-         wimbnw8mPBQIqUM3vSPQHyJ5nEKguj+NgmhvyyKe0LCRtMQNC+0gh9MqxyF92asOWjUo
-         feEZ7SSGSDOHU8nhh/1cCfjzKS1w95gKU1V/WVjz+kksJ3YL0lPKxWq0KIZpygRjKAn9
-         Plg9hIvTTXJv37/BhFtQ9L2QlTqc/qNcui0rKdvhl38thQGnUw99ksttba3XCX9E3tVP
-         qe9Q2RL5AqPW/bt5pzsuRH2HuuNYwiRiGI6LE6tbx/UZ2jVd4kg3ViWb5KVghGyGEU9/
-         TWMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUnpvybDT1J8iCySo7hcAqbzuuSeVPxiAi6w/ZWFfEfHZXuiXi1dN5g0pUwDPw6O5xqcv+e+iZnrWr524agHCoyAQ3+7t3lomznl6SgSQ==
-X-Gm-Message-State: AOJu0YxcWIUST2hmM9Q3l0PnuYHmJR0q/ywl3txVmZ7tX4td57TIazyZ
-	SAMxaRSVzi9vY3ezeS3MRb/xFoMnI+03hNLwOGUA7YraXAJ/aRTQxC8hbYeprqg=
-X-Google-Smtp-Source: AGHT+IGXupYnnuI77gfzxZuWZkyquJcBGxUXKKVzbJwEgcxiyALsDg39Ld+RBwQFb78sIGEYFACIAA==
-X-Received: by 2002:ac2:598b:0:b0:52b:aa4c:49e4 with SMTP id 2adb3069b0e04-52baa4c4ac0mr161821e87.7.1717512919778;
-        Tue, 04 Jun 2024 07:55:19 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d347d8sm1540431e87.29.2024.06.04.07.55.19
+        d=1e100.net; s=20230601; t=1717513307; x=1718118107;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+zzDBNu/Km1bywTdzn1zNJ2Ca7zC5GTmKmM9CZqf88E=;
+        b=kOK+HpqjsrDzqMQu5EuUQ8VukO0Hq0uPK1Bh2kTcXS+hMX3/n/sDsIsDHslAsyzL6t
+         kZ3yEMwj+4zh6BBfq7WeW6B5iDtLR1DlnOfMPNuTxKPTTjb/CQs2/Am/c275WkQegBno
+         jZwoMJ0Chm1nrO1k3Y/OyRe9T+fLSqoyqNCgbXvdPG6llaa//FycP7A2D2hUISHl4GFC
+         bgc8dYf8+sK6r2GBAC306+E7Cu70ERtEQPrIPTLtHuJvZOI9pChZgafox87qfIHX+4fP
+         MPnqXqc2wXduHIvoLCChmXqXOLunkUtKgCxrJy9noeuUZGZZ1R3BkaZRPJu943t2pcvH
+         Nnvw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3vKWKZYJ+W1a6gJgF+1o3t35yGwg0Pq8hwMktNO+r90fQiNOOUqRPrKq30q4m5krCi/+FHilIEZZs6I0geUEyCHYxSOdlniPbG/uq
+X-Gm-Message-State: AOJu0YyEeCWL3t6i62cD7acEaxajszLgTxurohtAqPmOYpHpReNrdjtc
+	d00vq0FGVBjL3efs3d6eM+CFLoc6viqMwk7gYAc2Du9Y8R/xGOO0
+X-Google-Smtp-Source: AGHT+IF1zgJrv6FVFO4d/uMJ9aDbi7Mhv60qd0JUz/GquNgBBdeZzjzd6K0FINdAHBDxfCTjnp5JGg==
+X-Received: by 2002:a17:902:e846:b0:1f3:4d2:7025 with SMTP id d9443c01a7336-1f6370985fcmr137086895ad.49.1717513301179;
+        Tue, 04 Jun 2024 08:01:41 -0700 (PDT)
+Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6323dd731sm86202895ad.144.2024.06.04.08.01.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 07:55:19 -0700 (PDT)
-Date: Tue, 4 Jun 2024 17:55:17 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	MSM <linux-arm-msm@vger.kernel.org>, DT <devicetree@vger.kernel.org>, freedreno@lists.freedesktop.org, 
-	Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: add HDMI nodes for msm8998
-Message-ID: <6zbddkrd5wp73le7tvhtrzp2uyehrpwlmltmrbhsxhh7q3frpw@njhdsgnbrh64>
-References: <a2cb1290-9e01-4136-9592-ce439b1096b6@freebox.fr>
- <648b2798-9302-4c6e-9ef2-e4318066d28f@freebox.fr>
+        Tue, 04 Jun 2024 08:01:40 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: iommu@lists.linux.dev
+Cc: linux-arm-msm@vger.kernel.org,
+	Stephen Boyd <swboyd@chromium.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] iommu/arm-smmu: Pretty-print context fault related regs
+Date: Tue,  4 Jun 2024 08:01:31 -0700
+Message-ID: <20240604150136.493962-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <648b2798-9302-4c6e-9ef2-e4318066d28f@freebox.fr>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 04, 2024 at 03:49:24PM +0200, Marc Gonzalez wrote:
-> From: Arnaud Vrac <avrac@freebox.fr>
-> 
-> Port device nodes from vendor code.
-> 
-> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-> ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 99 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index ba5e873f0f35f..f65a76da61ea8 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -2785,7 +2785,7 @@ mmcc: clock-controller@c8c0000 {
->  				 <&mdss_dsi0_phy 0>,
->  				 <&mdss_dsi1_phy 1>,
->  				 <&mdss_dsi1_phy 0>,
-> -				 <0>,
-> +				 <&hdmi_phy 0>,
->  				 <0>,
->  				 <0>,
->  				 <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
-> @@ -2890,6 +2890,14 @@ dpu_intf2_out: endpoint {
->  							remote-endpoint = <&mdss_dsi1_in>;
->  						};
->  					};
-> +
-> +					port@2 {
-> +						reg = <2>;
-> +
-> +						dpu_intf3_out: endpoint {
-> +							remote-endpoint = <&hdmi_in>;
-> +						};
-> +					};
->  				};
->  			};
->  
-> @@ -3045,6 +3053,96 @@ mdss_dsi1_phy: phy@c996400 {
->  
->  				status = "disabled";
->  			};
-> +
-> +			hdmi: hdmi-tx@c9a0000 {
-> +				compatible = "qcom,hdmi-tx-8998";
-> +				reg =	<0x0c9a0000 0x50c>,
-> +					<0x00780000 0x6220>,
-> +					<0x0c9e0000 0x2c>;
-> +				reg-names = "core_physical",
-> +					    "qfprom_physical",
-> +					    "hdcp_physical";
-> +
-> +				interrupt-parent = <&mdss>;
-> +				interrupts = <8>;
-> +
-> +				clocks = <&mmcc MDSS_MDP_CLK>,
-> +					 <&mmcc MNOC_AHB_CLK>,
-> +					 <&mmcc MDSS_AHB_CLK>,
-> +					 <&mmcc MDSS_AXI_CLK>,
-> +					 <&mmcc MISC_AHB_CLK>,
-> +					 <&mmcc MDSS_HDMI_CLK>,
-> +					 <&mmcc MDSS_HDMI_DP_AHB_CLK>,
-> +					 <&mmcc MDSS_EXTPCLK_CLK>;
-> +				clock-names =
-> +					"mdp_core",
+From: Rob Clark <robdclark@chromium.org>
 
-Nit: usually there is no line wrap here, but it's fine from my POV.
+Parse out the bitfields for easier-to-read fault messages.
 
-> +					"mnoc",
-> +					"iface",
-> +					"bus",
-> +					"iface_mmss",
-> +					"core",
-> +					"alt_iface",
-> +					"extp";
-> +
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+Stephen was wanting easier to read fault messages.. so I typed this up.
 
+Resend with the new iommu list address
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ drivers/iommu/arm/arm-smmu/arm-smmu.c | 53 +++++++++++++++++++++++++--
+ drivers/iommu/arm/arm-smmu/arm-smmu.h |  5 +++
+ 2 files changed, 54 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index c572d877b0e1..06712d73519c 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -411,6 +411,8 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+ 	unsigned long iova;
+ 	struct arm_smmu_domain *smmu_domain = dev;
+ 	struct arm_smmu_device *smmu = smmu_domain->smmu;
++	static DEFINE_RATELIMIT_STATE(rs, DEFAULT_RATELIMIT_INTERVAL,
++				      DEFAULT_RATELIMIT_BURST);
+ 	int idx = smmu_domain->cfg.cbndx;
+ 	int ret;
+ 
+@@ -425,10 +427,53 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+ 	ret = report_iommu_fault(&smmu_domain->domain, NULL, iova,
+ 		fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+ 
+-	if (ret == -ENOSYS)
+-		dev_err_ratelimited(smmu->dev,
+-		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
+-			    fsr, iova, fsynr, cbfrsynra, idx);
++	if (ret == -ENOSYS && __ratelimit(&rs)) {
++		static const struct {
++			u32 mask; const char *name;
++		} fsr_bits[] = {
++			{ ARM_SMMU_FSR_MULTI,  "MULTI" },
++			{ ARM_SMMU_FSR_SS,     "SS"    },
++			{ ARM_SMMU_FSR_UUT,    "UUT"   },
++			{ ARM_SMMU_FSR_ASF,    "ASF"   },
++			{ ARM_SMMU_FSR_TLBLKF, "TLBLKF" },
++			{ ARM_SMMU_FSR_TLBMCF, "TLBMCF" },
++			{ ARM_SMMU_FSR_EF,     "EF"     },
++			{ ARM_SMMU_FSR_PF,     "PF"     },
++			{ ARM_SMMU_FSR_AFF,    "AFF"    },
++			{ ARM_SMMU_FSR_TF,     "TF"     },
++		}, fsynr0_bits[] = {
++			{ ARM_SMMU_FSYNR0_WNR,    "WNR"    },
++			{ ARM_SMMU_FSYNR0_PNU,    "PNU"    },
++			{ ARM_SMMU_FSYNR0_IND,    "IND"    },
++			{ ARM_SMMU_FSYNR0_NSATTR, "NSATTR" },
++			{ ARM_SMMU_FSYNR0_PTWF,   "PTWF"   },
++			{ ARM_SMMU_FSYNR0_AFR,    "AFR"    },
++		};
++
++		pr_err("%s %s: Unhandled context fault: fsr=0x%x (",
++		       dev_driver_string(smmu->dev), dev_name(smmu->dev), fsr);
++
++		for (int i = 0, n = 0; i < ARRAY_SIZE(fsr_bits); i++) {
++			if (fsr & fsr_bits[i].mask) {
++				pr_cont("%s%s", (n > 0) ? "|" : "", fsr_bits[i].name);
++				n++;
++			}
++		}
++
++		pr_cont("), iova=0x%08lx, fsynr=0x%x (S1CBNDX=%u", iova, fsynr,
++			(fsynr >> 16) & 0xff);
++
++		for (int i = 0; i < ARRAY_SIZE(fsynr0_bits); i++) {
++			if (fsynr & fsynr0_bits[i].mask) {
++				pr_cont("|%s", fsynr0_bits[i].name);
++			}
++		}
++
++		pr_cont("|PLVL=%u), cbfrsynra=0x%x, cb=%d\n",
++			fsynr & 0x3,   /* FSYNR0.PLV */
++			cbfrsynra, idx);
++
++	}
+ 
+ 	arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
+ 	return IRQ_HANDLED;
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+index 836ed6799a80..3b051273718b 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+@@ -223,6 +223,11 @@ enum arm_smmu_cbar_type {
+ 
+ #define ARM_SMMU_CB_FSYNR0		0x68
+ #define ARM_SMMU_FSYNR0_WNR		BIT(4)
++#define ARM_SMMU_FSYNR0_PNU		BIT(5)
++#define ARM_SMMU_FSYNR0_IND		BIT(6)
++#define ARM_SMMU_FSYNR0_NSATTR		BIT(8)
++#define ARM_SMMU_FSYNR0_PTWF		BIT(10)
++#define ARM_SMMU_FSYNR0_AFR		BIT(11)
+ 
+ #define ARM_SMMU_CB_FSYNR1		0x6c
+ 
 -- 
-With best wishes
-Dmitry
+2.45.1
+
 
