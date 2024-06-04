@@ -1,217 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-21621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 858A48FB6BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:14:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CA4F8FB6D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:21:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A65D284293
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:14:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2738DB2784F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:20:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04DCC13D607;
-	Tue,  4 Jun 2024 15:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B626143C6B;
+	Tue,  4 Jun 2024 15:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iyUugpeY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eWwVuLMg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157F213D2B6
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 15:14:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5076A13D524
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 15:20:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717514089; cv=none; b=FAjiUqC9UUSR7QfHvX9miyCUydgSUW5Z+P8c6t//VJfYnc/QmZ+N7MCwGQZiug4+zy6RoWe4Kbw6jMbtZmwZJdRXffgxHCS0It/7vwE3TnWuU1U5MNAkNvKvSnx5O7SgcpIoUUyDP9QiZ0NQGl4qkU8yKAKt9crCBbt9GeYqinI=
+	t=1717514433; cv=none; b=dOtWAxaegd2D2mZVK9f+gyY46pS9nLzJgnEQ0CK6EV1Qmt/Fxu46B0D3GQWJlXMJv6oKCWo/llUPX4enS7XgsJkcrBBkxxqtEO7TQcLKT6Paa+M3SfFyBY3gN+Jede9FXL6KYBdk0eM3wKS7VhAwBUMiauGl/0A9SZY1+WbQOYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717514089; c=relaxed/simple;
-	bh=Gd0yXtKKs+ZHP6Ht3QxpUvb9WFxJIgvoYvpDMhy07/g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eWmjjIdHyHMVuIdWwpGmVJtJLZiRhnLXUL42N4WlKuIJbd5QwXP1wr3a3Otb38ME33Zh4MSt3NRM+NeEHf9bxoOSRxS1IaSLcVn069OXWFYgXkgcDjjh+mm5/NnHYfwFWN0YD5gu0jlU+ea+7a/BHobI1B1Q0U4Qllr0Gm6hlvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iyUugpeY; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1717514433; c=relaxed/simple;
+	bh=DRlJ5yB+jL9oj7S5uPqNBdhic3bTfsOGq2BvTaqTig4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SUT6jlVWFzonWmN/p+UV9qt+WtKT+bo3By90AMAmWBlttQQzD9jEAIkRxGZYKWsxFm7fcvGGfiexNTzUIEU4N9Zjr1r2R4JdcAwAx/v3VNDcXG2BEOanRDClJ6t1LiCTpWr1RqPU6jSfxaxeAIprQtP1j5IdU+HyxE1qCpRr78s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eWwVuLMg; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52b87e8ba1eso5988005e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 08:14:47 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57a68b0fbd0so2227672a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 08:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717514086; x=1718118886; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EWiHpLew9vGqorYtx7ts5j6e/3RBM+m1gRe0g/Bu3FA=;
-        b=iyUugpeYbnTUE4or6QM140sw8cu4xYUbSFc2KItDUurek7t/okMvv7Z7WteJvmWE8Z
-         j/pj0GpnVYVej4P9ObF4pfV5tQdvQYOvHkzyHmZ3RVnnEqHiU7+/OwdVu6u9K2uzM5vP
-         awEhIC8HuQcLRcZ88oVlaYAsKrnDJjBLOsW9C1H4dD7JJaT04STl+Hg+lSXXlt3EttCw
-         LhEqs+mw9PRZzvSCHmTikEkd/9GktFsVLjAIaOSL3UlSW78glgOSwm1nWnnnQGNVB8Pe
-         r+phDVGx2LeOb+wZrC6XoseZ+IvWaolRo1bpZqYnRz2tamtnkk0LWwEHtJt5eBsp0BgI
-         dW5g==
+        d=linaro.org; s=google; t=1717514429; x=1718119229; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qu+Ktqbr70Fl0EXEKSWGa6Z8asWwZOwbqMGQT7blGcw=;
+        b=eWwVuLMgc2nKIgKtITzK+Pcns6XQG+JAqelrF4128Bmp/bOWkuYxeQ3adbGdeq/Zrj
+         4LmEjPPGSim06jLKmpvGZfOKE0zPDeBz8z6s4nxbR7HhULyKbfFnkUMobkL3oAfW8See
+         UF4jpG3ZvmZ0mgUMDAC0zuW0UzGKnx2YFtyzvhrZVha9uycgs2wzW4GhU+rF9STdzv4l
+         DSB+g8+4u7BcfnM0GMpK7pMH+xSrRqATEFmDNp9wX56KWRcxREt8H/YSVsKhTnSgo8J0
+         Hy773YFejQ70g+tHTJfF1kq3Mod1WkFCWvJ56uFaFK+C3Ul7Qd2EECiTH/opNqd4l9wX
+         tQ/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717514086; x=1718118886;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EWiHpLew9vGqorYtx7ts5j6e/3RBM+m1gRe0g/Bu3FA=;
-        b=OR1WH7nzasxcxMr6vAykPycSn/Y9SLRy0mxEYu9WT1duMod0YH/HNqsIDOnGCe0RDh
-         f++Jvjl2Pd32j4REtVgbrIaDuVAMTh/JzP9E1+Do2nvE8GuR0KJGgAPW6r4N8ieEURWQ
-         hccpDKq77NQwHpurryB3W6wAP4G0qaexdDZoK00VfN27J3HiA9WHI3RRtZZmqekhzACH
-         0uTqJRUG0mqXq9/zYxn4GeQVpWIshLf/cy0obs2I0XW+UPtKKBXtIdH1PZDZ9+J0zU6a
-         cWywMX3g40jbJPfc5DTKQhY5QOGd1zRCXY1BxVXlARTm124TmP9cmCJgSOsDmE2hG27B
-         KrqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVAeNxeSEBWkSQi0TigAGG+nqeWjmgIvUf3Zy5L1AWFZKCniiHo+MAnlBLDKUc06zjsrOX0NuIeHqd0Urr3fgSH6UQ9ABuRpx6SkaTFHw==
-X-Gm-Message-State: AOJu0YyTphA5Mv+PxnirT6tOLh2D5zKsmvN29qmsZiGVzWzwN0nzQva/
-	W1HdjmLXDz8sqzPeXHPOIhaErEQz1mwxSpq7sxZImTQba6NxynwZyj93jMzMxQHQOT/k20YOpyS
-	E
-X-Google-Smtp-Source: AGHT+IHm+hB/6mNiZerSwvoXhE+7cXjeasN8XmPyjTFGT5CHDOB7i12qXaNe0UACZFPBgbH5sCq09g==
-X-Received: by 2002:a05:6512:5d0:b0:524:652e:1696 with SMTP id 2adb3069b0e04-52b896cac46mr8566501e87.60.1717514086137;
-        Tue, 04 Jun 2024 08:14:46 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b84d873b9sm1513803e87.229.2024.06.04.08.14.45
+        d=1e100.net; s=20230601; t=1717514429; x=1718119229;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qu+Ktqbr70Fl0EXEKSWGa6Z8asWwZOwbqMGQT7blGcw=;
+        b=UaI/kw+j9D+rTgE5qTSdLZh1GmyqGTwU/F2FyhUWjdwyyy0FIba85Prdbfjy4Onvkd
+         JvaCqAcpm02x+zh/V1S0+RCOGwe3Z8W8g+rcmjgAerBGte22Gdu1pVHPKXZ7uDE2uU80
+         iKiIqqf64Fp+Fnu9PuJPpy9p6/2+nWCT9kAf8vqrZ4fwa1I/yXnkcyk8o92d+0CfsS2c
+         iddjt2mQ4tnKBeZfDG6mwGq4Uirn8WpUV7SfcqCWe4OjlgoK52J5PX87y7QFB1VDtAYK
+         1pBHkR39Rk1hwwg3r1M4CvwZrV3nPRbabWCi3eSjRsl0Msjv4sAkXzVI0JmvH9hYBeMC
+         9CVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWQiBIPENrGELgBq8AZNrA/iDMJ91gSyRpCcCfJ2wWfBkNUavGaHOmt5eFBu6C0oMyKbDD8qeACpenvov+hq9gO93rxLaR3QZGuX4KDzA==
+X-Gm-Message-State: AOJu0YzBYY1kNCEWCLVssgzsQzelil9H7SGkchxf5/xWgdd3tjD02+6t
+	WkIFW15wZ15aj+YVdh4rhuYSTmESk3gohL/ZK4XtgejuXDB4km2Kh1wM2IGzlIzshXlRGCg2eZP
+	f
+X-Google-Smtp-Source: AGHT+IFT/gu+iXIw1FyazFLHgySd1ZeZkBXTazh7KSbQtI8SI2vRyQvZs4QXU0Ws+N/sE/bijqRglg==
+X-Received: by 2002:a50:d011:0:b0:57a:254f:67bf with SMTP id 4fb4d7f45d1cf-57a6ae8e518mr3135539a12.27.1717514428495;
+        Tue, 04 Jun 2024 08:20:28 -0700 (PDT)
+Received: from [127.0.1.1] ([188.27.161.69])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57a31bbbe18sm7540793a12.37.2024.06.04.08.20.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 08:14:45 -0700 (PDT)
-Date: Tue, 4 Jun 2024 18:14:44 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/7] dt-bindings: display/msm/dsi: allow specifying TE
- source
-Message-ID: <tymwexyhuujgrz2cvxkruimst3ff4mnevcm2k4h6qdmpmb7yqp@zqbwwc5t66ya>
-References: <20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org>
- <20240520-dpu-handle-te-signal-v1-1-f273b42a089c@linaro.org>
- <224fa477-07ba-e7b2-2f7d-8f7d21f4a0c7@quicinc.com>
- <CAA8EJpp8kRPKboHNHwD+R5f1AcndjaQdGG=Q4ygmRE9VMNievQ@mail.gmail.com>
- <5cde2f43-89ab-d2d4-d68e-605f8f5d1da7@quicinc.com>
- <CAA8EJpoMtr6OGjL8qq-cHadQSOVyDAaL8=2TLvOjBbYV2Z7+Mg@mail.gmail.com>
- <d1a9be5d-b0a0-73bc-c66f-6d45049fbaf1@quicinc.com>
- <CAA8EJppFZQTghtyweGG_8zSqqZpEp=ho0bXuRxgyU2qGL4+ppA@mail.gmail.com>
- <4b604c91-7b1f-46b3-6b41-fe7d45190b78@quicinc.com>
+        Tue, 04 Jun 2024 08:20:27 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Tue, 04 Jun 2024 18:20:24 +0300
+Subject: [PATCH v2] arm64: dts: qcom: x1e80100: Fix PCIe 6a reg offsets and
+ add MHI
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4b604c91-7b1f-46b3-6b41-fe7d45190b78@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240604-x1e80100-dts-fixes-pcie6a-v2-1-0b4d8c6256e5@linaro.org>
+X-B4-Tracking: v=1; b=H4sIALcwX2YC/42NSw6CMBCGr0Jm7ZgZsEJceQ/DopQBJjGUtKTBE
+ O5u5QQuv/+5Q5SgEuFR7BAkaVQ/ZygvBbjJzqOg9pmhpPJGpmLcWBpiIuzXiINuEnFxKneL5Ab
+ T1cY23Ajk/hLk9HP91WaeNK4+fM6rxD/1n9XESMimrqRzVnLs+dbZBn/1YYT2OI4vUR0/m8MAA
+ AA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>, 
+ Sibi Sankar <quic_sibis@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1755; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=DRlJ5yB+jL9oj7S5uPqNBdhic3bTfsOGq2BvTaqTig4=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmXzC5FC1IMRZJNSzyPlX31zXD+CdMbSWI6a+p8
+ Ws82r7lu/GJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZl8wuQAKCRAbX0TJAJUV
+ Vs9iEAC6OQ4ab0nzj5ojscz7+5NTPP+3zCXCBOk8CV5VAEUjUwcoVaL3vLFpe2jgPAEnuEuLDG9
+ 7WethkERUKPF99kNhJaoEJOs/ny3z5hWxskk9IZ+lKXZZ7EcvQ2qtu8oXSNzdhYG8BQVWvH1+ke
+ noG607lzURYgNi9KMck5xWmTR0xXIO0HREuFMj642/kXKbkRkkbZQmZiEt2WjJQAnRKhbrYm3JR
+ XrneQHBaKmF+nE24CQodXxFRoAUKS/Atf0tqPEG3Aht/UTYGTk/byqLXbrFJM8OzTjWoGXJjDy5
+ AKpAaj1a06FyGcRtIb/M1lGFsWQN6MorUtdL7KywMFnEkmf03Xd9+fyGNHUi2JTDejNIhIumyQP
+ 7BfUbXKtvhjE7fFFM+hdcb/fK4+DVQaRz5t3/9WDa91aoE9TCfYNFol0alEt73ct5veCN34246B
+ VWjtO2YBk/n304P1qkQZ+6I9sP2sN1KW5oAP3twXCT/BNc3sFtHIXoWr27PYbjfCTl9sj90q1qJ
+ 4+XhTaMLxNcwXCwCb7+Tc2KHG6F6BYgke37/7R8O4uv0T8/MjOIGC8ljPrM+lc571Hp7gUPc8Gv
+ bwFRNXWPSyHleL8DidVp8F1Eddb5noipfjQvHgy6R/T1nlu5cqXm12/JzziyZCCfEgCCyG/bltD
+ 6Ax2kQhZ9Mojs9w==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Wed, May 29, 2024 at 06:08:21PM -0700, Abhinav Kumar wrote:
-> 
-> 
-> On 5/29/2024 5:02 PM, Dmitry Baryshkov wrote:
-> > On Thu, 30 May 2024 at 00:57, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > > 
-> > > 
-> > > 
-> > > On 5/23/2024 2:58 AM, Dmitry Baryshkov wrote:
-> > > > On Thu, 23 May 2024 at 02:57, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > > > > 
-> > > > > 
-> > > > > 
-> > > > > On 5/22/2024 1:05 PM, Dmitry Baryshkov wrote:
-> > > > > > On Wed, 22 May 2024 at 21:38, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > > > > > > 
-> > > > > > > 
-> > > > > > > 
-> > > > > > > On 5/20/2024 5:12 AM, Dmitry Baryshkov wrote:
-> > > > > > > 
-> > > > > > > >          required:
-> > > > > > > >            - port@0
-> > > > > > > >            - port@1
-> > > > > > > > @@ -452,6 +467,7 @@ examples:
-> > > > > > > >                                dsi0_out: endpoint {
-> > > > > > > >                                         remote-endpoint = <&sn65dsi86_in>;
-> > > > > > > >                                         data-lanes = <0 1 2 3>;
-> > > > > > > > +                                   qcom,te-source = "mdp_gpio2";
-> > > > > > > 
-> > > > > > > I have a basic doubt on this. Should te-source should be in the input
-> > > > > > > port or the output one for the controller? Because TE is an input to the
-> > > > > > > DSI. And if the source is watchdog timer then it aligns even more as a
-> > > > > > > property of the input endpoint.
-> > > > > > 
-> > > > > > I don't really want to split this. Both data-lanes and te-source are
-> > > > > > properties of the link between the DSI and panel. You can not really
-> > > > > > say which side has which property.
-> > > > > > 
-> > > > > 
-> > > > > TE is an input to the DSI from the panel. Between input and output port,
-> > > > > I think it belongs more to the input port.
-> > > > 
-> > > > Technically we don't have in/out ports. There are two ports which
-> > > > define a link between two instances. For example, if the panel
-> > > > supports getting information through DCS commands, then "panel input"
-> > > > also becomes "panel output".
-> > > > 
-> > > 
-> > > The ports are labeled dsi0_in and dsi0_out. Putting te source in
-> > > dsi0_out really looks very confusing to me.
-> > 
-> > dsi0_in is a port that connects DSI and DPU, so we should not be
-> > putting panel-related data there.
-> > 
-> 
-> Yes, true. But here we are using the "out" port which like you mentioned is
-> not logical either. Thats why I am not convinced or not sure if this is the
-> right way to model this.
-> 
-> > I see two ports: mdss_dsi0_out and panel_in. Neither of them is
-> > logical from this point of view. The TE source likewise isn't an input
-> > to the panel, so we should not be using the panel_in port.
-> > 
-> 
-> > > 
-> > > > > 
-> > > > > I didnt follow why this is a link property. Sorry , I didnt follow the
-> > > > > split part.
-> > > > 
-> > > > There is a link between the DSI host and the panel. I don't want to
-> > > > end up in a situation when the properties of the link are split
-> > > > between two different nodes.
-> > > > 
-> > > 
-> > > It really depends on what the property denotes. I do not think this
-> > > should be the reason to do it this way.
-> > 
-> > It denotes how the panel signals DPU that it finished processing the
-> > data (please excuse me for possibly inaccurate description). However
-> > there is no direct link between the panel and the DPU. So we should be
-> > using a link between DSI host and the panel.
-> > 
-> 
-> Yes, I totally agree that we should be using a link between DSI host and the
-> panel.
-> 
-> My question from the beginning has been why the output port?
-> 
-> It looks like to me we need to have another input port to the controller
-> then?
-> 
-> One from DPU and the other from panel?
+The actual size of the DBI region is 0xf20 and the start of the
+ELBI region is 0xf40, according to the documentation. So fix them.
+While at it, add the MHI region as well.
 
-Dear DT maintainers, could you please comment on the OF graph entries?
-Are they considered to be unidirectional or bidirectional?
+Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v2:
+- Dropped the 4-lane mode switch patch entire.
+- Fetched Konrad's R-b tag
+- Link to v1: https://lore.kernel.org/r/20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org
+---
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Would you suggest adding another arc to the OF graph in our case or is
-it fine to have a signal generated by the panel in the 'panel_in' port?
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index cf8d8d5b1870..fe7ca2a73f9d 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -2818,15 +2818,17 @@ pcie6a: pci@1bf8000 {
+ 			device_type = "pci";
+ 			compatible = "qcom,pcie-x1e80100";
+ 			reg = <0 0x01bf8000 0 0x3000>,
+-			      <0 0x70000000 0 0xf1d>,
+-			      <0 0x70000f20 0 0xa8>,
++			      <0 0x70000000 0 0xf20>,
++			      <0 0x70000f40 0 0xa8>,
+ 			      <0 0x70001000 0 0x1000>,
+-			      <0 0x70100000 0 0x100000>;
++			      <0 0x70100000 0 0x100000>,
++			      <0 0x01bfb000 0 0x1000>;
+ 			reg-names = "parf",
+ 				    "dbi",
+ 				    "elbi",
+ 				    "atu",
+-				    "config";
++				    "config",
++				    "mhi";
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
+ 			ranges = <0x01000000 0 0x00000000 0 0x70200000 0 0x100000>,
 
+---
+base-commit: d97496ca23a2d4ee80b7302849404859d9058bcd
+change-id: 20240531-x1e80100-dts-fixes-pcie6a-0cf5b75a818e
 
-> 
-> > > 
-> > > > > 
-> > > > > If we are unsure about input vs output port, do you think its better we
-> > > > > make it a property of the main dsi node instead?
-> > > > 
-> > > > No, it's not a property of the DSI node at all. If the vendor rewires
-> > > > the panel GPIOs or (just for example regulators), it has nothing to do
-> > > > with the DSI host.
-> > 
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Abel Vesa <abel.vesa@linaro.org>
+
 
