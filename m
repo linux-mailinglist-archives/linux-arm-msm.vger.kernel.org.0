@@ -1,85 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-21687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06CD98FC029
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 01:47:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 243DE8FC041
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 01:58:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B78F3282F85
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 23:47:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A7186B226D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 23:58:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABB8E14D2B8;
-	Tue,  4 Jun 2024 23:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B9FF14E2D5;
+	Tue,  4 Jun 2024 23:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LJoUNHlM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nDAkVbRt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6721411F3
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 23:47:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D4B14B94E;
+	Tue,  4 Jun 2024 23:58:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717544843; cv=none; b=Ej4QkNtzfFPF1WYA+fpk+zqDxXTfkZNSToEvKwSA/krhNYcHVwBEPumLUQhG77lP+9mdqEjlghWZn2wnbyXXYwR5MJUmI34wlsexabPBYXo9+OHuQTxFC5S9X3UEvrwJPs2Y8X2+JyBExP+UTAWB0HXEZDAqM941C2TdoyggLtA=
+	t=1717545489; cv=none; b=A83Gikhga9orGGxL9g6ewIiKRs1S02iSdc9kGlUH7srTixQ+Fyo4QUaZQAy9UCqArqNUjEgjGuqp6/OJySDyBnRGRN6pixIGykTVjQeP8k+qAm1HkNieTO6qnmzHvU1sVo2P4gt+UYJhDAfMjWYG701DEy+BpW5bD3/toqseDBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717544843; c=relaxed/simple;
-	bh=mmylbRfB4KEKXyGBeR6H9S03CC6T+tHFQPGAlkjagrw=;
+	s=arc-20240116; t=1717545489; c=relaxed/simple;
+	bh=z/x7lnVHh6tGjQq6E7OKzagc09tZ4NbFq5Ho8k3qWiY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TrCmo2Xdm2s9VxireWaifJZdNxQjkp9EBndzQ2/U2+LNJptq5Zvxm9t0adQLakXvMgjHb1bTxjayXpJljOwE9tlwYKFpoeaB2hJT4alYtak5dxHuvp5+ieq3KOLLySF08ehS/XEqZMkUHYYO3QIrr7KfbFahd9eiIvSCv65NMsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LJoUNHlM; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52b9af7a01bso3469168e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 16:47:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717544840; x=1718149640; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rBt8eFQEo5ebAofL3QZI5AwFoi6fSHWEjf2SqXfLAIY=;
-        b=LJoUNHlMmWgzBdALd6+b5i7UoZ7DhTNz55ERcKg6LAHG+wMG4Yi+xGRuufelbv2Lr7
-         hXYaACNa17rhrOp32QuqwjyWUxVvCNYm/ogvCrrxDvV6z82kNMMsCw5lCLtMGs2Z1fjw
-         DYfYm5+gpFZkcLqfBkBnuNIfz6zXDl6qXd+VRD45EXdmGEarlXXTcKpXVUX3NaIzauQR
-         iLCUFEofZ+4g+hQC+3LiWdHp2gNZnApsGiGjAROvkqGVRtjKum/MVPJ7GggpnIJ8fsvI
-         Scb+mNMNHG1Eld6+2VJ7VetHsO1B2A1sy8JR93AWdsZG0sMQ54Jy92hYJ8Ql52fgSIEc
-         EtKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717544840; x=1718149640;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rBt8eFQEo5ebAofL3QZI5AwFoi6fSHWEjf2SqXfLAIY=;
-        b=XaG+KLukA67aXs4JnXFnbl3xWZ6s1bqUMRHgOv35W4b65i/QdG154X2UYPbbH9jgpO
-         YZ2pfUwYzr5iY2GQcQD7u3xVb8OV8o1xpp5okbIwZb5mAukAHTXvg83OCVnDYiQVvPkw
-         pnjVZAR0BGmHQHiXrDUECsxSTzTJ4gFLFaOmdXhIeb4KxVgvXVAUHnNF39YHdSo/z/nB
-         xy1lLnX3dnBJ6aPyxpgjE13S7G6VuBO7LVxq2CD0uu3v6hImrNk96sBjzOgL7rUXNaEi
-         crS6d3FimHo8WUmJiaKwdAR2oZGJV442O9BC2s4YiB80m2vylPZVnMzCAQWsH74Jf9Fl
-         G6ig==
-X-Forwarded-Encrypted: i=1; AJvYcCWt7xh0v/ge/dBZVm5uoPNML26LJQFrzifnsgBrwse0/P5zViDSh8sAa5abXIHRBUKL9SKVGH6UwifNtFGwnMkywkSLPO6797sULj6lXw==
-X-Gm-Message-State: AOJu0YwULcbjow63o1Y4pgVvWHkL7HYw1X6dXfoLKrABUEZD6tSXBWsH
-	uWFEKz+OAuhZtjg9xfqNsfYxANTDHTMvmA5WwN+R8En310gU/nnBCNHUztC43wY=
-X-Google-Smtp-Source: AGHT+IHbuLGX10F/ysmCrzCCkUQnoJywch6uPTMMgJQLv8uC1wFTg2UN7uiqWbEABiv2i8OZph92fQ==
-X-Received: by 2002:a05:6512:12ca:b0:52b:86cf:91b2 with SMTP id 2adb3069b0e04-52bab4f6fbbmr565864e87.46.1717544840076;
-        Tue, 04 Jun 2024 16:47:20 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52baa95c304sm111154e87.276.2024.06.04.16.47.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 16:47:19 -0700 (PDT)
-Date: Wed, 5 Jun 2024 02:47:18 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	patches@lists.linux.dev, cros-qcom-dts-watchers@chromium.org, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, Pin-yen Lin <treapking@chromium.org>, 
-	Douglas Anderson <dianders@chromium.org>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sc7180: quackingstick: Disable
- instead of delete usb_c1
-Message-ID: <4ksgrgsmbkze3m3sv2ikajvkv5asehzzhuw3c45hob275alvfo@yctbxgiv5oe2>
-References: <20240604214233.3551692-1-swboyd@chromium.org>
- <20240604214233.3551692-2-swboyd@chromium.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=M6qmcz8inue31pCdRKY8RaopQJi71M1s6wAJfQ91Tc7k5l4UdVDvrQ4dOvADLLXMSfKbXWyp6nJdJuhO7klOcOt4Y21dSP9X+IWGxe9qAOgkD3nnIkwemA2Xfc6O+x28AA9CdM3iYzekXXz0boGPFYKaZ0hn5sz8mCH2lvazZWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nDAkVbRt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372FFC2BBFC;
+	Tue,  4 Jun 2024 23:58:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717545488;
+	bh=z/x7lnVHh6tGjQq6E7OKzagc09tZ4NbFq5Ho8k3qWiY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nDAkVbRtBndrf0AUTpV5MC0DtJMsL7G0G3A7j7SJMOS8/m2xo6ixOtMt1Duj9c0iv
+	 KBGi1PUX1lSSA7W3DTunVgu7Fixuum8fyqYWMfSEB2H5AM9OfBq8kbdJczQvGs4CYg
+	 3tdfSQF6aIQEufKjukhOoU0bKa5j/AOnZcUKlbH5UO1wt2k2aOlWQHrY1T6qR0e3jI
+	 XeGfovm2YXsYzPCrrSnZNC6FR1XtbIrHYe1uisepl64YPkL0ohcWzLvd7dfIFTDoU2
+	 eROjrOCP6QdVhSqO3Uxk8md4Fz1hvsPc8kEO53ebGMKdMGfP6TCEHjPPBueHI+f5o1
+	 oW/RguEWs0u9Q==
+Date: Tue, 4 Jun 2024 17:58:06 -0600
+From: Rob Herring <robh@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: Fix register maps items and add
+ 3.3V supply
+Message-ID: <20240604235806.GA1903493-robh@kernel.org>
+References: <20240604-x1e80100-pci-bindings-fix-v1-1-f4e20251b3d0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,35 +67,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240604214233.3551692-2-swboyd@chromium.org>
+In-Reply-To: <20240604-x1e80100-pci-bindings-fix-v1-1-f4e20251b3d0@linaro.org>
 
-On Tue, Jun 04, 2024 at 02:42:30PM -0700, Stephen Boyd wrote:
-> It's simpler to reason about things if we disable nodes instead of
-> deleting them. Disable the second usb type-c connector node on
-> quackingstick instead of deleting it so that we can reason about ports
-> more easily.
+On Tue, Jun 04, 2024 at 07:05:12PM +0300, Abel Vesa wrote:
+> All PCIe controllers found on X1E80100 have MHI register region and
+> VDDPE supplies. Add them to the schema as well.
 > 
-> Cc: <cros-qcom-dts-watchers@chromium.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Cc: <linux-arm-msm@vger.kernel.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> Fixes: 692eadd51698 ("dt-bindings: PCI: qcom: Document the X1E80100 PCIe Controller")
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  .../arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+> This patchset fixes the following warning:
+> https://lore.kernel.org/all/171751454535.785265.18156799252281879515.robh@kernel.org/
 > 
+> Also fixes a MHI reg region warning that will be triggered by the following patch:
+> https://lore.kernel.org/all/20240604-x1e80100-dts-fixes-pcie6a-v2-1-0b4d8c6256e5@linaro.org/
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
+> index 1074310a8e7a..7ceba32c4cf9 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
+> @@ -19,11 +19,10 @@ properties:
+>      const: qcom,pcie-x1e80100
+>  
+>    reg:
+> -    minItems: 5
+> +    minItems: 6
+>      maxItems: 6
+>  
+>    reg-names:
+> -    minItems: 5
+>      items:
+>        - const: parf # Qualcomm specific registers
+>        - const: dbi # DesignWare PCIe registers
+> @@ -71,6 +70,9 @@ properties:
+>        - const: pci # PCIe core reset
+>        - const: link_down # PCIe link down reset
+>  
+> +  vddpe-3v3-supply:
+> +    description: A phandle to the PCIe endpoint power supply
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+TBC, this is a rail on the host side provided to a card? If so, we have 
+standard properties for standard PCI voltage rails. It is also preferred 
+that you put them in a root port node rather than the host bridge.
 
-
--- 
-With best wishes
-Dmitry
+Rob
 
