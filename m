@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-21607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 500648FB465
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 15:51:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D02C8FB4C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 16:07:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 808D21C22174
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 13:51:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F6A2B27FE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 13:51:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B8CCDDB2;
-	Tue,  4 Jun 2024 13:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42230B664;
+	Tue,  4 Jun 2024 13:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="c1pO2qQo"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="2IEtuynJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61B2171CC
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 13:50:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692E1EECF
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 13:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717509056; cv=none; b=p32crCa2ssMse34jW9942YRLfwmrrskdDytBJOSwU2H3tZTNIttmI7H9tUPqXmhX25l09Xk7AZJM+nt4Th3G3MDC32NphRC8t1oL46bhm1bWF/ge9D13NIpHBKPYA3f3G8FZ7fCi34xuBtAPXWFgPFkiKYrPLG6ynrMkRyRBhSM=
+	t=1717509057; cv=none; b=DBBABiV0b7sbHDMCuTtnlNkJrFGkdSwG66Rsp1FIlCwrA3NfLbYR+yrAI0gL8p+Ec64PJq13DNfbr0mH6W+1XeH3D26J+/s4PxaCO0BRoNYbNAHGUgNaiRPIt9s1i/UNBM8MssSTTzvyZUXaY4veOqCHP+/75h/Ut79IBap/5VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717509056; c=relaxed/simple;
-	bh=WNuAZBY5M5utaqDRaS3YVc/66sKW+YV2ror0qkCbifs=;
+	s=arc-20240116; t=1717509057; c=relaxed/simple;
+	bh=lgQ9TISB+gx9SFm7r4RKRfj7kA6xLYET6ecz7rril+8=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Om3fkrlPxIlZttyXs5+CXkhEnjXneRq5KmJeB5ASxpgYSOteEC29KlDK3YT41S+nYcgn2fmPo8e7EUZFnQwT1sb6z630XDaOc3PGzib21papY4DPP39/mUP9YpruKI6SULJFmcQzjQmiHPMah3o5aV5Icc09SkUGu86BhgENGxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=c1pO2qQo; arc=none smtp.client-ip=209.85.128.44
+	 In-Reply-To:Content-Type; b=tptfYrTKgSlQcypM2/JCZIWv0Gb4SUR6UUVJCRuz/gGv6n3RWDR8J0qTVtMcf+SNneRhkX9EwIKJITUQcBOU7ReGCTx4pRhgbjMOuMXppdJvNEjeNm3u6cN/40izc8L6npIFMcwvjgaxYAjg9ZNZnnBPKgwTYRapDt5bB9UW/XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=2IEtuynJ; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-421555a4454so1214375e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 06:50:54 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4213b94b7e7so14300205e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 06:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1717509053; x=1718113853; darn=vger.kernel.org;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1717509054; x=1718113854; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=1CmU0DTF3wr3QsPtiX/X8uKixsYvsbrBSlvb1F0M3SQ=;
-        b=c1pO2qQoMk5t3d9w8D1BYL/fNQWFzyseRfuJ1MBWrWd4iynKaLK88duS6nnQbaneN7
-         VwHWd/Jbn38OiJHmqaszpDGqVjEuRodzajdn1azuYQVrv6ffEBsVGMMlVrYnryH8XvB7
-         OaVoJy7nM16FCJzCudVHMaVdOiAgPISne4OiXNEpGwst6EwCMBGGrBNLNuP6u7J/1Vhq
-         tyZK+Kk3Fld2Z3TZv4YKqZFrC63f+F1MbMYS4C4Og7k/UFpLmTNzmFJA8cZhwYhThPCK
-         llbMsnD0NJfzu9TKSswf3ijSAo3xgREwr0ay4jKBFDCTbWts1dLlRbUq+G6jfOT280yy
-         m0nw==
+        bh=96Dvl82Hjo8efzNzsjm1jSvKrMhIPC8VaRY2If0PCPw=;
+        b=2IEtuynJhki0EdTuS5fyPooil0RWHl+T+2Zu+ASvB1iOQZ/7geV6tjj7m4WYLXNKxH
+         Bt2I/gCHeP2g1r3R56sQfyIzmgMisgFbz1xGxsX6wtcj3upLYFYbvUmW/QIxDqzV5jr3
+         fTISkrEJf2HdnkDVL3JiY+psP/+AkIiD0FX37VhBx4gTtCRsUsOMZacwfVeE7vYzd+Zh
+         54heT0G9PQDooELy3e/0s4lFPjyaQ5LnB7J84bwRvnCD152Wb7ITTCX/hz/nvONhEBbW
+         MgrYPIHJmCnv+8y44NTTWNboCniYdIEuWRBxY36L72wucBNJRjW5UYOxlHITp960QmiU
+         2GTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717509053; x=1718113853;
+        d=1e100.net; s=20230601; t=1717509054; x=1718113854;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1CmU0DTF3wr3QsPtiX/X8uKixsYvsbrBSlvb1F0M3SQ=;
-        b=iIiIzMHPiotJVY4kmLOzcCTvqwBY1qaY80oeuWWodyu+xG+TLYOgCGrvDkpF9m3aHk
-         gfa0sGjFjnpkd0J3lm87BLC/uviLq3kwvy5wMHaHGK7TcwgUlUhedBVD3hkEU//HZ/Ho
-         QmCDadnJtA2/kQ4pPg6HCYMSvg/62AHSxZ9pq5j+BF2LNA4q2rOoJZso/n/+9+Ca4LSP
-         sbeiJYBV3MSEVyqssvepF1bfXiqajn0S8qbsnsB2qoPjNkDUUKG7FeeDoKa4epHs2oMc
-         tlJQlhEJQM0M7ljk2G+dygjkYRnh8yfwDJDUWM0lLUzYwaCh/XeXAjVFY3HU1lh9PRqi
-         4dtw==
-X-Forwarded-Encrypted: i=1; AJvYcCXd+i6OvK9ZlsQ5ONJSEjqOeTiccPfbRIl06fY8k+KwQHjQOelpqwA8EQc6QKgv14TUwG1UF9zsoZThLpS8jt1Od3je8+/xHPo6Lcdq2A==
-X-Gm-Message-State: AOJu0YwYIMyNuYRffMfxgt/xEK6s1JHEUzk+3SKXcsCNHnfwfDnHm0Wr
-	CXDRXFyCEYVTdw2T2YeVyLfwngTOTC3sCRhJmSgaQlCE1sKpYDTOA3Fy0fYjs2g=
-X-Google-Smtp-Source: AGHT+IEKzaDjXASfbYTGTMDqSF3S8HOCUTwRYdvhMGZS2at1GRzbC8wUQ7EhWXjf0frP4FQPZnZyBQ==
-X-Received: by 2002:a05:600c:524f:b0:421:494c:9e74 with SMTP id 5b1f17b1804b1-421494ca032mr20179575e9.23.1717509053151;
+        bh=96Dvl82Hjo8efzNzsjm1jSvKrMhIPC8VaRY2If0PCPw=;
+        b=MiaO6TMmTLnxPqsMXEpBvvBALByFhpoL/J5QUvEmwQhE5S0shLuZkRqrrOs4c0R6Ih
+         Y/f0dkqKu+O8jhHBN9vBa6isx4YqQ5W7qf7udSTD5X3d3kidKO0KSCzwX4xZqJF5EArK
+         xZ309OnDIfCENVOyoykx5YzuTruPGiGbw8cFsYS37Gxj6hs33/7zQALaTQdo9ljgSieh
+         eSyLw1zTupeWELI+F8fW2o2CjT3YvL+Nh6eMlDI5Za/R0PavqsSah4l5cvInLB/yBmwX
+         gTAFn94EnpjrrLgz3C+wefYIIrw38lnPaC094f3O1ux7rIrCoAmy7kUx20tnqz1YcVQ0
+         ZXPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWpK7oqc0YcC3NpobmKuh8DRvZnoX9lQjQM+GV7E36oTFx3sifx4lgaj1DhwGlBue6dgF629MQNjE8MSEK7bNInrCQcuGQLgKl/KBxXxA==
+X-Gm-Message-State: AOJu0Ywp4xovVkzoQsgvTx6K0huW4eng96YiVwVS7iERIgpHo+EWMF5r
+	Y5xd6NKuiRjBX/Pvzo6T5lo2Kpz+CLjJJ1AB+Iwgprb1dkUCwi4EmO4XVpftBablrqn+rnCkMQn
+	CUpE=
+X-Google-Smtp-Source: AGHT+IHiQS1qEab8CDh9QhUYvRIc9qMluklpij7Hsvm1tty61lkjVQR1crQTp7gzhBw6FTV42IpGwA==
+X-Received: by 2002:a05:600c:5487:b0:421:556f:5fb8 with SMTP id 5b1f17b1804b1-421556f6215mr2242405e9.0.1717509053947;
         Tue, 04 Jun 2024 06:50:53 -0700 (PDT)
 Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42133227f8asm139569755e9.19.2024.06.04.06.50.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42133227f8asm139569755e9.19.2024.06.04.06.50.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jun 2024 06:50:52 -0700 (PDT)
-Message-ID: <84a86082-f28d-4750-a4ab-1c534bc54b78@freebox.fr>
-Date: Tue, 4 Jun 2024 15:47:57 +0200
+        Tue, 04 Jun 2024 06:50:53 -0700 (PDT)
+Message-ID: <648b2798-9302-4c6e-9ef2-e4318066d28f@freebox.fr>
+Date: Tue, 4 Jun 2024 15:49:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +77,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 3/4] arm64: dts: qcom: msm8998: add HDMI GPIOs
+Subject: [PATCH v2 4/4] arm64: dts: qcom: add HDMI nodes for msm8998
 From: Marc Gonzalez <mgonzalez@freebox.fr>
 To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
  <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -94,62 +95,141 @@ In-Reply-To: <a2cb1290-9e01-4136-9592-ce439b1096b6@freebox.fr>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-MSM8998 GPIO pin controller reference design defines:
+From: Arnaud Vrac <avrac@freebox.fr>
 
-- CEC: pin 31
-- DDC: pin 32,33
-- HPD: pin 34
+Port device nodes from vendor code.
 
-Downstream vendor code for reference:
-
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-pinctrl.dtsi#L2324-2400
-
-mdss_hdmi_{cec,ddc,hpd}_{active,suspend}
-
+Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
 Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 99 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index e5f051f5a92de..ba5e873f0f35f 100644
+index ba5e873f0f35f..f65a76da61ea8 100644
 --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1434,6 +1434,34 @@ blsp2_spi6_default: blsp2-spi6-default-state {
- 				drive-strength = <6>;
- 				bias-disable;
+@@ -2785,7 +2785,7 @@ mmcc: clock-controller@c8c0000 {
+ 				 <&mdss_dsi0_phy 0>,
+ 				 <&mdss_dsi1_phy 1>,
+ 				 <&mdss_dsi1_phy 0>,
+-				 <0>,
++				 <&hdmi_phy 0>,
+ 				 <0>,
+ 				 <0>,
+ 				 <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
+@@ -2890,6 +2890,14 @@ dpu_intf2_out: endpoint {
+ 							remote-endpoint = <&mdss_dsi1_in>;
+ 						};
+ 					};
++
++					port@2 {
++						reg = <2>;
++
++						dpu_intf3_out: endpoint {
++							remote-endpoint = <&hdmi_in>;
++						};
++					};
+ 				};
+ 			};
+ 
+@@ -3045,6 +3053,96 @@ mdss_dsi1_phy: phy@c996400 {
+ 
+ 				status = "disabled";
  			};
 +
-+			hdmi_cec_default: hdmi-cec-default-state {
-+				pins = "gpio31";
-+				function = "hdmi_cec";
-+				drive-strength = <2>;
-+				bias-pull-up;
++			hdmi: hdmi-tx@c9a0000 {
++				compatible = "qcom,hdmi-tx-8998";
++				reg =	<0x0c9a0000 0x50c>,
++					<0x00780000 0x6220>,
++					<0x0c9e0000 0x2c>;
++				reg-names = "core_physical",
++					    "qfprom_physical",
++					    "hdcp_physical";
++
++				interrupt-parent = <&mdss>;
++				interrupts = <8>;
++
++				clocks = <&mmcc MDSS_MDP_CLK>,
++					 <&mmcc MNOC_AHB_CLK>,
++					 <&mmcc MDSS_AHB_CLK>,
++					 <&mmcc MDSS_AXI_CLK>,
++					 <&mmcc MISC_AHB_CLK>,
++					 <&mmcc MDSS_HDMI_CLK>,
++					 <&mmcc MDSS_HDMI_DP_AHB_CLK>,
++					 <&mmcc MDSS_EXTPCLK_CLK>;
++				clock-names =
++					"mdp_core",
++					"mnoc",
++					"iface",
++					"bus",
++					"iface_mmss",
++					"core",
++					"alt_iface",
++					"extp";
++
++				phys = <&hdmi_phy>;
++				#sound-dai-cells = <1>;
++
++				pinctrl-names = "default", "sleep";
++				pinctrl-0 = <&hdmi_hpd_default
++					     &hdmi_ddc_default
++					     &hdmi_cec_default>;
++				pinctrl-1 = <&hdmi_hpd_sleep
++					     &hdmi_ddc_default
++					     &hdmi_cec_default>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						hdmi_in: endpoint {
++							remote-endpoint = <&dpu_intf3_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++						hdmi_out: endpoint {
++						};
++					};
++				};
 +			};
 +
-+			hdmi_ddc_default: hdmi-ddc-default-state {
-+				pins = "gpio32", "gpio33";
-+				function = "hdmi_ddc";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
++			hdmi_phy: hdmi-phy@c9a0600 {
++				compatible = "qcom,hdmi-phy-8998";
++				reg = <0x0c9a0600 0x18b>,
++				      <0x0c9a0a00 0x38>,
++				      <0x0c9a0c00 0x38>,
++				      <0x0c9a0e00 0x38>,
++				      <0x0c9a1000 0x38>,
++				      <0x0c9a1200 0x0e8>;
++				reg-names = "hdmi_pll",
++					    "hdmi_tx_l0",
++					    "hdmi_tx_l1",
++					    "hdmi_tx_l2",
++					    "hdmi_tx_l3",
++					    "hdmi_phy";
 +
-+			hdmi_hpd_default: hdmi-hpd-default-state {
-+				pins = "gpio34";
-+				function = "hdmi_hot";
-+				drive-strength = <16>;
-+				bias-pull-down;
-+			};
++				#clock-cells = <0>;
++				#phy-cells = <0>;
 +
-+			hdmi_hpd_sleep: hdmi-hpd-sleep-state {
-+				pins = "gpio34";
-+				function = "hdmi_hot";
-+				drive-strength = <2>;
-+				bias-pull-down;
++				clocks = <&mmcc MDSS_AHB_CLK>,
++					 <&gcc GCC_HDMI_CLKREF_CLK>,
++					 <&rpmcc RPM_SMD_XO_CLK_SRC>;
++				clock-names = "iface",
++					      "ref",
++					      "xo";
++
++				status = "disabled";
 +			};
  		};
  
- 		remoteproc_mss: remoteproc@4080000 {
+ 		venus: video-codec@cc00000 {
 -- 
 2.34.1
 
