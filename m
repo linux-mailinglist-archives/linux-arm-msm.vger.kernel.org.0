@@ -1,88 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-21673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 900B88FBE25
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 23:40:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC9978FBE2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 23:42:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2DB2FB2656E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 21:40:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7504C1F24CF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 21:42:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 363C514B945;
-	Tue,  4 Jun 2024 21:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6C2714C58C;
+	Tue,  4 Jun 2024 21:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yr5AlDwS"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bSHlftcN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4A5143741
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 21:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9DE14BF8F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 21:42:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717537223; cv=none; b=J53vIzyvRD8edaEOdrZByCNjt25PRRBING8tR8kOj7JXh+jXn1JbOgUxkTSsNtKZceLQ3cj9o2PZEoog4tF1IRRFrRXwbb9MjJAhnhRC855wc1Qbp3/A2UCpwexAS7HDT9TJ6fidx2Vo1q9a544QJXWMt/onvWSXanGz7XibfUE=
+	t=1717537357; cv=none; b=H6swUhybl7HI4Tr2aTR9PMS2jVdse7Afp9p5xmOGVpKE6m1NROxnla8dDH2h35vfvmxWcSW9eLbG+9bwvZ+cbBGRqyoOcth+rVuQAY0xd0rU0N4aP/jTtpZuQonemM5ssUjo/jBP3QsyedATi/bj1CSpARPhtFw23vAsiGXE+pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717537223; c=relaxed/simple;
-	bh=oAtiKWbEqdz+Rx/vFKANtNOS30yIJyVjx6/HCjlK6Uw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OHwNY/BVd9UPbvHQ18hnc7lbTFWMBYpYiKkCCKhR2J+NoNoCxp+xdRfxW7CkDZjo1zG8PaU+CRqHd8i1+j4Mqb1GsQQoB1ESCtgIsHEIbUrxy4QMhd1UH60DkAZAMF4wXvNqi9Ds+S/PWQ79k673LPivFW9/XzizN6LqMSwGWq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yr5AlDwS; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4212b4eea2eso43734625e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 14:40:21 -0700 (PDT)
+	s=arc-20240116; t=1717537357; c=relaxed/simple;
+	bh=vDctSeMuSiGp9PwhggSWKoGFj8wcUjkUW53LOQym6rc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BBWbpMe1h+RcsbDHTeMZeh60pgC/flysBC12cUT9PL3dgEzVIRxCyzz5vocTNnva/CJQ2HnsXVWV84kURZsY6NI9sEFtUo9ldbeL9ww3yoIqQ9UTBcqzoOGaITYmSP+imjFTrP5JpweVSnPu2D0+cf14bultaR+0+St2g8/h530=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bSHlftcN; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-70260814b2dso251695b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 14:42:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717537220; x=1718142020; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1717537355; x=1718142155; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rqq18CXoyGbGnQpbX01uKNmZ4w2EbKsUOPcap/enREU=;
-        b=Yr5AlDwSrICZlqa0eyAropgNGXSpdPbtFsPpxgD0RnvM08hrR9d9ZZnvbTnPqkBHME
-         oOTrGPqvEol8rjOZPf/w0pWdGPkXb8Sl/VYkdiWWU2tHPUoY7dq4Ta2AI6PgSgUB53SH
-         /OtP4JT4DqTjWWCGBzZrGCCj0/lozQN2/KUox2YoNGYLGVoBVcTTp00vqhO2V4QJGMxg
-         howV9Yr9f9nj3ru2o7VyjvCtnq3l01UT4yN5DW+B7LOmmPifX4O+sEKLdttAWAIPUnlY
-         srHiXB+9FIM7TEB/aFMz5gTS5TGcNmuBLKrPrurprc1MLZhU4yQhu6dZ7njMnL243Rbw
-         An+A==
+        bh=Q6Vw66yFGizo7QKpTFL7E/hug1hRafbghl++kv8rPPs=;
+        b=bSHlftcNke+EtV0LSI7rgn6Hn1kf3+tr4/H+kx+jq6fOdUR2131YJy/DKkdNfSiFfC
+         xd+JJwGrfCh5I4phXx1Q5aCr2yOy28KfjjMZEowKe7GAiBuZZ6HZMkHkrPb9F1KbhkGF
+         E9xwGSxc5kuHUZpnDO+33YGh9PXX8Dg55M+3U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717537220; x=1718142020;
+        d=1e100.net; s=20230601; t=1717537355; x=1718142155;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rqq18CXoyGbGnQpbX01uKNmZ4w2EbKsUOPcap/enREU=;
-        b=QYAn5ylIr6GtF2/EPZq7FbUlv/23e0K6VtoTdQyM/3j/jPXXdFXVo+v0VzM5Q8/bVQ
-         IviN2mHKWQiaN/SE1Kjw4P1xNWZkcwKRE9b4JgxohpkJYPBpqET2Vt4+3lMTgWvKMQqR
-         3RMb7Rf2Gfev9js8Zr9Fylh95sSrLuKSReIdZMT+XNVIS4YLeq8Iu7Bf/57BVFtGiYaf
-         hnA19JmL1n5ZU3iAk3wqqUBUhHtiq0/dZBe9uH0E7yafJYabcBd7Ql0zARUcF5Fgcaq1
-         WB1T8sv5YFXntRzrVyR4nFU7VVEcaGzDsIpIXzFnEqTVj5uUAzuKjWBABHreFRqs8syR
-         x/Iw==
-X-Forwarded-Encrypted: i=1; AJvYcCUYcRCNa1oNbAnPkcVPHSWFtW/XFcyZg6T+zYbsU8WhRoKdRBrTDsF7mhm8OuAnkTSAxh/8cQMZDKygF7JUI1hqP78FMNaAuLHxUGjlVw==
-X-Gm-Message-State: AOJu0Yyt6zKVGb8aJK7PkMa/24qPIoxWtJULL5aCT1r4IcKS1LP9F1ju
-	vTkcgPNwKef6t43rQ7MA4s+meTnv9Otk9782pzuSh9R2X0gHUlyu
-X-Google-Smtp-Source: AGHT+IHpCQ2HAPA1QqPFRWearVj1yS2MowqKgCHg9WOONS+xyrz1IWSdlUNZ7OspAvgXBXnkGD7Bgg==
-X-Received: by 2002:a5d:484a:0:b0:358:4af8:b76e with SMTP id ffacd0b85a97d-35e8ef9437fmr441650f8f.62.1717537219648;
-        Tue, 04 Jun 2024 14:40:19 -0700 (PDT)
-Received: from morpheus.home.roving-it.com (8.c.1.0.0.0.0.0.0.0.0.0.0.0.0.0.1.8.6.2.1.1.b.f.0.b.8.0.1.0.0.2.ip6.arpa. [2001:8b0:fb11:2681::1c8])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-35ed8b574e3sm270624f8f.79.2024.06.04.14.40.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 14:40:19 -0700 (PDT)
-From: Peter Robinson <pbrobinson@gmail.com>
-To: Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <andersson@kernel.org>,
+        bh=Q6Vw66yFGizo7QKpTFL7E/hug1hRafbghl++kv8rPPs=;
+        b=DzruXAdkNnBRQebrzHdWsSNc81KG8X3H6+LMFtsl8H8na6PuTJ1YBajhpQiHUoysUB
+         ARjTPfYgcfTT0TaGnTY3qJjSVyJz2cjof0GkjetpBJSdBAjsZpB6MCLRK4rFkB+DXuLj
+         YdzURLTu9HZE9OgHho4DaDc+yyvdWTgyT9EZMD+WbSkzDsfiFHFC8J+A9zLGP6JT0Y4u
+         qpjTtJQz8YVfVEhIrWmWCuFPGK7KIP9ZdPsmHaN9WWZh6gdKeF/BXS+1EvVIg4HMZpKZ
+         sw77NVJV8LvCxznOc7rp3T6kWKEP4VU5t3HBH5VF1lxJK8WeQe5G0DDo/1Q9P0Zq1pvo
+         Q3pw==
+X-Forwarded-Encrypted: i=1; AJvYcCVA2AuRHpHCKsoBYSJWO07pUjrTA+oCxC7HWY4HzYhS+MwF2UlRt6OyrC7T2wzXleo3I4s0HXty6/fIW5/nBU8wxWaMYUWM1PLSYBOYRw==
+X-Gm-Message-State: AOJu0YzV3bBAEJU1PIW1NcUhs+d597/Q56QcDyumKz9gfXsqZ1UClsbF
+	pM1j/N1GSzXPg1l2IIxibJwSv+tuwaC+XG+Dc0aEQjjkiO9jQhdEGiSRDUefmg==
+X-Google-Smtp-Source: AGHT+IFdOXCjV6WYTt/zwkB5UuQ0oRkBJqqgAgDp2qIDzzYVNu8sLTUOmr2dbUeuVyqxGp6ldB13nA==
+X-Received: by 2002:a05:6a20:3ca9:b0:1ad:7e4f:9564 with SMTP id adf61e73a8af0-1b2b6eb668bmr1221578637.9.1717537355547;
+        Tue, 04 Jun 2024 14:42:35 -0700 (PDT)
+Received: from localhost (132.197.125.34.bc.googleusercontent.com. [34.125.197.132])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-6c35a4b973csm6365068a12.79.2024.06.04.14.42.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Jun 2024 14:42:35 -0700 (PDT)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Cc: Peter Robinson <pbrobinson@gmail.com>
-Subject: [PATCH] drm/msm/adreno: Add some missing MODULE_FIRMWARE entries
-Date: Tue,  4 Jun 2024 22:40:05 +0100
-Message-ID: <20240604214018.238153-1-pbrobinson@gmail.com>
-X-Mailer: git-send-email 2.45.1
+	patches@lists.linux.dev,
+	cros-qcom-dts-watchers@chromium.org,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	devicetree@vger.kernel.org,
+	Pin-yen Lin <treapking@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 0/3] arm64: dts: qcom: sc7180-trogdor: clamshell/detachable fragments
+Date: Tue,  4 Jun 2024 14:42:29 -0700
+Message-ID: <20240604214233.3551692-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.45.1.288.g0e0cd299f1-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,37 +88,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add missing MODULE_FIRMWARE for firmware in linux-firmware,
-this is needed for automatically adding firmware to things
-like initrds when the drivers are built as modules. This is
-useful for devices like the X13s and the RBx devices on
-general distros.
+This is a followup to a series I sent a few months ago[1]. I've split out
+the dts patches and dropped the one that ties everything together for
+DP/USB as that whole solution is still working it's way through and I
+doubt I'll be able to get that done in the next couple weeks. Instead,
+I'm sending these patches to reduce the patch stack and make that DP
+series more manageable.
 
-Fixes: 5e7665b5e484b ("drm/msm/adreno: Add Adreno A690 support")
-Fixes: 18397519cb622 ("drm/msm/adreno: Add A702 support")
-Fixes: 3e7042ba87da ("drm/msm/adreno: Add ZAP firmware name to A635")
-Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
----
- drivers/gpu/drm/msm/adreno/adreno_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+Cc: <cros-qcom-dts-watchers@chromium.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Conor Dooley <conor+dt@kernel.org>
+Cc: <devicetree@vger.kernel.org>
+Cc: Pin-yen Lin <treapking@chromium.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Douglas Anderson <dianders@chromium.org>
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index c3703a51287b4..fede5159e7f5b 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -609,8 +609,11 @@ MODULE_FIRMWARE("qcom/a650_gmu.bin");
- MODULE_FIRMWARE("qcom/a650_sqe.fw");
- MODULE_FIRMWARE("qcom/a660_gmu.bin");
- MODULE_FIRMWARE("qcom/a660_sqe.fw");
-+MODULE_FIRMWARE("qcom/a660_zap.mbn");
-+MODULE_FIRMWARE("qcom/a702_sqe.fw");
- MODULE_FIRMWARE("qcom/leia_pfp_470.fw");
- MODULE_FIRMWARE("qcom/leia_pm4_470.fw");
-+MODULE_FIRMWARE("qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn");
- MODULE_FIRMWARE("qcom/yamato_pfp.fw");
- MODULE_FIRMWARE("qcom/yamato_pm4.fw");
- 
+[1] https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
+
+Stephen Boyd (3):
+  arm64: dts: qcom: sc7180: quackingstick: Disable instead of delete
+    usb_c1
+  arm64: dts: qcom: sc7180: pazquel: Add missing comment header
+  arm64: dts: qcom: sc7180-trogdor: Make clamshell/detachable fragments
+
+ .../boot/dts/qcom/sc7180-trogdor-clamshell.dtsi   |  9 +++++++++
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi      |  5 +----
+ .../boot/dts/qcom/sc7180-trogdor-detachable.dtsi  | 13 +++++++++++++
+ .../boot/dts/qcom/sc7180-trogdor-homestar.dtsi    |  9 +--------
+ .../boot/dts/qcom/sc7180-trogdor-kingoftown.dts   |  2 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi |  3 +--
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi     |  5 +++--
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi      |  3 +--
+ .../dts/qcom/sc7180-trogdor-quackingstick.dtsi    | 15 ++++++---------
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts    |  3 +--
+ .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi |  5 +----
+ 11 files changed, 38 insertions(+), 34 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
+
+base-commit: c3f38fa61af77b49866b006939479069cd451173
 -- 
-2.45.1
+https://chromeos.dev
 
 
