@@ -1,151 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-21654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03B688FB9F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 19:07:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 313FE8FBA10
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 19:13:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A983728485B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:07:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 542781C21C1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 17:13:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B55FA14A086;
-	Tue,  4 Jun 2024 17:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3F8D149C79;
+	Tue,  4 Jun 2024 17:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i3E6SxfJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kl+dkchX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B1D149C44
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 17:06:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E2AD535;
+	Tue,  4 Jun 2024 17:13:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717520776; cv=none; b=uVDmVPYvUQX+dVKep3sjxNnlV03n2e4UVZsUKDdcQyJ25eXwaioaEsRrfxz7YEoOHup7e8uJ9KGaLX1WXgUdjWaLHaf25sl639Zr4XbhePOJNtV15tx65NYKP83bMgeoyRKrWsUExYIXqC1pxP5IKjMAOMVITjDfCBVwOYLm7fQ=
+	t=1717521230; cv=none; b=iTnAQUJmg1WG0KYEypmmpKbg0ahwU8UKmfANzsmwld9Cn87MSgoMnJzxbwaHLY6JYzj68AT2QHPmu+q0Me2KO5GH91V3mdQbi/6xViTVYThu2WhM8/EwoLX9JSNtV4ktg9hAd03We8Ph64QO7dvDFY9mIxK0WZb8coaLUakJLm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717520776; c=relaxed/simple;
-	bh=7FZMerzyumByug0YBJaZePO62jxn9Zgedg66wnJtGLQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ft9e50d+eSeMJRwDwhJJJMOy8nQbpusfBHocgy/cREYtE6fJzm9eU0I+czfDqU8oyMK63cs3OlxW7bOuBKq6ls12uuvkLQCKKBojfD9IvHRHkc/W6g58dExfEWcNZ1Y4cK06fE5it213rJIB/TaLe3IPKcRqt/xQNcTh5V3xTgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i3E6SxfJ; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-579fa270e53so6609859a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 10:06:14 -0700 (PDT)
+	s=arc-20240116; t=1717521230; c=relaxed/simple;
+	bh=CMATLtHwVglZBZD8dhXY31CD/YKyPjonB2JuUGesnGw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h0NEVcwmh1vV/Ra+uvShoRHh/W/U/qMjhaIxb74V5EHpuj1oZ70XdcaavNap0Dz8OYR+vSdaho/Ev8YxtmvvgOPM9Tzlcbif4A/jTGFdhPi67gTZp06K6m+wEY39ZEFZ7aaU2o8YP8vtmkIH2d+41f6AMJVNvRzE8se1RIjnloA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kl+dkchX; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-44026036ecdso3604291cf.3;
+        Tue, 04 Jun 2024 10:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717520773; x=1718125573; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4aUMBd6S6vH1Fq76iwhEyjBkvlh36Pc3VvYRxup98QU=;
-        b=i3E6SxfJRRCVXelXM9VViV381xYdplJpsdn/xfmEDSpzUS50fakhUXufIKuM3wHvkm
-         iKj0beU/ibLDnZtvyzkSWR1oT91xa+FJCuH24iubMbhjPa5hZ4yfaja/w7Lr52cXvS3w
-         Wny81Gj1+tnHjsFK39Y/wBvp25uSglOyoiJQH2pwyFHhUHbX+/PVpdOFhPpwDt9lP7u6
-         +ARARApUmnnmEN9fmS2gEtVFQf6MPjtZ047hyIvTtLLOcDxN+5hgKptliA9gh1HylDl0
-         ES42ncwvuZuAZ+f95x0GLkOJbPb2Qkv+Ei/4Qtkv2JH9ievmLFB6TcOMMvnS3E9U1QxW
-         htHA==
+        d=gmail.com; s=20230601; t=1717521228; x=1718126028; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sudKpB/2Hr1Z7tzGSj92kMGoRjpOvxRwb9JzL2QNqJ8=;
+        b=kl+dkchX61h1RX1N6Kf7xJFIlQi5f54g76g6MnO3TUFMGJ0oq+nfeDElLHpVcC//04
+         qGPtNcX9yQoU9wnkMOMzfYvTvvwpJhsEYlUcn4qkPxV1/tx1ZOaNDUZLIn2tabd07aLT
+         pIJxywdE369Wvpdz1CcfqnO7l/sC6MaCtmgsZBOBnMa3AVSFIyKW4o3+kSqULZHki9q/
+         2CyMgwd52CqPkr/5a+YmfhsFDa93oO7saY71uuqHowkHszH9K2m52ng7isnDPOyQf1Tl
+         YfDxoh5pJnvRIKcInvBni+wUc1FOEzTLW2v5C4DYB0ZHnPOEw2PJlnasJ3+YrBU/8obN
+         ZLxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717520773; x=1718125573;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4aUMBd6S6vH1Fq76iwhEyjBkvlh36Pc3VvYRxup98QU=;
-        b=eRsPg5AkVzLcITyBEnLav8nBwH0tLd+PcuHYSfveF+e0WfqqIeS1FYuNtraDqGVWJU
-         YLX1tVZ6WCc7HixleMrzC4qPWvTr/2HgDdydLFP2j2S5N0jjJgw43oC/S+6BNLTxMoZ1
-         g731RZ8ES0q8SoxQ1FBbVYzoNEVwQlOBpLotPZB7lDo2/It0K4SPg9GYBX1j7pAHtzlT
-         0WCvSpgar3Dm5aHjEPJrteSfY+8W8lrcpqZgFE2K4TnJ4uSOpGYxRfvXlwKCx5+sfXFX
-         fddw3YvefW7ZNeDTSX1CwHyzFMqgk8TirF7OeS8iXGlfMExxE8HoPDGYYFdNnf3Ss4/F
-         Cpvg==
-X-Forwarded-Encrypted: i=1; AJvYcCUYpHPiI40m64KMWQus+yv5avaoWoWa6FrlSaeFNG3wVqdjDypHHLkXuYTuKU2OyqKGnuUM6DdZOmk4dnS2DrCa9IC6mGFn0ER928c1ow==
-X-Gm-Message-State: AOJu0YycIAvrfkw1d1ATJ1+n/f+TefklPCbQCxqQV2lE4wzmx9dkOMcv
-	AphegoUV/OQgQP2GeooKcnReumiwgf+rIkRtV9GMHaRWK+e7w4ZS7+x9L3veRTU=
-X-Google-Smtp-Source: AGHT+IHT8X9AMfx+BZpwbKKAI0BGP41IwtZlUxVZrzOm9sWMjqE5bRIO+v8abCGhYG5qwitWIODsOA==
-X-Received: by 2002:a17:907:770c:b0:a67:7649:3c3c with SMTP id a640c23a62f3a-a69a000e966mr10970966b.56.1717520772786;
-        Tue, 04 Jun 2024 10:06:12 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:909a:a11e:b2c0:1360:9a97:b2b8? ([2a00:f41:909a:a11e:b2c0:1360:9a97:b2b8])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a69127f2901sm291675066b.48.2024.06.04.10.06.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jun 2024 10:06:12 -0700 (PDT)
-Message-ID: <37b0404d-bba5-4a77-ad86-62c6dd308d37@linaro.org>
-Date: Tue, 4 Jun 2024 19:06:09 +0200
+        d=1e100.net; s=20230601; t=1717521228; x=1718126028;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sudKpB/2Hr1Z7tzGSj92kMGoRjpOvxRwb9JzL2QNqJ8=;
+        b=YoQMze92MrKpVNq5n8MMJ0KMctwB+CSpwR3yquIIxP1so129AF8ONCqyaqEbxrugKb
+         VELlTCbs4C4OzPsLZEVoMcmxHdFbT8oMTOJcvROq46YVuRTQ/v0ipTC81B3EGR/VTJGf
+         SwgoGRpY7dIjvC7SX3g/mLKaKobqQEg+x2+yH47SzKajgzQmRzEEECFT7XdCjbTjbwSR
+         tciPyTEhgzXKlkWP/3aA6LACABvFwtaAoC51jjn8TvFOXZgtyECtJ5O2YrfGN9fQUix4
+         Jhp/q8hOvjxLi8wYR82zlYKfMPQk68tYZFHYH58HCPt1v7noUIVjdtZftONwgl5cjSZG
+         R0Cw==
+X-Forwarded-Encrypted: i=1; AJvYcCWg5zXR1q9PviZQC1fos7WjbPUEUmVRu2BDn2kHsMZTOTXgXG6z+zEfGnKLeYL7aHHpTM7nmue22XkLG1BVWr4SP3IBbQxUF8sDjw93IxZUQ2oBQzziE6auG+3JfnJ4ImsLiRTr9Z3o0Yl8eQ==
+X-Gm-Message-State: AOJu0Yyj36hK1D5hopzkQmWHhTdnYKKpt6wMvDDr+Uz2qHoD75cdqM5l
+	i/GZut4gvBsiV0BJ85GnXgQp08cpFoxvhMbnuKfS7499yJZFwv4dy/KflS+TfamRtlXkbw7cDOO
+	14nELmQfO+1B3Poy3fRiJ/mPgMUA=
+X-Google-Smtp-Source: AGHT+IGDavzMqg1YxgefpG5JC3iDriDmgPEM0Ng6adDKFCKTwp2M6FdaPIc6YV1jKnHIPeqJV4CJilGX8pUiDfvc5cY=
+X-Received: by 2002:a05:622a:181a:b0:43c:7c7f:97b0 with SMTP id
+ d75a77b69052e-43ff54ff7e5mr111658481cf.42.1717521227920; Tue, 04 Jun 2024
+ 10:13:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/adreno: Add support for Adreno 505 GPU
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Daniil Titov <daniilt971@gmail.com>
-References: <20240604-a505-v1-1-82ee1c04d200@gmail.com>
- <49fe3b01-4f00-4ffc-80cf-2a0add1ebaad@linaro.org>
- <CAGsSOWV=i2JHsYNvi5EC6q=NoD8v7SiTjbVQhTDLNw35+irTCQ@mail.gmail.com>
- <CAGsSOWV9SRK1VUJiQfavEM1hL0PapxUBG6CNeD+Q=0qPT5ZnSA@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAGsSOWV9SRK1VUJiQfavEM1hL0PapxUBG6CNeD+Q=0qPT5ZnSA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240116150411.23876-1-quic_bibekkum@quicinc.com> <20240116150411.23876-5-quic_bibekkum@quicinc.com>
+In-Reply-To: <20240116150411.23876-5-quic_bibekkum@quicinc.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 4 Jun 2024 10:13:33 -0700
+Message-ID: <CAF6AEGsO+qxMPG8P5gPwt2KUvNscuUbLZ9OzHNGKJA_=bnoshw@mail.gmail.com>
+Subject: Re: [PATCH v8 4/5] iommu/arm-smmu: add ACTLR data and support for SM8550
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, 
+	dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org, jsnitsel@redhat.com, 
+	quic_bjorande@quicinc.com, mani@kernel.org, quic_eberman@quicinc.com, 
+	robdclark@chromium.org, u.kleine-koenig@pengutronix.de, robh@kernel.org, 
+	vladimir.oltean@nxp.com, quic_pkondeti@quicinc.com, quic_molvera@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	iommu@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Jan 16, 2024 at 7:06=E2=80=AFAM Bibek Kumar Patro
+<quic_bibekkum@quicinc.com> wrote:
+>
+> Add ACTLR data table for SM8550 along with support for
+> same including SM8550 specific implementation operations.
+>
+> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 85 ++++++++++++++++++++++
+>  1 file changed, 85 insertions(+)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/a=
+rm/arm-smmu/arm-smmu-qcom.c
+> index e6fad02aae92..26acfbdafd0f 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -23,6 +23,12 @@
+>
+>  #define CPRE                   (1 << 1)
+>  #define CMTLB                  (1 << 0)
+> +#define PREFETCH_SHIFT         8
+> +#define PREFETCH_DEFAULT       0
+> +#define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
+> +#define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
+> +#define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
+> +#define PREFETCH_SWITCH_GFX    (5 << 3)
 
+so, PREFETCH_SWITCH_GFX seems to actually be two things, b5 is
+actually PRR_ENABLE and b3 is ??
 
-On 6/4/24 18:45, Barnabás Czémán wrote:
-> On Tue, Jun 4, 2024 at 2:27 PM Barnabás Czémán <trabarni@gmail.com> wrote:
->>
->> On Tue, Jun 4, 2024 at 1:55 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>
->>>
->>>
->>> On 6/4/24 02:20, Barnabás Czémán wrote:
->>>> From: Daniil Titov <daniilt971@gmail.com>
->>>>
->>>> This GPU is found on SoCs such as MSM8937 (450 MHz), MSM8940 (475 MHz),
->>>> SDM439 (650 MHz).
->>>>
->>>> Signed-off-by: Daniil Titov <daniilt971@gmail.com>
->>>> Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
->>>> ---
->>>
->>> This all looks very good, just a nit
->>>
->>> [...]
->>>
->>>> +             /*
->>>> +              * Increase inactive period to 250 to avoid bouncing
->>>> +              * the GDSC which appears to make it grumpy
->>>> +              */
->>>> +             .inactive_period = 250,
->>>
->>> Are you sure this is actually necessary?
->> Every A5XX GPU is using the same value, but i have never tried with
->> DRM_MSM_INACTIVE_PERIOD.
-> This was the original patch
-> https://lore.kernel.org/all/20180507224750.9383-1-jcrouse@codeaurora.org/
-> where the inactive period was increased for a530. I cannot test
-> suspend on msm8937 yet.
+Probably you should drop the PRR_ENABLE, and perhaps give b3 a better name
 
-The suspend here refers to device suspend, not system suspend. Adreno
-goes into device suspend every time you stop using it, i.e. after the
-rendering is done and there's no more work to do.
+BR,
+-R
 
-I suppose a good test scenario here would be to keep running and closing
-kmscube in a rapid fashion and checking if the GPU starts crashing for
-unknown reasons (the dmesg would denote that)
-
-> I can check on msm8953 with a506 maybe if a506 works fine with
-> DRM_MSM_INACTIVE_PERIOD
-> then a505 would be fine with it also.
-
-The more testing the merrier :)
-
-Konrad
+>
+>  struct actlr_config {
+>         u16 sid;
+> @@ -30,6 +36,75 @@ struct actlr_config {
+>         u32 actlr;
+>  };
+>
+> +static const struct actlr_config sm8550_apps_actlr_cfg[] =3D {
+> +       { 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
+> +       { 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
+> +       { 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
+> +       { 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
+> +       { 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c02, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c03, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c04, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c05, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c06, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c07, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c08, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c09, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c0c, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c0d, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c0e, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x0c0f, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1961, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1962, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1963, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1964, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1965, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1966, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1967, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1968, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1969, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x196c, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x196d, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x196e, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x196f, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c1, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c2, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c3, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c4, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c5, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c6, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c7, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c8, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19c9, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19cc, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19cd, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19ce, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x19cf, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> +       { 0x1c00, 0x0002, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x1c01, 0x0000, PREFETCH_DEFAULT | CMTLB },
+> +       { 0x1920, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x1923, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x1924, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x1940, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x1941, 0x0004, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x1943, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x1944, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +       { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +};
+> +
+> +static const struct actlr_config sm8550_gfx_actlr_cfg[] =3D {
+> +       { 0x0000, 0x03ff, PREFETCH_SWITCH_GFX | PREFETCH_DEEP | CPRE | CM=
+TLB },
+> +};
+> +
+> +static const struct actlr_variant sm8550_actlr[] =3D {
+> +       { .io_start =3D 0x15000000, .actlrcfg =3D sm8550_apps_actlr_cfg,
+> +                       .num_actlrcfg =3D ARRAY_SIZE(sm8550_apps_actlr_cf=
+g) },
+> +       { .io_start =3D 0x03da0000, .actlrcfg =3D sm8550_gfx_actlr_cfg,
+> +                       .num_actlrcfg =3D ARRAY_SIZE(sm8550_gfx_actlr_cfg=
+) },
+> +};
+> +
+>  static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>  {
+>         return container_of(smmu, struct qcom_smmu, smmu);
+> @@ -601,6 +676,15 @@ static const struct qcom_smmu_match_data sdm845_smmu=
+_500_data =3D {
+>         /* Also no debug configuration. */
+>  };
+>
+> +
+> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data =3D =
+{
+> +       .impl =3D &qcom_smmu_500_impl,
+> +       .adreno_impl =3D &qcom_adreno_smmu_500_impl,
+> +       .cfg =3D &qcom_smmu_impl0_cfg,
+> +       .actlrvar =3D sm8550_actlr,
+> +       .num_smmu =3D ARRAY_SIZE(sm8550_actlr),
+> +};
+> +
+>  static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data =3D {
+>         .impl =3D &qcom_smmu_500_impl,
+>         .adreno_impl =3D &qcom_adreno_smmu_500_impl,
+> @@ -635,6 +719,7 @@ static const struct of_device_id __maybe_unused qcom_=
+smmu_impl_of_match[] =3D {
+>         { .compatible =3D "qcom,sm8250-smmu-500", .data =3D &qcom_smmu_50=
+0_impl0_data },
+>         { .compatible =3D "qcom,sm8350-smmu-500", .data =3D &qcom_smmu_50=
+0_impl0_data },
+>         { .compatible =3D "qcom,sm8450-smmu-500", .data =3D &qcom_smmu_50=
+0_impl0_data },
+> +       { .compatible =3D "qcom,sm8550-smmu-500", .data =3D &sm8550_smmu_=
+500_impl0_data },
+>         { .compatible =3D "qcom,smmu-500", .data =3D &qcom_smmu_500_impl0=
+_data },
+>         { }
+>  };
+> --
+> 2.17.1
+>
+>
 
