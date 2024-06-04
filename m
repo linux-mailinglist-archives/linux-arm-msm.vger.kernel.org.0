@@ -1,111 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-21684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 982698FBFB4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 01:14:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EE058FBFC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 01:23:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 553B828A278
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 23:14:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C0D1F1F23483
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 23:23:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E540F14D43E;
-	Tue,  4 Jun 2024 23:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8313C14D2B8;
+	Tue,  4 Jun 2024 23:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SwPFvpoN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HLiPBDnK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9E414D28B;
-	Tue,  4 Jun 2024 23:14:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5EE1442F5;
+	Tue,  4 Jun 2024 23:23:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717542858; cv=none; b=D6JmmMSAxDgYikPKQ6IdJBOMxaapn91BuORfXuHR8gBfo9EnJSeorFQShwVEIAIkuFpCH9fZ/JFVNO+ggXJhttjaqqGXwcD1Zg5XUTE4zytrVwILGsUvqACesqzZJGWzgTlyXVp7TEdw11Vw04x5kKLI0UxkulrjiYvpFoiyo+Y=
+	t=1717543430; cv=none; b=Z2sIp53nvEbgZkn4Ps1WbSFU+5ACKyKNfYCvWPMvKiRVt0+p+8zOp1ekWaGwJMGju0gEscF0LqE8EvQNLvZHGMpOTCGd3M0eYP8f6KmDow5PYUjJPWu77UP8jX4lqcLDT8oaT61LrcTl8GJWXkv45KHDmHa0bXhAPuB9tjyJtVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717542858; c=relaxed/simple;
-	bh=y1mTtAlH2HuLUf25v/LySlH6akxKBu02tXMnW6gHWHk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ntFaOJdBvUm8ieW9FGC8poeW5/3drXwzcJXJhnJDNGrawr1b0xeDO7XzmXn+aY+ZqCYNuMJo359hmDKyPP5ejgQDztBdxxO4RM3lCYez+Yhqqua+1nVHSBnRV7GyjlRsoUCZ5iPuOKDD1OrP+W2SPd5k4aZOqOunuTU5tqGK5sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SwPFvpoN; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 454LD832000945;
-	Tue, 4 Jun 2024 23:13:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	y1mTtAlH2HuLUf25v/LySlH6akxKBu02tXMnW6gHWHk=; b=SwPFvpoNZE7dHwJc
-	ir+h/O60rTin1bD+0PHOMpC9/sUgAnNqvY9cQW4X000flKMiH3YDT9DyymYl0DwB
-	09clSjTJOetJWuB4GY3TNMPBnqVZc9+XVezXZwir6gj5oOAz8Kd9iXGxTP1zWGh3
-	dZYgkS+NFueMl8QBhbmR9g34NjdOZDx9my8PcMJMwxsF7pmHPBjo0yMhB3LjMRRe
-	7dFgx0Y3SKesHvvZB+PD5XfYgX82JwtF4qeqQpySF/c+yagt/YWd2cNJIVzNYXo6
-	L4nQtMmve4rbOmQtknGF5iMArAVUhjcC9oGIoOH22E0HZxAGVSfUdmfE5OpEiUJq
-	xwvB6w==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjan2g5yx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Jun 2024 23:13:57 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 454NDuo6025285
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Jun 2024 23:13:56 GMT
-Received: from [10.48.241.109] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Jun 2024
- 16:13:55 -0700
-Message-ID: <40e65895-fc87-4754-ab5c-29d7c95b6d17@quicinc.com>
-Date: Tue, 4 Jun 2024 16:13:54 -0700
+	s=arc-20240116; t=1717543430; c=relaxed/simple;
+	bh=TcM91AOH5mARdOX+sC1EAXIn04cXXNDDk3iF8SmOPds=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=ZC+4MBiOncvQHflM4Suy6R2rD2UKjB7NFhppXg/sAWDhIdMzaHxo8jDGD3vEEv0iJTpUxCt0OaTgm+J6PGU4GjSg4BAsEDvQDPCvpgndpfSEEPfox9vvrKezYPei6Wjgk4rVMOANiWsbTYASRIc6zeHIuVuCYPeFuyHdY49lEiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HLiPBDnK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E83C3277B;
+	Tue,  4 Jun 2024 23:23:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717543429;
+	bh=TcM91AOH5mARdOX+sC1EAXIn04cXXNDDk3iF8SmOPds=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=HLiPBDnKEroIafHmkKhjL6ZMtwQGyKIKNbO+TcKl/05kSJIwg0yO1zoMMQbmOFtv3
+	 BPwiExtk5Je89Q0RCvCcP3KlX4Gh/9Y/96+4Th9xJSJREAr9tGTnYtD0hKHOUVm8i0
+	 rjrBa1hjbTsB2cAxnsTkD0mIW0nAt1HupIBiC4A3ABFImA1myBc45JQ3fI68abpMiw
+	 FrSRmzcAkYkvGQ9Cux3ZCT6BXB2Q07caU5VI5TY6DxiGtNCxTfI+3q8uT3jeG6ugDG
+	 bMO4Zbad0NPDHHGrNKyQfl8QS8RH9L5uVpcBiiwcQRkGeBpZCcqKAFD5AbiCUxhYJc
+	 Hrn3BtBW16vpg==
+Date: Tue, 4 Jun 2024 18:23:47 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+	Rocky Liao <quic_rjliao@quicinc.com>, Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Alex Elder <elder@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	ath12k@lists.infradead.org, linux-pm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	kernel@quicinc.com, Amit Pundir <amit.pundir@linaro.org>
+Subject: Re: [PATCH v8 16/17] PCI/pwrctl: add a PCI power control driver for
+ power sequenced devices
+Message-ID: <20240604232347.GA740032@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v22 03/38] xhci: sideband: add initial api to register a
- sideband entity
-Content-Language: en-US
-To: Wesley Cheng <quic_wcheng@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-        <mathias.nyman@intel.com>, <perex@perex.cz>, <conor+dt@kernel.org>,
-        <corbet@lwn.net>, <lgirdwood@gmail.com>, <tiwai@suse.com>,
-        <krzk+dt@kernel.org>, <Thinh.Nguyen@synopsys.com>,
-        <broonie@kernel.org>, <bgoswami@quicinc.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>,
-        Mathias Nyman <mathias.nyman@linux.intel.com>
-References: <20240524001043.10141-1-quic_wcheng@quicinc.com>
- <20240524001043.10141-4-quic_wcheng@quicinc.com>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <20240524001043.10141-4-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vwSx6Pp3ZiBFJUsFcI3mthVu9lAH8gPT
-X-Proofpoint-ORIG-GUID: vwSx6Pp3ZiBFJUsFcI3mthVu9lAH8gPT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-04_11,2024-06-04_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 adultscore=0 spamscore=0 clxscore=1011 mlxscore=0
- malwarescore=0 impostorscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406040188
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240528-pwrseq-v8-16-d354d52b763c@linaro.org>
 
-On 5/23/2024 5:10 PM, Wesley Cheng wrote:
-> From: Mathias Nyman <mathias.nyman@linux.intel.com>
-[...]
-> +EXPORT_SYMBOL_GPL(xhci_sideband_unregister);
-> +MODULE_LICENSE("GPL");
+On Tue, May 28, 2024 at 09:03:24PM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Add a PCI power control driver that's capable of correctly powering up
+> devices using the power sequencing subsystem. The first users of this
+> driver are the ath11k module on QCA6390 and ath12k on WCN7850.
 
-Please add missing MODULE_DESCRIPTION()
+Can you add a little detail here about what benefit we will see from
+this driver?  E.g., something that doesn't work correctly now, but
+will work with this driver?
 
+> +static const struct of_device_id pci_pwrctl_pwrseq_of_match[] = {
+> +	{
+> +		/* ATH11K in QCA6390 package. */
+> +		.compatible = "pci17cb,1101",
+> +		.data = "wlan",
+> +	},
+> +	{
+> +		/* ATH12K in WCN7850 package. */
+> +		.compatible = "pci17cb,1107",
+> +		.data = "wlan",
+> +	},
+
+IIUC, "pci17cb,1101" and "pci17cb,1107" exist partly so we can check
+that a DTS conforms to the schema, e.g., a "pci17cb,1101" node
+contains all the required regulators.  For that use, we obviously need
+a very specific "compatible" string.
+
+Is there any opportunity to add a more generic "compatible" string in
+addition to those so this list doesn't have to be updated for every
+PMU?  The .data here is "wlan" in both cases, and for this purpose, we
+don't care whether it's "pci17cb,1101" or "pci17cb,1107".
 
