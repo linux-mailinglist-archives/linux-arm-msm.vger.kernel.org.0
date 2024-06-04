@@ -1,118 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-21578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B5E38FB0CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 13:14:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CCF18FB0EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 13:17:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F24711F227FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 11:14:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C22AEB222F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 11:17:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12F0D145348;
-	Tue,  4 Jun 2024 11:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E8F7144D20;
+	Tue,  4 Jun 2024 11:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pck8xz7a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bW3GE3IB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF6D14533F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 11:14:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AA7145B03;
+	Tue,  4 Jun 2024 11:17:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717499653; cv=none; b=JNbCkJHep7tC/6lp2HeJsb5Bia6HiL16QBj0bGofGOlhmm9Ibf/6DV+XYHXN3ZjRFCGmw3+WdBYxmvmPn8BJUjUKOzdccTb3er9ZC8gr6RxnZ8F5K1/Pdcve85W4ZJO/Px/m+YD2MfDF45IwfVGSU3S2yO9DZDFV/iajpF4sMDU=
+	t=1717499847; cv=none; b=Ws7nKY3q5UpzNcB1LpjudIQuHIRIh+J+Haza1LP+mlq+tVvqdnve8QnYGN4J69kHVMfOpjM1RDwf0Yx5ljAZLPf5vpigTRCGyPwp5tqmBUKClED2zulwzdfaAbyG1DAofJvbxP+GnElGo2di2I7MT01X8TmZdVcOlQbF8/tBPEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717499653; c=relaxed/simple;
-	bh=gkoEaXTyzcTGwsF2z95ESHnjbvRX6cwJPCJEJHD0kz8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F5TnaIZebONdgw6ZifhxHTx+W7IxmU5cHlEtvXHPdf1/teRpVtKQj52/LFmO0ZF52JwtE7xMp6eBZbBwl6ixRDn+menrWJ4FWpKgpvOu80EwqIWZRBVtNVG5V1kNcjqq2KOAg0djEOmWl5jHlwRQMFv+017RewHkOY0FTGN7elE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pck8xz7a; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dfa48f505dfso5447940276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 04:14:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717499650; x=1718104450; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q4BJtPQ73qcfI2sO7ETwV4VEq/ZHWblB62uvfMkAtXA=;
-        b=pck8xz7aEQCZrXxZBnTqIUQJ/hy5CAtsO/YnI4+QTIMDaLZ/iomeFmDWIMuiuEOv2H
-         cmI95gO6IS3BM1C3jdbsOzHg2NAmdNpWtKvP4DboE4PEWT2gHw3cRN2xAQ0zW3UId6HG
-         qIO3XkzCY38Tqn1nzNDZ0bdyChnOHNXZCqPZqZ1pJkKBbxCtoL4LS2Z5ifWOEboVVBMG
-         onQtMeGJXMeS7JF30GvwDra7+5K4S0xx3pnfd+liP8/0mZdgZTdNnX0dCNewHoi5UP0w
-         SKY8xL5FCSOcmf734LZfR0qop/RzoYIA4TFibRAQm02HqW5U6hJQBFkMNobVG1rMjL31
-         s91Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717499650; x=1718104450;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q4BJtPQ73qcfI2sO7ETwV4VEq/ZHWblB62uvfMkAtXA=;
-        b=hk60st+FBrbiud5471RMoheNvFC2TZxQpkh7vFhOBkwRM/FQxHTblGPx+Vqna/bmvc
-         hXNwpFs2XA1V9YSQZinu8lfbeZlmzo3uMI8EuHHjSfmK+tJEdO9zbDffX3NQVUTQBts6
-         C+Uyp1x7sBFfJL9O/aAyJ6DHjTCZTzyJ8h+1UGVE4PIW+Ea8GwFcJWgHlBKI5AFpTtEp
-         axtlZNLl0z/cDRXatNm7fFPlI7x6SWh6KIKOTr/FWgKG1RRJFYomp9Buq574VDNTWVYY
-         G10o1c15xkRo2UzZn+883KF9H6g7v28G8Eadr7sS9qgMbGmkieBrEavQe1TtCJ5Y1LbF
-         FaLw==
-X-Forwarded-Encrypted: i=1; AJvYcCVdkvqCiBgQcJYNZiS1zwYSURsVS0BOmwzm15cpbk/l5Hzbx9uIkb7gG3VPzy5bG1qPlR3R4yn9fXQ1rnugwT7aKqty3TOEvKgxI5IHKw==
-X-Gm-Message-State: AOJu0Yzlt7NJpqq+XnHrD6g8xHk6sYSEqOPiOvqgh9d8KSsi6tw9SY3r
-	S0ddsCMIw7XBp79aPVmYOTvdTFcxim4O+VDDoeEndIBj5bkmEYFHqgssuj5J8TbrpkL4NVyu1c+
-	dkkNzfHc+P8AwjcMWJnHih8evvz0zndH5hY9Qyg==
-X-Google-Smtp-Source: AGHT+IGbblsFi//5mNdWKH76B/L88CqYx2joBG7nqbVMyDK7axGNMhKFIZaU+2AbW4M8ccMJuHxy87Azife0n7bvlpg=
-X-Received: by 2002:a25:acdc:0:b0:dee:998b:1459 with SMTP id
- 3f1490d57ef6-dfa73c3dbc1mr11889385276.39.1717499650330; Tue, 04 Jun 2024
- 04:14:10 -0700 (PDT)
+	s=arc-20240116; t=1717499847; c=relaxed/simple;
+	bh=ry3W4ejMvdfZDiI2lwHOaYBPQIP4mzzcKeBIDGzh7fA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cLzfp89WtiQYed57kQJ4Jd33Sfj5JjNP1p2/GnHSkBv7iA9WgORFCGvGMXJ3HuL+M42G4ncEEMqxHAz5l+bNMlk83s7HRoaVfW2XwpQMaUBrmH2E18EPBkJqggnJ6rkd4j0IdBE794Oww5BNihl+aCtcshoc9nBb2YHo8wo8d+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bW3GE3IB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC69C32782;
+	Tue,  4 Jun 2024 11:17:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717499846;
+	bh=ry3W4ejMvdfZDiI2lwHOaYBPQIP4mzzcKeBIDGzh7fA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bW3GE3IBaN63Sd741SnX4WqI3Iaqp+mpW7gs8SFSsYkqB2Ko4GSWwZhsvE7+AE/bQ
+	 7yRIp1E4/Vr93IoprQ5Hjn+1ADEBLqlHvxtx+9El+tcOi9fUg00VILyBpD6YRLdL5N
+	 XCv3e3NVV84QvXqBfZh3Xw1jx/RAQ7XM/0fWoOYVvHm+F4R6vK1agHJ0eBeI2ENoGd
+	 zFJTkwiiECReaDb6l7j1MH3USEqln700STIHnpmN3ufjQwChxyNo2CXh1AY3dTeIjk
+	 2UoVak7g26TJ0Wzn191eKZJUFimUxbBWHtJBanbgOyacdxJoW+eZVfUhFav+16LVvs
+	 WhVnMjExq57PA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sESAP-000000003Jb-0Nm6;
+	Tue, 04 Jun 2024 13:17:25 +0200
+Date: Tue, 4 Jun 2024 13:17:25 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Document the X1E80100 QMP PCIe PHY Gen4 x4
+Message-ID: <Zl73xRo7JpAZ5ViO@hovoldconsulting.com>
+References: <20240531-x1e80100-phy-add-gen4x4-v1-0-5c841dae7850@linaro.org>
+ <20240531-x1e80100-phy-add-gen4x4-v1-1-5c841dae7850@linaro.org>
+ <Zl26Y0VklPmiirem@hovoldconsulting.com>
+ <8e5610de-8091-4a08-a3b8-a0eecdc89438@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240523120337.9530-1-quic_nainmeht@quicinc.com> <20240523120337.9530-2-quic_nainmeht@quicinc.com>
-In-Reply-To: <20240523120337.9530-2-quic_nainmeht@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 4 Jun 2024 13:13:34 +0200
-Message-ID: <CAPDyKFpAtvQyfKJ6-xWEZhv259eAzuS+nmA9tcFDf_h728s1Qg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: mmc: sdhci-msm: Document the SDX75 compatible
-To: Naina Mehta <quic_nainmeht@quicinc.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, bhupesh.sharma@linaro.org, 
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8e5610de-8091-4a08-a3b8-a0eecdc89438@kernel.org>
 
-On Thu, 23 May 2024 at 14:04, Naina Mehta <quic_nainmeht@quicinc.com> wrote:
->
-> Document the compatible for SDHCI on SDX75 SoC.
->
-> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On Tue, Jun 04, 2024 at 01:00:35PM +0200, Krzysztof Kozlowski wrote:
+> On 03/06/2024 14:43, Johan Hovold wrote:
+> > On Fri, May 31, 2024 at 07:06:44PM +0300, Abel Vesa wrote:
+> >> The PCIe 6th instance from X1E80100 can be used in both 4-lane mode or
+> > 
+> > nit: s/PCIe 6th/sixth PCIe/
+> > nit: s/from/on/
+> > nit: s/both/either/
+> 
+> That's really nit-picking and not helpful in getting things merged.
 
-Applied for next, thanks!
+Writing proper commit messages with correct grammar is in no way to be
+asking too much (especially from experienced kernel devs).
 
-Kind regards
-Uffe
+Also, the code does not work so it should not be merged yet anyway.
 
-
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> index c24c537f62b1..11979b026d21 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> @@ -51,6 +51,7 @@ properties:
->                - qcom,sdm845-sdhci
->                - qcom,sdx55-sdhci
->                - qcom,sdx65-sdhci
-> +              - qcom,sdx75-sdhci
->                - qcom,sm6115-sdhci
->                - qcom,sm6125-sdhci
->                - qcom,sm6350-sdhci
-> --
-> 2.17.1
->
+Johan
 
