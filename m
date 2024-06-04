@@ -1,213 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-21679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A633C8FBE8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 00:12:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B4BD48FBEC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 00:19:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5ED27283F01
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 22:12:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71479287217
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 22:19:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04442143754;
-	Tue,  4 Jun 2024 22:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 659D614D2B2;
+	Tue,  4 Jun 2024 22:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YaHYyOuq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pbnyJeqd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B081143744;
-	Tue,  4 Jun 2024 22:12:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6ED714E2E2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 22:18:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717539173; cv=none; b=YpbHscg05TW7iSGuCrw98XIqOyMWldhPCdbusE3uNyZvpCmvJDveJFpOFSOT+FSh21HBhtPgXdQKRI2RTbqJEqkAvmOx2OjYyV8YG/zhlK9LgdDISk/r0/Kgdre9xj2ppaBnSVp/SwvfzrqFDtmegRMf0M2+u0QxyYVxqDUPpKU=
+	t=1717539485; cv=none; b=ByojcO+hmzcB0HZGeD0d11gjtS7mbj07HjTCvCy01U5Tzhmk4KowqY0HH3TVlOByUfjHAYrTf6/2ALSZbRunrjSFAWaFC+jE1Y1M9nH68ZWjtgU2UVPfQKLpETFPOdsZJvCB737KJGJO4yFt5qO6pcGDVVODw8AG+NrrBc6uOsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717539173; c=relaxed/simple;
-	bh=0CGf52J6wqg2rHnHzyeVZToNAn6a/5leV2ds3euk2eE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Ws2FsTe/+NS7lNWoBUxPrMsT60Y6iiNqNC2AzUYnHvg7iw3+Ipcc27EVfDgJh+LS+GVHnNSjOLiuJaXcoaPWcemu/NVh9jwaVbpWw9vh5OkE7tszUA4gzVOLqtlC3gXdPndAX2+eALb0svivtPNkDESSymfjgvDQkXtsJRwTw6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YaHYyOuq; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 454HHleZ003537;
-	Tue, 4 Jun 2024 22:12:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	w7EOe9ICjeZr31Ifq5ILUU15LEV5uAZYJEGQW6l5SOo=; b=YaHYyOuq3xZAj4NL
-	nClaNKJzDbMVUO/3VLHccju/AOcQGAlOhxNyxA6fo7DcQBshy4BJIBIJ5MyWmR7J
-	Nwy5xeY/LcfcCwpVCwjVs4+85tL5lVCYoKBy1nja0zn6CEuBHbYHGbB5DVIAbx24
-	MoVPzrPy3yo1LD1wqI/BBzw9bd4v3ExECpaN1H+jWd0iyUb5+mLV0aB3ce4iO1XR
-	HzuqgvLuJnPWZ82eOY8YY/BWOicLL9LjUFYq7Xu1nDp8AjbldvoarwxH3LAEH0xw
-	rqB4FAB6M0FyinDBvcOsOexx5JBgEoFJWKbeLEwpeEVAOybm/Nky+GNJzVOXipc5
-	mJj/oQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yj76wgjtq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 04 Jun 2024 22:12:48 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 454MClSw019533
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 4 Jun 2024 22:12:47 GMT
-Received: from [10.110.67.122] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 4 Jun 2024
- 15:12:47 -0700
-Message-ID: <abaefa57-b387-44ad-97bc-548da80f36ba@quicinc.com>
-Date: Tue, 4 Jun 2024 15:12:46 -0700
+	s=arc-20240116; t=1717539485; c=relaxed/simple;
+	bh=UxKMXajm6DR0Riqf2wqSJ50U+pm47wuiq1272pCFaQQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cYQcsmEaGFYfup+swD5RnOaj7aKqFxoqDCSrqF91UoPoQUsR5Omzeed7UPUJI6nCEEoLpO3y08fpl/ZgK9dGcJ36kVo2rNLS6KgHfFqt3S7oyafA7CdiL3qjbj3Ul+5mGyqdxF4+55TOBj/EyNnfppDGCDKfwRJhSsWnb8luOV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pbnyJeqd; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-627f3265898so63263027b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 15:18:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717539482; x=1718144282; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dju8euEud3tGI0Dc64zoJcqRLm8j+Mv/qSb1l+QDEd8=;
+        b=pbnyJeqdYCIU+zt6EN/zvHuwDm4V6e4hGfrxawjbGuWKVYy7vF1pt9F4HmyKIS6FmR
+         SUZN9dsQj/PYN1lMcP0LxDSksnRkHVWZ55XfeVjRvTBpnpNzmK4IdCTxspnxO1dkOxAc
+         2oNNUKylNUwYkp3pxPUysfOVW748pTi8SUSHWoyXul9gV+m6Si0g5RuQrRvYpe4lSnXZ
+         mU7THmP4bSOD7wBVv3JnQ/xWoQNKhfCnsUoe58E+cYz0ozt2BbSA7xmFcmaJZtAxXqD4
+         CnXthFe5byNZLHG/P+LBi+TpVCzwjG/gsiYsD6vUYXHyNL7WkdPnjkRd9fhbD2OhoiiF
+         hwcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717539482; x=1718144282;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dju8euEud3tGI0Dc64zoJcqRLm8j+Mv/qSb1l+QDEd8=;
+        b=lps2G0xGTZ5uVU0/b8kGbOZvXxLQp7EJVf+h5YaqgNfNp6GNGZUs30ULO47pcaIdNk
+         7SvZUykDIJXUNMfsMpX7nj1wxxS7RQOYzRp3DndGEgws7rkx4rFJJcv/m3InK4W8TsoJ
+         DvwDu54/Z774RPOcUpOJewXZxgevkcqP+Wl1QWTVDrcsatw7vMLGrQaclHjJC1UXVq6/
+         j33l0PP0dbi6RYGB5g8JNmrAeBt1Vgm6xyarRssFz/qyx0N59GXnVEPuepzcZCWGI3zg
+         UXOMX3Qi3Dv7pdn+fVLhDRwM6AX92KIrUh7X24uGgL9F+3zJcQ3BFT6sKUPu3FnQArGK
+         iUXA==
+X-Forwarded-Encrypted: i=1; AJvYcCWs2XA66+7xU3+V9gWpKjfdHjpVIC6fzSxi5OIky/2Sce6wKt6dfMhtWdEtAV0xh28K9OlUE+P37WXtIGspJY8vSQk3YjdIO+mtUp7uJw==
+X-Gm-Message-State: AOJu0Ywag5k8YDctTDRYldRTQdqUiDAI0wpctvSnbclk1GOM+EilXUHa
+	/mE798TyP7CM54Q6mVX0gcXv3c5N/f2eNkz6YGAkqBTRWYlZr1yRniYJYZ406m4DBux3Hc+dsBS
+	nXKqKWAAr9LYmKffz2g8Tc5r5nwLz/msJ/ZGrlA==
+X-Google-Smtp-Source: AGHT+IGjOfS4i93Row/X3jqzU0dH+hExXMYcFf+ZqDyJ2rsltsLw1J6GpgelC+gB54Q/xtCmXF7iFbUk4LEnR14NsBE=
+X-Received: by 2002:a25:828a:0:b0:df4:e791:867c with SMTP id
+ 3f1490d57ef6-dfacacf972fmr736847276.43.1717539482510; Tue, 04 Jun 2024
+ 15:18:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1] rpmsg: glink: Make glink smem interrupt wakeup capable
-To: Caleb Connolly <caleb.connolly@linaro.org>,
-        Deepak Kumar Singh
-	<quic_deesin@quicinc.com>,
-        <quic_bjorande@quicinc.com>, <andersson@kernel.org>,
-        <mathieu.poirier@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <quic_sarannya@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>
-References: <20240603073648.3475123-1-quic_deesin@quicinc.com>
- <8d10fbbb-471e-4960-a52a-1658df9fbc0c@linaro.org>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <8d10fbbb-471e-4960-a52a-1658df9fbc0c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: OX-JpblHBItWdJDV8jx4GR8OpvTne9uI
-X-Proofpoint-ORIG-GUID: OX-JpblHBItWdJDV8jx4GR8OpvTne9uI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-04_11,2024-06-04_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 mlxscore=0 suspectscore=0 mlxlogscore=999 clxscore=1011
- adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406040179
+References: <20240604214018.238153-1-pbrobinson@gmail.com>
+In-Reply-To: <20240604214018.238153-1-pbrobinson@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 5 Jun 2024 01:17:51 +0300
+Message-ID: <CAA8EJpr2ZKugjwYzFUq3Rqjdm6DO-PiZEfiuBjxSnJDmRcMRdw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/adreno: Add some missing MODULE_FIRMWARE entries
+To: Peter Robinson <pbrobinson@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Wed, 5 Jun 2024 at 00:40, Peter Robinson <pbrobinson@gmail.com> wrote:
+>
+> Add missing MODULE_FIRMWARE for firmware in linux-firmware,
+> this is needed for automatically adding firmware to things
+> like initrds when the drivers are built as modules. This is
+> useful for devices like the X13s and the RBx devices on
+> general distros.
+>
+> Fixes: 5e7665b5e484b ("drm/msm/adreno: Add Adreno A690 support")
+> Fixes: 18397519cb622 ("drm/msm/adreno: Add A702 support")
+> Fixes: 3e7042ba87da ("drm/msm/adreno: Add ZAP firmware name to A635")
+> Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index c3703a51287b4..fede5159e7f5b 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -609,8 +609,11 @@ MODULE_FIRMWARE("qcom/a650_gmu.bin");
+>  MODULE_FIRMWARE("qcom/a650_sqe.fw");
+>  MODULE_FIRMWARE("qcom/a660_gmu.bin");
+>  MODULE_FIRMWARE("qcom/a660_sqe.fw");
+> +MODULE_FIRMWARE("qcom/a660_zap.mbn");
+
+-ENOSUCHFILE. It should qcom/particular-SoC/a660_zap.mbn
+
+> +MODULE_FIRMWARE("qcom/a702_sqe.fw");
+>  MODULE_FIRMWARE("qcom/leia_pfp_470.fw");
+>  MODULE_FIRMWARE("qcom/leia_pm4_470.fw");
+> +MODULE_FIRMWARE("qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn");
+
+I'm a bit sceptical here. Each device has its own zap MBN file (this
+one is also a fancy named a690_zap.mbn).  Do we want to list all such
+files? Consider all the vendors, which are open-source / Linux
+friendly, like FairPhone, OnePlus, etc.
+
+>  MODULE_FIRMWARE("qcom/yamato_pfp.fw");
+>  MODULE_FIRMWARE("qcom/yamato_pm4.fw");
+>
+> --
+> 2.45.1
+>
 
 
-
-On 6/3/2024 2:37 AM, Caleb Connolly wrote:
-> Hi Deepak,
-> 
-> On 03/06/2024 09:36, Deepak Kumar Singh wrote:
->> There are certain usecases which require glink interrupt to be
->> wakeup capable. For example if handset is in sleep state and
->> usb charger is plugged in, dsp wakes up and sends glink interrupt
->> to host for glink pmic channel communication. Glink is suppose to
->> wakeup host processor completely for further glink data handling.
->> IRQF_NO_SUSPEND does not gurantee complete wakeup, system may again
->> enter sleep after interrupt handling and glink data may not be
->> handled by pmic client driver.
->>
->> To ensure data handling by client configure glink smem device as
->> wakeup source and attach glink interrupt as wakeup irq. Remove
->> IRQF_NO_SUSPEND flag as it is no longer required.
-> 
-> I'm not sure I agree with this approach, glink is used for lots of 
-> things -- like QRTR, where the sensor DSP and modem may also need to 
-> wake the system up (e.g. for "wake on pickup" on mobile, or for incoming 
-> calls/sms).
-> 
-> Configuring this to always wake up the system fully will result in a lot 
-> of spurious wakeups for arbitrary modem notifications (e.g. signal 
-> strength changes) if userspace hasn't properly configured these 
-> (something ModemManager currently lacks support for).
-> 
-> IRQF_NO_SUSPEND is presumably necessary to keep the DSPs happy? iirc 
-> downstream Qualcomm kernels have historically taken this approach to 
-> avoid spurious wakeups.
-> 
-
-To give some more context, until recently the GLINK interrupt was 
-managed and requested in the GLINK native layer. Any type of interrupt 
-configuration would affect all of the links. The interrupt is now being 
-requested at the transport layer (smem/rpm), so it has a little more 
-fine grain control.
-
-In downstream, we had switched to IRQF_NO_SUSPEND because there were a 
-couple of cases where glink communication with rpm was needed during the 
-suspend path. Having the interrupt configured as wake capable conflicted 
-with the use case.
-
-The general expectation from the DSPs is that if it is important enough 
-to send, then it should be important enough to wake the APPS subsystem. 
-We've always had to work around the fact we were using IRQF_NO_SUSPEND 
-in downstream.
-
-> I proposed an alternative approach some time back that would allow the 
-> wakeup to be configured on a per-channel basis.
-> 
-> https://lore.kernel.org/linux-arm-msm/20230117142414.983946-1-caleb.connolly@linaro.org/
-> > Back then Bjorn proposed using some socket specific mechanism to handle
-> this for QRTR, but given this is now a common issue for multiple glink 
-> channels, maybe it's something we could revisit.
-> 
-> Requiring the wakeup be enabled by userspace clearly doesn't make sense 
-> for your proposed usecase, perhaps there's a way to configure this on a 
-> per-channel basis in-kernel (maybe as the rpmsg API?).
-> 
-
-This alternative approach seems reasonable to me as well. I think the 
-only drawback I see with this approach is non-data traffic may stall. 
-The glink protocol traffic not tied to a TX_DATA command, such as intent 
-requests, wouldn't wake the system even if the channel is configured to 
-be wake capable.
-
-Thanks,
-Chris
-
-> Thanks and regards,
->>
->> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
->> ---
->>   drivers/rpmsg/qcom_glink_smem.c | 8 ++++++--
->>   1 file changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/rpmsg/qcom_glink_smem.c 
->> b/drivers/rpmsg/qcom_glink_smem.c
->> index 7a982c60a8dd..f1b553efab13 100644
->> --- a/drivers/rpmsg/qcom_glink_smem.c
->> +++ b/drivers/rpmsg/qcom_glink_smem.c
->> @@ -22,6 +22,7 @@
->>   #include <linux/regmap.h>
->>   #include <linux/workqueue.h>
->>   #include <linux/list.h>
->> +#include <linux/pm_wakeirq.h>
->>   #include <linux/rpmsg/qcom_glink.h>
->> @@ -306,8 +307,7 @@ struct qcom_glink_smem 
->> *qcom_glink_smem_register(struct device *parent,
->>       smem->irq = of_irq_get(smem->dev.of_node, 0);
->>       ret = devm_request_irq(&smem->dev, smem->irq, qcom_glink_smem_intr,
->> -                   IRQF_NO_SUSPEND | IRQF_NO_AUTOEN,
->> -                   "glink-smem", smem);
->> +                   IRQF_NO_AUTOEN, "glink-smem", smem);
->>       if (ret) {
->>           dev_err(&smem->dev, "failed to request IRQ\n");
->>           goto err_put_dev;
->> @@ -346,6 +346,8 @@ struct qcom_glink_smem 
->> *qcom_glink_smem_register(struct device *parent,
->>       smem->glink = glink;
->> +    device_init_wakeup(dev, true);
->> +    dev_pm_set_wake_irq(dev, smem->irq);
->>       enable_irq(smem->irq);
->>       return smem;
->> @@ -365,6 +367,8 @@ void qcom_glink_smem_unregister(struct 
->> qcom_glink_smem *smem)
->>       struct qcom_glink *glink = smem->glink;
->>       disable_irq(smem->irq);
->> +    dev_pm_clear_wake_irq(&smem->dev);
->> +    device_init_wakeup(&smem->dev, false);
->>       qcom_glink_native_remove(glink);
-> 
+-- 
+With best wishes
+Dmitry
 
