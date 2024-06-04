@@ -1,54 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-21575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 312848FB06E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 12:52:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 948A98FB07A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 12:53:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6236B1C23227
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 10:52:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4B324284445
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 10:53:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA70145346;
-	Tue,  4 Jun 2024 10:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7A97144D2E;
+	Tue,  4 Jun 2024 10:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HN/DpX8B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5Xmet7c"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C14144D1A;
-	Tue,  4 Jun 2024 10:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A064E13C67C;
+	Tue,  4 Jun 2024 10:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717498309; cv=none; b=L6uh5KurbnPJqVUGzdYCbOj/VO4+Kt00ycSGhl7+PnlAFhpDnZFaJmhIkWME2HZIn22lQ2ja5Sl5TK5fdgPw2ExXuskanYnLMydR3kRGp8pgAHC4dHsP/JSQWHnrReSJZUOanlTjFpL7bnMjovARzkls2x2f/0k/MGkPRPHaNgw=
+	t=1717498380; cv=none; b=JYWyli+zd2wH6ROhLugaR5fKdUg469NgdvYz4W7cn34LeMcdCtr327hHRsP9MwKNxdTD2pcr/pNLmKLqH6MNAXm/zNr2s3L32LGBoNmd1LESQlnsQyhNMxD1zAU6LrwY/bzU7W7qm3FHixALgnqKvOBvlpMN+xNqDXdeMc8iSAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717498309; c=relaxed/simple;
-	bh=dDFtLAPrbCWFw67uOUgzc5PB0wqcAOjBbz+GAOH3WwU=;
+	s=arc-20240116; t=1717498380; c=relaxed/simple;
+	bh=CIT+PLRRVeQCc2z7Vg7ycTCgsifejpCEeedaNo9Y7s0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NSw8LvabfQfAGovO3oKoQvInQ/oXRubz4nu1EIbEWUA1Cl0TDxEpioEpNl5lAu47UGE2gs/CrRBE06KnZU2Y0IcVTbZmKPf9EGQaMgcA2QJou1sIoh/fPyijvHkL+9ILwgPSmXTuB06673LDjOu754dPAq6Se3mX3SuL+X0j5Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HN/DpX8B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4F2C2BBFC;
-	Tue,  4 Jun 2024 10:51:49 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VDNgFFEbINf9Z9wuWenuGJmiqu2kI0lROaI0ftsekEHbfSv6eDaal2JY8PE4ulXZxrZ87Sb0clXM+ZQhIPAFXoKfkvNzjBobGJWEsJ156OZVme7mMzKN1Jv84AWJDEX8J6e9owzSb32nhBFCEq8SYD+0/n3ZltVdG+bxze3tGQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5Xmet7c; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17212C2BBFC;
+	Tue,  4 Jun 2024 10:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717498309;
-	bh=dDFtLAPrbCWFw67uOUgzc5PB0wqcAOjBbz+GAOH3WwU=;
+	s=k20201202; t=1717498380;
+	bh=CIT+PLRRVeQCc2z7Vg7ycTCgsifejpCEeedaNo9Y7s0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HN/DpX8B41dOmqn89bNy/yYXnXP1XKB9vqGTDnOuHhh6+OqcQAOoOXN61IJ025NY2
-	 ND108xDiXy7bN6JDhc0XibCKS+4xduOfJcs7Ls/d/eEkaYkHzfzltyycFoalqNYriP
-	 4XzZIlNI6ugzBC/lLDWOhKlnO8uQhQREjSStGHqpbdJyI9qCcFdeqHbrSBC9XQ5Cn4
-	 UHBJ1DLV/IrFh+r3t8YyMVHEB8nNho4yE6NZGQzNKjZs63jVS+nSzRHu1LIj9eKEDo
-	 08SUwFzDnrB5wYtRi0xY4yhBHwKiyse2qsqKaHR6xaX1n0aeK+xyPSS9hdA+z9oJfM
-	 aMWlA10s4i7KQ==
+	b=S5Xmet7couJFpLtaS/ov6U1F0VLxO4CKzvTvoWut/0vHH5PURzAXdg8upaH/1YpAu
+	 jjkLEw5yqSiL+JmnU/n0SIjshrR2GiZjlSCazWpM4vh7qhCrqfR+RzrH2bY4vGJTRb
+	 EU3G+zlN+DnOgGSqsrJ3ChOLrSB9cEIl6CKfhVY28u/cflYdT7UoCG23l+NdgutNt9
+	 6+DI5daCEbmYIIx5FqHI4eTXj2kJaqMhHyOYXkleb4aEYBmGCFj+T/GTM3TWLq6SLV
+	 oY5iMigYIs4DlbBiQV6OsYZOA+pLfqyJIdZX6kHvQR6FWHWhrUFWTHTy4Ii2WfOfpJ
+	 m4+YNJDMSwM5w==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1sERlb-000000002uY-1Jgj;
-	Tue, 04 Jun 2024 12:51:48 +0200
-Date: Tue, 4 Jun 2024 12:51:47 +0200
+	id 1sERml-000000002vu-0RVB;
+	Tue, 04 Jun 2024 12:52:59 +0200
+Date: Tue, 4 Jun 2024 12:52:59 +0200
 From: Johan Hovold <johan@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -56,49 +55,59 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wesley Cheng <quic_wcheng@quicinc.com>,
 	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Subject: Re: [PATCH] dt-bindings: usb: qcom,dwc3: set minItems for
  interrupt-names
-Message-ID: <Zl7xw4ER-BBvcuct@hovoldconsulting.com>
+Message-ID: <Zl7yCy5G2q0SGlwr@hovoldconsulting.com>
 References: <20240527144538.155704-1-brgl@bgdev.pl>
- <f709f17d-c20c-4777-b23b-8275f6d4f3f5@kernel.org>
+ <CAMRc=McurmN4Hs2MVGCjF0z_FX+84v0psGuTse0K7caSVF445A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f709f17d-c20c-4777-b23b-8275f6d4f3f5@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=McurmN4Hs2MVGCjF0z_FX+84v0psGuTse0K7caSVF445A@mail.gmail.com>
 
-On Mon, May 27, 2024 at 05:13:39PM +0200, Krzysztof Kozlowski wrote:
-> On 27/05/2024 16:45, Bartosz Golaszewski wrote:
+On Tue, Jun 04, 2024 at 08:52:52AM +0200, Bartosz Golaszewski wrote:
+> On Mon, May 27, 2024 at 4:45 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> >
 > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > 
+> >
 > > There's a set of compatibles for which we set a strict list of 5 interrupt
 > > names even though minItems for the interrupts property is 4. One of the
 > > USB controllers on sa8775p only consumes 4 interrupts which leads to
 > > dtbs_check errors. Make the last entry optional by setting minItems to 4.
-> > 
+> >
 > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > > ---
 > >  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
 > >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> > index cf633d488c3f..4251dc25ee9a 100644
+> > --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> > +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> > @@ -468,6 +468,7 @@ allOf:
+> >            minItems: 4
+> >            maxItems: 5
+> >          interrupt-names:
+> > +          minItems: 4
+> >            items:
+> >              - const: pwr_event
+> >              - const: hs_phy_irq
+> > --
+> > 2.43.0
+> >
 > 
-> Can you also fix other cases? I found there at least two other. I missed
-> that during review... or maybe we discussed it? I remember that commit
-> was a pain :/
+> Gentle ping.
 
-Yes, please make sure to fix those two remaining instances at the same
-time.
- 
-> But be sure that this is what we actually want. Maybe intention was to
-> have fixed number of interrupts (so no minItems in interrupts)?
-
-I'm pretty sure the intention was to keep the SuperSpeed interrupts
-optional.
+As was pointed out elsewhere in this thread, there are two more
+issues like introduced by the same patch which should be fixed at the
+same time.
 
 Johan
 
