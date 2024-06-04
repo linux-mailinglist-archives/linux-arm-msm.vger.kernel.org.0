@@ -1,83 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-21667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA1A08FBB81
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 20:25:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6982C8FBBA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 20:28:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4239C1F237CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 18:25:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 225BC28632B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Jun 2024 18:28:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E26314A61A;
-	Tue,  4 Jun 2024 18:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86B8614A60A;
+	Tue,  4 Jun 2024 18:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="WmsmXUcH"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="UfKRuEKu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AF714A4EB
-	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 18:24:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D2D339AB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  4 Jun 2024 18:27:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717525490; cv=none; b=RpQAybhQ5HhUsrvNcEP3Vy6G0FPUchzsxwsmZPkQUDQ+7sALW8DEfdgT1cmRTz5tsH5Lpw/xtcA0SflsDsQSygaYyX98YKY2jbwrghT8r2814dzGSeDuV1M/WGJcmrzwWrTcJGLuxtUB47VrbuMAUxVSS+PTdO7b7TkPYB8h+ZA=
+	t=1717525681; cv=none; b=K6SxjV/oMmYrjJaqBaaHAuIiGa9Tp+elG5lnHqx/nPgP1Q7T7YDlvZ42vdbmjxHDCn96wbcLbpRJthtYjvXNv8zhw7UDy1MIEuVpDEbxmBfgY5rlpEcxXEHp+rW5V4ZtCkG55gc8b9DYVK7Rqmlzm8lha5Zwq1+x5bkxypIPVLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717525490; c=relaxed/simple;
-	bh=o2SN5zEWYP5ck8C2MkkWKldDCJyUDO8w99vyJIIHKlE=;
+	s=arc-20240116; t=1717525681; c=relaxed/simple;
+	bh=tgO7W51+bHcDvjyP/YA64C67mrFqdBGIc+5LxIoRFGo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nRStTX+PfZa3mSkVJXyXt9B1vtAuhMStULoZWcmVLGwbzwV849Fbci1kocKEL8xbJpfe7qVFRHPjoG0Skj8Ll0zp/qfKWKhsBaqmeYMYoX2eCTaQj0ZBHhPDxLdiwwmdq1PlPi24la+Xq/ySpRwKQqxdmAxBiHV1pqpq/r+XVNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=WmsmXUcH; arc=none smtp.client-ip=209.85.208.178
+	 To:Cc:Content-Type; b=meqAbzTTjOQSThVQYx1ehkL4iyXNedhFHnCXZLsW4Q63Ra0jx4f7MVtFm2dGVkFQsLJbRlNbExQCMqN+OZ4AzaatKHmRF/XAJNmIrp6r9pJptIinPb+i0fZiKTsCP9v/ElQ4m8RS8tXpKEVFKE/DuQ/dx0rfkh7yGQTMLA+2fIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=UfKRuEKu; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2eabd22d441so17351061fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 11:24:47 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52b98fb5c32so3844246e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 11:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1717525486; x=1718130286; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1717525678; x=1718130478; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YajuiVABIxMlw/Xt1HbUpyxnW+sg47NgMW4NcK3Sjcc=;
-        b=WmsmXUcHpBY+mALTdJ+Li6kKYWllXT/etQ0BwojCnZrBvhDYxohTOKOWp5g7AL39Vk
-         ZxykjZsTM2gEN9hXi7oITjphGkNyc4BZ3cNJlZPZHdD+uChc3+6P55pTvPZaucLjHqWj
-         Ozv+h/Sr7tgMtRBbWVBWo7omFsF4W9U1W6hvYS3r+qAwncxuBOWU8KzmL7TpZeat0yb4
-         NtJGTlxg2OVH1C9rMCdvjGR3a1O8+uTh8htbw5uUTJiA74jCJ34unQSF9nzGTnfCRo1Q
-         pRfrilZ2P8nwZp14Q4fLc6byXVelLqiS0K3n7Ah04zeqkY7gBDUecUQOXrXl1A3/BeH8
-         34XQ==
+        bh=KtWwyHQ/s1Mo+jSgQ3jPju5LLIQLxY5LIc0kGaj+Rp0=;
+        b=UfKRuEKulQPRJ1eQ1jv5CPwj5N48I2Hd/0RecNZvR1umL2CaLMmHTBGRewMLx8xPVy
+         G8ohgactJFSAKbfIQPzAjtKfd0Sxw9ZtghZ+gPnY03Zy3F/AuVdbxqpIYaBWAInoXrKp
+         gIaaWDULocIxS0mx9djiuvA+RM3Ihq3jAZBVqt9hPjKydR8f38k2Ee3Uek4sOlzndqk/
+         dD4Azb1LLUXGqSiMu5p5k1byuGyaulNDQJDToit2cIh1xnjFr2Vmb2+SP6i40KeANUvt
+         HughqwuP0jI2ouIrSLA5Pi2guWDS3j1FF1vd4CKJq38kHz60Q3jIWz1rgtycCn6OtAv+
+         yGQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717525486; x=1718130286;
+        d=1e100.net; s=20230601; t=1717525678; x=1718130478;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YajuiVABIxMlw/Xt1HbUpyxnW+sg47NgMW4NcK3Sjcc=;
-        b=ViRshJ1eviBK77fijdTYzLORB9HmN3kSQZM5UIVKNFqUbutSg2LM7dIdbm10qH63Qa
-         RWguWZ+Kw+erkhd0ZER2ko3DlcMIyUG0KOLKRzc9bfRGSuVQwXKgY6R4Y2nCtkv+ngVg
-         8SMC+J+LuE1glmUZpxUqUTqzT/rpCA37Cavi0bijDhaCaiJODzxqxvRm79fQEN6L3y9b
-         xGRw+DvWPfdKM/X/2qoQ2T4gK5QcDh0PzN+4L1HMHNPKq2BX5bfsQVKevolPKG583vjo
-         aCunEzoG996ghxZF7V1HikgjtHxSfRnZTqMeTb28nB/mFxyXrJc1yFXd50yyLg8dka85
-         uwnA==
-X-Forwarded-Encrypted: i=1; AJvYcCVDGBziT6nMpi+3NQyPyVfsxoo/P/VAw2EIVl8TKPBeZnDW3AjejWRTYw4rnWRS1eA9yiKpLCdHfJ08cn+NWRO2M3twNtJhHh4lSFBFXA==
-X-Gm-Message-State: AOJu0YwutqsXDsy+sGZQvvNpSHRBREh03C0ZB4QwmBliiNnG6Bp7W9c2
-	MjARkp7nSgiG8pXZkCJ8YioXJf0syijJJu51FtiJLV5wIJQW4eTHINXauO74kN9wnb1G/TMDeKL
-	oSuQHQdgvkz+fS3tdLvZN/xA/vC6jUoooyx1l3A==
-X-Google-Smtp-Source: AGHT+IGLi1e1brdH2UNouYUbAUzN69aAALtAIZxoqynkaIYefJpLBuEQv8MM/AiBkSUTcEg9+r81ijCuWPOmcLI+5Ls=
-X-Received: by 2002:a2e:93c7:0:b0:2ea:8f93:a49e with SMTP id
- 38308e7fff4ca-2eac7a68282mr575891fa.36.1717525485967; Tue, 04 Jun 2024
- 11:24:45 -0700 (PDT)
+        bh=KtWwyHQ/s1Mo+jSgQ3jPju5LLIQLxY5LIc0kGaj+Rp0=;
+        b=AYiSbUB8JmubYLarpdL/2lwGnrSx0omRLZ3CUJSfhOaOX/EIcWiAAATqul7D1h4VD6
+         JV7+6/ZawhO5TrIJKtimlSZkAY2+VZ/Nge0nsFepK7Kel2cR0R6+26/IrddTfY7vXSLl
+         96xKGcG3y6NFulBvuuDW5/9oIgz5u6GJiB5CS4E6MhJazhrqE+gPet4HvE3baqPg0s7h
+         RgNTCPoatOFLDcX60glptKEjjRghc3Emc50AMmvSatkyt025OmNiVvFFReSMrvnSrvaq
+         vAjTGtIKmYOj5Y1WLhUGLWh5gOBW96KGNiwQUBfZoHBUfV49fuXeDd9kvrugr/96aYYh
+         +gmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX+1639xSPrsyU7cbSdGHvaWlQkl5RpdOMR+9AGhS28t2ZzhTWHmtFzBaJ+qRZddvqqjpSbnC7dusNE/N+3FY4aknSHWkZ9BVtDmmLbZg==
+X-Gm-Message-State: AOJu0Ywut6RD34UEiquGj7yQJU0aH/WVPwOXz/IoqwjvX9WR3/iul67p
+	QTmvPKhoPZBpj0cUHvlOlkV5s37a5s5vpe2LngpnNdXBfz817j2tyyxB/CwEDPXVB2GM4O9vjE3
+	hv2yF3h3rLylNeUmmFfSys6MBnQuI1vDIoX1BBQ==
+X-Google-Smtp-Source: AGHT+IEIBmN6Pbw21C48aFo92GeQIhF5kiBTsuKNdmIGqw2sOD28tsikvtBG3m69ha2Gd5/MsgbO+7NQyJOTbJOSXRc=
+X-Received: by 2002:a05:6512:2253:b0:523:9515:4b74 with SMTP id
+ 2adb3069b0e04-52bab4ca5e9mr311493e87.14.1717525678190; Tue, 04 Jun 2024
+ 11:27:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240528-pwrseq-v8-0-d354d52b763c@linaro.org> <20240604171950.GA731649@bhelgaas>
-In-Reply-To: <20240604171950.GA731649@bhelgaas>
+References: <20240528-pwrseq-v8-10-d354d52b763c@linaro.org> <20240604174326.GA733165@bhelgaas>
+In-Reply-To: <20240604174326.GA733165@bhelgaas>
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 4 Jun 2024 20:24:34 +0200
-Message-ID: <CAMRc=Mf9SDwo+RzEF8d=2Si3-KQVT_Xf8ew4k6+FQAyvOS+EvQ@mail.gmail.com>
-Subject: Re: [PATCH v8 00/17] power: sequencing: implement the subsystem and
- add first users
+Date: Tue, 4 Jun 2024 20:27:47 +0200
+Message-ID: <CAMRc=Mf_n9xcFHofq5Q_X3xs=2jDeor1zfFAd=bM0FywyhFUJA@mail.gmail.com>
+Subject: Re: [PATCH v8 10/17] power: sequencing: implement the pwrseq core
 To: Bjorn Helgaas <helgaas@kernel.org>
 Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
 	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
@@ -97,40 +96,49 @@ Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
 	Jeff Johnson <quic_jjohnson@quicinc.com>, ath12k@lists.infradead.org, 
 	linux-pm@vger.kernel.org, linux-pci@vger.kernel.org, 
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, kernel@quicinc.com, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Amit Pundir <amit.pundir@linaro.org>
+	Amit Pundir <amit.pundir@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 4, 2024 at 7:19=E2=80=AFPM Bjorn Helgaas <helgaas@kernel.org> w=
+On Tue, Jun 4, 2024 at 7:43=E2=80=AFPM Bjorn Helgaas <helgaas@kernel.org> w=
 rote:
 >
-> On Tue, May 28, 2024 at 09:03:08PM +0200, Bartosz Golaszewski wrote:
-> > Note: I am resending this series in its entirety once more for
-> > discussions and reviews. If there won't be any major objections, I'll
-> > then start sending individual bits and pieces to appropriate trees.
+> On Tue, May 28, 2024 at 09:03:18PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > >
-> > Merging strategy: The DT binding and DTS changes are a no-brainer, they
-> > can go through the wireless, regulator and arm-msm trees separately. Th=
-e
-> > bluetooth and PCI changes have a build-time dependency on the power
-> > sequencing code. The bluetooth changes also have a run-time dependency =
-on
-> > the PCI pwrctl part. In order to get it into next I plan to pick up the
-> > power sequencing code into my own tree and maintain it. I can then
-> > provide an immutable tag for the BT and PCI trees to pull. I wouldn't
-> > stress about the BT runtime dependency as it will be fixed once all
-> > changes are in next.
-> > ...
+> > Implement the power sequencing subsystem allowing devices to share
+> > complex powering-up and down procedures. It's split into the consumer
+> > and provider parts but does not implement any new DT bindings so that
+> > the actual power sequencing is never revealed in the DT representation.
 >
-> > ---
-> > base-commit: 6dc544b66971c7f9909ff038b62149105272d26a
-> > change-id: 20240527-pwrseq-76fc025248a2
+> > +++ b/drivers/power/sequencing/core.c
 >
-> What does this apply to?  I don't know what 6dc544b66971 is; it
-> doesn't seem to be in upstream or linux-next.
+> > + * Unit - a unit is a discreet chunk of a power sequence. For instance=
+ one unit
+>
+> s/discreet/discrete/
+>
+> > +static struct pwrseq_unit *pwrseq_unit_incref(struct pwrseq_unit *unit=
+)
+> > +{
+> > +     kref_get(&unit->ref);
+> > +
+> > +     return unit;
+> > +}
+> > +
+> > +static void pwrseq_unit_release(struct kref *ref);
+> > +
+> > +static void pwrseq_unit_decref(struct pwrseq_unit *unit)
+> > +{
+> > +     kref_put(&unit->ref, pwrseq_unit_release);
+> > +}
+>
+> No existing callers of kref_get() and kref_put() use names that
+> include "incref" or "decref".  Many include "get" and "put", so maybe
+> there would be some value in using that pattern?
 
-It's next-20240528 but it also applies to today's next without
-conflicts. What do you want me to base the PCI part when resending?
+These symbols are not exported and I personally dislike the get/put
+pattern. Best I can do is _ref/_unref like what kref does.
 
 Bart
 
