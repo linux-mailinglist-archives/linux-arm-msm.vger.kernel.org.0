@@ -1,209 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-21709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DB548FC4CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 09:43:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A6968FC570
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 10:10:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 74C061F22E2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 07:43:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 013B4282A9E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 08:10:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EDD618C351;
-	Wed,  5 Jun 2024 07:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22F1418FDA3;
+	Wed,  5 Jun 2024 08:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="2tcxoikD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wxz/znPH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6056318C334
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 07:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F15418F2E9
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 08:10:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717573397; cv=none; b=bBRolvGB8XScicxTbNS3QFGjyl5lR0JYRTAxC6YngPyyGtuEjxZfYb5Q+FrlPOXsKXUbtkutrozzvrwU1ICGmqeWK7OYiwzjQ4kCh526xmgE4hT2azlLaP5dqmH+/zzk6K6RXw/T7jvi7HfN6FBc31UhY3RgajxZ3DOsGcp8fkY=
+	t=1717575004; cv=none; b=hMOjVf1+K7tcO1XG7ABW1HsC0Mwi0un5ZbJcPENoo1T6R4s14bX33IUM1GRYtZLffhJnU3PejMjh39GlTfL7egYU16yY/x8QjbmpmqC2ICvKeqVGavRg38N65UfQZy3Wata/tjZogH3Y8bR6b9djMkP7MVQG3Bhy28ImvTZoT4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717573397; c=relaxed/simple;
-	bh=l9sh3+D2x2FynAmR7WZMbPzPELRCyU/6nGYVYGh1LAE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ie/ftK/pOtZAJ19BhmQ20PvKrRb5ri09phPgsbLwCiUNtNVWIehjLGEtosG5TUSAnSVp7DwWA22BJedtCWrJJRGnrAjGHtLFPqkvBouk3LnAo3tTAlwdb8rbFKTlyHAWM0VaY07MJeQo9N74godMFK2Qafn8q14XFejxph/UIvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=2tcxoikD; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2eaa80cb573so52308181fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 00:43:15 -0700 (PDT)
+	s=arc-20240116; t=1717575004; c=relaxed/simple;
+	bh=V+J+aSx0uqudxl1j+rKhAnrCnr6zYmBJyG/Uhr0zig8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=f4bfxgGUmmt97wZx9wo2iE/cN91V6DxrAc0GWJJ8TQOXcqp2+QXG2LiBF/RRTIij59gNTiF9F4s/3aDr6cIGBG9QKiTvB/ahpufnPSfvzPPtmV30ii3LqHvjcJW7UP2oOl2HaUSGnAtgW6Re7Nk0DqF0bGd1+EVyVnLrJax5e/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wxz/znPH; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42153115c65so12924095e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 01:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1717573394; x=1718178194; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iyjciw8omyqWPArx3sDq7VVjOnmIsURoasHM7cx8Qy0=;
-        b=2tcxoikDuetee/IYolYrAaZsEuduc0ig0ACkbZnNXC+E7FtUebge+0dlrsdtSXU5Jx
-         NSBrI6H4ec1LVyMy/EH6hnds4hGNDH0jpS8FDhLQquD1F3QLnAawPIt0ZQjXVpI7zN6J
-         QNCBYE+a3A8U1/mEbffsf9KmALHFjar9NJkH+Qzn9JQGbwkef2JlKhb10ppTRr4FZN3l
-         Y7nmkku5pq7yfrNOAP7XJC+2sXijopIXOLeLKeGDlzyRxQY+32ejw+Cg/eXxpL3amca5
-         LMH3k/DYZXDVkz4hRlKOi9EkadNzlfhUVp4wMY4bgRAchTDotltw/3YamzwU6rdmqlar
-         MOxQ==
+        d=linaro.org; s=google; t=1717575000; x=1718179800; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CI9Jh7n7nvhvvNWDKnjmv17Ru7dwOeHoVtLMN7I8+Oo=;
+        b=Wxz/znPHNl87UwF7tPXhn63iolJ/7vYPDBaakWQcaaOVEUF7JuS47vTeDJtAYQr3nz
+         TTxIYEORGWfcG9NPWGQOJOsWh0VZ2TKgT1u7b2kOczfEe5rA7K8xuTYQ+UDTu76bjL68
+         emrCzqDSGiY7uO8LhkRY7sO6NUz4CsVwabrFydBdjW0vZ7UsOSGuL7alNl9lywCVTCbg
+         oEafbJBAxi1TC5nR+hrd/Kij8y1teu8JetDtoZcQEk1Ai2v8UjTLW+cwYZkV4vVphnLf
+         j+JKvexbZy9RrAVHk/7yA4EmCYsItavZ/YsJduyq/B1aKgdrQlR0HNCy533U8wT61TEY
+         N3VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717573394; x=1718178194;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iyjciw8omyqWPArx3sDq7VVjOnmIsURoasHM7cx8Qy0=;
-        b=D0SpsF5OlRGLgBlGIH6MpeP1PpDDcB0JifZU9O8fRf3+0qsN2LUp0RUYx73Muambkt
-         zTYZH5FvpRg79FBhjU0QGU7RWOThqHgUUPgeyAWIQwo2bjEWjLxNXUcMxaa5e/ic6Wgi
-         hK9nY6n06CHtbUQPFaTwsICKSPw7WV4PcnOJr+iFlGKsmWVRBvHmqY00a1dlODgUeVU8
-         AqMv/tF6Uwi3RJ/I4eOZS1wCiLDFNYa6SMY5UpNVlEzbsfanVuUX1bCRGg6/cgHSOQ4G
-         DgSMaTABGJZJEQlb1ar7JsY9CBvc/1c94w/GkrBeP576PMCuo/g87zCsIgC2+9Ox0baF
-         anVA==
-X-Forwarded-Encrypted: i=1; AJvYcCUtBHGkEL4MzhDcLrHyA5cunnGiO0jCV/f65kFSUsh2UhdJZ1oHVdpDPgPUnHezTXS60QQJF3nIEk7HEW/Koog21dwUdeS7yYdQGH0QRA==
-X-Gm-Message-State: AOJu0YxM+QJdVTWJtG59Ww1sSSu/b2ThdVdhpasrChLFy1JXbXZkcvhY
-	rc0tKlALr6S4Ei6lN2BWHf0AD2ziC+EATpCcMO0x0/8QLtfLCkIiGGmFOqj6fqW50wKQ9eG5onW
-	3bg+eYvC/igOiuJrMvLzOVa7YLkmxvqiZajQdzA==
-X-Google-Smtp-Source: AGHT+IFiHKKNVWneGGr50WzFkObsQ9oUM8GSCkWSrf/BaWFo5gFPEh8dKnIHSJrU2YjGwU9b3MU7THwqkd1DB3CAvSE=
-X-Received: by 2002:a2e:2416:0:b0:2e2:72a7:843c with SMTP id
- 38308e7fff4ca-2eac7a54169mr9164901fa.36.1717573393470; Wed, 05 Jun 2024
- 00:43:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1717575000; x=1718179800;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CI9Jh7n7nvhvvNWDKnjmv17Ru7dwOeHoVtLMN7I8+Oo=;
+        b=wvhJnS5eRtuTzjrDfkkVTtrI2oOHRDGHaOpruSCbAOGJvHadhFJH33AkpCHBPOwOLG
+         cDD94bjHJzPj6zQyXfELpOV3oH4D5q+Lv1FsRez7pbzhMX+pXirr95cwHGcNK3n2Yqt3
+         mTmr08b6XgQmdLm2kWgRfab9p0cmZ7tEKzCfLIUbUmBsUDMMfJIQ5eC60ojQLirPJFTP
+         vGkacCNpSk8QRF65hY0pVUl/e3V5gQ3pzJxzVi4DixgOjSiD/BqhjAJ3sroRUB+bdsfr
+         zSyqJ5Mn9WcdEtAkdevr5Sqp+Nc/MmogL2C97ZLck3GsuGZh3OIUqwUU1M7jpKU6WcuX
+         HXaw==
+X-Gm-Message-State: AOJu0YzdqHfaIToxH3//ouXtZcJvsJAqAIkw1ek691hDdkjXYX1RrKoM
+	PVqcS3JHhz5otgYBdQ6Y3hq6QZnyUESA3ppfrDaUTPaVpAngvAadezIjrP3C544=
+X-Google-Smtp-Source: AGHT+IGr2uSf0VOxLmSzSagIc6jUkPrH43cyTSHezfDDKxc+I65Dj9YFegRjqgKRVxT237y1Vjn/yw==
+X-Received: by 2002:a05:600c:19c9:b0:421:52ce:6878 with SMTP id 5b1f17b1804b1-4215632d091mr13732375e9.29.1717575000415;
+        Wed, 05 Jun 2024 01:10:00 -0700 (PDT)
+Received: from [127.0.1.1] ([110.93.11.116])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-421581490e5sm11025585e9.34.2024.06.05.01.09.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jun 2024 01:09:59 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 00/16] dt-bindings: clock: qcom: reference qcom-gcc.yaml
+Date: Wed, 05 Jun 2024 10:09:27 +0200
+Message-Id: <20240605-dt-bindings-qcom-gcc-v2-0-f947b24f1283@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240528-pwrseq-v8-0-d354d52b763c@linaro.org> <20240528-pwrseq-v8-10-d354d52b763c@linaro.org>
- <20240605065245.GB3452034@maili.marvell.com>
-In-Reply-To: <20240605065245.GB3452034@maili.marvell.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 5 Jun 2024 09:43:02 +0200
-Message-ID: <CAMRc=MfyCJgOCBSh7AY4jEujWXGqZBB7Tnkq0VRrAKKCcJ9hAQ@mail.gmail.com>
-Subject: Re: [PATCH v8 10/17] power: sequencing: implement the pwrseq core
-To: Ratheesh Kannoth <rkannoth@marvell.com>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	Kalle Valo <kvalo@kernel.org>, Jeff Johnson <jjohnson@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Elliot Berman <quic_eberman@quicinc.com>, Caleb Connolly <caleb.connolly@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Alex Elder <elder@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
-	Jeff Johnson <quic_jjohnson@quicinc.com>, ath12k@lists.infradead.org, 
-	linux-pm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, kernel@quicinc.com, 
-	Amit Pundir <amit.pundir@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADcdYGYC/4WNQQ7CIBBFr9LM2jFAqaauvIfpooWBTqKg0DSah
+ ruLvYDL95L//gaZElOGS7NBopUzx1BBHRow8xg8IdvKoITSomsl2gUnDpaDz/gy8YHeGCTVd52
+ zJyGEhjp9JnL83rO3ofLMeYnps7+s8mf/BFeJAqf2bHXvSGolr3cOY4rHmDwMpZQvxmoWnbkAA
+ AA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+ Konrad Dybcio <konrad.dybcio@somainline.org>, 
+ Jonathan Marek <jonathan@marek.ca>, 
+ Del Regno <angelogioacchino.delregno@somainline.org>, 
+ Loic Poulain <loic.poulain@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3385;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=V+J+aSx0uqudxl1j+rKhAnrCnr6zYmBJyG/Uhr0zig8=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmYB057IaWR6MYppdF176okt3i3k8qz2rFqYhnU
+ dbhPmj9d8SJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZmAdOQAKCRDBN2bmhouD
+ 1+6JD/wLoF8PMRYdGXJxoetguQdaLAB8VEH2ebZam9hPVLhfXDP+ea12mkoAKya7qWgQxV9w7mh
+ 1b5/PUG3PkG1uxPNkgJ3aHSCKAik2d5FRFMXCJtnaedwRSnE85OnPYNbqpFyZXhoPGSNvoYlBOf
+ igM0XdYxnhyFETvX6103y1ynkY5I1tbWJTlexEoW6aqk93Cr+nYhNFgQ0RHf6viZ12AKOJ0842N
+ AAw+sVGQyZysnlGMkkS/j8vJTWqsRt+LavXYhZ5kWpVeOsYnxCRsvIulBM9qW6atMq0SQTVWwJa
+ 2cz45wFdEEP2wx8yjD0Eu1OLwWZ5v3z860ZlNqeEH2IYBj9W082wm+PxHshhrvy7P9GjKDa8VrW
+ +AE9MX5HRsPpJ3JIeu6hdIgGO737OnZ88yTRw4jLiqcRlc6gKKrVICV4Z8HU+r19VcGs5F8x/zN
+ n0yI9T7QI80pOBp/+ufTnL6JdR6aC017949XB1z3tgCSIJ3vSd/cuLw+rlxLXg2spHlTCa+Gj4Y
+ YKjTmowKl/imOCbktP8d6L3/1XlKNHm0qmScwfEug/Kt25EWCTwfzjUnehOQelFc3E8tyDHCnB3
+ cSwRbTTprOa7OZWRHWka7t6e1lehH+lzN6sISKPxra9sSgrqO71sOPD706TJs/aK4FjzpqlRaAk
+ qlBtbXub0QVH8Og==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-On Wed, Jun 5, 2024 at 8:52=E2=80=AFAM Ratheesh Kannoth <rkannoth@marvell.c=
-om> wrote:
->
-> On 2024-05-29 at 00:33:18, Bartosz Golaszewski (brgl@bgdev.pl) wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Implement the power sequencing subsystem allowing devices to share
-> > complex powering-up and down procedures. It's split into the consumer
-> > and provider parts but does not implement any new DT bindings so that
-> > the actual power sequencing is never revealed in the DT representation.
-> >
-> > Tested-by: Amit Pundir <amit.pundir@linaro.org>
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> > +
-> > +static struct pwrseq_unit_dep *pwrseq_unit_dep_new(struct pwrseq_unit =
-*unit)
-> nit. pwrseq_unit_dep_alloc/create rhymes well with pwrseq_unit_dep_free()=
-,
+Hi,
 
-So what?
+Changes in v2:
+- Rewrite commit msgs - don't mention there is hardware similarity
+  between clock controllers, because that is not certain.
+- Link to v1: https://lore.kernel.org/r/20240531-dt-bindings-qcom-gcc-v1-0-b37d49fe1421@linaro.org
 
-> > +static void pwrseq_unit_free_deps(struct list_head *list)
-> > +{
-> > +     struct pwrseq_unit_dep *dep, *next;
-> > +
-> > +     list_for_each_entry_safe(dep, next, list, list) {
-> no need of 'locks' to protect against simutaneous 'add' ?
+Description:
+============
+Unify Qualcomm clock controllers by referencing qcom,gcc.yaml where
+applicable.  Several existing bindings for these display/GPU/CAM clock
+controllers already do it.
 
-No, this only happens once during release.
+No external dependencies, this CAN be applied independently. It is
+aligned with Dmitry's approach here:
+https://lore.kernel.org/all/20240529-qcom-gdscs-v2-0-69c63d0ae1e7@linaro.org/
+(but no dependency!)
 
-> > +
-> > +static int pwrseq_unit_setup_deps(const struct pwrseq_unit_data **data=
-,
-> > +                               struct list_head *dep_list,
-> > +                               struct list_head *unit_list,
-> > +                               struct radix_tree_root *processed_units=
-)
-> > +{
-> > +     const struct pwrseq_unit_data *pos;
-> > +     struct pwrseq_unit_dep *dep;
-> > +     struct pwrseq_unit *unit;
-> > +     int i;
-> > +
-> > +     for (i =3D 0; data[i]; i++) {
-> Can we add range for i ? just depending on data[i] to be zero looks to be=
- risky.
->
+Best regards,
+Krzysztof
 
-Why? It's perfectly normal to expect users to end the array with a
-NULL pointer. The docs say these arrays must be NULL-terminated.
+---
+Krzysztof Kozlowski (16):
+      dt-bindings: clock: qcom,sm8450-videocc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,videocc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,dispcc-sc8280xp: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,dispcc-sm6350: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,dispcc-sm8x50: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,gpucc-sdm660: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,gpucc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,msm8998-gpucc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,qcm2290-dispcc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sc7180-dispcc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sc7280-dispcc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sdm845-dispcc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sm6115-dispcc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sm8450-dispcc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sm8550-dispcc: reference qcom,gcc.yaml
+      dt-bindings: clock: qcom,sm8450-gpucc: reference qcom,gcc.yaml
 
-> > +             pos =3D data[i];
-> > +
-> > +             unit =3D pwrseq_unit_setup(pos, unit_list, processed_unit=
-s);
-> > +             if (IS_ERR(unit))
-> > +                     return PTR_ERR(unit);
-> > +
-> > +             dep =3D pwrseq_unit_dep_new(unit);
-> > +             if (!dep) {
-> > +                     pwrseq_unit_decref(unit);
-> This frees only one 'unit'. is there any chance for multiple 'unit', then=
- better clean
-> up here ?
+ .../bindings/clock/qcom,dispcc-sc8280xp.yaml         | 20 ++++----------------
+ .../bindings/clock/qcom,dispcc-sm6350.yaml           | 20 ++++----------------
+ .../bindings/clock/qcom,dispcc-sm8x50.yaml           | 18 ++----------------
+ .../devicetree/bindings/clock/qcom,gpucc-sdm660.yaml | 20 ++++----------------
+ .../devicetree/bindings/clock/qcom,gpucc.yaml        | 20 ++++----------------
+ .../bindings/clock/qcom,msm8998-gpucc.yaml           | 20 ++++----------------
+ .../bindings/clock/qcom,qcm2290-dispcc.yaml          | 20 ++++----------------
+ .../bindings/clock/qcom,sc7180-dispcc.yaml           | 20 ++++----------------
+ .../bindings/clock/qcom,sc7280-dispcc.yaml           | 20 ++++----------------
+ .../bindings/clock/qcom,sdm845-dispcc.yaml           | 20 ++++----------------
+ .../bindings/clock/qcom,sm6115-dispcc.yaml           | 20 ++++----------------
+ .../bindings/clock/qcom,sm8450-dispcc.yaml           | 20 ++++----------------
+ .../devicetree/bindings/clock/qcom,sm8450-gpucc.yaml | 20 ++++----------------
+ .../bindings/clock/qcom,sm8450-videocc.yaml          | 20 ++++----------------
+ .../bindings/clock/qcom,sm8550-dispcc.yaml           | 20 ++++----------------
+ .../devicetree/bindings/clock/qcom,videocc.yaml      | 19 +++----------------
+ 16 files changed, 61 insertions(+), 256 deletions(-)
+---
+base-commit: 861a3cb5a2a8480d361fa6708da24747d6fa72fe
+change-id: 20240531-dt-bindings-qcom-gcc-e2955fd60004
 
-The references to those will be dropped in pwrseq_release().
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> > +
-> > +     /*
-> > +      * From this point onwards the device's release() callback is
-> > +      * responsible for freeing resources.
-> > +      */
-> > +     device_initialize(&pwrseq->dev);
-> > +
-> > +     ret =3D dev_set_name(&pwrseq->dev, "pwrseq.%d", pwrseq->id);
-> > +     if (ret)
-> > +             goto err_put_pwrseq;
-> > +
-> > +     pwrseq->owner =3D config->owner ?: THIS_MODULE;
-> > +     pwrseq->match =3D config->match;
-> > +
-> > +     init_rwsem(&pwrseq->rw_lock);
-> > +     mutex_init(&pwrseq->state_lock);
-> > +     INIT_LIST_HEAD(&pwrseq->targets);
-> > +     INIT_LIST_HEAD(&pwrseq->units);
-> > +
-> > +     ret =3D pwrseq_setup_targets(config->targets, pwrseq);
-> > +     if (ret)
-> > +             goto err_put_pwrseq;
-> > +
-> > +     scoped_guard(rwsem_write, &pwrseq_sem) {
-> > +             ret =3D device_add(&pwrseq->dev);
-> > +             if (ret)
-> > +                     goto err_put_pwrseq;
-> > +     }
-> > +
-> > +     return pwrseq;
-> > +
-> > +err_put_pwrseq:
-> no need to kfree(pwrseq) ?
-
-It's literally put on the next line?
-
-Bart
 
