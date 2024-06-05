@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-21781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D95028FD248
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 18:01:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 248508FD24D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 18:01:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFBC11C236F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 16:01:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9A6961F273A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 16:01:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 078E2188CD8;
-	Wed,  5 Jun 2024 16:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0525019007B;
+	Wed,  5 Jun 2024 16:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g1bsUUuq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PAAL3aNw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F52154457
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3736D15EFDC
 	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 16:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717603240; cv=none; b=PgSuqnkt75cucbtG6KtV39uN/WsiqU40ZotksUaSGe2+H6ETrSxJqo5DU7MBrVYZecNeT1Fat84+MMI7J/uPGNkF9QHSnsrCEZeciTFwsWe2LEeTE+5xtrc7Ft7kIyhg+2uTwJ8q+Pz7tSGsqI3N3M9GvXMKWV40z9BYvEH2hdk=
+	t=1717603241; cv=none; b=B8k/VtDa9B9ajWtK76NogURCI+wjk+5s26T0gaCAJzs3Ewuqb+0ZV4M7atsWqglb8CghyEIJCkcxAT8luS7TUejiypDjoVASr18cQRPIyfxBUn92W9xehTwtB/DvouvheDzuwoG+BwYzSfttg0NV7Sy2yQNA7EBDe3ArlaJiH6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717603240; c=relaxed/simple;
-	bh=c/2SKyVNxmDDEy4jtRH3u8SNLIlWuUpwBcMP/asBnSc=;
+	s=arc-20240116; t=1717603241; c=relaxed/simple;
+	bh=Z3V5mVxSUuFg+9G2PnTNBZMP9LTIe4c+pzhdPjpkFDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vcy7SJ5MigfGC0sdo31g1swu8qz/tAaBYzvfm3W8+Fl8Us+7EsFTytiUqhBfuZSlc2w2NlAP/Qr0Kc6opj3ySu1RXxnfGIDxzwZqRC4xRp+tBmn+U147Ft3wEjNKqw8fdErlFMCZGj6YJyX+DRb0F+c6yrOOczENydHklieazm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g1bsUUuq; arc=none smtp.client-ip=209.85.208.177
+	 MIME-Version; b=WMPiCX8VaUu75QfCqTaQ5f2PDfe9SHRZpTBywkG+GABfEqQ1NwBpJkddY0hmAJp/Zyfrb+nirU6A5/jjtGRKqUzcJf5WdpvVZ3NL/bzWqcBnhWYQsUH2GEWg5xLmlp3cMmEuacEsQX2cM5M3Oc/QNKj5iQqnp18QLVtvFc/ZiVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PAAL3aNw; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2eab0bc74cdso673291fa.3
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-35e83828738so165296f8f.1
         for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 09:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717603237; x=1718208037; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717603238; x=1718208038; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IS6pzXJDK9QslMNjlWCKMW5GnNTj+YYAKSrFzSpQVwY=;
-        b=g1bsUUuqpOhBWPzE30Jlh8lVWsdDyfdJY9Zy/kdq7kxcJGyIEvui0SkornbDUdFHuU
-         v860oTepOZF+3k66EHZkN1kjyjMBD3OHAFzzNMcvguX2xk2FvGP8snzs7dwC/qBUq+oB
-         QAMihJOTASDfELqPsMz1KbL+H3aXVosYUOyiz9VrmZeMj/CxdtctSP9qQ6Bc4XRPXGFa
-         jes4uM/hQQKYXmW0k23usyfCmwUTcMl2aSuHqsk7d05FG7Khp5pci+nm3zsMaga+r6yo
-         rhl4cbpa3yWm7wbFOxFGkyV8jKSx9M5MJUYTJzblb0gFLIL7lpCWJIoILZ4r/n75iwI8
-         wAZg==
+        bh=b6JpAglsaN0d79pvWFu/cyEHqqzh04VnENEg9cgtePs=;
+        b=PAAL3aNwKJA3V9dDknjtUGtMAtC5yRRzuwwVbQSyqtftJlf1o0MQcLgjo1o0slDB/7
+         dI5xnqkeXrgob2Yp/tsXZa0C73UsvLin1YmKAHBelwKEBIfsK4MWg01gY5RKbfGJMjyI
+         KfdqlHQmD7tegaqgWUCekwFQdlKZqeDHKh8VBiJgFNtNQsyIVd6IFAlMAOksnTEgpJY/
+         D1hDb3LK92CcZ43D7iGsKImPem9r5fOhSQ2mWVHGEbmODH7cB0RNEcejSNSk1NfO2mQo
+         YtK6oWv/ugS1kkUZkLFHMGse7sy/chrUC9dvW98Daesk4f5wgBytj4VBCjIQUdM3AJAk
+         hvgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717603237; x=1718208037;
+        d=1e100.net; s=20230601; t=1717603238; x=1718208038;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IS6pzXJDK9QslMNjlWCKMW5GnNTj+YYAKSrFzSpQVwY=;
-        b=FRn1oZDbZtnakA/MK79I0yTU4fTYpxBrtTLa6/7k6dExVVDEedq/lLlxKHZM+w/SEC
-         8JiF0mWfZ4weC4fqhAgkEq+9xJE83UKFR6HkwILzBMM29LPQRnYjZ7p0NcraTgQt2/v/
-         6cB6+kvZrK09XIwK8/baaWy3sx/Gb1wKqK1r1/zpXHBEY/sWvDSVu8Ezrs5a69wSFZzJ
-         TyG6a2RYwgKD+YseI4secyW0nKT/xhujAMi14CGdHw/s+WfeFYszVfBWpN5RvgVnefu2
-         zlMXhcj1PUpNmVyFqZIVKGEGeXZkPtBLnDXv0D1tTTNEdXB9av3BcsEoYXEipNQuYMwJ
-         3aOA==
-X-Forwarded-Encrypted: i=1; AJvYcCVr/Cn+tne4TQJIp8X4CQ34rz1hbLRp0Wl8GocQ4d8onXVEuoH+JXiM5THjJ+31wVl+2SeTBviayzYbvv6NGDzv/KltRp+G9jaB++SwwA==
-X-Gm-Message-State: AOJu0Yz0eU3IcwBwY9JKeCrqSt32MB7p057s/D5GMcX5NHb9FAAtkk3C
-	6BW+U7g59SxlI/w9+HRT4l+FtVYNVvJgec3oSGJ14O+MKcnQO6S6revYB39ezZU=
-X-Google-Smtp-Source: AGHT+IFVQ6EuFCOacFNDp/dYjlatng7UYWk7LSo2A1ZJyk2RuDDqs7BYNK1FQL5VNFszGvVvaRqBWQ==
-X-Received: by 2002:a05:651c:119a:b0:2e9:6265:9926 with SMTP id 38308e7fff4ca-2eac7a9a366mr14411021fa.49.1717603237432;
-        Wed, 05 Jun 2024 09:00:37 -0700 (PDT)
+        bh=b6JpAglsaN0d79pvWFu/cyEHqqzh04VnENEg9cgtePs=;
+        b=CcZbiZebLBs7qU4eRYcimc8PgGCtXYSxlKa5fXZuA/G+706S0LRDvxhrpo9CAvHi+H
+         oA7T3ZREBPo1/DxrYnkY0x97h9x5Pw52KInon++oZRXMzSWYxdWLTOr5rOIl8zyhxSAB
+         sdMgBkECjm7Huy4M+JxztwmImAXcgFqRQ+tc2YXsyR8nGjjUH4hMtAJXnPB83hWTV0Wk
+         fzph4SzBsWW3nnRj9sKYsMItTcF0gvcpnooGoJzheyBRs+rT9FRd6gsvnbaRMP7ZTIYg
+         IbfzoEk67pIzBD++vYsvETO8YDMIaGsiERcUqqk93ABVeTjcx79WTvBFr5WmqwLxcEmr
+         Tyfw==
+X-Forwarded-Encrypted: i=1; AJvYcCUrQiJynEd2G4Da7JmjteDU3AzVN55Ez0BpuDIDULzmIsgpbRnQRH+ZI8J+98dvK/2iI32vDlsH9lScSrWepoKIc7Y72pIA/jFw1KIiCw==
+X-Gm-Message-State: AOJu0Yyqs/roXAuQNA8/9OwUGQbMMg7MEv9FixxTo45J3Nz8guFZTkZc
+	GDSCRGoEKAkAAjQEgZM6OVFZkW3hal7zRqMpcKASqh5tYWJcPE6MkIJ/07FtGmI=
+X-Google-Smtp-Source: AGHT+IEdlXjBLFrGlceUU70bhxiydsRr4mkLa/WCqSg9ALFtiEoD+j/ZCMSrb7yCq/alxDLwLjn5yw==
+X-Received: by 2002:adf:ab18:0:b0:35e:7ddf:768a with SMTP id ffacd0b85a97d-35e8833a1b2mr1973579f8f.36.1717603238620;
+        Wed, 05 Jun 2024 09:00:38 -0700 (PDT)
 Received: from krzk-bin.. ([110.93.11.116])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42158149008sm26288975e9.29.2024.06.05.09.00.36
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42158149008sm26288975e9.29.2024.06.05.09.00.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jun 2024 09:00:36 -0700 (PDT)
+        Wed, 05 Jun 2024 09:00:38 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -77,9 +77,9 @@ To: Bjorn Andersson <andersson@kernel.org>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH RFT 3/4] arm64: dts: qcom: sm8250-sony-xperia: correct touchscreen interrupt flags
-Date: Wed,  5 Jun 2024 18:00:31 +0200
-Message-ID: <20240605160032.150587-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH RFT 4/4] arm64: dts: qcom: sm8450-sony-xperia: correct touchscreen interrupt flags
+Date: Wed,  5 Jun 2024 18:00:32 +0200
+Message-ID: <20240605160032.150587-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240605160032.150587-1-krzysztof.kozlowski@linaro.org>
 References: <20240605160032.150587-1-krzysztof.kozlowski@linaro.org>
@@ -98,22 +98,22 @@ pass just 0x8, so IRQ_TYPE_LEVEL_LOW.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index e07d0311ecb5..f6870d3f2886 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -520,7 +520,7 @@ touchscreen@48 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+index 8b29fcf483a3..17dbb67868ae 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+@@ -488,7 +488,7 @@ touchscreen@48 {
  		compatible = "samsung,s6sy761";
  		reg = <0x48>;
  		interrupt-parent = <&tlmm>;
--		interrupts = <39 0x2008>;
-+		interrupts = <39 IRQ_TYPE_LEVEL_LOW>;
- 		/* It's "vddio" downstream but it works anyway! */
- 		vdd-supply = <&vreg_l1c_1p8>;
- 		avdd-supply = <&vreg_l10c_3p3>;
+-		interrupts = <21 0x2008>;
++		interrupts = <21 IRQ_TYPE_LEVEL_LOW>;
+ 		vdd-supply = <&pm8350c_l2>;
+ 		avdd-supply = <&pm8350c_l3>;
+ 
 -- 
 2.43.0
 
