@@ -1,88 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-21700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FDC68FC322
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 07:51:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65A768FC32E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 07:55:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E982DB219A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 05:51:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1E411F222C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 05:55:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3147013AD19;
-	Wed,  5 Jun 2024 05:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6464A21C17D;
+	Wed,  5 Jun 2024 05:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U1FltmsK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="F4NJbHCB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7960946C
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 05:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDACA5916B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 05:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717566677; cv=none; b=XraIxSPccggqSgULn0Oc6gQpcjgIWrbxagoniH2xZGbb92R0jV0ihr2/RRJSL+70case5bhMdyrMgjJP8zgGQK4PamY1k4xQ2Gnqjlj/Q5bOtEnqO7sq8qw9739aKB1C2Zd3nPlFhRrID674ASlpaWW/w4/W7aJuvRca+7dWI7o=
+	t=1717566904; cv=none; b=HmmznViCEj1KbFK3tIedw98wEJ1ADn1UKFkgymjSt1NRJieiG7fDeNL6aW4BjMI30iDOp8sWRC82cya+MuHa39qi+wbVNWvS6mrY+ojNvVn8mlbogIRktHu35MbLqAebLcF7C010Nrjop+T8NdfKNc7Srfry1lhk/EWM1Au/LGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717566677; c=relaxed/simple;
-	bh=ITeDx0OqlgB7NiL0mf7tKEd1JYGKzgJ1DJzTY6KYISc=;
+	s=arc-20240116; t=1717566904; c=relaxed/simple;
+	bh=pT0vlRe1rncAiEJWLGJWVVrADwh3b6o5yFLYE0LLUGk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YNBqKl8599+WciRxses6dvCDjeVz81Ww5UlhteZfJFUYAt3R5qMh93GQ5QA6W6/27w5Vfrt1a2+rDvnUCiaBTnV1m+PqyJouF7snt0mtx5UZgP3HYNQk0BI5aw+vmDmeL9IRoLd1CCrJzRgyb+7KzSBrWU0J04vZzQ6xENLoS6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U1FltmsK; arc=none smtp.client-ip=209.85.214.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=E1LcLrmbYgVOUtTd5TwkluMvw1P3MBAyNz80p+7r5YJ+yiL8QO+208cyfiYDzGZnk8FdVsOyrJgeQeR6DmyLrXOCgKHQ0AP/MEeZdCQ989zCjCksWAccIOS+pwk5uEg6y/i4kSU1SHBMsNfZSNiHghOJGTnMavqk5BgVo/6VjDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=F4NJbHCB; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f480624d0dso50831515ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 22:51:15 -0700 (PDT)
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1f44b42d1caso49473335ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 22:55:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717566675; x=1718171475; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717566902; x=1718171702; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=rCWSUQImHGilToURCyAOpdWvaa8ql6HejyzXJyuEZoo=;
-        b=U1FltmsKqAmHOcgos8Ff6I6BwrczuMCgFtZVJYkqFM9ibIk2N7/kQFu4pYcKfk2+3i
-         H7FCeH274i4PM1PKonsO6gPw3HxA9LgTNo0RSWoph5OVrdTcE1O5ciY6igTcBGU7/oGK
-         q3L7bBA5tbiTFHA7gsdikMCfRGRlkqGRPzAeHu126y0D0QB8NZVaSt/X0JKMMwvpr+yq
-         JnNaokH5JFnbWKJ46XV519AxD1drzrg4pQldYkXBnNS0kOLJNe9DmAagqfllXAuC51JD
-         zRz7Pd59I1EG9EM5x4g/zFns079mo+0OC2t0jep79kfzPIP8GetknuR/eDNH4YT5xF6R
-         enZQ==
+        bh=JBxfUq6WQmeXfNg09rhVdjOvmMp9FrtYAbzQqMG7sgI=;
+        b=F4NJbHCBtZGM+0r/gm+OdhaFMx9EL7h0unndxXMoE10oVUsKN3ZsMkZa6xxQ0w1ckQ
+         h7k3hPC/Eoldn+EGn0fmS40uFFRB9PAeFaNy4Y92fnUJzgQ6Xh7v1RcavybYgZInpZDc
+         GlO49rVK4EXpqq0HOeM5BQvAIV4BZvdD3xXgb0FnuCCChAEJdKOaOizypmPPh06mw6nU
+         nVLO+imG0HVsQk1Zao0zW/q3iG6wr0zRZXnfzkgvLnSCPMuT/s/DUKNvUilriYJGw3Ed
+         h+LJH9zHn6xVVu2+n1+yiU4sxWOnZIe3kaiDIs9wxlcFYlDPavq4a7TqTbp6fclei2Ek
+         hsyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717566675; x=1718171475;
+        d=1e100.net; s=20230601; t=1717566902; x=1718171702;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rCWSUQImHGilToURCyAOpdWvaa8ql6HejyzXJyuEZoo=;
-        b=p0MhmfD+9PG1i+me6sefY+WNg0WDvc96xckkpyARxRMzdYPmrX2bLH89dPhVpsG5O1
-         AHv1/Spjd2pa3S94UDTHnfbWG545V23pppkqNFlVcgZ0a4ujs7+nLpHzupg5Ape17+eR
-         5YNh6xTH519pUTRYTq58mxbls7F8ft73dplZ7hZ6dqISigYUsa1wNTT/qwdZEBcGoXJU
-         2xYOqubLKRiLpY5tMy6vZQnyq5d11wOhrp8C3KKVCALZNinXayxzAp0NcOhuWbdxVD0H
-         xAEkBgAgM8Z6+kSN+PMESSG6GRLTeh0cO2LTFSyOX9MC1lc9qR7sKWYS7iXZdjaBVLRj
-         NQkg==
-X-Forwarded-Encrypted: i=1; AJvYcCXqBxprlc2YBVtbYN5NnRjnW7YXSCx1kBlSZR9z/sDZbywtpc4AUczSil/Ln4ItdafTOxkXz8i67SPsqlTPeUl7krhKoYxKd+aElGPiSg==
-X-Gm-Message-State: AOJu0Yz+dhCVYfdWvi20qA27VXHiGOk5dcvimAvc/lkJ7DrzIR7VBzcr
-	EWQifheoOxDEq5y55PF6bgHsgSwy2Tb7toJqJhght86ZvZno6pxaava5TyAP8A==
-X-Google-Smtp-Source: AGHT+IGV/MUBr4KlZCCtOhFeci3Ojt9DYoBNyrDOC3FmQoMHqR7+aHEIhtbKxi29Rzfm8hP/wXa/IQ==
-X-Received: by 2002:a17:902:9896:b0:1f6:3750:527f with SMTP id d9443c01a7336-1f6a5a20654mr17233275ad.31.1717566674957;
-        Tue, 04 Jun 2024 22:51:14 -0700 (PDT)
+        bh=JBxfUq6WQmeXfNg09rhVdjOvmMp9FrtYAbzQqMG7sgI=;
+        b=GFtiHtkEj49H7OMqz5lFdCxRggcbtpkzJuNm9Z3NPJ8Izn81vNiclE1PeZ+Nx5LMg6
+         5y0/QtlqMEc666z7AnBBunC4LYFEUEE7siRFSvok7iaGneUu0bbyRFXwKDjKtqQSqA7T
+         OB0EwE5tvd66Jpv5FhSWTHdG2ZT22k+ihAH1YWpe3461z43rXuPMsa5OFdbqqGS2uAPR
+         YDJR7S0+5j+1EEirdfZGtuWmtfSUU1vP/qVpbonQvsP4nejkqsj9tf4KDQdwiDqwMlc7
+         oHJZ83M9KLlBU+/p3gy3EqsT5N1dQPqp5sfuR8Dk+6wqiv1vdLM2Reg5Pnq1Lug982UC
+         egFg==
+X-Forwarded-Encrypted: i=1; AJvYcCWx0tvfUB3KsBxd8MkU910S++V5ISTfvaNggpuiVnZZpTO6LWgyo0QIRwEnDRInLXoVeAOD8uOeU4JIeOoQ2/5lrwGU14pHoDqoEjYUWQ==
+X-Gm-Message-State: AOJu0YyM3BwfyS5KG1C9Dh+W7t4TZaiZ7F9RSLxBNBS5XjYv1grxaDmD
+	lzUI/Knwuq5PReF9NLKyVtSWm7R228+xByc6WCQTo5gsBaijRZe8INVp8mZFbQ==
+X-Google-Smtp-Source: AGHT+IHScUtk14Z1Yr2g0W5IQ/gHXNWp09PycuN+tvMzWowATHARRRe4GJC2SYoiN+/nkoD9jS6KRg==
+X-Received: by 2002:a17:903:a0c:b0:1f6:87c:6f with SMTP id d9443c01a7336-1f6a5a84956mr15315165ad.62.1717566902118;
+        Tue, 04 Jun 2024 22:55:02 -0700 (PDT)
 Received: from thinkpad ([120.60.137.11])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6a5060788sm9513775ad.130.2024.06.04.22.51.11
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f632339066sm96044795ad.22.2024.06.04.22.55.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 22:51:14 -0700 (PDT)
-Date: Wed, 5 Jun 2024 11:21:09 +0530
+        Tue, 04 Jun 2024 22:55:01 -0700 (PDT)
+Date: Wed, 5 Jun 2024 11:24:58 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100: Fix PCIe 6a reg offsets
- and add MHI
-Message-ID: <20240605055109.GC2417@thinkpad>
-References: <20240604-x1e80100-dts-fixes-pcie6a-v2-1-0b4d8c6256e5@linaro.org>
+To: Slark Xiao <slark_xiao@163.com>
+Cc: loic.poulain@linaro.org, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: host: Add Foxconn SDX72 related support
+Message-ID: <20240605055458.GD2417@thinkpad>
+References: <20240520070633.308913-1-slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,65 +84,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240604-x1e80100-dts-fixes-pcie6a-v2-1-0b4d8c6256e5@linaro.org>
+In-Reply-To: <20240520070633.308913-1-slark_xiao@163.com>
 
-On Tue, Jun 04, 2024 at 06:20:24PM +0300, Abel Vesa wrote:
-> The actual size of the DBI region is 0xf20 and the start of the
-> ELBI region is 0xf40, according to the documentation. So fix them.
-> While at it, add the MHI region as well.
+On Mon, May 20, 2024 at 03:06:33PM +0800, Slark Xiao wrote:
+> Align with Qcom SDX72, add ready timeout item for Foxconn SDX72.
+> And also, add firehose support since SDX72.
 > 
-> Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Slark Xiao <slark_xiao@163.com>
 
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 - Mani
 
 > ---
-> Changes in v2:
-> - Dropped the 4-lane mode switch patch entire.
-> - Fetched Konrad's R-b tag
-> - Link to v1: https://lore.kernel.org/r/20240531-x1e80100-dts-fixes-pcie6a-v1-0-1573ebcae1e8@linaro.org
+> v2: (1). Update the edl file path and name (2). Set SDX72 support
+> trigger edl mode by default
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>  drivers/bus/mhi/host/pci_generic.c | 32 ++++++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index cf8d8d5b1870..fe7ca2a73f9d 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -2818,15 +2818,17 @@ pcie6a: pci@1bf8000 {
->  			device_type = "pci";
->  			compatible = "qcom,pcie-x1e80100";
->  			reg = <0 0x01bf8000 0 0x3000>,
-> -			      <0 0x70000000 0 0xf1d>,
-> -			      <0 0x70000f20 0 0xa8>,
-> +			      <0 0x70000000 0 0xf20>,
-> +			      <0 0x70000f40 0 0xa8>,
->  			      <0 0x70001000 0 0x1000>,
-> -			      <0 0x70100000 0 0x100000>;
-> +			      <0 0x70100000 0 0x100000>,
-> +			      <0 0x01bfb000 0 0x1000>;
->  			reg-names = "parf",
->  				    "dbi",
->  				    "elbi",
->  				    "atu",
-> -				    "config";
-> +				    "config",
-> +				    "mhi";
->  			#address-cells = <3>;
->  			#size-cells = <2>;
->  			ranges = <0x01000000 0 0x00000000 0 0x70200000 0 0x100000>,
-> 
-> ---
-> base-commit: d97496ca23a2d4ee80b7302849404859d9058bcd
-> change-id: 20240531-x1e80100-dts-fixes-pcie6a-0cf5b75a818e
-> 
-> Best regards,
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 08844ee79654..0b483c7c76a1 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -399,6 +399,8 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+>  	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+>  	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+>  	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
+>  	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+>  };
+> @@ -419,6 +421,16 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
+>  	.event_cfg = mhi_foxconn_sdx55_events,
+>  };
+>  
+> +static const struct mhi_controller_config modem_foxconn_sdx72_config = {
+> +	.max_channels = 128,
+> +	.timeout_ms = 20000,
+> +	.ready_timeout_ms = 50000,
+> +	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
+> +	.ch_cfg = mhi_foxconn_sdx55_channels,
+> +	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
+> +	.event_cfg = mhi_foxconn_sdx55_events,
+> +};
+> +
+>  static const struct mhi_pci_dev_info mhi_foxconn_sdx24_info = {
+>  	.name = "foxconn-sdx24",
+>  	.config = &modem_foxconn_sdx55_config,
+> @@ -448,6 +460,17 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx65_info = {
+>  	.sideband_wake = false,
+>  };
+>  
+> +static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
+> +	.name = "foxconn-sdx72",
+> +	.edl = "fox/sdx72m/edl.mbn",
+> +	.edl_trigger = true,
+> +	.config = &modem_foxconn_sdx72_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.mru_default = 32768,
+> +	.sideband_wake = false,
+> +};
+> +
+>  static const struct mhi_channel_config mhi_mv3x_channels[] = {
+>  	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 64, 0),
+>  	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 64, 0),
+> @@ -680,6 +703,15 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  	/* DW5932e (sdx62), Non-eSIM */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f9),
+>  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
+> +	/* T99W515 (sdx72) */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe118),
+> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx72_info },
+> +	/* DW5934e(sdx72), With eSIM */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe11d),
+> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx72_info },
+> +	/* DW5934e(sdx72), Non-eSIM */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe11e),
+> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx72_info },
+>  	/* MV31-W (Cinterion) */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b3),
+>  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
 > -- 
-> Abel Vesa <abel.vesa@linaro.org>
-> 
+> 2.25.1
 > 
 
 -- 
