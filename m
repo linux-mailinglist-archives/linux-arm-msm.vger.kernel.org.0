@@ -1,189 +1,385 @@
-Return-Path: <linux-arm-msm+bounces-21827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4054D8FDA0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 00:48:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38B728FDA54
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 01:22:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5642281CE9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 22:48:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A15211F256FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 23:22:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 270C215FA60;
-	Wed,  5 Jun 2024 22:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 470D017E478;
+	Wed,  5 Jun 2024 23:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ow8m+FnD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Um468Ktf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F9213BC3E;
-	Wed,  5 Jun 2024 22:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F1117CA18
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 23:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717627708; cv=none; b=hmufJCBcL0OTPcRui0xk20LW8SDC1L1py/uHDq940a4fzVCDtD8VlMsiKLZPBgnHqC+onhEbG79Wlq0z9JlokA07FiEfL5c3uqCkqCLf8CRwIOSaq4xEELSyTbThCAICzqPTiLb6XIh8egm/BH2Wl2hVTr7yH5x/n8s0BkOsIWw=
+	t=1717629581; cv=none; b=AJ8R3y7zrkSHYC7QHhsL5fHXMpwUL1KPum/QKeJmOePGUk5GDzF2fkPGV8A7YfB/0ZV9DELQj2fu7g8zLkRWOLWna2I1kP9HiYQ5ZfrJjeh9/WtVyA6nnHXULj4GfuOUTK4T7xFIvKBJ0Mf0unxbu2OurC/r+9BG6LXESA6TVvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717627708; c=relaxed/simple;
-	bh=SaKkEONMcXz5VuiwJ8gPQQzVNVB04hLirJVwtDBEQQM=;
+	s=arc-20240116; t=1717629581; c=relaxed/simple;
+	bh=LwWqwtE3tsAV11p5h1v4RADVEymeoCvJDT0Eb0zOFRg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bV/SmgECsGz1IUo0Jd0oZSTKJhGbSuHPzK4tDPBPw2wyZkJbeE2odRwl8mgmT17hjL2vFY6J8Kfqx1ZYb1Q+k4VfaNOuhUj6KPwy4I4rToMd14NQ2q28Ss3lbp2iCE5bUKf8jiMDSAWzQ6P2dRV0aaMja35ICkgtJ0R7rQawFZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ow8m+FnD; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=N4PRXbb8WzEsUTc/Bklj4Mc5EbFcNvIUWfeebKKm/fKISGvsProH5axVaxDlODKsWW12X2LUusoWWQFQAlUQBbffI/rmnzet+K7LVtRzthg8pmRuPo0TMbXez90zijaim612qkuNgANEoLYoEvg3IE/jUFyUat6ZczkO9uVgth4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Um468Ktf; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455B1UFW031684;
-	Wed, 5 Jun 2024 22:48:10 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455Lnx79010981;
+	Wed, 5 Jun 2024 23:19:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	B5SNWx6UZouir9JNN7giO4PUeXl6JfqRb+48Qd1gCn4=; b=ow8m+FnDxYRPGzHp
-	tRvFBGZ8B1i6M+7zVay1pEmG+z9zuFGt8BkYbFPI5QLEwvOixTvskS7fNrTzlXjw
-	9Wj2G3Ne0CIYQftdsEmumugjPKVUNkk0VSjHzEvZaiePlqMif4sRVYEVTWwhTWQx
-	2WUSPhl8uarn4obQXkUEAKMge018ZaC4OSrNxcNtC6VPzHVcifLmroNPcuYFrujX
-	46iaAwNFGvSAe6TBjV0W8AXxMKmqwjESqPlqvfXhYL1LySdHaUETm+pW8vN3uEPW
-	mPHQ+4lUUsAnNZOPcopzNKAQ1SHiUShhRBmFHQBpzk9RsaGqVZUX4P7sV3DbDiT6
-	kSbhLw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjh3tt8rc-1
+	ie7G5QiJNJnOxk2EnafVN7I2oHW3Oj+5f1jjnahgjHA=; b=Um468KtfEDDTfaf7
+	pws1+8KZc65wOQgE8tatxwDpA5TXRDlV8XlUhLBozlSx+2XsEQCKJ2r6dPAcOg31
+	8DrCjUA/U6ehIDe4prsCsX8P9ANF9U9NqdID/xa44A1theq5wrpkBw+r1/o2+qzh
+	CiqBS3kmL2amYLrIGdOYzEdrCqbNuE0tAvGqa7eZ0V6+4WwHdOiyb22dmtw02FFX
+	2VxuaWgSQhWyCeaUgfldS7ofUeEVCcN8BrF6y0c/WvEC4kl/4TxjU8obcPHK8JH7
+	W6wXAp1K/xxy5qLlUfCl2TD6HeLdcKrGygjPZz5y4ZIA7rHeJw4vZ9UW8L7fmICb
+	yHDt4Q==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjhw0tcjp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Jun 2024 22:48:10 +0000 (GMT)
+	Wed, 05 Jun 2024 23:19:27 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 455Mm9DB009493
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 455NJPwD009691
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 5 Jun 2024 22:48:09 GMT
-Received: from [10.110.119.103] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Wed, 5 Jun 2024 23:19:25 GMT
+Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 5 Jun 2024
- 15:48:08 -0700
-Message-ID: <d9a2004a-0a3b-41a6-92a4-eea7b1b3f804@quicinc.com>
-Date: Wed, 5 Jun 2024 15:48:08 -0700
+ 16:19:22 -0700
+Message-ID: <627dd526-2b56-2ecb-9011-4ec08bab454f@quicinc.com>
+Date: Wed, 5 Jun 2024 16:19:20 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/5] soc: qcom: pdr: protect locator_addr with the main
- mutex
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Sibi Sankar
-	<quic_sibis@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Xilin Wu <wuxilin123@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        "Alexey
- Minnekhanov" <alexeymin@postmarketos.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>
-References: <20240512-qcom-pd-mapper-v8-0-5ecbb276fcc0@linaro.org>
- <20240512-qcom-pd-mapper-v8-1-5ecbb276fcc0@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 06/13] drm/msm/dpu: split dpu_plane_atomic_check()
 Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20240512-qcom-pd-mapper-v8-1-5ecbb276fcc0@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-7-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240314000216.392549-7-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Wqs08OC1n35NM-bPWOi_M7MKTo19eJng
-X-Proofpoint-ORIG-GUID: Wqs08OC1n35NM-bPWOi_M7MKTo19eJng
+X-Proofpoint-ORIG-GUID: K2QUqcitr3o1LGDFN0EONGJoJKWrm6UZ
+X-Proofpoint-GUID: K2QUqcitr3o1LGDFN0EONGJoJKWrm6UZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-05_02,2024-06-05_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- adultscore=0 bulkscore=0 malwarescore=0 phishscore=0 priorityscore=1501
- suspectscore=0 spamscore=0 clxscore=1011 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406050171
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ phishscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406050175
 
-Hi Dmitry,
 
-On 5/11/2024 2:56 PM, Dmitry Baryshkov wrote:
-...
-> @@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
->   					      locator_hdl);
->   	struct pdr_service *pds;
+
+On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+> Split dpu_plane_atomic_check() function into two pieces:
+> 
+> dpu_plane_atomic_check_nopipe() performing generic checks on the pstate,
+> without touching the associated pipe,
+> 
+> and
+> 
+> dpu_plane_atomic_check_pipes(), which takes into account used pipes.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 184 ++++++++++++++--------
+>   1 file changed, 117 insertions(+), 67 deletions(-)
+> 
+
+One thing which seemed odd to me is even dpu_plane_atomic_check_nopipe() 
+does use pipe_cfg even though its named "nopipe".
+
+Perhaps were you targetting a split of SW planes vs SSPP atomic_check?
+
+I tried applying this patch on top of msm-next to more closely review 
+the split up but it does not apply. So, I will review this patch a 
+little better after it is re-spun. But will proceed with remaining patches.
+
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 6360052523b5..187ac2767a2b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -788,50 +788,22 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+>   #define MAX_UPSCALE_RATIO	20
+>   #define MAX_DOWNSCALE_RATIO	4
 >   
-> +	mutex_lock(&pdr->lock);
->   	/* Create a local client port for QMI communication */
->   	pdr->locator_addr.sq_family = AF_QIPCRTR;
->   	pdr->locator_addr.sq_node = svc->node;
->   	pdr->locator_addr.sq_port = svc->port;
+> -static int dpu_plane_atomic_check(struct drm_plane *plane,
+> -				  struct drm_atomic_state *state)
+> +static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+> +					 struct drm_plane_state *new_plane_state,
+> +					 const struct drm_crtc_state *crtc_state)
+>   {
+> -	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+> -										 plane);
+>   	int ret = 0, min_scale, max_scale;
+>   	struct dpu_plane *pdpu = to_dpu_plane(plane);
+>   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>   	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+>   	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> -	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+> -	struct dpu_sw_pipe *pipe = &pstate->pipe;
+> -	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> -	const struct drm_crtc_state *crtc_state = NULL;
+> -	const struct dpu_format *fmt;
+>   	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>   	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+>   	struct drm_rect fb_rect = { 0 };
+>   	uint32_t max_linewidth;
+> -	unsigned int rotation;
+> -	uint32_t supported_rotations;
+> -	const struct dpu_sspp_cfg *pipe_hw_caps;
+> -	const struct dpu_sspp_sub_blks *sblk;
 >   
-> -	mutex_lock(&pdr->lock);
->   	pdr->locator_init_complete = true;
->   	mutex_unlock(&pdr->lock);
+> -	if (new_plane_state->crtc)
+> -		crtc_state = drm_atomic_get_new_crtc_state(state,
+> -							   new_plane_state->crtc);
+> -
+> -	pipe->sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
+> -	r_pipe->sspp = NULL;
+> -
+> -	if (!pipe->sspp)
+> -		return -EINVAL;
+> -
+> -	pipe_hw_caps = pipe->sspp->cap;
+> -	sblk = pipe->sspp->cap->sblk;
+> -
+> -	if (sblk->scaler_blk.len) {
+> -		min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+> -		max_scale = MAX_DOWNSCALE_RATIO << 16;
+> -	} else {
+> -		min_scale = 1 << 16;
+> -		max_scale = 1 << 16;
+> -	}
+> +	min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+> +	max_scale = MAX_DOWNSCALE_RATIO << 16;
 >   
-> @@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
+>   	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+>   						  min_scale,
+> @@ -844,11 +816,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	if (!new_plane_state->visible)
+>   		return 0;
 >   
->   	mutex_lock(&pdr->lock);
->   	pdr->locator_init_complete = false;
-> -	mutex_unlock(&pdr->lock);
+> -	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> -	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> -
+>   	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+>   	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+>   		DPU_ERROR("> %d plane stages assigned\n",
+> @@ -872,8 +839,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   		return -E2BIG;
+>   	}
 >   
->   	pdr->locator_addr.sq_node = 0;
->   	pdr->locator_addr.sq_port = 0;
-> +	mutex_unlock(&pdr->lock);
->   }
+> -	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+> -
+>   	max_linewidth = pdpu->catalog->caps->max_linewidth;
 >   
->   static const struct qmi_ops pdr_locator_ops = {
-> @@ -365,6 +365,7 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
->   	if (ret < 0)
->   		return ret;
+>   	drm_rect_rotate(&pipe_cfg->src_rect,
+> @@ -882,6 +847,83 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
 >   
-> +	mutex_lock(&pdr->lock);
->   	ret = qmi_send_request(&pdr->locator_hdl,
->   			       &pdr->locator_addr,
->   			       &txn, SERVREG_GET_DOMAIN_LIST_REQ,
-> @@ -373,15 +374,16 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
->   			       req);
->   	if (ret < 0) {
->   		qmi_txn_cancel(&txn);
+>   	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
+>   	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
+> +		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
+> +			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+> +					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> +			return -E2BIG;
+> +		}
+> +
+> +		*r_pipe_cfg = *pipe_cfg;
+> +		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
+> +		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
+> +		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
+> +		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+> +	} else {
+> +		memset(r_pipe_cfg, 0, sizeof(*r_pipe_cfg));
+> +	}
+> +
+> +	drm_rect_rotate_inv(&pipe_cfg->src_rect,
+> +			    new_plane_state->fb->width, new_plane_state->fb->height,
+> +			    new_plane_state->rotation);
+> +	if (r_pipe_cfg->src_rect.x1 != 0)
+> +		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+> +				    new_plane_state->fb->width, new_plane_state->fb->height,
+> +				    new_plane_state->rotation);
+> +
+> +	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
+> +
+> +	return 0;
+> +}
+> +
+> +static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+> +					struct drm_atomic_state *state,
+> +					const struct drm_crtc_state *crtc_state)
+> +{
+> +	struct drm_plane_state *new_plane_state =
+> +		drm_atomic_get_new_plane_state(state, plane);
+> +	struct dpu_plane *pdpu = to_dpu_plane(plane);
+> +	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> +	struct dpu_sw_pipe *pipe = &pstate->pipe;
+> +	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> +	const struct dpu_format *fmt;
+> +	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+> +	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> +	uint32_t max_linewidth;
+> +	unsigned int rotation;
+> +	uint32_t supported_rotations;
+> +	const struct dpu_sspp_cfg *pipe_hw_caps;
+> +	const struct dpu_sspp_sub_blks *sblk;
+> +	int ret = 0;
+> +
+> +	pipe_hw_caps = pipe->sspp->cap;
+> +	sblk = pipe->sspp->cap->sblk;
+> +
+> +	/*
+> +	 * We already have verified scaling against platform limitations.
+> +	 * Now check if the SSPP supports scaling at all.
+> +	 */
+> +	if (!sblk->scaler_blk.len &&
+> +	    ((drm_rect_width(&new_plane_state->src) >> 16 !=
+> +	      drm_rect_width(&new_plane_state->dst)) ||
+> +	     (drm_rect_height(&new_plane_state->src) >> 16 !=
+> +	      drm_rect_height(&new_plane_state->dst))))
+> +		return -ERANGE;
+> +
+> +	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+> +
+> +	max_linewidth = pdpu->catalog->caps->max_linewidth;
+> +
+> +	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt,
+> +					  &crtc_state->adjusted_mode);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (r_pipe_cfg->src_rect.x1 != 0) {
+>   		/*
+>   		 * In parallel multirect case only the half of the usual width
+>   		 * is supported for tiled formats. If we are here, we know that
+> @@ -895,12 +937,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   			return -E2BIG;
+>   		}
+>   
+> -		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
+> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> -			return -E2BIG;
+> -		}
+> -
+>   		if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+>   		    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
+>   		    (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
+> @@ -922,26 +958,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   		r_pipe->multirect_index = DPU_SSPP_RECT_1;
+>   		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>   
+> -		*r_pipe_cfg = *pipe_cfg;
+> -		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
+> -		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
+> -		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
+> -		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+> -	}
+> -
+> -	drm_rect_rotate_inv(&pipe_cfg->src_rect,
+> -			    new_plane_state->fb->width, new_plane_state->fb->height,
+> -			    new_plane_state->rotation);
+> -	if (r_pipe->sspp)
+> -		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+> -				    new_plane_state->fb->width, new_plane_state->fb->height,
+> -				    new_plane_state->rotation);
+> -
+> -	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
+> -	if (ret)
 > -		return ret;
-> +		goto err_unlock;
+> -
+> -	if (r_pipe->sspp) {
+>   		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
+>   						  &crtc_state->adjusted_mode);
+>   		if (ret)
+> @@ -964,11 +980,45 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
 >   	}
 >   
->   	ret = qmi_txn_wait(&txn, 5 * HZ);
->   	if (ret < 0) {
->   		pr_err("PDR: %s get domain list txn wait failed: %d\n",
->   		       req->service_name, ret);
-> -		return ret;
-> +		goto err_unlock;
->   	}
-> +	mutex_unlock(&pdr->lock);
-
-I'm not sure it is necessary to hold the the mutex during the 
-qmi_txn_wait() since the only variable we are trying to protect is 
-locator_addr.
-
-Wouldn't this delay other work like new/del server notifications if this 
-qmi service is delayed or non-responsive?
-
-Thanks,
-Chris
-
->   
->   	if (resp->resp.result != QMI_RESULT_SUCCESS_V01) {
->   		pr_err("PDR: %s get domain list failed: 0x%x\n",
-> @@ -390,6 +392,11 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
->   	}
+>   	pstate->rotation = rotation;
+> -	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
 >   
 >   	return 0;
-> +
-> +err_unlock:
-> +	mutex_unlock(&pdr->lock);
-> +
-> +	return ret;
 >   }
 >   
+> +static int dpu_plane_atomic_check(struct drm_plane *plane,
+> +				  struct drm_atomic_state *state)
+> +{
+> +	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+> +										 plane);
+> +	int ret = 0;
+> +	struct dpu_plane *pdpu = to_dpu_plane(plane);
+> +	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> +	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+> +	struct dpu_sw_pipe *pipe = &pstate->pipe;
+> +	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> +	const struct drm_crtc_state *crtc_state = NULL;
+> +
+> +	if (new_plane_state->crtc)
+> +		crtc_state = drm_atomic_get_new_crtc_state(state,
+> +							   new_plane_state->crtc);
+> +
+> +	if (pdpu->pipe != SSPP_NONE) {
+
+This check was not present iirc, why did you have to add this?
+RM will return the same SSPP unless freed. So why this additional check?
+
+> +		pipe->sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
+> +		r_pipe->sspp = NULL;
+> +	}
+> +
+> +	if (!pipe->sspp)
+> +		return -EINVAL;
+> +
+> +	ret = dpu_plane_atomic_check_nopipe(plane, new_plane_state, crtc_state);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (!new_plane_state->visible)
+> +		return 0;
+> +
+> +	return dpu_plane_atomic_check_pipes(plane, state, crtc_state);
+> +}
+> +
+>   static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe)
+>   {
+>   	const struct dpu_format *format =
 
