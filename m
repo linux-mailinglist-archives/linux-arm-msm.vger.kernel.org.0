@@ -1,213 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-21703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 816AC8FC352
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 08:15:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DDED8FC36E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 08:29:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3818C28710F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 06:15:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB6E2B21947
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 06:29:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BA0421C192;
-	Wed,  5 Jun 2024 06:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B4E93DABF2;
+	Wed,  5 Jun 2024 06:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X8oPOHTN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FHcRfxUn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D80157A47
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 06:15:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED2ABA3F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 06:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717568116; cv=none; b=E0eZF4p8r/RjxxTOCaSJ9i+brfkjFyOxIt14VzvE9kR5ke5Wf6JX4TLAzfj9m/HC1dyKa7QVuXpzu4v8rBmFEWk0m68n2whWbeGKwkdt95GXZBkBYpkQYWS/zEqBD/p2FZl4I+qGn+ED217r8Vn7G4WjQsWd5ZjRlUAc/75PlGE=
+	t=1717568965; cv=none; b=WSV6pMrazLD7tHXqE3ifaRbBwtpt0Wm6z96dRIcBgjG+uAOdACNvitiFqZ/OUdspWaBccHSjpyGMluXaJfkFS8Gc7RoilQGX2hFhGFJGc+yiCuNl/aU22iJy8vHiyYPDGpgosIWMvjULEC1p18obOh5e7rVU4qgFCuCI7V4j8UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717568116; c=relaxed/simple;
-	bh=FH7/CdAzTjPVb3HTxwH4Z482YZ11x8BQKSxl511snAg=;
+	s=arc-20240116; t=1717568965; c=relaxed/simple;
+	bh=8MKNSHs8EGOAIZ9jigkySNhXca9mZ6lM0o1BuxSWNBY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tBw1AigEV5b29ZcoWW8kn/fuEEUl9G9a7oUHgItr30qkG6x1RKA6wNAFytjnIhG2N2FD8iGTBGZyPW2lPfmIppqd/9J7d6mCCN3D+j9Bt5DMmytHMAWsKfWXXvl+cWZtcXd5KPN7Tkr6qRhYQVFbUFsOY9zAVfmAmDh52wFT9t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X8oPOHTN; arc=none smtp.client-ip=209.85.214.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=jPRA/uEdt68pEUeJbvWm6oA76hs5z72LX0OWU1ibGZZd7g2ItPTyn0ud3IPiQJx1c7F1e6b3acwM4cSuMRlzsR23lXDxXPH4eg19O9vbzk21Qg1zBicw61eauJEzOhYquAoVOZS+QW5HkTVFsSX7/Hro4me7l/ekmA+u08B17QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FHcRfxUn; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f62a628b4cso43137245ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 23:15:14 -0700 (PDT)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52b7ffd9f6eso6404164e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 23:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717568114; x=1718172914; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zAu4SgsSJhhPH/cgZne7lMMDfMb41rkj8xyePWbHmPo=;
-        b=X8oPOHTNrZkqgvJYia/UOaE+4QRj46MFigwWTW8EO1dorbx69zgCnwF3snApkx7FE0
-         UuKqT9YCQGO6yHpJKbHtTjNOoNw8Sj/hoTojvuoTZ+QtixVNF30RwzULaXZSliNGo2mF
-         YAGzMbwX2ZvVb5irgkQwUjpMiWSjbOwEwGNYZcFuF3x0Q2UML7JCjL7xMD5QtXupofet
-         9INZAJnpTa+1tJj2PJ7Sc3WG4SpIdPRuDA/GBnK81cy3vkCdF1Pt7praMYE8BbL5Odzj
-         //X95EvCcoB/COnwN6sioeHx/rJB9sX8ar2yUkJjBbeq92I05drcp77XRwYtJsaoAxTF
-         ga0A==
+        d=linaro.org; s=google; t=1717568960; x=1718173760; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=RJ/23iqkxXhCu+0zyqHfXdCfh5GsXoO3Ru5EztY6RCw=;
+        b=FHcRfxUn+BpbyI6o91DoMiD9KAgc4o4f2dWNdUbU66wrMlsNzGUvmByNSWC13Yjvx7
+         CVNNYJ5bTn8krmLAlvpv9i3EJBdTV03UapQj3N8HQNO/bKuIdbx9VxCGKbeTPYLa3Er4
+         HhzYV1FSPpIXqjVqjtid54+gDXkQL4iQfvJfpokh3DgZ7meIfHf6pATYR+NyRsCtV4pK
+         s7C+/b1oVZnyGn85LGVwLipCa1yaJnQtJSj1TlbIeYRkpvr12K4aaYGXIr68jbCsLA2s
+         +wFGyCWpHOWAlaAtoxty/6gZ7f0p2gRTch2nES90HcQM7UL+4IBJOVn4vGjfbmBUaLCK
+         oCjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717568114; x=1718172914;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zAu4SgsSJhhPH/cgZne7lMMDfMb41rkj8xyePWbHmPo=;
-        b=JHRb7QZwMvWvP6BRGEPU58etaJ6HHjHLcuHHu+AMaMBs78B8el+PAdhwpiFMeQqr96
-         IJ2aj9t0/mJfAQFiRRcic+ks/T9ggmc14mlmgo3rYdMLf1EjWJLaBUHzQmu8STftpFzU
-         CiEoLRo9oLwFiOVRYXUvRJlL+iqTS5A79sl5N2zM+snjkDrTEd5hQ282n6JNi+Rqbfx/
-         h+y8/QZPcCvHYIUto+8zgmiP8Hk1A/HfwWguL7qDh0p2G+RC5WogfreBSS42bValqo8r
-         p3QTKkOhHuwnT/VHvo1P3bM0+dF9/DpVzQAufGimtBXciy3EPI8QgxFbjH6lXaAnTIqU
-         9lMg==
-X-Forwarded-Encrypted: i=1; AJvYcCWWmMTHJzfWXf6B1ga7MB7OtBzRxqSI+Z4CGE4D9yCdkuqu/ld0tta9miWFEoJb677JGyWxlwoalGLkJg0vtQQXh3k/w23DiwPxfG9j9Q==
-X-Gm-Message-State: AOJu0YzaIOOhQVOy4QRGvKrCnLkaqStD3KTNKzVRE1btEnLz0+K+mnqz
-	IZrp0Egk0WRujRE+WzTrFb8aYpYr+Z4dXfRojjiLVdBpltXOJn1Z4VNaU0rQXg==
-X-Google-Smtp-Source: AGHT+IH1r98BP+YeyFiil1aj9qCQowl82TMcJ/FFFdyHro+wBM2epKCpN9R5EB8uhJBH88SsvEFIsw==
-X-Received: by 2002:a17:902:da8f:b0:1f4:8faa:cd68 with SMTP id d9443c01a7336-1f6a5a12e06mr18071135ad.29.1717568114029;
-        Tue, 04 Jun 2024 23:15:14 -0700 (PDT)
-Received: from thinkpad ([120.60.137.11])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f63232e0ddsm93673055ad.51.2024.06.04.23.15.11
+        d=1e100.net; s=20230601; t=1717568960; x=1718173760;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RJ/23iqkxXhCu+0zyqHfXdCfh5GsXoO3Ru5EztY6RCw=;
+        b=lRviOuvwDJ+ZLttFujpiz7ATcb2TvIAE37L9MmXmXgfV+Gq8d7TkZnhgVXqNrOr/8b
+         +V0W7GlREHNL9ZVxEpMt+R4zDZ3MvCrPqEd1oWBX/gGYOKgz/8oMlpdtIu2WEp4AWscq
+         Rx5fALPLCHdTtPntDNoOR1CIeu3zrmfeTbVJ8ZL7oxj7pPj8QeVXRrlqL3EX6FRMUeYq
+         30ql+EPuHS5wxGOWPMiPzEhR+/FzQVqF3h+yhMP4702HI4m4e3MNM+G99v1Tm70Ipptl
+         Gf0fE4bqcrHwZN0chYT+t6n/0Cq6Ip3HQrUthO5CPLMDPAN+IByLcDQx8OnupublFgQY
+         XVlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU56sJ3lArXPA9rYd7YywbJQr73IDkhdSa79cKRzUmXpliiXm4iLtXn58IqV5o95lfljTkjoHe7p65CS3/eknSpQl8WOv/I24ntoz+99w==
+X-Gm-Message-State: AOJu0YyOUG3Y984fiCidGaNx9gGJPyoxnu0hD6vW4TXddSJSE7dfZnVf
+	bsp12J7gfv4qNRBoa1iGcM723KdsVLR800G/445p00S625eHO7ATJj1yt5ARMBg=
+X-Google-Smtp-Source: AGHT+IEMB9B/0I44cfP8n6kV1HLDOy5FxC94CDo+3545zQnZBjIiD9D2HCEXMElemi0yaQa7rQDptg==
+X-Received: by 2002:a05:6512:3056:b0:52b:7945:a434 with SMTP id 2adb3069b0e04-52bab4bd908mr1013426e87.28.1717568960298;
+        Tue, 04 Jun 2024 23:29:20 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52b97a15436sm943344e87.96.2024.06.04.23.29.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 23:15:13 -0700 (PDT)
-Date: Wed, 5 Jun 2024 11:45:08 +0530
-From: "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>
-To: mank <mank@netprisma.us>
-Cc: "duke_xinanwen@163.com" <duke_xinanwen@163.com>,
-	"loic.poulain@linaro.org" <loic.poulain@linaro.org>,
-	"quic_qianyu@quicinc.com" <quic_qianyu@quicinc.com>,
-	"mhi@lists.linux.dev" <mhi@lists.linux.dev>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for Netprisma
- LCUR57 and FCUN69
-Message-ID: <20240605061508.GG2417@thinkpad>
-References: <LV3PR22MB5104C27AD25D51B08C455B6CB0F92@LV3PR22MB5104.namprd22.prod.outlook.com>
+        Tue, 04 Jun 2024 23:29:19 -0700 (PDT)
+Date: Wed, 5 Jun 2024 09:29:18 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Connor Abbott <cwabbott0@gmail.com>, 
+	dri-devel@lists.freedesktop.org, seanpaul@chromium.org, quic_jesszhan@quicinc.com, 
+	Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] drm/msm/a6xx: use __unused__ to fix compiler warnings
+ for gen7_* includes
+Message-ID: <zgg52ydg2w4gxgmsfwte5houkns3rikdfz375oty6bappf5eud@gekg6ynavdpv>
+References: <20240605003829.4120343-1-quic_abhinavk@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <LV3PR22MB5104C27AD25D51B08C455B6CB0F92@LV3PR22MB5104.namprd22.prod.outlook.com>
+In-Reply-To: <20240605003829.4120343-1-quic_abhinavk@quicinc.com>
 
-On Wed, Jun 05, 2024 at 12:53:31AM +0000, mank wrote:
-> Add Netprisma LCUR57 and FCUN69 hardware revision:
+On Tue, Jun 04, 2024 at 05:38:28PM -0700, Abhinav Kumar wrote:
+> GCC diagnostic pragma method throws below warnings in some of the versions
 > 
-> LCUR57:
-> 02:00.0 Unassigned class [ff00]: Device 203e:1000
-> 	Subsystem: Device 203e:1000
+> drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:16:9: warning: unknown
+> option after '#pragma GCC diagnostic' kind [-Wpragmas]
+>   #pragma GCC diagnostic ignored "-Wunused-const-variable"
+>           ^
+> In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:18:0:
+> drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h:924:19: warning:
+> 'gen7_0_0_external_core_regs' defined but not used [-Wunused-variable]
+>   static const u32 *gen7_0_0_external_core_regs[] = {
+>                     ^
+> In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:19:0:
+> drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h:748:19: warning:
+> 'gen7_2_0_external_core_regs' defined but not used [-Wunused-variable]
+>   static const u32 *gen7_2_0_external_core_regs[] = {
+>                     ^
+> In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:20:0:
+> drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h:1188:43: warning:
+> 'gen7_9_0_sptp_clusters' defined but not used [-Wunused-variable]
+>   static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] = {
+>                                             ^
+> drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h:1438:19: warning:
+> 'gen7_9_0_external_core_regs' defined but not used [-Wunused-variable]
+>   static const u32 *gen7_9_0_external_core_regs[] = {
 > 
-> FCUN69:
-> 02:00.0 Unassigned class [ff00]: Device 203e:1001
-> 	Subsystem: Device 203e:1001
+> Remove GCC version dependency by using __unused__ for the unused gen7_* includes.
 > 
-> Signed-off-by: Mank Wang <mank@netprisma.us>
+> Changes in v2:
+> 	- Fix the warnings in the commit text
+> 	- Use __attribute((__unused__)) instead of local assignment
+> 
+> changes in v3:
+> 	- drop the Link from the auto add
+> 
+> Fixes: 64d6255650d4 ("drm/msm: More fully implement devcoredump for a7xx")
+> Suggested-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->  drivers/bus/mhi/host/pci_generic.c | 61 ++++++++++++++++++++++++++++++
->  1 file changed, 61 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 08844ee79654..e2b88699ce9e 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -26,6 +26,7 @@
->  /* PCI VID definitions */
->  #define PCI_VENDOR_ID_THALES	0x1269
->  #define PCI_VENDOR_ID_QUECTEL	0x1eac
-> +#define PCI_VENDOR_ID_NETPRISMA	0x203E
-
-lower case please.
-
->  
->  #define MHI_EDL_DB			91
->  #define MHI_EDL_COOKIE			0xEDEDEDED
-> @@ -606,6 +607,60 @@ static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
->  	.mru_default = 32768,
->  };
->  
-> +static const struct mhi_channel_config mhi_netprisma_lcur57_channels[] = {
-> +	MHI_CHANNEL_CONFIG_UL(0, "NMEA", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(1, "NMEA", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
-> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
-> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> +	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
-> +	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-> +};
-> +
-> +static struct mhi_event_config mhi_netprisma_lcur57_events[] = {
-> +	MHI_EVENT_CONFIG_CTRL(0, 128),
-> +	MHI_EVENT_CONFIG_DATA(1, 128),
-> +	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> +	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
-> +};
-> +
-> +static const struct mhi_controller_config modem_netprisma_lcur57_config = {
-> +	.max_channels = 128,
-> +	.timeout_ms = 20000,
-> +	.num_channels = ARRAY_SIZE(mhi_netprisma_lcur57_channels),
-> +	.ch_cfg = mhi_netprisma_lcur57_channels,
-> +	.num_events = ARRAY_SIZE(mhi_netprisma_lcur57_events),
-> +	.event_cfg = mhi_netprisma_lcur57_events,
-> +};
-> +
-
-The config looks similar to 'modem_quectel_em1xx_config', so you can just reuse
-it.
-
-- Mani
-
-> +static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
-> +	.name = "netprisma-lcur57",
-> +	.edl = "qcom/prog_firehose_sdx24.mbn",
-> +	.config = &modem_netprisma_lcur57_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32,
-> +	.mru_default = 32768,
-> +	.sideband_wake = true,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_netprisma_fcun69_info = {
-> +	.name = "netprisma-fcun69",
-> +	.edl = "qcom/prog_firehose_sdx6x.elf",
-> +	/* FCUN69 uses the same controller configuration as LCUR57 */
-> +	.config = &modem_netprisma_lcur57_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32,
-> +	.mru_default = 32768,
-> +	.sideband_wake = true,
-> +};
-> +
->  /* Keep the list sorted based on the PID. New VID should be added as the last entry */
->  static const struct pci_device_id mhi_pci_id_table[] = {
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
-> @@ -695,6 +750,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* T99W175 (sdx55), HP variant */
->  	{ PCI_DEVICE(0x03f0, 0x0a6c),
->  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-> +	/* NETPRISMA LCUR57 (SDX24) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1000),
-> +		.driver_data = (kernel_ulong_t) &mhi_netprisma_lcur57_info },
-> +	/* NETPRISMA FCUN69 (SDX6X) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
-> +		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
->  	{  }
->  };
->  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-> -- 
-> 2.34.1
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 12 ++++--------
+>  1 file changed, 4 insertions(+), 8 deletions(-)
 > 
 
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
 
