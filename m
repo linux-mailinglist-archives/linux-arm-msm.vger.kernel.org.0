@@ -1,139 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-21791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 323898FD3C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 19:20:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF6148FD443
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 19:47:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4076287454
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 17:20:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DACC81C20F5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 17:47:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8376139D13;
-	Wed,  5 Jun 2024 17:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5E0E7347E;
+	Wed,  5 Jun 2024 17:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X65T6mVX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ByLcuP2U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D94E79DE;
-	Wed,  5 Jun 2024 17:19:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6541D19D894;
+	Wed,  5 Jun 2024 17:47:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717607993; cv=none; b=eNv3BUvlgmKpGGv2N+x4PpIqeEvph5Lv+yetsKc2u3Hl47NA0RKFiDJABolnGaCdrS0sLETZ7/NWUB5pglzedSXIEUEfKrw1KdSHVPwanySKLbihHOsXH7nPMW4W3DNMkQaDFYVTdI803DmcGvkumRIZ5TRQcTQOG/no0pyIGEk=
+	t=1717609636; cv=none; b=UYkbtbugsXwD4sWTNHn+Uall40N3ZHwIpxoG6UDUbJsHbsHfjCtoTOVeFZKciGmmXMi7zl7xWwWUQZ6sLcx47aaia0WTeYsLfXUzZAWvi99tLeIR4cz/XSMCVDbuGWNHbzPcRoltNWVpWpOrZSlvHvIhMYV4wNM8N8BmJaoMMU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717607993; c=relaxed/simple;
-	bh=KoPDujt1xMD1rMjbCLSpQKDTwNo7Sp1vSRZVeW5Uy6s=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kZLjJucrax6DGM4DN05f64Rz4EKSlZ1hkfLFtcEKWFJ/+YvQi2pekqwqDtCYMBnPjYNDTLnHzEQY/glfAX5p96WONUWD1qsuqQLBgBXfFDKC7L7XMFk2hwlWdYeZBre7pXmSt1r5dwQi690duELgxN0GJAXpZCffTX3dKErbnfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=X65T6mVX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455DGfD8014486;
-	Wed, 5 Jun 2024 17:17:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=sNJniB11qHa4cbo7LPak+xXf
-	Ula5GuPjPcZNiVZTXdQ=; b=X65T6mVXXXVOqXlwsjcwOBZpbijhV+XkQzQsQ5SR
-	p+BedcH67osUcAIBA3PcLM4lEvG6cVRmcLmbUaZ33bmofSAaVieupgsruwJtse+z
-	zGq2QBbr3uSnSDHLEInKj+0xgCg27JnjYiYPLgM1idQGP9i48nfjD3Y3QpBMAKOE
-	g7OC8B2I/Yj0ZArMuGtCJCsZyyYm1Rfv065sfCncU+l+ZlFFuXkOH1yuL9QZh/95
-	uGk2tunv1W/oDmoAREOTpmEtUbo2fr43U2n+JQ0FE+aoEKgkz+pwiu4y+k8Vz3EL
-	GjIDyvsM6jtwRJwBTgk2bZIb7SSZxEdAUEecpm8r8vhoTg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yj7urasd5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Jun 2024 17:17:26 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 455HHNiC008319
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 5 Jun 2024 17:17:23 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 5 Jun 2024 10:17:23 -0700
-Date: Wed, 5 Jun 2024 10:17:22 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Simon Glass <sjg@chromium.org>
-CC: Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Amrit Anand <quic_amrianan@quicinc.com>,
-        "Peter
- Griffin" <peter.griffin@linaro.org>,
-        Caleb Connolly
-	<caleb.connolly@linaro.org>,
-        Andy Gross <agross@kernel.org>, Doug Anderson
-	<dianders@chromium.org>,
-        Chen-Yu Tsai <wenst@chromium.org>,
-        Julius Werner
-	<jwerner@chromium.org>,
-        "Humphreys, Jonathan" <j-humphreys@ti.com>,
-        "Sumit
- Garg" <sumit.garg@linaro.org>,
-        Jon Hunter <jonathanh@nvidia.org>,
-        Michal
- Simek <michal.simek@amd.com>,
-        <boot-architecture@lists.linaro.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH RFC v3 0/9] dt-bindings: hwinfo: Introduce board-id
-Message-ID: <20240605100246481-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
- <CAFLszTjexpNEjo1sGVs67L0CAgGZLNkyn9RGfHRD7iHak_mtmg@mail.gmail.com>
+	s=arc-20240116; t=1717609636; c=relaxed/simple;
+	bh=TquLKd0gVLtuXLEtJC/CPqTotKpWkwDo4bpISXh1os4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=eNg6Vwv2WMTM7bciuKwQiwsWeCHpTt0dh3pwjtI1QiOByyBY/6ZPFTI0en1hkbr15YwdKqkfbxVNLT0BdWBXaSgkMtFzWNNOXHYcne5BLLWC04y3tvzvB0/ldRz6apGpDTdCQNMx3S/i9SSeC/X5LM15/e4TdTO+PxNv/31VCvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ByLcuP2U; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990ADC2BD11;
+	Wed,  5 Jun 2024 17:47:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717609635;
+	bh=TquLKd0gVLtuXLEtJC/CPqTotKpWkwDo4bpISXh1os4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=ByLcuP2UMGfSLhV/gWgXJ82ryuTS1kHeyVL5PHdJ9MrxDAp/gdaVsb1SKLlVBuVd3
+	 fq0LpFK9smWEc2THwgiZAWoDCGhkuM8KzBRsH9loW2F/M0MzpkOqRD2sfGue6P/MxA
+	 QaEsd4pbfouIw47SbmMmVe5dlPtQVXQGEXgs7WzzaeBb06hrzsg0oUfsfZ941Pq6cN
+	 Y00sluayyGEZe86UJWMDtmxP8mxPYOYHUuclqYJRPdTu9shy3nr84VKzZsnAWbTcPc
+	 KADXMJK5MyM6Xm7e8uRFSwux6qHIYB9qdjPapN4JWHWjC9ihRa87GxdnD9tkHrfqF4
+	 ReQSAnxjbkAlw==
+Date: Wed, 5 Jun 2024 12:47:13 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+	Rocky Liao <quic_rjliao@quicinc.com>, Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Alex Elder <elder@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	ath12k@lists.infradead.org, linux-pm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	kernel@quicinc.com, Amit Pundir <amit.pundir@linaro.org>
+Subject: Re: [PATCH v8 16/17] PCI/pwrctl: add a PCI power control driver for
+ power sequenced devices
+Message-ID: <20240605174713.GA767261@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFLszTjexpNEjo1sGVs67L0CAgGZLNkyn9RGfHRD7iHak_mtmg@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rUOAnfgLEEt-4ffMEwQQ78zA6aJnT_VQ
-X-Proofpoint-GUID: rUOAnfgLEEt-4ffMEwQQ78zA6aJnT_VQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-05_02,2024-06-05_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- malwarescore=0 mlxscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406050130
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=Mckab1QYoBuE3iSv0x+GEjFNBQS5Hw_Mry=r7h5XGHZEQ@mail.gmail.com>
 
-On Wed, Jun 05, 2024 at 07:17:35AM -0600, Simon Glass wrote:
-> Hi Elliot,
+On Wed, Jun 05, 2024 at 10:47:32AM +0200, Bartosz Golaszewski wrote:
+> On Wed, Jun 5, 2024 at 4:13 AM Bjorn Helgaas <helgaas@kernel.org> wrote:
+> > On Wed, Jun 05, 2024 at 02:34:52AM +0300, Dmitry Baryshkov wrote:
+> > > On Wed, 5 Jun 2024 at 02:23, Bjorn Helgaas <helgaas@kernel.org> wrote:
+> > > > On Tue, May 28, 2024 at 09:03:24PM +0200, Bartosz Golaszewski wrote:
+> > > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > > >
+> > > > > Add a PCI power control driver that's capable of correctly powering up
+> > > > > devices using the power sequencing subsystem. The first users of this
+> > > > > driver are the ath11k module on QCA6390 and ath12k on WCN7850.
+> >
+> > > > > +static const struct of_device_id pci_pwrctl_pwrseq_of_match[] = {
+> > > > > +     {
+> > > > > +             /* ATH11K in QCA6390 package. */
+> > > > > +             .compatible = "pci17cb,1101",
+> > > > > +             .data = "wlan",
+> > > > > +     },
+> > > > > +     {
+> > > > > +             /* ATH12K in WCN7850 package. */
+> > > > > +             .compatible = "pci17cb,1107",
+> > > > > +             .data = "wlan",
+> > > > > +     },
+> > > >
+> > > > IIUC, "pci17cb,1101" and "pci17cb,1107" exist partly so we can check
+> > > > that a DTS conforms to the schema, e.g., a "pci17cb,1101" node
+> > > > contains all the required regulators.  For that use, we obviously need
+> > > > a very specific "compatible" string.
+> > > >
+> > > > Is there any opportunity to add a more generic "compatible" string in
+> > > > addition to those so this list doesn't have to be updated for every
+> > > > PMU?  The .data here is "wlan" in both cases, and for this purpose, we
+> > > > don't care whether it's "pci17cb,1101" or "pci17cb,1107".
+> > >
+> > > These two devices have different set of regulators and different
+> > > requirements to power them on.
+> >
+> > Right, but I don't think pci_pwrctl_pwrseq_probe() knows about those
+> > different sets.  It basically looks like:
+> >
+> >   pci_pwrctl_pwrseq_probe(struct platform_device *pdev)
+> >   {
+> >     struct pci_pwrctl_pwrseq_data *data;
+> >     struct device *dev = &pdev->dev;
+> >
+> >     data->pwrseq = devm_pwrseq_get(dev, of_device_get_match_data(dev));
+> >     pwrseq_power_on(data->pwrseq);
+> >     data->ctx.dev = dev;
+> >     devm_pci_pwrctl_device_set_ready(dev, &data->ctx);
+> >   }
+> >
+> > I think of_device_get_match_data(dev) will return "wlan" for both
+> > "pci17cb,1101" and "pci17cb,1107", so devm_pwrseq_get(),
+> > pwrseq_power_on(), and devm_pci_pwrctl_device_set_ready() don't see
+> > the distinction between them.
 > 
-> I am just picking up the discussion here, which was started on another thread.
+> These are only the first two users of this generic driver. We may end
+> up adding more that will use different targets or even extend the
+> match data with additional fields.
+
+If that were the only reason, I would suggest waiting to add the
+specific device strings until we need the functionality, but it sounds
+like there are other stronger reasons.
+
+> > Of course, they also get "dev", so they can find the device-specifc
+> > stuff that way, but I think that's on the drivers/power/sequencing/
+> > side, not in this pci-pwrctl-pwrseq driver itself.
+> >
+> > So what if there were a more generic "compatible" string, e.g., if the
+> > DT contained something like this:
+> >
+> >   wifi@0 {
+> >     compatible = "pci17cb,1101", "wlan-pwrseq";
 > 
-> I can't see why this new feature is needed. We should be able to use
-> compatible strings, as we do now. I added a 'usage' section to the FIT
-> spec [1] which might help. I also incorporated the board revision and
-> variant information and some notes on how to add to the available
-> suffixes.
-> 
-> Does that handle your use case?
+> What even is "pwrseq" in the context of the hardware description? DT
+> maintainers would like to have a word with you. :)
 
--rev and -sku don't fit the versioning scheme for QTI devices, so this
-isn't a generic enough approach. Patch 5 in this series describes the
-versioning scheme for us.
+There are "compatible" strings like "simple-bus", "simple-mfd", and
+"syscon" that allow drivers to bind and provide generic functionality
+when they don't need to know the exact hardware.
 
-In the other thread, we had talked about using some regex based approach
-for matching the root node compatible. I haven't had chance to work on
-that proposal and will try to get to it in the next couple weeks.
+> > and pci_pwrctl_pwrseq_of_match[] had this:
+> >
+> >   { .compatible = "wlan-pwrseq", .data = "wlan", }
+> >
+> > Wouldn't this pci-pwrctl-pwrseq driver work the same?  I'm not a DT
+> > whiz, so likely I'm missing something, but it would be nice if we
+> > didn't have to update this very generic-looking driver to add every
+> > device that needs it.
 
-Thanks,
-Elliot
+Do you have any other ideas to reduce the churn in this file?  It just
+seems weird to have to add an ID to this file without adding any
+actual code or data related to it.
 
+We should probably also add a pattern to MAINTAINERS so
+get_maintainers.pl on this file will show you as a maintainer.
+
+Bjorn
 
