@@ -1,53 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-21702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 674CF8FC332
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 07:58:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 816AC8FC352
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 08:15:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A045287146
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 05:58:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3818C28710F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 06:15:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6660921C17F;
-	Wed,  5 Jun 2024 05:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BA0421C192;
+	Wed,  5 Jun 2024 06:15:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X8oPOHTN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E5FF9E9;
-	Wed,  5 Jun 2024 05:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D80157A47
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 06:15:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717567087; cv=none; b=KT6MVj/X98/VPS0hVvpTK9cW8/pyhMYXnvlK1sSDbtT3ttj+GBQqi6S/z/QWWJmc8Xuv0VbR8wsVhbstFVxYKjbPS/9n5ZrhNGq6laS4EiAuAS6S+VzeF5lOVRipxRkHkV78KQ+vVayGUt2Rb5wSQayJwKCu5Xq+hhfxw/bEOTY=
+	t=1717568116; cv=none; b=E0eZF4p8r/RjxxTOCaSJ9i+brfkjFyOxIt14VzvE9kR5ke5Wf6JX4TLAzfj9m/HC1dyKa7QVuXpzu4v8rBmFEWk0m68n2whWbeGKwkdt95GXZBkBYpkQYWS/zEqBD/p2FZl4I+qGn+ED217r8Vn7G4WjQsWd5ZjRlUAc/75PlGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717567087; c=relaxed/simple;
-	bh=6GxX408iDcjhjYQDGUkRUJqXZyrINIunqpkSUHjASBY=;
+	s=arc-20240116; t=1717568116; c=relaxed/simple;
+	bh=FH7/CdAzTjPVb3HTxwH4Z482YZ11x8BQKSxl511snAg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=twTDaoN1PNwnLBJzk1Gjg1AeoTwY8GQ/jT6qngKUPEpKNh5NAOIYgNpmBvjArRqXWhg7R/PyAngptJ8XVn3TApjt0BtlI1tiX0Fz78HtU+vQk4JlGx0r1I3B3WByYFQGyX9TW9gyE2ghR1feiI0nyva+hokVTMlecy0lWlr6nLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFEFC32781;
-	Wed,  5 Jun 2024 05:58:04 +0000 (UTC)
-Date: Wed, 5 Jun 2024 11:27:56 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Slark Xiao <slark_xiao@163.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, loic.poulain@linaro.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_qianyu@quicinc.com
-Subject: Re: Re: Re:Re: Re: Re: Re: [PATCH] bus: mhi: host: Add Foxconn SDX72
- related support
-Message-ID: <20240605055756.GE2417@thinkpad>
-References: <541de8e4.1600.18f79de44f3.Coremail.slark_xiao@163.com>
- <20240515074119.GA2445@thinkpad>
- <5eee5967.7bdf.18f7b4567b7.Coremail.slark_xiao@163.com>
- <20240515115239.GD4488@thinkpad>
- <58fb648d.ab03.18f7c2f90bd.Coremail.slark_xiao@163.com>
- <20240516142346.GA6922@thinkpad>
- <20b11ca1.101c.18f8418706b.Coremail.slark_xiao@163.com>
- <6f6143b2.9e05.18f85fda5f9.Coremail.slark_xiao@163.com>
- <20240517104947.GA41015@thinkpad>
- <4c4eb491.13b6.18f9396ae58.Coremail.slark_xiao@163.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=tBw1AigEV5b29ZcoWW8kn/fuEEUl9G9a7oUHgItr30qkG6x1RKA6wNAFytjnIhG2N2FD8iGTBGZyPW2lPfmIppqd/9J7d6mCCN3D+j9Bt5DMmytHMAWsKfWXXvl+cWZtcXd5KPN7Tkr6qRhYQVFbUFsOY9zAVfmAmDh52wFT9t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X8oPOHTN; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1f62a628b4cso43137245ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Jun 2024 23:15:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717568114; x=1718172914; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zAu4SgsSJhhPH/cgZne7lMMDfMb41rkj8xyePWbHmPo=;
+        b=X8oPOHTNrZkqgvJYia/UOaE+4QRj46MFigwWTW8EO1dorbx69zgCnwF3snApkx7FE0
+         UuKqT9YCQGO6yHpJKbHtTjNOoNw8Sj/hoTojvuoTZ+QtixVNF30RwzULaXZSliNGo2mF
+         YAGzMbwX2ZvVb5irgkQwUjpMiWSjbOwEwGNYZcFuF3x0Q2UML7JCjL7xMD5QtXupofet
+         9INZAJnpTa+1tJj2PJ7Sc3WG4SpIdPRuDA/GBnK81cy3vkCdF1Pt7praMYE8BbL5Odzj
+         //X95EvCcoB/COnwN6sioeHx/rJB9sX8ar2yUkJjBbeq92I05drcp77XRwYtJsaoAxTF
+         ga0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717568114; x=1718172914;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zAu4SgsSJhhPH/cgZne7lMMDfMb41rkj8xyePWbHmPo=;
+        b=JHRb7QZwMvWvP6BRGEPU58etaJ6HHjHLcuHHu+AMaMBs78B8el+PAdhwpiFMeQqr96
+         IJ2aj9t0/mJfAQFiRRcic+ks/T9ggmc14mlmgo3rYdMLf1EjWJLaBUHzQmu8STftpFzU
+         CiEoLRo9oLwFiOVRYXUvRJlL+iqTS5A79sl5N2zM+snjkDrTEd5hQ282n6JNi+Rqbfx/
+         h+y8/QZPcCvHYIUto+8zgmiP8Hk1A/HfwWguL7qDh0p2G+RC5WogfreBSS42bValqo8r
+         p3QTKkOhHuwnT/VHvo1P3bM0+dF9/DpVzQAufGimtBXciy3EPI8QgxFbjH6lXaAnTIqU
+         9lMg==
+X-Forwarded-Encrypted: i=1; AJvYcCWWmMTHJzfWXf6B1ga7MB7OtBzRxqSI+Z4CGE4D9yCdkuqu/ld0tta9miWFEoJb677JGyWxlwoalGLkJg0vtQQXh3k/w23DiwPxfG9j9Q==
+X-Gm-Message-State: AOJu0YzaIOOhQVOy4QRGvKrCnLkaqStD3KTNKzVRE1btEnLz0+K+mnqz
+	IZrp0Egk0WRujRE+WzTrFb8aYpYr+Z4dXfRojjiLVdBpltXOJn1Z4VNaU0rQXg==
+X-Google-Smtp-Source: AGHT+IH1r98BP+YeyFiil1aj9qCQowl82TMcJ/FFFdyHro+wBM2epKCpN9R5EB8uhJBH88SsvEFIsw==
+X-Received: by 2002:a17:902:da8f:b0:1f4:8faa:cd68 with SMTP id d9443c01a7336-1f6a5a12e06mr18071135ad.29.1717568114029;
+        Tue, 04 Jun 2024 23:15:14 -0700 (PDT)
+Received: from thinkpad ([120.60.137.11])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f63232e0ddsm93673055ad.51.2024.06.04.23.15.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jun 2024 23:15:13 -0700 (PDT)
+Date: Wed, 5 Jun 2024 11:45:08 +0530
+From: "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>
+To: mank <mank@netprisma.us>
+Cc: "duke_xinanwen@163.com" <duke_xinanwen@163.com>,
+	"loic.poulain@linaro.org" <loic.poulain@linaro.org>,
+	"quic_qianyu@quicinc.com" <quic_qianyu@quicinc.com>,
+	"mhi@lists.linux.dev" <mhi@lists.linux.dev>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for Netprisma
+ LCUR57 and FCUN69
+Message-ID: <20240605061508.GG2417@thinkpad>
+References: <LV3PR22MB5104C27AD25D51B08C455B6CB0F92@LV3PR22MB5104.namprd22.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,179 +89,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4c4eb491.13b6.18f9396ae58.Coremail.slark_xiao@163.com>
+In-Reply-To: <LV3PR22MB5104C27AD25D51B08C455B6CB0F92@LV3PR22MB5104.namprd22.prod.outlook.com>
 
-On Mon, May 20, 2024 at 09:21:16AM +0800, Slark Xiao wrote:
+On Wed, Jun 05, 2024 at 12:53:31AM +0000, mank wrote:
+> Add Netprisma LCUR57 and FCUN69 hardware revision:
 > 
+> LCUR57:
+> 02:00.0 Unassigned class [ff00]: Device 203e:1000
+> 	Subsystem: Device 203e:1000
 > 
-> At 2024-05-17 18:49:47, "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org> wrote:
-> >On Fri, May 17, 2024 at 05:59:03PM +0800, Slark Xiao wrote:
-> >> 
-> >> At 2024-05-17 09:09:05, "Slark Xiao" <slark_xiao@163.com> wrote:
-> >> >
-> >> >At 2024-05-16 22:23:46, "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org> wrote:
-> >> >>On Wed, May 15, 2024 at 08:17:23PM +0800, Slark Xiao wrote:
-> >> >>> 
-> >> >>> 
-> >> >>> At 2024-05-15 19:52:39, "Manivannan Sadhasivam" <mani@kernel.org> wrote:
-> >> >>> >On Wed, May 15, 2024 at 04:01:37PM +0800, Slark Xiao wrote:
-> >> >>> >> 
-> >> >>> >> At 2024-05-15 15:41:19, "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org> wrote:
-> >> >>> >> >+ Qiang
-> >> >>> >> >
-> >> >>> >> >On Wed, May 15, 2024 at 09:29:20AM +0800, Slark Xiao wrote:
-> >> >>> >> >> At 2024-05-14 22:37:41, "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org> wrote:
-> >> >>> >> >> >On Fri, May 10, 2024 at 11:26:57AM +0800, Slark Xiao wrote:
-> >> >>> >> >> >> Align with Qcom SDX72, add ready timeout item for Foxconn SDX72.
-> >> >>> >> >> >> And also, add firehose support since SDX72.
-> >> >>> >> >> >> 
-> >> >>> >> >> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> >> >>> >> >> >> ---
-> >> >>> >> >> >>  drivers/bus/mhi/host/pci_generic.c | 31 ++++++++++++++++++++++++++++++
-> >> >>> >> >> >>  1 file changed, 31 insertions(+)
-> >> >>> >> >> >> 
-> >> >>> >> >> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> >> >>> >> >> >> index 08844ee79654..0fd94c193fc6 100644
-> >> >>> >> >> >> --- a/drivers/bus/mhi/host/pci_generic.c
-> >> >>> >> >> >> +++ b/drivers/bus/mhi/host/pci_generic.c
-> >> >>> >> >> >> @@ -399,6 +399,8 @@ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
-> >> >>> >> >> >>  	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> >> >>> >> >> >>  	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> >> >>> >> >> >>  	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> >> >>> >> >> >> +	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
-> >> >>> >> >> >> +	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-> >> >>> >> >> >
-> >> >>> >> >> >This means SDX55 is also supporting FIREHOSE channels, which is not true I
-> >> >>> >> >> >believe.
-> >> >>> >> >> Actually, I just verified it with my sdx55 and the answer is Yes. These channels
-> >> >>> >> >> are common settings for Qcom device which support PCIe mode. BTW, the
-> >> >>> >> >> default settings of Qcom and Quectel support firehose for their sdx55 products.
-> >> >>> >> >
-> >> >>> >> >Qiang, can you please confirm that SDX55 supports FIREHOSE channels?
-> >> >>> >> >
-> >> >>> >> >> >
-> >> >>> >> >> >>  	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
-> >> >>> >> >> >>  	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
-> >> >>> >> >> >>  };
-> >> >>> >> >> >> @@ -419,6 +421,16 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
-> >> >>> >> >> >>  	.event_cfg = mhi_foxconn_sdx55_events,
-> >> >>> >> >> >>  };
-> >> >>> >> >> >>  
-> >> >>> >> >> >> +static const struct mhi_controller_config modem_foxconn_sdx72_config = {
-> >> >>> >> >> >> +	.max_channels = 128,
-> >> >>> >> >> >> +	.timeout_ms = 20000,
-> >> >>> >> >> >> +	.ready_timeout_ms = 50000,
-> >> >>> >> >> >> +	.num_channels = ARRAY_SIZE(mhi_foxconn_sdx55_channels),
-> >> >>> >> >> >> +	.ch_cfg = mhi_foxconn_sdx55_channels,
-> >> >>> >> >> >> +	.num_events = ARRAY_SIZE(mhi_foxconn_sdx55_events),
-> >> >>> >> >> >> +	.event_cfg = mhi_foxconn_sdx55_events,
-> >> >>> >> >> >> +};
-> >> >>> >> >> >> +
-> >> >>> >> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_sdx24_info = {
-> >> >>> >> >> >>  	.name = "foxconn-sdx24",
-> >> >>> >> >> >>  	.config = &modem_foxconn_sdx55_config,
-> >> >>> >> >> >> @@ -448,6 +460,16 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx65_info = {
-> >> >>> >> >> >>  	.sideband_wake = false,
-> >> >>> >> >> >>  };
-> >> >>> >> >> >>  
-> >> >>> >> >> >> +static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
-> >> >>> >> >> >> +	.name = "foxconn-sdx72",
-> >> >>> >> >> >> +	.edl = "qcom/sdx72m/xbl_s_devprg_ns.melf",
-> >> >>> >> >> >
-> >> >>> >> >> >What is '.melf'? Is the firmware available somewhere? Did you plan to upstream
-> >> >>> >> >> >it to linux-firmware?
-> >> >>> >> >> >
-> >> >>> >> >> This file similar with "edl.mbn". In SDX72 product, the default "edl" file name is
-> >> >>> >> >> "xbl_s_devprg_ns.melf". Currently we don't plan to upstream it to linux-firmware
-> >> >>> >> >> since 2 reasons: 1: we share the same fold name sdx72m with qcom or other vendors
-> >> >>> >> >> 2: this file may be changed since sdx72 product still under developing in our side. we
-> >> >>> >> >> may change the base line according to QCOM release.
-> >> >>> >> >
-> >> >>> >> >Then I would ask you to add support when you have a stable firmware. I do not
-> >> >>> >> >want to change the firmware name after some time as it will confuse users.
-> >> >>> >> >
-> >> >>> >> >- Mani
-> >> >>> >> If a stable firmware must be provided, I think I shall change the folder name from qcom to
-> >> >>> >> fox, do you agree this?
-> >> >>> >
-> >> >>> >Even in that case, where can the user find the firmware?
-> >> >>> >
-> >> >>> I think this edl file could help user let device enter into edl mode(wwan0firehose0).
-> >> >>> For PCIE device, there is no opensource tool to support PCIE edl download. If user
-> >> >>> could get the tool to do the firehose download, I think it's not hard to get complete firmware
-> >> >>> from PC vendor or somewhere else.
-> >> >>
-> >> >>I was told that Qcom will upstream the PCI support for QDL in the coming weeks.
-> >> >>Once that happens (even if a PR), I'll share that with you. Please test it and
-> >> >>let me know if that works or not.
-> >> >>
-> >> >Sure. But I think this shall not the block cause for merging this patch, right?
-> >> >Before that PR, we have verified the firehose function in our local with our
-> >> >firehose tool which is not open. 
-> >
-> >Yeah, QDL is not a blocker for this device.
-> If there is no other issue, I will release a V2 version based on the edl file path and name.
-> Also, I will add the ".edl_trigger=true" for my sdx72 devices.
-> For previous sdx55 and sdx65 firehose support, I think a new commit would be better 
-> to cover that.
-> >
-> >> >>And for entering EDL mode, we have recently added support to trigger EDL mode
-> >> >>from host [1]. Could you also test that? You just need to add `edl_trigger =
-> >> >>true` to the `mhi_pci_dev_info` struct of SDX72 and trigger EDL mode from host
-> >> >>by:
-> >> >>
-> >> >>echo 1 > /sys/bus/mhi/devices/.../trigger_edl
-> >> >>
-> >> >Do you remember that I told you I want to merge such function from qualcomm driver
-> >> >in last year? I merge the commit from QUD driver in my local. Actually it's same as the
-> >> >commit [1], it's called "force_edl". And sure, the result is yes, it works well.
-> >> >
-> >> Latest test, it doesn't work in Linux V6.9 since there is a patch missing. In my local previous
-> >> test, there is no mhi_cntrl->edl_trigger condition to set up dev_attr_trigger_edl.
-> >> Seems patch [2] is missed.
-> >> 
-> >> [2]-https://lore.kernel.org/mhi/1713928915-18229-4-git-send-email-quic_qianyu@quicinc.com/
-> >
-> >You need to apply the whole series. But anyway, thanks for testing it out.
-> >
-> >> >>> >> BTW, I need to check if it works after updating 'edl fw' from  xbl_s_devprg_ns.melf to
-> >> >>> >> edl.mbn. 
-> >> >>> 
-> >> >>> >
-> >> >>> >Okay. IMO, we should upstream the product support only after a stable firmware
-> >> >>> >release (well stable in the sense a stable name at least).
-> >> >>> >
-> >> >>> >- Mani
-> >> >>> The check result is we can rename it to align with previous format. Until now, 
-> >> >>> I didn't see any mhi device has upstream their firmware to /lib/firmware/qcom folder.
-> >> >>
-> >> >>It is not mandatory, but it is a best practise that I recently started asking
-> >> >>for.
-> >> >>
-> >> >>> If it's a must, I think we can upstream the edl file later.  Anyway, we hope we can
-> >> >>> merge this sdx72 support into 6.10 since customer(Dell) would use this kernel for official
-> >> >>> release. But no worry, we can make sure this firehose download method works well in
-> >> >>>  our local side.
-> >> >>> And also, please help a review about my previous email about fix sdx72 ping failure issue.
-> >> >>> There is a fix solution from us. 
-> >> >>> 
-> >> >>
-> >> >>Qiang is working on that.
-> >> >Good to hear that. BTW, may I know the feature merge window in V6.10? I don't worry about
-> >> >merge window of the network fix commit, since it's a fix with higher priority. But I want to
-> >> >merge the basic support of my SDX72 before merge window close. This is important for us.
-> >> >
-> >
-> >MHI tree is closed during -rc6, so there is no way this patch can make 6.10.
-> I saw you tag mhi-for-6.10 which was created in 4/25,  before linux 6.9-RC6.
-> But V6.9 was just released in 5/13, and there is a lot of time before V6.10.
-> Why close the merge window for V6.10 so early?
+> FCUN69:
+> 02:00.0 Unassigned class [ff00]: Device 203e:1001
+> 	Subsystem: Device 203e:1001
+> 
+> Signed-off-by: Mank Wang <mank@netprisma.us>
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 61 ++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 08844ee79654..e2b88699ce9e 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -26,6 +26,7 @@
+>  /* PCI VID definitions */
+>  #define PCI_VENDOR_ID_THALES	0x1269
+>  #define PCI_VENDOR_ID_QUECTEL	0x1eac
+> +#define PCI_VENDOR_ID_NETPRISMA	0x203E
 
-I need to send the PR to Greg at the -rc6 timeframe. Greg will mostly close his
-tree post -rc6 as he needs to pull from different sub trees before sending the
-PR to Linus during merge window. That's the reason.
+lower case please.
+
+>  
+>  #define MHI_EDL_DB			91
+>  #define MHI_EDL_COOKIE			0xEDEDEDED
+> @@ -606,6 +607,60 @@ static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
+>  	.mru_default = 32768,
+>  };
+>  
+> +static const struct mhi_channel_config mhi_netprisma_lcur57_channels[] = {
+> +	MHI_CHANNEL_CONFIG_UL(0, "NMEA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(1, "NMEA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 32, 1),
+> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 32, 1),
+> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
+> +	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
+> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0_MBIM", 128, 2),
+> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0_MBIM", 128, 3),
+> +};
+> +
+> +static struct mhi_event_config mhi_netprisma_lcur57_events[] = {
+> +	MHI_EVENT_CONFIG_CTRL(0, 128),
+> +	MHI_EVENT_CONFIG_DATA(1, 128),
+> +	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> +	MHI_EVENT_CONFIG_HW_DATA(3, 1024, 101)
+> +};
+> +
+> +static const struct mhi_controller_config modem_netprisma_lcur57_config = {
+> +	.max_channels = 128,
+> +	.timeout_ms = 20000,
+> +	.num_channels = ARRAY_SIZE(mhi_netprisma_lcur57_channels),
+> +	.ch_cfg = mhi_netprisma_lcur57_channels,
+> +	.num_events = ARRAY_SIZE(mhi_netprisma_lcur57_events),
+> +	.event_cfg = mhi_netprisma_lcur57_events,
+> +};
+> +
+
+The config looks similar to 'modem_quectel_em1xx_config', so you can just reuse
+it.
 
 - Mani
+
+> +static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
+> +	.name = "netprisma-lcur57",
+> +	.edl = "qcom/prog_firehose_sdx24.mbn",
+> +	.config = &modem_netprisma_lcur57_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.mru_default = 32768,
+> +	.sideband_wake = true,
+> +};
+> +
+> +static const struct mhi_pci_dev_info mhi_netprisma_fcun69_info = {
+> +	.name = "netprisma-fcun69",
+> +	.edl = "qcom/prog_firehose_sdx6x.elf",
+> +	/* FCUN69 uses the same controller configuration as LCUR57 */
+> +	.config = &modem_netprisma_lcur57_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.mru_default = 32768,
+> +	.sideband_wake = true,
+> +};
+> +
+>  /* Keep the list sorted based on the PID. New VID should be added as the last entry */
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+> @@ -695,6 +750,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  	/* T99W175 (sdx55), HP variant */
+>  	{ PCI_DEVICE(0x03f0, 0x0a6c),
+>  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
+> +	/* NETPRISMA LCUR57 (SDX24) */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1000),
+> +		.driver_data = (kernel_ulong_t) &mhi_netprisma_lcur57_info },
+> +	/* NETPRISMA FCUN69 (SDX6X) */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
+> +		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
+>  	{  }
+>  };
+>  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+> -- 
+> 2.34.1
+> 
+
+
 
 -- 
 மணிவண்ணன் சதாசிவம்
