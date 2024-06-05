@@ -1,329 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-21819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 143C78FD9A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 00:13:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4054D8FDA0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 00:48:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4573C1F22FEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 22:13:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5642281CE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 22:48:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 057C815F3EC;
-	Wed,  5 Jun 2024 22:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 270C215FA60;
+	Wed,  5 Jun 2024 22:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PqDndSX5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ow8m+FnD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8824962B;
-	Wed,  5 Jun 2024 22:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F9213BC3E;
+	Wed,  5 Jun 2024 22:48:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717625612; cv=none; b=lPzjexl4/3VYXzoRw2fRAOPhcPbKd7rsyuj1chPPnQxn5vPEebbJol9Q9tmkPOsrJx6HeRjzbu0rT9I9axtIHKLjQtmake9/UX81Dl/sHjsiz7De6lOk+srtPNDrXXBEOOhzALWdiWQp/M8bGMWt3n+2/gFXYiRzfLrBqlwKRBY=
+	t=1717627708; cv=none; b=hmufJCBcL0OTPcRui0xk20LW8SDC1L1py/uHDq940a4fzVCDtD8VlMsiKLZPBgnHqC+onhEbG79Wlq0z9JlokA07FiEfL5c3uqCkqCLf8CRwIOSaq4xEELSyTbThCAICzqPTiLb6XIh8egm/BH2Wl2hVTr7yH5x/n8s0BkOsIWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717625612; c=relaxed/simple;
-	bh=Wngwnckn1Tj6rLC1+C7OloqUpd6c6W/4eYy7n0SkEio=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GyxC4/gR3yRQlrT2v6/o9IChLfxIy2VTx1n1uUHYjivo3oKoIawWQw366J+0dhiELSPmr9R+g6YwHBvTAuPy+Y/zlyKXj2tL1snR5b1aQqVVG6yObcDS58tiaW1HDnOwVV+rLm5r9Lh3hzFs7uqI8bPI+SapRzwkioSGCx6lWRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PqDndSX5; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2eaa794eb9fso3445271fa.2;
-        Wed, 05 Jun 2024 15:13:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717625609; x=1718230409; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cZ1uh3K4QtfBF8VEkq9yAiwApUG8fEgQZJ7CBc4fjQs=;
-        b=PqDndSX5IX/42dXE+ZsgOEAMDGiQIxbpOsdfRrwW3x2y8N8JrgWemAOKv/Fqu92US3
-         +JwMzTgnFyyMY97KjEosg97pQ4WojCaroctI264psC208ljc9TJqh81HrPFa53PngLgQ
-         tONMFzzqwHda7ipbUOFPitK1NW09uzTc21WyDZPFHhyHCE5feuk41JSOJTeRmKmXLint
-         KwFBonYhFSodtWM85YeuGjAuWVJDmgdG7YXtRdePeM1QXzrX3vlKtAWQdMkmBvJn/iQ/
-         gcF9/bTGFp419MYCfHcbmdJt5rWXxFKzgDShWBZn6qOJhLbNRpJSeKYEEB1mQsvV8nBF
-         86Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717625609; x=1718230409;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cZ1uh3K4QtfBF8VEkq9yAiwApUG8fEgQZJ7CBc4fjQs=;
-        b=BQjgfn2xXiyAKz2c1PcqLeNtytFQ53knUZUaYPwVPN4zZid5xU0WSGIe77rG9C2+6o
-         /8IfH7HVVNwYMmmINkX3zEy9DloY388mnu8DzM5d93O0tlFAiBdgKvyrEHHyslz8QPUu
-         8ZReKeLVGIBwjqjrqUAgMY04HF7gF0VZgdEmIJD3s4wJr6tUEexn9peEjkqIrCHyIxe/
-         qrtOeREcs5qbcaIHOUU6kMNspyKho7+0ZaIduWg8c7NujOFa+cRkpHg8EskczgLbu1JX
-         hyLUZbRm9DLuyMvpkuS3xPM/tMmn5kzrzsbEA2OAQRtbdrnS1z4hgQ7EcVCKaZcRzd7V
-         V3ig==
-X-Forwarded-Encrypted: i=1; AJvYcCW14oy6vGw4eCuWSpGomCCAVKDaEcnbyI+u4wO7ARKLp0dG9bW/vv0pcKhqEGJmbf783d2YNoHL50h6VL7zanl14bDip5AG7z2shH4Y4Jq5LINXwBBVSQoMThcaM66xW+iJnfD88XDvs3z/1A==
-X-Gm-Message-State: AOJu0Yye0nI8AEJs4/WqheMz41CJAdZ6eaMCQ+zte9ttWeMTxHxDmAyT
-	Tv6HN3e/mTwVixDdkEhG9kwl0KrtuIw86pNvMW42mLJHwuK9RY1obvoVza+BjgVOK5tP2qfYBaV
-	HVN0N6Eya1UbTRp3JepOUGjhoabXaeQ==
-X-Google-Smtp-Source: AGHT+IH6GbJhFgI/2EiVzuYAXcC+X8efqfLIYsN3X0TTXB9HePklJOwEaCHlGkROjKzAmeidQuASNMAWimonjYzcZio=
-X-Received: by 2002:a05:651c:2224:b0:2ea:8188:5bdf with SMTP id
- 38308e7fff4ca-2eac7a52b99mr26482021fa.36.1717625608682; Wed, 05 Jun 2024
- 15:13:28 -0700 (PDT)
+	s=arc-20240116; t=1717627708; c=relaxed/simple;
+	bh=SaKkEONMcXz5VuiwJ8gPQQzVNVB04hLirJVwtDBEQQM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bV/SmgECsGz1IUo0Jd0oZSTKJhGbSuHPzK4tDPBPw2wyZkJbeE2odRwl8mgmT17hjL2vFY6J8Kfqx1ZYb1Q+k4VfaNOuhUj6KPwy4I4rToMd14NQ2q28Ss3lbp2iCE5bUKf8jiMDSAWzQ6P2dRV0aaMja35ICkgtJ0R7rQawFZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ow8m+FnD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455B1UFW031684;
+	Wed, 5 Jun 2024 22:48:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	B5SNWx6UZouir9JNN7giO4PUeXl6JfqRb+48Qd1gCn4=; b=ow8m+FnDxYRPGzHp
+	tRvFBGZ8B1i6M+7zVay1pEmG+z9zuFGt8BkYbFPI5QLEwvOixTvskS7fNrTzlXjw
+	9Wj2G3Ne0CIYQftdsEmumugjPKVUNkk0VSjHzEvZaiePlqMif4sRVYEVTWwhTWQx
+	2WUSPhl8uarn4obQXkUEAKMge018ZaC4OSrNxcNtC6VPzHVcifLmroNPcuYFrujX
+	46iaAwNFGvSAe6TBjV0W8AXxMKmqwjESqPlqvfXhYL1LySdHaUETm+pW8vN3uEPW
+	mPHQ+4lUUsAnNZOPcopzNKAQ1SHiUShhRBmFHQBpzk9RsaGqVZUX4P7sV3DbDiT6
+	kSbhLw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjh3tt8rc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 05 Jun 2024 22:48:10 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 455Mm9DB009493
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 5 Jun 2024 22:48:09 GMT
+Received: from [10.110.119.103] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 5 Jun 2024
+ 15:48:08 -0700
+Message-ID: <d9a2004a-0a3b-41a6-92a4-eea7b1b3f804@quicinc.com>
+Date: Wed, 5 Jun 2024 15:48:08 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240123144543.9405-1-quic_bibekkum@quicinc.com>
- <20240123144543.9405-4-quic_bibekkum@quicinc.com> <CAF6AEGs3_wBNo58EbGicFoQuq8--fDohTGv1JSFgoViygLS5Lg@mail.gmail.com>
- <f2222714-1e00-424e-946d-c314d55541b8@quicinc.com> <51b2bd40-888d-4ee4-956f-c5239c5be9e9@linaro.org>
- <0a867cd1-8d99-495e-ae7e-a097fc9c00e9@quicinc.com> <7140cdb8-eda4-4dcd-b5e3-c4acdd01befb@linaro.org>
- <omswcicgc2kqd6gp4bebd43sklfs2wqyaorhfyb2wumoeo6v74@gaay3p5m46xi>
- <CAF6AEGub2b5SRw7kDUGfKQQ35VSsMkQ9LNExSkyHHczdFa2T4Q@mail.gmail.com>
- <9992067e-51c5-4a55-8d66-55a102a001b6@quicinc.com> <CAF6AEGsxKwzX6it4vipggOdGqNVzPbwMj6a0h871a=GfwUp0Cg@mail.gmail.com>
- <afb0698e-68a1-47b8-ba37-c9e413ca3ee3@quicinc.com>
-In-Reply-To: <afb0698e-68a1-47b8-ba37-c9e413ca3ee3@quicinc.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Wed, 5 Jun 2024 15:13:16 -0700
-Message-ID: <CAF6AEGsNSH4ZccWFN5F3o1uaFUqjpNQROON0QM2n6QnDT0Lq9A@mail.gmail.com>
-Subject: Re: [PATCH v9 3/5] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jsnitsel@redhat.com, 
-	quic_bjorande@quicinc.com, mani@kernel.org, quic_eberman@quicinc.com, 
-	robdclark@chromium.org, u.kleine-koenig@pengutronix.de, robh@kernel.org, 
-	vladimir.oltean@nxp.com, quic_pkondeti@quicinc.com, quic_molvera@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	iommu@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/5] soc: qcom: pdr: protect locator_addr with the main
+ mutex
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sibi Sankar
+	<quic_sibis@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Xilin Wu <wuxilin123@gmail.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        "Alexey
+ Minnekhanov" <alexeymin@postmarketos.org>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>
+References: <20240512-qcom-pd-mapper-v8-0-5ecbb276fcc0@linaro.org>
+ <20240512-qcom-pd-mapper-v8-1-5ecbb276fcc0@linaro.org>
+Content-Language: en-US
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20240512-qcom-pd-mapper-v8-1-5ecbb276fcc0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Wqs08OC1n35NM-bPWOi_M7MKTo19eJng
+X-Proofpoint-ORIG-GUID: Wqs08OC1n35NM-bPWOi_M7MKTo19eJng
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-05_02,2024-06-05_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ adultscore=0 bulkscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ suspectscore=0 spamscore=0 clxscore=1011 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406050171
 
-On Wed, Jun 5, 2024 at 3:52=E2=80=AFAM Bibek Kumar Patro
-<quic_bibekkum@quicinc.com> wrote:
->
-> On 6/5/2024 12:19 AM, Rob Clark wrote:
-> > On Thu, May 30, 2024 at 2:22=E2=80=AFAM Bibek Kumar Patro
-> > <quic_bibekkum@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 5/28/2024 9:38 PM, Rob Clark wrote:
-> >>> On Tue, May 28, 2024 at 6:06=E2=80=AFAM Dmitry Baryshkov
-> >>> <dmitry.baryshkov@linaro.org> wrote:
-> >>>>
-> >>>> On Tue, May 28, 2024 at 02:59:51PM +0200, Konrad Dybcio wrote:
-> >>>>>
-> >>>>>
-> >>>>> On 5/15/24 15:59, Bibek Kumar Patro wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>> On 5/10/2024 6:32 PM, Konrad Dybcio wrote:
-> >>>>>>> On 10.05.2024 2:52 PM, Bibek Kumar Patro wrote:
-> >>>>>>>>
-> >>>>>>>>
-> >>>>>>>> On 5/1/2024 12:30 AM, Rob Clark wrote:
-> >>>>>>>>> On Tue, Jan 23, 2024 at 7:00=E2=80=AFAM Bibek Kumar Patro
-> >>>>>>>>> <quic_bibekkum@quicinc.com> wrote:
-> >>>>>>>>>>
-> >>>>>>>>>> Currently in Qualcomm  SoCs the default prefetch is set to 1 w=
-hich allows
-> >>>>>>>>>> the TLB to fetch just the next page table. MMU-500 features AC=
-TLR
-> >>>>>>>>>> register which is implementation defined and is used for Qualc=
-omm SoCs
-> >>>>>>>>>> to have a custom prefetch setting enabling TLB to prefetch the=
- next set
-> >>>>>>>>>> of page tables accordingly allowing for faster translations.
-> >>>>>>>>>>
-> >>>>>>>>>> ACTLR value is unique for each SMR (Stream matching register) =
-and stored
-> >>>>>>>>>> in a pre-populated table. This value is set to the register du=
-ring
-> >>>>>>>>>> context bank initialisation.
-> >>>>>>>>>>
-> >>>>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> >>>>>>>>>> ---
-> >>>>>>>
-> >>>>>>> [...]
-> >>>>>>>
-> >>>>>>>>>> +
-> >>>>>>>>>> +               for_each_cfg_sme(cfg, fwspec, j, idx) {
-> >>>>>>>>>> +                       smr =3D &smmu->smrs[idx];
-> >>>>>>>>>> +                       if (smr_is_subset(smr, id, mask)) {
-> >>>>>>>>>> +                               arm_smmu_cb_write(smmu, cbndx,=
- ARM_SMMU_CB_ACTLR,
-> >>>>>>>>>> +                                               actlrcfg[i].ac=
-tlr);
-> >>>>>>>>>
-> >>>>>>>>> So, this makes ACTLR look like kind of a FIFO.  But I'm looking=
- at
-> >>>>>>>>> downstream kgsl's PRR thing (which we'll need to implement vulk=
-an
-> >>>>>>>>> sparse residency), and it appears to be wanting to set BIT(5) i=
-n ACTLR
-> >>>>>>>>> to enable PRR.
-> >>>>>>>>>
-> >>>>>>>>>             val =3D KGSL_IOMMU_GET_CTX_REG(ctx, KGSL_IOMMU_CTX_=
-ACTLR);
-> >>>>>>>>>             val |=3D FIELD_PREP(KGSL_IOMMU_ACTLR_PRR_ENABLE, 1)=
-;
-> >>>>>>>>>             KGSL_IOMMU_SET_CTX_REG(ctx, KGSL_IOMMU_CTX_ACTLR, v=
-al);
-> >>>>>>>>>
-> >>>>>>>>> Any idea how this works?  And does it need to be done before or=
- after
-> >>>>>>>>> the ACTLR programming done in this patch?
-> >>>>>>>>>
-> >>>>>>>>> BR,
-> >>>>>>>>> -R
-> >>>>>>>>>
-> >>>>>>>>
-> >>>>>>>> Hi Rob,
-> >>>>>>>>
-> >>>>>>>> Can you please help provide some more clarification on the FIFO =
-part? By FIFO are you referring to the storing of ACTLR data in the table?
-> >>>>>>>>
-> >>>>>>>> Thanks for pointing to the downstream implementation of kgsl dri=
-ver for
-> >>>>>>>> the PRR bit. Since kgsl driver is already handling this PRR bit'=
-s
-> >>>>>>>> setting, this makes setting the PRR BIT(5) by SMMU driver redund=
-ant.
-> >>>>>>>
-> >>>>>>> The kgsl driver is not present upstream.
-> >>>>>>>
-> >>>>>>
-> >>>>>> Right kgsl is not present upstream, it would be better to avoid co=
-nfiguring the PRR bit and can be handled by kgsl directly in downstream.
-> >>>>>
-> >>>>> No! Upstream is not a dumping ground to reduce your technical debt.
-> >>>>>
-> >>>>> There is no kgsl driver upstream, so this ought to be handled here,=
- in
-> >>>>> the iommu driver (as poking at hardware A from driver B is usually =
-not good
-> >>>>> practice).
-> >>>>
-> >>>> I'd second the request here. If another driver has to control the
-> >>>> behaviour of another driver, please add corresponding API for that.
-> >>>
-> >>> We have adreno_smmu_priv for this purpose ;-)
-> >>>
-> >>
-> >> Thanks Rob for pointing to this private interface structure between sm=
-mu
-> >> and gpu. I think it's similar to what you're trying to implement here
-> >> https://lore.kernel.org/all/CAF6AEGtm-KweFdMFvahH1pWmpOq7dW_p0Xe_13aHG=
-Wt0jSbg8w@mail.gmail.com/#t
-> >> I can add an api "set_actlr_prr()" with smmu_domain cookie, page point=
-er
-> >> as two parameters. This api then can be used by drm/msm driver to carr=
-y
-> >> out the prr implementation by simply calling this.
-> >> Would this be okay Rob,Konrad,Dmitry?
-> >> Let me know if any other suggestions you have in mind as well regardin=
-g
-> >> parameters and placement.
-> >
-> > Hey Bibek, quick question.. is ACTLR preserved across a suspend/resume
-> > cycle?  Or does it need to be reprogrammed on resume?  And same
-> > question for these two PRR related regs:
-> >
-> >    /* Global SMMU register offsets */
-> >    #define KGSL_IOMMU_PRR_CFG_LADDR        0x6008
-> >    #define KGSL_IOMMU_PRR_CFG_UADDR        0x600c
-> >
-> > (ie. high/low 32b of the PRR page)
-> >
->
-> Hey Rob, In suspend/resume, the register space power rails are not in
-> disabled state, so it won't go back to reset values and should retain
-> it's value. Only in hibernation cycle the registers' value would get rese=
-t.
->
-> So the hi/low address bit register for PRR page would also retain it's
-> value along with the ACTLR registers.
->
-> > I was starting to type up a patch to add PRR configuration, but
-> > depending on whether it interacts with suspend/resume, it might be
-> > better form arm-smmu-qcom.c to just always enable and configure PRR
-> > (including allocating a page to have an address to program into
-> > PRR_CFG_LADDR/UADDR), and instead add an interface to return the PRR
-> > page?  I think there is no harm in unconditionally configuring PRR for
-> > gpu smmu.
->
-> Sounds okay though since this would not interact with suspend/resume path=
-.
-> But I think, suppose in-case this page would have some other references
-> as well before configuring the address to the registers for PRR
-> configuration, then  GPU would be dependent on arm-smmu-qcom for this pag=
-e.
-> So Instead an endpoint api in arm-smmu-qcom.c can recieve the just the
-> page-address, and bit set status from drm/msm driver and can set/reset
-> the bit along with any page-address they want ?
-> It would mean the interface will be smmu's , but the choice of
-> configuration data to the registers' will be still with gpu.
->
-> I wrote up a small patch with this implementation, would you like to
-> review that?
-> Will send it in this v11 series as new patch.
+Hi Dmitry,
 
-I think if there is no suspend/resume interaction, we should go back
-to the original idea of page allocation in drm/msm.
+On 5/11/2024 2:56 PM, Dmitry Baryshkov wrote:
+...
+> @@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
+>   					      locator_hdl);
+>   	struct pdr_service *pds;
+>   
+> +	mutex_lock(&pdr->lock);
+>   	/* Create a local client port for QMI communication */
+>   	pdr->locator_addr.sq_family = AF_QIPCRTR;
+>   	pdr->locator_addr.sq_node = svc->node;
+>   	pdr->locator_addr.sq_port = svc->port;
+>   
+> -	mutex_lock(&pdr->lock);
+>   	pdr->locator_init_complete = true;
+>   	mutex_unlock(&pdr->lock);
+>   
+> @@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
+>   
+>   	mutex_lock(&pdr->lock);
+>   	pdr->locator_init_complete = false;
+> -	mutex_unlock(&pdr->lock);
+>   
+>   	pdr->locator_addr.sq_node = 0;
+>   	pdr->locator_addr.sq_port = 0;
+> +	mutex_unlock(&pdr->lock);
+>   }
+>   
+>   static const struct qmi_ops pdr_locator_ops = {
+> @@ -365,6 +365,7 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
+>   	if (ret < 0)
+>   		return ret;
+>   
+> +	mutex_lock(&pdr->lock);
+>   	ret = qmi_send_request(&pdr->locator_hdl,
+>   			       &pdr->locator_addr,
+>   			       &txn, SERVREG_GET_DOMAIN_LIST_REQ,
+> @@ -373,15 +374,16 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
+>   			       req);
+>   	if (ret < 0) {
+>   		qmi_txn_cancel(&txn);
+> -		return ret;
+> +		goto err_unlock;
+>   	}
+>   
+>   	ret = qmi_txn_wait(&txn, 5 * HZ);
+>   	if (ret < 0) {
+>   		pr_err("PDR: %s get domain list txn wait failed: %d\n",
+>   		       req->service_name, ret);
+> -		return ret;
+> +		goto err_unlock;
+>   	}
+> +	mutex_unlock(&pdr->lock);
 
-Basically, I think the pros and cons are:
+I'm not sure it is necessary to hold the the mutex during the 
+qmi_txn_wait() since the only variable we are trying to protect is 
+locator_addr.
 
-allocate in arm-smmu
-  pro: easy to sequence programming with suspend/resume
-  con: there isn't a convenient place to free the page on driver unload
+Wouldn't this delay other work like new/del server notifications if this 
+qmi service is delayed or non-responsive?
 
-allocate in drm/msm:
-  pro: easy place to free the page in teardown
-  con: harder to sequence with s/r
+Thanks,
+Chris
 
-But if ACTLR and PRR_CFG_LADDR/UADDR are retained, then the con isn't
-actually an issue ;-)
-
-Anyways, I can type that patch..  the rest of drm/msm and userspace
-changes (vm_bind + sparse) to get to the point where I can use PRR are
-a somewhat bigger task so it will take me a while to get the point
-where I can test any smmu patches.
-
-BR,
--R
-
-
-> Thanks & regards,
-> Bibek
->
-> >
-> > BR,
-> > -R
-> >
-> >> Thanks & regards,
-> >> Bibek
-> >>
-> >>> BR,
-> >>> -R
-> >>>
-> >>>>>
-> >>>>>>
-> >>>>>>>> Thanks for bringing up this point.
-> >>>>>>>> I will send v10 patch series removing this BIT(5) setting from t=
-he ACTLR
-> >>>>>>>> table.
-> >>>>>>>
-> >>>>>>> I think it's generally saner to configure the SMMU from the SMMU =
-driver..
-> >>>>>>
-> >>>>>> Yes, agree on this. But since PRR bit is not directly related to S=
-MMU
-> >>>>>> configuration so I think it would be better to remove this PRR bit
-> >>>>>> setting from SMMU driver based on my understanding.
-> >>>>>
-> >>>>> Why is it not related? We still don't know what it does.
-> >>>>>
-> >>>>> Konrad
-> >>>>
-> >>>> --
-> >>>> With best wishes
-> >>>> Dmitry
+>   
+>   	if (resp->resp.result != QMI_RESULT_SUCCESS_V01) {
+>   		pr_err("PDR: %s get domain list failed: 0x%x\n",
+> @@ -390,6 +392,11 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
+>   	}
+>   
+>   	return 0;
+> +
+> +err_unlock:
+> +	mutex_unlock(&pdr->lock);
+> +
+> +	return ret;
+>   }
+>   
 
