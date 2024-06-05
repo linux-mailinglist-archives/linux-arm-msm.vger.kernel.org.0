@@ -1,171 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-21800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC62A8FD61F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 20:58:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65FE78FD63A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 21:07:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 590B61F2431A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 18:58:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AD3ECB22E24
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 19:07:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B758B13AD2A;
-	Wed,  5 Jun 2024 18:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2395113B2B9;
+	Wed,  5 Jun 2024 19:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l8vdB7Oh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DKdDy452"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6432F2B;
-	Wed,  5 Jun 2024 18:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AA713B58B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 19:07:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717613885; cv=none; b=LTFmABl00h9UjNYyhl5hgmUrmF9o+YtOitCdMQPrPBPaqA49IU6RoeJYVMo9UDPia3sea0Bzqc809V8JSyatuchHXOBK7B7EOcmZhoH2fQdvjdQs792cLfE4GxZeSiDBXz/9B+CXqVqwKph981/TYCqhw26rfDINzgq77ZRxcg0=
+	t=1717614467; cv=none; b=kluJ4bzl96gd14KsgKBvpVtVNHLDWB7ECagZ0NYw1WyDaP9YK+DQ10+yH7+Eq53e0cbTuo1aF2jpWtjyeiMDGvgm0iZ2mtwvrhe/QHhnG+aFthflN2QwUYOcWZatDbPpSU9S1GB0uEqCs7b0LUcj/fLp/W8UdNw7CV0XookkmN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717613885; c=relaxed/simple;
-	bh=zVcdp7lJW+ZxItdsTRRf7VFEIBcMF3/oI6awBrH+fH0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=taLGVNoxBkkREt2MqO4aO2lmRV8JZPL94tG4fflIKIS5y43OXlsrZNDxukT6L/wUNlMpC9NhEzSMLnwSw6vxYkretip3sXO78Z1ush82SfruTgJtZDxcz2AMd2ihL0iwqogf61TJrEinkcMD+7DV2wOOBYsFvRcKlNUF7Zsp1+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l8vdB7Oh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455I31AP014221;
-	Wed, 5 Jun 2024 18:57:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=RgN0bSk7mYI0CkqM5sPTXz
-	2iOQPafeDR5xxg0Dk/4LI=; b=l8vdB7OhSDoJSgtM+PhbnmKgcp5XaEd4wEPdst
-	8zlzAss4/PQC5Tdv7O1AdcUgvlYd4IbmYLf8Lkh+sMVgPzWTA1xIDMYH8NyuBCMZ
-	DBhnUz5roSQsQFgD7KRcyiaXRiXmYXPviXiixxu6lDplAYuaIPbB3S1ADslbhPsQ
-	YlhRWPCpGCEvYQPZMZQd5ZEHGbuuT4SRIkPFK7mQdCpKqNotPuTPDiyo1hIh0muj
-	jOnQsII1LE6tnhRmLnN9TNBTsLFp4iEZktl/JkZ0HjpeWDZhPGusod+wdJAx3H2k
-	aJrDxIMAxrhBVASyYYqZKWozVTr0272ch00PyT/2dv0AVhzg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjvxy83y2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 05 Jun 2024 18:57:34 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 455IvXi0010536
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 5 Jun 2024 18:57:33 GMT
-Received: from hu-scheluve-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 5 Jun 2024 11:57:32 -0700
-From: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-Date: Wed, 5 Jun 2024 11:57:18 -0700
-Subject: [PATCH net v2] net: stmmac: dwmac-qcom-ethqos: Configure host DMA
- width
+	s=arc-20240116; t=1717614467; c=relaxed/simple;
+	bh=cdOYaJ07tJq85PvmM8XoPZBMscSvuRmlPOg751Y++Q4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=mB3CYNaH07svcxj6xgTwE0CbK34fWC97Dzl0+Ld4IVhjiQV+k2i/DA0UGvUNvqDPkBxFWqLhtWEtmVPAb2fgXmT2/aVVn51aSVshek6Pv1sumfcTuHEcWeQC5kNO2UDyZgDi5wy3lwcd7fMpqH8dbipRIQBUkZjOjoXccfeVbqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DKdDy452; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a68b54577aaso19026466b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 12:07:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717614464; x=1718219264; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hPEClXGXe2Dj1qtdIRu798YmzXY+/HU7ZIgSfhJTo54=;
+        b=DKdDy452XCaMHDwMBMEd6CNMLCJy1F9eC7CfgHLG75ZBE5CuHMvt0K8OiNM8kNMaKJ
+         0gzlccOV9GQYC1BF7xAcInVVStcNTMb7LIH6P+wFNMIgL0O/aKhP8tpW7vSs4RxY4vuR
+         bZlH8hYuI0TJy/VhpLgRcrnIoSYsJW75vCNUnxAdlMR4M2iOjz4H+wL9v7klhPOw1JMr
+         +bzcEtwNZZ5rofIqYT/CNjSaxo8g8Nb8KF0KUa3+ohTLHBrFfS6nRE3qbjBKdxXiNZRk
+         W3oJS1CjnlbmJKV7nV8KEd3bxgb1nwjfmowwengK4BMUOYpYu7Nvvt1oRBRdQ0RHbt1X
+         0IXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717614464; x=1718219264;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hPEClXGXe2Dj1qtdIRu798YmzXY+/HU7ZIgSfhJTo54=;
+        b=H0YtrwGw7G2oiiGi1BdZX00s4TD070lASr5xyQ910chwR+EgYZUvqvEs0HM0YQ9ewH
+         vzy7/Hd978/ZDCxSCbP1EAT2+hLzKrUmAPSKSF1tTHSo3LdaGd7VNRIGXqvGYho1Yj+M
+         5nyIDet1yMxmOYeSpolBJLhxjs1JM+G0qg9oM4jjOhC/q6ZoUhpiOsNGufDU5lOhuL+4
+         ox5uR9wmaM5DzfeBcJuIWgF2+5G5G2Y63M5ektCBFXIzYpT49WB3eykAuX15f+Qmbd1T
+         zNGBKwnowpglkh41azc7hzrfR/c4jkGCFr6iGQr0tPy/OT8HdMTSfNx86tAyHuFhRw5z
+         xrww==
+X-Forwarded-Encrypted: i=1; AJvYcCWQAoS48b4vXesJYTCHJyQLezBlLdbvwB9JwUsDbXwNSN+VVAEBJq9tOSDWsGgf8h2D9zrZ1KCc4jN51s0/OyMHFE7nSSHasmq/Eod63w==
+X-Gm-Message-State: AOJu0Ywln3GZ3H0hXMZS5T4UKi5FayCeVo3wDcqaCgryGNKy/x1kNHML
+	cTEP6tDGDM9dEAIhqPVZCSFIRN6/u6SZccUrzfdhAH9i2nTy7LJN98jpN0/Bq0M=
+X-Google-Smtp-Source: AGHT+IFGh2vtAmxaw64X6C18FcCCGny6E8kgDoJ4oamr/Pr2/7c6ckx4TbHoIQ/iHO9D5KkZ+TZlEQ==
+X-Received: by 2002:a17:906:f802:b0:a62:2eca:4f13 with SMTP id a640c23a62f3a-a699fcdfb9fmr222676566b.59.1717614463806;
+        Wed, 05 Jun 2024 12:07:43 -0700 (PDT)
+Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6b437b7cf3sm113900166b.136.2024.06.05.12.07.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jun 2024 12:07:43 -0700 (PDT)
+Message-ID: <2fb85bfa-bd48-496a-9e59-11b2af0b607d@linaro.org>
+Date: Wed, 5 Jun 2024 21:07:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: use defines for interrupts
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240605154605.149051-1-krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240605154605.149051-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240605-configure_ethernet_host_dma_width-v2-1-4cc34edfa388@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAA21YGYC/42NQQ7CIBAAv9JwFlNQrHjyH6YhDSxlDwUFWjUNf
- xcbH+Bx5jCzkgQRIZFLs5IICyYMvgLfNUS7wY9A0VQmvOXHVjBBdfAWxzmCguwgesjKhZSVmQb
- 1RJMd1ScmjRBcSm5I7dwjWHxtj1tf2WHKIb635cK+9lfn8o/6wiijB8u7tjsLNhh7fcyo0eu9D
- hPpSykfMgiVy9QAAAA=
-To: Vinod Koul <vkoul@kernel.org>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Jochen Henneberg <jh@henneberg-systemdesign.com>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        Andrew Lunn <andrew@lunn.ch>, Andrew Halaney <ahalaney@redhat.com>,
-        "Sagar
- Cheluvegowda" <quic_scheluve@quicinc.com>
-X-Mailer: b4 0.13.0
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: lJDrR8CNTC68DMMN-mHzEyjdQOFe9xJl
-X-Proofpoint-GUID: lJDrR8CNTC68DMMN-mHzEyjdQOFe9xJl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-05_02,2024-06-05_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 spamscore=0
- mlxscore=0 adultscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406050143
 
-Commit 070246e4674b ("net: stmmac: Fix for mismatched host/device DMA
-address width") added support in the stmmac driver for platform drivers
-to indicate the host DMA width, but left it up to authors of the
-specific platforms to indicate if their width differed from the addr64
-register read from the MAC itself.
+On 5.06.2024 5:46 PM, Krzysztof Kozlowski wrote:
+> Replace hard-coded interrupt parts (GIC, flags) with standard defines
+> for readability.  No changes in resulting DTBs.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
-Qualcomm's EMAC4 integration supports only up to 36 bit width (as
-opposed to the addr64 register indicating 40 bit width). Let's indicate
-that in the platform driver to avoid a scenario where the driver will
-allocate descriptors of size that is supported by the CPU which in our
-case is 36 bit, but as the addr64 register is still capable of 40 bits
-the device will use two descriptors as one address.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Fixes: 8c4d92e82d50 ("net: stmmac: dwmac-qcom-ethqos: add support for emac4 on sa8775p platforms")
-Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
----
-Changes in v2:
-Fix commit message to include a commit body
-Replace the proper fixes tag
-Remove the change-Id
-- Link to v1: https://lore.kernel.org/r/20240529-configure_ethernet_host_dma_width-v1-1-3f2707851adf@quicinc.com
----
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index e254b21fdb59..65d7370b47d5 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -93,6 +93,7 @@ struct ethqos_emac_driver_data {
- 	bool has_emac_ge_3;
- 	const char *link_clk_name;
- 	bool has_integrated_pcs;
-+	u32 dma_addr_width;
- 	struct dwmac4_addrs dwmac4_addrs;
- };
- 
-@@ -276,6 +277,7 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
- 	.has_emac_ge_3 = true,
- 	.link_clk_name = "phyaux",
- 	.has_integrated_pcs = true,
-+	.dma_addr_width = 36,
- 	.dwmac4_addrs = {
- 		.dma_chan = 0x00008100,
- 		.dma_chan_offset = 0x1000,
-@@ -845,6 +847,8 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 		plat_dat->flags |= STMMAC_FLAG_RX_CLK_RUNS_IN_LPI;
- 	if (data->has_integrated_pcs)
- 		plat_dat->flags |= STMMAC_FLAG_HAS_INTEGRATED_PCS;
-+	if (data->dma_addr_width)
-+		plat_dat->host_dma_width = data->dma_addr_width;
- 
- 	if (ethqos->serdes_phy) {
- 		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
-
----
-base-commit: 1b10b390d945a19747d75b34a6e01035ac7b9155
-change-id: 20240515-configure_ethernet_host_dma_width-c619d552992d
-
-Best regards,
--- 
-Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-
+Konrad
 
