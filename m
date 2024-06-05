@@ -1,153 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-21743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01E468FCACD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 13:45:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77BD28FCB40
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 13:56:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 882EFB23D32
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 11:45:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1946B282C31
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 11:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BBAE1922E0;
-	Wed,  5 Jun 2024 11:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC2CD19AD81;
+	Wed,  5 Jun 2024 11:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XHrx8TH2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="srSLjOHJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4009B14D433
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 11:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8865919885B;
+	Wed,  5 Jun 2024 11:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717587923; cv=none; b=mKST+qCRGKlviuSbVjpnu9JSlKr0VnQ44C8JAs2AdCtFx23BcYG7/4pcNviwAJ/fIaDZRvmz/lD3lLH/p2r7zLTteEqOVgL+wdgFm8voEdk86nzLRmuzzsze62iTijx/tBarVXqO4xgF3W58XuyY5ZhbyO9025P6sKSehxPKeQo=
+	t=1717588226; cv=none; b=OWLvvORgEX5eYV+fmZZG8IpwfzxVVwtqofGDuBKQwFYR0E6OGPcXknNMRd2+zpx7tOzpXGtCtvXGDp6ve7/UgLcPk1ZP30t00MO7J+dizY+uq5mk8D41uUbSRxkpjJ2ErvlZFhab+1wWtrit/y8rhiqSDOUpsuA3YJaNc2arvrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717587923; c=relaxed/simple;
-	bh=F8KvKlp9bavX/llL9E6gFKVG+DJ59VczQJj9wnu+J8I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hpsj2o93zocPuHExjdXdfGYnnuOvxBKqYitAS3ZWIypBDZIQDC2zBm0jWJ3E14DA4c6iplY9m8DGrq4TQTmUlRlHoZDitaA3GGDc8LAZ1ahWBHh+jGU6LPinNIc6oqOggptncfbB9pAFHu17WRdtv+w/ls09UhAwMv6TNShyjHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XHrx8TH2; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-57a85cc2d96so2084832a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 04:45:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717587920; x=1718192720; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FIB7ujhSm4r4oHfWl29labezUCHSPo2rSBZvn+iBsPc=;
-        b=XHrx8TH2k6q83iY625U8yXpQYcTBiAVEFQjCZHCtSYnU7Gwq/4Y0eoP8Lnjcg3NgTa
-         5ccKQnqnZwn7jmCpzvztowLVib0f2vSHZBZjLTPGQ/DY5ot+y9cWEhXgDnr109yC6wzM
-         x0C9R0s/UL0TOaSyJNDgCU4y7J5CNiHJIWSOiQ0ibCh2G/hojC4cShdM9D7E9iBdKq32
-         1DqI5b4HRACmlp7dbwJ3V7jBRcr2NCo8AscFX73+eRFcSDllMP/EYIMO5VTd4RQcB/ej
-         VZRvdaf3eMS+PUVmiofRfGhUQ2FNZZYWJCaw9ik5EDc1gp+9fpG6F1qDWE4mx82OkEHu
-         02iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717587920; x=1718192720;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FIB7ujhSm4r4oHfWl29labezUCHSPo2rSBZvn+iBsPc=;
-        b=PuhlcrYf4kHn2/nWpExnIjuIBZOr4+gdrxS/cb4EvsznARQY2SeEwFQ966HZqu++YR
-         dontjYMyjxSFx0incbDrw11BO28xUr9z7Wv3hg4On0P24rTYxQjexrnEl+mNBwEQ2vZD
-         O7Qc2l7JfLkd9XVo4XjF8yyIxxAxA91Tj2SGrivE0ajVGLDBJzW87KxrEhs+PD874HmO
-         dM5TDnE5tlxQLMJ636trl/Ewu3PsSo15ceWjVMz3pEgJrjmC3ATisDOt6mt7iJaMqGng
-         w3JZjT11qDRnxsYWs8ogmKH2ugUkUfdP443lCPZ5P2yU6MWLKsWQyosksaEHirqjoKXh
-         07vA==
-X-Forwarded-Encrypted: i=1; AJvYcCULxfa95ZAeShoJh81H6L0PnJdCiszKu2D2zInKALIUeYtyebFwjsWsk3zq1dtMXmMOprl3wJjuk+bLlgmlOJJM0PoAV9ndKAVAETZ39g==
-X-Gm-Message-State: AOJu0Yx1G2efhRdEjJ1EQGMk2iV1WeAZvN56pr0WJIy08DDRF6w4N7qK
-	CEIClWby6RnkIMuRqyQnbw6uNx1p3QU0b8F0ILLyMFMLoJUuvjz1Wkpdc/M+TGg=
-X-Google-Smtp-Source: AGHT+IEQq6YNWa7x/qG2lhYwxS9LQL2TDlJNLLtmnR+0fXmuY9dNZ7lFwLOhObs5pdsHmSIE7eyCDA==
-X-Received: by 2002:a17:906:fcc5:b0:a68:bae4:94d3 with SMTP id a640c23a62f3a-a699f680343mr167106966b.8.1717587920537;
-        Wed, 05 Jun 2024 04:45:20 -0700 (PDT)
-Received: from ?IPV6:2a02:8109:aa0d:be00::8090? ([2a02:8109:aa0d:be00::8090])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a68fa49e66fsm491263966b.129.2024.06.05.04.45.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jun 2024 04:45:20 -0700 (PDT)
-Message-ID: <395ffca5-20b3-43fe-b443-7055eba574fc@linaro.org>
-Date: Wed, 5 Jun 2024 13:45:18 +0200
+	s=arc-20240116; t=1717588226; c=relaxed/simple;
+	bh=k9wMZie2g8zido3r8l4XxgOwAvQm8nitQZP1EAGITQo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MrUImC5OpCr8CX9WRbOoj/IhAwRdXjx/sMvIBqVK471xZzmi+U3/vYPjvcOiAJPpecz4obEmPNCix5vmmEQ9dTH5iTgpsmASemjWwFM+ab46ZBVtdHAF+0ZvQ88cjMCtLlIkRKTWfPsOqN5nIpWuL/1F8+TNFLXsFoHZIxZdsH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=srSLjOHJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6686C32781;
+	Wed,  5 Jun 2024 11:50:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717588226;
+	bh=k9wMZie2g8zido3r8l4XxgOwAvQm8nitQZP1EAGITQo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=srSLjOHJPV5k+Ehbe7IXYhch/SaoMiisFIobMaX3hHfYkqH8syKfSI390h2AeFDVV
+	 2Lvb+4sqSgaLC4vGoSWUHvPy7A4cperkpQtbTJCBRsRYh6vwuqg6+3Za24tCewtH6l
+	 aj01P70pxm25gAqCiuzKxt48wB1VhDk8lx2Dis9UsX/PeBxMWSTqMUGz5AxxJ2naZz
+	 09Gf+U3pFrduu/Lp55vUXz1D+rehjevzHgrf3V9lfJ4giA+C9LW8kMImmxFuschxyq
+	 XLpvkoHFKT7WXHZzEAFdV35kYsx8vH0mE+OoKPoP9QK9aY6mHETLQyZbHmlb3pfqfW
+	 ZO7geDPqlin/Q==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.9 24/28] usb: typec: qcom-pmic-typec: split HPD bridge alloc and registration
+Date: Wed,  5 Jun 2024 07:48:53 -0400
+Message-ID: <20240605114927.2961639-24-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240605114927.2961639-1-sashal@kernel.org>
+References: <20240605114927.2961639-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: qrb2210-rb1: switch I2C2 to
- i2c-gpio
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Alexey Klimov <alexey.klimov@linaro.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20240605-rb12-i2c2g-pio-v2-0-946f5d6b6948@linaro.org>
- <20240605-rb12-i2c2g-pio-v2-1-946f5d6b6948@linaro.org>
-Content-Language: en-US
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20240605-rb12-i2c2g-pio-v2-1-946f5d6b6948@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.9.3
+Content-Transfer-Encoding: 8bit
 
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+[ Upstream commit 718b36a7b49acbba36546371db2d235271ceb06c ]
 
-On 05/06/2024 10:55, Dmitry Baryshkov wrote:
-> On the Qualcomm RB1 platform the I2C bus connected to the LT9611UXC
-> bridge under some circumstances can go into a state when all transfers
-> timeout. This causes both issues with fetching of EDID and with
-> updating of the bridge's firmware. While we are debugging the issue,
-> switch corresponding I2C bus to use i2c-gpio driver. While using
-> i2c-gpio no communication issues are observed.
-> 
-> This patch is asusmed to be a temporary fix, so it is implemented in a
-> non-intrusive manner to simply reverting it later.
-> 
-> Fixes: 616eda24edd4 ("arm64: dts: qcom: qrb2210-rb1: Set up HDMI")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+If a probe function returns -EPROBE_DEFER after creating another device
+there is a change of ending up in a probe deferral loop, (see commit
+fbc35b45f9f6 ("Add documentation on meaning of -EPROBE_DEFER"). In case
+of the qcom-pmic-typec driver the tcpm_register_port() function looks up
+external resources (USB role switch and inherently via called
+typec_register_port() USB-C muxes, switches and retimers).
 
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 13 ++++++++++++-
->   1 file changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-> index bb5191422660..8c27d52139a1 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-> @@ -59,6 +59,17 @@ hdmi_con: endpoint {
->   		};
->   	};
->   
-> +	i2c2_gpio: i2c {
-> +		compatible = "i2c-gpio";
-> +
-> +		sda-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-> +		scl-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		status = "disabled";
-> +	};
-> +
->   	leds {
->   		compatible = "gpio-leds";
->   
-> @@ -199,7 +210,7 @@ &gpi_dma0 {
->   	status = "okay";
->   };
->   
-> -&i2c2 {
-> +&i2c2_gpio {
->   	clock-frequency = <400000>;
->   	status = "okay";
->   
-> 
+In order to prevent such probe-defer loops caused by qcom-pmic-typec
+driver, use the API added by Johan Hovold and move HPD bridge
+registration to the end of the probe function.
 
+The devm_drm_dp_hpd_bridge_add() is called at the end of the probe
+function after all TCPM start functions. This is done as a way to
+overcome a different problem, the DRM subsystem can not properly cope
+with the DRM bridges being destroyed once the bridge is attached. Having
+this function call at the end of the probe function prevents possible
+DRM bridge device creation followed by destruction in case one of the
+TCPM start functions returns an error.
+
+Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20240424-qc-pmic-typec-hpd-split-v4-1-f7e10d147443@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+index d3958c061a972..501eddb294e43 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+@@ -41,7 +41,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+ 	struct device_node *np = dev->of_node;
+ 	const struct pmic_typec_resources *res;
+ 	struct regmap *regmap;
+-	struct device *bridge_dev;
++	struct auxiliary_device *bridge_dev;
+ 	u32 base;
+ 	int ret;
+ 
+@@ -92,7 +92,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+ 	if (!tcpm->tcpc.fwnode)
+ 		return -EINVAL;
+ 
+-	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
++	bridge_dev = devm_drm_dp_hpd_bridge_alloc(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+ 	if (IS_ERR(bridge_dev))
+ 		return PTR_ERR(bridge_dev);
+ 
+@@ -110,8 +110,14 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto port_stop;
+ 
++	ret = devm_drm_dp_hpd_bridge_add(tcpm->dev, bridge_dev);
++	if (ret)
++		goto pdphy_stop;
++
+ 	return 0;
+ 
++pdphy_stop:
++	tcpm->pdphy_stop(tcpm);
+ port_stop:
+ 	tcpm->port_stop(tcpm);
+ port_unregister:
 -- 
-// Caleb (they/them)
+2.43.0
+
 
