@@ -1,152 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-21741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAE428FCAC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 13:45:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB7A18FCAC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 13:45:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BAB931C22E51
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 11:45:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F2794B24530
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 11:45:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1527193082;
-	Wed,  5 Jun 2024 11:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7509A18C34D;
+	Wed,  5 Jun 2024 11:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eYV0gazN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MkfrmZBy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FA31922E0
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 11:43:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B302314D435
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 11:44:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717587818; cv=none; b=WR4t7Y0sQJAYuptGCV3t/WhpE8XQLkxUkkRLrpIwOMUpPz+dqgqbuYjX2TWkneTCZk7GQpkU6OzdjuQIS++1FVs39gJjGY9E7goKzmMCHf4FOQNm7ka+yKBXKW4VKXkl3CIJSFoHTCBjO6JIFVtLxAbbBwHPKzZ5dBIrQEQF6fw=
+	t=1717587896; cv=none; b=LezjrwCffcN8Z7jV8pZ3mkTzWiUKejVM0NLtDiOq9R0KvmYxYk+Ac7YCSiJ5ZD/MOnzZMSqBuEfbdZKi4P63/dN6V+kIrTeGbP73LxRNZXi+1QcSQJyJYVUCT3dJTjmbYZQm+/YfMCf0V1Z1D1EqqoAVlSSrYxIa/db3J87sFNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717587818; c=relaxed/simple;
-	bh=0GIPaRevDNRx/wPrHhuPUBfNf5OKm7cQz515RQ5q9iQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EvFGbRHXWS5Y2nGEJbLFQSpadDSfc0oODaMySkUTiQIElmFJqTqMLb0tsG/5IvZ7wDbAjhGQ5hsvKo3JgYEjJ+CQos3QimPMd7W8ej/A2CSXl042eUbiy5DK2PQFhnRRx9VnehZPKnQr2Ob5q4/G1gG1Em3ZJeecfHkdjFgaZCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eYV0gazN; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1717587896; c=relaxed/simple;
+	bh=10uX0pnm175pZfInro+zFADnM8oOID6XHqWA+aC+5pI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ix/sMtVFXFVw70CwbFUGdlepEPISVoSB74z14Dvv3dwoQXHKnHkMnnFBPoMxK/bpt73mfHPXhiMUI3mA9P38F9nJaTanJjmp9GhItajKJU3OBz8NiIMPbTmFSxq3tbl0XysvkyYUkAmQo6Urdn+C0ogVncyWcz/VxB74+lx7NfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MkfrmZBy; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-35e0f4e1821so4581427f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 04:43:35 -0700 (PDT)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a68c2915d99so224559166b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 04:44:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717587814; x=1718192614; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3j6XQTmAPHANze14GjdABlxabfBKYaZBM898HcyxrWw=;
-        b=eYV0gazNfe3MrgHj3eRSkcrH5/HMFcKXRwfLvHhl4zvUJGml7iIWDPNmU0F5OMlmdi
-         vElgggpgyj9GzuPniq04BUQ5F+pab+zcJizvVLHI79XR+DCtO0Puq3T6NKO+91+j9E9G
-         8J8DKa34KOYFvkQszYtTOuQoBYiK6CbKXCpzS8/gH9fafgXHATI4W8T9OEDi/Mcm6LNs
-         XpjKpGoL5L1A7QjiY2j4SDkS376/jfldHGRxEcYZuoPKpJ1zmb2IHXiqfmaR4PYUdY+I
-         PHqd/9B7SX+zANE9zpPbgRyCXIceHrpIYTfpCMiRbvPOhcuYWlmHKgf5nWdVpRo0vXBk
-         ED6g==
+        d=linaro.org; s=google; t=1717587893; x=1718192693; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zNZcbSzlByI67PsmGACJiLmqC3BU0QVfeHAMyiGnADo=;
+        b=MkfrmZBy4nTaZ8k/EThi3M3HjAVgdCwITrP/cIeOgMYTB6qM+4SA5QpGmMaYy4GWuc
+         R4q4mo8lZZkqCQWtkfqm/trjGcga0mCppP/lfphGoJun1PkjmPhkVqPr6Oa/A8C6N5kY
+         O/hwG/9I4I1H4apNXjbQAWPKPQeEXQonSOsQe+Pydwh0O1bUypj6pxB+95Da48NoYr3h
+         HlGEV5r0476pT04fOVgntOrrxAbds+8wGV83esmvR4ycOnn/rhovqCvylwQ9EiTkmf2q
+         AA5MAr7RV0DRZ4eqWViW2/ci2mkHLCo1/E9jTPQ/+4UQMeE/PLx3SSm4WbyHd8euCB06
+         2SEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717587814; x=1718192614;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3j6XQTmAPHANze14GjdABlxabfBKYaZBM898HcyxrWw=;
-        b=ePtm9ZjAjG86s27IPKvHAMob6MlSYFNJsrBHAiKm2n3QZLmzRWzqecQCgpjfNBekzv
-         2CVmiOWItz/EZOyIzLVCKlCtDJ9jsT/p0su9GvprJPTaBBvjC3iccxrS70kQkuCoJhJC
-         ZTNVO6QDk+pX8+STnIbPuPuAjfTs2QLPjv2sHk9NhPRQj8HpHAOBxuEklUilKejUVgvC
-         RMhTocGD8I6NHYa9UNMxu15pNWd3dTiKkDfZy5hSIUflQ2GJ3Rq2E+UmbBYqs9aXxy7a
-         85y0kfia0KFsYh2KB98XxQ9owPYImx13tTMQsnT9GjjK+B8msEe9GU8G47Ji+8Zq87gR
-         V4Qg==
-X-Gm-Message-State: AOJu0YyZcCjr0AQElIwA4mxgKhKnWAQzZBPh8ihbuakga/83BKv6zmDS
-	dCMFO0NA4r+SOU63m75140xnfMWnX4tFAPJMaaFayB9rxso1vPnAC7M0A1b7B8E=
-X-Google-Smtp-Source: AGHT+IH865p66lw4x2LZmxMYuezJKKDWUoV3nyY8R7CoXx5Z6tfcfp/lXHlTMUzuQCTJ7LOEh+GS5Q==
-X-Received: by 2002:adf:a1d5:0:b0:34c:f507:84b6 with SMTP id ffacd0b85a97d-35e8ef1b8dcmr1744590f8f.41.1717587813594;
-        Wed, 05 Jun 2024 04:43:33 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35e7dea1c3esm4851633f8f.66.2024.06.05.04.43.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jun 2024 04:43:33 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 05 Jun 2024 13:43:30 +0200
-Subject: [PATCH] arm64: dts: qcom: sm8650-hdk: allow more IOMMU SID for the
- first QUP instance
+        d=1e100.net; s=20230601; t=1717587893; x=1718192693;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zNZcbSzlByI67PsmGACJiLmqC3BU0QVfeHAMyiGnADo=;
+        b=MGUd2ILB2BTi+sIZ0q9cFEe0/QsASElVuEj5wo16OZQUPhpLzw5y74c3xgdcK1S6dG
+         FqHq253gb/OSqPLJZpYJtHwUNjLGbAFggVteod8hyIj+5LA0JBqMKefG9lylFKiTb61f
+         Plprw9n+J6w9g6PVA/371HOV/1W81xLR8FiXI3gnpuvr130g+kBwSweM4pWzzt9AM/eS
+         8VbgH1q4guYzGniQsjKWoNVLy9dYfZ+Br7djbQYEhv5RQijvV5V1Bho/vkxmzzyEc2Cm
+         aDLMpzpEH0XftSyBVA+LJl6uVqTJYK+OnLsZrQkaj+VwGQ8Sjw/yV6gh8VzUKauvcPnM
+         04/w==
+X-Forwarded-Encrypted: i=1; AJvYcCWBAKWCxjGSvVQ50zSFK2yF5tg46xBKKZVH/ckSeqMdsm0P3gF5+EXT7WeU6/DJojMfWhWVrGbufgLUt7DROXKgg/VZvKNKiMFrKK1l/A==
+X-Gm-Message-State: AOJu0YwksLpGgIO5TBt8ZpVSPiSoNBMdaTES/GeU21o8HcGUq0iJj0Ha
+	catzXyykVlN2jKrnMTIvM4y3pTDhL6GpYeMiKnSI4lJgEp7Fr5tNULDQDb/DZGc=
+X-Google-Smtp-Source: AGHT+IEoVi/zKnP2Ndp/Gg6ZKxgNC+4Zkk4fp46/324EESrPUgXyT6F7yoCUf6yEtyXrPvbrwW2rlQ==
+X-Received: by 2002:a17:906:698:b0:a6c:7221:60e6 with SMTP id a640c23a62f3a-a6c72216263mr4448166b.57.1717587893061;
+        Wed, 05 Jun 2024 04:44:53 -0700 (PDT)
+Received: from ?IPV6:2a02:8109:aa0d:be00::8090? ([2a02:8109:aa0d:be00::8090])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a67e73fa49esm759342166b.87.2024.06.05.04.44.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jun 2024 04:44:52 -0700 (PDT)
+Message-ID: <791c4a62-aa7f-4b62-ac71-b7ec66b0c996@linaro.org>
+Date: Wed, 5 Jun 2024 13:44:50 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: qrb4210-rb2: switch I2C2 to
+ i2c-gpio
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Alexey Klimov <alexey.klimov@linaro.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20240605-rb12-i2c2g-pio-v2-0-946f5d6b6948@linaro.org>
+ <20240605-rb12-i2c2g-pio-v2-2-946f5d6b6948@linaro.org>
+Content-Language: en-US
+From: Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20240605-rb12-i2c2g-pio-v2-2-946f5d6b6948@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240605-topic-sm8650-upstream-hdk-iommu-fix-v1-1-9fd7233725fa@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAGFPYGYC/x2NQQqDMBAAvyJ77sIasqHtV0oPEte6lJiQVSmIf
- 2/wOHOYOcCkqhg8uwOq7Gqalwb9rYM4D8tHUMfG4Mh5CsS45qIRLd0DE27F1ipDwnn8ouaUNpz
- 0h+xd6B8UOHqGVipVmr4ur/d5/gFeWorgdQAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1614;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=0GIPaRevDNRx/wPrHhuPUBfNf5OKm7cQz515RQ5q9iQ=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBmYE9kMjrsnWiE7WNIsOTxBIT23x8cQNKw63fdqRV0
- N8aPqS+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZmBPZAAKCRB33NvayMhJ0U0rEA
- CIAr0gdIreDfpQx/XyHMz7lbQl8x/UanWbfUkmzalRCEaEZAlBWxi/4UOCyur2voJhc/SPMaDh4495
- nr0cZPngFtJcWIH+eTEFydDO9TU07k0FpJv80SJXPxtsevNbCQRCLFbaXHEZ3Mif+K2KxXQgWCWp1I
- OWAkX3GQmin4S//a2E47UFCAD3HKQ7ZAyoG92Lzc66WNmBj37qjY+kyqlyymSEcWKQejqc+OMrNG5t
- 0D38zv/WoAtiO5kHQJQUmVa7sSBmHgS5/nHaRA51VmuDbRufaUQ4O/R5RYtX1AfX9wvpVB1GtFa7io
- 19ngbVh+Ihj7ZIwUYZA1eB2HprmtxkNC9t4Elg+Cdlhr5Z8TWCgItSEmFD/omzS5y8GRoQNBIVX0R7
- eFqxRRYI6eYnASqO9hHpwRvgLFHkvI5W9IjKQdhg5g2ovTM6YEnLQumH1/4v7wgx3R/K4OVm/YwRJ5
- Z+nMnMlIGKipmAYBbImQj8qN27SIeIi3t1PNiRu3pf7JkLIEWImoXwWa3vCG/+EVgHkNbT+dla3BeL
- 06bPKaf2Kw2zyyuE4u2PNImyFdb6ZDajjQ8g3P78ZJX7uXk2xamuAC3ZKRFV1tCxyONxSqSBL8dtia
- nB8StI1o1/YhLd02p2Bs2aN4LBjOOr+bxH6qw9uE9IN3yVav/8ZEoXj9z9LA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-When triggering I2S SE DMA transfers on the 6th Serial Element, we get
-some timeouts and finally a fatal SMMU crash because the I2C6 lines
-are shared with the secure firmware in order to handle the SMB1396
-charger from the secure side.
 
-In order to make thing work flawlessly we need to allow more SIDs
-while running our SE DMA transfers, thus add the 0x3 mark to allow
-the 0xa0 SID to trigger while we trigger an 0xa3 SID from Linux.
 
-This crash doesn't happen on the QRD platform since the SE6 is
-configured differently, with FIFO mode disabled, thus GPI DMA
-is used and we cannot exercise SE DMA on this interface.
+On 05/06/2024 10:55, Dmitry Baryshkov wrote:
+> On the Qualcomm RB2 platform the I2C bus connected to the LT9611UXC
+> bridge under some circumstances can go into a state when all transfers
+> timeout. This causes both issues with fetching of EDID and with
+> updating of the bridge's firmware. While we are debugging the issue,
+> switch corresponding I2C bus to use i2c-gpio driver. While using
+> i2c-gpio no communication issues are observed.
+> 
+> This patch is asusmed to be a temporary fix, so it is implemented in a
+> non-intrusive manner to simply reverting it later.
+> 
+> Fixes: f7b01e07e89c ("arm64: dts: qcom: qrb4210-rb2: Enable display out")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-The crash only happens when large tranfers occurs (>32 bytes) since
-the driver is designed to use the SE DMA in this case, and there's
-no way to mark the SE DMA as disabled or mark the GPI DMA as
-preferred since the FIFO/SE DMA will be used is FIFO is not disabled.
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 13 ++++++++++++-
+>   1 file changed, 12 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> index 2c39bb1b97db..cb8a62714a30 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> @@ -60,6 +60,17 @@ hdmi_con: endpoint {
+>   		};
+>   	};
+>   
+> +	i2c2_gpio: i2c {
+> +		compatible = "i2c-gpio";
+> +
+> +		sda-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+> +		scl-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		status = "disabled";
+> +	};
+> +
+>   	leds {
+>   		compatible = "gpio-leds";
+>   
+> @@ -190,7 +201,7 @@ zap-shader {
+>   	};
+>   };
+>   
+> -&i2c2 {
+> +&i2c2_gpio {
+>   	clock-frequency = <400000>;
+>   	status = "okay";
+>   
+> 
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650-hdk.dts | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-index 182864a3b6bd..5887d265a077 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-@@ -991,6 +991,8 @@ &qup_i2c3_data_clk {
- };
- 
- &qupv3_id_0 {
-+	iommus = <&apps_smmu 0xa3 0x3>;
-+
- 	status = "okay";
- };
- 
-
----
-base-commit: 234cb065ad82915ff8d06ce01e01c3e640b674d2
-change-id: 20240605-topic-sm8650-upstream-hdk-iommu-fix-542619065c45
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+// Caleb (they/them)
 
