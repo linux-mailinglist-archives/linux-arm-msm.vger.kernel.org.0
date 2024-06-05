@@ -1,88 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-21762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C48CE8FCE9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 15:12:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1096F8FCEC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 15:16:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4A5B21F26955
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 13:12:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 717061F2AF63
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 13:16:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8498C14D6F6;
-	Wed,  5 Jun 2024 12:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83EBC1993A7;
+	Wed,  5 Jun 2024 12:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="w7F/SbUk"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="APmbBRop"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C8A19CCFA
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 12:27:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33923199390
+	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 12:39:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717590468; cv=none; b=jK76PCJJiwkYm1dcvtPjfG5Jj3j+nAiir+m29ZiG9zuLgIpqW5aQ2AqoIk4CMKeRIZS9HPAD84Yc2tZnB0jHY4JDkv9a62sb3GQ2EI0SXIMuEnaoLLET6EFX9Wypeks62ZnVyDMxeCV5iFNoczdVWoNlHNdn58l68x3JdlP2Nl0=
+	t=1717591174; cv=none; b=o2aEftqJWd9UH97sR4cCXCtYDpkrqlArDvdmLTJrhB2lAZnGhjCYSRSjeBGeKDqFzyN44g94kMi3xBCQNhdqTCAMgA0r6VGJdPJfd2RpTrrcOeh/859QLs9ft8OvY2Vus3+VG2YfUAOWFLP6N9lVObFUpC81N09tUpVk/530Nxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717590468; c=relaxed/simple;
-	bh=wfBp64huVpv9lljkIQPdcvnFXuY1AKqBasZpyBPubwg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHxELkFtn52roxamK3kBFOEMIppxB5lvGw1p9Xq0xW+1EQSgMHzH7rQIsxrsGGHlULqDg7qvfC8zhDtDngQu31piOlrpCUViiGP0BuYwMfhEeDB6IeJc+oWnyvfYkTrKpazGmJHnALTFzejeHLxN63C/kpWgvz5G48hTAGXZONo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=w7F/SbUk; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1717591174; c=relaxed/simple;
+	bh=PN3w34drIVFY3EPIMuK3d7MloOEqH6vrNoCXQcodqfw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fYtA3rpHIkatogAI09p6U45aU/zAMkJz/loKlwugeP6fb9rHz+E/rhbyx0XfvTPae3ttdFMZLxe2wTbBR3QATwlo1nHAEyHBrNYhWiBMHkYy4koF4+ksm9dQgQCbrUoK5fzuWeP2/APyIzpIfxZlh4ObtZkqOteHOP2Kr7TFKQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=APmbBRop; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-421392b8156so21038945e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 05:27:46 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4212e341818so50017525e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 05:39:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1717590465; x=1718195265; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ddf2EiI4s/2WrSY3b2G39HCYD03J9BpVQC58gnLH4rM=;
-        b=w7F/SbUkDZ35ZFSglOdaAIcyfB6m7wgqqk/irrs1K2pDk+4QTsJ5vtAK5m/DFOQ9F9
-         q47izAukf6U8rBrAYAMqE2D+VmXCc0jua3alxNQTfD6SUrDXli+sVR9PxLhxbO7E5Ufe
-         WeZIhzpBuZoemrOt9K1BoZYBSkCcASltMpRvm28hJPuYJjRgM5fNUwsGdelUnUDCZH8z
-         ip3EwF1Z+FAeFOWdLJwOrr5okQWNcQuoo92px5bA9a6X4x2w+DYDCCoyE51nOpOJdydA
-         Zw+b8TjcbPqbZIuZzkjAsgXucdntm9PmtW4xIh32p7UHDY2HpX7UfOSeodE49hrwXMdr
-         rF+A==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1717591170; x=1718195970; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AsYvB5nRpR6ZIwbX5ZKQq6PXeotZMnLfWgyw/MJXre0=;
+        b=APmbBRop3ZoA/xyNiNARNuvmlyDAKlSv17U3fbW5Iluy3U1DQVmAuKlnBustljvjsS
+         1JRbEa1eqVEW0zK6dvt01Vt17jKXiYZrMcsJvtOWFKRzOH20i7cHvJie/v2oiyrDEjRz
+         GTBNJ2gGiupuD0AGFOnuCYzK/q8kLKoEVTq6SgK5jQV4SgkhkAyXAQ2qfNh2WzdzGoP0
+         QzKmhti2hOwlGcVMbHtY00RtDuX+Bp9HDZtDPmtyCPHWar/Q1slMm8y7SwEPpjw+gPBg
+         xBpnCl0dwwlV3r8ihyI2PMWWVT9UfmaktiSCgCCRaXu/o4KIB67/t7hTmoo9HJcZ54f7
+         +XKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717590465; x=1718195265;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ddf2EiI4s/2WrSY3b2G39HCYD03J9BpVQC58gnLH4rM=;
-        b=Gn3pwVBjqVcM6XtgqWdZFgI73zdfEvFyVPR3G6+TnfqK9gnlL7KMAIYACDqdGoNPWD
-         KLStIVKK59fLE37uJjXPaYl1JfSUXnbuCHndizRjHqTm8Enb6UmdVDi24q5jUMcogy6t
-         2lQuiGAH/E9PZh7TwZHgSOFGZrQWQbfdmu5+7FuO+VEA31vgeVWdZL9st+fpv1LFbvVP
-         iJi8qcolzLnNVqjP94pbVJi4QM5ar+NITXOfYF6Cv34c4xrKhWPdxs+0zJk2Ru1sT4Bm
-         IZK9KA7GPuuCsbXTfeOKPGDYVxllElWigEvnxZ015CvQqMZtBs/zyEhWOGTwyD50VCsT
-         i/cw==
-X-Gm-Message-State: AOJu0YyapkU0VrqtMr1yRpdy1lq6LWXh8dOogLAckSM5QqkdyRsZIFJP
-	3tzGvLa8+dejOyqDkHROHxTL3IVMRb3OKxACgIfF1gMcfLvZtl5ekatJiB8KwwU=
-X-Google-Smtp-Source: AGHT+IH3l/DrdngO6sHG+QFUbSm2Y+KwPZxyr3HEDrKMGsLb24C6sSJOVXzaBTrHB+8F8AxXLCd2vw==
-X-Received: by 2002:adf:cd07:0:b0:354:fb01:1089 with SMTP id ffacd0b85a97d-35e8ef99f56mr1680615f8f.57.1717590465241;
-        Wed, 05 Jun 2024 05:27:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1717591170; x=1718195970;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AsYvB5nRpR6ZIwbX5ZKQq6PXeotZMnLfWgyw/MJXre0=;
+        b=cT4wvXEIMktVK6MdTZ5wqO+tw53AwvBxQiW8BQospgY0BAPawdspQnQAo3ma9fqAsP
+         6u3Rwv7Q4Xvi8HeZdmXoZ4p2W63Cii9JI/t0EcL3qs3Sic4NUJ9Z/Ir6GlxJcINC1R3v
+         ng92LXyFR6NNeEUrLV9o6WfLyw9HhDRpDH+8J4Zkk7Qty1bHa3adZntnhDjVnSyby90j
+         gEmx/RIIF6RHiu6iWt+HSaNucL2gXMb/f94jLF6w7Uz/ozWTgqcKO7HTMK40YnVd3zL3
+         gfC9bd4YNkk2k1FPCMxknAX0L5eUTxuHaWTv49X1ciNtslwZs2zEd7OdekO3Q5kTw156
+         3Lxw==
+X-Forwarded-Encrypted: i=1; AJvYcCWqqUSZo/z8h3YOpmL0R7qBiGO1NiVMBLFCgunJDp8oDRL2YFqXeuV7MyzRwNlJJau/pfZLe12KxUgVISn9LNMQW8DFG7+GaE2QFI2e4A==
+X-Gm-Message-State: AOJu0Yzn/8xnjSpzg180askG2Lp51YocrcRKQcBx46Vd7Q5dFib2u/FU
+	MznHyrgQDkzaRps3wqf1xOM1JJp1qgHDRVX/wVFUI63JmT47LebCEqPu/itDS8s=
+X-Google-Smtp-Source: AGHT+IGD/jtVA3Rdnq+bTWW2i+WoMmfuwV5XxVW4+NDqwpMdifM8PtmushixxRUAGEgebmaoZjpfYw==
+X-Received: by 2002:a05:600c:44d4:b0:41f:ed4b:93f9 with SMTP id 5b1f17b1804b1-421562dc3abmr17532165e9.19.1717591170461;
+        Wed, 05 Jun 2024 05:39:30 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:75a:e000:d3dd:423:e1eb:d88b])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35dd04cac3esm14383619f8f.39.2024.06.05.05.27.44
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42158148f66sm21992535e9.32.2024.06.05.05.39.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jun 2024 05:27:44 -0700 (PDT)
+        Wed, 05 Jun 2024 05:39:30 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Saravana Kannan <saravanak@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Xilin Wu <wuxilin123@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org,
+	netdev@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>
-Subject: [PATCH v9 4/4] arm64: dts: qcom: qrb5165-rb5: add the Wifi node
-Date: Wed,  5 Jun 2024 14:27:29 +0200
-Message-ID: <20240605122729.24283-5-brgl@bgdev.pl>
+	linux-wireless@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-pci@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v9 0/2] pwrseq: introduce the subsystem and first driver
+Date: Wed,  5 Jun 2024 14:38:48 +0200
+Message-ID: <20240605123850.24857-1-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240605122729.24283-1-brgl@bgdev.pl>
-References: <20240605122729.24283-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,166 +122,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Add a node for the PMU module of the QCA6391 present on the RB5 board.
-Assign its LDO power outputs to the existing Bluetooth module. Add a
-node for the PCIe port to sm8250.dtsi and define the WLAN node on it in
-the board's .dts and also make it consume the power outputs of the PMU.
+Hi!
 
-Tested-by: Caleb Connolly <caleb.connolly@linaro.org> # OnePlus 8T
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 103 ++++++++++++++++++++---
- arch/arm64/boot/dts/qcom/sm8250.dtsi     |   2 +-
- 2 files changed, 93 insertions(+), 12 deletions(-)
+These are the power sequencing patches sent separately after some
+improvements suggested by Bjorn Helgaas. I intend to pick them up into a
+new branch and maintain the subsystem from now on. I then plan to
+provide an immutable tag to the Bluetooth and PCI subsystems so that the
+rest of the C changes can be applied. This new branch will then be
+directly sent to Linus Torvalds for the next merge window.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index c52357214de5..daf830dfe4b5 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -108,6 +108,67 @@ lt9611_3v3: lt9611-3v3 {
- 		regulator-always-on;
- 	};
- 
-+	qca6390-pmu {
-+		compatible = "qcom,qca6390-pmu";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-+
-+		vddaon-supply = <&vreg_s6a_0p95>;
-+		vddpmu-supply = <&vreg_s2f_0p95>;
-+		vddrfa0p95-supply = <&vreg_s2f_0p95>;
-+		vddrfa1p3-supply = <&vreg_s8c_1p3>;
-+		vddrfa1p9-supply = <&vreg_s5a_1p9>;
-+		vddpcie1p3-supply = <&vreg_s8c_1p3>;
-+		vddpcie1p9-supply = <&vreg_s5a_1p9>;
-+		vddio-supply = <&vreg_s4a_1p8>;
-+
-+		wlan-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-+		bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
-+
- 	thermal-zones {
- 		conn-thermal {
- 			polling-delay-passive = <0>;
-@@ -734,6 +795,23 @@ &pcie0_phy {
- 	vdda-pll-supply = <&vreg_l9a_1p2>;
- };
- 
-+&pcieport0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1101";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &pcie1 {
- 	status = "okay";
- };
-@@ -1303,6 +1381,14 @@ sdc2_card_det_n: sd-card-det-n-state {
- 		function = "gpio";
- 		bias-pull-up;
- 	};
-+
-+	wlan_en_state: wlan-default-state {
-+		pins = "gpio20";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		output-low;
-+		bias-pull-up;
-+	};
- };
- 
- &uart6 {
-@@ -1311,17 +1397,12 @@ &uart6 {
- 	bluetooth {
- 		compatible = "qcom,qca6390-bt";
- 
--		pinctrl-names = "default";
--		pinctrl-0 = <&bt_en_state>;
--
--		enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
--
--		vddio-supply = <&vreg_s4a_1p8>;
--		vddpmu-supply = <&vreg_s2f_0p95>;
--		vddaon-supply = <&vreg_s6a_0p95>;
--		vddrfa0p9-supply = <&vreg_s2f_0p95>;
--		vddrfa1p3-supply = <&vreg_s8c_1p3>;
--		vddrfa1p9-supply = <&vreg_s5a_1p9>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
- 	};
- };
- 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index f3f9dea0550b..95471ba46f9d 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2204,7 +2204,7 @@ pcie0: pcie@1c00000 {
- 
- 			status = "disabled";
- 
--			pcie@0 {
-+			pcieport0: pcie@0 {
- 				device_type = "pci";
- 				reg = <0x0 0x0 0x0 0x0 0x0>;
- 				bus-range = <0x01 0xff>;
+Changelog:
+
+Since v8:
+- split the pwrseq patches out into their own series
+- rename incref/decref functions to get/put for consistency
+- fix typos
+- make it very explicit in docs that arrays of targets and units must be
+  NULL-terminated
+- Link to v8: https://lore.kernel.org/r/20240528-pwrseq-v8-0-d354d52b763c@linaro.org
+
+Since v7:
+- added DTS changes for sm8650-hdk
+- added circular dependency detection for pwrseq units
+- fixed a KASAN reported use-after-free error in remove path
+- improve Kconfig descriptions
+- fix typos in bindings and Kconfig
+- fixed issues reported by smatch
+- fix the unbind path in PCI pwrctl
+- lots of minor improvements to the pwrseq core
+
+Since v6:
+- kernel doc fixes
+- drop myself from the DT bindings maintainers list for ath12k
+- wait until the PCI bridge device is fully added before creating the
+  PCI pwrctl platform devices for its sub-nodes, otherwise we may see
+  sysfs and procfs attribute failures (due to duplication, we're
+  basically trying to probe the same device twice at the same time)
+- I kept the regulators for QCA6390's ath11k as required as they only
+  apply to this specific Qualcomm package
+
+Since v5:
+- unify the approach to modelling the WCN WLAN/BT chips by always exposing
+  the PMU node on the device tree and making the WLAN and BT nodes become
+  consumers of its power outputs; this includes a major rework of the DT
+  sources, bindings and driver code; there's no more a separate PCI
+  pwrctl driver for WCN7850, instead its power-up sequence was moved
+  into the pwrseq driver common for all WCN chips
+- don't set load_uA from new regulator consumers
+- fix reported kerneldoc issues
+- drop voltage ranges for PMU outputs from DT
+- many minor tweaks and reworks
+
+v1: Original RFC:
+
+https://lore.kernel.org/lkml/20240104130123.37115-1-brgl@bgdev.pl/T/
+
+v2: First real patch series (should have been PATCH v2) adding what I
+    referred to back then as PCI power sequencing:
+
+https://lore.kernel.org/linux-arm-kernel/2024021413-grumbling-unlivable-c145@gregkh/T/
+
+v3: RFC for the DT representation of the PMU supplying the WLAN and BT
+    modules inside the QCA6391 package (was largely separate from the
+    series but probably should have been called PATCH or RFC v3):
+
+https://lore.kernel.org/all/CAMRc=Mc+GNoi57eTQg71DXkQKjdaoAmCpB=h2ndEpGnmdhVV-Q@mail.gmail.com/T/
+
+v4: Second attempt at the full series with changed scope (introduction of
+    the pwrseq subsystem, should have been RFC v4)
+
+https://lore.kernel.org/lkml/20240201155532.49707-1-brgl@bgdev.pl/T/
+
+v5: Two different ways of handling QCA6390 and WCN7850:
+
+https://lore.kernel.org/lkml/20240216203215.40870-1-brgl@bgdev.pl/
+
+Bartosz Golaszewski (2):
+  power: sequencing: implement the pwrseq core
+  power: pwrseq: add a driver for the PMU module on the QCom WCN
+    chipsets
+
+ MAINTAINERS                                |    8 +
+ drivers/power/Kconfig                      |    1 +
+ drivers/power/Makefile                     |    1 +
+ drivers/power/sequencing/Kconfig           |   29 +
+ drivers/power/sequencing/Makefile          |    6 +
+ drivers/power/sequencing/core.c            | 1105 ++++++++++++++++++++
+ drivers/power/sequencing/pwrseq-qcom-wcn.c |  336 ++++++
+ include/linux/pwrseq/consumer.h            |   56 +
+ include/linux/pwrseq/provider.h            |   75 ++
+ 9 files changed, 1617 insertions(+)
+ create mode 100644 drivers/power/sequencing/Kconfig
+ create mode 100644 drivers/power/sequencing/Makefile
+ create mode 100644 drivers/power/sequencing/core.c
+ create mode 100644 drivers/power/sequencing/pwrseq-qcom-wcn.c
+ create mode 100644 include/linux/pwrseq/consumer.h
+ create mode 100644 include/linux/pwrseq/provider.h
+
 -- 
 2.40.1
 
