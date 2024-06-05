@@ -1,122 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-21764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 261638FCECC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 15:16:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2BDE8FCF55
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 15:32:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 874491F28D39
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 13:16:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13F85B2D726
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 13:19:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A250F19B5BD;
-	Wed,  5 Jun 2024 12:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B295C4C6E;
+	Wed,  5 Jun 2024 12:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="0r4Ys5eC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d1Gf75UX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F39D199398
-	for <linux-arm-msm@vger.kernel.org>; Wed,  5 Jun 2024 12:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68DB393;
+	Wed,  5 Jun 2024 12:46:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717591178; cv=none; b=V4eWi1xrih9MAL4IZsFtZIeXvyKknEKwsYqVupvbowa26qW9ef6tvTon0hx9WrSTCbcdgAMqT2NACHRrZRlgziDHe1FCWp+viLYYfAeD01l4OlP8XE50xVc9VAPuJ4J2FtG56kDxNdGo5016QWVyXYdqR/o4X+j+Zc5IMHzLX58=
+	t=1717591571; cv=none; b=Bx75dv69QrqcnfQT9RUI1QPkj4uoAEuFT8oZEhzvEUKEYmzwFX9998rupsQaUefXtIn8tm3MFhl9OjWtNdd+cpf7udkAy6BnklghqM8gyQswS1LPjCRpgp8jNEn6XtbDitqD+YBU7nedtjx5YPQT3CIUpW3zBDi0ioLIAn66qq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717591178; c=relaxed/simple;
-	bh=yU1zUf+faD6JgyhE+bFIg993kTzscUEBjSG8Xzmsj+0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LvECwm6CTVBLqmcfVMkXv/f7O5Hbd5QQiOOjFcW4MamEkQmstYZFWOOYX7FZrZZmmeHmjVMuQrod28j/PR/9fS4doZtxWHK4ZfTTti/7iKt0uIakoWGKyL3zFj4bKNYBrv9cUQjRbF57wux2Xzkuv2m0dIq9vhHNEtLyMNbko1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=0r4Ys5eC; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4214aa43a66so18606625e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 05:39:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1717591174; x=1718195974; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nLJqIWJeQNkMBFWQ7v6+RLQIvbPqzd6527VcybskqUQ=;
-        b=0r4Ys5eCOciGHV9E0CezTMIftDUarXkGTMULtr70tUAQ9dVopJ5PJIHDkXe/+O855m
-         jaMuh2SFdJVoTWHrfmo0ypfasJDbXmovY14tPsuj8duV7mvRcGkkdjfKC1y0Dx2YdEY1
-         p9Nmka51RPEPIhRIzi9q5ARZ5Dz7ldT5uahLfvP3lhk+vZC04plXXKYB6oTMiypWQjlr
-         EmdslRtH83pfgNXsrhGodU4YhfF1r6oEj5ruDiI3DQRaD30jtqc15VA0xM1heX7JDN2N
-         thrgEM6cUGSpPdwwSIcq8QBB6WbGKELSPAUPKulkdCXqDkA1XzuApHCK0DSeTIdikgru
-         GYDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717591174; x=1718195974;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nLJqIWJeQNkMBFWQ7v6+RLQIvbPqzd6527VcybskqUQ=;
-        b=EYOVBMcw0zxXDi5VIpstzOX0ns7kHXMbzbifPqTzpfVvh/k0Ass3CfSXJs6EW2u85G
-         qtBSJX+aelqZCVJc78vdNY/u4qXMJFUrYAliqxGj1uIxBM2OeJ2RgYzsbZWgAXN2CAoh
-         S3/6N/FZ9Omv4e8KZkN83uihlRbGM4YNJjfZzttaU6vqoQIPygI5SWoj5/a7h8ojfQXF
-         c5VyYl00zi4u/o4SQ0vHCJ3tzGDnmZWOBbtoKFUQT0FxX9uPP8Sg1GbltfYVoRwmVNFo
-         0aZevb7UI51YXPM3VUkWdH0gPgNva8KAAkSY6mOsknbqRMKLuvmLYC0SivQIxpaZYPIq
-         nUHw==
-X-Forwarded-Encrypted: i=1; AJvYcCVaDvwJl9jakvOo6YRRQXDWjem7SjibkxoJ8YK19aCGZiwuA3X9seLt3pNaxzUod4bzYEm+IBxTBFYfbiPU6bD0pFUKlL/+OwwEbJI6DA==
-X-Gm-Message-State: AOJu0Yzk59soOe1VztG/1S1zmvHDqtdUocbKEfmyothlWAosVrb+/5RA
-	oeM+fsGRqhQi1Tl/kpV4nbiqj1xuxJQE72YsjtHU3XM0r37LJu3Kft0lXz4tfC4=
-X-Google-Smtp-Source: AGHT+IFkU9V1vqVoPhWtT14MJgaDv5EWKjQeJi+58c7DX4CmjM2wKHZTP6VmBQXo0ZrXi3nXBSbLmw==
-X-Received: by 2002:a05:600c:1c84:b0:420:173f:e1e9 with SMTP id 5b1f17b1804b1-421562dc3b6mr18874035e9.21.1717591173573;
-        Wed, 05 Jun 2024 05:39:33 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:75a:e000:d3dd:423:e1eb:d88b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42158148f66sm21992535e9.32.2024.06.05.05.39.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jun 2024 05:39:33 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Saravana Kannan <saravanak@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Xilin Wu <wuxilin123@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-pci@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>
-Subject: [PATCH v9 2/2] power: pwrseq: add a driver for the PMU module on the QCom WCN chipsets
-Date: Wed,  5 Jun 2024 14:38:50 +0200
-Message-ID: <20240605123850.24857-3-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240605123850.24857-1-brgl@bgdev.pl>
-References: <20240605123850.24857-1-brgl@bgdev.pl>
+	s=arc-20240116; t=1717591571; c=relaxed/simple;
+	bh=YkSxrwjWv7KZd09MEiQ5rhr4XLuFIHsreDoepNS/jvI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LLejZzh7joUmkZ0LwzPFSzhVlKlaActl2EkUcf8yGUJ/7QcSIfIXbmGXMnsH5SWx6jTYpHmTWPCa7ImhRWDTzeG6tZezIuuWl790dC6kyCLclWAGxU43h324vB842iE+tyElAY/I2kEx81XNmyhEzyHGjeTlGChO8BLvukmL4PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d1Gf75UX; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455B1Mf0031662;
+	Wed, 5 Jun 2024 12:46:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=fPt4WMFNWxC7lyDAZjNRmr
+	RW9T9rPixJCG+EYa6lnAc=; b=d1Gf75UXpn70nsOcwCTc+xt8tU3uvSO+rLbA2u
+	LIlIkl/0x+igVXryj7EAQfguvH/ryUTVhzvNBhgOpokPWWyg4CF/S6arxnXolxDo
+	MIbCuWoxhg2HPKtYMj4EcVhD2F4qUNlYCiW5ksMMKR/hWtrjkzTYMad5crXVy4+g
+	9gwULj8yINivw5AsEYgvf557+AGeeIkViBhZHes9YjymqjRz27iU5A8S9lKcY2n+
+	EwGtDrI5NHtVf+Er/F98rHr2a0sfvpXfcLpoJGVz3bB0ZaWtI6q3xuWmGV4JKUED
+	j1YN3HR+Cs2AI/tOXHWzT9CZeLu9bYBaVVpqf36HfBUhCo1A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjk898ttg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 05 Jun 2024 12:45:59 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 455CjwD3024417
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 5 Jun 2024 12:45:58 GMT
+Received: from luoj-gv.qualcomm.com (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 5 Jun 2024
+ 05:45:55 -0700
+From: Luo Jie <quic_luoj@quicinc.com>
+To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <p.zabel@pengutronix.de>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+Subject: [PATCH v15 0/4] add clock controller of qca8386/qca8084
+Date: Wed, 5 Jun 2024 20:45:37 +0800
+Message-ID: <20240605124541.2711467-1-quic_luoj@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -124,405 +72,239 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HpZm9ELIWt_-TIm51apxwwoBNYczvwsL
+X-Proofpoint-ORIG-GUID: HpZm9ELIWt_-TIm51apxwwoBNYczvwsL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-05_02,2024-06-05_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 impostorscore=0 phishscore=0 mlxscore=0 bulkscore=0
+ adultscore=0 malwarescore=0 priorityscore=1501 clxscore=1011
+ suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2405170001 definitions=main-2406050096
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+qca8xxx is 4 * 2.5GBaseT ports chip, working as switch mode
+named by qca8386, or working as PHY mode named by qca8084,
+clock hardware reigster is accessed by MDIO bus.
 
-This adds the power sequencing driver for the PMU modules present on the
-Qualcomm WCN Bluetooth and Wifi chipsets. It uses the pwrseq subsystem
-and knows how to match the sequencer to the consumer device by verifying
-the relevant properties and DT layout. Using this driver will allow the
-BT and WLAN drivers to respect the required delays between enabling the
-two modules.
+This patch series add the clock controller of qca8363/qca8084,
+and add the clock ops clk_branch2_prepare_ops to avoid spin lock
+used during the clock operation of qca8k clock controller where
+the sleep happens when accessing clock control register by MDIO
+bus.
 
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD, SM8650-QRD & SM8650-HDK
-Tested-by: Caleb Connolly <caleb.connolly@linaro.org> # OnePlus 8T
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/power/sequencing/Kconfig           |  17 ++
- drivers/power/sequencing/Makefile          |   2 +
- drivers/power/sequencing/pwrseq-qcom-wcn.c | 336 +++++++++++++++++++++
- 3 files changed, 355 insertions(+)
- create mode 100644 drivers/power/sequencing/pwrseq-qcom-wcn.c
+Changes in v2:
+	* remove clock flag CLK_ENABLE_MUTEX_LOCK.
+	* add clock ops clk_branch2_qca8k_ops.
+	* improve yaml file for fixing dtschema warnings.
+	* enable clock controller driver in defconfig.
 
-diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
-index ba5732b1dbf8..c9f1cdb66524 100644
---- a/drivers/power/sequencing/Kconfig
-+++ b/drivers/power/sequencing/Kconfig
-@@ -10,3 +10,20 @@ menuconfig POWER_SEQUENCING
- 	  during power-up.
- 
- 	  If unsure, say no.
-+
-+if POWER_SEQUENCING
-+
-+config POWER_SEQUENCING_QCOM_WCN
-+	tristate "Qualcomm WCN family PMU driver"
-+	default m if ARCH_QCOM
-+	help
-+	  Say Y here to enable the power sequencing driver for Qualcomm
-+	  WCN Bluetooth/WLAN chipsets.
-+
-+	  Typically, a package from the Qualcomm WCN family contains the BT
-+	  and WLAN modules whose power is controlled by the PMU module. As the
-+	  former two share the power-up sequence which is executed by the PMU,
-+	  this driver is needed for correct power control or else we'd risk not
-+	  respecting the required delays between enabling Bluetooth and WLAN.
-+
-+endif
-diff --git a/drivers/power/sequencing/Makefile b/drivers/power/sequencing/Makefile
-index dcdf8c0c159e..2eec2df7912d 100644
---- a/drivers/power/sequencing/Makefile
-+++ b/drivers/power/sequencing/Makefile
-@@ -2,3 +2,5 @@
- 
- obj-$(CONFIG_POWER_SEQUENCING)		+= pwrseq-core.o
- pwrseq-core-y				:= core.o
-+
-+obj-$(CONFIG_POWER_SEQUENCING_QCOM_WCN)	+= pwrseq-qcom-wcn.o
-diff --git a/drivers/power/sequencing/pwrseq-qcom-wcn.c b/drivers/power/sequencing/pwrseq-qcom-wcn.c
-new file mode 100644
-index 000000000000..42dacfda745e
---- /dev/null
-+++ b/drivers/power/sequencing/pwrseq-qcom-wcn.c
-@@ -0,0 +1,336 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2024 Linaro Ltd.
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/delay.h>
-+#include <linux/device.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/jiffies.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/regulator/consumer.h>
-+#include <linux/pwrseq/provider.h>
-+#include <linux/string.h>
-+#include <linux/types.h>
-+
-+struct pwrseq_qcom_wcn_pdata {
-+	const char *const *vregs;
-+	size_t num_vregs;
-+	unsigned int pwup_delay_ms;
-+	unsigned int gpio_enable_delay_ms;
-+};
-+
-+struct pwrseq_qcom_wcn_ctx {
-+	struct pwrseq_device *pwrseq;
-+	struct device_node *of_node;
-+	const struct pwrseq_qcom_wcn_pdata *pdata;
-+	struct regulator_bulk_data *regs;
-+	struct gpio_desc *bt_gpio;
-+	struct gpio_desc *wlan_gpio;
-+	struct clk *clk;
-+	unsigned long last_gpio_enable_jf;
-+};
-+
-+static void pwrseq_qcom_wcn_ensure_gpio_delay(struct pwrseq_qcom_wcn_ctx *ctx)
-+{
-+	unsigned long diff_jiffies;
-+	unsigned int diff_msecs;
-+
-+	if (!ctx->pdata->gpio_enable_delay_ms)
-+		return;
-+
-+	diff_jiffies = jiffies - ctx->last_gpio_enable_jf;
-+	diff_msecs = jiffies_to_msecs(diff_jiffies);
-+
-+	if (diff_msecs < ctx->pdata->gpio_enable_delay_ms)
-+		msleep(ctx->pdata->gpio_enable_delay_ms - diff_msecs);
-+}
-+
-+static int pwrseq_qcom_wcn_vregs_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_enable(ctx->pdata->num_vregs, ctx->regs);
-+}
-+
-+static int pwrseq_qcom_wcn_vregs_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_disable(ctx->pdata->num_vregs, ctx->regs);
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_qcom_wcn_vregs_unit_data = {
-+	.name = "regulators-enable",
-+	.enable = pwrseq_qcom_wcn_vregs_enable,
-+	.disable = pwrseq_qcom_wcn_vregs_disable,
-+};
-+
-+static int pwrseq_qcom_wcn_clk_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return clk_prepare_enable(ctx->clk);
-+}
-+
-+static int pwrseq_qcom_wcn_clk_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	clk_disable_unprepare(ctx->clk);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_qcom_wcn_clk_unit_data = {
-+	.name = "clock-enable",
-+	.enable = pwrseq_qcom_wcn_clk_enable,
-+	.disable = pwrseq_qcom_wcn_clk_disable,
-+};
-+
-+static const struct pwrseq_unit_data *pwrseq_qcom_wcn_unit_deps[] = {
-+	&pwrseq_qcom_wcn_vregs_unit_data,
-+	&pwrseq_qcom_wcn_clk_unit_data,
-+	NULL
-+};
-+
-+static int pwrseq_qcom_wcn_bt_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	pwrseq_qcom_wcn_ensure_gpio_delay(ctx);
-+	gpiod_set_value_cansleep(ctx->bt_gpio, 1);
-+	ctx->last_gpio_enable_jf = jiffies;
-+
-+	return 0;
-+}
-+
-+static int pwrseq_qcom_wcn_bt_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	gpiod_set_value_cansleep(ctx->bt_gpio, 0);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_qcom_wcn_bt_unit_data = {
-+	.name = "bluetooth-enable",
-+	.deps = pwrseq_qcom_wcn_unit_deps,
-+	.enable = pwrseq_qcom_wcn_bt_enable,
-+	.disable = pwrseq_qcom_wcn_bt_disable,
-+};
-+
-+static int pwrseq_qcom_wcn_wlan_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	pwrseq_qcom_wcn_ensure_gpio_delay(ctx);
-+	gpiod_set_value_cansleep(ctx->wlan_gpio, 1);
-+	ctx->last_gpio_enable_jf = jiffies;
-+
-+	return 0;
-+}
-+
-+static int pwrseq_qcom_wcn_wlan_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	gpiod_set_value_cansleep(ctx->wlan_gpio, 0);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_qcom_wcn_wlan_unit_data = {
-+	.name = "wlan-enable",
-+	.deps = pwrseq_qcom_wcn_unit_deps,
-+	.enable = pwrseq_qcom_wcn_wlan_enable,
-+	.disable = pwrseq_qcom_wcn_wlan_disable,
-+};
-+
-+static int pwrseq_qcom_wcn_pwup_delay(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	if (ctx->pdata->pwup_delay_ms)
-+		msleep(ctx->pdata->pwup_delay_ms);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_target_data pwrseq_qcom_wcn_bt_target_data = {
-+	.name = "bluetooth",
-+	.unit = &pwrseq_qcom_wcn_bt_unit_data,
-+	.post_enable = pwrseq_qcom_wcn_pwup_delay,
-+};
-+
-+static const struct pwrseq_target_data pwrseq_qcom_wcn_wlan_target_data = {
-+	.name = "wlan",
-+	.unit = &pwrseq_qcom_wcn_wlan_unit_data,
-+	.post_enable = pwrseq_qcom_wcn_pwup_delay,
-+};
-+
-+static const struct pwrseq_target_data *pwrseq_qcom_wcn_targets[] = {
-+	&pwrseq_qcom_wcn_bt_target_data,
-+	&pwrseq_qcom_wcn_wlan_target_data,
-+	NULL
-+};
-+
-+static const char *const pwrseq_qca6390_vregs[] = {
-+	"vddio",
-+	"vddaon",
-+	"vddpmu",
-+	"vddrfa0p95",
-+	"vddrfa1p3",
-+	"vddrfa1p9",
-+	"vddpcie1p3",
-+	"vddpcie1p9",
-+};
-+
-+static const struct pwrseq_qcom_wcn_pdata pwrseq_qca6390_of_data = {
-+	.vregs = pwrseq_qca6390_vregs,
-+	.num_vregs = ARRAY_SIZE(pwrseq_qca6390_vregs),
-+	.pwup_delay_ms = 60,
-+	.gpio_enable_delay_ms = 100,
-+};
-+
-+static const char *const pwrseq_wcn7850_vregs[] = {
-+	"vdd",
-+	"vddio",
-+	"vddio1p2",
-+	"vddaon",
-+	"vdddig",
-+	"vddrfa1p2",
-+	"vddrfa1p8",
-+};
-+
-+static const struct pwrseq_qcom_wcn_pdata pwrseq_wcn7850_of_data = {
-+	.vregs = pwrseq_wcn7850_vregs,
-+	.num_vregs = ARRAY_SIZE(pwrseq_wcn7850_vregs),
-+	.pwup_delay_ms = 50,
-+};
-+
-+static int pwrseq_qcom_wcn_match(struct pwrseq_device *pwrseq,
-+				 struct device *dev)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+	struct device_node *dev_node = dev->of_node;
-+
-+	/*
-+	 * The PMU supplies power to the Bluetooth and WLAN modules. both
-+	 * consume the PMU AON output so check the presence of the
-+	 * 'vddaon-supply' property and whether it leads us to the right
-+	 * device.
-+	 */
-+	if (!of_property_present(dev_node, "vddaon-supply"))
-+		return 0;
-+
-+	struct device_node *reg_node __free(device_node) =
-+			of_parse_phandle(dev_node, "vddaon-supply", 0);
-+	if (!reg_node)
-+		return 0;
-+
-+	/*
-+	 * `reg_node` is the PMU AON regulator, its parent is the `regulators`
-+	 * node and finally its grandparent is the PMU device node that we're
-+	 * looking for.
-+	 */
-+	if (!reg_node->parent || !reg_node->parent->parent ||
-+	    reg_node->parent->parent != ctx->of_node)
-+		return 0;
-+
-+	return 1;
-+}
-+
-+static int pwrseq_qcom_wcn_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct pwrseq_qcom_wcn_ctx *ctx;
-+	struct pwrseq_config config;
-+	int i, ret;
-+
-+	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->of_node = dev->of_node;
-+
-+	ctx->pdata = of_device_get_match_data(dev);
-+	if (!ctx->pdata)
-+		return dev_err_probe(dev, -ENODEV,
-+				     "Failed to obtain platform data\n");
-+
-+	ctx->regs = devm_kcalloc(dev, ctx->pdata->num_vregs,
-+				 sizeof(*ctx->regs), GFP_KERNEL);
-+	if (!ctx->regs)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < ctx->pdata->num_vregs; i++)
-+		ctx->regs[i].supply = ctx->pdata->vregs[i];
-+
-+	ret = devm_regulator_bulk_get(dev, ctx->pdata->num_vregs, ctx->regs);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to get all regulators\n");
-+
-+	ctx->bt_gpio = devm_gpiod_get_optional(dev, "bt-enable", GPIOD_OUT_LOW);
-+	if (IS_ERR(ctx->bt_gpio))
-+		return dev_err_probe(dev, PTR_ERR(ctx->bt_gpio),
-+				     "Failed to get the Bluetooth enable GPIO\n");
-+
-+	ctx->wlan_gpio = devm_gpiod_get_optional(dev, "wlan-enable",
-+						 GPIOD_OUT_LOW);
-+	if (IS_ERR(ctx->wlan_gpio))
-+		return dev_err_probe(dev, PTR_ERR(ctx->wlan_gpio),
-+				     "Failed to get the WLAN enable GPIO\n");
-+
-+	ctx->clk = devm_clk_get_optional(dev, NULL);
-+	if (IS_ERR(ctx->clk))
-+		return dev_err_probe(dev, PTR_ERR(ctx->clk),
-+				     "Failed to get the reference clock\n");
-+
-+	memset(&config, 0, sizeof(config));
-+
-+	config.parent = dev;
-+	config.owner = THIS_MODULE;
-+	config.drvdata = ctx;
-+	config.match = pwrseq_qcom_wcn_match;
-+	config.targets = pwrseq_qcom_wcn_targets;
-+
-+	ctx->pwrseq = devm_pwrseq_device_register(dev, &config);
-+	if (IS_ERR(ctx->pwrseq))
-+		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
-+				     "Failed to register the power sequencer\n");
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id pwrseq_qcom_wcn_of_match[] = {
-+	{
-+		.compatible = "qcom,qca6390-pmu",
-+		.data = &pwrseq_qca6390_of_data,
-+	},
-+	{
-+		.compatible = "qcom,wcn7850-pmu",
-+		.data = &pwrseq_wcn7850_of_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, pwrseq_qcom_wcn_of_match);
-+
-+static struct platform_driver pwrseq_qcom_wcn_driver = {
-+	.driver = {
-+		.name = "pwrseq-qcom_wcn",
-+		.of_match_table = pwrseq_qcom_wcn_of_match,
-+	},
-+	.probe = pwrseq_qcom_wcn_probe,
-+};
-+module_platform_driver(pwrseq_qcom_wcn_driver);
-+
-+MODULE_AUTHOR("Bartosz Golaszewski <bartosz.golaszewski@linaro.org>");
-+MODULE_DESCRIPTION("Qualcomm WCN PMU power sequencing driver");
-+MODULE_LICENSE("GPL");
+Changes in v3:
+	* rename clk_branch2_qca8k_ops to clk_branch2_mdio_ops.
+	* fix review comments on yaml file.
+	* use dev_err_probe on driver probe error.
+	* only use the compatible "qcom,qca8084-nsscc".
+	* remove enable clock controller driver patch.
+
+Changes in v4:
+	* add _qcom_cc_really_probe function.
+	* commonizing the probe function.
+	* remove flag CLK_IS_CRITICAL from clocks only needed
+	to be enabled in switch device.
+	* update device tree property reg to 0x10. 
+
+Changes in v5:
+	* commonize qcom_cc_really_probe.
+	* add halt_check for the branch clocks.
+	* fix the review comments on nsscc-qca8k.c. 
+
+Changes in v6:
+	* rename clk_branch2_mdio_ops to clk_branch2_prepare_ops.
+
+Changes in v7:
+	* remove the clock flag CLK_IS_CRITICAL.
+	* optimize the file nsscc-qca8k.c.
+	* identify & fix the comments from Stephen.
+
+Changes in v8:
+	* add dependency on ARM in Kconfig.
+
+Changes in v9:
+	* take the clk_ops clk_rcg2_mux_closest_ops to remove the
+	  redundant freq_tbls.
+
+Changes in v10:
+        * fix the patch CHECK and improve the comments.
+
+Changes in v11:
+	* update the clock names to reflect hardware connecton.
+	  NSS_CC_MAC4_SRDS1_CH2_XGMII_RX_DIV_CLK_SRC ->
+	  NSS_CC_MAC4_SRDS1_CH3_XGMII_RX_DIV_CLK_SRC
+
+	  NSS_CC_MAC4_SRDS1_CH2_XGMII_TX_DIV_CLK_SRC ->
+	  NSS_CC_MAC4_SRDS1_CH3_XGMII_TX_DIV_CLK_SRC
+        * resolve the qcom_cc_really_probe merge conflict based
+	  on the latest code.
+
+Changes in v12:
+	* fix the compile error caused by the parameter of
+	  qcom_cc_really_probe updated from pdev to &pdev->dev in the
+	  new merged clock driver gcc-sm4450.c and camcc-sm8550.c.
+
+Changes in v13:
+	* fix the compile error caused by the parameter of
+	  qcom_cc_really_probe from pdev to &pdev->dev in the new
+	  merged gcc drivers.
+	* use the freq_multi_tbl for the same frequency config, which
+	  is introduced by Christian's patch set below.
+	  <clk: qcom: clk-rcg2: introduce support for multiple conf
+	  for same freq>.
+	* add dependent patch set link.
+
+Changes in v14:
+	* Rebase the patch series.
+	* Reset clock controller after enabling reference clock.
+	* remove the link of dependent patch series since it is merged.
+
+Changes in v15:
+	* Rebase the patch series.
+	* fix the compile error caused by the parameter of
+	  qcom_cc_really_probe from pdev to &pdev->dev in the new
+	  merged qualcomm gcc drivers.
+
+Luo Jie (4):
+  clk: qcom: branch: Add clk_branch2_prepare_ops
+  dt-bindings: clock: add qca8386/qca8084 clock and reset definitions
+  clk: qcom: common: commonize qcom_cc_really_probe
+  clk: qcom: add clock controller driver for qca8386/qca8084
+
+ .../bindings/clock/qcom,qca8k-nsscc.yaml      |   86 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/apss-ipq6018.c               |    2 +-
+ drivers/clk/qcom/camcc-sc7180.c               |    2 +-
+ drivers/clk/qcom/camcc-sc7280.c               |    2 +-
+ drivers/clk/qcom/camcc-sc8280xp.c             |    2 +-
+ drivers/clk/qcom/camcc-sdm845.c               |    2 +-
+ drivers/clk/qcom/camcc-sm6350.c               |    2 +-
+ drivers/clk/qcom/camcc-sm7150.c               |    2 +-
+ drivers/clk/qcom/camcc-sm8250.c               |    2 +-
+ drivers/clk/qcom/camcc-sm8450.c               |    2 +-
+ drivers/clk/qcom/camcc-sm8550.c               |    2 +-
+ drivers/clk/qcom/camcc-x1e80100.c             |    2 +-
+ drivers/clk/qcom/clk-branch.c                 |    7 +
+ drivers/clk/qcom/clk-branch.h                 |    1 +
+ drivers/clk/qcom/common.c                     |    7 +-
+ drivers/clk/qcom/common.h                     |    2 +-
+ drivers/clk/qcom/dispcc-qcm2290.c             |    2 +-
+ drivers/clk/qcom/dispcc-sc7180.c              |    2 +-
+ drivers/clk/qcom/dispcc-sc7280.c              |    2 +-
+ drivers/clk/qcom/dispcc-sc8280xp.c            |    2 +-
+ drivers/clk/qcom/dispcc-sdm845.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6115.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6125.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6350.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6375.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm7150.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8250.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8450.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8550.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8650.c              |    2 +-
+ drivers/clk/qcom/dispcc-x1e80100.c            |    2 +-
+ drivers/clk/qcom/ecpricc-qdu1000.c            |    2 +-
+ drivers/clk/qcom/gcc-ipq5018.c                |    2 +-
+ drivers/clk/qcom/gcc-ipq6018.c                |    2 +-
+ drivers/clk/qcom/gcc-ipq8074.c                |    2 +-
+ drivers/clk/qcom/gcc-mdm9607.c                |    2 +-
+ drivers/clk/qcom/gcc-mdm9615.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8917.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8939.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8953.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8976.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8996.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8998.c                |    2 +-
+ drivers/clk/qcom/gcc-qcm2290.c                |    2 +-
+ drivers/clk/qcom/gcc-qcs404.c                 |    2 +-
+ drivers/clk/qcom/gcc-qdu1000.c                |    2 +-
+ drivers/clk/qcom/gcc-sa8775p.c                |    2 +-
+ drivers/clk/qcom/gcc-sc7180.c                 |    2 +-
+ drivers/clk/qcom/gcc-sc7280.c                 |    2 +-
+ drivers/clk/qcom/gcc-sc8180x.c                |    2 +-
+ drivers/clk/qcom/gcc-sc8280xp.c               |    2 +-
+ drivers/clk/qcom/gcc-sdm660.c                 |    2 +-
+ drivers/clk/qcom/gcc-sdm845.c                 |    2 +-
+ drivers/clk/qcom/gcc-sdx55.c                  |    2 +-
+ drivers/clk/qcom/gcc-sdx65.c                  |    2 +-
+ drivers/clk/qcom/gcc-sdx75.c                  |    2 +-
+ drivers/clk/qcom/gcc-sm4450.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6115.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6125.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6350.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6375.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm7150.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8150.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8250.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8350.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8450.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8550.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8650.c                 |    2 +-
+ drivers/clk/qcom/gcc-x1e80100.c               |    2 +-
+ drivers/clk/qcom/gpucc-msm8998.c              |    2 +-
+ drivers/clk/qcom/gpucc-sa8775p.c              |    2 +-
+ drivers/clk/qcom/gpucc-sc7180.c               |    2 +-
+ drivers/clk/qcom/gpucc-sc7280.c               |    2 +-
+ drivers/clk/qcom/gpucc-sc8280xp.c             |    2 +-
+ drivers/clk/qcom/gpucc-sdm660.c               |    2 +-
+ drivers/clk/qcom/gpucc-sdm845.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6115.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6125.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6350.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6375.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8150.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8250.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8350.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8450.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8550.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8650.c               |    2 +-
+ drivers/clk/qcom/gpucc-x1e80100.c             |    2 +-
+ drivers/clk/qcom/lcc-ipq806x.c                |    2 +-
+ drivers/clk/qcom/lcc-msm8960.c                |    2 +-
+ drivers/clk/qcom/lpassaudiocc-sc7280.c        |    4 +-
+ drivers/clk/qcom/lpasscorecc-sc7180.c         |    2 +-
+ drivers/clk/qcom/lpasscorecc-sc7280.c         |    2 +-
+ drivers/clk/qcom/mmcc-msm8960.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8974.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8994.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8996.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8998.c               |    2 +-
+ drivers/clk/qcom/mmcc-sdm660.c                |    2 +-
+ drivers/clk/qcom/nsscc-qca8k.c                | 2221 +++++++++++++++++
+ drivers/clk/qcom/tcsrcc-sm8550.c              |    2 +-
+ drivers/clk/qcom/videocc-sc7180.c             |    2 +-
+ drivers/clk/qcom/videocc-sc7280.c             |    2 +-
+ drivers/clk/qcom/videocc-sdm845.c             |    2 +-
+ drivers/clk/qcom/videocc-sm7150.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8150.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8250.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8350.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8450.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8550.c             |    2 +-
+ include/dt-bindings/clock/qcom,qca8k-nsscc.h  |  101 +
+ include/dt-bindings/reset/qcom,qca8k-nsscc.h  |   76 +
+ 113 files changed, 2610 insertions(+), 109 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,qca8k-nsscc.yaml
+ create mode 100644 drivers/clk/qcom/nsscc-qca8k.c
+ create mode 100644 include/dt-bindings/clock/qcom,qca8k-nsscc.h
+ create mode 100644 include/dt-bindings/reset/qcom,qca8k-nsscc.h
+
+
+base-commit: 234cb065ad82915ff8d06ce01e01c3e640b674d2
 -- 
-2.40.1
+2.34.1
 
 
