@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-21821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C1278FD9A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 00:15:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 387628FD9B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 00:16:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C898DB22CBC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 22:15:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFA111F27858
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Jun 2024 22:16:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68DFB15FD0E;
-	Wed,  5 Jun 2024 22:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A32C167DAE;
+	Wed,  5 Jun 2024 22:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NV6Skl5Q"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Lk6g1PW9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDAE15F3EC;
-	Wed,  5 Jun 2024 22:14:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C97161330;
+	Wed,  5 Jun 2024 22:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717625700; cv=none; b=nfo7zfvRIyBl2Bkv/8KmSZe3QtrPnIPjOL+0XnpaGE2buMCCSCpOKkrztGnMz/XxLvxbvJ/Xt7Hw4gumcpXEe9ZfvNR1vqU2ORJlOmuMuD9byZeuemOZeOESmGNszYApyxlozg9fMwwRoTLvuB1G8vW20/jpY51HxzMBl9I3Y2M=
+	t=1717625704; cv=none; b=DwqbC1CZ2Qi2fqIU9tP8xKs9suDwZZ+V3l7whqx0Mlr+HjOPY+IV7xXdQMbzPVgcKlsJswoS2btkWNAB9vlLXg9oF189YBmNOsUxYdWPzJ2Ssio6HFFrBuFn//xwLPUUxz5mfQFuU34kSEtUGvHm/6da1j9/jacsy+uHyN18sIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717625700; c=relaxed/simple;
-	bh=81hqptQlE/LEM/MdYuEb48YnMieQd2hcNEosrso0DUw=;
+	s=arc-20240116; t=1717625704; c=relaxed/simple;
+	bh=wn+WM6bIVhW767mtc2MZ19cATq9dvFlmfYEDJLezjxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mn3GplMxnWIG5eRMNXTKdikVVAwBFr14agrIMb6sSw4IcnW9Bcz0Ur60JlNmEB1GeGMQTCtAnfbZDkOKI6wNmTtI8O9JeTBivh2CBGQJzR4WFQqIfjzdajkhVGE8ZrLrgc4YgZv1bB6ja7yOY4l/9i1aChhA2T9gazElMS1HzaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NV6Skl5Q; arc=none smtp.client-ip=198.175.65.21
+	 MIME-Version; b=obadeFnlzKvfJGqjj8OLmh8BLJCo4yZNnNJQf0YKsyddBvsjL2ZxS/2RkHXQ5QJaPGE1YZ+q+1U5tNaCuCi6WQ85ikOwjuE6r3hz17rUbaG+Ucii88zky6qFwu+rB7w/4b7MaqksYvwEoWPhWwut0+ejGpiU0EGzyg4nNsVnJOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Lk6g1PW9; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717625700; x=1749161700;
+  t=1717625702; x=1749161702;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=81hqptQlE/LEM/MdYuEb48YnMieQd2hcNEosrso0DUw=;
-  b=NV6Skl5QMjBlcCNrZRhl6abZDyz9WbYrT4IpyRhVqFicJJltxDS80d7Z
-   MkcdYVH0/QxLjyyMAxbqwICV3kROBKCa4nBmfDLM1xzkeCqJKyiU2SlS2
-   opV0N0vee7kUM4GiLuLndBw3t9v1KuV2UBDep7vLbqDV03aGznkNC17Bp
-   dah32Dm4IDBCwtOYXXerY7UVOzq1VQ340z3LGsZdwhLVGjfL9m4xhb5Bz
-   YLGSVO0fOYoWQLUXrVrPVL6945DZCpOzqeVTSRtftBDTCeFZnaRQo/1wp
-   F3eJ4kXmutfXmabH6SZJMPAsrtFpKsHeEkScQ11mZczGjdK+bWRepV3gp
+  bh=wn+WM6bIVhW767mtc2MZ19cATq9dvFlmfYEDJLezjxw=;
+  b=Lk6g1PW9aokiAw8ON/ivuB61tRSmEY/WjUE65tL2BzdITbH2BMoP1gbN
+   9lAbvghbeG9RBEZwoV4BEsK8q6Pp6ZrQhoT4Uz97yPFZV6fwZU9GpgcHm
+   8h7SC5ZqytdopVT5SMjLb2Tn7oGDZRlgU52TEsG5k+j9w6gTCUYuQZl+M
+   0w7LDUmXdwrnSCuFXWn35dR4vreSJQFWYNFjP/cJ/T1Az1GI/3wJkngP5
+   +4xlaFyuKfc4m9/zpHwUU20h/bUCSi6umDJMBnncoCS9GRSPqkW4LyZiN
+   +7aDzg7a8binTP876WgIXgFq9OnkDa/BkgNOnw5N2MqFjTtbhBZLE7fnW
    Q==;
-X-CSE-ConnectionGUID: 0wIRGxX6TDy1SOJ4oNrciQ==
-X-CSE-MsgGUID: hyE9oKytR82jkSLcI8sgYA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11094"; a="14218716"
+X-CSE-ConnectionGUID: XgxQd+1/TFGuOjM+R069Kg==
+X-CSE-MsgGUID: SStWdSFNQgOV4ol2jTpNMw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11094"; a="24895498"
 X-IronPort-AV: E=Sophos;i="6.08,217,1712646000"; 
-   d="scan'208";a="14218716"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2024 15:14:58 -0700
-X-CSE-ConnectionGUID: t3Uw16VJSqWd0O8yE01ocw==
-X-CSE-MsgGUID: G+RGTNK3RGqRQhdhfEVyug==
+   d="scan'208";a="24895498"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2024 15:15:01 -0700
+X-CSE-ConnectionGUID: vDuyce6qQEmb/WWiwbWzNg==
+X-CSE-MsgGUID: D4oVJiRMQfCTDAoI5HxSPg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,217,1712646000"; 
-   d="scan'208";a="37621428"
+   d="scan'208";a="38168542"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by fmviesa007.fm.intel.com with ESMTP; 05 Jun 2024 15:14:49 -0700
+  by orviesa006.jf.intel.com with ESMTP; 05 Jun 2024 15:14:49 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id C9DEC44F; Thu, 06 Jun 2024 01:14:47 +0300 (EEST)
+	id DB91D56E; Thu, 06 Jun 2024 01:14:47 +0300 (EEST)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Rob Herring <robh@kernel.org>,
@@ -99,9 +99,9 @@ Cc: Liam Girdwood <lgirdwood@gmail.com>,
 	Pengutronix Kernel Team <kernel@pengutronix.de>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sylwester Nawrocki <s.nawrocki@samsung.com>
-Subject: [PATCH v2 3/6] ASoC: rockchip: Remove unused of_gpio.h
-Date: Thu,  6 Jun 2024 00:27:26 +0300
-Message-ID: <20240605221446.2624964-4-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v2 4/6] ASoC: codecs: Replace of_gpio.h by proper one
+Date: Thu,  6 Jun 2024 00:27:27 +0300
+Message-ID: <20240605221446.2624964-5-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.43.0.rc1.1336.g36b5255a03ac
 In-Reply-To: <20240605221446.2624964-1-andriy.shevchenko@linux.intel.com>
 References: <20240605221446.2624964-1-andriy.shevchenko@linux.intel.com>
@@ -113,39 +113,46 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-of_gpio.h is deprecated and subject to remove. The drivers in question
-don't use it, simply remove the unused header.
+of_gpio.h is deprecated and subject to remove.
+The driver doesn't use it directly, replace it
+with what is really being used.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- sound/soc/rockchip/rockchip_i2s.c   | 1 -
- sound/soc/rockchip/rockchip_spdif.c | 1 -
- 2 files changed, 2 deletions(-)
+ sound/soc/codecs/aw88395/aw88395.c | 2 +-
+ sound/soc/codecs/aw88399.c         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/rockchip/rockchip_i2s.c b/sound/soc/rockchip/rockchip_i2s.c
-index b0c3ef030e06..b378f870b3ad 100644
---- a/sound/soc/rockchip/rockchip_i2s.c
-+++ b/sound/soc/rockchip/rockchip_i2s.c
-@@ -11,7 +11,6 @@
- #include <linux/mfd/syscon.h>
- #include <linux/delay.h>
- #include <linux/of.h>
--#include <linux/of_gpio.h>
- #include <linux/clk.h>
- #include <linux/pinctrl/consumer.h>
- #include <linux/pm_runtime.h>
-diff --git a/sound/soc/rockchip/rockchip_spdif.c b/sound/soc/rockchip/rockchip_spdif.c
-index 1a24b78e9e02..eb9d5dee196e 100644
---- a/sound/soc/rockchip/rockchip_spdif.c
-+++ b/sound/soc/rockchip/rockchip_spdif.c
-@@ -11,7 +11,6 @@
+diff --git a/sound/soc/codecs/aw88395/aw88395.c b/sound/soc/codecs/aw88395/aw88395.c
+index 3c459a67ad0c..be6ebcb51cca 100644
+--- a/sound/soc/codecs/aw88395/aw88395.c
++++ b/sound/soc/codecs/aw88395/aw88395.c
+@@ -8,9 +8,9 @@
+ // Author: Weidong Wang <wangweidong.a@awinic.com>
+ //
  
- #include <linux/module.h>
- #include <linux/delay.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/i2c.h>
+ #include <linux/firmware.h>
 -#include <linux/of_gpio.h>
- #include <linux/clk.h>
- #include <linux/pm_runtime.h>
- #include <linux/mfd/syscon.h>
+ #include <linux/regmap.h>
+ #include <sound/soc.h>
+ #include "aw88395.h"
+diff --git a/sound/soc/codecs/aw88399.c b/sound/soc/codecs/aw88399.c
+index df6d52a1cfef..5d8481612eab 100644
+--- a/sound/soc/codecs/aw88399.c
++++ b/sound/soc/codecs/aw88399.c
+@@ -8,9 +8,9 @@
+ //
+ 
+ #include <linux/crc32.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/i2c.h>
+ #include <linux/firmware.h>
+-#include <linux/of_gpio.h> 
+ #include <linux/regmap.h>
+ #include <sound/soc.h>
+ #include "aw88399.h"
 -- 
 2.43.0.rc1.1336.g36b5255a03ac
 
