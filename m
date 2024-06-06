@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-21943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C96248FE870
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 16:07:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D35918FE8BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 16:10:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E4E21F25EBE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 14:07:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D2CB41C24F4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 14:10:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96745196C72;
-	Thu,  6 Jun 2024 14:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AC4F19882B;
+	Thu,  6 Jun 2024 14:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c7SBjxGH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W8FTmO9o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D526319643D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 14:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDD9196C72
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 14:08:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717682850; cv=none; b=N+6478aMim4XEwy4fLw68ZLg5pb9Nvh+w63mhEOPod4b5clwlnrYTiFnbtgJem9r0t66wPmwvUBUBjGa6xeldOCJTR7udsnmJ5oggMCj9elYWcg2NsJTdiuXWkEHi610s6MNjO/60RjbH2YqUrq3aU6hh8qXLbixMzhx1kbVgU8=
+	t=1717682930; cv=none; b=anJm5jUXzXQUUPtf5bdC3KUVojlnMx8x1chg7SMDGv+sLVVIylX9QCLV8OziRx3DhOomTNMurC2UVQH6xaxKi0+K4Y+0GFr6/GqrdZkHg9n7yLySmguZXCpyfFLVapurf/TMz+EFecdCqklhCwRPmq3oypiZr1YvU9lPV6Fvko0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717682850; c=relaxed/simple;
-	bh=4hNVwq7cQHTyBDF20Y8fpBPc7zzCmTIUwUsM/ZBouxc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=opEuYYi0qN1Dpj0/JWxtXmi/pE4+vqPfeGzSHl1xRzFA6bFPNUZEIzN5KnbcM4796O5+s33GOA9CQ2/8c4DhjD5WDY6BZ4GIy0S3ZHwMsYUzaHLEQx91kAfC0/4ba44wSsxaBPQO1LfJenj47brW2kP26M6VzLW7bL+SDJASkfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c7SBjxGH; arc=none smtp.client-ip=209.85.218.48
+	s=arc-20240116; t=1717682930; c=relaxed/simple;
+	bh=RpGnnlNwHkl9JIF7GLTjn2mJGXJPbuU0x/eYbCe04sI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t+aB4NnvoiJAxd8RZgk84a1/zsu/C+5WgnmQY8rXzqilaZZwDuYh2uE+O0Pjy6q06x35f0OjR/X1+m+ICwl7NjiBp/Mde3T/pr9IViTOcNrLJzWoiyHYwCdgYsASQ3Kt2BogMGoBTR39NDAW/1r/wjFMlfyXHNuHT//MAcLAVMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W8FTmO9o; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a68ca4d6545so186323566b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 07:07:28 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a689ad8d1f6so126222966b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 07:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717682847; x=1718287647; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717682927; x=1718287727; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=WuYJQB/gpV+Bc6GPW32Ein19OoVtrm6WSZM3VYy51qc=;
-        b=c7SBjxGHFa+SkS9v9Wezr2GzfjN2D80NzAMw4SvhK2b3o6z9HzcLT7vNAnidK2AUI0
-         hF0XgnqdWWblA0qYLKS8hJdTalqnx7/GH48m6mLr/WttzFWucrnKMXJ715smZzK5lTqR
-         ovknSKZZ2wDcPVMSzNaqYy9ptt41M3jSbKfgtA7+bDhjdnYnbvtog9nNnYZS0WPh9gpY
-         aqoyEd6ZUHfgRAZqB7PmufRmHJJTetxOt09EASgeQ/alVcohbdixTQaO0Ut5e8Fc8Zrw
-         hcQHnzbW1ESbhfvqf5ywcTq9BuanNIaktlo7725Jk3Yzyy/WyCullVjS7IHhXsFt46ks
-         7fng==
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=g+cc5/YkJMxn9xduO7p9Nejvh1U53rMlObVTtnaup/8=;
+        b=W8FTmO9oVWRstGVYbT7UpFgBps3YSV64AIIIQpl+89v1dAMW7+C71VHq2Ug7Yn+tUQ
+         laGwNvbeXUZkW35rzsZFF06HY9NndHhWzM2zgfi5yZz/qrvpkHnB2nVguEa/5FRdJAxx
+         ezxnQYltcEsd+uX9hlefUP2aidS/wRSKpq9mkHH5FJH9LQoBsFrqAHErZa8DN+tlMzzh
+         E3oi5jJ43x/VyqLWWL3CWClfvg9t7erWchPOJDpBoz7kFNFGy6m3ACKSesIOifZSmt15
+         1vuYAAJdFH0bntfu0eNh+hvztGQ61VBoBMNPbD4Itpfl4nyBlkhsAD7JnUzTRU2GDELH
+         yelw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717682847; x=1718287647;
+        d=1e100.net; s=20230601; t=1717682927; x=1718287727;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WuYJQB/gpV+Bc6GPW32Ein19OoVtrm6WSZM3VYy51qc=;
-        b=uZeRJ38+F/zv6l1BQOSDRtyp3sb2aun4kZi5T2eheNAGIcSgHNA+LhRTxsev4EOz1Z
-         JD27ZyF6oulMVvIeGGcRKhsUhVIvn+meo4kzAs9uSaS/zHWi87ty+YR82adZkGX1Zqpo
-         0Yf+UwMt7Drz8f7o6bbnQjgOwurs6Qm72wDvz1tRHv5KAfCit965OIzjwBYY5UBfpEUN
-         x0yc6NV/RanuowNNIPdNIIjn/So/RrWVjeF2uEzMRXAeqd/1ZFUB729js5dUPPj61QhI
-         o4nZeWRyCYN/Najqf/AZWwOhs0VTTmT5z2/8CC9Cnlz2+AFlncvuy2BxmmxMXsjWlLyt
-         YzRg==
-X-Forwarded-Encrypted: i=1; AJvYcCVBuOmS4YkUG1KpxAitSf/oR6nWbDdFi0Q1ecuoWiFHd5WIXb0Z0Bm9DCNLNOW21pFcXm4KfBGHz7RAWajwrykczqdqtU4zTeWUj3HIvQ==
-X-Gm-Message-State: AOJu0YwEjaCR2rKto6wlpfL4hQ1UHpEojrw8Lo37g/sii9JfGQHXiG4+
-	wqyN6cONLal+QSk+GcJQDTRYhLDIRx1TMJmCVt3kCJXHsh4jJCj/IR+3JWFdMWc=
-X-Google-Smtp-Source: AGHT+IEJuB2kN44q8dic1aobVJvgm0GkwA2QTBAqO7TjvoBitMWf4fmH36skjlZte8txrFIr5rt98g==
-X-Received: by 2002:a17:906:459c:b0:a59:be21:3587 with SMTP id a640c23a62f3a-a6c75f94214mr232595466b.8.1717682845919;
-        Thu, 06 Jun 2024 07:07:25 -0700 (PDT)
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g+cc5/YkJMxn9xduO7p9Nejvh1U53rMlObVTtnaup/8=;
+        b=BX7fASivw8FPmMX5DBm6gAiUeo9rI66ecl/4/op6tRg4Ok+2irO1f/JUtGnlQKoUW0
+         RTQL/2BAPNLD1thesOREefRy4RE1pZ4xLhVVxtmq2bW8fr6+KpNO76o7wg/wLJCL2SZE
+         FkEs0jbCI6RstmQvx1Dis9VuttfaJKumWeTbswnHT1819WbQtgVMO3CNA5Nyt+h5wiLz
+         2FhcUFFrU0EgulROvbB5o/5RTjNj7XeCD6lsgrZLeL/r5L+9Ov1ntJYpYGenI47oHapg
+         bEUoKj68FP8ciInOvSnvxX67uWggGw0UF8DWUdtUSzGpU8FvS+dLdBKXuy1DcUBjhjse
+         MF1Q==
+X-Gm-Message-State: AOJu0YxaN282LUGdAYADRoFv3bJQ6gH+LrwfsxBnChxoGNeUJJh9SnKP
+	SVuqoGk766H6NDxaImHfGVJ+KF8VD6YS3IVsypBSr9ym4oSbp1yS4GQFWHV6uCk=
+X-Google-Smtp-Source: AGHT+IFa+ockro1cArQLRQ4GHtw7t1e8h2Ycsz9C7ejmm9DBvHKuM0phsyk4sK4LaE9Py6WRFHv71g==
+X-Received: by 2002:a17:907:c909:b0:a59:9cc1:7330 with SMTP id a640c23a62f3a-a69a024f0f8mr313013366b.64.1717682926890;
+        Thu, 06 Jun 2024 07:08:46 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c8072ac5asm101513266b.219.2024.06.06.07.07.23
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c805ca035sm101684466b.57.2024.06.06.07.08.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jun 2024 07:07:25 -0700 (PDT)
-Message-ID: <90bb9256-d54d-4e01-aa06-4184e2b95d48@linaro.org>
-Date: Thu, 6 Jun 2024 16:07:23 +0200
+        Thu, 06 Jun 2024 07:08:46 -0700 (PDT)
+Message-ID: <6286a410-6faa-4996-8a9e-dc334dd9421f@linaro.org>
+Date: Thu, 6 Jun 2024 16:08:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,16 +76,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 0/6] Add interconnect driver for IPQ9574 SoC
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, djakov@kernel.org,
- dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+Subject: Re: [PATCH V2 7/8] clk: qcom: Add GPUCC driver support for SM4450
+To: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, bryan.odonoghue@linaro.org
-References: <20240430064214.2030013-1-quic_varada@quicinc.com>
- <ZjXrTywO6+iRaEYk@hu-varada-blr.qualcomm.com>
+ Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+References: <20240416182005.75422-1-quic_ajipan@quicinc.com>
+ <20240416182005.75422-8-quic_ajipan@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -124,45 +128,17 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZjXrTywO6+iRaEYk@hu-varada-blr.qualcomm.com>
+In-Reply-To: <20240416182005.75422-8-quic_ajipan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 4.05.2024 10:01 AM, Varadarajan Narayanan wrote:
-> Bjorn,
+On 16.04.2024 8:20 PM, Ajit Pandey wrote:
+> Add Graphics Clock Controller (GPUCC) support for SM4450 platform.
 > 
->> On Tue, Apr 30, 2024 at 12:12:08PM +0530, Varadarajan Narayanan wrote:
->> MSM platforms manage NoC related clocks and scaling from RPM.
->> However, in IPQ SoCs, RPM is not involved in managing NoC
->> related clocks and there is no NoC scaling.
->>
->> However, there is a requirement to enable some NoC interface
->> clocks for the accessing the peripherals present in the
->> system. Hence add a minimalistic interconnect driver that
->> establishes a path from the processor/memory to those peripherals
->> and vice versa.
->>
->> Change icc-clk driver to take master and slave ids instead
->> of auto generating.
->>
->> Currently, drivers/clk/qcom/clk-cbf-8996.c is the only user of
->> icc-clk. And, it had exactly one master and one slave node.
->> For this the auto generated master (= 1) and slave (= 0) was
->> enough.
->>
->> However, when drivers/clk/qcom/gcc-ipq9574.c wanted to make use
->> of the icc-clk framework, it had more number of master and slave
->> nodes and the auto generated ids did not suit the usage.
->>
->> ---
->> v11:	No code changes
->> 	Commit log changed for the first patch
->> 	Added Acked-By: to 3 patches
-> 
-> Can this be included in your driver changes for 6.10?
+> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+> ---
 
-FWIW there is still an open discussion at v9
-<CAA8EJpqENsojPQmCbma_nQLEZq8nK1fz1K0JdtvLd=kPrH_DBw@mail.gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
