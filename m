@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-21963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A84938FF004
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 17:09:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85B178FF080
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 17:23:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDF111C20D53
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 15:09:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C56E0B2FD71
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 15:10:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A939419754F;
-	Thu,  6 Jun 2024 14:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0676197A76;
+	Thu,  6 Jun 2024 14:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GpjpVti8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q8xDURwH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD6B168C10;
-	Thu,  6 Jun 2024 14:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D59A197554;
+	Thu,  6 Jun 2024 14:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717685377; cv=none; b=O41Rnwur3zvfrNmxPU74nDdSjnxeUFOpL2CxJc9g1rTfeVtK+I/lpedTjjseFcjpQW14aRUF4PwCOhRtfvirfKfgQIEeCnFs2/OpstvMhg+Egwj9EvqHS/R05Dy9iIXnmXbDiKqaTYZHY6MwhM0jrqC7WvmrwTlOCOT4RpuC2E4=
+	t=1717685421; cv=none; b=P/uxmiYToXpE48tg5cc4EhVThfrGswKk5ByXPaGk8W4SRW9n3Jq5uxR6Rom7qPbsAjsoGZ0Gx+8k0oJyt0OKEAsZDYoUDKElP+jvcqmOKVm6ZmtDoPXzJwa0jI7zt+GKnwRsQBu0FSw4SDZH+/9fYRb1bhg7sdHAWgje+hM0g7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717685377; c=relaxed/simple;
-	bh=NawlGkZO31q/YuNHdtemo5FsmDquueklSL3reLTQCVk=;
+	s=arc-20240116; t=1717685421; c=relaxed/simple;
+	bh=zw1XPsrHhdkztMwHgoGHGJIAqzfN4fPRiDa1UBE8hg4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nc5PfKWVMaWyT7py7fjeaJhFBXbbBKD1OjZANJ8qLsCt4pw0BEBJI5IO2rFiR/BfyM7XzQHLbWUtKDV++TXArs3BTZNvhTIGisrkgyeqnsuCum9kTrpmkODPu/Vg5uFg0LlIyMgcZ3/57kYhFf1t27s2K9STdZ3u/0+UXxgnJWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GpjpVti8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7B4C2BD10;
-	Thu,  6 Jun 2024 14:49:34 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qG9b28vJeCT3h1ay/PCJydivX0yTrhJn5lnbmNSw+Ml+pdLGhsmUinwgXs3NYrBjlYvmZKxdyIyO9gotdic8kMUOY3h9jQNyMDiVreGhjDuMmLhFq6/ip82gHjAlBbjipBicpjoKNV8bsUJoF63m5MS87eeBSJcA2hCTkKJka5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q8xDURwH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA55C2BD10;
+	Thu,  6 Jun 2024 14:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717685377;
-	bh=NawlGkZO31q/YuNHdtemo5FsmDquueklSL3reLTQCVk=;
+	s=k20201202; t=1717685421;
+	bh=zw1XPsrHhdkztMwHgoGHGJIAqzfN4fPRiDa1UBE8hg4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GpjpVti8zIZRDaf+7jUHZAt5ir0Ijq3fwR5fNwfU/m50uDARoCrFQx++QEMidwXOk
-	 SAy2G0CewxH44dWhdkUuWrqm93E4nbsQWaVEwg4L6M9eps5KVoxOUKdrC+WNrlAl74
-	 XKwpLaSuPi4rcYw59uy3cNj7m4FqMCS1/vF7pthkcOA5MZ8XyxYkzlEaPFO9eWVioq
-	 Nj/yGTcUXx8amouohrs4P+ViRl324LrJsQXbEp0lClp8buQ41JYR1JqK2JpZ0HZ5jU
-	 UsM8/fPLXsp/gl006YMW/9IL4HUvtO+LmVEFYUifwnAP2XWZw6gccX+K/whiWH2Lag
-	 cOxSZael9SbKA==
-Message-ID: <4ed45f6d-fcc7-45d7-8df0-5470f7f75d0e@kernel.org>
-Date: Thu, 6 Jun 2024 16:49:32 +0200
+	b=q8xDURwHUQecEv7Wd726Z+XRi0d7dHC+Vocn4v/8McV1mzJuKaRhoqiK6fyF3D8nj
+	 nWtgyeC26J6c9+Ix91nq9OnqqP17GGGcUqnToeR7nc+zNUH6H/Adi8DxeIj/gW6pKL
+	 W+FWCVVGyb93lQJeNp+k5wff8HtIpgcC79/9+IX66Jkf9uwfSRFRNLbBr/3xdIf61f
+	 7Kfh+/tiVEVLwDHOQXW75xOGUfbpG73GT3PeNV+n3MBMlt0r2oH9Zn+nZWFOjK4eKr
+	 Jb+32GpHgkIxNfc3stsimYJ9ppjdMP0chzoxf5yepoU18EU55MHxkH7fykMFETQaXZ
+	 vz33HwU3ZVOFw==
+Message-ID: <c22e20f5-5ca9-485c-991f-9b45e35cd75a@kernel.org>
+Date: Thu, 6 Jun 2024 16:50:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: remoteproc: qcom,sm8550-pas: document
- the SDX75 PAS
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: sdx75: add missing qlink_logging
+ reserved memory for mpss
 To: Naina Mehta <quic_nainmeht@quicinc.com>, andersson@kernel.org,
  mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, konrad.dybcio@linaro.org,
@@ -59,7 +59,7 @@ To: Naina Mehta <quic_nainmeht@quicinc.com>, andersson@kernel.org,
 Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240606143858.4026-1-quic_nainmeht@quicinc.com>
- <20240606143858.4026-2-quic_nainmeht@quicinc.com>
+ <20240606143858.4026-4-quic_nainmeht@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,33 +105,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240606143858.4026-2-quic_nainmeht@quicinc.com>
+In-Reply-To: <20240606143858.4026-4-quic_nainmeht@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 06/06/2024 16:38, Naina Mehta wrote:
-> Document the MPSS Peripheral Authentication Service on SDX75 platform.
+> The qlink_logging memory region is also used by the modem firmware,
+> add it to reserved memory regions.
+> Also split MPSS DSM region into 2 separate regions.
 > 
 > Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
 > ---
->  .../devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml          | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm64/boot/dts/qcom/sdx75.dtsi | 17 +++++++++++++----
+>  1 file changed, 13 insertions(+), 4 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-> index 73fda7565cd1..02e15b1f78ab 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
-> @@ -16,6 +16,7 @@ description:
->  properties:
->    compatible:
->      enum:
-> +      - qcom,sdx75-mpss-pas
->        - qcom,sm8550-adsp-pas
->        - qcom,sm8550-cdsp-pas
->        - qcom,sm8550-mpss-pas
+> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> index 9b93f6501d55..9349b1c4e196 100644
+> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> @@ -366,7 +366,12 @@
+>  			no-map;
+>  		};
+>  
+> -		qdss_mem: qdss@88800000 {
+> +		qdss_mem: qdss@88500000 {
+> +			reg = <0x0 0x88500000 0x0 0x300000>;
+> +			no-map;
+> +		};
+> +
+> +		qlink_logging_mem: qlink_logging@88800000 {
 
-Missing updates to allOf constraints. Are you sure this is the binding
-for SDX75?
+Sorry, no downstream code.
+
+Please follow DTS coding style - no underscores in node names. This
+applies to all work sent upstream.
+
+
 
 Best regards,
 Krzysztof
