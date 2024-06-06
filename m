@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-21893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DE418FE4A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 12:51:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBDB58FE4A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 12:51:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA7DC1F27D44
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 10:51:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 037AA1C2626F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 10:51:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F9A41850BC;
-	Thu,  6 Jun 2024 10:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25C2C195388;
+	Thu,  6 Jun 2024 10:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LT1xlnTH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yCQAZDRr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB02195396
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 10:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BC5195380
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 10:50:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717671020; cv=none; b=mtADDfdMJ7FAcD6cIGcmyf7s6LI4kcIkWPB0dtsYN/+XkgnAi306N4T/+9DS06EeOEIg0P+Ze4BCMCiN8ztw8+eT90BjiMdB4JLPhtEvCa1YIerKEseuNGRCFir+YExi8YF4DvVX755jm58y1w0lpxSUlEyL+vA8fu1R4EhCUis=
+	t=1717671061; cv=none; b=jC4yviZARWCESZuMmwrLSeNXhQv+PVpLeKu/0DlDhMph3MQZgex+Qdmj5RXVtCA+MQIRjZgsXQHD3ZU+/CAZEUQ1SoyCMrgQ48q6Vl/RoL6H9rEATK5gsWItls6O3HLPZdm5SL3xzcMVJ7vhe6XBLHH1dD9fd2Nogx21h64v9Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717671020; c=relaxed/simple;
-	bh=lBpSg8Lv9yUtdVyrD0zIyZn+NBaMN/0TwzLyC0E371M=;
+	s=arc-20240116; t=1717671061; c=relaxed/simple;
+	bh=pdegZV1es17fn1J5D8VlMEL3AsAIz+STUjzDJvWrBBI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rm1wL01drXAnnJyatfQtz2ZXhNh0WAVujtEDfnpieRJLt83aheoB53FMqYVOy/4KebTbkOQ/zKgEzhh7P8eP8+XQxkGUIFF0LOkuOHuVW4QWoOm1nixXRFCnSUUsx0TBEZs7skHTLaDvGsOZXk4UvvdpXgpzLOfC/SSv9hw+0OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LT1xlnTH; arc=none smtp.client-ip=209.85.208.44
+	 In-Reply-To:Content-Type; b=CbqRgjAcnBDNreMGDOIC6xihEfdEGHA6gasNEstCwC4TRiLR4ap6eUNMp2MTLAeBGxPmZuOc8Ly+wDnJ/UEHLPbRxQaaEWp+hc0OzneTpfh2X+KLbJy1jgg0Pz4YUKxPyjrAR6OK7kE56qKC+RIObLUISUkFSXxQvvRhS4jXCMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yCQAZDRr; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-578517c7ae9so798399a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 03:50:18 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a68a288b8a4so45157866b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 03:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717671017; x=1718275817; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717671058; x=1718275858; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rLnV9lT0RMBL8QGwcM84QsnzjUdPdV6KvK9KQAXkj0U=;
-        b=LT1xlnTHOw+IJv/3G4D54cxSQ6rG63yD/gy+K4WRc7NzD17L+pIlWGJs4JX3G3Jm4e
-         EhXx9TjlcgsLxaHLsqBtw4xV5uNCCRHGh5k05JXtKfUTIokS5BPqU9662D7AH6IG2euM
-         7sAg8nODvuN0B+MA+BZLmISj8bvCh5Cc+dkWg0UMvj3nbskO9s/GFMJyiuYuRBMFhZPQ
-         hZu1+pyGn9dEQJVtAY7pXVjJ95MAZzyYv9oyvIN5ldX5C1wQdhueFNpH/f4fQ+fgjMOd
-         b6gIe8LeoKSE66J3JY7AQX/0qWVLlSv+ZlbspKIlHteCRsecCpjyu1DSK/yPoxeiqxi5
-         M3zg==
+        bh=BqMCHnOYUKiSyeeFmyyCshrgD+mltZxAnqCowQV6Uqc=;
+        b=yCQAZDRrRQvP7mWTEPIEMY/tBJK0dkUTXrwN79qR9R7fnpt1P8NE9AOYa2DUvDuGYH
+         jRR0zvFWTaJcywEDS46HdFYxerY/LqDI+9A0tMcND4LD+Ify2nmWG4V6thYs5ceIcV9C
+         AvHmlzvCIeK6zgMuxDBTUZi0SqvSpJ0TxSiTOiKKwvvH0Y3i88QAHqUIAxVb5G7y+VVD
+         CRlxS0PZVn2cIG45yLWSORDhor87D9Pr7Bo+eSGjy6RYGp+b5suzvn6033rN9uJ9TdaK
+         JDk297Z1/MmrPwwK+d6ivKE/YBDeD1oKStoggCs2XVABWgez+VU8RlrVjKFvEm5MCOfF
+         Turw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717671017; x=1718275817;
+        d=1e100.net; s=20230601; t=1717671058; x=1718275858;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rLnV9lT0RMBL8QGwcM84QsnzjUdPdV6KvK9KQAXkj0U=;
-        b=gtmppN659vIF93pEo+X6wSwtbpjJS9/6NYyA2WHoGP4Rfjgvh5m/KI2Lf6WZ3xo6+a
-         /SFP4R9BjNR2+ebiIkTBZubNM4O9ftXj/QQuWIPzKf/7+tT+Hk5Mvz6eRrBJ+h6cpmwi
-         r+ii0FaBdplR0jQhF6gtNW4Z0fQOSbrOoMQaFK7waBbYThUcFJsxwEGpMAnCc3GdavnA
-         jN7yVIsL3iclaUcavrTXSwkap5NMR4/ApbZDgCF/TOCeEVt6Byf5P3kugb8WsSgw+raD
-         BX4r2KqvyNdQywpU03UwiBZOVyg8oY+tV3GNjUeuhhP0wmE0MMfvzQBxP8l41SO3z1Iv
-         vXJA==
-X-Gm-Message-State: AOJu0YzVSB4WdSz2D33/0mx0iF1dTcpitylbK7BmNA0To/NzRD8kXpeM
-	zZc43sRs30WcvsXseiB4UYCx3D3KtFjFTlXDfae675eG+ZQWpodINGX0lmI3CF8=
-X-Google-Smtp-Source: AGHT+IEf8D6a3Fss655zcntCKNrqfpoiWNAqqz5twNeanQNxrZBHbWufZrKTjPS8aOjMyasKbiArWw==
-X-Received: by 2002:a50:d592:0:b0:57a:48c:c0f4 with SMTP id 4fb4d7f45d1cf-57a8b6a69efmr3604817a12.17.1717671016695;
-        Thu, 06 Jun 2024 03:50:16 -0700 (PDT)
+        bh=BqMCHnOYUKiSyeeFmyyCshrgD+mltZxAnqCowQV6Uqc=;
+        b=Bc62TjH/CBJQvhqHbbGaDt9S1Uxt44r35BU+LdAyPLDDioNcefQ4A5ia5bzygksrPg
+         l8Z5At6MehpUfxV0id8sg3TLJzthggD2j5iMeGzbjhclzsu+XSeDM7UBjTa/7w+thn0n
+         Rn2eP84gM3KnrmVk3AI+nu6x7OVHAKcai57LndXgF7DIxArlou5nNjYEU2xqEAWWHZk4
+         vVfYlBHGn5iwIDecspbdqp3zaZkWDtX72sXQgfaefe8P+vwwYhzpplPQAVXijBv3Wguu
+         KwjakKMNO/VjqRMoCO1lkx9t9cFa72PBAm234wDM/87CTrRwmFVKTh0F04M3Fy6+n3oN
+         /lug==
+X-Gm-Message-State: AOJu0YxrD+Ys/IlJJqpiyPgaLPesxpCT1nKCMRW4SxXhxjXK0ZeYfNC9
+	jSj6EZwbyC1G41RDuzu8beM/bihzmEpBqi+83HDdVtPUdx8nWHWVzZhke2dSqpI=
+X-Google-Smtp-Source: AGHT+IGC6TY2jpKwU+jcFlupY0FBJ90KzehToofeXctaFJv53eeQXcJo/6Qmf+JosXop/C5DAbpyxQ==
+X-Received: by 2002:a50:d597:0:b0:572:a770:1371 with SMTP id 4fb4d7f45d1cf-57a8bcc6116mr3610017a12.42.1717671057810;
+        Thu, 06 Jun 2024 03:50:57 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae2366a4sm867633a12.92.2024.06.06.03.50.14
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae20238asm883405a12.73.2024.06.06.03.50.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jun 2024 03:50:16 -0700 (PDT)
-Message-ID: <80f6c943-71af-4200-89ac-d42736514390@linaro.org>
-Date: Thu, 6 Jun 2024 12:50:14 +0200
+        Thu, 06 Jun 2024 03:50:57 -0700 (PDT)
+Message-ID: <b95495d0-15c9-4fa3-a81a-9d01c1af08ba@linaro.org>
+Date: Thu, 6 Jun 2024 12:50:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,8 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 31/31] arm64: dts: qcom: sm8650-*: Remove thermal zone
- polling delays
+Subject: Re: [PATCH v2 00/31] Clean up thermal zone polling-delay
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -86,8 +85,7 @@ To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240510-topic-msm-polling-cleanup-v2-0-436ca4218da2@linaro.org>
- <20240510-topic-msm-polling-cleanup-v2-31-436ca4218da2@linaro.org>
- <a6e75f97-0479-4346-af84-5d7bd05f0063@linaro.org>
+ <b4dba1d5-448a-4a4b-94d5-f27c6ff0010d@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -125,54 +123,47 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <a6e75f97-0479-4346-af84-5d7bd05f0063@linaro.org>
+In-Reply-To: <b4dba1d5-448a-4a4b-94d5-f27c6ff0010d@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 10.05.2024 2:47 PM, Bryan O'Donoghue wrote:
+On 10.05.2024 2:49 PM, Bryan O'Donoghue wrote:
 > On 10/05/2024 12:59, Konrad Dybcio wrote:
->> All of the thermal zone suppliers are interrupt-driven, remove the
->> bogus and unnecessary polling that only wastes CPU time.
+>> A trivial follow-up on the changes introduced in Commit 488164006a28
+>> ("thermal/of: Assume polling-delay(-passive) 0 when absent").
 >>
+>> Should probably wait until v6.9-rc1 so that the patch in question is
+>> in the base tree, otherwise TZs will fail to register.
+>>
+>> FWIW, Compile-tested only (except 8280).
+>>
+>> To: Bjorn Andersson <andersson@kernel.org>
+>> To: Rob Herring <robh@kernel.org>
+>> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+>> To: Conor Dooley <conor+dt@kernel.org>
+>> To: cros-qcom-dts-watchers@chromium.org
+>> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+>> Cc: linux-arm-msm@vger.kernel.org
+>> Cc: devicetree@vger.kernel.org
+>> Cc: linux-kernel@vger.kernel.org
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 88 +++++++-----------------------------
->>   1 file changed, 16 insertions(+), 72 deletions(-)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> index 62a6e77730bc..39e789b21acc 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
->> @@ -5328,8 +5328,6 @@ compute-cb@12 {
->>         thermal-zones {
->>           aoss0-thermal {
->> -            polling-delay-passive = <0>;
->> -            polling-delay = <0>;
+>> Changes in v2:
+>> - Un-drop passive delays. Whether they're useful where they're enabled
+>>    is a topic for another patchset, as it requires examination on a case-
+>>    -by-case basis.
+>> - Better unify the style (newlines between properties)
+>> - Link to v1: https://lore.kernel.org/r/20240319-topic-msm-polling-cleanup-v1-0-e0aee1dbcd78@linaro.org
 > 
-> Commit log doesn't really match the values being subtracted
+> So perhaps you can answer the question I have.
 > 
-> polling-delay:
->   $ref: /schemas/types.yaml#/definitions/uint32
->   description:
->     The maximum number of milliseconds to wait between polls when
->     checking this thermal zone. Setting this to 0 disables the polling
->     timers setup by the thermal framework and assumes that the thermal
->     sensors in this zone support interrupts.
+> Right now, we have non-zero delay values, doesn't this mean the thermal framework driver has a delay between evaluating dT/dt values per
 > 
+> Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+> 
+> Your commit log implies or my reading of it is, there's no functional change because its currently driven by an IRQ but, is that actually _so_ with non-zero values in the DT?
 
-OK I suppose there are 3 things at play:
-
-1) for devices with polling-delay = <non_zero> without this patchset, the
-   polling is removed and threshold crossings are defered to the PMIC periph
-   or TSENS interrupts
-
-2) for devices with polling-delay = <0>, this is a NOP cleanup, saving LoC
-
-3) for devices with polling-delay-passive = <0>, this is a NOP, however in 99%
-   of cases, this was a misconfiguration in the first place. I can leave such
-   entries so that somebody has an easier time spotting it down the line. I'm not
-   however willing to go over each one of them and assess what the value should be,
-   as that requires significant effort across tens of platforms
+Yes, tsens irq fires a threshold change notification down the thermal framework
 
 Konrad
 
