@@ -1,55 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-21962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 072598FEFFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 17:08:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A84938FF004
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 17:09:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8361A283343
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 15:08:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDF111C20D53
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 15:09:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0C6F198828;
-	Thu,  6 Jun 2024 14:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A939419754F;
+	Thu,  6 Jun 2024 14:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="YtRrkQHK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GpjpVti8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCA5197544;
-	Thu,  6 Jun 2024 14:48:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD6B168C10;
+	Thu,  6 Jun 2024 14:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717685290; cv=none; b=LIb2PJ33FDEAvj8QaBiobuKSng4EuFW5VOL6NjevCaeyfZWmWItmYgjs8aIJPz6GOeui3rfrZUzqNJXtwgKAc2/GcNqvK29ELIlt9X39XWl/9nflsbowa1lTdGhXp9MY8M1iiM6Qjj8CPQJyVmio6560VT/JQEG2OjfyIJTtUgg=
+	t=1717685377; cv=none; b=O41Rnwur3zvfrNmxPU74nDdSjnxeUFOpL2CxJc9g1rTfeVtK+I/lpedTjjseFcjpQW14aRUF4PwCOhRtfvirfKfgQIEeCnFs2/OpstvMhg+Egwj9EvqHS/R05Dy9iIXnmXbDiKqaTYZHY6MwhM0jrqC7WvmrwTlOCOT4RpuC2E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717685290; c=relaxed/simple;
-	bh=dQuMVnPcFvL2rm7IsOiVG0+PEE/oKkyHvTcPJNmZa+0=;
+	s=arc-20240116; t=1717685377; c=relaxed/simple;
+	bh=NawlGkZO31q/YuNHdtemo5FsmDquueklSL3reLTQCVk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t0m23QjoNMzO/WeNcz/eV96yny/yeFahEIy/qvwM1gB1fWcQHLFtdvZZ9vle5+DXkrcPJpxnts2jLsAmIUEnFiDnVdPVw8pt3ghn0Qi7m9dFU2RcYsgnUJ84orT/y/RL5mWvuAhpgFH9Hxe2fLoKSO+OmWGtoX9gER46rnwtnwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=YtRrkQHK; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1717685287;
-	bh=dQuMVnPcFvL2rm7IsOiVG0+PEE/oKkyHvTcPJNmZa+0=;
+	 In-Reply-To:Content-Type; b=Nc5PfKWVMaWyT7py7fjeaJhFBXbbBKD1OjZANJ8qLsCt4pw0BEBJI5IO2rFiR/BfyM7XzQHLbWUtKDV++TXArs3BTZNvhTIGisrkgyeqnsuCum9kTrpmkODPu/Vg5uFg0LlIyMgcZ3/57kYhFf1t27s2K9STdZ3u/0+UXxgnJWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GpjpVti8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7B4C2BD10;
+	Thu,  6 Jun 2024 14:49:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717685377;
+	bh=NawlGkZO31q/YuNHdtemo5FsmDquueklSL3reLTQCVk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YtRrkQHKb+X7xskObtg8FVCsFdwW8ShtHfCWtk4KRWoyx36T/q0AyGDwcPLitgXD0
-	 juSSzZ3cVZnQbEDdzMDSSm8xGeGxl3vLT/L53APO2Uo9mJm74o3YO7FrEl2BM+EyDS
-	 RHflhbHlPHGWQ7EThEjdeN/fGUeVCYOlIKGO8DrwcAr/iYf/5sLnc4QHnStmIq0v0h
-	 xLL7JMpSpaAnGsWurIR2SiEcuC0uSUEfaXkzCyK0B0+QnKCJRPycr/Fv0n4gXpkoOX
-	 CpotkDssPI/ghb/8UWFmzZvE0qBspVDQY2C+F0VYLb5GEI9kUvXljorsWjykBsbJu8
-	 LAPtwkBjkdYrA==
-Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: koike)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 233DF37821F4;
-	Thu,  6 Jun 2024 14:48:01 +0000 (UTC)
-Message-ID: <da1366fa-4d48-4227-ae4b-4b39a6607973@collabora.com>
-Date: Thu, 6 Jun 2024 11:47:59 -0300
+	b=GpjpVti8zIZRDaf+7jUHZAt5ir0Ijq3fwR5fNwfU/m50uDARoCrFQx++QEMidwXOk
+	 SAy2G0CewxH44dWhdkUuWrqm93E4nbsQWaVEwg4L6M9eps5KVoxOUKdrC+WNrlAl74
+	 XKwpLaSuPi4rcYw59uy3cNj7m4FqMCS1/vF7pthkcOA5MZ8XyxYkzlEaPFO9eWVioq
+	 Nj/yGTcUXx8amouohrs4P+ViRl324LrJsQXbEp0lClp8buQ41JYR1JqK2JpZ0HZ5jU
+	 UsM8/fPLXsp/gl006YMW/9IL4HUvtO+LmVEFYUifwnAP2XWZw6gccX+K/whiWH2Lag
+	 cOxSZael9SbKA==
+Message-ID: <4ed45f6d-fcc7-45d7-8df0-5470f7f75d0e@kernel.org>
+Date: Thu, 6 Jun 2024 16:49:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,125 +50,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/6] drm/ci: uprev mesa/IGT and generate testlist
-To: Vignesh Raman <vignesh.raman@collabora.com>,
- dri-devel@lists.freedesktop.org
-Cc: daniels@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
- robdclark@gmail.com, david.heidelberg@collabora.com,
- guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
- dmitry.baryshkov@linaro.org, mcanal@igalia.com,
- linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
- linux-rockchip@lists.infradead.org, amd-gfx@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
- virtualization@lists.linux-foundation.org, linux-kernel@vger.kernel.org
-References: <20240529024049.356327-1-vignesh.raman@collabora.com>
+Subject: Re: [PATCH 1/5] dt-bindings: remoteproc: qcom,sm8550-pas: document
+ the SDX75 PAS
+To: Naina Mehta <quic_nainmeht@quicinc.com>, andersson@kernel.org,
+ mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, konrad.dybcio@linaro.org,
+ manivannan.sadhasivam@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240606143858.4026-1-quic_nainmeht@quicinc.com>
+ <20240606143858.4026-2-quic_nainmeht@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Helen Koike <helen.koike@collabora.com>
-In-Reply-To: <20240529024049.356327-1-vignesh.raman@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240606143858.4026-2-quic_nainmeht@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-
-On 28/05/2024 23:40, Vignesh Raman wrote:
-> Uprev mesa and IGT to the latest version and stop vendoring the
-> testlist into the kernel. Instead, use the testlist from the
-> IGT build to ensure we do not miss renamed or newly added tests.
-> Update the xfails with the latest testlist run.
+On 06/06/2024 16:38, Naina Mehta wrote:
+> Document the MPSS Peripheral Authentication Service on SDX75 platform.
 > 
-> Add farm variable and update device type variable.
+> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
+> ---
+>  .../devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml          | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1187556
-> 
-> Vignesh Raman (6):
->    drm/ci: uprev mesa version
->    drm/ci: add farm variable
->    drm/ci: generate testlist from build
->    drm/ci: uprev IGT
->    drm/ci: skip driver specific tests
->    drm/ci: update xfails for the new testlist
-> 
->   drivers/gpu/drm/ci/build-igt.sh               |   41 +-
->   drivers/gpu/drm/ci/build.sh                   |    6 +-
->   drivers/gpu/drm/ci/container.yml              |   12 +-
->   drivers/gpu/drm/ci/gitlab-ci.yml              |   46 +-
->   drivers/gpu/drm/ci/igt_runner.sh              |    9 +-
->   drivers/gpu/drm/ci/image-tags.yml             |    2 +-
->   drivers/gpu/drm/ci/lava-submit.sh             |    4 +-
->   drivers/gpu/drm/ci/test.yml                   |   17 +-
->   drivers/gpu/drm/ci/testlist.txt               | 2761 -----------------
->   .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt |   41 +-
->   .../drm/ci/xfails/amdgpu-stoney-flakes.txt    |    7 +
->   .../gpu/drm/ci/xfails/amdgpu-stoney-skips.txt |   33 +-
->   drivers/gpu/drm/ci/xfails/i915-amly-fails.txt |   31 +
->   .../gpu/drm/ci/xfails/i915-amly-flakes.txt    |    9 +
->   drivers/gpu/drm/ci/xfails/i915-amly-skips.txt |   22 +-
->   drivers/gpu/drm/ci/xfails/i915-apl-fails.txt  |   46 +-
->   drivers/gpu/drm/ci/xfails/i915-apl-flakes.txt |    6 +
->   drivers/gpu/drm/ci/xfails/i915-apl-skips.txt  |   26 +-
->   drivers/gpu/drm/ci/xfails/i915-cml-fails.txt  |   38 +
->   drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt |    6 +
->   drivers/gpu/drm/ci/xfails/i915-cml-skips.txt  |   23 +
->   drivers/gpu/drm/ci/xfails/i915-glk-fails.txt  |   41 +-
->   drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt |    7 +
->   drivers/gpu/drm/ci/xfails/i915-glk-skips.txt  |   26 +-
->   drivers/gpu/drm/ci/xfails/i915-kbl-fails.txt  |   42 +-
->   drivers/gpu/drm/ci/xfails/i915-kbl-flakes.txt |    7 +-
->   drivers/gpu/drm/ci/xfails/i915-kbl-skips.txt  |   36 +-
->   drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt  |   77 +-
->   drivers/gpu/drm/ci/xfails/i915-tgl-skips.txt  |   28 +-
->   drivers/gpu/drm/ci/xfails/i915-whl-fails.txt  |   63 +-
->   drivers/gpu/drm/ci/xfails/i915-whl-flakes.txt |    6 +
->   drivers/gpu/drm/ci/xfails/i915-whl-skips.txt  |   22 +-
->   .../drm/ci/xfails/mediatek-mt8173-fails.txt   |   30 +-
->   .../drm/ci/xfails/mediatek-mt8173-flakes.txt  |   11 +
->   .../drm/ci/xfails/mediatek-mt8173-skips.txt   |   16 +
->   .../drm/ci/xfails/mediatek-mt8183-fails.txt   |   21 +-
->   .../drm/ci/xfails/mediatek-mt8183-skips.txt   |   18 +
->   .../gpu/drm/ci/xfails/meson-g12b-fails.txt    |   24 +-
->   .../gpu/drm/ci/xfails/meson-g12b-skips.txt    |   18 +
->   .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |   12 +-
->   .../gpu/drm/ci/xfails/msm-apq8016-skips.txt   |   15 +
->   .../gpu/drm/ci/xfails/msm-apq8096-fails.txt   |    7 +
->   .../gpu/drm/ci/xfails/msm-apq8096-flakes.txt  |    6 +
->   .../gpu/drm/ci/xfails/msm-apq8096-skips.txt   |   26 +-
->   .../msm-sc7180-trogdor-kingoftown-fails.txt   |  175 +-
->   .../msm-sc7180-trogdor-kingoftown-flakes.txt  |    8 +
->   .../msm-sc7180-trogdor-kingoftown-skips.txt   |   19 +
->   ...sm-sc7180-trogdor-lazor-limozeen-fails.txt |  175 +-
->   ...m-sc7180-trogdor-lazor-limozeen-flakes.txt |    6 +
->   ...sm-sc7180-trogdor-lazor-limozeen-skips.txt |   16 +
->   .../gpu/drm/ci/xfails/msm-sdm845-fails.txt    |   38 +-
->   .../gpu/drm/ci/xfails/msm-sdm845-flakes.txt   |   25 +-
->   .../gpu/drm/ci/xfails/msm-sdm845-skips.txt    |   19 +
->   .../drm/ci/xfails/rockchip-rk3288-fails.txt   |   62 +-
->   .../drm/ci/xfails/rockchip-rk3288-skips.txt   |   21 +-
->   .../drm/ci/xfails/rockchip-rk3399-fails.txt   |   83 +-
->   .../drm/ci/xfails/rockchip-rk3399-flakes.txt  |   13 +-
->   .../drm/ci/xfails/rockchip-rk3399-skips.txt   |   19 +
->   drivers/gpu/drm/ci/xfails/update-xfails.py    |    4 +-
->   .../drm/ci/xfails/virtio_gpu-none-fails.txt   |   94 +-
->   .../drm/ci/xfails/virtio_gpu-none-skips.txt   |   20 +-
->   61 files changed, 1348 insertions(+), 3194 deletions(-)
->   delete mode 100644 drivers/gpu/drm/ci/testlist.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/i915-amly-flakes.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/i915-apl-flakes.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/i915-whl-flakes.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8173-skips.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8183-skips.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/meson-g12b-skips.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/msm-apq8016-skips.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/msm-apq8096-flakes.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
->   create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-flakes.txt
-> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> index 73fda7565cd1..02e15b1f78ab 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> @@ -16,6 +16,7 @@ description:
+>  properties:
+>    compatible:
+>      enum:
+> +      - qcom,sdx75-mpss-pas
+>        - qcom,sm8550-adsp-pas
+>        - qcom,sm8550-cdsp-pas
+>        - qcom,sm8550-mpss-pas
 
+Missing updates to allOf constraints. Are you sure this is the binding
+for SDX75?
 
-Applied to drm-misc-next
+Best regards,
+Krzysztof
 
-Thanks
-Helen
 
