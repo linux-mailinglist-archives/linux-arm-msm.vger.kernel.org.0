@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-21906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B21A78FE574
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 13:36:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91ECC8FE57A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 13:36:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4822F281DBC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:36:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EECDCB23542
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:36:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 875DE195810;
-	Thu,  6 Jun 2024 11:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C736D195979;
+	Thu,  6 Jun 2024 11:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="roj9mpic"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BUBvDUnU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EC03CF73
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 11:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E082B1922CA
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 11:36:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717673766; cv=none; b=UoCQtg5P7iOpJu6KFEhYrCM99LtQHLBDHk4puWcDwWCXt/1/FjFFdymffck99K0PglvMYZCJEPDZzhucs86gzVLnqA/lMPaFKfOv2sdP2StkV/gjCBNLWYgKzwVcaOnDoLFl8KMVLoULvRYPQiVWSMera+lcYGrqFwnwvpXM8CA=
+	t=1717673768; cv=none; b=Hr8S3Fm1fBvkL779aq6zSl9jOgM+19hct6H66MazbGqbXe3e5DDYc5j0wFenHfKVVhM7tA8GoR/OzkoB30X3Oo1I7vk+yn+G5PhtU51BR+i58osY0md1ymZac7C5eXuZqr0Tz7i+ssHh/1HP22F+ntBvC0oI9IEV37D4hUQgb2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717673766; c=relaxed/simple;
-	bh=nh/cE3Eeu+9iFnpZ9VsfcbkTKdJVkvZjzDWXX9A2c/U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=K+nbh9aiWdxnTuhtTa8C+5yPQVIy3cFixxXUpxf7d1QYr3DU4EKCZzsl9TkdlJ/VNlZOanWNQI7HEUiuAkIN0trmpVWoJ73wGjOL6f13cxkYj0P/3Dy+mwyVj5mwwoy3g2XHEJSiYNuxI9VEIT/RbyNP94UkonD5XUuLt84iuIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=roj9mpic; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1717673768; c=relaxed/simple;
+	bh=sI0N+gXKPVP3QbPJPNuP8btkVLaRyBbKcbcqKnzx9k4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=RHzu/h5PaO1xKoeb/mWYjMbdHf9qOI3pHshhH0ZhxzJohdqMf74A8TtROgjLi8MKJemgiAQkABwW19YR1xXBQcvkAj2igBo+eZOS4TIBzQ9aGSpZmJ4otScaSbfUeOE2g6ZdPyZHWBaTQaoVqwbfVBsW73XpD/ey1DmLfRgeb6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BUBvDUnU; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a68b41ef3f6so82686866b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 04:36:04 -0700 (PDT)
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2eaa80cb4d3so11998271fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 04:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717673763; x=1718278563; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=G5WVHvN4hcDFKHXeB2Nr1rayWqDhEYmxUcOfsWZcLro=;
-        b=roj9mpickY7udWe8MW95eX9kCWLKBO4cijCH7uFoaOOmDDAckWH01UcgGbCgsbOvR+
-         VbSrV165xspyIy9Y3ceQgvVN1BbOb8wRfXcMAs6ZDxDpzE97pHsZd1oA5Id9kbpDzyF5
-         a7bQBmSUCmYgIAQezRI48zWu+WIrb3gIjxrNyfHPaJmguBHq3RywmsGlExB3N6YfLpOm
-         0eq2w6AgEbznwBymxsrhE1FlSkYMZPMbHmAVxuhFcrln7XgNbrvfIplw/KxVfKZ9T12v
-         5FAZT9pXhU3yCJSIxOK4iLrZlnac4ghmJ0hBCzpMm8owhSGJqak23J4CzTiYPVQYL1M2
-         LUzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717673763; x=1718278563;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1717673765; x=1718278565; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=G5WVHvN4hcDFKHXeB2Nr1rayWqDhEYmxUcOfsWZcLro=;
-        b=t6+IlqA4erYcN8VYWUz5d8IDbKT0heOnBfs2+MnaLRWP3w2QF745pZTTSU2duSMuc6
-         kj7PT4ua3419Wz3tEncKrTmw3ima8bVeYaC5B43XFp5+wQUpuE0KKt2pyhwT2eglpZJv
-         SpdOYD2d/KD4ckh6XIklrXLHDRs4lGzVmSupdk84jvLZwB091534hhJZC7go37LsABcU
-         hzqRBqG2I/QN4StND3skDPQw1bKjdMKWUXMpWCriZaQc2j+v9IFI9KGywqG5Y1/uRqLC
-         JaUao7bkvnTiZunHOTN6EAI+G/00uz6D7e1AluClrLLpsP3oug1hW/0UYVJqDHk75wrv
-         ZWmw==
-X-Forwarded-Encrypted: i=1; AJvYcCUAFtvDiyOaPVTpMnpG+dI14KGHD3GkKEBDLmYLV+43fgd27J07A6ox+Wu5i2uWAd7586ASIC5IJEM1c1NChSM9KaaGIDEcv3u669tDMA==
-X-Gm-Message-State: AOJu0YydkMyViUcYqI8xnfzpaN0h0NebDsXGefbMJQacaH2Ux2C+Xqww
-	klzboYsI4vn19Now0Js1OQ99cOQETh16J45+0tsHMdltKXP3UYNz+lOTVtHYQ3o=
-X-Google-Smtp-Source: AGHT+IFZDyPLftilahlXIrsCVup26qyzLoFoIOhmxBf4lqFjcysdyrdECYXgfHHXe4PPxiS99o1Pwg==
-X-Received: by 2002:a17:906:eb17:b0:a68:b335:76b2 with SMTP id a640c23a62f3a-a699f663bcfmr329014866b.20.1717673763099;
-        Thu, 06 Jun 2024 04:36:03 -0700 (PDT)
+        bh=PK95U6T1OzBc7SkUtP7fADcsaPx2Hq7BisLs6oxG+E8=;
+        b=BUBvDUnU2ClY6SImcYoBg42L0nd60dQ3nwdx7EsvZ/BPQHQjH/rk2QFIPxsrvBarNf
+         2b+wtTVQSRfWzQqlaisoxDM89OoMNNtph5VTFKLUoHMHBkgGLvmMFi+guQ2Rkf3vPXHt
+         VWn7HP6isa1ocJ5xPMolm/7kxyb0ucaDavxCiVM1+rTclMlXORwS6O3zrbXYwEB2gv1f
+         gG3q/8mYsKxqWdVn4HWWMl/dQe/YBmueHNk7rDkclvzuTjh2JApzM6GCT0Prejpb+Oni
+         m7nQCFc0JjR8+KsNb82uIwNGSuPyJPbzgeAiHNJVQoLUynjpBMhGi+5D4AzJ91svIZuY
+         DNIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717673765; x=1718278565;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PK95U6T1OzBc7SkUtP7fADcsaPx2Hq7BisLs6oxG+E8=;
+        b=s2i5WGzb5qTZJSZLYCwFn5xq7U5BXzcB48q84uiSeD3c842nqf7Ou/TeKeX0bRTFhh
+         P0A98vh0DalBiJ9u67viuQ+ysZc2dGua2c9l+7y6KGnDKlkqFyY6nv1YukG8zMr3nGCa
+         mKmTKXjkvz9rIoUSvLQmvCTZDwtzCG+sbvZE+ruSewVZSCd76QtQluiZDKHtov07911w
+         8Qx1ClL06xAZv28qLWbpvRTaHZ4cApthQ2WL/l+QXtxIDy+NdCt3OhVRgAL/SOelkB5W
+         sKuTsVQk1cgKyr/jkjF0c2MnKO7igeL59nBM5a/MVh0O1Qm+vI3UKTf7MuHaKn3CC3Bc
+         GPMA==
+X-Forwarded-Encrypted: i=1; AJvYcCUtrdbwoC9GQkCJ52LA4LX3mQwvpI6Q+WsYMm2CWEANoxAUE87UfxVy5WHLijrRm8sW6GJIUoFzSPyGRfHu54r01182Ps4qSeOPyRWlSw==
+X-Gm-Message-State: AOJu0Yw4OtkyVpL6O8/oU47IPifNj+HAFOhfMOBKMPLcI3Nj5WpoePHo
+	NtXytsn1BX+L5rtGSg/qeP+ye8PQA45Z+HJ/TLm5TF1L+s/9IEky/WrWINU9lHWz0aNPI3+xElE
+	1pEM=
+X-Google-Smtp-Source: AGHT+IFaqbwXaxAArcyvx7On9m+sJ6KzrQFc91FEgGNgyqyQ462UA9Qvof5eF34yYRXObErVp+HIyA==
+X-Received: by 2002:a2e:8814:0:b0:2ea:b908:d82c with SMTP id 38308e7fff4ca-2eac79c7c5fmr42505111fa.22.1717673764847;
+        Thu, 06 Jun 2024 04:36:04 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c80581c05sm84014866b.7.2024.06.06.04.36.01
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c80581c05sm84014866b.7.2024.06.06.04.36.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 04:36:02 -0700 (PDT)
+        Thu, 06 Jun 2024 04:36:04 -0700 (PDT)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v4 0/5] A702 support
-Date: Thu, 06 Jun 2024 13:35:59 +0200
-Message-Id: <20240606-topic-rb1_gpu-v4-0-4bc0c19da4af@linaro.org>
+Date: Thu, 06 Jun 2024 13:36:00 +0200
+Subject: [PATCH v4 1/5] dt-bindings: clock: Add Qcom QCM2290 GPUCC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,10 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAB+fYWYC/33NSwqDMBgE4KtI1k35TWJMu+o9Sil5qQFJJFFpE
- e/e6K6UupyBb2ZByUZnE7oWC4p2dskFnwM7FUh30rcWO5MzIkAYkPKCxzA4jaMqn+0wYWq10Fx
- QoIKhbJRMFqsove6y8lPf53KItnGv/eT+yLlzaQzxvX/O5db+m59LDNgQDo0UFauhvvXOyxjOI
- bZom5rJISeZE0MNl2AUMPjh9JDTzAVveF0LXtGL/OLrun4AIa58Tz4BAAA=
+Message-Id: <20240606-topic-rb1_gpu-v4-1-4bc0c19da4af@linaro.org>
+References: <20240606-topic-rb1_gpu-v4-0-4bc0c19da4af@linaro.org>
+In-Reply-To: <20240606-topic-rb1_gpu-v4-0-4bc0c19da4af@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -91,80 +92,149 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
  linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1717673761; l=2655;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1717673761; l=3930;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=nh/cE3Eeu+9iFnpZ9VsfcbkTKdJVkvZjzDWXX9A2c/U=;
- b=nGY80AP0d0VIs7gnv8FCTsEISM8QTnBIrWhwxBlI6ydA0HbEtTobZPMQbLh87zZ6ga3Mq0dNK
- Xhbwvdok6dUBaFXUV1NCuGe5m2RJl9N1McKcJaloweiCl8YHBMNINMl
+ bh=sI0N+gXKPVP3QbPJPNuP8btkVLaRyBbKcbcqKnzx9k4=;
+ b=+bolgQM0KQdj5ZJhddh9aE5/mCjBndTCLL1xVp7WhUrpIENDI929+TM02w5EBYb2f6o3qLwAu
+ czIQuy40yC8D0H9txRfDhjnLc9mmZIw9o+lq74/MR56FHX6Nm/arbHg
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-To: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>
-To: Stephen Boyd <sboyd@kernel.org>
-To: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-To: Conor Dooley <conor+dt@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-clk@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
+Add device tree bindings for graphics clock controller for Qualcomm
+Technology Inc's QCM2290 SoCs.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Changes in v4:
-- Rebase on next-20240606
-- Do NOT change the wait in the HUAYRA_2290 configure to a poll, as that seems
-  to not work correctly..
-- Link to v3: https://lore.kernel.org/r/20240219-topic-rb1_gpu-v3-0-86f67786539a@linaro.org
-
-Changes in v3:
-- Use EXPORT_SYMBOL_GPL in the alpha pll change
-- Drop applied patches
-- Pick up tags
-- Link to v2: https://lore.kernel.org/r/20240219-topic-rb1_gpu-v2-0-2d3d6a0db040@linaro.org
-
-Changes in v2:
-- Drop applied smmu-bindings patch
-- Fix the gpucc bindings patch to be even better
-- Reorder HUAYRA_2290 definitions near HUAYRA (..Add HUAYRA_2290
-  support..)
-- Replace weird memory barriers copypasted from msm-5.4 with readback to
-  ensure timely write completion (..Add HUAYRA_2290 support..)
-- Keep my super amazing commit message referencing the 3D accelerator
-  official naming (dts)
-- Pick up tags
-- Link to v1: https://lore.kernel.org/r/20240219-topic-rb1_gpu-v1-0-d260fa854707@linaro.org
-
 ---
-Konrad Dybcio (5):
-      dt-bindings: clock: Add Qcom QCM2290 GPUCC
-      clk: qcom: clk-alpha-pll: Add HUAYRA_2290 support
-      clk: qcom: Add QCM2290 GPU clock controller driver
-      arm64: dts: qcom: qcm2290: Add GPU nodes
-      arm64: dts: qcom: qrb2210-rb1: Enable the GPU
+ .../bindings/clock/qcom,qcm2290-gpucc.yaml         | 77 ++++++++++++++++++++++
+ include/dt-bindings/clock/qcom,qcm2290-gpucc.h     | 32 +++++++++
+ 2 files changed, 109 insertions(+)
 
- .../bindings/clock/qcom,qcm2290-gpucc.yaml         |  77 ++++
- arch/arm64/boot/dts/qcom/qcm2290.dtsi              | 154 ++++++++
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts           |   8 +
- drivers/clk/qcom/Kconfig                           |   9 +
- drivers/clk/qcom/Makefile                          |   1 +
- drivers/clk/qcom/clk-alpha-pll.c                   |  47 +++
- drivers/clk/qcom/clk-alpha-pll.h                   |   3 +
- drivers/clk/qcom/gpucc-qcm2290.c                   | 423 +++++++++++++++++++++
- include/dt-bindings/clock/qcom,qcm2290-gpucc.h     |  32 ++
- 9 files changed, 754 insertions(+)
----
-base-commit: ee78a17615ad0cfdbbc27182b1047cd36c9d4d5f
-change-id: 20240219-topic-rb1_gpu-3ec8c6830384
+diff --git a/Documentation/devicetree/bindings/clock/qcom,qcm2290-gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,qcm2290-gpucc.yaml
+new file mode 100644
+index 000000000000..734880805c1b
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,qcm2290-gpucc.yaml
+@@ -0,0 +1,77 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,qcm2290-gpucc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Graphics Clock & Reset Controller on QCM2290
++
++maintainers:
++  - Konrad Dybcio <konradybcio@kernel.org>
++
++description: |
++  Qualcomm graphics clock control module provides the clocks, resets and power
++  domains on Qualcomm SoCs.
++
++  See also::
++    include/dt-bindings/clock/qcom,qcm2290-gpucc.h
++
++properties:
++  compatible:
++    const: qcom,qcm2290-gpucc
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: AHB interface clock,
++      - description: SoC CXO clock
++      - description: GPLL0 main branch source
++      - description: GPLL0 div branch source
++
++  power-domains:
++    description:
++      A phandle and PM domain specifier for the CX power domain.
++    maxItems: 1
++
++  required-opps:
++    description:
++      A phandle to an OPP node describing required CX performance point.
++    maxItems: 1
++
++required:
++  - compatible
++  - clocks
++  - power-domains
++
++allOf:
++  - $ref: qcom,gcc.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-qcm2290.h>
++    #include <dt-bindings/clock/qcom,rpmcc.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++
++    soc {
++        #address-cells = <2>;
++        #size-cells = <2>;
++
++        clock-controller@5990000 {
++            compatible = "qcom,qcm2290-gpucc";
++            reg = <0x0 0x05990000 0x0 0x9000>;
++            clocks = <&gcc GCC_GPU_CFG_AHB_CLK>,
++                     <&rpmcc RPM_SMD_XO_CLK_SRC>,
++                     <&gcc GCC_GPU_GPLL0_CLK_SRC>,
++                     <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
++            power-domains = <&rpmpd QCM2290_VDDCX>;
++            required-opps = <&rpmpd_opp_low_svs>;
++            #clock-cells = <1>;
++            #reset-cells = <1>;
++            #power-domain-cells = <1>;
++        };
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,qcm2290-gpucc.h b/include/dt-bindings/clock/qcom,qcm2290-gpucc.h
+new file mode 100644
+index 000000000000..7c76dd05278f
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,qcm2290-gpucc.h
+@@ -0,0 +1,32 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2024, Linaro Limited
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_GPU_CC_QCM2290_H
++#define _DT_BINDINGS_CLK_QCOM_GPU_CC_QCM2290_H
++
++/* GPU_CC clocks */
++#define GPU_CC_AHB_CLK			0
++#define GPU_CC_CRC_AHB_CLK		1
++#define GPU_CC_CX_GFX3D_CLK		2
++#define GPU_CC_CX_GMU_CLK		3
++#define GPU_CC_CX_SNOC_DVM_CLK		4
++#define GPU_CC_CXO_AON_CLK		5
++#define GPU_CC_CXO_CLK			6
++#define GPU_CC_GMU_CLK_SRC		7
++#define GPU_CC_GX_GFX3D_CLK		8
++#define GPU_CC_GX_GFX3D_CLK_SRC		9
++#define GPU_CC_PLL0			10
++#define GPU_CC_SLEEP_CLK		11
++#define GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK	12
++
++/* Resets */
++#define GPU_GX_BCR			0
++
++/* GDSCs */
++#define GPU_CX_GDSC			0
++#define GPU_GX_GDSC			1
++
++#endif
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.45.2
 
 
