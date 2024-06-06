@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-21880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 319018FE446
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 12:31:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2118B8FE46D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 12:38:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 496591C244DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 10:30:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E2C81C23E33
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 10:38:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A330E286AE;
-	Thu,  6 Jun 2024 10:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA547194C61;
+	Thu,  6 Jun 2024 10:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rakqLOdv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ThJVyJwX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE9313E05D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 10:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B67C1922C3
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 10:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717669832; cv=none; b=hrzEmTOHPjbNa94WLNYyznBbbkT0c04+WAg4Smfv/uSM4R0/MvgDIQvvBTLR3wpDRXu+6xdX+/srOzLsJPkXspxUTAhLZ2cSG7NOAKtXPqfmahuTjkN3tfDa8OQxkaM8862xbmQ1DBDFkAhwL5iAK6FyVLUi3abLEIetxzf2Sco=
+	t=1717670326; cv=none; b=hbL4GEszPbDDv7RF3ArOVqNNO7RAwIGPdW4z38BDKQtShLVgaJDw6keXdxLm3ASvCe4cxGtd/O5EQQIUW5Vm2UlyJTrU0un0VkdhO/f/AF09ecZ7C+QWxGn0GLXN05CLillGJnNH48DYYsEK3CqjQT6kJLKJAEcR2Kx3VrTCwQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717669832; c=relaxed/simple;
-	bh=T25AcLqwsFMYd8g/KW2Ws/ZAqcXEOs7GXOGrefSGhAc=;
+	s=arc-20240116; t=1717670326; c=relaxed/simple;
+	bh=avdIuF0V0C0iJkYjR7jtV7ubAqX+f6qQOGJkonzOpJI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lggtqwvMfcoFFm4XSqTzTUjRTJqa3vBp4zkMG/aB20V6/a5jp/I5El63OBExaX6DNr6C2jMN+XFdx3J0PIbNsV0yMKftaBdCi4h0E7sqJr8janLpbj4GJdossi+DnKiCcwFnGhoR8l1pCeLCNGX8cxYbBSaKStwi3X5UgrWTWSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rakqLOdv; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:Content-Type; b=X3GrAZl8slsiysmfKlE7zyYx7BiltVFpClfcp3/1xYZoSoAyquN0D9cZp3CHdvEf+VNxkEzEpxg+QEl5DYtwOmwAITUVS7z8VnrGhvMkZAqLxPiEliCsbZ/U3qUV/7OLSkOcArvYe15ZAlpExCQF6uutkE1xYE0dDfYFcCYW6LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ThJVyJwX; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a68a4a9946cso86817266b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 03:30:30 -0700 (PDT)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a6267778b3aso70216866b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 03:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717669829; x=1718274629; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717670323; x=1718275123; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=gl54fOZyBYtMXey6LAnbsNQ7H3hQsw/2WZQ42wnpCeM=;
-        b=rakqLOdvziob+IQVR5Q5M/6a8usQneqBLSQZNfvBC6cxpXUxLtHEjZ5SnzpEyeLNj6
-         o8ZvWmkwnkMX1jIuNymYLIgoXJUwf9Tof0JChKdc7Gmm89LvJuqx9BiJR5tQSZ2li9qs
-         OJx8RYr6iqms26zPqQZECAH+LlYcEpJCXSiExK4c1cWgzFS/8seRSAoB/WosH71BERAA
-         e7Z1DcIm9lyUlYIS/kYcCRukGF/jewySkGvEuxxmF0DoJixCm2QVM+HO7sAfWZEF1bCS
-         2r9YhQY5CMxu1PWe9H1t6AcyJoRr9mQBWhRPZKRRqfORbgRodPmdXqW4e/9AOOavpeJZ
-         XBUQ==
+        bh=bq+ea6+Xyq0hd82zdQ8F39rdvv/mrNdoQoHk1nZdUt4=;
+        b=ThJVyJwXY+UQim229/U1BcuIi3OkQHJUO+iRM0BzwQuxixpA63r0lAqZnmOHSRw4z8
+         RdXj6WD4rrEXsY1Ki5UaDMJYs/erAFaEn7GIsd/Z5Fql7jjcCSQmieCLo2t8zz0aF2KC
+         vdZbw3kQH4MByEPKVrOf2Obh1VF9gFC2lAqrqO36Gg+e5pzQwWDYo5qJNyhf34YIAuYC
+         UJS+ZIHJ5wLq64k+J6il2gWlKD67N3g0t8tPx6mXL8Lh0TsYXogfnmn5DU2ejmQF6Pf8
+         C4ylbqCPB1c4AVvHhEd4SPhAILpbWA2PFCpn402NffEkpuJm3MGkogJfq0tjGr0/KtHA
+         ls/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717669829; x=1718274629;
+        d=1e100.net; s=20230601; t=1717670323; x=1718275123;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gl54fOZyBYtMXey6LAnbsNQ7H3hQsw/2WZQ42wnpCeM=;
-        b=O8GG9ktFzF5XkDhvIHtPzgX5ZUdb4GLDiM+b1ilsMWT9WdQq4SgbVGjsSfH+K9bvLW
-         zi7MeN97mXa8jeqmXzoaGQYps0gBWDyIXqbm+SF0VpphbJ8F/7MGDeM1C+xhLm4Hs0ET
-         68tCd7uwEqT6NZIdA3/hpT9/SHPhCKoEAwI96hXnLUPJnxQ9IkwQkd2MwlOKdFo/d3AB
-         uGOXXl4GWF+TMAafxS4VcfNYUULqXPfb/l3G8PDC4mod/qY2jMyn1DLNarzatmssrntR
-         rEWsNgBZ91zBRO7WOJ2hZUNytEP1gPDLFgnCHF3BtU2RNv7KjG4/KdwDdmPy7FcpG1q1
-         oq/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUnfUkE0aD0yeBCohQ4wiIO/5RGEyBe8+PgPA87nDC+28/0n3aKNIFsVAxXKITEtDVJnUIHzgf7929kSvoLTA3JSzI65My/f9ZrJ/HClQ==
-X-Gm-Message-State: AOJu0YwFZaezxzuxR6lZ5bmR0MZOFqoPzYPrEfUru+uu8Kgbyu5s+4Ia
-	of8q3qQaQ0v13SsKNqOICLwBRjBGLvsh4UZGU7KIttvLqgVuJ1MuLoIjAjaJTME=
-X-Google-Smtp-Source: AGHT+IGRyxziwh9jwLY3Nk4qTCUBmZ8AXbbiN9CkX7zHugucAzQ5CdBMDg+E6Gaq3fMQ+d8giGt0Lg==
-X-Received: by 2002:a17:907:502:b0:a52:65bd:a19a with SMTP id a640c23a62f3a-a69a024cf7bmr267682866b.57.1717669829213;
-        Thu, 06 Jun 2024 03:30:29 -0700 (PDT)
+        bh=bq+ea6+Xyq0hd82zdQ8F39rdvv/mrNdoQoHk1nZdUt4=;
+        b=sA9OWmJI7VNCCt6vkyUUyAfMTwYumgK+o/gkfeNPzt18ldgrsAFN+HCcEio9Idux8F
+         mXvvIBaW47/djAt+6NAkv/QYthMApiwJO+9Gs1s6NCabvOfZd9/TmVbW9NO5/ikjLljU
+         IXeNuaV2MJJS4VTGiwjh6/hWHN1107VzFMKHn6VbDXHUS4iUy6l0HOvxvL0AOgxphpFX
+         67oBDmPMEeshoMjO3ZfOjMa68XrzZjA2U4hy1Ha90xw2g8rTOB17aTNTLTn909Me2SkR
+         Xf8oohTGjKGCE5pkMTVERJAO0SoHhpiyWlz/38N8LErRbLLy9ArEh01J50Hc1AEi51Sd
+         UEGg==
+X-Gm-Message-State: AOJu0YxMmKyPavm0nvxHWk13515pRUL3zNnAoVmRSdv0XzTyUjn1wUh8
+	0Xh8UNwaNAzy3JulFD5zWDS+b2RyFuA7XQV72bhzhheI0vZxWRLnGRuIXQVg0oVE/FWTbOMrTnm
+	CDYI=
+X-Google-Smtp-Source: AGHT+IGffyAJJEOu8Bve4fToXmECd6UGMQfM0mk1x8YtX2ObRb56733m1tjFzlXc3IvB2KF6yXr45w==
+X-Received: by 2002:a17:906:2f92:b0:a5c:df6b:a9b5 with SMTP id a640c23a62f3a-a69a002e5e2mr338177266b.59.1717670323335;
+        Thu, 06 Jun 2024 03:38:43 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c806eabf8sm77531366b.114.2024.06.06.03.30.27
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c805c95adsm79261966b.49.2024.06.06.03.38.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jun 2024 03:30:28 -0700 (PDT)
-Message-ID: <be2dc908-c8d3-4739-9f46-8f8daf0f328e@linaro.org>
-Date: Thu, 6 Jun 2024 12:30:26 +0200
+        Thu, 06 Jun 2024 03:38:43 -0700 (PDT)
+Message-ID: <2fa9d6e5-d301-4226-aef8-6d691cd392fa@linaro.org>
+Date: Thu, 6 Jun 2024 12:38:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,16 +77,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] arm64: dts: qcom: x1e80100: Enable bwmon and fastrpc
- support
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- djakov@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- srinivas.kandagatla@linaro.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
- quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
- dmitry.baryshkov@linaro.org, abel.vesa@linaro.org
-References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
+Subject: Re: [PATCH v5] arch: arm64: dts: sm8650-hdk: add support for the
+ Display Card overlay
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+References: <20240606-topic-sm8650-upstream-hdk-v5-1-5d878f3047e3@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -124,22 +123,93 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240604011157.2358019-1-quic_sibis@quicinc.com>
+In-Reply-To: <20240606-topic-sm8650-upstream-hdk-v5-1-5d878f3047e3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 4.06.2024 3:11 AM, Sibi Sankar wrote:
-> This patch series enables bwmon and fastrpc support on X1E80100 SoCs.
+On 6.06.2024 10:16 AM, Neil Armstrong wrote:
+> With the SM8650-HDK, a Display Card kit can be connected to provide
+> a VTDR6130 display with Goodix Berlin Touch controller.
 > 
-> This series applies on:
-> next-20240603 + https://lore.kernel.org/lkml/20240603205859.2212225-1-quic_sibis@quicinc.com/
+> In order to route the DSI lanes to the connector for the Display
+> Card kit, a switch must be changed on the board.
 > 
+> The HDMI nodes are disabled since the DSI lanes are shared with
+> the DSI to HDMI transceiver.
+> 
+> Add support for this card as an overlay and apply it it at
+> build-time to the sm8650-hdk dtb.
+> 
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Tested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
 
-Going back to [1], is memlat-over-scmi not enough to give us good numbers
-without OS intervention? Does probing bwmon and making some decisions in
-Linux actually help here?
+[...]
+
+> +
+
+/* Disable HDMI bridge related nodes (mutually exclusive with the display card) */
+> +&i2c6 {
+> +	status = "disabled";
+> +};
+> +
+> +&lt9611_1v2 {
+> +	status = "disabled";
+> +};
+> +
+> +&lt9611_3v3 {
+> +	status = "disabled";
+> +};
+> +
+> +&vreg_bob_3v3 {
+> +	status = "disabled";
+> +};
+> +
+> +&lt9611_codec {
+> +	status = "disabled";
+> +};
+> +
+> +&mdss_dsi0 {
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	panel@0 {
+> +		compatible = "visionox,vtdr6130";
+> +		reg = <0>;
+> +
+> +		reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
+> +
+> +		vddio-supply = <&vreg_l12b_1p8>;
+> +		vci-supply = <&vreg_l13b_3p0>;
+> +		vdd-supply = <&vreg_l11b_1p2>;
+> +
+> +		pinctrl-0 = <&disp0_reset_n_active>, <&mdp_vsync>;
+> +		pinctrl-1 = <&disp0_reset_n_suspend>, <&mdp_vsync>;
+> +		pinctrl-names = "default", "sleep";
+> +
+> +		port {
+> +			panel0_in: endpoint {
+> +				remote-endpoint = <&mdss_dsi0_out>;
+> +			};
+> +		};
+> +	};
+> +
+> +	/*
+> +	 * DTC requires to have both endpoints when compiling the overlay
+> +	 * and also requires the #address/size-cells + reg properties
+> +	 */
+
+[...]
+
+> +	/* DTC requires the #address/size-cells to compile DTBO */
+
+I think we can leave out such comments, if somebody tries to "clean it up",
+dtc will scream
+
+with that:
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-
-[1] https://lore.kernel.org/all/20240117173458.2312669-1-quic_sibis@quicinc.com/
 
