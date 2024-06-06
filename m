@@ -1,148 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-21964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85B178FF080
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 17:23:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09EED8FF107
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 17:45:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C56E0B2FD71
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 15:10:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AEBFC1F27817
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 15:45:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0676197A76;
-	Thu,  6 Jun 2024 14:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A712D197A7C;
+	Thu,  6 Jun 2024 15:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q8xDURwH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jXOHFHRb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D59A197554;
-	Thu,  6 Jun 2024 14:50:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D636019754F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 15:44:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717685421; cv=none; b=P/uxmiYToXpE48tg5cc4EhVThfrGswKk5ByXPaGk8W4SRW9n3Jq5uxR6Rom7qPbsAjsoGZ0Gx+8k0oJyt0OKEAsZDYoUDKElP+jvcqmOKVm6ZmtDoPXzJwa0jI7zt+GKnwRsQBu0FSw4SDZH+/9fYRb1bhg7sdHAWgje+hM0g7w=
+	t=1717688684; cv=none; b=WZchGsYdT/g/uB1kve3n3rxzIpwbYi8A59c3Q2EcdBLNIJxMbEvn6tFOPRkaa0CtPULewlx61F03KAl+cnEISwuVfG20jXXDAEJK5w334P/UqpHaSQ/vc8iqlOIF20uM5X19mM/Wdl91diWw9E2NJRURBWeIGm4hag2yjayp7MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717685421; c=relaxed/simple;
-	bh=zw1XPsrHhdkztMwHgoGHGJIAqzfN4fPRiDa1UBE8hg4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qG9b28vJeCT3h1ay/PCJydivX0yTrhJn5lnbmNSw+Ml+pdLGhsmUinwgXs3NYrBjlYvmZKxdyIyO9gotdic8kMUOY3h9jQNyMDiVreGhjDuMmLhFq6/ip82gHjAlBbjipBicpjoKNV8bsUJoF63m5MS87eeBSJcA2hCTkKJka5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q8xDURwH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA55C2BD10;
-	Thu,  6 Jun 2024 14:50:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717685421;
-	bh=zw1XPsrHhdkztMwHgoGHGJIAqzfN4fPRiDa1UBE8hg4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=q8xDURwHUQecEv7Wd726Z+XRi0d7dHC+Vocn4v/8McV1mzJuKaRhoqiK6fyF3D8nj
-	 nWtgyeC26J6c9+Ix91nq9OnqqP17GGGcUqnToeR7nc+zNUH6H/Adi8DxeIj/gW6pKL
-	 W+FWCVVGyb93lQJeNp+k5wff8HtIpgcC79/9+IX66Jkf9uwfSRFRNLbBr/3xdIf61f
-	 7Kfh+/tiVEVLwDHOQXW75xOGUfbpG73GT3PeNV+n3MBMlt0r2oH9Zn+nZWFOjK4eKr
-	 Jb+32GpHgkIxNfc3stsimYJ9ppjdMP0chzoxf5yepoU18EU55MHxkH7fykMFETQaXZ
-	 vz33HwU3ZVOFw==
-Message-ID: <c22e20f5-5ca9-485c-991f-9b45e35cd75a@kernel.org>
-Date: Thu, 6 Jun 2024 16:50:16 +0200
+	s=arc-20240116; t=1717688684; c=relaxed/simple;
+	bh=GK2TAzVHi7t+avHmUmGxuI/Ivtu5v5EspjOyIKr0EM0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k9oGXLamEjLF2sps7fZalekkkJrXhFR5u2dPESmzzCd8JhbISw/QNLyQ22XzeG6K/KhcfotEoHRx2I8ttrMWbi95a1w6NOH2nT1AeDIWzA1zXIez721FpoUgiNoSdEFahvie5xyUBMgaSjGLtDfByYlshwwMtKNgKmHL8RqG83Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jXOHFHRb; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5295e488248so1362241e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 08:44:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717688680; x=1718293480; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CcvLWtoAhuxv7+XmnyzWyh5/jHFSbk/UPbtacznbqAQ=;
+        b=jXOHFHRbt09mM9B9tKrV+CFN1aCkt/ox6ddsiYAhEIu7EV2k8UB6NuaMmZhbWMcU6i
+         TpQHgmlN+IAiTeikDkAY4pYaFhXJGP6k47YpEvlrNQwEFHUrwlfiRP5OPiQ/it2Jp+ME
+         3yvkodRMX+JWFgHuy1/HhG6k2oYYhJ6CYMST3pyLbgMPHiKQpLqf9kSAYK+Fb/hSotKC
+         ItvFFHipXubPO7xbLISCqHGS7Q7rMEFvAG49fAPlDzKHZE95NJ8qBfXJZgfoeHcPySn2
+         LESo5bEOh1bdPKLomyb9iXEbX4vBzLXHkWyCanNb+K9Eu1//FfY5pwLb3sUEkaWLE+FB
+         Ww2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717688680; x=1718293480;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CcvLWtoAhuxv7+XmnyzWyh5/jHFSbk/UPbtacznbqAQ=;
+        b=P3BdhnspuNSTt1DZ8i1JwpzRYwPAZ3Gau9his199GK8As50QN9e32JG75LkATTSQ+n
+         lPzbi4hDxCOWRaQ0i0sLyvN1JJ9JuvMTBrsxUSsZ7PdrxZJ8CJbESaEQoi4VhpG9+tTo
+         bTxCvKN2Mfy2dEAZIlbPiUrVNxOEWdsxgp/W2DloE59tnPB2P4iMI4SeDK6JkSIwhyjw
+         Qy9u4faW3hrCThW+8yCm78Q3iuAyfmkKanbKfVRKQGeDFnj45I3whH/yalgdipyGnzCW
+         qibkwpGkfnmdpQzRFcQyvLzXqOqCXAoQkBds20QCQQdq+TR4E4dDMVgu9ZJSIgoxs4Kn
+         TbiA==
+X-Forwarded-Encrypted: i=1; AJvYcCWs12A8DZtL7BRc1mIvGSITozjQSHVhnwfup6Hymb5C/5Z/YFb64g/3+udqnkHWwtu2iA+Zk8qy+fov49ZvMMGPNTHfe24Fw4tqIeUQKA==
+X-Gm-Message-State: AOJu0YwXnd/vVxDNaW2aeDSHnzi3vkZmDU4HDl8mniWmqtnqqW8nw0+J
+	JLrc1R8wulvGWzcbHfuue5HRs99T132XYvtNojVQQBQTQMxGIdoRHECB1uuEMFY=
+X-Google-Smtp-Source: AGHT+IGfkquA6C70zvNtH1bpeU35r9otrSSRpObdg1UiWOp9nLQV2leYilFdaGLb2X7iS4KqqbZ4DA==
+X-Received: by 2002:a05:6512:3b8:b0:52b:7a3c:36ca with SMTP id 2adb3069b0e04-52bb9f7cbb5mr3964e87.27.1717688679984;
+        Thu, 06 Jun 2024 08:44:39 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52bb41ee6acsm227187e87.80.2024.06.06.08.44.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jun 2024 08:44:39 -0700 (PDT)
+Date: Thu, 6 Jun 2024 18:44:38 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Connor Abbott <cwabbott0@gmail.com>, 
+	dri-devel@lists.freedesktop.org, seanpaul@chromium.org, quic_jesszhan@quicinc.com, 
+	nathan@kernel.org, Rob Clark <robdclark@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4] drm/msm/a6xx: use __unused__ to fix compiler warnings
+ for gen7_* includes
+Message-ID: <5b2o5hhq76pa322bum2td4cqqa5333d7rdxxsxulhalt3j24pi@ea7wzku5waf6>
+References: <20240605183415.259276-1-quic_abhinavk@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: sdx75: add missing qlink_logging
- reserved memory for mpss
-To: Naina Mehta <quic_nainmeht@quicinc.com>, andersson@kernel.org,
- mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, konrad.dybcio@linaro.org,
- manivannan.sadhasivam@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240606143858.4026-1-quic_nainmeht@quicinc.com>
- <20240606143858.4026-4-quic_nainmeht@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240606143858.4026-4-quic_nainmeht@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240605183415.259276-1-quic_abhinavk@quicinc.com>
 
-On 06/06/2024 16:38, Naina Mehta wrote:
-> The qlink_logging memory region is also used by the modem firmware,
-> add it to reserved memory regions.
-> Also split MPSS DSM region into 2 separate regions.
+On Wed, Jun 05, 2024 at 11:34:15AM -0700, Abhinav Kumar wrote:
+> GCC diagnostic pragma method throws below warnings in some of the versions
 > 
-> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
+> drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:16:9: warning: unknown
+> option after '#pragma GCC diagnostic' kind [-Wpragmas]
+>   #pragma GCC diagnostic ignored "-Wunused-const-variable"
+>           ^
+> In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:18:0:
+> drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h:924:19: warning:
+> 'gen7_0_0_external_core_regs' defined but not used [-Wunused-variable]
+>   static const u32 *gen7_0_0_external_core_regs[] = {
+>                     ^
+> In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:19:0:
+> drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h:748:19: warning:
+> 'gen7_2_0_external_core_regs' defined but not used [-Wunused-variable]
+>   static const u32 *gen7_2_0_external_core_regs[] = {
+>                     ^
+> In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:20:0:
+> drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h:1188:43: warning:
+> 'gen7_9_0_sptp_clusters' defined but not used [-Wunused-variable]
+>   static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] = {
+>                                             ^
+> drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h:1438:19: warning:
+> 'gen7_9_0_external_core_regs' defined but not used [-Wunused-variable]
+>   static const u32 *gen7_9_0_external_core_regs[] = {
+> 
+> Remove GCC version dependency by using __unused__ for the unused gen7_* includes.
+> 
+> Changes in v2:
+> 	- Fix the warnings in the commit text
+> 	- Use __attribute((__unused__)) instead of local assignment
+> 
+> changes in v3:
+> 	- drop the Link from the auto add
+> 
+> changes in v4:
+> 	- replace __attribute((__unused__)) with __always_unused
+> 
+> Fixes: 64d6255650d4 ("drm/msm: More fully implement devcoredump for a7xx")
+> Suggested-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sdx75.dtsi | 17 +++++++++++++----
->  1 file changed, 13 insertions(+), 4 deletions(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 12 ++++--------
+>  1 file changed, 4 insertions(+), 8 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> index 9b93f6501d55..9349b1c4e196 100644
-> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> @@ -366,7 +366,12 @@
->  			no-map;
->  		};
->  
-> -		qdss_mem: qdss@88800000 {
-> +		qdss_mem: qdss@88500000 {
-> +			reg = <0x0 0x88500000 0x0 0x300000>;
-> +			no-map;
-> +		};
-> +
-> +		qlink_logging_mem: qlink_logging@88800000 {
 
-Sorry, no downstream code.
-
-Please follow DTS coding style - no underscores in node names. This
-applies to all work sent upstream.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
