@@ -1,155 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-21961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 214868FF016
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 17:12:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 072598FEFFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 17:08:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7330DB275F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 15:08:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8361A283343
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 15:08:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E59A1990D0;
-	Thu,  6 Jun 2024 14:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0C6F198828;
+	Thu,  6 Jun 2024 14:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c6EmfmRf"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="YtRrkQHK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916EF197549;
-	Thu,  6 Jun 2024 14:47:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCA5197544;
+	Thu,  6 Jun 2024 14:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717685253; cv=none; b=Y5wJxuu8/bEchUUImcwoXRPnwVolgmFZOlrgWP/14w23PxuJrRWhjq+BstKtf//KHH7qeDK+5AahB6vYQ6+IkHDaIU6jTbZQ+LljJmYRhw1OXZ/xtU41awUh/fDbtOdAhBIPcSEEYYjzEf91rh8aJZ1bcXx2tJ+zWdNEhIKzfRg=
+	t=1717685290; cv=none; b=LIb2PJ33FDEAvj8QaBiobuKSng4EuFW5VOL6NjevCaeyfZWmWItmYgjs8aIJPz6GOeui3rfrZUzqNJXtwgKAc2/GcNqvK29ELIlt9X39XWl/9nflsbowa1lTdGhXp9MY8M1iiM6Qjj8CPQJyVmio6560VT/JQEG2OjfyIJTtUgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717685253; c=relaxed/simple;
-	bh=xpT4FS9NOMDZSBdsbHHC+PXphhpeO2mr4WXvX4mj0HU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=TYsiER/Tm+3wCD/1pXhwDU0DZr1a7JsPwt9GoOKJUMcqEYiD6QN2LzzjuR44sxNU8hkftBRqCWB7b7xWuenpkphKy+DSiSU4iVchQ5r+ygJAkd74lKfeyJ2gg60AGPkA//VFley6QjtErhzDMybTUCc++RRavJjBnVR3Gdxyrfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c6EmfmRf; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-35e816b735aso1155594f8f.0;
-        Thu, 06 Jun 2024 07:47:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717685250; x=1718290050; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=m3rVR4Thyo9aNwCQlgqCXd6hXabtEKHJTsbPaJcS5Vg=;
-        b=c6EmfmRfgByqiI8lJ63L6FbRCHeLqJ+ZaoCrKBwzvfqqMCnBoG+yA+KomRvV6O0+OP
-         ufh5XjomzyG31zLTdbN7J5Iqc5TYmqMfSiUwDMsIaA1TFVXwFWbPbijqlktikoZl3PCA
-         xB9Qs95t1cZPhB9YHVi5aen9hzhKcOnA11stL8gPFR4FGHDOIdJKJRiQrCG5PrKJ0GNI
-         LQm7Um72BSEPXqmWrzrjBeT6uYymITV4yxW48WVcdqiJ3j0Mnp7Tk+wfWW7eTSJexFA6
-         dKJnHgUyz870xKMNWOv4tVeLeetiQXJ2YbtGCA7EYYXqY7sDE4sTRSlhl/HoeiSMKA48
-         nKDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717685250; x=1718290050;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m3rVR4Thyo9aNwCQlgqCXd6hXabtEKHJTsbPaJcS5Vg=;
-        b=uGMDoAr2/knOd/2Bf5/RHvNycR/PVZi9r1z65tXmhXFFmS0yp0MrIjcIiPdd98/a7B
-         qeSogL0EdNytHsw0ddZDwdVgBK3yvbn0YyhEb7nAeEB7MbN9qWKEeJeQebuuFboBp+Kh
-         hB82x9+pP8TMOtyzu0gYzpO7C1D2MfDj0xZrktFqQS5sSL65r7VNNheQK+/GyuL6kmRw
-         9sSQ8gc60FKIkh2tf+JLvEdBj6KuQMa0BCY+69BYB1hReAhZBOA3tyKDFXltGXp4D3Y7
-         e8sTFKVXtkm94NlAevZCDDPQPfYRQhbpem09SPdxfqtPEdVaDdtmGejkF8H2T0zl5y/1
-         FyIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUo5KserPd0Ik2/M1kzQ8etf/uCvyhKATKWUtM8mMJVwQ0idSphSPPjjUlDLz/DdCXPoB3+x2VasayW2bIsn5pNYXlpgqIerzzgKHWPRtV/RuYwZkx6E15L9BcTecubvPm3s24SZdyTgw==
-X-Gm-Message-State: AOJu0YwNPLxH5nKKHt3RYFffhIXW9ANiBIv/Sy9BM/njjYQMYtHEfVld
-	vJwn5liUfTCPm5ClF/f3r9IE0FV6IhMkwBPO8ODPZ7YSou9eCNYlFnbd0cJZ
-X-Google-Smtp-Source: AGHT+IEJ5sosaLGENXHCZsNFvHmechI1Fl7am07tRLUpuE2qDbgBo25pGxeSacHewsGWwOrReUBIZA==
-X-Received: by 2002:adf:f2c8:0:b0:354:fb80:b515 with SMTP id ffacd0b85a97d-35e8ef65ea7mr3955508f8f.47.1717685249782;
-        Thu, 06 Jun 2024 07:47:29 -0700 (PDT)
-Received: from [192.168.1.130] (51B6DB6F.dsl.pool.telekom.hu. [81.182.219.111])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35ef5e989easm1739751f8f.78.2024.06.06.07.47.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 07:47:29 -0700 (PDT)
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-Date: Thu, 06 Jun 2024 16:47:28 +0200
-Subject: [PATCH] arm64: dts: qcom: pm660: Add rradc, charger
+	s=arc-20240116; t=1717685290; c=relaxed/simple;
+	bh=dQuMVnPcFvL2rm7IsOiVG0+PEE/oKkyHvTcPJNmZa+0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t0m23QjoNMzO/WeNcz/eV96yny/yeFahEIy/qvwM1gB1fWcQHLFtdvZZ9vle5+DXkrcPJpxnts2jLsAmIUEnFiDnVdPVw8pt3ghn0Qi7m9dFU2RcYsgnUJ84orT/y/RL5mWvuAhpgFH9Hxe2fLoKSO+OmWGtoX9gER46rnwtnwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=YtRrkQHK; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1717685287;
+	bh=dQuMVnPcFvL2rm7IsOiVG0+PEE/oKkyHvTcPJNmZa+0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=YtRrkQHKb+X7xskObtg8FVCsFdwW8ShtHfCWtk4KRWoyx36T/q0AyGDwcPLitgXD0
+	 juSSzZ3cVZnQbEDdzMDSSm8xGeGxl3vLT/L53APO2Uo9mJm74o3YO7FrEl2BM+EyDS
+	 RHflhbHlPHGWQ7EThEjdeN/fGUeVCYOlIKGO8DrwcAr/iYf/5sLnc4QHnStmIq0v0h
+	 xLL7JMpSpaAnGsWurIR2SiEcuC0uSUEfaXkzCyK0B0+QnKCJRPycr/Fv0n4gXpkoOX
+	 CpotkDssPI/ghb/8UWFmzZvE0qBspVDQY2C+F0VYLb5GEI9kUvXljorsWjykBsbJu8
+	 LAPtwkBjkdYrA==
+Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: koike)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 233DF37821F4;
+	Thu,  6 Jun 2024 14:48:01 +0000 (UTC)
+Message-ID: <da1366fa-4d48-4227-ae4b-4b39a6607973@collabora.com>
+Date: Thu, 6 Jun 2024 11:47:59 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240606-pm660-charger-rrdac-v1-1-a95d4da24f3b@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAP/LYWYC/x2MSQqAMAwAvyI5G4gLpfUr4qG0qebgQgoiFP9u8
- TgMMwUyq3CGqSmgfEuW86jQtQ2EzR8ro8TK0FM/kiGD124MYXW6sqJq9AGZaEjJjc4GC7W8lJM
- 8/3Ve3vcDKNiPGGUAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Aboothahir U <aboothahirpkd@gmail.com>, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-X-Mailer: b4 0.13.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/6] drm/ci: uprev mesa/IGT and generate testlist
+To: Vignesh Raman <vignesh.raman@collabora.com>,
+ dri-devel@lists.freedesktop.org
+Cc: daniels@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
+ robdclark@gmail.com, david.heidelberg@collabora.com,
+ guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com,
+ dmitry.baryshkov@linaro.org, mcanal@igalia.com,
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, amd-gfx@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ virtualization@lists.linux-foundation.org, linux-kernel@vger.kernel.org
+References: <20240529024049.356327-1-vignesh.raman@collabora.com>
+Content-Language: en-US
+From: Helen Koike <helen.koike@collabora.com>
+In-Reply-To: <20240529024049.356327-1-vignesh.raman@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Aboothahir U <aboothahirpkd@gmail.com>
 
-Add charger to PM660 PMIC. Readings from round-robin ADC
-are needed for charger to function, so add it as well.
 
-Signed-off-by: Aboothahir U <aboothahirpkd@gmail.com>
-Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
----
- arch/arm64/boot/dts/qcom/pm660.dtsi | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+On 28/05/2024 23:40, Vignesh Raman wrote:
+> Uprev mesa and IGT to the latest version and stop vendoring the
+> testlist into the kernel. Instead, use the testlist from the
+> IGT build to ensure we do not miss renamed or newly added tests.
+> Update the xfails with the latest testlist run.
+> 
+> Add farm variable and update device type variable.
+> 
+> https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1187556
+> 
+> Vignesh Raman (6):
+>    drm/ci: uprev mesa version
+>    drm/ci: add farm variable
+>    drm/ci: generate testlist from build
+>    drm/ci: uprev IGT
+>    drm/ci: skip driver specific tests
+>    drm/ci: update xfails for the new testlist
+> 
+>   drivers/gpu/drm/ci/build-igt.sh               |   41 +-
+>   drivers/gpu/drm/ci/build.sh                   |    6 +-
+>   drivers/gpu/drm/ci/container.yml              |   12 +-
+>   drivers/gpu/drm/ci/gitlab-ci.yml              |   46 +-
+>   drivers/gpu/drm/ci/igt_runner.sh              |    9 +-
+>   drivers/gpu/drm/ci/image-tags.yml             |    2 +-
+>   drivers/gpu/drm/ci/lava-submit.sh             |    4 +-
+>   drivers/gpu/drm/ci/test.yml                   |   17 +-
+>   drivers/gpu/drm/ci/testlist.txt               | 2761 -----------------
+>   .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt |   41 +-
+>   .../drm/ci/xfails/amdgpu-stoney-flakes.txt    |    7 +
+>   .../gpu/drm/ci/xfails/amdgpu-stoney-skips.txt |   33 +-
+>   drivers/gpu/drm/ci/xfails/i915-amly-fails.txt |   31 +
+>   .../gpu/drm/ci/xfails/i915-amly-flakes.txt    |    9 +
+>   drivers/gpu/drm/ci/xfails/i915-amly-skips.txt |   22 +-
+>   drivers/gpu/drm/ci/xfails/i915-apl-fails.txt  |   46 +-
+>   drivers/gpu/drm/ci/xfails/i915-apl-flakes.txt |    6 +
+>   drivers/gpu/drm/ci/xfails/i915-apl-skips.txt  |   26 +-
+>   drivers/gpu/drm/ci/xfails/i915-cml-fails.txt  |   38 +
+>   drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt |    6 +
+>   drivers/gpu/drm/ci/xfails/i915-cml-skips.txt  |   23 +
+>   drivers/gpu/drm/ci/xfails/i915-glk-fails.txt  |   41 +-
+>   drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt |    7 +
+>   drivers/gpu/drm/ci/xfails/i915-glk-skips.txt  |   26 +-
+>   drivers/gpu/drm/ci/xfails/i915-kbl-fails.txt  |   42 +-
+>   drivers/gpu/drm/ci/xfails/i915-kbl-flakes.txt |    7 +-
+>   drivers/gpu/drm/ci/xfails/i915-kbl-skips.txt  |   36 +-
+>   drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt  |   77 +-
+>   drivers/gpu/drm/ci/xfails/i915-tgl-skips.txt  |   28 +-
+>   drivers/gpu/drm/ci/xfails/i915-whl-fails.txt  |   63 +-
+>   drivers/gpu/drm/ci/xfails/i915-whl-flakes.txt |    6 +
+>   drivers/gpu/drm/ci/xfails/i915-whl-skips.txt  |   22 +-
+>   .../drm/ci/xfails/mediatek-mt8173-fails.txt   |   30 +-
+>   .../drm/ci/xfails/mediatek-mt8173-flakes.txt  |   11 +
+>   .../drm/ci/xfails/mediatek-mt8173-skips.txt   |   16 +
+>   .../drm/ci/xfails/mediatek-mt8183-fails.txt   |   21 +-
+>   .../drm/ci/xfails/mediatek-mt8183-skips.txt   |   18 +
+>   .../gpu/drm/ci/xfails/meson-g12b-fails.txt    |   24 +-
+>   .../gpu/drm/ci/xfails/meson-g12b-skips.txt    |   18 +
+>   .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |   12 +-
+>   .../gpu/drm/ci/xfails/msm-apq8016-skips.txt   |   15 +
+>   .../gpu/drm/ci/xfails/msm-apq8096-fails.txt   |    7 +
+>   .../gpu/drm/ci/xfails/msm-apq8096-flakes.txt  |    6 +
+>   .../gpu/drm/ci/xfails/msm-apq8096-skips.txt   |   26 +-
+>   .../msm-sc7180-trogdor-kingoftown-fails.txt   |  175 +-
+>   .../msm-sc7180-trogdor-kingoftown-flakes.txt  |    8 +
+>   .../msm-sc7180-trogdor-kingoftown-skips.txt   |   19 +
+>   ...sm-sc7180-trogdor-lazor-limozeen-fails.txt |  175 +-
+>   ...m-sc7180-trogdor-lazor-limozeen-flakes.txt |    6 +
+>   ...sm-sc7180-trogdor-lazor-limozeen-skips.txt |   16 +
+>   .../gpu/drm/ci/xfails/msm-sdm845-fails.txt    |   38 +-
+>   .../gpu/drm/ci/xfails/msm-sdm845-flakes.txt   |   25 +-
+>   .../gpu/drm/ci/xfails/msm-sdm845-skips.txt    |   19 +
+>   .../drm/ci/xfails/rockchip-rk3288-fails.txt   |   62 +-
+>   .../drm/ci/xfails/rockchip-rk3288-skips.txt   |   21 +-
+>   .../drm/ci/xfails/rockchip-rk3399-fails.txt   |   83 +-
+>   .../drm/ci/xfails/rockchip-rk3399-flakes.txt  |   13 +-
+>   .../drm/ci/xfails/rockchip-rk3399-skips.txt   |   19 +
+>   drivers/gpu/drm/ci/xfails/update-xfails.py    |    4 +-
+>   .../drm/ci/xfails/virtio_gpu-none-fails.txt   |   94 +-
+>   .../drm/ci/xfails/virtio_gpu-none-skips.txt   |   20 +-
+>   61 files changed, 1348 insertions(+), 3194 deletions(-)
+>   delete mode 100644 drivers/gpu/drm/ci/testlist.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/i915-amly-flakes.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/i915-apl-flakes.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/i915-glk-flakes.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/i915-whl-flakes.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8173-flakes.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8173-skips.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8183-skips.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/meson-g12b-skips.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/msm-apq8016-skips.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/msm-apq8096-flakes.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
+>   create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-flakes.txt
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
-index 98dc04962fe3..ed2c8e485cdd 100644
---- a/arch/arm64/boot/dts/qcom/pm660.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
-@@ -74,6 +74,23 @@ pon_resin: resin {
- 			};
- 		};
- 
-+		pm660_charger: charger@1000 {
-+			compatible = "qcom,pm660-charger";
-+			reg = <0x1000>;
-+
-+			interrupts = <0x0 0x13 0x4 IRQ_TYPE_EDGE_BOTH>,
-+				     <0x0 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
-+				     <0x0 0x16 0x1 IRQ_TYPE_EDGE_RISING>,
-+				     <0x0 0x13 0x6 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "usb-plugin", "bat-ov", "wdog-bark", "usbin-icl-change";
-+
-+			io-channels = <&pm660_rradc 3>,
-+				      <&pm660_rradc 4>;
-+			io-channel-names = "usbin_i", "usbin_v";
-+
-+			status = "disabled";
-+		};
-+
- 		pm660_temp: temp-alarm@2400 {
- 			compatible = "qcom,spmi-temp-alarm";
- 			reg = <0x2400>;
-@@ -181,6 +198,14 @@ channel@85 {
- 			};
- 		};
- 
-+		pm660_rradc: adc@4500 {
-+			compatible = "qcom,pm660-rradc";
-+			reg = <0x4500>;
-+			#io-channel-cells = <1>;
-+
-+			status = "disabled";
-+		};
-+
- 		pm660_gpios: gpio@c000 {
- 			compatible = "qcom,pm660-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
 
----
-base-commit: ee78a17615ad0cfdbbc27182b1047cd36c9d4d5f
-change-id: 20240606-pm660-charger-rrdac-e003ff9498c8
+Applied to drm-misc-next
 
-Best regards,
--- 
-Barnabás Czémán <trabarni@gmail.com>
-
+Thanks
+Helen
 
