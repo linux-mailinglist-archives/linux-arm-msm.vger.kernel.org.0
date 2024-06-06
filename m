@@ -1,193 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-21856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73AE68FDF7F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:22:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 907F28FDF90
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:27:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 020CA280DE4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 07:22:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02F01B21FCD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 07:27:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BA533D56D;
-	Thu,  6 Jun 2024 07:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0955713C679;
+	Thu,  6 Jun 2024 07:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZhvpbASW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IUotXnt3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D072D1E51D;
-	Thu,  6 Jun 2024 07:22:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA3413BC2F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 07:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717658549; cv=none; b=LiMq3ZG104J2c1wDN4ydhrm7BsLap0WSt8a1Xkqj7Bcpk9cGPz1U1jT9wMMqwoXxsxg+/vfKrWQ7RRvPZIyvmnQEPOOXg1fFxJqFMnPxFZFh1ZSNBgCjfBZj1pmMwvaKSUVIBwyhOWxolg4cmRfc3h171pFs65HFFlqrhjkhaTk=
+	t=1717658832; cv=none; b=jbdI2+T/6/JIZepDD0Mhx9fU0WGCj6sEcs05rdRpLL+p1UYnZjSKtTkyPNM4D/vjjZyJH6eTk2YuBYKMfnh+xyN/g9bHjoO1I2xzxOKTS1aeKilyaACwNnbNJpnWYOTv+Lm1m8x3NDN08X9g1bMR2OSyiZdU0qsJTTxdgCI3eGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717658549; c=relaxed/simple;
-	bh=szT99mGZHql/9nIzB4JuC9TNyyUcXb4GeLPFPN+LAng=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DaDsUc9Mn++35q2Sw/RFJiUKdfMXZ9YyGxpuicm8etaYxKVlZ9Iz9vYDpZm22dwgSftkMr1g4XqJKMAJ8xoSGyNqr8HbXtB3+XjjkOF6hUMNIEGVUnhIJ2U37mh1Ry0cyv0TUV/pBEgUTfQatYvf95arupHlrRDcxjP9OfhniHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZhvpbASW; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455KICoa004174;
-	Thu, 6 Jun 2024 07:22:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9N7P+qpAqx1kFTEkel5RJU3y+gdL6UcRibDpmh659lw=; b=ZhvpbASWzo+wPdwZ
-	Qwl/RthFSC1QS1XjqoAU60DlO80J2iU20H+g4qShP8T6IMHiAeMAOPiHMTsqf683
-	XKK6rHuP9FidB8yJjFPr0Be0UDRbB8Zy9iwQU5slisu3Dxo/tiZMeD55dKf1vkyw
-	zezN8rkgfjAN3Wmpe4XuTgAMjzopQcQcdC3jy5PwgBHn2twFApBHghEG+o9CUOXN
-	Ylw0yyImxQx/XnnFIrCXUAoKhv12z5FSnPJYLGuOhnYQ7Vc91ZA3KtQIfKnCF1i7
-	wpSKsviU2JhGPYrITu+3sYPYuHjeb9PP43vw5W23o5WxDR15O+NLr+anAvL8Y4CT
-	fG+XQQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjxxas1v6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Jun 2024 07:22:23 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4567MLkv008618
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Jun 2024 07:22:21 GMT
-Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Jun 2024
- 00:22:18 -0700
-Message-ID: <becf237b-1f46-46cd-b196-fdfca35ef736@quicinc.com>
-Date: Thu, 6 Jun 2024 12:52:15 +0530
+	s=arc-20240116; t=1717658832; c=relaxed/simple;
+	bh=eTnUwNkDQXdrC7n1JvpcvTENi2pHuNndoBzQaRgPaoU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=H2rYgtS6lb5b7on+7SRnLRCg3xXkAf3VTJ+4qgNhwKy8BUfg29kuaH2mpJjV7s8Eft58RArO9B77Xqq9aCeH4L3Fs7GzRvQluy7qzjXYg5Z7EUhyIp+fWbUTB67O0AK5IaBrIM6DReqEzyOsj7IZTsvTqXrdTLPSOSS3jsdeo3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IUotXnt3; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-702548b056aso526467b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 00:27:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717658830; x=1718263630; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vATXyYpxDoxuMBWGCsFFKBvV2FwTY9tS2i2Q/lEI70Q=;
+        b=IUotXnt3RvCUccEuthAMJH8Yt1+eJjUysxbCO4myWRjqJb8I/7NVLposA4wgdUj8LT
+         T6B3KSkshdQPjruuPxq1AJGEUDFmO82pKuHxD6e7383ZbhQOOw1pfKCMrEymOaHoTVAa
+         qHTiTZesFLRbrzI4OBCOHv5fY8RlUqg5dLBpR5NKLyyp/W9cF1d6a/caAdlDc98Rcp+4
+         uEHzpH58z96SSKDnJxP+jLvVqzHfNzUd9MMfgCWw3UvBust9Xwbx5W1avS7hcGXWhEUY
+         zYiAzJcLdoI10+Ot37BnQ/ALUnOjSSi/I35JE5RVmqvrTDEprlYvKD9Obh/lfhT8KbJK
+         4VDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717658830; x=1718263630;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vATXyYpxDoxuMBWGCsFFKBvV2FwTY9tS2i2Q/lEI70Q=;
+        b=QNmV2Kxmcd1S0vZRbCDc83p3jJuC80hUg0DfEJtSjziWm2Som69oqGgmrw/raabNqq
+         PCUXKGQ8N0F5o9bAdc/l/N821yUmrHy6uMv+Ch67VktiQREI2S/Zb5xqn1ayA40fPirK
+         Gz+8qboDi7lKf6QgWTRavEJCU1zf6Ratnisk3sA7/5dLrtBmjqBOOp5n2+p2U1hJaYO4
+         WHqHs04qnZCNZtv2l0cREKgfv009ORmzkRagYIadhcv6KT9RyxUL5ba3A/np0aE78/Lt
+         i4hUq80bIqQXJDVOlW6oULrhBCUy8nvgY5w6F80VojNnshJLLCvaZEeaI51jc64K0eih
+         yt4A==
+X-Forwarded-Encrypted: i=1; AJvYcCXfZ/Qmew+o4/qRq/PLqhoF+tYvqGpssd5Zop51caZlow48DVWgCrxM+fiz9oNwsxe8BESVgwUMGCVqqNy6oVUY37Z4FFB+jCBTqyyE+Q==
+X-Gm-Message-State: AOJu0YyJfyqCJZVtlFdRna6vmuOSyQ0IViraJo9smSq61BNNQsUSSIYj
+	ZXx4aPTsY229bGd6O1JwjWYKoEf0gxLOSCFOyKSRK6Vobj2Lg4VMUred04x6JQ==
+X-Google-Smtp-Source: AGHT+IHaMKRV/ZyBSrUsIgLazsPnTH6mNPZ8ByD6J5KfGegSjHhh2dqKlKHNCqkvzSpa+cIabaAPcw==
+X-Received: by 2002:a05:6a20:da9f:b0:1b0:278e:34a6 with SMTP id adf61e73a8af0-1b2b70fe1f0mr6173863637.49.1717658830110;
+        Thu, 06 Jun 2024 00:27:10 -0700 (PDT)
+Received: from [127.0.1.1] ([120.60.142.92])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-703fd494feasm566621b3a.100.2024.06.06.00.26.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jun 2024 00:27:09 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/5] PCI: endpoint: Add EPC 'deinit' event and
+ dw_pcie_ep_linkdown() API
+Date: Thu, 06 Jun 2024 12:56:33 +0530
+Message-Id: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/9] misc: fastrpc: Restrict untrusted app to spawn
- signed PD
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        stable
-	<stable@kernel.org>
-References: <20240530102032.27179-1-quic_ekangupt@quicinc.com>
- <20240530102032.27179-9-quic_ekangupt@quicinc.com>
- <q6vl2d7ekrjiwbr4h6cieh6q7vewhbiqay67wrglurphkigq4c@zoeyzywhypww>
- <6c026f78-d397-4375-a347-85f41bff1e99@quicinc.com>
- <7eygwrefc43aaqeihir3odjhdseeewweqvabvq6jg5bbmnhrkz@p33mhebq5v3w>
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <7eygwrefc43aaqeihir3odjhdseeewweqvabvq6jg5bbmnhrkz@p33mhebq5v3w>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _ufIZBHHGWcd2BdGZqHXuGL4ZfSL7WGH
-X-Proofpoint-GUID: _ufIZBHHGWcd2BdGZqHXuGL4ZfSL7WGH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-06_01,2024-06-06_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=923 adultscore=0
- priorityscore=1501 spamscore=0 malwarescore=0 mlxscore=0 bulkscore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406060053
+X-B4-Tracking: v=1; b=H4sIAKlkYWYC/x3MQQqAIBBA0avIrBNUYqCuEi3KGWs2JhoRiHdPW
+ r7F/xUKZ+ECs6qQ+ZEiV+ywgwJ/bvFgLdQNzrjRoEGdvGhiiXJrx+gp2J1wCtCDlDnI+8+WtbU
+ PTiaPVVwAAAA=
+To: Vignesh Raghavendra <vigneshr@ti.com>, 
+ Siddharth Vadapalli <s-vadapalli@ti.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Richard Zhu <hongxing.zhu@nxp.com>, Lucas Stach <l.stach@pengutronix.de>, 
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Minghuan Lian <minghuan.Lian@nxp.com>, 
+ Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>, 
+ Jesper Nilsson <jesper.nilsson@axis.com>, Jingoo Han <jingoohan1@gmail.com>, 
+ Srikanth Thokala <srikanth.thokala@intel.com>, 
+ Marek Vasut <marek.vasut+renesas@gmail.com>, 
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, 
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-omap@vger.kernel.org, linux-pci@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
+ linux-arm-kernel@axis.com, linux-arm-msm@vger.kernel.org, 
+ linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org, 
+ mhi@lists.linux.dev, Niklas Cassel <cassel@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Bjorn Helgaas <helgaas@kernel.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2731;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=eTnUwNkDQXdrC7n1JvpcvTENi2pHuNndoBzQaRgPaoU=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmYWTBvvClBeGF7FTQylWzbsg9oVTTskz2EOoBn
+ Zt4GVpYgeSJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZmFkwQAKCRBVnxHm/pHO
+ 9dwUB/4/uHuy0pOtmq60P1UyLiR+MH2npT+bFuWCf8fMwExCiwaeJHYifh0b18wJgThFXn7F4Lo
+ iuzlAa23KRnrAiq/e0hvZmPmnM30g6EXNbW7THksJEFxLdnoSpeyIWg7uIsVak75r1nSfHIKqNj
+ sSx1fUpQvxDgWYY+56ZvpDp7KZ40y4MG8iSOv2wVwPGgxgpugNKqY2ogX1366QUpjBOM1clCvwA
+ tuS3Xry4kqdFn3bu9TsWOL4HoG/3r+VB7RwuZoMAOe7z17rawzf4OiRQF/WwQO6VgQomU+JUIBG
+ hI3tDABYUW5C9SooxoFvxoHMbJIwb5/mXxW8M6dlQzXxeJpS
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
+Hi,
 
+This series includes patches that were left over from previous series [1] for
+making the host reboot handling robust in endpoint framework.
 
-On 6/3/2024 3:32 PM, Dmitry Baryshkov wrote:
-> On Mon, Jun 03, 2024 at 11:57:52AM +0530, Ekansh Gupta wrote:
->> On 5/31/2024 5:19 AM, Dmitry Baryshkov wrote:
->>> On Thu, May 30, 2024 at 03:50:26PM +0530, Ekansh Gupta wrote:
->>>> Some untrusted applications will not have access to open fastrpc
->>>> device nodes and a privileged process can open the device node on
->>>> behalf of the application. Add a check to restrict such untrusted
->>>> applications from offloading to signed PD.
->>>>
->>>> Fixes: 7f1f481263c3 ("misc: fastrpc: check before loading process to the DSP")
->>>> Cc: stable <stable@kernel.org>
->>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>>> ---
->>>>   drivers/misc/fastrpc.c | 23 ++++++++++++++++++-----
->>>>   1 file changed, 18 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->>>> index 73fa0e536cf9..32615ccde7ac 100644
->>>> --- a/drivers/misc/fastrpc.c
->>>> +++ b/drivers/misc/fastrpc.c
->>>> @@ -328,6 +328,7 @@ struct fastrpc_user {
->>>>   	int pd;
->>>>   	bool is_secure_dev;
->>>>   	bool is_unsigned_pd;
->>>> +	bool untrusted_process;
->>>>   	char *servloc_name;
->>>>   	/* Lock for lists */
->>>>   	spinlock_t lock;
->>>> @@ -1249,13 +1250,17 @@ static bool is_session_rejected(struct fastrpc_user *fl, bool unsigned_pd_reques
->>>>   		 * channel is configured as secure and block untrusted apps on channel
->>>>   		 * that does not support unsigned PD offload
->>>>   		 */
->>>> -		if (!fl->cctx->unsigned_support || !unsigned_pd_request) {
->>>> -			dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD\n");
->>>> -			return true;
->>>> -		}
->>>> +		if (!fl->cctx->unsigned_support || !unsigned_pd_request)
->>>> +			goto reject_session;
->>>>   	}
->>>> +	/* Check if untrusted process is trying to offload to signed PD */
->>>> +	if (fl->untrusted_process && !unsigned_pd_request)
->>>> +		goto reject_session;
->>>>   	return false;
->>>> +reject_session:
->>>> +	dev_dbg(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD\n");
->>>> +	return true;
->>>>   }
->>>>   static void fastrpc_mmap_remove_pdr(struct fastrpc_static_pd *spd)
->>>> @@ -1504,12 +1509,20 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->>>>   		goto err;
->>>>   	}
->>>> +	/*
->>>> +	 * Third-party apps don't have permission to open the fastrpc device, so
->>> Permissions depend on the end-user setup. Is it going to break if the
->>> user sets 0666 mode for fastrpc nodes?
->> If the root user sets 0666 for fastrpc nodes, it is expected that this check will get bypassed.
-> So, any process will be trusted? This looks so Android-centric. Please come
-> with a better way to define 'trusted'.
->
-> On a typical UNIX system a used has multiple supplementary GIDs (which
-> can be used to allow access to the devices) which have no relationship
-> to the process effective GID. On a multi-user machine it might be
-> logical that fastrpc nodes have separate group-id and group's read/write
-> permissions. But then each of the users has their own unique 'effective'
-> GID. Which of those should be using for computing the 'trusted' status?
-Thanks for your suggestions, Dmitry. I am considering dropping this patch and system unsignedPD patch
-from this series(due to the dependency). I'm redesigning the trusted-process term to make it more generic.
-Planning to make it depend on the group IDs and have a check with both primary and supplementary GIDs
-of the process. I'll share the design with you along with the changes once it's ready.
->
->>>> +	 * it is opened on their behalf by a priveleged process. This is detected
->>>> +	 * by comparing current PID with the one stored during device open.
->>>> +	 */
->>>> +	if (current->tgid != fl->tgid)
->>>> +		fl->untrusted_process = true;
->>> If the comment talks about PIDs, when why are you comparing GIDs here?
->> It should be GID, I'll update the comment in next spin.
->>
->>>> +
->>>>   	if (init.attrs & FASTRPC_MODE_UNSIGNED_MODULE)
->>>>   		fl->is_unsigned_pd = true;
->>>>   	if (is_session_rejected(fl, fl->is_unsigned_pd)) {
->>>> -		err = -ECONNREFUSED;
->>>> +		err = -EACCES;
->>>>   		goto err;
->>>>   	}
->>>> -- 
->>>> 2.43.0
->>>>
+When the above mentioned series got merged to pci/endpoint, we got a bug report
+from LKP bot [2] and due to that the offending patches were dropped.
+
+This series addressed the issue reported by the bot by adding the stub APIs in
+include/pci/pci-epc.h and also removed the unused dwc wrapper as concluded in
+[3].
+
+Testing
+=======
+
+This series is tested on Qcom SM8450 based development board with 2 SM8450 SoCs
+connected over PCIe.
+
+- Mani
+
+[1] https://lore.kernel.org/linux-pci/20240430-pci-epf-rework-v4-0-22832d0d456f@linaro.org/
+[2] https://lore.kernel.org/linux-pci/202405130815.BwBrIepL-lkp@intel.com/
+[3] https://lore.kernel.org/linux-pci/20240529141614.GA3293@thinkpad/
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (5):
+      PCI: dwc: ep: Remove dw_pcie_ep_init_notify() wrapper
+      PCI: endpoint: Introduce 'epc_deinit' event and notify the EPF drivers
+      PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown() API to handle Link Down event
+      PCI: qcom-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
+      PCI: layerscape-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
+
+ drivers/pci/controller/dwc/pci-dra7xx.c           |   2 +-
+ drivers/pci/controller/dwc/pci-imx6.c             |   2 +-
+ drivers/pci/controller/dwc/pci-keystone.c         |   2 +-
+ drivers/pci/controller/dwc/pci-layerscape-ep.c    |   4 +-
+ drivers/pci/controller/dwc/pcie-artpec6.c         |   2 +-
+ drivers/pci/controller/dwc/pcie-designware-ep.c   | 116 +++++++++++++---------
+ drivers/pci/controller/dwc/pcie-designware-plat.c |   2 +-
+ drivers/pci/controller/dwc/pcie-designware.h      |  10 +-
+ drivers/pci/controller/dwc/pcie-keembay.c         |   2 +-
+ drivers/pci/controller/dwc/pcie-qcom-ep.c         |   5 +-
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c       |   2 +-
+ drivers/pci/controller/dwc/pcie-tegra194.c        |   3 +-
+ drivers/pci/controller/dwc/pcie-uniphier-ep.c     |   2 +-
+ drivers/pci/endpoint/functions/pci-epf-mhi.c      |  19 ++++
+ drivers/pci/endpoint/functions/pci-epf-test.c     |  17 +++-
+ drivers/pci/endpoint/pci-epc-core.c               |  25 +++++
+ include/linux/pci-epc.h                           |  13 +++
+ include/linux/pci-epf.h                           |   2 +
+ 18 files changed, 162 insertions(+), 68 deletions(-)
+---
+base-commit: 7d96527bc16e46545739c6fe0ab6e4c915e9910e
+change-id: 20240606-pci-deinit-2e6cdf1bd69f
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 
