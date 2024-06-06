@@ -1,151 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-21851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8CE58FDE80
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 08:11:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A1C48FDE84
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 08:13:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 596521C23A09
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 06:11:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA2481C2193B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 06:13:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCD4D3CF73;
-	Thu,  6 Jun 2024 06:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 613234644E;
+	Thu,  6 Jun 2024 06:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="czKuIsd0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rBTpQDSo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1582576B;
-	Thu,  6 Jun 2024 06:11:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20D245012
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 06:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717654300; cv=none; b=eKdxnH+umdLcdb9e/UuOlsTIA3tU1Lx/3aS5KG996ruJxgTaSf6S7lNB2T9EZrpDOhGKLdyGXxeE93+ZX3922YdS9aHwVIQSVxJ6EwE9F2Qw1kyRqlibzJVFzVg4yfgmDiR8lFgG4Is3pSPaXMvzSNdLWKGNVrWjOoB2OSi+9aQ=
+	t=1717654407; cv=none; b=OPe3BHWVBcCsY4ZvByIMxUtn84JGDC/X6GaH2GR4Jb9GXAanGpLpM9tRdbZk1oYzlxENtT7PwYtcZcL0o1FJU4Qof2lB99KC+QlxyAoFqFJm+xyvOy42kKivG8oqTkfTRKb4nEynmrNFqsepYhY1mZojlc6RjudC3wPP/OHEwu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717654300; c=relaxed/simple;
-	bh=8t8GqrE9igKsHXbHUsO0YQpu7quqdO/sjnwgir25+xo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=qM3Dzi8OO69rqSytMV9CF5EKTKx+RHnPJqyVrBOGOPMBB218WAaXCDZUJOXpqx/2wa2ADcp0bC2gzDq51Sr0JIL8T5ooun/9cScbMBA6LuEaq+v6xMHgbewHJkG4hV3n3llJ94qziER3Yd0bb4ttcsOq3YMx7/dfLP3aWX+togI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=czKuIsd0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455I2jeO013971;
-	Thu, 6 Jun 2024 06:11:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6AsnmxVVbU7WdXutARzYu6ckxAXWOB5d2hWAzut8hks=; b=czKuIsd0XPdhj8mx
-	P590rci7xVbofX2F7fEg7DErp47934vA6mTvUHgiT/fAqUaNXcmOM466IrDqcpWL
-	cCD17/7GJa+C/9e2RGXTuy0+OnW5GAopA8SH3S3GGgYcf9L8WVvtoSeBLgwyiNUq
-	/qVZ4Ur+iCeGu1TsgFosysyQsesdFkuLZ8cP3OrZxjh/FHtAhT294xVFUPIivTUh
-	db7pRMVkXvBIAMet4tjLE0NQLYOBP4LSS1fBSkXc2SCKaUsrlA+57SOZxvxdzvcy
-	cVLbIYF5KZp/CgDNQKrtzrXFHMLXkif4Ar1YtWAk6mZkHvHLlp9+xxNrXc8gQth0
-	LFsGHA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjvxy97my-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Jun 2024 06:11:29 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4566BSP6004623
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Jun 2024 06:11:28 GMT
-Received: from [10.218.10.146] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 5 Jun 2024
- 23:11:22 -0700
-Message-ID: <664cca91-8615-d3f6-7525-15b9b6725cce@quicinc.com>
-Date: Thu, 6 Jun 2024 11:41:19 +0530
+	s=arc-20240116; t=1717654407; c=relaxed/simple;
+	bh=TCEmfUhx5NW8tX4+3pFLKOppFW7aeQNfaGuzeZ6O/XU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=E/PxvvrfGPIi6fOSkbfttVnwFuybr4nQVLCT7rPephU8VlKJrQKkHofl8QjdUjiENBwxqwKszM4A5SvBGb/tZNdVpTyBFnB3B6Y8hR3e/Y599UjTLyNVX4GIGLdo+yVdrLTlFPXSjJZvQyp/eUG1LRqEKj0h+Xm9cUsKXJ+t/vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rBTpQDSo; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52b938587a4so642024e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Jun 2024 23:13:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717654404; x=1718259204; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8sQ5CkvXW1H/O7XRlffCbc9bM4I1KOOxElkjM2VolH4=;
+        b=rBTpQDSoELBXB1AZ1d2sFnZGrPufKaB7cMX3Z8gL1BduPqd9BNCVQKa4l4Tsyizk6l
+         d2rH1kF3b8sBLjNQ7HKNCgZ6VtKdBmHkMYkc8vKP2vbPwg8JYSc+ozQDVa92yaU3tbSh
+         l6+OSsvi0nVy+gqnlfw0uRTPWVk2KeX0Lats7M6jTxCUs250NIsZQJrDMNQLluA+D23H
+         xKiFR1xvifQ7qtKSND7zQTNRZaVwcw7WeQ7Q4LCij4x/BJZi9ln/PyyAQqIMGNz6ROHG
+         mctGNfjxYx8BROod7rTv3LF6T//X9yILssKBqG/lnzgGHiFOGSsz/wPCKWilwGUfi4/X
+         YYWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717654404; x=1718259204;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8sQ5CkvXW1H/O7XRlffCbc9bM4I1KOOxElkjM2VolH4=;
+        b=tbWNa+gvaeIi6Lnp4vGw5D6kt9KreGsj1sTa5nBiAEWmXufZ4Z5l6PknpLaBoTZGu0
+         WbYEFbojFMLZugEU8se1MYDwNbltFrbvBvrJbAPsI87U4ApxJFWwoIe+IVwVphUuQUbP
+         cu7Q6698VxLs/icSzim4qPomjeW/vIu5EFRiTPjS2lTge/9zm4JwHxLgY2r+4WvCFq17
+         Be0kCHkGDmCyfrxdV2atacdhBS0N/Bx5fp2munvtBajYB0TuMKXc8P+cwl+6n57yJb/n
+         3dxmig5hj1BrbRAC2yjc/x6FXSWpONdXbr5hqOTcs+y0RNcSzBFSfkaFK3RbyQoMM+0f
+         ahbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU3HfgJl85yf3X6DQq/XXwcHP+/odMlKXk5AdIrABkxuqZGOo9jN5N4LbdlOYpARDc70QVMM2hLPvM/ONvGnf2Hg6rBIvxSRkzIhcA1Wg==
+X-Gm-Message-State: AOJu0Yxfu2yykTcVHRzwd5991K6lZyanLAQNgAJamd8vEHEk7ZBGPTNE
+	lUEMfPVlquMbw2VVfE6n62TVEBmi3mjJJUrnglAmMO133RDJpfczhi9beHCLCGI=
+X-Google-Smtp-Source: AGHT+IH6GDxAjS0FP0Fzu4H4EKEOYscrl/Q2tDMYt8/w5DcMnYe+h9UOrzA/5POt0zk/gnrf2oQv7w==
+X-Received: by 2002:ac2:5583:0:b0:523:b7ec:a222 with SMTP id 2adb3069b0e04-52bab4fc76bmr2487345e87.51.1717654403584;
+        Wed, 05 Jun 2024 23:13:23 -0700 (PDT)
+Received: from [192.168.2.24] ([110.93.11.116])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4215c19e567sm9925265e9.1.2024.06.05.23.13.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jun 2024 23:13:23 -0700 (PDT)
+Message-ID: <ad665e7c-a299-422b-b280-e80c9960b006@linaro.org>
+Date: Thu, 6 Jun 2024 08:13:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V3 7/8] clk: qcom: Add GPUCC driver support for SM4450
-To: Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>
-References: <20240528114254.3147988-1-quic_ajipan@quicinc.com>
- <20240528114254.3147988-8-quic_ajipan@quicinc.com>
- <ssnyujhgz64mbxawb43okjkdidd3tbxwjob36ikgbogy64xuqv@ckvir5vfqo63>
- <63d35ddacc113598f1822486b882552a.sboyd@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-crd: add USB DisplayPort audio
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240604094947.98191-1-krzysztof.kozlowski@linaro.org>
+ <gqcbvowfma7l4lmqeom4pczjnl5anxtn5brsp3ttu4fisgcw7u@ax4eqlpfqnc4>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-From: Ajit Pandey <quic_ajipan@quicinc.com>
-In-Reply-To: <63d35ddacc113598f1822486b882552a.sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <gqcbvowfma7l4lmqeom4pczjnl5anxtn5brsp3ttu4fisgcw7u@ax4eqlpfqnc4>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oz3MYEvDsO1nCe3XwPLEHzl9WDMbYrKr
-X-Proofpoint-GUID: oz3MYEvDsO1nCe3XwPLEHzl9WDMbYrKr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-06_01,2024-06-06_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- mlxscore=0 adultscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=958 impostorscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406060044
 
-
-
-On 5/30/2024 1:18 AM, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2024-05-28 06:23:27)
->> On Tue, May 28, 2024 at 05:12:53PM +0530, Ajit Pandey wrote:
->>> Add Graphics Clock Controller (GPUCC) support for SM4450 platform.
->>>
->>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
->>> ---
->>>   drivers/clk/qcom/Kconfig        |   9 +
->>>   drivers/clk/qcom/Makefile       |   1 +
->>>   drivers/clk/qcom/gpucc-sm4450.c | 805 ++++++++++++++++++++++++++++++++
->>>   3 files changed, 815 insertions(+)
->>>   create mode 100644 drivers/clk/qcom/gpucc-sm4450.c
->>
->> [trimmed]
->>
->>> +
->>> +     /* Keep some clocks always enabled */
->>> +     qcom_branch_set_clk_en(regmap, 0x93a4); /* GPU_CC_CB_CLK */
->>> +     qcom_branch_set_clk_en(regmap, 0x9004); /* GPU_CC_CXO_AON_CLK */
->>> +     qcom_branch_set_clk_en(regmap, 0x900c); /* GPU_CC_DEMET_CLK */
->>
->> I pinged Stephen regarding these clocks. LGTM otherwise.
->>
+On 06/06/2024 04:47, Bjorn Andersson wrote:
+> On Tue, Jun 04, 2024 at 11:49:47AM GMT, Krzysztof Kozlowski wrote:
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+> [..]
+>> @@ -836,6 +868,7 @@ &mdss {
+>>  };
+>>  
+>>  &mdss_dp0 {
 > 
-> Looks OK to me. I assume that these clks don't get turned off when the
-> GPU power domain is turned off. If that's the case then presumably we
-> would need to turn these on and off during power transitions.
+> I don't seem to have this node, did I loose a patch somewhere?
+> 
 
-Yes, these clocks will not get turned off with GPU power domain 
-transitions hence explicit on and off isn't required.
+I rebased my branch on top of Abel's work/next branches for x1e80100,
+assuming he sent the USB display port. Apparently this is not the case,
+so this makes little sense now. Sorry for the noise, I will come back
+once Abel's work get posted or merged.
 
--- 
-Thanks, and Regards
-Ajit
+Best regards,
+Krzysztof
+
 
