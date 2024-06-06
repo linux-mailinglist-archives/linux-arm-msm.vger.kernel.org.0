@@ -1,296 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-21868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C838A8FE248
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:16:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2DE38FE266
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:19:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D3CE1F228B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:16:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A06E91C224C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:19:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D8DF14EC66;
-	Thu,  6 Jun 2024 09:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D026916E875;
+	Thu,  6 Jun 2024 09:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GLEjZbbp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HShYZLVa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBD36D1B9;
-	Thu,  6 Jun 2024 09:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498DA16DEA0
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 09:15:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717665034; cv=none; b=nWKgzcxvFB+gRqW2jzBqxqF6R+OKyS4LIWQCf2tUQpoNRUhT9ItezIIjyZzQ8kHjoocrGWEmkoRDboYvf7v9v4C898pGu+y4vwuSMa6lwYszganN+RGS4Nr1a900quviHYlXx9rqXLsit9jWgduzhpw/Dh5ReTe+rySM8RmpRI0=
+	t=1717665355; cv=none; b=lRmiY8Ei1CAy2vi0JzEVizFk/+1VkiSF9hyKDcesqxbqOtPWRssYqN5HUO+W7ANdyp242YVjOMbtO9fUSJ8cjqsePA/iWPA4saXKUlZ13UpURp4jnpqw1x0ycSxx9dZX6FD7vf71pT8vG4PCCi3BsNRWdgUF4hmj9pVrGPwov0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717665034; c=relaxed/simple;
-	bh=EtGIx90prizG+AnE+pFraDLV268gRS80lT4+w+aqaZo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=q3p26rtqxSIdhOCxgcJzuk+pzXGxjWCMiKmdX2HNY1Yl9p11+IoKAbmTzA4YS3tZgPdVkorqRvtXcBxZToy1AMsurdAfBkHd+FfFwi6MYtjONrPmro6vdSeepWSbc9N5A8tnuVWimnIZPqmhj9Y+u8uQbcwhDVmF5uzL5kRuAWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GLEjZbbp; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455KIBiS004162;
-	Thu, 6 Jun 2024 09:10:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zsBeWenux3zM5BvoDcuWn2gC94RPHDwvuvLCikPbdsY=; b=GLEjZbbpMY6av01w
-	XDxtPr5aOkXg59+kr0F4JyYqZ/PGu9tgH5e+u3GvMz7QKkDTiNKaK3B5U1MjHBm/
-	boStCUGknYtFuWDYvQthlIjwcjZQf993vum9Rforj2hL2ohDMovtHaCSrCem1XAP
-	xmSsVHIKe76uKIKadBkWYKinD0cI7zQhBu3yTKckd/aBQlKlWkp4RLaBDOQ+c8Ht
-	NKATM3bhsBePxpD4nQpT7C6jOJ55K9kAOUs3qsxBtXsVpAgvOpUwGKTHMT0/U08d
-	Juxkvvg3BTfqtbMW1L+9QiJtR7I4nYBsmsNAhsPOteMpqA09Eiv7lfFUjHaGg+yk
-	yabyLQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjxxas99h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Jun 2024 09:10:29 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4569ACcj031595
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 6 Jun 2024 09:10:12 GMT
-Received: from [10.214.67.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Jun 2024
- 02:10:08 -0700
-Message-ID: <b9ee77da-bd51-4d32-8f35-d38fe8b77f44@quicinc.com>
-Date: Thu, 6 Jun 2024 14:39:52 +0530
+	s=arc-20240116; t=1717665355; c=relaxed/simple;
+	bh=d5VEawcLl8UDk3zRsblTLwZtFlWswsdJ90/lMO/E4z8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VwE/UyZya6gQYCF1bk6r64XbUMj7QYT3UJvSicq8S+z06Wp1O0G4LL9hi3WSbc3/BUKanxc6botohNXzFum+WxnAPjlwJNaqFyLNsD5sisKkZ0U3fEikLDOd5JrT7P/6scDEwou32a7n/C0F6U4D56vXlorXvUW8Vpxfj1Mn3js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HShYZLVa; arc=none smtp.client-ip=209.85.219.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dfa5b9274feso882250276.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 02:15:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717665353; x=1718270153; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=prCgKOu5xUqPviI6q3QieUy9Xde2OWUNUz9QeXNcL0E=;
+        b=HShYZLVaTXsLeDbz3chnzhFAk5/Zd/bulEY4k9uD7ihTZuQSrVJXlle2xr4eDzd1oC
+         gtZecySk4PABzYM4/x7j6hkOHpXIH5Sd78kRiqfWgZIcXpMMW61iekqbaug6AJm4mqQ1
+         ZSOHk9Sjo8oa5UDUgf1hIVMd238qNZjdNzn/uqzQ7NUEZce9RknphA2qcbgG9n3oNACB
+         1+Z6yxirvZ3hfrMLPzXGQMBiaTnLTpj4eP/1fUfXitcJYhaMnPwxhOzE8ZXqD8kJXux8
+         gYAj9DR+MGTyCuvGan38MBNuy7AoALmk363IlatT/hC0stFSmTisdr6dtnGpz8oyXYo/
+         xbAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717665353; x=1718270153;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=prCgKOu5xUqPviI6q3QieUy9Xde2OWUNUz9QeXNcL0E=;
+        b=OJqQPs2Qut5J3t4zKpKokDj7u6gfeZFjKgBhSQ4SJ27oImhHYLXxHLiRjIFbKXudXI
+         JOoxpmdwNvy8DzdoOVhJ58LmbFtsTSDcrnoCxdaYwaVL0yRbdWkNUsEUP0lYXmUtzzeY
+         S79BTvmRWLaPzun6dhNdZodgVCh1etrSPFWZT+OG2KS5NPrFsIVYSFeLYQ8tqjFJe/eB
+         348ZfCR8LZ15/PaY671fq//D4lkEmQsBCCe47JkCrME/EDNv585L2O2veeIoAUK/y83Y
+         l+rTAEfB28ZF7VrJGvHVeST+7uhP0CDiYWpfmqK73CDV6FrESOxBotqMQYrHlHZ821Qv
+         hqbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVgLW3UdnwJZjZfT6ujfEN5kUiNDVCLRiN0XmaTM4UkpqY8dztmcv+5bc1J9lHTpFcP7IUVFqg4ZSXDqLgsD/RtU6rMMGJPIZYPraScPw==
+X-Gm-Message-State: AOJu0Yz9PEDupP32/WN0++7ykOXoXelxCz2hDenEqAEkyTLLGcNCxYt3
+	aAyooa9HzlJxx2v8K7DuI0CDBeSkIb0KitVVOgTI26sczSTdILvnPVM4A+yY8JVXRZoZPGMvN8X
+	xsbZb/NJ7EM4b6FmuV63xt3xwlwKD0fhbMU5Lug==
+X-Google-Smtp-Source: AGHT+IFaOcdlZ5nCXl1l45Vkz1KaX5b/tqrF4gcmtPHSaXfhREsd/1VHIFL+r38k8LV70RRVuJHpKDl31AeNkyXGeHM=
+X-Received: by 2002:a25:2c2:0:b0:dfa:4936:e617 with SMTP id
+ 3f1490d57ef6-dfacad00050mr5096794276.48.1717665353113; Thu, 06 Jun 2024
+ 02:15:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: x1e80100: Add BWMONs
-To: Sibi Sankar <quic_sibis@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <djakov@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <quic_rgottimu@quicinc.com>, <conor+dt@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <abel.vesa@linaro.org>
-References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
- <20240604011157.2358019-4-quic_sibis@quicinc.com>
-Content-Language: en-US
-From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-In-Reply-To: <20240604011157.2358019-4-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: GntE29tcrGe8qrZnNCwTRtwg1-kSzRFh
-X-Proofpoint-GUID: GntE29tcrGe8qrZnNCwTRtwg1-kSzRFh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-06_01,2024-06-06_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=900 adultscore=0
- priorityscore=1501 spamscore=0 malwarescore=0 mlxscore=0 bulkscore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1011
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406060067
+References: <20240512-qcom-pd-mapper-v8-0-5ecbb276fcc0@linaro.org>
+ <20240512-qcom-pd-mapper-v8-1-5ecbb276fcc0@linaro.org> <d9a2004a-0a3b-41a6-92a4-eea7b1b3f804@quicinc.com>
+In-Reply-To: <d9a2004a-0a3b-41a6-92a4-eea7b1b3f804@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 6 Jun 2024 12:15:41 +0300
+Message-ID: <CAA8EJpq=vuvWMcPf65nezDXFmWjhwMziuMzVtSDiM81_HD5UMA@mail.gmail.com>
+Subject: Re: [PATCH v8 1/5] soc: qcom: pdr: protect locator_addr with the main mutex
+To: Chris Lew <quic_clew@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Sibi Sankar <quic_sibis@quicinc.com>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+	Xilin Wu <wuxilin123@gmail.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Steev Klimaszewski <steev@kali.org>, Alexey Minnekhanov <alexeymin@postmarketos.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+
+On Thu, 6 Jun 2024 at 01:48, Chris Lew <quic_clew@quicinc.com> wrote:
+>
+> Hi Dmitry,
+>
+> On 5/11/2024 2:56 PM, Dmitry Baryshkov wrote:
+> ...
+> > @@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
+> >                                             locator_hdl);
+> >       struct pdr_service *pds;
+> >
+> > +     mutex_lock(&pdr->lock);
+> >       /* Create a local client port for QMI communication */
+> >       pdr->locator_addr.sq_family = AF_QIPCRTR;
+> >       pdr->locator_addr.sq_node = svc->node;
+> >       pdr->locator_addr.sq_port = svc->port;
+> >
+> > -     mutex_lock(&pdr->lock);
+> >       pdr->locator_init_complete = true;
+> >       mutex_unlock(&pdr->lock);
+> >
+> > @@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
+> >
+> >       mutex_lock(&pdr->lock);
+> >       pdr->locator_init_complete = false;
+> > -     mutex_unlock(&pdr->lock);
+> >
+> >       pdr->locator_addr.sq_node = 0;
+> >       pdr->locator_addr.sq_port = 0;
+> > +     mutex_unlock(&pdr->lock);
+> >   }
+> >
+> >   static const struct qmi_ops pdr_locator_ops = {
+> > @@ -365,6 +365,7 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
+> >       if (ret < 0)
+> >               return ret;
+> >
+> > +     mutex_lock(&pdr->lock);
+> >       ret = qmi_send_request(&pdr->locator_hdl,
+> >                              &pdr->locator_addr,
+> >                              &txn, SERVREG_GET_DOMAIN_LIST_REQ,
+> > @@ -373,15 +374,16 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
+> >                              req);
+> >       if (ret < 0) {
+> >               qmi_txn_cancel(&txn);
+> > -             return ret;
+> > +             goto err_unlock;
+> >       }
+> >
+> >       ret = qmi_txn_wait(&txn, 5 * HZ);
+> >       if (ret < 0) {
+> >               pr_err("PDR: %s get domain list txn wait failed: %d\n",
+> >                      req->service_name, ret);
+> > -             return ret;
+> > +             goto err_unlock;
+> >       }
+> > +     mutex_unlock(&pdr->lock);
+>
+> I'm not sure it is necessary to hold the the mutex during the
+> qmi_txn_wait() since the only variable we are trying to protect is
+> locator_addr.
+>
+> Wouldn't this delay other work like new/del server notifications if this
+> qmi service is delayed or non-responsive?
+>
+
+I've verified, the addr is stored inside the message data by the
+enqueueing functions, so the locator_addr isn't referenced after the
+function returns. I'll reduce the locking scope.
 
 
-
-On 6/4/2024 6:41 AM, Sibi Sankar wrote:
-> Add the CPU and LLCC BWMONs on X1E80100 SoCs.
-> 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 169 +++++++++++++++++++++++++
->   1 file changed, 169 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 1929c34ae70a..d86c4d3be126 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -5329,6 +5329,175 @@ cpu_scp_lpri1: scp-sram-section@200 {
->   			};
->   		};
->   
-> +		pmu@24091000 {
-> +			compatible = "qcom,x1e80100-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
-> +			reg = <0 0x24091000 0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			interconnects = <&mc_virt MASTER_LLCC 3 &mc_virt SLAVE_EBI1 3>;
-> +
-> +			operating-points-v2 = <&llcc_bwmon_opp_table>;
-> +
-> +			llcc_bwmon_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-0 {
-
-Nitpick,In one table, we start from ‘opp-0,’ while in the other table, 
-it begins with ‘opp-1,it is better to make it consistent across table.
-
-> +					opp-peak-kBps = <800000>;
-> +				};
-> +
-> +				opp-1 {
-> +					opp-peak-kBps = <2188000>;
-> +				};
-> +
-> +				opp-2 {
-> +					opp-peak-kBps = <3072000>;
-> +				};
-> +
-> +				opp-3 {
-> +					opp-peak-kBps = <6220800>;
-> +				};
-> +
-> +				opp-4 {
-> +					opp-peak-kBps = <6835200>;
-> +				};
-> +
-> +				opp-5 {
-> +					opp-peak-kBps = <8371200>;
-> +				};
-> +
-> +				opp-6 {
-> +					opp-peak-kBps = <10944000>;
-> +				};
-> +
-> +				opp-7 {
-> +					opp-peak-kBps = <12748800>;
-> +				};
-> +
-> +				opp-8 {
-> +					opp-peak-kBps = <14745600>;
-> +				};
-> +
-> +				opp-9 {
-> +					opp-peak-kBps = <16896000>;
-> +				};
-> +			};
-> +		};
-> +
-> +		pmu@240b3400 {
-> +			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
-> +			reg = <0 0x240b3400 0 0x600>;
-> +
-> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &gem_noc SLAVE_LLCC 3>;
-> +			operating-points-v2 = <&cpu0_bwmon_opp_table>;
-> +
-> +			cpu0_bwmon_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-1 {
-> +					opp-peak-kBps = <4800000>;
-> +				};
-> +
-> +				opp-2 {
-> +					opp-peak-kBps = <7464000>;
-> +				};
-> +
-> +				opp-3 {
-> +					opp-peak-kBps = <9600000>;
-> +				};
-> +
-> +				opp-4 {
-> +					opp-peak-kBps = <12896000>;
-> +				};
-> +
-> +				opp-5 {
-> +					opp-peak-kBps = <14928000>;
-> +				};
-> +
-> +				opp-6 {
-> +					opp-peak-kBps = <17064000>;
-> +				};
-> +			};
-> +		};
-> +
-> +		pmu@240b5400 {
-> +			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
-> +			reg = <0 0x240b5400 0 0x600>;
-> +
-> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &gem_noc SLAVE_LLCC 3>;
-> +			operating-points-v2 = <&cpu8_bwmon_opp_table>;
-> +
-> +			cpu8_bwmon_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-1 {
-> +					opp-peak-kBps = <4800000>;
-> +				};
-> +
-> +				opp-2 {
-> +					opp-peak-kBps = <7464000>;
-> +				};
-> +
-> +				opp-3 {
-> +					opp-peak-kBps = <9600000>;
-> +				};
-> +
-> +				opp-4 {
-> +					opp-peak-kBps = <12896000>;
-> +				};
-> +
-> +				opp-5 {
-> +					opp-peak-kBps = <14928000>;
-> +				};
-> +
-> +				opp-6 {
-> +					opp-peak-kBps = <17064000>;
-> +				};
-> +			};
-> +		};
-> +
-> +		pmu@240b6400 {
-> +			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
-> +			reg = <0 0x240b6400 0 0x600>;
-> +
-> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &gem_noc SLAVE_LLCC 3>;
-> +			operating-points-v2 = <&cpu4_bwmon_opp_table>;
-> +
-> +			cpu4_bwmon_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-1 {
-> +					opp-peak-kBps = <4800000>;
-> +				};
-> +
-> +				opp-2 {
-> +					opp-peak-kBps = <7464000>;
-> +				};
-> +
-> +				opp-3 {
-> +					opp-peak-kBps = <9600000>;
-> +				};
-> +
-> +				opp-4 {
-> +					opp-peak-kBps = <12896000>;
-> +				};
-> +
-> +				opp-5 {
-> +					opp-peak-kBps = <14928000>;
-> +				};
-> +
-> +				opp-6 {
-> +					opp-peak-kBps = <17064000>;
-> +				};
-> +			};
-> +		};
-> +
->   		system-cache-controller@25000000 {
->   			compatible = "qcom,x1e80100-llcc";
->   			reg = <0 0x25000000 0 0x200000>,
-
-
-Thanks,
-Shivnandan
+-- 
+With best wishes
+Dmitry
 
