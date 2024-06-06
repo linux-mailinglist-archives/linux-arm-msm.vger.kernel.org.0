@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-21873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D97B78FE39F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:56:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DC828FE3A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:57:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8ABB3284601
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:56:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A4811F2210A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:57:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DD0717F4F0;
-	Thu,  6 Jun 2024 09:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45ABF17FAAD;
+	Thu,  6 Jun 2024 09:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bAY09Tb4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hj7TExGz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517C117F4E6
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 09:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67ED517F51D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 09:57:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717667797; cv=none; b=r0b0Rqe6xjzHrZVAjntmI6sGWqrTe5Dbw1pV4K6ZgKLDf/K/qzDyljwn965Lh/5OqkQV46xXPGQKfJt/mOKzvLIqNDPL5YjLAFFdDWzbYgPwIjGT3CXAOd9cMd/oB7MuNotHnBN4FWKAvWveSnWY5SqJXL+LQ74TGA4852yA48U=
+	t=1717667830; cv=none; b=SzlOJS8p68/8gN5wK+xkEuPgDkmrQ5gbQW44E6ijh4z/39t4XZpmjbFKoQJZt4gEMyYhjbiYCTMT9xPm5HRj0g0Ji4i4sMJpF9ppkAzo5ImRGYPH66qgThy3gHasR+0z/gb5upGIMnNrzoYl0WsvpktTuz8V7dNPd6RZQrnpteY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717667797; c=relaxed/simple;
-	bh=sj8vzD7NOhy+claRmdekzWZavh/1G4/bMZrzTLq/nRQ=;
+	s=arc-20240116; t=1717667830; c=relaxed/simple;
+	bh=pZba+yKPKAIjlW59yMlzkexteKvLGEOvgVy2SEAGPV4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uHR3hXrCwzkIHv08uEV7vaL9tRLHx4zyRkxjnqRQXu667hIEDyeR5MyLlqnDKrip78Kd68vT6Bo8Zo+yFGiJMHJpm6Ec9Uvebua9XDjqem3mlxIrltp2/+ZGPDZZwCCZypkLeSYRNWb4TDkBrqpzX983jPDuRlkCziO3r0gXh9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bAY09Tb4; arc=none smtp.client-ip=209.85.218.54
+	 In-Reply-To:Content-Type; b=X8DVsIRY/WH/j6igCbiYvjboTpJeVIQea7gjF8ugOdEJ9Uj02NaxuR2zjGh6opc6BH1vT+sk9rgA9TVzzUhZKGGKNezT15fu0R6RAnwjHo3hJ+J8DmvhetMEVIoia50wTStOZw4JyFVeINpjIUcym+IZJ4+bfjPlKoDB8+pfLow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hj7TExGz; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a68b54577aaso83094266b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 02:56:34 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a626919d19dso346588466b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 02:57:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717667793; x=1718272593; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717667827; x=1718272627; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=q6FdkmT4DFdyuA/nJhZdLMgbso+NmWKDxfZ7lWlQYA8=;
-        b=bAY09Tb4NFhuSK+deRQVRqsm+e7trcE8jiD/ev5apDlyTFm/2LgLA6AXh6zMxktp17
-         wv5St14QakA9NfYAa8Ei6oxeT8hcTCIl2QmdsWYGE3t9fvaRWUEyOPOio4AKei5RAVoB
-         N+RD9/134kmgz8drJvNTYQ1YDknZSdUfCaV6kxO7lFNyAb3CwIifPUTG0+c4fR50clfN
-         spPHFHCDJrp5iURQwdyzmWWo7pylNfIEsZR4/9rW9KSaQvNguunOhKtV6qXG+taCLsTC
-         7FnMX+5KMsaKu5SnG67YhQKud4y9tqKvcXGeBd+t/WpbHFIMCkhLxyoaZIEQi96k2Pj9
-         9d8A==
+        bh=E3f93tFB2rT6AGkBJjlcrliLx2/McmtIe80WPbfuLCA=;
+        b=hj7TExGzMyPHmQrCZTc8qMWfoDn0e0b/DFij//PEb+4tNXWb0Zrue+DHD3y2PuT3TC
+         hatT0qDrX9XdGMQcs3T5gjDvHLbekEmhHXVK4/cs4xq65m2g/KCCPYvNFmPrCGqnAAzD
+         UZOgwLRW+n/9mDIssHYiu2Zq/D5ezQkDLId7HZRVRFA7kJfuFBHnp4vzbEPaLKRBzYEI
+         u+vOfhWH6hUH9I3QtzGnNCud+pjb+SZjSc6dnnvTtJMDFCXRpT+1AEgOQKCu/iFtPeVF
+         2xm64Rl+QIjQ55Uo9uUQmPxq2QakzUp9ArNFPZu7lpeTxSa+eGUxpDL9k8buojXfKfEg
+         VPAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717667793; x=1718272593;
+        d=1e100.net; s=20230601; t=1717667827; x=1718272627;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=q6FdkmT4DFdyuA/nJhZdLMgbso+NmWKDxfZ7lWlQYA8=;
-        b=RGKZni+k7NufTRtNrguuPZKQBk6wI7lICXpL/YTTn6zccFRlYV6IoqyMDpxRiokRLW
-         8II2rQP91ESSlv5p7nHu6jSVPuJC9tZr5nHG1mX4aS45AgdNWZReNQEbmEcX6ZIbcjkk
-         u5grs8wziZqiQlWZrWHSrgd6G/xn+Tzo00OtQTiISfaP2PYS/S8u55xyG87f08HPCx7e
-         Gn3DaxTnnjiV/YNr8O99tpZ3g1Wytz6qlsLKb2LCymCZAR1Jyyc3S/2Wlw9wQZpzMP+D
-         acNmPiBiGJifMUdiZHRLRVnXUD8b5YzhbfTzmUX+aFs21/3gpxJj5zPMCIAXIEB/zua+
-         gc8A==
-X-Forwarded-Encrypted: i=1; AJvYcCUrBXlNarBOR8ZIP3RjP4MXnFrKNN/fd3xPgfEjr0bcYF2YQo7jhn8Up6u8hybKvctlDXwd6VenNJZUA5D0CxJe4cFrUV45bBuZKe4eYQ==
-X-Gm-Message-State: AOJu0Yyw5YiASGpoLSTgXA4iX42xA0ahQZ7d8drwndn+nhfd9ufu/j0x
-	WNSVUEdyBVZtC1jyukV/fQE7g5tXPeQNz2Exu/f+9cPrKypDi+3cs7G7U2oMmmw=
-X-Google-Smtp-Source: AGHT+IGifyVW7fe6ghb2pMUwo5R9wL/uHIVW6JK55HBCyclDKc2AMGF5C+7U7bfEkgY+1FECAlE05A==
-X-Received: by 2002:a17:906:2a4e:b0:a68:a52b:7554 with SMTP id a640c23a62f3a-a699fdfef46mr274087166b.66.1717667792592;
-        Thu, 06 Jun 2024 02:56:32 -0700 (PDT)
+        bh=E3f93tFB2rT6AGkBJjlcrliLx2/McmtIe80WPbfuLCA=;
+        b=dNzOqex3AQvx9680sMPdO7EY+lXOeNF0hx5xcf2QhM1aFEC0oE+1WISN77a1p5ny67
+         5RM1r3JeUtEUadSJ971e3dIa3QPi2AwJN5N7uTsg5A/VwmUdmKFLXodzpgXC3gGtSwMp
+         vujJljJXoGgZbDLb/fWmL3eC9phzs63lv0qzNCP28zVg6OL+HYIKAibUb6rPogOyk1oI
+         iT70VJssSdAEz+E/xWTdS0+cLCbd6/T+U0D12YIWv6UpTKwNlJ+VT4l7Fw7BotpUijpB
+         KsdhT8fQt0PTIa3U2e+tZ/5NSpn44DwE/f0Dd5ypLvk3X2VTa5R8D3Fhcl6/IOlNuqCX
+         rWcw==
+X-Forwarded-Encrypted: i=1; AJvYcCX8TBX9XYNZO0tOkwS5ydgHwCDtaqd7UBR/GPqYViRvX5RNlK1jzP9Qqez0/F/Yw/HFwv3LGSQBv98SLaAFOyanzcQtTgOM7pr9J1waYA==
+X-Gm-Message-State: AOJu0YwwOPltI58bd09ggeRquqXPY5xB7wUPIV+TMTPIpx6P0thWbBgj
+	8r7M1P7oDz49DSrq/IcMWE1z8ZpXt6mkWDVlbc2R9IbnoTMFrUdrQ+jXFwWeIg4=
+X-Google-Smtp-Source: AGHT+IEo0+Vr7PVFW2gZBx1g/PraiBGsC+gt0IJWns+YxpEU8kU7Lfu7cX7h5TitU7otGn9P0VMA/w==
+X-Received: by 2002:a17:906:228b:b0:a69:2554:9c6 with SMTP id a640c23a62f3a-a6c75f942b4mr188930866b.6.1717667826883;
+        Thu, 06 Jun 2024 02:57:06 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c8070e39bsm72204166b.162.2024.06.06.02.56.30
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c8070e2d9sm73065366b.158.2024.06.06.02.57.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jun 2024 02:56:32 -0700 (PDT)
-Message-ID: <4ef1d9a9-6a0e-4324-b6d5-2ae225855b03@linaro.org>
-Date: Thu, 6 Jun 2024 11:56:29 +0200
+        Thu, 06 Jun 2024 02:57:06 -0700 (PDT)
+Message-ID: <db76dd17-905c-40a8-9319-94659c95a6c3@linaro.org>
+Date: Thu, 6 Jun 2024 11:57:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,16 +77,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: x1e80100: Add BWMONs
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- djakov@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- srinivas.kandagatla@linaro.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
- quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
- dmitry.baryshkov@linaro.org, abel.vesa@linaro.org
-References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
- <20240604011157.2358019-4-quic_sibis@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Use .mbn
+ firmware for IPA
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240606-fp5-ipa-mbn-v1-1-183668affe58@fairphone.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -124,44 +123,19 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240604011157.2358019-4-quic_sibis@quicinc.com>
+In-Reply-To: <20240606-fp5-ipa-mbn-v1-1-183668affe58@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 4.06.2024 3:11 AM, Sibi Sankar wrote:
-> Add the CPU and LLCC BWMONs on X1E80100 SoCs.
+On 6.06.2024 11:09 AM, Luca Weiss wrote:
+> Specify the file name for the squashed/non-split firmware with the .mbn
+> extension instead of the split .mdt. The kernel can load both but the
+> squashed version is preferred in dts nowadays.
 > 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 169 +++++++++++++++++++++++++
->  1 file changed, 169 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 1929c34ae70a..d86c4d3be126 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -5329,6 +5329,175 @@ cpu_scp_lpri1: scp-sram-section@200 {
->  			};
->  		};
->  
-> +		pmu@24091000 {
-> +			compatible = "qcom,x1e80100-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
-> +			reg = <0 0x24091000 0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			interconnects = <&mc_virt MASTER_LLCC 3 &mc_virt SLAVE_EBI1 3>;
 
-QCOM_ICC_TAG_ACTIVE_ONLY
-
-[...]
-
-> +
-> +			cpu0_bwmon_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-
-I *think* if you add opp-shared here, you can reference the same OPP table
-from all 3 BWMONs without anything exploding.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
