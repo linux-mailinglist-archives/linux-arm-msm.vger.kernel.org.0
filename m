@@ -1,144 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-21866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B966A8FE1BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 10:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 474B98FE2A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:27:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5291DB22DF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 08:57:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 01DFEB2AC76
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:15:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54F38145340;
-	Thu,  6 Jun 2024 08:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C88914EC42;
+	Thu,  6 Jun 2024 09:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xHd99Ngz"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="cWfMu6Kh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A497C13FD9F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 08:54:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7380A14036B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 09:09:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717664062; cv=none; b=WjbLv2zb50K3CEtIPR4R8mAaZFkCp+oRC0l/GnB8PsRDi76yQcdFQL/vs1ddKJCa5jpEvHCkuLm28xTtRH6o7tj9bwtWf2jzwnGpALZiwse3qJDxTOw+e15QQ/dGhh8c5bU0cUMyhVjQ46as+X443v91A+GsP4PPS4QAgcOEc/k=
+	t=1717664972; cv=none; b=gKD/3bTvrUc4QcalVSKeJWy+T6/OZsy6G7PV7pPL00GLobDewKV9haJsdM0E8k0UT22lteIAnKrtVXkPCQvHFH258dTCn39WZAxCVhV2expQ/VPJPGW6OI+cLpIoTp6J6Q87zX1jwF6CI2dX723cHdt3ZEyVg5fmx60exxp8fjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717664062; c=relaxed/simple;
-	bh=i+b9uZ9a4NsJn65/qLie+xZL7ZD0qq99aE7ZxCea3aM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LOIDtrcycLkS5NuiNZgEQUqAU/OBNNwNJwelOCPZ5cW3udibzN0s/dKM1tspU7RFQ7xrh8Zq5IhdpyagJSxfeM0d09v/HqbhIoIg/aqtdeXSYcl/1m56hvWy5flUJAbCifJWNGUKzRAxcCcesVT4MnVacpBgD7Mcotr/2Jeojss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xHd99Ngz; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dfa8427f22dso883097276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 01:54:20 -0700 (PDT)
+	s=arc-20240116; t=1717664972; c=relaxed/simple;
+	bh=smlH6T7zNUxLgq0OmtV7Rk4JiobNDMTSW4bVj1LVQxI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=oEZ9vijHKgWRgZCmpfOYL2+m8JWv+iJbQOFTXsi5htkD87zWHV6T1P/8Ss5SIzO6fj5lQz9tapGsaB8ATyIYRiCSx775fiaauDKKSR1n+7V6Ljtbe7R54X7gMpOjbJsq32B5KGo8WZQLneLrD2kRV8Ht1PhffGadvmVPCJEru0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=cWfMu6Kh; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a63359aaaa6so93602666b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 02:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717664059; x=1718268859; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+iELr/WPzJm0A7EM6v/U4tRKEa6mtrRIhxMOyb3jnnc=;
-        b=xHd99NgzG1HdBANoZlvs7ED492yr1/KwTpo2iNjXOnDlLQ1rApGr6LPuuBP1Lg4yTf
-         Rm3/T1MLvLPVb+rTHcIIsaU6aiUt4MVjHT58v0D6fRq80/5o9KohnB78RMbMr+OGOEYK
-         +KIrCaQe9AvkszGnQBPMLmhMi63NMhXWCVES4Y9rz76LshQQI8bQuBWYisUtMqxMUuuY
-         N8seqOE8SnjHMhzHySjVv24IKZo97mbmMXFEvtyLGpcz/etIbFV4CGJtKWr0qJIbE7qa
-         OwLuOtVxu80gSJAH0ujtX8YgR7x7MTY7cMxnzLYHysXO6poGO0/RyzZEo7vA/yJXyOSu
-         2sLQ==
+        d=fairphone.com; s=fair; t=1717664968; x=1718269768; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HeWTsjDgfYcjvzpN9AvdtAEHKQHZVOf8ieRqkfpvQRQ=;
+        b=cWfMu6KhrgPF3imNOHEt+r8zGhrYPeKzdjvKNo9rMxmyW1t30p5KBJ7u1GW4+0vlj+
+         Msyg8ifY2oqtB3fPB/wcyifJZv6/4wft/lxFsA5JCEmSF6vAbnwCfNokRjip1ww+3M+n
+         ytDfFbsvB4Bgsog0Dm135LOHYCXqIHyRHHP12XvTKV3ZBL0SA9M7Ng/cnFl5cqs8Zfrz
+         vSrFNKGeoaxfFgLcwMAcF/Yy276i3V0N+jLBw8Dmv8E8mR84vtuChr/n1vxW/JdAMNFQ
+         PD0OSZA157Z8UNDi5EGTNpTDk3ux6U90h8xplRwwpN0tiAdPtPd1T9LuJuFmxU01ed8i
+         +vPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717664059; x=1718268859;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1717664968; x=1718269768;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+iELr/WPzJm0A7EM6v/U4tRKEa6mtrRIhxMOyb3jnnc=;
-        b=Q+wfK97nOPrR+e6kRILMhyBvfK+Iuib8dKZyyTexzdnxxmlLXGHiWY23FuRSqKl91L
-         80PTs6Mtnf2qS7lcZuAY5Pill7BEYOCeY8VJSYiBh7SZl2RSxAkNwoTeFMJDmvpHriOv
-         WyQ5RAzbxfpvedTRGfkKSNLClmoBqCJxIVm4UpToRif9Bo4eT8f81e8J85VkpjmhdSQg
-         d5xIQqRMGK+FqZb3naa3cq42UXx0A8ziXi0WES/EeVYyVeMJWliiAgJt4qIafx5CMRXR
-         YuFw+l9syn7uMAKpXEOEtJHgvStFXYUPzhfzMQ8TIFB5LOkmkR8eZcFX94ilQVp2Q5jH
-         EcaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX+nxauQ6FEJKIaMXhltc+t5xsHNt3XZZRA+bzSC0MB2Lc+hU2p+CYAcEaAWULE3xSFUt52nErRJzfPZsT+CLkjWggLmaPJBsIjQtdwWQ==
-X-Gm-Message-State: AOJu0YwoXJ2em59tWooAZVeA24ZKLiss3Q4e4+zfP3EsubJuJABDGWT/
-	Lm+OYy4r/NngPKHmUQox/uof656/Xr5LjHojuqCjryEVIgwTNu8mNEHaHdmjD2tHNi0AvxcCLt/
-	Sa+GzWNnN0qIvdHj2fMkuQ+nmOA4ZeSxo/88ZJA==
-X-Google-Smtp-Source: AGHT+IFVHYy2qIeOQs9q5V92xKkDYTynf4PQxhlNASe/iGH0WwNFzITXGL0WNI9PXXLo8Ls225McpXU6BeaKzqXO3hE=
-X-Received: by 2002:a25:2d19:0:b0:de5:5084:715d with SMTP id
- 3f1490d57ef6-dfacad2443fmr5080848276.53.1717664059531; Thu, 06 Jun 2024
- 01:54:19 -0700 (PDT)
+        bh=HeWTsjDgfYcjvzpN9AvdtAEHKQHZVOf8ieRqkfpvQRQ=;
+        b=LHTpVBXNKGNTyorrKUYiqn9sHywhjEJnT4lC7DCRTQHi30UbMho24TUX9CgSuAqfgT
+         1bl5nFyrdVE9bD03Y9hltMv78OLvR7p2k9viUBXNZ/BuOa6KiuoYvVW6e+vP55B9Jdig
+         q3PR5nOMazD3UIxyU2viHIcD58tzzDGnrxJvEB0BGGc5lfLAHR95RGmxYsgxjOSN+wV6
+         uqe43tEopmDp8PUA0DsTja1Y3m9jPKA8YIXmEkf2hg9JxWOSS5iVBGqL8+aYvN4pije3
+         brFeGlNc18O2MSmiT8EK3O0kVJRQJvVjQAYqL4cHBM3wnU7ae9BNc/U3ZJEIToRe4oV5
+         btTw==
+X-Forwarded-Encrypted: i=1; AJvYcCXkqD7V4fx/nh0VhppGfQeySWUStFalM3VKLhokUJjIPFb2iR7kbad59higKlwfA54umGIWb53sHxtfZ79Fem3n2Xh7eg6xXNHjpps4UQ==
+X-Gm-Message-State: AOJu0YzYfPNtUB2xfdGMFlj+SIIexNbw8n7SfuHMFJXg/XEB6B0dU3ZS
+	c/ImhV4YznoakujrJz0n52FhEac0qF+M9GM8CVet47j0a0gng2nKDPkXuLkrauj2BzvVTkWNDcV
+	qyW4=
+X-Google-Smtp-Source: AGHT+IFATerlbshiVB9ZH69mQZNENHUzFhrPR4nN3eku2fN5TTpR1lr0p7A6w/6VhU4mf30ksR4j2w==
+X-Received: by 2002:a17:906:174b:b0:a68:ad68:c7c8 with SMTP id a640c23a62f3a-a699f67ecc7mr310175866b.36.1717664967729;
+        Thu, 06 Jun 2024 02:09:27 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (2a02-a210-20ba-5a00-9ceb-707b-2d57-26f7.cable.dynamic.v6.ziggo.nl. [2a02:a210:20ba:5a00:9ceb:707b:2d57:26f7])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c805cdd32sm67724966b.79.2024.06.06.02.09.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jun 2024 02:09:27 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Thu, 06 Jun 2024 11:09:06 +0200
+Subject: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Use .mbn firmware
+ for IPA
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
- <20240314000216.392549-7-dmitry.baryshkov@linaro.org> <627dd526-2b56-2ecb-9011-4ec08bab454f@quicinc.com>
- <CAA8EJpp+NvoTMZdVNivqe0_nQd3PChSND7ojqa+Ee3nMdWcQGQ@mail.gmail.com>
- <1c107933-2180-fcd2-06f2-61eb7108b6b0@quicinc.com> <CAA8EJpp7DL+hpTUgmzsKciXg8ZEZ5BFy8ALiH0CbFmWb058HCw@mail.gmail.com>
-In-Reply-To: <CAA8EJpp7DL+hpTUgmzsKciXg8ZEZ5BFy8ALiH0CbFmWb058HCw@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 6 Jun 2024 11:54:08 +0300
-Message-ID: <CAA8EJpqBSiCadAKXSXSB58cPV7Fb31_92vJJDMDsnxHz1TnuOA@mail.gmail.com>
-Subject: Re: [PATCH v4 06/13] drm/msm/dpu: split dpu_plane_atomic_check()
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240606-fp5-ipa-mbn-v1-1-183668affe58@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIALF8YWYC/x3MQQqAIBBA0avIrBuw0Fl0lWihOdYsMlGIILx70
+ vIt/n+hchGuMKsXCt9S5Uod46BgO1zaGSV0w6Qno0kTxmxRssPTJwzaEAUmb32EXuTCUZ7/tqy
+ tfZcL1xBdAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.13.0
 
-On Thu, 6 Jun 2024 at 11:53, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Thu, 6 Jun 2024 at 02:47, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> >
-> >
-> >
-> > On 6/5/2024 4:32 PM, Dmitry Baryshkov wrote:
-> > > On Thu, 6 Jun 2024 at 02:19, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > >>
-> > >>
-> > >>
-> > >> On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
-> > >>> Split dpu_plane_atomic_check() function into two pieces:
-> > >>>
-> > >>> dpu_plane_atomic_check_nopipe() performing generic checks on the pstate,
-> > >>> without touching the associated pipe,
-> > >>>
-> > >>> and
-> > >>>
-> > >>> dpu_plane_atomic_check_pipes(), which takes into account used pipes.
-> > >>>
-> > >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >>> ---
-> > >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 184 ++++++++++++++--------
-> > >>>    1 file changed, 117 insertions(+), 67 deletions(-)
-> > >>>
+Specify the file name for the squashed/non-split firmware with the .mbn
+extension instead of the split .mdt. The kernel can load both but the
+squashed version is preferred in dts nowadays.
 
-> > >>> +     if (new_plane_state->crtc)
-> > >>> +             crtc_state = drm_atomic_get_new_crtc_state(state,
-> > >>> +                                                        new_plane_state->crtc);
-> > >>> +
-> > >>> +     if (pdpu->pipe != SSPP_NONE) {
-> > >>
-> > >> This check was not present iirc, why did you have to add this?
-> > >> RM will return the same SSPP unless freed. So why this additional check?
-> > >
-> > > If pdpu->pipe is not SSPP_NONE, then virtual planes are disabled and
-> > > there is a fixed 1:1 relationship between planes and SSPP blocks.
-> > >
-> >
-> > True, pdpu->pipe is currently assigned in dpu_plane_init(), so we will
-> > always be hitting this condition.
-> >
-> > Perhaps the patches later on are changing that, so shouldnt this part
-> > come along with those?
->
-> Ack, I'll move it to patch 5.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Patch 8, of course.
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+index 8cd2fe80dbb2..6b4ffc585dcf 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+@@ -551,7 +551,7 @@ &i2c9 {
+ &ipa {
+ 	qcom,gsi-loader = "self";
+ 	memory-region = <&ipa_fw_mem>;
+-	firmware-name = "qcom/qcm6490/fairphone5/ipa_fws.mdt";
++	firmware-name = "qcom/qcm6490/fairphone5/ipa_fws.mbn";
+ 	status = "okay";
+ };
+ 
 
+---
+base-commit: ee78a17615ad0cfdbbc27182b1047cd36c9d4d5f
+change-id: 20240606-fp5-ipa-mbn-d0466de6b5bf
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Luca Weiss <luca.weiss@fairphone.com>
+
 
