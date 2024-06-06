@@ -1,433 +1,814 @@
-Return-Path: <linux-arm-msm+bounces-22001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB36C8FF67B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 23:10:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5BC18FF79F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 00:21:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 659CB284531
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 21:10:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 14604B2080E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 22:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 729376CDBA;
-	Thu,  6 Jun 2024 21:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A21A43149;
+	Thu,  6 Jun 2024 22:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="DUUoGUVc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ER9aZ4vS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from EUR02-VI1-obe.outbound.protection.outlook.com (mail-vi1eur02on2058.outbound.protection.outlook.com [40.107.241.58])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7261BDEF;
-	Thu,  6 Jun 2024 21:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.241.58
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717708249; cv=fail; b=iC9cP7QgNfwrxNx9dTeDKQLi5c9Tc2FN5Rvd5C/W59wdSYjlA4/O98xDuud5zr9AJsTulO4UfQc+jbYFVSLGg8/U/me4d6AXATUu9IC7a2lR3H3C2Gi17JLi2XnVYF4N6AYMikrKm5Bt+s9psTmwLcGAqzcc8nIpVrQGTW7D+bs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717708249; c=relaxed/simple;
-	bh=sc/W3ZGLU6emYBsb8gg7QIEFeBry2xuOgQ0hqq4aaT0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=D9oXu48UsB5CpkPOoCMcZr+Kke9Fe5Rh3cKiKgRKEsp1ACf4lpHE4Jzs6o/RWGC7StFBBI7V5T/8FpoexcR+2zyM2qa9w/5/ePBqFRPiZTnC/EiMQvAOs3XjifGfeVC55ETvHn2wdxOLo3AasooMDQ22HFLwpXXx7slbv5VkDo8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b=DUUoGUVc; arc=fail smtp.client-ip=40.107.241.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CbKyAYUzLjzd81SlrjO9K2Fm/VqOHuH+5aN3GLdAgz14rVHnPHEPs3dRI7vhNVV3Nox3fo5HaQvb7V12Ls0zBqp9DCvXreTzG7tXrlIxKk+X8L4sZ/RYgp9OF8Vz7pqRzCE/zHZQtbHrbstcUZ9lYW4LFZckLKrFDrHY+9Y+GGGtHEMeQI4hykF7DGY5ctVHgMF3In2TVgWiyprOZu6io7H8YjqDdbfIWfWSJBM01mExkAZ1fK/yxMFVwRllPbVJZiqd1j+BoxP5CAb0UvuSN+hrozMDmnloeTAg9tDIDSCgsgd35ZibCzwfjd/YebSLCMQWI0ZGLow5p4pSibr5/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pLjwML3+LJqJe0egmg4+SzXghL6iZlUrjvqiCwPG3WM=;
- b=XBpEc3nfuIpPYBqr4FXAym+0h4wi6fWETK9Z2nSiut0xAJolWLPG8JTHThNmV1zntJl3xcVTPzAUgsIqwdSOSZ7E8CRokdruc4LVM+uJ8ZSqCsTTPczdmwMcYd9zWiJQwYGKxOoY6ZdB6YZhenoIO/kZv0MWz0nyTyyL79+V58hoCowSTl01mwPvu9DcC9mLBjHZi6+4bEy+ywbYcxbe6lUwx3T2xAqeTSw3exO7TbY8YdqDVhlzEPxkzsCvTE+HhIyI4oC2zKeEBMpPNeBlKOO4gQ2FEVoN/gs0eRAKaJkHCFYSzmo3YgUlVF3haMI9cvWy7a9z7JyTtZ4CnwmI8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pLjwML3+LJqJe0egmg4+SzXghL6iZlUrjvqiCwPG3WM=;
- b=DUUoGUVcYK4bjDs4WFZ/CBM+4l//Yl9hNUvk7wXYQENMWU+UtgAMhtUc3vaCcFwwFSmLME0a3v8Wbboi4UT8TDt96WV7T83Osez9lteRwzNVCj1d+HSFh0E11Q14ZzU2JiNRlapo1vym68c1rOSjBoh+emvEAC5sxcV81/2fDo4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PAXPR04MB9642.eurprd04.prod.outlook.com (2603:10a6:102:240::14)
- by PA1PR04MB10208.eurprd04.prod.outlook.com (2603:10a6:102:454::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.33; Thu, 6 Jun
- 2024 21:10:42 +0000
-Received: from PAXPR04MB9642.eurprd04.prod.outlook.com
- ([fe80::9126:a61e:341d:4b06]) by PAXPR04MB9642.eurprd04.prod.outlook.com
- ([fe80::9126:a61e:341d:4b06%2]) with mapi id 15.20.7633.021; Thu, 6 Jun 2024
- 21:10:42 +0000
-Date: Thu, 6 Jun 2024 17:10:29 -0400
-From: Frank Li <Frank.li@nxp.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-	mhi@lists.linux.dev, Niklas Cassel <cassel@kernel.org>
-Subject: Re: [PATCH 2/5] PCI: endpoint: Introduce 'epc_deinit' event and
- notify the EPF drivers
-Message-ID: <ZmIlxSQ8ffDk4Dau@lizhi-Precision-Tower-5810>
-References: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
- <20240606-pci-deinit-v1-2-4395534520dc@linaro.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240606-pci-deinit-v1-2-4395534520dc@linaro.org>
-X-ClientProxiedBy: SJ0PR13CA0188.namprd13.prod.outlook.com
- (2603:10b6:a03:2c3::13) To PAXPR04MB9642.eurprd04.prod.outlook.com
- (2603:10a6:102:240::14)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9322224D6
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 22:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1717712493; cv=none; b=MdMRCJjYpru7GyNyq6AjIbIs7LHl8otpw21pthjks8FYDY9rdybo/66YNjVXSmYwMCRGFg8P98aFxLdpX+yF+tg/dGjMQHT1+e3GUp1i1+ApSDI92c4RT1WDDo0U2CkkODK5SjwfwQqhWKFicoznfwrJVX5mYq3JClxavcZmdsg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1717712493; c=relaxed/simple;
+	bh=gLWAnCSx0bdXqBxJF2x3+OnBvBXjxg6j/yEZLb+D12g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=caOv0gH7UMX73XVKydsIjnecLP1VBREeRK790gxYzsvROc+C/72n3QF89h41yY5xVNY2VxpSuAqDhkJWB9aYCIvdbZj0amhEudxs3mgcbgXulS+3f1BOl9l7wQtrNCal/kxgiXyI1881IM8GtCugwNbDvUWSj9z65OWUEKs5ob4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ER9aZ4vS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4569RLRT031717;
+	Thu, 6 Jun 2024 22:21:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5gO5XjuJVii5QRh+w5vqGAQxMjYMx/JedIEDQ3N+U+g=; b=ER9aZ4vSEKsjAR/n
+	xxcikybT/+9RU0pncgGyUx/2j3MwIwqTC+SKrvziGRA/D1njZGJQ4BJG2xtsvRGN
+	HDl+r6F+BPDwRPQEOPUl7XNamaqIC3JNMY6pf4wS8Ov0+3AcMQvt2+1Hk/lcDoso
+	a9camqirj4G2uAUAKSE/gJyw0h46pUO8B/mvGKq3JvNv3ZK9hBNLBRABJHqwDYFq
+	LuDwipFuV8xQqTmJpk2oD3QQOYmzmGpp5rS7WvzOy5wi+3s2g6OO/46aW9Ti8fvK
+	5Gq2nqcnX9enQp9QUwBOpT4E346DUq65ydiCi5gyRQPkSY6xuGa5VIX/07FknQsG
+	xwwZFg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjk89cv2k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Jun 2024 22:21:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 456MLG8V014861
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Jun 2024 22:21:16 GMT
+Received: from [10.110.34.41] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Jun 2024
+ 15:21:13 -0700
+Message-ID: <d828f7b6-ac3d-6696-71f1-682599c5fa64@quicinc.com>
+Date: Thu, 6 Jun 2024 15:21:11 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR04MB9642:EE_|PA1PR04MB10208:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9585b62-22e6-40bb-3067-08dc866d1fcc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230031|366007|7416005|52116005|376005|1800799015|38350700005;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?imY6PnzkWIsks1J2DWujzNdheRbLCnZNtaA0GHhRbzyeV+aUfUF4T+Pa4gWq?=
- =?us-ascii?Q?KX9m/nzGUg/JF+LaxnOd0YZcVrCMILs1b3XBWZBBzSc8KKgyXtTGZv/JAq4W?=
- =?us-ascii?Q?B5po1zMoNMUDhL0uwYPi8M52kXDVe2UxNG+zircP+YZyy1EHg+gZS/UPxQJY?=
- =?us-ascii?Q?8cZiFDF+QKUohec47oEHo6NQSxQJKBoowgfiWk6apVlEQGFUb/3vSI5mACsV?=
- =?us-ascii?Q?tsg2vWiAYTyFJwgW2rCz1jyTPbB9KfrgvZhTxQ2SRfywgsC9hBz0/qYS3V1W?=
- =?us-ascii?Q?IzNqQjC/beOARM8PU92VpdlT0SleYDfWSLCHf/ASBwXz9N/1GtrRmoDmcg/U?=
- =?us-ascii?Q?1hIp/Sbkxl0P+X6F30Js46nKvBNTDTCr1/4HfeXuMnjD3rAgnAg5Lwx5yf78?=
- =?us-ascii?Q?f8mm/y2b+a8TQ+zzjTZbjy3Ti6dEnsS6wOSxIFGPr7BRTAOZXvaxVcklKwWS?=
- =?us-ascii?Q?v3WGE6ApVaf5WvNUOqAJkaPCnNmvKPEDyf127rGD6h8TIzg4+Q8SzCN4lqzY?=
- =?us-ascii?Q?8PMDy2XGdtFwha+V3ga9ex7a6nAqEJZ0SIxAMjkIZfi7TrJgwemo/h8SWdEU?=
- =?us-ascii?Q?67w1I9h/7qvjRBQ7gTq3Rghr3NNvTAgJp3LEnYmyNrSY+jNJubcCi5/66IZe?=
- =?us-ascii?Q?bxcXBxVcJMO4E4V4BQNi9dXAJdqDimif7maKlfju+CplyzlMm6WyWcCUyxbM?=
- =?us-ascii?Q?AGiAd4C3suNsw4C9i3VWZYe1OfJ0eUxTVcQpGjvK6Yf3y0CZRAUJg8ZvMAHJ?=
- =?us-ascii?Q?/clxzj/xxS56GfQFkyqSIRb816PJt5/MF1lboVIiyBLprg9v1SaJJXZWXiCv?=
- =?us-ascii?Q?Eoki1ufdvXCcN1w32cEvsdQ8aci8XmkOV5PoyO7iGmMIatv8WSL4JXtiAk7z?=
- =?us-ascii?Q?SsgNlH+ILgkYzDUwXrZx3itRcmGyTxovpZEuoKRuCp3DIvYJx7dEz4RSpc4A?=
- =?us-ascii?Q?ERwpOxAEdUZFwFGxHSvPrRVrJ8JxjS6py4rcaBSmfpEH2o7aNHEdcpI45o2M?=
- =?us-ascii?Q?zhOuJa8qJiRkMbh5VOsmmZNU2mUo8Q8SSJbatoxxxJk6vLly6ocx1qjb11Ni?=
- =?us-ascii?Q?fBv3bsFb78XvQ7Be59MEd2uj9YAoTKMsJDlREmaiWZhaa7n4LH1Ur9O/N9iw?=
- =?us-ascii?Q?0YbHrNwYzRlxvG5lp10l/37+62xLfkvj0EwwKO+fhnlAMv9Ld0Aakx5ewXzp?=
- =?us-ascii?Q?454KrLrpFVkTMzIKIF35xjNiTU+jxFdwtp1lTJZYoKCs4OZaqEwb+e1MKVf4?=
- =?us-ascii?Q?I//K2Go8TZglvcCi+31a+Yl2LWifA1KmZn8if5R/3xUy6QdDH3qT7xNfbRBN?=
- =?us-ascii?Q?kpaKO5WfKIuqAlljL3o9SYY+BBjsbfxW65KnxtaUe7p+Ik8jw2+iYbPnSt2c?=
- =?us-ascii?Q?/szKkbo=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB9642.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(7416005)(52116005)(376005)(1800799015)(38350700005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?pDhM/hW/FbWSQ/bthLswklRDmLtj9asDyCQRpqHu6xHbcB3rlad+rwPSSLjB?=
- =?us-ascii?Q?k2baVqoLi3N+6Xon2JY8JhLACI8u1k8S2Feso46u517OMSwgHGNjs3QKEhlY?=
- =?us-ascii?Q?4mNVO30fVacJt1SSw2sfYu+VSnGN6QTpaNkX+aeLChAosm26xWKyH2WJxcVT?=
- =?us-ascii?Q?i1cCp73pgbKq17eMYKIyOqr5MSIBufWstW7DpKvVsfZjl7tCVVd2MlGRe2JU?=
- =?us-ascii?Q?F+kYnoYhEW+ITd6Jrj7dL5TtBwkum9fQeRT0MugihGzk7J5r2J7Re23zDCNm?=
- =?us-ascii?Q?iFe6hcl+CP/E1cXGIlJz7UmA0m3GykmZXVAFp4BEyZxKh6+kmsmW5hOPFtYB?=
- =?us-ascii?Q?kKZQUnHnf1z9NEKfX0lIHtJsmqYvbUqaCqh5L4+76eNGtIKt8a3Bh4my7Fuk?=
- =?us-ascii?Q?udZRnGeyVbs8/VmzilmqHSsTGgiHBt2FT1K1nHC3DeX417pvi0S6Yf8H7WDI?=
- =?us-ascii?Q?f1eAXpNnYGpuhC21VH6JY5FSoTOaWBNTPannhahxKKAqfEalHBQ6gfglBJGY?=
- =?us-ascii?Q?4feaEfxlPTluy7ME5L+e+RfSqmNS4i3VM5d4gccLedGj6EQDoQxq5zGkEzDj?=
- =?us-ascii?Q?Xqqf2OhoBXH7O2Z+FvvKHBlpuMoWiEtOtH5xy3K55qgeN72EFKw6LDi25t3L?=
- =?us-ascii?Q?s7hiQRm9OC/+TKjAH0Vucvsb/zZTx8obcWRITSaTu075XJD1uJWCpgTQW4ol?=
- =?us-ascii?Q?VQXedHjhEophE2hyuECoBLS/AjDOsAyyQeI30L/Zv9AAZC+Oq9PR7xVTsQSj?=
- =?us-ascii?Q?oyW4fA37X5YPl5N5mWZ0LCL/ijPUxnmpP0lwvohESy+ZJLKXZw5jjXmOUrs2?=
- =?us-ascii?Q?X0X919m+Z/HpltIug6hzFxF62uboIccCxRaRKcXemmsx4mHFkVwH+DOV53za?=
- =?us-ascii?Q?Ts5Jb/wa93sUTNzwvk/OCH7Na54uJCZF8LWqaJ941UN9wo240kjVeOrRndov?=
- =?us-ascii?Q?FLk+1VAZ6mxFHDI8aYDXfy28Nxf79+2ylAjBunrSNoCciOpeyWjz8/REoNRu?=
- =?us-ascii?Q?o6TlU2FYCw/5GBi8m8pNPjXpBsInj8PMv3ubcsY/Fq5iiqlfGZRFkv52lEkm?=
- =?us-ascii?Q?q7+kVheByxmQxbCiEQEU7qE1zGplTCkckIs9lVKmejNLdk/9lOBGMKtmY141?=
- =?us-ascii?Q?R98plPBA4jShbbVDTVLUO/z3QOFVIZ+lgtVT4tZssNopUIgDp86GWePDphTr?=
- =?us-ascii?Q?+61CavN00T0er3r7hJcLLpGyrnBFLKT907nLi4BtmhHUxXdW2hVacZsdfWEE?=
- =?us-ascii?Q?7ENRPM5AjWYny/LYjqIG4qSiJqA1aUTnZXsWrbE1HXXxFwpA7wJ/y8d6p4GZ?=
- =?us-ascii?Q?MSt+CBL7HGmaRTIFtUpIj8gMpwxFltjEDNeHTkdAcm/0Hqj/j8exwFR0uPAv?=
- =?us-ascii?Q?WpQj6FocuVlVhcellWSpP3/0t2bDiv1HswN1X5tc7wjTmucFynpCCSVEnJx0?=
- =?us-ascii?Q?vXslR+lUaSG4MmPE/JPrRzNiVOidUIdECKxSWBejJ9H0nJ7x2s1qohRcP6XN?=
- =?us-ascii?Q?zjDyRVfkFFtmLgFC327IoXEEpvCwh/MsgXhNlicLnKXIIoXriTwSKCy8nB1c?=
- =?us-ascii?Q?jpKcPp09j3iVRU01TG4=3D?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9585b62-22e6-40bb-3067-08dc866d1fcc
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB9642.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2024 21:10:42.3718
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: L7bt6Tm2qzfEz4k3+o+nNFIX6XnQrhsskUdRmtbHritonSUiDhaN0OPH9ZC9LbtnJHu8YLFpHuFA1ZuTtdI6eg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10208
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 08/13] drm/msm/dpu: add support for virtual planes
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-9-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240314000216.392549-9-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: veq29ftnmH2UTHi3HwJGrqPtcWstqju-
+X-Proofpoint-ORIG-GUID: veq29ftnmH2UTHi3HwJGrqPtcWstqju-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-06_18,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 impostorscore=0 phishscore=0 mlxscore=0 bulkscore=0
+ adultscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
+ suspectscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2405170001 definitions=main-2406060154
 
-On Thu, Jun 06, 2024 at 12:56:35PM +0530, Manivannan Sadhasivam wrote:
-> As like the 'epc_init' event, that is used to signal the EPF drivers about
-> the EPC initialization, let's introduce 'epc_deinit' event that is used to
-> signal EPC deinitialization.
-> 
-> The EPC deinitialization applies only when any sort of fundamental reset
-> is supported by the endpoint controller as per the PCIe spec.
-> 
-> Reference: PCIe Base spec v5.0, sections 4.2.4.9.1 and 6.6.1.
-> 
-> Currently, some EPC drivers like pcie-qcom-ep and pcie-tegra194 support
-> PERST# as the fundamental reset. So the 'deinit' event will be notified to
-> the EPF drivers when PERST# assert happens in the above mentioned EPC
-> drivers.
-> 
-> The EPF drivers, on receiving the event through the epc_deinit() callback
-> should reset the EPF state machine and also cleanup any configuration that
-> got affected by the fundamental reset like BAR, DMA etc...
-> 
-> This change also warrants skipping the cleanups in unbind() if already done
-> in epc_deinit().
-> 
-> Reviewed-by: Niklas Cassel <cassel@kernel.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
+On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+> Only several SSPP blocks support such features as YUV output or scaling,
+> thus different DRM planes have different features.  Properly utilizing
+> all planes requires the attention of the compositor, who should
+> prefer simpler planes to YUV-supporting ones. Otherwise it is very easy
+> to end up in a situation when all featureful planes are already
+> allocated for simple windows, leaving no spare plane for YUV playback.
+> 
+> To solve this problem make all planes virtual. Each plane is registered
+> as if it supports all possible features, but then at the runtime during
+> the atomic_check phase the driver selects backing SSPP block for each
+> plane.
+> 
+> Note, this does not provide support for using two different SSPP blocks
+> for a single plane or using two rectangles of an SSPP to drive two
+> planes. Each plane still gets its own SSPP and can utilize either a solo
+> rectangle or both multirect rectangles depending on the resolution.
+> 
+> Note #2: By default support for virtual planes is turned off and the
+> driver still uses old code path with preallocated SSPP block for each
+> plane. To enable virtual planes, pass 'msm.dpu_use_virtual_planes=1'
+> kernel parameter.
+> 
+
+I like the overall approach in this patch. Some comments below.
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/pci/controller/dwc/pcie-designware-ep.c |  1 -
->  drivers/pci/controller/dwc/pcie-qcom-ep.c       |  1 +
->  drivers/pci/controller/dwc/pcie-tegra194.c      |  1 +
->  drivers/pci/endpoint/functions/pci-epf-mhi.c    | 19 +++++++++++++++++++
->  drivers/pci/endpoint/functions/pci-epf-test.c   | 17 +++++++++++++++--
->  drivers/pci/endpoint/pci-epc-core.c             | 25 +++++++++++++++++++++++++
->  include/linux/pci-epc.h                         | 13 +++++++++++++
->  include/linux/pci-epf.h                         |  2 ++
->  8 files changed, 76 insertions(+), 3 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  50 +++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  10 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h   |   4 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 230 +++++++++++++++++++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  19 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    |  77 ++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h    |  28 +++
+>   7 files changed, 390 insertions(+), 28 deletions(-)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> index 2e69f81baf99..78d5fc72c9cb 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-> @@ -620,7 +620,6 @@ void dw_pcie_ep_cleanup(struct dw_pcie_ep *ep)
->  	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
->  
->  	dw_pcie_edma_remove(pci);
-> -	ep->epc->init_complete = false;
->  }
->  EXPORT_SYMBOL_GPL(dw_pcie_ep_cleanup);
->  
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 4d2d7457dcb3..2324e56c9bfc 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -507,6 +507,7 @@ static void qcom_pcie_perst_assert(struct dw_pcie *pci)
->  		return;
->  	}
->  
-> +	pci_epc_deinit_notify(pci->ep.epc);
->  	dw_pcie_ep_cleanup(&pci->ep);
->  	qcom_pcie_disable_resources(pcie_ep);
->  	pcie_ep->link_status = QCOM_PCIE_EP_LINK_DISABLED;
-> diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-> index 432ed9d9a463..4ca7404246a3 100644
-> --- a/drivers/pci/controller/dwc/pcie-tegra194.c
-> +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-> @@ -1715,6 +1715,7 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
->  	if (ret)
->  		dev_err(pcie->dev, "Failed to go Detect state: %d\n", ret);
->  
-> +	pci_epc_deinit_notify(pcie->pci.ep.epc);
->  	dw_pcie_ep_cleanup(&pcie->pci.ep);
->  
->  	reset_control_assert(pcie->core_rst);
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> index 205c02953f25..5832989e55e8 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> @@ -764,6 +764,24 @@ static int pci_epf_mhi_epc_init(struct pci_epf *epf)
->  	return 0;
->  }
->  
-> +static void pci_epf_mhi_epc_deinit(struct pci_epf *epf)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 88c2e51ab166..794c5643584f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -1168,6 +1168,49 @@ static bool dpu_crtc_needs_dirtyfb(struct drm_crtc_state *cstate)
+>   	return false;
+>   }
+>   
+> +static int dpu_crtc_reassign_planes(struct drm_crtc *crtc, struct drm_crtc_state *crtc_state)
 > +{
-> +	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-> +	const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-> +	struct pci_epf_bar *epf_bar = &epf->bar[info->bar_num];
-> +	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-> +	struct pci_epc *epc = epf->epc;
+> +	int total_planes = crtc->dev->mode_config.num_total_plane;
+> +	struct drm_atomic_state *state = crtc_state->state;
+> +	struct dpu_global_state *global_state;
+> +	struct drm_plane_state **states;
+> +	struct drm_plane *plane;
+> +	int ret;
 > +
-> +	if (mhi_cntrl->mhi_dev) {
-> +		mhi_ep_power_down(mhi_cntrl);
-> +		if (info->flags & MHI_EPF_USE_DMA)
-> +			pci_epf_mhi_dma_deinit(epf_mhi);
-> +		mhi_ep_unregister_controller(mhi_cntrl);
+> +	global_state = dpu_kms_get_global_state(crtc_state->state);
+> +	if (IS_ERR(global_state))
+> +		return PTR_ERR(global_state);
+> +
+> +	dpu_rm_release_all_sspp(global_state, crtc);
+> +
+
+Do we need to call dpu_rm_release_all_sspp() even in the 
+_dpu_plane_atomic_disable()?
+
+> +	if (!crtc_state->enable)
+> +		return 0;
+> +
+> +	states = kcalloc(total_planes, sizeof(*states), GFP_KERNEL);
+> +	if (!states)
+> +		return -ENOMEM;
+> +
+> +	drm_atomic_crtc_state_for_each_plane(plane, crtc_state) {
+> +		struct drm_plane_state *plane_state =
+> +			drm_atomic_get_plane_state(state, plane);
+> +
+> +		if (IS_ERR(plane_state)) {
+> +			ret = PTR_ERR(plane_state);
+> +			goto done;
+> +		}
+> +
+> +		states[plane_state->normalized_zpos] = plane_state;
 > +	}
 > +
-> +	pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no, epf_bar);
+> +	ret = dpu_assign_plane_resources(global_state, state, crtc, states, total_planes);
+> +
+> +done:
+> +	kfree(states);
+> +	return ret;
+> +
+> +	return 0;
 > +}
 > +
->  static int pci_epf_mhi_link_up(struct pci_epf *epf)
->  {
->  	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-> @@ -898,6 +916,7 @@ static void pci_epf_mhi_unbind(struct pci_epf *epf)
->  
->  static const struct pci_epc_event_ops pci_epf_mhi_event_ops = {
->  	.epc_init = pci_epf_mhi_epc_init,
-> +	.epc_deinit = pci_epf_mhi_epc_deinit,
->  	.link_up = pci_epf_mhi_link_up,
->  	.link_down = pci_epf_mhi_link_down,
->  	.bus_master_enable = pci_epf_mhi_bus_master_enable,
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-> index e771be7512a1..7c2ed6eae53a 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-> @@ -782,6 +782,15 @@ static int pci_epf_test_epc_init(struct pci_epf *epf)
->  	return 0;
->  }
->  
-> +static void pci_epf_test_epc_deinit(struct pci_epf *epf)
-> +{
-> +	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> +
-> +	cancel_delayed_work(&epf_test->cmd_handler);
-> +	pci_epf_test_clean_dma_chan(epf_test);
-> +	pci_epf_test_clear_bar(epf);
-> +}
-> +
->  static int pci_epf_test_link_up(struct pci_epf *epf)
->  {
->  	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> @@ -803,6 +812,7 @@ static int pci_epf_test_link_down(struct pci_epf *epf)
->  
->  static const struct pci_epc_event_ops pci_epf_test_event_ops = {
->  	.epc_init = pci_epf_test_epc_init,
-> +	.epc_deinit = pci_epf_test_epc_deinit,
->  	.link_up = pci_epf_test_link_up,
->  	.link_down = pci_epf_test_link_down,
->  };
-> @@ -905,10 +915,13 @@ static int pci_epf_test_bind(struct pci_epf *epf)
->  static void pci_epf_test_unbind(struct pci_epf *epf)
->  {
->  	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
-> +	struct pci_epc *epc = epf->epc;
->  
->  	cancel_delayed_work(&epf_test->cmd_handler);
-> -	pci_epf_test_clean_dma_chan(epf_test);
-> -	pci_epf_test_clear_bar(epf);
-> +	if (epc->init_complete) {
-> +		pci_epf_test_clean_dma_chan(epf_test);
-> +		pci_epf_test_clear_bar(epf);
+>   static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+>   		struct drm_atomic_state *state)
+>   {
+> @@ -1183,6 +1226,13 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+>   
+>   	bool needs_dirtyfb = dpu_crtc_needs_dirtyfb(crtc_state);
+>   
+> +	if (dpu_use_virtual_planes &&
+> +	    (crtc_state->planes_changed || crtc_state->zpos_changed)) {
+
+Here, I assume you are relying on DRM to set zpos_changed. But can you 
+please elaborate why we have to reassign planes when zpos_changes?
+
+> +		rc = dpu_crtc_reassign_planes(crtc, crtc_state);
+> +		if (rc < 0)
+> +			return rc;
 > +	}
->  	pci_epf_test_free_space(epf);
->  }
->  
-> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-> index 56b60330355d..47a91dcb07d7 100644
-> --- a/drivers/pci/endpoint/pci-epc-core.c
-> +++ b/drivers/pci/endpoint/pci-epc-core.c
-> @@ -774,6 +774,31 @@ void pci_epc_notify_pending_init(struct pci_epc *epc, struct pci_epf *epf)
->  }
->  EXPORT_SYMBOL_GPL(pci_epc_notify_pending_init);
->  
+> +
+>   	if (!crtc_state->enable || !drm_atomic_crtc_effectively_active(crtc_state)) {
+>   		DRM_DEBUG_ATOMIC("crtc%d -> enable %d, active %d, skip atomic_check\n",
+>   				crtc->base.id, crtc_state->enable,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index 9a1fe6868979..becdd98f3c40 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -51,6 +51,9 @@
+>   #define DPU_DEBUGFS_DIR "msm_dpu"
+>   #define DPU_DEBUGFS_HWMASKNAME "hw_log_mask"
+>   
+> +bool dpu_use_virtual_planes = false;
+> +module_param(dpu_use_virtual_planes, bool, 0);
+> +
+>   static int dpu_kms_hw_init(struct msm_kms *kms);
+>   static void _dpu_kms_mmu_destroy(struct dpu_kms *dpu_kms);
+>   
+> @@ -770,8 +773,11 @@ static int _dpu_kms_drm_obj_init(struct dpu_kms *dpu_kms)
+>   			  type, catalog->sspp[i].features,
+>   			  catalog->sspp[i].features & BIT(DPU_SSPP_CURSOR));
+>   
+> -		plane = dpu_plane_init(dev, catalog->sspp[i].id, type,
+> -				       (1UL << max_crtc_count) - 1);
+> +		if (dpu_use_virtual_planes)
+> +			plane = dpu_plane_init_virtual(dev, type, (1UL << max_crtc_count) - 1);
+> +		else
+> +			plane = dpu_plane_init(dev, catalog->sspp[i].id, type,
+> +					       (1UL << max_crtc_count) - 1);
+>   		if (IS_ERR(plane)) {
+>   			DPU_ERROR("dpu_plane_init failed\n");
+>   			ret = PTR_ERR(plane);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index e2adc937ea63..195257660057 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -64,6 +64,8 @@
+>   #define ktime_compare_safe(A, B) \
+>   	ktime_compare(ktime_sub((A), (B)), ktime_set(0, 0))
+>   
+> +extern bool dpu_use_virtual_planes;
+> +
+>   struct dpu_kms {
+>   	struct msm_kms base;
+>   	struct drm_device *dev;
+> @@ -138,6 +140,8 @@ struct dpu_global_state {
+>   	uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
+>   	uint32_t dsc_to_enc_id[DSC_MAX - DSC_0];
+>   	uint32_t cdm_to_enc_id;
+> +
+> +	uint32_t sspp_to_crtc_id[SSPP_MAX - SSPP_NONE];
+
+I will re-visit this sspp_to_crtc_id mapping after checking the rest of 
+the patches.
+
+>   };
+>   
+>   struct dpu_global_state
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index a41ffa2d774b..2961b809ccf3 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -876,7 +876,7 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>   	drm_rect_rotate_inv(&pipe_cfg->src_rect,
+>   			    new_plane_state->fb->width, new_plane_state->fb->height,
+>   			    new_plane_state->rotation);
+> -	if (r_pipe_cfg->src_rect.x1 != 0)
+> +	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0)
+>   		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+>   				    new_plane_state->fb->width, new_plane_state->fb->height,
+>   				    new_plane_state->rotation);
+> @@ -942,7 +942,7 @@ static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>   	if (ret)
+>   		return ret;
+>   
+> -	if (r_pipe_cfg->src_rect.x1 != 0) {
+> +	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
+>   		/*
+>   		 * In parallel multirect case only the half of the usual width
+>   		 * is supported for tiled formats. If we are here, we know that
+> @@ -1022,6 +1022,113 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	return dpu_plane_atomic_check_pipes(plane, state, crtc_state);
+>   }
+>   
+
+This part should goto patch 6 right?
+
+> +static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+> +					  struct drm_atomic_state *state)
+> +{
+> +	struct drm_plane_state *plane_state =
+> +		drm_atomic_get_plane_state(state, plane);
+> +	struct dpu_plane_state *pstate = to_dpu_plane_state(plane_state);
+> +	const struct dpu_format *format;
+> +	struct drm_crtc_state *crtc_state;
+> +	int ret;
+> +
+> +	if (plane_state->crtc)
+> +		crtc_state = drm_atomic_get_new_crtc_state(state,
+> +							   plane_state->crtc);
+> +
+> +	ret = dpu_plane_atomic_check_nopipe(plane, plane_state, crtc_state);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (!plane_state->visible) {
+> +		/*
+> +		 * resources are freed by dpu_crtc_assign_plane_resources(),
+> +		 * but clean them here.
+> +		 */
+> +		pstate->pipe.sspp = NULL;
+> +		pstate->r_pipe.sspp = NULL;
+> +
+> +		return 0;
+> +	}
+> +
+> +	format = to_dpu_format(msm_framebuffer_format(plane_state->fb));
+> +
+> +	/* force resource reallocation if the format of FB has changed */
+> +	if (pstate->saved_fmt != format) {
+> +		crtc_state->planes_changed = true;
+
+planes_changed means planes on this CRTC are updated. We are using this 
+to track that the underlying SSPP of the plane needs to be changed?
+
+Is this still correct because this might conflict with the DRM's 
+expectation of planes_changed.
+
+> +		pstate->saved_fmt = format;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+> +					      struct dpu_global_state *global_state,
+> +					      struct drm_atomic_state *state,
+> +					      struct drm_plane_state *plane_state)
+> +{
+> +	const struct drm_crtc_state *crtc_state = NULL;
+> +	struct drm_plane *plane = plane_state->plane;
+> +	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+> +	struct dpu_rm_sspp_requirements reqs;
+> +	struct dpu_plane_state *pstate;
+> +	struct dpu_sw_pipe *pipe;
+> +	struct dpu_sw_pipe *r_pipe;
+> +	const struct dpu_format *fmt;
+> +
+> +	if (plane_state->crtc)
+> +		crtc_state = drm_atomic_get_new_crtc_state(state,
+> +							   plane_state->crtc);
+> +
+> +	pstate = to_dpu_plane_state(plane_state);
+> +	pipe = &pstate->pipe;
+> +	r_pipe = &pstate->r_pipe;
+> +
+> +	pipe->sspp = NULL;
+> +	r_pipe->sspp = NULL;
+> +
+> +	if (!plane_state->fb)
+> +		return -EINVAL;
+> +
+> +	fmt = to_dpu_format(msm_framebuffer_format(plane_state->fb));
+> +	reqs.yuv = DPU_FORMAT_IS_YUV(fmt);
+> +	reqs.scale = (plane_state->src_w >> 16 != plane_state->crtc_w) ||
+> +		(plane_state->src_h >> 16 != plane_state->crtc_h);
+> +
+> +	reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
+> +
+> +	pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> +	if (!pipe->sspp)
+> +		return -ENODEV;
+> +
+> +	return dpu_plane_atomic_check_pipes(plane, state, crtc_state);
+> +}
+> +
+> +int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+> +			       struct drm_atomic_state *state,
+> +			       struct drm_crtc *crtc,
+> +			       struct drm_plane_state **states,
+> +			       unsigned int num_planes)
+> +{
+> +	unsigned int i;
+> +	int ret;
+> +
+> +	for (i = 0; i < num_planes; i++) {
+> +		struct drm_plane_state *plane_state = states[i];
+> +
+> +		if (!plane_state ||
+> +		    !plane_state->visible)
+> +			continue;
+> +
+> +		ret = dpu_plane_virtual_assign_resources(crtc, global_state,
+> +							 state, plane_state);
+> +		if (ret)
+> +			break;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>   static void dpu_plane_flush_csc(struct dpu_plane *pdpu, struct dpu_sw_pipe *pipe)
+>   {
+>   	const struct dpu_format *format =
+> @@ -1342,12 +1449,14 @@ static void dpu_plane_atomic_print_state(struct drm_printer *p,
+>   
+>   	drm_printf(p, "\tstage=%d\n", pstate->stage);
+>   
+> -	drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
+> -	drm_printf(p, "\tmultirect_mode[0]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
+> -	drm_printf(p, "\tmultirect_index[0]=%s\n",
+> -		   dpu_get_multirect_index(pipe->multirect_index));
+> -	drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
+> -	drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
+> +	if (pipe->sspp) {
+> +		drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
+> +		drm_printf(p, "\tmultirect_mode[0]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
+> +		drm_printf(p, "\tmultirect_index[0]=%s\n",
+> +			   dpu_get_multirect_index(pipe->multirect_index));
+> +		drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
+> +		drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
+> +	}
+
+I dont mind this being pushed out as a separate patch to protect 
+pipe->sspp. Even though it is static assignment today, there is no harm 
+against adding this protection even today IMO.
+
+>   
+>   	if (r_pipe->sspp) {
+>   		drm_printf(p, "\tsspp[1]=%s\n", r_pipe->sspp->cap->name);
+> @@ -1436,31 +1545,29 @@ static const struct drm_plane_helper_funcs dpu_plane_helper_funcs = {
+>   		.atomic_update = dpu_plane_atomic_update,
+>   };
+>   
+> +static const struct drm_plane_helper_funcs dpu_plane_virtual_helper_funcs = {
+> +	.prepare_fb = dpu_plane_prepare_fb,
+> +	.cleanup_fb = dpu_plane_cleanup_fb,
+> +	.atomic_check = dpu_plane_virtual_atomic_check,
+> +	.atomic_update = dpu_plane_atomic_update,
+> +};
+> +
+>   /* initialize plane */
+> -struct drm_plane *dpu_plane_init(struct drm_device *dev,
+> -		uint32_t pipe, enum drm_plane_type type,
+> -		unsigned long possible_crtcs)
+> +static struct drm_plane *dpu_plane_init_common(struct drm_device *dev,
+> +					       enum drm_plane_type type,
+> +					       unsigned long possible_crtcs,
+> +					       bool inline_rotation,
+> +					       const uint32_t *format_list,
+> +					       uint32_t num_formats,
+> +					       enum dpu_sspp pipe)
+>   {
+>   	struct drm_plane *plane = NULL;
+> -	const uint32_t *format_list;
+>   	struct dpu_plane *pdpu;
+>   	struct msm_drm_private *priv = dev->dev_private;
+>   	struct dpu_kms *kms = to_dpu_kms(priv->kms);
+> -	struct dpu_hw_sspp *pipe_hw;
+> -	uint32_t num_formats;
+>   	uint32_t supported_rotations;
+>   	int ret;
+>   
+> -	/* initialize underlying h/w driver */
+> -	pipe_hw = dpu_rm_get_sspp(&kms->rm, pipe);
+> -	if (!pipe_hw || !pipe_hw->cap || !pipe_hw->cap->sblk) {
+> -		DPU_ERROR("[%u]SSPP is invalid\n", pipe);
+> -		return ERR_PTR(-EINVAL);
+> -	}
+> -
+> -	format_list = pipe_hw->cap->sblk->format_list;
+> -	num_formats = pipe_hw->cap->sblk->num_formats;
+> -
+>   	pdpu = drmm_universal_plane_alloc(dev, struct dpu_plane, base,
+>   				0xff, &dpu_plane_funcs,
+>   				format_list, num_formats,
+> @@ -1486,7 +1593,7 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   
+>   	supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0 | DRM_MODE_ROTATE_180;
+>   
+> -	if (pipe_hw->cap->features & BIT(DPU_SSPP_INLINE_ROTATION))
+> +	if (inline_rotation)
+>   		supported_rotations |= DRM_MODE_ROTATE_MASK;
+>   
+>   	drm_plane_create_rotation_property(plane,
+> @@ -1494,10 +1601,81 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   
+>   	drm_plane_enable_fb_damage_clips(plane);
+>   
+> -	/* success! finalize initialization */
+> +	DPU_DEBUG("%s created for pipe:%u id:%u\n", plane->name,
+> +					pipe, plane->base.id);
+> +	return plane;
+> +}
+> +
+> +struct drm_plane *dpu_plane_init(struct drm_device *dev,
+> +				 uint32_t pipe, enum drm_plane_type type,
+> +				 unsigned long possible_crtcs)
+> +{
+> +	struct drm_plane *plane = NULL;
+> +	struct msm_drm_private *priv = dev->dev_private;
+> +	struct dpu_kms *kms = to_dpu_kms(priv->kms);
+> +	struct dpu_hw_sspp *pipe_hw;
+> +
+> +	/* initialize underlying h/w driver */
+> +	pipe_hw = dpu_rm_get_sspp(&kms->rm, pipe);
+> +	if (!pipe_hw || !pipe_hw->cap || !pipe_hw->cap->sblk) {
+> +		DPU_ERROR("[%u]SSPP is invalid\n", pipe);
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +
+> +	plane = dpu_plane_init_common(dev, type, possible_crtcs,
+> +				      pipe_hw->cap->features & BIT(DPU_SSPP_INLINE_ROTATION),
+> +				      pipe_hw->cap->sblk->format_list,
+> +				      pipe_hw->cap->sblk->num_formats,
+> +				      pipe);
+> +	if (IS_ERR(plane))
+> +		return plane;
+> +
+>   	drm_plane_helper_add(plane, &dpu_plane_helper_funcs);
+>   
+>   	DPU_DEBUG("%s created for pipe:%u id:%u\n", plane->name,
+>   					pipe, plane->base.id);
+> +
+> +	return plane;
+> +}
+> +
+> +struct drm_plane *dpu_plane_init_virtual(struct drm_device *dev,
+> +					 enum drm_plane_type type,
+> +					 unsigned long possible_crtcs)
+> +{
+> +	struct drm_plane *plane = NULL;
+> +	struct msm_drm_private *priv = dev->dev_private;
+> +	struct dpu_kms *kms = to_dpu_kms(priv->kms);
+> +	bool has_inline_rotation = false;
+> +	const u32 *format_list = NULL;
+> +	u32 num_formats = 0;
+> +	int i;
+> +
+> +	/* Determine the largest configuration that we can implement */
+> +	for (i = 0; i < kms->catalog->sspp_count; i++) {
+> +		const struct dpu_sspp_cfg *cfg = &kms->catalog->sspp[i];
+> +
+> +		if (test_bit(DPU_SSPP_INLINE_ROTATION, &cfg->features))
+> +			has_inline_rotation = true;
+> +
+> +		if (!format_list ||
+> +		    cfg->sblk->csc_blk.len) {
+
+But format_list is being assigned to NULL just a few lines above. Why is 
+this check needed?
+
+I dont get why this part can also goto dpu_plane_init_common() as it 
+looks identical to me.
+
+
+> +			format_list = cfg->sblk->format_list;
+> +			num_formats = cfg->sblk->num_formats;
+> +		}
+> +	}
+> +
+> +	plane = dpu_plane_init_common(dev, type, possible_crtcs,
+> +				      has_inline_rotation,
+> +				      format_list,
+> +				      num_formats,
+> +				      SSPP_NONE);
+
+Ok, here is the part which we were discussing in
+
+https://patchwork.freedesktop.org/patch/582820/?series=131109&rev=1#comment_1087370
+
+So yes, that part belongs to this patch.
+
+> +	if (IS_ERR(plane))
+> +		return plane;
+> +
+> +	drm_plane_helper_add(plane, &dpu_plane_virtual_helper_funcs);
+> +
+> +	DPU_DEBUG("%s created virtual id:%u\n", plane->name, plane->base.id);
+> +
+>   	return plane;
+>   }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> index a3ae45dc95d0..15f7d60d8b85 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> @@ -30,6 +30,7 @@
+>    * @plane_fetch_bw: calculated BW per plane
+>    * @plane_clk: calculated clk per plane
+>    * @needs_dirtyfb: whether attached CRTC needs pixel data explicitly flushed
+> + * @saved_fmt: format used by the plane's FB, saved for for virtual plane support
+>    */
+>   struct dpu_plane_state {
+>   	struct drm_plane_state base;
+> @@ -46,6 +47,8 @@ struct dpu_plane_state {
+>   	u64 plane_clk;
+>   
+>   	bool needs_dirtyfb;
+> +
+> +	const struct dpu_format *saved_fmt;
+>   };
+
+Why is saved_fmt needed?
+
+The use-case which comes to my mind is lets say if we have a RGB format 
+and we need to switch to a YUV format, basically switch from DMA to ViG 
+SSPP, then yes we have to mark planes_changed as we need to switch the 
+underlying SSPP that time, but why cant we simply check that by means of 
+a check to see if the fmt is YUV and whether CSC block is present in the 
+SSPP.
+
+This will lead to dpu_crtc_reassign_planes() getting called for format 
+changes even when the new format might be available in the same SSPP.
+
+>   
+>   #define to_dpu_plane_state(x) \
+> @@ -75,6 +78,16 @@ struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>   		uint32_t pipe, enum drm_plane_type type,
+>   		unsigned long possible_crtcs);
+>   
 > +/**
-> + * pci_epc_deinit_notify() - Notify the EPF device about EPC deinitialization
-> + * @epc: the EPC device whose deinitialization is completed
-> + *
-> + * Invoke to notify the EPF device that the EPC deinitialization is completed.
+> + * dpu_plane_init_virtual - create new dpu virtualized plane
+> + * @dev:   Pointer to DRM device
+> + * @type:  Plane type - PRIMARY/OVERLAY/CURSOR
+> + * @possible_crtcs: bitmask of crtc that can be attached to the given pipe
 > + */
-> +void pci_epc_deinit_notify(struct pci_epc *epc)
+> +struct drm_plane *dpu_plane_init_virtual(struct drm_device *dev,
+> +					 enum drm_plane_type type,
+> +					 unsigned long possible_crtcs);
+> +
+>   /**
+>    * dpu_plane_color_fill - enables color fill on plane
+>    * @plane:  Pointer to DRM plane object
+> @@ -91,4 +104,10 @@ void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable);
+>   static inline void dpu_plane_danger_signal_ctrl(struct drm_plane *plane, bool enable) {}
+>   #endif
+>   
+> +int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+> +			       struct drm_atomic_state *state,
+> +			       struct drm_crtc *crtc,
+> +			       struct drm_plane_state **states,
+> +			       unsigned int num_planes);
+> +
+>   #endif /* _DPU_PLANE_H_ */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> index 44938ba7a2b7..7264a4d44a14 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> @@ -694,6 +694,83 @@ int dpu_rm_reserve(
+>   	return ret;
+>   }
+>   
+> +struct dpu_hw_sspp *dpu_rm_reserve_sspp(struct dpu_rm *rm,
+> +					struct dpu_global_state *global_state,
+> +					struct drm_crtc *crtc,
+> +					struct dpu_rm_sspp_requirements *reqs)
 > +{
-> +	struct pci_epf *epf;
+> +	uint32_t crtc_id = crtc->base.id;
+> +	unsigned int weight, best_weght = UINT_MAX;
+
+best_weight?
+
+> +	struct dpu_hw_sspp *hw_sspp;
+> +	unsigned long mask = 0;
+> +	int i, best_idx = -1;
 > +
-> +	if (IS_ERR_OR_NULL(epc))
-> +		return;
+> +	/*
+> +	 * Don't take cursor feature into consideration until there is proper support for SSPP_CURSORn.
+> +	 */
+> +	mask |= BIT(DPU_SSPP_CURSOR);
 > +
-> +	mutex_lock(&epc->list_lock);
-> +	list_for_each_entry(epf, &epc->pci_epf, list) {
-> +		mutex_lock(&epf->lock);
-> +		if (epf->event_ops && epf->event_ops->epc_deinit)
-> +			epf->event_ops->epc_deinit(epf);
-> +		mutex_unlock(&epf->lock);
+> +	if (reqs->scale)
+> +		mask |= BIT(DPU_SSPP_SCALER_RGB) |
+> +			BIT(DPU_SSPP_SCALER_QSEED2) |
+> +			BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE);
+> +
+> +	if (reqs->yuv)
+> +		mask |= BIT(DPU_SSPP_CSC) |
+> +			BIT(DPU_SSPP_CSC_10BIT);
+> +
+> +	if (reqs->rot90)
+> +		mask |= BIT(DPU_SSPP_INLINE_ROTATION);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(rm->hw_sspp); i++) {
+> +		if (!rm->hw_sspp[i])
+> +			continue;
+> +
+> +		if (global_state->sspp_to_crtc_id[i])
+> +			continue;
+> +
+> +		hw_sspp = rm->hw_sspp[i];
+> +
+> +		/* skip incompatible planes */
+> +		if (reqs->scale && !hw_sspp->cap->sblk->scaler_blk.len)
+> +			continue;
+> +
+> +		if (reqs->yuv && !hw_sspp->cap->sblk->csc_blk.len)
+> +			continue;
+> +
+> +		if (reqs->rot90 && !(hw_sspp->cap->features & DPU_SSPP_INLINE_ROTATION))
+> +			continue;
+> +
+> +		/*
+> +		 * For non-yuv, non-scaled planes prefer simple (DMA or RGB)
+> +		 * plane, falling back to VIG only if there are no such planes.
+> +		 *
+> +		 * This way we'd leave VIG sspps to be later used for YUV formats.
+> +		 */
+> +		weight = hweight64(hw_sspp->cap->features & ~mask);
+
+This approach is assuming that ViG feature masks are more than DMA.
+Hence the hweight of DMA SSPP's features is less than hweight of ViG SSPPs.
+
+Is this really true? Because there are other bits such as 
+DMA_SDM845_MASK which might increase the hweight of DMA SSPPs
+
+I would rather make it simpler.
+
+1) if we need scaling || yuv, then we have to get only a Vig
+2) else, first try to get a DMA SSPP
+3) if (2) fails, we have to try to get a ViG SSPP.
+
+Lets be more explicit about the SSPP type here rather than using hweight.
+
+
+> +		if (weight < best_weght) {
+> +			best_weght = weight;
+> +			best_idx = i;
+> +		}
 > +	}
-> +	epc->init_complete = false;
-> +	mutex_unlock(&epc->list_lock);
+> +
+> +	if (best_idx < 0)
+> +		return NULL;
+> +
+> +	global_state->sspp_to_crtc_id[best_idx] = crtc_id;
+> +
+> +	return rm->hw_sspp[best_idx];
 > +}
-> +EXPORT_SYMBOL_GPL(pci_epc_deinit_notify);
 > +
->  /**
->   * pci_epc_bus_master_enable_notify() - Notify the EPF device that the EPC
->   *					device has received the Bus Master
-> diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-> index 11115cd0fe5b..85bdf2adb760 100644
-> --- a/include/linux/pci-epc.h
-> +++ b/include/linux/pci-epc.h
-> @@ -197,6 +197,8 @@ struct pci_epc_features {
->  
->  #define to_pci_epc(device) container_of((device), struct pci_epc, dev)
->  
-> +#ifdef CONFIG_PCI_ENDPOINT
-> +
->  #define pci_epc_create(dev, ops)    \
->  		__pci_epc_create((dev), (ops), THIS_MODULE)
->  #define devm_pci_epc_create(dev, ops)    \
-> @@ -226,6 +228,7 @@ void pci_epc_linkup(struct pci_epc *epc);
->  void pci_epc_linkdown(struct pci_epc *epc);
->  void pci_epc_init_notify(struct pci_epc *epc);
->  void pci_epc_notify_pending_init(struct pci_epc *epc, struct pci_epf *epf);
-> +void pci_epc_deinit_notify(struct pci_epc *epc);
->  void pci_epc_bus_master_enable_notify(struct pci_epc *epc);
->  void pci_epc_remove_epf(struct pci_epc *epc, struct pci_epf *epf,
->  			enum pci_epc_interface_type type);
-> @@ -272,4 +275,14 @@ void __iomem *pci_epc_mem_alloc_addr(struct pci_epc *epc,
->  				     phys_addr_t *phys_addr, size_t size);
->  void pci_epc_mem_free_addr(struct pci_epc *epc, phys_addr_t phys_addr,
->  			   void __iomem *virt_addr, size_t size);
-> +
-> +#else
-> +static inline void pci_epc_init_notify(struct pci_epc *epc)
+> +void dpu_rm_release_all_sspp(struct dpu_global_state *global_state,
+> +			     struct drm_crtc *crtc)
 > +{
+> +	uint32_t crtc_id = crtc->base.id;
+> +
+> +	_dpu_rm_clear_mapping(global_state->sspp_to_crtc_id,
+> +		ARRAY_SIZE(global_state->sspp_to_crtc_id), crtc_id);
 > +}
 > +
-> +static inline void pci_epc_deinit_notify(struct pci_epc *epc)
-> +{
-> +}
-> +#endif /* CONFIG_PCI_ENDPOINT */
->  #endif /* __LINUX_PCI_EPC_H */
-> diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
-> index dc759eb7157c..0639d4dc8986 100644
-> --- a/include/linux/pci-epf.h
-> +++ b/include/linux/pci-epf.h
-> @@ -71,12 +71,14 @@ struct pci_epf_ops {
->  /**
->   * struct pci_epc_event_ops - Callbacks for capturing the EPC events
->   * @epc_init: Callback for the EPC initialization complete event
-> + * @epc_deinit: Callback for the EPC deinitialization event
->   * @link_up: Callback for the EPC link up event
->   * @link_down: Callback for the EPC link down event
->   * @bus_master_enable: Callback for the EPC Bus Master Enable event
->   */
->  struct pci_epc_event_ops {
->  	int (*epc_init)(struct pci_epf *epf);
-> +	void (*epc_deinit)(struct pci_epf *epf);
->  	int (*link_up)(struct pci_epf *epf);
->  	int (*link_down)(struct pci_epf *epf);
->  	int (*bus_master_enable)(struct pci_epf *epf);
-> 
-> -- 
-> 2.25.1
-> 
+>   int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+>   	struct dpu_global_state *global_state, uint32_t enc_id,
+>   	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> index e63db8ace6b9..bf9110547385 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> @@ -37,6 +37,12 @@ struct dpu_rm {
+>   	struct dpu_hw_blk *cdm_blk;
+>   };
+>   
+> +struct dpu_rm_sspp_requirements {
+> +	bool yuv;
+> +	bool scale;
+> +	bool rot90;
+> +};
+> +
+>   /**
+>    * dpu_rm_init - Read hardware catalog and create reservation tracking objects
+>    *	for all HW blocks.
+> @@ -82,6 +88,28 @@ int dpu_rm_reserve(struct dpu_rm *rm,
+>   void dpu_rm_release(struct dpu_global_state *global_state,
+>   		struct drm_encoder *enc);
+>   
+> +/**
+> + * dpu_rm_reserve_sspp - Reserve the required SSPP for the provided CRTC
+> + * @rm: DPU Resource Manager handle
+> + * @global_state: private global state
+> + * @crtc: DRM CRTC handle
+> + * @reqs: SSPP required features
+> + */
+> +struct dpu_hw_sspp *dpu_rm_reserve_sspp(struct dpu_rm *rm,
+> +					struct dpu_global_state *global_state,
+> +					struct drm_crtc *crtc,
+> +					struct dpu_rm_sspp_requirements *reqs);
+> +
+> +/**
+> + * dpu_rm_release_all_sspp - Given the CRTC, release all SSPP
+> + *	blocks previously reserved for that use case.
+> + * @rm: DPU Resource Manager handle
+> + * @crtc: DRM CRTC handle
+> + * @Return: 0 on Success otherwise -ERROR
+> + */
+
+This is void so does not return anything?
+
+> +void dpu_rm_release_all_sspp(struct dpu_global_state *global_state,
+> +			     struct drm_crtc *crtc);
+> +
+>   /**
+>    * Get hw resources of the given type that are assigned to this encoder.
+>    */
 
