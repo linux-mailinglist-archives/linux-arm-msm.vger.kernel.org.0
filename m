@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-21870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9470C8FE2CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:30:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D97B78FE39F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:56:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1223B1F23B6D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:30:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8ABB3284601
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:56:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC663146A85;
-	Thu,  6 Jun 2024 09:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DD0717F4F0;
+	Thu,  6 Jun 2024 09:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mHbpPO++"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bAY09Tb4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F64F13FD93
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 09:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517C117F4E6
+	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 09:56:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717666061; cv=none; b=qZFUZ1vNAbtvtw0Exih/PLWH/j4F6dtU2soXVoFiCaKM/C9AiiBRuazyKv45hc07dxCi63y0ayu/mSwuhnVbdlKRk6Mfae7c1gyRHrNNoqkZAYOLenCAYJzhFGJV6YryQ0KXSiG/tO1IWH4catXdwFGmmMKL9Pp9RD1QboKR3KU=
+	t=1717667797; cv=none; b=r0b0Rqe6xjzHrZVAjntmI6sGWqrTe5Dbw1pV4K6ZgKLDf/K/qzDyljwn965Lh/5OqkQV46xXPGQKfJt/mOKzvLIqNDPL5YjLAFFdDWzbYgPwIjGT3CXAOd9cMd/oB7MuNotHnBN4FWKAvWveSnWY5SqJXL+LQ74TGA4852yA48U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717666061; c=relaxed/simple;
-	bh=rYnqU+2ou4u7Kaw4R/jgOa2YNlkFkEhv+b9vNxA6IfE=;
+	s=arc-20240116; t=1717667797; c=relaxed/simple;
+	bh=sj8vzD7NOhy+claRmdekzWZavh/1G4/bMZrzTLq/nRQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TwluhYmy+DObybB5x0XrJ+nQPu0F2vBganZMm81I4nDDrDbX9QGnsUT/KkfrmVtHyv775LRoL4s7DZG0dLo3sHEDzpCruVLj/tJwV8C4xCaVcfGwsP5QhZvsIQx0/aNzlnVy0qQkU8ToBMAvmir+WHjQDL09A2Kvuj153algsn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mHbpPO++; arc=none smtp.client-ip=209.85.208.43
+	 In-Reply-To:Content-Type; b=uHR3hXrCwzkIHv08uEV7vaL9tRLHx4zyRkxjnqRQXu667hIEDyeR5MyLlqnDKrip78Kd68vT6Bo8Zo+yFGiJMHJpm6Ec9Uvebua9XDjqem3mlxIrltp2/+ZGPDZZwCCZypkLeSYRNWb4TDkBrqpzX983jPDuRlkCziO3r0gXh9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bAY09Tb4; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-57a44c2ce80so709610a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 02:27:39 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a68b54577aaso83094266b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 02:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717666058; x=1718270858; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717667793; x=1718272593; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4coGUS5rqVO/XkMEjgpDlue2Pr3XzDgvTCMJ1kTn61Y=;
-        b=mHbpPO++Pj5BgKK7RI2OslzYmpyQe13GSZVmlCQvrgoAwdLYZVDRRI9UBvMJZVKyJH
-         8RR9v1HbA4yn4JLqTcPyeutgJ3tA37Wo60zZiJHCXGte8Mhve3ZJoX08HjFMI6IVrnau
-         f+HDCon7V188Do/dwnUWaqahv2ttTvwe/3gNXzztAdO5Nww4cph5DhkDAxzK7daZYza/
-         UdaDaQ7SHXQTqS46zpsd6LzDEAvRIOFOOV0q6i1aL9b0G+4g2k5lc1YyphMFZcKA4oKV
-         DJ80oUQHE8gxY99hzrahq9OFnjFJ0bym93hFQdGqrHooEAemF4O7fM7vV3rKmf6l2vWI
-         b6fA==
+        bh=q6FdkmT4DFdyuA/nJhZdLMgbso+NmWKDxfZ7lWlQYA8=;
+        b=bAY09Tb4NFhuSK+deRQVRqsm+e7trcE8jiD/ev5apDlyTFm/2LgLA6AXh6zMxktp17
+         wv5St14QakA9NfYAa8Ei6oxeT8hcTCIl2QmdsWYGE3t9fvaRWUEyOPOio4AKei5RAVoB
+         N+RD9/134kmgz8drJvNTYQ1YDknZSdUfCaV6kxO7lFNyAb3CwIifPUTG0+c4fR50clfN
+         spPHFHCDJrp5iURQwdyzmWWo7pylNfIEsZR4/9rW9KSaQvNguunOhKtV6qXG+taCLsTC
+         7FnMX+5KMsaKu5SnG67YhQKud4y9tqKvcXGeBd+t/WpbHFIMCkhLxyoaZIEQi96k2Pj9
+         9d8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717666058; x=1718270858;
+        d=1e100.net; s=20230601; t=1717667793; x=1718272593;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4coGUS5rqVO/XkMEjgpDlue2Pr3XzDgvTCMJ1kTn61Y=;
-        b=RPp6KDlamJi7487kxOT8gXQRIibW8M5LnNL2IArvTazST6B5Pbh/11EqA6HNZpGICK
-         OtLy26XJkbsvX3jWgpCN3wvLJgNSL86aTVTlspreIq3FLnyMZf1SLw8mT5jAhhPVFfBT
-         KaOkaN0cwYwBGRYNrqDQYU043LLsecdr2CP0pN964goU8lLknJeQUS72EZ7KbnGo9APo
-         M58ImygaZWOWj4XUZTUMCHAcMpKGZAe89u23H6OV42s2bXoEB/SyVdw6VvM29NIvsL1k
-         9UHXJXJwtaSvTEl2/3E8+Sg6bCV5XvFohgplHB+ZgehAHm2ty8ZFZeH3xmQ5AgfBQ+6B
-         8nHw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvwZP0BEHsNS6u8H1dpzXwMRlTtm4GpgTsIid87M7UthfbD/Eky35TGdXDsi5vxdc/sL37i6z0ZOwz/bbk5ZVVxyThBGhB9nFkyuaDrA==
-X-Gm-Message-State: AOJu0Yyfs00VLad8FcDohFtK+3moO3PyYVNJ0K4EqZrhyGBpbYnSq8fC
-	EwTQAm9drPSyFOhfbyK1Gaj6imyhhLWett1azoYDk6q2w+81rTUZBDxxq+PC+8M=
-X-Google-Smtp-Source: AGHT+IGqN8B1VWaFB5hpOX3x2j23zjabMi+w1OoZszVo5ULIhjp7d0F8Xv74HZa+5EdL58oQ+GHQ2A==
-X-Received: by 2002:a50:d5c8:0:b0:574:ebf4:f78c with SMTP id 4fb4d7f45d1cf-57aaaf0eb41mr807201a12.7.1717666058529;
-        Thu, 06 Jun 2024 02:27:38 -0700 (PDT)
+        bh=q6FdkmT4DFdyuA/nJhZdLMgbso+NmWKDxfZ7lWlQYA8=;
+        b=RGKZni+k7NufTRtNrguuPZKQBk6wI7lICXpL/YTTn6zccFRlYV6IoqyMDpxRiokRLW
+         8II2rQP91ESSlv5p7nHu6jSVPuJC9tZr5nHG1mX4aS45AgdNWZReNQEbmEcX6ZIbcjkk
+         u5grs8wziZqiQlWZrWHSrgd6G/xn+Tzo00OtQTiISfaP2PYS/S8u55xyG87f08HPCx7e
+         Gn3DaxTnnjiV/YNr8O99tpZ3g1Wytz6qlsLKb2LCymCZAR1Jyyc3S/2Wlw9wQZpzMP+D
+         acNmPiBiGJifMUdiZHRLRVnXUD8b5YzhbfTzmUX+aFs21/3gpxJj5zPMCIAXIEB/zua+
+         gc8A==
+X-Forwarded-Encrypted: i=1; AJvYcCUrBXlNarBOR8ZIP3RjP4MXnFrKNN/fd3xPgfEjr0bcYF2YQo7jhn8Up6u8hybKvctlDXwd6VenNJZUA5D0CxJe4cFrUV45bBuZKe4eYQ==
+X-Gm-Message-State: AOJu0Yyw5YiASGpoLSTgXA4iX42xA0ahQZ7d8drwndn+nhfd9ufu/j0x
+	WNSVUEdyBVZtC1jyukV/fQE7g5tXPeQNz2Exu/f+9cPrKypDi+3cs7G7U2oMmmw=
+X-Google-Smtp-Source: AGHT+IGifyVW7fe6ghb2pMUwo5R9wL/uHIVW6JK55HBCyclDKc2AMGF5C+7U7bfEkgY+1FECAlE05A==
+X-Received: by 2002:a17:906:2a4e:b0:a68:a52b:7554 with SMTP id a640c23a62f3a-a699fdfef46mr274087166b.66.1717667792592;
+        Thu, 06 Jun 2024 02:56:32 -0700 (PDT)
 Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae0ca5e3sm766761a12.25.2024.06.06.02.27.35
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c8070e39bsm72204166b.162.2024.06.06.02.56.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Jun 2024 02:27:38 -0700 (PDT)
-Message-ID: <fca5168d-9ea2-4fe9-a247-0d97ab175eb3@linaro.org>
-Date: Thu, 6 Jun 2024 11:27:34 +0200
+        Thu, 06 Jun 2024 02:56:32 -0700 (PDT)
+Message-ID: <4ef1d9a9-6a0e-4324-b6d5-2ae225855b03@linaro.org>
+Date: Thu, 6 Jun 2024 11:56:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,26 +77,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] drm/msm/adreno: Add A702 support
-To: Connor Abbott <cwabbott0@gmail.com>
-Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org
-References: <20240219-topic-rb1_gpu-v2-0-2d3d6a0db040@linaro.org>
- <20240219-topic-rb1_gpu-v2-5-2d3d6a0db040@linaro.org>
- <CACu1E7FTN=kwaDJMNiTmFspALzj2+Q-nvsN5ugi=vz4RdUGvGw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: x1e80100: Add BWMONs
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ djakov@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ srinivas.kandagatla@linaro.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+ quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org, abel.vesa@linaro.org
+References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
+ <20240604011157.2358019-4-quic_sibis@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -134,38 +124,44 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CACu1E7FTN=kwaDJMNiTmFspALzj2+Q-nvsN5ugi=vz4RdUGvGw@mail.gmail.com>
+In-Reply-To: <20240604011157.2358019-4-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 23.05.2024 2:14 PM, Connor Abbott wrote:
-> On Fri, Feb 23, 2024 at 9:28 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> The A702 is a weird mix of 600 and 700 series.. Perhaps even a
->> testing ground for some A7xx features with good ol' A6xx silicon.
->> It's basically A610 that's been beefed up with some new registers
->> and hw features (like APRIV!), that was then cut back in size,
->> memory bus and some other ways.
->>
->> Add support for it, tested with QCM2290 / RB1.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
+On 4.06.2024 3:11 AM, Sibi Sankar wrote:
+> Add the CPU and LLCC BWMONs on X1E80100 SoCs.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 169 +++++++++++++++++++++++++
+>  1 file changed, 169 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> index 1929c34ae70a..d86c4d3be126 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> @@ -5329,6 +5329,175 @@ cpu_scp_lpri1: scp-sram-section@200 {
+>  			};
+>  		};
+>  
+> +		pmu@24091000 {
+> +			compatible = "qcom,x1e80100-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
+> +			reg = <0 0x24091000 0 0x1000>;
+> +
+> +			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			interconnects = <&mc_virt MASTER_LLCC 3 &mc_virt SLAVE_EBI1 3>;
+
+QCOM_ICC_TAG_ACTIVE_ONLY
 
 [...]
 
->> +
->> +       if (adreno_is_a702(gpu)) {
->> +               gpu->ubwc_config.highest_bank_bit = 14;
->> +               gpu->ubwc_config.min_acc_len = 1;
->> +               gpu->ubwc_config.ubwc_mode = 2;
-> 
-> I just noticed, but this is wrong. ubwc_mode is a 1 bit field and what
-> this is actually doing is overwriting hbb_lo, making the highest bank
-> bit 15 instead of 14.
+> +
+> +			cpu0_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
 
-You're right, this should be a 0. Thanks!
+I *think* if you add opp-shared here, you can reference the same OPP table
+from all 3 BWMONs without anything exploding.
 
 Konrad
-
 
