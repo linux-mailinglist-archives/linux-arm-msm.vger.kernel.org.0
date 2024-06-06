@@ -1,125 +1,296 @@
-Return-Path: <linux-arm-msm+bounces-21867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-21868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 474B98FE2A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:27:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C838A8FE248
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 11:16:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 01DFEB2AC76
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:15:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D3CE1F228B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Jun 2024 09:16:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C88914EC42;
-	Thu,  6 Jun 2024 09:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D8DF14EC66;
+	Thu,  6 Jun 2024 09:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="cWfMu6Kh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GLEjZbbp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7380A14036B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  6 Jun 2024 09:09:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBD36D1B9;
+	Thu,  6 Jun 2024 09:10:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717664972; cv=none; b=gKD/3bTvrUc4QcalVSKeJWy+T6/OZsy6G7PV7pPL00GLobDewKV9haJsdM0E8k0UT22lteIAnKrtVXkPCQvHFH258dTCn39WZAxCVhV2expQ/VPJPGW6OI+cLpIoTp6J6Q87zX1jwF6CI2dX723cHdt3ZEyVg5fmx60exxp8fjE=
+	t=1717665034; cv=none; b=nWKgzcxvFB+gRqW2jzBqxqF6R+OKyS4LIWQCf2tUQpoNRUhT9ItezIIjyZzQ8kHjoocrGWEmkoRDboYvf7v9v4C898pGu+y4vwuSMa6lwYszganN+RGS4Nr1a900quviHYlXx9rqXLsit9jWgduzhpw/Dh5ReTe+rySM8RmpRI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717664972; c=relaxed/simple;
-	bh=smlH6T7zNUxLgq0OmtV7Rk4JiobNDMTSW4bVj1LVQxI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=oEZ9vijHKgWRgZCmpfOYL2+m8JWv+iJbQOFTXsi5htkD87zWHV6T1P/8Ss5SIzO6fj5lQz9tapGsaB8ATyIYRiCSx775fiaauDKKSR1n+7V6Ljtbe7R54X7gMpOjbJsq32B5KGo8WZQLneLrD2kRV8Ht1PhffGadvmVPCJEru0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=cWfMu6Kh; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a63359aaaa6so93602666b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 02:09:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1717664968; x=1718269768; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HeWTsjDgfYcjvzpN9AvdtAEHKQHZVOf8ieRqkfpvQRQ=;
-        b=cWfMu6KhrgPF3imNOHEt+r8zGhrYPeKzdjvKNo9rMxmyW1t30p5KBJ7u1GW4+0vlj+
-         Msyg8ifY2oqtB3fPB/wcyifJZv6/4wft/lxFsA5JCEmSF6vAbnwCfNokRjip1ww+3M+n
-         ytDfFbsvB4Bgsog0Dm135LOHYCXqIHyRHHP12XvTKV3ZBL0SA9M7Ng/cnFl5cqs8Zfrz
-         vSrFNKGeoaxfFgLcwMAcF/Yy276i3V0N+jLBw8Dmv8E8mR84vtuChr/n1vxW/JdAMNFQ
-         PD0OSZA157Z8UNDi5EGTNpTDk3ux6U90h8xplRwwpN0tiAdPtPd1T9LuJuFmxU01ed8i
-         +vPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717664968; x=1718269768;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HeWTsjDgfYcjvzpN9AvdtAEHKQHZVOf8ieRqkfpvQRQ=;
-        b=LHTpVBXNKGNTyorrKUYiqn9sHywhjEJnT4lC7DCRTQHi30UbMho24TUX9CgSuAqfgT
-         1bl5nFyrdVE9bD03Y9hltMv78OLvR7p2k9viUBXNZ/BuOa6KiuoYvVW6e+vP55B9Jdig
-         q3PR5nOMazD3UIxyU2viHIcD58tzzDGnrxJvEB0BGGc5lfLAHR95RGmxYsgxjOSN+wV6
-         uqe43tEopmDp8PUA0DsTja1Y3m9jPKA8YIXmEkf2hg9JxWOSS5iVBGqL8+aYvN4pije3
-         brFeGlNc18O2MSmiT8EK3O0kVJRQJvVjQAYqL4cHBM3wnU7ae9BNc/U3ZJEIToRe4oV5
-         btTw==
-X-Forwarded-Encrypted: i=1; AJvYcCXkqD7V4fx/nh0VhppGfQeySWUStFalM3VKLhokUJjIPFb2iR7kbad59higKlwfA54umGIWb53sHxtfZ79Fem3n2Xh7eg6xXNHjpps4UQ==
-X-Gm-Message-State: AOJu0YzYfPNtUB2xfdGMFlj+SIIexNbw8n7SfuHMFJXg/XEB6B0dU3ZS
-	c/ImhV4YznoakujrJz0n52FhEac0qF+M9GM8CVet47j0a0gng2nKDPkXuLkrauj2BzvVTkWNDcV
-	qyW4=
-X-Google-Smtp-Source: AGHT+IFATerlbshiVB9ZH69mQZNENHUzFhrPR4nN3eku2fN5TTpR1lr0p7A6w/6VhU4mf30ksR4j2w==
-X-Received: by 2002:a17:906:174b:b0:a68:ad68:c7c8 with SMTP id a640c23a62f3a-a699f67ecc7mr310175866b.36.1717664967729;
-        Thu, 06 Jun 2024 02:09:27 -0700 (PDT)
-Received: from otso.luca.vpn.lucaweiss.eu (2a02-a210-20ba-5a00-9ceb-707b-2d57-26f7.cable.dynamic.v6.ziggo.nl. [2a02:a210:20ba:5a00:9ceb:707b:2d57:26f7])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c805cdd32sm67724966b.79.2024.06.06.02.09.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 02:09:27 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Thu, 06 Jun 2024 11:09:06 +0200
-Subject: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Use .mbn firmware
- for IPA
+	s=arc-20240116; t=1717665034; c=relaxed/simple;
+	bh=EtGIx90prizG+AnE+pFraDLV268gRS80lT4+w+aqaZo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=q3p26rtqxSIdhOCxgcJzuk+pzXGxjWCMiKmdX2HNY1Yl9p11+IoKAbmTzA4YS3tZgPdVkorqRvtXcBxZToy1AMsurdAfBkHd+FfFwi6MYtjONrPmro6vdSeepWSbc9N5A8tnuVWimnIZPqmhj9Y+u8uQbcwhDVmF5uzL5kRuAWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GLEjZbbp; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 455KIBiS004162;
+	Thu, 6 Jun 2024 09:10:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zsBeWenux3zM5BvoDcuWn2gC94RPHDwvuvLCikPbdsY=; b=GLEjZbbpMY6av01w
+	XDxtPr5aOkXg59+kr0F4JyYqZ/PGu9tgH5e+u3GvMz7QKkDTiNKaK3B5U1MjHBm/
+	boStCUGknYtFuWDYvQthlIjwcjZQf993vum9Rforj2hL2ohDMovtHaCSrCem1XAP
+	xmSsVHIKe76uKIKadBkWYKinD0cI7zQhBu3yTKckd/aBQlKlWkp4RLaBDOQ+c8Ht
+	NKATM3bhsBePxpD4nQpT7C6jOJ55K9kAOUs3qsxBtXsVpAgvOpUwGKTHMT0/U08d
+	Juxkvvg3BTfqtbMW1L+9QiJtR7I4nYBsmsNAhsPOteMpqA09Eiv7lfFUjHaGg+yk
+	yabyLQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjxxas99h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Jun 2024 09:10:29 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4569ACcj031595
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 6 Jun 2024 09:10:12 GMT
+Received: from [10.214.67.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Jun 2024
+ 02:10:08 -0700
+Message-ID: <b9ee77da-bd51-4d32-8f35-d38fe8b77f44@quicinc.com>
+Date: Thu, 6 Jun 2024 14:39:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240606-fp5-ipa-mbn-v1-1-183668affe58@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIALF8YWYC/x3MQQqAIBBA0avIrBuw0Fl0lWihOdYsMlGIILx70
- vIt/n+hchGuMKsXCt9S5Uod46BgO1zaGSV0w6Qno0kTxmxRssPTJwzaEAUmb32EXuTCUZ7/tqy
- tfZcL1xBdAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.13.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: x1e80100: Add BWMONs
+To: Sibi Sankar <quic_sibis@quicinc.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <djakov@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <srinivas.kandagatla@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <quic_rgottimu@quicinc.com>, <conor+dt@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <abel.vesa@linaro.org>
+References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
+ <20240604011157.2358019-4-quic_sibis@quicinc.com>
+Content-Language: en-US
+From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+In-Reply-To: <20240604011157.2358019-4-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GntE29tcrGe8qrZnNCwTRtwg1-kSzRFh
+X-Proofpoint-GUID: GntE29tcrGe8qrZnNCwTRtwg1-kSzRFh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-06_01,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=900 adultscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 mlxscore=0 bulkscore=0
+ phishscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1011
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406060067
 
-Specify the file name for the squashed/non-split firmware with the .mbn
-extension instead of the split .mdt. The kernel can load both but the
-squashed version is preferred in dts nowadays.
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 8cd2fe80dbb2..6b4ffc585dcf 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -551,7 +551,7 @@ &i2c9 {
- &ipa {
- 	qcom,gsi-loader = "self";
- 	memory-region = <&ipa_fw_mem>;
--	firmware-name = "qcom/qcm6490/fairphone5/ipa_fws.mdt";
-+	firmware-name = "qcom/qcm6490/fairphone5/ipa_fws.mbn";
- 	status = "okay";
- };
- 
+On 6/4/2024 6:41 AM, Sibi Sankar wrote:
+> Add the CPU and LLCC BWMONs on X1E80100 SoCs.
+> 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 169 +++++++++++++++++++++++++
+>   1 file changed, 169 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> index 1929c34ae70a..d86c4d3be126 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> @@ -5329,6 +5329,175 @@ cpu_scp_lpri1: scp-sram-section@200 {
+>   			};
+>   		};
+>   
+> +		pmu@24091000 {
+> +			compatible = "qcom,x1e80100-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
+> +			reg = <0 0x24091000 0 0x1000>;
+> +
+> +			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			interconnects = <&mc_virt MASTER_LLCC 3 &mc_virt SLAVE_EBI1 3>;
+> +
+> +			operating-points-v2 = <&llcc_bwmon_opp_table>;
+> +
+> +			llcc_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-0 {
 
----
-base-commit: ee78a17615ad0cfdbbc27182b1047cd36c9d4d5f
-change-id: 20240606-fp5-ipa-mbn-d0466de6b5bf
+Nitpick,In one table, we start from ‘opp-0,’ while in the other table, 
+it begins with ‘opp-1,it is better to make it consistent across table.
 
-Best regards,
--- 
-Luca Weiss <luca.weiss@fairphone.com>
+> +					opp-peak-kBps = <800000>;
+> +				};
+> +
+> +				opp-1 {
+> +					opp-peak-kBps = <2188000>;
+> +				};
+> +
+> +				opp-2 {
+> +					opp-peak-kBps = <3072000>;
+> +				};
+> +
+> +				opp-3 {
+> +					opp-peak-kBps = <6220800>;
+> +				};
+> +
+> +				opp-4 {
+> +					opp-peak-kBps = <6835200>;
+> +				};
+> +
+> +				opp-5 {
+> +					opp-peak-kBps = <8371200>;
+> +				};
+> +
+> +				opp-6 {
+> +					opp-peak-kBps = <10944000>;
+> +				};
+> +
+> +				opp-7 {
+> +					opp-peak-kBps = <12748800>;
+> +				};
+> +
+> +				opp-8 {
+> +					opp-peak-kBps = <14745600>;
+> +				};
+> +
+> +				opp-9 {
+> +					opp-peak-kBps = <16896000>;
+> +				};
+> +			};
+> +		};
+> +
+> +		pmu@240b3400 {
+> +			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
+> +			reg = <0 0x240b3400 0 0x600>;
+> +
+> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &gem_noc SLAVE_LLCC 3>;
+> +			operating-points-v2 = <&cpu0_bwmon_opp_table>;
+> +
+> +			cpu0_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-1 {
+> +					opp-peak-kBps = <4800000>;
+> +				};
+> +
+> +				opp-2 {
+> +					opp-peak-kBps = <7464000>;
+> +				};
+> +
+> +				opp-3 {
+> +					opp-peak-kBps = <9600000>;
+> +				};
+> +
+> +				opp-4 {
+> +					opp-peak-kBps = <12896000>;
+> +				};
+> +
+> +				opp-5 {
+> +					opp-peak-kBps = <14928000>;
+> +				};
+> +
+> +				opp-6 {
+> +					opp-peak-kBps = <17064000>;
+> +				};
+> +			};
+> +		};
+> +
+> +		pmu@240b5400 {
+> +			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
+> +			reg = <0 0x240b5400 0 0x600>;
+> +
+> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &gem_noc SLAVE_LLCC 3>;
+> +			operating-points-v2 = <&cpu8_bwmon_opp_table>;
+> +
+> +			cpu8_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-1 {
+> +					opp-peak-kBps = <4800000>;
+> +				};
+> +
+> +				opp-2 {
+> +					opp-peak-kBps = <7464000>;
+> +				};
+> +
+> +				opp-3 {
+> +					opp-peak-kBps = <9600000>;
+> +				};
+> +
+> +				opp-4 {
+> +					opp-peak-kBps = <12896000>;
+> +				};
+> +
+> +				opp-5 {
+> +					opp-peak-kBps = <14928000>;
+> +				};
+> +
+> +				opp-6 {
+> +					opp-peak-kBps = <17064000>;
+> +				};
+> +			};
+> +		};
+> +
+> +		pmu@240b6400 {
+> +			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
+> +			reg = <0 0x240b6400 0 0x600>;
+> +
+> +			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &gem_noc SLAVE_LLCC 3>;
+> +			operating-points-v2 = <&cpu4_bwmon_opp_table>;
+> +
+> +			cpu4_bwmon_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-1 {
+> +					opp-peak-kBps = <4800000>;
+> +				};
+> +
+> +				opp-2 {
+> +					opp-peak-kBps = <7464000>;
+> +				};
+> +
+> +				opp-3 {
+> +					opp-peak-kBps = <9600000>;
+> +				};
+> +
+> +				opp-4 {
+> +					opp-peak-kBps = <12896000>;
+> +				};
+> +
+> +				opp-5 {
+> +					opp-peak-kBps = <14928000>;
+> +				};
+> +
+> +				opp-6 {
+> +					opp-peak-kBps = <17064000>;
+> +				};
+> +			};
+> +		};
+> +
+>   		system-cache-controller@25000000 {
+>   			compatible = "qcom,x1e80100-llcc";
+>   			reg = <0 0x25000000 0 0x200000>,
 
+
+Thanks,
+Shivnandan
 
