@@ -1,278 +1,413 @@
-Return-Path: <linux-arm-msm+bounces-22056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 148E890028C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 13:46:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F9E1900291
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 13:47:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A4291F248FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:46:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3897C28AEBA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:47:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEEBF190060;
-	Fri,  7 Jun 2024 11:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87CBC18F2E4;
+	Fri,  7 Jun 2024 11:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CoZhXKKH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sRwZOdMS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC581527A4;
-	Fri,  7 Jun 2024 11:46:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9AC1527A4
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 11:46:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717760792; cv=none; b=ltlV5a4+wwxC3vdbJhvdQmtwHHR2Klytb9LvWMlwfwAI6KJSlW+MDWg6k6xJaQ5AuFVwo1gbNHOqzMvpcvFicGkZaouaL4hQcUJKUPgrFTayvl/HNmYP1vv/tB54nsoT/DhG2jBojcMowHz02oK3RcwnkDNlmnAFpa5dqPsvDuM=
+	t=1717760805; cv=none; b=VvTCyThZSdGZo8ph3STmNfXJr9YTGHA7wEjcH2XXatgF/OPyLGvFCs4VBK/pd38CX2+mazfbcjD7KR2RtOuyHdJnHh7k/pSc0li4rAo8bCf+YVIx3q2gXj+jHWkryVub+/Dbl64GqcLCNU++nIF6yqLjNZM0fonfqLkr+xIcW08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717760792; c=relaxed/simple;
-	bh=WgoPOvpJBrjFRzJkMr0lOsjcrFohGFp24YpP2tSK04c=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=fAjEXV3hixdSBKzJkqa97qOXDyWT5bHWZ2E04lma6Z3Fu0KFvPSweYgbB9iLHDPLfoppEuzLyCYif82MRWCxlIuvnC70ojIbSopw92XdxqWCeA6C4/j++8Ecps/zBT35tUrEaKLqaT+M2qjjgnXN6PJn3L0x5GJArXMm4v6K860=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CoZhXKKH; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1717760791; x=1749296791;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=WgoPOvpJBrjFRzJkMr0lOsjcrFohGFp24YpP2tSK04c=;
-  b=CoZhXKKHANDuPBh6mFhQQ+Nm+6+uKzTjsT5V6kGS8bwoGm/AJcXeVOLm
-   A7JcjEu4peb+RSg3ifgezvZb3KlWEhNcYoJjHD7Ze+DO/OgAgPgrPtpMx
-   ExcDq3vaKlvWK+eh4SPngIk0Q3IlaQ11McSEof4vB/Ii8NQCzpX6Ir+oI
-   fzC1Vzg+MWUC6BA3N2p+r/kYQIA7JZAKQ67P8cT6hDCB3JP/9+4Zf88rF
-   0oRVa2wF7n16mUq6xwTWz4j1e+lWh00Ly9UeMwYtkYmM/JZX31WWxa9GX
-   Z113+3Otk4/DTVnEWCTRcxk0wJIu5FrWoDiR6+EfbP740LBjQEZSFHC0p
-   w==;
-X-CSE-ConnectionGUID: lLWB/BQ/SMq5f4D/w/WuGg==
-X-CSE-MsgGUID: F/M4WIOqSWCs6hs8Nkno4w==
-X-IronPort-AV: E=McAfee;i="6600,9927,11095"; a="14321039"
-X-IronPort-AV: E=Sophos;i="6.08,221,1712646000"; 
-   d="scan'208";a="14321039"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2024 04:46:30 -0700
-X-CSE-ConnectionGUID: 4lKNgLrKSGCxUy3it4FE/Q==
-X-CSE-MsgGUID: +x08uut2TuWWc9SfCar14w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,221,1712646000"; 
-   d="scan'208";a="38400831"
-Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.247.184])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2024 04:46:24 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Fri, 7 Jun 2024 14:46:20 +0300 (EEST)
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
-    Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-    Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-    Hans de Goede <hdegoede@redhat.com>, 
-    =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-    Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-    Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-    Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-    Konrad Dybcio <konrad.dybcio@linaro.org>, linux-pm@vger.kernel.org, 
-    devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org, 
-    linux-arm-msm@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-Subject: Re: [PATCH v5 2/6] platform: arm64: add Lenovo Yoga C630 WOS EC
- driver
-In-Reply-To: <20240607-yoga-ec-driver-v5-2-1ac91a0b4326@linaro.org>
-Message-ID: <3a9cb5b3-92a0-640d-baac-0429a91a669b@linux.intel.com>
-References: <20240607-yoga-ec-driver-v5-0-1ac91a0b4326@linaro.org> <20240607-yoga-ec-driver-v5-2-1ac91a0b4326@linaro.org>
+	s=arc-20240116; t=1717760805; c=relaxed/simple;
+	bh=vGYxCl8GhEjo7aBFCGoMrrcVy9k+50wGJU2FCIWlVKk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n39g8/qOEF2BDHkRfdHnVLABmUCCUVbqcAOHi6ipfx9OFghjN1KZPMelza5rib1zAW3udS3jSbbvcHjwuf98cW/mra61sL3XfuUxHOy/ISLnUxRXAQSlvpqvkvCVPDjX1n61IBxn4bRfPPxOw5t/1U3GO7pFszVqIY/lQvE01Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sRwZOdMS; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52bbdc237f0so632828e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 04:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717760802; x=1718365602; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CUo/YSczk2Nyul9jpd4YNh6gCc1zxDtFM6huYK5JuxA=;
+        b=sRwZOdMS8iKtLslt69viwEBkBCHECjUKVv2hcwEVDylhlU6nET8OS7gwqjzkYuXCDf
+         WJvGaRZyv8WhfWmpCLt8R5LgHM6gqLTvU4tDnkgLmn5YaM7n5pUo/QeHk02XSa+GYbm2
+         jRfrAeck4BAsFChe0evVJJA9og/s3lx0Ilye0WrUA+y7R2HB8GuaEqdTFp0zEZXF8zqD
+         oO+qnpyv5CQOah0EtCr+bezfCpq7/wXUOlt+mi33r563mG1VkiHLVbLTAhOL+plX/aSx
+         yLwpkdjN/ecB4116/SU6HUNC3Tyq361mvGdMsu9pVTlywMoULS7OPfXjWC4TkCn0091V
+         sonA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717760802; x=1718365602;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CUo/YSczk2Nyul9jpd4YNh6gCc1zxDtFM6huYK5JuxA=;
+        b=qwmR4hI7iql/TtLImuxePUr80jSc16qEbqkelA3BxcySvoTr6f+3Fgeu82sNlF1c1w
+         Su4RrqdsMLMbAALhXxi/Si+YfW3LOtEIJ8pBr3K90H7IsfoMRTgrMkZpadi7kF7FZ+3V
+         cYks/Ukvi6WRkMxq+jgAC2TBJYg68nH/B6FAxyCJTuobklHLBujuY83Vw2+hBOniwaAJ
+         axvQ+IwPrbFXyCPHrI/oq0GPFWhIpnPcfNQtNd5EVSOHOu7YfEOuW42zdDkzgh0H/Swy
+         74M6TSjyjRlcYVh2/48V27L8Plo6BY5j9kYm+l4YGQAFok1DGHw4nH3AwLbUTqZiSe0A
+         8G1g==
+X-Forwarded-Encrypted: i=1; AJvYcCXpZo2UFlBYnjO9Bt6YMJWSHfXKplOuqCRoFEij/SyHA2PJMWNChp+4WyLAVxguHaUoR4H/W93uO205rlQtHEfn2fW0UDJmU5ceuRgKIQ==
+X-Gm-Message-State: AOJu0YwHmm6COY7pwiySR+OLQ1OtK0qDnnoNToCFquDiZCgL/7yRmsbm
+	SqQ973iThvUXL4kWUibVxGxhR7+h7zUYCVBvwPf8rLCpEExuvtzG9z7I2SDIwIQ=
+X-Google-Smtp-Source: AGHT+IFYOXxG2sZJjkRufHuz/UALTmdhRiqiszeoU2cb1WTHtJFP6AB08E691SvhcBZCJbn4dsefuw==
+X-Received: by 2002:a05:6512:3ae:b0:52b:8c88:2d73 with SMTP id 2adb3069b0e04-52bb9fc944amr1779886e87.52.1717760801702;
+        Fri, 07 Jun 2024 04:46:41 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52bb41ee260sm510066e87.68.2024.06.07.04.46.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jun 2024 04:46:41 -0700 (PDT)
+Date: Fri, 7 Jun 2024 14:46:39 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, stable <stable@kernel.org>
+Subject: Re: [PATCH v4 10/11] misc: fastrpc: Fix unsigned PD support
+Message-ID: <rqnxu5ga5bauwmyrsncy5fxkrjduvhavtjqcxvy6bzb565ci35@32pvlalsuij2>
+References: <20240606165939.12950-1-quic_ekangupt@quicinc.com>
+ <20240606165939.12950-11-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240606165939.12950-11-quic_ekangupt@quicinc.com>
 
-On Fri, 7 Jun 2024, Dmitry Baryshkov wrote:
+On Thu, Jun 06, 2024 at 10:29:30PM +0530, Ekansh Gupta wrote:
+> Unsigned PDs are sandboxed DSP processes used to offload computation
+> workloads to the DSP. Unsigned PD have less privileges in terms of
+> DSP resource access as compared to Signed PD.
+> 
+> Unsigned PD requires more initial memory to spawn. Also most of the
+> memory request are allocated from user space. Current initial memory
+> size is not sufficient and mapping request for user space allocated
+> buffer is not supported. This results in failure of unsigned PD offload
+> request. Add changes to fix initial memory size and user space allocated
+> buffer mapping support.
 
-> Lenovo Yoga C630 WOS is a laptop using Snapdragon 850 SoC. Like many
-> laptops it uses an embedded controller (EC) to perform various platform
-> operations, including, but not limited, to Type-C port control or power
-> supply handlng.
+You can guess my comment here.
+
 > 
-> Add the driver for the EC, that creates devices for UCSI and power
-> supply devices.
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 7f1f481263c3 ("misc: fastrpc: check before loading process to the DSP")
+
+And here.
+
+> Cc: stable <stable@kernel.org>
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 > ---
->  drivers/platform/arm64/Kconfig                 |  14 ++
->  drivers/platform/arm64/Makefile                |   1 +
->  drivers/platform/arm64/lenovo-yoga-c630.c      | 283 +++++++++++++++++++++++++
->  include/linux/platform_data/lenovo-yoga-c630.h |  43 ++++
->  4 files changed, 341 insertions(+)
+>  drivers/misc/fastrpc.c | 180 ++++++++++++++++++++++++++++++-----------
+>  1 file changed, 133 insertions(+), 47 deletions(-)
 > 
-> diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
-> index 8fdca0f8e909..8c103b3150d1 100644
-> --- a/drivers/platform/arm64/Kconfig
-> +++ b/drivers/platform/arm64/Kconfig
-> @@ -32,4 +32,18 @@ config EC_ACER_ASPIRE1
->  	  laptop where this information is not properly exposed via the
->  	  standard ACPI devices.
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 32f2e6f625ed..5ffb6098ac38 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -40,7 +40,7 @@
+>  #define FASTRPC_INIT_HANDLE	1
+>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
+>  #define FASTRPC_CTXID_MASK (0xFF0)
+> -#define INIT_FILELEN_MAX (2 * 1024 * 1024)
+> +#define INIT_FILELEN_MAX (5 * 1024 * 1024)
+
+So, there are two things being fixed here. One is the insufficient
+memory size, another one is the mmap request. Separate commits, please.
+
+>  #define INIT_FILE_NAMELEN_MAX (128)
+>  #define FASTRPC_DEVICE_NAME	"fastrpc"
 >  
-> +config EC_LENOVO_YOGA_C630
-> +	tristate "Lenovo Yoga C630 Embedded Controller driver"
-> +	depends on I2C
-> +	help
-> +	  Driver for the Embedded Controller in the Qualcomm Snapdragon-based
-> +	  Lenovo Yoga C630, which provides battery and power adapter
-> +	  information.
-> +
-> +	  This driver provides battery and AC status support for the mentioned
-> +	  laptop where this information is not properly exposed via the
-> +	  standard ACPI devices.
-> +
-> +	  Say M or Y here to include this support.
-> +
->  endif # ARM64_PLATFORM_DEVICES
-> diff --git a/drivers/platform/arm64/Makefile b/drivers/platform/arm64/Makefile
-> index 4fcc9855579b..b2ae9114fdd8 100644
-> --- a/drivers/platform/arm64/Makefile
-> +++ b/drivers/platform/arm64/Makefile
-> @@ -6,3 +6,4 @@
->  #
+> @@ -327,6 +327,7 @@ struct fastrpc_user {
+>  	int tgid;
+>  	int pd;
+>  	bool is_secure_dev;
+> +	bool is_unsigned_pd;
+>  	char *servloc_name;
+>  	/* Lock for lists */
+>  	spinlock_t lock;
+> @@ -1488,7 +1489,6 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>  		u32 siglen;
+>  	} inbuf;
+>  	u32 sc;
+> -	bool unsigned_module = false;
 >  
->  obj-$(CONFIG_EC_ACER_ASPIRE1)	+= acer-aspire1-ec.o
-> +obj-$(CONFIG_EC_LENOVO_YOGA_C630) += lenovo-yoga-c630.o
-> diff --git a/drivers/platform/arm64/lenovo-yoga-c630.c b/drivers/platform/arm64/lenovo-yoga-c630.c
-> new file mode 100644
-> index 000000000000..ffad8c443a13
-> --- /dev/null
-> +++ b/drivers/platform/arm64/lenovo-yoga-c630.c
-
-> +int yoga_c630_ec_read8(struct yoga_c630_ec *ec, u8 addr)
-> +{
-> +	u8 req[2] = { LENOVO_EC_READ_REG, };
-> +	int ret;
-> +	u8 val;
-> +
-> +	scoped_guard(mutex, &ec->lock) {
-> +		req[1] = addr;
-> +		ret = yoga_c630_ec_request(ec, req, sizeof(req), &val, 1);
-> +		if (ret < 0)
-> +			return ret;
+>  	args = kcalloc(FASTRPC_CREATE_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
+>  	if (!args)
+> @@ -1500,9 +1500,9 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>  	}
+>  
+>  	if (init.attrs & FASTRPC_MODE_UNSIGNED_MODULE)
+> -		unsigned_module = true;
+> +		fl->is_unsigned_pd = true;
+>  
+> -	if (is_session_rejected(fl, unsigned_module)) {
+> +	if (is_session_rejected(fl, fl->is_unsigned_pd)) {
+>  		err = -ECONNREFUSED;
+>  		goto err;
+>  	}
+> @@ -1985,6 +1985,7 @@ static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
+>  {
+>  	struct fastrpc_buf *buf = NULL, *iter, *b;
+>  	struct fastrpc_req_munmap req;
+> +	struct fastrpc_map *map = NULL, *iterm, *m;
+>  	struct device *dev = fl->sctx->dev;
+>  	int err = 0;
+>  
+> @@ -2031,34 +2032,75 @@ static int fastrpc_req_munmap(struct fastrpc_user *fl, char __user *argp)
+>  		}
+>  		return err;
+>  	}
+> -	dev_err(dev, "buffer not found addr 0x%09lx, len 0x%08llx\n",
+> +	spin_lock(&fl->lock);
+> +	list_for_each_entry_safe(iterm, m, &fl->maps, node) {
+> +		if (iterm->raddr == req.vaddrout) {
+> +			map = iterm;
+> +			break;
+> +		}
+> +	}
+> +	spin_unlock(&fl->lock);
+> +	if (!map) {
+> +		dev_dbg(dev, "buffer not found addr 0x%09llx, len 0x%08llx\n",
+>  			req.vaddrout, req.size);
+> -	return -EINVAL;
+> +		return -EINVAL;
 > +	}
 > +
-> +	return val;
+> +	err = fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
+> +	if (err)
+> +		dev_dbg(dev, "unmmap\tpt fd = %d, 0x%09llx error\n",  map->fd, map->raddr);
 
-For simple cases like this which don't do logic after the unlock, guard() 
-would be enough (I don't mind scoped_guard() myself though).
+Which error? The message is useless.
 
+> +	else
+> +		fastrpc_map_put(map);
+
+Should the fl->lock be still held here? Can the map be modified
+concurrently?
+
+> +
+> +	return err;
+>  }
+>  
+> -static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+> +static int fastrpc_req_map_dsp(struct fastrpc_user *fl, u64 phys,
+> +			u64 size, u32 flag, uintptr_t vaddrin, u64 *raddr)
+>  {
+>  	struct fastrpc_invoke_args args[3] = { [0 ... 2] = { 0 } };
+> -	struct fastrpc_buf *buf = NULL;
+>  	struct fastrpc_mmap_req_msg req_msg;
+>  	struct fastrpc_mmap_rsp_msg rsp_msg;
+>  	struct fastrpc_phy_page pages;
+> -	struct fastrpc_req_mmap req;
+> -	struct device *dev = fl->sctx->dev;
+>  	int err;
+>  	u32 sc;
+>  
+> -	if (copy_from_user(&req, argp, sizeof(req)))
+> -		return -EFAULT;
+> +	req_msg.pgid = fl->tgid;
+> +	req_msg.flags = flag;
+> +	req_msg.vaddr = vaddrin;
+> +	req_msg.num = sizeof(pages);
+>  
+> -	if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
+> -		dev_err(dev, "flag not supported 0x%x\n", req.flags);
+> +	args[0].ptr = (u64) (uintptr_t) &req_msg;
+> +	args[0].length = sizeof(req_msg);
+>  
+> -		return -EINVAL;
+> +	pages.addr = phys;
+> +	pages.size = size;
+> +
+> +	args[1].ptr = (u64) (uintptr_t) &pages;
+> +	args[1].length = sizeof(pages);
+> +	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MMAP, 2, 1);
+> +	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+> +					  &args[0]);
+> +
+> +	if (err) {
+> +		dev_err(fl->sctx->dev, "mmap error (len 0x%08llx)\n", size);
+> +		return err;
+>  	}
+> +	*raddr = rsp_msg.vaddr;
+> +
+> +	return err;
 > +}
-> +EXPORT_SYMBOL_GPL(yoga_c630_ec_read8);
 > +
-> +int yoga_c630_ec_read16(struct yoga_c630_ec *ec, u8 addr)
+> +static int fastrpc_req_buf_alloc(struct fastrpc_user *fl,
+> +			struct fastrpc_req_mmap req, char __user *argp)
 > +{
-> +	u8 req[2] = { LENOVO_EC_READ_REG, };
-> +	int ret;
-> +	u8 msb;
-> +	u8 lsb;
+> +	struct device *dev = fl->sctx->dev;
+> +	struct fastrpc_buf *buf = NULL;
+> +	u64 raddr = 0;
+> +	int err;
+>  
+>  	if (req.vaddrin) {
+> -		dev_err(dev, "adding user allocated pages is not supported\n");
+> +		dev_err(dev, "adding user allocated pages is not supported for signed PD\n");
 
-addr + 1 could overflow below so it would be good the return -EINVAL if 
-0xff addr is given as a parameter.
+Drop, less chance of users spamming the dmesg.
 
-> +	scoped_guard(mutex, &ec->lock) {
-> +		req[1] = addr;
-> +		ret = yoga_c630_ec_request(ec, req, sizeof(req), &lsb, 1);
-> +		if (ret < 0)
-> +			return ret;
+>  		return -EINVAL;
+>  	}
+>  
+> @@ -2091,36 +2133,16 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>  		}
+>  	}
+>  
+> -	req_msg.pgid = fl->tgid;
+> -	req_msg.flags = req.flags;
+> -	req_msg.vaddr = req.vaddrin;
+> -	req_msg.num = sizeof(pages);
+> -
+> -	args[0].ptr = (u64) (uintptr_t) &req_msg;
+> -	args[0].length = sizeof(req_msg);
+> -
+> -	pages.addr = buf->phys;
+> -	pages.size = buf->size;
+> -
+> -	args[1].ptr = (u64) (uintptr_t) &pages;
+> -	args[1].length = sizeof(pages);
+> -
+> -	args[2].ptr = (u64) (uintptr_t) &rsp_msg;
+> -	args[2].length = sizeof(rsp_msg);
+> -
+> -	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_MMAP, 2, 1);
+> -	err = fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE, sc,
+> -				      &args[0]);
+> -	if (err) {
+> -		dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
+> +	err = fastrpc_req_map_dsp(fl, buf->phys, buf->size, buf->flag,
+> +				req.vaddrin, &raddr);
+> +	if (err)
+>  		goto err_invoke;
+> -	}
+>  
+>  	/* update the buffer to be able to deallocate the memory on the DSP */
+> -	buf->raddr = (uintptr_t) rsp_msg.vaddr;
+> +	buf->raddr = (uintptr_t) raddr;
+>  
+>  	/* let the client know the address to use */
+> -	req.vaddrout = rsp_msg.vaddr;
+> +	req.vaddrout = raddr;
+>  
+>  	spin_lock(&fl->lock);
+>  	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
+> @@ -2129,16 +2151,14 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>  		list_add_tail(&buf->node, &fl->mmaps);
+>  	spin_unlock(&fl->lock);
+>  
+> +	dev_dbg(dev, "mmap\t\tpt 0x%09lx OK [len 0x%08llx]\n",
+> +		buf->raddr, buf->size);
 > +
-> +		req[1] = addr + 1;
-> +		ret = yoga_c630_ec_request(ec, req, sizeof(req), &msb, 1);
-> +		if (ret < 0)
-> +			return ret;
+>  	if (copy_to_user((void __user *)argp, &req, sizeof(req))) {
+>  		err = -EFAULT;
+>  		goto err_copy;
+>  	}
+> -
+> -	dev_dbg(dev, "mmap\t\tpt 0x%09lx OK [len 0x%08llx]\n",
+> -		buf->raddr, buf->size);
+> -
+>  	return 0;
+> -
+>  err_copy:
+>  	spin_lock(&fl->lock);
+>  	list_del(&buf->node);
+> @@ -2146,11 +2166,77 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>  	fastrpc_req_munmap_impl(fl, buf);
+>  	buf = NULL;
+>  err_invoke:
+> -	fastrpc_buf_free(buf);
+> +	if (buf)
+> +		fastrpc_buf_free(buf);
+> +
+> +	return err;
+> +}
+> +
+> +static int fastrpc_req_map_create(struct fastrpc_user *fl,
+> +			struct fastrpc_req_mmap req, char __user *argp)
+> +{
+> +	struct fastrpc_map *map = NULL;
+> +	struct device *dev = fl->sctx->dev;
+> +	u64 raddr = 0;
+> +	int err;
+> +
+> +	if ((req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR) && fl->is_unsigned_pd) {
+> +		dev_err(dev, "secure memory allocation is not supported in unsigned PD\n");
+> +		return -EINVAL;
+> +	}
+> +	err = fastrpc_map_create(fl, req.fd, req.size, 0, &map);
+> +	if (err) {
+> +		dev_err(dev, "failed to map buffer, fd = %d\n", req.fd);
+> +		return err;
 > +	}
 > +
-> +	return msb << 8 | lsb;
-> +}
-> +EXPORT_SYMBOL_GPL(yoga_c630_ec_read16);
-
-
+> +	err = fastrpc_req_map_dsp(fl, map->phys, map->size, req.flags,
+> +				req.vaddrin, &raddr);
+> +	if (err)
+> +		goto err_invoke;
 > +
-> +u16 yoga_c630_ec_ucsi_get_version(struct yoga_c630_ec *ec)
-> +{
-> +	u8 req[3] = { 0xb3, 0xf2, 0x20};
-> +	int ret;
-> +	u8 msb;
-> +	u8 lsb;
+> +	/* update the buffer to be able to deallocate the memory on the DSP */
+> +	map->raddr = (uintptr_t) raddr;
 > +
-> +	scoped_guard(mutex, &ec->lock) {
-> +		ret = yoga_c630_ec_request(ec, req, sizeof(req), &lsb, 1);
-> +		if (ret < 0)
-> +			return ret;
+> +	/* let the client know the address to use */
+> +	req.vaddrout = raddr;
+> +	dev_dbg(dev, "mmap\t\tpt 0x%09llx OK [len 0x%08llx]\n",
+> +		map->raddr, map->size);
 > +
-> +		req[2] = 0x21;
-
-Could you name 0x20 with a define and use it above and with + 1 here?
-
-> +		ret = yoga_c630_ec_request(ec, req, sizeof(req), &msb, 1);
-> +		if (ret < 0)
-> +			return ret;
+> +	if (copy_to_user((void __user *)argp, &req, sizeof(req))) {
+> +		err = -EFAULT;
+> +		goto err_copy;
 > +	}
+> +	return 0;
+> +err_copy:
+> +	fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
+> +err_invoke:
+> +	fastrpc_map_put(map);
+>  
+>  	return err;
+>  }
+>  
+> +static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+> +{
+> +	struct fastrpc_req_mmap req;
+> +	int err;
 > +
-> +	return msb << 8 | lsb;
+> +	if (copy_from_user(&req, argp, sizeof(req)))
+> +		return -EFAULT;
+> +
+> +	if ((req.flags == ADSP_MMAP_ADD_PAGES ||
+> +	     req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR) && !fl->is_unsigned_pd) {
+> +		err = fastrpc_req_buf_alloc(fl, req, argp);
+> +		if (err)
+> +			return err;
+> +	} else {
+> +		err = fastrpc_req_map_create(fl, req, argp);
+> +		if (err)
+> +			return err;
+> +	}
+> +	return 0;
 > +}
-> +EXPORT_SYMBOL_GPL(yoga_c630_ec_ucsi_get_version);
-
-> diff --git a/include/linux/platform_data/lenovo-yoga-c630.h b/include/linux/platform_data/lenovo-yoga-c630.h
-> new file mode 100644
-> index 000000000000..5571dd65ce08
-> --- /dev/null
-> +++ b/include/linux/platform_data/lenovo-yoga-c630.h
-> @@ -0,0 +1,43 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2024, Linaro Ltd
-> + * Authors:
-> + *    Bjorn Andersson
-> + *    Dmitry Baryshkov
-> + */
 > +
-> +#ifndef _LENOVO_YOGA_C630_DATA_H
-> +#define _LENOVO_YOGA_C630_DATA_H
-> +
-> +struct yoga_c630_ec;
-> +struct notifier_block;
-> +
-> +#define YOGA_C630_MOD_NAME	"lenovo_yoga_c630"
-> +
-> +#define YOGA_C630_DEV_UCSI	"ucsi"
-> +#define YOGA_C630_DEV_PSY	"psy"
-> +
-> +int yoga_c630_ec_read8(struct yoga_c630_ec *ec, u8 addr);
-> +int yoga_c630_ec_read16(struct yoga_c630_ec *ec, u8 addr);
-> +
-> +int yoga_c630_ec_register_notify(struct yoga_c630_ec *ec, struct notifier_block *nb);
-> +void yoga_c630_ec_unregister_notify(struct yoga_c630_ec *ec, struct notifier_block *nb);
-> +
-> +#define YOGA_C630_UCSI_WRITE_SIZE	8
-> +#define YOGA_C630_UCSI_CCI_SIZE		4
-> +#define YOGA_C630_UCSI_DATA_SIZE	16
-> +#define YOGA_C630_UCSI_READ_SIZE	(YOGA_C630_UCSI_CCI_SIZE + YOGA_C630_UCSI_DATA_SIZE)
-
-Add newline here.
-
-> +u16 yoga_c630_ec_ucsi_get_version(struct yoga_c630_ec *ec);
-> +int yoga_c630_ec_ucsi_write(struct yoga_c630_ec *ec,
-> +			    const u8 req[YOGA_C630_UCSI_WRITE_SIZE]);
-> +int yoga_c630_ec_ucsi_read(struct yoga_c630_ec *ec,
-> +			   u8 resp[YOGA_C630_UCSI_READ_SIZE]);
-> +
-> +#define LENOVO_EC_EVENT_USB		0x20
-> +#define LENOVO_EC_EVENT_UCSI		0x21
-> +#define LENOVO_EC_EVENT_HPD		0x22
-> +#define LENOVO_EC_EVENT_BAT_STATUS	0x24
-> +#define LENOVO_EC_EVENT_BAT_INFO	0x25
-> +#define LENOVO_EC_EVENT_BAT_ADPT_STATUS	0x37
-> +
-> +#endif
-> 
+>  static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_mem_unmap *req)
+>  {
+>  	struct fastrpc_invoke_args args[1] = { [0] = { 0 } };
+> -- 
+> 2.43.0
 > 
 
 -- 
- i.
-
+With best wishes
+Dmitry
 
