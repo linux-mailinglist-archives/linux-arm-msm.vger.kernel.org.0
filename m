@@ -1,253 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-22076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38D3F9004AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 15:24:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED56C9004B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 15:26:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9E7D2B26F50
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 13:24:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72F861F25202
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 13:26:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4864F197A7A;
-	Fri,  7 Jun 2024 13:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80132193099;
+	Fri,  7 Jun 2024 13:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cyOR3OF+"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Q9tK9baH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECB119596C
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 13:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF761940AA
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 13:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717766596; cv=none; b=tu/DCzVv+RQWRWISIGRmbQ9bCyw/+FCOe7E4AO1h3NMC2ehryknCs/axfJEc7lR4MBCS0gpOpiW9pn82zaZK5Yax2cL92m44zARSWrvJkUPOFPxZhG6mrQkvDqER6fWWraFIxVYMcbtCYYaVtCHDjm3is3OQBlhUe9t09uEq6oA=
+	t=1717766650; cv=none; b=jOuJB+M0kGEOjNJv5Au8ObcKiErrWYK65imeKnsMAErqXdMYFz8XD/SAzSXD2Qq6RN4FYtYoFun9H6Vx55Z7vRNfOowybjYguU/AJoEggGMd6Uv3A0IoZrWjq2YXsp4ss+pXJhcNQ0FnnA+3kf+V3Hm6M4mnu03WTMc5+mVSM1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717766596; c=relaxed/simple;
-	bh=OmtXhjZ3Qtpb8oKDdME4LcvLFljKS2x7aDOlRaG8IZU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=l1/2kE1+T4IePEXEdQtBUlpjn0WGgeGNvI29ayj9xziZiKjTVaAVcnkfhcLx/cPJuN4Z7YZrgFm7XVBVynEU6smWhFphzbV/26cGDMz38ajosBS41FrCnZEmmENY8Ha446Fwe2vMKOeuvN0As4WwJd6l6bu2XBzXLfVaT28ppSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cyOR3OF+; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52b992fd796so2245792e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 06:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717766592; x=1718371392; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xk2JZtrRtwrwL4+NkRD4qshhppX0yY2US+tv9P72R1s=;
-        b=cyOR3OF+89f+zwLi9VV6yiY92v2F8UzdGNpl5B+K8JvQ+c9YhOw0U1L+kPFYDL9Hi7
-         D6O8ByEtqnQBdrLc0tB3gZtjv+kl+RVGIfKX+15dJBYZDJ7nAw/hWT6JOHTGuZhkqDsC
-         WC6/J4WwUTR/y6C+bWwOooieVDY91ucq7o2gOHNJvVHzMEwSR/l7tVunWO/Smc0MyCeZ
-         9O1SN1fWE1hwUR6dm0jBrdfk4oFmlT6qQciAZWn7vS6Mw7SMyPsKEm48cXipPrko7Fhp
-         rxIre9KZNr0hphiH2IoJo9hF9b/xsEa1sjrPLbIRNBeADFWLv+CGqtxf+NhewdWjBFHh
-         RPVg==
+	s=arc-20240116; t=1717766650; c=relaxed/simple;
+	bh=4sM4q5itO1Eb5xJyANREchHwndiUR9sJ2nfSR/sd0ZI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k/nZnEhAEBrCK4ATSUSMsf7tVlggRMGLFOwOndTQ7RXUzu/OxQ8EHUBSaVwaetPfmschs1yeNSW2WbHnYpHaKG13Sjj4sx+zc+tylGSBNQeDyJlMXOdBrsu+jv2O3xTqQm0gWBYlGRYFpi4UTzXQ0Nf1dW7Twwwz1zpKpdT2e+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Q9tK9baH; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1717766647;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=h0njwWl4Xr7B/zKqo02JfY8aEgwHTV+DbOrvBRuVJ/0=;
+	b=Q9tK9baHSKVNqNpmOrXHV0ZLlXf0T47wJMuzDLVL9pmq0aOmQwuT7rdSGTXHEj3zLGjfgJ
+	XgkFjaWEXc6FN+SNlcl2LeyPUXAvp9nN9l/zyS2+T+h0QF8FBe1rLiujg+PUaqImlBXp4a
+	BC8Aj8Y1XzFDkaTMzWvma9z/MPUB3x8=
+Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
+ [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-55-WUG4DlRQOLy58Q0Vb4ZpRg-1; Fri, 07 Jun 2024 09:24:04 -0400
+X-MC-Unique: WUG4DlRQOLy58Q0Vb4ZpRg-1
+Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-5ba793ceccaso1858129eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 06:24:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717766592; x=1718371392;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Xk2JZtrRtwrwL4+NkRD4qshhppX0yY2US+tv9P72R1s=;
-        b=He9emfLKzxm0/vghGu9eI7gq+95m9mKI7DZl3QvTxvHIJEoZtAWGkyJsjeaPvpJBwx
-         x37Zn5BjBEjoJt/fQxJF1CHzxxXSOaRJImXHcNK6z+5YEepxEvHCGCiVTeoK2kc2EZ3c
-         MiYiwlywn3HRjGIe58WuHO9Ja6mCpBUzG1v55bTcS4prNVn7BhWc8BFCeW42p2BK8rtn
-         QoiK4D/VWNFJDlM1clUnPv0LzPDGqLS19t9syau++6ovojJ8D7WTJNAUCo4IKDvVYZXI
-         f1iDB1j+MPh11HuF3p6pPqeCc3XZSbUhZX4thg1wBsLh9ReeUr6weKC/rvi1ECeMmERg
-         68MQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWgnKwCgJhHHDd/Qwq00O5BsMIeJ9hwmamdlzirQS5oW7/HRNmJpg8EhWCoCVx5xGuijs8YS/g+4B45fygKBlGWPSxgrPCsFrXpne7TLQ==
-X-Gm-Message-State: AOJu0YyoofT1LM60ObgOMDCHI8LlxMEiltfaw9Y+uVkAdDgOGnnqekoD
-	C5kUgZSSWcpSJ2cFt5rwpDodvo1jl1ENvT3fqw8xmE0qZlX3lRInppfEGrlkOR0=
-X-Google-Smtp-Source: AGHT+IEtVSc28/MM7GrtUCOZP0ECjv9PS5r8QH3dphese9FTqeAHNA05vy8pF9hv1GQpjHfasTAzRQ==
-X-Received: by 2002:a05:6512:2109:b0:529:b712:e6d5 with SMTP id 2adb3069b0e04-52bb9f805d9mr1439643e87.31.1717766592471;
-        Fri, 07 Jun 2024 06:23:12 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52bc27640easm80944e87.104.2024.06.07.06.23.11
+        d=1e100.net; s=20230601; t=1717766644; x=1718371444;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h0njwWl4Xr7B/zKqo02JfY8aEgwHTV+DbOrvBRuVJ/0=;
+        b=NNZ3fcB5KAad53XBFhb3R5Nz819vdpr0uin6lGRzTlnq1O3Hsp29vBIQIfh4OKlni8
+         nixlAeEYoRQPYjWsvu1gtCwO2X+zA+zzoAMTK5WuIlXVT12S6i9wpbCcOsaMzJWkAbbO
+         5INapM3CyPH7Ahhad277SmllZHgLfYRSlf6BBQIJnU97vyucjXbaxijykCaQ9mp7sXQn
+         Bm3hk9XGgRLCtGmUNvAQ4HNyEC77YDvxpBmGTveEtbcZoarH5qZdAGinJA4oQY2Y62T+
+         zY0/KDk9rQ3d4WYw+a4Y8ZnT7vGfieUCFcFLq8XYek8N9AIs9CC0tpJMBpW8PoJH5uyt
+         QRSw==
+X-Forwarded-Encrypted: i=1; AJvYcCWVQkJ09x6nd9bCJNNcprF7YzjmGERmjk4KFkPYdJMj+cYlK+Sy5/ZaQZbm0anR2WCWrjnqMelXq9tiGN8ovJ1TY8Scz1cGWKSEMePCBw==
+X-Gm-Message-State: AOJu0YzDz+ptF31Wu+Y3OWy6MzC7UHPvGmUsj5jHUUuvXJcaxprAItM/
+	RgVq/Hc/3+GB7xNsxHoIgp+/tIcTX8yjhc/O+DomztGrGue2QwjusGfNI6miUOPA4+JSAJF9YB+
+	iPRmEtURS+jq7DBW5oOTGeHL1lLBrx47ZB5PSQnBUUz/3P6su9/GUizPZhwGSqIs=
+X-Received: by 2002:a05:6870:1647:b0:250:7f7e:fa6a with SMTP id 586e51a60fabf-254644ebe85mr2654545fac.23.1717766643658;
+        Fri, 07 Jun 2024 06:24:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwA2CSDWzl4DWmECTbOWHWFKZGJkdSO88z6FFhYWwsyVS9MiJccFJLIeEIllG1fQtMcqXfeA==
+X-Received: by 2002:a05:6870:1647:b0:250:7f7e:fa6a with SMTP id 586e51a60fabf-254644ebe85mr2654518fac.23.1717766643236;
+        Fri, 07 Jun 2024 06:24:03 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-795332e2111sm163946885a.133.2024.06.07.06.24.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jun 2024 06:23:11 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 07 Jun 2024 16:23:06 +0300
-Subject: [PATCH v5 9/9] drm/msm/hdmi: also send the SPD and HDMI Vendor
- Specific InfoFrames
+        Fri, 07 Jun 2024 06:24:02 -0700 (PDT)
+Date: Fri, 7 Jun 2024 08:24:00 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Jochen Henneberg <jh@henneberg-systemdesign.com>, 
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>
+Subject: Re: [PATCH net v2] net: stmmac: dwmac-qcom-ethqos: Configure host
+ DMA width
+Message-ID: <jtalwaityx7fyakigggyahhhor23fml76yic3e3xkeoimdqoj2@i7fiqzacowq3>
+References: <20240605-configure_ethernet_host_dma_width-v2-1-4cc34edfa388@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240607-bridge-hdmi-connector-v5-9-ab384e6021af@linaro.org>
-References: <20240607-bridge-hdmi-connector-v5-0-ab384e6021af@linaro.org>
-In-Reply-To: <20240607-bridge-hdmi-connector-v5-0-ab384e6021af@linaro.org>
-To: Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4619;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=OmtXhjZ3Qtpb8oKDdME4LcvLFljKS2x7aDOlRaG8IZU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmYwm3Vv0fiW83ykL6I4HH01Ryv7CLLl50kocSo
- jWFjuZQyqiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZmMJtwAKCRCLPIo+Aiko
- 1XLsB/9eGSmRclfirO4LoI0+ATKayXjmJcJIO5Gn3p36eE3zrzi0SB5aNCO4stXsOEtA3RqZpC6
- 5bPGbabD3hiuR2tdCGgRAIXXG80uey+UFdmoLhvfQEM3aC8js7VGKuBIdwzr1pr2TjkgrDxDbVo
- 19ZkVX9C9BON4Iscb7HeE9SPqiVE0q2Iy7bB7Q49YqsueQqTkUarstlbPvXu1vRvZBOCgLNPrjp
- hRcSRfYYrj8CGgURiGsZ5BG6qpBTuxkIdMSbaIX1IkyaQMb+PqrUYauz9r97+klYM65QPCIJSjY
- 0tYraAr7rvIQ5uhsTszRdNLEQcxz0b1uxXjAOKwdzhFdsA1a
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240605-configure_ethernet_host_dma_width-v2-1-4cc34edfa388@quicinc.com>
 
-Extend the driver to send SPD and HDMI Vendor Specific InfoFrames.
+On Wed, Jun 05, 2024 at 11:57:18AM GMT, Sagar Cheluvegowda wrote:
+> Commit 070246e4674b ("net: stmmac: Fix for mismatched host/device DMA
+> address width") added support in the stmmac driver for platform drivers
+> to indicate the host DMA width, but left it up to authors of the
+> specific platforms to indicate if their width differed from the addr64
+> register read from the MAC itself.
+> 
+> Qualcomm's EMAC4 integration supports only up to 36 bit width (as
+> opposed to the addr64 register indicating 40 bit width). Let's indicate
+> that in the platform driver to avoid a scenario where the driver will
+> allocate descriptors of size that is supported by the CPU which in our
+> case is 36 bit, but as the addr64 register is still capable of 40 bits
+> the device will use two descriptors as one address.
+> 
+> Fixes: 8c4d92e82d50 ("net: stmmac: dwmac-qcom-ethqos: add support for emac4 on sa8775p platforms")
+> Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
 
-While the HDMI block has special block to send HVS InfoFrame, use
-GENERIC0 block instead. VENSPEC_INFO registers pack frame data in a way
-that requires manual repacking in the driver, while GENERIC0 doesn't
-have such format requirements. The msm-4.4 kernel uses GENERIC0 to send
-HDR InfoFrame which we do not at this point anyway.
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 93 ++++++++++++++++++++++++++++++++++
- 1 file changed, 93 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index 9258d3100042..ad6258a2017a 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -69,6 +69,8 @@ static void power_off(struct drm_bridge *bridge)
- }
- 
- #define AVI_IFRAME_LINE_NUMBER 1
-+#define SPD_IFRAME_LINE_NUMBER 1
-+#define VENSPEC_IFRAME_LINE_NUMBER 3
- 
- static int msm_hdmi_config_avi_infoframe(struct hdmi *hdmi,
- 					 const u8 *buffer, size_t len)
-@@ -142,6 +144,74 @@ static int msm_hdmi_config_audio_infoframe(struct hdmi *hdmi,
- 	return 0;
- }
- 
-+static int msm_hdmi_config_spd_infoframe(struct hdmi *hdmi,
-+					 const u8 *buffer, size_t len)
-+{
-+	u32 buf[7] = {};
-+	u32 val;
-+	int i;
-+
-+	if (len != HDMI_INFOFRAME_SIZE(SPD) || len - 3 > sizeof(buf)) {
-+		DRM_DEV_ERROR(&hdmi->pdev->dev,
-+			"failed to configure SPD infoframe\n");
-+		return -EINVAL;
-+	}
-+
-+	/* checksum gets written together with the body of the frame */
-+	hdmi_write(hdmi, REG_HDMI_GENERIC1_HDR,
-+		   buffer[0] |
-+		   buffer[1] << 8 |
-+		   buffer[2] << 16);
-+
-+	memcpy(buf, &buffer[3], len - 3);
-+
-+	for (i = 0; i < ARRAY_SIZE(buf); i++)
-+		hdmi_write(hdmi, REG_HDMI_GENERIC1(i), buf[i]);
-+
-+	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-+	val |= HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
-+		 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
-+		 HDMI_GEN_PKT_CTRL_GENERIC1_LINE(SPD_IFRAME_LINE_NUMBER);
-+	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-+
-+	return 0;
-+}
-+
-+static int msm_hdmi_config_hdmi_infoframe(struct hdmi *hdmi,
-+					  const u8 *buffer, size_t len)
-+{
-+	u32 buf[7] = {};
-+	u32 val;
-+	int i;
-+
-+	if (len < HDMI_INFOFRAME_HEADER_SIZE + HDMI_VENDOR_INFOFRAME_SIZE ||
-+	    len - 3 > sizeof(buf)) {
-+		DRM_DEV_ERROR(&hdmi->pdev->dev,
-+			"failed to configure HDMI infoframe\n");
-+		return -EINVAL;
-+	}
-+
-+	/* checksum gets written together with the body of the frame */
-+	hdmi_write(hdmi, REG_HDMI_GENERIC0_HDR,
-+		   buffer[0] |
-+		   buffer[1] << 8 |
-+		   buffer[2] << 16);
-+
-+	memcpy(buf, &buffer[3], len - 3);
-+
-+	for (i = 0; i < ARRAY_SIZE(buf); i++)
-+		hdmi_write(hdmi, REG_HDMI_GENERIC0(i), buf[i]);
-+
-+	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-+	val |= HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
-+		 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
-+		 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
-+		 HDMI_GEN_PKT_CTRL_GENERIC0_LINE(VENSPEC_IFRAME_LINE_NUMBER);
-+	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-+
-+	return 0;
-+}
-+
- static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
- 					   enum hdmi_infoframe_type type)
- {
-@@ -176,6 +246,25 @@ static int msm_hdmi_bridge_clear_infoframe(struct drm_bridge *bridge,
- 
- 		break;
- 
-+	case HDMI_INFOFRAME_TYPE_SPD:
-+		val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-+		val &= ~(HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
-+			 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
-+			 HDMI_GEN_PKT_CTRL_GENERIC1_LINE__MASK);
-+		hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-+
-+		break;
-+
-+	case HDMI_INFOFRAME_TYPE_VENDOR:
-+		val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
-+		val &= ~(HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
-+			 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
-+			 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
-+			 HDMI_GEN_PKT_CTRL_GENERIC0_LINE__MASK);
-+		hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
-+
-+		break;
-+
- 	default:
- 		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
- 	}
-@@ -197,6 +286,10 @@ static int msm_hdmi_bridge_write_infoframe(struct drm_bridge *bridge,
- 		return msm_hdmi_config_avi_infoframe(hdmi, buffer, len);
- 	case HDMI_INFOFRAME_TYPE_AUDIO:
- 		return msm_hdmi_config_audio_infoframe(hdmi, buffer, len);
-+	case HDMI_INFOFRAME_TYPE_SPD:
-+		return msm_hdmi_config_spd_infoframe(hdmi, buffer, len);
-+	case HDMI_INFOFRAME_TYPE_VENDOR:
-+		return msm_hdmi_config_hdmi_infoframe(hdmi, buffer, len);
- 	default:
- 		drm_dbg_driver(hdmi_bridge->base.dev, "Unsupported infoframe type %x\n", type);
- 		return 0;
-
--- 
-2.39.2
+> ---
+> Changes in v2:
+> Fix commit message to include a commit body
+> Replace the proper fixes tag
+> Remove the change-Id
+> - Link to v1: https://lore.kernel.org/r/20240529-configure_ethernet_host_dma_width-v1-1-3f2707851adf@quicinc.com
+> ---
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index e254b21fdb59..65d7370b47d5 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -93,6 +93,7 @@ struct ethqos_emac_driver_data {
+>  	bool has_emac_ge_3;
+>  	const char *link_clk_name;
+>  	bool has_integrated_pcs;
+> +	u32 dma_addr_width;
+>  	struct dwmac4_addrs dwmac4_addrs;
+>  };
+>  
+> @@ -276,6 +277,7 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
+>  	.has_emac_ge_3 = true,
+>  	.link_clk_name = "phyaux",
+>  	.has_integrated_pcs = true,
+> +	.dma_addr_width = 36,
+>  	.dwmac4_addrs = {
+>  		.dma_chan = 0x00008100,
+>  		.dma_chan_offset = 0x1000,
+> @@ -845,6 +847,8 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  		plat_dat->flags |= STMMAC_FLAG_RX_CLK_RUNS_IN_LPI;
+>  	if (data->has_integrated_pcs)
+>  		plat_dat->flags |= STMMAC_FLAG_HAS_INTEGRATED_PCS;
+> +	if (data->dma_addr_width)
+> +		plat_dat->host_dma_width = data->dma_addr_width;
+>  
+>  	if (ethqos->serdes_phy) {
+>  		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
+> 
+> ---
+> base-commit: 1b10b390d945a19747d75b34a6e01035ac7b9155
+> change-id: 20240515-configure_ethernet_host_dma_width-c619d552992d
+> 
+> Best regards,
+> -- 
+> Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+> 
 
 
