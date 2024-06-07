@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-22058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06E4090029B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 13:50:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D292E9002AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 13:52:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 911F228BC69
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:50:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D4F411C23B62
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:52:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7938D18F2C6;
-	Fri,  7 Jun 2024 11:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE21F18FC63;
+	Fri,  7 Jun 2024 11:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UIfOgY4O"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KdjoH8kC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0853187358
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 11:50:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4117715DBB6
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 11:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717761034; cv=none; b=eZ+4n7QLmiaInubRO9mouOydaaTIpvktf5iJofRVV/OLMNmDbeBh82XqIgTXsdeUk/9nbdFHWHgeGESlNePY0gkZux7JXnuf9OCOc5aDUTNl4tI7MbE3x009C9tOiuJcwfJ2LF2LlcTM2hvpnox0TE6PZ/kDntVMbYKkWjkDQy4=
+	t=1717761155; cv=none; b=bAmW+gUzXHxQsmfeZ8p/W/5eNeJHnC+SjQQUKCB/tgbh30liNtYXNu2KpwEDvj4zSmuG8dzYQQizurPhLkD8LycBbskyMWtH9N9TRtM3QKjQaaWOe0TtvWXwWapjtDJ2q7R8VU7pIDAPI4rvi85U3nvEwW3ZGjw2sWXKKwOdzJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717761034; c=relaxed/simple;
-	bh=wwGWvexxsp5XY5L70dQnxGHTPS4bWU8DrXd4gNmOcAI=;
+	s=arc-20240116; t=1717761155; c=relaxed/simple;
+	bh=fdeqPpnAPXCFODbGLL/diIQAGBeosl713q3KkJA/Vi8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HVjbiQ5U7bNSFe82eS1iR0HFYtQgexk4dF0d6ek5gIGpMB5p+zJa6+KFdJMLYBkB9I5SDWBTduWSbtUBIpFd65yelDrrRuM1xBzfUyijjnR4cmW2KlyVExRrzYtVbvlPJdFd+6nB+CDrQqZsyoG9PHpjAa9AD0D5bzXKenyNlHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UIfOgY4O; arc=none smtp.client-ip=209.85.167.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=kZ/1Db/aPBBOH/m5MI6P+IJQhc5zs8pT/iWUqIKZWs3gJJ7Z12Yzh+wWkDbOZ6hlZ0697ETsMC5Ln5nFMNU2CV1OcYJo4RsWyOiDqexLa5lHtryxJp4gqqDAZUGX8DDXZxxI6bttmGpBVOfmq6lA35ayQMB0DFiKb7784HFdcAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KdjoH8kC; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52bc274f438so278094e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 04:50:32 -0700 (PDT)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52bc29c79fdso237922e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 04:52:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717761031; x=1718365831; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717761152; x=1718365952; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=G8YSZ1xf3JS020wtDYuRSc4/MIriNLZ3fkqQQXeB5h0=;
-        b=UIfOgY4OwsUBgYVsw0Cpe7LtJy9xXiLoTy9ULEH1KtPYaIsj1KSp2uJhimHGhLV98E
-         PLRjZS1/oP9nQDvFLSkJj4oGvgtaIj6/t6QmWnU1he7xnf9KFLm79o5Gv2jY+eBYIAfW
-         inVEcWoSdGurppGEvVD/4p8S5UUI6ixJbHXNfZCHoWBFSii6mUG7/SNwk8/BYS4vGtQL
-         1bcThBCbo+tXFLkxIxTLaPOm6nkEhd8zO4uJOHGrn8OGJo05rUvMZCfzZrGhHoVlJhZN
-         b0FkhbB1DwGdPYweIrgg7UBTJSGFj9+lqAYbBJ4vsfK9uDamd6UgXr37WhfUctjgxVDV
-         lxgA==
+        bh=LfxTauYnQKQisjXwxnNunMTLSl53yMGzyCyy7lURrtQ=;
+        b=KdjoH8kC+QYJK2zX2WdE4jNk7g0877KusHfjLaqEM0l4CgeLc61Dxto0QPz9me0xUX
+         Zwmb0nwpqUg1vt2J3cc36U9UK54jg839gXBs+xHD81y30DkS0NGpnLdGRN0oV9OxlIr9
+         VaeHT8flbB5CfpSIXvCkyRCFchOTOcarg0uuwby8FxI/vzzAawVGCKmGw5VUIAByHbdy
+         GzMpBLE6b3dEupeJMCcrdLSiCZ9sJmDIpzto3BPDWUhUe/ZkuWtRUo9g4CRHENzEeFJt
+         4ZimpqrD2orye5c4C1eOh2/5ok8UGqetwj/tldDQoyTdbfPxcb0PqTfk1KewmIo6ceKI
+         da+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717761031; x=1718365831;
+        d=1e100.net; s=20230601; t=1717761152; x=1718365952;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=G8YSZ1xf3JS020wtDYuRSc4/MIriNLZ3fkqQQXeB5h0=;
-        b=F1187yJjeVlrsuwi70ch22rxkofNaE+LJPKOB715C2juURl9ABDwUXhN+acnwQpubf
-         bMNkxutqkFWbkxWhcGkshpLIOKr8JfbeyEs7Oy//+xfTWWXcp/uLabduTJASS1WDDGze
-         rAHbmGiMrPfcI/duZc62q1HCgYDb5UXNwmlpiDIhI9Ka+kfZjo3uwBpfYdkkk7zd/8MD
-         9txGlWc0Wuk31vkrN2W5CxTc5j9RqXZoQ9IkXnyobixLlQHu3wrjyPullkvPrKhXmOTY
-         QadEhSpFW6TnLnUFt60N1u4wQ+gj9VABa2pQi0I98pn/spBZuLuxCd/UxPTQwOfp2X+j
-         dEOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUTxj3COTgrzjYaig4qAjkMUrDMigydo2SA8wn8RXy6rkrNyeau8bGwE/lo7sKG4NzkdqjVC/OB3g/hz/l14KxC7fGuav2BKUJtwqPHZg==
-X-Gm-Message-State: AOJu0YwyISgC6aGfcTRSiM5275ErwtDqDhsK+PS1hPBiJ6/E6MjwRR0e
-	JbY2yjpyAAxlHtWGrm+OX14lBtkxsj2wLPrIvfDcg2l8nJ67ZSeGBrcH36UmnJQ=
-X-Google-Smtp-Source: AGHT+IH1fnzWJzSRWiOc9TKw1sMxf6+hh+r01uOIlWbPCeTM2eFUdTm3MFGz4e2qPlT0qozxajJK/g==
-X-Received: by 2002:a05:6512:3e07:b0:52b:8435:8f22 with SMTP id 2adb3069b0e04-52bb9f84ca9mr1871221e87.36.1717761031014;
-        Fri, 07 Jun 2024 04:50:31 -0700 (PDT)
+        bh=LfxTauYnQKQisjXwxnNunMTLSl53yMGzyCyy7lURrtQ=;
+        b=b9QFSPs00ZAlOoTRFHtAHqLBCPSeTT+ldFeeE8pZnabixyigKo6FnhKtWxpY1hGzHe
+         9AoxIM5Kw4nR3TiR8PLFXWfXK1ci/ZrcCCQt4yJndVYKDNuHvye9VjkiyJ1MBpNwXInH
+         RGHOP8pByUxEkw+4rBRd/BzmLL5pk2lfQI99c0ES9UF9vEG0ZohcjKGZSNUITokiohRo
+         b1dDKuPuoKRNzHeF+5Z5k7mxY2+NZvNTd7IbwhfyZiopKETHcx7q/2VIujM5ud1y1q3J
+         Z0xow8TH3LhPXaO8xdfBt9Ao19pk99Zl/FiqNbQE6tdx6zBH9GOZNBLr5wfVAEFLZgFt
+         xOuA==
+X-Forwarded-Encrypted: i=1; AJvYcCWYO8sRW8FPjEZYnR0Y3s/frogoKXHHBpl4MK+/YAMgCSFzO7oP1TaSAtVL7HjojsxenNtITzWVjBPg+bqX0j8qphIwkLTFRLLoimJ6iw==
+X-Gm-Message-State: AOJu0YyNBfLMdM7T/XXbcOY3YmXIxp+eGp3E/9qQo/MCL2rR9p6cXg2L
+	QjRUb3EQrsDFJJSAvNLqFdJOKwSE9dj6PBf+6fZPq+5A8Rxg2LVBIR+4cF8PwZw=
+X-Google-Smtp-Source: AGHT+IEzmS8xVuepYdRPEOD54V7+IMoDbdrIJFm4dNUKsWDnLdcZnTpTFA8AyCQj83pGyC6jsDsDdA==
+X-Received: by 2002:a05:6512:404:b0:52b:8ad9:cf0a with SMTP id 2adb3069b0e04-52bb9fc5e89mr1695052e87.51.1717761152337;
+        Fri, 07 Jun 2024 04:52:32 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52bb433c4fdsm505724e87.264.2024.06.07.04.50.30
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52bb4216536sm508426e87.129.2024.06.07.04.52.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jun 2024 04:50:30 -0700 (PDT)
-Date: Fri, 7 Jun 2024 14:50:29 +0300
+        Fri, 07 Jun 2024 04:52:32 -0700 (PDT)
+Date: Fri, 7 Jun 2024 14:52:30 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com
-Subject: Re: [PATCH v4 00/11] Add missing features to FastRPC driver
-Message-ID: <fc3q4tp6sbmwgfpvi3eqavxnw74mc7czhf473dkbkvl2nzf4qe@i2lrfulyfaz4>
-References: <20240606165939.12950-1-quic_ekangupt@quicinc.com>
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qdu1000: Add secure qfprom node
+Message-ID: <mjkxgytrdzm7gz6jjjbe3tjemussrcqyvz52n4o4cwhdr6y557@h4im5qv4itpc>
+References: <20240607113445.2909-1-quic_kbajaj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,43 +84,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240606165939.12950-1-quic_ekangupt@quicinc.com>
+In-Reply-To: <20240607113445.2909-1-quic_kbajaj@quicinc.com>
 
-On Thu, Jun 06, 2024 at 10:29:20PM +0530, Ekansh Gupta wrote:
-> This patch series adds the listed features that have been missing
-> in upstream fastRPC driver.
-> - Add missing bug fixes.
-> - Add static PD restart support for audio and sensors PD using
->   PDR framework.
-> - Redesign and improve remote heap management.
-> - Add fixes for unsigned PD. Unsigned PD can be enabled
->   using userspace API:
->   https://git.codelinaro.org/linaro/qcomlt/fastrpc/-/blob/master/src/fastrpc_apps_user.c?ref_type=heads#L1173
-> 
-> Changes in v2:
-> - Added separate patch to add newlines in dev_err.
-> - Added a bug fix in fastrpc capability function.
-> - Added a new patch to save and restore interrupted context.
-> - Fixed config dependency for PDR support.
-> 
-> Changes in v3:
-> - Dropped interrupted context patch.
-> - Splitted few of the bug fix patches.
-> - Added Fixes tag wherever applicable.
-> - Updated proper commit message for few of the patches.
-> 
-> Changes in v4:
-> - Dropped untrusted process and system unsigned PD patches.
-> - Updated proper commit message for few of the patches.
-> - Splitted patches in more meaningful way.
-> - Added helped functions for fastrpc_req_mmap.
-> 
+On Fri, Jun 07, 2024 at 05:04:45PM +0530, Komal Bajaj wrote:
+> Add secure qfprom node and also add properties for multi channel
+> DDR. This will be required for LLCC driver to pick the correct
+> LLCC configuration.
 
-I'd suggest to land patches 1-4, they seem to be fine.
 
-The rest of the series needs more rework. Please start by reordering the
-patches, so that fixes come first. Think about the people who will
-backport them to earlier kernels.
+'will be' or 'is' ?
+
+> 
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> index 7a77f7a55498..d8df1bab63d5 100644
+> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> @@ -1584,6 +1584,21 @@ system-cache-controller@19200000 {
+>  			reg-names = "llcc0_base",
+>  				    "llcc_broadcast_base";
+>  			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			nvmem-cell-names = "multi-chan-ddr";
+> +			nvmem-cells = <&multi_chan_ddr>;
+> +		};
+> +
+> +		sec_qfprom: efuse@221c8000 {
+> +			compatible = "qcom,qdu1000-sec-qfprom", "qcom,sec-qfprom";
+> +			reg = <0 0x221c8000 0 0x1000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +
+> +			multi_chan_ddr: multi-chan-ddr@12b {
+> +				reg = <0x12b 0x1>;
+> +				bits = <0 2>;
+> +			};
+>  		};
+>  	};
+> 
+> --
+> 2.42.0
+> 
 
 -- 
 With best wishes
