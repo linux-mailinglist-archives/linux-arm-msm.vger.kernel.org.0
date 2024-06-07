@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-22021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E5FD8FFD4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 09:36:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57ACE8FFD54
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 09:39:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C3F22B20F2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 07:36:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D2190284D25
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 07:39:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E35D45C06;
-	Fri,  7 Jun 2024 07:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80A08156646;
+	Fri,  7 Jun 2024 07:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AD69LnGT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p55Nyt6x"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C05B64E;
-	Fri,  7 Jun 2024 07:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F02C156221;
+	Fri,  7 Jun 2024 07:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717745807; cv=none; b=Rr7R/su6jljq60Ek0/STfco69uYCy8xr1AJRtwpjYAsxEdt2ipMHZhI5o99Z3VdxYK48oYVMr8FPsQY+EphaY0tUKAcFEo04jXw8JUg1m5fHF4QivaRWrGbgN3hjWafSE8FaUaZA9IDt+Od6AFhNQosKJyVeJjACdmKaLkh/34o=
+	t=1717745965; cv=none; b=tqYgtpeWIVN0D/UsyjQKRrsMos2ks9saCJgB60Opv9DuzloDY27+zitijQMCl0BUSWB+R18m13KvktJdLFKt0wkaZM05pdcNY3WRp2anFPqnKl7exXg63dxKvejXzY+NPe3ul4SnhxNAXYhnvD4ULJa4e7PWzbdVRBzmahJ67wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717745807; c=relaxed/simple;
-	bh=dNfJZqLy5bPjeiFjUXNb4v8s2dIB9ZYJCxWbAm+lNMw=;
+	s=arc-20240116; t=1717745965; c=relaxed/simple;
+	bh=wr7gu9163Sk/f1sRmruwuCnVoGH5mPVTJX2Ks0O82gY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=edn5GZ0c2IIG+FRQlFrKVygCf5kySTtMTxwhz1jzkUmMZuT904qlN3BZeltyrLII2CTX+4xVzZUDt/FKvRwCMKwOfL3ShgkDykRLRUmWlL3dOt5KJErMPBfIq5YQFMTjgnCzsot9XP1MipB5oxh0MaKawv3hI1XIY1tjvDepcPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AD69LnGT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B7DC32786;
-	Fri,  7 Jun 2024 07:36:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=vF5xMZ7Jl8VLw+rCuaxEzyx/6MG7/6iSvwqXPxAXCS5rGbUpBuuKzKl1XYJSKriyYLlzFjlKN7ndj9H520XQ8FAuOpjmG4RwmjC+rNMva53ljbLGh/SCHL6JPR3WSe440MmBvlXpJVTVsWH1hxHSOeYwAA1Q24IyLUq5J6Kq5es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p55Nyt6x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D063C32786;
+	Fri,  7 Jun 2024 07:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717745807;
-	bh=dNfJZqLy5bPjeiFjUXNb4v8s2dIB9ZYJCxWbAm+lNMw=;
+	s=k20201202; t=1717745965;
+	bh=wr7gu9163Sk/f1sRmruwuCnVoGH5mPVTJX2Ks0O82gY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AD69LnGT1NlhgQcTlCiRhUl1BoYzYMox2EX1VQtCEQIxI5Eu3/pUU8jbLgnimnVMj
-	 ViyV0CSF3rC8Y7I6UlIwPnLLQ2FLRRRzNzSeVBgHOch9YdRuCwKYhjy+itmHoIJ5GO
-	 0HhNxQwoA5Yqvd+k70s300y3etxgWM+nqEhEELAQpDtYI4WpKKMg2VlATQZmdaaMmS
-	 HV7IYCtPEE/SKT29Ly1XEwUDuxBKtkFd3h16sPNA2UYRqBeWiZqAQWETRn0Z4BBQ5U
-	 bDhoo+PyQQj+FWJSu0Uj993Sihb7zULmEcAvN6SM3VQoAmK1lQxQDlKaQyElbueOZB
-	 5ogDf3gmzSWKw==
-Message-ID: <12e2bbec-7aa9-4893-9f6d-54051f18f6d5@kernel.org>
-Date: Fri, 7 Jun 2024 09:36:43 +0200
+	b=p55Nyt6xQ3oMskqBNCw8+mIL+7dAv2QHLRctSkDokTW+3hyyEZv9XOitzNEzP/oaC
+	 VzQhXomue0zmsmd43BCe7u3+8k5zrfc7ET6hN53aca8c6v1/XVadIVMZxo61M4Ppma
+	 y/iNxFKQ8mYy1AwheYGMyr9reAiIIDjSdYlWVKBuery8WSFl26qUMohTp2Z8gISMxX
+	 bKwH2U61tfrYGqzPYsDS4Hj8t6sGeXJDExXjlzvgomgovo/NvBju5BC9qpj8cfW5lK
+	 UoS7bS8kjZxUwU5jP9h6QJTsWj/TWLiaC9UxTt788TASzrCwDvGGkqiGKP9w88I+MG
+	 cABUgilxeVRFw==
+Message-ID: <1a258cee-653d-457d-bece-297037044bca@kernel.org>
+Date: Fri, 7 Jun 2024 09:39:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM4250 pinctrl
+Subject: Re: [PATCH 2/2] pinctrl: qcom: Introduce SM4250 LPI pinctrl driver
 To: srinivas.kandagatla@linaro.org, andersson@kernel.org,
  linus.walleij@linaro.org
 Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  linux-arm-msm@vger.kernel.org, inux-gpio@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240606130323.138970-1-srinivas.kandagatla@linaro.org>
- <20240606130323.138970-2-srinivas.kandagatla@linaro.org>
+ <20240606130323.138970-3-srinivas.kandagatla@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,95 +103,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240606130323.138970-2-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20240606130323.138970-3-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 06/06/2024 15:03, srinivas.kandagatla@linaro.org wrote:
 > From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > 
-> Add device tree binding Documentation details for Qualcomm SM4250 LPASS
-> LPI(Low power Island) pinctrl device.
+> Add support for the pin controller block on SM4250 Low Power Island.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-...
-
-> +
-> +description:
-> +  Top Level Mode Multiplexer pin controller in the Low Power Audio SubSystem
-> +  (LPASS) Low Power Island (LPI) of Qualcomm SM4250 SoC.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm4250-lpass-lpi-pinctrl
-> +
-> +  reg:
-> +    maxItems: 2
-
-Please use recent bindings as starting work or template, e.g. sm8550 or
-sm8650. IOW, you need to list the items.
-
-> +
-> +  clocks:
-> +    items:
-> +      - description: LPASS Audio voting clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: audio
-> +
-> +patternProperties:
-> +  "-state$":
-> +    oneOf:
-> +      - $ref: "#/$defs/qcom-sm4250-lpass-state"
-> +      - patternProperties:
-> +          "-pins$":
-> +            $ref: "#/$defs/qcom-sm4250-lpass-state"
-> +        additionalProperties: false
-> +
-> +$defs:
-> +  qcom-sm4250-lpass-state:
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    $ref: qcom,lpass-lpi-common.yaml#/$defs/qcom-tlmm-state
-> +    unevaluatedProperties: false
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +        items:
-> +          oneOf:
-
-No need for oneOf. And then directly "pattern" without leading hyphen.
-
-> +            - pattern: "^gpio([0-9]|1[0-8])$"
-> +        minItems: 1
-> +        maxItems: 19
-> +
-> +      function:
-> +        enum: [ gpio, dmic01_clk, dmic01_data, dmic23_clk, dmic23_data,
-> +                dmic4_clk, dmic4_data, ext_mclk0_a, ext_mclk0_b, ext_mclk1_a,
-> +                ext_mclk1_b, ext_mclk1_c, i2s1_clk, i2s1_data, i2s1_ws,
-> +                i2s2_clk, i2s2_data, i2s2_ws, i2s3_clk, i2s3_data, i2s3_ws,
-> +                qua_mi2s_data, qua_mi2s_sclk, qua_mi2s_ws, slim_clk, slim_data,
-> +                swr_rx_clk, swr_rx_data, swr_tx_clk, swr_tx_data, swr_wsa_clk,
-> +                swr_wsa_data ]
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +
-> +allOf:
-> +  - $ref: qcom,lpass-lpi-common.yaml#
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
