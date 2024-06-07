@@ -1,147 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-22032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4658C8FFF82
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:30:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DA0F8FFF8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:31:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 01D5F288DB5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 09:30:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2363288673
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 09:31:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EEDA155C91;
-	Fri,  7 Jun 2024 09:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21D4B15B541;
+	Fri,  7 Jun 2024 09:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tY7s0hR+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YvgS8d5/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6478678C9A
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 09:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9AD15A4B0;
+	Fri,  7 Jun 2024 09:31:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717752648; cv=none; b=pxKd5uTpYZPk1FMTMlapW0usWw+deiDOtX4UGw1VFhoC+IxwSJdoyEZA9g1ZPNyLoX7EgLkXf+J2wAOFJLjeEVWjedLawJRDevd9ovA2b2eC+If8WizaNmNTyc1cSinoyJPcOGCJU19ZmHcG1YyEZQ+coY1VzGI9vBAQ5Kv46k8=
+	t=1717752700; cv=none; b=lLarsrHcOLWLmwWRq64AlF2TfTuqL/HCNeVw2UsunZvwq+JNP8NvME9y+RFrZ0rBvSWJoYXiL7LxrhHDLj+NgzrA5vt/2St343yNB33WaZoOKQE+GTN67foB1zgmCB35WiR+AZvIGRlq4jagIoFa733UBo/G3kjQj9uYclSPhzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717752648; c=relaxed/simple;
-	bh=DajssPdvM/GcVOr+7zyW3/I7g59DJwuVbVcBHTtzzg8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ui5HCYNtgCNJotCn/AGBYFoaYBN3Xo6/Mq6Q1fHouIlrriEFvuVEcTIPwlLD6GJjsQOym9OytfmvetRVrKS5ZREIIyZzPp7tz7y/ZFHitRpzN7Ww5oAoqVl6QhnSMPsXFpmEFNRcnai4eO7McJkcvyQSFWnBNarTkl/sOfPPLOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tY7s0hR+; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2eaea28868dso2711961fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 02:30:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717752644; x=1718357444; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ywA0zlMcN9IykKo37lEmbbeOlog+RD/9uIxRnWwzKOM=;
-        b=tY7s0hR+hAiVqxT70wXxy0bfhibePTyw/SF/fm5yGk6cwn2YCAJ7E8iinhkm64ou1q
-         d/ocxaq4xP6ZuqsoMD++2fj8jfdC02/WxMK2td4KcsiT3ZmhbKHoBCbd3AqbOfdZZy8C
-         TjRQsep8KxXUo8BzbdAmim0I1GfcpQmOeSFRI8sSLv5n10VUGlTiuMvGqCys67pnR+sn
-         XnHdW1Wv+tggnHwVWaQryd+GhCgzIZlF1ZHWRPHFn8hjVuw92JyOvgmORtTQyu501PEL
-         84Yx/aU+82+aup/D4X1nlZDmAupSPo8tZtHOcr9rdxna5D9VpD8wX5Qapyvp3OCre0z/
-         G20w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717752644; x=1718357444;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ywA0zlMcN9IykKo37lEmbbeOlog+RD/9uIxRnWwzKOM=;
-        b=c0V/E1eOLtwObI8wP4+UJAwTSGzCw8GzMudFsi9o+HiJwzTwem+HHbkCW7fYQ9XfFw
-         /2vGx+E06y/mPQadn8I88jl0i+jTKKpySXUYRorzANQOt/uzH1CZBUHNDFwTCrhkrQQp
-         UBElg1iuE0TNI194PhQOmlk/k/SZYTr2k/AtZ6E4Gf9vMbkLwIAMtoWGsr5eZeqIrWb7
-         lr1OY5VhDJxYS6DD4/GMDzY3bYlXuJaR2SntcEUVzJ/XiAPpnNSct7nJNLgVtSJP0rW+
-         OcuyAK2ly8JYKQdlE00l6dXnGHnAZs/Z6wRBd8FsP7llJvPUt3PplVvYHuELhB6MaScl
-         ENbg==
-X-Gm-Message-State: AOJu0YylvZTantfETHmfzio0doWePn33MPRm/VXCLvZFAO07g3eeHHTp
-	P3S38oWAnek7lbY/bhYk6MxMq2lpLCqcL8EKkGFE5NAG5yO5hCjYQiy0jw33VzY=
-X-Google-Smtp-Source: AGHT+IGt8sp8x/QxseJyoFK2YsUds2ZDkx/vsoybD+SaHfZ9FZSQWtTQUNOvp6QdgYWdAvxcER0KkQ==
-X-Received: by 2002:a2e:9613:0:b0:2e9:85cd:a8b3 with SMTP id 38308e7fff4ca-2eadce31413mr17205761fa.7.1717752644599;
-        Fri, 07 Jun 2024 02:30:44 -0700 (PDT)
-Received: from [192.168.128.139] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c80581f42sm216227666b.1.2024.06.07.02.30.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jun 2024 02:30:44 -0700 (PDT)
-Message-ID: <6aad6a71-dd2f-4682-91ea-835357342ba1@linaro.org>
-Date: Fri, 7 Jun 2024 11:30:41 +0200
+	s=arc-20240116; t=1717752700; c=relaxed/simple;
+	bh=rhqvtgLdAjJDetwu1HLnQ9oLmOzc4vfXBUwHh6e/WhU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qCkfezev8K4nGA56N6RvcrL9PaDLDYaXKcsRUB172F/rGQY/CeK4TQOu3JWuDPyjaW7K8ccUMxhFc1AKNtB3WGg58XUBpwbhBjigjsHc327PEwPVTLx43KPFZqHPpkU3VNO4UXKeTLBCqCrFBMBRegC1Z8xZG2WqdhAG/cuoEkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YvgS8d5/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D64AC2BBFC;
+	Fri,  7 Jun 2024 09:31:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717752699;
+	bh=rhqvtgLdAjJDetwu1HLnQ9oLmOzc4vfXBUwHh6e/WhU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YvgS8d5/r8o92wmID2/l03gbU9QAWi7CUT0IEKy/7vK4blclQl++O0siD+W1pPIRG
+	 /s9Z0+oaUX8bOt6GmBL5GhYuGexbsFKFZsuXnRguzAumckCsBKgglkzab0VySUz0tP
+	 4/EqJQD5Z6OVOQeETexIJPP/WkAcfu8yg30yYDDU1xFm6BvPkQ4Oud+e5SIiJw4jTd
+	 0lD1ADHlCHs7c04IQZIMzrXLNniJTMxbSR4JO+3aL4oTsTCsP9fT1TOfYQrPANoAUL
+	 fPprirrsaqFRhHwkKVzNeVkm1xgc/DvgYPVHJ77wqpDhdnaLG0j0wSLMv3CnTJ7yfb
+	 ZRogfCZ0zHcWA==
+Date: Fri, 7 Jun 2024 11:31:28 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+	mhi@lists.linux.dev, Bjorn Helgaas <helgaas@kernel.org>
+Subject: Re: [PATCH 0/5] PCI: endpoint: Add EPC 'deinit' event and
+ dw_pcie_ep_linkdown() API
+Message-ID: <ZmLTcNz0FxAWRYcd@ryzen.lan>
+References: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] clk: qcom: lpassaudiocc-sc7280: Add support for LPASS
- resets for QCM6490
-To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Rob Herring <robh+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- quic_jkona@quicinc.com, quic_imrashai@quicinc.com, devicetree@vger.kernel.org
-References: <20240531102252.26061-1-quic_tdas@quicinc.com>
- <20240531102252.26061-3-quic_tdas@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240531102252.26061-3-quic_tdas@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
 
-On 31.05.2024 12:22 PM, Taniya Das wrote:
-> On the QCM6490 boards the LPASS firmware controls the complete clock
-> controller functionalities. But the LPASS resets are required to be
-> controlled from the high level OS. The Audio SW driver should be able to
-> assert/deassert the audio resets as required. Thus in clock driver add
-> support for the same.
+On Thu, Jun 06, 2024 at 12:56:33PM +0530, Manivannan Sadhasivam wrote:
+> Hi,
 > 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> This series includes patches that were left over from previous series [1] for
+> making the host reboot handling robust in endpoint framework.
+> 
+> When the above mentioned series got merged to pci/endpoint, we got a bug report
+> from LKP bot [2] and due to that the offending patches were dropped.
+> 
+> This series addressed the issue reported by the bot by adding the stub APIs in
+> include/pci/pci-epc.h and also removed the unused dwc wrapper as concluded in
+> [3].
+> 
+> Testing
+> =======
+> 
+> This series is tested on Qcom SM8450 based development board with 2 SM8450 SoCs
+> connected over PCIe.
+> 
+> - Mani
+> 
+> [1] https://lore.kernel.org/linux-pci/20240430-pci-epf-rework-v4-0-22832d0d456f@linaro.org/
+> [2] https://lore.kernel.org/linux-pci/202405130815.BwBrIepL-lkp@intel.com/
+> [3] https://lore.kernel.org/linux-pci/20240529141614.GA3293@thinkpad/
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
+> Manivannan Sadhasivam (5):
+>       PCI: dwc: ep: Remove dw_pcie_ep_init_notify() wrapper
+>       PCI: endpoint: Introduce 'epc_deinit' event and notify the EPF drivers
+>       PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown() API to handle Link Down event
+>       PCI: qcom-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
+>       PCI: layerscape-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
+> 
+>  drivers/pci/controller/dwc/pci-dra7xx.c           |   2 +-
+>  drivers/pci/controller/dwc/pci-imx6.c             |   2 +-
+>  drivers/pci/controller/dwc/pci-keystone.c         |   2 +-
+>  drivers/pci/controller/dwc/pci-layerscape-ep.c    |   4 +-
+>  drivers/pci/controller/dwc/pcie-artpec6.c         |   2 +-
+>  drivers/pci/controller/dwc/pcie-designware-ep.c   | 116 +++++++++++++---------
+>  drivers/pci/controller/dwc/pcie-designware-plat.c |   2 +-
+>  drivers/pci/controller/dwc/pcie-designware.h      |  10 +-
+>  drivers/pci/controller/dwc/pcie-keembay.c         |   2 +-
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c         |   5 +-
+>  drivers/pci/controller/dwc/pcie-rcar-gen4.c       |   2 +-
+>  drivers/pci/controller/dwc/pcie-tegra194.c        |   3 +-
+>  drivers/pci/controller/dwc/pcie-uniphier-ep.c     |   2 +-
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c      |  19 ++++
+>  drivers/pci/endpoint/functions/pci-epf-test.c     |  17 +++-
+>  drivers/pci/endpoint/pci-epc-core.c               |  25 +++++
+>  include/linux/pci-epc.h                           |  13 +++
+>  include/linux/pci-epf.h                           |   2 +
+>  18 files changed, 162 insertions(+), 68 deletions(-)
+> ---
+> base-commit: 7d96527bc16e46545739c6fe0ab6e4c915e9910e
+> change-id: 20240606-pci-deinit-2e6cdf1bd69f
+> 
+> Best regards,
+> -- 
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
 
-Please stop ignoring my comments without responding.
+Considering certain dependency patches have been merged to
+pci/endpoint and other dependency patches have been merged to
+pci/controller/dwc, perhaps it is best if you split this series:
 
-https://lore.kernel.org/all/c1d07eff-4832-47d9-8598-aa6709b465ff@linaro.org/
+Series 1 based on pci/endpoint: with patch 1/5 and 2/5.
+Series 2 based on pci/controller/dwc: with patch 5/5.
 
-Konrad
+Just a friendly suggestion to make Bjorn's life easier
+(and grease the path of your patch) ;) [0]
 
+
+Kind regards,
+Niklas
+
+[0]: https://lore.kernel.org/linux-pci/20171026223701.GA25649@bhelgaas-glaptop.roam.corp.google.com/
+(I still have this in my bookmarks :P)
 
