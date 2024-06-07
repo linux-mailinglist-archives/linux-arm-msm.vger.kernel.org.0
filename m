@@ -1,112 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-22013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB8508FFB7C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 07:55:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3DE58FFC7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 08:51:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDA921C23D7F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 05:55:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC46E1C28B04
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 06:51:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02554200A0;
-	Fri,  7 Jun 2024 05:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C182115357A;
+	Fri,  7 Jun 2024 06:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RVDDYZbC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BXcsw8sK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3FA18049
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 05:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0EF5336A;
+	Fri,  7 Jun 2024 06:51:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717739723; cv=none; b=SIIuaUNNeD2+FjJE3wumP+ke+5g313DHUMIces4PNmKouUec15yCSYXk49iJKOSh2gvdNQPVuPTaq6qr/JrGJ8EQL2iEtQUgW8gzlMiVowAXMmtGrhUysOjZSlnUEllNsvNMymKnYFK59yOIdn8ZbhAKEU+suQrfCA8dvzMOIn4=
+	t=1717743107; cv=none; b=VoycggGTejDVsrr//+7NKCBQ9TGUMtPN1tbz8f4vWLhWI/cwYu054uuEd8L1G3I+AfcURHt5/S8y1svZ1V73jJA+sbAQiKV6PdSPl0gcinE2e5kTvnyfwSi/Ymycy/ZVQ33EGIkVbrIsmQe7vAo64p0+FbpviuYZ2LSrvDfxUgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717739723; c=relaxed/simple;
-	bh=ZhXwI1cGzdbG3/xPhux84aeXE5uygV37OsetZ+A49tA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sHk6YiGjMGmjXltctApk7+JYryWv5iSgzByRCg69B2I2v93mujBVzQYeccRC0E0a+oatGbfFJKfcqUa8uPlkv0wJL0n2qUwRLvfd8rg/63ZGWyKJDkrJWGgqMre1E3jUGcmjdrErfSVCOGfFrPeqctuTyNep2SL2NEODJtMac/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RVDDYZbC; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2eaac465915so17040541fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Jun 2024 22:55:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717739720; x=1718344520; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9BPHj5tjsy40u5xnIOS+sJiXd9TZKhkHWvmbm5XCXCM=;
-        b=RVDDYZbCHjjSb1ysoxB8BQxmkpI/NReyrjiApQ1a5ucarQr4KM2V/kiXNnIkcBcD58
-         oMKVojybysSXvLaQ3Nq4f7iyV9DoJ6dUnMWQyYWtYFe9dPW0qpwx29IvLJL6nhulVR9p
-         I+BB2JU6pejVBI+iE4u2X+H+CEP4V/RUHSEQJ/om125O6T+R6NOdLu8hdQYeQKH9C7ZS
-         xuESyungs6DPZmOfLSOToop1EveK7BuWTubGewGjQEjpzzxKDWZ+j5cBMBMas4IlGCul
-         JXh9wcYGP+I0pKHdAOAcUmkxApEW2YudQ9chdntdv2sUcFSVoLCIn7XHTd9WgtbN8T84
-         bxgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717739720; x=1718344520;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9BPHj5tjsy40u5xnIOS+sJiXd9TZKhkHWvmbm5XCXCM=;
-        b=ACzZ4DlTtv25Aewu5rn9ufzEyaxwGG2qZ/iVWLgxJzTUI3NUfH0ce1rTE3al8ixQpr
-         wdf+klLv7zrNdWNWHCt/o1/Vi2Km5txAM/uKVGE8sLsUAqMwukPyyNNqlA8uSeKgd6a+
-         ySpPd4T3HzY5GcGLXV4hxr9oBO3yBzTGR+sXaTIq9Hgp1qcgP3Q+h9wjx/XZ4GLsSRnm
-         kastoEtxgjAw2do7bZehv7v4zWJ9CSy0GXcDlpoZ8Ur9DQP7/QWkF+XJt1EYfvDdsr+L
-         bc1J69paKV2RzuiyQijTjJ4cI7z0kWWvRxIfDd8QYLIphM7K2SsF4X4OofnmXQl6d2c/
-         HfEA==
-X-Forwarded-Encrypted: i=1; AJvYcCWwXL8w/mRVnTdNxh4eweaOD+88uMDBleRo5dq38YaFpn9j4wmZv7WkIK7e/25npII4Yh/z1ILTR0wkVdEWyIMyXXnM8SaZ44/oBQBi4g==
-X-Gm-Message-State: AOJu0YxkLla7Q8ACiXAt7zBEq25jIyZyfxby1qk3mnmsJu6X47t2/zBW
-	NFrADcZGo4/eDfTSsG4K4lq58WLeP5E80hgM/Vk7NQpKFZheMX8UC6P9EcEV70E=
-X-Google-Smtp-Source: AGHT+IHoz1Kc5/yTC4dbwlAKkn/RxZ/i22SG7V2m9thfEVSDlUh/a8lngHbXSPt7qixcRb4bTIg8IQ==
-X-Received: by 2002:a2e:99c2:0:b0:2e9:881f:66ac with SMTP id 38308e7fff4ca-2eadce34e53mr9065441fa.21.1717739720539;
-        Thu, 06 Jun 2024 22:55:20 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ead40f11b9sm4233071fa.11.2024.06.06.22.55.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 22:55:19 -0700 (PDT)
-Date: Fri, 7 Jun 2024 08:55:18 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] usb: typec-mux: nb7vpq904m: broadcast typec state
- to next mux
-Message-ID: <i3ampmzac6rsbvjkysfcu264jhhzre4rz5jkee4ktqlwxnpbor@n2jjzv7sklz5>
-References: <20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-0-c6f6eae479c3@linaro.org>
- <20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-4-c6f6eae479c3@linaro.org>
+	s=arc-20240116; t=1717743107; c=relaxed/simple;
+	bh=ApvfQgtq23tfdbbfL4earCVKBRWM4vSoJHJ/Wgkzuk4=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=T7415JfKzJbLcRTgyJS1d7rKn2VTcNnfURwG/Vm1KjVmEJTdkPuMxOOo6rpUANvdrZGyE+0jmbPlNVKuP/naJN6yN9NwhY1U5e69JpUiRx1AVQOV8sa3Qp67Jm/xuD//U/VcS2Dy0kZkHEsm3FpDVhyg/Isnchjdrcy/CclrWws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BXcsw8sK; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 456IKQY9013971;
+	Fri, 7 Jun 2024 06:51:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	KPsji9VDaiIc4QBTtWsUNU07pLzwRJlb2lTmicfrLVA=; b=BXcsw8sKw9C0sLip
+	dHo9n2YAVWbW+NWPJDAUd6c8hiZu1SYbSJOoQo02oPk2XtBNwz1Zxl4qkQFf+Jca
+	pbLy4GC7muJeR5wm4l222W2aO63fZ2S5C2Xvr3dNk7ZK4lZFoFKwN6yAAlC0pEp5
+	YDWktR6MQxiWEp8RpRMXjm6ozlc6c2yTbPQK+ewibwE6UYh2EskF87NyJb7amQRM
+	hPQmB+kXRNPlYniqcor/kho8HEW6ZbpcDhkzvJ1+FiVFaUVQbXfDpBM+19QCRzIw
+	DbgWlWhza5MjhizO9a9dc85qXzQNv1XPVaJNDG8KSdM2i/MVVxXS1fR5IltlzTQ0
+	aqPKjw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yjvxyc1ny-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 07 Jun 2024 06:51:35 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 4576pZoY004642
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 7 Jun 2024 06:51:35 GMT
+Received: from [10.214.66.219] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 6 Jun 2024
+ 23:51:31 -0700
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: sdx75: add missing qlink_logging
+ reserved memory for mpss
+To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
+        <mathieu.poirier@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <konrad.dybcio@linaro.org>,
+        <manivannan.sadhasivam@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240606143858.4026-1-quic_nainmeht@quicinc.com>
+ <20240606143858.4026-4-quic_nainmeht@quicinc.com>
+ <c22e20f5-5ca9-485c-991f-9b45e35cd75a@kernel.org>
+From: Naina Mehta <quic_nainmeht@quicinc.com>
+Message-ID: <da06a758-5239-42d6-e4f8-c78418d9529d@quicinc.com>
+Date: Fri, 7 Jun 2024 12:21:06 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-4-c6f6eae479c3@linaro.org>
+In-Reply-To: <c22e20f5-5ca9-485c-991f-9b45e35cd75a@kernel.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: NdYHxGU6YDPDWTxK0HVJpnfeLYvgIPNe
+X-Proofpoint-GUID: NdYHxGU6YDPDWTxK0HVJpnfeLYvgIPNe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-07_01,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ mlxscore=0 adultscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406070047
 
-On Thu, Jun 06, 2024 at 03:11:16PM +0200, Neil Armstrong wrote:
-> In the Type-C graph, the nb7vpq904m retimer is in between the USB-C
-> connector and the USB3/DP combo PHY, and this PHY also requires the
-> USB-C mode events to properly set-up the SuperSpeed Lanes functions
-> to setup USB3-only, USB3 + DP Altmode or DP Altmode only on the 4 lanes.
+On 6/6/2024 8:20 PM, Krzysztof Kozlowski wrote:
+> On 06/06/2024 16:38, Naina Mehta wrote:
+>> The qlink_logging memory region is also used by the modem firmware,
+>> add it to reserved memory regions.
+>> Also split MPSS DSM region into 2 separate regions.
+>>
+>> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sdx75.dtsi | 17 +++++++++++++----
+>>   1 file changed, 13 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+>> index 9b93f6501d55..9349b1c4e196 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+>> @@ -366,7 +366,12 @@
+>>   			no-map;
+>>   		};
+>>   
+>> -		qdss_mem: qdss@88800000 {
+>> +		qdss_mem: qdss@88500000 {
+>> +			reg = <0x0 0x88500000 0x0 0x300000>;
+>> +			no-map;
+>> +		};
+>> +
+>> +		qlink_logging_mem: qlink_logging@88800000 {
 > 
-> Update the nb7vpq904m retimer to get an optional type-c mux on the next
-> endpoint, and broadcast the received mode to it.
+> Sorry, no downstream code.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/usb/typec/mux/nb7vpq904m.c | 24 ++++++++++++++++++++++--
->  1 file changed, 22 insertions(+), 2 deletions(-)
+> Please follow DTS coding style - no underscores in node names. This
+> applies to all work sent upstream.
 > 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Thanks for pointing this out. I will update in next revision.
 
+Regards,
+Naina
 
--- 
-With best wishes
-Dmitry
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
