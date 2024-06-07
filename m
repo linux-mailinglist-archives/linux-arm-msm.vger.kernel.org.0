@@ -1,168 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-22033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DA0F8FFF8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:31:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E0A18FFF9A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:34:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2363288673
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 09:31:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D43C01F249A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 09:34:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21D4B15B541;
-	Fri,  7 Jun 2024 09:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2430978C9A;
+	Fri,  7 Jun 2024 09:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YvgS8d5/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NyinHndA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9AD15A4B0;
-	Fri,  7 Jun 2024 09:31:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E0D155324
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 09:34:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717752700; cv=none; b=lLarsrHcOLWLmwWRq64AlF2TfTuqL/HCNeVw2UsunZvwq+JNP8NvME9y+RFrZ0rBvSWJoYXiL7LxrhHDLj+NgzrA5vt/2St343yNB33WaZoOKQE+GTN67foB1zgmCB35WiR+AZvIGRlq4jagIoFa733UBo/G3kjQj9uYclSPhzQ=
+	t=1717752849; cv=none; b=gBnqJ+Tr80GJiRiNgnkLD9KyeLzfBk4Zdk9A40W7LilBHVtYVzPghXUei7NMxl1X7f/Zg3kTQh6+Nv2//lYoMcty2sCsxAy/6DJ8wjjorSVvHSrnkpIOhm6AoqJrUKDn3MxTUpHiaTPGnGJz+zZ7GKANQp1KqDUoIPbiBxfxoOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717752700; c=relaxed/simple;
-	bh=rhqvtgLdAjJDetwu1HLnQ9oLmOzc4vfXBUwHh6e/WhU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qCkfezev8K4nGA56N6RvcrL9PaDLDYaXKcsRUB172F/rGQY/CeK4TQOu3JWuDPyjaW7K8ccUMxhFc1AKNtB3WGg58XUBpwbhBjigjsHc327PEwPVTLx43KPFZqHPpkU3VNO4UXKeTLBCqCrFBMBRegC1Z8xZG2WqdhAG/cuoEkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YvgS8d5/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D64AC2BBFC;
-	Fri,  7 Jun 2024 09:31:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717752699;
-	bh=rhqvtgLdAjJDetwu1HLnQ9oLmOzc4vfXBUwHh6e/WhU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YvgS8d5/r8o92wmID2/l03gbU9QAWi7CUT0IEKy/7vK4blclQl++O0siD+W1pPIRG
-	 /s9Z0+oaUX8bOt6GmBL5GhYuGexbsFKFZsuXnRguzAumckCsBKgglkzab0VySUz0tP
-	 4/EqJQD5Z6OVOQeETexIJPP/WkAcfu8yg30yYDDU1xFm6BvPkQ4Oud+e5SIiJw4jTd
-	 0lD1ADHlCHs7c04IQZIMzrXLNniJTMxbSR4JO+3aL4oTsTCsP9fT1TOfYQrPANoAUL
-	 fPprirrsaqFRhHwkKVzNeVkm1xgc/DvgYPVHJ77wqpDhdnaLG0j0wSLMv3CnTJ7yfb
-	 ZRogfCZ0zHcWA==
-Date: Fri, 7 Jun 2024 11:31:28 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-	mhi@lists.linux.dev, Bjorn Helgaas <helgaas@kernel.org>
-Subject: Re: [PATCH 0/5] PCI: endpoint: Add EPC 'deinit' event and
- dw_pcie_ep_linkdown() API
-Message-ID: <ZmLTcNz0FxAWRYcd@ryzen.lan>
-References: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
+	s=arc-20240116; t=1717752849; c=relaxed/simple;
+	bh=Mkj3XT9ut46CEFNKsKvkQbdS1PkbvW9WWDHM9Wt8rkw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uRzKtkk7Q2ND+EuAm3AF0Inaiii+uaQiAWlnxdutJqLrmDUgaW6l8Rs8k1c4EMAsuomhdktaMAVtxRcaQkac/I29PNGVp+IA6uxUtMpXlckCTnx4ftWtosaLZqv60DLAkhI0DqCpENdRILMNaxjKPhQ9npNl1HZxk6innBEHKEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NyinHndA; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-35e4d6f7c5cso1847868f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 02:34:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1717752846; x=1718357646; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=F1hHYZcjLgSGH8Bo1cMx5LiBf6CRFSTGZkRvw9Ksdw4=;
+        b=NyinHndAq+x4YPlpdtKR4nmNrBNpszzMLDUvKvcZanbkiE8oCAQg1DduQEYU7Ls60i
+         ugRFez4k7PTpsGEE6jXMIrBQtaWkPGSzNDdu9EYS6qwDIVaj4x5ZZUmy8qnU8yOn03NE
+         WFDhtdVF3KUHVZosCV6y3a42uhyuQXjX9UleFB84K/n+IZqbqC6nybPjHS+gnzysgFH2
+         /Tx/puDxzpu7NSttaeli+b6vtR092a7k0xtrekx/Z66Y/Qa3P7VoiQCAb3+dXfbBM79J
+         D2VUlN3CDdhl18gHf3eOc+jPSheya/lgtk4wT1snDtvReqB2am4g4Pp9y8JS0bxnpyiC
+         uWfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717752846; x=1718357646;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F1hHYZcjLgSGH8Bo1cMx5LiBf6CRFSTGZkRvw9Ksdw4=;
+        b=CN9I3nBsONExBpSdPftuMF+9MAC2JZnjpfEkDaNHUT6RL+LOrjOlj0NnTg1wpzoSAS
+         Mr+EWJ2I1F68Y/btigsXL2eDvF8VdUxshii/UeydinQCh+vhI8BurSqAeFJAJpoGpyTt
+         aFD/Frb4DBjca4S0tB0kaozg4UvvbG2LZfAFl+6AKGelSSPhZ5K9N4xEXHdFNqezH07G
+         jjJkNPpGFYrkYMETwwv59mOiGB7td/qGo5fjUStaFsWrUSK/WK/q4NEAEkYP2wHFL//+
+         oPNgpvKyRwZ0CYaWKd2NAekmEWxM7bGNOH8aok7JeQ4eZ5iH/MVlVATzJRO4tycAjm1T
+         8iRA==
+X-Gm-Message-State: AOJu0Yz+2fnBsxBVt53HLkRdTSb5KqV2YE3lq75ECnJgtqHlUtxDf9/m
+	ZQQkgrdecdjCwoZxGu+4SwxEAF0IBB66kOxaFsJ6A+9gQ86VgeGxO2Vwaj+AGMo=
+X-Google-Smtp-Source: AGHT+IFNNnZHH4kN7xvK0Gl1oFDuJAhYAu++rJbQ7uphPduCYgm5TWYo1rOwC90eb6eUEVeAnd2HiQ==
+X-Received: by 2002:a5d:40c6:0:b0:35f:d4a:ae34 with SMTP id ffacd0b85a97d-35f0d4aaf5fmr137022f8f.17.1717752845768;
+        Fri, 07 Jun 2024 02:34:05 -0700 (PDT)
+Received: from [192.168.2.24] ([110.93.11.116])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35efa97b15dsm2569514f8f.81.2024.06.07.02.34.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Jun 2024 02:34:05 -0700 (PDT)
+Message-ID: <22becbf9-a663-4f25-aee5-8fd195e6fa55@linaro.org>
+Date: Fri, 7 Jun 2024 11:34:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] clk: qcom: lpassaudiocc-sc7280: Add support for LPASS
+ resets for QCM6490
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ quic_jkona@quicinc.com, quic_imrashai@quicinc.com, devicetree@vger.kernel.org
+References: <20240531102252.26061-1-quic_tdas@quicinc.com>
+ <20240531102252.26061-3-quic_tdas@quicinc.com>
+ <6aad6a71-dd2f-4682-91ea-835357342ba1@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <6aad6a71-dd2f-4682-91ea-835357342ba1@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 06, 2024 at 12:56:33PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
+On 07/06/2024 11:30, Konrad Dybcio wrote:
+> On 31.05.2024 12:22 PM, Taniya Das wrote:
+>> On the QCM6490 boards the LPASS firmware controls the complete clock
+>> controller functionalities. But the LPASS resets are required to be
+>> controlled from the high level OS. The Audio SW driver should be able to
+>> assert/deassert the audio resets as required. Thus in clock driver add
+>> support for the same.
+>>
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> ---
 > 
-> This series includes patches that were left over from previous series [1] for
-> making the host reboot handling robust in endpoint framework.
+> Please stop ignoring my comments without responding.
 > 
-> When the above mentioned series got merged to pci/endpoint, we got a bug report
-> from LKP bot [2] and due to that the offending patches were dropped.
-> 
-> This series addressed the issue reported by the bot by adding the stub APIs in
-> include/pci/pci-epc.h and also removed the unused dwc wrapper as concluded in
-> [3].
-> 
-> Testing
-> =======
-> 
-> This series is tested on Qcom SM8450 based development board with 2 SM8450 SoCs
-> connected over PCIe.
-> 
-> - Mani
-> 
-> [1] https://lore.kernel.org/linux-pci/20240430-pci-epf-rework-v4-0-22832d0d456f@linaro.org/
-> [2] https://lore.kernel.org/linux-pci/202405130815.BwBrIepL-lkp@intel.com/
-> [3] https://lore.kernel.org/linux-pci/20240529141614.GA3293@thinkpad/
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
-> Manivannan Sadhasivam (5):
->       PCI: dwc: ep: Remove dw_pcie_ep_init_notify() wrapper
->       PCI: endpoint: Introduce 'epc_deinit' event and notify the EPF drivers
->       PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown() API to handle Link Down event
->       PCI: qcom-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
->       PCI: layerscape-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
-> 
->  drivers/pci/controller/dwc/pci-dra7xx.c           |   2 +-
->  drivers/pci/controller/dwc/pci-imx6.c             |   2 +-
->  drivers/pci/controller/dwc/pci-keystone.c         |   2 +-
->  drivers/pci/controller/dwc/pci-layerscape-ep.c    |   4 +-
->  drivers/pci/controller/dwc/pcie-artpec6.c         |   2 +-
->  drivers/pci/controller/dwc/pcie-designware-ep.c   | 116 +++++++++++++---------
->  drivers/pci/controller/dwc/pcie-designware-plat.c |   2 +-
->  drivers/pci/controller/dwc/pcie-designware.h      |  10 +-
->  drivers/pci/controller/dwc/pcie-keembay.c         |   2 +-
->  drivers/pci/controller/dwc/pcie-qcom-ep.c         |   5 +-
->  drivers/pci/controller/dwc/pcie-rcar-gen4.c       |   2 +-
->  drivers/pci/controller/dwc/pcie-tegra194.c        |   3 +-
->  drivers/pci/controller/dwc/pcie-uniphier-ep.c     |   2 +-
->  drivers/pci/endpoint/functions/pci-epf-mhi.c      |  19 ++++
->  drivers/pci/endpoint/functions/pci-epf-test.c     |  17 +++-
->  drivers/pci/endpoint/pci-epc-core.c               |  25 +++++
->  include/linux/pci-epc.h                           |  13 +++
->  include/linux/pci-epf.h                           |   2 +
->  18 files changed, 162 insertions(+), 68 deletions(-)
-> ---
-> base-commit: 7d96527bc16e46545739c6fe0ab6e4c915e9910e
-> change-id: 20240606-pci-deinit-2e6cdf1bd69f
-> 
-> Best regards,
-> -- 
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
+> https://lore.kernel.org/all/c1d07eff-4832-47d9-8598-aa6709b465ff@linaro.org/
 
-Considering certain dependency patches have been merged to
-pci/endpoint and other dependency patches have been merged to
-pci/controller/dwc, perhaps it is best if you split this series:
+So this was already sent, feedback ignored and now we have again "v1"
+skipping previous talks?
 
-Series 1 based on pci/endpoint: with patch 1/5 and 2/5.
-Series 2 based on pci/controller/dwc: with patch 5/5.
+Best regards,
+Krzysztof
 
-Just a friendly suggestion to make Bjorn's life easier
-(and grease the path of your patch) ;) [0]
-
-
-Kind regards,
-Niklas
-
-[0]: https://lore.kernel.org/linux-pci/20171026223701.GA25649@bhelgaas-glaptop.roam.corp.google.com/
-(I still have this in my bookmarks :P)
 
