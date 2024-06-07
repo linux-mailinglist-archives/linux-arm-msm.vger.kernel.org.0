@@ -1,93 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-22092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D28B9900C02
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 20:48:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85EF3900C27
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 20:57:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A5A3288057
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 18:48:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F4DE288479
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 18:57:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C1C445000;
-	Fri,  7 Jun 2024 18:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5C40147C85;
+	Fri,  7 Jun 2024 18:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ee3lp7YW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HpvV00kS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19E51A270;
-	Fri,  7 Jun 2024 18:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B1210A24;
+	Fri,  7 Jun 2024 18:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717786095; cv=none; b=lhg6dbV3yzg0EtgXXJtCt5Lx7NPVDw5ZjBnbNvPpqR9uwyKF5sgVJY31Schu+NwMWemAcElpzvuIqout2mrC+7aGCraAWToIqwmEn7jlLT6LILryTLVX50lA0PJUyHV7W/XKPPttmcAN+k+9mVhegbFgpnX1NnbBFjFLX2N2+Zc=
+	t=1717786611; cv=none; b=EXuoYGBQPKbCcxiAv4FGzcmQONcMfqI/jm76v2YZO4yuagNHDhsg1YR5FVUyyRtTBaYYxBafYn8bBs5HJ+S0fGuJThNLwuOQ0bcz8qELJJn54mO/CoD6ZoG7Riozk3pws5voj8qZo6bUToDIKSdQ0+qsXcLXvj+nZ5MB3+wTTrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717786095; c=relaxed/simple;
-	bh=DtGgDy+D5KM3EF/EaCxohZ818IYKLcFGHBkvEIlLjoo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DJ6gNGDx4MuucxVCUnvC3LWaZoLThoj6luIoOsFlv2zjXgwsVrP9Y/FGnCjer/k4VhNMpQW8S/to8QJ0rjw0t2wiOxyIAEpJbelWFsk3hh07c8N5exXgQITKKng9gRA+AxegQGKr/BuX2YPQdW9uW2BLWp0C4cqaHqVaybDTna0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ee3lp7YW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED11C32781;
-	Fri,  7 Jun 2024 18:48:13 +0000 (UTC)
+	s=arc-20240116; t=1717786611; c=relaxed/simple;
+	bh=41IstQhdcJ/CO6qLA0Pt3uJNJsWcjN/+4QzXDnL5O5o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j/4iwNfS4UzHCCkhZtRxprGif8cA4oeAHH2Lj96PWZlbgeIUf8A82ym/xpIvRt0rgmPdgdcth2X3RV+IMAady9aM8/Pr2ULGSkJ32JC02YLnFBf9FlDcTbKv9SDF0ABiRO0kHcV3PPikO/JP0WS4vnFrkQxsumeizGCnoLQ5BtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HpvV00kS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36941C2BBFC;
+	Fri,  7 Jun 2024 18:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717786094;
-	bh=DtGgDy+D5KM3EF/EaCxohZ818IYKLcFGHBkvEIlLjoo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ee3lp7YWd80nonZ8cGDbIUHpkB6GiiBD5a4S2yQPTQLz+ZiUJWM3Ffxm/kF6o2SbE
-	 ALLh9uNXxvhWYNZtieW5N9DCfp7oLxZep2VEITrQGbaNscLowYzU90Kf/9ouX1QsdM
-	 jN2NjKKBoOjmcKM3h27UCcdLoCK/dRSxQi8vo4H9NXNFwaMHmwFTZ90qLDgieciAh1
-	 RvtaTYwqxaxdoS92V9QMXT7UAuo1GBjYqePWJ4SAQ77pwUamZWBnBmGbHvYoQk6cdM
-	 y+efsj5fxjPib0H+Nr2wIyKGvfwmUR2eK7HA1jHKaefsLTGM3+YfA7y5kTs9j80swl
-	 1xRTlTqlOtuaQ==
+	s=k20201202; t=1717786611;
+	bh=41IstQhdcJ/CO6qLA0Pt3uJNJsWcjN/+4QzXDnL5O5o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HpvV00kSl8s9vfARlmVxjxrgpaEHv60+3J6UWUibhgMNVrqp2C5sTpK45qL1nNkfz
+	 Vys2ef5PLRuKw3YTU6SlJg9YGbkZjhRBfszBCoG797zVVV2bn6lHu8j6gksma1XqXJ
+	 dDlwWXeIW7lumMaeQ+EmZDx9W3wSWPTmw861x0+UlP95BGXJYosJX+ak2XH3vsY0GX
+	 t8HqM2YeCLUTjyKk9IxpD4+4kdPwsVdVYIxmhjF4msOqbscf7eGI16XkmPamrQnkon
+	 Xh78tAkmv8KEc+JBVJYr9RlW2J/RKJd052x62m4h63LSNsT8J45t8j3EX3kbOKuRpo
+	 rrOJ6RMEnSPxQ==
+Date: Fri, 7 Jun 2024 13:56:48 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-input@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/7] HID/arm64: dts: qcom: sc8280xp-x13s: fix touchscreen power on
-Date: Fri,  7 Jun 2024 13:48:11 -0500
-Message-ID: <171778608823.816738.7581855560296370875.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240507144821.12275-1-johan+linaro@kernel.org>
-References: <20240507144821.12275-1-johan+linaro@kernel.org>
+To: Anjelique Melendez <quic_amelende@quicinc.com>
+Cc: pavel@ucw.cz, lee@kernel.org, robh@kernel.org, 
+	u.kleine-koenig@pengutronix.de, marijn.suijten@somainline.org, kees@kernel.org, 
+	morf3089@gmail.com, quic_gurus@quicinc.com, quic_subbaram@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] leds: rgb: leds-qcom-lpg: Fix line wrapping style
+ issues
+Message-ID: <mummt6hl5c4iih6dvc5qcg6uijkluareqmjbxcfyfyzvhadpcd@oswmwaecv5ic>
+References: <20240607005250.4047135-1-quic_amelende@quicinc.com>
+ <20240607005250.4047135-2-quic_amelende@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240607005250.4047135-2-quic_amelende@quicinc.com>
 
+On Thu, Jun 06, 2024 at 05:52:52PM GMT, Anjelique Melendez wrote:
+> Fix line wrapping style issues introduced in previous patches.
 
-On Tue, 07 May 2024 16:48:14 +0200, Johan Hovold wrote:
-> The Elan eKTH5015M touch controller on the X13s requires a 300 ms delay
-> before sending commands after having deasserted reset during power on.
+Bending the line length guidelines is okay when it results in easier to
+read code. I find the existing code easier to read...
+
+Regards,
+Bjorn
+
 > 
-> This series switches the X13s devicetree to use the Elan specific
-> binding so that the OS can determine the required power-on sequence and
-> make sure that the controller is always detected during boot. [1]
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> ---
+>  drivers/leds/rgb/leds-qcom-lpg.c | 19 +++++++++++++------
+>  1 file changed, 13 insertions(+), 6 deletions(-)
 > 
-> [...]
-
-Applied, thanks!
-
-[7/7] arm64: defconfig: enable Elan i2c-hid driver
-      commit: e706474d8428f420bba11f2c49c3083fd1b31d88
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> index e74b2ceed1c2..7c35b3ba09a3 100644
+> --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> @@ -620,6 +620,7 @@ static void lpg_sdam_apply_lut_control(struct lpg_channel *chan)
+>  	u8 val = 0, conf = 0, lut_offset = 0;
+>  	unsigned int hi_pause, lo_pause;
+>  	struct lpg *lpg = chan->lpg;
+> +	u16 addr;
+>  
+>  	if (!chan->ramp_enabled || chan->pattern_lo_idx == chan->pattern_hi_idx)
+>  		return;
+> @@ -640,17 +641,23 @@ static void lpg_sdam_apply_lut_control(struct lpg_channel *chan)
+>  		lo_idx += lut_offset;
+>  	}
+>  
+> -	nvmem_device_write(lpg_chan_sdam, SDAM_PBS_SCRATCH_LUT_COUNTER_OFFSET + chan->sdam_offset, 1, &val);
+> -	nvmem_device_write(lpg_chan_sdam, SDAM_PATTERN_CONFIG_OFFSET + chan->sdam_offset, 1, &conf);
+> -	nvmem_device_write(lpg_chan_sdam, SDAM_END_INDEX_OFFSET + chan->sdam_offset, 1, &hi_idx);
+> -	nvmem_device_write(lpg_chan_sdam, SDAM_START_INDEX_OFFSET + chan->sdam_offset, 1, &lo_idx);
+> +	addr = SDAM_PBS_SCRATCH_LUT_COUNTER_OFFSET + chan->sdam_offset;
+> +	nvmem_device_write(lpg_chan_sdam, addr, 1, &val);
+> +	addr = SDAM_PATTERN_CONFIG_OFFSET + chan->sdam_offset;
+> +	nvmem_device_write(lpg_chan_sdam, addr, 1, &conf);
+> +	addr = SDAM_END_INDEX_OFFSET + chan->sdam_offset;
+> +	nvmem_device_write(lpg_chan_sdam, addr, 1, &hi_idx);
+> +	addr = SDAM_START_INDEX_OFFSET + chan->sdam_offset;
+> +	nvmem_device_write(lpg_chan_sdam, addr, 1, &lo_idx);
+>  
+>  	val = RAMP_STEP_DURATION(chan->ramp_tick_ms);
+>  	nvmem_device_write(lpg_chan_sdam, SDAM_REG_RAMP_STEP_DURATION, 1, &val);
+>  
+>  	if (lpg->lut_sdam) {
+> -		nvmem_device_write(lpg_chan_sdam, SDAM_PAUSE_HI_MULTIPLIER_OFFSET + chan->sdam_offset, 1, &hi_pause);
+> -		nvmem_device_write(lpg_chan_sdam, SDAM_PAUSE_LO_MULTIPLIER_OFFSET + chan->sdam_offset, 1, &lo_pause);
+> +		addr = SDAM_PAUSE_HI_MULTIPLIER_OFFSET + chan->sdam_offset;
+> +		nvmem_device_write(lpg_chan_sdam, addr, 1, &hi_pause);
+> +		addr = SDAM_PAUSE_LO_MULTIPLIER_OFFSET + chan->sdam_offset;
+> +		nvmem_device_write(lpg_chan_sdam, addr, 1, &lo_pause);
+>  	}
+>  
+>  }
+> -- 
+> 2.34.1
+> 
 
