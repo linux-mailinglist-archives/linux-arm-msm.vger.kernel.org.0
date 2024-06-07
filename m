@@ -1,532 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-22079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF283900566
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 15:46:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D81019005D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 16:00:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 587B81F22A6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 13:46:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4858C1F220C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 14:00:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A17A194ACC;
-	Fri,  7 Jun 2024 13:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB49B1974FD;
+	Fri,  7 Jun 2024 14:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mV2t9ggA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K921WjHJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DC3DDA3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 13:46:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09156196C6D;
+	Fri,  7 Jun 2024 14:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717767964; cv=none; b=ZyElwKyFBOmk7viUYdbyeydSow7qVp+T++10iS3u7sLGEnN5t0Qm/Aa+8b2RcbuyxkhNDGN8Ab4oBPxmqLWWtqxapiSBH2rOFuGQS518r/JN6nV818UiX7jN1M3SMffZsTVRTPz2pPzdmkeS9ylH0qJDq5w/PKflUjg4WdY5gaY=
+	t=1717768833; cv=none; b=EXzPo4pS1jnXZrL7Rae+LArpzHH6IkL4Nml9cmb/uUTnkgt9II3JFczrCcwLLsX78Wy5ApVWOtIvXBqAIXetR4aKm/x030U+iA0P7FYLjHs3AWaa5wTkCoHnTq8L4W2+3UiUO4CsQholymFRccB3p82dmDWVeJ+iTmuypa4ZdGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717767964; c=relaxed/simple;
-	bh=GWNdn7/W0ksI33kkNZTnRbc69IVKv2dqgrkko6CFvkM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p7dyJglZVxi2vV+7mDGHxrihRuCl7fTxaeTfOnxcFeaTAj3xwvg1pYSkLbV/2T7lV4ZCK4QARgWM7xODj6R96XFn0EBS/xuc1VHB6jorVZZVTU63Djh9VKkyoLie9BLD3084rlLvQ7GqTp013CQBpNYI1EfKJG3c9h/Sj2JEre4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mV2t9ggA; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-57a1fe63947so2728180a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 06:46:01 -0700 (PDT)
+	s=arc-20240116; t=1717768833; c=relaxed/simple;
+	bh=19tlOcfJuT/2kVzSY/jYIvVZ6Y8DgteEDTklyfN/YSM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BG2hTWdlPzp9CC5XIyMdWOtxdVTzEZ4M1zv4M8GBdB5f70RVQnAdjTZPk/UOSiYr95I4DL+bVjJvS5OGkWTf/X4O14OI5KB+SkaiCXZ4VeRABlLkyR4bmZ0u57XCJj5WM0j3Wwv5SAo7jbUDr+HHbWBHkR7XxO7QS/jNBz4BIas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K921WjHJ; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2eabd22d441so33661741fa.2;
+        Fri, 07 Jun 2024 07:00:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717767960; x=1718372760; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n/y6pBcgH6b/cbsT6A6zTZMlyTFzuvKGcUhVsEX7P8Y=;
-        b=mV2t9ggAgVHZGqD99hgbxOF6wiF0f4mfZg8L6x/g/R4CkSI+d9DyR0n5IYNO5+UlFo
-         ArLJZtdj5WUjHLtYz1hUp7GcIb0DDjD2cTgI2MJNpbkP7UMnH8O3g7iSzcvtZz+2x7dw
-         s3aBFlOOHgHos78L03iACVmZr/qmGW0n1KJC9f4Bf2rMH/z7LMRv0yxj5nKsTiq/y0YM
-         JJnyzO8oYUjjfgbrE6ePdqhPuZgEHogRKvQJRrSnG+lNP3n0CdOJ9Vkq3fo/hRZNJ8mD
-         +E3Yqn4GQ+QgrdWgoILEM1eWJtoSIiXVDtwq8dnsjWYrdGO0KDqvd3l/gZvQGa1TTHbY
-         zsww==
+        d=gmail.com; s=20230601; t=1717768829; x=1718373629; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=smHlXdeijHe0Qv4gdPnMjOi/H4/3+n74NUKh1ac6v1Y=;
+        b=K921WjHJ4rDEKHHrTK9NQrh8UwCELZeLSpXeN8p420h7OVro3zpFzTZNSUITvaOvbQ
+         +3v6vGg/p988EY98GxV8kEX5dHyBMPrLuZqabyKudb03fy2b1GZk+Svwl6kXgupi7hWu
+         +omNkHplOccoi6lZc6RoVJgkeQBTlQXjmC3+rNG3YRO0RcQGK2ubH4xGsCerOAPQjA7w
+         Sy6OdOy9u4PPkw7g9L6z54VsCTYeMpygsoO1UKOtnOyDM1hrybhTcwWJY2mGd6fXWS2K
+         LtqICjfsv1GajEyojn29G3i25DK0EHoENkrhTT7HBJDxJw7P+4BDmJNrCm+TIEC+BBRQ
+         lQoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717767960; x=1718372760;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n/y6pBcgH6b/cbsT6A6zTZMlyTFzuvKGcUhVsEX7P8Y=;
-        b=uhm54Hs5th4vLnVK0ewBcMwKp3hWCjEEfGyg3FnE/VdcdpRxCGxd4+tQfyCKJVzPyV
-         0jITS2vQb3FZJrxdJY3gH/xWjwuE8jbpFeDYVvWsviq8zmE0U9PTxF9Kryg08fBjrn5M
-         QjTRjLMJK9pkozsxGK4ExzKRiZAS8OcaaguGMauP7roKBS0DVyQLpNJ4nRagSshuctlA
-         aI5fqI+lkuQrR68SGxx0CFFalfUxVwnZJwkZAyMDd8t6KeATULQYS8qellkT1Kl518B0
-         HTlEH1wXHW0gyH8u0pRv57/P845qPLiv/0sDclOfOnndBSAfKftv1f7CBM/8fhNk7Art
-         +pAA==
-X-Forwarded-Encrypted: i=1; AJvYcCV3Jg09l8TXbKxKLQvH0ViIfDjY6OnkaDUB0CLSISGE+xYA9Rw8cILQ0TFxXNCJdNRkW/wx9NOfE+5tnLalXvnt0bXTK3v15NoryN2caA==
-X-Gm-Message-State: AOJu0Yx4/cDexzeAqcs7IZsYuuZ1+Q6/34WHMEnvbT9y5IsAvNG9TePO
-	CvHMNfnUqSgZZU/QgppuzBGZ3kdPjX67fwstRR8I6Ox46Rz67+FBzfxvmQGf5R4=
-X-Google-Smtp-Source: AGHT+IHsnlaEt+stFIS8YamBEqIpNqtjafgtKVGoz7dBTkkdaDBl1h5p/u8zir6IgabxmOk0BKklLA==
-X-Received: by 2002:a50:9e85:0:b0:57c:5515:307d with SMTP id 4fb4d7f45d1cf-57c5515319dmr1197939a12.38.1717767959933;
-        Fri, 07 Jun 2024 06:45:59 -0700 (PDT)
-Received: from ?IPV6:2a02:8109:aa0d:be00::8090? ([2a02:8109:aa0d:be00::8090])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aadf9d280sm2787480a12.9.2024.06.07.06.45.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jun 2024 06:45:59 -0700 (PDT)
-Message-ID: <c007308b-4641-44a5-9e64-fb085cced2b0@linaro.org>
-Date: Fri, 7 Jun 2024 15:45:58 +0200
+        d=1e100.net; s=20230601; t=1717768829; x=1718373629;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=smHlXdeijHe0Qv4gdPnMjOi/H4/3+n74NUKh1ac6v1Y=;
+        b=nJbwlMjRathn9AqUSBeDtsEwyqLRrKKYwem9LFKP5ewx4RTG1HJu5AP8E5kbz6XYud
+         4OxVpDrqg2hCIteWPwmaPJjsI+ZFmifWIM3IQboi8a5pxDAo8hZb/1bjHXP7nuNRroms
+         1tRUCYqRnAW/x2fGQ+0+1N3OhzgbbgVNVjXE8SwLoFl9UOUhNvGXiMs3SRSpAync1fNO
+         sgD3Xi4kAwzMF1ksnhT45ckQ31eqgYRDcdExeNHoGgWulU4Poo1opTm43v8WSmWVXaMn
+         acYAEVvAD76jVz330VY+vsdXHiUPNe00L3uts15Qv5BdJItKfd9Pmc3dwO2lOuR5TV6d
+         iRDg==
+X-Forwarded-Encrypted: i=1; AJvYcCWz9nFnavPo8I8BCj4WJ6v0qsB4mdk//Yg955vgnqscwdaxl+i1Q1iTaFvCKucR3oBbUdOiTFcbmA1JOcyK0Y4da+tBzob0/gJoXZVu
+X-Gm-Message-State: AOJu0Yy0xDFqRuIOWIruT3UDuvnyejOCAkO6BPd3JaEinwT0SXPg2D2R
+	aCKWv90cjNCg6Uf7MNz+fw7Q1MbFxQTsHXwrs5H1rJkCTke8csMt
+X-Google-Smtp-Source: AGHT+IHR81iKUplsByiF1E+L/92JPbJTbqeGnU4taIDP/6XaWJzNK7gYiRIkjw6lHphiKZY7veQvQA==
+X-Received: by 2002:a05:651c:a0f:b0:2ea:79b2:1839 with SMTP id 38308e7fff4ca-2eadce281d4mr29893421fa.2.1717768828808;
+        Fri, 07 Jun 2024 07:00:28 -0700 (PDT)
+Received: from kali.localhost (static.47.50.88.23.clients.your-server.de. [23.88.50.47])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c806ec844sm252472566b.120.2024.06.07.07.00.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jun 2024 07:00:28 -0700 (PDT)
+From: Kiarash Hajian <kiarash8112hajian@gmail.com>
+Date: Fri, 07 Jun 2024 10:00:04 -0400
+Subject: [PATCH] drm/msm/a6xx: request memory region
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/11] misc: fastrpc: Add static PD restart support
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>, srinivas.kandagatla@linaro.org,
- linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
- linux-kernel@vger.kernel.org, quic_chennak@quicinc.com
-References: <20240606165939.12950-1-quic_ekangupt@quicinc.com>
- <20240606165939.12950-6-quic_ekangupt@quicinc.com>
-Content-Language: en-US
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20240606165939.12950-6-quic_ekangupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20240607-memory-v1-1-8664f52fc2a1@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAGMSY2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDMwNz3dzU3PyiSl0T01RD46Qkg+QUQzMloOKCotS0zAqwQdGxtbUAG2Q
+ NnlgAAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Kiarash Hajian <kiarash8112hajian@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1717768825; l=4856;
+ i=kiarash8112hajian@gmail.com; s=20240409; h=from:subject:message-id;
+ bh=19tlOcfJuT/2kVzSY/jYIvVZ6Y8DgteEDTklyfN/YSM=;
+ b=LovuAN+Yw05fo0LE4TjWvASYbGMde0nyU+ekFhEVleLCWxzSTpZLgPrOfhHwJkda4m0uefexE
+ MQuMdmXQJmgAXSDd4LqRKtWw7WuMsDBrkwMhDt5JBPig0U5aBohe2hn
+X-Developer-Key: i=kiarash8112hajian@gmail.com; a=ed25519;
+ pk=ehVBr28gPcA8cMB/wneVh0Mj6WGkqZoyYRdRNi5+aI0=
 
+The driver's memory regions are currently just ioremap()ed, but not
+reserved through a request. That's not a bug, but having the request is
+a little more robust.
 
+Implement the region-request through the corresponding managed
+devres-function.
 
-On 06/06/2024 18:59, Ekansh Gupta wrote:
-> Static PDs are created on DSPs to support specific use cases like Audio
-> and Sensors. The static PDs uses any CPU requirements like file
-> operations or memory need with the help of a daemon running on the CPU.
-> Audio and sensors daemons attaches to audio PD and sensors PD on DSP.
-> Audio PD expects some CMA memory for dynamic loading purpose which is
-> allocated and sent to DSP in fastrpc_init_create_static_process call.
-> For sensor daemon, the expectation is just to attach to sensors PD and
-> take up any requests made by the PD(like file operations etc.).
-> 
-> Static PDs run on the audio and sensor supporting subsystem which can
-> be ADSP or SDSP. They are expected to support PD restart. There are some
-> CPU resources like buffers etc. for static PDs which are expected to be
-> cleaned up by fastrpc driver during PDR scenario. For this, there is a
-> requirement of PD service locator to get the event notifications for
-> static PD services. Also when events are received, the driver needs to
-> handle based on PD states.
-> 
-> PDR handling is required for static PD only. There are no static PD
-> supported on MDSP or CDSP hence no PDR handling is required. PDR is also
-> not required for root_pd as if root_pd is shutting down, that basically
-> suggests that the remoteproc itself is shutting down which is handled
-> with rpmsg functionalities(probe and remove).
-> 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->   drivers/misc/Kconfig   |   2 +
->   drivers/misc/fastrpc.c | 205 ++++++++++++++++++++++++++++++++++++++---
+Signed-off-by: Kiarash Hajian <kiarash8112hajian@gmail.com>
+---
+To: Rob Clark <robdclark@gmail.com>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sean Paul <sean@poorly.run>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: David Airlie <airlied@gmail.com>
+To: Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Kiarash Hajian <kiarash8112hajian@gmail.com>
 
-I think this justifies introducing a new C file. The functionality added 
-here should be quite easily abstracted behind a sensible interface.
->   2 files changed, 195 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-> index faf983680040..e2d83cd085b5 100644
-> --- a/drivers/misc/Kconfig
-> +++ b/drivers/misc/Kconfig
-> @@ -280,8 +280,10 @@ config QCOM_FASTRPC
->   	tristate "Qualcomm FastRPC"
->   	depends on ARCH_QCOM || COMPILE_TEST
->   	depends on RPMSG
-> +	depends on NET
->   	select DMA_SHARED_BUFFER
->   	select QCOM_SCM
-> +	select QCOM_PDR_HELPERS
->   	help
->   	  Provides a communication mechanism that allows for clients to
->   	  make remote method invocations across processor boundary to
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index abdd35b7c3ad..13e368279765 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -22,6 +22,7 @@
->   #include <linux/firmware/qcom/qcom_scm.h>
->   #include <uapi/misc/fastrpc.h>
->   #include <linux/of_reserved_mem.h>
-> +#include <linux/soc/qcom/pdr.h>
->   
->   #define ADSP_DOMAIN_ID (0)
->   #define MDSP_DOMAIN_ID (1)
-> @@ -29,6 +30,7 @@
->   #define CDSP_DOMAIN_ID (3)
->   #define FASTRPC_DEV_MAX		4 /* adsp, mdsp, slpi, cdsp*/
->   #define FASTRPC_MAX_SESSIONS	14
-> +#define FASTRPC_MAX_SPD		4
+Changes in v5:
+    - Fix errorhanlding problems.
+    - Link to v4: https://lore.kernel.org/r/20240512-msm-adreno-memory-region-v4-1-3881a64088e6@gmail.com
+    
+    Changes in v4:
+    - Combine v3 commits into a singel commit
+    - Link to v3: https://lore.kernel.org/r/20240512-msm-adreno-memory-region-v3-0-0a728ad45010@gmail.com
+    
+    Changes in v3:
+    - Remove redundant devm_iounmap calls, relying on devres for automatic resource cleanup.
+    
+    Changes in v2:
+    - update the subject prefix to "drm/msm/a6xx:", to match the majority of other changes to this file.
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 33 +++++++++++++++------------------
+ 1 file changed, 15 insertions(+), 18 deletions(-)
 
-Why 4? This patch only makes use of two.
->   #define FASTRPC_MAX_VMIDS	16
->   #define FASTRPC_ALIGN		128
->   #define FASTRPC_MAX_FDLIST	16
-> @@ -105,6 +107,18 @@
->   
->   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
->   
-> +#define AUDIO_PDR_SERVICE_LOCATION_CLIENT_NAME   "audio_pdr_adsp"
-> +#define AUDIO_PDR_ADSP_SERVICE_NAME              "avs/audio"
-> +#define ADSP_AUDIOPD_NAME                        "msm/adsp/audio_pd"
-> +
-> +#define SENSORS_PDR_ADSP_SERVICE_LOCATION_CLIENT_NAME   "sensors_pdr_adsp"
-> +#define SENSORS_PDR_ADSP_SERVICE_NAME              "tms/servreg"
-> +#define ADSP_SENSORPD_NAME                       "msm/adsp/sensor_pd"
-> +
-> +#define SENSORS_PDR_SLPI_SERVICE_LOCATION_CLIENT_NAME "sensors_pdr_slpi"
-> +#define SENSORS_PDR_SLPI_SERVICE_NAME            SENSORS_PDR_ADSP_SERVICE_NAME
-> +#define SLPI_SENSORPD_NAME                       "msm/slpi/sensor_pd"
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 8bea8ef26f77..35323bf2d844 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -635,10 +635,12 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 	a6xx_rpmh_stop(gmu);
+ 
+ err:
+-	if (!IS_ERR_OR_NULL(pdcptr))
+-		iounmap(pdcptr);
+-	if (!IS_ERR_OR_NULL(seqptr))
+-		iounmap(seqptr);
++	if (!IS_ERR_OR_NULL(pdcptr)){
++        return ERR_PTR(-EINVAL);
++	}
++	if (!IS_ERR_OR_NULL(seqptr)){
++        return ERR_PTR(-EINVAL);
++	}
+ }
+ 
+ /*
+@@ -1503,7 +1505,7 @@ static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+-	ret = ioremap(res->start, resource_size(res));
++	ret = devm_ioremap_resource(&pdev->dev, res);
+ 	if (!ret) {
+ 		DRM_DEV_ERROR(&pdev->dev, "Unable to map the %s registers\n", name);
+ 		return ERR_PTR(-EINVAL);
+@@ -1613,13 +1615,13 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 	gmu->mmio = a6xx_gmu_get_mmio(pdev, "gmu");
+ 	if (IS_ERR(gmu->mmio)) {
+ 		ret = PTR_ERR(gmu->mmio);
+-		goto err_mmio;
++		goto err_cleanup;
+ 	}
+ 
+ 	gmu->cxpd = dev_pm_domain_attach_by_name(gmu->dev, "cx");
+ 	if (IS_ERR(gmu->cxpd)) {
+ 		ret = PTR_ERR(gmu->cxpd);
+-		goto err_mmio;
++		goto err_cleanup;
+ 	}
+ 
+ 	if (!device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME)) {
+@@ -1635,7 +1637,7 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 	gmu->gxpd = dev_pm_domain_attach_by_name(gmu->dev, "gx");
+ 	if (IS_ERR(gmu->gxpd)) {
+ 		ret = PTR_ERR(gmu->gxpd);
+-		goto err_mmio;
++		goto err_cleanup;
+ 	}
+ 
+ 	gmu->initialized = true;
+@@ -1645,9 +1647,7 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ detach_cxpd:
+ 	dev_pm_domain_detach(gmu->cxpd, false);
+ 
+-err_mmio:
+-	iounmap(gmu->mmio);
+-
++err_cleanup:
+ 	/* Drop reference taken in of_find_device_by_node */
+ 	put_device(gmu->dev);
+ 
+@@ -1762,7 +1762,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 		gmu->rscc = a6xx_gmu_get_mmio(pdev, "rscc");
+ 		if (IS_ERR(gmu->rscc)) {
+ 			ret = -ENODEV;
+-			goto err_mmio;
++			goto err_cleanup;
+ 		}
+ 	} else {
+ 		gmu->rscc = gmu->mmio + 0x23000;
+@@ -1774,13 +1774,13 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 
+ 	if (gmu->hfi_irq < 0 || gmu->gmu_irq < 0) {
+ 		ret = -ENODEV;
+-		goto err_mmio;
++		goto err_cleanup;
+ 	}
+ 
+ 	gmu->cxpd = dev_pm_domain_attach_by_name(gmu->dev, "cx");
+ 	if (IS_ERR(gmu->cxpd)) {
+ 		ret = PTR_ERR(gmu->cxpd);
+-		goto err_mmio;
++		goto err_cleanup;
+ 	}
+ 
+ 	link = device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME);
+@@ -1824,10 +1824,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ detach_cxpd:
+ 	dev_pm_domain_detach(gmu->cxpd, false);
+ 
+-err_mmio:
+-	iounmap(gmu->mmio);
+-	if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"))
+-		iounmap(gmu->rscc);
++err_cleanup:
+ 	free_irq(gmu->gmu_irq, gmu);
+ 	free_irq(gmu->hfi_irq, gmu);
+ 
 
-This data should be defined in some const static data struct, not as a 
-bunch of macros, then you can actually describe the relationship between 
-a domain_id and the fact that the ADSP registers two PDR lookups. See my 
-comments in fastrpc_setup_service_locator() and where it's called in probe.
+---
+base-commit: 1b294a1f35616977caddaddf3e9d28e576a1adbc
+change-id: 20240607-memory-45e13bb0cd16
 
-struct fastrpc_pdr_domain {
-	const char *servloc_client_name;
-	const char *service_name;
-	const char *pd_name;
-};
-
-static const struct fastrpc_pdr_domain adsp_pdr_services[] = {
-	{
-		.servloc_client_name = "audio_pdr_adsp";
-		.service_name = "avs/audio";
-		.pd_name = "msm/adsp/audio_pd";
-	},
-	{
-		.servloc_client_name = "sensors_pdr_adsp";
-		...
-};
-> +
->   static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
->   						"sdsp", "cdsp"};
->   struct fastrpc_phy_page {
-> @@ -259,6 +273,15 @@ struct fastrpc_session_ctx {
->   	bool valid;
->   };
->   
-> +struct fastrpc_static_pd {
-> +	char *servloc_name;
-> +	char *spdname;
-> +	void *pdrhandle;
-> +	struct fastrpc_channel_ctx *cctx;
-> +	struct fastrpc_user *fl;
-> +	bool ispdup;
-> +};
-> +
->   struct fastrpc_channel_ctx {
->   	int domain_id;
->   	int sesscount;
-> @@ -266,6 +289,7 @@ struct fastrpc_channel_ctx {
->   	struct qcom_scm_vmperm vmperms[FASTRPC_MAX_VMIDS];
->   	struct rpmsg_device *rpdev;
->   	struct fastrpc_session_ctx session[FASTRPC_MAX_SESSIONS];
-> +	struct fastrpc_static_pd spd[FASTRPC_MAX_SPD];
->   	spinlock_t lock;
->   	struct idr ctx_idr;
->   	struct list_head users;
-> @@ -297,10 +321,12 @@ struct fastrpc_user {
->   	struct fastrpc_channel_ctx *cctx;
->   	struct fastrpc_session_ctx *sctx;
->   	struct fastrpc_buf *init_mem;
-> +	struct fastrpc_static_pd *spd;
->   
->   	int tgid;
->   	int pd;
->   	bool is_secure_dev;
-> +	char *servloc_name;
-
-This is duplicated from spd->servloc_name
->   	/* Lock for lists */
->   	spinlock_t lock;
->   	/* lock for allocations */
-> @@ -1230,12 +1256,33 @@ static bool is_session_rejected(struct fastrpc_user *fl, bool unsigned_pd_reques
->   	return false;
->   }
->   
-> +static struct fastrpc_static_pd *fastrpc_get_spd_session( > +				struct fastrpc_user *fl)
-
-Every caller of this function has the same handling (checking !spd and 
-then !spd->ispdup and returning different errors in each case). Please 
-lift this common error handling into this function. While at it, I'd 
-propose dropping the opaque *fl pointer and instead passing in the data 
-which is actually used. The servloc_name could be looked up from the 
-fastrpc_pdr_domain data.
-
-static int fastrpc_pdr_is_up(int pd, int domain_id, struct 		
-			     fastrpc_static_pd *spds,
-			     struct fastrpc_static_pd *spd)
-> +{
-> +	int i;
-> +	struct fastrpc_static_pd *spd = NULL;
-> +	struct fastrpc_channel_ctx *cctx = fl->cctx;
-> +
-> +	for (i = 0; i < FASTRPC_MAX_SPD ; i++) {
-> +		if (!cctx->spd[i].servloc_name)
-> +			continue;
-> +		if (!strcmp(fl->servloc_name, cctx->spd[i].servloc_name)) {
-> +			spd = &cctx->spd[i];
-> +			spd->fl = fl;
-> +			break;
-> +		}
-> +	}
-> +
-> +	return spd;
-> +}
-> +
->   static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   					      char __user *argp)
->   {
->   	struct fastrpc_init_create_static init;
->   	struct fastrpc_invoke_args *args;
->   	struct fastrpc_phy_page pages[1];
-> +	struct fastrpc_static_pd *spd = NULL;
->   	char *name;
->   	int err;
->   	struct {
-> @@ -1270,6 +1317,19 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   		goto err_name;
->   	}
->   
-> +	fl->servloc_name = AUDIO_PDR_SERVICE_LOCATION_CLIENT_NAME;
-> +
-> +	spd = fastrpc_get_spd_session(fl);
-> +	if (!spd) {
-> +		err = -EUSERS;
-> +		goto err_name;
-> +	}
-> +
-> +	if (!spd->ispdup) {
-> +		err = -ENOTCONN;
-> +		goto err_name;
-> +	}
-> +	fl->spd = spd;
->   	if (!fl->cctx->remote_heap) {
->   		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
->   						&fl->cctx->remote_heap);
-> @@ -1645,6 +1705,7 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
->   static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
->   {
->   	struct fastrpc_invoke_args args[1];
-> +	struct fastrpc_static_pd *spd = NULL;
->   	int tgid = fl->tgid;
->   	u32 sc;
->   
-> @@ -1654,6 +1715,22 @@ static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
->   	sc = FASTRPC_SCALARS(FASTRPC_RMID_INIT_ATTACH, 1, 0);
->   	fl->pd = pd;
->   
-> +	if (pd == SENSORS_PD) {
-
-Why is this only relevant for the sensors pd?
-> +		if (fl->cctx->domain_id == ADSP_DOMAIN_ID)
-> +			fl->servloc_name = SENSORS_PDR_ADSP_SERVICE_LOCATION_CLIENT_NAME;
-> +		else if (fl->cctx->domain_id == SDSP_DOMAIN_ID)
-> +			fl->servloc_name = SENSORS_PDR_SLPI_SERVICE_LOCATION_CLIENT_NAME;
-What if domain_id isn't either of these? Should this be checked? If not, 
-why?
-
-This whole block could be replaced with a call to the 
-fastrpc_pdr_is_up() function I proposed.
-> +
-> +		spd = fastrpc_get_spd_session(fl);
-> +		if (!spd)
-> +			return -EUSERS;
-> +
-> +		if (!spd->ispdup)
-> +			return -ENOTCONN;
-> +
-> +		fl->spd = spd;
-> +	}
-> +
->   	return fastrpc_internal_invoke(fl, true, FASTRPC_INIT_HANDLE,
->   				       sc, &args[0]);
->   }
-> @@ -2129,6 +2206,64 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
->   	return err;
->   }
->   
-> +static void fastrpc_notify_users(struct fastrpc_user *user)
-> +{
-> +	struct fastrpc_invoke_ctx *ctx;
-> +
-> +	spin_lock(&user->lock);
-> +	list_for_each_entry(ctx, &user->pending, node) {
-> +		ctx->retval = -EPIPE;
-> +		complete(&ctx->work);
-> +	}
-> +	spin_unlock(&user->lock);
-> +}
-> +
-> +static void fastrpc_notify_pdr_drivers(struct fastrpc_channel_ctx *cctx,
-> +		char *servloc_name)
-> +{
-> +	struct fastrpc_user *fl;
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&cctx->lock, flags);
-> +	list_for_each_entry(fl, &cctx->users, user) {
-> +		if (fl->servloc_name && !strcmp(servloc_name, fl->servloc_name))
-> +			fastrpc_notify_users(fl);
-> +	}
-> +	spin_unlock_irqrestore(&cctx->lock, flags);
-> +}
-> +
-> +static void fastrpc_pdr_cb(int state, char *service_path, void *priv)
-> +{
-> +	struct fastrpc_static_pd *spd = (struct fastrpc_static_pd *)priv;
-> +	struct fastrpc_channel_ctx *cctx;
-> +
-> +	if (!spd)
-> +		return;
-> +
-> +	cctx = spd->cctx;
-> +	switch (state) {
-> +	case SERVREG_SERVICE_STATE_DOWN:
-> +		dev_info(&cctx->rpdev->dev,
-> +			"%s: %s (%s) is down for PDR on %s\n",
-> +			__func__, spd->spdname,
-> +			spd->servloc_name,
-> +			domains[cctx->domain_id]);
-
-dev_dbg
-> +		spd->ispdup = false;
-> +		fastrpc_notify_pdr_drivers(cctx, spd->servloc_name);
-> +		break;
-> +	case SERVREG_SERVICE_STATE_UP:
-> +		dev_info(&cctx->rpdev->dev,
-> +			"%s: %s (%s) is up for PDR on %s\n",
-> +			__func__, spd->spdname,
-> +			spd->servloc_name,
-> +			domains[cctx->domain_id]);
-> +		spd->ispdup = true;
-> +		break;
-> +	default:
-> +		break;
-> +	}
-> +}
-> +
->   static const struct file_operations fastrpc_fops = {
->   	.open = fastrpc_device_open,
->   	.release = fastrpc_device_release,
-> @@ -2248,6 +2383,39 @@ static int fastrpc_device_register(struct device *dev, struct fastrpc_channel_ct
->   	return err;
->   }
->   
-> +static int fastrpc_setup_service_locator(struct fastrpc_channel_ctx *cctx, char *client_name,
-> +			char *service_name, char *service_path, int domain, int spd_session)
-
-This function should instead take a struct fastrpc_pdr_domain *services 
-array.
-> +{
-> +	int err = 0;
-> +	struct pdr_handle *handle = NULL;
-> +	struct pdr_service *service = NULL;
-> +
-> +	/* Register the service locator's callback function */
-> +	handle = pdr_handle_alloc(fastrpc_pdr_cb, &cctx->spd[spd_session]);
-> +	if (IS_ERR(handle)) {
-> +		err = PTR_ERR(handle);
-> +		goto bail;
-> +	}
-> +	cctx->spd[spd_session].pdrhandle = handle;
-> +	cctx->spd[spd_session].servloc_name = client_name;
-> +	cctx->spd[spd_session].spdname = service_path;
-> +	cctx->spd[spd_session].cctx = cctx;
-> +	service = pdr_add_lookup(handle, service_name, service_path);
-> +	if (IS_ERR(service)) {
-> +		err = PTR_ERR(service);
-> +		goto bail;
-> +	}
-> +	pr_info("fastrpc: %s: pdr_add_lookup enabled for %s (%s, %s)\n",
-dev_dbg
-> +		__func__, service_name, client_name, service_path);
-> +
-> +bail:
-> +	if (err) {
-> +		pr_warn("fastrpc: %s: failed for %s (%s, %s)with err %d\n",
-dev_err
-> +				__func__, service_name, client_name, service_path, err);
-> +	}
-> +	return err;
-> +}
-> +
->   static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   {
->   	struct device *rdev = &rpdev->dev;
-> @@ -2326,6 +2494,25 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   		goto fdev_error;
->   	}
->   
-> +	if (domain_id == ADSP_DOMAIN_ID) {
-> +		err = fastrpc_setup_service_locator(data, AUDIO_PDR_SERVICE_LOCATION_CLIENT_NAME,
-> +			AUDIO_PDR_ADSP_SERVICE_NAME, ADSP_AUDIOPD_NAME, domain_id, 0);
-> +		if (err)
-> +			goto populate_error;
-> +
-> +		err = fastrpc_setup_service_locator(data,
-> +			SENSORS_PDR_ADSP_SERVICE_LOCATION_CLIENT_NAME,
-> +			SENSORS_PDR_ADSP_SERVICE_NAME, ADSP_SENSORPD_NAME, domain_id, 1);
-
-I assume this is basically a nop on platforms where this service doesn't 
-exist? A comment mentioning this would be nice.
-> +		if (err)
-> +			goto populate_error;
-> +	} else if (domain_id == SDSP_DOMAIN_ID) {
-> +		err = fastrpc_setup_service_locator(data,
-> +			SENSORS_PDR_SLPI_SERVICE_LOCATION_CLIENT_NAME,
-> +			SENSORS_PDR_SLPI_SERVICE_NAME, SLPI_SENSORPD_NAME, domain_id, 0);
-> +		if (err)
-> +			goto populate_error;
-> +	}
-
-This block should be moved into the domain_id switch/case which is 
-directly above it.
-
-> +
->   	kref_init(&data->refcount);
->   
->   	dev_set_drvdata(&rpdev->dev, data);
-> @@ -2355,24 +2542,13 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   	return err;
->   }
->   
-> -static void fastrpc_notify_users(struct fastrpc_user *user)
-> -{
-> -	struct fastrpc_invoke_ctx *ctx;
-> -
-> -	spin_lock(&user->lock);
-> -	list_for_each_entry(ctx, &user->pending, node) {
-> -		ctx->retval = -EPIPE;
-> -		complete(&ctx->work);
-> -	}
-> -	spin_unlock(&user->lock);
-> -}
-> -
->   static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->   {
->   	struct fastrpc_channel_ctx *cctx = dev_get_drvdata(&rpdev->dev);
->   	struct fastrpc_buf *buf, *b;
->   	struct fastrpc_user *user;
->   	unsigned long flags;
-> +	int i;
->   
->   	/* No invocations past this point */
->   	spin_lock_irqsave(&cctx->lock, flags);
-> @@ -2393,6 +2569,11 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->   	if (cctx->remote_heap)
->   		fastrpc_buf_free(cctx->remote_heap);
->   
-> +	for (i = 0; i < FASTRPC_MAX_SPD; i++) {
-> +		if (cctx->spd[i].pdrhandle)
-> +			pdr_handle_release(cctx->spd[i].pdrhandle);
-> +	}
-> +
->   	of_platform_depopulate(&rpdev->dev);
->   
->   	fastrpc_channel_ctx_put(cctx);
-
+Best regards,
 -- 
-// Caleb (they/them)
+Kiarash Hajian <kiarash8112hajian@gmail.com>
+
 
