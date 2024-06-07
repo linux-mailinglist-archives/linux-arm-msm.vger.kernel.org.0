@@ -1,83 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-22029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B7F58FFF44
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:23:04 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E41FF8FFF55
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 11:24:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 85766B2454E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 09:23:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 82EDDB24E6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 09:24:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0621615B99B;
-	Fri,  7 Jun 2024 09:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8CBA15B986;
+	Fri,  7 Jun 2024 09:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wd/bO7uQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QC3h8D1q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C042615B98E;
-	Fri,  7 Jun 2024 09:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8351615ADA5;
+	Fri,  7 Jun 2024 09:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717752159; cv=none; b=Y6mQbmGWjDq+ViJX47e7I3lp+hS+CoqzcLq64w9IPivFRdJ2xiSkm2eYkeh4ICaowmgBReebqchUh9lIgPaRnQybOhjBbHOddniX6XXspCnfCjm1FZK8KjBc8yddgFCgvBPCFd5U626WpBbEiHBgFrt+loOgsvgraX/UsOsR83M=
+	t=1717752285; cv=none; b=gTV/Iaux5VCGjHGiSqvuUowV58Bca3YU+Ea+5uRRTlJY2Gyg+AjjL2v0AF8svD6XbAHJS/zpXOlc4S0AEyTNfsfA2CsIl8FXZRnap6hMDww1AiugMzp+zHnGYM8IK+viPFwa2+gDXCZfaXZ2GJYrqtg5IZG2eXu2TDxIh/qbhtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717752159; c=relaxed/simple;
-	bh=D7lvHQq+tZorV1+pcjIY5sjD02wKITLOPmyvKO904yI=;
+	s=arc-20240116; t=1717752285; c=relaxed/simple;
+	bh=Ai/nxfazLLCWh/3bdRJszh7k3lCJMV2XEd3vBUFJoOk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DEmr59UCRMwM5ePKc3HTOg5MFxGv6ljg3/EDfPyFQnrhRYWcpGKhLY1Al+cZstmUdelZbUKpPE6u4aiHg5H+1bJxfqPHAE5mJAhGUFYUG7EOBHAUV+s6J9wR6pHw0IXFQ0MPzYXl4w6hVS2idUsjT4vkViGRzMS9U9AmsfUTJJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wd/bO7uQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2B2C4AF07;
-	Fri,  7 Jun 2024 09:22:31 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=q93asdGQti6SuQD/kJrOgr+GrVMkiEXV9sXl8PSY2PAYegozx8xcRKJUK27iQxEUzH68LozyY3AwnU9JE8W2aKz/TvXUJhLZZz06h4R8gP9tT5ezVF5/Kdy/hEb4q4NJ72lRFKPd499/qHW4L7A+Uh5ojrwmLzt6M8xncs3ZjcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QC3h8D1q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6F5C2BBFC;
+	Fri,  7 Jun 2024 09:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717752159;
-	bh=D7lvHQq+tZorV1+pcjIY5sjD02wKITLOPmyvKO904yI=;
+	s=k20201202; t=1717752285;
+	bh=Ai/nxfazLLCWh/3bdRJszh7k3lCJMV2XEd3vBUFJoOk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Wd/bO7uQuUWMF88y073MEYdcJkxc/T9boJd1q64JFfETO37/4iGwJryBTybOc9dBY
-	 DY4Mx3hhpcqNSOELqeCujEVhpgMhJ5CU3Zz20fZ6Uks+q9Iwu1cuA5Ee9f/IDfJUP/
-	 7A4BQ2Pv9OFhpgJ8KT5sHHNz3Dk0rvg9rKg6AkOTs6isY+Zqf24Xlvd9geCjfS3IXS
-	 95TqGUH3d2BNJFSN9ou8DWOSXJTdrplMPW6d4/jiOi7Q3GXaqc9Pkdx3VUGF9POD/G
-	 l3vf8BeR4RCcbq+dfKMEEdjdgOr4koutz4uJh4BZVuxoN3Jt+PxxzxdXkCLhy+F/SE
-	 /WaTgN5oouNKw==
-Date: Fri, 7 Jun 2024 11:22:29 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-	mhi@lists.linux.dev, Bjorn Helgaas <helgaas@kernel.org>
-Subject: Re: [PATCH 5/5] PCI: layerscape-ep: Use the generic
- dw_pcie_ep_linkdown() API to handle Link Down event
-Message-ID: <ZmLRVQgLBx457R8E@ryzen.lan>
-References: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
- <20240606-pci-deinit-v1-5-4395534520dc@linaro.org>
+	b=QC3h8D1qaaOBdKGODeHGrDZvqpt286T73I4bfkGGrDNF5iq5G2fD9vMQb68Hj62lJ
+	 JVgWzd8/GCrN+XBZ5ZYBBgKclvg6R9eNpC4r8pzu6LANaC/IMbV49qsj1U5gV5d5HF
+	 ybUmNuHnK5QB6lddvfPXXpMgS5eMYKDJ30qJey3NCNylpPTOW+hd/jb2LpnhTVmhSY
+	 SL+SYoECCF+wNN4We4C9rApwSqRlvTEmBbVI/7Ed1omESoH47CpLdVTP5CsE5tdS4S
+	 B3nOHl5kSMyhk4M9Pv7wiNYw/9P4R1eslLqXt/lrtganrqzyHAi23/eDLhWB+1vFYT
+	 8dCe6TBmnmWMQ==
+Date: Fri, 7 Jun 2024 11:24:39 +0200
+From: Benjamin Tissoires <bentiss@kernel.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Jiri Kosina <jikos@kernel.org>, 
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Douglas Anderson <dianders@chromium.org>, linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/7] HID/arm64: dts: qcom: sc8280xp-x13s: fix
+ touchscreen power on
+Message-ID: <wa5x3m33rpb6vwoyqnj2srfyylg6uzoeroprv27n45vxga5kqb@2kzps6mnublf>
+References: <20240507144821.12275-1-johan+linaro@kernel.org>
+ <ZmBZPHbDv7ma_JaJ@hovoldconsulting.com>
+ <fupsiajh2za5r7itt2naxtynyqiwpw3efubrjmydd5ohypo3jg@2u44rbhbvmym>
+ <ZmFg-uBodIMkINof@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,37 +66,37 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240606-pci-deinit-v1-5-4395534520dc@linaro.org>
+In-Reply-To: <ZmFg-uBodIMkINof@hovoldconsulting.com>
 
-On Thu, Jun 06, 2024 at 12:56:38PM +0530, Manivannan Sadhasivam wrote:
-> Now that the API is available, let's make use of it. It also handles the
-> reinitialization of DWC non-sticky registers in addition to sending the
-> notification to EPF drivers.
+On Jun 06 2024, Johan Hovold wrote:
+> On Thu, Jun 06, 2024 at 08:57:47AM +0200, Benjamin Tissoires wrote:
+> > On Jun 05 2024, Johan Hovold wrote:
+> > > Hi Jiri and Benjamin,
+> > > 
+> > > On Tue, May 07, 2024 at 04:48:14PM +0200, Johan Hovold wrote:
 > 
-> Reported-by: Bjorn Helgaas <helgaas@kernel.org>
-> Closes: https://lore.kernel.org/linux-pci/20240528195539.GA458945@bhelgaas/
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/pci/controller/dwc/pci-layerscape-ep.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > > Johan Hovold (7):
+> > > >   dt-bindings: HID: i2c-hid: add dedicated Ilitek ILI2901 schema
+> > > >   dt-bindings: HID: i2c-hid: elan: add Elan eKTH5015M
+> > > >   dt-bindings: HID: i2c-hid: elan: add 'no-reset-on-power-off' property
+> > > >   HID: i2c-hid: elan: fix reset suspend current leakage
+> > > 
+> > > Could you consider picking the first four patches up for 6.10-rc3 so
+> > > that Bjorn can take the devicetree changes?
+> > 
+> > We definitely can. But if it makes things easier, Bjorn can also take
+> > the whole series through his tree with my Acked-by.
 > 
-> diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> index 35bb481564c7..a4a800699f89 100644
-> --- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> +++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> @@ -104,7 +104,7 @@ static irqreturn_t ls_pcie_ep_event_handler(int irq, void *dev_id)
->  		dev_dbg(pci->dev, "Link up\n");
->  	} else if (val & PEX_PF0_PME_MES_DR_LDD) {
->  		dev_dbg(pci->dev, "Link down\n");
-> -		pci_epc_linkdown(pci->ep.epc);
-> +		dw_pcie_ep_linkdown(&pci->ep);
->  	} else if (val & PEX_PF0_PME_MES_DR_HRD) {
->  		dev_dbg(pci->dev, "Hot reset\n");
->  	}
+> Thanks, but it should be fine to take this through two different trees.
 > 
-> -- 
-> 2.25.1
-> 
+> It will probably take a little longer to get the DT changes into
+> mainline anyway as they will also go through the SoC tree.
 
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Alright, fair enough. I've applied them, and will let them sink in
+for-next for 24h. I'll send the PR to Linus tomorrow evening. No
+guarantees they'll make -rc3 (but they should be applied early next week
+unless I messed something big).
+
+Cheers,
+Benjamin
 
