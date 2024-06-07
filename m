@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-22065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 408FA9003C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 14:41:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE0BB9003F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 14:47:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B88E81F21305
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 12:41:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1240C284415
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Jun 2024 12:47:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9E9D192B68;
-	Fri,  7 Jun 2024 12:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 044601946D8;
+	Fri,  7 Jun 2024 12:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="efYtRcnK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AGmTJiTS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9B818FC63
-	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 12:41:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475671847
+	for <linux-arm-msm@vger.kernel.org>; Fri,  7 Jun 2024 12:42:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717764067; cv=none; b=ClhUY32Rn1S8OgSwKnVD643PnpiuspNRVHgfqZwjmi5d4o0NBYyiJXhPck2ziv2dewW71/oVTxqYXQZsweAu5/ncsnjpXCHPzrD8d1C3AaFIW2nqipUN3/SVV62DKr+IwWBagn19vSSqfcRQ2O12HU1HJolDjASvFQu4EuZ400k=
+	t=1717764141; cv=none; b=pbHLHkRdVUKK3uiYc+LjBt8a+3xLhJRZaKIH6n302DtUilM/0xAkjREaufZP8Ju4No5tryEAOkYlbpgR3VdVPBEGCGmQssAWHb3ozZyjJWJIXnexBqxm8ymnhu1f5Cu04VXpLiyfWyPT38qqAozJ5JK/IUtLIlc7MLqNZHLnwtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717764067; c=relaxed/simple;
-	bh=CpI4EdqIwC1Bi0MB6v53eSkac80cwlVCjpiZwtFiwTA=;
+	s=arc-20240116; t=1717764141; c=relaxed/simple;
+	bh=a5796ySW3YMSWtbXww5SPASPZ3Nh/h6vftisfvSJZQ8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LKEX/Wwvw4Hmz1oHzZ5r1ZNYfEhZmi3IDRpIybCRN/rFDeV5OBdzBb2btOj/gCyn3vy2FyaEo+gfiZ7vN6UZbNVgsmv6cBlofMd+ZbPPH8k6tulacCdsDfD7Z7RFpdwIXz7Tmm7qUMtn7wkj/YCiPlVvnR5KRY772S1/xFPVaOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=efYtRcnK; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:Content-Type; b=s699gFnUJI4t5JfYJRjgQKy0ZGM4cTV0CNeteJ8XTDtxBYz39IjZLwvwvuEvdLJLWrb74R4iyBqLZb5QQrt+T/YNYOJp5MnsAEvRXlYJf8jKJUzjLuK9w7HBs+Jmu914STzJoq8Dxq44i3SURQFUvlUQUgx94Ep/WbnUWvp8lmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AGmTJiTS; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a6c828238dcso201733766b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 05:41:05 -0700 (PDT)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57c61165af6so189452a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Jun 2024 05:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1717764064; x=1718368864; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1717764139; x=1718368939; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=d9VE2Rco2+OBq4k6yMk2HFwn9iF2JPDlMzwkzy0fHug=;
-        b=efYtRcnK4af8nIocPb+LcfpzKhkcyUjoJi2sF0DRhbEPnzfx1NeWKMG1MYS6qm7Jjk
-         LftVXWCEQXEE6Wc16fKlAUVXv/Mz3mnNFWbxaA5GGOQfXFYnnWXocixnN+w/a75rTTEK
-         3XXhUzEwD7S7uJVVJPqsl9xhdSILWM+Go8FGOpnaS/Z7C5hCIouOAhuaLVkNEt9n+8z7
-         PdMUtllBZT8Xlu2LWHTjWRWimnDLYkREzsmzkfux0Ufx2zBrjbtAsUgGtRefPFzGU713
-         EiD9txHFlkW2IwPpGqwez+1ZQ1eCpus1A7klS1/G9j3cbfw3LnJkpsXJj4jpj0XFAaXC
-         ZKrQ==
+        bh=763OORXE2U3LdBi+kBiAJ1rdKK00vtJI0371975xlvU=;
+        b=AGmTJiTSrAOJe2jMpVDsTowCq0Ycp5iZCjYBntwS284jI2+LDeU3ikRo5wmWL8rgsg
+         zH+9qvqDY98u+qlPi/xSp3fMXv8KdOcwubNsw8d7ZWpSMqjhRBdmTSYcGfHjAsR65sFf
+         YtwTdNQISnNxIzYElJvu3PA3WCa6jCu7DRXeLh/BJDbmiKsUAUkq3gPXFOGFKnW6ol0f
+         ACYOA2hHDxEPckDjprEm4NJ+rMEH9+6bA+YmYEXRVfAHgBTDawkZCGV84N4nG8OfpzDl
+         Un5MII4zCpqg+5X57mMoBiS6dCL7RnPNenBZ2B2vU7OVH5YgKB/zbT1+gnskFA0rCiwa
+         3lGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717764064; x=1718368864;
+        d=1e100.net; s=20230601; t=1717764139; x=1718368939;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d9VE2Rco2+OBq4k6yMk2HFwn9iF2JPDlMzwkzy0fHug=;
-        b=b60YfCbsa3hNNt2KrRZkn9BIHjtIwqgDa7hp8ESornlEDwOe0P7+uhC9QbtuhRVbK3
-         8SHWuMtN8LiZYHqJhsb6KOQFvn+9u7JrvAqJEZMO12jc2cG2kw9G+8EuS/zkC19YzLDb
-         QIkyuiV/yZoieI4nrNjnDrIaXhgioG3dm6LhDFj9PFuvyr4JC6NRMK3Y7+KA4TTgvHlq
-         WMNL4vSkrAgJinwxYmuP2scLMb+5gkkX1GcohuG7mY9Q2Jf8rZSO54XrkjCM6we8rRqP
-         TBFq9xLkyB6WUASe4l+yPLcEFtbmIPOkSL+SdKHAbY74LoWj+1JaRMyYqn5Pw22jaZvf
-         aXFg==
-X-Forwarded-Encrypted: i=1; AJvYcCXro+ptBVO0r8fsFK0i6lyYTy4UUpzQbUrc5jyoeeRK6nbmdAVoQB8kmXp2hUFn0j26kCpkaJvt4JFF03F1Ov00D7QeLl+rTCqt13cX7A==
-X-Gm-Message-State: AOJu0Yy1cGTMZvQ7xsRd8MRxDO3+lWbivMo7+KevdRclKSsh1lnIq4Kt
-	ekCr17x2HKCtExPYvJ1b20YCrBz3bGFZrpFdeU5Iif8TfPSCD4f7NIWLdoT54WR8ixg+a7EvPRP
-	kVDrw15qG
-X-Google-Smtp-Source: AGHT+IGJ04zgDm+tzQ2v/+kw3WCAzIV8Doek52h/npy2UFsZjhGnxknFHS7QSERFdX/CTXzMcNteQw==
-X-Received: by 2002:a17:906:1b19:b0:a6e:f6d2:5012 with SMTP id a640c23a62f3a-a6ef6d26d99mr13562466b.2.1717764064232;
-        Fri, 07 Jun 2024 05:41:04 -0700 (PDT)
+        bh=763OORXE2U3LdBi+kBiAJ1rdKK00vtJI0371975xlvU=;
+        b=iYgKVXIncaFMb4QWxzHQ7s02AcS8nC18PZ+ZM8bv93ykidh4d2EqJoRRGtg68vuRlO
+         fTfwdX2E8eF0o+Te0EdCiY539D26fP4P5/Zps8Pmkj/w3VStysH5aWvvbh2HZ4IQ9hk5
+         NQYMpEofvMN3qzXiOa54WyGQQIHg8/Z5YPvi4Xjf7EJKIJPXEbFWeNkGCCvcEY7hI/4B
+         CdbSoeJ2X64Osck2h6TBbDQG4f2ziKP6qKvi3eT/8moAOUvJQnM3MY/qSWK6LeGAfcV1
+         rDXU5ygZNuHxr4rJ1ZmjMUXMkvnc3gHXoi5F50iF1qxOFB0gg8FSB1ks/17u6gmFn9ek
+         eAQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVFLj5uF5qavMvOzWPA+6h+9X159J0GzC1CqwkeWEafzWxg1MjKqtkp8flXeidYEKpNC+sVzvpGB5dxsyBmXkddbBh51bDP7PxeX5VoiA==
+X-Gm-Message-State: AOJu0Yx3PQd1x+LflgsAJVMOdcoAIVuLq2cdESmPIXG3l90ScwaKQbm+
+	evqEPYqCoBVn2r9FHuLCE/6SIqLzU1TZfMdmjohIpv0jM8S+H9DVKiOhMrFapi0=
+X-Google-Smtp-Source: AGHT+IHGCU7SOofUC5q+FlTfu45pN2L6JEbAlbXDLfaXmvVdmuyPmPykEYwb8QcVU5NVMF6CUNC2eg==
+X-Received: by 2002:a50:9509:0:b0:572:9962:7f0 with SMTP id 4fb4d7f45d1cf-57c509a841amr1347566a12.34.1717764138635;
+        Fri, 07 Jun 2024 05:42:18 -0700 (PDT)
 Received: from ?IPV6:2a02:8109:aa0d:be00::8090? ([2a02:8109:aa0d:be00::8090])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6c805cdd32sm240659866b.79.2024.06.07.05.41.03
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57aae234204sm2680408a12.87.2024.06.07.05.42.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jun 2024 05:41:03 -0700 (PDT)
-Message-ID: <1c85847f-ea6d-437e-ac15-93346d414761@linaro.org>
-Date: Fri, 7 Jun 2024 14:41:02 +0200
+        Fri, 07 Jun 2024 05:42:18 -0700 (PDT)
+Message-ID: <da6452eb-a419-4260-aeef-f092250430ba@linaro.org>
+Date: Fri, 7 Jun 2024 14:42:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,84 +76,55 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/11] misc: fastrpc: Add missing dev_err newlines
+Subject: Re: [PATCH v4 03/11] misc: fastrpc: Copy the complete capability
+ structure to user
 To: Ekansh Gupta <quic_ekangupt@quicinc.com>, srinivas.kandagatla@linaro.org,
  linux-arm-msm@vger.kernel.org
 Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
  linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ stable <stable@kernel.org>
 References: <20240606165939.12950-1-quic_ekangupt@quicinc.com>
- <20240606165939.12950-2-quic_ekangupt@quicinc.com>
+ <20240606165939.12950-4-quic_ekangupt@quicinc.com>
 Content-Language: en-US
 From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20240606165939.12950-2-quic_ekangupt@quicinc.com>
+In-Reply-To: <20240606165939.12950-4-quic_ekangupt@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
 On 06/06/2024 18:59, Ekansh Gupta wrote:
-> Few dev_err calls are missing newlines. This can result in unrelated
-> lines getting appended which might make logs difficult to understand.
-> Add trailing newlines to avoid this.
+> User is passing capability ioctl structure(argp) to get DSP
+> capabilities. This argp is copied to a local structure to get domain
+> and attribute_id information. After getting the capability, only
+> capability value is getting copied to user argp which will not be
+> useful if the use is trying to get the capability by checking the
+> capability member of fastrpc_ioctl_capability structure. Add changes
+> to copy the complete capability structure so that user can get the
+> capability value from the expected member of the structure.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
+> Cc: stable <stable@kernel.org>
 > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
 Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->   drivers/misc/fastrpc.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+>   drivers/misc/fastrpc.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 4c67e2c5a82e..4028cb96bcf2 100644
+> index abf7df7c0c85..f64781c3012f 100644
 > --- a/drivers/misc/fastrpc.c
 > +++ b/drivers/misc/fastrpc.c
-> @@ -325,7 +325,7 @@ static void fastrpc_free_map(struct kref *ref)
->   			err = qcom_scm_assign_mem(map->phys, map->size,
->   				&src_perms, &perm, 1);
->   			if (err) {
-> -				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
-> +				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
->   						map->phys, map->size, err);
->   				return;
->   			}
-> @@ -816,7 +816,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
->   		map->attr = attr;
->   		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &src_perms, dst_perms, 2);
->   		if (err) {
-> -			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
-> +			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
->   					map->phys, map->size, err);
->   			goto map_err;
->   		}
-> @@ -1222,7 +1222,7 @@ static bool is_session_rejected(struct fastrpc_user *fl, bool unsigned_pd_reques
->   		 * that does not support unsigned PD offload
->   		 */
->   		if (!fl->cctx->unsigned_support || !unsigned_pd_request) {
-> -			dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD");
-> +			dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD\n");
->   			return true;
->   		}
->   	}
-> @@ -1285,7 +1285,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   							&src_perms,
->   							fl->cctx->vmperms, fl->cctx->vmcount);
->   			if (err) {
-> -				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
-> +				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
->   					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
->   				goto err_map;
->   			}
-> @@ -1337,7 +1337,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   						(u64)fl->cctx->remote_heap->size,
->   						&src_perms, &dst_perms, 1);
->   		if (err)
-> -			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
-> +			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
->   				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
->   	}
->   err_map:
+> @@ -1784,7 +1784,7 @@ static int fastrpc_get_dsp_info(struct fastrpc_user *fl, char __user *argp)
+>   	if (err)
+>   		return err;
+>   
+> -	if (copy_to_user(argp, &cap.capability, sizeof(cap.capability)))
+> +	if (copy_to_user(argp, &cap, sizeof(cap)))
+>   		return -EFAULT;
+>   
+>   	return 0;
 
 -- 
 // Caleb (they/them)
