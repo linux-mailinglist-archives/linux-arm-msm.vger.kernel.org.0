@@ -1,248 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-22133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 682BB90128E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 17:57:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F25A39012A4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 18:11:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 08EB0282CCF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 15:57:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6DD301F218D4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 16:11:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E33C217BB37;
-	Sat,  8 Jun 2024 15:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C888F179675;
+	Sat,  8 Jun 2024 16:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oGxkhm4Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CLjoMtrK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C3617B508;
-	Sat,  8 Jun 2024 15:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980DA178382;
+	Sat,  8 Jun 2024 16:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717862241; cv=none; b=ub/nxln4oXzocKLCm9NYgaFNtRte2hufr3rC8YSVRLKImFskN5RL0IvIjN1Bq5WYGQXDmAqi1K/Q7UWuI9QJ3hsp3XDGpl3TR9+lc0/zf4R4XLzR02OWgcalTw/mRotq1YWW+qCbTvq8u+XIZjD38srIAgeAIGtdDyd6K/jrAoU=
+	t=1717863079; cv=none; b=umS22CifFMi+YeU+XPit9HBIOEqvDxsTK+0U+43n4op57Zg/N/lcJCgaOLYVOIMk/SXiYeo5YvwdyDhYFoSJUXb+7Um0ONW7tIKgnX3nsHBTcW5szXAaDE6FniLnmv+FqG8drWSMgXwK7pJSG7bbuxz9U3qk4dCSczdClk9rgKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717862241; c=relaxed/simple;
-	bh=mrE9CflCyD5JGJU45JpmcouGaGOztDkM/lJ4oalLK0c=;
+	s=arc-20240116; t=1717863079; c=relaxed/simple;
+	bh=IjZW7s+e5GiUN4hH6yDA8HOWvGUpCfB7ZLtckx4HLJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Frfs9URPqNh3cyDffZUYOaqJAoeBAMY9YjL/iKlQGnQhwtlchkNYiLoPXNQlCAX7QmZ3qf8T8u10BbMhCuaPoeaEGVTckJ80nEmmM2YHtcCx4TuymEGHdmlsmYhcvYnatOjQq3Z3E+u2pG01ppguYLxTJtReZBva4P4SZYqdkLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oGxkhm4Y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A95C4DE00;
-	Sat,  8 Jun 2024 15:57:21 +0000 (UTC)
+	 MIME-Version:Content-Type; b=J8gL3o8z4WT0sed0sB0Obn43l+ksoAZ3qiJ6eSccX3Wt587HOxqW9I8S2RAp0P/1/Y3wyc20MU6zqBxgVAECfA5gN9J8mMtjJrfc9BVNkudg3SNdRYfCBKK0+7maqPgjB39xasoHtfbafkk/wdRcB+wfRnGBIFu4AG/lo0Yb3B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CLjoMtrK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640B4C2BD11;
+	Sat,  8 Jun 2024 16:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717862241;
-	bh=mrE9CflCyD5JGJU45JpmcouGaGOztDkM/lJ4oalLK0c=;
+	s=k20201202; t=1717863079;
+	bh=IjZW7s+e5GiUN4hH6yDA8HOWvGUpCfB7ZLtckx4HLJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGxkhm4YIAttg9cFJNPyiFrl4ijOQsL6rfF0KwRw5jU1mDiWrWCwCzuCQrMoO5eaE
-	 KPr+719Jx14U6SK4/vpnlrNvSRKI0alg300+P0XM2WSWT9vqWub/6aylm0OC417psp
-	 e/ymxXVIA+KtjVcZJibDuxcoHWwS9Fw1IHS+ilwdYLA12NrytGF2P/dRN1UsUb8WAK
-	 vs8uKTH5q4fzREncAidWEFyuc+BnC5d/3xdzooIPSL8He+WJlqmMkzcoRyAxWKHUyO
-	 ZUXo1lItASsMG+zMOszCVF5WpzKnacEjd7AxbVAq968ue+LF6Lx7eqIO1fU4zC2yPW
-	 z3dfc2F9xjNkQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1sFyRU-000000003QN-2Rhf;
-	Sat, 08 Jun 2024 17:57:20 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Lee Jones <lee@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
+	b=CLjoMtrKZInJ2kW0BDfDzudCsnYu2dyZF/kcppjD5soOeqOXEG4Znw1p7+jNe6ZId
+	 iZWoIgd0FRklZ4P8eqHQKk4kmrhWqrh9DxbXkuqkqOMM928ebEZNaUvsvL73NMw370
+	 v1AZQyNowQlCxTCtprc4leEnDjvtEJ7h3xkRRu2UD1XekGp2RHrISN6IB6qg52BVdZ
+	 sXSwXQU1+rl45+PPfPtTNYP7DS/gxu4jjCsYkMBXBKU0u+QQg1HlF77RuJ8QwE3WFv
+	 hV2H/WupNAaOj/CJJRJG8XKkko3DmoZYO5veL8Y36D0uUZua6ZpAjCOeHB1pfedl0m
+	 uDFvL+EXhjY6A==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Das Srinagesh <quic_gurus@quicinc.com>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v3 12/12] arm64: dts: qcom: sc8280xp-x13s: enable pm8008 camera pmic
-Date: Sat,  8 Jun 2024 17:55:26 +0200
-Message-ID: <20240608155526.12996-13-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.44.1
-In-Reply-To: <20240608155526.12996-1-johan+linaro@kernel.org>
-References: <20240608155526.12996-1-johan+linaro@kernel.org>
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH 00/12] Adreno cooling, take 2
+Date: Sat,  8 Jun 2024 11:11:15 -0500
+Message-ID: <171786307409.851553.17581174595985014782.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240510-topic-gpus_are_cool_now-v1-0-ababc269a438@linaro.org>
+References: <20240510-topic-gpus_are_cool_now-v1-0-ababc269a438@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Enable the PM8008 PMIC which is used to power the camera sensors.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 123 ++++++++++++++++++
- 1 file changed, 123 insertions(+)
+On Fri, 10 May 2024 14:58:29 +0200, Konrad Dybcio wrote:
+> For the thermal framework to cool devfreq-managed devices properly,
+> it seems like the following conditions must be met:
+> 
+> 1. the devfreq device has a cooling device associated with it
+> 2. there exists some thermal zone provider
+> 3. the cooling device is referenced in a cooling map
+> 4. the cooling map is associated with a thermal trip point
+> 5. the thermal trip point is of the "passive" kind
+> 6. the "passive" trip point is being updated (via polling or otherwise)
+> 7. the trip point is being hit (i.e. the thing gets hot enough)
+> 
+> [...]
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 642705b7d896..daca6bd2e34c 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -297,6 +297,27 @@ linux,cma {
- 	};
- 
- 	thermal-zones {
-+		pm8008-thermal {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+
-+			thermal-sensors = <&pm8008>;
-+
-+			trips {
-+				trip0 {
-+					temperature = <95000>;
-+					hysteresis = <0>;
-+					type = "passive";
-+				};
-+
-+				trip1 {
-+					temperature = <115000>;
-+					hysteresis = <0>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
- 		skin-temp-thermal {
- 			polling-delay-passive = <250>;
- 			polling-delay = <0>;
-@@ -671,6 +692,85 @@ touchscreen@10 {
- 	};
- };
- 
-+&i2c11 {
-+	clock-frequency = <400000>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c11_default>;
-+
-+	status = "okay";
-+
-+	pm8008: pmic@c {
-+		compatible = "qcom,pm8008";
-+		reg = <0xc>;
-+
-+		interrupts-extended = <&tlmm 41 IRQ_TYPE_EDGE_RISING>;
-+		reset-gpios = <&tlmm 42 GPIO_ACTIVE_LOW>;
-+
-+		vdd-l1-l2-supply = <&vreg_s11b>;
-+		vdd-l3-l4-supply = <&vreg_bob>;
-+		vdd-l5-supply = <&vreg_bob>;
-+		vdd-l6-supply = <&vreg_bob>;
-+		vdd-l7-supply = <&vreg_bob>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&pm8008_default>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-ranges = <&pm8008 0 0 2>;
-+
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+
-+		#thermal-sensor-cells = <0>;
-+
-+		regulators {
-+			vreg_l1q: ldo1 {
-+				regulator-name = "vreg_l1q";
-+				regulator-min-microvolt = <1200000>;
-+				regulator-max-microvolt = <1200000>;
-+			};
-+
-+			vreg_l2q: ldo2 {
-+				regulator-name = "vreg_l2q";
-+				regulator-min-microvolt = <1200000>;
-+				regulator-max-microvolt = <1200000>;
-+			};
-+
-+			vreg_l3q: ldo3 {
-+				regulator-name = "vreg_l3q";
-+				regulator-min-microvolt = <2800000>;
-+				regulator-max-microvolt = <2800000>;
-+			};
-+
-+			vreg_l4q: ldo4 {
-+				regulator-name = "vreg_l4q";
-+				regulator-min-microvolt = <2800000>;
-+				regulator-max-microvolt = <2800000>;
-+			};
-+
-+			vreg_l5q: ldo5 {
-+				regulator-name = "vreg_l5q";
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+			};
-+
-+			vreg_l6q: ldo6 {
-+				regulator-name = "vreg_l6q";
-+				regulator-min-microvolt = <1800000>;
-+				regulator-max-microvolt = <1800000>;
-+			};
-+
-+			vreg_l7q: ldo7 {
-+				regulator-name = "vreg_l7q";
-+				regulator-min-microvolt = <2800000>;
-+				regulator-max-microvolt = <2800000>;
-+			};
-+		};
-+	};
-+};
-+
- &i2c21 {
- 	clock-frequency = <400000>;
- 
-@@ -1361,6 +1461,13 @@ i2c4_default: i2c4-default-state {
- 		bias-disable;
- 	};
- 
-+	i2c11_default: i2c11-default-state {
-+		pins = "gpio18", "gpio19";
-+		function = "qup11";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
- 	i2c21_default: i2c21-default-state {
- 		pins = "gpio81", "gpio82";
- 		function = "qup21";
-@@ -1464,6 +1571,22 @@ wake-n-pins {
- 		};
- 	};
- 
-+	pm8008_default: pm8008-default-state {
-+		int-pins {
-+			pins = "gpio41";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		reset-n-pins {
-+			pins = "gpio42";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
- 	spkr_1_sd_n_default: spkr-1-sd-n-default-state {
- 		perst-n-pins {
- 			pins = "gpio178";
+Applied, thanks!
+
+[01/12] arm64: dts: qcom: sc8180x: Throttle the GPU when overheating
+        commit: 7c05517e5e68205c9d5085c029df2ca4e6ad9237
+[02/12] arm64: dts: qcom: sc8280xp: Throttle the GPU when overheating
+        commit: f7fd6d04c1046107a87a0fc883ed044cf8b877a1
+[03/12] arm64: dts: qcom: sdm630: Throttle the GPU when overheating
+        commit: 545fef1e5e43fb73083d16507a13820179726ebe
+[04/12] arm64: dts: qcom: sdm845: Throttle the GPU when overheating
+        commit: b79dd56ed5fcc863f167eb53771b09e8b3d8e317
+[05/12] arm64: dts: qcom: sm6115: Update GPU thermal zone settings
+        commit: c518b5f6def159222d73f3241fb1802bc846a477
+[06/12] arm64: dts: qcom: sm6350: Update GPU thermal zone settings
+        commit: 1a558bbffc2ee9b99226b146fd7928e41db79d41
+[07/12] arm64: dts: qcom: sm8150: Throttle the GPU when overheating
+        commit: c61300433b7b89d5782fddf95bd96a6e819c0377
+[08/12] arm64: dts: qcom: sm8250: Throttle the GPU when overheating
+        commit: c862b78b7203b72dd6806a77c0feff60fe96dee5
+[09/12] arm64: dts: qcom: sm8350: Throttle the GPU when overheating
+        commit: 10a5555220ad20b2f8043060d76b0e7f83ae91fa
+[10/12] arm64: dts: qcom: sm8450: Throttle the GPU when overheating
+        commit: 4be0dd44c39b083148ae9d4c4a7ef6d64e6c0062
+[11/12] arm64: dts: qcom: sm8550: Throttle the GPU when overheating
+        commit: ed979c039ad1c9b02dd7e9fa6a0dd69209bac6ed
+[12/12] arm64: dts: qcom: sm8650: Throttle the GPU when overheating
+        commit: 497624ed550604b3f713f53bc506e49ce5046e5f
+
+Best regards,
 -- 
-2.44.1
-
+Bjorn Andersson <andersson@kernel.org>
 
