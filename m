@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-22130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FF8190128C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 17:57:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AD34901281
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 17:57:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 476FB1C213C5
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 15:57:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3872A1F2217D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 15:57:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D73AF17BB2D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAD8A17BB04;
 	Sat,  8 Jun 2024 15:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vA/5X68/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JkGEdCKK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D3917B500;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5169017B410;
 	Sat,  8 Jun 2024 15:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717862241; cv=none; b=inefgA0rBw9kk/cyg6SJHB8/ZOpWa9EM/DmrzxZx/N5keEK3bYOPv4k1ozdGg5HzZ7eNbC/v1HS8fqB2laoY1QDpTgaznCluzgcrVoR8Hw3u+rpa5h8I217Q9iD0iidRkMTFW6w7u4GczFSi+Qkrbr5na25PdiyAqjhIIlmiCPs=
+	t=1717862241; cv=none; b=s+CC1STbyAFLjoVKkLwdf7e4uGxLFWX8XNw1LVVgtJh3Zm71boc19u39p124/qA0CracUtmTi+e2KC4B+1oEIK2FtR9osQ3CdsJ16lDHcjCGPTQB3pBr24f4mwNfXFYXf5a6Nx7Ef6hYwpmWc8bgZ/yrmdgV0JjKbLdlZrZDPYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717862241; c=relaxed/simple;
-	bh=9D6ySfgbWhQOFK6PfMLujLLbbQCJ9ljTc4OjiKugm44=;
+	bh=1PVqbSEdTjzNUNtNb5nVf+8za+2HVUfuQBw5ji4FkkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6JFGLpL9T5BG71NUnlzJ1lRDG9/Qx0HibPUP9gFpOxYneSbYpvBPGCT43Kr83U8+Trm1M1GOG7mA7rbXDMHOkmuP7Ok4692sFxhxuAhlRDxSGEXyNqHZETtkaB4OPgBzxW1ZFkj/HYeJUY1HaA3TOTamse+CRb+z4Gj87ZLsY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vA/5X68/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDE9C4AF0D;
+	 MIME-Version; b=oBVpjGGLbkX+InmZLyu9EOGjqHCQENTyE8VYigQOMId9cuXstCMogckvM3aPwrkvktxs5AvEtwc3AQZbdKV1lri8o1nSSV6O6c0his99kXfjRcqp4NSGLaaSLM4vOUGfoTs2j7hPLlliIdE67P1gWl7I3WFoO1cFhtH3iOoWI9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JkGEdCKK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4801C4AF0E;
 	Sat,  8 Jun 2024 15:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1717862240;
-	bh=9D6ySfgbWhQOFK6PfMLujLLbbQCJ9ljTc4OjiKugm44=;
+	bh=1PVqbSEdTjzNUNtNb5nVf+8za+2HVUfuQBw5ji4FkkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vA/5X68/2Z7CaJ03EsbxXgLsnwaatwI5YtaEvxnw4Lo1Oj5ubpSO8UVv1c3wWyPbr
-	 Tm2uvO78vdLtpdubiWBaPT0oeTUlXqbV/Vv0Lg++htj1i/Ck1aLIZm7D7OY+UJiA7E
-	 MiJV1JntjhX0FbrQ8EznjFo4pwX8jgtj6b3OAMoficBKmiCmVg3rviguRmISHhC9FM
-	 NGbBHDvxNL+TdKGWDBNenS05wSvnoK/0SEbSAAWvDSUMlME7jGktvlecXwgo8XpPCM
-	 7L2WF0UlpCGGSkEoDd5UISbRhqwIBlpqXhAhp8OHcy2P9P3Wzi15mogWTFeifQePIU
-	 l8MyIeTWSMCBg==
+	b=JkGEdCKKaAxXwMSPoCmHPOgQWdxzjHOD/26D2+dOnwpJEjcR/xulIhLDzG/sbt3dC
+	 GVQYF35B7AVDJ4QwsnvdO/OoSO6B1AGD4rVbolR4XiIieJ1ib13eIiCuziGnW8In/m
+	 RYy/9r2POv1kNQDZBV8LXqO91Dh/QT5B6V0hNOr5zxEy1e/hjSieEhWPjTyqmGGTtS
+	 KvWBolM5e3XPoCDr47lLmk+BqRlce+XaUydHO8CFeIxJwRFTYARsEqm5jfegXl8JJV
+	 JWlWa/I+V/iGgUiNEQiwsab0M+nkcn4FAkaN4FCqpiRNrieLabSaVYN83llNL7Uwl7
+	 yzmU0X8QBf9aA==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1sFyRU-000000003Q5-0KoV;
+	id 1sFyRU-000000003Q8-0hto;
 	Sat, 08 Jun 2024 17:57:20 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Lee Jones <lee@kernel.org>,
@@ -64,9 +64,9 @@ Cc: Rob Herring <robh@kernel.org>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v3 07/12] mfd: pm8008: Drop unused driver data
-Date: Sat,  8 Jun 2024 17:55:21 +0200
-Message-ID: <20240608155526.12996-8-johan+linaro@kernel.org>
+Subject: [PATCH v3 08/12] dt-bindings: mfd: pm8008: Drop redundant descriptions
+Date: Sat,  8 Jun 2024 17:55:22 +0200
+Message-ID: <20240608155526.12996-9-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.1
 In-Reply-To: <20240608155526.12996-1-johan+linaro@kernel.org>
 References: <20240608155526.12996-1-johan+linaro@kernel.org>
@@ -78,29 +78,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The i2c client driver data pointer has never been used so drop the
-unnecessary assignment.
+In preparation for reworking the binding, drop the redundant
+descriptions of the standard 'reg' and 'interrupts' properties.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/mfd/qcom-pm8008.c | 2 --
- 1 file changed, 2 deletions(-)
+ Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
-index bab17417aeec..72199840231e 100644
---- a/drivers/mfd/qcom-pm8008.c
-+++ b/drivers/mfd/qcom-pm8008.c
-@@ -167,8 +167,6 @@ static int pm8008_probe(struct i2c_client *client)
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+index e1e05921afb4..d71657f488db 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
+@@ -19,16 +19,11 @@ properties:
+     const: qcom,pm8008
  
--	i2c_set_clientdata(client, regmap);
+   reg:
+-    description:
+-      I2C slave address.
 -
- 	reset = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(reset))
- 		return PTR_ERR(reset);
+     maxItems: 1
+ 
+   interrupts:
+     maxItems: 1
+ 
+-    description: Parent interrupt.
+-
+   reset-gpios:
+     maxItems: 1
+ 
 -- 
 2.44.1
 
