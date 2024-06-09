@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-22135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B59F69012A8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 18:11:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6CFF90144A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jun 2024 05:05:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F9AA2822E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Jun 2024 16:11:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 00E77B2136D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jun 2024 03:05:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD3CF17B4E9;
-	Sat,  8 Jun 2024 16:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C2CA5C89;
+	Sun,  9 Jun 2024 03:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PDv4T1md"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OgDFTK/X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDED17B411;
-	Sat,  8 Jun 2024 16:11:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B584D79C4;
+	Sun,  9 Jun 2024 03:05:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717863080; cv=none; b=kqfz5drE7HznFj4AJ80dLxN5DjPPWAzpl/PVp6Fz5DJHYIE8w4Td+4kBpJObTie87Lc54eM/F+tsfEIAGnQY4rLGZL5Wnv/r4a86j9QoUCSiaTzhZAH0TIPPi2B/QJa9gaG319kQxpiv9r1aYAqE6+7gyt6jUo+srJM7j4kJsPc=
+	t=1717902311; cv=none; b=gei+CuuwGRVp349WGHrubz2SuyerLoaR4K4fAloTz4g/XHh7fgry/IoJUtBEOB9GSFIGeTzTUTevn9O8ZOPgQ0xcZZ3abJ3EtidyrSKQGQtFHHLVOkdq6ZenWqs6k4nYzc6DXyV726tM7i60PVn5b+tAeqGgXhncow5ph/v8ZDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717863080; c=relaxed/simple;
-	bh=/uwRUI/YsWFpgfwjwsOyJzuR2HOJ5zMOT3h3yHM7+JU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uCJODW9rNaaHv4P7rRFQRj1dSwgZwRdrUjmgmTK8Y/cQD+hz+iLn5MO9Lprdo/HXwqIVsM2YjxOkcgVi+dI9ae7STmuvMV0Amev36wEAfGwU5iKwMdkLQg1VFAGpbGVD/lQ1Rp0t1hH8geVJ2jHY3Pd/tYjCxgPAhUJzGdasYkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PDv4T1md; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD83C4AF0A;
-	Sat,  8 Jun 2024 16:11:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717863080;
-	bh=/uwRUI/YsWFpgfwjwsOyJzuR2HOJ5zMOT3h3yHM7+JU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDv4T1mdEAD6YIw6KhJDrK+44OqV31pIXyBKBjnSw4RhvCBYpool4jpTQGZFDjbqu
-	 3pUe8e4Lv5mwe8HL7D14917qerQjd4jd0+cXIunmWfP1XuZl4AwrUstLDzQm6F+YJm
-	 Y1aUy8ySwLO2GlY6YOHPh1aEG94CMpXEZdHyJITTNtxj8MFVTwIfiWen8xSbjwmcVz
-	 gJg/3rdHsJL6UQaByFBDRDRxL0zy7NcSvQJAD1oddNwHIgpqN5mOBhTXjHAK/xxbSC
-	 FOJ5PIeO5/mOc5VwVHQjKJqhbE75/P2ricR9khxbrwLDksc/wLZJCYVBeXsDqrzpbv
-	 JUYosm/LV5t1g==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 00/31] Clean up thermal zone polling-delay
-Date: Sat,  8 Jun 2024 11:11:16 -0500
-Message-ID: <171786307408.851553.16016904343712298022.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240510-topic-msm-polling-cleanup-v2-0-436ca4218da2@linaro.org>
-References: <20240510-topic-msm-polling-cleanup-v2-0-436ca4218da2@linaro.org>
+	s=arc-20240116; t=1717902311; c=relaxed/simple;
+	bh=L59mpxAx7Oy0+v4OF1LzwYpdPH6+XJg2XjvCL4mDy28=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=cn4DhkXnTzGHyko80yYYb/0S6W8aGWDv/YgLGHYBBO83ywxu6r7NX+9AuBatvOHh0oXBRa0PgLdMpQVL3YaKSR58Ujvlm2xzbQWpT+I4G2UV9jrGluyRtlIAI8SaIUU/lafccaxBSgfrrh1/snOBVtBHM/xW/0P/Dg/ecVArDNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OgDFTK/X; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4591cw9Y025605;
+	Sun, 9 Jun 2024 02:38:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=V0zhxDEiGiHbhoNplvvv4+
+	hjKa5wqd1UOf81oTwOStA=; b=OgDFTK/XwGFfkseVwb144BhTCZtRT/VpjWsnim
+	eUmFnS6/q+LK5llRkFCj1aRn7HwoMh9rKIf4uxYBaGzhrhAryiPHD88YxtP7Ha33
+	gWzZAGb3a38ugOIKVWbeTMjhH6KvzY6Pn9IQXpY5S3YtkcL5E4SuvlOO199yOZq/
+	QzIbmCEEAvWHIRmevlPjkeqYOMp4vuByDOzlMbJZLQfKslB8WcxCdtvnG9A3DOJp
+	4gW31igIlbsJ6kMhuyUmKoBboAF9qfWBNjNrRJlzDQmA/h13k+Hg/+VcInonRtqN
+	ma7upez104wcZnlSGNnP1e8G95XDkygHK4bM7tDAunZ6eSvA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymemgh7k8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 09 Jun 2024 02:38:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4592cXUR002321
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 9 Jun 2024 02:38:33 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sat, 8 Jun 2024 19:38:19 -0700
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v14 0/4] PCI: qcom: Add support for OPP
+Date: Sun, 9 Jun 2024 08:08:14 +0530
+Message-ID: <20240609-opp_support-v14-0-801cff862b5a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,86 +65,187 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJYVZWYC/x2MQQqAIBAAvxJ7TjAVob4SEVZr7SUXrQjEvycdZ
+ 2AmQ8JImGBoMkR8KFE4K3SmbWA93LmjoK0KUFIZaWUvAvOcbuYQL2HcartFS6+dglpwRE/vvxu
+ nUj4aQCgwXgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
+	<kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>, <johan+linaro@kernel.org>,
+        <bmasney@redhat.com>, <djakov@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <vireshk@kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_parass@quicinc.com>, <quic_krichai@quicinc.com>,
+        <krzysztof.kozlowski@linaro.org>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1717900698; l=6392;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=L59mpxAx7Oy0+v4OF1LzwYpdPH6+XJg2XjvCL4mDy28=;
+ b=UobhBdsLKb2zqDoZwGlIzwqIWO58ckftnkQFywTck6NHkVblK8eSZhcyWXkizZ+OY1HoXo0lB
+ uoFUj+9uWsLA6Dtcy//ptuo9Gm6et+h0mD65Oz+CxB9ILNBskPQeB2/
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: D614MXHVgyeId6sPFwx4J9fEt7rbwT-7
+X-Proofpoint-ORIG-GUID: D614MXHVgyeId6sPFwx4J9fEt7rbwT-7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-08_16,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ suspectscore=0 adultscore=0 impostorscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 malwarescore=0 mlxscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406090019
 
+This patch adds support for OPP to vote for the performance state of RPMH
+power domain based upon PCIe speed it got enumerated.
 
-On Fri, 10 May 2024 13:59:23 +0200, Konrad Dybcio wrote:
-> A trivial follow-up on the changes introduced in Commit 488164006a28
-> ("thermal/of: Assume polling-delay(-passive) 0 when absent").
-> 
-> Should probably wait until v6.9-rc1 so that the patch in question is
-> in the base tree, otherwise TZs will fail to register.
-> 
-> FWIW, Compile-tested only (except 8280).
-> 
-> [...]
+QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
+maintains hardware state of a regulator by performing max aggregation of
+the requests made by all of the processors.
 
-Applied, thanks!
+PCIe controller can operate on different RPMh performance state of power
+domain based up on the speed of the link. And this performance state varies
+from target to target.
 
-[01/31] arm64: dts: qcom: ipq6018-*: Remove thermal zone polling delays
-        commit: 28930820bf8928c8247d6b001e042ce7e0037350
-[02/31] arm64: dts: qcom: ipq8074-*: Remove thermal zone polling delays
-        commit: bebd3c6476c97d0aee8985eb9544dfd82f6e8e36
-[03/31] arm64: dts: qcom: ipq9574-*: Remove thermal zone polling delays
-        commit: 88dd10e237ee1cfc70595c0feb37c8a71e521bfc
-[04/31] arm64: dts: qcom: msm8916-*: Remove thermal zone polling delays
-        commit: b3f0d522b548e969b138c48c0fd4098703363c53
-[05/31] arm64: dts: qcom: msm8939-*: Remove thermal zone polling delays
-        commit: 19c658e5bfe71b01ae41e85dab076da051814857
-[06/31] arm64: dts: qcom: msm8953-*: Remove thermal zone polling delays
-        commit: 1a43ff5b5f5a51c2dd0859bc46020e7f1c282414
-[07/31] arm64: dts: qcom: msm8976-*: Remove thermal zone polling delays
-        commit: adfb64b78f2f0e894c2520b8e2ff8bd5f2d49825
-[08/31] arm64: dts: qcom: msm8996-*: Remove thermal zone polling delays
-        commit: 612f017315fb466bc9348fb9a5f1d9506f4b5260
-[09/31] arm64: dts: qcom: msm8998-*: Remove thermal zone polling delays
-        commit: 47d92455f59f7e8414ebc962f60bd7a990563a7c
-[10/31] arm64: dts: qcom: pm7550ba: Remove thermal zone polling delays
-        commit: d96854de5d69a08a893d4a137d69c65f2feb40d5
-[11/31] arm64: dts: qcom: pms405: Remove thermal zone polling delays
-        commit: 1a78b5da8164afc1d60bec7c02b8fd8e6451f0f3
-[12/31] arm64: dts: qcom: pmx75: Remove thermal zone polling delays
-        commit: 8e49df9200591c469dfbdd29c93ee6cbe970aa2a
-[13/31] arm64: dts: qcom: qcm2290-*: Remove thermal zone polling delays
-        commit: d3eb8179f21f86439053745bb1504791236d38bf
-[14/31] arm64: dts: qcom: qcs404-*: Remove thermal zone polling delays
-        commit: 8d7807d24746af11ba966bce854ef3cd8df5267e
-[15/31] arm64: dts: qcom: sa8775p-*: Remove thermal zone polling delays
-        commit: a759962163af22b7f50c8f43ed8b3fc5e09bec19
-[16/31] arm64: dts: qcom: sc7180-*: Remove thermal zone polling delays
-        commit: 7cd2d9080a6eb281701f7303b1699719640380d0
-[17/31] arm64: dts: qcom: sc7280-*: Remove thermal zone polling delays
-        commit: 7747a49db7e54978151d74b22907a373c9b4de1b
-[18/31] arm64: dts: qcom: sc8180x-*: Remove thermal zone polling delays
-        commit: 1f57b1cff485c02678ea2dfe0ff7efa3b9f51e9d
-[19/31] arm64: dts: qcom: sc8280xp-*: Remove thermal zone polling delays
-        commit: e388421387e8b1b51c507883aaf13f40277fe137
-[20/31] arm64: dts: qcom: sdm660-*: Remove thermal zone polling delays
-        commit: 82162bf535a76f87e20a6eece83375d2dd791655
-[21/31] arm64: dts: qcom: sdm845-*: Remove thermal zone polling delays
-        commit: 2e58dbeae40e5fc7b2742bed05957cae32031387
-[22/31] arm64: dts: qcom: sm6115-*: Remove thermal zone polling delays
-        commit: 190f743561a44cf0176707b6e2f37b1a1b7ff367
-[23/31] arm64: dts: qcom: sm6125-*: Remove thermal zone polling delays
-        commit: d1a12560ef38021ce42ac31408fc53d2b8e08cc8
-[24/31] arm64: dts: qcom: sm6350-*: Remove thermal zone polling delays
-        commit: 2aad3fd3820d047fa70b62906565c185d830465c
-[25/31] arm64: dts: qcom: sm6375-*: Remove thermal zone polling delays
-        commit: 088d826d5af3cda20deb04dce406c95ef1ed8563
-[26/31] arm64: dts: qcom: sm8150-*: Remove thermal zone polling delays
-        commit: fc2f92b522019a5bfd464c946b15d180c31b092b
-[27/31] arm64: dts: qcom: sm8250-*: Remove thermal zone polling delays
-        commit: 2d10e2e28df7a690d670b3452d4891b50011dc42
-[28/31] arm64: dts: qcom: sm8350-*: Remove thermal zone polling delays
-        commit: 07fab48327ad0d85c2b2763d26ce56c84043515a
-[29/31] arm64: dts: qcom: sm8450-*: Remove thermal zone polling delays
-        commit: d0730a729f1a723f06e7b9db7f1a540cf72de871
-[30/31] arm64: dts: qcom: sm8550-*: Remove thermal zone polling delays
-        commit: fe5cb7d30795d81ed55888bcfb896086af3adc01
-[31/31] arm64: dts: qcom: sm8650-*: Remove thermal zone polling delays
-        commit: 92332cca0551b7c5c44f4236b8d1ce2828888e92
+It is manadate to scale the performance state based up on the PCIe speed
+link operates so that SoC can run under optimum power conditions.
+
+Add Operating Performance Points(OPP) support to vote for RPMh state based
+upon GEN speed link is operating.
+
+Before link up PCIe driver will vote for the maximum performance state.
+
+As now we are adding ICC BW vote in OPP, the ICC BW voting depends both
+GEN speed and link width using opp-level to indicate the opp entry table
+will be difficult.
+
+In PCIe certain gen speeds like 2.5GT/s x2 & 5.0 GT/s X1 or 8.0 GT/s x2 &
+16GT/s x1 use same ICC bw if we use freq in the OPP table to represent the
+PCIe speed number of PCIe entries can reduced.
+
+So going back to use freq in the OPP table instead of level.
+
+To access PCIe registers of the host controller and endpoint PCIe
+BAR space, config space the CPU-PCIe ICC (interconnect) path should
+be voted otherwise it may lead to NoC (Network on chip) timeout.
+We are surviving because of other driver voting for this path.
+
+As there is less access on this path compared to PCIe to mem path
+add minimum vote i.e 1KBps bandwidth always which is sufficient enough
+to keep the path active and is recommended by HW team.
+
+In suspend to ram case there can be some DBI access. Except in suspend
+to ram case disable CPU-PCIe ICC path after register space access
+is done.
+
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+Changes from v13:
+	- Rebased the patch series on top of pci next.
+Changes from v12:
+	- removed icc bw of the memory path as suggested by mayank
+	- Added check for icc_set_bw in the suspend path as suggested by mani.
+	- Link to v12: https://lore.kernel.org/r/20240427-opp_support-v12-0-f6beb0a1f2fc@quicinc.com
+Changes from v11:
+	- added nicpicks suggested by mani.
+	- Link to v11: https://lore.kernel.org/r/20240423-opp_support-v11-0-15fdd40b0f95@quicinc.com
+Changes from v10:
+	- Updated comments and logs as suggested by mani.
+	- Link to v10: https://lore.kernel.org/r/20240409-opp_support-v10-0-1956e6be343f@quicinc.com
+Changes from v9:
+	- Disable interconnect CPU-PCIe path only system is not suspend to ram case.
+	- If opp find freq fails in the probe fail the probe as suggested by mani.
+	- Modify comments as suggested by mani
+	- Link to v9: https://lore.kernel.org/r/20240407-opp_support-v9-0-496184dc45d7@quicinc.com
+Changes from v8:
+	- Removed the ack-by and reviewed by on dt-bindings as dt-bindings moved to new files.
+	- Removed dt-binding patch for interconnects as it is added in the common file.
+	- Added tags for interconnect as suggested by konrad
+	- Added the comments as suggested by mani
+	- In ICC BW vote for CPU to PCIe path if icc_disable() fails log error and return instead of re-init.
+	- Link to v8: https://lore.kernel.org/linux-arm-msm/20240302-opp_support-v8-0-158285b86b10@quicinc.com/
+Changes from v7:
+	- Fix the compilation issue in patch3
+	- Change the commit text and wrap the comments to 80 columns as suggested by bjorn
+	- remove PCIE_MBS2FREQ macro as this is being used by only qcom drivers.
+	- Link to v7: https://lore.kernel.org/r/20240223-opp_support-v7-0-10b4363d7e71@quicinc.com
+Changes from v6:
+	- change CPU-PCIe bandwidth to 1KBps as suggested by HW team.
+	- Create a new API to get frequency based upon PCIe speed as suggested
+	  by mani.
+	- Updated few commit texts and comments.
+	- Setting opp to NULL in suspend to remove any votes.
+	- Link for v6: https://lore.kernel.org/linux-arm-msm/20240112-opp_support-v6-0-77bbf7d0cc37@quicinc.com/
+Changes from v5:
+	- Add ICC BW voting as part of OPP, rebase the latest kernel, and only
+	- either OPP or ICC BW voting will supported we removed the patch to
+	- return error for icc opp update patch.
+	- As we added the icc bw voting in opp table I am not including reviewed
+	- by tags given in previous patch.
+	- Use opp freq to find opp entries as now we need to include pcie link
+	- also in to considerations.
+	- Add CPU-PCIe BW voting which is not present till now.
+	- Drop  PCI: qcom: Return error from 'qcom_pcie_icc_update' as either opp or icc bw
+	- only one executes and there is no need to fail if opp or icc update fails.
+	- Link for v5: https://lore.kernel.org/linux-arm-msm/20231101063323.GH2897@thinkpad/T/
+Changes from v4:
+	- Added a separate patch for returning error from the qcom_pcie_upadate
+	  and moved opp update logic to icc_update and used a bool variable to
+	  update the opp.
+	- Addressed comments made by pavan.
+changes from v3:
+	- Removing the opp vote on suspend when the link is not up and link is not
+	  up and add debug prints as suggested by pavan.
+	- Added dev_pm_opp_find_level_floor API to find the highest opp to vote.
+changes from v2:
+	- Instead of using the freq based opp search use level based as suggested
+	  by Dmitry Baryshkov.
+Changes from v1:
+        - Addressed comments from Krzysztof Kozlowski.
+        - Added the rpmhpd_opp_xxx phandle as suggested by pavan.
+        - Added dev_pm_opp_set_opp API call which was missed on previous patch.
+---
+
+---
+Krishna chaitanya chundru (4):
+      PCI: qcom: Add ICC bandwidth vote for CPU to PCIe path
+      dt-bindings: pci: qcom: Add OPP table
+      PCI: Bring the PCIe speed to MBps logic to new pcie_link_speed_to_mbps()
+      PCI: qcom: Add OPP support to scale performance
+
+ .../devicetree/bindings/pci/qcom,pcie-sm8450.yaml  |   4 +
+ drivers/pci/controller/dwc/pcie-qcom.c             | 134 ++++++++++++++++++---
+ drivers/pci/pci.c                                  |  19 +--
+ drivers/pci/pci.h                                  |  22 ++++
+ 4 files changed, 141 insertions(+), 38 deletions(-)
+---
+base-commit: e150a8a6fb76fb4aa860abf320691dd4860049a3
+change-id: 20240609-opp_support-4ac61b30f3a2
 
 Best regards,
 -- 
-Bjorn Andersson <andersson@kernel.org>
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
+
 
