@@ -1,265 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-22208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B0C890279B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 19:18:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF4AD902810
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 19:54:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9EA731C210AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 17:18:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 42D56B20CAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 17:54:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACD6E145328;
-	Mon, 10 Jun 2024 17:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44CF6147C86;
+	Mon, 10 Jun 2024 17:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SVScgIcn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oq+g2w3r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D320A77F2F;
-	Mon, 10 Jun 2024 17:18:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F711422A2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 17:54:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718039916; cv=none; b=Lj07vTTtPCbw/ZEsv70TXCI1k1MPQmZ+lLWg5BMo3Zz1d2H+d7Y+XEKJvv0qvETr2nyNNfsGhxnmmt6F53VeaiT/pVhrzqP3GCo6v9JiGfHlQ4DogQA099r5i8U+YYEBJ7caIXRo9K64zbRFmhVoTS1IlKin2GonCMiSPcy8mB4=
+	t=1718042055; cv=none; b=V6aksh61Xa2HlyVhwEmhuf/djU+qHKFZZtqHSLA1qIrr8Gb6XKJNc+X7MXsdoymUG7TMWpBmYTBak+xVbMvvRcrHp10afxrzgLBYHOQlXm2m/LrlyX+iIAygceokPkOoCW124mlsLW2mQz3uDxF0lTtdtwCd/ZyygVlg1/mb/G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718039916; c=relaxed/simple;
-	bh=UwceiLbEMORfQXcexpdTd5fT57x7AMWYbgoQXlSdfRw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PwgsMwDE7OxNgFPW49o09K5nWmoNpfYw8qdh46R1qYQAZ/+z7fbVCEgimS0nF8rQmg8fauZE48Ds1xTaYZEEdrHUmfCMS/qQzcs3VaxrnWXxGf4G4pizzj8f/WEOx3Od/vjv4ZVcxHJ0G4uqeS8yDKTQyOkcy3ZnyLlNSgkLFGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SVScgIcn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45ADjnIq028814;
-	Mon, 10 Jun 2024 17:17:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	t7T3JlUwTNkc3EZcuno7yF04wb9s3O69gEWjoM1rTFI=; b=SVScgIcn9qNoQobk
-	H46zCfRnPsb9xNprQvNYowBTA1+aq7LwFKoAtMu4k6BwhdTlXJ/92NvM0NCpjhxB
-	gQlOulAPrNG6QWaUXEFnAotHVYKRCpd8jcroDql2u2dz7ysv9MkRHnFtM7Dqk12R
-	TVjZsaPwrDjjJ4A6dr84XFBara9COS741pN7y5/cUKKDIIKDtpjZrTkbR/n9IDYi
-	JvmlM12BN3z4pukaurLWxOiPvoAKFZHeW6Y2s71UBlvWv8m3Z1cDQI5iUlYv4oiW
-	JSy/D0VEk5M9Qbo7KKfzahhm/iChKML6xJOsGO/bdF56t3zHCjUZhwp+KiT3q8SZ
-	CXWNrg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymfh34ryq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Jun 2024 17:17:34 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45AHHWD9028433
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Jun 2024 17:17:32 GMT
-Received: from [10.110.107.105] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Jun
- 2024 10:17:32 -0700
-Message-ID: <ab551d96-c27e-40b7-9534-9e4b3c8a5a3c@quicinc.com>
-Date: Mon, 10 Jun 2024 10:17:31 -0700
+	s=arc-20240116; t=1718042055; c=relaxed/simple;
+	bh=DqlBReCntRkAfjMiyGre5joFM/nIKurevFFUxsbH+wY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fctgNkGdhIbzhELdsjzsUloHWEb8o9911Zm/DwnfyLFroWcA/ZDVXeHBTOWFBCXAfTwf2A+Eo7R5C3nmKpa9RxoIhl5gKZj/Jf5OxkZQkFLTgdRGtuWZ00iFbk8t3Eo8J3yzlBnMmRvKaPGYa2BeiZg1GfMhQJLBI+Ng3kCRCI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oq+g2w3r; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52bbdc237f0so285517e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 10:54:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718042051; x=1718646851; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WF40KLAkximrjsTW3ssqoGFaQBR69JrpW4FxsMvcSc4=;
+        b=oq+g2w3rvYjbcePI/dP/HsHVRcST7cXHa2jnA0oC9PT33a/Pd5OLUxJc5NUiH32wwp
+         VhdCD4NepjeYsR6HOJWdck3QCsKwf9ktW+XYMvd4YC6HIOc8ihNGHFuXVGe3VbPynAr9
+         oXUoYc9bSOwz1PedsZrMNP50Xgjtp4AWjT8MP9n5uCJ0RjPE3sIk2j0mWJRHTn39tutq
+         cSkN7XRJvic/OynE+KdV7tARAMOiu0q8P3vXPVcxpnr9PLPHE0oiKOgWDXCkVIT3gTkV
+         z7VXM0sJ5fQ4FYeWRoaQkFSuMk3dlF9E/PmFz6xNxROR5lH/fHTM/gzxBjjcKQIx588q
+         aE3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718042051; x=1718646851;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WF40KLAkximrjsTW3ssqoGFaQBR69JrpW4FxsMvcSc4=;
+        b=wgKI5KoSQ1vGCMzDt90Jw1UQH2xY2ijFAq6v7M4e6DdEjD5k1PeeHu+sc6S6dDBfQu
+         P6eqXDLpGFCxM713YtR8GOW/+ayAmFRRgDTDwv53BrATZCzSIcTRur+jpfxvdNbN23ba
+         TUWbMQ6MhLTibVsIdz+9iQqImWzeEegUfEfFC+rXED6BIh+OAFz5PiEQzxFbZ5sFQWdJ
+         lMNLT27XStduhSeDQ+fx/BNKhl7XjRsamVnkuMgxSVATUAuoBYSw3yRhLaObtxuaAYRN
+         ucNj3NtJ/gOxQP5l9pvdABWycv9tuV+aW06GIlE2ziVv6rOAPsqmZDp83k9ZvSk1F4uk
+         U9NQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVbaWqhH1WsXaNnnWCtXzfs6krIYhqjwzA8LJ+kLlIY7SpE7LreBcfkB7Qb7+PK7gTCCezVoH14/hhCQ732wvBnqhbgKNxtd17yHSHOMw==
+X-Gm-Message-State: AOJu0Yx+MHzfcA+9GYgqrVggt9I5rafl7tZeE+qsdRWgIemWx/KR1K45
+	Ut3Zc+bOdUJ1ULRZ4fYfGV7LHbrFdHAimYnihdKQ+5XLGVEoYpDOa3H8wm+Rhuw=
+X-Google-Smtp-Source: AGHT+IEmuXhTm5mdM3lvjSvOFZmrX8S9MxFYd5t2YIYtjO2PNmSKP1Vp9kngKdCZNYrU6DsbsjCmsA==
+X-Received: by 2002:ac2:490b:0:b0:52c:8079:b264 with SMTP id 2adb3069b0e04-52c8079b896mr4288403e87.9.1718042051388;
+        Mon, 10 Jun 2024 10:54:11 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52c8f4f52c1sm431573e87.266.2024.06.10.10.54.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Jun 2024 10:54:10 -0700 (PDT)
+Date: Mon, 10 Jun 2024 20:54:09 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Hans de Goede <hdegoede@redhat.com>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/9] drm/bridge-connector: switch to using drmm
+ allocations
+Message-ID: <t5pav3up5r6ezs4q37lc7jqlv55ftta7fnntp75b4pjboycwsm@uvs7q6frrzf5>
+References: <20240607-bridge-hdmi-connector-v5-0-ab384e6021af@linaro.org>
+ <20240607-bridge-hdmi-connector-v5-2-ab384e6021af@linaro.org>
+ <20240610-secret-rottweiler-from-asgard-132f75@houat>
+ <CAA8EJpogi2qm0bhCwumY4zj-xMUkF4zbK-NAPqCeDbLcybFciw@mail.gmail.com>
+ <20240610-smooth-liberal-guan-59853e@houat>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/2] PCI: Add Qualcomm PCIe ECAM root complex driver
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: Rob Herring <robh@kernel.org>, <linux-pci@vger.kernel.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>, <bhelgaas@google.com>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_ramkri@quicinc.com>,
-        <quic_nkela@quicinc.com>, <quic_shazhuss@quicinc.com>,
-        <quic_msarkar@quicinc.com>, <quic_nitegupt@quicinc.com>
-References: <1712257884-23841-1-git-send-email-quic_mrana@quicinc.com>
- <1712257884-23841-3-git-send-email-quic_mrana@quicinc.com>
- <20240405052918.GA2953@thinkpad>
- <e2ff3031-bd71-4df7-a3a4-cec9c2339eaa@quicinc.com>
- <20240406041717.GD2678@thinkpad>
- <0b738556-0042-43ab-80f2-d78ed3b432f7@quicinc.com>
- <20240410165829.GA418382-robh@kernel.org>
- <c623951e-1b47-4e0b-bfa4-338672a5eeb9@quicinc.com>
- <ee4c0b2b-7a3b-43d1-90b6-369be2194a65@quicinc.com>
- <20240606023952.GA3481@thinkpad>
-Content-Language: en-US
-From: Mayank Rana <quic_mrana@quicinc.com>
-In-Reply-To: <20240606023952.GA3481@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rPvp9Oyh8BtisQ-O8QS_kKyRll2eQXw5
-X-Proofpoint-GUID: rPvp9Oyh8BtisQ-O8QS_kKyRll2eQXw5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-10_04,2024-06-10_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- suspectscore=0 clxscore=1015 bulkscore=0 phishscore=0 adultscore=0
- mlxscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406100129
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240610-smooth-liberal-guan-59853e@houat>
 
-
-On 6/5/2024 7:39 PM, Manivannan Sadhasivam wrote:
-> On Fri, May 31, 2024 at 03:47:24PM -0700, Mayank Rana wrote:
->> Hi Rob / Mani
->>
->> On 4/15/2024 4:30 PM, Mayank Rana wrote:
->>> Hi Rob
->>>
->>> Excuse me for late response on this (was OOO).
->>> On 4/10/2024 9:58 AM, Rob Herring wrote:
->>>> On Mon, Apr 08, 2024 at 11:57:58AM -0700, Mayank Rana wrote:
->>>>> Hi Mani
->>>>>
->>>>> On 4/5/2024 9:17 PM, Manivannan Sadhasivam wrote:
->>>>>> On Fri, Apr 05, 2024 at 10:41:15AM -0700, Mayank Rana wrote:
->>>>>>> Hi Mani
->>>>>>>
->>>>>>> On 4/4/2024 10:30 PM, Manivannan Sadhasivam wrote:
->>>>>>>> On Thu, Apr 04, 2024 at 12:11:24PM -0700, Mayank Rana wrote:
->>>>>>>>> On some of Qualcomm platform, firmware
->>>>>>>>> configures PCIe controller into
->>>>>>>>> ECAM mode allowing static memory allocation for
->>>>>>>>> configuration space of
->>>>>>>>> supported bus range. Firmware also takes care of
->>>>>>>>> bringing up PCIe PHY
->>>>>>>>> and performing required operation to bring PCIe
->>>>>>>>> link into D0. Firmware
->>>>>>>>> also manages system resources (e.g.
->>>>>>>>> clocks/regulators/resets/ bus voting).
->>>>>>>>> Hence add Qualcomm PCIe ECAM root complex driver
->>>>>>>>> which enumerates PCIe
->>>>>>>>> root complex and connected PCIe devices.
->>>>>>>>> Firmware won't be enumerating
->>>>>>>>> or powering up PCIe root complex until this
->>>>>>>>> driver invokes power domain
->>>>>>>>> based notification to bring PCIe link into D0/D3cold mode.
->>>>>>>>>
->>>>>>>>
->>>>>>>> Is this an in-house PCIe IP of Qualcomm or the same
->>>>>>>> DWC IP that is used in other
->>>>>>>> SoCs?
->>>>>>>>
->>>>>>>> - Mani
->>>>>>> Driver is validated on SA8775p-ride platform using PCIe DWC IP for
->>>>>>> now.Although this driver doesn't need to know used PCIe
->>>>>>> controller and PHY
->>>>>>> IP as well programming sequence as that would be taken
->>>>>>> care by firmware.
->>>>>>>
->>>>>>
->>>>>> Ok, so it is the same IP but firmware is controlling the
->>>>>> resources now. This
->>>>>> information should be present in the commit message.
->>>>>>
->>>>>> Btw, there is an existing generic ECAM host controller driver:
->>>>>> drivers/pci/controller/pci-host-generic.c
->>>>>>
->>>>>> This driver is already being used by several vendors as
->>>>>> well. So we should try
->>>>>> to extend it for Qcom usecase also.
->>>>
->>>> I would take it a bit further and say if you need your own driver, then
->>>> just use the default QCom driver. Perhaps extend it to support ECAM.
->>>> Better yet, copy your firmware setup and always configure the QCom h/w
->>>> to use ECAM.
->>> Good suggestion. Although here we are having 2 set of requirements:
->>> 1. ECAM configuration
->>> 2. Managing PCIe controller and PHY resources and programming from
->>> firmware as well
->>> Hence it is not feasible to use default QCOM driver.
->>>> If you want to extend the generic driver, that's fine, but we don't need
->>>> a 3rd.
->>> I did consider this part before coming up with new driver. Although I
->>> felt that
->>> below mentioned functionality may not look more generic to be part of
->>> pci-host-generic.c driver.
->>>>> I did review pci-host-generic.c driver for usage. although there
->>>>> are more
->>>>> functionalityneeded for use case purpose as below:
->>>>> 1. MSI functionality
->>>>
->>>> Pretty sure the generic driver already supports that.
->>> I don't find any MSI support with pci-host-generic.c driver.
->>>>> 2. Suspend/Resume
->>>>
->>>> Others might want that to work as well.
->>> Others firmware won't have way to handle D3cold and D0 functionality
->>> handling as
->>> needed here for supporting suspend/resume as I don't find any interface
->>> for pci-host-generic.c driver to notify firmware. here we are having way
->>> to talk to firmware using GenPD based power domain usage to communicate
->>> with firmware.
->>>
->>>>> 3. Wakeup Functionality (not part of current change, but would be added
->>>>> later)
->>>>
->>>> Others might want that to work as well.
->>> possible if suspend/resume support is available or used.
->>>>> 4. Here this driver provides way to virtualized PCIe controller.
->>>>> So VMs only
->>>>> talk to a generic ECAM whereas HW is only directed accessed by
->>>>> service VM.
->>>>
->>>> That's the existing driver. If if doesn't work for a VM, fix the VM.
->>> Correct.
->>>>> 5. Adding more Auto based safety use cases related implementation
->>>>
->>>> Now that's just hand waving.
->>> Here I am trying to provide new set of changes plan to be added as part
->>> of required functionality.
->>>
->>>>> Hence keeping pci-host-generic.c as generic driver where above
->>>>> functionality
->>>>> may not be needed.
->>>>
->>>> Duplicating things to avoid touching existing drivers is not how kernel
->>>> development works.
->>> I shall try your suggestion and see how it looks in terms of code
->>> changes. Perhaps then we can have more clarity in terms of adding more
->>> functionality into generic or having separate driver.
->> I just learnt that previously dwc related PCIe ECAM driver and MSI
->> controller driver tried out as:
->>
->> https://lore.kernel.org/linux-pci/20170821192907.8695-1-ard.biesheuvel@linaro.org/
->>
->> Although there were few concerns at that time. Due to that having dwc
->> specific MSI functionality based driver was dropped, and pci-host-generic.c
->> driver is being updated using with dwc/snps specific ECAM operation.
->>
->> In current discussion, it seems that we are discussing to have identical
->> approach here.
->>
->> Atleast on Qualcomm SA8775p platform, I don't have any other way to support
->> MSI functionality i.e. extended SPI or ITS/LPI based MSI or using GICv2m
->> functionality are not supported.
->>
->> I don't see any other approach other than MSI based implementation within
->> pci-host-generic.c driver for dwc/snps based MSI controller.
->>
->> Do you have any suggestion on this ?
->>
+On Mon, Jun 10, 2024 at 02:07:06PM +0200, Maxime Ripard wrote:
+> Hi,
 > 
-> Since this ECAM driver is going to be used in newer Qcom SoCs, why can't you use
-> GICv3 for MSI handling?
-Yes, that is plan further as look like we have limitation on just SA8775.
-So I see two options here:
-1. Update pcie-host-generic.c without MSI based functionality, and leave 
-with MSI functionality differently on SA8775
-2. Also possible to make pcie-host-designware.c based MSI functionality 
-as separate driver, and try to use with pcie-host-generic.c driver. That 
-way we would still use existing MSI related code base, and able to use 
-with ECAM driver.
+> +Hans
+> 
+> On Mon, Jun 10, 2024 at 02:46:03PM GMT, Dmitry Baryshkov wrote:
+> > On Mon, 10 Jun 2024 at 11:04, Maxime Ripard <mripard@kernel.org> wrote:
+> > >
+> > > Hi,
+> > >
+> > > On Fri, Jun 07, 2024 at 04:22:59PM GMT, Dmitry Baryshkov wrote:
+> > > > Turn drm_bridge_connector to using drmm_kzalloc() and
+> > > > drmm_connector_init() and drop the custom destroy function. The
+> > > > drm_connector_unregister() and fwnode_handle_put() are already handled
+> > > > by the drm_connector_cleanup() and so are safe to be dropped.
+> > > >
+> > > > Acked-by: Maxime Ripard <mripard@kernel.org>
+> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > ---
+> > > >  drivers/gpu/drm/drm_bridge_connector.c | 23 +++++------------------
+> > > >  1 file changed, 5 insertions(+), 18 deletions(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/drm_bridge_connector.c b/drivers/gpu/drm/drm_bridge_connector.c
+> > > > index 982552c9f92c..e093fc8928dc 100644
+> > > > --- a/drivers/gpu/drm/drm_bridge_connector.c
+> > > > +++ b/drivers/gpu/drm/drm_bridge_connector.c
+> > > > @@ -15,6 +15,7 @@
+> > > >  #include <drm/drm_connector.h>
+> > > >  #include <drm/drm_device.h>
+> > > >  #include <drm/drm_edid.h>
+> > > > +#include <drm/drm_managed.h>
+> > > >  #include <drm/drm_modeset_helper_vtables.h>
+> > > >  #include <drm/drm_probe_helper.h>
+> > > >
+> > > > @@ -193,19 +194,6 @@ drm_bridge_connector_detect(struct drm_connector *connector, bool force)
+> > > >       return status;
+> > > >  }
+> > > >
+> > > > -static void drm_bridge_connector_destroy(struct drm_connector *connector)
+> > > > -{
+> > > > -     struct drm_bridge_connector *bridge_connector =
+> > > > -             to_drm_bridge_connector(connector);
+> > > > -
+> > > > -     drm_connector_unregister(connector);
+> > > > -     drm_connector_cleanup(connector);
+> > > > -
+> > > > -     fwnode_handle_put(connector->fwnode);
+> > > > -
+> > > > -     kfree(bridge_connector);
+> > > > -}
+> > > > -
+> > > >  static void drm_bridge_connector_debugfs_init(struct drm_connector *connector,
+> > > >                                             struct dentry *root)
+> > > >  {
+> > > > @@ -224,7 +212,6 @@ static const struct drm_connector_funcs drm_bridge_connector_funcs = {
+> > > >       .reset = drm_atomic_helper_connector_reset,
+> > > >       .detect = drm_bridge_connector_detect,
+> > > >       .fill_modes = drm_helper_probe_single_connector_modes,
+> > > > -     .destroy = drm_bridge_connector_destroy,
+> > > >       .atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
+> > > >       .atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+> > > >       .debugfs_init = drm_bridge_connector_debugfs_init,
+> > > > @@ -328,7 +315,7 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
+> > > >       int connector_type;
+> > > >       int ret;
+> > > >
+> > > > -     bridge_connector = kzalloc(sizeof(*bridge_connector), GFP_KERNEL);
+> > > > +     bridge_connector = drmm_kzalloc(drm, sizeof(*bridge_connector), GFP_KERNEL);
+> > >
+> > > So you make destroy's kfree call unnecessary here ...
+> > >
+> > > >       if (!bridge_connector)
+> > > >               return ERR_PTR(-ENOMEM);
+> > > >
+> > > > @@ -383,9 +370,9 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
+> > > >               return ERR_PTR(-EINVAL);
+> > > >       }
+> > > >
+> > > > -     ret = drm_connector_init_with_ddc(drm, connector,
+> > > > -                                       &drm_bridge_connector_funcs,
+> > > > -                                       connector_type, ddc);
+> > > > +     ret = drmm_connector_init(drm, connector,
+> > > > +                               &drm_bridge_connector_funcs,
+> > > > +                               connector_type, ddc);
+> > >
+> > > ... and here of drm_connector_cleanup.
+> > >
+> > > drm_connector_unregister wasn't needed, so can ignore it, but you leak a reference to
+> > > connector->fwnode since you don't call fwnode_handle_put anymore.
+> > >
+> > > We should register a drmm action right below the call to fwnode_handle_get too.
+> > 
+> > But drm_connector_cleanup() already contains
+> > fwnode_handle_put(connector->fwnode). Isn't that enough?
+> 
+> It does, but now I'm confused.
+> 
+> drm_bridge_connector_init takes a reference, drm_connector_init doesn't.
+> It will call drm_bridge_connector_destroy() that gives back its
+> reference (which makes sense to me), but then why do
+> drm_connector_cleanup() does? None of the drm_connector code even took
+> that reference, and we end up with a double-put.
+> 
+> It looks like it was introduced by commit 48c429c6d18d ("drm/connector:
+> Add a fwnode pointer to drm_connector and register with ACPI (v2)") from
+> Hans, which does call put, but never gets that reference.
 
-Do you see using above option 2 as good way to allow SNPS/DWC based MSI 
-controller functionality with ECAM and Non-ECAM driver ?
+The mentioned patch documents that pretty clearly:
 
-Regards,
-Mayank
+* Drivers can set this to associate a fwnode with a connector, drivers
+* are expected to get a reference on the fwnode when setting this.
+* drm_connector_cleanup() will call fwnode_handle_put() on this.
+
+This is logical. Whoever sets the drm_connector::fwnode pointer, should
+get reference. This way drm_connector_init() doesn't need to play with
+the reference counting. The cleanup code drops the reference (so the
+driver doesn't need to), because cleanup might be assynchronous..
+
+The drm_bridge_connector follows this approach: it sets
+drm_connector->fwnode, so it gets the reference. It uses
+drm_connector_cleanup(), so it doesn't need to put it.
+
+> 
+> It has nothing to do with this series anymore, but that's super fishy to
+> me, and the source of bugs as we can see here.
+
+-- 
+With best wishes
+Dmitry
 
