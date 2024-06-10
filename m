@@ -1,230 +1,439 @@
-Return-Path: <linux-arm-msm+bounces-22217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88B8F9029D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 22:16:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A0D99029E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 22:20:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18EBB2810FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 20:16:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5776B20F1D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 20:20:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC1753E47E;
-	Mon, 10 Jun 2024 20:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF6C73E47E;
+	Mon, 10 Jun 2024 20:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXcrQilT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mi4usKBI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2AA3BB30;
-	Mon, 10 Jun 2024 20:16:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDCD18C36
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 20:20:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718050601; cv=none; b=kZaScyQuMsd7cHEfc7eMIzIC2BS9GBzwDVyCDXVmUfoDnRt/GkLsS+GhU/0dQaN0VVWiPOQ98j3cgDZFnZr/pe2iTcxf5R4QwNBWBQUq+Fk0cy5fXP+k5hl/WKUrPju0R6gfUKX5GJhHF+oNZQDi3wljTdpRzVg6fPS4Ek49Avk=
+	t=1718050822; cv=none; b=aEIrjI8Mqzkxhy28UwbIpOHqhToLHNL4nbjo7yfEN7Rr55lNu4AhS2l28lagg+9hJDceVEpbMmiuoTTMak5er77KxlYQ5Cph1cY7g5/35PhpGVJrssIHBuDzb+tfEEIjZx3f8uAoV09v3m/M3e8LlcNJ2XqhiFeXtiby4l3I16w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718050601; c=relaxed/simple;
-	bh=//W7kqXFonvLeGOTPZRMLoM6eBxITBOMJLknJtGDK0w=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CQsFhtimlbXLbYEsFv0mWIAUr/8fvkFBdrbtyy3zXc6ht5ZbXC2GcK4vt+uY0K8OpwMNQO85joUMTfIn2hpcWjHj4Y0K5IUvl603U/wdTOGys0yOd5R23UN621WMcGfewyQ0Muv9y0BxA/F2hKBx1uhWtBSliFyT0rCYEENWT0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXcrQilT; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57a52dfd081so315263a12.2;
-        Mon, 10 Jun 2024 13:16:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718050598; x=1718655398; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6pl8T6m4emk3aMt9ImW1yQY4NMWNiVqYmr9bldDIC9w=;
-        b=MXcrQilThMC3TUQlan3B+hdqGB9H8g46rqMOin49aN/cvSWanvwuTtwjV13ELFo8Ys
-         O5ctzAsuv9tzzYUednMoibWftEN0qMs62J2HriS5Yrlc8QjHLRS10NsSNKf0daizwp0a
-         iNs4zlH6YiTbdWD/xH3LA9x1cY4PakMv3IIwcK6UKCgN0CrMU2/aJMjtRhyjHBDbxue8
-         aNzV5Nv+vvgUWOPStaa+ldTnbm87nx69JXdaHx+2oT5RGlniroM9aY6+PPiw9OilJU9F
-         opNskyojmcIWn2tfJqpKtUNjjiqOCTTviLtn1OoCXPXRyZbExP+hYUj5PnoVhE3EGVQv
-         Wzug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718050598; x=1718655398;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6pl8T6m4emk3aMt9ImW1yQY4NMWNiVqYmr9bldDIC9w=;
-        b=aeBi8rducKmJ2MlKb/uMgZwzGWUzvQFrNWhAebkgA8oHMek7HSOwUCbGcyLWJg2PFn
-         wYkj8FFrBlclJsxo0T2uN+vzii6iYW4wpzZ5m9/crMs14PrTTHMoE++c3stgZykDKOyL
-         OL7uh6FYH7d5mWuRVwnMtS+hx+cn74EFCKpW3P+9PMqVAELN2ma/2LT6xBQyWjLoeLrE
-         P8X1cPo9ccY03ANe+nl7fU3qB3OARV0bb6NhHqYsm01HJrrI5ix6mWO4Y97WdnU0VQL8
-         5CQ0itkjMVo2DVpD5vZuXxtjlqsr2LgZOcSYnNJPsyxD7K9XP6kuEOLxdABMbH9Dbu8G
-         hzuw==
-X-Forwarded-Encrypted: i=1; AJvYcCWxLuWsW/imoUpe/4MtVM0+0oOxJD6VptrOTkJZ8AngKTtzOM26MzonrMJ/v/EeA0Qy3xSUVTQ4WG4RbH3VnRSxdI68Izxpj7MksYBMThNd1dDNuUwrZJxfy1ITot4uQeyAurimxVybzzvwgw==
-X-Gm-Message-State: AOJu0YzPkKBr5CZNud7HaXw9ASDFuDblzMlQWac69u7vLctpoKoSSGXz
-	aWdSv8kBOaRoPdAVaDPR31VDpPtQNjU0Wh5FAjp7cnXOOeHKSF7U
-X-Google-Smtp-Source: AGHT+IETB9mWF1zLj7DTLQxbvtAnMS46L7eWHIrPUE06xGFBHdTgXwhD+GJm3BDLZNBCIpQ3qOZ1CQ==
-X-Received: by 2002:a17:906:1503:b0:a6f:118c:2622 with SMTP id a640c23a62f3a-a6f118c26aamr371908066b.63.1718050597938;
-        Mon, 10 Jun 2024 13:16:37 -0700 (PDT)
-Received: from ?IPV6:2a02:a466:68ed:1:2173:d612:de41:2058? ([2a02:a466:68ed:1:2173:d612:de41:2058])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f1b7f5b12sm217710466b.196.2024.06.10.13.16.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jun 2024 13:16:37 -0700 (PDT)
-Message-ID: <364fbb96-006f-4582-a0f8-a0f9edd50f6f@gmail.com>
-Date: Mon, 10 Jun 2024 22:16:28 +0200
+	s=arc-20240116; t=1718050822; c=relaxed/simple;
+	bh=w3zAIxZOPpuLd2CJnH/HqbQMH8L4t1/EYTxHB6IKJXo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NH7fS38pNCqGjmt3Kyx73DQ0bhJmuQtR99Ibg9vIOKZ50py/enf+PvHVCMBPeOWuq0hviYFvmN8YDgi8MNKor5Y8cmfbCRK7t/4Jm2RdOaf1mUquUH5tZdGDWYalZ1qC6fTzYymW7TpyczQMT/eUmjwStKYrlCk9LByKhDp6HWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mi4usKBI; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45AEKxrG001296;
+	Mon, 10 Jun 2024 20:19:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	u9Nj6YH64EdfLNAULralaBJwSjACSwIdbfB9+j72f78=; b=Mi4usKBIDbHPUkqO
+	sdB2tvJXYslpO9784gKuW3A9SXt04Povko/rhgQouA+7/bUj+GhmKzgvhZBlIqkX
+	z7jcElptoRpN/z+0p0+UZgd9lFspJX1+3j2QICLVwMqhO85QzMmZQBfW/iciKUb6
+	Ae9/iY69LFdOBlh51GG/Jv8D8Thbj47MmZxo3piaw3FbQrB89qNteLZ28ll0L9bV
+	/YvO5lyA1Xa71c2jLE6LwERimV4hEmfuPibbIBfgdHkX5sVYCueMSG8SGd5XU8xC
+	wza+e9cLAM9hsJz2XZ+AkLtbpBWGJEmIL+zpiCQrhsctEbNXH3XSsOBPwufIdqzU
+	PU/T+g==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymemgmkxs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Jun 2024 20:19:56 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45AKJObU013456
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 10 Jun 2024 20:19:24 GMT
+Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Jun
+ 2024 13:19:19 -0700
+Message-ID: <1dff0318-921e-ea43-4eba-8c4e2b283afb@quicinc.com>
+Date: Mon, 10 Jun 2024 13:19:16 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/15] tty: serial: switch from circ_buf to kfifo
-From: Ferry Toth <fntoth@gmail.com>
-To: Jiri Slaby <jirislaby@kernel.org>, neil.armstrong@linaro.org,
- gregkh@linuxfoundation.org
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
- Al Cooper <alcooperx@gmail.com>, Alexander Shiyan <shc_work@mail.ru>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Alim Akhtar <alim.akhtar@samsung.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>, Baruch Siach
- <baruch@tkos.co.il>, Bjorn Andersson <andersson@kernel.org>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- "David S. Miller" <davem@davemloft.net>, Fabio Estevam <festevam@gmail.com>,
- Hammer Hsieh <hammerh0314@gmail.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Chunyan Zhang <zhang.lyra@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Jonathan Hunter <jonathanh@nvidia.com>, Kevin Hilman <khilman@baylibre.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
- Laxman Dewangan <ldewangan@nvidia.com>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <michal.simek@amd.com>,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Nicholas Piggin <npiggin@gmail.com>, Orson Zhai <orsonzhai@gmail.com>,
- =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- Peter Korsgaard <jacmet@sunsite.dk>,
- Richard Genoud <richard.genoud@gmail.com>,
- Russell King <linux@armlinux.org.uk>, Sascha Hauer <s.hauer@pengutronix.de>,
- Shawn Guo <shawnguo@kernel.org>, Stefani Seibold <stefani@seibold.net>,
- Sumit Semwal <sumit.semwal@linaro.org>,
- Taichi Sugaya <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>,
- Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
- Thierry Reding <thierry.reding@gmail.com>, Timur Tabi <timur@kernel.org>,
- Vineet Gupta <vgupta@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>
-References: <20240405060826.2521-1-jirislaby@kernel.org>
- <daf06969-15fd-470e-88b8-a717066fe312@linaro.org>
- <cebad7f8-3f47-4e6a-93b7-32fcf2367874@kernel.org>
- <f42ef4a3-4bfe-4354-9220-ed742e093c86@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 09/13] drm/msm/dpu: allow using two SSPP blocks for a
+ single plane
 Content-Language: en-US
-In-Reply-To: <f42ef4a3-4bfe-4354-9220-ed742e093c86@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-10-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240314000216.392549-10-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yStIEB6Nh6eVPgqwA7uEyCJwY5crWBkQ
+X-Proofpoint-ORIG-GUID: yStIEB6Nh6eVPgqwA7uEyCJwY5crWBkQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-10_06,2024-06-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ suspectscore=0 adultscore=0 impostorscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 malwarescore=0 mlxscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406100152
 
-Hi
 
-Op 07-06-2024 om 22:32 schreef Ferry Toth:
-> Hi,
-> 
-> Op 22-04-2024 om 07:51 schreef Jiri Slaby:
->> Hi,
->>
->> On 19. 04. 24, 17:12, Neil Armstrong wrote:
->>> On 05/04/2024 08:08, Jiri Slaby (SUSE) wrote:
->>>> This series switches tty serial layer to use kfifo instead of circ_buf.
->>>>
->>>> The reasoning can be found in the switching patch in this series:
->>>> """
->>>> Switch from struct circ_buf to proper kfifo. kfifo provides much better
->>>> API, esp. when wrap-around of the buffer needs to be taken into 
->>>> account.
->>>> Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for 
->>>> example.
->>>>
->>>> Kfifo API can also fill in scatter-gather DMA structures, so it easier
->>>> for that use case too. Look at lpuart_dma_tx() for example. Note that
->>>> not all drivers can be converted to that (like atmel_serial), they
->>>> handle DMA specially.
->>>>
->>>> Note that usb-serial uses kfifo for TX for ages.
->>>> """
->> ...
->>> This patchset has at least broken all Amlogic and Qualcomm boards so 
->>> far, only part of them were fixed in next-
->>
->> So are there still not fixed problems yet?
->>
->>> but this serie has been merged in v1
->>
->> Ugh, are you saying that v1 patches are not worth taking? That doesn't 
->> fit with my experience.
->>
->>> with no serious testing
->>
->> Sadly, everyone had a chance to test the series:
->>    
->> https://lore.kernel.org/all/20240319095315.27624-1-jirislaby@kernel.org/
->> for more than two weeks before I sent this version for inclusion. And 
->> then it took another 5 days till this series appeared in -next. But 
->> noone with this HW apparently cared enough back then. I'd wish they 
->> (you) didn't. Maybe next time, people will listen more carefully:
->> ===
->> This is Request for Testing as I cannot test all the changes
->> (obviously). So please test your HW's serial properly.
->> ===
->>
->>> and should've been dropped immediately when the first regressions 
->>> were reported.
->>
->> Provided the RFT was mostly ignored (anyone who tested that here, or I 
->> only wasted my time?), how exactly would dropping help me finding 
->> potential issues in the series? In the end, noone is running -next in 
->> production, so glitches are sort of expected, right? And I believe I 
->> smashed them quickly enough (despite I was sidetracked to handle the 
->> n_gsm issue). But I might be wrong, as usual.
-> 
-> I arrived at this party a bit late, sorry about that. No good excuses.
-> 
->> So no, dropping is not helping moving forward, actions taken by e.g. 
->> Marek Szyprowski <m.szyprowski@samsung.com> do, IMNSHO.
-> 
-> Good news is I tested on Merrifield (Intel Edison) which is slow 
-> (500MHz) and has a HSU that can transmit up to 3.5Mb/s. It really 
-> normally needs DMA and just a single interrupt at the end of transmit 
-> and receive for which I my own patches locally. The bounce buffer I was 
-> using on transmit broke due to this patch, so I dropped that. Still, 
-> with the extra interrupts caused by the circ buffer wrapping around it 
-> seems to work well. Too late to add my Tested-by.
-> 
-> One question though: in 8250_dma.c serial8250_tx_dma() you mention "/* 
-> kfifo can do more than one sg, we don't (quite yet) */".
-> 
-> I see the opportunity to use 2 sg entries to get all the data out in one 
-> dma transfer, but there doesn't seem to be much documentation or 
-> examples on how to do that. It seems just increasing nents to 2 would do 
-> the trick?
 
-Nevertheless I got this to work. Very nice. Thanks for this series.
-I am seeing only 2 interrupts (x2 as each interrupt happens twice), one 
-for dma complete. The 2nd, not sure but likely, uart tx done.
-In any case the whole buffer is transferred without interchar gaps.
-
-> So, what was the reason to "don't (quite yet)"?
-
-Before considering to send out a patch for this, are there any caveats 
-that I'm overlooking?
-
->> thanks,
+On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+> Virtual wide planes give high amount of flexibility, but it is not
+> always enough:
 > 
+> In parallel multirect case only the half of the usual width is supported
+> for tiled formats. Thus the whole width of two tiled multirect
+> rectangles can not be greater than max_linewidth, which is not enough
+> for some platforms/compositors.
+> 
+> Another example is as simple as wide YUV plane. YUV planes can not use
+> multirect, so currently they are limited to max_linewidth too.
+> 
+> Now that the planes are fully virtualized, add support for allocating
+> two SSPP blocks to drive a single DRM plane. This fixes both mentioned
+> cases and allows all planes to go up to 2*max_linewidth (at the cost of
+> making some of the planes unavailable to the user).
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 172 ++++++++++++++++------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   8 +
+>   2 files changed, 131 insertions(+), 49 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 2961b809ccf3..cde20c1fa90d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -886,6 +886,28 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>   	return 0;
+>   }
+>   
+> +static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+> +						   struct dpu_sw_pipe_cfg *pipe_cfg,
+> +						   const struct dpu_format *fmt,
+> +						   uint32_t max_linewidth)
+> +{
+> +	if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+> +	    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect))
+> +		return false;
+> +
+> +	if (pipe_cfg->rotation & DRM_MODE_ROTATE_90)
+> +		return false;
+> +
+> +	if (DPU_FORMAT_IS_YUV(fmt))
+> +		return false;
+> +
+> +	if (DPU_FORMAT_IS_UBWC(fmt) &&
+> +	    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth / 2)
+> +		return false;
+> +
+> +	return true;
+> +}
+> +
+
+This is a good idea to separate out multirect checks to a separate API. 
+I think can push this part of the change even today.
+
+>   static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>   					struct drm_atomic_state *state,
+>   					const struct drm_crtc_state *crtc_state)
+> @@ -899,7 +921,6 @@ static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>   	const struct dpu_format *fmt;
+>   	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>   	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> -	uint32_t max_linewidth;
+>   	uint32_t supported_rotations;
+>   	const struct dpu_sspp_cfg *pipe_hw_caps;
+>   	const struct dpu_sspp_sub_blks *sblk;
+> @@ -919,15 +940,8 @@ static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>   	      drm_rect_height(&new_plane_state->dst))))
+>   		return -ERANGE;
+>   
+> -	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> -	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> -
+>   	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+>   
+> -	max_linewidth = pdpu->catalog->caps->max_linewidth;
+> -
+>   	supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0;
+>   
+>   	if (pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION))
+> @@ -943,41 +957,6 @@ static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>   		return ret;
+>   
+>   	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
+> -		/*
+> -		 * In parallel multirect case only the half of the usual width
+> -		 * is supported for tiled formats. If we are here, we know that
+> -		 * full width is more than max_linewidth, thus each rect is
+> -		 * wider than allowed.
+> -		 */
+> -		if (DPU_FORMAT_IS_UBWC(fmt) &&
+> -		    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, tiled format\n",
+> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> -			return -E2BIG;
+> -		}
+> -
+> -		if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+> -		    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
+> -		    (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
+> -		     !test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features)) ||
+> -		    pipe_cfg->rotation & DRM_MODE_ROTATE_90 ||
+> -		    DPU_FORMAT_IS_YUV(fmt)) {
+> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, can't use split source\n",
+> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> -			return -E2BIG;
+> -		}
+> -
+> -		/*
+> -		 * Use multirect for wide plane. We do not support dynamic
+> -		 * assignment of SSPPs, so we know the configuration.
+> -		 */
+> -		pipe->multirect_index = DPU_SSPP_RECT_0;
+> -		pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> -
+> -		r_pipe->sspp = pipe->sspp;
+> -		r_pipe->multirect_index = DPU_SSPP_RECT_1;
+> -		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> -
+>   		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
+>   						  &crtc_state->adjusted_mode);
+>   		if (ret)
+> @@ -998,16 +977,16 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>   	struct dpu_sw_pipe *pipe = &pstate->pipe;
+>   	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> +	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+> +	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+>   	const struct drm_crtc_state *crtc_state = NULL;
+>   
+>   	if (new_plane_state->crtc)
+>   		crtc_state = drm_atomic_get_new_crtc_state(state,
+>   							   new_plane_state->crtc);
+>   
+> -	if (pdpu->pipe != SSPP_NONE) {
+> -		pipe->sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
+> -		r_pipe->sspp = NULL;
+> -	}
+> +	pipe->sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
+> +	r_pipe->sspp = NULL;
+>   
+>   	if (!pipe->sspp)
+>   		return -EINVAL;
+> @@ -1019,6 +998,52 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	if (!new_plane_state->visible)
+>   		return 0;
+>   
+> +	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
+> +		uint32_t max_linewidth = dpu_kms->catalog->caps->max_linewidth;
+> +		const struct dpu_format *fmt;
+> +
+> +		fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
+> +
+> +		/*
+> +		 * In parallel multirect case only the half of the usual width
+> +		 * is supported for tiled formats. If we are here, we know that
+> +		 * full width is more than max_linewidth, thus each rect is
+> +		 * wider than allowed.
+> +		 */
+> +		if (DPU_FORMAT_IS_UBWC(fmt) &&
+> +		    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+> +			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, tiled format\n",
+> +					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> +			return -E2BIG;
+> +		}
+> +
+> +		r_pipe->sspp = pipe->sspp;
+> +
+> +		if (!dpu_plane_is_multirect_parallel_capable(pipe, pipe_cfg, fmt, max_linewidth) ||
+> +		    !dpu_plane_is_multirect_parallel_capable(r_pipe, r_pipe_cfg, fmt, max_linewidth) ||
+> +		    !(test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) ||
+> +		      test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features))) {
+> +			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, can't use split source\n",
+> +					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> +			return -E2BIG;
+> +		}
+> +
+> +		/*
+> +		 * Use multirect for wide plane. We do not support dynamic
+> +		 * assignment of SSPPs, so we know the configuration.
+> +		 */
+> +		pipe->multirect_index = DPU_SSPP_RECT_0;
+> +		pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> +
+> +		r_pipe->multirect_index = DPU_SSPP_RECT_1;
+> +		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> +	}
+> +
+
+I might be wrong here, but it seems like this part was moved to 
+dpu_plane_atomic_check_nopipe() in patch 6 and now being brought back 
+(atleast most of it) to dpu_plane_atomic_check().
+
+If this is correct, then the migration in patch 6 was not necessary.
+
+>   	return dpu_plane_atomic_check_pipes(plane, state, crtc_state);
+>   }
+>   
+> @@ -1053,10 +1078,18 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+>   
+>   	format = to_dpu_format(msm_framebuffer_format(plane_state->fb));
+>   
+> -	/* force resource reallocation if the format of FB has changed */
+> -	if (pstate->saved_fmt != format) {
+> +	/* force resource reallocation if the format of FB or src/dst have changed */
+> +	if (pstate->saved_fmt != format ||
+> +	    pstate->saved_src_w != plane_state->src_w ||
+> +	    pstate->saved_src_h != plane_state->src_h ||
+> +	    pstate->saved_src_w != plane_state->src_w ||
+> +	    pstate->saved_crtc_h != plane_state->crtc_h) {
+>   		crtc_state->planes_changed = true;
+>   		pstate->saved_fmt = format;
+> +		pstate->saved_src_w = plane_state->src_w;
+> +		pstate->saved_src_h = plane_state->src_h;
+> +		pstate->saved_crtc_w = plane_state->crtc_w;
+> +		pstate->saved_crtc_h = plane_state->crtc_h;
+>   	}
+
+Is thic chunk checking that if the src/dst have changed, this plane 
+might span more than one LM?
+
+Will be better to add more comment on why we are also checking src/dest 
+changes.
+
+Overall, can we just use for_each_oldnew_plane_in_state to compare the 
+prev and current dimensions and drop saved_****?
+
+>   
+>   	return 0;
+> @@ -1074,7 +1107,10 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   	struct dpu_plane_state *pstate;
+>   	struct dpu_sw_pipe *pipe;
+>   	struct dpu_sw_pipe *r_pipe;
+> +	struct dpu_sw_pipe_cfg *pipe_cfg;
+> +	struct dpu_sw_pipe_cfg *r_pipe_cfg;
+>   	const struct dpu_format *fmt;
+> +	uint32_t max_linewidth;
+>   
+>   	if (plane_state->crtc)
+>   		crtc_state = drm_atomic_get_new_crtc_state(state,
+> @@ -1083,6 +1119,8 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   	pstate = to_dpu_plane_state(plane_state);
+>   	pipe = &pstate->pipe;
+>   	r_pipe = &pstate->r_pipe;
+> +	pipe_cfg = &pstate->pipe_cfg;
+> +	r_pipe_cfg = &pstate->r_pipe_cfg;
+>   
+>   	pipe->sspp = NULL;
+>   	r_pipe->sspp = NULL;
+> @@ -1097,10 +1135,46 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   
+>   	reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
+>   
+> +	max_linewidth = dpu_kms->catalog->caps->max_linewidth;
+> +
+>   	pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+>   	if (!pipe->sspp)
+>   		return -ENODEV;
+>   
+> +	if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
+> +		pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +		pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +		r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +		r_pipe->sspp = NULL;
+> +	} else {
+> +		if (dpu_plane_is_multirect_parallel_capable(pipe, pipe_cfg, fmt, max_linewidth) &&
+> +		    dpu_plane_is_multirect_parallel_capable(r_pipe, r_pipe_cfg, fmt, max_linewidth) &&
+> +		    (test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) ||
+> +		     test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features))) {
+> +			r_pipe->sspp = pipe->sspp;
+> +
+> +			pipe->multirect_index = DPU_SSPP_RECT_0;
+> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> +
+> +			r_pipe->multirect_index = DPU_SSPP_RECT_1;
+> +			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> +		} else {
+> +			/* multirect is not possible, use two SSPP blocks */
+> +			r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> +			if (!r_pipe->sspp)
+> +				return -ENODEV;
+> +
+> +			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +		}
+> +	}
+> +
+
+This chunk LGTM.
+
+>   	return dpu_plane_atomic_check_pipes(plane, state, crtc_state);
+>   }
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> index 15f7d60d8b85..5522f9035d68 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+> @@ -31,6 +31,10 @@
+>    * @plane_clk: calculated clk per plane
+>    * @needs_dirtyfb: whether attached CRTC needs pixel data explicitly flushed
+>    * @saved_fmt: format used by the plane's FB, saved for for virtual plane support
+> + * @saved_src_w: cached value of plane's src_w, saved for for virtual plane support
+> + * @saved_src_h: cached value of plane's src_h, saved for for virtual plane support
+> + * @saved_crtc_w: cached value of plane's crtc_w, saved for for virtual plane support
+> + * @saved_crtc_h: cached value of plane's crtc_h, saved for for virtual plane support
+>    */
+>   struct dpu_plane_state {
+>   	struct drm_plane_state base;
+> @@ -49,6 +53,10 @@ struct dpu_plane_state {
+>   	bool needs_dirtyfb;
+>   
+>   	const struct dpu_format *saved_fmt;
+> +	uint32_t saved_src_w;
+> +	uint32_t saved_src_h;
+> +	uint32_t saved_crtc_w;
+> +	uint32_t saved_crtc_h;
+>   };
+>   
+>   #define to_dpu_plane_state(x) \
 
