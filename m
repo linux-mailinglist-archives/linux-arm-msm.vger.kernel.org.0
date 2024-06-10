@@ -1,187 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-22157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F785901B67
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 08:53:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBCC8901B87
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 09:05:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8151B1F21F00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 06:53:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DBCFF1C2158B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 07:05:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CD251803A;
-	Mon, 10 Jun 2024 06:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BAB72032D;
+	Mon, 10 Jun 2024 07:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qPj5C8aw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CdRZ5nnK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D41C18643
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 06:53:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9561C20
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 07:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718002418; cv=none; b=EgdLKsaajymA9vP6nCPbW612KfG7ryOjaYr8pBNI4kTj/qJW0MUecA3QGJGN1WkdGnwWFu1O1k5qy5KAsS5yaRbL1l81y0Lgg8IMwMtvCkyxlEK4NCA+uLQWMFw7KfQ+BZ+bRSrxJzhjQK5Ft/qbEB41zViBWADcC7dbRdmpEzg=
+	t=1718003125; cv=none; b=ScORG9c64ZS3Rt994atzsfvHkZ0BcM3oaVrZdayju3f7C+mLy4IkUNvYx/wxqvazuW3sku/T+BN2NgImRT0rF302cMf6YE5hTpmOn4EkjEdbPQYH5lymPT9n2jRs3RAuJPapNS4VNebgzAjCPgtEQFovaaQZdxGKBXc78aPY/BU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718002418; c=relaxed/simple;
-	bh=mRZh5+OagwrYksdm05IvR/+1yNl8KYHz8Qj7URz+FVo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YFkAv/EZhDaT5JxfoiN5SguqXO4gleiSkynwz7L2KqVakuajgjof2Sh245v6ivx0RM/YQTfRWgoFMtTifQeC8S3CI2zU3eVctE0GFl2N0tO2k5LfX9s28q1MVRp5G1FtsJYtfGfR2lVK1oq2ixHjziNjRnHgaYjIbSOV0ARapK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qPj5C8aw; arc=none smtp.client-ip=209.85.215.171
+	s=arc-20240116; t=1718003125; c=relaxed/simple;
+	bh=/AvsbsUJd/zTGNO42rFXKAiiuS8ZEWlCyClzMR+cMBU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fQXsFU6FketBDEC0ZeJdBdh4QSURbVlCvYiqyuMj+5m6qdjQWs3majrn096L+UmPUAbz0kgVrF5byPFHmAM+x3qrTwb/SJet1QhI9w6KiYv950pz+7Q5dc7STec2HbVRXH6fkHVLR2guK8wgNMfgLx+Y/7tKczjYe+Grom4c/CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CdRZ5nnK; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-6e9f52e99c2so851660a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Jun 2024 23:53:35 -0700 (PDT)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-57c5c51cb89so2956276a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 00:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718002415; x=1718607215; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Q79+Rla3cX6Hmnq2eCF4cwSxfS8g2qeMA5niTT4AJrk=;
-        b=qPj5C8awILJqh3c/ngE7eXKXeYZ0SQOicLTFq5jZzuiL9aHGzEYvh25QB2h713dsMt
-         3c+MYas5fDMuGrH8mO4sx57ojueo6ftuPopnJa8wRmTz/AM8UYoXfiKFHSX5FXJbANil
-         FXb2sSUzmTcDjagabFJSpcd5Sf6WY1j3W5R9gjYUHCNy7BL30CnnEcV8NFyanyR2uSUr
-         s6qJy1tSl33o4XhZyubNBuquojl/ZVvDXJCp+1zIsYAwS8gjZi9sQv0ENu8wSMRglpwD
-         pPYl6Kd2rlSRWDZPNjBVzziIsusmJ9rwKqw4ylTnOAzRRRRUP7wdfPSva9Qt1AESroYZ
-         Mh4w==
+        d=linaro.org; s=google; t=1718003120; x=1718607920; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cPZSLa5VJ9ZJ5ThCXQZcFW6Ti5Z+EHbBJU7SLERjk6Q=;
+        b=CdRZ5nnK12/P3OrRhY2mW8r9y79KJ8tDxDEsbc+1YCHKhg6Mpk/48GN5tnd1dXIBz3
+         f+7bw+eRHk6TCMGV3BY91p+720Bo/sQF9LXS+Prg4ejkS/34nIDygXbYywF5yqoIuptA
+         NmVbIa9yaCctoUQW8tllBDO27ljO0DLtADcfWxRzf7zRWfU1mTkEIukoMXMACzLKGt2W
+         zlqAM2HUeJETWMMJQGdSn2ah/RlsEoWz6dgPbqaoTOZyCBvV+Tx22dOMv+iDfMnO4Kr4
+         PeB5olWdW3SM8Z4QTgOlMZKdCbceeuiSmJ6EVrEByjfkYQ6mXGbcaKJOlZGpB79Jqr3Y
+         pohw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718002415; x=1718607215;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1718003120; x=1718607920;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q79+Rla3cX6Hmnq2eCF4cwSxfS8g2qeMA5niTT4AJrk=;
-        b=b4J+ArJCjcg8xrQ70vkDlK3pAMTiIwgv8L4OzJHNm6+Rz3eOgPfcP28pVCls4DEzHU
-         i3F38Vw0tUCnlg5UKUBBzqALD8fN6T6u9uxNRjK1gx4nP/w/CIfusHW8Bh9quKaIS4Xf
-         BjEdaT+VB308+KZBUjAk0+dEkwMcEOT4RZHOM8nlbkE/if6kVpbHp19d3ERqiJWKJusz
-         ig0D8uF5XZzXU7IFF3QZyMxl/q0ndlu+Iz7b4wfT79payT7AeoDdVzZu9vI5vlCmN2vR
-         E5OOeJeadzF7iV6B0ETySTPat/tKKhOn708Q+XeY/vBlokYx/m3RgcK9ANgemTnF1KHX
-         Iosw==
-X-Forwarded-Encrypted: i=1; AJvYcCX5GkgAV6TQYiHlkmCrciqTz6IUzaSJ82Up96kafsTRwhPS7Bm5JenkfHa4w5OaMb0nUVwaxhd0GPiPqnD0iEhfmK/QRzXeMVXNFycM/w==
-X-Gm-Message-State: AOJu0Yy2Q14/V9nlHJyzqaBR6QKNzrG2125j8O/tmpfjPqUzZZQqHyQK
-	I2bl4C9Q/xV8tBAL9Pvzxn11pquxdgmsVcXYOfCrhzn84SSd19KHL8sV9Bp4vg==
-X-Google-Smtp-Source: AGHT+IGiQnfID/w2ovEqOtXmdaUmHolv4W8npj5rXP4hlu3K/zYS4n6pz5nKcO0YwT4Ao+fhHzZlGg==
-X-Received: by 2002:a17:90b:b12:b0:2c2:c3fb:b13c with SMTP id 98e67ed59e1d1-2c2c3fbb277mr5727406a91.44.1718002414578;
-        Sun, 09 Jun 2024 23:53:34 -0700 (PDT)
-Received: from thinkpad ([220.158.156.236])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c3094cfe3dsm1355898a91.15.2024.06.09.23.53.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Jun 2024 23:53:34 -0700 (PDT)
-Date: Mon, 10 Jun 2024 12:23:24 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-	mhi@lists.linux.dev, Niklas Cassel <cassel@kernel.org>,
-	Bjorn Helgaas <helgaas@kernel.org>
-Subject: Re: [PATCH 0/5] PCI: endpoint: Add EPC 'deinit' event and
- dw_pcie_ep_linkdown() API
-Message-ID: <20240610065324.GA7660@thinkpad>
-References: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
+        bh=cPZSLa5VJ9ZJ5ThCXQZcFW6Ti5Z+EHbBJU7SLERjk6Q=;
+        b=HJ29iYePZ+SuQQ2y4sCgC8EhtKSp0WTQO/NEMDLLGQeMcwPrH5zxUTnUOWtc3Wu75q
+         jsG4FUPAj8E/5caLDJgtdsmAQ+I5DgQE0KEOw5K2YLzWR3ZqiUvr5/rK3Dh0tK/zmddu
+         Gl0SvLVe6ApVFYX17LrHyEnIMsbu7upouQrFuqvo4PEMJrgaIuV/C0x8j9yphm7VTwII
+         Hnh8wGrTeSPidflHRbg7RAN5XQlaUNL9FaApMmiaLLeNlZFCIobty14m1FjUwCvO8gW2
+         X8vaDSekwBz/WCH3xhHSzFQPFIlgvwoEHTy7hnFWWTXa60VBXe21zV+XafwJWJTxtOlA
+         ebFw==
+X-Forwarded-Encrypted: i=1; AJvYcCW5u152Vq+kjJ030tocVXfJ8zsM0sk9miijAyF+h6QwYL9X6zD4APGc7acY0tzYbJRTz9KcJ0tzSQ1LsMR9jAQMn2+xk6FLV7Y49V18vA==
+X-Gm-Message-State: AOJu0YzyXOBXPCnjiy3yCCfGEhF9/1OiHIsGzvlUZ12FdzRu8ARULeKZ
+	B+Auwklrqc5ji4Rc9pPEqd8OqSuJFkHDdVnUhrRZ+vl1/W5rkR4dDyhHp3EmAuc=
+X-Google-Smtp-Source: AGHT+IEgv3JegFvQ+6vLGmNwNKNTfnIzW5enFDnscw96CRYsquxgRG1RrvcEtuTnAeCT9o3J9KN8iQ==
+X-Received: by 2002:a17:906:4ecd:b0:a6f:7cb:6e76 with SMTP id a640c23a62f3a-a6f07cb723emr358812166b.51.1718003120208;
+        Mon, 10 Jun 2024 00:05:20 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a6f2d4138ccsm7698766b.220.2024.06.10.00.05.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jun 2024 00:05:19 -0700 (PDT)
+Message-ID: <ba911ebd-aef5-46af-ace1-84d13bee6876@linaro.org>
+Date: Mon, 10 Jun 2024 08:05:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RESEND v5 6/7] ASoC: codecs: wcd937x: add capture dapm widgets
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+ quic_pkumpatl@quicinc.com, Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20240527111956.444425-1-quic_mohs@quicinc.com>
+ <20240527111956.444425-7-quic_mohs@quicinc.com>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20240527111956.444425-7-quic_mohs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 06, 2024 at 12:56:33PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> This series includes patches that were left over from previous series [1] for
-> making the host reboot handling robust in endpoint framework.
-> 
-> When the above mentioned series got merged to pci/endpoint, we got a bug report
-> from LKP bot [2] and due to that the offending patches were dropped.
-> 
-> This series addressed the issue reported by the bot by adding the stub APIs in
-> include/pci/pci-epc.h and also removed the unused dwc wrapper as concluded in
-> [3].
-> 
-> Testing
-> =======
-> 
-> This series is tested on Qcom SM8450 based development board with 2 SM8450 SoCs
-> connected over PCIe.
-> 
-> - Mani
-> 
 
-Applied patch 2/5 to pci/endpoint! Krzysztof, please apply patches 1/5 and 5/5
-to controller/dwc (patches 3/5 and 4/5 are already applied by you).
 
-- Mani
+On 27/05/2024 12:19, Mohammad Rafi Shaik wrote:
+> +static int __wcd937x_codec_enable_micbias(struct snd_soc_dapm_widget *w,
+> +					  int event)
+> +{
+> +	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+> +	int micb_num;
+> +
+> +	if (strnstr(w->name, "MIC BIAS1", sizeof("MIC BIAS1")))
+> +		micb_num = MIC_BIAS_1;
+> +	else if (strnstr(w->name, "MIC BIAS2", sizeof("MIC BIAS2")))
+> +		micb_num = MIC_BIAS_2;
+> +	else if (strnstr(w->name, "MIC BIAS3", sizeof("MIC BIAS3")))
+> +		micb_num = MIC_BIAS_3;
+> +	else
+> +		return -EINVAL;
+> +
+See last comment..
 
-> [1] https://lore.kernel.org/linux-pci/20240430-pci-epf-rework-v4-0-22832d0d456f@linaro.org/
-> [2] https://lore.kernel.org/linux-pci/202405130815.BwBrIepL-lkp@intel.com/
-> [3] https://lore.kernel.org/linux-pci/20240529141614.GA3293@thinkpad/
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
-> Manivannan Sadhasivam (5):
->       PCI: dwc: ep: Remove dw_pcie_ep_init_notify() wrapper
->       PCI: endpoint: Introduce 'epc_deinit' event and notify the EPF drivers
->       PCI: dwc: ep: Add a generic dw_pcie_ep_linkdown() API to handle Link Down event
->       PCI: qcom-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
->       PCI: layerscape-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
-> 
->  drivers/pci/controller/dwc/pci-dra7xx.c           |   2 +-
->  drivers/pci/controller/dwc/pci-imx6.c             |   2 +-
->  drivers/pci/controller/dwc/pci-keystone.c         |   2 +-
->  drivers/pci/controller/dwc/pci-layerscape-ep.c    |   4 +-
->  drivers/pci/controller/dwc/pcie-artpec6.c         |   2 +-
->  drivers/pci/controller/dwc/pcie-designware-ep.c   | 116 +++++++++++++---------
->  drivers/pci/controller/dwc/pcie-designware-plat.c |   2 +-
->  drivers/pci/controller/dwc/pcie-designware.h      |  10 +-
->  drivers/pci/controller/dwc/pcie-keembay.c         |   2 +-
->  drivers/pci/controller/dwc/pcie-qcom-ep.c         |   5 +-
->  drivers/pci/controller/dwc/pcie-rcar-gen4.c       |   2 +-
->  drivers/pci/controller/dwc/pcie-tegra194.c        |   3 +-
->  drivers/pci/controller/dwc/pcie-uniphier-ep.c     |   2 +-
->  drivers/pci/endpoint/functions/pci-epf-mhi.c      |  19 ++++
->  drivers/pci/endpoint/functions/pci-epf-test.c     |  17 +++-
->  drivers/pci/endpoint/pci-epc-core.c               |  25 +++++
->  include/linux/pci-epc.h                           |  13 +++
->  include/linux/pci-epf.h                           |   2 +
->  18 files changed, 162 insertions(+), 68 deletions(-)
-> ---
-> base-commit: 7d96527bc16e46545739c6fe0ab6e4c915e9910e
-> change-id: 20240606-pci-deinit-2e6cdf1bd69f
-> 
-> Best regards,
-> -- 
-> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
+> +	switch (event) {
+> +	case SND_SOC_DAPM_PRE_PMU:
+> +		wcd937x_micbias_control(component, micb_num,
+> +					MICB_ENABLE, true);
+> +		break;
+> +	case SND_SOC_DAPM_POST_PMU:
+> +		usleep_range(1000, 1100);
+> +		break;
+> +	case SND_SOC_DAPM_POST_PMD:
+> +		wcd937x_micbias_control(component, micb_num,
+> +					MICB_DISABLE, true);
+> +		break;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int wcd937x_codec_enable_micbias(struct snd_soc_dapm_widget *w,
+> +					struct snd_kcontrol *kcontrol,
+> +					int event)
+> +{
+> +	return __wcd937x_codec_enable_micbias(w, event);
+> +}
+> +
+> +static int __wcd937x_codec_enable_micbias_pullup(struct snd_soc_dapm_widget *w,
+> +						 int event)
+> +{
+> +	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+> +	int micb_num;
+> +
+> +	if (strnstr(w->name, "VA MIC BIAS1", sizeof("VA MIC BIAS1")))
+> +		micb_num = MIC_BIAS_1;
+> +	else if (strnstr(w->name, "VA MIC BIAS2", sizeof("VA MIC BIAS2")))
+> +		micb_num = MIC_BIAS_2;
+> +	else if (strnstr(w->name, "VA MIC BIAS3", sizeof("VA MIC BIAS3")))
+> +		micb_num = MIC_BIAS_3;
+> +	else
+> +		return -EINVAL;
+> +
+same..
+> +	switch (event) {
+> +	case SND_SOC_DAPM_PRE_PMU:
+> +		wcd937x_micbias_control(component, micb_num, MICB_PULLUP_ENABLE, true);
+> +		break;
+> +	case SND_SOC_DAPM_POST_PMU:
+> +		usleep_range(1000, 1100);
+> +		break;
+> +	case SND_SOC_DAPM_POST_PMD:
+> +		wcd937x_micbias_control(component, micb_num, MICB_PULLUP_DISABLE, true);
+> +		break;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
 
--- 
-மணிவண்ணன் சதாசிவம்
+...
+
+>   static const struct snd_soc_dapm_widget wcd937x_dapm_widgets[] = {
+...> +	/* MIC_BIAS widgets */
+> +	SND_SOC_DAPM_SUPPLY("MIC BIAS1", SND_SOC_NOPM, 0, 0,
+Please use shift here like
+         SND_SOC_DAPM_SUPPLY("MIC BIAS1", SND_SOC_NOPM, MIC_BIAS_1, 0,
+         SND_SOC_DAPM_SUPPLY("MIC BIAS2", SND_SOC_NOPM, MIC_BIAS_2, 0,
+
+to avoid doing a string compares on wideget name.
+
+--srini
+
+> +			    wcd937x_codec_enable_micbias,
+> +			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+> +			    SND_SOC_DAPM_POST_PMD),
+> +	SND_SOC_DAPM_SUPPLY("MIC BIAS2", SND_SOC_NOPM, 0, 0,
+> +			    wcd937x_codec_enable_micbias,
+> +			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+> +			    SND_SOC_DAPM_POST_PMD),
+> +	SND_SOC_DAPM_SUPPLY("MIC BIAS3", SND_SOC_NOPM, 0, 0,
+> +			    wcd937x_codec_enable_micbias,
+> +			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+> +			    SND_SOC_DAPM_POST_PMD),
+> +
+>   	SND_SOC_DAPM_SUPPLY("VDD_BUCK", SND_SOC_NOPM, 0, 0,
+>   			    wcd937x_codec_enable_vdd_buck,
+>   			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMD),
+> @@ -2007,11 +2312,101 @@ static const struct snd_soc_dapm_widget wcd937x_dapm_widgets[] = {
+>   	SND_SOC_DAPM_MIXER("HPHR_RDAC", SND_SOC_NOPM, 0, 0,
+>   			   hphr_rdac_switch, ARRAY_SIZE(hphr_rdac_switch)),
+>   
+> +	/* TX output widgets */
+> +	SND_SOC_DAPM_OUTPUT("ADC1_OUTPUT"),
+> +	SND_SOC_DAPM_OUTPUT("ADC2_OUTPUT"),
+> +	SND_SOC_DAPM_OUTPUT("ADC3_OUTPUT"),
+> +	SND_SOC_DAPM_OUTPUT("WCD_TX_OUTPUT"),
+> +
+>   	/* RX output widgets */
+>   	SND_SOC_DAPM_OUTPUT("EAR"),
+>   	SND_SOC_DAPM_OUTPUT("AUX"),
+>   	SND_SOC_DAPM_OUTPUT("HPHL"),
+>   	SND_SOC_DAPM_OUTPUT("HPHR"),
+> +
+> +	/* MIC_BIAS pull up widgets */
+> +	SND_SOC_DAPM_SUPPLY("VA MIC BIAS1", SND_SOC_NOPM, 0, 0,
+> +			    wcd937x_codec_enable_micbias_pullup,
+> +			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+> +			    SND_SOC_DAPM_POST_PMD),
+> +	SND_SOC_DAPM_SUPPLY("VA MIC BIAS2", SND_SOC_NOPM, 0, 0,
+> +			    wcd937x_codec_enable_micbias_pullup,
+> +			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+> +			    SND_SOC_DAPM_POST_PMD),
+> +	SND_SOC_DAPM_SUPPLY("VA MIC BIAS3", SND_SOC_NOPM, 0, 0,
+> +			    wcd937x_codec_enable_micbias_pullup,
+> +			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+> +			    SND_SOC_DAPM_POST_PMD),
 
