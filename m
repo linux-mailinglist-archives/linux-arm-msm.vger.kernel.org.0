@@ -1,119 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-22216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C341D902896
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 20:25:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88B8F9029D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 22:16:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A755A1C20DB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 18:25:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18EBB2810FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 20:16:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1AA315A8;
-	Mon, 10 Jun 2024 18:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC1753E47E;
+	Mon, 10 Jun 2024 20:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eLSeMQEb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXcrQilT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163D2147C86
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 18:24:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2AA3BB30;
+	Mon, 10 Jun 2024 20:16:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718043898; cv=none; b=M/tsNcXRqE1wyTP8UboEocJMhCNbAHy00RWQ0T9JkZtgi2V2NAUA5SvDl2by76V5Eu8iICkrSHvkajoquPqOz9uvAC9sbHJKfvLyVYtVcNLjkBA6NzUo7EVky/Um6E3m9IYgPEc2ZDLacEeTPV4mF0xDVqXz8m0ITYI432xxn88=
+	t=1718050601; cv=none; b=kZaScyQuMsd7cHEfc7eMIzIC2BS9GBzwDVyCDXVmUfoDnRt/GkLsS+GhU/0dQaN0VVWiPOQ98j3cgDZFnZr/pe2iTcxf5R4QwNBWBQUq+Fk0cy5fXP+k5hl/WKUrPju0R6gfUKX5GJhHF+oNZQDi3wljTdpRzVg6fPS4Ek49Avk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718043898; c=relaxed/simple;
-	bh=QXuGc6rD/i+3ogb5lW0kNGaFEh8y4OM7z/QYgEAr5MY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QnnKnOHFiI62/1I7zEGVIs2A8xmBhdSSeubRamV/zSLC+hmSUeVR3H5BEeNUeEnkJ76i/XBgEjSlQ/VxqGvl0kEVCJ8+pY+6SHtOzerXhoSAsy4Gpj+SFaKvUSJ7ASuRfhFT4kw6+BJCEYD7d86v/WYGIzoSYnDhhL6Zi8KwNXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eLSeMQEb; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52bc274f438so360243e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 11:24:56 -0700 (PDT)
+	s=arc-20240116; t=1718050601; c=relaxed/simple;
+	bh=//W7kqXFonvLeGOTPZRMLoM6eBxITBOMJLknJtGDK0w=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=CQsFhtimlbXLbYEsFv0mWIAUr/8fvkFBdrbtyy3zXc6ht5ZbXC2GcK4vt+uY0K8OpwMNQO85joUMTfIn2hpcWjHj4Y0K5IUvl603U/wdTOGys0yOd5R23UN621WMcGfewyQ0Muv9y0BxA/F2hKBx1uhWtBSliFyT0rCYEENWT0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXcrQilT; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57a52dfd081so315263a12.2;
+        Mon, 10 Jun 2024 13:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718043895; x=1718648695; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=85fV94iKDPP5ejIcWWbM9CJA1/LLXYa+BC+XEnAE7UA=;
-        b=eLSeMQEblQEHvINMM8wPoPeyYMEbvLNMsN28WcBhjSepzbia2IrAjVXvCG9YQl2c9S
-         U5ani+ASsjlq9Edxez+ZtyxKmAyOdYOUugB19gxT16orQEXZ0BmVxm2ObiwTXHz9Mscx
-         4WDv7UrFboxomyaFBhFEA6VAWOK117RxDlRwGTDMunY1o/iBNQTMODFumrAT6FAA/1Q0
-         v0DDayOXH+hvvxFC29cGf1KkCs+caAfZVuvyhg5XYpbYmbvW+EoWii64Sc0pd8w16BQF
-         2tzVSuAjVjP9JYJznrG7D9WSUE9IqxR4fXwnet9kJoC4KMUr/4I9A49PIPFt5nI0vSGm
-         8wYg==
+        d=gmail.com; s=20230601; t=1718050598; x=1718655398; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6pl8T6m4emk3aMt9ImW1yQY4NMWNiVqYmr9bldDIC9w=;
+        b=MXcrQilThMC3TUQlan3B+hdqGB9H8g46rqMOin49aN/cvSWanvwuTtwjV13ELFo8Ys
+         O5ctzAsuv9tzzYUednMoibWftEN0qMs62J2HriS5Yrlc8QjHLRS10NsSNKf0daizwp0a
+         iNs4zlH6YiTbdWD/xH3LA9x1cY4PakMv3IIwcK6UKCgN0CrMU2/aJMjtRhyjHBDbxue8
+         aNzV5Nv+vvgUWOPStaa+ldTnbm87nx69JXdaHx+2oT5RGlniroM9aY6+PPiw9OilJU9F
+         opNskyojmcIWn2tfJqpKtUNjjiqOCTTviLtn1OoCXPXRyZbExP+hYUj5PnoVhE3EGVQv
+         Wzug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718043895; x=1718648695;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=85fV94iKDPP5ejIcWWbM9CJA1/LLXYa+BC+XEnAE7UA=;
-        b=ehq0jH59xxGssttsegQON7W7+cTkvmXyM7LUxPc+bs64l5BOA4q+TVaIdfVGnd1hZC
-         VnWoqwEoJAZn817t9C78qhYSOTPR89KMatiAapk/6tYYNeMBA87n+eL1axD8Rkyx9Usg
-         dwJzK9wnDm6u2XIpW6ydP3FCk03Wwf6mnNZLwnGb6+sxSnqt7HHGsoVh+pnWYbLONoHt
-         WIUiTrXfPVxmGMqCLQe7/09KrPiWDewMIpXHYlUkVHwE7iAqdR5wjcxJ64xYSvsvIf0O
-         owjgiH6VVPOt4q3IFRJymOvnRv7AyKAXrfBPmffVrR5P2Dwds88AKZj0zwkwa6ScT9Hq
-         k1Ew==
-X-Forwarded-Encrypted: i=1; AJvYcCU0eHAM0+tOs+gRmexKE/QPXbJjoYLbuX0+73OE+Go/k4NFSP3Z+2ISLAPk4Mtu2tIZEOcIX1yrHoKgjabCVqL/4fB1fPFN6moulZDwWA==
-X-Gm-Message-State: AOJu0YzVaJ0FSNXFpaL+7rjlAb+wz4I6/tEX4HtxObpL0haIuB6+4bHj
-	jTJ+hHd6rOv8Ob2YLMKJSZEPROtLh2aPSPQy/XYC4nM5FS4jGdROCE4JRFPWMegBFyeLhYQu2aF
-	T
-X-Google-Smtp-Source: AGHT+IETLq0+3npA+1ldTNeNlD3hH0XVRYz/fMMGTaoJ0jb3KRoa8rWuG2H/dtzMV4OR8i1EIR3YDQ==
-X-Received: by 2002:a19:2d07:0:b0:52b:c1d5:949d with SMTP id 2adb3069b0e04-52bc1d59815mr4865449e87.54.1718043895209;
-        Mon, 10 Jun 2024 11:24:55 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52c8f54f091sm436234e87.133.2024.06.10.11.24.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jun 2024 11:24:54 -0700 (PDT)
-Date: Mon, 10 Jun 2024 21:24:53 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com
-Subject: Re: [PATCH v4 05/11] misc: fastrpc: Add static PD restart support
-Message-ID: <cy3bb2vch7pg24ldjhcq3pg456n5vrdwqsdcwzpghytrxzo6ta@hhhr3nelfipy>
-References: <20240606165939.12950-1-quic_ekangupt@quicinc.com>
- <20240606165939.12950-6-quic_ekangupt@quicinc.com>
- <wsdk6i6wp5ahxs3oykwabtxfkqc3fytvaguchkl4imd43r2lv6@mq2ejnbwmpmo>
- <5e4a8de4-73b1-4518-a99b-78a85dba028f@quicinc.com>
+        d=1e100.net; s=20230601; t=1718050598; x=1718655398;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6pl8T6m4emk3aMt9ImW1yQY4NMWNiVqYmr9bldDIC9w=;
+        b=aeBi8rducKmJ2MlKb/uMgZwzGWUzvQFrNWhAebkgA8oHMek7HSOwUCbGcyLWJg2PFn
+         wYkj8FFrBlclJsxo0T2uN+vzii6iYW4wpzZ5m9/crMs14PrTTHMoE++c3stgZykDKOyL
+         OL7uh6FYH7d5mWuRVwnMtS+hx+cn74EFCKpW3P+9PMqVAELN2ma/2LT6xBQyWjLoeLrE
+         P8X1cPo9ccY03ANe+nl7fU3qB3OARV0bb6NhHqYsm01HJrrI5ix6mWO4Y97WdnU0VQL8
+         5CQ0itkjMVo2DVpD5vZuXxtjlqsr2LgZOcSYnNJPsyxD7K9XP6kuEOLxdABMbH9Dbu8G
+         hzuw==
+X-Forwarded-Encrypted: i=1; AJvYcCWxLuWsW/imoUpe/4MtVM0+0oOxJD6VptrOTkJZ8AngKTtzOM26MzonrMJ/v/EeA0Qy3xSUVTQ4WG4RbH3VnRSxdI68Izxpj7MksYBMThNd1dDNuUwrZJxfy1ITot4uQeyAurimxVybzzvwgw==
+X-Gm-Message-State: AOJu0YzPkKBr5CZNud7HaXw9ASDFuDblzMlQWac69u7vLctpoKoSSGXz
+	aWdSv8kBOaRoPdAVaDPR31VDpPtQNjU0Wh5FAjp7cnXOOeHKSF7U
+X-Google-Smtp-Source: AGHT+IETB9mWF1zLj7DTLQxbvtAnMS46L7eWHIrPUE06xGFBHdTgXwhD+GJm3BDLZNBCIpQ3qOZ1CQ==
+X-Received: by 2002:a17:906:1503:b0:a6f:118c:2622 with SMTP id a640c23a62f3a-a6f118c26aamr371908066b.63.1718050597938;
+        Mon, 10 Jun 2024 13:16:37 -0700 (PDT)
+Received: from ?IPV6:2a02:a466:68ed:1:2173:d612:de41:2058? ([2a02:a466:68ed:1:2173:d612:de41:2058])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f1b7f5b12sm217710466b.196.2024.06.10.13.16.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jun 2024 13:16:37 -0700 (PDT)
+Message-ID: <364fbb96-006f-4582-a0f8-a0f9edd50f6f@gmail.com>
+Date: Mon, 10 Jun 2024 22:16:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5e4a8de4-73b1-4518-a99b-78a85dba028f@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/15] tty: serial: switch from circ_buf to kfifo
+From: Ferry Toth <fntoth@gmail.com>
+To: Jiri Slaby <jirislaby@kernel.org>, neil.armstrong@linaro.org,
+ gregkh@linuxfoundation.org
+Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Al Cooper <alcooperx@gmail.com>, Alexander Shiyan <shc_work@mail.ru>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Alim Akhtar <alim.akhtar@samsung.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>, Baruch Siach
+ <baruch@tkos.co.il>, Bjorn Andersson <andersson@kernel.org>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ "David S. Miller" <davem@davemloft.net>, Fabio Estevam <festevam@gmail.com>,
+ Hammer Hsieh <hammerh0314@gmail.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Chunyan Zhang <zhang.lyra@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Kevin Hilman <khilman@baylibre.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
+ Laxman Dewangan <ldewangan@nvidia.com>,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ "Maciej W. Rozycki" <macro@orcam.me.uk>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <michal.simek@amd.com>,
+ "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Orson Zhai <orsonzhai@gmail.com>,
+ =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
+ Patrice Chotard <patrice.chotard@foss.st.com>,
+ Peter Korsgaard <jacmet@sunsite.dk>,
+ Richard Genoud <richard.genoud@gmail.com>,
+ Russell King <linux@armlinux.org.uk>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Shawn Guo <shawnguo@kernel.org>, Stefani Seibold <stefani@seibold.net>,
+ Sumit Semwal <sumit.semwal@linaro.org>,
+ Taichi Sugaya <sugaya.taichi@socionext.com>,
+ Takao Orito <orito.takao@socionext.com>,
+ Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+ Thierry Reding <thierry.reding@gmail.com>, Timur Tabi <timur@kernel.org>,
+ Vineet Gupta <vgupta@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>
+References: <20240405060826.2521-1-jirislaby@kernel.org>
+ <daf06969-15fd-470e-88b8-a717066fe312@linaro.org>
+ <cebad7f8-3f47-4e6a-93b7-32fcf2367874@kernel.org>
+ <f42ef4a3-4bfe-4354-9220-ed742e093c86@gmail.com>
+Content-Language: en-US
+In-Reply-To: <f42ef4a3-4bfe-4354-9220-ed742e093c86@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 10, 2024 at 02:35:48PM +0530, Ekansh Gupta wrote:
+Hi
+
+Op 07-06-2024 om 22:32 schreef Ferry Toth:
+> Hi,
 > 
+> Op 22-04-2024 om 07:51 schreef Jiri Slaby:
+>> Hi,
+>>
+>> On 19. 04. 24, 17:12, Neil Armstrong wrote:
+>>> On 05/04/2024 08:08, Jiri Slaby (SUSE) wrote:
+>>>> This series switches tty serial layer to use kfifo instead of circ_buf.
+>>>>
+>>>> The reasoning can be found in the switching patch in this series:
+>>>> """
+>>>> Switch from struct circ_buf to proper kfifo. kfifo provides much better
+>>>> API, esp. when wrap-around of the buffer needs to be taken into 
+>>>> account.
+>>>> Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for 
+>>>> example.
+>>>>
+>>>> Kfifo API can also fill in scatter-gather DMA structures, so it easier
+>>>> for that use case too. Look at lpuart_dma_tx() for example. Note that
+>>>> not all drivers can be converted to that (like atmel_serial), they
+>>>> handle DMA specially.
+>>>>
+>>>> Note that usb-serial uses kfifo for TX for ages.
+>>>> """
+>> ...
+>>> This patchset has at least broken all Amlogic and Qualcomm boards so 
+>>> far, only part of them were fixed in next-
+>>
+>> So are there still not fixed problems yet?
+>>
+>>> but this serie has been merged in v1
+>>
+>> Ugh, are you saying that v1 patches are not worth taking? That doesn't 
+>> fit with my experience.
+>>
+>>> with no serious testing
+>>
+>> Sadly, everyone had a chance to test the series:
+>>    
+>> https://lore.kernel.org/all/20240319095315.27624-1-jirislaby@kernel.org/
+>> for more than two weeks before I sent this version for inclusion. And 
+>> then it took another 5 days till this series appeared in -next. But 
+>> noone with this HW apparently cared enough back then. I'd wish they 
+>> (you) didn't. Maybe next time, people will listen more carefully:
+>> ===
+>> This is Request for Testing as I cannot test all the changes
+>> (obviously). So please test your HW's serial properly.
+>> ===
+>>
+>>> and should've been dropped immediately when the first regressions 
+>>> were reported.
+>>
+>> Provided the RFT was mostly ignored (anyone who tested that here, or I 
+>> only wasted my time?), how exactly would dropping help me finding 
+>> potential issues in the series? In the end, noone is running -next in 
+>> production, so glitches are sort of expected, right? And I believe I 
+>> smashed them quickly enough (despite I was sidetracked to handle the 
+>> n_gsm issue). But I might be wrong, as usual.
 > 
-> On 6/7/2024 4:55 PM, Dmitry Baryshkov wrote:
-> > On Thu, Jun 06, 2024 at 10:29:25PM +0530, Ekansh Gupta wrote:
-> >> Static PDs are created on DSPs to support specific use cases like Audio
-> >> and Sensors. The static PDs uses any CPU requirements like file
-> >> operations or memory need with the help of a daemon running on the CPU.
-> > What do you mean by 'CPU requirements' here?
-> Something like file system request or any memory requirement. For these types of requirements
-> PD will rely on CPU process.
-
-So, this is not 'CPU requirements'. It should be something like
-'requests to the HLOS'. CPU requirements would usually mean something
-requiring CPU cycles or min/max freq, etc.
-
+> I arrived at this party a bit late, sorry about that. No good excuses.
 > 
-> Planning to drop this patch from the series and move the pd notification specific implementations
-> to a different .c file as per Caleb's suggestion.
+>> So no, dropping is not helping moving forward, actions taken by e.g. 
+>> Marek Szyprowski <m.szyprowski@samsung.com> do, IMNSHO.
 > 
-> I'll address all other comments in the new patch series.
+> Good news is I tested on Merrifield (Intel Edison) which is slow 
+> (500MHz) and has a HSU that can transmit up to 3.5Mb/s. It really 
+> normally needs DMA and just a single interrupt at the end of transmit 
+> and receive for which I my own patches locally. The bounce buffer I was 
+> using on transmit broke due to this patch, so I dropped that. Still, 
+> with the extra interrupts caused by the circ buffer wrapping around it 
+> seems to work well. Too late to add my Tested-by.
+> 
+> One question though: in 8250_dma.c serial8250_tx_dma() you mention "/* 
+> kfifo can do more than one sg, we don't (quite yet) */".
+> 
+> I see the opportunity to use 2 sg entries to get all the data out in one 
+> dma transfer, but there doesn't seem to be much documentation or 
+> examples on how to do that. It seems just increasing nents to 2 would do 
+> the trick?
 
-Ack
+Nevertheless I got this to work. Very nice. Thanks for this series.
+I am seeing only 2 interrupts (x2 as each interrupt happens twice), one 
+for dma complete. The 2nd, not sure but likely, uart tx done.
+In any case the whole buffer is transferred without interchar gaps.
 
--- 
-With best wishes
-Dmitry
+> So, what was the reason to "don't (quite yet)"?
+
+Before considering to send out a patch for this, are there any caveats 
+that I'm overlooking?
+
+>> thanks,
+> 
 
