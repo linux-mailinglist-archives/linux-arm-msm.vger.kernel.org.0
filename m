@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-22218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A0D99029E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 22:20:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0915B902A61
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 23:02:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5776B20F1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 20:20:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 028FA1C224BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 21:02:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF6C73E47E;
-	Mon, 10 Jun 2024 20:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B14B554FAD;
+	Mon, 10 Jun 2024 21:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mi4usKBI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NXUirKQJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDCD18C36
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 20:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0CD14277
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 21:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718050822; cv=none; b=aEIrjI8Mqzkxhy28UwbIpOHqhToLHNL4nbjo7yfEN7Rr55lNu4AhS2l28lagg+9hJDceVEpbMmiuoTTMak5er77KxlYQ5Cph1cY7g5/35PhpGVJrssIHBuDzb+tfEEIjZx3f8uAoV09v3m/M3e8LlcNJ2XqhiFeXtiby4l3I16w=
+	t=1718053326; cv=none; b=bnYdBVk6TSNV1zdmWw9FZK/k1MuW8IRY+Pp0Q7YqB45M93R3/0cg8g4Tq9afUiAjYoav8KVCexX6Ghk6o7zpQaDxjEIiCxFwriFkibodRenqj4oKBvV1B4t0seVxF0tMhR7CpeHiyYTPBkBmsIfIWD7LVF74qZNeAelIOTDTLM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718050822; c=relaxed/simple;
-	bh=w3zAIxZOPpuLd2CJnH/HqbQMH8L4t1/EYTxHB6IKJXo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NH7fS38pNCqGjmt3Kyx73DQ0bhJmuQtR99Ibg9vIOKZ50py/enf+PvHVCMBPeOWuq0hviYFvmN8YDgi8MNKor5Y8cmfbCRK7t/4Jm2RdOaf1mUquUH5tZdGDWYalZ1qC6fTzYymW7TpyczQMT/eUmjwStKYrlCk9LByKhDp6HWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mi4usKBI; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1718053326; c=relaxed/simple;
+	bh=v4sRVQWnBXXBZ7IDF6ZgZeBbmjsePyWhUSavh+effBQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=uF4Gyv926nB125m8wTMmsMfAFhWuCodh65GTBDZHhT5yz03EU92HT+UffFaAYgGX3zbQEM4H915QDFbsPZ6ErmVqoVjQeiXdbpipg9MOLtV54V/vtWFPLzoeMzN2zQtlAouUefCE9IhkAmIliC5uV7sE/x8wWa9Sx+kNJvQIHPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NXUirKQJ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45AEKxrG001296;
-	Mon, 10 Jun 2024 20:19:56 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45ADQAlr020328;
+	Mon, 10 Jun 2024 21:01:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	u9Nj6YH64EdfLNAULralaBJwSjACSwIdbfB9+j72f78=; b=Mi4usKBIDbHPUkqO
-	sdB2tvJXYslpO9784gKuW3A9SXt04Povko/rhgQouA+7/bUj+GhmKzgvhZBlIqkX
-	z7jcElptoRpN/z+0p0+UZgd9lFspJX1+3j2QICLVwMqhO85QzMmZQBfW/iciKUb6
-	Ae9/iY69LFdOBlh51GG/Jv8D8Thbj47MmZxo3piaw3FbQrB89qNteLZ28ll0L9bV
-	/YvO5lyA1Xa71c2jLE6LwERimV4hEmfuPibbIBfgdHkX5sVYCueMSG8SGd5XU8xC
-	wza+e9cLAM9hsJz2XZ+AkLtbpBWGJEmIL+zpiCQrhsctEbNXH3XSsOBPwufIdqzU
-	PU/T+g==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymemgmkxs-1
+	2A5QR6ozzcN6A0XeYsnx0f5xeqUZOSJnAyqiMGJw7Ig=; b=NXUirKQJL2W6Cotk
+	J2XVbCPtBoogFtkPgAP0DU1J6NBYsgf4efTIa7rD7r/gaGhINTi0xIbsiTn/nXxN
+	R2ADpXQP4sJW+emIKEypgp+LBOZq9wIbYHQMAOAm5LxXmM8OivaCONHhnHtVDIv8
+	hwjTL6iyflKIsraag6eYUiR+XdHWXgfBFhI4dsxx35qJc25Vl8y6MjkAm4Zj5Pg2
+	dzaMYy/JWhNtJBfwQhWEB/JittLkfX9WMawJPupyN+SL7A4fqHC7woXVs8nB8PDJ
+	g3BMCS8+wBImS9ngUTNLzMJcnxs/IlbTTdHk6EZvvpcQf8vLDBbF8FfkxjWS6yRX
+	F2uF9g==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymea6mns2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Jun 2024 20:19:56 +0000 (GMT)
+	Mon, 10 Jun 2024 21:01:49 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45AKJObU013456
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45AL1m65022131
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 10 Jun 2024 20:19:24 GMT
+	Mon, 10 Jun 2024 21:01:48 GMT
 Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 10 Jun
- 2024 13:19:19 -0700
-Message-ID: <1dff0318-921e-ea43-4eba-8c4e2b283afb@quicinc.com>
-Date: Mon, 10 Jun 2024 13:19:16 -0700
+ 2024 14:01:43 -0700
+Message-ID: <f7f7d8a3-880e-0287-3362-e89c25244e88@quicinc.com>
+Date: Mon, 10 Jun 2024 14:01:40 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,374 +66,759 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v4 09/13] drm/msm/dpu: allow using two SSPP blocks for a
- single plane
+Subject: Re: [PATCH v4 08/13] drm/msm/dpu: add support for virtual planes
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
         <freedreno@lists.freedesktop.org>
 References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
- <20240314000216.392549-10-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240314000216.392549-10-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-9-dmitry.baryshkov@linaro.org>
+ <d828f7b6-ac3d-6696-71f1-682599c5fa64@quicinc.com>
+ <abz2qu6mrtmjxpyrwwvnqs5ckcuxt2mpex5kd34o7gcmse6xvy@ympm6vlh2fc2>
+ <e4b4aa8f-dc30-7b1f-5778-f4973783457a@quicinc.com>
+ <q566tpuzjgpopndtfn2acjkxyhia7lcj33nyrxeilqy5a3cx2e@xlx7y5to2vnc>
+ <12d24d3e-6798-ec26-1d44-a0efc4828f6c@quicinc.com>
+ <CAA8EJpohUy+fEKPgDrMHEMmEpmi8RQqa6rV1EmW1M8YmoC+Wpw@mail.gmail.com>
+ <e821ed65-5116-e12e-7378-7d20155f3cc4@quicinc.com>
+ <CAA8EJpqFsMPEjTWJ=JsVOdT563XR8seeb_B6bMy7gbDdt-RSpg@mail.gmail.com>
+ <9737798d-a188-eac3-542e-787c8dbf72b3@quicinc.com>
+In-Reply-To: <9737798d-a188-eac3-542e-787c8dbf72b3@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yStIEB6Nh6eVPgqwA7uEyCJwY5crWBkQ
-X-Proofpoint-ORIG-GUID: yStIEB6Nh6eVPgqwA7uEyCJwY5crWBkQ
+X-Proofpoint-GUID: AZJ8LMGOisNvgX9Sokc_dXTrpFHvWBgJ
+X-Proofpoint-ORIG-GUID: AZJ8LMGOisNvgX9Sokc_dXTrpFHvWBgJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-10_06,2024-06-10_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- suspectscore=0 adultscore=0 impostorscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 phishscore=0 malwarescore=0 mlxscore=0 clxscore=1015
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ spamscore=0 phishscore=0 mlxlogscore=999 clxscore=1015 lowpriorityscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 bulkscore=0 impostorscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406100152
+ definitions=main-2406100156
 
 
 
-On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
-> Virtual wide planes give high amount of flexibility, but it is not
-> always enough:
+On 6/7/2024 7:45 PM, Abhinav Kumar wrote:
 > 
-> In parallel multirect case only the half of the usual width is supported
-> for tiled formats. Thus the whole width of two tiled multirect
-> rectangles can not be greater than max_linewidth, which is not enough
-> for some platforms/compositors.
 > 
-> Another example is as simple as wide YUV plane. YUV planes can not use
-> multirect, so currently they are limited to max_linewidth too.
+> On 6/7/2024 5:57 PM, Dmitry Baryshkov wrote:
+>> On Sat, 8 Jun 2024 at 02:55, Abhinav Kumar <quic_abhinavk@quicinc.com> 
+>> wrote:
+>>>
+>>>
+>>>
+>>> On 6/7/2024 3:26 PM, Dmitry Baryshkov wrote:
+>>>> On Sat, 8 Jun 2024 at 00:39, Abhinav Kumar 
+>>>> <quic_abhinavk@quicinc.com> wrote:
+>>>>>
+>>>>>
+>>>>>
+>>>>> On 6/7/2024 2:10 PM, Dmitry Baryshkov wrote:
+>>>>>> On Fri, Jun 07, 2024 at 12:22:16PM -0700, Abhinav Kumar wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 6/7/2024 12:16 AM, Dmitry Baryshkov wrote:
+>>>>>>>> On Thu, Jun 06, 2024 at 03:21:11PM -0700, Abhinav Kumar wrote:
+>>>>>>>>> On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+>>>>>>>>>> Only several SSPP blocks support such features as YUV output 
+>>>>>>>>>> or scaling,
+>>>>>>>>>> thus different DRM planes have different features.  Properly 
+>>>>>>>>>> utilizing
+>>>>>>>>>> all planes requires the attention of the compositor, who should
+>>>>>>>>>> prefer simpler planes to YUV-supporting ones. Otherwise it is 
+>>>>>>>>>> very easy
+>>>>>>>>>> to end up in a situation when all featureful planes are already
+>>>>>>>>>> allocated for simple windows, leaving no spare plane for YUV 
+>>>>>>>>>> playback.
+>>>>>>>>>>
+>>>>>>>>>> To solve this problem make all planes virtual. Each plane is 
+>>>>>>>>>> registered
+>>>>>>>>>> as if it supports all possible features, but then at the 
+>>>>>>>>>> runtime during
+>>>>>>>>>> the atomic_check phase the driver selects backing SSPP block 
+>>>>>>>>>> for each
+>>>>>>>>>> plane.
+>>>>>>>>>>
+>>>>>>>>>> Note, this does not provide support for using two different 
+>>>>>>>>>> SSPP blocks
+>>>>>>>>>> for a single plane or using two rectangles of an SSPP to drive 
+>>>>>>>>>> two
+>>>>>>>>>> planes. Each plane still gets its own SSPP and can utilize 
+>>>>>>>>>> either a solo
+>>>>>>>>>> rectangle or both multirect rectangles depending on the 
+>>>>>>>>>> resolution.
+>>>>>>>>>>
+>>>>>>>>>> Note #2: By default support for virtual planes is turned off 
+>>>>>>>>>> and the
+>>>>>>>>>> driver still uses old code path with preallocated SSPP block 
+>>>>>>>>>> for each
+>>>>>>>>>> plane. To enable virtual planes, pass 
+>>>>>>>>>> 'msm.dpu_use_virtual_planes=1'
+>>>>>>>>>> kernel parameter.
+>>>>>>>>>>
+
+While posting the next revision, can you pls leave a note in the commit 
+text on the reason behind picking crtc_id for sspp allocation and not 
+encoder_id?
+
+I recall you mentioned that, two rects of the smartDMA cannot goto two 
+LMs. This is true. But crtc mapping need not goto 1:1 with LM mapping. 
+It depends on topology. I think I forgot the full explanation for this 
+aspect of it. Hence it will be better to note that in the commit text.
+
+
+>>>>>>>>>
+>>>>>>>>> I like the overall approach in this patch. Some comments below.
+>>>>>>>>>
+>>>>>>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>>>>>> ---
+>>>>>>>>>>       drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  50 +++++
+>>>>>>>>>>       drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  10 +-
+>>>>>>>>>>       drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h   |   4 +
+>>>>>>>>>>       drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 230 
+>>>>>>>>>> +++++++++++++++++++---
+>>>>>>>>>>       drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  19 ++
+>>>>>>>>>>       drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    |  77 ++++++++
+>>>>>>>>>>       drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h    |  28 +++
+>>>>>>>>>>       7 files changed, 390 insertions(+), 28 deletions(-)
+>>>>>>>>>>
+>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
+>>>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>>>>>>> index 88c2e51ab166..794c5643584f 100644
+>>>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>>>>>>>> @@ -1168,6 +1168,49 @@ static bool 
+>>>>>>>>>> dpu_crtc_needs_dirtyfb(struct drm_crtc_state *cstate)
+>>>>>>>>>>             return false;
+>>>>>>>>>>       }
+>>>>>>>>>> +static int dpu_crtc_reassign_planes(struct drm_crtc *crtc, 
+>>>>>>>>>> struct drm_crtc_state *crtc_state)
+>>>>>>>>>> +{
+>>>>>>>>>> + int total_planes = crtc->dev->mode_config.num_total_plane;
+>>>>>>>>>> + struct drm_atomic_state *state = crtc_state->state;
+>>>>>>>>>> + struct dpu_global_state *global_state;
+>>>>>>>>>> + struct drm_plane_state **states;
+>>>>>>>>>> + struct drm_plane *plane;
+>>>>>>>>>> + int ret;
+>>>>>>>>>> +
+>>>>>>>>>> + global_state = dpu_kms_get_global_state(crtc_state->state);
+>>>>>>>>>> + if (IS_ERR(global_state))
+>>>>>>>>>> +         return PTR_ERR(global_state);
+>>>>>>>>>> +
+>>>>>>>>>> + dpu_rm_release_all_sspp(global_state, crtc);
+>>>>>>>>>> +
+>>>>>>>>>
+>>>>>>>>> Do we need to call dpu_rm_release_all_sspp() even in the
+>>>>>>>>> _dpu_plane_atomic_disable()?
+>>>>>>>>
+>>>>>>>> It allows the driver to optimize the usage of the SSPP rectangles.
+>>>>>>>>
+>>>>>>>
+>>>>>>> No, what I meant was that we should call 
+>>>>>>> dpu_rm_release_all_sspp() in
+>>>>>>> dpu_plane_atomic_update() as well because in the atomic_check() 
+>>>>>>> path where
+>>>>>>> its called today, its being called only for zpos_changed and 
+>>>>>>> planes_changed
+>>>>>>> but during disable we must call this for sure.
+>>>>>>
+>>>>>> No. the dpu_rm_release_all_sspp() should only be called during check.
+>>>>>> When dpu_plane_atomic_update() is called, the state should already be
+>>>>>> finalised. The atomic_check() callback is called when a plane is 
+>>>>>> going
+>>>>>> to be disabled.
+>>>>>>
+>>>>>
+>>>>> atomic_check() will be called when plane is disabled but
+>>>>> dpu_rm_release_all_sspp() may not be called as it is protected by
+>>>>> zpos_changed and planes_changed. OR you need to add a !visible check
+>>>>> here to call dpu_rm_release_all_sspp() that time. Thats whay I wrote
+>>>>> previously.
+>>>>
+>>>> Unless I miss something, if a plane gets disabled, then obviously
+>>>> planes_changed is true.
+>>>>
+>>>> [trimmed]
+>>>>
+>>>
+>>> Do you mean DRM fwk sets planes_changed correctly for this case?
+>>>
+>>> Currently we have
+>>>
+>>>           if (!new_state->visible) {
+>>>                   _dpu_plane_atomic_disable(plane);
+>>>           } else {
+>>>                   dpu_plane_sspp_atomic_update(plane);
+>>>           }
+>>>
+>>> So I wanted to ensure that when plane gets disabled, its SSPP is freed
+>>> too. If this is confirmed, I do not have any concerns.
+>>
+>> This is the atomic_update() path, not the atomic_check()
+>>
 > 
-> Now that the planes are fully virtualized, add support for allocating
-> two SSPP blocks to drive a single DRM plane. This fixes both mentioned
-> cases and allows all planes to go up to 2*max_linewidth (at the cost of
-> making some of the planes unavailable to the user).
+> Yes, I am aware.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 172 ++++++++++++++++------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |   8 +
->   2 files changed, 131 insertions(+), 49 deletions(-)
+> Let me clarify my question here once again.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 2961b809ccf3..cde20c1fa90d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -886,6 +886,28 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
->   	return 0;
->   }
->   
-> +static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
-> +						   struct dpu_sw_pipe_cfg *pipe_cfg,
-> +						   const struct dpu_format *fmt,
-> +						   uint32_t max_linewidth)
-> +{
-> +	if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
-> +	    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect))
-> +		return false;
-> +
-> +	if (pipe_cfg->rotation & DRM_MODE_ROTATE_90)
-> +		return false;
-> +
-> +	if (DPU_FORMAT_IS_YUV(fmt))
-> +		return false;
-> +
-> +	if (DPU_FORMAT_IS_UBWC(fmt) &&
-> +	    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth / 2)
-> +		return false;
-> +
-> +	return true;
-> +}
-> +
-
-This is a good idea to separate out multirect checks to a separate API. 
-I think can push this part of the change even today.
-
->   static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
->   					struct drm_atomic_state *state,
->   					const struct drm_crtc_state *crtc_state)
-> @@ -899,7 +921,6 @@ static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
->   	const struct dpu_format *fmt;
->   	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
->   	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
-> -	uint32_t max_linewidth;
->   	uint32_t supported_rotations;
->   	const struct dpu_sspp_cfg *pipe_hw_caps;
->   	const struct dpu_sspp_sub_blks *sblk;
-> @@ -919,15 +940,8 @@ static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
->   	      drm_rect_height(&new_plane_state->dst))))
->   		return -ERANGE;
->   
-> -	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -
->   	fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
->   
-> -	max_linewidth = pdpu->catalog->caps->max_linewidth;
-> -
->   	supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0;
->   
->   	if (pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION))
-> @@ -943,41 +957,6 @@ static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
->   		return ret;
->   
->   	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
-> -		/*
-> -		 * In parallel multirect case only the half of the usual width
-> -		 * is supported for tiled formats. If we are here, we know that
-> -		 * full width is more than max_linewidth, thus each rect is
-> -		 * wider than allowed.
-> -		 */
-> -		if (DPU_FORMAT_IS_UBWC(fmt) &&
-> -		    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
-> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, tiled format\n",
-> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-> -			return -E2BIG;
-> -		}
-> -
-> -		if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
-> -		    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
-> -		    (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
-> -		     !test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features)) ||
-> -		    pipe_cfg->rotation & DRM_MODE_ROTATE_90 ||
-> -		    DPU_FORMAT_IS_YUV(fmt)) {
-> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, can't use split source\n",
-> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-> -			return -E2BIG;
-> -		}
-> -
-> -		/*
-> -		 * Use multirect for wide plane. We do not support dynamic
-> -		 * assignment of SSPPs, so we know the configuration.
-> -		 */
-> -		pipe->multirect_index = DPU_SSPP_RECT_0;
-> -		pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-> -
-> -		r_pipe->sspp = pipe->sspp;
-> -		r_pipe->multirect_index = DPU_SSPP_RECT_1;
-> -		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-> -
->   		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
->   						  &crtc_state->adjusted_mode);
->   		if (ret)
-> @@ -998,16 +977,16 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
->   	struct dpu_sw_pipe *pipe = &pstate->pipe;
->   	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
-> +	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
-> +	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
->   	const struct drm_crtc_state *crtc_state = NULL;
->   
->   	if (new_plane_state->crtc)
->   		crtc_state = drm_atomic_get_new_crtc_state(state,
->   							   new_plane_state->crtc);
->   
-> -	if (pdpu->pipe != SSPP_NONE) {
-> -		pipe->sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
-> -		r_pipe->sspp = NULL;
-> -	}
-> +	pipe->sspp = dpu_rm_get_sspp(&dpu_kms->rm, pdpu->pipe);
-> +	r_pipe->sspp = NULL;
->   
->   	if (!pipe->sspp)
->   		return -EINVAL;
-> @@ -1019,6 +998,52 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	if (!new_plane_state->visible)
->   		return 0;
->   
-> +	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +
-> +	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
-> +		uint32_t max_linewidth = dpu_kms->catalog->caps->max_linewidth;
-> +		const struct dpu_format *fmt;
-> +
-> +		fmt = to_dpu_format(msm_framebuffer_format(new_plane_state->fb));
-> +
-> +		/*
-> +		 * In parallel multirect case only the half of the usual width
-> +		 * is supported for tiled formats. If we are here, we know that
-> +		 * full width is more than max_linewidth, thus each rect is
-> +		 * wider than allowed.
-> +		 */
-> +		if (DPU_FORMAT_IS_UBWC(fmt) &&
-> +		    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
-> +			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, tiled format\n",
-> +					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-> +			return -E2BIG;
-> +		}
-> +
-> +		r_pipe->sspp = pipe->sspp;
-> +
-> +		if (!dpu_plane_is_multirect_parallel_capable(pipe, pipe_cfg, fmt, max_linewidth) ||
-> +		    !dpu_plane_is_multirect_parallel_capable(r_pipe, r_pipe_cfg, fmt, max_linewidth) ||
-> +		    !(test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) ||
-> +		      test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features))) {
-> +			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u, can't use split source\n",
-> +					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-> +			return -E2BIG;
-> +		}
-> +
-> +		/*
-> +		 * Use multirect for wide plane. We do not support dynamic
-> +		 * assignment of SSPPs, so we know the configuration.
-> +		 */
-> +		pipe->multirect_index = DPU_SSPP_RECT_0;
-> +		pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-> +
-> +		r_pipe->multirect_index = DPU_SSPP_RECT_1;
-> +		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-> +	}
-> +
-
-I might be wrong here, but it seems like this part was moved to 
-dpu_plane_atomic_check_nopipe() in patch 6 and now being brought back 
-(atleast most of it) to dpu_plane_atomic_check().
-
-If this is correct, then the migration in patch 6 was not necessary.
-
->   	return dpu_plane_atomic_check_pipes(plane, state, crtc_state);
->   }
->   
-> @@ -1053,10 +1078,18 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
->   
->   	format = to_dpu_format(msm_framebuffer_format(plane_state->fb));
->   
-> -	/* force resource reallocation if the format of FB has changed */
-> -	if (pstate->saved_fmt != format) {
-> +	/* force resource reallocation if the format of FB or src/dst have changed */
-> +	if (pstate->saved_fmt != format ||
-> +	    pstate->saved_src_w != plane_state->src_w ||
-> +	    pstate->saved_src_h != plane_state->src_h ||
-> +	    pstate->saved_src_w != plane_state->src_w ||
-> +	    pstate->saved_crtc_h != plane_state->crtc_h) {
->   		crtc_state->planes_changed = true;
->   		pstate->saved_fmt = format;
-> +		pstate->saved_src_w = plane_state->src_w;
-> +		pstate->saved_src_h = plane_state->src_h;
-> +		pstate->saved_crtc_w = plane_state->crtc_w;
-> +		pstate->saved_crtc_h = plane_state->crtc_h;
->   	}
-
-Is thic chunk checking that if the src/dst have changed, this plane 
-might span more than one LM?
-
-Will be better to add more comment on why we are also checking src/dest 
-changes.
-
-Overall, can we just use for_each_oldnew_plane_in_state to compare the 
-prev and current dimensions and drop saved_****?
-
->   
->   	return 0;
-> @@ -1074,7 +1107,10 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->   	struct dpu_plane_state *pstate;
->   	struct dpu_sw_pipe *pipe;
->   	struct dpu_sw_pipe *r_pipe;
-> +	struct dpu_sw_pipe_cfg *pipe_cfg;
-> +	struct dpu_sw_pipe_cfg *r_pipe_cfg;
->   	const struct dpu_format *fmt;
-> +	uint32_t max_linewidth;
->   
->   	if (plane_state->crtc)
->   		crtc_state = drm_atomic_get_new_crtc_state(state,
-> @@ -1083,6 +1119,8 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->   	pstate = to_dpu_plane_state(plane_state);
->   	pipe = &pstate->pipe;
->   	r_pipe = &pstate->r_pipe;
-> +	pipe_cfg = &pstate->pipe_cfg;
-> +	r_pipe_cfg = &pstate->r_pipe_cfg;
->   
->   	pipe->sspp = NULL;
->   	r_pipe->sspp = NULL;
-> @@ -1097,10 +1135,46 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->   
->   	reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
->   
-> +	max_linewidth = dpu_kms->catalog->caps->max_linewidth;
-> +
->   	pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
->   	if (!pipe->sspp)
->   		return -ENODEV;
->   
-> +	if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
-> +		pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +		pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +
-> +		r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +
-> +		r_pipe->sspp = NULL;
-> +	} else {
-> +		if (dpu_plane_is_multirect_parallel_capable(pipe, pipe_cfg, fmt, max_linewidth) &&
-> +		    dpu_plane_is_multirect_parallel_capable(r_pipe, r_pipe_cfg, fmt, max_linewidth) &&
-> +		    (test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) ||
-> +		     test_bit(DPU_SSPP_SMART_DMA_V2, &pipe->sspp->cap->features))) {
-> +			r_pipe->sspp = pipe->sspp;
-> +
-> +			pipe->multirect_index = DPU_SSPP_RECT_0;
-> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-> +
-> +			r_pipe->multirect_index = DPU_SSPP_RECT_1;
-> +			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
-> +		} else {
-> +			/* multirect is not possible, use two SSPP blocks */
-> +			r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> +			if (!r_pipe->sspp)
-> +				return -ENODEV;
-> +
-> +			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +
-> +			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +		}
-> +	}
-> +
-
-This chunk LGTM.
-
->   	return dpu_plane_atomic_check_pipes(plane, state, crtc_state);
->   }
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> index 15f7d60d8b85..5522f9035d68 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> @@ -31,6 +31,10 @@
->    * @plane_clk: calculated clk per plane
->    * @needs_dirtyfb: whether attached CRTC needs pixel data explicitly flushed
->    * @saved_fmt: format used by the plane's FB, saved for for virtual plane support
-> + * @saved_src_w: cached value of plane's src_w, saved for for virtual plane support
-> + * @saved_src_h: cached value of plane's src_h, saved for for virtual plane support
-> + * @saved_crtc_w: cached value of plane's crtc_w, saved for for virtual plane support
-> + * @saved_crtc_h: cached value of plane's crtc_h, saved for for virtual plane support
->    */
->   struct dpu_plane_state {
->   	struct drm_plane_state base;
-> @@ -49,6 +53,10 @@ struct dpu_plane_state {
->   	bool needs_dirtyfb;
->   
->   	const struct dpu_format *saved_fmt;
-> +	uint32_t saved_src_w;
-> +	uint32_t saved_src_h;
-> +	uint32_t saved_crtc_w;
-> +	uint32_t saved_crtc_h;
->   };
->   
->   #define to_dpu_plane_state(x) \
+> 1) dpu_rm_release_all_sspp() gets called only in atomic_check() when 
+> either planes_changed or zpos_changed is set
+> 2) But even in _dpu_plane_atomic_disable(), we should call 
+> dpu_rm_release_all_sspp() unconditionally. So for this, as you wrote, 
+> the corresponding atomic_check() call of _dpu_plane_atomic_disable() is 
+> supposed to do this. atomic_check() checks planes_changed and 
+> zpos_changed but not !visible before calling dpu_rm_release_all_sspp().
+> 
+> Will planes_changed be set even when !visible?
+> 
+> I am trying to make sure that dpu_rm_release_all_sspp() will get called 
+> for the _dpu_plane_atomic_disable(). Thats all.
+> 
+>>>
+>>>>>
+>>>>>>>>>> @@ -1486,7 +1593,7 @@ struct drm_plane *dpu_plane_init(struct 
+>>>>>>>>>> drm_device *dev,
+>>>>>>>>>>             supported_rotations = DRM_MODE_REFLECT_MASK | 
+>>>>>>>>>> DRM_MODE_ROTATE_0 | DRM_MODE_ROTATE_180;
+>>>>>>>>>> - if (pipe_hw->cap->features & BIT(DPU_SSPP_INLINE_ROTATION))
+>>>>>>>>>> + if (inline_rotation)
+>>>>>>>>>>                     supported_rotations |= DRM_MODE_ROTATE_MASK;
+>>>>>>>>>>             drm_plane_create_rotation_property(plane,
+>>>>>>>>>> @@ -1494,10 +1601,81 @@ struct drm_plane 
+>>>>>>>>>> *dpu_plane_init(struct drm_device *dev,
+>>>>>>>>>>             drm_plane_enable_fb_damage_clips(plane);
+>>>>>>>>>> - /* success! finalize initialization */
+>>>>>>>>>> + DPU_DEBUG("%s created for pipe:%u id:%u\n", plane->name,
+>>>>>>>>>> +                                 pipe, plane->base.id);
+>>>>>>>>>> + return plane;
+>>>>>>>>>> +}
+>>>>>>>>>> +
+>>>>>>>>>> +struct drm_plane *dpu_plane_init(struct drm_device *dev,
+>>>>>>>>>> +                          uint32_t pipe, enum drm_plane_type 
+>>>>>>>>>> type,
+>>>>>>>>>> +                          unsigned long possible_crtcs)
+>>>>>>>>>> +{
+>>>>>>>>>> + struct drm_plane *plane = NULL;
+>>>>>>>>>> + struct msm_drm_private *priv = dev->dev_private;
+>>>>>>>>>> + struct dpu_kms *kms = to_dpu_kms(priv->kms);
+>>>>>>>>>> + struct dpu_hw_sspp *pipe_hw;
+>>>>>>>>>> +
+>>>>>>>>>> + /* initialize underlying h/w driver */
+>>>>>>>>>> + pipe_hw = dpu_rm_get_sspp(&kms->rm, pipe);
+>>>>>>>>>> + if (!pipe_hw || !pipe_hw->cap || !pipe_hw->cap->sblk) {
+>>>>>>>>>> +         DPU_ERROR("[%u]SSPP is invalid\n", pipe);
+>>>>>>>>>> +         return ERR_PTR(-EINVAL);
+>>>>>>>>>> + }
+>>>>>>>>>> +
+>>>>>>>>>> +
+>>>>>>>>>> + plane = dpu_plane_init_common(dev, type, possible_crtcs,
+>>>>>>>>>> +                               pipe_hw->cap->features & 
+>>>>>>>>>> BIT(DPU_SSPP_INLINE_ROTATION),
+>>>>>>>>>> +                               pipe_hw->cap->sblk->format_list,
+>>>>>>>>>> +                               pipe_hw->cap->sblk->num_formats,
+>>>>>>>>>> +                               pipe);
+>>>>>>>>>> + if (IS_ERR(plane))
+>>>>>>>>>> +         return plane;
+>>>>>>>>>> +
+>>>>>>>>>>             drm_plane_helper_add(plane, &dpu_plane_helper_funcs);
+>>>>>>>>>>             DPU_DEBUG("%s created for pipe:%u id:%u\n", 
+>>>>>>>>>> plane->name,
+>>>>>>>>>>                                             pipe, 
+>>>>>>>>>> plane->base.id);
+>>>>>>>>>> +
+>>>>>>>>>> + return plane;
+>>>>>>>>>> +}
+>>>>>>>>>> +
+>>>>>>>>>> +struct drm_plane *dpu_plane_init_virtual(struct drm_device *dev,
+>>>>>>>>>> +                                  enum drm_plane_type type,
+>>>>>>>>>> +                                  unsigned long possible_crtcs)
+>>>>>>>>>> +{
+>>>>>>>>>> + struct drm_plane *plane = NULL;
+>>>>>>>>>> + struct msm_drm_private *priv = dev->dev_private;
+>>>>>>>>>> + struct dpu_kms *kms = to_dpu_kms(priv->kms);
+>>>>>>>>>> + bool has_inline_rotation = false;
+>>>>>>>>>> + const u32 *format_list = NULL;
+>>>>>>>>>> + u32 num_formats = 0;
+>>>>>>>>>> + int i;
+>>>>>>>>>> +
+>>>>>>>>>> + /* Determine the largest configuration that we can implement */
+>>>>>>>>>> + for (i = 0; i < kms->catalog->sspp_count; i++) {
+>>>>>>>>>> +         const struct dpu_sspp_cfg *cfg = 
+>>>>>>>>>> &kms->catalog->sspp[i];
+>>>>>>>>>> +
+>>>>>>>>>> +         if (test_bit(DPU_SSPP_INLINE_ROTATION, &cfg->features))
+>>>>>>>>>> +                 has_inline_rotation = true;
+>>>>>>>>>> +
+>>>>>>>>>> +         if (!format_list ||
+>>>>>>>>>> +             cfg->sblk->csc_blk.len) {
+>>>>>>>>>
+>>>>>>>>> But format_list is being assigned to NULL just a few lines 
+>>>>>>>>> above. Why is
+>>>>>>>>> this check needed?
+>>>>>>>>
+>>>>>>>> It was assigned before the loop.
+>>>>>>>>
+>>>>>>>
+>>>>>>> Yes, I got this part but missed on why we needed the loop at all.
+>>>>>>
+>>>>>> Which set of formats should the virtual plane use?
+>>>>>>
+>>>>>>>>>
+>>>>>>>>> I dont get why this part can also goto dpu_plane_init_common() 
+>>>>>>>>> as it looks
+>>>>>>>>> identical to me.
+>>>>>>>>
+>>>>>>>> And it is not. For the non-virtual case there is no loop around 
+>>>>>>>> formats
+>>>>>>>> list assignment.
+>>>>>>>>
+>>>>>>>
+>>>>>>> Ah okay, I misunderstood the logic. After reading the comment 
+>>>>>>> above the loop
+>>>>>>> I get what you are trying to do here.
+>>>>>>>
+>>>>>>> But I dont get why you really need to do that?
+>>>>>>>
+>>>>>>> 1) In this patch the relationship between virtual plane and SSPP 
+>>>>>>> is still
+>>>>>>> 1:1 so what is wrong to retain the sspp's actual format for the 
+>>>>>>> plane rather
+>>>>>>> than picking the best format (you are targetting Vig SSPP)
+>>>>>>
+>>>>>> No. With this patch there is no 1:1 relationship. The RM will 
+>>>>>> select the
+>>>>>> SSPP that suits the requirements (YUV, scaling, rotation, etc).
+>>>>>>
+>>>>>
+>>>>> Yes but there is always only one SSPP for one plane is what I meant.
+>>>>> That does not change till the next patch.
+>>>>>
+>>>>> In that sense, I dont see why you need to expose the superset of 
+>>>>> formats.
+>>>>
+>>>> Let me please repeat my question: what set of formats should be used
+>>>> for plane init?
+>>>>
+>>>
+>>> So, my point here was that in the loop, in this patch, we create one
+>>> plane for one SSPP, why dont we just use the same SSPP's format for that
+>>> plane.
+>>
+>> Which SSPP? There is no SSPP attached to a virtual plane.
+>>
+> 
+> dpu_plane_init_virtual() gets called for each SSPP of the catalog in 
+> this patchset just like dpu_plane_init().
+> 
+> The only difference is dpu_plane_init() also passes the pipe but 
+> dpu_plane_init_virtual() does not.
+> 
+> Would it be incorrect to also pass along the sspp's fmt list (from the 
+> catalog->sspp loop) to dpu_plane_init_virtual() instead of the superset?
+> 
+>>>
+>>> In the next patch, when the same plane can attach to two different
+>>> SSPPs, we will use the superset of the SSPPs. IOW, do we need the
+>>> superset in this patch itself?
+>>>
+>>>>>
+>>>>>>> In fact, that will reduce atomic_check() failures with this patch 
+>>>>>>> because
+>>>>>>> compositor will still work the same way as it used to work before 
+>>>>>>> by not
+>>>>>>> trying an unsupported format on a plane.
+>>>>>>
+>>>>>> The virtual plane should support any of the formats that the backing
+>>>>>> hardware can support. If (for example) we only had RGB-only and 
+>>>>>> YUV-only
+>>>>>> hardware blocks, the driver would have to construct a _superset_ of
+>>>>>> those formats. Fortunately this is not the case and VIG supports a
+>>>>>> strict superset of what DMA (or RGB) SSPP supports.
+>>>>>>
+>>>>>
+>>>>> Yes, thats why I said plane_formats_yuv is enough in my next point 
+>>>>> below
+>>>>> because Vig is super set of DMA or IOW Vig is the most feature rich 
+>>>>> plane.
+>>>>
+>>>> QCM2290 doesn't have YUV support if I'm not mistaken.
+>>>>
+>>>
+>>> qcm2290_sspp has YUV support but no scaling support as per the catalog.
+>>> It uses _VIG_SBLK_NOSCALE which still has plane_formats_yuv.
+>>
+>> I'll check it on the real hw. I remember that I had questions 
+>> regarding it.
+>>
+>>>
+>>>>>
+>>>>>>> If one plane maps to two SSPPs, then yes we can go with the 
+>>>>>>> superset of
+>>>>>>> formats but that comes in a later patch right?
+>>>>>>>
+>>>>>>> 2) So even if we want to do it this way from this patch itself, I 
+>>>>>>> think all
+>>>>>>> you are looking for is whether there is a Vig SSPP and if so use
+>>>>>>> plane_formats_yuv. There is no need for this loop IMO.
+>>>>>>>
+>>>>>>> 3) I noticed that virt_format_list is still present in the 
+>>>>>>> driver. If you
+>>>>>>> are planning to not use that perhaps drop it with this series.
+>>>>>>
+>>>>>> Ack
+>>>>>>
+>>>>>>>
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>>> +                 format_list = cfg->sblk->format_list;
+>>>>>>>>>> +                 num_formats = cfg->sblk->num_formats;
+>>>>>>>>>> +         }
+>>>>>>>>>> + }
+>>>>>>>>>> +
+>>>>>>>>>> + plane = dpu_plane_init_common(dev, type, possible_crtcs,
+>>>>>>>>>> +                               has_inline_rotation,
+>>>>>>>>>> +                               format_list,
+>>>>>>>>>> +                               num_formats,
+>>>>>>>>>> +                               SSPP_NONE);
+>>>>>>>>>
+>>>>>>>>> Ok, here is the part which we were discussing in
+>>>>>>>>>
+>>>>>>>>> https://patchwork.freedesktop.org/patch/582820/?series=131109&rev=1#comment_1087370
+>>>>>>>>>
+>>>>>>>>> So yes, that part belongs to this patch.
+>>>>>>>>
+>>>>>>>> I'll check it while preparing the next iteration.
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>>> + if (IS_ERR(plane))
+>>>>>>>>>> +         return plane;
+>>>>>>>>>> +
+>>>>>>>>>> + drm_plane_helper_add(plane, &dpu_plane_virtual_helper_funcs);
+>>>>>>>>>> +
+>>>>>>>>>> + DPU_DEBUG("%s created virtual id:%u\n", plane->name, 
+>>>>>>>>>> plane->base.id);
+>>>>>>>>>> +
+>>>>>>>>>>             return plane;
+>>>>>>>>>>       }
+>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h 
+>>>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+>>>>>>>>>> index a3ae45dc95d0..15f7d60d8b85 100644
+>>>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+>>>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
+>>>>>>>>>> @@ -30,6 +30,7 @@
+>>>>>>>>>>        * @plane_fetch_bw: calculated BW per plane
+>>>>>>>>>>        * @plane_clk: calculated clk per plane
+>>>>>>>>>>        * @needs_dirtyfb: whether attached CRTC needs pixel 
+>>>>>>>>>> data explicitly flushed
+>>>>>>>>>> + * @saved_fmt: format used by the plane's FB, saved for for 
+>>>>>>>>>> virtual plane support
+>>>>>>>>>>        */
+>>>>>>>>>>       struct dpu_plane_state {
+>>>>>>>>>>             struct drm_plane_state base;
+>>>>>>>>>> @@ -46,6 +47,8 @@ struct dpu_plane_state {
+>>>>>>>>>>             u64 plane_clk;
+>>>>>>>>>>             bool needs_dirtyfb;
+>>>>>>>>>> +
+>>>>>>>>>> + const struct dpu_format *saved_fmt;
+>>>>>>>>>>       };
+>>>>>>>>>
+>>>>>>>>> Why is saved_fmt needed?
+>>>>>>>>>
+>>>>>>>>> The use-case which comes to my mind is lets say if we have a 
+>>>>>>>>> RGB format and
+>>>>>>>>> we need to switch to a YUV format, basically switch from DMA to 
+>>>>>>>>> ViG SSPP,
+>>>>>>>>> then yes we have to mark planes_changed as we need to switch 
+>>>>>>>>> the underlying
+>>>>>>>>> SSPP that time, but why cant we simply check that by means of a 
+>>>>>>>>> check to see
+>>>>>>>>> if the fmt is YUV and whether CSC block is present in the SSPP.
+>>>>>>>>
+>>>>>>>> Yes, correct. And vice versa, going from YUV to RGB might free 
+>>>>>>>> the VIG
+>>>>>>>> SSPP.
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> This will lead to dpu_crtc_reassign_planes() getting called for 
+>>>>>>>>> format
+>>>>>>>>> changes even when the new format might be available in the same 
+>>>>>>>>> SSPP.
+>>>>>>>>
+>>>>>>>> So use 'needs_vig' instead of storing the format? Sounds good to 
+>>>>>>>> me.
+>>>>>>>>
+>>>>>>>
+>>>>>>> Yes thats the idea. Basically "needs_reassignment". You could 
+>>>>>>> even go from
+>>>>>>> Vig to DMA if the use-case can just use DMA to save up Vig.
+>>>>>>>
+>>>>>>> Also, do we really need to cache anything in the plane state to 
+>>>>>>> track this?
+>>>>>>>
+>>>>>>> If we have a function called dpu_crtc_needs_plane_reassignment() 
+>>>>>>> will go
+>>>>>>> through the current plane state and the current SSPP from the 
+>>>>>>> global state
+>>>>>>> and see if needs reassignment.
+>>>>>>
+>>>>>> No, looking at the global state won't be possible here. I'd have 
+>>>>>> to lock
+>>>>>> the private object before consulting it, which might cause EDEADLOCK
+>>>>>> later on during resource reallocation. So all necessary information
+>>>>>> should be stored in the dpu_plane_state.
+>>>>>>
+>>>>>
+>>>>> But you are already calling dpu_kms_get_global_state() in
+>>>>> dpu_crtc_reassign_planes().
+>>>>
+>>>> It happens at a different point. And I'm not sure how modeset locking
+>>>> will react to an attempt to lock the private object twice.
+>>>>
+>>>
+>>> hmm, I am missing the code flow a bit.
+>>>
+>>> Inside drm_atomic_helper_check_planes(), we first have plane's
+>>> atomic_check followed by crtc's.
+>>>
+>>> In plane's atomic_check is where we are setting planes_changed by
+>>> checking whether we need re-assignment of SSPPs.
+>>>
+>>> In CRTC's atomic_check is where we have the logic to check
+>>> planes_changed and reassign the SSPPs.
+>>>
+>>> We already call dpu_kms_get_global_state() in crtc atomic_check which
+>>> means we acquire the ctx for the private object.
+>>>
+>>> Would it be incorrect to acquire it in plane's atomic_check?
+>>>
+>>> If so, can we do one of below:
+>>>
+>>> 1) call drm_modeset_drop_locks() before plane's atomic_check ends. That
+>>> way within the drm_atomic_helper_check_planes(), only one ctx is tracked
+>>> at a time.
+>>
+>> No, if I understand it correctly, this would drop all lock, so all the
+>> objects are unlocked.
+>>
+>>>
+>>> 2) if (1) wont work, would dpu_kms_get_existing_global_state() help? For
+>>> that one we do not need the locking.
+>>
+>> I'll check whether this works as expected.
+>>
+>> But really I don't see a problem that you are trying to solve. It is
+>> too early to run SSPP allocation before dpu_crtc_atomic_check(). We
+>> need a set of all the plane states that are used by the CRTC. Even
+>> though it is not needed for this patch (it can work with just single
+>> plane state), it doesn't make sense to rewire that again, within the
+>> same patchset.
+>>
+> 
+> The problem I am trying to solve is to avoid caching any previous state 
+> like saved_fmt OR needs_yuv in the state and keep growing that list when 
+> that information is already available to us in the current global state.
+> 
+> I would like to avoid adding new cached information just to track prev 
+> and current state unless that information is indeed not available.
+> 
+>>>
+>>>
+>>>>>
+>>>>>>>
+>>>>>>>>>
+>>>>>>>>>>       #define to_dpu_plane_state(x) \
+>>>>>>>>>> @@ -75,6 +78,16 @@ struct drm_plane *dpu_plane_init(struct 
+>>>>>>>>>> drm_device *dev,
+>>>>>>>>>>                     uint32_t pipe, enum drm_plane_type type,
+>>>>>>>>>>                     unsigned long possible_crtcs);
+>>>>>>>>>> +/**
+>>>>>>>>>> + * dpu_plane_init_virtual - create new dpu virtualized plane
+>>>>>>>>>> + * @dev:   Pointer to DRM device
+>>>>>>>>>> + * @type:  Plane type - PRIMARY/OVERLAY/CURSOR
+>>>>>>>>>> + * @possible_crtcs: bitmask of crtc that can be attached to 
+>>>>>>>>>> the given pipe
+>>>>>>>>>> + */
+>>>>>>>>>> +struct drm_plane *dpu_plane_init_virtual(struct drm_device *dev,
+>>>>>>>>>> +                                  enum drm_plane_type type,
+>>>>>>>>>> +                                  unsigned long possible_crtcs);
+>>>>>>>>>> +
+>>>>>>>>>>       /**
+>>>>>>>>>>        * dpu_plane_color_fill - enables color fill on plane
+>>>>>>>>>>        * @plane:  Pointer to DRM plane object
+>>>>>>>>>> @@ -91,4 +104,10 @@ void dpu_plane_danger_signal_ctrl(struct 
+>>>>>>>>>> drm_plane *plane, bool enable);
+>>>>>>>>>>       static inline void dpu_plane_danger_signal_ctrl(struct 
+>>>>>>>>>> drm_plane *plane, bool enable) {}
+>>>>>>>>>>       #endif
+>>>>>>>>>> +int dpu_assign_plane_resources(struct dpu_global_state 
+>>>>>>>>>> *global_state,
+>>>>>>>>>> +                        struct drm_atomic_state *state,
+>>>>>>>>>> +                        struct drm_crtc *crtc,
+>>>>>>>>>> +                        struct drm_plane_state **states,
+>>>>>>>>>> +                        unsigned int num_planes);
+>>>>>>>>>> +
+>>>>>>>>>>       #endif /* _DPU_PLANE_H_ */
+>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c 
+>>>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>>>>>>>> index 44938ba7a2b7..7264a4d44a14 100644
+>>>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>>>>>>>> @@ -694,6 +694,83 @@ int dpu_rm_reserve(
+>>>>>>>>>>             return ret;
+>>>>>>>>>>       }
+>>>>>>>>>> +struct dpu_hw_sspp *dpu_rm_reserve_sspp(struct dpu_rm *rm,
+>>>>>>>>>> +                                 struct dpu_global_state 
+>>>>>>>>>> *global_state,
+>>>>>>>>>> +                                 struct drm_crtc *crtc,
+>>>>>>>>>> +                                 struct 
+>>>>>>>>>> dpu_rm_sspp_requirements *reqs)
+>>>>>>>>>> +{
+>>>>>>>>>> + uint32_t crtc_id = crtc->base.id;
+>>>>>>>>>> + unsigned int weight, best_weght = UINT_MAX;
+>>>>>>>>>
+>>>>>>>>> best_weight?
+>>>>>>>>
+>>>>>>>> Yes
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>>> + struct dpu_hw_sspp *hw_sspp;
+>>>>>>>>>> + unsigned long mask = 0;
+>>>>>>>>>> + int i, best_idx = -1;
+>>>>>>>>>> +
+>>>>>>>>>> + /*
+>>>>>>>>>> +  * Don't take cursor feature into consideration until there 
+>>>>>>>>>> is proper support for SSPP_CURSORn.
+>>>>>>>>>> +  */
+>>>>>>>>>> + mask |= BIT(DPU_SSPP_CURSOR);
+>>>>>>>>>> +
+>>>>>>>>>> + if (reqs->scale)
+>>>>>>>>>> +         mask |= BIT(DPU_SSPP_SCALER_RGB) |
+>>>>>>>>>> +                 BIT(DPU_SSPP_SCALER_QSEED2) |
+>>>>>>>>>> +                 BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE);
+>>>>>>>>>> +
+>>>>>>>>>> + if (reqs->yuv)
+>>>>>>>>>> +         mask |= BIT(DPU_SSPP_CSC) |
+>>>>>>>>>> +                 BIT(DPU_SSPP_CSC_10BIT);
+>>>>>>>>>> +
+>>>>>>>>>> + if (reqs->rot90)
+>>>>>>>>>> +         mask |= BIT(DPU_SSPP_INLINE_ROTATION);
+>>>>>>>>>> +
+>>>>>>>>>> + for (i = 0; i < ARRAY_SIZE(rm->hw_sspp); i++) {
+>>>>>>>>>> +         if (!rm->hw_sspp[i])
+>>>>>>>>>> +                 continue;
+>>>>>>>>>> +
+>>>>>>>>>> +         if (global_state->sspp_to_crtc_id[i])
+>>>>>>>>>> +                 continue;
+>>>>>>>>>> +
+>>>>>>>>>> +         hw_sspp = rm->hw_sspp[i];
+>>>>>>>>>> +
+>>>>>>>>>> +         /* skip incompatible planes */
+>>>>>>>>>> +         if (reqs->scale && !hw_sspp->cap->sblk->scaler_blk.len)
+>>>>>>>>>> +                 continue;
+>>>>>>>>>> +
+>>>>>>>>>> +         if (reqs->yuv && !hw_sspp->cap->sblk->csc_blk.len)
+>>>>>>>>>> +                 continue;
+>>>>>>>>>> +
+>>>>>>>>>> +         if (reqs->rot90 && !(hw_sspp->cap->features & 
+>>>>>>>>>> DPU_SSPP_INLINE_ROTATION))
+>>>>>>>>>> +                 continue;
+>>>>>>>>>> +
+>>>>>>>>>> +         /*
+>>>>>>>>>> +          * For non-yuv, non-scaled planes prefer simple (DMA 
+>>>>>>>>>> or RGB)
+>>>>>>>>>> +          * plane, falling back to VIG only if there are no 
+>>>>>>>>>> such planes.
+>>>>>>>>>> +          *
+>>>>>>>>>> +          * This way we'd leave VIG sspps to be later used 
+>>>>>>>>>> for YUV formats.
+>>>>>>>>>> +          */
+>>>>>>>>>> +         weight = hweight64(hw_sspp->cap->features & ~mask);
+>>>>>>>>>
+>>>>>>>>> This approach is assuming that ViG feature masks are more than 
+>>>>>>>>> DMA.
+>>>>>>>>> Hence the hweight of DMA SSPP's features is less than hweight 
+>>>>>>>>> of ViG SSPPs.
+>>>>>>>>>
+>>>>>>>>> Is this really true? Because there are other bits such as 
+>>>>>>>>> DMA_SDM845_MASK
+>>>>>>>>> which might increase the hweight of DMA SSPPs
+>>>>>>>>
+>>>>>>>> Which bits are present in the DMA mask, which are not present in 
+>>>>>>>> the VIG
+>>>>>>>> mask? Also for the older platforms there are three kinds of 
+>>>>>>>> planes: VIG,
+>>>>>>>> DMA and RGB. The selection algorithm should not require significant
+>>>>>>>> changes to support that case.
+>>>>>>>>
+>>>>>>>
+>>>>>>> DMA_SDM845_MASK has DPU_SSPP_QOS_8LVL which is not there in 
+>>>>>>> VIG_MSM8998_MASK
+>>>>>>> afaict. But we really cannot be counting the number of feature 
+>>>>>>> bits and
+>>>>>>> going by that.
+>>>>>>
+>>>>>> MSM8998 uses DMA_MSM8998_MASK, not DMA_SDM845_MASK.
+>>>>>>
+>>>
+>>> I forgot to update this point, for sm6375_sspp, it uses DMA_SDM845_MASK
+>>> for DMA and VIG_SDM845_MASK for VIG. So my point is applicable for
+>>> sm6375 atleast.
+>>
+>> DPU_SSPP_QOS_8LVL is enabled in both VIG_SDM845_MASK and DMA_SDM845_MASK
+>>
+>>>>>>> Hence, inherently, going by hweight is not right because whenever 
+>>>>>>> we add a
+>>>>>>> catalog change to add a new feature bit to SSPP, we have to come 
+>>>>>>> back here
+>>>>>>> and make sure this logic will not break.
+>>>>>>>>>
+>>>>>>>>> I would rather make it simpler.
+>>>>>>>>>
+>>>>>>>>> 1) if we need scaling || yuv, then we have to get only a Vig
+>>>>>>>>> 2) else, first try to get a DMA SSPP
+>>>>>>>>
+>>>>>>>> How would you distinguish between VIG and DMA?
+>>>>>>>>
+>>>>>>>
+>>>>>>> the type SSPP_TYPE_VIG OR SSPP_TYPE_DMA. We also have a 
+>>>>>>> SSPP_TYPE_RGB so
+>>>>>>> that should address your concern about the third type of plane 
+>>>>>>> (Vig, DMA,
+>>>>>>> RGB).
+>>>>>>
+>>>>>> I don't particularly like the idea of using type. We still need to
+>>>>>> evaluate plane's features. Consider QCM2290, where VIG planes do not
+>>>>>> support scaling.
+>>>>>>
+>>>>>> I will evaluate if I can rework this part to use type, while still
+>>>>>> checking for the feature bit. BTW: should we prefer RGB or DMA 
+>>>>>> plane if
+>>>>>> all other conditions are met?
+>>>>>>
+>>>>>
+>>>>> Ok, qcm2290 really seems like an odd case but point taken.
+>>>>>
+>>>>> I am fine if it needs to be a combination of type and feature bit but
+>>>>> certainly not hweight of feature bit. If you want to use type along 
+>>>>> with
+>>>>> presence of scaler blk feature bit thats fine.
+>>>>>
+>>>>> I need to check if there is any feature loss in RGB Vs DMA. Let me 
+>>>>> check
+>>>>> and get back. This needs some history digging.
+>>>>
+>>>> Sure.
+>>
 
