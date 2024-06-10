@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-22222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0576F902B8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 00:25:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB604902B8C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 00:26:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 81CC1282AE1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 22:25:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5DFB22829E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 22:26:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 103861514C0;
-	Mon, 10 Jun 2024 22:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AB7D1514FD;
+	Mon, 10 Jun 2024 22:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="XhGU1jQO"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Yl4MEXmL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D8515098F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 22:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8813E1514D8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 22:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718058339; cv=none; b=Ihb+WqP1FykCkAi9NFK+Sv8Lnrjxel9Urk4s2BMs5QJkSNCacXSL05eJDRGVmwEDef/avpI66w21CFneeZaVaB4IPWNjlJBNRBSSqeUwh+L/d0zlVsMjM6MeDMXbCTd61D1N5Bzl7/qwGHed2gNn38uc/ZZLOXcXG/+VutsX4oY=
+	t=1718058340; cv=none; b=FVSP6Wff5AwAjZO+6JFNUdhy2KLrg2r87h16vKlUMN8LMwnVO98i1xJiYNAIvmi7JOvaEGo1++mzpuZgptgGkv3okLrRASBl4xlmTI/5KrgYRzLBqhnM05ImCFLuEdg0V/2JAdYOsjVkr9277GlVpe8hq6m7gjp3bmlVGyH84N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718058339; c=relaxed/simple;
-	bh=+RxVcrk5xlinIyKBU8E8yKLsymOqJrp8Zmr9e1mtnNc=;
+	s=arc-20240116; t=1718058340; c=relaxed/simple;
+	bh=b/gmORW177pH358qwBll4nCzl18LhbdthrWxcEpd3WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hw5rkrL3BDYp8tZyBFxSW5K/YoBbliZWynftKOjvarYInjc1oXMmaXIrshL4/9EgEpsNDH7hG8AjyWvmHNWMWAXbxoMPW0CP5OaQFiuWbZZ5pEkNsvwEq+9epvdrunB+Ykods84A6AdiJ7j87kxH5Hl50w0f4AYvKmAxWRI8UQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=XhGU1jQO; arc=none smtp.client-ip=209.85.214.176
+	 MIME-Version:Content-Type; b=t6rx2zx6Ou8yQABl1xI/k2tG2LBXhefokmvHoMQYotImnHJrtahX4c3x0UXXD/8hhQoXG9mWRt7NghnnURS7qPT/wYS+FAGiJGXed27XKODxJN7mb3NVbjPGpEoRc801y9tF8Aahj0rJ69MY5Iv+KgZb1m7M7VmQOkWPnA6TjzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Yl4MEXmL; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1f717b3f2d8so9356325ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 15:25:36 -0700 (PDT)
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1f6a837e9a3so29657305ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Jun 2024 15:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1718058336; x=1718663136; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1718058339; x=1718663139; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fyDnUVi7f01VKkUwYe3kP2/vlms1ESU+sUAt3unZHAg=;
-        b=XhGU1jQOpxq8bONZwPPsHHLaV3UQVq/GKl1B6jBpQ5MsEOpOin8j2bMaNhWRY9wqEH
-         vo845YmHGuqLPMbVkXa9GXE6h0H5K0/K/90Z3E+OIgTp3OD6PV+qX5uHHTpgsMH42gXZ
-         +UfEQubIHNsXgx2iaVkQvB+qIP4YpT/RFJ4Ng=
+        bh=nKk/Fcf4krWK/CutdJaQNqib/rpK58721OaB/B0Az0c=;
+        b=Yl4MEXmLY1Hlh4sAr3wjNFtQ3BaO0gFGzAI7U5DW1fjXy6EpvqNrx5c/Iy1oucxc5N
+         j/DnNXxi8fGqv0KcWHqj5dByyQvsT7zXM+pynSCjm2tJmvxk8BKNBBZ+CsqYoQUyIGQ+
+         p1aH18VNQfC21BJV3maG+uPpiegxBXG+o9zZI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718058336; x=1718663136;
+        d=1e100.net; s=20230601; t=1718058339; x=1718663139;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fyDnUVi7f01VKkUwYe3kP2/vlms1ESU+sUAt3unZHAg=;
-        b=KWk0ir6hgq2YqfXF5EvdQ3Sy248jXqDS0n/85/cT4oejiMZ+ACs+ZRT6rUhNqc6Nhc
-         WEMGktAQVb4FxdtoJyMOj0M77suhtmFKEnn6debjZ3d6xoTnYifVSKUUVfcAsnacWAjm
-         MfiR8EodmQIghKdC81l5NxcaQXeCuvRnjyd+BNbwI9pbZFdOgPG7rMdc56eA2uS7NU0B
-         XwsrnNRctv0sm8S1gI4gJfmzKGi9Oa8JwynX2LKKtq1XIFF/OwKVhX8m6EFijoYoPfvA
-         mNtBmMkPwzMRqx7KLDCmw5Zbn0du85u23ruyOMZ7zh9gqNeG4CK0h6SUUA+wbcfAZ3w7
-         pE4w==
-X-Forwarded-Encrypted: i=1; AJvYcCVJkPzqKkyhnxhcNjVRHg5OWjQ2CQGDy9fRCNtMPapcONEaLYHz/Hzfvea8n7a6103Y/ggMtJ/fhavzi5xPLQOsNq+9GKdaqkgwAwCa6g==
-X-Gm-Message-State: AOJu0Yxe+IyksJIs5AP39bkECULkzYh7HPsUVNm8gR/9njvwoRfbZ8mL
-	kJaaFF9ZIUfukywJzVpv8VGjvZqgj1NZSvfzVFYguFTGW0QrUbrX2SknAjKwfA==
-X-Google-Smtp-Source: AGHT+IHKwUPrbCmgwcYQyfYNHQzhIsajNRjs/TPs5xRJljWfg9/8As8zTXUgUwq2P5ekE1wC6HHkcw==
-X-Received: by 2002:a17:903:22c2:b0:1f4:8bb9:924f with SMTP id d9443c01a7336-1f72879f841mr9952475ad.1.1718058336214;
-        Mon, 10 Jun 2024 15:25:36 -0700 (PDT)
+        bh=nKk/Fcf4krWK/CutdJaQNqib/rpK58721OaB/B0Az0c=;
+        b=EHlnNzGmNmDoaekozLJOsrUpT78kIcPU2RuRq3mSFWWpPA0lDhr+8jhVZOSXZ2CYUT
+         roI5451BAMUJKHl8/QH+Lxp8K6MH/usR+471t952rmn95UzQmMiLvNZRNijzkV3ANML5
+         plq+hceedo83jqq7OwBrxm2gBTiYYwwy1wr2xu/equi2hzZJVwcHmfh/SgZANxfWH//O
+         yRvUIknR/XH0F6iR6UbCzN4jjZNun6LGSKzQr8zSQPeqSubzlsaIY4ZsWuw3P1ugiA4R
+         QhnS32JIe2yXYKB2DseavQpNlcM3kDFwmfXO+CfFKt7Nf53ydnu+EoFL+/taS7vTgKs5
+         RXCw==
+X-Forwarded-Encrypted: i=1; AJvYcCXD2bVg4kSFS2Z4UlYN68+PEb/f10y+oDLXXHTBAMdwTEmu6rbSCuq9jCSky4nTolbl0zJhJCcPgNUHH13iIVgSdWeU5NNRH+zvvvArXw==
+X-Gm-Message-State: AOJu0Yw5nvxyU09v+Wa+Yyha+coPDVsUUNx3ey9VeYEm1WMdpfCWPhD6
+	Wy223Tjx8kF7HBHwHXBvKz+SkHEhhwQnTscLOgXu/7ar+8dy+72XN2FQXhkVyA==
+X-Google-Smtp-Source: AGHT+IEPvKsxtcTKyVFqYj3DMCQNNVcrn0tqX55aDDTvedwEK+TaMY96o+XSdyorpL5zdw3WSjvBxg==
+X-Received: by 2002:a17:902:dace:b0:1f7:2dca:ea39 with SMTP id d9443c01a7336-1f72dcaf3a1mr3583725ad.68.1718058338829;
+        Mon, 10 Jun 2024 15:25:38 -0700 (PDT)
 Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:bba2:69f4:1b51:d0f5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f71029e223sm29212325ad.170.2024.06.10.15.25.34
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f71029e223sm29212325ad.170.2024.06.10.15.25.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jun 2024 15:25:35 -0700 (PDT)
+        Mon, 10 Jun 2024 15:25:37 -0700 (PDT)
 From: Douglas Anderson <dianders@chromium.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiri Slaby <jirislaby@kernel.org>
@@ -81,9 +81,9 @@ Cc: Yicong Yang <yangyicong@hisilicon.com>,
 	linux-kernel@vger.kernel.org,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH v4 1/8] soc: qcom: geni-se: Add GP_LENGTH/IRQ_EN_SET/IRQ_EN_CLEAR registers
-Date: Mon, 10 Jun 2024 15:24:19 -0700
-Message-ID: <20240610152420.v4.1.Ife7ced506aef1be3158712aa3ff34a006b973559@changeid>
+Subject: [PATCH v4 2/8] tty: serial: Add uart_fifo_timeout_ms()
+Date: Mon, 10 Jun 2024 15:24:20 -0700
+Message-ID: <20240610152420.v4.2.I65a6430ab75f74d20c28b5c5f819dd5b8455933d@changeid>
 X-Mailer: git-send-email 2.45.2.505.gda0bf45e8d-goog
 In-Reply-To: <20240610222515.3023730-1-dianders@chromium.org>
 References: <20240610222515.3023730-1-dianders@chromium.org>
@@ -93,74 +93,63 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-For UART devices the M_GP_LENGTH is the TX word count. For other
-devices this is the transaction word count.
+The current uart_fifo_timeout() returns jiffies, which is not always
+the most convenient for callers. Add a variant uart_fifo_timeout_ms()
+that returns the timeout in milliseconds.
 
-For UART devices the S_GP_LENGTH is the RX word count.
+NOTES:
+- msecs_to_jiffies() rounds up, unlike nsecs_to_jiffies(). This is
+  because msecs_to_jiffies() is actually intended for device drivers
+  to calculate timeout value. This means we don't need to take the max
+  of the timeout and "1" since the timeout will always be > 0 ms (we
+  add 20 ms of slop).
+- uart_fifo_timeout_ms() returns "unsigned int" but we leave
+  uart_fifo_timeout() returning "unsigned long". This matches the
+  types of msecs_to_jiffies().
 
-The IRQ_EN set/clear registers allow you to set or clear bits in the
-IRQ_EN register without needing a read-modify-write.
-
-Acked-by: Bjorn Andersson <andersson@kernel.org>
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
-Since these new definitions are used in the future UART patches and
-Bjorn has Acked them, I'd expect them to go through the same tree as
-the UART patches that need them.
-
-Note: in v4 I added the GP_LENGTH but kept Bjorn's Ack since it seemed
-very minor.
 
 Changes in v4:
-- Add GP_LENGTH field definition.
-
-Changes in v2:
 - New
 
- include/linux/soc/qcom/geni-se.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/linux/serial_core.h | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
-index 0f038a1a0330..c3bca9c0bf2c 100644
---- a/include/linux/soc/qcom/geni-se.h
-+++ b/include/linux/soc/qcom/geni-se.h
-@@ -88,11 +88,15 @@ struct geni_se {
- #define SE_GENI_M_IRQ_STATUS		0x610
- #define SE_GENI_M_IRQ_EN		0x614
- #define SE_GENI_M_IRQ_CLEAR		0x618
-+#define SE_GENI_M_IRQ_EN_SET		0x61c
-+#define SE_GENI_M_IRQ_EN_CLEAR		0x620
- #define SE_GENI_S_CMD0			0x630
- #define SE_GENI_S_CMD_CTRL_REG		0x634
- #define SE_GENI_S_IRQ_STATUS		0x640
- #define SE_GENI_S_IRQ_EN		0x644
- #define SE_GENI_S_IRQ_CLEAR		0x648
-+#define SE_GENI_S_IRQ_EN_SET		0x64c
-+#define SE_GENI_S_IRQ_EN_CLEAR		0x650
- #define SE_GENI_TX_FIFOn		0x700
- #define SE_GENI_RX_FIFOn		0x780
- #define SE_GENI_TX_FIFO_STATUS		0x800
-@@ -101,6 +105,8 @@ struct geni_se {
- #define SE_GENI_RX_WATERMARK_REG	0x810
- #define SE_GENI_RX_RFR_WATERMARK_REG	0x814
- #define SE_GENI_IOS			0x908
-+#define SE_GENI_M_GP_LENGTH		0x910
-+#define SE_GENI_S_GP_LENGTH		0x914
- #define SE_DMA_TX_IRQ_STAT		0xc40
- #define SE_DMA_TX_IRQ_CLR		0xc44
- #define SE_DMA_TX_FSM_RST		0xc58
-@@ -234,6 +240,9 @@ struct geni_se {
- #define IO2_DATA_IN			BIT(1)
- #define RX_DATA_IN			BIT(0)
+diff --git a/include/linux/serial_core.h b/include/linux/serial_core.h
+index 8cb65f50e830..97968acfd564 100644
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -889,14 +889,21 @@ unsigned int uart_get_divisor(struct uart_port *port, unsigned int baud);
+ /*
+  * Calculates FIFO drain time.
+  */
+-static inline unsigned long uart_fifo_timeout(struct uart_port *port)
++static inline unsigned int uart_fifo_timeout_ms(struct uart_port *port)
+ {
+ 	u64 fifo_timeout = (u64)READ_ONCE(port->frame_time) * port->fifosize;
++	unsigned int fifo_timeout_ms = div_u64(fifo_timeout, NSEC_PER_MSEC);
  
-+/* SE_GENI_M_GP_LENGTH and SE_GENI_S_GP_LENGTH fields */
-+#define GP_LENGTH			GENMASK(31, 0)
-+
- /* SE_DMA_TX_IRQ_STAT Register fields */
- #define TX_DMA_DONE			BIT(0)
- #define TX_EOT				BIT(1)
+-	/* Add .02 seconds of slop */
+-	fifo_timeout += 20 * NSEC_PER_MSEC;
++	/*
++	 * Add .02 seconds of slop. This also helps account for the fact that
++	 * when we converted from ns to ms that we didn't round up.
++	 */
++	return fifo_timeout_ms + 20;
++}
+ 
+-	return max(nsecs_to_jiffies(fifo_timeout), 1UL);
++static inline unsigned long uart_fifo_timeout(struct uart_port *port)
++{
++	return msecs_to_jiffies(uart_fifo_timeout_ms(port));
+ }
+ 
+ /* Base timer interval for polling */
 -- 
 2.45.2.505.gda0bf45e8d-goog
 
