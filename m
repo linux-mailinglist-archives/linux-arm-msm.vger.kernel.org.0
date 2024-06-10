@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-22152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 827B490187B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 00:19:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41880901959
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 04:21:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0295D1F21184
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Jun 2024 22:19:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B039D281A8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 02:21:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EE561F95A;
-	Sun,  9 Jun 2024 22:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DED028EC;
+	Mon, 10 Jun 2024 02:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UcG/T8D2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RIf4KEIU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F81EAF9;
-	Sun,  9 Jun 2024 22:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C9137B;
+	Mon, 10 Jun 2024 02:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717971545; cv=none; b=fjgDBd8aNzhPESFUu2QFsu9GHpmHfEt34hCX5L8iKZndoDenerMa63uQxNwMMmdKVUK7Q2ThdOdEw+FMmjqGgs+s7dFw1vugmSRbwCfS9yOEQo8yZO0XMxcKgHucC86l/Q2esmnw8Sz1xD2RtLYlCl/CaE5GKkgp92srdsmzUFU=
+	t=1717986106; cv=none; b=nRkavPJu+8JSlIHcLHtBsj1Z6Zm/0h5djlbiNjLlrH4C4Q61l5VsW//+y5hcgNZ+GHxaCnhJFK2RCY3qpxRIVQKH4qB/sCfI9h/yfLhJrv2Gt0bF20KG062eYwW0BloR+Oc3yfqyENL/aiLe27CSu3wHij44L2bJ2nrdUhqaXfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717971545; c=relaxed/simple;
-	bh=ySuyf8UbF0zWjzvwoGYc+ew5iXeHZUMDNjl7NU6DiCc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=k05XrsWKwwXHCXereFqBb+aiNd3nXCx2G7hZnNqfVzhYDjdL9LP3COtFRm8Kvcy4HCWiZdL4einEDW5gVBb+l2nIdenUKdfzFbAfMlOdjWdtyr9PSfxY1RATHWiTLnY6+0GkknYuMQatcypIyIK+/qRfwO2cDUZkkhHKuvW9wdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UcG/T8D2; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1717986106; c=relaxed/simple;
+	bh=temh3GWDe8csOvN1HEol0Fh2OT0MGFy8HGOe+fdk4Nw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=sK3fU5W4DIZwGDOVyJ2KjDdiFtuUDAbAmfhKHJPHzyQdfAGGum1Z3x9ezPgvRJTR6yjz58+mDwVLQp/F2lmFzdxJ2Q0AVwInXz4s4VVdOY0hI0M4EbQTnORAk6eoJ6Ig54ObcTeisD1CydO1ddStKshnZs6ljG1MWJRp3uCEoWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RIf4KEIU; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 459KrZO1025542;
-	Sun, 9 Jun 2024 22:19:00 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45A1vFqv024507;
+	Mon, 10 Jun 2024 02:21:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=N5eQqMFkP57lxHjn9HDz4v
-	EB4SJwMNThRpvnJhhQHpw=; b=UcG/T8D211BCdRfNuk8HKiQOqHIZxskACmAEVr
-	lyFv1zz86XpAEDMi6OYEywDEjWf7cQP6RJtFPQeq1hjG7SFs1/i3WePbjHs0ADuV
-	Pw++JbP4fwlXHAueLZQOWk/3hts65pJi7yYGnPiksNTlPu3tnHOlAGaod9kIbUIs
-	/6rRdnobjSZwqZ6NjXX3ts8whHm0uwKPnqPmU0tW45Gnxs2yei4/k3cyYz3Y9FAj
-	3EiWAVu9hRx6wL9PggQOeYOwE89uWstW5zyJG/BW0FTTXp0PL6uYZN4I50bNezB6
-	s8yF/XWrlnXRP0Zzxw1mbwW5GD5ey0Wzn1OhSj7p4WxVXeWg==
+	:mime-version:subject:to; s=qcppdkim1; bh=FaS7UVPglZYt5wqWsJFyaz
+	f0/L3Vrqak+m7hqBPt4+w=; b=RIf4KEIU1KXNz5Fy7FRzh6kr+6uUvIS0iTy2uD
+	DEU75UxypqQoJSYgNIxnkoOdlQb9VEi/HkmVA967gQFogz538GsXVJDCV0RIYSI1
+	T5Air6QgF7lWTg6pBl/CJgWhDc64ob1bGJxiaVLOkBGV2aAiJMuKGlEhUiVvpwGb
+	WTvFQcvJxoft6xpiqzRhvNJcgeWrx4xjznnuZGmR8/3+0MIDPCD33mRMdSR1RlAX
+	jJ6QZ44FJpy0ZSGKVW0jB+n/cF6w+FdWN5slAjYqkg5mURli0z+CC6eBS0sOwlXT
+	9o9S/i8JbdCA8CsXv6c9s/8qZsAP8qawTF7imAlIvtQ1tuNg==
 Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymfp7a3dg-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymcnmtfwy-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 09 Jun 2024 22:19:00 +0000 (GMT)
+	Mon, 10 Jun 2024 02:21:31 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 459MIwr8002475
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45A2LUQ0008473
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 9 Jun 2024 22:18:59 GMT
+	Mon, 10 Jun 2024 02:21:30 GMT
 Received: from [169.254.0.1] (10.49.16.6) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 9 Jun 2024
- 15:18:58 -0700
+ 19:21:29 -0700
 From: Jeff Johnson <quic_jjohnson@quicinc.com>
-Date: Sun, 9 Jun 2024 15:18:58 -0700
-Subject: [PATCH] spi: add missing MODULE_DESCRIPTION() macros
+Date: Sun, 9 Jun 2024 19:21:28 -0700
+Subject: [PATCH] mfd: add missing MODULE_DESCRIPTION() macros
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,114 +65,151 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240609-md-drivers-spi-v1-1-1c7444f53cde@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAFEqZmYC/x3MQQqDQAxG4atI1g2kIoq9SulixvlbA3UqSSuCe
- PeOLr/Fexs5TOF0qzYyLOr6yQXXS0XDGPILrKmYaqkbaaXnKXEyXWDOPiv3XdcEoE0ShUo0G56
- 6nsP7ozgGB0cLeRiPzVvzb+Up+BdG+/4HTCSgnX8AAAA=
-To: Mark Brown <broonie@kernel.org>
-CC: <linux-spi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        "Jeff
- Johnson" <quic_jjohnson@quicinc.com>
+Message-ID: <20240609-md-drivers-mfd-v1-1-47cdd0b394e9@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIACdjZmYC/x3MQQrCMBBG4auUWTsQg4j1KuJi2vyxAybKjC2F0
+ rsbXX6L9zZymMLp2m1kWNT1VRuOh47GSeoDrKmZYoincA49l8TJdIE5l5wYOaCPiPmShFr0NmR
+ d/8PbvXkQBw8mdZx+m6fWeeUi/oHRvn8BplOLm38AAAA=
+To: Lee Jones <lee@kernel.org>, Andy Shevchenko <andy@kernel.org>,
+        Liviu Dudau
+	<liviu.dudau@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>
+CC: <patches@opensource.cirrus.com>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <kernel-janitors@vger.kernel.org>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>
 X-Mailer: b4 0.13.0
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 35kC_feu8IiuVCZfmxFCPlL9L7wanhBE
-X-Proofpoint-ORIG-GUID: 35kC_feu8IiuVCZfmxFCPlL9L7wanhBE
+X-Proofpoint-GUID: fNSLfaQVD5hvbpEjrH7wwIjmA0LHQH8C
+X-Proofpoint-ORIG-GUID: fNSLfaQVD5hvbpEjrH7wwIjmA0LHQH8C
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-09_17,2024-06-06_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=999 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
- priorityscore=1501 clxscore=1011 bulkscore=0 impostorscore=0 mlxscore=0
+ definitions=2024-06-09_18,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 clxscore=1011 adultscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406090175
+ engine=8.19.0-2405170001 definitions=main-2406100016
 
-make allmodconfig && make W=1 C=1 reports:
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spi/spi-altera-core.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spi/spi-fsl-lib.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spi/spi-omap2-mcspi.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spi/spi-qup.o
+On x86, make allmodconfig && make W=1 C=1 reports:
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/arizona.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/pcf50633-gpio.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/timberdale.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/ssbi.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/rt4831.o
+WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/intel_soc_pmic_bxtwc.o
 
-Add the missing invocations of the MODULE_DESCRIPTION() macro.
+Add the missing invocation of the MODULE_DESCRIPTION() macro to all
+files which have a MODULE_LICENSE().
+
+This includes mfd-core.c and vexpress-sysreg.c which, although they
+did not produce a warning with the x86 allmodconfig configuration, may
+cause this warning with other configurations.
 
 Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 ---
- drivers/spi/spi-altera-core.c | 1 +
- drivers/spi/spi-fsl-cpm.c     | 1 +
- drivers/spi/spi-fsl-lib.c     | 1 +
- drivers/spi/spi-omap-uwire.c  | 1 +
- drivers/spi/spi-omap2-mcspi.c | 1 +
- drivers/spi/spi-qup.c         | 1 +
- 6 files changed, 6 insertions(+)
+ drivers/mfd/arizona-core.c         | 1 +
+ drivers/mfd/intel_soc_pmic_bxtwc.c | 1 +
+ drivers/mfd/mfd-core.c             | 1 +
+ drivers/mfd/pcf50633-gpio.c        | 1 +
+ drivers/mfd/rt4831.c               | 1 +
+ drivers/mfd/ssbi.c                 | 1 +
+ drivers/mfd/timberdale.c           | 1 +
+ drivers/mfd/vexpress-sysreg.c      | 1 +
+ 8 files changed, 8 insertions(+)
 
-diff --git a/drivers/spi/spi-altera-core.c b/drivers/spi/spi-altera-core.c
-index 87e37f48f196..7af097929116 100644
---- a/drivers/spi/spi-altera-core.c
-+++ b/drivers/spi/spi-altera-core.c
-@@ -219,4 +219,5 @@ void altera_spi_init_host(struct spi_controller *host)
+diff --git a/drivers/mfd/arizona-core.c b/drivers/mfd/arizona-core.c
+index 19a0adf8ce3d..85ff8717d850 100644
+--- a/drivers/mfd/arizona-core.c
++++ b/drivers/mfd/arizona-core.c
+@@ -1429,4 +1429,5 @@ int arizona_dev_exit(struct arizona *arizona)
  }
- EXPORT_SYMBOL_GPL(altera_spi_init_host);
+ EXPORT_SYMBOL_GPL(arizona_dev_exit);
  
-+MODULE_DESCRIPTION("Altera SPI Controller driver core");
- MODULE_LICENSE("GPL");
-diff --git a/drivers/spi/spi-fsl-cpm.c b/drivers/spi/spi-fsl-cpm.c
-index e335132080bf..23ad1249f121 100644
---- a/drivers/spi/spi-fsl-cpm.c
-+++ b/drivers/spi/spi-fsl-cpm.c
-@@ -415,4 +415,5 @@ void fsl_spi_cpm_free(struct mpc8xxx_spi *mspi)
- }
- EXPORT_SYMBOL_GPL(fsl_spi_cpm_free);
- 
-+MODULE_DESCRIPTION("Freescale SPI controller driver CPM functions");
- MODULE_LICENSE("GPL");
-diff --git a/drivers/spi/spi-fsl-lib.c b/drivers/spi/spi-fsl-lib.c
-index 4fc2c56555b5..bb7a625db5b0 100644
---- a/drivers/spi/spi-fsl-lib.c
-+++ b/drivers/spi/spi-fsl-lib.c
-@@ -158,4 +158,5 @@ int of_mpc8xxx_spi_probe(struct platform_device *ofdev)
- }
- EXPORT_SYMBOL_GPL(of_mpc8xxx_spi_probe);
- 
-+MODULE_DESCRIPTION("Freescale SPI/eSPI controller driver library");
- MODULE_LICENSE("GPL");
-diff --git a/drivers/spi/spi-omap-uwire.c b/drivers/spi/spi-omap-uwire.c
-index 210a98d903fa..03b820e85651 100644
---- a/drivers/spi/spi-omap-uwire.c
-+++ b/drivers/spi/spi-omap-uwire.c
-@@ -541,5 +541,6 @@ static void __exit omap_uwire_exit(void)
- subsys_initcall(omap_uwire_init);
- module_exit(omap_uwire_exit);
- 
-+MODULE_DESCRIPTION("MicroWire interface driver for OMAP");
- MODULE_LICENSE("GPL");
- 
-diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
-index 7e3083b83534..b428990f6931 100644
---- a/drivers/spi/spi-omap2-mcspi.c
-+++ b/drivers/spi/spi-omap2-mcspi.c
-@@ -1671,4 +1671,5 @@ static struct platform_driver omap2_mcspi_driver = {
- };
- 
- module_platform_driver(omap2_mcspi_driver);
-+MODULE_DESCRIPTION("OMAP2 McSPI controller driver");
- MODULE_LICENSE("GPL");
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index 2af63040ac6e..1e335cd961a4 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1369,5 +1369,6 @@ static struct platform_driver spi_qup_driver = {
- };
- module_platform_driver(spi_qup_driver);
- 
-+MODULE_DESCRIPTION("Qualcomm SPI controller with QUP interface");
++MODULE_DESCRIPTION("Wolfson Arizona core driver");
  MODULE_LICENSE("GPL v2");
- MODULE_ALIAS("platform:spi_qup");
+diff --git a/drivers/mfd/intel_soc_pmic_bxtwc.c b/drivers/mfd/intel_soc_pmic_bxtwc.c
+index 8dac0d41f64f..ba32cacfc499 100644
+--- a/drivers/mfd/intel_soc_pmic_bxtwc.c
++++ b/drivers/mfd/intel_soc_pmic_bxtwc.c
+@@ -581,5 +581,6 @@ static struct platform_driver bxtwc_driver = {
+ 
+ module_platform_driver(bxtwc_driver);
+ 
++MODULE_DESCRIPTION("Intel Broxton Whiskey Cove PMIC MFD core driver");
+ MODULE_LICENSE("GPL v2");
+ MODULE_AUTHOR("Qipeng Zha <qipeng.zha@intel.com>");
+diff --git a/drivers/mfd/mfd-core.c b/drivers/mfd/mfd-core.c
+index 6ad5c93027af..b2742b1dce0c 100644
+--- a/drivers/mfd/mfd-core.c
++++ b/drivers/mfd/mfd-core.c
+@@ -437,5 +437,6 @@ int devm_mfd_add_devices(struct device *dev, int id,
+ }
+ EXPORT_SYMBOL(devm_mfd_add_devices);
+ 
++MODULE_DESCRIPTION("Core MFD support");
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Ian Molton, Dmitry Baryshkov");
+diff --git a/drivers/mfd/pcf50633-gpio.c b/drivers/mfd/pcf50633-gpio.c
+index 4d2b53b12eeb..3e368219479a 100644
+--- a/drivers/mfd/pcf50633-gpio.c
++++ b/drivers/mfd/pcf50633-gpio.c
+@@ -88,4 +88,5 @@ int pcf50633_gpio_power_supply_set(struct pcf50633 *pcf,
+ }
+ EXPORT_SYMBOL_GPL(pcf50633_gpio_power_supply_set);
+ 
++MODULE_DESCRIPTION("NXP PCF50633 GPIO Driver");
+ MODULE_LICENSE("GPL");
+diff --git a/drivers/mfd/rt4831.c b/drivers/mfd/rt4831.c
+index f8d6dc55b558..1ab8870e4ebf 100644
+--- a/drivers/mfd/rt4831.c
++++ b/drivers/mfd/rt4831.c
+@@ -115,4 +115,5 @@ static struct i2c_driver rt4831_driver = {
+ module_i2c_driver(rt4831_driver);
+ 
+ MODULE_AUTHOR("ChiYuan Huang <cy_huang@richtek.com>");
++MODULE_DESCRIPTION("Richtek RT4831 core driver");
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/mfd/ssbi.c b/drivers/mfd/ssbi.c
+index f849f2d34ec7..6e7aff6e2746 100644
+--- a/drivers/mfd/ssbi.c
++++ b/drivers/mfd/ssbi.c
+@@ -319,6 +319,7 @@ static struct platform_driver ssbi_driver = {
+ };
+ module_platform_driver(ssbi_driver);
+ 
++MODULE_DESCRIPTION("Qualcomm Single-wire Serial Bus Interface (SSBI) driver");
+ MODULE_LICENSE("GPL v2");
+ MODULE_VERSION("1.0");
+ MODULE_ALIAS("platform:ssbi");
+diff --git a/drivers/mfd/timberdale.c b/drivers/mfd/timberdale.c
+index a41e9a3e2064..333d5b874de3 100644
+--- a/drivers/mfd/timberdale.c
++++ b/drivers/mfd/timberdale.c
+@@ -853,4 +853,5 @@ module_pci_driver(timberdale_pci_driver);
+ 
+ MODULE_AUTHOR("Mocean Laboratories <info@mocean-labs.com>");
+ MODULE_VERSION(DRV_VERSION);
++MODULE_DESCRIPTION("Timberdale FPGA MFD driver");
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/mfd/vexpress-sysreg.c b/drivers/mfd/vexpress-sysreg.c
+index eab82619ec31..d34d58ce46db 100644
+--- a/drivers/mfd/vexpress-sysreg.c
++++ b/drivers/mfd/vexpress-sysreg.c
+@@ -132,4 +132,5 @@ static struct platform_driver vexpress_sysreg_driver = {
+ };
+ 
+ module_platform_driver(vexpress_sysreg_driver);
++MODULE_DESCRIPTION("Versatile Express system registers driver");
+ MODULE_LICENSE("GPL v2");
 
 ---
-base-commit: 19ca0d8a433ff37018f9429f7e7739e9f3d3d2b4
-change-id: 20240609-md-drivers-spi-9774aee6d0b0
+base-commit: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670
+change-id: 20240609-md-drivers-mfd-ef0e92e2f8da
 
 
