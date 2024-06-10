@@ -1,109 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-22200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A526D902401
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 16:25:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A6CA90249F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 16:51:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 590FE1F224F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 14:25:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6D0BB27769
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 14:50:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07DCC84A4A;
-	Mon, 10 Jun 2024 14:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBB2B74048;
+	Mon, 10 Jun 2024 14:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AMsgFN04"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nfQBkOM3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C47824BC;
-	Mon, 10 Jun 2024 14:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BE1132108;
+	Mon, 10 Jun 2024 14:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718029538; cv=none; b=MdkgsGYIUdlGu22cQ3l2t16BqD+pidGZhCqjae2DRvtTKA4F+i8IUJyZROlrTLcoDAjLnLqM4cePDtytIPeOPLBz37FP2lDDQ212t9OIOB4luZH5w9am41I+01VwYFuyQF9OnetenhEUTlHye9dHOJ3ydYIOVjTGsVZQyW90Qik=
+	t=1718031049; cv=none; b=XYnuiGryaGamGSEERtkWCqbjMHji6kgpnRwGiHYaBBo3ht1gQg+6sBhxF4DRHrF44cJvnxvPu9cPq12VwS2bpqozwieA4KH+PQf2SvnqjedjQsITf45ZEHwQE3LntDLNM68eK+2k/YxT4ptXjDR59Amq9yO/SmnzUQ/V/lLrZX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718029538; c=relaxed/simple;
-	bh=2oNIHC1/qajiws6A5qnA832XS8nRceNwT6VYS3zw6hI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ay8+TVbGiRvzD7KdlBLANJLWmNvlnPmDPPVKXu1heqvokmjfXaLj2u/l0ZDXHclUJGogNCpxVRUnhwtzWxfbya9KgkP/a/WPhDOwv8BCcTUA/6kp6RU5H1t7fkgU0FSZGVvJyf3q+/Ze5zvgxIQ4cKmJay1fI3mT3HvPIgfTiPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AMsgFN04; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9743EC2BBFC;
-	Mon, 10 Jun 2024 14:25:37 +0000 (UTC)
+	s=arc-20240116; t=1718031049; c=relaxed/simple;
+	bh=yXPl4ziNypOqobIyVC50Zd47hNqbxMWLfgaCob3s0I8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EaHimtZrHAEWPoNGTZJLaAkaWYwRkJgG0+CRbJFmUi5umtLtZ0B1B6fMj1wfPMXMWxZKmrHW22xFW+zN1IEYu3knv2N2Q//c/3Ou3pMRTLHCcKcs5A2aGhlWgvtOZA0AWVd5WH34VGYmqsfD/Z9s0Pf+si0E8VRb6BK598CPC9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nfQBkOM3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2564EC32786;
+	Mon, 10 Jun 2024 14:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718029538;
-	bh=2oNIHC1/qajiws6A5qnA832XS8nRceNwT6VYS3zw6hI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AMsgFN04/6zYDUEgta/tqx/wvy22e6q2954Ge7IN7SZBJYplQ/VoYBC9o3ahbfNkD
-	 88s0GBrWAYIRjnlmUCe1JpsucKPgK1A8Qcu7RkZcwVKUKyIBXHVaudEoKWyM2mPiwq
-	 MAFfFovh5oDJOOLCGB/9RZvBxUmnDEBTk3wgFrYqdkADlME2kbjJuouPWhjozNjEYC
-	 wvPvkNh3nwCk9e0NytDHcTFZRbqcm/jYLCjh7wzh6CBfodscXwF5x9Ftyooiys5Ixx
-	 641yfrmnEdSaqlWxTvd8jVctvwYc/D8v0hFfyKyCsO5dVtp33mnl14l2zSNdtBr6nH
-	 BCIA9iCtr/IjQ==
-Date: Mon, 10 Jun 2024 15:25:30 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Lee Jones <lee@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Das Srinagesh <quic_gurus@quicinc.com>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 11/12] regulator: add pm8008 pmic regulator driver
-Message-ID: <ZmcM2v02IXHM-xld@finisterre.sirena.org.uk>
-References: <20240608155526.12996-1-johan+linaro@kernel.org>
- <20240608155526.12996-12-johan+linaro@kernel.org>
+	s=k20201202; t=1718031049;
+	bh=yXPl4ziNypOqobIyVC50Zd47hNqbxMWLfgaCob3s0I8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=nfQBkOM3KfJAjVv+DJzJJ5eh722OfeGNm/CaHtkkgbTBNP/gLwP5WfB32L8SMg/nL
+	 31RSl9EgcZj8R38NhhoDoGnDrndj8bAGoC6NSw18dQeG+1SBkEp5hCtu0OjEhUa7gW
+	 n4gGiJ3G9kp3/E9m+gs9I9RG063mZtZDSNhOdmsNv5r6snx1xjtAY9TFmfNabPZRmG
+	 XhB50drb5gewti+YQQ/11OvOUsGvKMo9T8ieEWy7Q/VGK3s6QVTLspPIAIpIjdtsMF
+	 YDbi1I6BCBeRdFEbeFJI6+4yJuljsgXBA6gC8lZZNPNBx9Ph7FXR4UtXwXiJQ6laqT
+	 JShwxlQYl2gXA==
+Message-ID: <384c7c5b-73a8-42ca-8bb0-afab70309a25@kernel.org>
+Date: Mon, 10 Jun 2024 16:50:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nDGQNZhoUiVNni7Y"
-Content-Disposition: inline
-In-Reply-To: <20240608155526.12996-12-johan+linaro@kernel.org>
-X-Cookie: Your love life will be... interesting.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 1/2] power: sequencing: implement the pwrseq core
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann
+ <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Saravana Kannan <saravanak@google.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ Lukas Wunner <lukas@wunner.de>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Amit Pundir <amit.pundir@linaro.org>, Xilin Wu <wuxilin123@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
+ linux-pm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Caleb Connolly <caleb.connolly@linaro.org>
+References: <20240605123850.24857-1-brgl@bgdev.pl>
+ <20240605123850.24857-2-brgl@bgdev.pl>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240605123850.24857-2-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 05/06/2024 14:38, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Implement the power sequencing subsystem allowing devices to share
+> complex powering-up and down procedures. It's split into the consumer
+> and provider parts but does not implement any new DT bindings so that
+> the actual power sequencing is never revealed in the DT representation.
+> 
+> Tested-by: Amit Pundir <amit.pundir@linaro.org>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD, SM8650-QRD & SM8650-HDK
+> Tested-by: Caleb Connolly <caleb.connolly@linaro.org> # OnePlus 8T
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
---nDGQNZhoUiVNni7Y
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Looks fine to me, including the concept and solving real problems.
 
-On Sat, Jun 08, 2024 at 05:55:25PM +0200, Johan Hovold wrote:
-> The Qualcomm PM8008 is an I2C-controlled PMIC containing seven LDO
-> regulators.
->=20
-> The driver is based on a driver submitted by Satya Priya, but it has
-> been cleaned up and reworked to match the new devicetree binding which
-> no longer describes each regulator as a separate device.
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-Reviewed-by: Mark Brown <broonie@kernel.org>
+Best regards,
+Krzysztof
 
---nDGQNZhoUiVNni7Y
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZnDNkACgkQJNaLcl1U
-h9DhtQf9FEs9YHno5v2nXIHxCEySbIXyo4E4uiBYgMdUgo2xSADqPu+47muKU0dc
-MUMjal9spLFWGwmEZYfeIIZcXy37mqHltnjzb9ukwjkif0XVqG6EiBkYH71CgWoL
-Kk7ynxUURlvq/mRcOHxhXo5e3hbJ9sqwTZsPxqWcl11gy8dp5OcyjqxZisueB/3W
-e8/Nvb6uEEbvHe0u1fq7pqVq2A9e6kpGVRPlyUDvaRbnFnlAIwbnrGK560TBiyzm
-EMP+xJdubQSlxCeAjkyzlcRnD2RkvyYePyEuW541I3B5mZt3KewJEEpq6+HxZzan
-c8wP9JrbazrvCvopPADDELl1v/6NSw==
-=mFc2
------END PGP SIGNATURE-----
-
---nDGQNZhoUiVNni7Y--
 
