@@ -1,77 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-22197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D83C902263
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 15:06:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81E94902295
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 15:23:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A95D81F24462
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 13:06:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 163D0281997
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Jun 2024 13:23:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A850E81754;
-	Mon, 10 Jun 2024 13:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1852E82D9F;
+	Mon, 10 Jun 2024 13:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="itLslvpq"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RghWsiHj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71FB80BFC;
-	Mon, 10 Jun 2024 13:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E27C824BC;
+	Mon, 10 Jun 2024 13:22:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718024782; cv=none; b=EDA8GFm1TgeqgSG9Fj8Mnb/ocFnnVlAGnAuAxM3xBattGD9O93VioOGFIMz9FUQjANYQL21SaBPDliPTzLxAyfC0tvLMknr3Gwyy2msuqeC/xfUpwphHsiyNoKs2U/KT3cb+CeXciNScOEYw2GOxATeJMLUCb08Rz6vNHX4xE+E=
+	t=1718025775; cv=none; b=WnEKbNgWMoM9uyj/c3m+mDRX47C0dn/o1lzBbJGs+6DOI5h4AeiH5mqvO/L0cqaWyIvRIPuSjJFZX8LzEky0yd1knpmhYJphdrXbMnvUU8YBGsDTobCt0gJ6bEYYwg7Ah+AGu5jgGwJxYmFpGX06VTEakaxdo0YD9/OrM4//nt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718024782; c=relaxed/simple;
-	bh=144hdn/4UZt+z7DwMhtvAAmuC7HYAGH+e5myzRdaVFk=;
+	s=arc-20240116; t=1718025775; c=relaxed/simple;
+	bh=NepeI8ob9FXfvNHO4LXDjbHQpKCdIwqnMC08bVFhulo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TFrDApz0bb+0+C+1+dMoOK/EyjvE0I5BxomLlNdAs0L/z0uuRUEVmb3K+prU+GKCDXFievnDQZ3gRmDv/iqJCAQcG3FCgZ+IWNm0XNUThaPugTIFh36mAP1GUYdifQ/vyjSepNqxCCglxsoIxI+0VtWuVqK4+P/9IzpGFTVBXqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=itLslvpq; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=VPG9/SWMU/xeBRg2XpyT/l8yFgayPWPH/lyVtuqkPtQVCeZSgEJv/080Ek4BLFhi2CTP/RAd39cvAkqq+B9SrVjHDwt6scJBKIdtvDjQ2/TyhQbIr+IpTpbYI1O9btI06CjA2wZ6Vq6/Oh2kKzN3nRzQeS6ivKCQuOFEHKWswWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RghWsiHj; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1718024781; x=1749560781;
+  t=1718025773; x=1749561773;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=144hdn/4UZt+z7DwMhtvAAmuC7HYAGH+e5myzRdaVFk=;
-  b=itLslvpqbKmAHOHm1S2Ki+T8H3KV7eT5FAPzaPTJAZGmSR/4CqK7yCc5
-   mL1k5WnO4vngXGvrA++Vyu2Iqk8pav8Grza6vxAX/9+kDmVw9qnJaqBnY
-   4J45zR4AcZF5hMw2HjzKdoRnyqJ+TBHdUFAQfSRhrjZy3vz6dk9CbdE+u
-   u6JGlGFN9o0IRO6ozh8xiFZntHGdxR+etqF9S9xwt16GMHEuQoSsfuH8g
-   M2Vk6xkBGTUKbeYifq1f9wNubmzaVC80bUGkdXd+DrPW83pU98tDseCqC
-   /b+FTZl4X9HzzuyAhFbnNlX3K4Xs357lcBzmw15bQSiAlUFOGAlox6A0f
-   w==;
-X-CSE-ConnectionGUID: yMq50/MMSrejOp7yw+Hzrg==
-X-CSE-MsgGUID: tbpF7A2TSoKsw4fgTmfjgA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="14803181"
+  bh=NepeI8ob9FXfvNHO4LXDjbHQpKCdIwqnMC08bVFhulo=;
+  b=RghWsiHjbKdtUb/UEO9Q7lAJrwav/YbHeFakvLaKBYf6ja3v0mr/gqoQ
+   iiALqBY7fD12/HtVOAOq73HFAQcfBSH16vQxst62T6RyOp7o223Pp7L0/
+   tfcRlhrlX/1Dp1HkroNaziUJA4aUniDs29oXiaEij5V5kfbijAiNvUlBi
+   IM+M2dtQRBf/rWS7iCoCpCvteI9JW9KXsZcPI9lm6yS1hjNN1J/VwG+Lo
+   6Igpz8WFsRDf/XsEYB8h1WPtjUCih+HnEbNtyUXa6m7POzYKOESAhHhmI
+   GzHWKtxHfdeHXXo24uumBMlW2aBO8g5K7ORMRXqFl/KGl4YNNTWcUtBjZ
+   Q==;
+X-CSE-ConnectionGUID: eepkyb5NTYKrgZ2Yo8g2TQ==
+X-CSE-MsgGUID: lb/ezKeLRt++VY1JtZOPfw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="14514971"
 X-IronPort-AV: E=Sophos;i="6.08,227,1712646000"; 
-   d="scan'208";a="14803181"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2024 06:06:08 -0700
-X-CSE-ConnectionGUID: VTxdETbATgWpc52gh9Kntg==
-X-CSE-MsgGUID: QDZQZKyrRIW2inSAdjcRYg==
+   d="scan'208";a="14514971"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2024 06:17:44 -0700
+X-CSE-ConnectionGUID: vVswg6JuRhizRL9I0CY4iA==
+X-CSE-MsgGUID: aMrqn/CUTJmFElQblBKmqQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.08,227,1712646000"; 
-   d="scan'208";a="38890468"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmviesa007.fm.intel.com with SMTP; 10 Jun 2024 06:06:04 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 10 Jun 2024 16:06:03 +0300
-Date: Mon, 10 Jun 2024 16:06:03 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+   d="scan'208";a="39056580"
+Received: from lkp-server01.sh.intel.com (HELO 8967fbab76b3) ([10.239.97.150])
+  by fmviesa008.fm.intel.com with ESMTP; 10 Jun 2024 06:17:39 -0700
+Received: from kbuild by 8967fbab76b3 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sGeu1-0002A7-0g;
+	Mon, 10 Jun 2024 13:17:37 +0000
+Date: Mon, 10 Jun 2024 21:17:16 +0800
+From: kernel test robot <lkp@intel.com>
+To: Adam Skladowski <a39.skl@gmail.com>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+	Adam Skladowski <a39.skl@gmail.com>, Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] usb: typec-mux: nb7vpq904m: broadcast typec state
- to next mux
-Message-ID: <Zmb6O9Cm0dyhS81x@kuha.fi.intel.com>
-References: <20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-0-c6f6eae479c3@linaro.org>
- <20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-4-c6f6eae479c3@linaro.org>
+Subject: Re: [PATCH 6/7] interconnect: qcom: qcs404: Add regmaps and more bus
+ descriptions
+Message-ID: <202406102141.1kH3LXFy-lkp@intel.com>
+References: <20240609182112.13032-7-a39.skl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,101 +87,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-4-c6f6eae479c3@linaro.org>
+In-Reply-To: <20240609182112.13032-7-a39.skl@gmail.com>
 
-On Thu, Jun 06, 2024 at 03:11:16PM +0200, Neil Armstrong wrote:
-> In the Type-C graph, the nb7vpq904m retimer is in between the USB-C
-> connector and the USB3/DP combo PHY, and this PHY also requires the
-> USB-C mode events to properly set-up the SuperSpeed Lanes functions
-> to setup USB3-only, USB3 + DP Altmode or DP Altmode only on the 4 lanes.
-> 
-> Update the nb7vpq904m retimer to get an optional type-c mux on the next
-> endpoint, and broadcast the received mode to it.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Hi Adam,
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+kernel test robot noticed the following build errors:
 
-> ---
->  drivers/usb/typec/mux/nb7vpq904m.c | 24 ++++++++++++++++++++++--
->  1 file changed, 22 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/mux/nb7vpq904m.c b/drivers/usb/typec/mux/nb7vpq904m.c
-> index 569f1162ee2e..b57b6c9c40fe 100644
-> --- a/drivers/usb/typec/mux/nb7vpq904m.c
-> +++ b/drivers/usb/typec/mux/nb7vpq904m.c
-> @@ -69,6 +69,7 @@ struct nb7vpq904m {
->  
->  	bool swap_data_lanes;
->  	struct typec_switch *typec_switch;
-> +	struct typec_mux *typec_mux;
->  
->  	struct mutex lock; /* protect non-concurrent retimer & switch */
->  
-> @@ -275,6 +276,7 @@ static int nb7vpq904m_sw_set(struct typec_switch_dev *sw, enum typec_orientation
->  static int nb7vpq904m_retimer_set(struct typec_retimer *retimer, struct typec_retimer_state *state)
->  {
->  	struct nb7vpq904m *nb7 = typec_retimer_get_drvdata(retimer);
-> +	struct typec_mux_state mux_state;
->  	int ret = 0;
->  
->  	mutex_lock(&nb7->lock);
-> @@ -292,7 +294,14 @@ static int nb7vpq904m_retimer_set(struct typec_retimer *retimer, struct typec_re
->  
->  	mutex_unlock(&nb7->lock);
->  
-> -	return ret;
-> +	if (ret)
-> +		return ret;
-> +
-> +	mux_state.alt = state->alt;
-> +	mux_state.data = state->data;
-> +	mux_state.mode = state->mode;
-> +
-> +	return typec_mux_set(nb7->typec_mux, &mux_state);
->  }
->  
->  static const struct regmap_config nb7_regmap = {
-> @@ -413,9 +422,16 @@ static int nb7vpq904m_probe(struct i2c_client *client)
->  		return dev_err_probe(dev, PTR_ERR(nb7->typec_switch),
->  				     "failed to acquire orientation-switch\n");
->  
-> +	nb7->typec_mux = fwnode_typec_mux_get(dev->fwnode);
-> +	if (IS_ERR(nb7->typec_mux)) {
-> +		ret = dev_err_probe(dev, PTR_ERR(nb7->typec_mux),
-> +				    "Failed to acquire mode-switch\n");
-> +		goto err_switch_put;
-> +	}
-> +
->  	ret = nb7vpq904m_parse_data_lanes_mapping(nb7);
->  	if (ret)
-> -		goto err_switch_put;
-> +		goto err_mux_put;
->  
->  	ret = regulator_enable(nb7->vcc_supply);
->  	if (ret)
-> @@ -458,6 +474,9 @@ static int nb7vpq904m_probe(struct i2c_client *client)
->  	gpiod_set_value(nb7->enable_gpio, 0);
->  	regulator_disable(nb7->vcc_supply);
->  
-> +err_mux_put:
-> +	typec_mux_put(nb7->typec_mux);
-> +
->  err_switch_put:
->  	typec_switch_put(nb7->typec_switch);
->  
-> @@ -475,6 +494,7 @@ static void nb7vpq904m_remove(struct i2c_client *client)
->  
->  	regulator_disable(nb7->vcc_supply);
->  
-> +	typec_mux_put(nb7->typec_mux);
->  	typec_switch_put(nb7->typec_switch);
->  }
->  
-> 
-> -- 
-> 2.34.1
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.10-rc3 next-20240607]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Adam-Skladowski/dt-bindings-interconnect-Add-Qualcomm-MSM8976-DT-bindings/20240610-022416
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20240609182112.13032-7-a39.skl%40gmail.com
+patch subject: [PATCH 6/7] interconnect: qcom: qcs404: Add regmaps and more bus descriptions
+config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20240610/202406102141.1kH3LXFy-lkp@intel.com/config)
+compiler: clang version 19.0.0git (https://github.com/llvm/llvm-project 4403cdbaf01379de96f8d0d6ea4f51a085e37766)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240610/202406102141.1kH3LXFy-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202406102141.1kH3LXFy-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/interconnect/qcom/qcs404.c:1070:35: error: variable has incomplete type 'const struct regmap_config'
+    1070 | static const struct regmap_config qcs404_bimc_regmap_config = {
+         |                                   ^
+   drivers/interconnect/qcom/icc-rpm.h:136:15: note: forward declaration of 'struct regmap_config'
+     136 |         const struct regmap_config *regmap_cfg;
+         |                      ^
+   drivers/interconnect/qcom/qcs404.c:1137:35: error: variable has incomplete type 'const struct regmap_config'
+    1137 | static const struct regmap_config qcs404_pcnoc_regmap_config = {
+         |                                   ^
+   drivers/interconnect/qcom/icc-rpm.h:136:15: note: forward declaration of 'struct regmap_config'
+     136 |         const struct regmap_config *regmap_cfg;
+         |                      ^
+   drivers/interconnect/qcom/qcs404.c:1178:35: error: variable has incomplete type 'const struct regmap_config'
+    1178 | static const struct regmap_config qcs404_snoc_regmap_config = {
+         |                                   ^
+   drivers/interconnect/qcom/icc-rpm.h:136:15: note: forward declaration of 'struct regmap_config'
+     136 |         const struct regmap_config *regmap_cfg;
+         |                      ^
+   3 errors generated.
+
+
+vim +1070 drivers/interconnect/qcom/qcs404.c
+
+  1069	
+> 1070	static const struct regmap_config qcs404_bimc_regmap_config = {
+  1071		.reg_bits = 32,
+  1072		.reg_stride = 4,
+  1073		.val_bits = 32,
+  1074		.max_register = 0x80000,
+  1075		.fast_io = true,
+  1076	};
+  1077	
 
 -- 
-heikki
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
