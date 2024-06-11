@@ -1,252 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-22295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31369903A02
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 13:26:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE472903A12
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 13:29:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC3E328470F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 11:26:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B0E228298D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 11:29:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3C6B3F8C7;
-	Tue, 11 Jun 2024 11:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BD5717B414;
+	Tue, 11 Jun 2024 11:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o6NFR+yc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fC+KaHaQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292A217A930
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 11:26:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EC417A930;
+	Tue, 11 Jun 2024 11:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718105186; cv=none; b=ZUzUZ4oFc71QuVB7jc4QuEwIPo+L6RUKTokqZK99aHDG77HidvN4zMRLEZe3br+2lUG/RHbcSsb1WbEIpXWJt3P+toCVqWYDG8JvctvOAT3a9Muml14VViXfEBfoj/LnhWUn7x11MU62kSvWDO7dnQfXhSj3qgnrR4X2c712y/A=
+	t=1718105395; cv=none; b=t7cAjMHvAim57lLZvNJgKjElQI+Ybp03suclFaxHwGoSX7tZ+Q1FyNfT2+6lPJMivphBIKkK146mCZcrXbJHhjQT9CCnH3dviZ7aean5WX69sJF4zjvhLpSvd1q1/rywbBL/agzsW2fc2f8GQ0rEHUq5GNNS75+2ZLDwGFerIoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718105186; c=relaxed/simple;
-	bh=CfXhXO5gbKHP0O3Mzpd0IEhQ/0lBlGLlCDI26UoQxPw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ndq7eA0n38LfOu7q6Upob7FzRoi8or6eSJ5AUKvewSazAgc5fkLOd/ePV9H+ufLJeix2TTWrDvqGLcQfQ1IUsWlhbL7hZF7IrWvXFP2vFlnEn1lq20DTzs9n5lcnlE9sZ/MOUdKiLeL+S9+JauiRNZ7GcOGwR2ekGyjSfGX5yGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=o6NFR+yc; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dfa682a4025so949875276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 04:26:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718105184; x=1718709984; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nbepqfHXX8/ebWOQDHLQgzSo88cywSIGNBywsOUNYMQ=;
-        b=o6NFR+yc1t4sTd2qgy7tR6VQXc11wh1j0izTn7LArNhpwj4SUomwcAW8PUau2zhSWS
-         I6iNAIAh1ksVNASfe/Bho16x+OHEUTgBl5UwS9qKX8WTPrnmMPnXjIC3BCI8WashVKQw
-         eeA4O9x2nPcwTBdlHilE5BrgOMDFvw2FCZ4eJxeATZ1JTK4qNbaMw1otz+zAsfGW3trL
-         jWuBzfXMqpgYaeLZ5zOZ0/i9e2dgzD7bzxdLeaxyvIgWTMu5084bywGCkycid6dpUWcS
-         cpFPTU6p1ulQg/2Q7kiOtIu5b5+Kvqq/lSudain3pZGuKG6G6x+d/F3pYf5tWgBCQkPK
-         Gd8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718105184; x=1718709984;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nbepqfHXX8/ebWOQDHLQgzSo88cywSIGNBywsOUNYMQ=;
-        b=sQXMgkJwXrRTptOajFJ+6AkRNM7Y4qjC4/G9PE6/Rd+Z2VfxNBzcF58mI1IMzV77Fu
-         eZUCEU1mXewdS5APQiBJw4CQ0705UVzSs9z9WLd2TAAR3SyXg38NtG/safQH56J+oChe
-         pujxmt/1MBqqnPXLLqSo1Z8NbHM/UOVzr4lb2W7sB9vY0yPwBE8CB+brFSIQm5DS3/Qa
-         5pMWV7gupswJjsQu3aOuZzmBNfzu/wY3pS/W6cAJRE1h6mmOrZ211tfu+P6f+rGE59/B
-         uMokIYO8406b3mDPRpDaRHIQPR8S9a0zR3LY9C3RMtgNHSL/cbb2FAm0yKNSSewvoYHI
-         Ly6w==
-X-Forwarded-Encrypted: i=1; AJvYcCXPikRSGdTRwFpUFpP31RE6cIy34rkr6Du/HGz4pc8zbzb7QYFf7/T3tEAMZJx5iu8V92b2/n5msX8Mv3RO8LmGcjruR9V5WiloGqsIFw==
-X-Gm-Message-State: AOJu0Yy6l5UrxXRmtpJLsy9xOCUfRIOGfnhUUr5JHIG2HvRPqKabXalm
-	zg7hnJJOLHDZDWRhOANgi1DGbRzwJmWnNWoTGAnYBWCcKBog7F/B5fgKP0a79/FlZfsMwwrhssq
-	0Yf7NsE8n6O2LElBfYjLX+Gvg48p8laTE2o5biQ==
-X-Google-Smtp-Source: AGHT+IHPQBOTA1l+9Q6Mt11B/7brXJx2+reHInxEahmPdyYeu/oGfCOgbBJHGoEyCZWwwwFiHs2jDWDlq4TplfBFJxM=
-X-Received: by 2002:a25:b11e:0:b0:dfa:fe33:713f with SMTP id
- 3f1490d57ef6-dfafe337732mr10791981276.31.1718105183996; Tue, 11 Jun 2024
- 04:26:23 -0700 (PDT)
+	s=arc-20240116; t=1718105395; c=relaxed/simple;
+	bh=v1wPmjm6dFdn2OBU3/MOe0zu3EOVJMs/Uhyx/PeNHUo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RkiM0m0f+CiorydOL8f0vUnyPszOE6XUoGv2yox1WJjPa+/kiGT5WPaBAKqJZiF3JqS5QKgE0R9IZ+q2ngrkB0O9mvKxRVef0R7/ypUixrvLTPoYcVoMsTPDfhjeyfkDyV8AKpq1VDl0vDhbSu7xIuJigBFpnvp9EiUfd1HvUiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fC+KaHaQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA104C2BD10;
+	Tue, 11 Jun 2024 11:29:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718105394;
+	bh=v1wPmjm6dFdn2OBU3/MOe0zu3EOVJMs/Uhyx/PeNHUo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fC+KaHaQzvpP3LpHfg/9JTHwp4d3p7VqEZQR1G3nQjQVo+OPdv+e2mMncshGJTNZE
+	 utBtuZH8BtOdSpLC1hDWHS221jrBU2YFdIfhoWKZ3BNEKovw08s+2h7tU2jJtikE1I
+	 EvQTS/VWrRBIaOsJLsFAV940ZwmIl9VQtml/valvz/q2E4yac4N+Rk0DtgbhTeXJ+s
+	 sT028DprkflkR/pIVy3f/6S546l0MupgNqBvgFAsiFhdeUFPnR0mDSnACtMRavRadq
+	 2ASWJetbt87CET8H7tuNR6Fvo7NM+Vn1CcVLtO1D5ehoRezuA7BHvKyf24pQQaFwrZ
+	 YIW9CPET6mYfg==
+Message-ID: <176137e5-6312-4d46-97b6-c4494bc1c61b@kernel.org>
+Date: Tue, 11 Jun 2024 14:29:48 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240607-bridge-hdmi-connector-v5-0-ab384e6021af@linaro.org>
- <20240607-bridge-hdmi-connector-v5-2-ab384e6021af@linaro.org>
- <20240610-secret-rottweiler-from-asgard-132f75@houat> <CAA8EJpogi2qm0bhCwumY4zj-xMUkF4zbK-NAPqCeDbLcybFciw@mail.gmail.com>
- <20240610-smooth-liberal-guan-59853e@houat> <t5pav3up5r6ezs4q37lc7jqlv55ftta7fnntp75b4pjboycwsm@uvs7q6frrzf5>
- <20240611-zippy-pragmatic-catfish-cceee5@houat>
-In-Reply-To: <20240611-zippy-pragmatic-catfish-cceee5@houat>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 11 Jun 2024 14:26:12 +0300
-Message-ID: <CAA8EJppcqLm7UbW9n2Y_4mfJv4JFWDkPXJ8=TBL53LiFPADzpQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/9] drm/bridge-connector: switch to using drmm allocations
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Hans de Goede <hdegoede@redhat.com>, Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 6/6] arm64: dts: qcom: ipq9574: Add icc provider
+ ability to gcc
+To: Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, quic_anusha@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20240418092305.2337429-1-quic_varada@quicinc.com>
+ <20240418092305.2337429-7-quic_varada@quicinc.com>
+ <a7194edd-a2c8-46fc-bea1-f26b0960e535@linaro.org>
+ <Ziov6bWBXYXJ4Zp8@hu-varada-blr.qualcomm.com>
+ <27f4f3dd-9375-40cf-8c8f-1c4edf66e31b@linaro.org>
+ <ZjNdTmmXucjtRxJt@hu-varada-blr.qualcomm.com>
+ <c015b3a5-2213-4ebd-b960-d97ed1fe7062@kernel.org>
+ <ZjshR0ekcn0gxwOa@hu-varada-blr.qualcomm.com>
+ <CAA8EJpqENsojPQmCbma_nQLEZq8nK1fz1K0JdtvLd=kPrH_DBw@mail.gmail.com>
+ <1a08ef42-b52f-4c97-90d7-e7fdee7725b4@linaro.org>
+ <Zmgb+OjdBNw71sC1@hu-varada-blr.qualcomm.com>
+Content-Language: en-US
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <Zmgb+OjdBNw71sC1@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 11 Jun 2024 at 11:54, Maxime Ripard <mripard@kernel.org> wrote:
->
-> On Mon, Jun 10, 2024 at 08:54:09PM GMT, Dmitry Baryshkov wrote:
-> > On Mon, Jun 10, 2024 at 02:07:06PM +0200, Maxime Ripard wrote:
-> > > Hi,
-> > >
-> > > +Hans
-> > >
-> > > On Mon, Jun 10, 2024 at 02:46:03PM GMT, Dmitry Baryshkov wrote:
-> > > > On Mon, 10 Jun 2024 at 11:04, Maxime Ripard <mripard@kernel.org> wrote:
-> > > > >
-> > > > > Hi,
-> > > > >
-> > > > > On Fri, Jun 07, 2024 at 04:22:59PM GMT, Dmitry Baryshkov wrote:
-> > > > > > Turn drm_bridge_connector to using drmm_kzalloc() and
-> > > > > > drmm_connector_init() and drop the custom destroy function. The
-> > > > > > drm_connector_unregister() and fwnode_handle_put() are already handled
-> > > > > > by the drm_connector_cleanup() and so are safe to be dropped.
-> > > > > >
-> > > > > > Acked-by: Maxime Ripard <mripard@kernel.org>
-> > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > ---
-> > > > > >  drivers/gpu/drm/drm_bridge_connector.c | 23 +++++------------------
-> > > > > >  1 file changed, 5 insertions(+), 18 deletions(-)
-> > > > > >
-> > > > > > diff --git a/drivers/gpu/drm/drm_bridge_connector.c b/drivers/gpu/drm/drm_bridge_connector.c
-> > > > > > index 982552c9f92c..e093fc8928dc 100644
-> > > > > > --- a/drivers/gpu/drm/drm_bridge_connector.c
-> > > > > > +++ b/drivers/gpu/drm/drm_bridge_connector.c
-> > > > > > @@ -15,6 +15,7 @@
-> > > > > >  #include <drm/drm_connector.h>
-> > > > > >  #include <drm/drm_device.h>
-> > > > > >  #include <drm/drm_edid.h>
-> > > > > > +#include <drm/drm_managed.h>
-> > > > > >  #include <drm/drm_modeset_helper_vtables.h>
-> > > > > >  #include <drm/drm_probe_helper.h>
-> > > > > >
-> > > > > > @@ -193,19 +194,6 @@ drm_bridge_connector_detect(struct drm_connector *connector, bool force)
-> > > > > >       return status;
-> > > > > >  }
-> > > > > >
-> > > > > > -static void drm_bridge_connector_destroy(struct drm_connector *connector)
-> > > > > > -{
-> > > > > > -     struct drm_bridge_connector *bridge_connector =
-> > > > > > -             to_drm_bridge_connector(connector);
-> > > > > > -
-> > > > > > -     drm_connector_unregister(connector);
-> > > > > > -     drm_connector_cleanup(connector);
-> > > > > > -
-> > > > > > -     fwnode_handle_put(connector->fwnode);
-> > > > > > -
-> > > > > > -     kfree(bridge_connector);
-> > > > > > -}
-> > > > > > -
-> > > > > >  static void drm_bridge_connector_debugfs_init(struct drm_connector *connector,
-> > > > > >                                             struct dentry *root)
-> > > > > >  {
-> > > > > > @@ -224,7 +212,6 @@ static const struct drm_connector_funcs drm_bridge_connector_funcs = {
-> > > > > >       .reset = drm_atomic_helper_connector_reset,
-> > > > > >       .detect = drm_bridge_connector_detect,
-> > > > > >       .fill_modes = drm_helper_probe_single_connector_modes,
-> > > > > > -     .destroy = drm_bridge_connector_destroy,
-> > > > > >       .atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
-> > > > > >       .atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
-> > > > > >       .debugfs_init = drm_bridge_connector_debugfs_init,
-> > > > > > @@ -328,7 +315,7 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
-> > > > > >       int connector_type;
-> > > > > >       int ret;
-> > > > > >
-> > > > > > -     bridge_connector = kzalloc(sizeof(*bridge_connector), GFP_KERNEL);
-> > > > > > +     bridge_connector = drmm_kzalloc(drm, sizeof(*bridge_connector), GFP_KERNEL);
-> > > > >
-> > > > > So you make destroy's kfree call unnecessary here ...
-> > > > >
-> > > > > >       if (!bridge_connector)
-> > > > > >               return ERR_PTR(-ENOMEM);
-> > > > > >
-> > > > > > @@ -383,9 +370,9 @@ struct drm_connector *drm_bridge_connector_init(struct drm_device *drm,
-> > > > > >               return ERR_PTR(-EINVAL);
-> > > > > >       }
-> > > > > >
-> > > > > > -     ret = drm_connector_init_with_ddc(drm, connector,
-> > > > > > -                                       &drm_bridge_connector_funcs,
-> > > > > > -                                       connector_type, ddc);
-> > > > > > +     ret = drmm_connector_init(drm, connector,
-> > > > > > +                               &drm_bridge_connector_funcs,
-> > > > > > +                               connector_type, ddc);
-> > > > >
-> > > > > ... and here of drm_connector_cleanup.
-> > > > >
-> > > > > drm_connector_unregister wasn't needed, so can ignore it, but you leak a reference to
-> > > > > connector->fwnode since you don't call fwnode_handle_put anymore.
-> > > > >
-> > > > > We should register a drmm action right below the call to fwnode_handle_get too.
-> > > >
-> > > > But drm_connector_cleanup() already contains
-> > > > fwnode_handle_put(connector->fwnode). Isn't that enough?
-> > >
-> > > It does, but now I'm confused.
-> > >
-> > > drm_bridge_connector_init takes a reference, drm_connector_init doesn't.
-> > > It will call drm_bridge_connector_destroy() that gives back its
-> > > reference (which makes sense to me), but then why do
-> > > drm_connector_cleanup() does? None of the drm_connector code even took
-> > > that reference, and we end up with a double-put.
-> > >
-> > > It looks like it was introduced by commit 48c429c6d18d ("drm/connector:
-> > > Add a fwnode pointer to drm_connector and register with ACPI (v2)") from
-> > > Hans, which does call put, but never gets that reference.
-> >
-> > The mentioned patch documents that pretty clearly:
-> >
-> > * Drivers can set this to associate a fwnode with a connector, drivers
-> > * are expected to get a reference on the fwnode when setting this.
-> > * drm_connector_cleanup() will call fwnode_handle_put() on this.
-> >
-> > This is logical. Whoever sets the drm_connector::fwnode pointer, should
-> > get reference. This way drm_connector_init() doesn't need to play with
-> > the reference counting. The cleanup code drops the reference (so the
-> > driver doesn't need to), because cleanup might be assynchronous..
->
-> Right, but it's the cleanup part that isn't logical. It makes total
-> sense to have the connector that sets connector->fwnode get the
-> reference itself. It doesn't make sense to have the core give that
-> reference instead of the driver.
->
-> It's confusing, because if the driver is supposed to handle its
-> reference itself, then it should handle all of it itself. This bug is
-> the testament for that: the natural approach is buggy.
+On 11.06.24 12:42, Varadarajan Narayanan wrote:
+> On Thu, Jun 06, 2024 at 04:06:01PM +0200, Konrad Dybcio wrote:
+>> On 8.05.2024 10:10 AM, Dmitry Baryshkov wrote:
+>>> On Wed, 8 May 2024 at 09:53, Varadarajan Narayanan
+>>> <quic_varada@quicinc.com> wrote:
+>>>>
+>>>> On Fri, May 03, 2024 at 04:51:04PM +0300, Georgi Djakov wrote:
+>>>>> Hi Varada,
+>>>>>
+>>>>> Thank you for your work on this!
+>>>>>
+>>>>> On 2.05.24 12:30, Varadarajan Narayanan wrote:
+>>>>>> On Tue, Apr 30, 2024 at 12:05:29PM +0200, Konrad Dybcio wrote:
+>>>>>>> On 25.04.2024 12:26 PM, Varadarajan Narayanan wrote:
+>>>>>>>> On Tue, Apr 23, 2024 at 02:58:41PM +0200, Konrad Dybcio wrote:
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> On 4/18/24 11:23, Varadarajan Narayanan wrote:
+>>>>>>>>>> IPQ SoCs dont involve RPM in managing NoC related clocks and
+>>>>>>>>>> there is no NoC scaling. Linux itself handles these clocks.
+>>>>>>>>>> However, these should not be exposed as just clocks and align
+>>>>>>>>>> with other Qualcomm SoCs that handle these clocks from a
+>>>>>>>>>> interconnect provider.
+>>>>>>>>>>
+>>>>>>>>>> Hence include icc provider capability to the gcc node so that
+>>>>>>>>>> peripherals can use the interconnect facility to enable these
+>>>>>>>>>> clocks.
+>>>>>>>>>>
+>>>>>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>>>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>>>>>>>> ---
+>>>>>>>>>
+>>>>>>>>> If this is all you do to enable interconnect (which is not the case,
+>>>>>>>>> as this patch only satisfies the bindings checker, the meaningful
+>>>>>>>>> change happens in the previous patch) and nothing explodes, this is
+>>>>>>>>> an apparent sign of your driver doing nothing.
+>>>>>>>>
+>>>>>>>> It appears to do nothing because, we are just enabling the clock
+>>>>>>>> provider to also act as interconnect provider. Only when the
+>>>>>>>> consumers are enabled with interconnect usage, this will create
+>>>>>>>> paths and turn on the relevant NOC clocks.
+>>>>>>>
+>>>>>>> No, with sync_state it actually does "something" (sets the interconnect
+>>>>>>> path bandwidths to zero). And *this* patch does nothing functionally,
+>>>>>>> it only makes the dt checker happy.
+>>>>>>
+>>>>>> I understand.
+>>>>>>
+>>>>>>>> This interconnect will be used by the PCIe and NSS blocks. When
+>>>>>>>> those patches were posted earlier, they were put on hold until
+>>>>>>>> interconnect driver is available.
+>>>>>>>>
+>>>>>>>> Once this patch gets in, PCIe for example will make use of icc.
+>>>>>>>> Please refer to https://lore.kernel.org/linux-arm-msm/20230519090219.15925-5-quic_devipriy@quicinc.com/.
+>>>>>>>>
+>>>>>>>> The 'pcieX' nodes will include the following entries.
+>>>>>>>>
+>>>>>>>>          interconnects = <&gcc MASTER_ANOC_PCIE0 &gcc SLAVE_ANOC_PCIE0>,
+>>>>>>>>                          <&gcc MASTER_SNOC_PCIE0 &gcc SLAVE_SNOC_PCIE0>;
+>>>>>>>>          interconnect-names = "pcie-mem", "cpu-pcie";
+>>>>>>>
+>>>>>>> Okay. What about USB that's already enabled? And BIMC/MEMNOC?
+>>>>>>
+>>>>>> For USB, the GCC_ANOC_USB_AXI_CLK is enabled as part of the iface
+>>>>>> clock. Hence, interconnect is not specified there.
+>>>>>>
+>>>>>> MEMNOC to System NOC interfaces seem to be enabled automatically.
+>>>>>> Software doesn't have to turn on or program specific clocks.
+>>>>>>
+>>>>>>>>> The expected reaction to "enabling interconnect" without defining the
+>>>>>>>>> required paths for your hardware would be a crash-on-sync_state, as all
+>>>>>>>>> unused (from Linux's POV) resources ought to be shut down.
+>>>>>>>>>
+>>>>>>>>> Because you lack sync_state, the interconnects silently retain the state
+>>>>>>>>> that they were left in (which is not deterministic), and that's precisely
+>>>>>>>>> what we want to avoid.
+>>>>>>>>
+>>>>>>>> I tried to set 'sync_state' to icc_sync_state to be invoked and
+>>>>>>>> didn't see any crash.
+>>>>>>>
+>>>>>>> Have you confirmed that the registers are actually written to, and with
+>>>>>>> correct values?
+>>>>>>
+>>>>>> I tried the following combinations:-
+>>>>>>
+>>>>>> 1. Top of tree linux-next + This patch set
+>>>>>>
+>>>>>>      * icc_sync_state called
+>>>>>>      * No crash or hang observed
+>>>>>>      * From /sys/kernel/debug/clk/clk_summary can see the
+>>>>>>        relevant clocks are set to the expected rates (compared
+>>>>>>        with downstream kernel)
+>>>>>>
+>>>>>> 2. Top of tree linux-next + This patch set + PCIe enablement
+>>>>>>
+>>>>>>      * icc_sync_state NOT called
+>>>>>
+>>>>> If sync_state() is not being called, that usually means that there
+>>>>> are interconnect consumers that haven't probed successfully (PCIe?)
+>>>>> or their dependencies. That can be checked in /sys/class/devlink/.../status
+>>>>> But i am not sure how this works for PCI devices however.
+>>>>>
+>>>>> You can also manually force a call to sync_state by writing "1" to
+>>>>> the interconnect provider's /sys/devices/.../state_synced
+>>>>>
+>>>>> Anyway, the question is if PCIe and NSS work without this driver?
+>>>>
+>>>> No.
+>>>>
+>>>>> If they work, is this because the clocks are turned on by default
+>>>>> or by the boot loader?
+>>>>
+>>>> Initially, the PCIe/NSS driver enabled these clocks directly
+>>>> by having them in their DT nodes itself. Based on community
+>>>> feedback this was removed and after that PCIe/NSS did not work.
+>>>>
+>>>>> Then if an interconnect path (clock) gets disabled either when we
+>>>>> reach a sync_state (with no bandwidth requests) or we explicitly
+>>>>> call icc_set_bw() with 0 bandwidth values, i would expect that
+>>>>> these PCIe and NSS devices would not function anymore (it might
+>>>>> save some power etc) and if this is unexpected we should see a
+>>>>> a crash or hang...
+>>>>>
+>>>>> Can you confirm this?
+>>>>
+>>>> With ICC enabled, icc_set_bw (with non-zero values) is called by
+>>>> PCIe and NSS drivers. Haven't checked with icc_set_bw with zero
+>>>> values.
+>>>>
+>>>> PCIe:   qcom_pcie_probe -> qcom_pcie_icc_init -> icc_set_bw
+>>>> NSS:    ppe_icc_init -> icc_set_bw
+>>>>
+>>>> I believe sync_state is not getting called since there is a
+>>>> non-zero set bandwidth request. Which seems to be aligned with
+>>>> your explanation.
+>>>
+>>> This doesn't look correct. sync_state is being called once all
+>>> consumers are probed. It doesn't matter whether those consumers have
+>>> non-zero bandwidth requests or no.
+>>
+>> /sys/kernel/debug/devices_deferred may have some useful info, too
+> 
+> /sys/kernel/debug/devices_deferred seems to be empty
+> 
+> 	# mount | grep -w debugfs
+> 	none on /sys/kernel/debug type debugfs (rw,relatime)
+> 
+> 	# cat /sys/kernel/debug/devices_deferred  | wc -l
+> 	0
+> 
+> Added the following print to icc_sync_state,
+> 
+> 	@@ -1096,6 +1096,7 @@ void icc_sync_state(struct device *dev)
+> 		struct icc_node *n;
+> 		static int count;
+> 
+> 	+	printk("--> %s: %d %d\n", __func__, providers_count, count);
+> 		count++;
+> 
+> 		if (count < providers_count)
+> 			return;
+> 
+> icc_sync_state seems to be called once,
+> 
+> 	# dmesg | grep icc_sync_state
+> 	[   12.260544] --> icc_sync_state: 2 0
+> 
+> Since 'providers_count' is greated than 'count' icc_sync_state
+> seems to return before doing anything.
 
-I'd say this is the 'transfer of the ownership'. The base driver gets
-the reference, and then gives it away to the drm_connecter. But indeed
-this is not very intuitive.
+Is there also another interconnect provider on this platform, other
+than the gcc? Check for DT nodes that have the #interconnect-cells
+property. Are all providers probing successfully?
 
-I have looked at the original series by Hans/Heikky, but I don't seem
-to be able to find a good way to solve that. The fwnode can be set
-after initialising the drm_connector. And at the same time it doesn't
-make so much sense to put that burden onto the driver. One option
-might be to add drm_connector_set_fwnode() that will get the reference
-internally, but that looks a bit like an overkill.
+All providers must probe, as there might be paths that cross multiple
+providers and we can't get into sync-state with a topology that is
+only partially initialized.
 
->
-> > The drm_bridge_connector follows this approach: it sets
-> > drm_connector->fwnode, so it gets the reference. It uses
-> > drm_connector_cleanup(), so it doesn't need to put it.
->
-> Yet, it calls fwnode_handle_put in its destroy path, because it grabbed
-> a reference before.
->
-> Maxime
-
-
-
--- 
-With best wishes
-Dmitry
+Thanks,
+Georgi
 
