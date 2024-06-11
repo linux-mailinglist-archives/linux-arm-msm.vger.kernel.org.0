@@ -1,110 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-22302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2F60903B3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 13:58:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1747903B4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 14:01:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6794C28869E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 11:58:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9AB29B29694
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 12:01:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49E3F17A931;
-	Tue, 11 Jun 2024 11:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FDB117B513;
+	Tue, 11 Jun 2024 11:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LTXKZQhE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K2Kg2GHp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F361514FA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 11:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAB017B43A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 11:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718107085; cv=none; b=sN+6qgcu97w7w5u4G0CMS8WAFepmTz5pAOlRKBPuwtaXb2mndH6bWiwfgJnG7P/r/NONYPVYMv4rzmkLBPBHSf1rKMMBK1Ad0vLXY8IEit6h5Iewbi2UawwoHA1vrzVOJRcuILC9oNWcdHgYReiK1aTpvRlhCVYCQru26xj/ur8=
+	t=1718107192; cv=none; b=Weps1lqX4glBveFtgQQNI8irLMCbR7u1D+VEUzcW5kcQwJq/cDrBi7ZYxucpvcV1sT+xenAcS8gydfz9AeQRsBzfAE9UO0LE1xS4Z3Zj/uvdJlOwWnzzrhQQZXDOWvEczAdp6eKzOB+UwBAs1t1optTBRfwQpaUcXemlt0LvKU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718107085; c=relaxed/simple;
-	bh=KQOQMNe/0O2p5NcAx9Wr8YU3xBI8taSDf2dxsX8eN+U=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=QWpsv4bKSzlZ/mz8F7N/Nc/fnzYU4D3DFaH4aZ0yKj3YtAghIGYWUcUwaZM4Kqj9R3/IyCElDT8JSL2W3ZbgaRqzVNAgKT9EkOfiC70Vr02qgesHiPbUej35OZUbR7GsyTYTZ/ZcCQKWY2h8wptQHnnCmsf+yuu0fjPQv30moK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LTXKZQhE; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1718107192; c=relaxed/simple;
+	bh=4iGuE74BDxwLQsO249KSKAU+HX6bPKIAwO4Q+EsyiZ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MlJATmDAiDgCT8FmAXvQZLNfXN7YG8wUjJJc7EoAU7Mmx+LCWgOmswydwVt4TOu1KCFTCPI80VZzK632hkxvO0h1mum4qMD1QI7jZNLaDajH0m7T6lwbcwJQcqHdR+qg8HKf8zbZJpvWcqaO5SiZuTf0MtMd9oP5TmpQOeZkjLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K2Kg2GHp; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a6ef46d25efso438974766b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 04:58:03 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2eaafda3b5cso71282961fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 04:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718107082; x=1718711882; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8km0fCrQgO57gFXBsXFIYcrjuKczDYZLAASbYW83aek=;
-        b=LTXKZQhECbbfKv/qkZCqUXiwri9YSZmnMzOpcOcBiGAxiX//EtvEs8CaahYh4Hlavk
-         NdJVYFn6ZRh0wfmkpsI6XgV/oHsQNI87gpiReGDii1AFcIfO2QLPkZTdS92ChNjXUKHU
-         VbVzQ3dHKh8wgXN/OQaLpOKMxiykQBSrW+rDA5aXq7GXDxfnRe1IUBwQlc6F+73JBngb
-         CMdw5KdbQU85kcTzttxuSsCrYRNZbCH2dpkjXcB7Yy2x5ZqQSXjz5Z6KMSUr0cRUJpVk
-         650bUQFLGSG64x653XGcQwCzDwR6azGKRzbHW9sjY+boMPUAGvTZexbMm9avCX7Gkzle
-         uNGw==
+        d=linaro.org; s=google; t=1718107189; x=1718711989; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CQzSwJnKjLuXJbZmjfDwPRrFFzgmeR6RnIyFdcSdy0E=;
+        b=K2Kg2GHpeYuymdgXBf9/uJaDx8sip9eOLWbD0qz0e3YWtikORR6f9eBVIADnFuM3TZ
+         5Cyib8l8MGEleG6Mk5bRNBUBtEEBxEZ8yVgcVpDmacNDrbWRnqlBAV/tCWpocD0691Dh
+         0xMYdfPJYPl+4mq7SXQycxcZXuPDh5Tz4wwrfLNZeScJ3em1QdLw6rPWcqTQxaSfAE2D
+         LOSbHcA9/pSIQ5gGt/6fCO1KWfjhQtJUQployMKNgyR9KyNu+5g+tdCWD4VzuZhUW5T5
+         kjkX4e8S/ehecwgKbnIxUEYQL8Vnt/Z99KBrXQy93sa/LGD+smoqUXIOYHoXHA1kLm3X
+         JFEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718107082; x=1718711882;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8km0fCrQgO57gFXBsXFIYcrjuKczDYZLAASbYW83aek=;
-        b=gT4cyldOLdik6BF3g38dHkAcYy4Ao8xU4/Sa0M1tI6APnmCqr6QZ93akdMLBcWk/nH
-         I0rlLm8Zo2rYgUiYhlAjwUXa9rQiP+U92bJzrbgocAemVL2W8ALIIOtYNYWY1uCWvKLi
-         7zliNFUOvao5+HQv9Pc1OpKu975KyuSSMXfdL2xBeEXh8x7TnJH31+yWMpsvGWCGQAhp
-         PaGlc/UgoAoZQwxzCqVttkh+68J+JqFzCDvgv52G5T4RbRbkqHt1o4EMAK2kn6tYOIIy
-         EeehYxsAURkmKqxooibIDk02OiuFGuiCBgIswKXeVE/j3L6yYj8XQKfpMUs7MRXzTKiu
-         qJXw==
-X-Gm-Message-State: AOJu0YyjvgdxFsB6mGGOmeBdi00kuJfbLOI3p+Pxc0QYmu+zwb2WPc5T
-	XILJdcWqi4SsLskMP2b2izD0VeEDoYb2IKFRAkcyvfU0JU1xRwpC9cv/5WqvRcA=
-X-Google-Smtp-Source: AGHT+IFE/E3oXsA/j5Sw46isYeAbfSwDcm+QTBQfzlRN7+BbqOoeqoLghf4L6f7cDyPU3Yb2H/A/fA==
-X-Received: by 2002:a17:906:4eca:b0:a6e:f75f:be04 with SMTP id a640c23a62f3a-a6ef75fc386mr549563966b.38.1718107082022;
-        Tue, 11 Jun 2024 04:58:02 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57c6aa014c1sm6226784a12.41.2024.06.11.04.58.01
+        d=1e100.net; s=20230601; t=1718107189; x=1718711989;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CQzSwJnKjLuXJbZmjfDwPRrFFzgmeR6RnIyFdcSdy0E=;
+        b=lo4ZCPgnNLVPz8ZM8oS4zTTjKjLJn3OHdqpo6yj0CupYltw/Su8vCMQu8EppN4DaEn
+         N702/u/uLaRw3WIAwrNWnlj+CHV8xrZant+M2CshyFWi0MD4Jvbc7zWlxIeGiSDCe5v8
+         BofDuNb5Xy2hjTSuzDcBH0xj3s04suyi9J5G8UJYNlx3hC1KoEaxuvax5iNcg0GcY/2U
+         Naz5yDv+TFYAROS6BnnDnQOsFMSOLD4ce3DRnGDu8u5teuDwjO1QOkLn4P1LS9+4QgfL
+         amiE1k4ZU2zbjljTIfvEljtSpwMf/X4FY6dKRWVdxR7P/IMTBQ0T4YzDWUmNMTilUjZ4
+         P4ig==
+X-Forwarded-Encrypted: i=1; AJvYcCWsNvzIuBYmdI5MedbCnmv1PVl9YLRRY1LVUrIehfB0dxFQNQkYcKINBN92dOehWoSjYfWk6s4mCwMtehiY+dj+IJrPhu9HAbpZrZXzWQ==
+X-Gm-Message-State: AOJu0YwehDBL0ECI5pH+dE1OYbfU5u+J3dUlwOVnIqNKWPsBfEWvQRYu
+	YySHhsJW032ic0LM74txR+TCQIRzrc0Sdg+nXRV6p+1LhtiseUm5CBoelmy1qPU=
+X-Google-Smtp-Source: AGHT+IEiG6bWGoC6W+LaRwRWxsSHZi70nYVqL1c15B6JskQ3SX5MbNBNkF6Y9FVXqPDvhRbcmv3nnA==
+X-Received: by 2002:a2e:7207:0:b0:2ea:e5ae:8ffb with SMTP id 38308e7fff4ca-2eae5ae90d3mr57066381fa.47.1718107188773;
+        Tue, 11 Jun 2024 04:59:48 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::227])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ead41b05a8sm21198371fa.86.2024.06.11.04.59.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 04:58:01 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To: Amol Maheshwari <amahesh@qti.qualcomm.com>, 
- Arnd Bergmann <arnd@arndb.de>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- kernel@quicinc.com, kernel-janitors@vger.kernel.org
-In-Reply-To: <20240603-md-misc-fastrpc-v1-1-6e6d73d08315@quicinc.com>
-References: <20240603-md-misc-fastrpc-v1-1-6e6d73d08315@quicinc.com>
-Subject: Re: (subset) [PATCH] misc: fastrpc: add missing
- MODULE_DESCRIPTION() macro
-Message-Id: <171810708104.74168.2910983617658418174.b4-ty@linaro.org>
-Date: Tue, 11 Jun 2024 12:58:01 +0100
+        Tue, 11 Jun 2024 04:59:48 -0700 (PDT)
+Date: Tue, 11 Jun 2024 14:59:46 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, stable <stable@kernel.org>
+Subject: Re: [PATCH v5 6/7] misc: fastrpc: Fix ownership reassignment of
+ remote heap
+Message-ID: <xc2ys75plbtrenastitqafadfrtolpd3bjdqcrl3wnozpc6kdo@e6e73ousyea7>
+References: <20240611103442.27198-1-quic_ekangupt@quicinc.com>
+ <20240611103442.27198-7-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240611103442.27198-7-quic_ekangupt@quicinc.com>
 
+On Tue, Jun 11, 2024 at 04:04:39PM +0530, Ekansh Gupta wrote:
+> Audio PD daemon will allocate memory for audio PD dynamic loading
 
-On Mon, 03 Jun 2024 12:58:08 -0700, Jeff Johnson wrote:
-> make allmodconfig && make W=1 C=1 reports:
-> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/misc/fastrpc.o
+What is Audio PD daemon? Is it something running on the CPU or on the
+DSP? Is it adsprpcd or some other daemon?
+
+> usage when it is attaching for the first time to audio PD. As
+> part of this, the memory ownership is moved to the VM where
+
+Which VM?
+
+> audio PD can use it. In case daemon process is killed without any
+> impact to DSP audio PD, the daemon process will retry to attach to
+> audio PD and in this case memory won't be reallocated. If the invoke
+> fails due to any reason, as part of err_invoke, the memory ownership
+> is getting reassigned to HLOS even when the memory was not allocated.
+> At this time the audio PD might still be using the memory and an
+> attemp of ownership reassignment would result in memory issue.
+
+What kind of 'memory issues'? Is it even possible to reclaim the memory
+back?
+
 > 
-> Add the missing invocation of the MODULE_DESCRIPTION() macro.
+> Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")
+> Cc: stable <stable@kernel.org>
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> ---
+>  drivers/misc/fastrpc.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 1ba85c70e3ff..24dc1cba40e9 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1238,6 +1238,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>  	struct fastrpc_phy_page pages[1];
+>  	char *name;
+>  	int err;
+> +	bool scm_done = false;
+>  	struct {
+>  		int pgid;
+>  		u32 namelen;
+> @@ -1289,6 +1290,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>  					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+>  				goto err_map;
+>  			}
+> +			scm_done = true;
+>  		}
+>  	}
+>  
+> @@ -1324,7 +1326,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>  
+>  	return 0;
+>  err_invoke:
+> -	if (fl->cctx->vmcount) {
+> +	if (fl->cctx->vmcount && scm_done) {
+>  		u64 src_perms = 0;
+>  		struct qcom_scm_vmperm dst_perms;
+>  		u32 i;
+> -- 
+> 2.43.0
 > 
 
-Applied, thanks!
-
-[1/1] misc: fastrpc: add missing MODULE_DESCRIPTION() macro
-      commit: 6814f03445b30f6a136ff043cb54c0a86e3de982
-
-Best regards,
 -- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
+With best wishes
+Dmitry
 
