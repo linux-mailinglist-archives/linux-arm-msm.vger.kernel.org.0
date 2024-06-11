@@ -1,71 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-22288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 847599038F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 12:35:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CAF19038F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 12:35:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2DE7F286A1E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 10:35:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 411E31F22940
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 10:35:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28206178CE8;
-	Tue, 11 Jun 2024 10:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83D121791EF;
+	Tue, 11 Jun 2024 10:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mOmi7DfQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ISFJ5FQ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E865179951;
-	Tue, 11 Jun 2024 10:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1491417A939;
+	Tue, 11 Jun 2024 10:35:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718102103; cv=none; b=ISkk3yPSJ75+5sy7gFFtwscKT2b0optsgHBu+lNRNu0jJajyqmoX6LVws3KN+HqGD043UsNd718ABtk9TXgi6TAnm1q+Wwpe4GQrdUGBiRZ4jPpmtRjt530S8ng+IWpsovCesDmlOkzsgGpVX4yWp/D050VbLCDsS5IspnnaONY=
+	t=1718102107; cv=none; b=Hm6bHysVS8CcqPB+cJ6mXtqsAeiG3P4O4QPwvM6v5gX8UCB1jDW18AVhzR6Tmo2JGQPylJfEKDIM6NPeJldLzDqjg4VTYP07MnR0KEb69Ve9v3su7kKArgyn56M7ZpRKUxZh9Lt+Zm1dRAcfpRQLRU7JBrzUJMVG6KOrrsV1+aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718102103; c=relaxed/simple;
-	bh=gdQdL7PDmTheGV5WoKx2trpx4d2NKLBgtahxRGx+gaw=;
+	s=arc-20240116; t=1718102107; c=relaxed/simple;
+	bh=IFAwgLYIVNiT1DyTOrZ+wD7aEJ+ZJbriVh9nPOim1P4=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LRiMogThUMbhIbOW3JE1mLmeNd5SD5sc2thUtINqIGAIGGEXBmbx1aBul6M7seBkEvvAf1MYPpRDarfEE4rWlVIG8a/sdjCCamI7Mr+bxHiEm5xwhB9ILOvTOIDia1aZ4C9owPxdnuHv6ASRxyvi7PT93pF2AsQsZdj3DH4al6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mOmi7DfQ; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=Q/T97iFdKBGUvflEECgPnI/Q2hxeC4IbjGR5ejQM6uAgrMy6vAlTGwpJyyGPnbMnUIoafVtvRMySHBdV2c5eZvfot/JHgTCD535Dbctstz4OLkNOvxI5zvJi1SojPaSoj4aox5E+Jyqp/mTpiTuDaP3pMngeR6G8TkilTHwc1Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ISFJ5FQ1; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45B3WQxR007867;
-	Tue, 11 Jun 2024 10:34:58 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45BA7vgJ016951;
+	Tue, 11 Jun 2024 10:35:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	r/Eu9q7j7Fk//YNgt7+LPl2GWZ2HoIFlzcye5+w9Ei0=; b=mOmi7DfQ8OchFX/Y
-	sXpxbZQ7RuqpBr7QG04HJy0X6FKV8dzGCjBpZMyjZlPwGI7fiF3Fo6GrBYsBEffB
-	R2hfVxjyV6+MGgVCio5AM8Tc22URm2JwqH1mxd0DWfDKC7QCWkSE+9Tlxhp20eIu
-	XIRc6r3FUc1fcGeS6mGd2/uBTtDdYallhhBu6JrE6JhKkp/l+dszaHwMFbfcB8eo
-	bXl6dTKAZlKrGACVI0aIRJOoyZiLpIKX0WRaYMG6XkkvHOBi7zizdn6lsmrwN37t
-	FC2FrmKY7GlH2oBbHGRBwEKcLvkUDE1R05SN+gvMsqhC/i/tVC8SjrmqwNqCgxT1
-	ulozvw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymevxe43y-1
+	AcaHTiFdtI61MVemNZZdvjdwIbXvZJOj3Oqq+GgO4zo=; b=ISFJ5FQ1vSnprqNh
+	+r1tXbtMQnPTtAYfZaHb5wIm+Py2uxpg0V0E9oQfPXc5nrwMrhx8i4CSmfkNycxp
+	gpas0XKs8fPa6mhR8oKEhd5d5jsDjq8KOCvOzGnWQFFT0i+5GnE4skR3/4QCsQi4
+	bPR5XFV65Om+2tN/1UiNxZLVA6MG90C47Q0q4nf125QWXubIBP5I4e3Wht7qh7km
+	dmDzMZ0fWaWDhn1AxYHViTQC/xESjGoszF+k7NHc32kBibjdlL4KOiB8w/FD58wq
+	L5lYxxjFJAjFJJ5RLntxbud7dcFedKkuDFzaayiETLgAbB84qt+mJPBHIVPpadYA
+	lKzg5w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ypmjar2b3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Jun 2024 10:34:57 +0000 (GMT)
+	Tue, 11 Jun 2024 10:35:00 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45BAYuMU002861
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45BAYxQh022894
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Jun 2024 10:34:56 GMT
+	Tue, 11 Jun 2024 10:34:59 GMT
 Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 11 Jun 2024 03:34:53 -0700
+ 15.2.1544.9; Tue, 11 Jun 2024 03:34:56 -0700
 From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
 CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
         <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Subject: [PATCH v5 1/7] misc: fastrpc: Add missing dev_err newlines
-Date: Tue, 11 Jun 2024 16:04:34 +0530
-Message-ID: <20240611103442.27198-2-quic_ekangupt@quicinc.com>
+        stable
+	<stable@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Caleb
+ Connolly" <caleb.connolly@linaro.org>
+Subject: [PATCH v5 2/7] misc: fastrpc: Fix DSP capabilities request
+Date: Tue, 11 Jun 2024 16:04:35 +0530
+Message-ID: <20240611103442.27198-3-quic_ekangupt@quicinc.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240611103442.27198-1-quic_ekangupt@quicinc.com>
 References: <20240611103442.27198-1-quic_ekangupt@quicinc.com>
@@ -81,77 +83,74 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3xvxoZOGQpFTyr8g0OesMo_4EYkzRLxM
-X-Proofpoint-GUID: 3xvxoZOGQpFTyr8g0OesMo_4EYkzRLxM
+X-Proofpoint-GUID: pAittO2b2qkZMb_pBIsG7FHxY5XieoGx
+X-Proofpoint-ORIG-GUID: pAittO2b2qkZMb_pBIsG7FHxY5XieoGx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-11_06,2024-06-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
- impostorscore=0 adultscore=0 phishscore=0 malwarescore=0 clxscore=1015
- suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
+ clxscore=1015 mlxscore=0 impostorscore=0 mlxlogscore=999
+ lowpriorityscore=0 spamscore=0 phishscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405170001 definitions=main-2406110080
 
-Few dev_err calls are missing newlines. This can result in unrelated
-lines getting appended which might make logs difficult to understand.
-Add trailing newlines to avoid this.
+The DSP capability request call expects 2 arguments. First is the
+information about the total number of attributes to be copied from
+DSP and second is the information about the buffer where the DSP
+needs to copy the information. The current design is passing the
+information about the size to be copied from DSP which would be
+considered as a bad argument to the call by DSP causing a failure
+suggesting the same. The second argument carries the information
+about the buffer where the DSP needs to copy the capability
+information and the size to be copied. As the first entry of
+capability attribute is getting skipped, same should also be
+considered while sending the information to DSP. Add changes to
+pass proper arguments to DSP.
 
+Fixes: 6c16fd8bdd40 ("misc: fastrpc: Add support to get DSP capabilities")
+Cc: stable <stable@kernel.org>
 Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- drivers/misc/fastrpc.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/misc/fastrpc.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 4c67e2c5a82e..4028cb96bcf2 100644
+index 4028cb96bcf2..0c5bba1d355e 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -325,7 +325,7 @@ static void fastrpc_free_map(struct kref *ref)
- 			err = qcom_scm_assign_mem(map->phys, map->size,
- 				&src_perms, &perm, 1);
- 			if (err) {
--				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
-+				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
- 						map->phys, map->size, err);
- 				return;
- 			}
-@@ -816,7 +816,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 		map->attr = attr;
- 		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &src_perms, dst_perms, 2);
- 		if (err) {
--			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
-+			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
- 					map->phys, map->size, err);
- 			goto map_err;
- 		}
-@@ -1222,7 +1222,7 @@ static bool is_session_rejected(struct fastrpc_user *fl, bool unsigned_pd_reques
- 		 * that does not support unsigned PD offload
- 		 */
- 		if (!fl->cctx->unsigned_support || !unsigned_pd_request) {
--			dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD");
-+			dev_err(&fl->cctx->rpdev->dev, "Error: Untrusted application trying to offload to signed PD\n");
- 			return true;
- 		}
- 	}
-@@ -1285,7 +1285,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 							&src_perms,
- 							fl->cctx->vmperms, fl->cctx->vmcount);
- 			if (err) {
--				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
-+				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d\n",
- 					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
- 				goto err_map;
- 			}
-@@ -1337,7 +1337,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 						(u64)fl->cctx->remote_heap->size,
- 						&src_perms, &dst_perms, 1);
- 		if (err)
--			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
-+			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d\n",
- 				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
- 	}
- err_map:
+@@ -1693,14 +1693,19 @@ static int fastrpc_get_info_from_dsp(struct fastrpc_user *fl, uint32_t *dsp_attr
+ {
+ 	struct fastrpc_invoke_args args[2] = { 0 };
+ 
+-	/* Capability filled in userspace */
++	/*
++	 * Capability filled in userspace. This carries the information
++	 * about the remoteproc support which is fetched from the remoteproc
++	 * sysfs node by userspace.
++	 */
+ 	dsp_attr_buf[0] = 0;
++	dsp_attr_buf_len -= 1;
+ 
+ 	args[0].ptr = (u64)(uintptr_t)&dsp_attr_buf_len;
+ 	args[0].length = sizeof(dsp_attr_buf_len);
+ 	args[0].fd = -1;
+ 	args[1].ptr = (u64)(uintptr_t)&dsp_attr_buf[1];
+-	args[1].length = dsp_attr_buf_len;
++	args[1].length = dsp_attr_buf_len * sizeof(u32);
+ 	args[1].fd = -1;
+ 	fl->pd = USER_PD;
+ 
+@@ -1730,7 +1735,7 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
+ 	if (!dsp_attributes)
+ 		return -ENOMEM;
+ 
+-	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES_LEN);
++	err = fastrpc_get_info_from_dsp(fl, dsp_attributes, FASTRPC_MAX_DSP_ATTRIBUTES);
+ 	if (err == DSP_UNSUPPORTED_API) {
+ 		dev_info(&cctx->rpdev->dev,
+ 			 "Warning: DSP capabilities not supported on domain: %d\n", domain);
 -- 
 2.43.0
 
