@@ -1,112 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-22327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4F9C90406E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 17:47:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 285D29040D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 18:06:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C42811C22ACA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 15:47:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B3311F22280
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 16:06:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6369A3987D;
-	Tue, 11 Jun 2024 15:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 439BD39FD0;
+	Tue, 11 Jun 2024 16:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZwiXetjh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mCNKSnt2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1003381AA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 15:47:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87002383B2;
+	Tue, 11 Jun 2024 16:06:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718120836; cv=none; b=PJ0+GtpPFgWKlxjT86HadqgqrXFwxQ+kqpWNAw761vuihNHIptFjO7oboGAAq/9WIdvAv4iuksrCXzHR0CmxMyJwBlRV/D1KI8KFmRCPh07CqIUomM/6lfG6Z9Vn6/ikHeprZ5KhbNmcsXdtNBDr+kBOeUaqtHTh0AwmaKWm9K8=
+	t=1718122007; cv=none; b=tW11jfZdI49vSdx6krd2zl51AQ6mnCb1WMyAmx3+8q/xbL6V/mwokunTth4ldmtbsj7c1xl76rfKqFrazK0hqrhy/laCieacfQ+UwvCdmH+0XxJaZNKeH0G1UegcmVuqZtefPH6QkWAlZT3K2In6Lw9C0StvB9zSADPS86ilMUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718120836; c=relaxed/simple;
-	bh=F5BWENXEo3o1WWI4CxCWwY1vrialDPlJgFzabTHdxUM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MbKJE3vlLdavrcxVRfuDKhVVcq1v+B7o9F//Mf2P/SOmtroNtjKTbSG0PSddFAJLJkkHolO1e/e3ne3vhRXm2GspIaRN4Lb0KRVoaCi5Vei2pyYX8mlfmnnTAtdYW11lXc9db4JmVpK5KkOdc2v90Wma/jpgYPxTI1rKj4b8Mjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZwiXetjh; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52c525257feso4243985e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 08:47:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718120833; x=1718725633; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nw8/LuxiTJ04FrRfjacvt3XWvtMEY1Dsg0HiFZPTY74=;
-        b=ZwiXetjhE+zy8f/csRnJsnVF6oXx2JL0FbnJqcLUqeTBFkXUYHxfY40mlKSEUwCbsd
-         kaumfY5c4gSOWNCZbmgMXHmT46jar21cajZWBlGq9MRlYWz9tWp6sNo596/J4dnbY7Qc
-         ggR+qWJrzR1VMFr0eRFW+ABiKb91SAxKjz5Z5cHtv/sKvAcQYXc7wKOxwl5JwxRcacCK
-         TtaJjQKRZxiFRsixUjpXcOavB5Y/W0pLjKD2fIxIuJiXkU5Vp6EfNqMTIZQ+Y5uqAQJJ
-         /AiS1XChQyaFNDomP51MtGMNJU2Q9giB7ccU29tOwrTgtWaZurCFi5Ywk5MUHtNFkGC6
-         n0Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718120833; x=1718725633;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nw8/LuxiTJ04FrRfjacvt3XWvtMEY1Dsg0HiFZPTY74=;
-        b=PFBKmObKAAoBxQ9OffFRS7oW0m3YlN7ju9dDSM6hgm3xzVJHqc5QtNMqPOh48xcxtZ
-         sQfVKz1bHR/jIYhgSjsl4wvnBDAqqXInhzN2vDMN5+gpy/FyTJqySFpRCyJGdcYUODxS
-         4/jDMRbAZ/4ku8CxGRM1lbKf7gxcVMpYZ2QAZMhppcj5gA8nLTFdKG8PR1puJOlYLzd6
-         xgQMkb0p4r1Cv9jgZDL2beFCXB6dTkUQU7P3TVETZ2LToDcy71oviD4wUDwKCCgBBJ1w
-         j4ht1xhhb6XXXtm+p+xKFk5ZwmaQCu+2fpjkLqIKy7h7I6bTa9WVry9MzIN2CjmVsLFK
-         0oYA==
-X-Forwarded-Encrypted: i=1; AJvYcCWgB9aaZxNlEkWJ+1pOczEcw2GYTg3fyJgkFjde2Ck9W/No+zlxjSJIPsCTZ9ROR9M/OaJYTCg7HPcrzW/yp/4uq3gz8vpsWByFi+iJig==
-X-Gm-Message-State: AOJu0YxU9TOzisRcwkiNIUw62JHHZ8alluBNc3k2TZne9OA9L+hnXqko
-	+j4uOmy7Mou+UPp1suP9Qh8QiIc7iSJZs3v1Bur47tD5OC/FvfVi2SS5R0gVJBo=
-X-Google-Smtp-Source: AGHT+IFHillVbdPIfFDh7/7ug2ke7MoTVtAgBViv6Ex/VT0dLFNs7Kce4qyvplMjkvLsBubqW+QkLw==
-X-Received: by 2002:a19:3846:0:b0:52c:8051:5799 with SMTP id 2adb3069b0e04-52c8051599cmr4531904e87.11.1718120832839;
-        Tue, 11 Jun 2024 08:47:12 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52c80d6b04dsm1471344e87.136.2024.06.11.08.47.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 08:47:12 -0700 (PDT)
-Date: Tue, 11 Jun 2024 18:47:10 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ajit Pandey <quic_ajipan@quicinc.com>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Vinod Koul <vkoul@kernel.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Subject: Re: [PATCH V4 8/8] arm64: dts: qcom: sm4450: add camera, display and
- gpu clock controller
-Message-ID: <5z52xmqrgngi7xckhner34f2wgnmikkhmvwnxbwvhh7ixhj52s@5yofsg7yr765>
-References: <20240611133752.2192401-1-quic_ajipan@quicinc.com>
- <20240611133752.2192401-9-quic_ajipan@quicinc.com>
+	s=arc-20240116; t=1718122007; c=relaxed/simple;
+	bh=ScPhGOCO3bV0NanOK0AuSPnSG3scE/Ty0BObPsnla4Y=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g++Q1+NLeRJlpPapMy6FFyw2HImEEuq1Ih5dUlrH27eaXlz2EZlR0XBTFGfa+ybY6oBkCistMpqsFc9GlpyTngKODXgoY6RsOkcTFPImW6Y5gsbH+WFa00kIht90NQ+sEc4UyZb5Gh1U2uTFKO3HnKPtA0/njiEL7dgIyZOuM4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mCNKSnt2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45BF2Uaa006245;
+	Tue, 11 Jun 2024 16:06:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=vB9b8QKV3SVGrr7bVXaqXKJ2
+	pGDDkhNCdZ1weSNZecg=; b=mCNKSnt2TFzL55c2N8JLz6ygtLTFTmGfeRDjsgA1
+	gNx2cakRa4HVjVmgq0zmvh7jg0lX4MDyeIx6bfQxJC7Osgc1RU0w3aqlzL/zI9Fe
+	l66A8gOuptaisXuEGKHVFQTWwEFA/wd2VMhBpHRPzDeypnmqM1HWuyY1mcqEeEEv
+	rg/O9vXgKNrQtYlVD0aCFbw00ipdUbM3UdLM4E0UxX0yXnX8AJP8SmeqUe3gqtgb
+	ud2TFJ9Mj4IUbStIGkao6jZbwunyUN2U6sRukYiopV9FGw/AxkjpFbhCKmn/J6wH
+	XTQmZtyRkJIt13a+kf3w9UDSJy97PuqEPeHlL8Oq3FfNFQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymcnmxt9n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Jun 2024 16:06:40 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45BG6bu5021825
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Jun 2024 16:06:37 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 11 Jun 2024 09:06:37 -0700
+Date: Tue, 11 Jun 2024 09:06:35 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
+CC: <andersson@kernel.org>, <quic_clew@quicinc.com>,
+        <mathieu.poirier@linaro.org>, <linux-kernel@vger.kernel.org>,
+        <quic_deesin@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH V2 1/2] soc: qcom: smp2p: Add remote name into smp2p irq
+ devname
+Message-ID: <Zmh2CzGpJrmzs+6K@hu-bjorande-lv.qualcomm.com>
+References: <20240611123351.3813190-1-quic_sudeepgo@quicinc.com>
+ <20240611123351.3813190-2-quic_sudeepgo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240611133752.2192401-9-quic_ajipan@quicinc.com>
+In-Reply-To: <20240611123351.3813190-2-quic_sudeepgo@quicinc.com>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mawu2I00unrM5ytr6-6jesIUueA_YenB
+X-Proofpoint-ORIG-GUID: mawu2I00unrM5ytr6-6jesIUueA_YenB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-11_09,2024-06-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 clxscore=1011 adultscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406110115
 
-On Tue, Jun 11, 2024 at 07:07:52PM +0530, Ajit Pandey wrote:
-> Add device node for camera, display and graphics clock controller on
-> Qualcomm SM4450 platform.
+On Tue, Jun 11, 2024 at 06:03:50PM +0530, Sudeepgoud Patil wrote:
+> Add smp2p irq devname which fetches remote name from respective
+> smp2p dtsi node, which makes the wakeup source distinguishable
+> in irq wakeup prints.
 > 
-> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+> Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm4450.dtsi | 38 ++++++++++++++++++++++++++++
->  1 file changed, 38 insertions(+)
+>  drivers/soc/qcom/smp2p.c | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
 > 
+> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+> index a21241cbeec7..a77fee048b38 100644
+> --- a/drivers/soc/qcom/smp2p.c
+> +++ b/drivers/soc/qcom/smp2p.c
+> @@ -122,6 +122,7 @@ struct smp2p_entry {
+>   * @ssr_ack_enabled: SMP2P_FEATURE_SSR_ACK feature is supported and was enabled
+>   * @ssr_ack: current cached state of the local ack bit
+>   * @negotiation_done: whether negotiating finished
+> + * @irq_devname: poniter to the smp2p irq devname
+>   * @local_pid:	processor id of the inbound edge
+>   * @remote_pid:	processor id of the outbound edge
+>   * @ipc_regmap:	regmap for the outbound ipc
+> @@ -146,6 +147,7 @@ struct qcom_smp2p {
+>  	bool ssr_ack;
+>  	bool negotiation_done;
+>  
+> +	char *irq_devname;
+>  	unsigned local_pid;
+>  	unsigned remote_pid;
+>  
+> @@ -614,10 +616,16 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
+>  	/* Kick the outgoing edge after allocating entries */
+>  	qcom_smp2p_kick(smp2p);
+>  
+> +	smp2p->irq_devname = kasprintf(GFP_KERNEL, "%s", pdev->dev.of_node->name);
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+That's a lot of extra instructions for copying a string, which doesn't
+need to be copied because of_node->name is const char and the argument
+to devm_request_threaded_irq() is const char.
+
+So, kstrdup_const() is what you're looking for.
+
+You can then go devm_kstrdup_const() and avoid the kfree() (then
+kfree_const()) below.
 
 
--- 
-With best wishes
-Dmitry
+That said, looking at /proc/interrupts, I think it would make sense to
+make this devm_kasprintf(..., "smp2p-%s", name);
+
+Regards,
+Bjorn
+
+> +	if (!smp2p->irq_devname) {
+> +		ret = -ENOMEM;
+> +		goto unwind_interfaces;
+> +	}
+> +
+>  	ret = devm_request_threaded_irq(&pdev->dev, irq,
+>  					NULL, qcom_smp2p_intr,
+>  					IRQF_ONESHOT,
+> -					"smp2p", (void *)smp2p);
+> +					smp2p->irq_devname, (void *)smp2p);
+>  	if (ret) {
+>  		dev_err(&pdev->dev, "failed to request interrupt\n");
+>  		goto unwind_interfaces;
+> @@ -650,6 +658,8 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
+>  	list_for_each_entry(entry, &smp2p->outbound, node)
+>  		qcom_smem_state_unregister(entry->state);
+>  
+> +	kfree(smp2p->irq_devname);
+> +
+>  	smp2p->out->valid_entries = 0;
+>  
+>  release_mbox:
+> @@ -677,6 +687,8 @@ static void qcom_smp2p_remove(struct platform_device *pdev)
+>  
+>  	mbox_free_channel(smp2p->mbox_chan);
+>  
+> +	kfree(smp2p->irq_devname);
+> +
+>  	smp2p->out->valid_entries = 0;
+>  }
+>  
+> -- 
+> 
 
