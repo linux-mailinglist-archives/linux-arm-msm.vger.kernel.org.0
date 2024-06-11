@@ -1,70 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-22342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C50E09045DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 22:40:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 858829046BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 00:06:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 60ADA1F234C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 20:40:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99B601C20B25
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 22:06:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C76D9152503;
-	Tue, 11 Jun 2024 20:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78BB91527B3;
+	Tue, 11 Jun 2024 22:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gNbbr/GI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/NzRHHA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958793839C;
-	Tue, 11 Jun 2024 20:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A4E3A8E4;
+	Tue, 11 Jun 2024 22:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718138403; cv=none; b=N/UlgSfqhFLOs8l8sXRvrKRC7fD/2BhDBCPnEDrOSFt2H2KWIhSXv6gKI2rnkQ4WCDqVX7EzVapyQoYxO30eJpdqx+ZyxOKvGpqDsdmh1ye4znTu4fmizGp6Wip7lfw8pbnp96WY1rTsjOXpzHQNdtQUs/mLky5wMaCu81QYczw=
+	t=1718143605; cv=none; b=dZ2H7wVx+7FMTggyFkL9Zpj4tWo2gy1Njvxi2Bwa4F77MjWCOVjNqtpGgT4PFhEff+7QzO0gemdqk7zKuH+4ObT+p+XWFiZjz7Lqx8yZNFzZZCRYByHN2hN0tOljyBGyM3nXe8W2QmLY3P0wxkZdopXisLZWBnbGqSQy21xBUtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718138403; c=relaxed/simple;
-	bh=Fc2HEeo9okemeHUxDvZyvIytBDjmzwdqdSkla9vn06k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iGLrmRpJsA0XHaOn1SP4WpJRsqaZqJiuM6cnAGobQnRfmh9iODE0Jjxb5sr9nZjAy2da2BZhQH6+2EpKFqRfN+OoSCqdSHypzD23JexMoseTv8GQW2CCdBlwBHDFlraHxKCVwQsQ7fD5qMfscEW3NrEeyfVsKuHvIgRv+69LaU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gNbbr/GI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76A2C3277B;
-	Tue, 11 Jun 2024 20:40:02 +0000 (UTC)
+	s=arc-20240116; t=1718143605; c=relaxed/simple;
+	bh=2z2T09bcbzfwexUZ5T7jD1TkbLjspNsoiYHpZ3OkpCI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=S3oQDUOGk9ZUWoUr6usYvNZjGQtGPO6sNTAj+Xg+jFLvMuzH6aXbihOC4v6Y+usGqpSbnLhYQv6s666tSpPXHa2dRrL6crJOu4M0CFgHbcOyKFnsh2KJj1URau+wzmv5Zweg4XoBnug4aF5r96qXPetcw4egG77mjcBDX7TPRpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/NzRHHA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC81C2BD10;
+	Tue, 11 Jun 2024 22:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718138403;
-	bh=Fc2HEeo9okemeHUxDvZyvIytBDjmzwdqdSkla9vn06k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gNbbr/GIbov1z2/M0ZncN5ndZNY+RGEhOS3BIuFYzXKt8Ix1x4gvYDNrWS9/yq40I
-	 6lXvO+02Y5iwtyyg2Dgwgy1ZryBRF/gdz+iqST9EQ+152f+ciYHW5Qf5aUBK7W7Kzi
-	 VTD8q9PmcNkGtujnalwAQL/x6WOrxSyiplUw2qbNu//8Mk5ZZSpkP14nmgASSoZQK7
-	 pvvDqmUMcSw9B0BeHuKLeL5/GeoouKM8LvPxnorq9e3jUzQVyqihdi6ceYa78xZREu
-	 mKzMS9Xab+GFv0Jbvyrubj5oLR/zkYuW6phmvv8UYJ2QVOx9ZZgfObZkisaaFtrm3C
-	 yFV8OoRy5gYIA==
-Date: Tue, 11 Jun 2024 14:40:01 -0600
-From: Rob Herring <robh@kernel.org>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
+	s=k20201202; t=1718143604;
+	bh=2z2T09bcbzfwexUZ5T7jD1TkbLjspNsoiYHpZ3OkpCI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=a/NzRHHA81Kr/n5nwF8wLMmpSxDwQFBG1tf3wJl/ZX5qrZu3LoF/n38c1RQWAS3to
+	 9PF0iBa1/cYKwSVYTUUEyS/nclJFBX6lIO5eO0x1Az0PTI0ZwlAsdX/khbFtfebn6E
+	 YXiFVo4lds+SLiDkmm+nUPE/ZqefCzy2l8jaKYjZeHRpo24owJwxwC2tQwf1lgcI1s
+	 jSWMaN02nOnAzTwxwp8JNo1/Rsd/DRVvo/SgDh50CtfMf0VE9bi5/DnHDINTWd02UU
+	 HtDL2EuqVAPEfbwNIt35YzWTA4zlII6G6PiSRavH22Rynv/chO+GKlSJqnxKZZ2/Mp
+	 +OmyobALds0Jg==
+Date: Tue, 11 Jun 2024 17:06:40 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Melody Olvera <quic_molvera@quicinc.com>,
-	Shivendra Pratap <quic_spratap@quicinc.com>,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] dt-bindings: power: reset: Convert mode-.*
- properties to array
-Message-ID: <20240611204001.GA3026541-robh@kernel.org>
-References: <20240611-arm-psci-system_reset2-vendor-reboots-v4-0-98f55aa74ae8@quicinc.com>
- <20240611-arm-psci-system_reset2-vendor-reboots-v4-1-98f55aa74ae8@quicinc.com>
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Minghuan Lian <minghuan.Lian@nxp.com>,
+	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@axis.com, linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
+	mhi@lists.linux.dev, Niklas Cassel <cassel@kernel.org>
+Subject: Re: [PATCH 2/5] PCI: endpoint: Introduce 'epc_deinit' event and
+ notify the EPF drivers
+Message-ID: <20240611220640.GA1001976@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,109 +84,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240611-arm-psci-system_reset2-vendor-reboots-v4-1-98f55aa74ae8@quicinc.com>
+In-Reply-To: <20240606-pci-deinit-v1-2-4395534520dc@linaro.org>
 
-On Tue, Jun 11, 2024 at 08:35:13AM -0700, Elliot Berman wrote:
-> PSCI reboot mode will map a mode name to multiple magic values instead
-> of just one. Convert the mode-.* property to an array. Users of the
-> reboot-mode schema will need to specify the maxItems of the mode-.*
-> properties. Existing users will all be 1.
+On Thu, Jun 06, 2024 at 12:56:35PM +0530, Manivannan Sadhasivam wrote:
+> As like the 'epc_init' event, that is used to signal the EPF drivers about
+> the EPC initialization, let's introduce 'epc_deinit' event that is used to
+> signal EPC deinitialization.
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  .../devicetree/bindings/power/reset/nvmem-reboot-mode.yaml        | 5 +++++
->  Documentation/devicetree/bindings/power/reset/qcom,pon.yaml       | 8 ++++++++
->  Documentation/devicetree/bindings/power/reset/reboot-mode.yaml    | 4 ++--
->  .../devicetree/bindings/power/reset/syscon-reboot-mode.yaml       | 5 +++++
->  4 files changed, 20 insertions(+), 2 deletions(-)
+> The EPC deinitialization applies only when any sort of fundamental reset
+> is supported by the endpoint controller as per the PCIe spec.
 > 
-> diff --git a/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-> index 627f8a6078c2..9b9bbc0f29e7 100644
-> --- a/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-> +++ b/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-> @@ -31,6 +31,11 @@ properties:
->  allOf:
->    - $ref: reboot-mode.yaml#
->  
-> +patternProperties:
-> +  "^mode-.*$":
-> +    items:
-> +      maxItems: 1
+> Reference: PCIe Base spec v5.0, sections 4.2.4.9.1 and 6.6.1.
 
-Drop 'items'. Otherwise, you are defining constraints of a matrix.
+PCIe r6.0, sec 4.2.5.9.1 and 6.6.1.
 
-> +
->  required:
->    - compatible
->    - nvmem-cells
-> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> index fc8105a7b9b2..4c87ff5ecc9a 100644
-> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
-> @@ -54,6 +54,11 @@ required:
->    - compatible
->    - reg
->  
-> +patternProperties:
-> +  "^mode-.*$":
-> +    items:
-> +      maxItems: 1
-> +
->  unevaluatedProperties: false
->  
->  allOf:
-> @@ -75,6 +80,9 @@ allOf:
->          reg-names:
->            items:
->              - const: pon
-> +    else:
-> +      patternProperties:
-> +        "^mode-.*$": false
->  
->      # Special case for pm8941, which doesn't store reset mode
->    - if:
-> diff --git a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
-> index ad0a0b95cec1..523602fb82d2 100644
-> --- a/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
-> +++ b/Documentation/devicetree/bindings/power/reset/reboot-mode.yaml
-> @@ -28,13 +28,13 @@ description: |
->  
->  properties:
->    mode-normal:
-> -    $ref: /schemas/types.yaml#/definitions/uint32
-> +    $ref: "#/patternProperties/^mode-.*$"
+(Not 4.2.4.9.1, which no longer exists in r6.x)
 
-No need for this. The pattern schema will be applied already. Also, a 
-$ref to a regex is fragile as it won't work for some regex patterns.
-
->      description:
->        Default value to set on a reboot if no command was provided.
->  
->  patternProperties:
->    "^mode-.*$":
-> -    $ref: /schemas/types.yaml#/definitions/uint32
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
->  
->  additionalProperties: true
->  
-> diff --git a/Documentation/devicetree/bindings/power/reset/syscon-reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/syscon-reboot-mode.yaml
-> index b6acff199cde..e9d2e3b27885 100644
-> --- a/Documentation/devicetree/bindings/power/reset/syscon-reboot-mode.yaml
-> +++ b/Documentation/devicetree/bindings/power/reset/syscon-reboot-mode.yaml
-> @@ -32,6 +32,11 @@ properties:
->  allOf:
->    - $ref: reboot-mode.yaml#
->  
-> +patternProperties:
-> +  "^mode-.*$":
-> +    items:
-> +      maxItems: 1
-> +
->  unevaluatedProperties: false
->  
->  required:
+> Currently, some EPC drivers like pcie-qcom-ep and pcie-tegra194 support
+> PERST# as the fundamental reset. So the 'deinit' event will be notified to
+> the EPF drivers when PERST# assert happens in the above mentioned EPC
+> drivers.
 > 
-> -- 
-> 2.34.1
+> The EPF drivers, on receiving the event through the epc_deinit() callback
+> should reset the EPF state machine and also cleanup any configuration that
+> got affected by the fundamental reset like BAR, DMA etc...
 > 
+> This change also warrants skipping the cleanups in unbind() if already done
+> in epc_deinit().
+> 
+> Reviewed-by: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
