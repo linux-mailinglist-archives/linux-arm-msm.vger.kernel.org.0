@@ -1,132 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-22321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 701F3903EAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 16:26:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF92690401B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 17:36:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18CBB1F23AAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 14:26:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4DF732850C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 15:36:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4743017DE31;
-	Tue, 11 Jun 2024 14:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9182537703;
+	Tue, 11 Jun 2024 15:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rmqmor8I"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kg7XpXrw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C2C17DE07
-	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 14:26:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD573282FD;
+	Tue, 11 Jun 2024 15:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718115964; cv=none; b=lWkQY2CyI1XNBIJm4rzGDtrr15uLUw7MaQBEjY5e0zD4xc1eFu2p5TXGNGMHhJKyDO3KeLtLpmxy728y2G5qzUZgOijVvZ5FlmY/dvkQMy4veWIk4RaFT5euZRhg8/Ps5aSBx+VmeWrRxHoeMFTn5gbQ5B8AGOTtTWn2Qti4T9w=
+	t=1718120157; cv=none; b=MvJnF6OKVrx3Jjq3VPGndeAlhdW9qwf7s111dvIbPaeuC/pH7Azk+cewSoeZLGCGl2QHT97mgOtpmTYtI+rRIUz8WhZzC++tBxuD2hbEohUIoXcg4Eam2inUCBbvm75ZLoh8IcLTFFNwz7yDgxNqJAefxCbjGN+ifzBxmCYVitQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718115964; c=relaxed/simple;
-	bh=jTgcJ6I9f/rRMv8ZQvu6QHiOuSVE1U6c/CD+DvrI+aE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aTEVLuv3E8cNnufWPLR+XtcBbh1Z8MS2/Z+zf7TJFdkcE/QCgGvGMuJceoBOU+sT6venj321KPw+pukiIVgF/I22Xc5sPtszbEzpo5UklRI6uEEsu78SEF/ApnTxMzsPD+eBRVpt90xuntyuVPnS1BMTCqhEbmqTvXa2SY+NpBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Rmqmor8I; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a62ef52e837so704883766b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 07:26:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718115960; x=1718720760; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fEIGYp+wGh2VjZ0I9sLID7yRBrttreOePBUNcFhAtA0=;
-        b=Rmqmor8I6jAEFEwF831mIAawoeA/3BBfBS16C2z0mD1y0GfHvnXkb4Uw0t4RQ5pqYg
-         LHrdBESI1u/818rvowDNiO5nQvoyrGiqOD0hS2ymM/J0D1hMfXV9XXhVLWdJ0nlUMviw
-         Z0H9BjWRK8Hfu8wwpD6wK9DYPrM46XXH91yChEC5Ocbl5enkeKRvW/4khvRbEyi2UH7d
-         Y4H9Ya6Ou0MhCxnmoKGewM5FdTXYaKOWQQ+oMyl37Sb22hzpswnLXv71gLvBX65wo7EI
-         N27jHiE7DgIGhHsRaFnDEX392AFrPJw7CoWVZtrlLW3sNGA7lGJmXqBQ419pxJYdbB7W
-         xa6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718115960; x=1718720760;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fEIGYp+wGh2VjZ0I9sLID7yRBrttreOePBUNcFhAtA0=;
-        b=wBYcTlkRY9nnIH+CwIMucSxAErVobTYgWAq0V7oLw3YRB3XOVfNFE31p21xXD1fCbx
-         ZheYshZGsP0bCRmGceOhr1vGjUuyLk+lUz05NSQKEgqDuJGdKdHoEQAlWQdvEf7cBz79
-         9eeeqbZu6NJVwhUqAu59AlWX93YZWowfByNANfqlsWLHUlUuD8cy/eb2H4JBH32B4dwb
-         jYd7+IoZXG0LwwKhGgQCy/+hYpZltp7YRyDFf8RVSjpJhz80vF+YCooJBFy4Ul7MJSZA
-         VbZ73uUpRRZFXbRmoj0D32V0z4dMeKOWz0icqGKB3hDJ+3+iAZEbuPK+gQTecHX56sKX
-         L3Ww==
-X-Forwarded-Encrypted: i=1; AJvYcCUprKSVeFS+u+5sxnRzSdnlGPTf/0AaXfypONsAj29TPxEhNSSSg76csSxqAFVeEwXA/zStc0Ts45o7UYrQKOmnSLQqDD1PclVAe7nSLQ==
-X-Gm-Message-State: AOJu0Ywekd9HXmZ1DLg/e93pZBwYLoMP+L9ODV/OyZwVbEd7nkphQhjY
-	4X7DKnO9hFb4Aie37Wx6dGwZIGUBFTNFf4P/RfTXf35l/QHyl2muyb3xRqysbe4EHhvxoPXlRNB
-	n
-X-Google-Smtp-Source: AGHT+IH+rsh5Ih113GwCiPSGW2KUD3lICD/Laz7ogIuvQXHqM5nyY5Tw1tvqnk/4FjQ38ojd000sDw==
-X-Received: by 2002:a17:906:68c5:b0:a6f:2d5c:5c8d with SMTP id a640c23a62f3a-a6f2d5c6342mr272886466b.30.1718115959823;
-        Tue, 11 Jun 2024 07:25:59 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6ef83ac0c4sm518070666b.74.2024.06.11.07.25.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jun 2024 07:25:59 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	stable@vger.kernel.org
-Subject: [PATCH 2/2] arm64: dts: qcom: x1e80100-crd: fix DAI used for headset recording
-Date: Tue, 11 Jun 2024 16:25:55 +0200
-Message-ID: <20240611142555.994675-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240611142555.994675-1-krzysztof.kozlowski@linaro.org>
-References: <20240611142555.994675-1-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1718120157; c=relaxed/simple;
+	bh=X4pQhHhc2wREphg/mg/Gg8FX0fb2OJLky1khSVECMZA=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=UE4qevc3ARED4qI24NxJ8zOVaqBh54cn3JWM6k7iR72EkRgBCt9zQ6Q+xToK9CRn4B8n2y6g1UViQ5lGNi9iCTqSHR2/LlIlQNtRGh21dhQV1bpgp5xeruI1jVl0aaLOvNUA9gqIo7kp1at0tc2mE/mKCa93aLTK1GzN0hiorDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kg7XpXrw; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45B9fLM2025776;
+	Tue, 11 Jun 2024 15:35:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=NDXNkA2yULIeqsSdinq8WN
+	9E/uqd//orwPkFZqRx7NQ=; b=kg7XpXrwQ6fTA81aQgiEiKWg92c+CLvmDh2Ivt
+	sGcNxo7kZIhoLxkdGPOybFQvgOp/qHrQkh3ASnRXbGkOgxf4124DQBlwsDdJ3FO9
+	OcL1VooM9zgzLWAC3Um11+CXR+1Fnk4zYEQIUncNCtaBHAX1zRzECPD3Pli2Xnak
+	Foqw+LPXJ0FjxQE21XKJ6ir8SEQawt6fv5Oe1nhHK88RQ7Lb0jt0HqAHF0nWKX2l
+	DzmfYPZvebXqpoJXqQcCL+ORCasFVqnynoSy2BAJJgTtVR6uVhh3sRlh16Feg2XK
+	ZVAeOqI3A55+UMN2kFWD0St7DCUTStx5I2RsDdshv5MJ3zyg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymfp7ehp0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Jun 2024 15:35:31 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45BFZUIU009120
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 11 Jun 2024 15:35:30 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 11 Jun 2024 08:35:29 -0700
+From: Elliot Berman <quic_eberman@quicinc.com>
+Subject: [PATCH v4 0/4] Implement vendor resets for PSCI SYSTEM_RESET2
+Date: Tue, 11 Jun 2024 08:35:12 -0700
+Message-ID: <20240611-arm-psci-system_reset2-vendor-reboots-v4-0-98f55aa74ae8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALBuaGYC/5XQz07DMAwG8FeZcibIzr/SnXgPhFDquCyHNiMpE
+ dPUd6cdIDTBoTt+Pvw+22dROEcuYr87i8w1lpjGJZi7naCDH19ZxrBkoUBpBHTS50EeC0VZTmX
+ i4SVz4UnJymNIWWbuUpqKJNI+GOsIGhCLdczcx49Lz9Pzkg+xTCmfLrUV1+l3gzIbGypKkOCwa
+ xqCFg08vr1HiiPdUxrWyi9Pwy1eoBCc1lb5gP96iM1N+2kyDhVazerKW39Q1c/dBgxuvlute/r
+ Wg7XemYf+r6t/XYt2q6sXF10Ipm8JfGeu3XmePwGYYLSSLAIAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan
+	<andy.yan@rock-chips.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "Mark
+ Rutland" <mark.rutland@arm.com>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>
+CC: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Melody Olvera
+	<quic_molvera@quicinc.com>,
+        Shivendra Pratap <quic_spratap@quicinc.com>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Florian Fainelli
+	<florian.fainelli@broadcom.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Elliot Berman <quic_eberman@quicinc.com>
+X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Hz052umDGftNADFs-AycvXWcHJzVoWeL
+X-Proofpoint-ORIG-GUID: Hz052umDGftNADFs-AycvXWcHJzVoWeL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-11_09,2024-06-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=878 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
+ priorityscore=1501 clxscore=1011 bulkscore=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406110110
 
-The SWR2 Soundwire instance has 1 output and 4 input ports, so for the
-headset recording (via the WCD9385 codec and the TX macro codec) we want
-to use the next DAI, not the first one (see qcom,dout-ports and
-qcom,din-ports for soundwire@6d30000 node).
+The PSCI SYSTEM_RESET2 call allows vendor firmware to define additional
+reset types which could be mapped to the reboot argument.
 
-Original code was copied from other devices like SM8450 and SM8550.  On
-the SM8450 this was a correct setting, however on the SM8550 this worked
-probably only by coincidence, because the DTS defined no output ports on
-SWR2 Soundwire.
+Setting up reboot on Qualcomm devices can be inconsistent from chipset
+to chipset. Generally, there is a PMIC register that gets written to
+decide the reboot type. There is also sometimes a cookie that can be
+written to indicate that the bootloader should behave differently than a
+regular boot. These knobs evolve over product generations and require 
+more drivers. Qualcomm firmwares are beginning to expose vendor
+SYSTEM_RESET2 types to simplify driver requirements from Linux.
 
-This is a necessary fix for proper audio recording via analogue
-microphones connected to WCD9385 codec (e.g. headset AMIC2).
+Add support in PSCI to statically wire reboot mode commands from
+userspace to a vendor reset and cookie value using the device tree. The
+DT bindings are similar to reboot mode framework except that 2
+integers are accepted (the type and cookie). Also, reboot mode framework
+is intended to program the cookies, but not actually reboot the host.
+PSCI SYSTEM_RESET2 does both. I've not added support for reading ACPI
+tables since I don't have any device which provides them + firmware that
+supports vendor SYSTEM_RESET2 types.
 
-Fixes: 4442a67eedc1 ("arm64: dts: qcom: x1e80100-crd: add sound card")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Previous discussions around SYSTEM_RESET2:
+- https://lore.kernel.org/lkml/20230724223057.1208122-2-quic_eberman@quicinc.com/T/
+- https://lore.kernel.org/all/4a679542-b48d-7e11-f33a-63535a5c68cb@quicinc.com/
+
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes in v4:
+- Change mode- properties from uint32-matrix to uint32-array
+- Restructure the reset-types node so only the restriction is in the
+  if/then schemas and not the entire definition
+- Link to v3: https://lore.kernel.org/r/20240515-arm-psci-system_reset2-vendor-reboots-v3-0-16dd4f9c0ab4@quicinc.com
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index 12a4c4637baf..05e62d9f1cbc 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -102,7 +102,7 @@ cpu {
- 			};
- 
- 			codec {
--				sound-dai = <&wcd938x 1>, <&swr2 0>, <&lpass_txmacro 0>;
-+				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
- 			};
- 
- 			platform {
+Changes in v3:
+- Limit outer number of items to 1 for mode-* properties
+- Move the reboot-mode for psci under a subnode "reset-types"
+- Fix the DT node in qcm6490-idp so it doesn't overwrite the one from
+  sc7820.dtsi
+- Link to v2: https://lore.kernel.org/r/20240414-arm-psci-system_reset2-vendor-reboots-v2-0-da9a055a648f@quicinc.com
+
+Changes in v2:
+- Fixes to schema as suggested by Rob and Krzysztof
+- Add qcm6490 idp as first Qualcomm device to support
+- Link to v1: https://lore.kernel.org/r/20231117-arm-psci-system_reset2-vendor-reboots-v1-0-03c4612153e2@quicinc.com
+
+Changes in v1:
+- Reference reboot-mode bindings as suggeted by Rob.
+- Link to RFC: https://lore.kernel.org/r/20231030-arm-psci-system_reset2-vendor-reboots-v1-0-dcdd63352ad1@quicinc.com
+
+---
+Elliot Berman (4):
+      dt-bindings: power: reset: Convert mode-.* properties to array
+      dt-bindings: arm: Document reboot mode magic
+      firmware: psci: Read and use vendor reset types
+      arm64: dts: qcom: Add PSCI SYSTEM_RESET2 types for qcm6490-idp
+
+ Documentation/devicetree/bindings/arm/psci.yaml    | 44 +++++++++++
+ .../bindings/power/reset/nvmem-reboot-mode.yaml    |  5 ++
+ .../devicetree/bindings/power/reset/qcom,pon.yaml  |  8 ++
+ .../bindings/power/reset/reboot-mode.yaml          |  4 +-
+ .../bindings/power/reset/syscon-reboot-mode.yaml   |  5 ++
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts           |  7 ++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  2 +-
+ drivers/firmware/psci/psci.c                       | 92 ++++++++++++++++++++++
+ 8 files changed, 164 insertions(+), 3 deletions(-)
+---
+base-commit: e92bee9f861b466c676f0200be3e46af7bc4ac6b
+change-id: 20231016-arm-psci-system_reset2-vendor-reboots-cc3ad456c070
+
+Best regards,
 -- 
-2.43.0
+Elliot Berman <quic_eberman@quicinc.com>
 
 
