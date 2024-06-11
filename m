@@ -1,180 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-22328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 285D29040D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 18:06:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC4DA904104
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 18:18:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B3311F22280
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 16:06:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34A37286E0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 16:18:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 439BD39FD0;
-	Tue, 11 Jun 2024 16:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B41F3BB25;
+	Tue, 11 Jun 2024 16:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mCNKSnt2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohSHEeJv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87002383B2;
-	Tue, 11 Jun 2024 16:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D791CFB2;
+	Tue, 11 Jun 2024 16:18:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718122007; cv=none; b=tW11jfZdI49vSdx6krd2zl51AQ6mnCb1WMyAmx3+8q/xbL6V/mwokunTth4ldmtbsj7c1xl76rfKqFrazK0hqrhy/laCieacfQ+UwvCdmH+0XxJaZNKeH0G1UegcmVuqZtefPH6QkWAlZT3K2In6Lw9C0StvB9zSADPS86ilMUo=
+	t=1718122707; cv=none; b=NdJ1DHcDyheXpwUtyIoQhVfMNlO0ltOsQfxs/K9nRZ2M5DYpTunbPXJeDhukBlBDGu2NWQWGo0YukI1Cs3GTzRe0EkJZ5duRxt+CFi62UP7uB3QK18ctmpIesSKoe8knrG16QQHvxXPpGciOLp/rLTy1bS+tlt+pDZz+PdVHp38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718122007; c=relaxed/simple;
-	bh=ScPhGOCO3bV0NanOK0AuSPnSG3scE/Ty0BObPsnla4Y=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g++Q1+NLeRJlpPapMy6FFyw2HImEEuq1Ih5dUlrH27eaXlz2EZlR0XBTFGfa+ybY6oBkCistMpqsFc9GlpyTngKODXgoY6RsOkcTFPImW6Y5gsbH+WFa00kIht90NQ+sEc4UyZb5Gh1U2uTFKO3HnKPtA0/njiEL7dgIyZOuM4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mCNKSnt2; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45BF2Uaa006245;
-	Tue, 11 Jun 2024 16:06:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=vB9b8QKV3SVGrr7bVXaqXKJ2
-	pGDDkhNCdZ1weSNZecg=; b=mCNKSnt2TFzL55c2N8JLz6ygtLTFTmGfeRDjsgA1
-	gNx2cakRa4HVjVmgq0zmvh7jg0lX4MDyeIx6bfQxJC7Osgc1RU0w3aqlzL/zI9Fe
-	l66A8gOuptaisXuEGKHVFQTWwEFA/wd2VMhBpHRPzDeypnmqM1HWuyY1mcqEeEEv
-	rg/O9vXgKNrQtYlVD0aCFbw00ipdUbM3UdLM4E0UxX0yXnX8AJP8SmeqUe3gqtgb
-	ud2TFJ9Mj4IUbStIGkao6jZbwunyUN2U6sRukYiopV9FGw/AxkjpFbhCKmn/J6wH
-	XTQmZtyRkJIt13a+kf3w9UDSJy97PuqEPeHlL8Oq3FfNFQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymcnmxt9n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Jun 2024 16:06:40 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45BG6bu5021825
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Jun 2024 16:06:37 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 11 Jun 2024 09:06:37 -0700
-Date: Tue, 11 Jun 2024 09:06:35 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
-CC: <andersson@kernel.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <quic_deesin@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH V2 1/2] soc: qcom: smp2p: Add remote name into smp2p irq
- devname
-Message-ID: <Zmh2CzGpJrmzs+6K@hu-bjorande-lv.qualcomm.com>
-References: <20240611123351.3813190-1-quic_sudeepgo@quicinc.com>
- <20240611123351.3813190-2-quic_sudeepgo@quicinc.com>
+	s=arc-20240116; t=1718122707; c=relaxed/simple;
+	bh=BXCo5tYRXnp4nFR9iSjOtaso98PV85SmlYISucj3UX4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W+wLV5ACLh/DPbPR1CpssyZQsHY7se+Z/nXaawAlqyC4keNKfUgD2buGRIqSecQ7uDTUA2AwjJLOUS8k3e7Je5z+upvTfrAYLZESPMl5QuxG6hd+hGL8gqBtMmfQjeKVKjIgJ+U0BhxFsv4rK93PXnZr/hn62GFuPDHQJ5hyMJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohSHEeJv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E1EC32789;
+	Tue, 11 Jun 2024 16:18:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718122705;
+	bh=BXCo5tYRXnp4nFR9iSjOtaso98PV85SmlYISucj3UX4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ohSHEeJvbrchG5opz8XOjoL5wWczUKYg/j0J10BezKCKdWUHh+2BGYj+2R2VF18Mi
+	 XxjPWUSuAVLzYTuQ4L1Id7Wk/3W+3mvM8csSpYEc2KuP9ce/ryb2HxUA1lkkXJbnAk
+	 ycthwzrpLuDUuTuRkh4XlaBNI7nC+cxs+PpO8vDpg/C5wHFcqKDsn8W16QnZi0tH5Z
+	 DIW824tseUEYQgmEu7R2mIUAN258cQpMsEFlGEu5cwIdxRTn3rfzKktZUsav89+1o0
+	 AvPQP/2fbiglHKN++jvchzmV0lV14dKFjLkz9KQ4wYWeH0PdcZS9myKs7/inZQrZC/
+	 7oaaF+7qiwjyw==
+Date: Tue, 11 Jun 2024 17:18:23 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+	quic_pkumpatl@quicinc.com
+Subject: Re: [PATCH v5 0/7] ASoC: codecs: wcd937x: add wcd937x audio codec
+ support
+Message-ID: <Zmh4z2F6Q0Z5tWnz@finisterre.sirena.org.uk>
+References: <20240524035535.3119208-1-quic_mohs@quicinc.com>
+ <171810116692.177725.17513047102055843084.b4-ty@kernel.org>
+ <9a14cb7b-8d6a-14b3-1d3a-b61086e4d4a9@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="9kuz/Ng8fSpME3+T"
 Content-Disposition: inline
-In-Reply-To: <20240611123351.3813190-2-quic_sudeepgo@quicinc.com>
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mawu2I00unrM5ytr6-6jesIUueA_YenB
-X-Proofpoint-ORIG-GUID: mawu2I00unrM5ytr6-6jesIUueA_YenB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-11_09,2024-06-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 clxscore=1011 adultscore=0 phishscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406110115
-
-On Tue, Jun 11, 2024 at 06:03:50PM +0530, Sudeepgoud Patil wrote:
-> Add smp2p irq devname which fetches remote name from respective
-> smp2p dtsi node, which makes the wakeup source distinguishable
-> in irq wakeup prints.
-> 
-> Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
-> ---
->  drivers/soc/qcom/smp2p.c | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index a21241cbeec7..a77fee048b38 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -122,6 +122,7 @@ struct smp2p_entry {
->   * @ssr_ack_enabled: SMP2P_FEATURE_SSR_ACK feature is supported and was enabled
->   * @ssr_ack: current cached state of the local ack bit
->   * @negotiation_done: whether negotiating finished
-> + * @irq_devname: poniter to the smp2p irq devname
->   * @local_pid:	processor id of the inbound edge
->   * @remote_pid:	processor id of the outbound edge
->   * @ipc_regmap:	regmap for the outbound ipc
-> @@ -146,6 +147,7 @@ struct qcom_smp2p {
->  	bool ssr_ack;
->  	bool negotiation_done;
->  
-> +	char *irq_devname;
->  	unsigned local_pid;
->  	unsigned remote_pid;
->  
-> @@ -614,10 +616,16 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
->  	/* Kick the outgoing edge after allocating entries */
->  	qcom_smp2p_kick(smp2p);
->  
-> +	smp2p->irq_devname = kasprintf(GFP_KERNEL, "%s", pdev->dev.of_node->name);
-
-That's a lot of extra instructions for copying a string, which doesn't
-need to be copied because of_node->name is const char and the argument
-to devm_request_threaded_irq() is const char.
-
-So, kstrdup_const() is what you're looking for.
-
-You can then go devm_kstrdup_const() and avoid the kfree() (then
-kfree_const()) below.
+In-Reply-To: <9a14cb7b-8d6a-14b3-1d3a-b61086e4d4a9@quicinc.com>
+X-Cookie: Your love life will be... interesting.
 
 
-That said, looking at /proc/interrupts, I think it would make sense to
-make this devm_kasprintf(..., "smp2p-%s", name);
+--9kuz/Ng8fSpME3+T
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Regards,
-Bjorn
+On Tue, Jun 11, 2024 at 05:43:19PM +0530, Mohammad Rafi Shaik wrote:
+> On 6/11/2024 3:49 PM, Mark Brown wrote:
 
-> +	if (!smp2p->irq_devname) {
-> +		ret = -ENOMEM;
-> +		goto unwind_interfaces;
-> +	}
-> +
->  	ret = devm_request_threaded_irq(&pdev->dev, irq,
->  					NULL, qcom_smp2p_intr,
->  					IRQF_ONESHOT,
-> -					"smp2p", (void *)smp2p);
-> +					smp2p->irq_devname, (void *)smp2p);
->  	if (ret) {
->  		dev_err(&pdev->dev, "failed to request interrupt\n");
->  		goto unwind_interfaces;
-> @@ -650,6 +658,8 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
->  	list_for_each_entry(entry, &smp2p->outbound, node)
->  		qcom_smem_state_unregister(entry->state);
->  
-> +	kfree(smp2p->irq_devname);
-> +
->  	smp2p->out->valid_entries = 0;
->  
->  release_mbox:
-> @@ -677,6 +687,8 @@ static void qcom_smp2p_remove(struct platform_device *pdev)
->  
->  	mbox_free_channel(smp2p->mbox_chan);
->  
-> +	kfree(smp2p->irq_devname);
-> +
->  	smp2p->out->valid_entries = 0;
->  }
->  
-> -- 
-> 
+> > If any updates are required or you are submitting further changes they
+> > should be sent as incremental updates against current git, existing
+> > patches will not be replaced.
+
+> if possible please revert v5 and pick new v6 patch set.
+
+As mentioned above please send incremental fixes for any issues, there's
+already other changes on top of these.
+
+--9kuz/Ng8fSpME3+T
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmZoeM4ACgkQJNaLcl1U
+h9Cnawf/fREWTBnC0LJb0pWn2slZjuzkeDdemDwGEzINKR+3GWRSgkj7g8EfveZZ
+uhpb4kMAETtZZFdqNipbdCdCn0rykBEAg1htIkvk8aCKlDiMKw18vomFlGCHuMyL
+OJU3W0Bdj7gK/9It4OcoR5niYSCX8Qga0y+lanU+7yBgVX/tBlJCWduiQamUwig7
+tzbtQB+/w+rIFk8hOTD7YDN2L3meLPqHqLxZxAf2VGFwti3ZazGFdDcQTPwFEGgL
+uIPG39uCwDr3g1tmX0mcNgg2mOBnWNLreXER2BxaduXePl3qacANXkFpwD3BxNvn
+sC6Abb/j+iurQFMG0e5eZVdgLBc3Pg==
+=qvv7
+-----END PGP SIGNATURE-----
+
+--9kuz/Ng8fSpME3+T--
 
