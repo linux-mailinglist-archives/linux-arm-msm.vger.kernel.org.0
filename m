@@ -1,161 +1,380 @@
-Return-Path: <linux-arm-msm+bounces-22356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 173C890477D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 01:06:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D33C290478E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 01:12:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 253F11C2289A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 23:06:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BFF61F22809
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 23:12:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ACD05BAF0;
-	Tue, 11 Jun 2024 23:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A2ED155C9F;
+	Tue, 11 Jun 2024 23:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nI7ie6oS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y11ctdjc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C92152DF1;
-	Tue, 11 Jun 2024 23:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A19B1553B5
+	for <linux-arm-msm@vger.kernel.org>; Tue, 11 Jun 2024 23:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718147168; cv=none; b=BlOpfOzElLQvAgXjo470w1uzNdFpTTkC89C3M/fNeItl1Djh4cr77im2TkqGV9P+7mGMLZeEtFekL7EbAS5njwiz7HWl3ybaI6XPRCJyv/89q8uBY5889pDG7yTMGqVX38vPmEW7b8N4627BhQNHhqOoN1N0yjTBxkJhLIvdo8g=
+	t=1718147570; cv=none; b=BZj4oa88UWRwqBPTbOXKK2HD0QmIgHUYAPlHZ59DEpVBQjJ4IVX0+k0cd49QBU475GuEkkmTgHIFSHHkeRF8l7SF79sTd4vXxtt64afhzNyj/1TCnqid8hKSDRlzeShqrGDnu7txmnPKZX6VPbETeCYt7J8bJZy85p5DIiCLJUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718147168; c=relaxed/simple;
-	bh=0sJE9lCi9yl51IYl52WCu2bf9BONc1ovIPmUL9NAx5M=;
+	s=arc-20240116; t=1718147570; c=relaxed/simple;
+	bh=V+YNYJmTpRiOssAs+8yT9SL9I+3QEhTbAGO6pw6Hhqs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hfDWpEMbwc0qTzY5PH+BQe4GMApG4ILjcqrlL6aKayyeX7iq8V40voM1ZvxjgkXG/EGVlcg1hw40WytpTMv8sbQuhnrLTaG5nIDpfxU2d8F2iMxI8tCH3KTWhP+pwfLUGJyUMsohGswMbV4pnBcn1gwdtAzX0I5ZYJdlkvqn0E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nI7ie6oS; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=CPC+pRAp5FQX2pDZZXi/52vVC/mEi8ScdtsUr++tsXrupQLuIL8GlN3u3z5KF6rbEVq7KXVMeyyn0c3NRlwKeC+wkE2fHRdrb8FZNxYa5UuHtnDNV+19AjfmGVTdy4GHb1qLdQw1Qfxjv6b8cIAV8ee/wEwR69Fx9l0p1qW0B5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y11ctdjc; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45BL0gmb013157;
-	Tue, 11 Jun 2024 23:05:54 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45BFD0IM031044;
+	Tue, 11 Jun 2024 23:12:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sag2Db5U+ssq0Mfo5pmsGP9cW/zUXlRRoUs7slLtsIo=; b=nI7ie6oSlbdTO2FQ
-	SwGpAdyBoyd+O2Ts3UFownm6NeY2x6dc8txG4FfjsXSGoE4bIu5g7GH9xDMaSUEi
-	hpO1l3cImHIJswQBnGReLO1G8w4Kn3U3rNlrc3PZbF8y1RBYC821pOZtW1iKsxiF
-	Dl1PjeQ4VVC8Zv6bCqSK/sSoLqCOhDRoDFdNBns0g9mCR/FoqCHTbxypC3//GKMi
-	B06kBt1EphSqfx94xPtPTpU4Z3BbS3QnEUAA5gS7YgXjVRfkR/bVXKfe5XVXlDXt
-	Bx4UGhU/A3deqJOBSNvdK5wW1n1CHgF+CcHDjmRfCgFDXktWrWzUlsVWR2hBWRod
-	eJlTCQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ypm459urd-1
+	LkssiW4Rv/Oty1gAxuq6udQ7ea1djF3GtQiRocoy84s=; b=Y11ctdjcVVKbY7xG
+	RKZefDtxTQyhrrQbYt5hH9DDMJJiTXfC6B5i09EznEeBfwYj01Y1CuO6HU/A0nQJ
+	ZOExNP8WNolZqgcCtGxTqUwRT6BNuMaPXBQRtkCXkhr3X6EgHIvUxRwEtmgoLKRP
+	wWLF+tZ4NLLiUfkZqqM5uK+lBwsOUGNFPIJJEkA2mFd1ZKy7RCxo9T3C68WXrzqt
+	xCuFxF6wM2PRa70QmYZKWYjQR/zP4v9cWt6UZxjpMKY9WA0FQiixDoO4TP4sIS9z
+	Ivs6X/AUxJ5FlDs6EXvDteu0JO6gyFbmlrvwOs/fHRDmDiY5E+CS5SB9Hw0szg2j
+	nkbGgQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ymcnmyjx1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Jun 2024 23:05:54 +0000 (GMT)
+	Tue, 11 Jun 2024 23:12:38 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45BN5pvN024820
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45BNCbfh021775
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 11 Jun 2024 23:05:51 GMT
-Received: from [10.71.115.211] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Tue, 11 Jun 2024 23:12:37 GMT
+Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Jun
- 2024 16:05:51 -0700
-Message-ID: <0318b0c2-5686-4565-b75b-fa1ecfe61740@quicinc.com>
-Date: Tue, 11 Jun 2024 16:05:50 -0700
+ 2024 16:12:32 -0700
+Message-ID: <68dc0d98-9830-d71d-ec65-71890fb2986e@quicinc.com>
+Date: Tue, 11 Jun 2024 16:12:30 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/2] soc: qcom: smp2p: Introduce tracepoint support
-To: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>, <quic_bjorande@quicinc.com>,
-        <andersson@kernel.org>, <mathieu.poirier@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <quic_deesin@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>
-References: <20240611123351.3813190-1-quic_sudeepgo@quicinc.com>
- <20240611123351.3813190-3-quic_sudeepgo@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 10/13] drm/msm/dpu: allow sharing SSPP between planes
 Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20240611123351.3813190-3-quic_sudeepgo@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-11-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240314000216.392549-11-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: x3EwQRm8v1oJDPQnkUiTux5N50AmAKth
-X-Proofpoint-ORIG-GUID: x3EwQRm8v1oJDPQnkUiTux5N50AmAKth
+X-Proofpoint-GUID: 0DjmiNwj1zJl1JC9bvmpU94Co6ra59tl
+X-Proofpoint-ORIG-GUID: 0DjmiNwj1zJl1JC9bvmpU94Co6ra59tl
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-11_11,2024-06-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 mlxlogscore=784 phishscore=0 malwarescore=0 suspectscore=0
- bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406110156
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 clxscore=1015 adultscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406110157
 
 
 
-On 6/11/2024 5:33 AM, Sudeepgoud Patil wrote:
-> This commit introduces tracepoint support for smp2p,
-> enabling logging of communication between local and remote processors.
-> The tracepoints include information about the remote processor ID,
-> remote subsystem name, negotiation details, supported features,
-> bit change notifications, and ssr activity.
-> These tracepoints are valuable for debugging issues between subsystems.
+On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+> Since SmartDMA planes provide two rectangles, it is possible to use them
+> to drive two different DRM planes, first plane getting the rect_0,
+> another one using rect_1 of the same SSPP. The sharing algorithm is
+> pretty simple, it requires that each of the planes can be driven by the
+> single rectangle and only consequetive planes are considered.
 > 
-> Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
+
+consequetive - > consecutive
+
+Can you please explain why only consecutive planes are considered for this?
+
+So lets say we have 4 virtual planes : 0, 1, 2, 3
+
+It will try 0-1, 1-2, 2-3
+
+Because all planes are virtual, there are only 3 unique pairs to be 
+considered? Otherwise technically 6 pairs are possible.
+
+
+General request:
+
+Patches 1-9 : Add support for using 2 SSPPs in one plane
+Patches 10-12 : Add support for using two rectangles of the same SSPP as 
+two virtual planes
+Patch 13 : Can be pushed along with the first set.
+
+Can we break up this series in this way to make it easier to test and 
+land the bulk of it in this cycle?
+
+I have some doubts on patches 10-12 and would like to spend more time 
+reviewing and testing this. So I am trying to reduce the debt of patches 
+we have been carrying as this is a tricky feature to simulate and test 
+the cases.
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-...
-> diff --git a/drivers/soc/qcom/trace-smp2p.h b/drivers/soc/qcom/trace-smp2p.h
-> new file mode 100644
-> index 000000000000..833782460b57
-> --- /dev/null
-> +++ b/drivers/soc/qcom/trace-smp2p.h
-> @@ -0,0 +1,116 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 128 +++++++++++++++++++---
+>   1 file changed, 112 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index cde20c1fa90d..2e1c544efc4a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -886,10 +886,9 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>   	return 0;
+>   }
+>   
+> -static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+> -						   struct dpu_sw_pipe_cfg *pipe_cfg,
+> -						   const struct dpu_format *fmt,
+> -						   uint32_t max_linewidth)
+> +static int dpu_plane_is_multirect_capable(struct dpu_sw_pipe *pipe,
+> +					  struct dpu_sw_pipe_cfg *pipe_cfg,
+> +					  const struct dpu_format *fmt)
+>   {
+>   	if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+>   	    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect))
+> @@ -901,6 +900,13 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+>   	if (DPU_FORMAT_IS_YUV(fmt))
+>   		return false;
+>   
+> +	return true;
+> +}
 > +
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM qcom_smp2p
+> +static int dpu_plane_is_parallel_capable(struct dpu_sw_pipe_cfg *pipe_cfg,
+> +					 const struct dpu_format *fmt,
+> +					 uint32_t max_linewidth)
+> +{
+>   	if (DPU_FORMAT_IS_UBWC(fmt) &&
+>   	    drm_rect_width(&pipe_cfg->src_rect) > max_linewidth / 2)
+>   		return false;
+> @@ -908,6 +914,82 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+>   	return true;
+>   }
+>   
+> +static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+> +						   struct dpu_sw_pipe_cfg *pipe_cfg,
+> +						   const struct dpu_format *fmt,
+> +						   uint32_t max_linewidth)
+> +{
+> +	return dpu_plane_is_multirect_capable(pipe, pipe_cfg, fmt) &&
+> +		dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth);
+> +}
 > +
-> +#if !defined(__QCOM_SMP2P_TRACE_H__) || defined(TRACE_HEADER_MULTI_READ)
-> +#define __QCOM_SMP2P_TRACE_H__
 > +
-> +#include <linux/tracepoint.h>
+> +static int dpu_plane_try_multirect(struct dpu_plane_state *pstate,
+> +				   struct dpu_plane_state *prev_pstate,
+> +				   const struct dpu_format *fmt,
+> +				   uint32_t max_linewidth)
+> +{
+> +	struct dpu_sw_pipe *pipe = &pstate->pipe;
+> +	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> +	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+> +	struct dpu_sw_pipe *prev_pipe = &prev_pstate->pipe;
+> +	struct dpu_sw_pipe_cfg *prev_pipe_cfg = &prev_pstate->pipe_cfg;
+> +	const struct dpu_format *prev_fmt =
+> +		to_dpu_format(msm_framebuffer_format(prev_pstate->base.fb));
+> +	u16 max_tile_height = 1;
 > +
-> +#define SMP2P_FEATURE_SSR_ACK 0x1
+> +	if (prev_pstate->r_pipe.sspp != NULL ||
+> +	    prev_pipe->multirect_mode != DPU_SSPP_MULTIRECT_NONE)
+> +		return false;
+> +
+> +	if (!dpu_plane_is_multirect_capable(pipe, pipe_cfg, fmt) ||
+> +	    !dpu_plane_is_multirect_capable(prev_pipe, prev_pipe_cfg, prev_fmt) ||
+> +	    !(test_bit(DPU_SSPP_SMART_DMA_V1, &prev_pipe->sspp->cap->features) ||
+> +	      test_bit(DPU_SSPP_SMART_DMA_V2, &prev_pipe->sspp->cap->features)))
 
-Now that I see it, redefining the the feature flag here seems a bit out 
-of place. I'm not sure if it's worth kicking off a header file for this 
-single define though.
+This test_bit check should be absorbed into 
+dpu_plane_is_multirect_capable()?
 
+> +		return false;
 > +
-> +TRACE_EVENT(smp2p_ssr_ack,
-> +	TP_PROTO(unsigned int remote_pid, char *irq_devname),
-> +	TP_ARGS(remote_pid, irq_devname),
-> +	TP_STRUCT__entry(
-> +		__field(u32, remote_pid)
-> +		__string(irq_devname, irq_devname)
-> +	),
-> +	TP_fast_assign(
-> +		__entry->remote_pid = remote_pid;
-> +		__assign_str(irq_devname, irq_devname);
-> +	),
-> +	TP_printk("%d: %s: SSR detected, doing SSR Handshake",
-> +		__entry->remote_pid,
-> +		__get_str(irq_devname)
-> +	)
-> +);
+> +	if (DPU_FORMAT_IS_UBWC(fmt))
+> +		max_tile_height = max(max_tile_height, fmt->tile_height);
+> +
+> +	if (DPU_FORMAT_IS_UBWC(prev_fmt))
+> +		max_tile_height = max(max_tile_height, prev_fmt->tile_height);
+> +
+> +	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +	r_pipe->sspp = NULL;
+> +
+> +	if (dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth) &&
+> +	    dpu_plane_is_parallel_capable(prev_pipe_cfg, prev_fmt, max_linewidth) &&
+> +	    (pipe_cfg->dst_rect.x1 >= prev_pipe_cfg->dst_rect.x2 ||
+> +	     prev_pipe_cfg->dst_rect.x1 >= pipe_cfg->dst_rect.x2)) {
+
+Even if y1 > y2 or y2 > y1 but the separation is less than the  2 * 
+max_tile_height, it can qualify for parallel fetch.
+
+So parallel fetch is possible not only in x direction but y direction as 
+well as it will be fetched by different SSPPs.
+
+> +		pipe->sspp = prev_pipe->sspp;
+> +
+> +		pipe->multirect_index = DPU_SSPP_RECT_1;
+> +		pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> +
+> +		prev_pipe->multirect_index = DPU_SSPP_RECT_0;
+> +		prev_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+> +
+> +		return true;
+> +	}
+> +
+> +	if (pipe_cfg->dst_rect.y1 >= prev_pipe_cfg->dst_rect.y2 + 2 * max_tile_height ||
+> +	    prev_pipe_cfg->dst_rect.y1 >= pipe_cfg->dst_rect.y2 + 2 * max_tile_height) {
+> +		pipe->sspp = prev_pipe->sspp;
+> +
+> +		pipe->multirect_index = DPU_SSPP_RECT_1;
+> +		pipe->multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
+> +
+> +		prev_pipe->multirect_index = DPU_SSPP_RECT_0;
+> +		prev_pipe->multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
+> +
+> +		return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>   static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>   					struct drm_atomic_state *state,
+>   					const struct drm_crtc_state *crtc_state)
+> @@ -1098,13 +1180,14 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+>   static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   					      struct dpu_global_state *global_state,
+>   					      struct drm_atomic_state *state,
+> -					      struct drm_plane_state *plane_state)
+> +					      struct drm_plane_state *plane_state,
+> +					      struct drm_plane_state *prev_plane_state)
+>   {
+>   	const struct drm_crtc_state *crtc_state = NULL;
+>   	struct drm_plane *plane = plane_state->plane;
+>   	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>   	struct dpu_rm_sspp_requirements reqs;
+> -	struct dpu_plane_state *pstate;
+> +	struct dpu_plane_state *pstate, *prev_pstate;
+>   	struct dpu_sw_pipe *pipe;
+>   	struct dpu_sw_pipe *r_pipe;
+>   	struct dpu_sw_pipe_cfg *pipe_cfg;
+> @@ -1117,6 +1200,7 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   							   plane_state->crtc);
+>   
+>   	pstate = to_dpu_plane_state(plane_state);
+> +	prev_pstate = prev_plane_state ? to_dpu_plane_state(prev_plane_state) : NULL;
+>   	pipe = &pstate->pipe;
+>   	r_pipe = &pstate->r_pipe;
+>   	pipe_cfg = &pstate->pipe_cfg;
+> @@ -1137,19 +1221,27 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   
+>   	max_linewidth = dpu_kms->catalog->caps->max_linewidth;
+>   
+> -	pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> -	if (!pipe->sspp)
+> -		return -ENODEV;
+> -
+>   	if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
+> -		pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -		pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +		if (!prev_pstate ||
+> +		    !dpu_plane_try_multirect(pstate, prev_pstate, fmt, max_linewidth)) {
+
+This is a bit confusing to check esp since i am unable to apply this 
+patch and check .... but...
+
+dpu_plane_atomic_check_nopipe() will set r_pipe_cfg if we are going to 
+do multirect with two rectangles of the same sspp. Right?
+
+Which means r_pipe_cfg will be 0 if multirect is not possible with same 
+SSPP. Thats why the else case of this either uses two SSPPs.
+
+So why are we trying multirect with again with the two rectangles of the 
+same SSPP as different planes? The result will be same right?
+
+
+> +			pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> +			if (!pipe->sspp)
+> +				return -ENODEV;
+>   
+> -		r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +			r_pipe->sspp = NULL;
+> +
+> +			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +
+> +			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> +			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> +		}
+>   
+> -		r_pipe->sspp = NULL;
+>   	} else {
+> +		pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+> +		if (!pipe->sspp)
+> +			return -ENODEV;
 > +
 
-I don't think we need to pass remote_pid into all of the traces if we 
-have a unique name "irq_devname" to identify the remote now. We could 
-remove remote_pid from all the trace event arguments.
+Unless I am missing something, you are assigning pipe->sspp in both if 
+and else cases, so why dont you keep the allocation if pipe->sspp 
+outside the conditionals.
 
-We can probably drop the "doing SSR Handshake" part of this print. I 
-think it can be assumed that we're doing the handshake once we've 
-detected SSR.
+>   		if (dpu_plane_is_multirect_parallel_capable(pipe, pipe_cfg, fmt, max_linewidth) &&
+>   		    dpu_plane_is_multirect_parallel_capable(r_pipe, r_pipe_cfg, fmt, max_linewidth) &&
+>   		    (test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) ||
+> @@ -1186,6 +1278,7 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+>   {
+>   	unsigned int i;
+>   	int ret;
+> +	struct drm_plane_state *prev_plane_state = NULL;
+>   
+
+This naming is a bit confusing. prev_plane_state could mean the plane's 
+previous state but here you are implying the state of the previous plane 
+in the list of planes.
+
+Maybe prev_adjacent_plane_state?
+
+>   	for (i = 0; i < num_planes; i++) {
+>   		struct drm_plane_state *plane_state = states[i];
+> @@ -1195,9 +1288,12 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
+>   			continue;
+>   
+>   		ret = dpu_plane_virtual_assign_resources(crtc, global_state,
+> -							 state, plane_state);
+> +							 state, plane_state,
+> +							 prev_plane_state);
+>   		if (ret)
+>   			break;
+> +
+> +		prev_plane_state = plane_state;
+>   	}
+>   
+>   	return ret;
 
