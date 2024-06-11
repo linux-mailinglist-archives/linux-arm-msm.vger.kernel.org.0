@@ -1,56 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-22336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF1C99043A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 20:32:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D8A99043AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 20:32:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7567A289A4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 18:32:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D11F1C20A40
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Jun 2024 18:32:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 099BB156223;
-	Tue, 11 Jun 2024 18:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2F7C15687C;
+	Tue, 11 Jun 2024 18:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="snSiSNmC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDdPztC5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D278680C03;
-	Tue, 11 Jun 2024 18:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8110B156872;
+	Tue, 11 Jun 2024 18:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718130509; cv=none; b=fyGLF1gKtXjTiOCukhJqiOAKTWZ+hwc/TDi+EKBD2+nsES6ekqQ4X1F58BSSuK6ZKtxO0W3qNKOqZ1Wt8AJBCVSsMZb5hdD2jKvlQkqmjOu82jxbTS3uodWHNk6SDuQn0GgT+/txVCrZTNioJoSOVppiYNZJh5aOysJ4izTm0iM=
+	t=1718130514; cv=none; b=fwqcDf2JDcTswo9sR262JQ1mVGDFaG26DZT7RcaLyg1D7YLnKKted9mVDj7V+tUogyxUx4PLavT+OsqBtGZySbGGuOEK0TJGaa4lbtRTsQJGFriCI1t5ywp1OTrqVBbP+NSid+Zc6GyzAahnJR8X2ADPfTUZvSIPgtPZL51RHPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718130509; c=relaxed/simple;
-	bh=bPeE4jluIw13QwOYSdkGvUGAxzeLN+qD7fwRi95zID8=;
+	s=arc-20240116; t=1718130514; c=relaxed/simple;
+	bh=j3EYgUxpMjgfmmR2THkxXKYiD0+fISTsMnZ5sXS6YPY=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=RQH22Oh1mXJUVhDzMXJ5Me2G/pg8pegKlPbiJ79b/yqS6ga+mNsgh1tVfKAjhBB6QG++3pEHaSNSAfXGpZfp6fVDboGxBmc32oXld8t/yGOvInInc8U6w9NEJBWBF56DC2KEChMpyRw03pSaCeHT+rXp9JnXN4AalEl/kS6xY30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=snSiSNmC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D09C4AF1C;
-	Tue, 11 Jun 2024 18:28:27 +0000 (UTC)
+	 MIME-Version:Content-Type; b=QCBRmt9DP+x4lv6HkqmZcITLVx78Ig5/K89bgjsj7hPWJJkXpELB6H4rsE/X8HxlKHAy9Q6xXEnEt/gUQut3w+Y/rTGBV+ZapM62AhRuKWJ4SAc7PFOaS6PGSqnFNKr2luDTQYHMu9Dzu8TWXp2FtuXSszGm+DvhKALe18AOb1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDdPztC5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47895C2BD10;
+	Tue, 11 Jun 2024 18:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718130509;
-	bh=bPeE4jluIw13QwOYSdkGvUGAxzeLN+qD7fwRi95zID8=;
+	s=k20201202; t=1718130514;
+	bh=j3EYgUxpMjgfmmR2THkxXKYiD0+fISTsMnZ5sXS6YPY=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=snSiSNmCEpnyYvucGnRjxdxbHVr20LKA6o/B3v2Chbz01wahttuUUpuL+LL5XdSdr
-	 uk0PzzjU+i+lQxBpMmUJiDauPoGF5lKf6HFvraFz+2meOp+YDCbzAY6afFt3kXPrMa
-	 MDrRPs/G3/Eno1pfSAHHky1+k05KWCrrOf5Sd+XXwZW44AqC1aq8xm3Fyq3PjNZBrr
-	 g4/CnF3SskjONUiaLhCF7PWstlA+ZLB3kM9RRXPg1Re2+nZl7eXk2362FIB1CF5Y1u
-	 iRR+2cmV2Wdv5/gcFiKtU5gTpK29da8rBzNXfEqpu0m8CEGQ9Nd+ZxSYUbob3sPHTI
-	 4zytIANS1bLHQ==
+	b=mDdPztC5Q9KtE1SqqHauRE3BQg2MM2rrMDU4tC68RRnWORRZsLKH+2pPXe/3i47qv
+	 56gI+s0U7nydon6CMJ2CYkFL08lmCDdO6C0io/g2ci5JOG+rqoqAW1CIERXEtYzUci
+	 TcwQCAWNi9dXnRmGFecR88Dhl2PxtZ/nHm4Tg99Zio4suBuTDOjOI1xJH3vTzWcsxz
+	 H+XoPVH/a1BGzTs1bNDNgwKreBDeFJSG+KyxgnFsulF+EGaU7fWIR00FRTuDOodGYz
+	 nlfY/Jmg7bqfOlxVC8de7kuER5aLoKH7xjOH0IirfnvoGKRHU0IEzIamI2q7qULW6S
+	 HiKBknUNLassA==
 From: Vinod Koul <vkoul@kernel.org>
-To: bryan.odonoghue@linaro.org, Frank.li@nxp.com, linux@treblig.org
-Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20240517234024.231477-1-linux@treblig.org>
-References: <20240517234024.231477-1-linux@treblig.org>
-Subject: Re: [PATCH v3] dmaengine: qcom: gpi: remove unused struct
- 'reg_info'
-Message-Id: <171813050721.475662.13719019207799425584.b4-ty@kernel.org>
-Date: Tue, 11 Jun 2024 23:58:27 +0530
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Yangtao Li <frank.li@vivo.com>, linux-arm-msm@vger.kernel.org, 
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ kernel-janitors@vger.kernel.org
+In-Reply-To: <8be473eb-65e0-42b4-b574-e61c3a7f62d8@moroto.mountain>
+References: <8be473eb-65e0-42b4-b574-e61c3a7f62d8@moroto.mountain>
+Subject: Re: [PATCH] dmaengine: qcom: gpi: clean up the IRQ disable/enable
+ in gpi_reset_chan()
+Message-Id: <171813051191.475662.11143295801968577894.b4-ty@kernel.org>
+Date: Tue, 11 Jun 2024 23:58:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,17 +63,17 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Sat, 18 May 2024 00:40:24 +0100, linux@treblig.org wrote:
-> 'reg_info' was never used since it's initial
-> commit 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
-> Remove it.
+On Thu, 09 May 2024 14:02:11 +0300, Dan Carpenter wrote:
+> The calls write_lock/unlock_irq() disables and re-enables the IRQs.
+> Calling spin_lock_irqsave() and spin_lock_restore() when the IRQs are
+> already disabled doesn't do anything and just makes the code confusing.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] dmaengine: qcom: gpi: remove unused struct 'reg_info'
-      commit: 7dcf9e82e0a05cf7b7abccd0ce1b4ca598d70f08
+[1/1] dmaengine: qcom: gpi: clean up the IRQ disable/enable in gpi_reset_chan()
+      commit: f8f530ba429a334fe1a28714787f8a98e90777ec
 
 Best regards,
 -- 
