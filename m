@@ -1,131 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-22524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC2A0905DA5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 23:30:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00962905DFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 23:48:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5772FB213C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 21:30:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80160282BE7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 21:48:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59ADD8288C;
-	Wed, 12 Jun 2024 21:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BC2231A67;
+	Wed, 12 Jun 2024 21:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mmgj2EO0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y+Z9KsJ/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C375F21360;
-	Wed, 12 Jun 2024 21:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C41B84D02
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 21:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718227821; cv=none; b=GTSOlty0xPi88qFGforQq0Dshez58FwOhBvxOCVBjrirJ+XyNV+MxxTO2bLxG96eg2qpJuQ94++e8SQxIzEa28R14ulDVcbOsXAwBWmMNkrbFAkHp7CF2pH7yyFinRZ2O2OIRRj3R7uen0KYbHdUAd8cUZDbkGDaOFSjekmquvs=
+	t=1718228901; cv=none; b=XFyjtKqztG35FuQVWT/3oFHVOO6ueRXfhzzZ5wp6UfN+0vMzJjgO1bpTUAPmGoNmchi7rG/StNFA30rIVdShRtrcKi+s5VT3xc41c9OgH+i1DUg9zErrWbJW09USo21sknw849u43s1tTyI7WcQudFQ0+/TFLMz2LodymtUIyj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718227821; c=relaxed/simple;
-	bh=7oi+Dxn3vPmuBX3GF+LezGlD7Ns+idrg1dOvb8SD5k0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=RcSBZRI6+/Yd+hKAPRZCjV/lw3mwmAeOrL/2u2l8GtN7SNdQJbbn5gxco4rh43tGksYoaUF/08pA3TLUEwZbuJYe5gTfgNSaB8oC8vu4Da5x9dJ5Z2yJ5bwC7CgtOuscKB+jtY5guT6TnLQ+gAAzhr4opEeIJLBORj7cLFfByTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mmgj2EO0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45CKnLup021461;
-	Wed, 12 Jun 2024 21:30:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=IvQCOazXZ/AL5r1TiWeTRP
-	39ZBZboAl6gzkFzp6H2II=; b=Mmgj2EO0UkYiXJvOEQq7NMKrtuJ75PgJtZWnEj
-	Se/1qv951rqc3LzFLQSvbc+qWL3SHMVd4XF2cbHiNVBYDWXrS3+hKhDC3RUOi+vu
-	dWl9BC4O6ZbmGd0rcXz1iai2ePtyjglBE5prI9UcMlz9dVR7peEOR4nh2pvak8ZF
-	1tO9g2sy1JhuXkj20/rU8yCH3PU3dEGshfoKWMcyoxcFK2yuJ0jw4Q0G8283kzf8
-	ZfmT+ZSR1YePN0wJ3e5zylXMu5szeNRQFkbrNAGb2FQH6QgB88Odgu89bW2N2dzZ
-	4G4DO2Tx6IG+4yDsNExVzPz5RFSt1rZEgbQ+xQSdnUfK26KA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ype9153u0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 21:30:16 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CLUFbt015143
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 21:30:15 GMT
-Received: from [169.254.0.1] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Jun
- 2024 14:30:14 -0700
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-Date: Wed, 12 Jun 2024 14:30:13 -0700
-Subject: [PATCH] interconnect: qcom: add missing MODULE_DESCRIPTION()
- macros
+	s=arc-20240116; t=1718228901; c=relaxed/simple;
+	bh=52Tt3NW+ANKZQb7cZcBFFzPLEvp/e4YDY2iQa91g6pA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=KTSqSrtm/rdNq1t6G8Vg6873wUV6YfMix+1js25VIMloW+Cljlcrb6wpD9oMWZM4Vf+qU8+frPvgB7iQUlark8s73NaqljbpSCq4QJ2btg9OuEvXZy+dr2KWCYRiVb6VEUHHo1oumtFjOYGWoqK9BOYl2+9amABx5q2QvzenrYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y+Z9KsJ/; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52c8260a9a9so60192e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 14:48:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718228898; x=1718833698; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cFE+Zn1tmEAauc9dII1QLXSVzsx3AjtBMpF3fJlb5C8=;
+        b=y+Z9KsJ/AbUX9edUq/zJn5+RgW5TVpCmA5gt/0AND3cdsBUNrjPIvTvjwiaPb7yArA
+         TeKKfszIp5QmF1eZd4IuZQp7gzHLHofyyZAQLxJejy5PMZc44nrIieQf2VAEW4BE8hPD
+         Twv27EToG7kiMDAc7nDp9/ONwf+aFaVj+mORKsu6bbTQQcVeKBI2zAz9+MidV6nkvZgA
+         gQlx3VKD3btMK23K0qw3fYsyANlUfejMDgeYJnx+vUkLPU8rNLFdtad1MKkNGfpIIQiC
+         +5fMhxJQA9A9DF+XJ3JopK+2GyEcg1C4g7j1NV79Rs7iOrJy+rQeK8gfaewFGHyss9ou
+         NRxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718228898; x=1718833698;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cFE+Zn1tmEAauc9dII1QLXSVzsx3AjtBMpF3fJlb5C8=;
+        b=e/f5PdLvy9aC7U/1GkEf7nMiY1Kb07o0XyOMIXl86WuxFSnVjJCrn1CZodYOiKdQVn
+         WSW1efiM/S/qsy0sxi1p/G6d/9NiTsTe12tFJqZzYAOS/c6XkXUJZf/B6jg4PH9Po4NV
+         eZ4E7MLGEjPQsiCfY2YyCPyKTopz2zk8zJ8PrSFVghSL5IftYx4LNwJ7n1bEcTAt2Ilw
+         5Bwta9umDOdmLqdgsJW4ccKP6XSfBYvxS1WFZzk3HofeSifMKKwGW1m4mqBK3LbFk51u
+         G5JKFixZDCJpDDVvJFBBEHNUORkJZ+GSh1UMr8XHzx46Ixq1ogtx/S/bundLUgvlAacD
+         BXzg==
+X-Forwarded-Encrypted: i=1; AJvYcCVsqcVmRyhLjiv+g1nh0ONkF3sXY3/Y9XTuKzg6rLS2u6tA95usdAUNZ6G8Sz2NcCRYUa4RlHJeNZd1LbrfkwziS76kaKfzu8gSW8Mf6g==
+X-Gm-Message-State: AOJu0YxMuSDa7/ftdxZfTveloCddaTjsOn0Gm4MVClbM//Ol70X6ayRH
+	ZDIqIR+KU4eryyTKs6ElEs7ZLzo1vWuJ9Wcs5tdTo9aL/3VTC8NhAH9UaM3Li4o=
+X-Google-Smtp-Source: AGHT+IHBkY1T5rNg6UcaRlgOULtgIQE89IiT4QIFhldMkA5FIlJk2StjrJMJgXHuM9swnpPJsa33cw==
+X-Received: by 2002:ac2:504d:0:b0:52b:b349:c224 with SMTP id 2adb3069b0e04-52c9a342daamr1496377e87.0.1718228897641;
+        Wed, 12 Jun 2024 14:48:17 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52c912a84d4sm940264e87.185.2024.06.12.14.48.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jun 2024 14:48:17 -0700 (PDT)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH][RFT] arm64: dts: qcom: sm8550: Change camcc power domain from MMCX to MXC
+Date: Thu, 13 Jun 2024 00:48:12 +0300
+Message-Id: <20240612214812.1149019-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240612-md-drivers-interconnect-qcom-v1-1-da0462d6301b@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAGUTamYC/x3MwQrCMAwA0F8ZORvYik7wV8RDl2YuYFNNtjEY+
- 3erx3d5OzibsMOt2cF4FZeiFd2pAZqiPhklVUNow7ntu4A5YTJZ2RxFZzYqqkwzfqhkpJGHSNf
- +koigFm/jUbZ/f39UD9EZB4tK0y99iS4b5uj1geP4AjIDTzqNAAAA
-To: Georgi Djakov <djakov@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        "Jeff
- Johnson" <quic_jjohnson@quicinc.com>
-X-Mailer: b4 0.13.0
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HAhboqsiavfmPmU6s1l8Y8y0xcHiRM5R
-X-Proofpoint-ORIG-GUID: HAhboqsiavfmPmU6s1l8Y8y0xcHiRM5R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-12_10,2024-06-12_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- adultscore=0 priorityscore=1501 malwarescore=0 phishscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=982 impostorscore=0 suspectscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406120152
+Content-Transfer-Encoding: 8bit
 
-With ARCH=arm64, make allmodconfig && make W=1 C=1 reports:
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/interconnect/qcom/interconnect_qcom.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/interconnect/qcom/icc-rpmh.o
+Any attempt to enable titan_top_gdsc on SM8550-QRD fails and produces
+an error message that the gdsc is stuck at 'off' state.
 
-Add the missing invocations of the MODULE_DESCRIPTION() macro.
+However if MMCX power domain is simply replaced to MXC one, it allows
+to turn titan_top_gdsc on successfully, even if MMCX is remained off
+according to /sys/kernel/debug/pm_genpd/pm_genpd_summary report.
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Note that at the moment qcom,sm8450-camcc.yaml gives a definite comment
+that the supply power domain should be MMCX, and it may be needed in
+some certain cases, but at the moment they are not unveiled on SM8550
+platform.
+
+Fixes: e271b59e39a6 ("arm64: dts: qcom: sm8550: Add camera clock controller")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
- drivers/interconnect/qcom/icc-common.c | 1 +
- drivers/interconnect/qcom/icc-rpmh.c   | 1 +
- 2 files changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/icc-common.c b/drivers/interconnect/qcom/icc-common.c
-index 9b9ee113f172..9b8a9c69e0cb 100644
---- a/drivers/interconnect/qcom/icc-common.c
-+++ b/drivers/interconnect/qcom/icc-common.c
-@@ -35,4 +35,5 @@ struct icc_node_data *qcom_icc_xlate_extended(const struct of_phandle_args *spec
- }
- EXPORT_SYMBOL_GPL(qcom_icc_xlate_extended);
- 
-+MODULE_DESCRIPTION("Qualcomm interconnect common functions");
- MODULE_LICENSE("GPL");
-diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
-index c1aa265c1f4e..4c5aa342e013 100644
---- a/drivers/interconnect/qcom/icc-rpmh.c
-+++ b/drivers/interconnect/qcom/icc-rpmh.c
-@@ -262,4 +262,5 @@ void qcom_icc_rpmh_remove(struct platform_device *pdev)
- }
- EXPORT_SYMBOL_GPL(qcom_icc_rpmh_remove);
- 
-+MODULE_DESCRIPTION("Qualcomm RPMh interconnect driver");
- MODULE_LICENSE("GPL v2");
-
----
-base-commit: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670
-change-id: 20240612-md-drivers-interconnect-qcom-cfebac765dcc
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 4234c92aafe3..a429115524a6 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -2754,7 +2754,7 @@ camcc: clock-controller@ade0000 {
+ 				 <&bi_tcxo_div2>,
+ 				 <&bi_tcxo_ao_div2>,
+ 				 <&sleep_clk>;
+-			power-domains = <&rpmhpd SM8550_MMCX>;
++			power-domains = <&rpmhpd SM8550_MXC>;
+ 			required-opps = <&rpmhpd_opp_low_svs>;
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+-- 
+2.33.0
 
 
