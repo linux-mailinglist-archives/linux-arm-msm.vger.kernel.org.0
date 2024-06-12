@@ -1,102 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-22431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9805390526A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:29:16 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C0159052AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:41:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AF8D11C2225E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 12:29:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BF087B24B0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 12:41:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2458B16F845;
-	Wed, 12 Jun 2024 12:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F00D17082A;
+	Wed, 12 Jun 2024 12:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="vnN08X8c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dp6+j6TW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6600F16F0F3;
-	Wed, 12 Jun 2024 12:29:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8CA16F29C;
+	Wed, 12 Jun 2024 12:41:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718195352; cv=none; b=S4u5SECb3y2FQlW7EbDmp4GMWlnThplfGFdXlxQcqaKUd2CHAh7zwxnRSL/KP2tJwuIfNsZkQG8fbU/ocS11uDF8A/oFPzos8Yzy2uYwyrGJsBuGrnCdNfQyEP6uXFUL5BtsU6QnwEPaWkrwIyfjhNroc3leX+ipqIAJREDmOX8=
+	t=1718196088; cv=none; b=iTNgq5fdvgUb+ifkPcSf6xb0pvD1GVC2fMzXNHvNxpj0fTj05vrNGbXSFAuxiUPIZ4ckzDIsCWxdgkho2If2rB1hTtvzBFB6Nkly1RDyDIkiLpuaQokFrxudnQCTlfHfOPhfRz6FV3iVYDnbV21WKjwHpFV4fZ84fwmqZHCmNz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718195352; c=relaxed/simple;
-	bh=xa3TDRwgZuX8yrQhYuKQcppS5saA02uNPUv7uS2FNlw=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=RNBEy1SeC/bDxm/om2T+z2dwNv1BtEWAWItnMu86F56SGFJdYn6IFi2cqfcDvxBMhmp0sUUZZa7k3u0W2Ve6Og65TltWbfSzOcL04k/OSGgUCitHm/Af/JagE02lY7gwRDocrlau0fEGnSIXOK3GmdEmSIa6RAEcxUz6mfDUUSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=vnN08X8c; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1718195331; x=1718800131; i=markus.elfring@web.de;
-	bh=xa3TDRwgZuX8yrQhYuKQcppS5saA02uNPUv7uS2FNlw=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=vnN08X8c9dQil+FPsUvfogxmWJ4G3S2/XuGyM6/hEthZyVGU8cx7iXfZI8CYQu52
-	 tWjqZ08zhRMBhUhD89KDzmYTfWT0m3aYW2dm+iHwVkd7d+isO5bt+LpomHQ2rk1Aj
-	 g6lCS3uM88rApXtMDvkGDwo3Vt8s8z9XNUXOBH9/nzBbHMCot/K5yVKTHK1gOJE9a
-	 96CFXAgyZCtb1BDwYoaXXWXf2bDm261yJzBrZ/PQzZtRpVUqw80IgBeXIbLsZbagz
-	 Pefp4Jiw46fZSbTElpaq3aWLmsY54sy65RL/VUqrMULfuSX9H+P2v86kGGqZbVA1T
-	 29cQwcmGqjkREINl1w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mrfp8-1sn91S3dPY-00cXtP; Wed, 12
- Jun 2024 14:28:50 +0200
-Message-ID: <47685d2a-da23-4558-8577-98f4ddfff386@web.de>
-Date: Wed, 12 Jun 2024 14:28:49 +0200
+	s=arc-20240116; t=1718196088; c=relaxed/simple;
+	bh=QKNi1AnJcoaWSExqqXnv1fwPnCX7d8tJdIQZQ5sLTLg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=peKpkElDWmUMq/R0r8hS1vq8CskSvn+g+15f1uPAPxgh/T2ywxfGZrnnBd0Mzsyr1NoVNxlj/AVUsYnmBQrkSp/vqRYOw0umPrpbM/7mIFB5xLwd7QAJ3cNc0dFZDy/UOQExcw9phPQlXVlS+dMQ4iaDtN79QMU/ty35PqYdD5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dp6+j6TW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45C5FpOs026048;
+	Wed, 12 Jun 2024 12:41:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=4w9NEFBq31+/OpwZoJSdmS
+	qWfK/PiX4zNunRe6a0SyE=; b=dp6+j6TW7nWc9elNgo/XTtQUx3DdqbL0CQDIPy
+	sEiMsnzYWJ1SbjnTxlB+LYPKN+kXDJ7z+lV9KAdZMR+kR1UnY4PK3XY67YCoaf9r
+	oB+Gtd07s81QDDY9Pg+HA7SFHmR+YgeimuCcdS5Z8BQkdzAsMucst7AXABywB0HN
+	ZUkXqlCPi4KzbAU7g0lVeox/6UkS9zi5DL1WouidQYivY0okUrcUHc13yjLFsfOm
+	nCflnln6CKrFdbxrspnncoTUcmOdNpYrw0P1wDhDAXyGm3tUgQHjh/HRg91eCr/r
+	p0MHRnOoh5Rvt+lc0V2o2ydwfpBi0YeFKo9WF+x739kEPErg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yps5xak42-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Jun 2024 12:41:18 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CCfHwl003077
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Jun 2024 12:41:17 GMT
+Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 12 Jun 2024 05:41:11 -0700
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <dmitry.baryshkov@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_rgottimu@quicinc.com>,
+        <quic_kshivnan@quicinc.com>, <quic_sibis@quicinc.com>,
+        <conor+dt@kernel.org>, <quic_nkela@quicinc.com>,
+        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>
+Subject: [PATCH V6 0/5] qcom: x1e80100: Enable CPUFreq
+Date: Wed, 12 Jun 2024 18:10:51 +0530
+Message-ID: <20240612124056.39230-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc: LKML <linux-kernel@vger.kernel.org>
-References: <20240522-fd-hdmi-hpd-v2-0-c30bdb7c5c7e@linaro.org>
-Subject: Re: [v2 00/14] drm/msm/hdmi: rework and fix the HPD even generation
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20240522-fd-hdmi-hpd-v2-0-c30bdb7c5c7e@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Ja2i8ZUUvIyK5q6YmCwdL9rk9uZKTbD7PKkt7563jmEhmvE1n4c
- ZzUvQSj4iXfm5RqU3YVXn2bO8RGzprL9jpkdN6Wkyc5bi1udDg6/jMke6Qq2DPUgdk/qPDS
- rx/UmNp34WoVZtCQ+Hm61N2h978worirp0LojuomUXpXRLzwhxvIvn04DPLkfb3EcHLR1LW
- CkPD1llIIPwaJ3/+h9TfA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:yYaB5Ri7W4o=;VeXpXqKLcMhulJxSFoDGSSyHCDU
- 1qiyxgM707FIzTmPeutdJTN5Z17s79WLkQGxx5T5Ev/oR/SQMAXyzDiveZyG+pj8UoS5LMJqO
- d6vpnd7OBMweb9Jo7kPWnDDztF5e9B2wQi2XO3uWcMUTJWiHaXG7AVoLAosaHK0L2DxcUc9I0
- NLzd06Ls5sXgkYesdr/NS++eWV+gto7Jm3CQ0h5AJR5parbruvLI8RjB0n/cIiY3nGtYVQ6t1
- 5W64isUzcseQ780s3janMrjpRlLANa8cojD55YJu3G0AypYh0eFEKKBmkMAwf3XJ0hEGe/gpW
- f7P5rPFmslf7STucUBuuxem33Rr0xzIAQUaaVWoc0S62z2BywINXnbIlIs1ekeMRxHeXfeDb8
- 98N4IgBEijbe93h+kX0qUrIqhTDeBJYeG+UGqDMKrCL6hP1jaKjrUMgUm0y2L1pgJwcLta20f
- zs71UcnG41xTdDus060Qmhgfmp8L7KkTMUokwgDqklp6CRpQUeMoyC7008lUs8xrpM63h9uuV
- itOkG9n/KeONrcxZ9WwLW6IZ4iWAwDGWqGI1/vxLk34OaqQQ7yceltRI51lTMSbKGU5aILVqq
- KGmguOz31zO7mh8x+yjLdyyhHM5/Yk25SxsnuF7DJqEv3OXTVrKi6kcxkrDIzt4XQH0Nebg8p
- XOx8PYhVqK6MNf0KRKu0U8myq5TlI/RsTyO2Ks6wT6feFxiUqA/ta6mFKPzFeMpr0IJDBVy40
- Tu7+hQ01bR+Ndii39ADVjIwGhElg0IQT53xwFbbn4pFjNa21+0Dk6sxi2xK7+OiW7sUebrJgE
- JcQDccGzTtj9OyZn8803lhasUDYIkIoYl4OmHPFDAbLUY=
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vUAtslI0AYZvWHAMOgUuY4fAXaXabGRf
+X-Proofpoint-ORIG-GUID: vUAtslI0AYZvWHAMOgUuY4fAXaXabGRf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-12_06,2024-06-12_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999
+ spamscore=0 suspectscore=0 adultscore=0 bulkscore=0 mlxscore=0
+ phishscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2405170001 definitions=main-2406120092
 
-=E2=80=A6
-> This series was tested on msm8996 and apq8064 boards. Previously HPD
-> handling sometimes could trigger in the CRTC event handling, =E2=80=A6
+This series enables CPUFreq support on the X1E SoC using the SCMI perf
+protocol. This was originally part of the RFC: firmware: arm_scmi:
+Qualcomm Vendor Protocol [1]. I've split it up so that this part can
+land earlier.
 
-Would you like to refer to the word =E2=80=9Cevent=E2=80=9D also in the me=
-ssage subject?
+V5:
+* Fix build error reported by kernel test robot by adding 64BIT requirement
+  to COMPILE_TEST
+* Pick Rbs
 
-Regards,
-Markus
+V4:
+* Move val, flag and chan to local loop variables. [Jassi]
+* Add cpucp mailbox to the MAINTAINERS file. [Jassi]
+* Move to core_initcall. [Konrad]
+* Skip explicitly setting txdone_irq/txdone_poll to zero. [Konrad]
+
+V3:
+* Fix Maintainer info in cpucp mbox bindings. [Bjorn]
+* Fix copyright info in cpucp driver. [Bjorn]
+* Drop unused APSS_CPUCP_TX_MBOX_IDR, value init and drv_data. [Bjorn/Dmitry]
+* Convert to lower case hex. [Bjorn]
+* Convert irq and dev to local variables. [Bjorn]
+* Replace for and if with for_each_set_bit. [Bjorn]
+* Document the need for spinlock. [Bjorn]
+* Add space after " for aesthetics. [Bjorn]
+* Fix err in calc and add fixes tag. [Bjorn]
+* Include io.h and re-order platform_device.h
+* Use GENMASK_ULL to generate APSS_CPUCP_RX_MBOX_CMD_MASK.
+
+V2:
+* Fix series version number [Rob]
+* Pickup Rbs from Dimitry and Rob.
+* Use power-domain instead of clocks. [Sudeep/Ulf]
+* Rename sram sub-nodes according to schema. [Dmitry]
+* Use BIT() instead of manual shift. [Dmitry]
+* Define RX_MBOX_CMD to account for chan calculation. [Dmitry]
+* Clear the bit instead of the entire status within the spinlock. [Dmitry]
+* Use dev_err_probe instead. [Dmitry]
+* Drop superfluous error message while handling errors from get_irq. [Dmitry]
+* Use devm_mbox_controller_register and drop remove path. [Dmitry]
+* Define TX_MBOX_CMD to account for chan calculation.
+* Use cpucp->dev in probe path for conformity.
+
+RFC V1:
+* Use x1e80100 as the fallback for future SoCs using the cpucp-mbox
+  controller. [Krzysztoff/Konrad/Rob]
+* Use chan->lock and chan->cl to detect if the channel is no longer
+  Available. [Dmitry]
+* Use BIT() instead of using manual shifts. [Dmitry]
+* Don't use integer as a pointer value. [Dmitry]
+* Allow it to default to of_mbox_index_xlate. [Dmitry]
+* Use devm_of_iomap. [Dmitry]
+* Use module_platform_driver instead of module init/exit. [Dmitry]
+* Get channel number using mailbox core (like other drivers) and
+  further simplify the driver by dropping setup_mbox func.
+
+[1]: https://lore.kernel.org/lkml/20240117173458.2312669-1-quic_sibis@quicinc.com/#r
+
+Other relevant Links:
+https://lore.kernel.org/lkml/be2e475a-349f-4e98-b238-262dd7117a4e@linaro.org/
+
+Sibi Sankar (5):
+  dt-bindings: mailbox: qcom: Add CPUCP mailbox controller bindings
+  mailbox: Add support for QTI CPUCP mailbox controller
+  arm64: dts: qcom: x1e80100: Resize GIC Redistributor register region
+  arm64: dts: qcom: x1e80100: Add cpucp mailbox and sram nodes
+  arm64: dts: qcom: x1e80100: Enable cpufreq
+
+ .../bindings/mailbox/qcom,cpucp-mbox.yaml     |  49 +++++
+ MAINTAINERS                                   |   7 +
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi        |  91 ++++++---
+ drivers/mailbox/Kconfig                       |   8 +
+ drivers/mailbox/Makefile                      |   2 +
+ drivers/mailbox/qcom-cpucp-mbox.c             | 187 ++++++++++++++++++
+ 6 files changed, 319 insertions(+), 25 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+ create mode 100644 drivers/mailbox/qcom-cpucp-mbox.c
+
+-- 
+2.34.1
+
 
