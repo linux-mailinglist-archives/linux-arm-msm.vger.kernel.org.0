@@ -1,158 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-22450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71FD99055BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:52:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 933489055F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:57:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F2CDD1F253A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:52:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B22E283818
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:57:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D06A417F37E;
-	Wed, 12 Jun 2024 14:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 539C217F396;
+	Wed, 12 Jun 2024 14:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MJYcE4KY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jcPK+yGu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC1917F374
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 14:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3DB17F4FD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 14:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718203920; cv=none; b=eg8MHDQtt2mDn3DlO8FjxAGlQWKt26SDzndhjSJjEU7LgPTtFcxILFkCVmMX3EFJmQsn5giS3udeQJPsU0t8m+XNR/Ew9H71s/v0eNiLbqpyrPAf0ky2tIvNfNyxe0HftEFay0CPcfk6/r+CVYirCko1uyDV39VSaYB8NEqq26k=
+	t=1718204194; cv=none; b=Iqio50O4nZMgeh8maedTjyp4Bflfaovhb7+QDhgd6p6w+LGSbdGXoMknUbS2c5w/Hwm7ndHbBCTcVouY+FEIbYvVrboKN1A8aVzx2mE9N7UlEtN55WtVNxd6BCW+A/u4fdSqp1ViG5rn2ZPQZhAb2GMGOQim+kOhKjQR3z//t34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718203920; c=relaxed/simple;
-	bh=AeqMoyy136EGDb0dzZP8XtwJcrC4ZlwbNxyV6GvQdiE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VfWhUqKJdNZRSIiBKA+xDh3uGxUdULMnCybQLF/mnNkVqRvfPrT3XrVnbUuMxEkN5Bs6ZX9L05R26dqu6xKZM5wCTAbe/w/VnwWy/q4MwVeMOPE011J5Wnp6K0OgT0+sZgER5GnOn7GzB7uPw0WsQ+twAE+7f7VpjRsDdtLkzUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MJYcE4KY; arc=none smtp.client-ip=209.85.215.181
+	s=arc-20240116; t=1718204194; c=relaxed/simple;
+	bh=4kn8S3LzHMMLi/6nFeWowtDlnUvyLGqfc/HqAgfIrhQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=StO+aP/ZlxdevjM+cT/CbwbZk7o7wg9IOP261MQ9tuBs5/xootqu5JKKUSIyTgRClca+RCbrpfRK+UyPsZ+yAiU+AMMCYbcoIHlLmCJibY3lQCruks/H+FSkWq2fMpfuOkulJi+0kq3nw0sgQxCkCem2nccf4uZ8AtjWmc9gsk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jcPK+yGu; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-681ad26f4a5so1531873a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 07:51:59 -0700 (PDT)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a6e349c0f2bso694012466b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 07:56:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718203918; x=1718808718; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pdm0MxlnE9mvGLW6dM72J7+DWmReIl//Ic2Mk/zy3V0=;
-        b=MJYcE4KYrgYajp92pF0JkPnJDSf3Sy48hRTuQ3mg0GWbGMJt/2AT9OEE68x/Y6FHsT
-         eoH4U6vB6LHYqhIPX0o+Bd4JXY/4cZ3tKW15dJTl8Zu/WrorJTje5DrNXi/AXTzovd4/
-         cKdwr2oh9CaInA+wwKVPUUF0Iv9HzikU1KaorOwn6EJHo+4r0zjjbX57xKQ2aHZlrv42
-         SElfcUoq6qZ75YMCxyw7yk0TUsm/0WwiLTh8mpWFZHSCVSYmJdm2y6aAL0v8YgPcO0Pu
-         j7lwzjRpUfdIhIfpGHrGvYazuaer/78uGWypCILPoebZQXZHDsGkFMRsl2KrUCceE/3a
-         Dj4A==
+        d=linaro.org; s=google; t=1718204191; x=1718808991; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q5yu8LOR9yMB+oZSUx+fwYASzFM4Hileor0B9Ph2tUI=;
+        b=jcPK+yGuvsDp844baXORuuy6LmQF02uRm5rukBMTdd8MDXHPn25+f0462WZrez8Ola
+         3rMNDiWO95xmcGBOtVhDY684AkBlRVN9wMFmJL9pAucYAlz64uV9CxblrOU4MpFgxIAD
+         ose+245sCKpgoD5qSf5I2G3u6QZCPYUdUwvaoahSVdKUsvwaEpc+QPMQ9yi3jooeQBs4
+         YORLLEh0dwDHRAVmbHFZOwok4AN+mfFdthdRzE1ULUiECnMD9PhQgdrVlozuY46Usk2b
+         XjtIP12IE0ggKDjjeqNF1Of3PSUbg2U1nEkW6dJvZpM/LlLe4g4aErYcdHRfyk0yxH35
+         A2/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718203918; x=1718808718;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pdm0MxlnE9mvGLW6dM72J7+DWmReIl//Ic2Mk/zy3V0=;
-        b=Q5pKUfjqakcPp05093g/Uzv2yG3a3XMvNwjEUauCEegxNYXurOWSCie4eXh/UQNSMU
-         UhX1r+hwLWs7vXs5A7KmGN1HCUXGz1XV4OcsHdRnJdbL7eErw0IYnIL3NrLP5YAW8WNV
-         SlyW6l/IZxL0lyth3qxdCSIYOeMb2Ol68krQ5roNTEylUEHjxA7ZQtSBFXLqRejT2yT0
-         LKuDmHWjo6UkOyg6BnvQPKp06Rf28FeL8D81gnXy6h8F9y5WLFsMIM7zmlbaDv0MSE+q
-         5f/6qfAZcqO8leGyk1gsjjg7f9nWrch0LthDu2SCbqaxuF0VsCVmw2Koy/0nwjL9fhTq
-         2CyA==
-X-Forwarded-Encrypted: i=1; AJvYcCWfHEu2wI8UbfN7GZxqTWDnl9PaVqmLbfZpwEJoH/BJ9L2Z0TQnb//Hnk46v4dSD26Nzsf/zGOHfPUKMuJ40zIJUy9eQNWkuwE6MU1EKA==
-X-Gm-Message-State: AOJu0Yxgq+jSKL4L9bbvigWyCafHtxe5LkShhG5bQ7H05WSX2eGXLp1F
-	5DAnfp98yokh6+C6zwC7syGuw99JRMTw8hDkA3zQlB+uO2E7zyqDdolcTJXbpg==
-X-Google-Smtp-Source: AGHT+IEEszIpfWjt+j2J+ofzaMw29P0ZLiOqhilxxHJLGEkXkLRKQGtaaf54uh3t5ga5appr/f9iEw==
-X-Received: by 2002:a05:6a20:430f:b0:1b7:d050:93e5 with SMTP id adf61e73a8af0-1b8a9b4de5bmr2487914637.15.1718203918415;
-        Wed, 12 Jun 2024 07:51:58 -0700 (PDT)
-Received: from thinkpad ([120.60.129.29])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c4a76ab1c8sm1863792a91.52.2024.06.12.07.51.54
+        d=1e100.net; s=20230601; t=1718204191; x=1718808991;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q5yu8LOR9yMB+oZSUx+fwYASzFM4Hileor0B9Ph2tUI=;
+        b=NwdJwK3n3RqTpdUMaLFLyizf+/w+S346ZO3VhYCkJjsini34xKKytrTnDlUgF3DOFk
+         ImNdLqrLzum2KZd+//QWVu0G2g5o/Q7Wa/9p83U47A/lL217sxgpRgFqvgn7Abla0Xg2
+         sUED4F1clNwVo47VTVwMksFe/M07iFQagI9Jj+KWGwvtIpYiqfLx2CxuGgtM1xQc1Meh
+         cs55kQAytiTQIXs4hC1cChhDOx8KEWIjU5HcqCtxs40Bhk8ZJnbTzYx+Lw7SN65YhAiL
+         ReXL9xAokSiipsCi/K8AFysnMyDAuKF4n11VimsjhJzrIDjNsfpmvZHqczzcAgBBAM7r
+         QNvA==
+X-Forwarded-Encrypted: i=1; AJvYcCW00Jm6l/1t+G7s/tBBNoD3wGmdb6GGkecuLBQxZIisPw2b05bKdspdhXRjTShJsA999t9C/g5M/ozUccSD5vYCv/+XrXlHRWnwMJhA0w==
+X-Gm-Message-State: AOJu0YzdpWqoR9k9v7hdBQ7dEDDq8NcDckRelJXQfuavVUyvbQFE/x5F
+	Z0gPjsl0B8tkRbIFLBNGJTQOuCyzb+lUlYWhQd5XH+Fc1hMHf1OQqa8aMjY9KoU=
+X-Google-Smtp-Source: AGHT+IEwGz7ExK9rFeDcCAcMm8cBQlNhVoJT3sknKM3Eud8XI4/QAubfXavkLlUfpvUlX4mMSSoZ7Q==
+X-Received: by 2002:a17:906:cb13:b0:a6f:4f2c:1936 with SMTP id a640c23a62f3a-a6f4f2c1c19mr45887366b.44.1718204190879;
+        Wed, 12 Jun 2024 07:56:30 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f0f98a285sm552368966b.210.2024.06.12.07.56.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 07:51:58 -0700 (PDT)
-Date: Wed, 12 Jun 2024 20:21:47 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: Slark Xiao <slark_xiao@163.com>, loic.poulain@linaro.org,
-	ryazanov.s.a@gmail.com, johannes@sipsolutions.net,
-	netdev@vger.kernel.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
-Message-ID: <20240612145147.GB58302@thinkpad>
-References: <20240612093842.359805-1-slark_xiao@163.com>
- <20240612094609.GA58302@thinkpad>
- <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
+        Wed, 12 Jun 2024 07:56:30 -0700 (PDT)
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To: Amol Maheshwari <amahesh@qti.qualcomm.com>, 
+ Arnd Bergmann <arnd@arndb.de>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Dylan Van Assche <me@dylanvanassche.be>
+Cc: Caleb Connolly <caleb.connolly@linaro.org>, phone-devel@vger.kernel.org, 
+ ~postmarketos/upstreaming@lists.sr.ht
+In-Reply-To: <20240524161423.15392-1-me@dylanvanassche.be>
+References: <20240524161423.15392-1-me@dylanvanassche.be>
+Subject: Re: [PATCH v5 0/2] misc: fastrpc: FastRPC reserved memory
+ assignment for SDM845 SLPI
+Message-Id: <171820418971.165525.3637990952357907188.b4-ty@linaro.org>
+Date: Wed, 12 Jun 2024 15:56:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.2
 
-On Wed, Jun 12, 2024 at 08:19:13AM -0600, Jeffrey Hugo wrote:
-> On 6/12/2024 3:46 AM, Manivannan Sadhasivam wrote:
-> > On Wed, Jun 12, 2024 at 05:38:42PM +0800, Slark Xiao wrote:
-> > 
-> > Subject could be improved:
-> > 
-> > bus: mhi: host: Add configurable mux_id for MBIM mode
-> > 
-> > > For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
-> > > This would lead to device can't ping outside successfully.
-> > > Also MBIM side would report "bad packet session (112)".
-> > > So we add a default mux_id value for SDX72. And this value
-> > > would be transferred to wwan mbim side.
-> > > 
-> > > Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> > > ---
-> > >   drivers/bus/mhi/host/pci_generic.c | 3 +++
-> > >   include/linux/mhi.h                | 2 ++
-> > >   2 files changed, 5 insertions(+)
-> > > 
-> > > diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> > > index 0b483c7c76a1..9e9adf8320d2 100644
-> > > --- a/drivers/bus/mhi/host/pci_generic.c
-> > > +++ b/drivers/bus/mhi/host/pci_generic.c
-> > > @@ -53,6 +53,7 @@ struct mhi_pci_dev_info {
-> > >   	unsigned int dma_data_width;
-> > >   	unsigned int mru_default;
-> > >   	bool sideband_wake;
-> > > +	unsigned int mux_id;
-> > >   };
-> > >   #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
-> > > @@ -469,6 +470,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
-> > >   	.dma_data_width = 32,
-> > >   	.mru_default = 32768,
-> > >   	.sideband_wake = false,
-> > > +	.mux_id = 112,
-> > >   };
-> > >   static const struct mhi_channel_config mhi_mv3x_channels[] = {
-> > > @@ -1035,6 +1037,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-> > >   	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
-> > >   	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
-> > >   	mhi_cntrl->mru = info->mru_default;
-> > > +	mhi_cntrl->link_id = info->mux_id;
-> > 
-> > Again, 'link_id' is just a WWAN term. Use 'mux_id' here also.
+
+On Fri, 24 May 2024 18:14:01 +0200, Dylan Van Assche wrote:
+> * About *
 > 
-> Does this really belong in MHI?  If this was DT, I don't think we would put
-> this value in DT, but rather have the driver (MBIM) detect the device and
-> code in the required value.
+> The Qualcomm SDM845 SoC has a separate SLPI (Sensor Low Power Island)
+> DSP for sensors connected to the SoC which is responsible for exposing
+> sensors to userspace, power saving, and other features.
+> While sensors are connected to GPIOs of the SoC, they cannot be used
+> because the hypervisor blocks direct access to the sensors, thus the
+> DSP must be used to access any sensor on this SoC. The SLPI DSP uses a
+> GLink edge (dsps) to communicate with the host and has a FastRPC interface
+> to load files from the host filesystem such as sensor configuration files.
+> The FastRPC interface does not use regular FastRPC Compute Banks
+> but instead uses an allocated CMA region through which communication happens.
 > 
+> [...]
 
-I believe this is a modem value rather than MHI. But I was OK with keeping it in
-MHI driver since we kind of keep modem specific config.
+Applied, thanks!
 
-But if WWAN can detect the device and apply the config, I'm all over it.
+[1/2] misc: fastrpc: support complete DMA pool access to the DSP
+      commit: 9cee10334bdfa9db771b006fe2eba060f8719687
+[2/2] misc: fastrpc: use coherent pool for untranslated Compute Banks
+      commit: 0ff3de43062785462d9acede2987f35525b1c0ba
 
-- Mani
-
-> Furthermore, if this is included in MHI, it seems to be a property of the
-> channel, and not the controller.
-> 
-> -Jeff
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
 
