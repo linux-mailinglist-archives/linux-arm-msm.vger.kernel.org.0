@@ -1,65 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-22426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 035E9905128
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 13:10:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80D5E9051B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 13:56:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 66937B2266D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 11:10:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3791E1F248B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 11:56:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B771170856;
-	Wed, 12 Jun 2024 11:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1D9416F27D;
+	Wed, 12 Jun 2024 11:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q62Vwm+x"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y29JYbjm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB800170835;
-	Wed, 12 Jun 2024 11:09:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39752381D4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 11:56:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718190549; cv=none; b=YRDrwX6l5qAf7+zON8KZBfgwRCIlC22Lvv3+F6F7ng9N3YoDjkh4jICVW7wZyYretu/Zv0inQBDFC+jiaA1PE4EKf28dyFDEqG+tofA0dkkzLHjjh9JlFpiqvX/1qXBaP6x88b3tOrkxgveUHDvIE3diidyrodT8Jc3q2JrsLcY=
+	t=1718193369; cv=none; b=DJlfsvNCTBcLvGJGZlwuz19GuydBwvVPVO+7r0jM0539gx/t788wABqrDfjBUh6X3zVzD6O/T7UBgB/YU4C4HVDP9Hsokk+OVSeZEDmqdIN/2ZrmhTGxxGhlSt4Md2MR3DUC5UFWhKMLIN6gQbqz2nfxH3mFZ/nmRMqwx3Yd/XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718190549; c=relaxed/simple;
-	bh=ZpX2s9AVltGY9qGaXmgfl9K7J2KEaesELz2gXylgajs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=V43zcWSk2PV0dpdSGiSX2nhgZcyDCQkgHqfcv/iAfJn5sV2gF75KOX+6LzbuoCWsRZ8/f3RtF4eEz7zbjvOeV0Oec9YGPUqTOc0b81VYw6khqXoI9VKMS6z9Kal2vR4ZGeQP9QJ5W0FByzkDsf3DXhZ33bNb1ETHieugGBKoTHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q62Vwm+x; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45C6Epvr001302;
-	Wed, 12 Jun 2024 11:09:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rl4ZzLZTNW6HYIDFpaYJ1+DSR4TWsp6N9+/231EsyqI=; b=Q62Vwm+xdDl0pMXO
-	R+qQvZxA91H155KuAVW54YwZUt5mVW7TBDduHzoflvUy88RKoRq6rJv33wwZ60vQ
-	hd1Zlv+eZ92XBj4FLpbjskMEhlpmggjJFzFONptQFOVf6oOTndEiDyhGlc44aitu
-	j4AejEPpe8Go4GSgBlXL1Uo1eSWlIzShmYJXIY2uVAi5rqCDGVqSOFNZNYmhlMOH
-	P6+wdQWapKtA1XU0YIoO2DKXnAwmxsFHkTGNWsnPq48UVwPuFPHRFGPVkik0sGc0
-	QwILfTXdfADcbYyiw8NdcmZ/8HQxtEje+kgeLB7ahd2HLt3Zn7y1uSkkVV/RTLSF
-	EQLnuA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yptuy22pj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 11:09:04 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CB93rX021865
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 11:09:03 GMT
-Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 12 Jun 2024 04:09:00 -0700
-From: Taniya Das <quic_tdas@quicinc.com>
-Date: Wed, 12 Jun 2024 16:38:26 +0530
-Subject: [PATCH v2 6/6] clk: qcom: gpucc-sa8775p: Update wait_val fields
- for GPU GDSC's
+	s=arc-20240116; t=1718193369; c=relaxed/simple;
+	bh=uOR+xIsHDbWSbhrnfmd8+ZJ/VQdwPuFOjpN0peY3rVw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TghU40ly+Jycnbc/MCb4ER+gaKHIKfRSswld5WrjRTMNdlvcm5cM0u3Nf5YlcPswM//MCRlBYDPVQju2j4fo6+lw89cVN22za+rIzdMHc37a94oq/AUSGvU7bbaUDpgLwLeCIIUq0ouCK1rvQ1z40kI3yxcjSm94T2By5yWTHmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y29JYbjm; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a6e43dad8ecso146672966b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 04:56:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718193365; x=1718798165; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oxtqnkllneU5FSN1j1eKyCGRpnLNazDSvubINnfxoJQ=;
+        b=y29JYbjmJgpQM1HK6rR0gChdDpGzwzIIxZFAqummvuY+To3yWcbv/K0v8ngocAzqxK
+         3rpgpXWK0d3NXRrseUxV0k27MGLrwyDTXSPMmXEPPx07isgeGsY1A+JPHaEwg0K37w+q
+         frCJowKc+HILnZRdfXUo8Wo/JmDW0oDEvB1pKPRgsCiqHR6YVG4jL1KtVE8sfBxS2tGG
+         8wIL4mdTHX92wM5hGCO1Uw8oO9WG9YitLMe4kycy8abnxiRwnQZB9glAQ+aEo0+mlwqo
+         88slYNpaIACEtt9hbYbkMcfswufAFQGd52S5IbA+UsS+IUXECVkZETX2Yin4BAbeY2XN
+         dskQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718193365; x=1718798165;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oxtqnkllneU5FSN1j1eKyCGRpnLNazDSvubINnfxoJQ=;
+        b=AH8S8gdwiRJpbwNzs42jaO+K1b0t6hkmlGi8z8/KTjeXyeZGIFlHPTjQLRcGRfs54k
+         8/XkhA2TsVo3JY2kvdnm0dJiciiOxw/jReC420nFjOVE5twhY9vofVOVdUiMBTvH0BZC
+         3rpsQ5zDayNdphZxQ3uF5LJ0uAswVWwRGIIv9bdpzqwKJ/rNP/l/4vA18eXfL9IJK66k
+         kZ/qh8ZgVhkrZ57g/5n6K1IA15jakAokaOVNzuvn9zxE0ERRKc86SuRquVVKbZdGxLt3
+         RqxcxiuMB+HDX3unw98YQvVEERg3oVkIEZeNKIcwtL9l9XtNoveebmeVJE05pKjCroKo
+         +2gg==
+X-Gm-Message-State: AOJu0YzDIf0Gpzmtd4t+xm9nG00HeJddZ9Xtgo/bvak4VPLWiMa/cB7h
+	Nd8vXwNhUmCMOxUQ3BtUYoJfmgj13Q1wx7r9pUxzceGm7m/pKlpDAazwwN5B21s=
+X-Google-Smtp-Source: AGHT+IFXFTqJEnGgm3nlv3r4tBxyWKOMcONwHoYdXFVZPX7J06kPvPoo0NWR2HZ1krnwdNU1FMiNoA==
+X-Received: by 2002:a17:906:2790:b0:a6e:fecb:6baa with SMTP id a640c23a62f3a-a6f34ddcccbmr358983466b.34.1718193365502;
+        Wed, 12 Jun 2024 04:56:05 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f2f8bd62esm275762266b.141.2024.06.12.04.56.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jun 2024 04:56:05 -0700 (PDT)
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v2 0/2] pinctrl: qcom: add sm4250 lpi pinctrl
+Date: Wed, 12 Jun 2024 12:55:43 +0100
+Message-Id: <20240612-sm4250-lpi-v1-0-f19c33e1cc6e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,73 +76,55 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240612-sa8775p-v2-gcc-gpucc-fixes-v2-6-adcc756a23df@quicinc.com>
-References: <20240612-sa8775p-v2-gcc-gpucc-fixes-v2-0-adcc756a23df@quicinc.com>
-In-Reply-To: <20240612-sa8775p-v2-gcc-gpucc-fixes-v2-0-adcc756a23df@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_jkona@quicinc.com>,
-        <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>
-X-Mailer: b4 0.14-dev-f7c49
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LXuSP9rBQ54XGSXhuzOxMvY_HTkL_r2z
-X-Proofpoint-ORIG-GUID: LXuSP9rBQ54XGSXhuzOxMvY_HTkL_r2z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-12_06,2024-06-12_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- impostorscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 clxscore=1015 mlxlogscore=812 phishscore=0 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406120080
+X-B4-Tracking: v=1; b=H4sIAL+MaWYC/x2NQQqDQAwAvyI5G8im6qFfKR42NtWA3UoCUhD/3
+ rXHGRjmgFA3Dbg3B7juFvYpFVLbwLTkMivaszIwcUdDYox3xz3huhlKysKD3IR6ghpIDkXxXKb
+ lSlz4spvry77/xQN2hvE8f68Um1Z2AAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=883;
+ i=srinivas.kandagatla@linaro.org; h=from:subject:message-id;
+ bh=uOR+xIsHDbWSbhrnfmd8+ZJ/VQdwPuFOjpN0peY3rVw=;
+ b=owEBbQGS/pANAwAKAXqh/VnHNFU3AcsmYgBmaYzUVFtwMT4tcW19q5T3WlgZ1W6TtznpCplbP
+ OPB8c+bsr+JATMEAAEKAB0WIQQi509axvzi9vce3Y16of1ZxzRVNwUCZmmM1AAKCRB6of1ZxzRV
+ N6HXB/9POskOO91hQ3rIbwW6dGB0gGSXNe/DbmuevbjSoY9jsS7Qu5PqXVapI//nbeRTdBOtFlK
+ QAVVpuCh4Mt0HHECWuHaR9yvQblUTwYXKMjwv25AYJaKa59mcvXpDcukG5vBVusH/H98KIW9S5g
+ za/ZQflcL+/Gou8KgoG2tLjPtVGhtoyll02siVTWN12J9ofy6YQ2GeP59zV0TiIpBaJMbjBb7NL
+ baPE1uqS2Zot4bd8e3R/3rQ4+ontFeprfQtoVSqHeRMBniPXyT185WS904Q/2SdLDOQXX0y1ft4
+ g8xf7cwhzJGYUuTNUFlnuUjO34oDlWy2fmJkEhtwjvH5eRwe
+X-Developer-Key: i=srinivas.kandagatla@linaro.org; a=openpgp;
+ fpr=ED6472765AB36EC43B3EF97AD77E3FC0562560D6
 
-Update wait_val fields as per the default hardware values of the GDSC as
-otherwise it would lead to GDSC FSM state stuck causing power on/off
-failures of the GSDC.
+Add support for sm4250 lpi pinctrl.
 
-Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+changes since v1:
+- updated dt bindings with suggestions from Krzysztof
+- removed duplicate function name.
+- added all the lpi pins
+
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- drivers/clk/qcom/gpucc-sa8775p.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+Srinivas Kandagatla (2):
+      dt-bindings: pinctrl: qcom: Add SM4250 pinctrl
+      pinctrl: qcom: Introduce SM4250 LPI pinctrl driver
 
-diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
-index 1f7a02a7503d..3deabf833388 100644
---- a/drivers/clk/qcom/gpucc-sa8775p.c
-+++ b/drivers/clk/qcom/gpucc-sa8775p.c
-@@ -523,6 +523,9 @@ static struct clk_regmap *gpu_cc_sa8775p_clocks[] = {
- 
- static struct gdsc cx_gdsc = {
- 	.gdscr = 0x9108,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.gds_hw_ctrl = 0x953c,
- 	.pd = {
- 		.name = "cx_gdsc",
-@@ -533,6 +536,9 @@ static struct gdsc cx_gdsc = {
- 
- static struct gdsc gx_gdsc = {
- 	.gdscr = 0x905c,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "gx_gdsc",
- 		.power_on = gdsc_gx_do_nothing_enable,
+ .../pinctrl/qcom,sm4250-lpass-lpi-pinctrl.yaml     | 119 +++++++++++
+ drivers/pinctrl/qcom/Kconfig                       |   9 +
+ drivers/pinctrl/qcom/Makefile                      |   1 +
+ drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c    | 236 +++++++++++++++++++++
+ 4 files changed, 365 insertions(+)
+---
+base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
+change-id: 20240612-sm4250-lpi-b1ab26b3b050
 
+Best regards,
 -- 
-2.45.2
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
 
