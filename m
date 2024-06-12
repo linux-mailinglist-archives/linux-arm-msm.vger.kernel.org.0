@@ -1,74 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-22447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF47D90554F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:38:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 56D299055A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:48:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 085DA1F23D00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:38:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D4B4E1F212C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:48:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C63617DE39;
-	Wed, 12 Jun 2024 14:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B47E017F36C;
+	Wed, 12 Jun 2024 14:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="olJM5ahl"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="grGqWBkB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D76B17E456
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 14:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528C21E504;
+	Wed, 12 Jun 2024 14:47:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718203081; cv=none; b=TBBGFOW1/Tuo6edGOpK8jjDk5turJnVrUWnEaXItDO4yLXkt3RrVsWAIEbCUl4kY1oi/pgWpcAn+Jx1t4EyGxawnItqsB/8D2FME8N+/a8JZV4AVMHq+yRJon0B+wxinDx2SPun2FJ/ecXMEIL19YNVTiH1dKKrSJoIfEYbNjlI=
+	t=1718203664; cv=none; b=SLO86olC37nGUwDl4inOE7HqfzNhey+H//p7Krv8eQyXnA5OYRnTqV3vBfB67WffvaF//3cNFnk6zYmdv82e+aNDMrGf0iSOOX9xRFLAHulnQwS67/llMjNsXfx/nHow5gXfRWMR1Vw+X6idJ7uY9S8ZBtsOejJfCdktVckCP9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718203081; c=relaxed/simple;
-	bh=CTYOhhQlTsoO4oIyaYO/EgA0AeZ/eZ/nx2RqqUkiaGA=;
+	s=arc-20240116; t=1718203664; c=relaxed/simple;
+	bh=afYKfX5WiT24a7vRcOHvX/frxR+u+IAFVv0AQdtNlWs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fijtL8Yza50BQN9GjNjlfvR7/mnBZaF6bmgnSDYRQmOpFb4NKLTi1hiYuoxP0EqEDpqRm6QvrShNHEOFrM00kCMniBDtN7iFICbKLXLIYoFFXh0GDZ9LCYHLUf7iuCjSRfEq3T33OK+A1yVYIthYIjq5b7sT+C9CFeHtIXmihAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=olJM5ahl; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-57c68c3f8adso3044916a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 07:37:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718203078; x=1718807878; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8fjaZfrJZ3QIeFP/iVn+xJccYn+xXruLly+6B31t6tg=;
-        b=olJM5ahlzzR1wF810pHdppeEQ5Di8CoM5gBKr34HFMlDgVxL7uWY66ZI789h/qcSof
-         GNfgwgBMz1eL7M4xK/FSRRHCfsbIIexPz9yXfHFOxQwrjwktpH0BbpPR4gs5yK0Hyn16
-         FhhfJtQjpCrfqmfGnlUGpP5tdSNmuUSYWVAAUEg7lNe3+7QYxvJcm90j5X2n1A2WTMpc
-         aMuRxJ+6KOhdlYQGCAJ11S+uzmz2tjiUW6OkOWnjSztPTdQc3ta2lcU2wXTygaUCwgbg
-         AIhaPFHwvQdQUMHR8ABhJ2Aurm3WcXi1611yANurk1zNONeUGcyykeQ5ecVqJQScUSFK
-         nxUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718203078; x=1718807878;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8fjaZfrJZ3QIeFP/iVn+xJccYn+xXruLly+6B31t6tg=;
-        b=RvrPFF54YDYlu85VrAoKlla/AtxGjdigu1FmB1WHu1NI/xU/5tgZ5c0xLFKa6usw6d
-         q1IeB/uoaxyILAMmWz/6/pMECBRIgyhEJh7bIhvkuZ7zpQqY+DYsPCE94RQeQjnQRQvM
-         DYL81kvfBkAPffjnSHy80qUxiKau2ouTV0/13dmf3yJNyhge+VyVrWMoKz+sp+9hYmFH
-         p0kQydPFNsP/lZt+UCzFqqbFvh70RvRq41IqGcTeljyanWolLx5ivoZ3nWr6vz1hyKZv
-         xRHBSQ3W/AcYV/ZQdgzEkDS/3/ahRG1gCuKDVBgyeENDon/HxiYdXdMsToGfcbLpsQAQ
-         wHNw==
-X-Forwarded-Encrypted: i=1; AJvYcCXz/0GPv6/AJejJgIN+zCzxFy+BfnC5C0G9oKcG1+cxOu/gONZNF5nfEuPWQ1JBegHiwm2zK6Ji0rZYwExj7Yxrk7ZDZp/E25fxvx3f/A==
-X-Gm-Message-State: AOJu0YyYeC05Xtj/yDE/9t6S0fWwhryHUi9cxqh4pKmgQuRTgUg/B/my
-	Qhgf43xUbBw4Et3mk2OBRFPSMGo/pU5M0t+bZTx4VTus5/dp6xN1wqYIkwur9c8=
-X-Google-Smtp-Source: AGHT+IFaoHUQSMxx6j+MTMcufV4ec8ectABjdUjrL9TYkcI9tXI2C/BHxmQlOwnr29Szys5kmNlntw==
-X-Received: by 2002:a17:906:c9c7:b0:a6e:139b:996d with SMTP id a640c23a62f3a-a6f47f5a03emr169143166b.32.1718203077766;
-        Wed, 12 Jun 2024 07:37:57 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a6f34591542sm248835366b.55.2024.06.12.07.37.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jun 2024 07:37:57 -0700 (PDT)
-Message-ID: <5bf5ee5e-d24f-476f-9500-9d1b7adcfc72@linaro.org>
-Date: Wed, 12 Jun 2024 15:37:56 +0100
+	 In-Reply-To:Content-Type; b=lzzHYRp813k/cuM3XLTZw3zt5OE3fK8MTEwH5iujQjQJq9LK2go/h+fjsS7+kCkPYyD4D62Q6/5iF0obty8uLuIM4D7Eoryy+zgEkRy++VPioCh5pOITz2uBaDOmSe2koPzZEJcNFZsGWD6G/aowTXHg4xbaYBalLSr5SI4sbFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=grGqWBkB; arc=none smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1718203663; x=1749739663;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=afYKfX5WiT24a7vRcOHvX/frxR+u+IAFVv0AQdtNlWs=;
+  b=grGqWBkBrKX6Msb/pvvAOHn2rH4uV6Qb4CJO1tFzD+6GU18XlXSAXUWd
+   oAqBUpmV20lrCMDqbIW7gf+JUeJ5efRIYEFlpa4/rBRMVhb6PuVMrhq6i
+   3jR2/G2RcbpqfaxoniGJoeOKy31B4d+8uYv+V9mpLABrfVd5ZUj+COHm0
+   tx21xtLqs5F23FhWS5j2q5bRfjp/nalZL/xLjNyVzTgTYDwbVr0VdjN0U
+   /BtxqqgXrSKRknC/Y55XC2nGOzAHqTQYVQ0q+FeTnLOBjLMiQcAJ+B/SR
+   p+MKvpLnPW+5Oto47i9YhHk/FXrg3HXpCXRFkmh2cL5iLZ4/YdW15U2QG
+   g==;
+X-CSE-ConnectionGUID: jWqhhuq5RhGZ7B+MzB90kg==
+X-CSE-MsgGUID: O1xhuSP7TYm6zrnXWMr0HA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11101"; a="14846470"
+X-IronPort-AV: E=Sophos;i="6.08,233,1712646000"; 
+   d="scan'208";a="14846470"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jun 2024 07:47:41 -0700
+X-CSE-ConnectionGUID: lXJttGFaTCK21oTjZ4kGZw==
+X-CSE-MsgGUID: iGl843MOR66bAy93XUaE6w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,233,1712646000"; 
+   d="scan'208";a="44375086"
+Received: from aslawinx-mobl.ger.corp.intel.com (HELO [10.94.0.53]) ([10.94.0.53])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jun 2024 07:47:36 -0700
+Message-ID: <5be51e1f-70c9-4bbc-96fa-1e50e441bd35@linux.intel.com>
+Date: Wed, 12 Jun 2024 16:47:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,118 +67,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] ASoC: codec: lpass-rx-macro: add suppor for 2.5
- codec version
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: broonie@kernel.org, perex@perex.cz, lgirdwood@gmail.com,
- alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, krzk+dt@kernel.org,
- neil.armstrong@linaro.org, krzysztof.kozlowski@linaro.org
-References: <20240606122559.116698-1-srinivas.kandagatla@linaro.org>
- <20240606122559.116698-3-srinivas.kandagatla@linaro.org>
- <qjyuvejxvjfanhqi3xpgobqjuugh52okxiutdprprx43emee7t@gzh7go6yc77z>
+Subject: Re: [PATCH v23 32/32] ASoC: doc: Add documentation for SOC USB
 Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <qjyuvejxvjfanhqi3xpgobqjuugh52okxiutdprprx43emee7t@gzh7go6yc77z>
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+ Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+ robh@kernel.org, gregkh@linuxfoundation.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240610235808.22173-1-quic_wcheng@quicinc.com>
+ <20240610235808.22173-33-quic_wcheng@quicinc.com>
+From: =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
+ <amadeuszx.slawinski@linux.intel.com>
+In-Reply-To: <20240610235808.22173-33-quic_wcheng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+On 6/11/2024 1:58 AM, Wesley Cheng wrote:
+
+(...)
+
+> +In the case where the USB offload driver is unbounded, while USB SND is
+
+unbounded -> unbound
+
+(...)
+
+> +SOC USB and USB Sound Kcontrols
+> +===============================
+> +Details
+> +-------
+> +SOC USB and USB sound expose a set of SND kcontrols for applications to select
+> +and fetch the current offloading status for the ASoC platform sound card. Kcontrols
+> +are split between two layers:
+> +
+> +	- USB sound - Notifies the sound card number for the ASoC platform sound
+> +	  card that it is registered to for supporting audio offload.
+> +
+> +	- SOC USB - Maintains the current status of the offload path, and device
+> +	  (USB sound card and PCM device) information.  This would be the main
+> +	  card that applications can read to determine offloading capabilities.
+> +
+> +Implementation
+> +--------------
+> +
+> +**Example:**
+> +
+> +  **Sound Cards**:
+> +
+> +	::
+> +
+> +	  0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+> +                     SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+> +	  1 [C320M          ]: USB-Audio - Plantronics C320-M
+> +                     Plantronics Plantronics C320-M at usb-xhci-hcd.1.auto-1, full speed
+> +
+> +
+> +  **Platform Sound Card** - card#0:
+> +
+> +	::
+> +
+> +	  USB Offload Playback Route Card Select  1 (range -1->32)
+> +	  USB Offload Playback Route PCM Select   0 (range -1->255)
+> +	  USB Offload Playback Route Card Status  -1 (range -1->32)
+> +	  USB Offload Playback Route PCM Status   -1 (range -1->255)
+> +
+> +
+> +  **USB Sound Card** - card#1:
+> +
+> +	::
+> +
+> +	  USB Offload Playback Capable Card         0 (range -1->32)
+> +
+> +
+> +The platform sound card(card#0) kcontrols are created as part of adding the SOC
+> +USB device using **snd_soc_usb_add_port()**.  The following kcontrols are defined
+> +as:
+> +
+> +  - ``USB Offload Playback Route Card Status`` **(R)**: USB sound card device index
+> +    that defines which USB SND resources are currently offloaded.  If -1 is seen, it
+> +    signifies that offload is not active.
+> +  - ``USB Offload Playback Route PCM Status`` **(R)**: USB PCM device index
+> +    that defines which USB SND resources are currently offloaded.  If -1 is seen, it
+> +    signifies that offload is not active.
+> +  - ``USB Offload Playback Route Card Select`` **(R/W)**: USB sound card index which
+> +    selects the USB device to initiate offloading on.  If no value is written to the
+> +    kcontrol, then the last USB device discovered card index will be chosen.
+
+I see only one kcontrol, what if hardware is capable of offloading on 
+more cards, is it possible to do offloading on more than one device?
+
+> +  - ``USB Offload Playback Route PCM Select`` **(R/W)**: USB PCM index which selects
+> +    the USB device to initiate offloading on.  If no value is written to the
+> +    kcontrol, then the last USB device discovered PCM zero index will be chosen.
+> +
+> +The USB sound card(card#1) kcontrols are created as USB audio devices are plugged
+> +into the physical USB port and enumerated.  The kcontrols are defined as:
+> +
+> +  - ``USB Offload Playback Capable Card`` **(R)**: Provides the sound card
+> +    number/index that supports USB offloading.  Further/follow up queries about
+> +    the current offload state can be handled by reading the offload status
+> +    kcontrol exposed by the platform card.
+> +
 
 
-On 07/06/2024 12:03, Dmitry Baryshkov wrote:
-> On Thu, Jun 06, 2024 at 01:25:59PM +0100, srinivas.kandagatla@linaro.org wrote:
->> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>
->> LPASS Codec v2.5 has significant changes in the rx register offsets.
->> Due to this headset playback on SM8550, SM8650, x1e80100 and all SoCs
->> after SM8450 have only Left working.
->>
->> This patch adjusts the registers to accomdate 2.5 changes. With this
->> fixed now L and R are functional on Headset playback.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> ---
->>   sound/soc/codecs/lpass-rx-macro.c | 565 ++++++++++++++++++++++--------
->>   1 file changed, 410 insertions(+), 155 deletions(-)
->>
->> diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
->> index f35187d69cac..bb8ede0e7076 100644
->> --- a/sound/soc/codecs/lpass-rx-macro.c
->> +++ b/sound/soc/codecs/lpass-rx-macro.c
->>   
->>   static int rx_macro_probe(struct platform_device *pdev)
->>   {
->> +	struct reg_default *reg_defaults;
->>   	struct device *dev = &pdev->dev;
->>   	kernel_ulong_t flags;
->>   	struct rx_macro *rx;
->>   	void __iomem *base;
->> -	int ret;
->> +	int ret, def_count;
->>   
->>   	flags = (kernel_ulong_t)device_get_match_data(dev);
->>   
->> @@ -3567,6 +3793,33 @@ static int rx_macro_probe(struct platform_device *pdev)
->>   		goto err;
->>   	}
->>   
->> +	rx->codec_version = lpass_macro_get_codec_version();
+Why do we need to some magic between cards? I feel like whole kcontrol 
+thing is overengineered a bit - I'm not sure I understand the need to do 
+linking between cards. It would feel a lot simpler if USB card exposed 
+one "USB Offload" kcontrol on USB card if USB controller supports 
+offloading and allowed to set it to true/false to allow user to choose 
+if they want to do offloading on device.
+
+(...)
+> +Mixer Examples
+> +--------------
+> +
+> +	::
+> +
+> +	  tinymix -D 0 set 'USB Offload Playback Route Card Select' 2
+> +	  tinymix -D 0 set 'USB Offload Playback Route PCM Select' 0
+> +
+> +
+> +	::
+> +
+> +	  tinymix -D 0 get 'USB Offload Playback Route Card Select'
+> +	  --> 2 (range -1->32)
+> +	  tinymix -D 0 get 'USB Offload Playback Route PCM Select'
+> +	  --> 0 (range -1->255)
+> +
+> +	::
+> +
+> +	  tinymix -D 0 get 'USB Offload Playback Route Card Status'
+> +	  --> 2 (range -1->32)   [OFFLD active]
+> +	  --> -1 (range -1->32) [OFFLD idle]
+> +	  tinymix -D 0 get 'USB Offload Playback Route PCM Status'
+> +	  --> 0 (range -1->255)   [OFFLD active]
+> +	  --> -1 (range -1->255) [OFFLD idle]
+> +
+> +	::
+> +
+> +	  tinymix -D 1 get 'USB Offload Playback Capable Card'
+> +	  --> 0 (range -1->32)
 > 
-> What guarantees that VA macro has been probed already? If I'm not
-> mistaken, we might easily get a default '0' here instead of a correct
-> version.
 
-fsgen(Frame sync gen) clk is derived from VA macro, so if we are here 
-that means the va macro is probed.
+Yes, looking at examples again, I'm still not sure I understand. There 
+are two cards and you do linking between them, this feels broken by 
+design. From my point of view USB Offload should be property of USB card 
+and not involve any other card in a system.
 
-> 
->> +	switch (rx->codec_version) {
->> +	case LPASS_CODEC_VERSION_2_5 ... LPASS_CODEC_VERSION_2_8:
->> +		rx->rxn_reg_offset = 0xc0;
->> +		def_count = ARRAY_SIZE(rx_defaults) + ARRAY_SIZE(rx_2_5_defaults);
->> +		reg_defaults = kmalloc_array(def_count, sizeof(struct reg_default), GFP_KERNEL);
->> +		if (!reg_defaults)
->> +			return -ENOMEM;
->> +		memcpy(&reg_defaults[0], rx_defaults, sizeof(rx_defaults));
->> +		memcpy(&reg_defaults[ARRAY_SIZE(rx_defaults)],
->> +				rx_2_5_defaults, sizeof(rx_2_5_defaults));
->> +		break;
->> +	default:
->> +		rx->rxn_reg_offset = 0x80;
->> +		def_count = ARRAY_SIZE(rx_defaults) + ARRAY_SIZE(rx_pre_2_5_defaults);
->> +		reg_defaults = kmalloc_array(def_count, sizeof(struct reg_default), GFP_KERNEL);
->> +		if (!reg_defaults)
->> +			return -ENOMEM;
->> +		memcpy(&reg_defaults[0], rx_defaults, sizeof(rx_defaults));
->> +		memcpy(&reg_defaults[ARRAY_SIZE(rx_defaults)],
->> +				rx_pre_2_5_defaults, sizeof(rx_pre_2_5_defaults));
->> +		break;
->> +	}
->> +
->> +	rx_regmap_config.reg_defaults = reg_defaults,
->> +	rx_regmap_config.num_reg_defaults = def_count;
->> +
->>   	rx->regmap = devm_regmap_init_mmio(dev, base, &rx_regmap_config);
->>   	if (IS_ERR(rx->regmap)) {
->>   		ret = PTR_ERR(rx->regmap);
->> @@ -3629,6 +3882,7 @@ static int rx_macro_probe(struct platform_device *pdev)
->>   	if (ret)
->>   		goto err_clkout;
->>   
->> +	kfree(reg_defaults);
->>   	return 0;
->>   
->>   err_clkout:
->> @@ -3642,6 +3896,7 @@ static int rx_macro_probe(struct platform_device *pdev)
->>   err_dcodec:
->>   	clk_disable_unprepare(rx->macro);
->>   err:
->> +	kfree(reg_defaults);
->>   	lpass_macro_pds_exit(rx->pds);
->>   
->>   	return ret;
->> -- 
->> 2.21.0
->>
-> 
 
