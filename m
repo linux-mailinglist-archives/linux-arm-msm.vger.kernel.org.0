@@ -1,129 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-22384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5A24904D48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 09:59:12 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA28C904D67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 10:02:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8764F2842EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 07:59:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5469EB2123E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 08:02:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41E2216C6B2;
-	Wed, 12 Jun 2024 07:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC17638382;
+	Wed, 12 Jun 2024 08:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u03sckw8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NzYrEmjT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1583116C6A5;
-	Wed, 12 Jun 2024 07:58:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9894696
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 08:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718179136; cv=none; b=jiFNUOJRpcwLOXgX/bQjwR4BgRoQyyI4ttd+Nn9R68Ub4U8ibyVyoDCmA5HMElLIjMfPvMzPRR+lVRLmK9W+tBjhEgBcSPzjJp6a4BGHf4+ifb+vbsfcqr0gCq12pLUM7Dc0NXjbkKu6AYJetWvdu/wsirGz5ZN3zYB+vA21UYw=
+	t=1718179331; cv=none; b=lSYuvKI7E93jK0Es3Sa+7XOUQgTsom0HmeCvtu5Gcnxkdc92dcTfa8/fr/LtnQwGU8DXjDIhXKODNBCGUpHuGWS8iDY13hVxH48ZJs1PfDWPE/jDiaugBKXWgiEdYyBql8OTurCDc98fOFCGX6rqIAa4ZwxG4bzZW52c0KoZfFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718179136; c=relaxed/simple;
-	bh=3LFtotRRK2OvgkevUxAw97OnaB6blbVrV6bpKO+w89E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ASdhiXAmbuPDOrXfD0QXThQgz5QLQBHIv+ec2s/2RoW/SpJ8eNiXABckWOIGI8F2NgPoQ8n90VZSKZx90kvp7/9Wx/XVblTyvqydXd1wUtdp0d29PRiYEVkH8Zmpx8zNE3MjODJfLCBHLc/AjGrZOcYQgd+YPyvtIrtXOA5xq/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u03sckw8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01154C32786;
-	Wed, 12 Jun 2024 07:58:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718179135;
-	bh=3LFtotRRK2OvgkevUxAw97OnaB6blbVrV6bpKO+w89E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=u03sckw8PZKnCV8J8i7K7PqlAcm3uLqCV6Jgl0+VDhKkkVVRE5brHTCUThq30NNv+
-	 v92EG8WO3ost8F0Gp/ChnTl6lwvSF03yFfCAzxWJdJgLSEOPie/rHeQLbWngFaUf4w
-	 /DvV7umn4vad9mMrfZssSFOiMxMdSRL1ZgNhsBu6/hGJd4RCLPPAAG6SbFaCqOg+wo
-	 CBpNGoVOfj/ZRu8ZoNFMnpUfJoJv4gguJq8YngxnnPry9ihMx02hPdKMwdh5I6nz+b
-	 D01LGHeU0+fVExiQz90cBB1o4D+WT04Z1fN6M4GgPSKp3VfzNBQD2py7r/1rZ3+TD4
-	 EGN5jzBAkaIYA==
-Message-ID: <175bd8b0-83b8-45d0-99bd-1e9384fed3f7@kernel.org>
-Date: Wed, 12 Jun 2024 09:58:50 +0200
+	s=arc-20240116; t=1718179331; c=relaxed/simple;
+	bh=E4ogs9hBictxE7ukXz0EmjyOLTNqPtBX6JxBOeDJggM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EH02sK78KuVy5XChPooevEVKxlzOKKjUtkxk29v0kE4SzR1anVTcG3wR699Wzyw486cYwr3rnPhsmFmiV3zIbNL8S5N0nF4a1DtLsHmR4yzIad1I/WMtizC49Brp6b6hMkPmGOWMchXxI7+k80w4dpkAZd4s3aYBhY3WLxlPQ6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NzYrEmjT; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52c4b92c09bso2579836e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 01:02:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718179328; x=1718784128; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iy6VaAIWsc/uFJxkxC11R2z+NrPGPrzZFexuniHGbrY=;
+        b=NzYrEmjTa8FaiGfGTcVuqWzOAF9WVuHG2wKoEsALDBP8S4C1+NJzF/si4ueUzfpj3s
+         TkRWLyg/xf18ZfNJFktPsDDftbHCPuRsikZF/X9QmXKCUSccX7DlgVUPvKhpqzxFdCNp
+         kHiekoWtxVjyemu54W38CiGgrx3l89sd0fC1ZdD+Y0R/eCpVSAW2hG7+NwGZ3iMEoKSq
+         r7inZBJwEw0KgVOuvDsFXa7GpaSV8AzAYp+gNgEm+7n/nxSblj/HCVZGr82Qqr4GcpDy
+         gmZNkYyrkUNQPpsQRZ4E9V9n0iAnY/eWuTYd2+DbJGtIW4JG9R4TATcHWzi6ouJtK7e4
+         IZQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718179328; x=1718784128;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iy6VaAIWsc/uFJxkxC11R2z+NrPGPrzZFexuniHGbrY=;
+        b=IlWepMXnK4PYgP99gKtzkOmECx+X6S/lVbR6zv8d+cK0Dh8qa0sRzrlFbiFaAKuwbS
+         48s/I5/DbsdkG3Wm+Wm5UEVIQM7AvnrX1lrJ7RoQN0vXzHslmK5nrBx+Rw2BWwpQnFaN
+         HWKoVgpHLuwDR5AZfCVdQ+e/qT/lhRUE8Ojm4z3CGJsaExOXvdCcAfu1F9EWsBTJZ4N9
+         YsH+nnPitSSuHBDQk05iWdx856vKToEu7lrTlYlh5OKwXwmvvIMiXz9oMXUym3zI+78F
+         BfuGxYCBuQqGA4cAPZED6coqCYkwbkfhtAKc8/goBWNyD5IOxfIz8wuJSW8TOUA/Zh3k
+         UH7g==
+X-Forwarded-Encrypted: i=1; AJvYcCUbkp9uT8al25Mr3IEg8dbLEI8aGX7PTOGTSh7YQw2T2ij5haq50MBxGK2ObuvdqQk87Z/vMf8sXJKaIl3qPO4AM2u4ohDpkawvs42ZLQ==
+X-Gm-Message-State: AOJu0YwuyMpBuAtEjmMHo634rXW/HzsKcG3vFUXDIoDAVsSAaCmci2DZ
+	TImMmwqr1G/9XA9STC3tHz71+ggqpxS0blXQjBybaI3D43zZQ8m5BwKiEW0M+5A=
+X-Google-Smtp-Source: AGHT+IFDKHNqbb5jXRRVasJXbOoXoBcVXVT3XdueDls6+ffc1QNC2kyj8whnyTo7bp9zFvAdHXeXCQ==
+X-Received: by 2002:ac2:58e8:0:b0:52c:7fe5:f89 with SMTP id 2adb3069b0e04-52c9a3c6b34mr739943e87.15.1718179327968;
+        Wed, 12 Jun 2024 01:02:07 -0700 (PDT)
+Received: from eriador.lan (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52c879187f0sm1435885e87.272.2024.06.12.01.02.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jun 2024 01:02:07 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v5 0/9] drm/msm: make use of the HDMI connector infrastructure
+Date: Wed, 12 Jun 2024 11:02:06 +0300
+Message-ID: <171817931352.2727087.11541630600563210677.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240607-bridge-hdmi-connector-v5-0-ab384e6021af@linaro.org>
+References: <20240607-bridge-hdmi-connector-v5-0-ab384e6021af@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] dt-bindings: cache: qcom,llcc: Fix QDU1000
- description
-To: Komal Bajaj <quic_kbajaj@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240612062719.31724-1-quic_kbajaj@quicinc.com>
- <20240612062719.31724-3-quic_kbajaj@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240612062719.31724-3-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 12/06/2024 08:27, Komal Bajaj wrote:
-> QDU1000 DTSI comes with one LLCC0-7 base addresses. Updating
-> dt-bindings accordingly.
+On Fri, 07 Jun 2024 16:22:57 +0300, Dmitry Baryshkov wrote:
+> This patchset sits on top Maxime's HDMI connector patchset ([1]).
 > 
-> Fixes: f0f99f371822 ("dt-bindings: cache: qcom,llcc: correct QDU1000 reg entries")
+> Currently this is an RFC exploring the interface between HDMI bridges
+> and HDMI connector code. This has been lightly verified on the Qualcomm
+> DB820c, which has native HDMI output. If this approach is considered to
+> be acceptable, I'll finish MSM HDMI bridge conversion (reworking the
+> Audio Infoframe code). Other bridges can follow the same approach (we
+> have lt9611 / lt9611uxc / adv7511 on Qualcomm hardware).
+> 
+> [...]
 
-You are basically reverting without saying this is a revert and without
-explanation.
+Applied to drm-misc-next, thanks!
 
-What's happening with QDU1000? Why it is such a mess that DTS was
-totally not matching bindings drivers and now suddenly we need to revert
-commits?
+[1/9] drm/connector: hdmi: allow disabling Audio Infoframe
+      commit: 000d1940c90984a9a2af9c02bc17e3ca0d87f71d
+[2/9] drm/bridge-connector: switch to using drmm allocations
+      commit: c12907be57b16eed5a73f75a44ebea8f30629c85
+[3/9] drm/bridge-connector: implement glue code for HDMI connector
+      commit: 6b4468b0c6ba37a16795da567b58dc80bc7fb439
 
 Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
 
