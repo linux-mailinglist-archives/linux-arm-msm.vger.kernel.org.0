@@ -1,132 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-22380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CFF8904C71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 09:11:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D4B1904CC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 09:26:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82FFA1C20951
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 07:11:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 784C8B20A4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 07:26:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 544B516B73C;
-	Wed, 12 Jun 2024 07:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6ACD16D326;
+	Wed, 12 Jun 2024 07:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="o7Zd1oeZ"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="eNd5Ceix"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4215A13BC12
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 07:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB96845948
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 07:25:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718176268; cv=none; b=VxD9aaHpr9UuDGKfqFi/FSExmIfVS2R4H4BVzAU6QKT+ZkXqgCTKQFCz/x1DcVh8HGAOIAWufnYiu2l7RPujBNgGtCWHl4HP7hsFML3QyhjnKMR/hl5dxUw7OliAo2bz1kDa5kUZmaMf4dETMz0i44J2rsiBHVP28NT5rdxgAMI=
+	t=1718177103; cv=none; b=D9ukOTg0NPZ/K/sRZYvj3aYnMZYzAGuf/He9QxNzN2kDMPkZhrd7fs8wgg2Q85OGRQW8RJeS2TbNcdOefxDM4n4/eTKtX3A+2+h6kUrrFQfSpJ5qM4lsqu0riJdjMIQglnWFNAKZCQJoJta0Ku25d/Z1bgwikI9V6pdyvC+T86o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718176268; c=relaxed/simple;
-	bh=i6o0FZBPMx+nOIu/mzHBniZ5GdF+FcAxR4uXfrLlAu8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fl2619W/bVm1nq9ebP11MpwXxe/xl0j7Ie2xxusWm8yP8xMHI4x1lg2oQnSvgGzOLK096hJJTHKKJ4xpJqQbbXn8sU4qoLVO2VbeRkbWpdKrHMFt3tmmhXzMgwy/EJ/+S16866OFu1hTM1EzHKHvWBXaZP28Fmv6iVm0T0nbwAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=o7Zd1oeZ; arc=none smtp.client-ip=209.85.208.182
+	s=arc-20240116; t=1718177103; c=relaxed/simple;
+	bh=GV8vhLk5W+15Fu37cvfJGGkkE6AbEn/05xw+plQAHrs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hxHJ2CDfghp1HuJ+cCIwSaG/DnJxUSUwhQCM/asB4leyXr+2t3wZWbd3RPDYSiq3LTjR0NhV8IO+v//BDsCFLSmPNdjNT6FC/MWwwf/M/mbe0mv4Nd4oYHztQLydw2gnHE3Doum+EFCBh5FoSOb/Q7CqtLrZhuQKd+HLockUHe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=eNd5Ceix; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2eaae2a6dc1so126633411fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 00:11:05 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-35f225ac23bso3020022f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 00:25:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718176264; x=1718781064; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718177100; x=1718781900; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i6o0FZBPMx+nOIu/mzHBniZ5GdF+FcAxR4uXfrLlAu8=;
-        b=o7Zd1oeZPpPLURaHzb321yRhJty2DLlnC4qlpDAKYRFrE37XjKXxDcFOiFIb9S/k59
-         zOiDJoKQKHDthECblWTjcuySU2K8pVGTszGKSP28d8Wqu8RslcoPlcygzf1gMvZwyl3I
-         pvNZo+1wN7nmbggtNN8Z6x2LMRnZSBpP+Z+J+iGRVSpfGK9gO4MbtRortXxuZgYt/y25
-         pNZA62NRWFLhqawVq7KXbsVGQsn49MwnAqnVQsnthUWtbAjJMYPwSAy5XiqKVPxQxpr8
-         LGRrV3JLU8vv3DDdZY6lCL2a6PAUrgpA0YzkKe44ijQH5GLO9atBJnYnPCFtsPgtHWjb
-         1ISQ==
+        bh=nZZ648vF2hGd45hekWosmU80qN8L5wlOVqhbijLkjGE=;
+        b=eNd5Ceixs5u/g3v6ODZjFyxjAEDPzadGTSf/6GUQL7AfM8wJycLhpqO50pAS875tqF
+         pg+mNBSeEF7bXrFHJo9gihBclpdBSOEVmvXZIOw+od0s+EhKU7y+XEdx8FQsmCZL/V9a
+         LeEY2OVP4QZOeFICVlJxoNQ61YWf5BHY63T+p624Daf1A8qank+N2v3o0rZSAykbW9W5
+         +vylme+bJks+NgvEyucWZ7G8dgWY3kT7Q4sJWubMgbPALPNtJsFcGzKYrP82VtCdiQs7
+         nh6saJxbGvhw+xi0l05gHc3uU/GxIAy12BRCGYvNigqyXA9PnY/DtWXlj0c4QURYFkpB
+         C6EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718176264; x=1718781064;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1718177100; x=1718781900;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=i6o0FZBPMx+nOIu/mzHBniZ5GdF+FcAxR4uXfrLlAu8=;
-        b=C6DlDxQ30ALAAC0zcQBvyQc/6CdJJjHfh1hGcdPf6DkwUotarT17kBlUZgnTvr4mjy
-         TXycP6xvL1ukVolyvc8rqBBwbHj66cDnemoNNeM1zTGo43yDE0QFltpPsIBVNP34zY/i
-         XOXSLwjiCFNbtsWK0FEpeSXEbPhff4PYM9YjMowQsV7jHHPAJ+6NS9Q6hTakGWGbl5BC
-         6oPkdoo+/VmhU4LxMjPboRACCiRHgDOJwx3d5qqULnN3kBw7rx/ZqSlrFDE71HxJV1RH
-         ONtPgP2of577kp/UR+xiulhDfzvkkKUB2Ub9niWYXK3N65oMKhdHv4jNfsNmX+nDZbVB
-         NEvw==
-X-Forwarded-Encrypted: i=1; AJvYcCVTj9KXYEq6OynRBB3gD9rRMyKD33qHRW54B/qv5/CXWDpcmWJHUV/a79LvZblZ7Ey+egwa9MHJrkq/46dR+o28xmALjAtU0FuW9fwhhg==
-X-Gm-Message-State: AOJu0Yyea1ytDJgMBw1YITkyP1qbq5TYGhCJy+IOttUIR0V6Gk28pIY4
-	xTvSASOl2BCFE5FhrMJ7M6NfJmdMpixbZNA56o7wF1fttDxiqjo0CrlrYacsBogzYL/+FBSY6J1
-	A7TbywzJjD7S11L+nybZGq2eaolNGmAe28jkgyw==
-X-Google-Smtp-Source: AGHT+IGbd4X2fJf6zNeYZx/X1mM77+GhoF1Zhv+mm3RhXCxcJXVvZIgRJjoUptYt08IGG4KjkAvHHP/xFOcuJD7oR1M=
-X-Received: by 2002:ac2:4c4a:0:b0:52c:826f:f3f1 with SMTP id
- 2adb3069b0e04-52c9a3bfbb7mr898457e87.2.1718176264237; Wed, 12 Jun 2024
- 00:11:04 -0700 (PDT)
+        bh=nZZ648vF2hGd45hekWosmU80qN8L5wlOVqhbijLkjGE=;
+        b=RKhkwdrmaidqPxJ7w7+DXwDfmvs8ipPslNkBFeiREdGX0Nw7zPywRzQhSWmziS3wQA
+         ndxCn4ikNJnAu6GvIQs1MFXaUgVpdpdZ2nuKXh/zjLctK+j9JpExh4eR8RS978VHJCeo
+         HzQICrLkP7UwkGxvylNqJh7mQkJIsuJgk1kqFwMVy2jBxkhWWTsN7U3zQ3s60vIu42O5
+         pedNZ/uw7R4zt7uGz8zJO7ZviYrgUHuKN3hVee0QmfqO5uFHYKZQ/rDH5cZxu6eztvS0
+         roj3P5+AhdC5JrpWHQJDbhy94ASfx/6nWzgVozwAPgJw1unlxRt2LPloq/DHxP+n3HNB
+         310w==
+X-Forwarded-Encrypted: i=1; AJvYcCX/VAc77SAUXWgbuPYQMHJLJPnpgfNtNjF+TY3JL4+p8VaRh3ECAYdo0HWL0yhW43k+Knj70YkP/8leT+SnfhufCUZE7+rYpYbr4fbxRA==
+X-Gm-Message-State: AOJu0YxsYfEa6ahxJCeIupngDgyQfC3LMM+083NyWKwJy3FJ3c+ReNXV
+	mTyvsHL/MQdW0qFVyYzdrz7wZnp/tqT4oGRuXD/WN/rGLawGMUi229CR8oCSSOs=
+X-Google-Smtp-Source: AGHT+IHzJQZOo7VhfwHUIA0Rvt2UNlF28rgiuiNCV0gXUegLqiznXfYjxQF2KbE4ePZs0+9rQ3O3JQ==
+X-Received: by 2002:adf:e6c1:0:b0:354:eb62:365a with SMTP id ffacd0b85a97d-35fdf7adcd2mr650626f8f.25.1718177100076;
+        Wed, 12 Jun 2024 00:25:00 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:8d3:3800:a172:4e8b:453e:2f03])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35f0f551c20sm11692172f8f.69.2024.06.12.00.24.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jun 2024 00:24:59 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Xilin Wu <wuxilin123@gmail.com>,
+	Alex Elder <elder@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-bluetooth@vger.kernel.org,
+	netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-pci@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH v9 0/2] pwrseq: introduce the subsystem and first driver
+Date: Wed, 12 Jun 2024 09:24:56 +0200
+Message-ID: <171817709104.16429.1270997690165832044.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240605123850.24857-1-brgl@bgdev.pl>
+References: <20240605123850.24857-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240528-pwrseq-v8-0-d354d52b763c@linaro.org> <20240611225428.GA1005695@bhelgaas>
-In-Reply-To: <20240611225428.GA1005695@bhelgaas>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 12 Jun 2024 09:10:53 +0200
-Message-ID: <CAMRc=MfE0o=ohK6fpJN6=J7hmywifneBaNdSxOgeGH9iZ1uvTQ@mail.gmail.com>
-Subject: Re: [PATCH v8 00/17] power: sequencing: implement the subsystem and
- add first users
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	Kalle Valo <kvalo@kernel.org>, Jeff Johnson <jjohnson@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Elliot Berman <quic_eberman@quicinc.com>, Caleb Connolly <caleb.connolly@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Alex Elder <elder@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
-	Jeff Johnson <quic_jjohnson@quicinc.com>, ath12k@lists.infradead.org, 
-	linux-pm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, kernel@quicinc.com, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Amit Pundir <amit.pundir@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jun 12, 2024 at 12:54=E2=80=AFAM Bjorn Helgaas <helgaas@kernel.org>=
- wrote:
->
-> On Tue, May 28, 2024 at 09:03:08PM +0200, Bartosz Golaszewski wrote:
-> > Note: I am resending this series in its entirety once more for
-> > discussions and reviews. If there won't be any major objections, I'll
-> > then start sending individual bits and pieces to appropriate trees.
-> >
-> > Merging strategy: The DT binding and DTS changes are a no-brainer, they
-> > can go through the wireless, regulator and arm-msm trees separately. Th=
-e
-> > bluetooth and PCI changes have a build-time dependency on the power
-> > sequencing code. The bluetooth changes also have a run-time dependency =
-on
-> > the PCI pwrctl part. In order to get it into next I plan to pick up the
-> > power sequencing code into my own tree and maintain it. I can then
-> > provide an immutable tag for the BT and PCI trees to pull. I wouldn't
-> > stress about the BT runtime dependency as it will be fixed once all
-> > changes are in next.
->
-> The PCI changes are very self-contained and any conflicts will be
-> trivial, so rather than messing with an immutable tag, how about if I
-> just ack them and you can include them in your tree directly?
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Sure, if you're convinced that eventual conflicts in PCI core won't be
-an issue then it's even better.
 
-Bart
+On Wed, 05 Jun 2024 14:38:48 +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Hi!
+> 
+> These are the power sequencing patches sent separately after some
+> improvements suggested by Bjorn Helgaas. I intend to pick them up into a
+> new branch and maintain the subsystem from now on. I then plan to
+> provide an immutable tag to the Bluetooth and PCI subsystems so that the
+> rest of the C changes can be applied. This new branch will then be
+> directly sent to Linus Torvalds for the next merge window.
+> 
+> [...]
+
+Applied, thanks!
+
+[1/2] power: sequencing: implement the pwrseq core
+      commit: 249ebf3f65f8530beb2cbfb91bff1d83ba88d23c
+[2/2] power: pwrseq: add a driver for the PMU module on the QCom WCN chipsets
+      commit: 2f1630f437dff20d02e4b3f07e836f42869128dd
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
