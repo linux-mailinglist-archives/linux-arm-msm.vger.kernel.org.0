@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-22461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0438990584E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 18:16:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B94C905885
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 18:21:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6291C28CD9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:16:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BCA55B2C82E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:16:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D845181D0C;
-	Wed, 12 Jun 2024 16:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C0D8181B87;
+	Wed, 12 Jun 2024 16:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kcLjxOf1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gfmGHWun"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415E8181BB1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 16:15:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920AD181CFE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 16:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718208951; cv=none; b=I7SbmFZNdrHRwE7pytFVlU0MQZlAR9P2wRcaOw/MRvTw9qEZgBryI/SBXPGri8FHL2TNVc1eY0lKrzxkaw7iJz0KnG5bxoB7+EQ5XzAGbkLL/Y4Pa6f7icVVBMBg2xg1YvkYQUImTtm3wlMYxV1f4ME3KRZEdksuSOv5Lbw7U/E=
+	t=1718208952; cv=none; b=A+ECWe5ZOMAWfdVykQCmkJb9OXucW7JsozDNpYADM8snrmsloqOrCsFQ72PLOdYU+VfKDqKyFfOIgDfCBSxB9sTmZxmfm1uQFY7IMBW/AyPMeHUpCT1baXY32vRI9pO4lRquv8oZuzt5RyEMESqSy0jTn7U/sVKeSNYgtbtEnSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718208951; c=relaxed/simple;
-	bh=+6N7gMq4jHzelVlw8umcPCRfVgXICvRLvIVfctyIHUQ=;
+	s=arc-20240116; t=1718208952; c=relaxed/simple;
+	bh=44SvPncKGed5222crY2QmWyS1bBJY6ITGdo0S3bUKlg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CA9Tfehsq5bO9WZ2M45uKc66pxD/b0fRz2bz8YR5DAY0mR1RYpV8wbpqfKiIu1RQqvwznZ0RR2221nlr/CW2gX4eM5nMb/BBFDLsfL+N5sihejKKfN3iUAmf8d8qdD7YlBONSPvdPxhkv55ni0JOKB1GFfHFAETQBQnu9OjAcMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kcLjxOf1; arc=none smtp.client-ip=209.85.208.48
+	 In-Reply-To:To:Cc; b=XrC2lCe1v9AuSNwZ1vgPlG3Ho9yBmwHMDzbkth+uSwD27pze4+idUmGRp4vPyDTJMowKY1cwwIQxMd4rbgRVvvCdTy6u83k5aRwmE70AKvu44+e0OEqOMhHeqzclS+ymiZUteGYTJMj76w8cR8bK38KBu3txYYexCltuA6EQhc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gfmGHWun; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-57c6011d75dso2940562a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 09:15:48 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a6f21ff4e6dso9042266b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 09:15:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718208947; x=1718813747; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718208949; x=1718813749; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UbUB+HoAqq7FbsjH4xIB6iwTWnEv+liGNHJk9xgO0cg=;
-        b=kcLjxOf1LBj6xbwspKlmAWOvrQY1qIzgdjDcj78mKV/7P3QEF4k3D5+jkAa87nH3lt
-         GPG7BpNbrakTtxspIRz9iB5xDxWb3MtyF0Wh8efu9x4H5W2MoXq032uDG8iJIy6JU35P
-         yBSeOtxp7JEbBUh1OVFr89y8otuE4pSmxs7R8Zp33xXzivbvXjAhwXzvhPiRSm9WajYg
-         7FCbC57GDlNdJffVBAUrDibTMXP+vfYJWeiWoV/yZRy/BfjdYrBUpqBtVozk0XUEheaC
-         AkBSY/yJ1+xJUZsu1Cj9CSucmWKIwHT+XaHgdjayH59CCXH3ofD5MiWvVFqzR81X9XMB
-         A/FA==
+        bh=VmEnUku8lwCm6C2oNC52aCB1kZkiPbgX5VQWbXgPBbA=;
+        b=gfmGHWunpe6UFSBIe2OUEZ7oL+YkwkoYfGRaf8IjyswjVMvSGKexiWFdXYK/s4yeL6
+         1oBijMRVFnNVEc6EtYYbALavhCWjOMARFYihZkO7EHJTianivuNYmmBIL4sFzpS2qJhr
+         tsViwxCQdEWhjwVUrB0iMHedwAQd+u5i7X274GdbbF9ZbC52o5ddGchEamwt7SS5LfDF
+         evVVhS1joSZZFPZ6wB6GvHlqtXDYtYJsCWGObcwLEvpsq4l7plyfvm8OR9QetCQZ6My8
+         gy1rhvDXgUXB2P6VpCmilHP3kJ2hV478OinFv0vLZYvkMs+/s9e1Yscd+QAiVd42rKRM
+         DmYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718208947; x=1718813747;
+        d=1e100.net; s=20230601; t=1718208949; x=1718813749;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UbUB+HoAqq7FbsjH4xIB6iwTWnEv+liGNHJk9xgO0cg=;
-        b=apYF32/QVa81pIfcv8PVm5mWAS2dVfXG55uyhBtX9OJIVQMybdgZTRag8yU+YE+jRW
-         ReHPjPFwNlBlqh+m2Gj8zH7eIuW3OACti+u/UaZfmdSDIBaYt8yA3Gb3KgwY4dqdh5jJ
-         LkuLTjVGedjkUszpNX3lnxQHtVTgqeZmXnO6GRvZMJzg+L+VfkZDLZfSWFeCOkJfhrvF
-         svepbNv1UtbN7x03QDp1tbhPV2qZg0P8KIcUAv3qXewuOrA1tkrozrQAZTNKsT32JN3L
-         V9QFWRqHm3w9Gxo1tGqQ6/FDM80NexAjFBuxKyvTFzSRFI5kz7MqoYWvjcEQkkuYJDPH
-         qR8g==
-X-Forwarded-Encrypted: i=1; AJvYcCUk8w9zdHQHNogDHFgkhG4eYTUp6Qy5QqFkF1Q0RbXo6j59Uj+ftgT4x11uglyI71QLej94vwhrK+D4lZYjHQFfRGMVi8oWlKYvEV+aJw==
-X-Gm-Message-State: AOJu0Yw8aSkbcoscgrq27N8ALt5GDRDPJXM6ViTBqcm7Si5ZjikgQnaY
-	Z3eQUXnKRw5aYZk2htABwK8DEpK8LCW/QfWP2JVM+VQk5BxFFScRymdcew9WDB4=
-X-Google-Smtp-Source: AGHT+IG0yCZZBR115YOLcbqPgpzpGDnmFUZQ7t8V3T3cBvW0NmL6cdA4+NAFWt7VmyHk43Bf5ICYxA==
-X-Received: by 2002:a17:907:38c:b0:a6f:15f5:261e with SMTP id a640c23a62f3a-a6f47c9b5fbmr151234666b.7.1718208947613;
-        Wed, 12 Jun 2024 09:15:47 -0700 (PDT)
+        bh=VmEnUku8lwCm6C2oNC52aCB1kZkiPbgX5VQWbXgPBbA=;
+        b=iV+YMDwVf9gp1YD300cwziMSM268gxr10ZJCGR11evtsiHsvhY0liSLGsON9u61BTf
+         RnZS/iRrzEbf/x6Iy1uvrKLwMOAMVBrlCCqjxLDnvaVYGekcZJFFA5xcai43txYqjZTi
+         GCZ6ObZgkgZydRfiJPSmZhDbOkuyFPrVo95L5RFWBzHO99n5mpeFbi0Ha/N5k0coFFrw
+         PbpPJpVtaUaBIDypX1y31PfUu189IJLrr6BSOYknAfSZIu9n4MsBQyrYj/iTQHP1KUOL
+         JHkybYepF5orU7da4EzLhGOEiFBC+HJr1A04ATS1bk3D+EOYZnJZETApsILQjCdFRpLi
+         80iA==
+X-Forwarded-Encrypted: i=1; AJvYcCVkhEVcIu+Ghvs6Sn3q4es9mrRq7Lq8jXKP7vp4ZjMeGLCRLXozB6SceM1BCA/oSnvdNYFi2T6gDQGeE43TOzB4eWVKQerLku8iYs7RRQ==
+X-Gm-Message-State: AOJu0YxOMNh75TvmNIRZ3FfGjx+uLjweoPdv3O/FQFjNxNaDpsuWG7sS
+	LL3MQCuq6YWqGNqKBiBt7JPTT3z4qs4+vuGZ4MlQ3kG/ORpZS0XXng5oJddyYC0=
+X-Google-Smtp-Source: AGHT+IFoKaDJDYfIyho5GczSHSkqKxu7KN6zUTd+u7cNPd4fAXx5KP0876Uwls0hd/gjuxcHkQ/dtg==
+X-Received: by 2002:a17:906:355b:b0:a6f:4e02:ce50 with SMTP id a640c23a62f3a-a6f4e0323c0mr68616866b.58.1718208948949;
+        Wed, 12 Jun 2024 09:15:48 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6efd6cfb74sm624815866b.20.2024.06.12.09.15.46
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6efd6cfb74sm624815866b.20.2024.06.12.09.15.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 09:15:47 -0700 (PDT)
+        Wed, 12 Jun 2024 09:15:48 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 12 Jun 2024 18:15:17 +0200
-Subject: [PATCH 04/23] ASoC: codecs: wcd9335: Handle nicer probe deferral
- and simplify with dev_err_probe()
+Date: Wed, 12 Jun 2024 18:15:18 +0200
+Subject: [PATCH 05/23] ASoC: codecs: wcd9335: Drop unneeded error message
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240612-asoc-wcd9xxx-wide-cleanups-v1-4-0d15885b2a06@linaro.org>
+Message-Id: <20240612-asoc-wcd9xxx-wide-cleanups-v1-5-0d15885b2a06@linaro.org>
 References: <20240612-asoc-wcd9xxx-wide-cleanups-v1-0-0d15885b2a06@linaro.org>
 In-Reply-To: <20240612-asoc-wcd9xxx-wide-cleanups-v1-0-0d15885b2a06@linaro.org>
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
@@ -90,92 +89,48 @@ Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
  linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2279;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=936;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=+6N7gMq4jHzelVlw8umcPCRfVgXICvRLvIVfctyIHUQ=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmacma7eeNDLLN0oFnHMu4KHxXU88PgA6aoK/iC
- kzfL/NTn/qJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZmnJmgAKCRDBN2bmhouD
- 12oDEACbOfb0Sh+eYacsC3jNLnc/sjhcEJmmabc7LSV2WeyBsOpmWU2H+R1hzWoehPhT/C56MFZ
- E6eECee+tk5B07aSBZ3m7AmmjXcpplP7fmG25JGiRKnSZAAscVYTDv9Nn6r3b6WBkmu1y3fK446
- FZEcVG/vIThP6TFX4KnxO/zq4iM7AtzCEqWqPYqIWOfVvTKOG2oQRGV83sqAgsg7PT7Rlq06R/q
- H5UztTT74rl09nhTYlgdXvPrcLpyUeqog56haAg6sRXSffwo9YvkusGOS1tn8gHvQLD9limLpk9
- 5VR/iN9CwtSDf5jItZUPYSAEmaD1qiUZNPXehwHZMoLRLbSB8wJCXU2AZJ71TkU/SgyeGGREIKY
- f/cfNQWiPJWRjIs1gIjCi+BgoX5PUn7vsvnxrf5rmN0PdvVWimILgdX2Q2/BO9CsC0wHU7LZkI4
- uvP/eIv1wytwf0EczGdvUXWoPUZb4fkH+GYLtJlb67p4VNeAP0APnLDAvaL1pMH34nLr9dXppOU
- DSnh/hZDOVU8J5pblyOyJeuOP6dMS0ypPhLWjh52wLLr1JBKPD5p+B4tQsAArE6vvUCdFwAlrdv
- FFo+J0hi8cwmycN0F5sp8ATkRQVH84qpupHF8PxAJbm8tzuUVN20GFd/ibngZBqQ42zxLyZj1Ag
- p83UAfr91YoTpyw==
+ bh=44SvPncKGed5222crY2QmWyS1bBJY6ITGdo0S3bUKlg=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmacmbvr1fmPfm/PMxuNcXIa5+ruSQV6ftFq3SU
+ UD9sww97xuJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZmnJmwAKCRDBN2bmhouD
+ 14i2D/9ENklcp84Bwc6wDhkbkAIOZoKpswTywzAoWiMdry4iky0WUt0gd6WLJT/qv5r7Co4+EhR
+ S7yKqdbaTpPQEDfHVshh/lcsePxUi0cfYWgPYOfybJkEslsGWveTrmpl/YGUIGtb+gh+TMu88EC
+ r8rXn0ZwL3jAEywWS5sqQ61SK4jXB3fYA7Cuv97vBqqaY+r9Sp7i7N0ivMV+CM2jsZYrptOM0G6
+ YcpxzGgBjLaDYRfQx/Bzts2ll7eDKNzMGPivjfX1sDZKly0HxVspivE2lyReNwyuSC5LIDEtDca
+ swIpoFbqUa0LIBjwqix+fx+Qm7nmz5BfO7WnohsR41EgR6+G7UzAGqAMLaY2Wo1UwEcN3aRGFcU
+ lhwtwDCj1Ft9NxY/D375Eam6tH+uylUnKq9azvGq31IpL3iM3+I7lz9AAdrVxUVKkEZIEbv4azv
+ XvJE11BzRVWF7aEWJo7OB/d+3wMQ8KJKEVsWShZrwYA5BNFm/T64dgTH9Ivtz8TD0BoBlEJq1ax
+ tVONbpPPUAu8eaRNmyXvSmroCSMi37CDSc/Eh+XVi6oFrLXwk16FrP9kXeCCEtFWVJbpY2IgOCo
+ XVjQLRJMmWo97dJTc7RALr6tH6t3DQAWupxZDsUT5GH7oZX9ajL3ULkXGxFW1nRa8r83/mcsIBn
+ FGM0S/aIAx0610w==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-wcd9335_parse_dt() function is called only from probe(), so printing
-errors on resource acquisition is discouraged, because it can pollute
-dmesg.  Use dev_err_probe() to fix this and also make the code a bit
-simpler.
+Error-level should not be used as debugging.  The code (function
+wcd9335_get_dmic_clk_val()) will always be called with same parameters,
+so this is not really useful debug anyway, so drop it.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- sound/soc/codecs/wcd9335.c | 28 +++++++++-------------------
- 1 file changed, 9 insertions(+), 19 deletions(-)
+ sound/soc/codecs/wcd9335.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
-index c5ac2d46e556..334c5241617f 100644
+index 334c5241617f..6a1376b3b98c 100644
 --- a/sound/soc/codecs/wcd9335.c
 +++ b/sound/soc/codecs/wcd9335.c
-@@ -5031,22 +5031,16 @@ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
- 	int ret;
+@@ -2849,10 +2849,6 @@ static u8 wcd9335_get_dmic_clk_val(struct snd_soc_component *component,
+ 	u32 div_factor;
+ 	u8 dmic_ctl_val;
  
- 	wcd->reset_gpio = of_get_named_gpio(np,	"reset-gpios", 0);
--	if (wcd->reset_gpio < 0) {
--		dev_err(dev, "Reset GPIO missing from DT\n");
--		return wcd->reset_gpio;
--	}
-+	if (wcd->reset_gpio < 0)
-+		return dev_err_probe(dev, wcd->reset_gpio, "Reset GPIO missing from DT\n");
- 
- 	wcd->mclk = devm_clk_get(dev, "mclk");
--	if (IS_ERR(wcd->mclk)) {
--		dev_err(dev, "mclk not found\n");
--		return PTR_ERR(wcd->mclk);
--	}
-+	if (IS_ERR(wcd->mclk))
-+		return dev_err_probe(dev, PTR_ERR(wcd->mclk), "mclk not found\n");
- 
- 	wcd->native_clk = devm_clk_get(dev, "slimbus");
--	if (IS_ERR(wcd->native_clk)) {
--		dev_err(dev, "slimbus clock not found\n");
--		return PTR_ERR(wcd->native_clk);
--	}
-+	if (IS_ERR(wcd->native_clk))
-+		return dev_err_probe(dev, PTR_ERR(wcd->native_clk), "slimbus clock not found\n");
- 
- 	wcd->supplies[0].supply = "vdd-buck";
- 	wcd->supplies[1].supply = "vdd-buck-sido";
-@@ -5055,10 +5049,8 @@ static int wcd9335_parse_dt(struct wcd9335_codec *wcd)
- 	wcd->supplies[4].supply = "vdd-io";
- 
- 	ret = regulator_bulk_get(dev, WCD9335_MAX_SUPPLY, wcd->supplies);
--	if (ret) {
--		dev_err(dev, "Failed to get supplies: err = %d\n", ret);
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to get supplies\n");
- 
- 	return 0;
- }
-@@ -5157,10 +5149,8 @@ static int wcd9335_slim_probe(struct slim_device *slim)
- 
- 	wcd->dev = dev;
- 	ret = wcd9335_parse_dt(wcd);
--	if (ret) {
--		dev_err(dev, "Error parsing DT: %d\n", ret);
-+	if (ret)
- 		return ret;
--	}
- 
- 	ret = wcd9335_power_on_reset(wcd);
- 	if (ret)
+-	dev_err(component->dev,
+-		"%s: mclk_rate = %d, dmic_sample_rate = %d\n",
+-		__func__, mclk_rate, dmic_clk_rate);
+-
+ 	/* Default value to return in case of error */
+ 	if (mclk_rate == WCD9335_MCLK_CLK_9P6MHZ)
+ 		dmic_ctl_val = WCD9335_DMIC_CLK_DIV_2;
 
 -- 
 2.43.0
