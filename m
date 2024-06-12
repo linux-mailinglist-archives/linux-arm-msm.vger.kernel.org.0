@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-22435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1560A9052B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:42:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE0AD9052BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:42:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 91731B24EEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 12:42:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1DA6C1C2109B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 12:42:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB5A7177990;
-	Wed, 12 Jun 2024 12:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01066176FB7;
+	Wed, 12 Jun 2024 12:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="chT2Agmq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="px+fnC+/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B9F176FB7;
-	Wed, 12 Jun 2024 12:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DD717B42A;
+	Wed, 12 Jun 2024 12:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718196103; cv=none; b=iFEwdgR6uf2cBf+Rk7R4XhPqfJSVQ9U2xvJdYMuyKeiqRh0FDPq/no2yo6+y91rNhSyXf0DPHjzmLJUJldgQqvlN6rmZA3WDCbe7aHSsiUlMXejPGcYG5Q5StgtI5qYN/lVdC+BWYbshYItdYApPGLFGYYWqoYBNdSTJEXtqVPw=
+	t=1718196108; cv=none; b=JzSi+PzG9qvk9u8nLI5wIA2zDZAHPRmgH7ZwyoIyfwQ2aCqaD7r7tvfXuEG8dCc2pnWLcczhJSdBxf2gNgOIjx+If97NjgpDU0htdgKp4sPbraDhIRmgzcfLQg20YnWTqdPdTkPQC4+S199Hdga1acV6ZuyPrSjS7e1Ws7iafTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718196103; c=relaxed/simple;
-	bh=v+Vps9sF5m9+vsfaYrdnZmlPPtCx1wkQO+UOwHLUBUA=;
+	s=arc-20240116; t=1718196108; c=relaxed/simple;
+	bh=ChyPFqH+i5KWbsUxVFYKkAwMlW75WIUPyccoOYkaORM=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ezmxyiC5ik7gZQedNeYsC2iZh83QCVuUE3PrLGPJE6SDi7oIx6Z/LBO1SkqG9fG9uMNIe/anHOUxenoRWa2PiKQV2VDF9217ggJR+bj3WkVqd6VQJl8aE4gfYs2Dj0KDxod82j6R8X0rdV6NN4D5K6ZGJX44JXa3v1cFyuJ2QYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=chT2Agmq; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=im5fwj25bw8+Oj25vW8fCSbcFEqcxVFrAmlFG/3FNKegnRWb4fFwRr3Y5S9m6eMKTkeOiZM7B+coJzdUHnavuK6RlqQtTgselCTwk1UOwkoPz4KWCoa35nohl8md8yddOCiUkczEsE8yH1t0qlCknJaUU6WcdBRGhumg+URIpNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=px+fnC+/; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45C4Z0j0002481;
-	Wed, 12 Jun 2024 12:41:35 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45C4YSBu002224;
+	Wed, 12 Jun 2024 12:41:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ziALlH0oAv5kJDkztUT150mKhOCRXSeu9LtrxBg1U2Y=; b=chT2AgmqX+Yev5Wq
-	J8tZFTec0uiSBcp5moNBeX7iJeXZwu8MI4LflJKGdDdzWpovTjeCASi4Obn6CZVW
-	FowuxgOz4TWFzl2PieZHGZSAArltT8WdBBlhw1E/jbJlPANSgmEsWlieHnS1Qkyn
-	PUo1NvgtD1MqUBUPwXY4D1Y7z26M4zxJiw1LMwTfdeDS//dK6c+5RSi9yCymCKMu
-	X8iRKH+Sf4XtkjdhyERA9p4UQQIKBN7kccNYfNwycgP0NhS6yw+BQcxmCXTAF+8z
-	bg/ZMG2MIPRgGZDJSZSfM+VPaVEAqh6rcdmDwghzyWhjT+/L7gBgpXLmDLWniZBD
-	6y5jPA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yq4s093jf-1
+	H3U6AIT9aUnPw+VW7qYN8QAxNenNr/ZtwfuD7Ehgdx0=; b=px+fnC+/pUcEgap5
+	ln5UBZ7mE0tOrFtUUoT0jq1wogXHp3m8IpPJOSisAZbvKNhm9RVENX8sW2ljYKfx
+	PTzt7qC9wjLW2vpEJnQ4aqKHAkXH4KAXUDhfMPbsw4uUxkMWc+j1e/LUiNlZ4vDt
+	FcBYdm0h5j6q69+R0K4yeQ8DpZQaOXrCebFNrm7V2LeAjhJBUf/YpiAA6iqiHq5k
+	FAQdiaZz/XwpnbmhnTPe21sD/gFYT/Yg/Po5wWgEaGF+bPq991PO6uTv8dGHqBD0
+	5zpgpGQw9+oLOTSHmzGLxX15X04TRJuhqDmsSP+uOu2AgE8De9CnU+Orj/LkPSwW
+	vccXXw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yq4s093jp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 12:41:35 +0000 (GMT)
+	Wed, 12 Jun 2024 12:41:41 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CCfYSi000684
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CCfeU2016295
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 12:41:34 GMT
+	Wed, 12 Jun 2024 12:41:40 GMT
 Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 12 Jun 2024 05:41:28 -0700
+ 15.2.1544.9; Wed, 12 Jun 2024 05:41:34 -0700
 From: Sibi Sankar <quic_sibis@quicinc.com>
 To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
         <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
@@ -66,9 +66,9 @@ CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <quic_kshivnan@quicinc.com>, <quic_sibis@quicinc.com>,
         <conor+dt@kernel.org>, <quic_nkela@quicinc.com>,
         <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>
-Subject: [PATCH V6 3/5] arm64: dts: qcom: x1e80100: Resize GIC Redistributor register region
-Date: Wed, 12 Jun 2024 18:10:54 +0530
-Message-ID: <20240612124056.39230-4-quic_sibis@quicinc.com>
+Subject: [PATCH V6 4/5] arm64: dts: qcom: x1e80100: Add cpucp mailbox and sram nodes
+Date: Wed, 12 Jun 2024 18:10:55 +0530
+Message-ID: <20240612124056.39230-5-quic_sibis@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240612124056.39230-1-quic_sibis@quicinc.com>
 References: <20240612124056.39230-1-quic_sibis@quicinc.com>
@@ -84,45 +84,69 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: V0YdmlZnLOJHslFq9_hy3yj2-UTXsyQO
-X-Proofpoint-ORIG-GUID: V0YdmlZnLOJHslFq9_hy3yj2-UTXsyQO
+X-Proofpoint-GUID: S7dxKm4lajA2-nYTKUqws7L5T7n3qbFD
+X-Proofpoint-ORIG-GUID: S7dxKm4lajA2-nYTKUqws7L5T7n3qbFD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-12_06,2024-06-12_02,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
  bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 mlxlogscore=689
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 mlxlogscore=968
  spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405170001 definitions=main-2406120092
 
-Resize the GICR register region as it currently seeps into the CPU Control
-Processor mailbox RX region.
+Add the cpucp mailbox and sram nodes required by SCMI perf protocol
+on X1E80100 SoCs.
 
-Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 ---
-
-v5:
-* Pick Rbs
-
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 9944c654851e..28ae10c24a5f 100644
+index 28ae10c24a5f..7b619db07694 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
 +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -5091,7 +5091,7 @@ apps_smmu: iommu@15000000 {
- 		intc: interrupt-controller@17000000 {
- 			compatible = "arm,gic-v3";
- 			reg = <0 0x17000000 0 0x10000>,     /* GICD */
--			      <0 0x17080000 0 0x480000>;    /* GICR * 12 */
-+			      <0 0x17080000 0 0x300000>;    /* GICR * 12 */
+@@ -5116,6 +5116,13 @@ gic_its: msi-controller@17040000 {
+ 			};
+ 		};
  
- 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
++		cpucp_mbox: mailbox@17430000 {
++			compatible = "qcom,x1e80100-cpucp-mbox";
++			reg = <0 0x17430000 0 0x10000>, <0 0x18830000 0 0x10000>;
++			interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
++			#mbox-cells = <1>;
++		};
++
+ 		apps_rsc: rsc@17500000 {
+ 			compatible = "qcom,rpmh-rsc";
+ 			reg = <0 0x17500000 0 0x10000>,
+@@ -5299,6 +5306,25 @@ frame@1780d000 {
+ 			};
+ 		};
  
++		sram: sram@18b4e000 {
++			compatible = "mmio-sram";
++			reg = <0x0 0x18b4e000 0x0 0x400>;
++
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges = <0x0 0x0 0x18b4e000 0x400>;
++
++			cpu_scp_lpri0: scp-sram-section@0 {
++				compatible = "arm,scmi-shmem";
++				reg = <0x0 0x200>;
++			};
++
++			cpu_scp_lpri1: scp-sram-section@200 {
++				compatible = "arm,scmi-shmem";
++				reg = <0x200 0x200>;
++			};
++		};
++
+ 		system-cache-controller@25000000 {
+ 			compatible = "qcom,x1e80100-llcc";
+ 			reg = <0 0x25000000 0 0x200000>,
 -- 
 2.34.1
 
