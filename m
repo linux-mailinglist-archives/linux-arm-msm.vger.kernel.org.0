@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-22424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DF92905121
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 13:09:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93921905124
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 13:10:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2637A1C21355
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 11:09:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 189DF1F23F8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 11:10:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87CC416F8F9;
-	Wed, 12 Jun 2024 11:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD31616FF59;
+	Wed, 12 Jun 2024 11:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GTbOEvH3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QA3Btef4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA9C16F833;
-	Wed, 12 Jun 2024 11:09:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2394216FF48;
+	Wed, 12 Jun 2024 11:09:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718190542; cv=none; b=pXC7YHZJySqIFu2AUK1pF8yjkbl8tZHHDFxWwKrlDy/Fz+vXsmZpoPU3Cm8tg9C2IGvMgxp8pR+IVRVmgTGe3+S7LB3QNmUy0zvyqWg5a54wFiLE9MkygQpK7/9hRqZ1IfjKmo22HZYdlKdwjMrM1fL+qafYO33AkypG/8JgJ58=
+	t=1718190546; cv=none; b=GOy8daYk6r2xvzX6KWwgt8aBwuGtGowOH4J+A8d5ooou8FNSFGUVDuld1JgSk7t5iInz5kWS8XXrqATdsZS/uuDyDVNYcWmdloKQMhyB2DXs+xb2btrVlks2HdvDFPSyJKbevFEOB0JJqxCLaB7L/N8S1kuapxGvEfdpldBoUww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718190542; c=relaxed/simple;
-	bh=xTyiOrtAYkbAZkU2p4OJDJdtuIQltTaR2y7DNAkotak=;
+	s=arc-20240116; t=1718190546; c=relaxed/simple;
+	bh=N0D5bDjl36upHaP9w52ql3oEOeKMlWVAqEqNCfvSiJE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=HornIimWKh5neFoOj+QhZivUYvT3DxHaNytMHBDMDu9RtVcCvlgUNppRGVHuVnStKocZRox8n29dSHSBP0wYWbdD7hab4x1amPTHx2hNXbtgwIwC7E0BikkbxreAVt8toVlXoAZ0IEu8ssH+XObVcvLFZIXI5w2pgvciWO6vVkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GTbOEvH3; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=EsV5vK8uMnh8FW/YKtwurMYqO2hZ/06osa3TycEWM2LWnGZ334OUpaHTvjsJ/znBiT5l+R0nRC+f8esb4BBO218TjMh+zR+V3CqEOHsKBh+xyYIhQCy2gGpqWcPA676Ac6nVPFnla4yBjx4cUfQrjO0StWSTBkPGPh0Bnc1zbBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QA3Btef4; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45C5JJGU000841;
-	Wed, 12 Jun 2024 11:08:57 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45C4YXQS002230;
+	Wed, 12 Jun 2024 11:09:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qXMXwpncXOjVNupXBhndFReWB+6l0ip4JVC7wt9liEY=; b=GTbOEvH3RgnLqku2
-	/DUXw+jD4PzpDVPsKi+Kn7miRk38Fkh1XkHI0ruryQFO5R8aDpa8emLGYrg7B6I3
-	rArL/Fj5X1NITPFSKS7zIZQ4KG0BAfOul+wuETa0Xs03UqzbIr8M4WneMZRHc1+V
-	SH42z7Q2+HD2JXhzsg81oiXRFssiEIkcN0e9kPW6VKeBPcqeCSwvQFlBBCOkIL42
-	u4XppOGRzYBUSBAyF5uWdBZqVqJ0PLdOc7EMeubNMV7GjerpOhRBnqasKoVnf/20
-	EevI/5YpQ9WOhKLUW18nVQQZQOYoVgqVzokaRVrhlcW4bf/08aueyaXuSgSM6AbQ
-	TKBZOQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yphsaupjx-1
+	kuR4Hc9pfNBLg66dWqd7T6F+itXs7IdkV399NEba0ho=; b=QA3Btef4jxUR1NnN
+	3Pv7KBs/docvW3+e1WEdl8QPxBfpk0RCGlYfKx/LalAiUgCWC/+2gB357+r4ns0J
+	7+rvJrvTjA+omFJB67IxdlNihOK74iUoJDJm/pE559X3A3COVwQC3VzPCxsaW88J
+	trS/E/bm0Ex6NARKcojQEIqIJZF/P96eu8C4pblyFUw5Q86h5/brsOM2GyuvmO5H
+	ZasbkJE0yhHdr6Gwr1HB9r458/h+ilSQRmHVlu3qUIJReAJnkmMzaxLWI00gOJdh
+	k2WV8PygNEHgATypF7Rv00+1jVCn7zwfayvx5YL6wjx1M32C74EIx84zpwUgyECv
+	+OZBJg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yq4s08vxu-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 11:08:57 +0000 (GMT)
+	Wed, 12 Jun 2024 11:09:01 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CB8uWw028808
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CB90Tt025968
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 11:08:56 GMT
+	Wed, 12 Jun 2024 11:09:00 GMT
 Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 12 Jun 2024 04:08:52 -0700
+ 15.2.1544.9; Wed, 12 Jun 2024 04:08:56 -0700
 From: Taniya Das <quic_tdas@quicinc.com>
-Date: Wed, 12 Jun 2024 16:38:24 +0530
-Subject: [PATCH v2 4/6] clk: qcom: gpucc-sa8775p: Remove the
- CLK_IS_CRITICAL and ALWAYS_ON flags
+Date: Wed, 12 Jun 2024 16:38:25 +0530
+Subject: [PATCH v2 5/6] clk: qcom: gpucc-sa8775p: Park RCG's clk source at
+ XO during disable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240612-sa8775p-v2-gcc-gpucc-fixes-v2-4-adcc756a23df@quicinc.com>
+Message-ID: <20240612-sa8775p-v2-gcc-gpucc-fixes-v2-5-adcc756a23df@quicinc.com>
 References: <20240612-sa8775p-v2-gcc-gpucc-fixes-v2-0-adcc756a23df@quicinc.com>
 In-Reply-To: <20240612-sa8775p-v2-gcc-gpucc-fixes-v2-0-adcc756a23df@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -88,172 +88,68 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: feG1E1QkwoFc5yHIgumct60YiZU206FO
-X-Proofpoint-GUID: feG1E1QkwoFc5yHIgumct60YiZU206FO
+X-Proofpoint-GUID: vaK2n3q3qpDakCaY5N70CX-IvDgvwjPU
+X-Proofpoint-ORIG-GUID: vaK2n3q3qpDakCaY5N70CX-IvDgvwjPU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-12_06,2024-06-12_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- adultscore=0 spamscore=0 mlxlogscore=943 impostorscore=0
- lowpriorityscore=0 clxscore=1015 phishscore=0 mlxscore=0
- priorityscore=1501 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2405170001 definitions=main-2406120081
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 mlxlogscore=627
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406120081
 
-The GPU clocks/GDSCs have been marked critical from the clock driver
-but the GPU driver votes on these resources as per the HW requirement.
-In the case where these clocks & GDSCs are left enabled, would have
-power impact and also cause GPU stability/corruptions.
-Fix the same by removing the CLK_IS_CRITICAL for clocks and ALWAYS_ON
-flags for the GPU GDSCs.
+The RCG's clk src has to be parked at XO while disabling as per the
+HW recommendation, hence use clk_rcg2_shared_ops to achieve the same.
+Also gpu_cc_cb_clk is recommended to be kept always ON, hence use
+clk_branch2_aon_ops to keep the clock always ON.
 
 Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
 Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 ---
- drivers/clk/qcom/gpucc-sa8775p.c | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ drivers/clk/qcom/gpucc-sa8775p.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
-index 1167c42da39d..f965babf4330 100644
+index f965babf4330..1f7a02a7503d 100644
 --- a/drivers/clk/qcom/gpucc-sa8775p.c
 +++ b/drivers/clk/qcom/gpucc-sa8775p.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2022, 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-  * Copyright (c) 2023, Linaro Limited
-  */
- 
-@@ -280,7 +280,7 @@ static struct clk_branch gpu_cc_ahb_clk = {
- 				&gpu_cc_hub_ahb_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
+@@ -161,7 +161,7 @@ static struct clk_rcg2 gpu_cc_ff_clk_src = {
+ 		.name = "gpu_cc_ff_clk_src",
+ 		.parent_data = gpu_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_0),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
  	},
-@@ -294,7 +294,6 @@ static struct clk_branch gpu_cc_cb_clk = {
+ };
+ 
+@@ -181,7 +181,7 @@ static struct clk_rcg2 gpu_cc_gmu_clk_src = {
+ 		.parent_data = gpu_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -200,7 +200,7 @@ static struct clk_rcg2 gpu_cc_hub_clk_src = {
+ 		.name = "gpu_cc_hub_clk_src",
+ 		.parent_data = gpu_cc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_2),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -294,7 +294,7 @@ static struct clk_branch gpu_cc_cb_clk = {
  		.enable_mask = BIT(0),
  		.hw.init = &(const struct clk_init_data){
  			.name = "gpu_cc_cb_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
+-			.ops = &clk_branch2_ops,
++			.ops = &clk_branch2_aon_ops,
  		},
  	},
-@@ -312,7 +311,7 @@ static struct clk_branch gpu_cc_crc_ahb_clk = {
- 				&gpu_cc_hub_ahb_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -330,7 +329,7 @@ static struct clk_branch gpu_cc_cx_ff_clk = {
- 				&gpu_cc_ff_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -348,7 +347,7 @@ static struct clk_branch gpu_cc_cx_gmu_clk = {
- 				&gpu_cc_gmu_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags =  CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_aon_ops,
- 		},
- 	},
-@@ -362,7 +361,6 @@ static struct clk_branch gpu_cc_cx_snoc_dvm_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_cx_snoc_dvm_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -380,7 +378,7 @@ static struct clk_branch gpu_cc_cxo_aon_clk = {
- 				&gpu_cc_xo_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -398,7 +396,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
- 				&gpu_cc_xo_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags =  CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -416,7 +414,7 @@ static struct clk_branch gpu_cc_demet_clk = {
- 				&gpu_cc_demet_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_aon_ops,
- 		},
- 	},
-@@ -430,7 +428,6 @@ static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_hlos1_vote_gpu_smmu_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -448,7 +445,7 @@ static struct clk_branch gpu_cc_hub_aon_clk = {
- 				&gpu_cc_hub_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_aon_ops,
- 		},
- 	},
-@@ -466,7 +463,7 @@ static struct clk_branch gpu_cc_hub_cx_int_clk = {
- 				&gpu_cc_hub_cx_int_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags =  CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_aon_ops,
- 		},
- 	},
-@@ -480,7 +477,6 @@ static struct clk_branch gpu_cc_memnoc_gfx_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_memnoc_gfx_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -494,7 +490,6 @@ static struct clk_branch gpu_cc_sleep_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_sleep_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -533,7 +528,7 @@ static struct gdsc cx_gdsc = {
- 		.name = "cx_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
-+	.flags = VOTABLE | RETAIN_FF_ENABLE,
  };
- 
- static struct gdsc gx_gdsc = {
 
 -- 
 2.45.2
