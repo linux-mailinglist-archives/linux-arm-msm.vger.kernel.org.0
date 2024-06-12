@@ -1,129 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-22394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 109FF904F10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 11:21:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B309904F68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 11:39:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CE0E281CDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 09:21:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3E48B1C212BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 09:39:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC4D616D9C0;
-	Wed, 12 Jun 2024 09:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28A8C16DEC2;
+	Wed, 12 Jun 2024 09:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oR9ID2QC"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="YkgDkpNg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0C016B72E;
-	Wed, 12 Jun 2024 09:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E72352576F;
+	Wed, 12 Jun 2024 09:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718184082; cv=none; b=upCour+BONAoD78oS7IVzfo22DpiAPv0Mse5iOpfI4I3lepD8IRKnsgJfuMWosN8oMJUnfe4X6XoElXTretahgRDOt/8kk7JTkNwkH9Y2/vGWZ2gEdcrWw6XODmzS8dKz3FtoVEryPN1767nJ+BzcMn6r6U5f0dTcx0YTPXA39g=
+	t=1718185173; cv=none; b=umE59L7TIfUr2p8MD9WV28izq+eoBFqKzONj+EKQbgHEtJok8McXKFWSkLf0N72n5WQisvYTeUblWiGYi9Zb+PGyQmQpZhRcPcr22QTRox0zG+TIPUF6ZDCChZVPAaP0zyTCNOIKUR49UlRUNrhuwO/eKnTncPtJatDgOuwfLXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718184082; c=relaxed/simple;
-	bh=EsJGTO6GTs/SJhhsrjmi78vqJQP8kwuegjOox6ZFSPQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GnWe0Gx49R3nBMJdrIOh8siIAv1XMuPNAWy4T7lX4F2cYX0iHJdPyzvaV9wQh9jUxXYgGwvPTG7I6ba4oL79jjwJoUK0ZSkIxUOA7kYLZut0lB997X0RqnlVKyQClTjc3aTYTbXc0LfDwc3iVqbWrhbqdwQeDv+e2cdt+I0hgxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oR9ID2QC; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45C8DqqC018413;
-	Wed, 12 Jun 2024 09:21:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=xRrvXtowPvfK9lgsi7WMphP5
-	miUwkL2U7ntiBaCwewY=; b=oR9ID2QCdZIzQD3/QaEFhZ+8DABB/ZG7/gGgA+8e
-	CXr5TCSFGAvjYLCcq1RgcKVQhatCBr488V2aJ5ssGIEahH0snBcZnWWyzogFgY+6
-	rGZaHonvgvY75LYvohargShjrHu6Qq7idQWLvOAbl6b5CkwNMCBQhclWdKjAqUkC
-	w3DJTCcNGEKSSexDDBGAs7UgKWpO/WZO7OQefOswiOtHXcMJ+ejowgRZN9SgenFl
-	+6OxprqVVqzuO3BesqeKKuFP/I06FJ+QbKmzQse9BXIF396IAHQiP0af4ecAAVnR
-	OExWsLUsBjSHwHl31dlYUA6cNmg9aFSi8vDbaQEKocH6Qw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ypm6bb0up-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 09:21:17 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45C9LGRf016236
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 09:21:16 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 12 Jun 2024 02:21:13 -0700
-Date: Wed, 12 Jun 2024 14:51:09 +0530
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] dt-bindings: cache: qcom,llcc: Fix QDU1000
- description
-Message-ID: <ZmlohTUi6Ppl4k6f@hu-mojha-hyd.qualcomm.com>
-References: <20240612062719.31724-1-quic_kbajaj@quicinc.com>
- <20240612062719.31724-3-quic_kbajaj@quicinc.com>
- <175bd8b0-83b8-45d0-99bd-1e9384fed3f7@kernel.org>
+	s=arc-20240116; t=1718185173; c=relaxed/simple;
+	bh=hq17MAkaqI/mS5UaroN1BkaNHRkBEIuYufisq/6rssk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uqVl4isjzWbvZVIq7UNf/C/4gxzawqKJrlVzt6hbzr26s6N52UKBlZUrm5R1xdBuPqFGuYM4QUEGdbSmex6cdk5tU7+MZCFqYuYdL3lHwqyJZzovJ/KbJF061bKJ4oDYdC6KWl4BEp6xo0mQ31K4VKfNhW9XUcioR+FQf32ZXUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=YkgDkpNg; arc=none smtp.client-ip=45.254.50.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=tAb1g
+	4fB79567ItBIyDcRXSQsvQ9HpG5fbNWTaEarMY=; b=YkgDkpNgD+bYwyzX+c46Z
+	bbHYLMbEFwRAvUtfovntc83lNRnRxrL1K8/xJzIWWD26/PMNvt8DMGO21sDD5olI
+	HY6FkO6+4wgZocB81Uhr0NbG/XpJLKRahwoZjfMtuwUVk+KtGSj/qTzoFaurKWBF
+	h8+ldOaGjhebLDIgknMKek=
+Received: from localhost.localdomain (unknown [112.97.57.186])
+	by gzga-smtp-mta-g0-2 (Coremail) with SMTP id _____wDX30WwbGlmH_qlAQ--.27950S2;
+	Wed, 12 Jun 2024 17:38:57 +0800 (CST)
+From: Slark Xiao <slark_xiao@163.com>
+To: manivannan.sadhasivam@linaro.org,
+	loic.poulain@linaro.org,
+	ryazanov.s.a@gmail.com,
+	johannes@sipsolutions.net,
+	quic_jhugo@quicinc.com
+Cc: netdev@vger.kernel.org,
+	mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
+Date: Wed, 12 Jun 2024 17:38:42 +0800
+Message-Id: <20240612093842.359805-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <175bd8b0-83b8-45d0-99bd-1e9384fed3f7@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -FPgc8fuaJdhcs7nza0EowJ3NumJrYYq
-X-Proofpoint-GUID: -FPgc8fuaJdhcs7nza0EowJ3NumJrYYq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-12_05,2024-06-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- mlxlogscore=999 impostorscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 bulkscore=0 phishscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406120067
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wDX30WwbGlmH_qlAQ--.27950S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7ZrWfJr1DAr1DAF1kKw13CFg_yoW8tr4kpF
+	sYgrW3Jr4fXrWjyryqk3s7ZF1rWw4DG347KrW7K342ywn8t34qvFWjga4ftF1akrZFkF42
+	yFy5u3y5W3WDXFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRuc_3UUUUU=
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiRxT7ZGV4JvHumQAAsx
 
-On Wed, Jun 12, 2024 at 09:58:50AM +0200, Krzysztof Kozlowski wrote:
-> On 12/06/2024 08:27, Komal Bajaj wrote:
-> > QDU1000 DTSI comes with one LLCC0-7 base addresses. Updating
-> > dt-bindings accordingly.
-> > 
-> > Fixes: f0f99f371822 ("dt-bindings: cache: qcom,llcc: correct QDU1000 reg entries")
-> 
-> You are basically reverting without saying this is a revert and without
-> explanation.
-> 
-> What's happening with QDU1000? Why it is such a mess that DTS was
-> totally not matching bindings drivers and now suddenly we need to revert
-> commits?
+For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
+This would lead to device can't ping outside successfully.
+Also MBIM side would report "bad packet session (112)".
+So we add a default mux_id value for SDX72. And this value
+would be transferred to wwan mbim side.
 
-I think, this happened because of the refactoring happened in LLCC driver
-and at the same time QDU1000 device tree change picked while other SoCs
-change was made like 
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 3 +++
+ include/linux/mhi.h                | 2 ++
+ 2 files changed, 5 insertions(+)
 
-e.g
-https://lore.kernel.org/r/20230314080443.64635-11-manivannan.sadhasivam@linaro.org
-https://lore.kernel.org/r/20230517-topic-kailua-llcc-v1-2-d57bd860c43e@linaro.org
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 0b483c7c76a1..9e9adf8320d2 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -53,6 +53,7 @@ struct mhi_pci_dev_info {
+ 	unsigned int dma_data_width;
+ 	unsigned int mru_default;
+ 	bool sideband_wake;
++	unsigned int mux_id;
+ };
+ 
+ #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
+@@ -469,6 +470,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
+ 	.dma_data_width = 32,
+ 	.mru_default = 32768,
+ 	.sideband_wake = false,
++	.mux_id = 112,
+ };
+ 
+ static const struct mhi_channel_config mhi_mv3x_channels[] = {
+@@ -1035,6 +1037,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+ 	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+ 	mhi_cntrl->mru = info->mru_default;
++	mhi_cntrl->link_id = info->mux_id;
+ 
+ 	if (info->edl_trigger)
+ 		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
+diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+index b573f15762f8..499c735fb1a3 100644
+--- a/include/linux/mhi.h
++++ b/include/linux/mhi.h
+@@ -361,6 +361,7 @@ struct mhi_controller_config {
+  * @wake_set: Device wakeup set flag
+  * @irq_flags: irq flags passed to request_irq (optional)
+  * @mru: the default MRU for the MHI device
++ * @link_id: the default link
+  *
+  * Fields marked as (required) need to be populated by the controller driver
+  * before calling mhi_register_controller(). For the fields marked as (optional)
+@@ -445,6 +446,7 @@ struct mhi_controller {
+ 	bool wake_set;
+ 	unsigned long irq_flags;
+ 	u32 mru;
++	u32 link_id;
+ };
+ 
+ /**
+-- 
+2.25.1
 
-
-However, this change missed for QDU1000, later f0f99f371822 ("dt-bindings: cache: qcom,llcc: correct QDU1000 reg entries")
-happened and now realized the driver does not work anymore with current
-binding and hence fixing was required.
-
--Mukesh
 
