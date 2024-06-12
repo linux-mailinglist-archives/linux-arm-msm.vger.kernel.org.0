@@ -1,120 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-22444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87314905397
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 15:22:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C7CD9054FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:19:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD9021C214B0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 13:22:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A93CA1F21B00
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:19:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E910817799B;
-	Wed, 12 Jun 2024 13:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74AE517DE1E;
+	Wed, 12 Jun 2024 14:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JfE3Nu+l"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="arUpZQm8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572B0178CE2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 13:22:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC5517C221;
+	Wed, 12 Jun 2024 14:19:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718198536; cv=none; b=rkpzdMrry0DmKSHsoNIwJcl1+hiSBTuSer4HTD0Ni5xL6/3faRDFdxIiF6eFwL2FNLCdkO65HQ1kiFA3j2hxXJmZbEUrgowp4ucvC77N0GdlkwPEIYR5qVO5vYdUM0ezKUpKo71io+29QRGzeEKUZ52bzITbwSnmHJFfAzpdEm4=
+	t=1718201969; cv=none; b=e06uuuoNA90KOkiLSNaNH0leRMwp0gAWgjQDroNaklLL3znNBQUVUybgRJOJPvZiQfMI1LqJexmp4Wxt3g0A2iRNWwcazwVu2AFuUzVCmX64XLy5fuGfwgYPh/2kXS0fZGYVMKI/0Jy5oorD9uyi+tBXfViFvVf5K/neWAogfis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718198536; c=relaxed/simple;
-	bh=RM/yyON+6lyB6Kj4FOxNNV+NuZ2jFCP1VoFpY0bDmWo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rHAVF3t2YHiSr4I63pZ/BUnzF3X1pyNRnJR/av9QJgcPEOpmgD0V/SC8IXMbVxMqS8x1okxpfgU9Uj/iMzl6M71zkGQoqt/hHDmijMsWfqPREBoTEiJvjpYpr4EXolsuTAX/W6d6uFnp8mOEPt9LOVPlTDs4tJka/k5iVuGQjfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JfE3Nu+l; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-62a2a6a5ccfso28082317b3.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 06:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718198534; x=1718803334; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qsoWuzn17VvjikVzQz6+Jyxo7R4j3K1aNLPcDUzQdZE=;
-        b=JfE3Nu+lmQGflisTTxgOBVHAJbnSfMDvQr63ehaSAYORVOR52uudhzIClbDtCANmx4
-         GYiJqVM4BFGMns809djxKdwe/uCR8iFx/tiR9hD/xyrJFhPEpYJYyi0OGF4Qo9ePE6sS
-         ZXimjFnq+J800ZP6lkvAOTHz7QbAQ3nZGqkaMb1J9oQrtcSPck7Rb9Nm2OyZiWxvh+rT
-         gMDSk6C6k6FWYiy+M8XYDPGr+nLJG0mKRNWSfkrhvoHEaDz3UErKiT96yhWnTJ4FvKdc
-         X0w9N7jApdNqrBSDw53srx3yJH9nonelAeJAt3UHm4wBTbDFAWs3M+RIIJ180LS4stKx
-         yRCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718198534; x=1718803334;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qsoWuzn17VvjikVzQz6+Jyxo7R4j3K1aNLPcDUzQdZE=;
-        b=qyoCO+R/Zp4TrAzYipJgObsZjbdpSNIzWwCLGCUYL9QMqUBlohanFEEIDL5UTypHAB
-         XyHirddPV9rovxXHEnFKwLf8cbp4KKo4/3fm/RqbGje85QpP8hwW5AhYo6QQLFz/HcE0
-         RRGflfweoazFOkut/9Yq7XUYM6zbf5niEfM+dQWVbjd0YfWuvZO2UpY/7uN5/ykNpcX5
-         6PWIldWXQK2smcLw9NB5d1aduysq79h9qCQcZDhSpIlCVWisx877PWHs7uGtWIYKD1nu
-         cJHwf5/Z+brdYnIAilcrmx5J6re1cSIx5yELR7Nur+duYu5ApMD0WLol5w0ZrXmw65xf
-         Xpig==
-X-Forwarded-Encrypted: i=1; AJvYcCVr6XVmR0Kp8yZveks5ETpVfV+E4HlKw/ANrey+On61OBG/gEU8lhqJVP1oRl9TNJZSpxnQqyt4Df4ZVu6g5ASCPmRh2z/6JTT4u+AVWQ==
-X-Gm-Message-State: AOJu0Ywq8eQNBczni/iuo50fyHfQliwYYAKaf3czVdZkmA0WkSLK99p0
-	Y3HHmvm7W7agfEQLmwfz2lxYSL8r4i0y3un7ihg3gtIVlivmdSCtAIPjjcymtfl9CY/IZqmXvZL
-	TisXcYPjMcI+/XOsTa1AdQWEeM6bVrLBdtXHiSA==
-X-Google-Smtp-Source: AGHT+IHOmiC+sARRKPnM20C1DGRPtMc6UmI9stZNJsOQF5EN19JWxDcLDuyjTBRVCwm3T5Vs6GZWTmySOdJ8QSidTZY=
-X-Received: by 2002:a0d:d841:0:b0:62c:e8a2:305 with SMTP id
- 00721157ae682-62fba375c1fmr16113497b3.41.1718198534271; Wed, 12 Jun 2024
- 06:22:14 -0700 (PDT)
+	s=arc-20240116; t=1718201969; c=relaxed/simple;
+	bh=m/1UUdkM/F8U6/9ty+rzPaHzO2Qrr8eAVhVF50RZiYU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Sn0QbaVGJq03LlR/MDQgwCB2l7gMJkmcBrAvtGeskCFcujUoXTX+fDLZGrVa2qsJz/GMmu4b4dAaVQ+M23t9IgtFJuy/C5mKj5mUmWouNzKJCBhb1p14eDAjgAvkh29ArSlNfp7bIQEDheRu8EcY+m/VlF+d4XKsIRuupiZ2vX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=arUpZQm8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45CCqoJF018660;
+	Wed, 12 Jun 2024 14:19:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AOiiCfqxJl3ela2rnUbIDu7M7Owloxg8mRgKwY4S0uQ=; b=arUpZQm84guwoexo
+	NTu8/KVpViP1bOn3Vyk7UNGdIoOTbtC5OKjcayqy5zNOWm19urQmMW/2ZThU4G0y
+	Srafme9lY5ZbxcELo3fGITxGZnAgLuet5NE8sfXdQ7r5idwGjjgrOmxEb8x4RCvS
+	MaMjRo0ItA0cE5Et13X8uGSspd54TwlgcA/U+dvIfEdREpKleoN26iMAPbnup8O/
+	A2+VlTZUwdHcMZPdB03eQMPsXQku499Tcxp5vvu5KY6fYzimix8rZLKGqqieTSUP
+	kFfPUziq5BqELhp8049u+JpbopygwvK8FuwZ5XAvJzWgV4wQ2Rm5LNgqw/Zq+Ad1
+	MT7rzA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yq4s8hc4e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Jun 2024 14:19:15 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CEJENw031149
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Jun 2024 14:19:14 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 12 Jun
+ 2024 07:19:14 -0700
+Message-ID: <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
+Date: Wed, 12 Jun 2024 08:19:13 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240522-fd-hdmi-hpd-v2-13-c30bdb7c5c7e@linaro.org> <deaa2a50-9e16-4f23-8c13-34947ba4e4e0@web.de>
-In-Reply-To: <deaa2a50-9e16-4f23-8c13-34947ba4e4e0@web.de>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 12 Jun 2024 16:22:03 +0300
-Message-ID: <CAA8EJppn_mVzmd==-bs8je8VjXrNrWu0hNXWAGuP+TP3DARReg@mail.gmail.com>
-Subject: Re: [PATCH v2 13/14] drm/msm/hdmi: ensure that HDMI is one if HPD is requested
-To: Markus Elfring <Markus.Elfring@web.de>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>, LKML <linux-kernel@vger.kernel.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Slark Xiao
+	<slark_xiao@163.com>
+CC: <loic.poulain@linaro.org>, <ryazanov.s.a@gmail.com>,
+        <johannes@sipsolutions.net>, <netdev@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240612093842.359805-1-slark_xiao@163.com>
+ <20240612094609.GA58302@thinkpad>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20240612094609.GA58302@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: u8DihMomhUAk3P4xj0tSZnqG-fwtbN7y
+X-Proofpoint-ORIG-GUID: u8DihMomhUAk3P4xj0tSZnqG-fwtbN7y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-12_08,2024-06-12_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ spamscore=0 mlxscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1011 mlxlogscore=999 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406120102
 
-On Wed, 12 Jun 2024 at 16:01, Markus Elfring <Markus.Elfring@web.de> wrote:
->
-> =E2=80=A6
-> > +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-> > @@ -117,11 +117,13 @@ static void msm_hdmi_bridge_atomic_pre_enable(str=
-uct drm_bridge *bridge,
-> >
-> >       DBG("power up");
-> >
-> > +     mutex_lock(&hdmi->state_mutex);
-> >       if (!hdmi->power_on) {
-> =E2=80=A6
-> >       }
-> > +     mutex_unlock(&hdmi->state_mutex);
-> >
-> >       if (hdmi->hdmi_mode) {
-> >               msm_hdmi_config_avi_infoframe(hdmi);
-> =E2=80=A6
->
-> Would you become interested to apply a statement like =E2=80=9Cguard(mute=
-x)(&hdmi->state_mutex);=E2=80=9D?
-> https://elixir.bootlin.com/linux/v6.10-rc3/source/include/linux/mutex.h#L=
-196
+On 6/12/2024 3:46 AM, Manivannan Sadhasivam wrote:
+> On Wed, Jun 12, 2024 at 05:38:42PM +0800, Slark Xiao wrote:
+> 
+> Subject could be improved:
+> 
+> bus: mhi: host: Add configurable mux_id for MBIM mode
+> 
+>> For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
+>> This would lead to device can't ping outside successfully.
+>> Also MBIM side would report "bad packet session (112)".
+>> So we add a default mux_id value for SDX72. And this value
+>> would be transferred to wwan mbim side.
+>>
+>> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+>> ---
+>>   drivers/bus/mhi/host/pci_generic.c | 3 +++
+>>   include/linux/mhi.h                | 2 ++
+>>   2 files changed, 5 insertions(+)
+>>
+>> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+>> index 0b483c7c76a1..9e9adf8320d2 100644
+>> --- a/drivers/bus/mhi/host/pci_generic.c
+>> +++ b/drivers/bus/mhi/host/pci_generic.c
+>> @@ -53,6 +53,7 @@ struct mhi_pci_dev_info {
+>>   	unsigned int dma_data_width;
+>>   	unsigned int mru_default;
+>>   	bool sideband_wake;
+>> +	unsigned int mux_id;
+>>   };
+>>   
+>>   #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
+>> @@ -469,6 +470,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
+>>   	.dma_data_width = 32,
+>>   	.mru_default = 32768,
+>>   	.sideband_wake = false,
+>> +	.mux_id = 112,
+>>   };
+>>   
+>>   static const struct mhi_channel_config mhi_mv3x_channels[] = {
+>> @@ -1035,6 +1037,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>>   	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+>>   	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+>>   	mhi_cntrl->mru = info->mru_default;
+>> +	mhi_cntrl->link_id = info->mux_id;
+> 
+> Again, 'link_id' is just a WWAN term. Use 'mux_id' here also.
 
-I am not.
+Does this really belong in MHI?  If this was DT, I don't think we would 
+put this value in DT, but rather have the driver (MBIM) detect the 
+device and code in the required value.
 
+Furthermore, if this is included in MHI, it seems to be a property of 
+the channel, and not the controller.
 
---=20
-With best wishes
-Dmitry
+-Jeff
 
