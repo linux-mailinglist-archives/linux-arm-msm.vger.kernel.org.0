@@ -1,184 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-22438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 722459052E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:49:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04BFF9052FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:53:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 246E7284D92
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 12:49:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DAA31F25696
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 12:53:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95F8F171E74;
-	Wed, 12 Jun 2024 12:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C140817BB17;
+	Wed, 12 Jun 2024 12:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C8R2kAE5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIpK+x9m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D8016F0D0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 12:49:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFC517B50C;
+	Wed, 12 Jun 2024 12:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718196555; cv=none; b=bWeRAd4xF1BZ7jTO/ezmyVSa6OavO2jfTMThUqLf1exNzUJD81MXIl+poCbo28RGWuZZR4T/8KI65BXZmBj2N22GLGgdQ6m0RMCGy1lcB+SCQQTlO+Gq5Tw3FPpxQWLBFFOwn6eOE4UFVAW5wlIu1gu32oKP99+NYfZtXJlJeQM=
+	t=1718196777; cv=none; b=crkdssjU7t43QVx2/iW66M5MD7zZB5pNOUia2HNHc2Hkc3HSviema7JE+q+fsSzxe+9sqvnQryBoRLpK1b6dE2soImrMYQGs66wN1ShD5w1EuJbtdLmwWPQDWhR/TuxbIbxZ/QxBnxEQuSKOYe1V1NzTpG+chNATZUQaOZxRKm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718196555; c=relaxed/simple;
-	bh=nK8eQD3U2HLvmSpYT0ul176n/7+KfLRXAUeTJYk9YdU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GskAmBP9THjQgdiwmRwwYP1kB0DnvGWXTE5XgZHKh72nE1/I098wy0uB6iebOqi8TWonzSHiBuwe8vuoqdu9VnV/uHHTqWJBgjlqXnKzWNqewbJDNX4jaAb8jsbb4Ah3OFNRZ//mXa00vzZLzUI3ym3yCqLx5tXh5BJ1wTGuMdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C8R2kAE5; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ebd421a931so45739371fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 05:49:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718196552; x=1718801352; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0yxD5VYZZavmxVXtb3enG8WmplRcJPFmwaHxZgVVSPo=;
-        b=C8R2kAE5QLFHnlLGclMrXOUYdtvEwoG1MkFG5A/bPsMQqQEYO9MZ7r5mbHC/ALwyYK
-         ty577VF8IjbswNcoJq0WRp81AL+7HwXvAHsBTSdc84nqAriQk1Nug2RiSA5knYIaQj7S
-         p2CaLggKxmeHEhxWgfBjd4OF9I1m0wqKTKZ4NBEl6UrhXA+jy0SkHtT2pM5Rl58bSbtX
-         9Ke4tUEFQDWulCkaNI+fq/4+t/Q4tO6DibeE/Kd4yxHJ7d/JQay8qUhtfGfrmGzBb6xd
-         mCQncXScN0+zZJSVuLHhqPErL4QlvUYdKGHyU8l1G9ZZaH4OffsKOVy9ecEnuXuBkPAr
-         wYNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718196552; x=1718801352;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0yxD5VYZZavmxVXtb3enG8WmplRcJPFmwaHxZgVVSPo=;
-        b=YwNLH+koQnPJfDQsuFkkXMBNk5NxAQ1tllfWpULxgYwZIcbvN6lAjB1c21tvI8U7vS
-         qHcl48Q73tz2haxuwkFI9Qmg9hhmC6gPJ9fbzbh0OxqDCP2VYeqyssx38/HzVaRbM8th
-         gOatKqJkhlpskhwRAKWnJQLfX2WUjSnReKK+T69WgPg6WvJMj6rCd2hTSfAHHc/623Zd
-         sJew087nJCEGyjCvjQvXJNeVKrjKnB04LW4RMu4zSm3xJg1MaBUxYW9GronQiy5bq10J
-         SnDF1GY/deRx5d2GGrVGwn9GD5RuwNlTZeYlreVNLfjpY5O6yD1DxqdbRrETaThKuLZy
-         hImg==
-X-Forwarded-Encrypted: i=1; AJvYcCULiyPRReDmVi73QA8wOa2CT/NU0qrtgx8if9lDToKq17LP8f2FCyYqLrHzaI9fxokXtptAaPLqiuUzo2nNq9VsJxoMwS0SOO63tk5snw==
-X-Gm-Message-State: AOJu0YxR3WqBF3Dz5eTCK36gPykYEXd15kEupezGnQPREA9GP1Szf2Zi
-	kgdoxzG35jhwBC0QqKkWpW6HTufXCkKqNia0uJJPOGiH37hz/0KbbFsyQd9SRyY=
-X-Google-Smtp-Source: AGHT+IHTtXOw7Dy85qXvDzKaBi3NfAqIFcpOA4TBDfQaEJBSthuiUBRe5J4B3+U+O6qnjq/yvAitWg==
-X-Received: by 2002:a2e:9b13:0:b0:2eb:de21:94a1 with SMTP id 38308e7fff4ca-2ebfc964026mr9608001fa.43.1718196551645;
-        Wed, 12 Jun 2024 05:49:11 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2eadb8d2973sm22603021fa.117.2024.06.12.05.49.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 05:49:11 -0700 (PDT)
-Date: Wed, 12 Jun 2024 15:49:09 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com, stable <stable@kernel.org>
-Subject: Re: [PATCH v5 6/7] misc: fastrpc: Fix ownership reassignment of
- remote heap
-Message-ID: <xvy4syldmqdklij4wbub6x52gexijlrgtoketd3urohxrca5g2@mmioafzpmy7s>
-References: <20240611103442.27198-1-quic_ekangupt@quicinc.com>
- <20240611103442.27198-7-quic_ekangupt@quicinc.com>
- <xc2ys75plbtrenastitqafadfrtolpd3bjdqcrl3wnozpc6kdo@e6e73ousyea7>
- <7d75f6b1-60fe-4a03-a251-4675a3364148@quicinc.com>
+	s=arc-20240116; t=1718196777; c=relaxed/simple;
+	bh=UJ4JudAfMWR1kYmv/khSHntL+ff+3UTdSYyO7febHfQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MWs7Hjnfic5gMeOQUWNXpkP80ETs4cywj/O8MQuPF4ggLV/BwOinkcspUlE89ARIobHArhuPdmLMxYjRACu215qbg52pbagisKWT2FFD1QO9tbsAg9NVPwq3z6OuTzSX9fHwMxmx23D06LNCYIhdNsN0+8TIaQDRrv60NftoYhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIpK+x9m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD71C3277B;
+	Wed, 12 Jun 2024 12:52:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718196777;
+	bh=UJ4JudAfMWR1kYmv/khSHntL+ff+3UTdSYyO7febHfQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HIpK+x9mXFva2OYweYMjCSux8vWn5J5v/aJqWoVm+ATzMjGtGEAYmI+7O5DFPfYfy
+	 WBZvR5Uqwl7lrkcGStsaHJWnTxySi5/ae9AJLMgzi7RwzsJ+UY9jmKHZZIh9z81NY0
+	 GQBwRbcepXzHDwqrYwfhr2YE8iC2tjfEI0GAC+4Pke+yIzytho7+riZOUe8dJtecNT
+	 lAVf9MN1liynoKwkVBM5jvs6QmMV0AXhCMeqpsa8SyiYPsH26lp6Sqh9xPDkp3bIc/
+	 zkdQduCZp1FVmH7468ScwcdlFBAH8rpTbk8L15UH5kbNmOd6r664VxC2Kexnsia/b4
+	 3r7JPkcyXGrYQ==
+Message-ID: <8e32a8be-dbbf-49ca-92a1-2fe3c8bfb571@kernel.org>
+Date: Wed, 12 Jun 2024 15:52:51 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7d75f6b1-60fe-4a03-a251-4675a3364148@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 6/6] arm64: dts: qcom: ipq9574: Add icc provider
+ ability to gcc
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, quic_anusha@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <27f4f3dd-9375-40cf-8c8f-1c4edf66e31b@linaro.org>
+ <ZjNdTmmXucjtRxJt@hu-varada-blr.qualcomm.com>
+ <c015b3a5-2213-4ebd-b960-d97ed1fe7062@kernel.org>
+ <ZjshR0ekcn0gxwOa@hu-varada-blr.qualcomm.com>
+ <CAA8EJpqENsojPQmCbma_nQLEZq8nK1fz1K0JdtvLd=kPrH_DBw@mail.gmail.com>
+ <1a08ef42-b52f-4c97-90d7-e7fdee7725b4@linaro.org>
+ <Zmgb+OjdBNw71sC1@hu-varada-blr.qualcomm.com>
+ <176137e5-6312-4d46-97b6-c4494bc1c61b@kernel.org>
+ <ZmlAdETV0+6Md8HC@hu-varada-blr.qualcomm.com>
+ <e24cfd23-6f77-46a0-b020-9cb3daef6930@kernel.org>
+ <Zml4RQ5R5s3mVMnI@hu-varada-blr.qualcomm.com>
+Content-Language: en-US
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <Zml4RQ5R5s3mVMnI@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 12, 2024 at 09:54:47AM +0530, Ekansh Gupta wrote:
+On 12.06.24 13:28, Varadarajan Narayanan wrote:
+> On Wed, Jun 12, 2024 at 11:48:17AM +0300, Georgi Djakov wrote:
+>> On 12.06.24 9:30, Varadarajan Narayanan wrote:
+>>> On Tue, Jun 11, 2024 at 02:29:48PM +0300, Georgi Djakov wrote:
+>>>> On 11.06.24 12:42, Varadarajan Narayanan wrote:
+>>>>> On Thu, Jun 06, 2024 at 04:06:01PM +0200, Konrad Dybcio wrote:
+>>>>>> On 8.05.2024 10:10 AM, Dmitry Baryshkov wrote:
+>>>>>>> On Wed, 8 May 2024 at 09:53, Varadarajan Narayanan
+>>>>>>> <quic_varada@quicinc.com> wrote:
+>>>>>>>>
+>>>>>>>> On Fri, May 03, 2024 at 04:51:04PM +0300, Georgi Djakov wrote:
+>>>>>>>>> Hi Varada,
+>>>>>>>>>
+>>>>>>>>> Thank you for your work on this!
+>>>>>>>>>
+>>>>>>>>> On 2.05.24 12:30, Varadarajan Narayanan wrote:
+>>>>>>>>>> On Tue, Apr 30, 2024 at 12:05:29PM +0200, Konrad Dybcio wrote:
+>>>>>>>>>>> On 25.04.2024 12:26 PM, Varadarajan Narayanan wrote:
+>>>>>>>>>>>> On Tue, Apr 23, 2024 at 02:58:41PM +0200, Konrad Dybcio wrote:
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> On 4/18/24 11:23, Varadarajan Narayanan wrote:
+>>>>>>>>>>>>>> IPQ SoCs dont involve RPM in managing NoC related clocks and
+>>>>>>>>>>>>>> there is no NoC scaling. Linux itself handles these clocks.
+>>>>>>>>>>>>>> However, these should not be exposed as just clocks and align
+>>>>>>>>>>>>>> with other Qualcomm SoCs that handle these clocks from a
+>>>>>>>>>>>>>> interconnect provider.
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> Hence include icc provider capability to the gcc node so that
+>>>>>>>>>>>>>> peripherals can use the interconnect facility to enable these
+>>>>>>>>>>>>>> clocks.
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>>>>>>>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>>>>>>>>>>>> ---
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> If this is all you do to enable interconnect (which is not the case,
+>>>>>>>>>>>>> as this patch only satisfies the bindings checker, the meaningful
+>>>>>>>>>>>>> change happens in the previous patch) and nothing explodes, this is
+>>>>>>>>>>>>> an apparent sign of your driver doing nothing.
+>>>>>>>>>>>>
+>>>>>>>>>>>> It appears to do nothing because, we are just enabling the clock
+>>>>>>>>>>>> provider to also act as interconnect provider. Only when the
+>>>>>>>>>>>> consumers are enabled with interconnect usage, this will create
+>>>>>>>>>>>> paths and turn on the relevant NOC clocks.
+>>>>>>>>>>>
+>>>>>>>>>>> No, with sync_state it actually does "something" (sets the interconnect
+>>>>>>>>>>> path bandwidths to zero). And *this* patch does nothing functionally,
+>>>>>>>>>>> it only makes the dt checker happy.
+>>>>>>>>>>
+
+[..]
+
 > 
+> nsscc_ipq9574 was not using icc_sync_state. After adding that, I
+> can see the following messages printed from icc_sync_state. I
+> also added a print to confirm if 'p->set(n, n);' is called.
+
+Ok, that's good! So now when all providers are using sync_state, we
+can go back to the initial comment from Konrad. I think you should
+re-check the tests that you did, as the current results just lead to
+more questions than answers. Maybe it was just the sync-state that
+was missing, or there is some other issue.
+
+BR,
+Georgi
+
+[..]
 > 
-> On 6/11/2024 5:29 PM, Dmitry Baryshkov wrote:
-> > On Tue, Jun 11, 2024 at 04:04:39PM +0530, Ekansh Gupta wrote:
-> >> Audio PD daemon will allocate memory for audio PD dynamic loading
-> > What is Audio PD daemon? Is it something running on the CPU or on the
-> > DSP? Is it adsprpcd or some other daemon?
-> It's adsprpcd which is going to attach to Audio PD.
-
-Ack
-
-> >
-> >> usage when it is attaching for the first time to audio PD. As
-> >> part of this, the memory ownership is moved to the VM where
-> > Which VM?
-> In audio PD case, it's the following VMIDs:
-> QCOM_SCM_VMID_LPASS
-> QCOM_SCM_VMID_ADSP_HEAP
+> The gcc based interconnect paths are referenced by PCIe controller
+> nodes. Please refer to this patch
 > 
-> Defined here: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/dt-bindings/firmware/qcom,scm.h?h=v6.10-rc3
+> 	[PATCH V5 4/6] arm64: dts: qcom: ipq9574: Add PCIe PHYs and controller nodes
+> 	https://lore.kernel.org/linux-arm-msm/20240512082858.1806694-5-quic_devipriy@quicinc.com/
 > 
-> These are expected to be added to fastrpc DT node as "qcom,vmids"
-
-Ok, good.
-
+> Sorry, did not post the nsscc related patches since this base ICC
+> patch hasn't reached closure. The nsscc patches are very similar
+> to this gcc based series. Wanted to gather the issues raised in
+> this and address them in nsscc so that it is in a more acceptable
+> shape.
 > 
-> >
-> >> audio PD can use it. In case daemon process is killed without any
-> >> impact to DSP audio PD, the daemon process will retry to attach to
-> >> audio PD and in this case memory won't be reallocated. If the invoke
-> >> fails due to any reason, as part of err_invoke, the memory ownership
-> >> is getting reassigned to HLOS even when the memory was not allocated.
-> >> At this time the audio PD might still be using the memory and an
-> >> attemp of ownership reassignment would result in memory issue.
-> > What kind of 'memory issues'? Is it even possible to reclaim the memory
-> > back?
-> In case when audio PD on DSP is still using the memory, the ownership should not be
-> moved to HLOS. This might happen in daemon kill scenario where remote_heap is not
-> allocated again, but if due to any reason if the fastrpc_internal_invoke fails, that might
-> result in the ownership change of remote_heap memory.
+> Thanks
+> Varada
 
-You are describing the expected behaviour. not the observed issue.
-
-Also, the second quesiton didn't get the answer. Is it possible to free
-/reclaim the memory?
-
-> >
-> >> Fixes: 0871561055e6 ("misc: fastrpc: Add support for audiopd")
-> >> Cc: stable <stable@kernel.org>
-> >> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> >> ---
-> >>  drivers/misc/fastrpc.c | 4 +++-
-> >>  1 file changed, 3 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> >> index 1ba85c70e3ff..24dc1cba40e9 100644
-> >> --- a/drivers/misc/fastrpc.c
-> >> +++ b/drivers/misc/fastrpc.c
-> >> @@ -1238,6 +1238,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
-> >>  	struct fastrpc_phy_page pages[1];
-> >>  	char *name;
-> >>  	int err;
-> >> +	bool scm_done = false;
-> >>  	struct {
-> >>  		int pgid;
-> >>  		u32 namelen;
-> >> @@ -1289,6 +1290,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
-> >>  					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
-> >>  				goto err_map;
-> >>  			}
-> >> +			scm_done = true;
-> >>  		}
-> >>  	}
-> >>  
-> >> @@ -1324,7 +1326,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
-> >>  
-> >>  	return 0;
-> >>  err_invoke:
-> >> -	if (fl->cctx->vmcount) {
-> >> +	if (fl->cctx->vmcount && scm_done) {
-> >>  		u64 src_perms = 0;
-> >>  		struct qcom_scm_vmperm dst_perms;
-> >>  		u32 i;
-> >> -- 
-> >> 2.43.0
-> >>
-> 
-
--- 
-With best wishes
-Dmitry
 
