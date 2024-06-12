@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-22502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69923905AF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 20:32:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 65A1B905AF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 20:32:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BEA01B25A28
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 18:32:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB8FEB25AD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 18:32:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D70226A031;
-	Wed, 12 Jun 2024 18:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 112AC6EB4A;
+	Wed, 12 Jun 2024 18:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ODbk6cFg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UMX+9nxB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AD35FBB7;
-	Wed, 12 Jun 2024 18:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B5E6214D;
+	Wed, 12 Jun 2024 18:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718217077; cv=none; b=Mu97ynS4yO8Xy+ccAUD2pXjdcSZ23BFUgLJvFRnb3wmGRAvRNMf6kLMpWwdY2wVjOWs+qqAEztpopSsiEH0v63amCT0qCi4w4uIl41uULQlrZ/yF8efpkXgegtGW2dR7H02yIw4phUHSATXXakI8A2e62o/k6LG3CaOTSsdM8FY=
+	t=1718217079; cv=none; b=DNxEcyJ22AOhhkyXuGjeDqKdeGOc4UZCSWl221CpuvKFxtTyHlUJy6lNIO64eK/4NV/13tegpwzOa3/hpye/+f+XOCPsOJr6wTSHSx+fGmQ4WmbMuSt6xRWBsXHREgmdnjskO3a4EFVr2X4l/PJqmVCQFWJSYb+LF/LKdeAH0ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718217077; c=relaxed/simple;
-	bh=oou1jM5VFq/2y2bcsmpwOiyQfeAuRop+eiyLGDLCMxU=;
+	s=arc-20240116; t=1718217079; c=relaxed/simple;
+	bh=BLoZJ4bi2OEMeUpnz3dhev0ANghngVOc+fxUT6k/Hh4=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qQsxUZCm297ADWf1W0sz+BiOvti2uNSvLM2HJ2uQ61E2Xucc0+vk22rxmHbQKZVOy5sSU5TSdW044I9diV45J5chAKENIKrctviN/VR0EE83cmjVIBmXCT6sjtEGUifAFNUoORlq/LIGkEoYjW0Fg3i5qiBNwI4Qsn8GcmqrrvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ODbk6cFg; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=JDe966rrEwgORVU4GQvUtM7/2kP9Jr/ak9hWBmpfSux9GM590l8IUay2J/kS+nUpe+LPU4us2IxkP7Uyh+FDmr9dUeNONIXrdgFsDSuN0qxrUH5KSWT7TLhQzSaqzhlZWje45BOlokkaj2TW/k3UGBvLtboQOlOZ92AG2QTFlx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UMX+9nxB; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45CGOUTF011256;
-	Wed, 12 Jun 2024 18:31:05 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45CDqiLK019095;
+	Wed, 12 Jun 2024 18:31:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	j5G049VqCQMeE3w0OXR+7RWXAi7MH2G9dMoTlQcaq/4=; b=ODbk6cFgyhN6+Stw
-	xKoFPfFysI6gAsAJ+lmQP0CRNgysllSA4BxPaNxfODtAtQSBidlPfnIDOiPrcoHd
-	USM0PWwlR7vuDrsoViywASn9GTQKbiVVFzH1iywKW1VY03L6I99qlaR/iZSglRu9
-	OZ2w/xwBBwV2nWOHcVOGyVUjFgILkKinU2Lh7QN65r/0LfO9filA4nvD7ExBJf2s
-	ecFm0Af4i8pYPl9mLyGc9wHjI9ZAAmNoz7uN6/coobeXKlrjUs7uwgUZQ9WANoGl
-	43U5DlTeP7eLFgJhteleI/+AXEZfiXiLdsGLUPF91/7kx9L0iOq0F3KKankiYFRq
-	8DsKwQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yq83wh5ww-1
+	rNv419ymt13TEImL0lQWU1KdquoPPrPW5oQHQBmS4/k=; b=UMX+9nxBPY/6Rmln
+	L4r3iDI5AH4UQl4+kEf9kzRW/2NEgMOF7vCIfZMvmbjIvDwzh7/T4SOTnS0p8UiS
+	y+QWc4RsjQgEvw4ZzhldMUrql6JkWYAMizJOVfO0StKTDkLzyHipk6RvfC/+GEZM
+	W+aCpB9j9DnsyVJzF95p4lcAY/GkhgxzxLSWGRV6dPdjBkw5qnyrr+hHSAESmIBG
+	0/B2RWK/z1nxa7ID1/hn77sJCueaRzjEYKP5tFcCAKs1YHCEtoPXdIIOwooEK17c
+	Imbw16m3OL0ux+GZyzNerfyfYjc+0w0IRN916DqBElxh+JqN7WDJPkZzn/DYUcO/
+	sFZaFg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yqcxtgxmu-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 18:31:04 +0000 (GMT)
+	Wed, 12 Jun 2024 18:31:08 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CIV2qV027832
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45CIV7t5030202
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 12 Jun 2024 18:31:02 GMT
+	Wed, 12 Jun 2024 18:31:07 GMT
 Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 12 Jun 2024 11:30:57 -0700
+ 15.2.1544.9; Wed, 12 Jun 2024 11:31:02 -0700
 From: Sibi Sankar <quic_sibis@quicinc.com>
 To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
         <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
@@ -63,10 +63,12 @@ To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
 CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
         <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-        <quic_sibis@quicinc.com>, <conor+dt@kernel.org>
-Subject: [RFC V2 1/4] dt-bindings: firmware: Add support for QCOM Vendor Protocol
-Date: Thu, 13 Jun 2024 00:00:28 +0530
-Message-ID: <20240612183031.219906-2-quic_sibis@quicinc.com>
+        <quic_sibis@quicinc.com>, <conor+dt@kernel.org>,
+        Amir Vajid
+	<avajid@quicinc.com>
+Subject: [RFC V2 2/4] firmware: arm_scmi: vendors: Add QCOM vendor protocol
+Date: Thu, 13 Jun 2024 00:00:29 +0530
+Message-ID: <20240612183031.219906-3-quic_sibis@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240612183031.219906-1-quic_sibis@quicinc.com>
 References: <20240612183031.219906-1-quic_sibis@quicinc.com>
@@ -82,344 +84,307 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4P1iCEa0ItLAyj1ZsloIKOQNT-aT8dT-
-X-Proofpoint-ORIG-GUID: 4P1iCEa0ItLAyj1ZsloIKOQNT-aT8dT-
+X-Proofpoint-ORIG-GUID: JM_Ev-nFmj52rdPMNqecw_4ESl3XwBNi
+X-Proofpoint-GUID: JM_Ev-nFmj52rdPMNqecw_4ESl3XwBNi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-12_09,2024-06-12_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- bulkscore=0 spamscore=0 mlxlogscore=999 suspectscore=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406120131
+ definitions=2024-06-12_10,2024-06-12_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ lowpriorityscore=0 mlxlogscore=999 spamscore=0 mlxscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406120132
 
-Document the SCMI QCOM Vendor protocol v1.0 bindings and the various memory
-buses that can be monitored and scaled by memory latency governor hosted
-on it.
+The SCMI QCOM vendor protocol provides a generic way of exposing a
+number of Qualcomm SoC specific features (like memory bus scaling)
+through a mixture of pre-determined algorithm strings and param_id
+pairs hosted on the SCMI controller.
 
+Co-developed-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+Co-developed-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
+Signed-off-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
+Co-developed-by: Amir Vajid <avajid@quicinc.com>
+Signed-off-by: Amir Vajid <avajid@quicinc.com>
 Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 ---
 
 v1:
-* Add missing bindings for the protocol. [Konrad/Dmitry]
-* Use alternate bindings. [Dmitry/Konrad]
+* Rebase on top of Cristian's "SCMI multiple vendor protocol support" series. [Cristian]
+* Add more documentation wherever possible. [Sudeep]
 
- .../bindings/firmware/arm,scmi.yaml           |  21 ++
- .../bindings/soc/qcom/qcom,scmi-memlat.yaml   | 243 ++++++++++++++++++
- include/dt-bindings/soc/qcom,scmi-vendor.h    |  22 ++
- 3 files changed, 286 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
- create mode 100644 include/dt-bindings/soc/qcom,scmi-vendor.h
+ drivers/firmware/arm_scmi/vendors/Kconfig     |  12 ++
+ drivers/firmware/arm_scmi/vendors/Makefile    |   2 +-
+ .../arm_scmi/vendors/qcom_scmi_vendor.c       | 184 ++++++++++++++++++
+ include/linux/qcom_scmi_vendor.h              |  39 ++++
+ 4 files changed, 236 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/firmware/arm_scmi/vendors/qcom_scmi_vendor.c
+ create mode 100644 include/linux/qcom_scmi_vendor.h
 
-diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-index 7de2c29606e5..21e4da53d02c 100644
---- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-+++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-@@ -278,6 +278,27 @@ properties:
-     required:
-       - reg
+diff --git a/drivers/firmware/arm_scmi/vendors/Kconfig b/drivers/firmware/arm_scmi/vendors/Kconfig
+index 7c1ca7a12603..6bff4550fa25 100644
+--- a/drivers/firmware/arm_scmi/vendors/Kconfig
++++ b/drivers/firmware/arm_scmi/vendors/Kconfig
+@@ -1,4 +1,16 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ menu "ARM SCMI Vendor Protocols"
  
-+  protocol@80:
-+    $ref: '#/$defs/protocol-node'
-+    unevaluatedProperties: false
++config ARM_SCMI_PROTOCOL_VENDOR_QCOM
++	tristate "Qualcomm Technologies, Inc. Qcom SCMI vendor Protocol"
++	depends on ARM_SCMI_PROTOCOL || COMPILE_TEST
++	help
++	  The SCMI QCOM vendor protocol provides a generic way of exposing a
++	  number of Qualcomm SoC specific features (like memory bus scaling)
++	  through a mixture of pre-determined algorithm strings and param_id
++	  pairs hosted on the SCMI controller.
 +
-+    properties:
-+      reg:
-+        const: 0x80
++	  This driver defines/documents the message ID's used for this
++	  communication and also exposes the ops used by the clients.
 +
-+      memlat-dvfs:
-+        type: object
-+        additionalProperties: false
-+        description:
-+          The list of all memory buses that can be monitored and scaled by the
-+          memory latency governor running on the SCMI controller.
-+
-+        patternProperties:
-+          '^memory-[0-9]$':
-+            type: object
-+            $ref: /schemas/soc/qcom/qcom,scmi-memlat.yaml#
-+            unevaluatedProperties: false
-+
- additionalProperties: false
- 
- $defs:
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
+ endmenu
+diff --git a/drivers/firmware/arm_scmi/vendors/Makefile b/drivers/firmware/arm_scmi/vendors/Makefile
+index c6c214158dd8..c1d6a355f579 100644
+--- a/drivers/firmware/arm_scmi/vendors/Makefile
++++ b/drivers/firmware/arm_scmi/vendors/Makefile
+@@ -1,2 +1,2 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+-# obj-$(CONFIG_ARM_SCMI_PROTOCOL_<your_vendor_proto>) += <your_vendor_proto>.o
++obj-$(CONFIG_ARM_SCMI_PROTOCOL_VENDOR_QCOM) += qcom_scmi_vendor.o
+diff --git a/drivers/firmware/arm_scmi/vendors/qcom_scmi_vendor.c b/drivers/firmware/arm_scmi/vendors/qcom_scmi_vendor.c
 new file mode 100644
-index 000000000000..c6e3d163c4a3
+index 000000000000..e02163381d4b
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
-@@ -0,0 +1,243 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/soc/qcom/qcom,scmi-memlat.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SCMI Memory Bus nodes
-+
-+maintainers:
-+  - Sibi Sankar <quic_sibis@quicinc.com>
-+
-+description: |
-+  This binding describes the various memory buses that can be monitored and scaled
-+  by memory latency governor running on the CPU Control Processor (SCMI controller).
-+
-+properties:
-+  qcom,memory-type:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    enum: [0, 1, 2]
-+    description:
-+      Memory Bus Identifier
-+        0 = QCOM_MEM_TYPE_DDR
-+        1 = QCOM_MEM_TYPE_LLCC
-+        2 = QCOM_MEM_TYPE_DDR_QOS
-+
-+  freq-table-hz:
-+    items:
-+      items:
-+        - description: Minimum frequency of the memory bus in Hz
-+        - description: Maximum frequency of the memory bus in Hz
-+
-+patternProperties:
-+  '^monitor-[0-9]$':
-+    type: object
-+    unevaluatedProperties: false
-+    description:
-+      The list of all monitors detecting the memory latency bound workloads using
-+      various counters.
-+
-+    properties:
-+      qcom,compute-type:
-+        description:
-+          Monitors of type compute perform bus dvfs based on a rudimentary CPU
-+          frequency to memory frequency map.
-+        type: boolean
-+
-+      qcom,ipm-ceil:
-+        $ref: /schemas/types.yaml#/definitions/uint32
-+        description:
-+          Monitors having this property perform bus dvfs based on the same
-+          rudimentary table but the scaling is performed only if the calculated
-+          IPM (Instruction Per Misses) exceeds the given ceiling.
-+
-+      qcom,cpulist:
-+        $ref: /schemas/types.yaml#/definitions/phandle-array
-+        description:
-+          List of phandles to the CPUs nodes whose frequency and IPM are to be
-+          monitored.
-+
-+      operating-points-v2: true
-+      opp-table:
-+        type: object
-+
-+    required:
-+      - qcom,cpulist
-+      - operating-points-v2
-+      - opp-table
-+
-+    allOf:
-+      - if:
-+          properties:
-+            qcom,compute-type: false
-+        then:
-+          required:
-+            - qcom,ipm-ceil
-+
-+      - if:
-+          properties:
-+            qcom,ipm-ceil: false
-+        then:
-+          required:
-+            - qcom,compute-type
-+
-+required:
-+  - qcom,memory-type
-+  - freq-table-hz
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/soc/qcom,scmi-vendor.h>
-+
-+    firmware {
-+        scmi {
-+            compatible = "arm,scmi";
-+            mboxes = <&cpucp_mbox 0>, <&cpucp_mbox 2>;
-+            mbox-names = "tx", "rx";
-+            shmem = <&cpu_scp_lpri0>, <&cpu_scp_lpri1>;
-+
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            protocol@80 {
-+                reg = <0x80>;
-+
-+                memlat-dvfs {
-+                    memory-0 {
-+                        qcom,memory-type = <QCOM_MEM_TYPE_DDR>;
-+                        freq-table-hz = /bits/ 64 <200000000 4224000000>;
-+
-+                        monitor-0 {
-+                            qcom,ipm-ceil = <20000000>;
-+                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
-+                                            &CPU8 &CPU9 &CPU10 &CPU11>;
-+                            operating-points-v2 = <&memory0_monitor0_opp_table>;
-+
-+                            memory0_monitor0_opp_table: opp-table {
-+                                compatible = "operating-points-v2";
-+
-+                                opp-999000000 {
-+                                    opp-hz = /bits/ 64 <999000000 547000000>;
-+                                };
-+
-+                                opp-1440000000 {
-+                                    opp-hz = /bits/ 64 <1440000000 768000000>;
-+                                };
-+
-+                                opp-1671000000 {
-+                                    opp-hz = /bits/ 64 <1671000000 1555000000>;
-+                                };
-+
-+                                opp-2189000000 {
-+                                    opp-hz = /bits/ 64 <2189000000 2092000000>;
-+                                };
-+
-+                                opp-2516000000 {
-+                                    opp-hz = /bits/ 64 <2516000000 3187000000>;
-+                                };
-+
-+                                opp-3860000000 {
-+                                    opp-hz = /bits/ 64 <3860000000 4224000000>;
-+                                };
-+                            };
-+                        };
-+
-+                        monitor-1 {
-+                            qcom,compute-type;
-+                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
-+                                            &CPU8 &CPU9 &CPU10 &CPU11>;
-+                            operating-points-v2 = <&memory0_monitor1_opp_table>;
-+
-+                            memory0_monitor1_opp_table: opp-table {
-+                                compatible = "operating-points-v2";
-+
-+                                opp-1440000000 {
-+                                        opp-hz = /bits/ 64 <1440000000 200000000>;
-+                                };
-+
-+                                opp-2189000000 {
-+                                        opp-hz = /bits/ 64 <2189000000 768000000>;
-+                                };
-+
-+                                opp-2516000000 {
-+                                        opp-hz = /bits/ 64 <2516000000 1555000000>;
-+                                };
-+
-+                                opp-3860000000 {
-+                                        opp-hz = /bits/ 64 <3860000000 4224000000>;
-+                                };
-+                            };
-+                        };
-+                    };
-+
-+                    memory-1 {
-+                        qcom,memory-type = <QCOM_MEM_TYPE_LLCC>;
-+                        freq-table-hz = /bits/ 64 <300000000 1067000000>;
-+
-+                        monitor-0 {
-+                            qcom,ipm-ceil = <20000000>;
-+                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
-+                                            &CPU8 &CPU9 &CPU10 &CPU11>;
-+                            operating-points-v2 = <&memory1_monitor0_opp_table>;
-+
-+                            memory1_monitor0_opp_table: opp-table {
-+                                compatible = "operating-points-v2";
-+
-+                                opp-999000000 {
-+                                    opp-hz = /bits/ 64 <999000000 300000000>;
-+                                };
-+
-+                                opp-1440000000 {
-+                                    opp-hz = /bits/ 64 <1440000000 466000000>;
-+                                };
-+
-+                                opp-1671000000 {
-+                                    opp-hz = /bits/ 64 <1671000000 600000000>;
-+                                };
-+
-+                                opp-2189000000 {
-+                                    opp-hz = /bits/ 64 <2189000000 806000000>;
-+                                };
-+
-+                                opp-2516000000 {
-+                                    opp-hz = /bits/ 64 <2516000000 933000000>;
-+                                };
-+
-+                                opp-3860000000 {
-+                                    opp-hz = /bits/ 64 <3860000000 1066000000>;
-+                                };
-+                            };
-+                        };
-+                    };
-+
-+                    memory-2 {
-+                        qcom,memory-type = <QCOM_MEM_TYPE_DDR_QOS>;
-+                        freq-table-hz = /bits/ 64 <QCOM_DDR_LEVEL_AUTO QCOM_DDR_LEVEL_PERF>;
-+
-+                        monitor-0 {
-+                            qcom,ipm-ceil = <20000000>;
-+                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
-+                                            &CPU8 &CPU9 &CPU10 &CPU11>;
-+                            operating-points-v2 = <&memory2_monitor0_opp_table>;
-+
-+                            memory2_monitor0_opp_table: opp-table {
-+                                compatible = "operating-points-v2";
-+
-+                                opp-2189000000 {
-+                                    opp-hz = /bits/ 64 <2189000000>;
-+                                    opp-level = <QCOM_DDR_LEVEL_AUTO>;
-+                                };
-+
-+                                opp-3860000000 {
-+                                    opp-hz = /bits/ 64 <3860000000>;
-+                                    opp-level = <QCOM_DDR_LEVEL_PERF>;
-+                                };
-+                            };
-+                        };
-+                    };
-+                };
-+            };
-+        };
-+    };
-diff --git a/include/dt-bindings/soc/qcom,scmi-vendor.h b/include/dt-bindings/soc/qcom,scmi-vendor.h
-new file mode 100644
-index 000000000000..7ae8d8d5623b
---- /dev/null
-+++ b/include/dt-bindings/soc/qcom,scmi-vendor.h
-@@ -0,0 +1,22 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++++ b/drivers/firmware/arm_scmi/vendors/qcom_scmi_vendor.c
+@@ -0,0 +1,184 @@
++// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
 + */
-+#ifndef __DT_BINDINGS_QCOM_SCMI_VENDOR_H
-+#define __DT_BINDINGS_QCOM_SCMI_VENDOR
 +
-+/* Memory IDs */
-+#define QCOM_MEM_TYPE_DDR	0x0
-+#define QCOM_MEM_TYPE_LLCC	0x1
-+#define QCOM_MEM_TYPE_DDR_QOS	0x2
++#include <linux/qcom_scmi_vendor.h>
 +
-+/*
-+ * QCOM_MEM_TYPE_DDR_QOS supports the following states.
++#include "../common.h"
++
++/**
++ * qcom_scmi_vendor_protocol_cmd - vendor specific commands supported by Qualcomm SCMI
++ *                                 vendor protocol.
 + *
-+ * %QCOM_DDR_LEVEL_AUTO:	DDR operates with LPM enabled
-+ * %QCOM_DDR_LEVEL_PERF:	DDR operates with LPM disabled
++ * This protocol is intended as a generic way of exposing a number of Qualcomm SoC
++ * specific features through a mixture of pre-determined algorithm string and param_id
++ * pairs hosted on the SCMI controller.
++ *
++ * The QCOM SCMI Vendor Protocol has the protocol id as 0x80 and vendor id set to
++ * Qualcomm and the implementation version set to 0x20000. The PROTOCOL_VERSION command
++ * returns version 1.0.
++ *
++ * @QCOM_SCMI_SET_PARAM: message_id: 0x10 is used to set the parameter of a specific algo_str
++ *                       hosted on QCOM SCMI Vendor Protocol. The tx len depends on the
++ *                       algo_str used.
++ * @QCOM_SCMI_GET_PARAM: message_id: 0x11 is used to get parameter information of a specific
++ *                       algo_str hosted on QCOM SCMI Vendor Protocol. The tx and rx len
++ *                       depends on the algo_str used.
++ * @QCOM_SCMI_START_ACTIVITY: message_id: 0x12 is used to start the activity performed by
++ *                            the algo_str.
++ * @QCOM_SCMI_STOP_ACTIVITY: message_id: 0x13 is used to stop a pre-existing activity
++ *                           performed by the algo_str.
 + */
-+#define QCOM_DDR_LEVEL_AUTO	0x0
-+#define QCOM_DDR_LEVEL_PERF	0x1
++enum qcom_scmi_vendor_protocol_cmd {
++	QCOM_SCMI_SET_PARAM = 0x10,
++	QCOM_SCMI_GET_PARAM = 0x11,
++	QCOM_SCMI_START_ACTIVITY = 0x12,
++	QCOM_SCMI_STOP_ACTIVITY = 0x13,
++};
 +
-+#endif /* __DT_BINDINGS_QCOM_SCMI_VENDOR_H */
++/**
++ * struct qcom_scmi_msg - represents the various parameters to be populated
++ *                        for using the QCOM SCMI Vendor Protocol
++ *
++ * @ext_id: reserved, must be zero
++ * @algo_low: lower 32 bits of the algo_str
++ * @algo_high: upper 32 bits of the algo_str
++ * @param_id: serves as token message id to the specific algo_str
++ * @buf: serves as the payload to the specified param_id and algo_str pair
++ */
++struct qcom_scmi_msg {
++	__le32 ext_id;
++	__le32 algo_low;
++	__le32 algo_high;
++	__le32 param_id;
++	__le32 buf[];
++};
++
++static int qcom_scmi_set_param(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
++			       u32 param_id, size_t size)
++{
++	struct scmi_xfer *t;
++	struct qcom_scmi_msg *msg;
++	int ret;
++
++	ret = ph->xops->xfer_get_init(ph, QCOM_SCMI_SET_PARAM, size + sizeof(*msg), 0, &t);
++	if (ret)
++		return ret;
++
++	msg = t->tx.buf;
++	msg->algo_low = cpu_to_le32(lower_32_bits(algo_str));
++	msg->algo_high = cpu_to_le32(upper_32_bits(algo_str));
++	msg->param_id = cpu_to_le32(param_id);
++
++	memcpy(msg->buf, buf, t->tx.len - sizeof(*msg));
++
++	ret = ph->xops->do_xfer(ph, t);
++	ph->xops->xfer_put(ph, t);
++
++	return ret;
++}
++
++static int qcom_scmi_get_param(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
++			       u32 param_id, size_t tx_size, size_t rx_size)
++{
++	struct scmi_xfer *t;
++	struct qcom_scmi_msg *msg;
++	int ret;
++
++	ret = ph->xops->xfer_get_init(ph, QCOM_SCMI_GET_PARAM, tx_size + sizeof(*msg), rx_size, &t);
++	if (ret)
++		return ret;
++
++	msg = t->tx.buf;
++	msg->algo_low = cpu_to_le32(lower_32_bits(algo_str));
++	msg->algo_high = cpu_to_le32(upper_32_bits(algo_str));
++	msg->param_id = cpu_to_le32(param_id);
++	memcpy(msg->buf, buf, t->tx.len - sizeof(*msg));
++
++	ret = ph->xops->do_xfer(ph, t);
++	memcpy(buf, t->rx.buf, t->rx.len);
++	ph->xops->xfer_put(ph, t);
++
++	return ret;
++}
++
++static int qcom_scmi_start_activity(const struct scmi_protocol_handle *ph,
++				    void *buf, u64 algo_str, u32 param_id, size_t size)
++{
++	struct scmi_xfer *t;
++	struct qcom_scmi_msg *msg;
++	int ret;
++
++	ret = ph->xops->xfer_get_init(ph, QCOM_SCMI_START_ACTIVITY, size + sizeof(*msg), 0, &t);
++	if (ret)
++		return ret;
++
++	msg = t->tx.buf;
++	msg->algo_low = cpu_to_le32(lower_32_bits(algo_str));
++	msg->algo_high = cpu_to_le32(upper_32_bits(algo_str));
++	msg->param_id = cpu_to_le32(param_id);
++
++	memcpy(msg->buf, buf, t->tx.len - sizeof(*msg));
++
++	ret = ph->xops->do_xfer(ph, t);
++	ph->xops->xfer_put(ph, t);
++
++	return ret;
++}
++
++static int qcom_scmi_stop_activity(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
++				   u32 param_id, size_t size)
++{
++	struct scmi_xfer *t;
++	struct qcom_scmi_msg *msg;
++	int ret;
++
++	ret = ph->xops->xfer_get_init(ph, QCOM_SCMI_STOP_ACTIVITY, size + sizeof(*msg), 0, &t);
++	if (ret)
++		return ret;
++
++	msg = t->tx.buf;
++	msg->algo_low = cpu_to_le32(lower_32_bits(algo_str));
++	msg->algo_high = cpu_to_le32(upper_32_bits(algo_str));
++	msg->param_id = cpu_to_le32(param_id);
++
++	memcpy(msg->buf, buf, t->tx.len - sizeof(*msg));
++
++	ret = ph->xops->do_xfer(ph, t);
++	ph->xops->xfer_put(ph, t);
++
++	return ret;
++}
++
++static struct qcom_scmi_vendor_ops qcom_proto_ops = {
++	.set_param = qcom_scmi_set_param,
++	.get_param = qcom_scmi_get_param,
++	.start_activity = qcom_scmi_start_activity,
++	.stop_activity = qcom_scmi_stop_activity,
++};
++
++static int qcom_scmi_vendor_protocol_init(const struct scmi_protocol_handle *ph)
++{
++	u32 version;
++
++	ph->xops->version_get(ph, &version);
++
++	dev_dbg(ph->dev, "SCMI QCOM Vendor Version %d.%d\n",
++		PROTOCOL_REV_MAJOR(version), PROTOCOL_REV_MINOR(version));
++
++	return 0;
++}
++
++static const struct scmi_protocol qcom_scmi_vendor = {
++	.id = QCOM_SCMI_VENDOR_PROTOCOL,
++	.owner = THIS_MODULE,
++	.instance_init = &qcom_scmi_vendor_protocol_init,
++	.ops = &qcom_proto_ops,
++	.vendor_id = "Qualcomm",
++	.impl_ver = 0x20000,
++};
++module_scmi_protocol(qcom_scmi_vendor);
++
++MODULE_DESCRIPTION("QTI SCMI vendor protocol");
++MODULE_LICENSE("GPL");
+diff --git a/include/linux/qcom_scmi_vendor.h b/include/linux/qcom_scmi_vendor.h
+new file mode 100644
+index 000000000000..60f85fedee80
+--- /dev/null
++++ b/include/linux/qcom_scmi_vendor.h
+@@ -0,0 +1,39 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * QTI SCMI vendor protocol's header
++ *
++ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef _QCOM_SCMI_VENDOR_H
++#define _QCOM_SCMI_VENDOR_H
++
++#include <linux/bitfield.h>
++#include <linux/device.h>
++#include <linux/types.h>
++
++#define QCOM_SCMI_VENDOR_PROTOCOL    0x80
++
++struct scmi_protocol_handle;
++
++/**
++ * struct qcom_scmi_vendor_ops - represents the various operations provided
++ *				 by QCOM SCMI Vendor Protocol
++ *
++ * @set_param: set parameter specified by param_id and algo_str pair.
++ * @get_param: retrieve parameter specified by param_id and algo_str pair.
++ * @start_activity: initiate a specific activity defined by algo_str.
++ * @stop_activity: halt previously initiated activity defined by algo_str.
++ */
++struct qcom_scmi_vendor_ops {
++	int (*set_param)(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
++			 u32 param_id, size_t size);
++	int (*get_param)(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
++			 u32 param_id, size_t tx_size, size_t rx_size);
++	int (*start_activity)(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
++			      u32 param_id, size_t size);
++	int (*stop_activity)(const struct scmi_protocol_handle *ph, void *buf, u64 algo_str,
++			     u32 param_id, size_t size);
++};
++
++#endif /* _QCOM_SCMI_VENDOR_H */
 -- 
 2.34.1
 
