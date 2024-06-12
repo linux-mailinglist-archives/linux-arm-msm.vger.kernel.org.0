@@ -1,394 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-22429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05B2F9051BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 13:56:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B08F4905259
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 14:25:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9040E2886F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 11:56:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A2461F23AFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 12:25:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5739A16F901;
-	Wed, 12 Jun 2024 11:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F178C16F82E;
+	Wed, 12 Jun 2024 12:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gdDC8Auq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mtrf2Ssy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB7716F27A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 11:56:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D7D208C3;
+	Wed, 12 Jun 2024 12:25:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718193373; cv=none; b=l8Zm4Q6Na/aBqjEwT+uhWOrgAPu2bnNuOa+qzu/aIYQny6NM0Ac5qAoyv6a4QyP0pAaArS6epohJg52B14WTI4DxxGOgPUcHaKEHbpOX8W6H/8ZQwTy4xwzC9SNshPM3qDQWrkvTqxriaKQIHLGpLIdKm+mRGbCjZYkJKxJmqcE=
+	t=1718195124; cv=none; b=JI37Wy8KctsCh6NtL+Jw4y8Qv+p7BDbkK4atbokPkRM9KZGDws+T0VEOK+WyaxtOimvJRhdfSJMRZyOQdr+Ttxvo7j1Zl4k4LthuOb+ZBa9w5/HVLkWHHx7f+/zS3A+6PYar9ZKcp+hcOJ6uzHklnkEGPV1E3+YZaYHjA45Db28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718193373; c=relaxed/simple;
-	bh=RSHRfB7yFv744+oXoN0fW/gI1EQ2qQj7XY9p4L9Iaxw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ExGjsk02sAWWsVpVHWVMvH9t4jseyU+KHkp7H+IhS+YyERuSgDLWOTaSmxu7eim4EJEvVQ8KaJgWpyFiH0QQ5/EhUeJmQnk2Rp+TXAnjDSRsyZQbr47600Xh6SmomrFvCF0FmUHIwQARhERjutzh16z4vWAKUZyw3jUHHfzdpKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gdDC8Auq; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a6f1da33826so292940366b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 04:56:09 -0700 (PDT)
+	s=arc-20240116; t=1718195124; c=relaxed/simple;
+	bh=Wrzhzu7bIdEAEmG7BQsLuO7wEyAX0cCb7hQvsk2N+G0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iaaDEGr9g1R25XxyjFuNvfdgylj5DOnoRhKAtu+pWcNQYnJTs7f3pMoHXCRqlnzkKUiqEvfsIkwndbedEyCnW7ChHOO9NVv03Wcxa1Ve41VjfldYeDQUHgR5P66xXwXuPITiPB2CYAAs8udrMyi4fDIncLfqVuge1mx9KyyO6Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mtrf2Ssy; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7041ed475acso3831297b3a.2;
+        Wed, 12 Jun 2024 05:25:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718193368; x=1718798168; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hP6Lz1CO+lqIq0GdN2MgiAFkI30RBlWJtTtLyJkZjNQ=;
-        b=gdDC8Auq8muVh2hDW/9o1jfPTZsbwqiNPd9m9xQieakWWZHTPWmEzWm4UurXEHQRw9
-         rKS6w65DvkLuqYHnJvikjPLuaaEZ2eJVNG9kSZX0kmAiOqb+OEGOaR2O3m/M0L3JVdyp
-         r8/GQKBlZ61mhCV23LI1eAgF2BUnLqDUBrEQypXy6xoDIyX21UlivBKYJrrtM3WzZMiB
-         7JtVRXU4mTaEyHIXu9q47bPHkIl44lAaQ0fYIyiiBWZNeUUVBywrK4QLwWOFolH2TpLN
-         wiT4KHlvH64H3IA+pZIE01K66h6lhtCLVqYtAxbyooRhXKJc5OWP03tBc/LgW4Kovq3H
-         yosQ==
+        d=gmail.com; s=20230601; t=1718195123; x=1718799923; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jC+Unx6/L3Ahsjr160FqlUlQIcBGGCTwQ+U7pYUCZQ0=;
+        b=mtrf2Ssy5+xJS8eAuqn0r6Qpu9caoLMkvtUQgqv8iaan+cCnTHe9yW72t3+RoivsoY
+         osxa1qrqQJmd5Z6vl09xbtkgLO18dV9pb6JPFOUWb9nAo1CwjlHiLdBYWdrxmTeRYctD
+         Zpzq1LPD4rIch96M/KeFySietP0YcRez2sIjHb6Qj2NbYbfGqpPBvRhVTPpN1hSQgQ4N
+         nm17TZRSy8kpbabl1bTYnp7RxXORGzUztKOijLbLwRVxeMxb3rUu1OrEaT9I7Ot/3yS5
+         st/I4lwu1X/I59wndSqh3ntFguu/57OOwkaxR/is4/h0RxPIcBlceZu4T7RA6YY0BJRX
+         1JtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718193368; x=1718798168;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hP6Lz1CO+lqIq0GdN2MgiAFkI30RBlWJtTtLyJkZjNQ=;
-        b=XoOLblcwPNutaiSCgwKTpIGZSqOHbH0ub7Py99OglT3aL5CzludGQEQe8loemlarpo
-         ZkINQxDBNPAkk6JzbA07W0+0uULBJIr3NAlNvb9TEYAqSVtsf0pnnScGpu8/iAHw4tfk
-         COYrkPpGNrcDEG3cRW71lqpHI7x0iUXTHvi2JhmHkYzJBTzD1eBIM3D2MjHPlJE8OPsx
-         9GYdD6/vvTxiAFgT2Z9zKPgwe7B132b0egCUS0rh4Ac8/O2ZrVtD4WLhq+6dOZe/KBi2
-         W1UU0LBQIjeP+fixFH/HkMs66bapCSm0dhbbhhHxhlN8/Qfrq+MxOMqTmixr8y/C/8Ly
-         WNVg==
-X-Gm-Message-State: AOJu0YxznHNIbwfEdK8FSc7DCNLiTGAadslC6BKcC6jM6RzJGF9WgrE4
-	PcsTEDeE4aOQJVuns0YxXD+/uKvsd/vyqsNyE1WCYZ0Yh6OD0v/gHUl1DostfpvJL3XFJiqsaLm
-	IsiA=
-X-Google-Smtp-Source: AGHT+IH1jC2vCdXrbjvSJd0c+mFGs8vkIxaNxkYX+w+9n2rtK2mfM2wQ1Loa+Tu/InRPwXMp+rVrSg==
-X-Received: by 2002:a17:906:3408:b0:a6f:2de0:54d with SMTP id a640c23a62f3a-a6f4801a4d9mr131732066b.76.1718193368277;
-        Wed, 12 Jun 2024 04:56:08 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f2f8bd62esm275762266b.141.2024.06.12.04.56.07
+        d=1e100.net; s=20230601; t=1718195123; x=1718799923;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jC+Unx6/L3Ahsjr160FqlUlQIcBGGCTwQ+U7pYUCZQ0=;
+        b=WX17RLb+3T691ALkA5HVbZPOg0cbMMOZcgMKw+a4G5zPlxip+/fOjTjH8Iad271aMF
+         j/NURa7ByAsdY4m9l+isE0PXOi9zId0Com6GKMiTiBOMXaWezhLH5JW1wOWeXww6y/uj
+         tPWrWGsVOiXez8SY9M3C8JzvLcyUNaGoMqVlBBcz48weS7m3fmkiswy8CdkyO2KE5t57
+         o+kOHsnIIMyE/AaclHc+D79+xhpV9ivusUSgyr0NOeq7kBjJgUQ/Lm+JI9jIZEjmVzVD
+         hWn48dUjWiONRl4ehufAXmIvFvqiltR23O/Q6zaTvbFdGrpveVcgBxZ7/yCsatFQOgqC
+         5Ltg==
+X-Forwarded-Encrypted: i=1; AJvYcCVKRgrOLCIpDYHgtXNCJygTPjgLvADYDayexPOpXpizd973jlaSuWj2ePZ9QUzWTPrGGhNlBCC4zWYwicrTUwr68z4IGXPxGhNQ0ETxwVqKer2XjvglHO0xakM4s/0Ki1X0O4bVHVP2oNxLIMaXs07hmFp6Ien4WqCtxcMmbQy+yxF6CiMCawiyH3arj3Rd1QzvZWBtEk1LikoMesNxP4skFzf2qApShj9zDBHIEMZEiNEBFzUuHubi858yLg==
+X-Gm-Message-State: AOJu0YxtUD0F9c3Ds6OkuHDgKua7Bu8Wr0bLN7inY502Q7YKjlivrSd+
+	f7Fu3HI0xTrwWP+r3Xt/UerBci9eUNMFQ5iXJFH5Tf2DhR1XPvrn
+X-Google-Smtp-Source: AGHT+IErt7uVvEdoTI+9BxF9U3hhKUgJvir/IBG5VhQMRaKn/1u60z5z026VLtNbbSWbrgj1SHg2Bg==
+X-Received: by 2002:a05:6a21:32a4:b0:1b8:54f8:385d with SMTP id adf61e73a8af0-1b8a9c688e8mr1858023637.47.1718195122807;
+        Wed, 12 Jun 2024 05:25:22 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6bd7e3e71sm121898095ad.219.2024.06.12.05.25.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 04:56:07 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Date: Wed, 12 Jun 2024 12:55:45 +0100
-Subject: [PATCH v2 2/2] pinctrl: qcom: Introduce SM4250 LPI pinctrl driver
+        Wed, 12 Jun 2024 05:25:22 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id 5B4DE182522A0; Wed, 12 Jun 2024 19:25:19 +0700 (WIB)
+Date: Wed, 12 Jun 2024 19:25:19 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+	mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+	corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com,
+	krzk+dt@kernel.org, Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com,
+	tiwai@suse.com, robh@kernel.org, gregkh@linuxfoundation.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+	alsa-devel@alsa-project.org
+Subject: Re: [PATCH v23 32/32] ASoC: doc: Add documentation for SOC USB
+Message-ID: <ZmmTr48zLCxRVlYf@archie.me>
+References: <20240610235808.22173-1-quic_wcheng@quicinc.com>
+ <20240610235808.22173-33-quic_wcheng@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240612-sm4250-lpi-v1-2-f19c33e1cc6e@linaro.org>
-References: <20240612-sm4250-lpi-v1-0-f19c33e1cc6e@linaro.org>
-In-Reply-To: <20240612-sm4250-lpi-v1-0-f19c33e1cc6e@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11218;
- i=srinivas.kandagatla@linaro.org; h=from:subject:message-id;
- bh=RSHRfB7yFv744+oXoN0fW/gI1EQ2qQj7XY9p4L9Iaxw=;
- b=owEBbQGS/pANAwAKAXqh/VnHNFU3AcsmYgBmaYzUcoIu4UR+Qz/1zQLGVoyFXy0x8bj1ar2oB
- 6WvgHIqGV+JATMEAAEKAB0WIQQi509axvzi9vce3Y16of1ZxzRVNwUCZmmM1AAKCRB6of1ZxzRV
- N2n8B/4qwVZZCDc29/ljKmyTX1L2dBWs8oOuFC20cwMwGyDQdzGjBoZwPvXKr6iwmFxQTBYavhM
- mqqE8w8Bz0JFNDlqdUQ9D0gGCaJbqKSuzuKm6d5vGvg331vcPetI/Z0fyojLnpT++e52CwlIeVY
- OviEHR2VaPW0wOgx70+HBJdjIRydwCjFgxMgDW77ocHcgbZlhQY55ESN3xXjeaVXX21WWLcLjlp
- HBZ0UWM8qPESitm1n8zt7oGehfDqeyM+mOPkfd0p86EY60Sp/LnZ3mdSBY8/TOtw/oHIeo+hUCE
- D2fVKvLqDdW+i7GNIGtROveu80Pf5r5PhQVLb94VuGf5bTIe
-X-Developer-Key: i=srinivas.kandagatla@linaro.org; a=openpgp;
- fpr=ED6472765AB36EC43B3EF97AD77E3FC0562560D6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="P13nW3ExZUkt8gyc"
+Content-Disposition: inline
+In-Reply-To: <20240610235808.22173-33-quic_wcheng@quicinc.com>
 
-Add support for the pin controller block on SM4250 Low Power Island.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/pinctrl/qcom/Kconfig                    |   9 +
- drivers/pinctrl/qcom/Makefile                   |   1 +
- drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c | 236 ++++++++++++++++++++++++
- 3 files changed, 246 insertions(+)
+--P13nW3ExZUkt8gyc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 24619e80b2cc..dd9bbe8f3e11 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -68,6 +68,15 @@ config PINCTRL_SC7280_LPASS_LPI
- 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
- 	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280 platform.
- 
-+config PINCTRL_SM4250_LPASS_LPI
-+	tristate "Qualcomm Technologies Inc SM4250 LPASS LPI pin controller driver"
-+	depends on ARM64 || COMPILE_TEST
-+	depends on PINCTRL_LPASS_LPI
-+	help
-+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-+	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-+	  (Low Power Island) found on the Qualcomm Technologies Inc SM4250 platform.
-+
- config PINCTRL_SM6115_LPASS_LPI
- 	tristate "Qualcomm Technologies Inc SM6115 LPASS LPI pin controller driver"
- 	depends on ARM64 || COMPILE_TEST
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index e2e76071d268..eb04297b6388 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -43,6 +43,7 @@ obj-$(CONFIG_PINCTRL_SDM845) += pinctrl-sdm845.o
- obj-$(CONFIG_PINCTRL_SDX55) += pinctrl-sdx55.o
- obj-$(CONFIG_PINCTRL_SDX65) += pinctrl-sdx65.o
- obj-$(CONFIG_PINCTRL_SDX75) += pinctrl-sdx75.o
-+obj-$(CONFIG_PINCTRL_SM4250_LPASS_LPI) += pinctrl-sm4250-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SM4450) += pinctrl-sm4450.o
- obj-$(CONFIG_PINCTRL_SM6115) += pinctrl-sm6115.o
- obj-$(CONFIG_PINCTRL_SM6115_LPASS_LPI) += pinctrl-sm6115-lpass-lpi.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c
-new file mode 100644
-index 000000000000..2d2c636a3e20
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c
-@@ -0,0 +1,236 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2020, 2023 Linaro Ltd.
-+ */
-+
-+#include <linux/gpio/driver.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+enum lpass_lpi_functions {
-+	LPI_MUX_dmic01_clk,
-+	LPI_MUX_dmic01_data,
-+	LPI_MUX_dmic23_clk,
-+	LPI_MUX_dmic23_data,
-+	LPI_MUX_dmic4_clk,
-+	LPI_MUX_dmic4_data,
-+	LPI_MUX_ext_mclk0_a,
-+	LPI_MUX_ext_mclk0_b,
-+	LPI_MUX_ext_mclk1_a,
-+	LPI_MUX_ext_mclk1_b,
-+	LPI_MUX_ext_mclk1_c,
-+	LPI_MUX_i2s1_clk,
-+	LPI_MUX_i2s1_data,
-+	LPI_MUX_i2s1_ws,
-+	LPI_MUX_i2s2_clk,
-+	LPI_MUX_i2s2_data,
-+	LPI_MUX_i2s2_ws,
-+	LPI_MUX_i2s3_clk,
-+	LPI_MUX_i2s3_data,
-+	LPI_MUX_i2s3_ws,
-+	LPI_MUX_qup_io_00,
-+	LPI_MUX_qup_io_01,
-+	LPI_MUX_qup_io_05,
-+	LPI_MUX_qup_io_10,
-+	LPI_MUX_qup_io_11,
-+	LPI_MUX_qup_io_25,
-+	LPI_MUX_qup_io_21,
-+	LPI_MUX_qup_io_26,
-+	LPI_MUX_qup_io_31,
-+	LPI_MUX_qup_io_36,
-+	LPI_MUX_qua_mi2s_data,
-+	LPI_MUX_qua_mi2s_sclk,
-+	LPI_MUX_qua_mi2s_ws,
-+	LPI_MUX_slim_clk,
-+	LPI_MUX_slim_data,
-+	LPI_MUX_sync_out,
-+	LPI_MUX_swr_rx_clk,
-+	LPI_MUX_swr_rx_data,
-+	LPI_MUX_swr_tx_clk,
-+	LPI_MUX_swr_tx_data,
-+	LPI_MUX_swr_wsa_clk,
-+	LPI_MUX_swr_wsa_data,
-+	LPI_MUX_gpio,
-+	LPI_MUX__,
-+};
-+
-+static const struct pinctrl_pin_desc sm4250_lpi_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+	PINCTRL_PIN(15, "gpio15"),
-+	PINCTRL_PIN(16, "gpio16"),
-+	PINCTRL_PIN(17, "gpio17"),
-+	PINCTRL_PIN(18, "gpio18"),
-+	PINCTRL_PIN(19, "gpio19"),
-+	PINCTRL_PIN(20, "gpio20"),
-+	PINCTRL_PIN(21, "gpio21"),
-+	PINCTRL_PIN(22, "gpio22"),
-+	PINCTRL_PIN(23, "gpio23"),
-+	PINCTRL_PIN(24, "gpio24"),
-+	PINCTRL_PIN(25, "gpio25"),
-+	PINCTRL_PIN(26, "gpio26"),
-+};
-+
-+static const char * const dmic01_clk_groups[] = { "gpio6" };
-+static const char * const dmic01_data_groups[] = { "gpio7" };
-+static const char * const dmic23_clk_groups[] = { "gpio8" };
-+static const char * const dmic23_data_groups[] = { "gpio9" };
-+static const char * const dmic4_clk_groups[] = { "gpio10" };
-+static const char * const dmic4_data_groups[] = { "gpio11" };
-+static const char * const ext_mclk0_a_groups[] = { "gpio13" };
-+static const char * const ext_mclk0_b_groups[] = { "gpio5" };
-+static const char * const ext_mclk1_a_groups[] = { "gpio18" };
-+static const char * const ext_mclk1_b_groups[] = { "gpio9" };
-+static const char * const ext_mclk1_c_groups[] = { "gpio17" };
-+static const char * const slim_clk_groups[] = { "gpio14" };
-+static const char * const slim_data_groups[] = { "gpio15" };
-+static const char * const i2s1_clk_groups[] = { "gpio6" };
-+static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-+static const char * const i2s1_ws_groups[] = { "gpio7" };
-+static const char * const i2s2_clk_groups[] = { "gpio10" };
-+static const char * const i2s2_data_groups[] = { "gpio12", "gpio13" };
-+static const char * const i2s2_ws_groups[] = { "gpio11" };
-+static const char * const i2s3_clk_groups[] = { "gpio14" };
-+static const char * const i2s3_data_groups[] = { "gpio16", "gpio17" };
-+static const char * const i2s3_ws_groups[] = { "gpio15" };
-+static const char * const qup_io_00_groups[] = { "gpio19" };
-+static const char * const qup_io_01_groups[] = { "gpio21" };
-+static const char * const qup_io_05_groups[] = { "gpio23" };
-+static const char * const qup_io_10_groups[] = { "gpio20" };
-+static const char * const qup_io_11_groups[] = { "gpio22" };
-+static const char * const qup_io_25_groups[] = { "gpio23" };
-+static const char * const qup_io_21_groups[] = { "gpio25" };
-+static const char * const qup_io_26_groups[] = { "gpio25" };
-+static const char * const qup_io_31_groups[] = { "gpio26" };
-+static const char * const qup_io_36_groups[] = { "gpio26" };
-+static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4", "gpio5" };
-+static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-+static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-+static const char * const sync_out_groups[] = { "gpio19", "gpio20", "gpio21", "gpio22",
-+						"gpio23", "gpio24", "gpio25", "gpio26"};
-+static const char * const swr_rx_clk_groups[] = { "gpio3" };
-+static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
-+static const char * const swr_tx_clk_groups[] = { "gpio0" };
-+static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2" };
-+static const char * const swr_wsa_clk_groups[] = { "gpio10" };
-+static const char * const swr_wsa_data_groups[] = { "gpio11" };
-+
-+
-+static const struct lpi_pingroup sm4250_groups[] = {
-+	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-+	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-+	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(5, 12, swr_rx_data, ext_mclk0_b, qua_mi2s_data, _),
-+	LPI_PINGROUP(6, LPI_NO_SLEW, dmic01_clk, i2s1_clk, _, _),
-+	LPI_PINGROUP(7, LPI_NO_SLEW, dmic01_data, i2s1_ws, _, _),
-+	LPI_PINGROUP(8, LPI_NO_SLEW, dmic23_clk, i2s1_data, _, _),
-+	LPI_PINGROUP(9, LPI_NO_SLEW, dmic23_data, i2s1_data, ext_mclk1_b, _),
-+	LPI_PINGROUP(10, 16, i2s2_clk, swr_wsa_clk, dmic4_clk, _),
-+	LPI_PINGROUP(11, 18, i2s2_ws, swr_wsa_data, dmic4_data, _),
-+	LPI_PINGROUP(12, LPI_NO_SLEW, dmic23_clk, i2s2_data, _, _),
-+	LPI_PINGROUP(13, LPI_NO_SLEW, dmic23_data, i2s2_data, ext_mclk0_a, _),
-+	LPI_PINGROUP(14, LPI_NO_SLEW, i2s3_clk, slim_clk, _, _),
-+	LPI_PINGROUP(15, LPI_NO_SLEW, i2s3_ws, slim_data, _, _),
-+	LPI_PINGROUP(16, LPI_NO_SLEW, i2s3_data, _, _, _),
-+	LPI_PINGROUP(17, LPI_NO_SLEW, i2s3_data, ext_mclk1_c, _, _),
-+	LPI_PINGROUP(18, 20, ext_mclk1_a, swr_rx_data, _, _),
-+	LPI_PINGROUP(19, LPI_NO_SLEW, qup_io_00, sync_out, _, _),
-+	LPI_PINGROUP(20, LPI_NO_SLEW, qup_io_10, sync_out, _, _),
-+	LPI_PINGROUP(21, LPI_NO_SLEW, qup_io_01, sync_out, _, _),
-+	LPI_PINGROUP(22, LPI_NO_SLEW, qup_io_11, sync_out, _, _),
-+	LPI_PINGROUP(23, LPI_NO_SLEW, qup_io_25, qup_io_05, sync_out, _),
-+	LPI_PINGROUP(25, LPI_NO_SLEW, qup_io_26, qup_io_21, sync_out, _),
-+	LPI_PINGROUP(26, LPI_NO_SLEW, qup_io_36, qup_io_31, sync_out, _),
-+};
-+
-+static const struct lpi_function sm4250_functions[] = {
-+	LPI_FUNCTION(dmic01_clk),
-+	LPI_FUNCTION(dmic01_data),
-+	LPI_FUNCTION(dmic23_clk),
-+	LPI_FUNCTION(dmic23_data),
-+	LPI_FUNCTION(dmic4_clk),
-+	LPI_FUNCTION(dmic4_data),
-+	LPI_FUNCTION(ext_mclk0_a),
-+	LPI_FUNCTION(ext_mclk0_b),
-+	LPI_FUNCTION(ext_mclk1_a),
-+	LPI_FUNCTION(ext_mclk1_b),
-+	LPI_FUNCTION(ext_mclk1_c),
-+	LPI_FUNCTION(i2s1_clk),
-+	LPI_FUNCTION(i2s1_data),
-+	LPI_FUNCTION(i2s1_ws),
-+	LPI_FUNCTION(i2s2_clk),
-+	LPI_FUNCTION(i2s2_data),
-+	LPI_FUNCTION(i2s2_ws),
-+	LPI_FUNCTION(i2s3_clk),
-+	LPI_FUNCTION(i2s3_data),
-+	LPI_FUNCTION(i2s3_ws),
-+	LPI_FUNCTION(qup_io_00),
-+	LPI_FUNCTION(qup_io_01),
-+	LPI_FUNCTION(qup_io_05),
-+	LPI_FUNCTION(qup_io_10),
-+	LPI_FUNCTION(qup_io_11),
-+	LPI_FUNCTION(qup_io_25),
-+	LPI_FUNCTION(qup_io_21),
-+	LPI_FUNCTION(qup_io_26),
-+	LPI_FUNCTION(qup_io_31),
-+	LPI_FUNCTION(qup_io_36),
-+	LPI_FUNCTION(qua_mi2s_data),
-+	LPI_FUNCTION(qua_mi2s_sclk),
-+	LPI_FUNCTION(qua_mi2s_ws),
-+	LPI_FUNCTION(slim_clk),
-+	LPI_FUNCTION(slim_data),
-+	LPI_FUNCTION(sync_out),
-+	LPI_FUNCTION(swr_rx_clk),
-+	LPI_FUNCTION(swr_rx_data),
-+	LPI_FUNCTION(swr_tx_clk),
-+	LPI_FUNCTION(swr_tx_data),
-+	LPI_FUNCTION(swr_wsa_clk),
-+	LPI_FUNCTION(swr_wsa_data),
-+};
-+
-+static const struct lpi_pinctrl_variant_data sm4250_lpi_data = {
-+	.pins = sm4250_lpi_pins,
-+	.npins = ARRAY_SIZE(sm4250_lpi_pins),
-+	.groups = sm4250_groups,
-+	.ngroups = ARRAY_SIZE(sm4250_groups),
-+	.functions = sm4250_functions,
-+	.nfunctions = ARRAY_SIZE(sm4250_functions),
-+};
-+
-+static const struct of_device_id lpi_pinctrl_of_match[] = {
-+	{ .compatible = "qcom,sm4250-lpass-lpi-pinctrl", .data = &sm4250_lpi_data },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-+
-+static struct platform_driver lpi_pinctrl_driver = {
-+	.driver = {
-+		.name = "qcom-sm4250-lpass-lpi-pinctrl",
-+		.of_match_table = lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove_new = lpi_pinctrl_remove,
-+};
-+
-+module_platform_driver(lpi_pinctrl_driver);
-+MODULE_DESCRIPTION("QTI SM4250 LPI GPIO pin control driver");
-+MODULE_AUTHOR("Srinivas Kandagatla <srinivas.kandagatla@linaro.org>");
-+MODULE_LICENSE("GPL");
+On Mon, Jun 10, 2024 at 04:58:08PM -0700, Wesley Cheng wrote:
+> +Overview
+> +=3D=3D=3D=3D=3D=3D=3D=3D
+> +In order to leverage the existing USB sound device support in ALSA, the
+> +introduction of the ASoC USB APIs, allow for the entities to communicate
+> +with one another.
+"... ASoC USB APIs are introduced to allow for ..."
 
--- 
-2.25.1
+> +USB Audio Device Connection Flow
+> +--------------------------------
+> +USB devices can be hotplugged into the USB root hub at any point in time.
+> +The BE DAI link should be aware of the current state of the physical USB
+> +port, i.e. if there are any USB devices with audio interface(s) connecte=
+d.
+> +The following callback can be used to notify the BE DAI link of any chan=
+ge:
+> +
+> +	**connection_status_cb()**
+"... connection_status_cb() can be used to ..."
 
+Thanks.
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--P13nW3ExZUkt8gyc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZmmTqwAKCRD2uYlJVVFO
+owd6AQCEY5WzdrzzRuY11wLRsArm4PXhVeYX76BrwKtOEaytPAEA0vFiTnhwd+vZ
+Dthl3BItVCKR0K2COEv+kWuRoxJD1As=
+=YNu/
+-----END PGP SIGNATURE-----
+
+--P13nW3ExZUkt8gyc--
 
