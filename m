@@ -1,123 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-22525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00962905DFB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 23:48:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A536905E04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 23:53:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80160282BE7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 21:48:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 63569B212B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 21:53:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BC2231A67;
-	Wed, 12 Jun 2024 21:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75A5084FDC;
+	Wed, 12 Jun 2024 21:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y+Z9KsJ/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kofaZ7Hh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C41B84D02
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 21:48:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF4E129E94;
+	Wed, 12 Jun 2024 21:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718228901; cv=none; b=XFyjtKqztG35FuQVWT/3oFHVOO6ueRXfhzzZ5wp6UfN+0vMzJjgO1bpTUAPmGoNmchi7rG/StNFA30rIVdShRtrcKi+s5VT3xc41c9OgH+i1DUg9zErrWbJW09USo21sknw849u43s1tTyI7WcQudFQ0+/TFLMz2LodymtUIyj4=
+	t=1718229213; cv=none; b=KFwssRwTGRfoh+3AcMvIiEASqr0QHZWa/dPMKhxn6DxMnK5V09ILmir7sTfGwyQ2Wpfzpr4wpUKanrv8enulg0ngOXsihZHeaBsAtw7vPoq7nKg2AOErrSXgSuB4BHDXvNb4LoiGklqaH691RoXcysB/sTULfUIRrAeSy28ujq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718228901; c=relaxed/simple;
-	bh=52Tt3NW+ANKZQb7cZcBFFzPLEvp/e4YDY2iQa91g6pA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=KTSqSrtm/rdNq1t6G8Vg6873wUV6YfMix+1js25VIMloW+Cljlcrb6wpD9oMWZM4Vf+qU8+frPvgB7iQUlark8s73NaqljbpSCq4QJ2btg9OuEvXZy+dr2KWCYRiVb6VEUHHo1oumtFjOYGWoqK9BOYl2+9amABx5q2QvzenrYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y+Z9KsJ/; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52c8260a9a9so60192e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 14:48:19 -0700 (PDT)
+	s=arc-20240116; t=1718229213; c=relaxed/simple;
+	bh=mcJjYHjV++hIvIdWkHyHOgdpiusnN+4IJjaQnk6MVdI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PKt0/pcFoc7C9k1hqk3fvi0bAvHQt25PImI3YjNpcCcCVkNmiUPG8XdBrPX8BfSCZW/eQfvdFlcR/LPkoIsaBgwndbD8gEfNSw0TvX5ysrNFLvo5YnUXP5NSVnRZiFEF68saPxFvFDERJXzWXSqw3hfzCCrDVNp4xjDALUfQpso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kofaZ7Hh; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4217926991fso3908165e9.3;
+        Wed, 12 Jun 2024 14:53:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718228898; x=1718833698; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cFE+Zn1tmEAauc9dII1QLXSVzsx3AjtBMpF3fJlb5C8=;
-        b=y+Z9KsJ/AbUX9edUq/zJn5+RgW5TVpCmA5gt/0AND3cdsBUNrjPIvTvjwiaPb7yArA
-         TeKKfszIp5QmF1eZd4IuZQp7gzHLHofyyZAQLxJejy5PMZc44nrIieQf2VAEW4BE8hPD
-         Twv27EToG7kiMDAc7nDp9/ONwf+aFaVj+mORKsu6bbTQQcVeKBI2zAz9+MidV6nkvZgA
-         gQlx3VKD3btMK23K0qw3fYsyANlUfejMDgeYJnx+vUkLPU8rNLFdtad1MKkNGfpIIQiC
-         +5fMhxJQA9A9DF+XJ3JopK+2GyEcg1C4g7j1NV79Rs7iOrJy+rQeK8gfaewFGHyss9ou
-         NRxQ==
+        d=gmail.com; s=20230601; t=1718229210; x=1718834010; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9pxDQ2xml58KGU++S3MziyUsd0pYxlkTij9Nt+5fCkQ=;
+        b=kofaZ7Hh3eDkmlr2KpMuNhnS+PA02UIOOXea7GEar+k1UZeq22MPbgQNSJVRqqcx2I
+         cLkbJbCFNL18XVWtoCSS/GzQZU/QRlE1qU0i5XwcC9fKZhdB9tUeyF5SkLgziKsFcm5W
+         NJTVjYEplT8ZNTr+0oYqX+Ej/gVAqz5n4xX2ETwWOXC+Qd3hX/lKRL9efoeyCNVltn+s
+         ZWj3J1J2uJrCJpAFz6hzYGJS0iUMoVUzUvFtLbNGLExTlon3LFCanRNzucdB61SxLw+9
+         UX43ERM7HuCRS9TgMbZQ4OxlCe48foVoPAg8bMFi+KhRZVXVJFBMRtcxWHDDvxWotDfz
+         qwJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718228898; x=1718833698;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cFE+Zn1tmEAauc9dII1QLXSVzsx3AjtBMpF3fJlb5C8=;
-        b=e/f5PdLvy9aC7U/1GkEf7nMiY1Kb07o0XyOMIXl86WuxFSnVjJCrn1CZodYOiKdQVn
-         WSW1efiM/S/qsy0sxi1p/G6d/9NiTsTe12tFJqZzYAOS/c6XkXUJZf/B6jg4PH9Po4NV
-         eZ4E7MLGEjPQsiCfY2YyCPyKTopz2zk8zJ8PrSFVghSL5IftYx4LNwJ7n1bEcTAt2Ilw
-         5Bwta9umDOdmLqdgsJW4ccKP6XSfBYvxS1WFZzk3HofeSifMKKwGW1m4mqBK3LbFk51u
-         G5JKFixZDCJpDDVvJFBBEHNUORkJZ+GSh1UMr8XHzx46Ixq1ogtx/S/bundLUgvlAacD
-         BXzg==
-X-Forwarded-Encrypted: i=1; AJvYcCVsqcVmRyhLjiv+g1nh0ONkF3sXY3/Y9XTuKzg6rLS2u6tA95usdAUNZ6G8Sz2NcCRYUa4RlHJeNZd1LbrfkwziS76kaKfzu8gSW8Mf6g==
-X-Gm-Message-State: AOJu0YxMuSDa7/ftdxZfTveloCddaTjsOn0Gm4MVClbM//Ol70X6ayRH
-	ZDIqIR+KU4eryyTKs6ElEs7ZLzo1vWuJ9Wcs5tdTo9aL/3VTC8NhAH9UaM3Li4o=
-X-Google-Smtp-Source: AGHT+IHBkY1T5rNg6UcaRlgOULtgIQE89IiT4QIFhldMkA5FIlJk2StjrJMJgXHuM9swnpPJsa33cw==
-X-Received: by 2002:ac2:504d:0:b0:52b:b349:c224 with SMTP id 2adb3069b0e04-52c9a342daamr1496377e87.0.1718228897641;
-        Wed, 12 Jun 2024 14:48:17 -0700 (PDT)
-Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52c912a84d4sm940264e87.185.2024.06.12.14.48.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 14:48:17 -0700 (PDT)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH][RFT] arm64: dts: qcom: sm8550: Change camcc power domain from MMCX to MXC
-Date: Thu, 13 Jun 2024 00:48:12 +0300
-Message-Id: <20240612214812.1149019-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.33.0
+        d=1e100.net; s=20230601; t=1718229210; x=1718834010;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9pxDQ2xml58KGU++S3MziyUsd0pYxlkTij9Nt+5fCkQ=;
+        b=UyciX6bT6joU/ap3tWyTZFNkbi0/lPXjRTN+GH2gTsXr3Hv6cBgIc6skvOO84JEFkt
+         Qgaqqo/CsZk62wSCE9XKgEMIQsSIk2uSEhb1kMdu62GeeJaoDP5fLRccOk+gzndaJUwd
+         oVHRHVvDGqynw8evOAOgVU2jRsk1GCN8Hry2vtzb34vUX3PsjZ9MFTSG0P2v2IVfrus2
+         tt5O5gTRLbT2EQwCSkAtfylavPnJrB8eea52JgLTP/ONTQr8OPld/8W45XRbXf8AjFEW
+         4TIg+pw9PGlZU1Dw6HIL3bgpEtELlSeOdGZFmuY/5jCWt4CAHYst2KPWpFDnuOPKIGi5
+         bWdw==
+X-Forwarded-Encrypted: i=1; AJvYcCVvnBxM5QwdkCqTac45gynk5iaOhx7LZ6StHgbXIR9W4dyffTyU5s5P9kMT12ey8VCWe4/Fm+oSxanLc4Ps50kOVytOO2vIT2kfjzkHIBtHb1W/L6zg5+1nr6j4vAeyCxBhX6LEhg5/zdcjK0ZXHy9D83vNAqVJ6ggYoH2MvBk+XOjYoA==
+X-Gm-Message-State: AOJu0YxhMk9FW8TGnJGITK7y1iqWQU9VJoQnJvUBSK5mbXoXvVL8P8B6
+	FuxCYH4S1bjOeRCPamyXduk6/kIJYdTENMGa6Hiph8E1YApyqBKEY2Ytkg==
+X-Google-Smtp-Source: AGHT+IFqIoOKC1lqkvIoSrutwet1tzBSEOu4Q+/c77rzZJZWz+OjyJm4fZX/gA7it5X1tJrM35WvNQ==
+X-Received: by 2002:a05:600c:358b:b0:422:6765:2726 with SMTP id 5b1f17b1804b1-422865ad68fmr27777105e9.30.1718229209883;
+        Wed, 12 Jun 2024 14:53:29 -0700 (PDT)
+Received: from [192.168.0.5] ([69.6.8.124])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35ef5d2e73dsm17831029f8f.16.2024.06.12.14.53.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jun 2024 14:53:29 -0700 (PDT)
+Message-ID: <0b24c10f-1c20-4bd1-958b-dbf89cb28792@gmail.com>
+Date: Thu, 13 Jun 2024 00:54:03 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] net: wwan: mhi: make default data link id
+ configurable
+To: Slark Xiao <slark_xiao@163.com>, manivannan.sadhasivam@linaro.org
+Cc: loic.poulain@linaro.org, johannes@sipsolutions.net,
+ quic_jhugo@quicinc.com, netdev@vger.kernel.org, mhi@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240612093941.359904-1-slark_xiao@163.com>
+Content-Language: en-US
+From: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+In-Reply-To: <20240612093941.359904-1-slark_xiao@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Any attempt to enable titan_top_gdsc on SM8550-QRD fails and produces
-an error message that the gdsc is stuck at 'off' state.
+Hello Slark, Manivannan,
 
-However if MMCX power domain is simply replaced to MXC one, it allows
-to turn titan_top_gdsc on successfully, even if MMCX is remained off
-according to /sys/kernel/debug/pm_genpd/pm_genpd_summary report.
+On 12.06.2024 12:39, Slark Xiao wrote:
+> For SDX72 MBIM device, it starts data mux id from 112 instead of 0.
+> This would lead to device can't ping outside successfully.
+> Also MBIM side would report "bad packet session (112)".
+> So we add a link id default value for these SDX72 products which
+> works in MBIM mode.
 
-Note that at the moment qcom,sm8450-camcc.yaml gives a definite comment
-that the supply power domain should be MMCX, and it may be needed in
-some certain cases, but at the moment they are not unveiled on SM8550
-platform.
+The patch itself looks good to me except a tiny nitpick (see below). 
+Meanwhile, I can not understand when we should merge it. During the V1 
+discussion, It was mentioned that we need this change specifically for 
+Foxconn SDX72 modem. Without any actual users the configurable default 
+data link id is a dead code.
 
-Fixes: e271b59e39a6 ("arm64: dts: qcom: sm8550: Add camera clock controller")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+According to the ARM MSM patchwork [1], the main Foxconn SDX72 
+introducing patch is (a) not yet merged, (b) no more applicable. So, as 
+far as I understand, it should be resend. In this context, a best way to 
+merge the modem support is to prepend the modem introduction patch with 
+these changes forming a series:
+1/3: bus: mhi: host: Import mux_id item
+2/3: net: wwan: mhi: make default data link id configurable
+3/3: bus: mhi: host: Add Foxconn SDX72 related support
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 4234c92aafe3..a429115524a6 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2754,7 +2754,7 @@ camcc: clock-controller@ade0000 {
- 				 <&bi_tcxo_div2>,
- 				 <&bi_tcxo_ao_div2>,
- 				 <&sleep_clk>;
--			power-domains = <&rpmhpd SM8550_MMCX>;
-+			power-domains = <&rpmhpd SM8550_MXC>;
- 			required-opps = <&rpmhpd_opp_low_svs>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
--- 
-2.33.0
+And merge the series as whole, when everything will be ready. This will 
+help us to avoid partially merged work and will keep the modem support 
+introduction clear.
 
+Manivannan, could you share the main [1] Foxconn SDX72 introduction 
+patch status, and your thoughts regarding the merging process?
+
+
+1. 
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20240520070633.308913-1-slark_xiao@163.com/
+
+> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> ---
+>   drivers/net/wwan/mhi_wwan_mbim.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/net/wwan/mhi_wwan_mbim.c b/drivers/net/wwan/mhi_wwan_mbim.c
+> index 3f72ae943b29..c731fe20814f 100644
+> --- a/drivers/net/wwan/mhi_wwan_mbim.c
+> +++ b/drivers/net/wwan/mhi_wwan_mbim.c
+> @@ -618,7 +618,8 @@ static int mhi_mbim_probe(struct mhi_device *mhi_dev, const struct mhi_device_id
+>   	mbim->rx_queue_sz = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
+>   
+>   	/* Register wwan link ops with MHI controller representing WWAN instance */
+> -	return wwan_register_ops(&cntrl->mhi_dev->dev, &mhi_mbim_wwan_ops, mbim, 0);
+> +	return wwan_register_ops(&cntrl->mhi_dev->dev, &mhi_mbim_wwan_ops, mbim,
+> +		mhi_dev->mhi_cntrl->link_id);
+
+Just a nitpick. The second line had better be aligned with the opening 
+bracket:
+
+return wwan_register_ops(&cntrl->...
+                          mhi_dev->...
+
+>   }
+>   
+>   static void mhi_mbim_remove(struct mhi_device *mhi_dev)
+
+--
+Sergey
 
