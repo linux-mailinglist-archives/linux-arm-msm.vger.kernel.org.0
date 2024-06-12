@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-22472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B03B1905872
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 18:19:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66A3D905877
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 18:19:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DE131F21751
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:19:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 214511F21B91
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 16:19:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC1CE186E43;
-	Wed, 12 Jun 2024 16:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5DA3186E5F;
+	Wed, 12 Jun 2024 16:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yV7bjPy5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hoPbt6xm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0081862A0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 16:16:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E88186E25
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 16:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718208966; cv=none; b=PjaDR2L4m9jSEZtLbPNKjCkJXblAoOJ5egAg/HeVPCxUMB31wkmgFStqQS7xass6giDSAU9aRk9qYMBOLVHAlvQact+kx4DtMzvQ/4LH4suTp/wGz8HOU//qyQkBGbIk7WPYou4UgBQ+R9wtJMeqV27y7Od9V9+bxRAH2PpLCqA=
+	t=1718208967; cv=none; b=Plap1c8VT/sT/EFcMl2gfm/PolQ65xnw1+qfl+2r417AY2tKk5kUMGdtY3E/x9qELSA26ndxu1SppJCGinalJnYnwh6bQiA8kmaFlP6HouCG4mddztXYl9y6IvPS7ywjTG7WyC/BCnqGxMN/ou4QCaD2RyAMwhXWwmVv/lDHxtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718208966; c=relaxed/simple;
-	bh=DfQrCy7EPdHobgPyU9Z15QMCzkozExD4qQYmVl1720A=;
+	s=arc-20240116; t=1718208967; c=relaxed/simple;
+	bh=zKXd+91xEq5pfFCX7DOuH5v5v4sMaD9C4FPc04gU9r4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a5uVPxrASxNUqQoHiz/xkLxr2e/DWuHeSIIprjcw/2r3QFXf/pVH5MpzV5+uTbLe5sWjzJK4EEXwEfnTgUBJ23vdxwHzue8qELzBsT0R27Tsy6UIW5lGvDX2Q4J329gQylfu47PGV5K8swfVMMtdnOwDZHCllbw8ZHBmgdlnDew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yV7bjPy5; arc=none smtp.client-ip=209.85.208.51
+	 In-Reply-To:To:Cc; b=MuIuOYphqSG9ukuAJunQUlhh11C3SD28MRm/L06QCVBoEqgVZ6TA3Fta3pb5AD+kiBcNxZx5/8MtqQ5dbmH122i6C2dtgIjBffcc41ZqNanGGNC0u1X/pJ0JEFq5W9/MyQRCt17+jkNaA6UFVw7+B3ujYMZXqT8mxTeqdCHovIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hoPbt6xm; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-57ca81533d0so1797046a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 09:16:04 -0700 (PDT)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a6f1dc06298so9164166b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 09:16:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718208963; x=1718813763; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718208964; x=1718813764; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=a2qLhgW8KCLNLm5E9+T5V7rINfGXJY8In7L0xJk0yrk=;
-        b=yV7bjPy5N+YVuJaKhFOHeGIRmJRVgaj2LgilyAjmLpaI1zf0n3iaWafZyA9Eu+vV58
-         BElwBdkzhYSW6LhJZwzn3qs+4crcP8T+BHaIylJv+SDubsN8D1qRd6buda28CH/bV2HL
-         yBmEq/uQbtu2d65ET7uL4rceErwPbvaNMPYxZQEVoAFaLjsp0xg2wxISyakws6Al++8e
-         1dgOB71s0REsoqdRAuWa8w65rJl9fZ+ZT0P1rTZEeluuchN1Od3c37CtzRl4KP/VbM8m
-         Atbvg2V6EG4oQtrCG9VaBd+JmFvht7l59XPE0Lpf5Rify+9QR7PVTLkZH3RbV2Kq2qwi
-         0e9A==
+        bh=SiX6Sbf9ddGFk6daznvxWZY69rEFKNMVZ2nde0CgHqI=;
+        b=hoPbt6xmYtAanIH3KlhM3t4Iw+N657KsclcVR45FEuOLceCYzXSyeV6dqM1S1+fxJF
+         LvGJDrEx9fD86a2LGzHUn20NsDYbIJTUsHNpqFMBMEv7IeXmFXmCD2zd7yA0tWz8DoGs
+         JnYUEuNEC1H3VeET1leUll7V6TtzoZtvZlI+L2nf2Lr1E8KZqrqiMr8cHu7+sl64MoEV
+         Pf2ygGrqnNQdKv8VI3+dM5QBuR0hriD/TViSLvb+Dw/BtGApWdaTrWdF3tFfFlU4DUA2
+         UlJTWiAtJjTaBLSxf33/2ntOHrEfbzOsRvjAYoTkdThA2gxLXmE95TOR38xvsqCXxMAW
+         6P/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718208963; x=1718813763;
+        d=1e100.net; s=20230601; t=1718208964; x=1718813764;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=a2qLhgW8KCLNLm5E9+T5V7rINfGXJY8In7L0xJk0yrk=;
-        b=cTTUDCFuAhsB8lQLp/TuY0kIXJLoTN3czL6s8Jm8ZR1GMAzFL6XD24z5k7OcfmHOFj
-         zFQhSGyZEJiAGczU0dN8mNY8r3iHjoZIjx9xmSYUoGwGqdGtK1BdQaFMvGs3fG5VadHk
-         RBXs3/Dc3a31G1rUf/ymzgQ8o6k/YXL0UrYSn99YOBtfhkYJ/88s7efW31h93GxnE9qn
-         HFqb/bV/Ab1yu/lvbdgrOVVcaR5pek8/HxsGaBwoiy/qlpMV2xTqBfjJciPO5AKvVzQu
-         Xh74JeS1PAd7JYbNyBALFcXDO5ZaxWcclzFeIYmTHWvRz7ViQsTNBQinjtgNkTzlpP5q
-         lzAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU972cA56MjLCNXrxEErru5Jy8Y8+HOgPbd5cmj+dEFMuTj3tF36G5dSmWkD8jcxvmuvvBisaA54fUdUKKdSgBoSWIfRukffrbwzxHIhA==
-X-Gm-Message-State: AOJu0Yy+5fiNQXdTF4EqomwsWnOTtRHJIv2xvO4GuKNLEjhkJlFUVDqe
-	Wii+WsadCCSI/ZFBmt3XARqKS0qKHbqC8hUmnt9ENuneBAiREFQpNlLYR+KUX1s=
-X-Google-Smtp-Source: AGHT+IEaxDscDTCz98NySxu5kWNh8RbOVnW92/hmTae69P40NS2kQrWhez3Q7lBBRuGgxN9hl/EswQ==
-X-Received: by 2002:a17:906:27d6:b0:a6f:4232:4370 with SMTP id a640c23a62f3a-a6f523ed34cmr9882066b.5.1718208963267;
-        Wed, 12 Jun 2024 09:16:03 -0700 (PDT)
+        bh=SiX6Sbf9ddGFk6daznvxWZY69rEFKNMVZ2nde0CgHqI=;
+        b=VFi7KJFRMk4qM1T2DXgnnox8LaIUD3+BmWLsaJzaltNf7TGs2KXEW4golAb5RjpcMy
+         KW07SQFoszLJppZ7d+rFpBOe6WI10t9PgephUXUGbgV1ecXL0tN2RkjBDLA9vb6Zzaus
+         KFtLjaKajnfInuTXhHqypCMmVhiiWn2kS5SS1QOWAI9So5M7mWUSYSOzciOra/w9esJW
+         ZvNKE4vOzBBzeGYxkO6T95eYVaB/IBZVk6Gd1N+v7802YMgabdLFBngN2mGUdGHqJ/8B
+         9GDDNZSCtQnI4cio+nvHvLFRHJPk2RpSPxuwwOO/1KszIqyrS2OeRImYuZ5Eg6fBfGmW
+         m9Ig==
+X-Forwarded-Encrypted: i=1; AJvYcCWWnQHdcQaZDyh94EL2YCWhLYEkifier++YQXhFaLHuvcBz0BmCgygLAdK+wXrAZDVKExf1uE7U5f8RvbBGD7o9nRJMobzWZYYOeeJo3A==
+X-Gm-Message-State: AOJu0Yzb8uZWbjd0B+AsJ2yxrSZQ0RV4MpYG/k23ENoDs7KQXnRunjY6
+	WWzCSyunqMpM0aogMAE1bTraDn4x9XZmeOyu27tygRrSWiAdHqND8gFS1P6xMOs=
+X-Google-Smtp-Source: AGHT+IGiiOo8DvyESFXAfcAnuf1NGFEdhUpYILJtrfGZXuVCuhwhQWT5bCBjkKfscjQ0XSUs8MlYHA==
+X-Received: by 2002:a17:906:c349:b0:a6f:22ea:55b6 with SMTP id a640c23a62f3a-a6f47d5cf04mr139036266b.65.1718208964688;
+        Wed, 12 Jun 2024 09:16:04 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6efd6cfb74sm624815866b.20.2024.06.12.09.16.01
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6efd6cfb74sm624815866b.20.2024.06.12.09.16.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 09:16:02 -0700 (PDT)
+        Wed, 12 Jun 2024 09:16:04 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 12 Jun 2024 18:15:28 +0200
-Subject: [PATCH 15/23] ASoC: codecs: wcd937x: Drop unused chipid member
+Date: Wed, 12 Jun 2024 18:15:29 +0200
+Subject: [PATCH 16/23] ASoC: codecs: wcd938x: Constify static data
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240612-asoc-wcd9xxx-wide-cleanups-v1-15-0d15885b2a06@linaro.org>
+Message-Id: <20240612-asoc-wcd9xxx-wide-cleanups-v1-16-0d15885b2a06@linaro.org>
 References: <20240612-asoc-wcd9xxx-wide-cleanups-v1-0-0d15885b2a06@linaro.org>
 In-Reply-To: <20240612-asoc-wcd9xxx-wide-cleanups-v1-0-0d15885b2a06@linaro.org>
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
@@ -89,77 +89,54 @@ Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
  linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2010;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1144;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=DfQrCy7EPdHobgPyU9Z15QMCzkozExD4qQYmVl1720A=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmacmke3u0kf8lnyb0s0QfPL8aI/2dH2R1t684n
- kmKyhh8/siJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZmnJpAAKCRDBN2bmhouD
- 1x8cD/9qfnVnoulRcTk6aU0YK+dtSPJsmk9BsXwzTqwP6Ehddbn+CarFRP2bjWywEuweaxNGAl+
- QaGdzy8AFkLtQzgtJFZr3nf/CShN+mvfOIH2zK7VmnhYihL4+AW6RS+Y8Bm21xvFFGbZejrOKQa
- 9l3kfbRn5+8s5ZIxIQ+zba/V+sZsG9fAYIAO560YoCCejowEl60W7uJ3+yntEBo2ADlE1xsdnCw
- OH9NOL0L+V24troQbqXV2v+tN6txvfka2NGDrIDNfVoFfipZlijd/8I14YSnoZwFgBARcyqCFyg
- CoZX8HVQLxLFfo1ljtLJAahgmZQ/XRDZj13hM/TF52MaYuV/zaSW1Jyw63Qn2lAn+0zvojZobnG
- 7RXw8KUbnOBc+tecVdA441Nz68RKgnx0M9r4EOl0j9rb2TwsfeT3vjGJHU3sxxbwnzamMTqK3m3
- JVSrInxoo4VVwvrCbRTNk7WA+a20B4A/jhRwUq8//Gtusg7D4jt9ahU9OOy/aTo7fEECG1ZYF61
- ysCZxeUFm2vdapjO40MtZC+DJjmeuCCaN7p0jYl+UTgiKPR4bJHo/qy/zXr67r/0bkl1BF9LzAs
- DEVKCINiuMNGwbtL//wTaiUlfmVwvC5RxShzuz32ycPERp750AWQkqX4ZBNGAJq6kL5/W8+Cts7
- TSWOUyWEsbCbCRg==
+ bh=zKXd+91xEq5pfFCX7DOuH5v5v4sMaD9C4FPc04gU9r4=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmacmlSsu/q1HO0eaUx9PgU+Dxz56B2dOlI+KPw
+ SXkBY21VYKJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZmnJpQAKCRDBN2bmhouD
+ 1yyVD/sEH+iwt0IY8qp1uSeTqpdM8WJOxtJQKO07crLnieq69XT6lz0MVNvBufuf1+jprRqGX4v
+ G+vYXNWTc2+wT34jYp4HAVPIkd5O/+jrCJ2Fvc+D+l7/guwa6h7qp1K+K+AHgbPnrpLd3yWalYp
+ LX9cWjSDD3e5vaqhn6Aj8UCMdTTy6uSqdr+Eu+MxpJoUb0+bhxmiJoCuAd5VDvxWYh5RguxjN92
+ aRShTmq5mkX7ivZVE40xXJs3SYstK17V5HnByrTJwLNBWVZGGtvGmgFk7XQbrUAz44kSvOmkiyy
+ LmVGLnZXVsA34h8P6QhaIcQU1K5HS1nNqmVgOslpjqbgn8X2543TlhR6PwncLlfT+O/ZPwu3qb6
+ pn7Pduxpcz3NZiNctj6N/5SxqJ/2//NN6UWsYqvTg8oVEJJlEKIxTx6fp+uDaf1Y6WsPNqhE5vr
+ EWMkoZA5/sh6D6A8NS0lwMpO/bgUuyXUFVu+5+RhTuTp8PrfAmCsALZAHKj1ioheTwKbKzPOwh8
+ eXFODdsxR3TlMLou1tiByjgTfS81dywRci/lTwsS8j8RKTLgiKdD+KkuVVaDcFG0BQ9XWkHAUdr
+ WB7JMNouzyG8LBZYzEIxeT+tAtaamYudAG3LzvraWM1USEsCt0RbSul5XqhNbUr3ZmdgF5gmAFW
+ gfuek37KPhyfRQw==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-The driver stores the read chipid in 'struct wcd937x_priv' but never
-needs it after.
+Driver does not modify few static data (MBHC reg fields, IRQ chip), so
+make them const for code safety.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- sound/soc/codecs/wcd937x.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ sound/soc/codecs/wcd938x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
-index 96e2989f9722..4beb70bc4d8c 100644
---- a/sound/soc/codecs/wcd937x.c
-+++ b/sound/soc/codecs/wcd937x.c
-@@ -99,7 +99,6 @@ struct wcd937x_priv {
- 	s32 pullup_ref[WCD937X_MAX_MICBIAS];
- 	u32 hph_mode;
- 	int ear_rx_path;
--	u32 chipid;
- 	u32 micb1_mv;
- 	u32 micb2_mv;
- 	u32 micb3_mv;
-@@ -2539,6 +2538,7 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
- 	struct device *dev = component->dev;
- 	unsigned long time_left;
- 	int i, ret;
-+	u32 chipid;
+diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
+index 73387152ce02..124c18712422 100644
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -221,7 +221,7 @@ struct wcd938x_mbhc_zdet_param {
+ 	u16 btn7;
+ };
  
- 	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
- 						msecs_to_jiffies(5000));
-@@ -2552,11 +2552,10 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
- 	if (ret < 0)
- 		return ret;
+-static struct wcd_mbhc_field wcd_mbhc_fields[WCD_MBHC_REG_FUNC_MAX] = {
++static const struct wcd_mbhc_field wcd_mbhc_fields[WCD_MBHC_REG_FUNC_MAX] = {
+ 	WCD_MBHC_FIELD(WCD_MBHC_L_DET_EN, WCD938X_ANA_MBHC_MECH, 0x80),
+ 	WCD_MBHC_FIELD(WCD_MBHC_GND_DET_EN, WCD938X_ANA_MBHC_MECH, 0x40),
+ 	WCD_MBHC_FIELD(WCD_MBHC_MECH_DETECTION_TYPE, WCD938X_ANA_MBHC_MECH, 0x20),
+@@ -3027,7 +3027,7 @@ static irqreturn_t wcd938x_wd_handle_irq(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
  
--	wcd937x->chipid = (snd_soc_component_read(component,
--				WCD937X_DIGITAL_EFUSE_REG_0) & 0x1e) >> 1;
--	if (wcd937x->chipid != CHIPID_WCD9370 &&
--	    wcd937x->chipid != CHIPID_WCD9375) {
--		dev_err(dev, "Got unknown chip id: 0x%x\n", wcd937x->chipid);
-+	chipid = (snd_soc_component_read(component,
-+					 WCD937X_DIGITAL_EFUSE_REG_0) & 0x1e) >> 1;
-+	if (chipid != CHIPID_WCD9370 && chipid != CHIPID_WCD9375) {
-+		dev_err(dev, "Got unknown chip id: 0x%x\n", chipid);
- 		pm_runtime_put(dev);
- 		return -EINVAL;
- 	}
-@@ -2605,7 +2604,7 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
- 	disable_irq_nosync(wcd937x->hphl_pdm_wd_int);
- 	disable_irq_nosync(wcd937x->aux_pdm_wd_int);
+-static struct irq_chip wcd_irq_chip = {
++static const struct irq_chip wcd_irq_chip = {
+ 	.name = "WCD938x",
+ };
  
--	if (wcd937x->chipid == CHIPID_WCD9375) {
-+	if (chipid == CHIPID_WCD9375) {
- 		ret = snd_soc_dapm_new_controls(dapm, wcd9375_dapm_widgets,
- 						ARRAY_SIZE(wcd9375_dapm_widgets));
- 		if (ret < 0) {
 
 -- 
 2.43.0
