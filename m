@@ -1,77 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-22454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 932A49056E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 17:32:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AB81905790
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 17:56:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E6D81F26849
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 15:32:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 22C7D28C220
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 15:56:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B7981802CC;
-	Wed, 12 Jun 2024 15:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41FDB181B86;
+	Wed, 12 Jun 2024 15:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m4Z5mNTp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kYWVzenO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2014818622;
-	Wed, 12 Jun 2024 15:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8729181312;
+	Wed, 12 Jun 2024 15:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718206344; cv=none; b=f5RHlvS1L/lCxEisZXHx2kilYBqoYUvkikhPanLB2WVxAZtQ2BYyuEKOu0VcKbU47jIWhUYxoSIuIA5we/NNrtfXtAJ9CWjNTuxX5TbbQcLzQmxi0A5BO0mezU9bj+ezziHi1RBHXU8mNlFEDHqo9CjvgCEG26KyvHTxlJPOK0c=
+	t=1718207758; cv=none; b=TqXTeEeTAyXVbweCTjoWfBrrGZJUwDrCPyIDjVgVE3FZ26jyM9Z3RPxx6/LeAjEp3TsP95CT+n6UP0CUMsRsB8M3+YQyKDh1oR2OoF1wnWNVpe8KaS7+09BcaDD6vEo2GpIVOIzC3TiLZ1xqA9gNc9zEuyE5KGmvuf/A4EuNMZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718206344; c=relaxed/simple;
-	bh=OGoAB/KsV+AVM08lTf3vOHxawWYqkPNBMZeu15j3ez4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qg2FYWdsk+gz5ezEGKZIyHEuig8YYN2p4Anrsxz/4xB9jLX0erk/jbQPARZr8STkureUj1HU0Cs7+hAMGjmBXDElWLsIrCp+hXh0UYt5N9sWtI74IFc7wpKnS9sldgDbxRUNnBK+W9g3ab6OJ4b/GbxsXbyzy0Gppu1jkIcu9KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m4Z5mNTp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9E0C116B1;
-	Wed, 12 Jun 2024 15:32:23 +0000 (UTC)
+	s=arc-20240116; t=1718207758; c=relaxed/simple;
+	bh=OGohKvk0MjWf9+Q8+mvrBX+1BAlKKRyUXLbfH75xyb4=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=aVOTTwsJpcctQuUjdTM8dhm19LLOc1Dt6AuwIhKCXrejUHcYcJPE5H4DC9Fzyw6QCAdYqEK0nP0ui81Knrinl0W7LiaUbPTrmLHR1XPSyo1uTsFW2/6YtmNxiP9jkihUCMxy7nnZMPsyNeMQ5f1h0fnSNwiH7kbWlovFqnKdm34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kYWVzenO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7AEC7C4DDE4;
+	Wed, 12 Jun 2024 15:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718206343;
-	bh=OGoAB/KsV+AVM08lTf3vOHxawWYqkPNBMZeu15j3ez4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=m4Z5mNTpKKY3xFAj4m+68IihUDu6UXEpldEukwcXEyOLneAb5ZecfvI+rtrMwS+9w
-	 ugYeExRaz8FwnwpL95FTS0e/C3ZZB7hS0FHpRrOBaWWsXdv8RZdiKJNWwVLDsNypHf
-	 EBbwwMntPG1VrcqLBBVP4qdLnxRyDgV7RIlI1pNNEoqRZ9/Re8ebwc+ZC+sZf7hbXL
-	 VJn1kKOodoymSuJ4k1qjSQNh1IkZJ6G4XkQkP4DI68gIl8R5mJ6Z9Kt7pRDHaLRufY
-	 ZsFruA6FvyfeCmI/mJhuz52rTZeg/qBUGR7IiInbbDGqeVVgSfCVj9s78+8rjpqyUO
-	 IlvstsMPQ1GVQ==
-Date: Wed, 12 Jun 2024 09:32:22 -0600
-From: Rob Herring <robh@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: Re: [PATCH] dt-bindings: interrupt-controller: qcom,pdc: Add sc8180x
- PDC
-Message-ID: <20240612153222.GA2635484-robh@kernel.org>
-References: <20240525-sc8180x-pdc-binding-compatible-v1-1-17031c85ed69@quicinc.com>
+	s=k20201202; t=1718207757;
+	bh=OGohKvk0MjWf9+Q8+mvrBX+1BAlKKRyUXLbfH75xyb4=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=kYWVzenO6v46dav7m+6VeeBQvWtkfZ2ijSROLzZNF2xhVox8NT4g6D7nEQ7Yr1CvD
+	 QbMqbzoNwKvtHxN4oOUSJGsdzFSOiqxLCA02gKqMCQ7TCsZzzusBONx5M/RWdCVpV3
+	 EiLccKqgRHfAnZUsG10WiKCsIr5ffuOoIqg1qhcsU6IhDG8FGsX5pkowWNVMy10FlC
+	 cn2EJB/8N7UtSBq02dCqRuSQs3PZ1MDiLAg7XtxdpzyjShLg11I47hWenlonizyvmL
+	 MeVPPNyid+I2VhiIZBpPj5WbK56sRWz78MH6UY8PKtaaCMSFrdgOOixPo+5vEX+bSG
+	 8/iqEXeUVgsUQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 61107C43618;
+	Wed, 12 Jun 2024 15:55:57 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240525-sc8180x-pdc-binding-compatible-v1-1-17031c85ed69@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Subject: Re: [f2fs-dev] [PATCH] tracing/treewide: Remove second parameter of
+ __assign_str()
+From: patchwork-bot+f2fs@kernel.org
+Message-Id: 
+ <171820775738.32393.13116890369510221266.git-patchwork-notify@kernel.org>
+Date: Wed, 12 Jun 2024 15:55:57 +0000
+References: <20240516133454.681ba6a0@rorschach.local.home>
+In-Reply-To: <20240516133454.681ba6a0@rorschach.local.home>
+To: Steven Rostedt <rostedt@goodmis.org>
+Cc: linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ linux-hyperv@vger.kernel.org, kvm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, ath10k@lists.infradead.org,
+ Julia.Lawall@inria.fr, linux-s390@vger.kernel.org, dev@openvswitch.org,
+ linux-cifs@vger.kernel.org, linux-bcachefs@vger.kernel.org,
+ linux-rdma@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+ io-uring@vger.kernel.org, torvalds@linux-foundation.org,
+ iommu@lists.linux.dev, ath11k@lists.infradead.org,
+ linux-media@vger.kernel.org, linux-wpan@vger.kernel.org,
+ linux-pm@vger.kernel.org, selinux@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ linux-erofs@lists.ozlabs.org, virtualization@lists.linux.dev,
+ linux-sound@vger.kernel.org, linux-block@vger.kernel.org,
+ ocfs2-devel@lists.linux.dev, mathieu.desnoyers@efficios.com,
+ linux-cxl@vger.kernel.org, linux-tegra@vger.kernel.org,
+ intel-xe@lists.freedesktop.org, linux-edac@vger.kernel.org,
+ linux-hwmon@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
+ linuxppc-dev@lists.ozlabs.org, linux-usb@vger.kernel.org,
+ linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ linux-f2fs-devel@lists.sourceforge.net, linux-xfs@vger.kernel.org,
+ ath12k@lists.infradead.org, tipc-discussion@lists.sourceforge.net,
+ mhiramat@kernel.org, netdev@vger.kernel.org, bpf@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-nfs@vger.kernel.org,
+ linux-btrfs@vger.kernel.org
 
-On Sat, May 25, 2024 at 11:05:31AM -0700, Bjorn Andersson wrote:
-> From: Bjorn Andersson <quic_bjorande@quicinc.com>
-> 
-> The SC8180X platform has a PDC block, add a compatible for this.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml | 1 +
->  1 file changed, 1 insertion(+)
+Hello:
 
-Applied.
+This patch was applied to jaegeuk/f2fs.git (dev)
+by Steven Rostedt (Google) <rostedt@goodmis.org>:
+
+On Thu, 16 May 2024 13:34:54 -0400 you wrote:
+> From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
+> 
+> [
+>    This is a treewide change. I will likely re-create this patch again in
+>    the second week of the merge window of v6.10 and submit it then. Hoping
+>    to keep the conflicts that it will cause to a minimum.
+> ]
+> 
+> [...]
+
+Here is the summary with links:
+  - [f2fs-dev] tracing/treewide: Remove second parameter of __assign_str()
+    https://git.kernel.org/jaegeuk/f2fs/c/2c92ca849fcc
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
