@@ -1,112 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-22363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E09F90480B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 02:34:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41F98904885
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 03:48:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F42371C22E63
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 00:34:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6D2DDB21190
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 01:48:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB08D10FA;
-	Wed, 12 Jun 2024 00:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FEE123A6;
+	Wed, 12 Jun 2024 01:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vONq4abH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h8OVDQgn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CC6394;
-	Wed, 12 Jun 2024 00:34:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09931FA1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 01:48:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718152446; cv=none; b=rtzf38vra4osJNruhXvKuaq2smXz7IVUJ47/Jz04BTw+rFoiWOIAMQ6Ixa5lvWo4nNyHQN0iM/nwHeCeSYMfZ/ImiWZqmkhI9yH4mA/RsRnIqrk/QOxotWyr9LA4MmCWTpdRc6ygkUTxoeKUu4aL0i0IXbkjraMMv51rEDz0FpY=
+	t=1718156902; cv=none; b=L9rLL+lyKnQo2De6xpjnJ5TBaK4qIwkkGO4W0rKruvgvDAvaSdVFWm+tBahbbuIMsof4hHlWETpznb4C8A6YHxfdyRnPw99gctO2YiKq+Pq5Q7DoSx7o5jltrGFbVa6JlNti0zfMxRBzjrPJs9WMe61Uv//f7TdC+fWjThaBbAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718152446; c=relaxed/simple;
-	bh=5fRGuvJp6cBf5p4D5mJF23NkzpveK8jJGPPtUPoL47Y=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=qNMgf9HaGNJiNlJkxtmAYmAesmcbb9cADd52eDAyCSCuZDFqUYakrDs6ybvQQ2r0QsL96weFfjQ4YE7NJO0497xmTw3+hHKi8tQl3roZfg8to4fOepZBTNWvLV4vnW72Ofdh7hZ/y3wnzYiczlRryl/PdOkzV2AgOK9PD4z2EGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vONq4abH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92413C2BD10;
-	Wed, 12 Jun 2024 00:34:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718152446;
-	bh=5fRGuvJp6cBf5p4D5mJF23NkzpveK8jJGPPtUPoL47Y=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=vONq4abHtLrO1CV8n8jkL2JI7V/e8C71ZawuNB8izsThmZ7zeuBNf6L9pjUeYOb0L
-	 ABkkhSjNK1tGGBdcEQHF+QGGr0Boc3xPaNH4pwF0gf7uFwWoYnPcQEaTuwdROGl5lG
-	 76cXGQwCz2LHb0c4UDqX5k19r2FM7x0cdHoA/bq8tmU00FBoLSECTlNLrlhnxDsY9T
-	 r3d6Cg7iQfrVsoDV0MeUpKPiEDPvkcurn31SYc7xAQeHoTGMoMgkG7JqfFzjBE13c9
-	 4rM354UbjF2TpJsCOG0dG8Lou2GbSuhMEhWK4+EDi6nZHNJl1E9hEOfld92kQKqESx
-	 eMMDN65Z+ALkg==
-Date: Tue, 11 Jun 2024 18:34:04 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1718156902; c=relaxed/simple;
+	bh=MvBlGLG9UfXny227TfKMIAKAXIVBb62sRlVVDT80Fpc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BSuKIIqGsYPmnc3FfvhXgCe6FwkblpgKY865iXH1VYaNtU7iQiODxLp7BUvGR4aEDG89BzewjiTeQbleJ51BGavOzUnTzmeUbGfHmex/TDb3iluY1osA/FAzKvO2vZTSrY5qPL9rFzLZ/c4EufipMiXdUKQ6V4k3M0vuTfcRLkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h8OVDQgn; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45BCZFQH009027;
+	Wed, 12 Jun 2024 01:48:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qxXzdQxfHkCtNKsqmmrSyucgB2JfRhPahfaLkSnynM4=; b=h8OVDQgnM3uU+8V+
+	xhOsJg0pdJy42sXz2ESIYhgHPzecaQRE7h9a+U3iLYX9Z4F+3ZmBsuBQLTVxC90c
+	Phq8Plp0eLPcx6k90dsHg/6JqffW8je2ea3tSeSk4nHhP0tZWtFz/sUorpi4V8eJ
+	N2zX1zKXriIo1ENS8lhVJtrpXf+Zf78v4JizfRpfMtPdP7uQcdhylSnzHA8g+rVg
+	WZb9U6viWMjIZ3siTucoZRFYjDRCqSjVEuEqCHVq9KEaS97wf1HUy50j8sI9s+tC
+	lIwLrXDKwXA8i32/YtWF6SK67WyA1hyWoF5bMiLR9oyREghMrvUamDVF7TdLsGsO
+	SOp7+g==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yme8s0f0q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Jun 2024 01:48:08 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45C1m7ec019126
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 12 Jun 2024 01:48:07 GMT
+Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 11 Jun
+ 2024 18:48:02 -0700
+Message-ID: <0996ccd1-32b1-eaa9-0331-e0270da80da2@quicinc.com>
+Date: Tue, 11 Jun 2024 18:47:59 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: jonathan@marek.ca, krzk+dt@kernel.org, quic_khsieh@quicinc.com, 
- linux-arm-msm@vger.kernel.org, quic_rmccann@quicinc.com, sean@poorly.run, 
- dmitry.baryshkov@linaro.org, tzimmermann@suse.de, mripard@kernel.org, 
- linux-kernel@vger.kernel.org, konrad.dybcio@linaro.org, 
- dri-devel@lists.freedesktop.org, maarten.lankhorst@linux.intel.com, 
- daniel@ffwll.ch, freedreno@lists.freedesktop.org, 
- marijn.suijten@somainline.org, robdclark@gmail.com, conor+dt@kernel.org, 
- swboyd@chromium.org, quic_abhinavk@quicinc.com, devicetree@vger.kernel.org, 
- airlied@gmail.com, quic_jesszhan@quicinc.com, neil.armstrong@linaro.org
-In-Reply-To: <20240611223743.113223-2-danila@jiaxyga.com>
-References: <20240611223743.113223-1-danila@jiaxyga.com>
- <20240611223743.113223-2-danila@jiaxyga.com>
-Message-Id: <171815244421.3448243.12009673117592867975.robh@kernel.org>
-Subject: Re: [PATCH 1/4] dt-bindings: display/msm: Add SM7150 MDSS
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 12/13] drm/msm/dpu: allow sharing of blending stages
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-13-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240314000216.392549-13-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dIB9REMI2tFqx5MOR1SzqHxCk81R5gqI
+X-Proofpoint-GUID: dIB9REMI2tFqx5MOR1SzqHxCk81R5gqI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-11_13,2024-06-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ priorityscore=1501 mlxlogscore=999 impostorscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406120010
 
 
-On Wed, 12 Jun 2024 01:37:40 +0300, Danila Tikhonov wrote:
-> Document the MDSS hardware found on the Qualcomm SM7150 platform.
+
+On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+> It is possible to slightly bend the limitations of the HW blender. If
+> two rectangles are contiguous (like two rectangles of a single plane)
+> they can be blended using a single LM blending stage, allowing one to
+> blend more planes via a single LM.
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+
+Can you pls let me know the source of this optimization (assuming its 
+present downstream) ?
+
+Otherwise I will have to lookup some more docs to confirm this.
+
+It certainly makes sense, that if the same layer is being split across 
+two SSPP's we can certainly use the same blend stage. But want to make 
+sure this is already in place somewhere and not something which was 
+tried and just worked.
+
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../display/msm/qcom,sm7150-mdss.yaml         | 460 ++++++++++++++++++
->  1 file changed, 460 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm7150-mdss.yaml
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  9 ++++--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 37 ++++++++++++++++++-----
+>   2 files changed, 37 insertions(+), 9 deletions(-)
 > 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 794c5643584f..fbbd7f635d04 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -445,6 +445,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   
+>   	uint32_t lm_idx;
+>   	bool bg_alpha_enable = false;
+> +	unsigned int stage_indices[DPU_STAGE_MAX] = {};
+>   	DECLARE_BITMAP(fetch_active, SSPP_MAX);
+>   
+>   	memset(fetch_active, 0, sizeof(fetch_active));
+> @@ -469,7 +470,9 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   					   mixer, cstate->num_mixers,
+>   					   pstate->stage,
+>   					   format, fb ? fb->modifier : 0,
+> -					   &pstate->pipe, 0, stage_cfg);
+> +					   &pstate->pipe,
+> +					   stage_indices[pstate->stage]++,
+> +					   stage_cfg);
+>   
+>   		if (pstate->r_pipe.sspp) {
+>   			set_bit(pstate->r_pipe.sspp->idx, fetch_active);
+> @@ -477,7 +480,9 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>   						   mixer, cstate->num_mixers,
+>   						   pstate->stage,
+>   						   format, fb ? fb->modifier : 0,
+> -						   &pstate->r_pipe, 1, stage_cfg);
+> +						   &pstate->r_pipe,
+> +						   stage_indices[pstate->stage]++,
+> +						   stage_cfg);
+>   		}
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Is this part of the change related to this patch? We moved from 
+hard-coding 0 and 1 for the stage_idx to stage_indices[pstate->stage] 
+will still result in the same values of 0 and 1 right?
 
-yamllint warnings/errors:
+The sharing will be achieved with the change below of doing
+pstate->stage = prev_pstate->stage.
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/display/msm/qcom,sm7150-mdss.example.dts:25:18: fatal error: dt-bindings/clock/qcom,sm7150-dispcc.h: No such file or directory
-   25 |         #include <dt-bindings/clock/qcom,sm7150-dispcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:427: Documentation/devicetree/bindings/display/msm/qcom,sm7150-mdss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1430: dt_binding_check] Error 2
-make: *** [Makefile:240: __sub-make] Error 2
+Rest of the change LGTM.
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240611223743.113223-2-danila@jiaxyga.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+>   
+>   		/* blend config update */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 2e1c544efc4a..43dfe13eb298 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -827,13 +827,6 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>   	if (!new_plane_state->visible)
+>   		return 0;
+>   
+> -	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+> -	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+> -		DPU_ERROR("> %d plane stages assigned\n",
+> -			  pdpu->catalog->caps->max_mixer_blendstages - DPU_STAGE_0);
+> -		return -EINVAL;
+> -	}
+> -
+>   	/* state->src is 16.16, src_rect is not */
+>   	drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
+>   
+> @@ -971,6 +964,18 @@ static int dpu_plane_try_multirect(struct dpu_plane_state *pstate,
+>   		prev_pipe->multirect_index = DPU_SSPP_RECT_0;
+>   		prev_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>   
+> +		if (pipe_cfg->dst_rect.y1 == prev_pipe_cfg->dst_rect.y1 &&
+> +		    pipe_cfg->dst_rect.y2 == prev_pipe_cfg->dst_rect.y2 &&
+> +		    pipe_cfg->dst_rect.x1 == prev_pipe_cfg->dst_rect.x2) {
+> +			pstate->stage = prev_pstate->stage;
+> +		} else if (pipe_cfg->dst_rect.y1 == prev_pipe_cfg->dst_rect.y1 &&
+> +			   pipe_cfg->dst_rect.y2 == prev_pipe_cfg->dst_rect.y2 &&
+> +			   pipe_cfg->dst_rect.x2 == prev_pipe_cfg->dst_rect.x1) {
+> +			pstate->stage = prev_pstate->stage;
+> +			pipe->multirect_index = DPU_SSPP_RECT_0;
+> +			prev_pipe->multirect_index = DPU_SSPP_RECT_1;
+> +		}
+> +
+>   		return true;
+>   	}
+>   
+> @@ -1080,6 +1085,13 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	if (!new_plane_state->visible)
+>   		return 0;
+>   
+> +	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+> +	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+> +		DPU_ERROR("> %d plane stages assigned\n",
+> +			  pdpu->catalog->caps->max_mixer_blendstages - DPU_STAGE_0);
+> +		return -EINVAL;
+> +	}
+> +
+>   	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>   	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>   	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> @@ -1221,6 +1233,11 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   
+>   	max_linewidth = dpu_kms->catalog->caps->max_linewidth;
+>   
+> +	if (prev_pstate)
+> +		pstate->stage = prev_pstate->stage + 1;
+> +	else
+> +		pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+> +
+>   	if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
+>   		if (!prev_pstate ||
+>   		    !dpu_plane_try_multirect(pstate, prev_pstate, fmt, max_linewidth)) {
+> @@ -1267,6 +1284,12 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>   		}
+>   	}
+>   
+> +	if (pstate->stage >= dpu_kms->catalog->caps->max_mixer_blendstages) {
+> +		DPU_ERROR("> %d plane stages assigned\n",
+> +			  dpu_kms->catalog->caps->max_mixer_blendstages - DPU_STAGE_0);
+> +		return -EINVAL;
+> +	}
+> +
+>   	return dpu_plane_atomic_check_pipes(plane, state, crtc_state);
+>   }
+>   
 
