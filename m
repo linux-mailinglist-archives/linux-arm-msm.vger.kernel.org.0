@@ -1,156 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-22526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A536905E04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 23:53:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83DA0905E14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 23:59:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 63569B212B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 21:53:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0AED0286723
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 21:59:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75A5084FDC;
-	Wed, 12 Jun 2024 21:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 046B012B163;
+	Wed, 12 Jun 2024 21:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kofaZ7Hh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="duEd34AX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-lf1-f65.google.com (mail-lf1-f65.google.com [209.85.167.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF4E129E94;
-	Wed, 12 Jun 2024 21:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77FF129E93
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 21:58:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718229213; cv=none; b=KFwssRwTGRfoh+3AcMvIiEASqr0QHZWa/dPMKhxn6DxMnK5V09ILmir7sTfGwyQ2Wpfzpr4wpUKanrv8enulg0ngOXsihZHeaBsAtw7vPoq7nKg2AOErrSXgSuB4BHDXvNb4LoiGklqaH691RoXcysB/sTULfUIRrAeSy28ujq8=
+	t=1718229523; cv=none; b=TmpjZcirgTLU5IpU0YmBcAmUPOdQ0t6+A704KoyQE+pdPpznSURunR+RQ5qM96QRTY1g9odCkzbQSXHVE4x7pEHX+9rPtzJdAjE08URm5AzIe6FkzqO49J3k8Zy/Ug2z/4eB2lBPT3bpA6r5Npav5zYWVrwbvSzgmhrDHcBPJyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718229213; c=relaxed/simple;
-	bh=mcJjYHjV++hIvIdWkHyHOgdpiusnN+4IJjaQnk6MVdI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PKt0/pcFoc7C9k1hqk3fvi0bAvHQt25PImI3YjNpcCcCVkNmiUPG8XdBrPX8BfSCZW/eQfvdFlcR/LPkoIsaBgwndbD8gEfNSw0TvX5ysrNFLvo5YnUXP5NSVnRZiFEF68saPxFvFDERJXzWXSqw3hfzCCrDVNp4xjDALUfQpso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kofaZ7Hh; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4217926991fso3908165e9.3;
-        Wed, 12 Jun 2024 14:53:31 -0700 (PDT)
+	s=arc-20240116; t=1718229523; c=relaxed/simple;
+	bh=RwirxVQ5lCYdqrq2CamTDoFinCGGMm+4YAa64ynicsk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=dqKIv2UjmQDa3bsAsH5ruQ9ZLLoZguP9Eeq77SBtyBmRChX0+dG7O/TOvYBbobh8P+8EL7HfsFcqIFPbHOSDFsSsr36RYG0JRJihDaMIrxIm5RrqjSK74tT6XGEJejtjKT5ddDDFl9v1u5s25m74ks48osCn/Kz6viKK//WP1yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=duEd34AX; arc=none smtp.client-ip=209.85.167.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f65.google.com with SMTP id 2adb3069b0e04-52c83f21854so52372e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 14:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718229210; x=1718834010; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9pxDQ2xml58KGU++S3MziyUsd0pYxlkTij9Nt+5fCkQ=;
-        b=kofaZ7Hh3eDkmlr2KpMuNhnS+PA02UIOOXea7GEar+k1UZeq22MPbgQNSJVRqqcx2I
-         cLkbJbCFNL18XVWtoCSS/GzQZU/QRlE1qU0i5XwcC9fKZhdB9tUeyF5SkLgziKsFcm5W
-         NJTVjYEplT8ZNTr+0oYqX+Ej/gVAqz5n4xX2ETwWOXC+Qd3hX/lKRL9efoeyCNVltn+s
-         ZWj3J1J2uJrCJpAFz6hzYGJS0iUMoVUzUvFtLbNGLExTlon3LFCanRNzucdB61SxLw+9
-         UX43ERM7HuCRS9TgMbZQ4OxlCe48foVoPAg8bMFi+KhRZVXVJFBMRtcxWHDDvxWotDfz
-         qwJA==
+        d=linaro.org; s=google; t=1718229519; x=1718834319; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+zcv/dvg7WkrFwHEFNP1T9ef5+b/Oc5DEEcdM/vW9RU=;
+        b=duEd34AXS6sTGcM8cMrooVkutWMQBDZ/dyuE3d7JVxuyT04d6QC1wXt6c9yf/9Aw9T
+         BDfC34BapPjIowDPQAw/yt3dCH9sjy1DlZjjdAQSDsufo500yV7O2vEEM3BbBMTgnzra
+         b2XJnILUx833z6WNvOlMgDmteiAB2w9y55v0Y4nS1KkcFCFyUwzZn9kEpiI4qMhWfM0l
+         JG+g9ij/4SyUcQIyZuNTHVOZiS/FZXKFfUyBYdz6Lhw2AFBUeIXU5HbwOfeKZftipxeL
+         hb9FInPzpkQO9JyfarIES+XZdFZ3GndF/zX4/9c66u49qNXzbFOxPcLkXIPnucd07gY8
+         O6CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718229210; x=1718834010;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9pxDQ2xml58KGU++S3MziyUsd0pYxlkTij9Nt+5fCkQ=;
-        b=UyciX6bT6joU/ap3tWyTZFNkbi0/lPXjRTN+GH2gTsXr3Hv6cBgIc6skvOO84JEFkt
-         Qgaqqo/CsZk62wSCE9XKgEMIQsSIk2uSEhb1kMdu62GeeJaoDP5fLRccOk+gzndaJUwd
-         oVHRHVvDGqynw8evOAOgVU2jRsk1GCN8Hry2vtzb34vUX3PsjZ9MFTSG0P2v2IVfrus2
-         tt5O5gTRLbT2EQwCSkAtfylavPnJrB8eea52JgLTP/ONTQr8OPld/8W45XRbXf8AjFEW
-         4TIg+pw9PGlZU1Dw6HIL3bgpEtELlSeOdGZFmuY/5jCWt4CAHYst2KPWpFDnuOPKIGi5
-         bWdw==
-X-Forwarded-Encrypted: i=1; AJvYcCVvnBxM5QwdkCqTac45gynk5iaOhx7LZ6StHgbXIR9W4dyffTyU5s5P9kMT12ey8VCWe4/Fm+oSxanLc4Ps50kOVytOO2vIT2kfjzkHIBtHb1W/L6zg5+1nr6j4vAeyCxBhX6LEhg5/zdcjK0ZXHy9D83vNAqVJ6ggYoH2MvBk+XOjYoA==
-X-Gm-Message-State: AOJu0YxhMk9FW8TGnJGITK7y1iqWQU9VJoQnJvUBSK5mbXoXvVL8P8B6
-	FuxCYH4S1bjOeRCPamyXduk6/kIJYdTENMGa6Hiph8E1YApyqBKEY2Ytkg==
-X-Google-Smtp-Source: AGHT+IFqIoOKC1lqkvIoSrutwet1tzBSEOu4Q+/c77rzZJZWz+OjyJm4fZX/gA7it5X1tJrM35WvNQ==
-X-Received: by 2002:a05:600c:358b:b0:422:6765:2726 with SMTP id 5b1f17b1804b1-422865ad68fmr27777105e9.30.1718229209883;
-        Wed, 12 Jun 2024 14:53:29 -0700 (PDT)
-Received: from [192.168.0.5] ([69.6.8.124])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-35ef5d2e73dsm17831029f8f.16.2024.06.12.14.53.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Jun 2024 14:53:29 -0700 (PDT)
-Message-ID: <0b24c10f-1c20-4bd1-958b-dbf89cb28792@gmail.com>
-Date: Thu, 13 Jun 2024 00:54:03 +0300
+        d=1e100.net; s=20230601; t=1718229519; x=1718834319;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+zcv/dvg7WkrFwHEFNP1T9ef5+b/Oc5DEEcdM/vW9RU=;
+        b=Ee5u+3dqJwlLYgdQjeWnh9czmL1EQ6QQzJQlG35pIbKm/ZFlSwpe2zPx6CvCgeOYsQ
+         TFaewIeU7f3pnTA+A2KGlbZKcue7dbFtyyo6xuNI2JTiiiPLoB9w8oS1CpzUqQVd/RJs
+         zy+77OPRcUnv/PUCn4/Yg7TwftCFk/Pe5qX9+Hz96sLLAnP3N1kPWIKZreZNTUdf+ml1
+         6txPreLGn8Dtx3Lpds3vk28Dd+2nEwqAjxJY9n3DpSi5MQjVF+VoO9Qs8VmcS8RDmMqn
+         Z7HuCWWWkJU69wd89UCD8IUDmeQtWopbn4AEcuZpDhLl2bDBl8tSMNkjYNWOMYUipJ06
+         87lQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUuX7TrKOrJOLEPUtJzGZw/5YR2cqwMXvkhLSM6Ie0/z+ARtpFEhZqPT8uiI9sWAMfSiu58Enf0igjV0EKgA7q7752X/gXmLn5OEZF73w==
+X-Gm-Message-State: AOJu0YwaT499fdLWoY6Pquj2P1QvSpNra7DlpdPm7ATnGiJYHGfazxr/
+	7r039Julg4aDOdMWtiYXUPVxDczi7Hb4EpKaUEt9jwAbvp5RNad0sTEKXvR33ls=
+X-Google-Smtp-Source: AGHT+IGbt+hiv1cK+84CIIOD+ul5bawW2KjbJwf/tKijr8Zc1WRz4H8zFkeJOC1rldlsfeTgdCtJsg==
+X-Received: by 2002:a2e:a796:0:b0:2eb:d5f1:d8b1 with SMTP id 38308e7fff4ca-2ebfc992062mr22432861fa.3.1718229518918;
+        Wed, 12 Jun 2024 14:58:38 -0700 (PDT)
+Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c179c5sm57011fa.67.2024.06.12.14.58.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jun 2024 14:58:38 -0700 (PDT)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Loic Poulain <loic.poulain@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-i2c@vger.kernel.org
+Subject: [PATCH v2 0/4] arm64: dts: qcom: add description of CCI controllers for sm8550 and sm8650
+Date: Thu, 13 Jun 2024 00:58:31 +0300
+Message-Id: <20240612215835.1149199-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] net: wwan: mhi: make default data link id
- configurable
-To: Slark Xiao <slark_xiao@163.com>, manivannan.sadhasivam@linaro.org
-Cc: loic.poulain@linaro.org, johannes@sipsolutions.net,
- quic_jhugo@quicinc.com, netdev@vger.kernel.org, mhi@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240612093941.359904-1-slark_xiao@163.com>
-Content-Language: en-US
-From: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-In-Reply-To: <20240612093941.359904-1-slark_xiao@163.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hello Slark, Manivannan,
+The changeset adds description of camera control interface controllers found
+on Qualcomm SM8550 and SM8650 SoCs.
 
-On 12.06.2024 12:39, Slark Xiao wrote:
-> For SDX72 MBIM device, it starts data mux id from 112 instead of 0.
-> This would lead to device can't ping outside successfully.
-> Also MBIM side would report "bad packet session (112)".
-> So we add a link id default value for these SDX72 products which
-> works in MBIM mode.
+Previous version of the change is found as a single patch for SM8650 SoC:
 
-The patch itself looks good to me except a tiny nitpick (see below). 
-Meanwhile, I can not understand when we should merge it. During the V1 
-discussion, It was mentioned that we need this change specifically for 
-Foxconn SDX72 modem. Without any actual users the configurable default 
-data link id is a dead code.
+    https://lore.kernel.org/all/20240410074951.447898-1-vladimir.zapolskiy@linaro.org/
 
-According to the ARM MSM patchwork [1], the main Foxconn SDX72 
-introducing patch is (a) not yet merged, (b) no more applicable. So, as 
-far as I understand, it should be resend. In this context, a best way to 
-merge the modem support is to prepend the modem introduction patch with 
-these changes forming a series:
-1/3: bus: mhi: host: Import mux_id item
-2/3: net: wwan: mhi: make default data link id configurable
-3/3: bus: mhi: host: Add Foxconn SDX72 related support
+Changes from v1 to v2:
+* added new SM8550 specific changes,
+* added dt-bindings documentation changes for both SM8550 and SM8650,
+* unified bus names to follow cciX_Y scheme as it's mentioned by Konrad,
+* removed minor code leftovers in sm8650.dtsi.
 
-And merge the series as whole, when everything will be ready. This will 
-help us to avoid partially merged work and will keep the modem support 
-introduction clear.
+The patchset is based on v4 of "Add support for videocc and camcc on SM8650"
+series by Jagadeesh Kona:
 
-Manivannan, could you share the main [1] Foxconn SDX72 introduction 
-patch status, and your thoughts regarding the merging process?
+    https://lore.kernel.org/all/20240602114439.1611-1-quic_jkona@quicinc.com/
 
+Note, that during the testing on SM8550-QRD board I discovered that it's
+necessary to replace sm8550-camcc power domain from MMCX to MXC, however
+that change and these ones are independent.
 
-1. 
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20240520070633.308913-1-slark_xiao@163.com/
+    https://lore.kernel.org/all/20240612214812.1149019-1-vladimir.zapolskiy@linaro.org/
 
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> ---
->   drivers/net/wwan/mhi_wwan_mbim.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/net/wwan/mhi_wwan_mbim.c b/drivers/net/wwan/mhi_wwan_mbim.c
-> index 3f72ae943b29..c731fe20814f 100644
-> --- a/drivers/net/wwan/mhi_wwan_mbim.c
-> +++ b/drivers/net/wwan/mhi_wwan_mbim.c
-> @@ -618,7 +618,8 @@ static int mhi_mbim_probe(struct mhi_device *mhi_dev, const struct mhi_device_id
->   	mbim->rx_queue_sz = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
->   
->   	/* Register wwan link ops with MHI controller representing WWAN instance */
-> -	return wwan_register_ops(&cntrl->mhi_dev->dev, &mhi_mbim_wwan_ops, mbim, 0);
-> +	return wwan_register_ops(&cntrl->mhi_dev->dev, &mhi_mbim_wwan_ops, mbim,
-> +		mhi_dev->mhi_cntrl->link_id);
+Vladimir Zapolskiy (4):
+  dt-bindings: i2c: qcom-cci: Document sm8550 compatible
+  dt-bindings: i2c: qcom-cci: Document sm8650 compatible
+  arm64: dts: qcom: sm8550: add description of CCI controllers
+  arm64: dts: qcom: sm8650: add description of CCI controllers
 
-Just a nitpick. The second line had better be aligned with the opening 
-bracket:
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml |  20 ++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          | 252 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          | 291 ++++++++++++++++++
+ 3 files changed, 563 insertions(+)
 
-return wwan_register_ops(&cntrl->...
-                          mhi_dev->...
+-- 
+2.33.0
 
->   }
->   
->   static void mhi_mbim_remove(struct mhi_device *mhi_dev)
-
---
-Sergey
 
