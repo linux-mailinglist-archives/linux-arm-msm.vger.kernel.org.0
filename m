@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-22398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67742904FC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 11:59:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 76135904FCE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 12:00:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2F031F238AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 09:59:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E77D21F25176
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Jun 2024 09:59:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C831DA34;
-	Wed, 12 Jun 2024 09:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 985E916EBF6;
+	Wed, 12 Jun 2024 09:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Mpn2SCHB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kmrRb7l3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DB516DEA3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 09:59:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526FF16DEDB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 09:59:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718186378; cv=none; b=MfvCMUg+BhJfeCUHS1jwrRzhc8XLLHMuHeq8cJnVaCpq596qzVM2ER1YwpX1Qe0n+uZXZPGtbkxW5vdRrmXzV2Ov66HX1xmvFs5/xuWJTeyFnOabFtDK4tCSqrlJtmUR0CWmOm8X2WLn1bcmuVN6INyqcUyMMa3+uWyDnm3LBPM=
+	t=1718186380; cv=none; b=T4R5wVqAPgjRIFYF2jnvhqukjw8bihTIzvpgv5GCUS7mBeAtazXL1YHKRhFI1vnvr+TX6uv+tQxaZyBNk6alw8LQBk8Pi+PpwQM5s0BlZWH7IjHsniE4wxVCU2/Xkr7zAYYucjPDj3ueiGaeI/J9dC1rZ8SFYlVmSpkYD2B9d6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718186378; c=relaxed/simple;
-	bh=eMuODGP7W4LxxOLv4JBF6KdKVN5A3gRCCuaax4uO73I=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qiMDhgKXI30MSJoQ3qjk2AQwDPwVKF9fXXJ8W2SABVL/qQYGWKJN1Czg14CvK73Z7jriB2+qxDxk/0PKIleRKMTpywkmYBcYHaAp0Gx4wJBHWgYEWeBjiQJ9b7VCQh2hTHvEFUFN0eEvMcNLApMk4fPlJgMn6BFz4tQVdpVh0BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Mpn2SCHB; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1718186380; c=relaxed/simple;
+	bh=lzuWmQsRHevIFSOU8fqsv8TO85dYE8vzaNEi5gArVS8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=IANQSBxduwTk+4Nr0/gzkGpzuKMq5f+SHp3FYvXOR6FrrFLgHNi7Vob2rZA1+YjtkzkIDsFrbY3CnLK/tEtENl7Pl5GUcgC8oO6qvLK9Tnjjb56HIShdiE/zfn7wJAkZlZ+Bo/aZkeA7e8XlFk7AgT3AB+JMzIFOfbmmu4LpF4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kmrRb7l3; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52c4b92c09bso2737496e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 02:59:36 -0700 (PDT)
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5295e488248so7297039e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Jun 2024 02:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1718186375; x=1718791175; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xts/ri4+0emIXdmkFUBZxsB2Gm19lNPTdXZ/kDOdF3c=;
-        b=Mpn2SCHBu2qZuM7Ors2YnwSE3MlK5K012AuiDNrUPZCERHjcpC2+z/x+W/WW/Gij7N
-         s5R6wK+kTw8DIdHdjWgzHo0DKhO8GiXMNOrzb0jMao4bm/sIo3/TTAqOpFKkAkMGuVOR
-         8VBuXOb92y1f9OlAYxyiRq+3NatHYUM08//D3P4DWjD3P9sESwZN6gOd6KK6qEapszHt
-         blYvDyeIbfOawwa7YwgspgQx5It3zo9vZcEhJghFOU29UaO4UOkJzvzpFPcLSEgyFrq2
-         5iSlJ7bl313vwnlPIiUGY2oGqiLvvP2FMfwUO5+2jbxG43nOcrdaH02kVddJq58YD6nz
-         lUUQ==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sp42j2u8rigijiuxzVvZ7hagCwbbwAjC3ss3o2b1CDw=;
+        b=kmrRb7l38KsZqpfWUJNIjU0ghLQhukEut0linJHuTc2BZgzppQmWsBLUBB85qU13ch
+         twCNYCljVR5UMJ/8nshzJ3Li/Wu9OYrnwqbmrAxaO8hJtyYNXgsI1H6HAxjhsyT+F+bo
+         l3qXsltUEIU62RHYwFfhd+7kUwrLjmfGA4dGkz4hu/jqbDNeEf1JSNlsbvr63mvuDZ+S
+         BDoLksB4V/dk1h/En+2d16gCkMEUTXjNXjbuIcZUJ8qH46DEFc2YDtuTV9ZcF8D9vsH4
+         xR36AfahTDiYpDhY0S2DqG/T0k+UTvu/D0+8NawRSuLNR7gT4ERwgpvqSfcyTkuV9iZZ
+         5cpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1718186375; x=1718791175;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Xts/ri4+0emIXdmkFUBZxsB2Gm19lNPTdXZ/kDOdF3c=;
-        b=KdfF5k8paF/pIfqg61m4/glUwPQ29Kqk1OZysOGRpJ9zvB9TDpzk57n78AIrrdCL+2
-         R9ClD0/ggxlxmgw7KIuZY2XaFTi+8CsLQrUfr8PZPTMAxVnIBIamq6N71As2ClZj+S2R
-         IAob+gELs5aoXMwbAITFHDdJgfjhzQVUANisemS/FfwhbOwoKKDJ4GdminIqTBMjvoO6
-         mewpi6P0gFPNDT1x65KiDOt4QQoUNeCVywb/O2SA2UflQBfwVMOjhxHoIuY+GFVupyiB
-         0IYj1Gs3YLIrIabJdMnvILq5Ri93lE+ERdqU6I27H4I2RUiF488IoDDzSBWdy5GSvxzP
-         VKyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVcNH6vIrIUDVBTkos8HIQGbLvCLvT5ejN94mb+rhElZTN04msMYQfRYxH7fpPRMpR2BwWi28BOdaGuSpc16tbBuD3j+ZMi1InLetm3aA==
-X-Gm-Message-State: AOJu0YwPF2T2qBcDdyLgxQYFyoNbO0Nh5xrCeZcEyUAHdZuOX0qkkU04
-	UrRbSC0vriPE9U6SjP0nrgOZtPnMs21kXvQyoSD4ozuH8Q71qO8Thj9GkBSzZKo=
-X-Google-Smtp-Source: AGHT+IHCMWtdj1tPlQQ0Sr0DDMO1hg1ot8AGKkRV4GaB2yRvMXl7ylZpYCJpJPIeeQY4+5t45YW90w==
-X-Received: by 2002:ac2:5582:0:b0:52c:9052:db7f with SMTP id 2adb3069b0e04-52c9a40520emr924558e87.56.1718186374895;
-        Wed, 12 Jun 2024 02:59:34 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sp42j2u8rigijiuxzVvZ7hagCwbbwAjC3ss3o2b1CDw=;
+        b=MlasWQ6ZEjRaJXPHQ9SmueKcMRp6NrPs3I9+3HIZInJUKuhoTpnMpmKGMbMnWbIiwy
+         R/vgsSFsf0LlNwsUKZyhbYJqRoZvVs9+3FDwNRw6PJcRUMbMuKrU4IR/SwADbnp0Gnb8
+         D/Z4Wa0spc4rE1zCrv83Co2Ss8V5JxQSRMVJKIPk/NB+rPMBkIj23lRNqUXfvWeYuhL+
+         KjlgEie4yg0vWSev/OOzZMR5zw5MJ+FyD4oZnFpx7XAHXB4XVtNjsdWWd/rEIDMmSSV/
+         cmyIczBqUr7OHonbHsLs2JSLf7ClMs9Au67SKPkRvsvsJ7RJmloMp68Zwj4kS1EMgxvc
+         quKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUQHQzEjy4dJAPBjMB1ta7Fdlsi6NMG99ppPeuUS1mMMR1ZKlELBhOZkUww9zvaifypnnaZqxbFXGPH870FaWuogpL84VY4Pq1IzRcUwA==
+X-Gm-Message-State: AOJu0YzUVXBD5HEvI4jGwYhirZasajXRrkdu63fJ9MaMYAZGfGJWD3i2
+	EQy799j/x3bOdpv3azVguj7CEdtcGxsEEhZtTtEnfr6Z2FQvqzKfKFFZmhQkCpc=
+X-Google-Smtp-Source: AGHT+IEDa7kb32fgkJfPo5ReIlwBIVgibQAKT4zkUPAxRXpdDcs3pt/afX/PBq3eBew4IroPkWM/5g==
+X-Received: by 2002:a05:6512:3130:b0:52c:9468:c991 with SMTP id 2adb3069b0e04-52c9a3b794bmr758824e87.14.1718186375541;
+        Wed, 12 Jun 2024 02:59:35 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52c8907dae9sm1408095e87.129.2024.06.12.02.59.34
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52c8907dae9sm1408095e87.129.2024.06.12.02.59.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jun 2024 02:59:34 -0700 (PDT)
+        Wed, 12 Jun 2024 02:59:35 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v6 0/6] power: supply: Lenovo Yoga C630 EC
-Date: Wed, 12 Jun 2024 12:59:31 +0300
-Message-Id: <20240612-yoga-ec-driver-v6-0-8e76ba060439@linaro.org>
+Date: Wed, 12 Jun 2024 12:59:32 +0300
+Subject: [PATCH v6 1/6] dt-bindings: platform: Add Lenovo Yoga C630 EC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,11 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIRxaWYC/3XOzUrEMBSG4VsZsjYl/0ldeR/i4rRJ2qDTyEkJl
- qH3bjogjhSX3+J5z7mREjCFQp4vN4KhppLy0oZ5upBxhmUKNPm2iWBCMS0s3fIENIzUY6oBqTX
- R26i9h+BIQ58YYvq6B1/f2o6Yr3SdMcBPRjLBNNfCsb4TQkolDeXUX9OKWzcAbmV+z/XlIy2Au
- cs4Hdk5lTXjdn+zyiP+70dVUkalsNA7zT14/Zg6Xqrq0buTV82rCM5HgGAHc/L61xt2vq+b5zD
- 2HNigpPjr933/BnF1r7B0AQAA
+Message-Id: <20240612-yoga-ec-driver-v6-1-8e76ba060439@linaro.org>
+References: <20240612-yoga-ec-driver-v6-0-8e76ba060439@linaro.org>
+In-Reply-To: <20240612-yoga-ec-driver-v6-0-8e76ba060439@linaro.org>
 To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -97,117 +96,122 @@ Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
  Nikita Travkin <nikita@trvn.ru>, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4716;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2676;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=eMuODGP7W4LxxOLv4JBF6KdKVN5A3gRCCuaax4uO73I=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmaXGFNd/hzHoo56I1fjpVq1NuqLinKlwZUa/wl
- uU33Ubc6YyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZmlxhQAKCRCLPIo+Aiko
- 1WNsB/4puhimqcLUNR+1HNqt4pmQ1iKV+joscGjEBnKJaGRAPGnQTTgkVJi6fKLgA3CZ9ax94KI
- Pm5Fn7wrEcRUaauMkHB+va4KHZrJMZSoWycgfgvWzYBLLlYjhEevElD+4soJIKxK3B6QcZcFJHz
- eYKJX876lXUIkTlu2oOyOteSq0Ujn1P1lkBlZI+pQoptZUV5o8qG1TJpizHuSVDXUw1LoaodsjY
- meZbqIAhkznUIaAy1v+25dobPUl0xYzieqNkX4Dy1h1qk06DuJsql04MWGvquOc+Oju/VQ8YQTt
- WmAyEkSSMjmNqHbKFOp2+n3kI3HVU6cO7CpWy5lHaNcX40p5
+ bh=C9Lg3cE1aC1zyYeo+0Q2DO6EQOTcK4wvIXQyDKOKakY=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmaXGFPHjMU3q0TrL2Mx4I+pTs8YCISncfWVhKJ
+ VlZnOacUO+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZmlxhQAKCRCLPIo+Aiko
+ 1TEDB/0UqCtGC8LEtWypIkYCwbJtdw2FoYkGk7eXkL5c1Qm7XThJfAwsLhCZ5R0pVYfr2VSIyig
+ WR3RjZAjC2Q3odxD+TPd/TdOZz4YPt3fSq8bzrMCjbs569sPjuDQtv+WWfrycY/el7xUedx8KOw
+ umU6Sigj5gpc0meXgnVnK5ZXWDnWNkSiQc+AUSP1EVaXwEGNMi46g0j9UFs5zxx2e+nrkX1ML7o
+ 2dPSjf0LMgwJ/mu7KORHcBrD5Vc7pwRMOo0JjHTSG5/BmtmujPlmhhNoLMpL+jyBG0bPK/vejrj
+ 14AVhbi8/iSG3YxqGiRFPp0L3x1JYQzWFdirDaHuILXZOHXy
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-This adds binding, driver and the DT support for the Lenovo Yoga C630
-Embedded Controller, to provide battery information.
+From: Bjorn Andersson <andersson@kernel.org>
 
-Support for this EC was implemented by Bjorn, who later could not work
-on this driver. I've picked this patchset up and updated it following
-the pending review comments.
+Add binding for the Embedded Controller found in the Qualcomm
+Snapdragon-based Lenovo Yoga C630.
 
-DisplayPort support is still not a part of this patchset. It uses EC
-messages to provide AltMode information rather than implementing
-corresponding UCSI commands. However to have a cleaner uAPI story, the
-AltMode should be handled via the same Type-C port.
-
-Merge strategy: the driver bits depend on the platform/arm64 patch,
-which adds interface for the subdrivers. I'd either ask to get that
-patch merged to the immutable branch, which then can be picked up by
-power/supply and USB trees or, to make life simpler, ack merging all
-driver bits e.g. through USB subsystem (I'm biased here since I plan to
-send more cleanups for the UCSI subsystem, which would otherwise result
-in cross-subsystem conflicts).
-
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v6:
-- Use guard() instead of scoped_guard() (Ilpo)
-- Add a define for UCSI version register (Ilpo)
-- Added a check to prevent overflowing the address in reg16 read (Ilpo)
-- Link to v5: https://lore.kernel.org/r/20240607-yoga-ec-driver-v5-0-1ac91a0b4326@linaro.org
+ .../bindings/platform/lenovo,yoga-c630-ec.yaml     | 83 ++++++++++++++++++++++
+ 1 file changed, 83 insertions(+)
 
-Changes in v5:
-- Added missing article in the commit message (Bryan)
-- Changed yoga_c630_ec_ucsi_get_version() to explicitly set the register
-  instead of just incrementing it (Bryan)
-- Dropped spurious debugging pr_info (Bryan)
-- Added missing includes all over the place (Ilpo)
-- Switched to scoped_guard() where it's suitable (Ilpo)
-- Defined register bits (Ilpo, Bryan)
-- Whitespace cleanup (Ilpo, Bryan)
-- Reworked yoga_c630_ucsi_notify() to use switch-case (Bryan)
-- Use ternary operators instead of if()s (Ilpo)
-- Switched power supply driver to use fwnode (Sebastian)
-- Fixed handling of the adapter's type vs usb_type (Sebastian)
-- Added SCOPE property to the battery (Sebastian)
-- Link to v4: https://lore.kernel.org/r/20240528-yoga-ec-driver-v4-0-4fa8dfaae7b6@linaro.org
+diff --git a/Documentation/devicetree/bindings/platform/lenovo,yoga-c630-ec.yaml b/Documentation/devicetree/bindings/platform/lenovo,yoga-c630-ec.yaml
+new file mode 100644
+index 000000000000..3180ce1a22d4
+--- /dev/null
++++ b/Documentation/devicetree/bindings/platform/lenovo,yoga-c630-ec.yaml
+@@ -0,0 +1,83 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/platform/lenovo,yoga-c630-ec.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Lenovo Yoga C630 Embedded Controller.
++
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++
++description:
++  The Qualcomm Snapdragon-based Lenovo Yoga C630 has an Embedded Controller
++  (EC) which handles things such as battery and USB Type-C. This binding
++  describes the interface, on an I2C bus, to this EC.
++
++properties:
++  compatible:
++    const: lenovo,yoga-c630-ec
++
++  reg:
++    const: 0x70
++
++  '#address-cells':
++    const: 1
++
++  '#size-cells':
++    const: 0
++
++  interrupts:
++    maxItems: 1
++
++patternProperties:
++  '^connector@[01]$':
++    $ref: /schemas/connector/usb-connector.yaml#
++
++    properties:
++      reg:
++        maxItems: 1
++
++    unevaluatedProperties: false
++
++required:
++  - compatible
++  - reg
++  - interrupts
++
++additionalProperties: false
++
++examples:
++  - |+
++    #include <dt-bindings/interrupt-controller/irq.h>
++    i2c1 {
++        clock-frequency = <400000>;
++
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        embedded-controller@70 {
++            compatible = "lenovo,yoga-c630-ec";
++            reg = <0x70>;
++
++            interrupts-extended = <&tlmm 20 IRQ_TYPE_LEVEL_HIGH>;
++
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            connector@0 {
++                compatible = "usb-c-connector";
++                reg = <0>;
++                power-role = "source";
++                data-role = "host";
++            };
++
++            connector@1 {
++                compatible = "usb-c-connector";
++                reg = <1>;
++                power-role = "source";
++                data-role = "host";
++            };
++        };
++    };
++...
 
-Changes in v4:
-- Moved bindings to platform/ to follow example of other Acer Aspire1 EC
-  (Nikita Travkin)
-- Fixed dt validation for EC interrupt pin (Rob Herring)
-- Dropped separate 'scale' property (Oliver Neukum)
-- Link to v3: https://lore.kernel.org/r/20240527-yoga-ec-driver-v3-0-327a9851dad5@linaro.org
-
-Changes in v3:
-- Split the driver into core and power supply drivers,
-- Added UCSI driver part, handling USB connections,
-- Fixed Bjorn's address in DT bindings (Brian Masney)
-- Changed power-role for both ports to be "dual" per UCSI
-- Link to v2: https://lore.kernel.org/linux-arm-msm/20230205152809.2233436-1-dmitry.baryshkov@linaro.org/
-
-Changes in v2:
-- Dropped DP support for now, as the bindings are in process of being
-  discussed separately,
-- Merged dt patch into the same patchseries,
-- Removed the fixed serial number battery property,
-- Fixed indentation of dt bindings example,
-- Added property: reg and unevaluatedProperties to the connector
-  bindings.
-- Link to v1: https://lore.kernel.org/linux-arm-msm/20220810035424.2796777-1-bjorn.andersson@linaro.org/
-
----
-Bjorn Andersson (2):
-      dt-bindings: platform: Add Lenovo Yoga C630 EC
-      arm64: dts: qcom: c630: Add Embedded Controller node
-
-Dmitry Baryshkov (4):
-      platform: arm64: add Lenovo Yoga C630 WOS EC driver
-      usb: typec: ucsi: add Lenovo Yoga C630 glue driver
-      power: supply: lenovo_yoga_c630_battery: add Lenovo C630 driver
-      arm64: dts: qcom: sdm845: describe connections of USB/DP port
-
- .../bindings/platform/lenovo,yoga-c630-ec.yaml     |  83 ++++
- arch/arm64/boot/dts/qcom/sdm845.dtsi               |  53 ++-
- .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      |  75 ++++
- drivers/platform/arm64/Kconfig                     |  14 +
- drivers/platform/arm64/Makefile                    |   1 +
- drivers/platform/arm64/lenovo-yoga-c630.c          | 290 ++++++++++++
- drivers/power/supply/Kconfig                       |   9 +
- drivers/power/supply/Makefile                      |   1 +
- drivers/power/supply/lenovo_yoga_c630_battery.c    | 500 +++++++++++++++++++++
- drivers/usb/typec/ucsi/Kconfig                     |   9 +
- drivers/usb/typec/ucsi/Makefile                    |   1 +
- drivers/usb/typec/ucsi/ucsi_yoga_c630.c            | 202 +++++++++
- include/linux/platform_data/lenovo-yoga-c630.h     |  44 ++
- 13 files changed, 1281 insertions(+), 1 deletion(-)
----
-base-commit: 03d44168cbd7fc57d5de56a3730427db758fc7f6
-change-id: 20240527-yoga-ec-driver-76fd7f5ddae8
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
