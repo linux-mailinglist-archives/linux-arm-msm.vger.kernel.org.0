@@ -1,129 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-22582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FDFB907182
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 14:38:10 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2DF19071CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 14:41:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C3A71C24410
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:38:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3DD9CB2693E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:41:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 521E11442EF;
-	Thu, 13 Jun 2024 12:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2CBB143759;
+	Thu, 13 Jun 2024 12:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yJ/rhK5L"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iU0cJ8RT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1289D143C62
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 12:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53FE12C47D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 12:40:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718282247; cv=none; b=a8mAIwMLwN3QiKqJvwOSFBX4DjO8X+0eq4tF/AgFONJuupnyopF9taGjBjVUFMTqcZGAg/dTdLl0hgrj6jmgSj2sY2ksXr7RJd2le/W4cHguq6y2KK86YdYkUaNzsgpm7tzEgy7mp6e15GYYg41KGXPYphTvzh2xNzXsG+vChi8=
+	t=1718282419; cv=none; b=sPEteex4uTu2Me9Lm0H4MIOFzGG+ahFTogIbqKdxzUX5Rp484WW1TmK+LQbdEyrqzWCAcpFyVdrJWQQwNl9YlQc4CU/opQCm4PpKcO3/VnR3PYLE4DepkAj8joyPyyNwKHinGbilrmgkgWL9a+yj4y/sAxEKmWRW2MBsr6SR9Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718282247; c=relaxed/simple;
-	bh=HO+x80vOL45DfnbGDH+HE4l2kGlmP8xcQBK47SIOSDk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gdFzJsG5UmNjaj/GmsUDgY4dz4btJ1HME6z7uhHmFYEPK4rUpWh2cOGHQ7o0gw4e7okjf6kTTkKHifQXUPoD4lfXqfyBovFQCtY1YX5NCztOTpwMhFr25RePihzV7kWxbAPdkMYXAolj/ZGIvpycCUFpjRj96xgDiCuwLurqycI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yJ/rhK5L; arc=none smtp.client-ip=209.85.128.174
+	s=arc-20240116; t=1718282419; c=relaxed/simple;
+	bh=1huBxxS455lFb9lb95aj5aHQLKb1A7Gghj5h9+l71k0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GT8IiYRjr5Cc8VHV1wlj/Tz10Uf+CUjg6fy2oR5UiFrZSqC9mZnVsErNuwQSN3Zaj5yRMfC/lqQC+zVAMYSfN0TJ5HswjxgTMUQoVPs9/2XNbdaJQ3n3/qkbT39PW5Rgt451dn40zOZ59rmY969CNHs4KRdq8wqrrIN/6YuBGYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iU0cJ8RT; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-62cecde1db9so10399857b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 05:37:24 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ec002caeb3so11637051fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 05:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718282244; x=1718887044; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lK324ZHK2UbYkaord9YynZkPLQSYfxb5dYuVjUssGuM=;
-        b=yJ/rhK5Lg+rkWw8pq9YggxvBlPh8A/DOkCsY3uA/ktzMZgZYq+Yr/0NWUahCQMP55y
-         A41T+7/FLd5ADX08KV5D2c+XpBCfcH2zIojMMrU1rfH1EuPJBej6dvln/02u84kpGc4Y
-         RSJ8AGk5gJFAdRWE7vWEkN49G0p9CUUaAha0v5UlWEF02DAJtg3ETnq3Nz4o22RH4fou
-         AiXMaIEnKrl3zgNsdYIjul6ybY5XEC+8VKCPApSvCtwaLJR0Bz6y/ftradFMQO4fQ9C2
-         6f71NU6+8wmxDTe38KKrKwEGtfNHOCSAgdbnd2jzn5RlUOhv3R5MEkOiNbTqXbTVjlI3
-         41Bw==
+        d=linaro.org; s=google; t=1718282416; x=1718887216; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=U3ih0pRkamLgGn89/coTp+mG03B+Ar2meens0mN7r6I=;
+        b=iU0cJ8RTqcuLkRvseOLP+yFg2Y2Echz6G6ReydWdEBxcCy7vjfmMT/mVDQtat1UsQE
+         LdZpvU/wNPRoUU4K1NCMAzEE7Uk6mjgD4ZgaGyqgJW6C1dYUiR+faC54BbGorGh/PGPG
+         P8uuMFoB1bqOVz/FPvJDKlOEiRgV1fb3tmJ/qKiFzBlUSaHEMqlX34p7TPWmxW0axOjp
+         y8a2FUVfiqwPfUvS1sAtENR5qljWhIJ7eqpzPgVCQKOOn255/GcyUq+YfhkEX4mMB4dk
+         fK6NK5id/VPH7sriRUf8gsZ3z5KV88mZ14GPBkortKrIkurzbvZG5kZ0o4oqLUD63Rsz
+         zEmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718282244; x=1718887044;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lK324ZHK2UbYkaord9YynZkPLQSYfxb5dYuVjUssGuM=;
-        b=FC3PZfcoMcObJCjGDQDV7OdSnVU19l6YiGrIY/hsY7po1EhIwhJXlL3mICAfaq7bsI
-         X5VKieXcj9Q2VLSGkAHEeBzWF5sohXMwMWlvQ5pAjcou/jsd8omnDPF8W2yDBQ1Vm9l/
-         oefNbwr8Xh2b3+ns1RIiTRMIB8bU0ihwKi9gY3G1kDIQIfeWGsOaTU9MNpa6NtFXez/o
-         N5gDQWbv2DKNiEg/4rZa9mJ62laQcqSMVqSETq5tbJL3671dZ6JYS6N1xnLfu4Si2g05
-         EjF+WlRaUVVxs6lb1u0sGQ4k/SQ4Q1M7dbVNJdypV8u3ifbXLRGF/Q+5ZPXKHyWUeHjk
-         YVFA==
-X-Forwarded-Encrypted: i=1; AJvYcCXWkJySL907O88F8xJ+5gqzewqkfxKImBHf6gip4nzm3wnpebrxFjrX6i62jw+hLlFzZdPJIuhDL2F8aMlTUf0ziAfviNElK+gZKcCJWQ==
-X-Gm-Message-State: AOJu0Yz/AbWzs7P0/YguF0SzjOMegcOqKFmEQj5ejVXV1raC28c3wTEP
-	Za+kTTVOPDRveyrn1z8tRm0elzM6HwZo6Tuu3+P9L/qC5i93Ht/EaK/5FAQtjwjxlffIBualyiR
-	J5cBbzHw6D77d62VFMrUCo0QDGVhabb/iP/6oxg==
-X-Google-Smtp-Source: AGHT+IHZvUBnLsMhW62XBAnxIb34bbF6VpwyWCJv6bXVbMOYQVTTwWrwK1vnVsv5FrvtFe2dwrIEhVqsavWTdlA/pfI=
-X-Received: by 2002:a81:8a42:0:b0:62f:9e2d:3e5d with SMTP id
- 00721157ae682-62fbdba5388mr40959977b3.43.1718282243851; Thu, 13 Jun 2024
- 05:37:23 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718282416; x=1718887216;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U3ih0pRkamLgGn89/coTp+mG03B+Ar2meens0mN7r6I=;
+        b=Jh9nmKFluYG6fgKYLHsBQT7tZJJ4P5KYuwdgCu3+sv2/alotQgeKR7nmHpbTn1xEYa
+         jRA4yRmQwUNCs+gz1fb6n7TZefhU0PnAoQQ1wc4McKKir2YGA06KUPdNSENEnNxhWH9k
+         X1pfgox1DslrINeZnnAvzBwKfWP4AQhszwGoHmH9Me11GbeYmALKx9nCBIZeiYowTLTD
+         AefxaQZNmI0JB0/vco0pZCvnIAwjN1rTmJyD0v/KZtCoMEoXvea4S7Ybok3vW9t1ksKE
+         +7EXaOkE0FEL5IC5+cegE3ToLahSDU/FIEzY5eGb4rrNc0aDjc53MmJvzgio/175qtrD
+         PQDw==
+X-Forwarded-Encrypted: i=1; AJvYcCVtb9etQIU5Wd+VymF3Zz4wjeofxtFckeq2qwI8BX3H+V0rEEAfpEkNqetX568EY5Z1p/yxHuhRNyPRm69NqoL639mn4IsWZnaLNGVX4Q==
+X-Gm-Message-State: AOJu0YwOyic97DGcyfHHpoEP3OSfCLiuI9EYZ6I0hgfUzxllPFrB3CVt
+	5uZY37gPF84sYZ2C5BJ65mtrijSj2RPpHkEYUr2SbDR9Te0GSrV+8J5QcEAJvjI=
+X-Google-Smtp-Source: AGHT+IEqq49c8cGicA+OdVdYsOlsGoIcr/1WK+4fWR/h8LRWQ3o9Z/xoaT075/lNiMhPVaQRL6RyNA==
+X-Received: by 2002:a05:651c:1258:b0:2eb:dd0b:b9ec with SMTP id 38308e7fff4ca-2ebfc932783mr26945561fa.20.1718282415951;
+        Thu, 13 Jun 2024 05:40:15 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c05d3csm2060981fa.43.2024.06.13.05.40.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Jun 2024 05:40:15 -0700 (PDT)
+Date: Thu, 13 Jun 2024 15:40:14 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: srinivas.kandagatla@linaro.org
+Cc: broonie@kernel.org, perex@perex.cz, lgirdwood@gmail.com, 
+	alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	krzk+dt@kernel.org
+Subject: Re: [PATCH v3 0/4] ASoC: qcom: display port changes
+Message-ID: <3q77jowqtvnlsrskzbmt627mgoebnkld2tswjaby6tfluadszn@v7vcgkgagyiy>
+References: <20240606104922.114229-1-srinivas.kandagatla@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240613-q6apm-fixes-v1-1-d88953675ab3@linaro.org>
-In-Reply-To: <20240613-q6apm-fixes-v1-1-d88953675ab3@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 13 Jun 2024 15:37:11 +0300
-Message-ID: <CAA8EJpq7SN5J8Ye8nGfbJdKAC5Ws61iKMu6QO9ebnRV6q3EVNQ@mail.gmail.com>
-Subject: Re: [PATCH] ASoC: q6apm-lpass-dai: close graph on prepare errors
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, alsa-devel@alsa-project.org, 
-	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240606104922.114229-1-srinivas.kandagatla@linaro.org>
 
-On Thu, 13 Jun 2024 at 15:13, Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
->
-> There is an issue around with error handling and graph management with
-> the exising code, none of the error paths close the graph, which result in
-> leaving the loaded graph in dsp, however the driver thinks otherwise.
->
-> This can have a nasty side effect specially when we try to load the same
-> graph to dsp, dsp returns error which leaves the board with no sound and
-> requires restart.
->
-> Fix this by properly closing the graph when we hit errors between
-> open and close.
->
-> Fixes: 30ad723b93ad ("ASoC: qdsp6: audioreach: add q6apm lpass dai support")
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Thu, Jun 06, 2024 at 11:49:18AM +0100, srinivas.kandagatla@linaro.org wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> 
+> This patchset adds support for.
+> 	1. parse Display Port module tokens from ASoC topology
+> 	2. add support to DP/HDMI Jack events.
+> 	3. fixes a typo in function name in sm8250
+> 
+> Verified these patches on X13s along with changes to tplg in 
+> https://git.codelinaro.org/linaro/qcomlt/audioreach-topology/-/tree/topic/x13s-dp?ref_type=heads
+> and ucm changes from https://github.com/Srinivas-Kandagatla/alsa-ucm-conf/tree/topic/x13s-dp
+> 
+> x1e80100 is verified by Krzysztof with his changes in tplg 
+> 
+> https://git.codelinaro.org/linaro/qcomlt/audioreach-topology/-/merge_requests/7/commits
+
+Together with [1] and corresponding DT changes:
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # X13s
 
-> ---
->  sound/soc/qcom/qdsp6/q6apm-lpass-dais.c | 32 ++++++++++++++++++++------------
->  1 file changed, 20 insertions(+), 12 deletions(-)
+Note, patch [1] is required to get the switching between Speakers and DP
+work in a stable way, so I'd consider for it to be a dependency for this
+series.
 
-[...]
+[1] https://lore.kernel.org/linux-sound/20240613-q6apm-fixes-v1-1-d88953675ab3@linaro.org/
 
-> ---
-> base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
-
-Note: this didn't go to linux-arm-msm, probably because of the use of
-an outdated tree for submission. This commit is v6.10-rc1, it probably
-should have been Mark's tree instead or linux-next.
-
-> change-id: 20240613-q6apm-fixes-6a9c84852713
->
-> Best regards,
-> --
-> Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->
-
+> 
+> Thanks,
+> Srini
+> 
+> Changes since v2:
+>  - remove hdmi references.
+>  - added more DP jacks
+>  - added some comments in code
+>  - added x1e80100 patch to this series
+> 
+> Krzysztof Kozlowski (1):
+>   ASoC: qcom: x1e80100: Add USB DisplayPort plug support
+> 
+> Srinivas Kandagatla (3):
+>   ASoC: qcom: q6dsp: parse Display port tokens
+>   ASoC: qcom: common: add Display port Jack function
+>   ASoC: qcom: sc8280xp: add Display port Jack
+> 
+>  sound/soc/qcom/common.c         | 35 +++++++++++++++++++++++++++++++++
+>  sound/soc/qcom/common.h         |  3 +++
+>  sound/soc/qcom/qdsp6/topology.c | 26 ++++++++++++++++++++++++
+>  sound/soc/qcom/sc8280xp.c       | 15 ++++++++++++++
+>  sound/soc/qcom/x1e80100.c       | 20 +++++++++++++++++++
+>  5 files changed, 99 insertions(+)
+> 
+> -- 
+> 2.43.0
+> 
 
 -- 
 With best wishes
