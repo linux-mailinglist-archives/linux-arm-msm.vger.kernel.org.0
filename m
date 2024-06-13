@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-22561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0569F906874
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 11:21:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 201F990687D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 11:24:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 85408B27FB4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 09:21:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A90FC2814C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 09:24:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E6A013F45D;
-	Thu, 13 Jun 2024 09:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F66313DDD5;
+	Thu, 13 Jun 2024 09:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dbYVSu8h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="STeTf5Nd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D316D13E3E4;
-	Thu, 13 Jun 2024 09:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC4E13D8A6;
+	Thu, 13 Jun 2024 09:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718270462; cv=none; b=RhZqWwNGHh8UM4RivvXSz6Hib5ZpfQ5L/PtPDG5j966kx+5yJ3g+pme+X9KrXQWz9jhTlNKNgAtoezeJxxhZIbfKYO2EdEH7aceyacqhMfVJjp2+autlTbjsjwMkJtPgWJ/t2Gg7lKxvKvNo+4QizjFwDas7ZToNVf+tNB9Oh4g=
+	t=1718270641; cv=none; b=VOClZQ7nuqHA/OrhiObssUl8NjSWG1PlKBJoOxAA7ki/fWPhXgBq5H+ObMqWceUX0CFfWICiTPILafRqWeZBhlFtDw9x0tJKSo1MCJ8hwL0h0gQcDQiYK6hfrIXKy9SeB/n8n/jj2TQKgMlQSEZ3OaydS+6GzZuzX+OUwl/mVjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718270462; c=relaxed/simple;
-	bh=kfXPGykpA/Z2AcMvE0hW+MiTEpkeu8ppH/DTgZXRNI4=;
+	s=arc-20240116; t=1718270641; c=relaxed/simple;
+	bh=7fMQpIku4vo8Gr+0QKJESH9aZGoPywmOAdN+PpVROoU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Husgn/cFZLE/QjVk/71EatRBaFtr3v93c9MLWOYbslW6R5sGvKCOu3KZtYlEJ+hEgUueuXTFNZDSltcLrdVw5w1sr1ViEGjA583NvRAOdhhtDDWcSwtfG/bgcYD5bpAwBJfxCfTrnrvvaiyKsIjbpJV15EatveiYyBqAiUc3iJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dbYVSu8h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC86C2BBFC;
-	Thu, 13 Jun 2024 09:20:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ImPIuUWa9Moptb7l04o7IzK2vG2W+3lv2LDYWCkeKvxTVrOLHFFAd5fIKbk8VY2B7C7DUFNIBJ/1sXVvhCng/t0Opu1M24YZYxHP+wda7b11oqZ3nTpokxnJ1Obz0gGe9W5BUxZnnOwrldpiSPziOY1JlFwfBCj7cf4u9bFAM1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=STeTf5Nd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58B5C2BBFC;
+	Thu, 13 Jun 2024 09:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718270462;
-	bh=kfXPGykpA/Z2AcMvE0hW+MiTEpkeu8ppH/DTgZXRNI4=;
+	s=k20201202; t=1718270640;
+	bh=7fMQpIku4vo8Gr+0QKJESH9aZGoPywmOAdN+PpVROoU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dbYVSu8hM2NvdIj2GPOMflHJqrVM+N/jEaJwr7aQ7aYynmy5onEpbmfkg5kXV+8p9
-	 yEDpfk+Nc+kgraC5A2X9SuZqKw1UK/nZsoT1KTEahXqa2fAidWBEy1MJFntMK+dXyn
-	 YPP8906DWFupTKWwCTREEt53iNlRCDHwgUGYfkgmMGQimx8JPmP3PyLJXqPR2eVQ1T
-	 wkZb/jEYjYC/q70EdincWYAPKjBlwmstiWB68Iy2f6W4qcKmErfh3f56EzD64eT6v1
-	 5kvnsL18twxw2a1l+EMd6Rj9U0PThyVtjIw+Az6UOa7VBVsjJRGIvLXlVLZoPxfRxo
-	 Ea0d0cnYS/mQg==
-Message-ID: <7e9819be-f061-43f8-8026-3c2882690ba2@kernel.org>
-Date: Thu, 13 Jun 2024 11:20:53 +0200
+	b=STeTf5NdCO/DfNOrY4rD3T7+5E74WzYqoE8ZBl/L3nTkHxXCyfnU15HCSUOroIAub
+	 80gCn0TUbcl5ohTymor7dXIsV6TVqebY8RQbPzheqKsiZhUvLcdO5FvT3o/oxDB25A
+	 IfxCRBmLo0mhNxtVMuwsMte64e/aJKhBY75e2nDbnVlDzTWsHaHJx4woMjxYMshftn
+	 YRpVe8lIDWCNM5p5hVNzOzZKpJjgSy7muhFVASOU6RSTY8T8KpQIXH6EyVj5oNMR1d
+	 NqLae79Ifx8Sdsz0Xf8ApWYKhdbt7JPVTKTih/1/Em/uNvo+gVjzpgpMXklIFvLeCP
+	 cp414GqmUpq6Q==
+Message-ID: <0e7bd7f2-b445-4a59-b456-8d03af121a8e@kernel.org>
+Date: Thu, 13 Jun 2024 11:23:50 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: display/msm: Add SM7150 MDSS
+Subject: Re: [PATCH v2 3/4] dt-bindings: display/msm: Add SM7150 DPU
 To: Danila Tikhonov <danila@jiaxyga.com>, robdclark@gmail.com,
  quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run,
  marijn.suijten@somainline.org, maarten.lankhorst@linux.intel.com,
@@ -63,7 +63,7 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240612184336.11794-1-danila@jiaxyga.com>
- <20240612184336.11794-2-danila@jiaxyga.com>
+ <20240612184336.11794-4-danila@jiaxyga.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,17 +109,55 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240612184336.11794-2-danila@jiaxyga.com>
+In-Reply-To: <20240612184336.11794-4-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 12/06/2024 20:43, Danila Tikhonov wrote:
-> Document the MDSS hardware found on the Qualcomm SM7150 platform.
+> Document the DPU hardware found on the Qualcomm SM7150 platform.
+
+In general, this should be before MDSS, because it defines fully the
+compatibles already used in the MDSS schema. For multi-binding devices
+it always starts with children and ends with parent/top schema.
+
 > 
 > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
+>  .../bindings/display/msm/qcom,sm7150-dpu.yaml | 143 ++++++++++++++++++
+>  1 file changed, 143 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+> new file mode 100644
+> index 0000000000000..1a44cad131a72
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+> @@ -0,0 +1,143 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/msm/qcom,sm7150-dpu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SM7150 Display DPU
+
+What is DPU? Such acronyms should be explained in description or
+expanded here, if there is space.
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+> +
+> +maintainers:
+> +  - Danila Tikhonov <danila@jiaxyga.com>
+> +
+> +$ref: /schemas/display/msm/dpu-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sm7150-dpu
+> +
+
+
 
 Best regards,
 Krzysztof
