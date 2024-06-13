@@ -1,86 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-22566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 429AF9069B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:10:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB9309069BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:13:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9BBE3B23D22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 10:10:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0C8D1C203B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 10:13:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3BB41411F8;
-	Thu, 13 Jun 2024 10:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D3C114198A;
+	Thu, 13 Jun 2024 10:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S+jejdCP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gKih+lwo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B0A140E5E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 10:10:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48131411DB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 10:13:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718273440; cv=none; b=nMKsY5fNAkB9DATYUCU6eWv7+JSfNZnnbvstcvudwKhLgUyx6cD1dgg7qmYHE8J1znJF2IC8/uGnl4gessOtaK+22wPws5IU3ZqSyXZ9Bcb2dKJWPWoMYVWNnkRkhLMxqWUC0Ahz1EvlNJpGEZerRQrrTKZ2SoH0f3TvMSu6hyY=
+	t=1718273602; cv=none; b=rUQwCGIvgZT5KkdIqUJGSN5dsbpmjVYjGpsWJdXv8eC2YPcgid07bd2Wb8TaIX5V+Iz59bR6jin+M0S1ErO8QDU+2WExN8ltZQqlAaI5WsbPviv/LR1VKuYR4MEin1e36BWzk6eOHmpfbdTRMJJZdlO7ddo8UL4rH/xwh9Ru6yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718273440; c=relaxed/simple;
-	bh=mOMZE1BImQgQqVos0pSrYVwUrtiIOEk/BT5krayXtjI=;
+	s=arc-20240116; t=1718273602; c=relaxed/simple;
+	bh=Jig0VbrF7vcRqgAzrjYh7+MqNViArZUDt8CaUtGL04U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UIA1hJSECG+9ASMFr2EhtzLiIKgON9PHoGA7AqoeBOnbFQtwCuixb+Sc12r1ffXTRGLAkkgtz1GAXJ1nhs9zHKLbTHn8scxdnRWgnh5t9FUaszY6rJfdkxfshD9LzAFqJ6c5UPszQkU7eJxc/yyp4E9iGm9YeO9Gid/s+vpN14c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S+jejdCP; arc=none smtp.client-ip=209.85.208.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=pLJ1fEm23xZYNFnNnUw9fk7v0fVjejB4MbNNBJ/RXVGoCn3qBCZB2Wj38m6Av4mDMRwAO/sk+F7ReCr+/nfIoJaQTpdMeR28lfmSnmcRqYODIj97ZqWpP0TFTdK9GUev9Q51A6T3WDApcVH7ELOsFP5ZVKOe3T8uOaxCPyOjZao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gKih+lwo; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ebdfe26217so6719721fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 03:10:38 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ebe6495aedso7291821fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 03:13:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718273437; x=1718878237; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718273598; x=1718878398; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VnOXzfBQPF+LHXjU6pXBEMJF3WvZiisnuKFTk0ZYuAo=;
-        b=S+jejdCPSgiDz1ZDqAOPS79cij4ikRaQJnFPWZjdD6wTKuVVopRz3lllO8SKqrvFSw
-         C90yFR52ZUGIC0jUbbhnFrMnlGlJw2Rb7NxesuEnfpSPlotY+yvJbQkmKJLZBR6MxRiE
-         rROuYy8ZlhB4EEa7viqg/m7j/qZ5OjoTPN6qMxxzgCfv6PNH4qg6xNGwyfKbValyW/LL
-         KQ6omeOHDMuupUUycGOIoea0n/vhIJIND5ooye/jIqWVIy8A/3WbkuPnVyHoG/3WXX5l
-         gFnbiNT9GeExEqiCHSl77azExi6zvAVccfQfR/TbFMaq5WWCzZgevXbU5Ev5FhxqKuOM
-         Biiw==
+        bh=6UhTMrFvQBB8mfMQ4c+fd/Ifc6ucfhQNCFOCAgSgYQ0=;
+        b=gKih+lwoYe9CzToEpk6oH9NrrUIyfwappEyPRKqMBA/OKcv9PKzVKTqm1/W0knRbc8
+         LXZITLVa+HnJ25bW6hBqculEPpwfSEaF0ig/UDIlwpLqEkrqPJnhlRKwMmbv47dA9JbR
+         On/5HFPo5lh+DIFdwmZA+GacbDcpmw4Ldx4AnpZoVeAAt+v3Ty3aMqPHeGkYDoJ/ADqj
+         7asCTFBVGLiYQnC+ilLg/qKortdgde3LoyPkM0fKQ+z87wFAAHQuU3sGE+mmCyQTV7YF
+         qgrrvnmlWIOvwxFAp/nzUd1OoDKXXUYOB+/XuKnMyvXLZM8YCbTAO4ribRiGH051sUK2
+         sjdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718273437; x=1718878237;
+        d=1e100.net; s=20230601; t=1718273598; x=1718878398;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VnOXzfBQPF+LHXjU6pXBEMJF3WvZiisnuKFTk0ZYuAo=;
-        b=vQR5Dltor6W8C+vDIQ3/HQfv+9PG50U59o0E3n89r1iI73qJsilEo1kWzUU+mn8YD6
-         eN3N72VsMFOz6/pStBfKAuAT9t4QPcTW33bTUPp3fSdSh1KZTon31RUSy+FqxZzgyGnb
-         9ZuD8g9rMFqtKqf+kKmtCXOqCWvbFnkXpggDIClfCz4MTQzCPqeTWaN51ggR6Os4oLdp
-         545LvFaXch2tUOOppQC97WneRzPuaw7fCVMRPtYRBKbf0fMobT8CvEICX3aCXUMy0FXA
-         w++JGKcuEedezdtMceuISUCr9PjpTg/y5pK8+ZGX5XlxVrU94lCoJo+UwQjVpFevfqPc
-         5Rnw==
-X-Forwarded-Encrypted: i=1; AJvYcCUeJ82i5xVuzk8wKgu8aGQ702/qYySlKU1RzMPaft6rv1Qgd7BX9HdGa4gSqESSpEigXs1MphZmsO1qV4lFdu0PjoB2OQHFvyO0iAcmtA==
-X-Gm-Message-State: AOJu0YzkFxe+pCMNpkXHqCDPbPtumt10mEDzchdtUzw2Ry6fOAely8jQ
-	3WHPQI+/k9YzGguhHW/8IvIdg9bIwagoL2wX2M/BzTCoVwWnZP/h4OxuwGJ9/aA=
-X-Google-Smtp-Source: AGHT+IEnmrWgnM5SGxICW1vWwc2O/mTW96VNMeI3/JiExHdDPaxx2NlTGNeh1bZrVaDWkM08FDbyLQ==
-X-Received: by 2002:a05:6512:44a:b0:52c:8a4e:f4bf with SMTP id 2adb3069b0e04-52c9a400d27mr2332640e87.51.1718273437098;
-        Thu, 13 Jun 2024 03:10:37 -0700 (PDT)
+        bh=6UhTMrFvQBB8mfMQ4c+fd/Ifc6ucfhQNCFOCAgSgYQ0=;
+        b=i8bzK0RDuW0Xumi3lvPeLbquM5DZgvvevAScPogsHFOvfA0ur3g9ZYROk8er38/kzl
+         jiHdcs5131ejhHnZZDiesKcze9VJn3yqRNh+9qDnyZqBAHaNyo045e+l6eOsfIfXbCyf
+         esB7YNQYVjbEqYs3WWZqS7WvmqSTbZ05F4zJq8EKQCZHwoOHHJvc5MAZ+JifT53Eyg7A
+         gLIORr+NUbiaLP6Fznw+NmVnB5G2xH01FOiBrzauHNksJZEdFJVLDkOsWbtob0rxOXIU
+         BIsdCo6O697tfnte6BO0Hhevl/JzZjx+MhjhaMGXJYHCXHFXyP9Fg/oHWyfMmv8jYJk+
+         OjqA==
+X-Forwarded-Encrypted: i=1; AJvYcCUH523NlfxdFMKQ7DJZqlvpmo9/IPWOCR+LSjCCR0Q13Gn6FUyz1gJUzaFvz0U8MHTf3UIscb4V81gWYl8gItYgL33cGNMNWEl2LDBMtQ==
+X-Gm-Message-State: AOJu0Yx/8ZLzgCbnhwKKep1gZeU5EtqCbRBKH7YmLDWvhQdU0KhSJZ2h
+	wmFr6Kawqe4gBx/ewmrsgwWLGSfsygMskKiDV8/GOA70ZJbxK0vomcOxhX7XLY8=
+X-Google-Smtp-Source: AGHT+IEqZFp6DfPOGQtW9vNfCAckczSMPw7RWxGa/vCjp53axsK6Fln9qoOgp1dvliTR80CJljmHPQ==
+X-Received: by 2002:a2e:88d2:0:b0:2e2:2791:9842 with SMTP id 38308e7fff4ca-2ebfc9aa3dbmr23103601fa.44.1718273598106;
+        Thu, 13 Jun 2024 03:13:18 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca287ad17sm146604e87.225.2024.06.13.03.10.36
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c9ac5bsm1561941fa.134.2024.06.13.03.13.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jun 2024 03:10:36 -0700 (PDT)
-Date: Thu, 13 Jun 2024 13:10:35 +0300
+        Thu, 13 Jun 2024 03:13:17 -0700 (PDT)
+Date: Thu, 13 Jun 2024 13:13:16 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-crd: fix DAI used for
- headset recording
-Message-ID: <7rfoogp7w3gmtyawmil5lilx4blbpnb3nzl5tv2onydmzblcqw@qooqesspnrp4>
-References: <20240611142555.994675-1-krzysztof.kozlowski@linaro.org>
- <20240611142555.994675-2-krzysztof.kozlowski@linaro.org>
- <90f5ad41-7192-4c01-90c0-ad9c54094917@linaro.org>
- <9e9cbc0b-f9fd-439c-93d1-054179f7b07f@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Danila Tikhonov <danila@jiaxyga.com>, robdclark@gmail.com, 
+	quic_abhinavk@quicinc.com, sean@poorly.run, marijn.suijten@somainline.org, 
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, 
+	daniel@ffwll.ch, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	quic_rmccann@quicinc.com, konrad.dybcio@linaro.org, neil.armstrong@linaro.org, 
+	jonathan@marek.ca, swboyd@chromium.org, quic_khsieh@quicinc.com, 
+	quic_jesszhan@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] dt-bindings: display/msm: Add SM7150 DPU
+Message-ID: <4xqa6u3jh6z7zdfaamxl3jpucfymznxmd3ezhihgfky62iifkc@bdslrxujahxc>
+References: <20240612184336.11794-1-danila@jiaxyga.com>
+ <20240612184336.11794-4-danila@jiaxyga.com>
+ <0e7bd7f2-b445-4a59-b456-8d03af121a8e@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,32 +90,62 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9e9cbc0b-f9fd-439c-93d1-054179f7b07f@linaro.org>
+In-Reply-To: <0e7bd7f2-b445-4a59-b456-8d03af121a8e@kernel.org>
 
-On Thu, Jun 13, 2024 at 11:11:05AM +0200, Krzysztof Kozlowski wrote:
-> On 13/06/2024 09:45, Konrad Dybcio wrote:
-> > 
-> > 
-> > On 6/11/24 16:25, Krzysztof Kozlowski wrote:
-> >> The SWR2 Soundwire instance has 1 output and 4 input ports, so for the
-> >> headset recording (via the WCD9385 codec and the TX macro codec) we want
-> >> to use the next DAI, not the first one (see qcom,dout-ports and
-> >> qcom,din-ports for soundwire@6d30000 node).
-> >>
-> >> Original code was copied from other devices like SM8450 and SM8550.  On
-> >> the SM8450 this was a correct setting, however on the SM8550 this worked
-> >> probably only by coincidence, because the DTS defined no output ports on
-> >> SWR2 Soundwire.
-> > 
-> > Planning to send a fix for that?
-> > 
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Thu, Jun 13, 2024 at 11:23:50AM +0200, Krzysztof Kozlowski wrote:
+> On 12/06/2024 20:43, Danila Tikhonov wrote:
+> > Document the DPU hardware found on the Qualcomm SM7150 platform.
 > 
-> Not really, because microphone works on these targets and changing it
-> would require testing. I don't have boards suitable for testing, so
-> let's just leave it.
+> In general, this should be before MDSS, because it defines fully the
+> compatibles already used in the MDSS schema. For multi-binding devices
+> it always starts with children and ends with parent/top schema.
+> 
+> > 
+> > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> > ---
+> >  .../bindings/display/msm/qcom,sm7150-dpu.yaml | 143 ++++++++++++++++++
+> >  1 file changed, 143 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+> > new file mode 100644
+> > index 0000000000000..1a44cad131a72
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+> > @@ -0,0 +1,143 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/display/msm/qcom,sm7150-dpu.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Qualcomm SM7150 Display DPU
+> 
+> What is DPU? Such acronyms should be explained in description or
+> expanded here, if there is space.
 
-If you provide instructions, I can test microphones on SM8450 HDK.
+Other bindings here use 'DPU', so probably we need to fix all of them at
+the same time.
+
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> > +
+> > +maintainers:
+> > +  - Danila Tikhonov <danila@jiaxyga.com>
+> > +
+> > +$ref: /schemas/display/msm/dpu-common.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: qcom,sm7150-dpu
+> > +
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
 -- 
 With best wishes
