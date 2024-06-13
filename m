@@ -1,424 +1,527 @@
-Return-Path: <linux-arm-msm+bounces-22643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A6D6907CB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 21:36:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8D3A907D16
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 22:03:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C95F51F23648
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 19:36:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 238ED1F21D4C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 20:03:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 426FA14A4EA;
-	Thu, 13 Jun 2024 19:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7253D57C8D;
+	Thu, 13 Jun 2024 20:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k1jORBDr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WvYvSF5P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150E112C7E3;
-	Thu, 13 Jun 2024 19:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8484B74420
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 20:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718307387; cv=none; b=oQZURZ7qC3xYo5Ii6LS/+rICfMGJBQsy5FOlOFOetDzI8YibW8AhgEcAGIasRU91xR9P6VZoUmFGUqjDpZPpXneMn+RUCbpWxlm2bFy3QfzrntyN9Zh+7KBYhPPNI4t6CYAh0N3C+usXS1m8D9fL/Vx92fd1S6z0WXwc2fhTBM4=
+	t=1718308994; cv=none; b=O0BexWq6/w7CP2gFLHH93OPHarzkcJ85V6ULR+D6Q+wayK4ZPfrleaMwvgzKGmNPmDQkFEXfpYtBF+pO0OCTSDQYiMEWdStfwdfMJsQLkwYezSgkU203GdaK0jxkQIimq/fI1ZugbaJUtRq7voooCpACDUBgLUlf9lcpdQ0MloY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718307387; c=relaxed/simple;
-	bh=hoj7+mJl2v8L0w+cxKSigp1VZHa6dw8bBqGYa12pXUw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=slsP/NREEDPvF+yx6b+VIgEKJvuXzA4HXWjk+7IBGOAFw4MCbeQ2uygnk9fA3uNBDwqK7cTfzJpYU2YigO0wYn7qWJ63ZVnsdzGRiG24Y+hGneXkx9z2IqKSm8Ofn/2Pvsh9YX6OQdK+YTd7zcvAeORxLd2BmVI1bVcOExebuWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k1jORBDr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D19C2BBFC;
-	Thu, 13 Jun 2024 19:36:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718307386;
-	bh=hoj7+mJl2v8L0w+cxKSigp1VZHa6dw8bBqGYa12pXUw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=k1jORBDrBIqdH7GVXqzbhn0HdZtnUoYs2B6pDvKF5dvUURSItSBpKNureIbhv+/LP
-	 oxXstJpNUtCSu2izRXfM2kpKMG1zvsVDX0ZM531F/8hJWNztYYkOnNc8yx5qR4nj6O
-	 Eh6SsQxsLaZ90x0hSywMHSDBAaBINLzgpQrNADmrw8Li/6jTxojibxTnKmsJS9Tn3K
-	 110x+acMk972B5piy5krf4CFA3joDEaqHBYEbdzLsDDPDkRZtAuN13TviQhMMbz/MQ
-	 v9CW3x+p6e0Y+wNRJnE9qhzuIYbUKmze09/QX71dKU8MBPfrEMD71TmtEsXJiNajVE
-	 vqi5FCivOMIpg==
-Date: Thu, 13 Jun 2024 13:36:25 -0600
-From: Rob Herring <robh@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org,
-	konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
-	conor+dt@kernel.org
-Subject: Re: [RFC V2 1/4] dt-bindings: firmware: Add support for QCOM Vendor
- Protocol
-Message-ID: <20240613193625.GA2338851-robh@kernel.org>
-References: <20240612183031.219906-1-quic_sibis@quicinc.com>
- <20240612183031.219906-2-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1718308994; c=relaxed/simple;
+	bh=BqNx6fq5xzzQvs7IJuwJUewKiUDhWUek2XmH2QNc22Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=nrJ679W7HHR/deGZYNJni2msz0i4e5PxTkNZNp5L7sYh1H1661rOKfZ6Nuf7eYMjI/TVSAI++3RtV1lzbTJmoyJ2rUkxJDNm/2ms2FNh8n9W24DK2nsBKgh2MFQ/Yg1O+wQx+DHmdN7Fumq/UOTKpGO5s+pOUhlXdkpKyOwWibo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WvYvSF5P; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45DJGL6r030228;
+	Thu, 13 Jun 2024 20:02:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	++/0rbwSkqHw84MvR+hU+/vr8pLS4HWr/ld0QgWtZNw=; b=WvYvSF5PEZ3CDWF2
+	Bb3TWXsTmVcI7Wc0gfYvJ0Ahq9n84fXRvHjFI+QaT9pjr8accF0x8K+jmKsy474Y
+	wCZawg+88z/Au5hzHKmrKxQnrgZ4HV+GooPSKMr2v1EEwwedsFtqSMF2I9tzr6io
+	QxWJZxXQDFOkLGviNDjZjz8PmrmegTwSPfYGPliPyTffVaXNP5JyIfEooXDEAHGy
+	jLuY+PfwPAzMUG/KH8ETdMqaXhvbAeNG3kxJILzl9HrSCrg6bQXLXfkxanWCd8ay
+	6eLiro2aZjUPde6OwMNg+ZT6TTsGWMiuDj+XyYERq2CbLT42UMO6OYnzzd6tf3uK
+	frXLMg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yr6q405ge-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Jun 2024 20:02:59 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45DK2woe017051
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Jun 2024 20:02:58 GMT
+Received: from [10.71.110.249] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 13 Jun
+ 2024 13:02:57 -0700
+Message-ID: <a7ca8784-9dde-159f-e304-db38d3dddfb4@quicinc.com>
+Date: Thu, 13 Jun 2024 13:02:57 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240612183031.219906-2-quic_sibis@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 10/13] drm/msm/dpu: allow sharing SSPP between planes
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240314000216.392549-1-dmitry.baryshkov@linaro.org>
+ <20240314000216.392549-11-dmitry.baryshkov@linaro.org>
+ <68dc0d98-9830-d71d-ec65-71890fb2986e@quicinc.com>
+ <CAA8EJpop48--yTyyWs+3b=sgHgjV6-7akp7mJX007aMaaKteJA@mail.gmail.com>
+ <7e1c4f24-f663-71ea-3a03-e21951ee543b@quicinc.com>
+ <emkkg5jqeyxvqifm4pubrtrizoui7cj3nnzwli7n2h6ly53xcf@dpa7245xozpp>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <emkkg5jqeyxvqifm4pubrtrizoui7cj3nnzwli7n2h6ly53xcf@dpa7245xozpp>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _XKqESzQqL1OvkII6HUC2Ww8H7kL_9MW
+X-Proofpoint-ORIG-GUID: _XKqESzQqL1OvkII6HUC2Ww8H7kL_9MW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-13_12,2024-06-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 mlxlogscore=999 suspectscore=0 impostorscore=0
+ phishscore=0 spamscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406130143
 
-On Thu, Jun 13, 2024 at 12:00:28AM +0530, Sibi Sankar wrote:
-> Document the SCMI QCOM Vendor protocol v1.0 bindings and the various memory
-> buses that can be monitored and scaled by memory latency governor hosted
-> on it.
+
+
+On 6/13/2024 3:05 AM, Dmitry Baryshkov wrote:
+> On Wed, Jun 12, 2024 at 06:17:37PM -0700, Abhinav Kumar wrote:
+>>
+>>
+>> On 6/12/2024 2:08 AM, Dmitry Baryshkov wrote:
+>>> On Wed, 12 Jun 2024 at 02:12, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 3/13/2024 5:02 PM, Dmitry Baryshkov wrote:
+>>>>> Since SmartDMA planes provide two rectangles, it is possible to use them
+>>>>> to drive two different DRM planes, first plane getting the rect_0,
+>>>>> another one using rect_1 of the same SSPP. The sharing algorithm is
+>>>>> pretty simple, it requires that each of the planes can be driven by the
+>>>>> single rectangle and only consequetive planes are considered.
+>>>>>
+>>>>
+>>>> consequetive - > consecutive
+>>>>
+>>>> Can you please explain why only consecutive planes are considered for this?
+>>>>
+>>>> So lets say we have 4 virtual planes : 0, 1, 2, 3
+>>>>
+>>>> It will try 0-1, 1-2, 2-3
+>>>>
+>>>> Because all planes are virtual, there are only 3 unique pairs to be
+>>>> considered? Otherwise technically 6 pairs are possible.
+>>>
+>>> An implementation that tries all 6 pairs taking the zpos and the
+>>> overlapping into account is appreciated. I cared for the simplest case
+>>> here. Yes, further optimizations can be implemented.
+>>>
+>>
+>> Ok got it. So you would like to build a better one on top of this.
+>> But I see one case where this has an issue or is not optimal. Pls see below.
 > 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
+> Yes, it is not optimal. This is the 'best possible effort' or 'best
+> simple effort' from my POV.
 > 
-> v1:
-> * Add missing bindings for the protocol. [Konrad/Dmitry]
-> * Use alternate bindings. [Dmitry/Konrad]
+>>
+>>>>
+>>>>
+>>>> General request:
+>>>>
+>>>> Patches 1-9 : Add support for using 2 SSPPs in one plane
+>>>> Patches 10-12 : Add support for using two rectangles of the same SSPP as
+>>>> two virtual planes
+>>>> Patch 13 : Can be pushed along with the first set.
+>>>>
+>>>> Can we break up this series in this way to make it easier to test and
+>>>> land the bulk of it in this cycle?
+>>>
+>>> Sure.
+>>>
+>>
+>> Thanks.
+>>
+>>>>
+>>>> I have some doubts on patches 10-12 and would like to spend more time
+>>>> reviewing and testing this. So I am trying to reduce the debt of patches
+>>>> we have been carrying as this is a tricky feature to simulate and test
+>>>> the cases.
+>>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> ---
+>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 128 +++++++++++++++++++---
+>>>>>     1 file changed, 112 insertions(+), 16 deletions(-)
+>>>>>
+>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>>> index cde20c1fa90d..2e1c544efc4a 100644
+>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>>>> @@ -886,10 +886,9 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>>>>>         return 0;
+>>>>>     }
+>>>>>
+>>>>> -static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+>>>>> -                                                struct dpu_sw_pipe_cfg *pipe_cfg,
+>>>>> -                                                const struct dpu_format *fmt,
+>>>>> -                                                uint32_t max_linewidth)
+>>>>> +static int dpu_plane_is_multirect_capable(struct dpu_sw_pipe *pipe,
+>>>>> +                                       struct dpu_sw_pipe_cfg *pipe_cfg,
+>>>>> +                                       const struct dpu_format *fmt)
+>>>>>     {
+>>>>>         if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+>>>>>             drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect))
+>>>>> @@ -901,6 +900,13 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+>>>>>         if (DPU_FORMAT_IS_YUV(fmt))
+>>>>>                 return false;
+>>>>>
+>>>>> +     return true;
+>>>>> +}
+>>>>> +
+>>>>> +static int dpu_plane_is_parallel_capable(struct dpu_sw_pipe_cfg *pipe_cfg,
+>>>>> +                                      const struct dpu_format *fmt,
+>>>>> +                                      uint32_t max_linewidth)
+>>>>> +{
+>>>>>         if (DPU_FORMAT_IS_UBWC(fmt) &&
+>>>>>             drm_rect_width(&pipe_cfg->src_rect) > max_linewidth / 2)
+>>>>>                 return false;
+>>>>> @@ -908,6 +914,82 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+>>>>>         return true;
+>>>>>     }
+>>>>>
+>>>>> +static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+>>>>> +                                                struct dpu_sw_pipe_cfg *pipe_cfg,
+>>>>> +                                                const struct dpu_format *fmt,
+>>>>> +                                                uint32_t max_linewidth)
+>>>>> +{
+>>>>> +     return dpu_plane_is_multirect_capable(pipe, pipe_cfg, fmt) &&
+>>>>> +             dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth);
+>>>>> +}
+>>>>> +
+>>>>> +
+>>>>> +static int dpu_plane_try_multirect(struct dpu_plane_state *pstate,
+>>>>> +                                struct dpu_plane_state *prev_pstate,
+>>>>> +                                const struct dpu_format *fmt,
+>>>>> +                                uint32_t max_linewidth)
+>>>>> +{
+>>>>> +     struct dpu_sw_pipe *pipe = &pstate->pipe;
+>>>>> +     struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+>>>>> +     struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>>>>> +     struct dpu_sw_pipe *prev_pipe = &prev_pstate->pipe;
+>>>>> +     struct dpu_sw_pipe_cfg *prev_pipe_cfg = &prev_pstate->pipe_cfg;
+>>>>> +     const struct dpu_format *prev_fmt =
+>>>>> +             to_dpu_format(msm_framebuffer_format(prev_pstate->base.fb));
+>>>>> +     u16 max_tile_height = 1;
+>>>>> +
+>>>>> +     if (prev_pstate->r_pipe.sspp != NULL ||
+>>>>> +         prev_pipe->multirect_mode != DPU_SSPP_MULTIRECT_NONE)
+>>>>> +             return false;
+>>>>> +
+>>>>> +     if (!dpu_plane_is_multirect_capable(pipe, pipe_cfg, fmt) ||
+>>>>> +         !dpu_plane_is_multirect_capable(prev_pipe, prev_pipe_cfg, prev_fmt) ||
+>>>>> +         !(test_bit(DPU_SSPP_SMART_DMA_V1, &prev_pipe->sspp->cap->features) ||
+>>>>> +           test_bit(DPU_SSPP_SMART_DMA_V2, &prev_pipe->sspp->cap->features)))
+>>>>
+>>>> This test_bit check should be absorbed into
+>>>> dpu_plane_is_multirect_capable()?
+>>>
+>>> Yep.
+>>>
+>>>>
+>>>>> +             return false;
+>>>>> +
+>>>>> +     if (DPU_FORMAT_IS_UBWC(fmt))
+>>>>> +             max_tile_height = max(max_tile_height, fmt->tile_height);
+>>>>> +
+>>>>> +     if (DPU_FORMAT_IS_UBWC(prev_fmt))
+>>>>> +             max_tile_height = max(max_tile_height, prev_fmt->tile_height);
+>>>>> +
+>>>>> +     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> +     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> +
+>>>>> +     r_pipe->sspp = NULL;
+>>>>> +
+>>>>> +     if (dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth) &&
+>>>>> +         dpu_plane_is_parallel_capable(prev_pipe_cfg, prev_fmt, max_linewidth) &&
+>>>>> +         (pipe_cfg->dst_rect.x1 >= prev_pipe_cfg->dst_rect.x2 ||
+>>>>> +          prev_pipe_cfg->dst_rect.x1 >= pipe_cfg->dst_rect.x2)) {
+>>>>
+>>>> Even if y1 > y2 or y2 > y1 but the separation is less than the  2 *
+>>>> max_tile_height, it can qualify for parallel fetch.
+>>>>
+>>>> So parallel fetch is possible not only in x direction but y direction as
+>>>> well as it will be fetched by different SSPPs.
+>>>
+>>> I think that's now what I see in the SDE driver.
+>>>
+>>
+>> hmm , okay, we can support that case once this one works without issues.
+>>
+>>>>
+>>>>> +             pipe->sspp = prev_pipe->sspp;
+>>>>> +
+>>>>> +             pipe->multirect_index = DPU_SSPP_RECT_1;
+>>>>> +             pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>>>>> +
+>>>>> +             prev_pipe->multirect_index = DPU_SSPP_RECT_0;
+>>>>> +             prev_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>>>>> +
+>>>>> +             return true;
+>>>>> +     }
+>>>>> +
+>>>>> +     if (pipe_cfg->dst_rect.y1 >= prev_pipe_cfg->dst_rect.y2 + 2 * max_tile_height ||
+>>>>> +         prev_pipe_cfg->dst_rect.y1 >= pipe_cfg->dst_rect.y2 + 2 * max_tile_height) {
+>>>>> +             pipe->sspp = prev_pipe->sspp;
+>>>>> +
+>>>>> +             pipe->multirect_index = DPU_SSPP_RECT_1;
+>>>>> +             pipe->multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
+>>>>> +
+>>>>> +             prev_pipe->multirect_index = DPU_SSPP_RECT_0;
+>>>>> +             prev_pipe->multirect_mode = DPU_SSPP_MULTIRECT_TIME_MX;
+>>>>> +
+>>>>> +             return true;
+>>>>> +     }
+>>>>> +
+>>>>> +     return false;
+>>>>> +}
+>>>>> +
+>>>>>     static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>>>>>                                         struct drm_atomic_state *state,
+>>>>>                                         const struct drm_crtc_state *crtc_state)
+>>>>> @@ -1098,13 +1180,14 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+>>>>>     static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>>>>>                                               struct dpu_global_state *global_state,
+>>>>>                                               struct drm_atomic_state *state,
+>>>>> -                                           struct drm_plane_state *plane_state)
+>>>>> +                                           struct drm_plane_state *plane_state,
+>>>>> +                                           struct drm_plane_state *prev_plane_state)
+>>>>>     {
+>>>>>         const struct drm_crtc_state *crtc_state = NULL;
+>>>>>         struct drm_plane *plane = plane_state->plane;
+>>>>>         struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+>>>>>         struct dpu_rm_sspp_requirements reqs;
+>>>>> -     struct dpu_plane_state *pstate;
+>>>>> +     struct dpu_plane_state *pstate, *prev_pstate;
+>>>>>         struct dpu_sw_pipe *pipe;
+>>>>>         struct dpu_sw_pipe *r_pipe;
+>>>>>         struct dpu_sw_pipe_cfg *pipe_cfg;
+>>>>> @@ -1117,6 +1200,7 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>>>>>                                                            plane_state->crtc);
+>>>>>
+>>>>>         pstate = to_dpu_plane_state(plane_state);
+>>>>> +     prev_pstate = prev_plane_state ? to_dpu_plane_state(prev_plane_state) : NULL;
+>>>>>         pipe = &pstate->pipe;
+>>>>>         r_pipe = &pstate->r_pipe;
+>>>>>         pipe_cfg = &pstate->pipe_cfg;
+>>>>> @@ -1137,19 +1221,27 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
+>>>>>
+>>>>>         max_linewidth = dpu_kms->catalog->caps->max_linewidth;
+>>>>>
+>>>>> -     pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
+>>>>> -     if (!pipe->sspp)
+>>>>> -             return -ENODEV;
+>>>>> -
+>>>>>         if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
+>>>>> -             pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>>>> -             pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>>> +             if (!prev_pstate ||
+>>>>> +                 !dpu_plane_try_multirect(pstate, prev_pstate, fmt, max_linewidth)) {
+>>>>
+>>>> This is a bit confusing to check esp since i am unable to apply this
+>>>> patch and check .... but...
+>>>
+>>> It was posted several months ago. No surprise that the source code has
+>>> evolved. Getting the patches reviewed in time would have helped them
+>>> to be applicable.
+>>>
+>>
+>> Yes, part of the delays for virtual plane was purely because the CB setup
+>> was down (both due to internal IT issues and general sc7280 being down) and
+>> I want to make sure this series is compositor-tested and not just modetest
+>> tested.
+>>
+>> But anyway, thats why I didnt request a rebase this time even though it was
+>> very hard to review the patch emails for this series.
 > 
->  .../bindings/firmware/arm,scmi.yaml           |  21 ++
->  .../bindings/soc/qcom/qcom,scmi-memlat.yaml   | 243 ++++++++++++++++++
->  include/dt-bindings/soc/qcom,scmi-vendor.h    |  22 ++
->  3 files changed, 286 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
->  create mode 100644 include/dt-bindings/soc/qcom,scmi-vendor.h
+> Review is review, testing is testing. Those are two different items.
+> It's perfectly fine to review a patchset and at the same time to add a
+> notice 'don't merge until fully validated on a hardware'.
 > 
-> diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-> index 7de2c29606e5..21e4da53d02c 100644
-> --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-> +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
-> @@ -278,6 +278,27 @@ properties:
->      required:
->        - reg
->  
-> +  protocol@80:
-> +    $ref: '#/$defs/protocol-node'
-> +    unevaluatedProperties: false
-> +
-> +    properties:
-> +      reg:
-> +        const: 0x80
-> +
-> +      memlat-dvfs:
 
-I don't see the purpose of this container node.
+Ack, I will use this notice from now on.
 
-> +        type: object
-> +        additionalProperties: false
-> +        description:
-> +          The list of all memory buses that can be monitored and scaled by the
-> +          memory latency governor running on the SCMI controller.
-> +
-> +        patternProperties:
-> +          '^memory-[0-9]$':
-> +            type: object
-> +            $ref: /schemas/soc/qcom/qcom,scmi-memlat.yaml#
+>>
+>>>> dpu_plane_atomic_check_nopipe() will set r_pipe_cfg if we are going to
+>>>> do multirect with two rectangles of the same sspp. Right?
+>>>
+>>> No. It sets r_pipe_cfg in all the cases.
+>>>
+>>
+>>  From what I see, we still have this check before a valid rectangle is set
+>> for the r_pipe_cfg
+>>
+>>   	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
+>>   	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) >
+>> max_mdp_clk_rate) {
+> 
+> I really don't see a contradiction here. Maybe I'm missing something.
+> 
+>>>> Which means r_pipe_cfg will be 0 if multirect is not possible with same
+>>>> SSPP. Thats why the else case of this either uses two SSPPs.
+>>>
+>>> No. It means that the plane can use a single rectangle of the SSPP.
+>>>
+>>
+>> OR that the plane does not need to use multirect because its rectangle width
+>> is < max_linewidth.
+> 
+> Isn't it the same fact, just expressed in different words?
+> 
+>>
+>>>>
+>>>> So why are we trying multirect with again with the two rectangles of the
+>>>> same SSPP as different planes? The result will be same right?
+>>>
+>>> No, if the width of r_pipe_cfg is 0, it means that this plane doesn't
+>>> need a second rectangle to be displayed. So we can try reusing the
+>>> SSPP from the previous plane.
+>>>
+>>
+>> Yes, agreed to this point that this plane doesnt need a second rectangle to
+>> be displayed as it will fit in one rectangle.
+>>
+>> And I see what you mean now, if the current plane needs only one rectangle
+>> to be used, you are trying to use the prev plane's SSPP's other rect?
+>>
+>> So lets say we have plane 1 and plane 2 in the list.
+>>
+>> Plane 1 has only one rect used and plane 2 also needs only one rect.
+>>
+>> Then you use plane 1's SSPP even for plane 2.
+> 
+> Yes!
+> 
+>> Cant you use an alternative check like !dpu_plane_is_wideplane_multirect()
+>> to make this condition clear?
+> 
+> No. There might be other conditions in play. So we really need to check
+> both pipe configurations together in order to determine.
+> 
 
-This schema needs to be at the level of the protocol node. See the i.MX 
-SCMI pinctrl patches for more details on what it should look like.
+What I meant was instead of doing !r_pip_cfg->rect maybe put that in a 
+helper API like dpu_plane_is_wideplane_multirect().
 
-> +            unevaluatedProperties: false
-> +
->  additionalProperties: false
->  
->  $defs:
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
-> new file mode 100644
-> index 000000000000..c6e3d163c4a3
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
-> @@ -0,0 +1,243 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/qcom/qcom,scmi-memlat.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SCMI Memory Bus nodes
-> +
-> +maintainers:
-> +  - Sibi Sankar <quic_sibis@quicinc.com>
-> +
-> +description: |
+It seems like to me the ideal way would have been that you have both the 
+checks in the same place rather than breaking it up into a different API 
+(check_no_pipe)
 
-Doesn't need '|' if no formatting.
+That way we could have done:
 
-> +  This binding describes the various memory buses that can be monitored and scaled
-> +  by memory latency governor running on the CPU Control Processor (SCMI controller).
-> +
-> +properties:
-> +  qcom,memory-type:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    enum: [0, 1, 2]
-> +    description:
+1) Try wide plane multirect
+2) if that does not qualify, try SSPP sharing multirect
+3) if both do not work, try dual SSPP
 
-Needs a '|' if you want your formatting preserved.
+Now, it seems like to me that perhaps the migration of setting the 
+r_pipe_cfg rect inside check_no_pipe() could have been avoided and 
+rather just kept that outside?
 
-> +      Memory Bus Identifier
-> +        0 = QCOM_MEM_TYPE_DDR
-> +        1 = QCOM_MEM_TYPE_LLCC
-> +        2 = QCOM_MEM_TYPE_DDR_QOS
-> +
-> +  freq-table-hz:
-> +    items:
-> +      items:
-> +        - description: Minimum frequency of the memory bus in Hz
-> +        - description: Maximum frequency of the memory bus in Hz
-> +
-> +patternProperties:
-> +  '^monitor-[0-9]$':
-> +    type: object
-> +    unevaluatedProperties: false
-> +    description:
-> +      The list of all monitors detecting the memory latency bound workloads using
-> +      various counters.
-> +
-> +    properties:
-> +      qcom,compute-type:
-> +        description:
-> +          Monitors of type compute perform bus dvfs based on a rudimentary CPU
-> +          frequency to memory frequency map.
-> +        type: boolean
-> +
-> +      qcom,ipm-ceil:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        description:
-> +          Monitors having this property perform bus dvfs based on the same
-> +          rudimentary table but the scaling is performed only if the calculated
-> +          IPM (Instruction Per Misses) exceeds the given ceiling.
-> +
-> +      qcom,cpulist:
-> +        $ref: /schemas/types.yaml#/definitions/phandle-array
-> +        description:
-> +          List of phandles to the CPUs nodes whose frequency and IPM are to be
-> +          monitored.
+>> Also dpu_plane_try_multirect() name is confusing then because you are trying
+>> multi-rect again to see if the SSPP can be shared and wide-plane multirect
+>> was not possible. So technically both are multirect, just dfferent
+>> applications.
+> 
+> dpu_plane_try_sharing_sspp() ?
+> 
 
-We have a standard property for this: cpus
+Yes, this one is better.
 
-> +
-> +      operating-points-v2: true
-> +      opp-table:
-> +        type: object
-> +
-> +    required:
-> +      - qcom,cpulist
-> +      - operating-points-v2
-> +      - opp-table
-> +
+>> That will make it clear that you are trying to use multi-rect for sharing
+>> SSPP.
+>>
+>> So there are essentially two use-cases of multi-rect:
+>>
+>> 1) Wide plane multi-rect
+>> 2) SSPP sharing multi-rect
+>>
+>> So this will make it clear.
+> 
+> Ideally we should be able to get rid of this distinction. Maybe in the
+> end we should just list all pipe configurations in some natural order
+> and then assign SSPP rectangles.
+> 
+>>
+>> Coming to the algorithm, I see one issue with this now.
+>>
+>> Lets say we have this list of SSPPs.
+>>
+>> DMA0 Vig0 Vig1
+> 
+> Fine.
+> 
+>>
+>> DMA0 has only rec0 used and rec1 is free.
+>>
+>> Vig0 needs both recs used.
+>>
+>> Vig1 needs only one rec.
+> 
+> And this is not fine. There are no fixed planes like DMA0, etc.
+> 
+> Let me rephrase that for you, if I got your example correctly. We have
+> three planes, first one is small RGB plane, so it requires only a single
+> rectangle, second plane requires both rectangles of VIG0.
+> Third plane could have fit into DMA1 / REC1, but using this algorithm we
+> end up allocating VIG1 for the third plane.
+> 
 
-> +    allOf:
-> +      - if:
-> +          properties:
-> +            qcom,compute-type: false
-> +        then:
-> +          required:
-> +            - qcom,ipm-ceil
-> +
-> +      - if:
-> +          properties:
-> +            qcom,ipm-ceil: false
-> +        then:
-> +          required:
-> +            - qcom,compute-type
+Correct, this is the scenario I was trying to explain.
 
-Isn't all this just:
+> 
+>> Here it will notice that its previous plane has both rects used and will not
+>> try the DMA0 even though it has one rect free and will end up using a new
+>> SSPP.
+>>
+>> Thats why considering only immediate pairs is not enough. All possible pairs
+>> will address this.
+> 
+> Yes, I know the algorithm is not optimal from the resource management
+> point of view. However:
+> 
+> - I was not sure how allocating two rectangles of the same SSPP for
+>    different stages will work across different hardware generations, etc.
+>    This algorithm doesn't have such an issue, because both rectangles are
+>    always using the same blending stage.
+> 
 
-oneOf:
-  - required: [ qcom,compute-type ]
-  - required: [ qcom,ipm-ceil ]
+hmm, I am not aware of any restrictions with this regard.
+
+> - Trying all possible combinations requires exponential time for the
+>    number of planes in use. The simple algorithm works in a linear time,
+>    while being good enough for the simplest cases.
+> 
+
+Okay, lets go ahead with this algorithm but I will try to improve this.
 
 
-> +
-> +required:
-> +  - qcom,memory-type
-> +  - freq-table-hz
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/soc/qcom,scmi-vendor.h>
-> +
-> +    firmware {
-> +        scmi {
-> +            compatible = "arm,scmi";
-> +            mboxes = <&cpucp_mbox 0>, <&cpucp_mbox 2>;
-> +            mbox-names = "tx", "rx";
-> +            shmem = <&cpu_scp_lpri0>, <&cpu_scp_lpri1>;
-> +
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            protocol@80 {
-> +                reg = <0x80>;
-> +
-> +                memlat-dvfs {
-> +                    memory-0 {
-> +                        qcom,memory-type = <QCOM_MEM_TYPE_DDR>;
-> +                        freq-table-hz = /bits/ 64 <200000000 4224000000>;
-> +
-> +                        monitor-0 {
-> +                            qcom,ipm-ceil = <20000000>;
-> +                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
-> +                                            &CPU8 &CPU9 &CPU10 &CPU11>;
-> +                            operating-points-v2 = <&memory0_monitor0_opp_table>;
-> +
-> +                            memory0_monitor0_opp_table: opp-table {
-> +                                compatible = "operating-points-v2";
-> +
-> +                                opp-999000000 {
-> +                                    opp-hz = /bits/ 64 <999000000 547000000>;
-> +                                };
-> +
-> +                                opp-1440000000 {
-> +                                    opp-hz = /bits/ 64 <1440000000 768000000>;
-> +                                };
-> +
-> +                                opp-1671000000 {
-> +                                    opp-hz = /bits/ 64 <1671000000 1555000000>;
-> +                                };
-> +
-> +                                opp-2189000000 {
-> +                                    opp-hz = /bits/ 64 <2189000000 2092000000>;
-> +                                };
-> +
-> +                                opp-2516000000 {
-> +                                    opp-hz = /bits/ 64 <2516000000 3187000000>;
-> +                                };
-> +
-> +                                opp-3860000000 {
-> +                                    opp-hz = /bits/ 64 <3860000000 4224000000>;
-> +                                };
-> +                            };
-> +                        };
-> +
-> +                        monitor-1 {
-> +                            qcom,compute-type;
-> +                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
-> +                                            &CPU8 &CPU9 &CPU10 &CPU11>;
-> +                            operating-points-v2 = <&memory0_monitor1_opp_table>;
-> +
-> +                            memory0_monitor1_opp_table: opp-table {
-> +                                compatible = "operating-points-v2";
-> +
-> +                                opp-1440000000 {
-> +                                        opp-hz = /bits/ 64 <1440000000 200000000>;
-> +                                };
-> +
-> +                                opp-2189000000 {
-> +                                        opp-hz = /bits/ 64 <2189000000 768000000>;
-> +                                };
-> +
-> +                                opp-2516000000 {
-> +                                        opp-hz = /bits/ 64 <2516000000 1555000000>;
-> +                                };
-> +
-> +                                opp-3860000000 {
-> +                                        opp-hz = /bits/ 64 <3860000000 4224000000>;
-> +                                };
-> +                            };
-> +                        };
-> +                    };
-> +
-> +                    memory-1 {
-> +                        qcom,memory-type = <QCOM_MEM_TYPE_LLCC>;
-> +                        freq-table-hz = /bits/ 64 <300000000 1067000000>;
-> +
-> +                        monitor-0 {
-> +                            qcom,ipm-ceil = <20000000>;
-> +                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
-> +                                            &CPU8 &CPU9 &CPU10 &CPU11>;
-> +                            operating-points-v2 = <&memory1_monitor0_opp_table>;
-> +
-> +                            memory1_monitor0_opp_table: opp-table {
-> +                                compatible = "operating-points-v2";
-> +
-> +                                opp-999000000 {
-> +                                    opp-hz = /bits/ 64 <999000000 300000000>;
-> +                                };
-> +
-> +                                opp-1440000000 {
-> +                                    opp-hz = /bits/ 64 <1440000000 466000000>;
-> +                                };
-> +
-> +                                opp-1671000000 {
-> +                                    opp-hz = /bits/ 64 <1671000000 600000000>;
-> +                                };
-> +
-> +                                opp-2189000000 {
-> +                                    opp-hz = /bits/ 64 <2189000000 806000000>;
-> +                                };
-> +
-> +                                opp-2516000000 {
-> +                                    opp-hz = /bits/ 64 <2516000000 933000000>;
-> +                                };
-> +
-> +                                opp-3860000000 {
-> +                                    opp-hz = /bits/ 64 <3860000000 1066000000>;
-> +                                };
-> +                            };
-> +                        };
-> +                    };
-> +
-> +                    memory-2 {
-> +                        qcom,memory-type = <QCOM_MEM_TYPE_DDR_QOS>;
-> +                        freq-table-hz = /bits/ 64 <QCOM_DDR_LEVEL_AUTO QCOM_DDR_LEVEL_PERF>;
-> +
-> +                        monitor-0 {
-> +                            qcom,ipm-ceil = <20000000>;
-> +                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
-> +                                            &CPU8 &CPU9 &CPU10 &CPU11>;
-> +                            operating-points-v2 = <&memory2_monitor0_opp_table>;
-> +
-> +                            memory2_monitor0_opp_table: opp-table {
-> +                                compatible = "operating-points-v2";
-> +
-> +                                opp-2189000000 {
-> +                                    opp-hz = /bits/ 64 <2189000000>;
-> +                                    opp-level = <QCOM_DDR_LEVEL_AUTO>;
-> +                                };
-> +
-> +                                opp-3860000000 {
-> +                                    opp-hz = /bits/ 64 <3860000000>;
-> +                                    opp-level = <QCOM_DDR_LEVEL_PERF>;
-> +                                };
-> +                            };
-> +                        };
-> +                    };
-> +                };
-> +            };
-> +        };
-> +    };
-> diff --git a/include/dt-bindings/soc/qcom,scmi-vendor.h b/include/dt-bindings/soc/qcom,scmi-vendor.h
-> new file mode 100644
-> index 000000000000..7ae8d8d5623b
-> --- /dev/null
-> +++ b/include/dt-bindings/soc/qcom,scmi-vendor.h
-> @@ -0,0 +1,22 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +#ifndef __DT_BINDINGS_QCOM_SCMI_VENDOR_H
-> +#define __DT_BINDINGS_QCOM_SCMI_VENDOR
-> +
-> +/* Memory IDs */
-> +#define QCOM_MEM_TYPE_DDR	0x0
-> +#define QCOM_MEM_TYPE_LLCC	0x1
-> +#define QCOM_MEM_TYPE_DDR_QOS	0x2
-> +
-> +/*
-> + * QCOM_MEM_TYPE_DDR_QOS supports the following states.
-> + *
-> + * %QCOM_DDR_LEVEL_AUTO:	DDR operates with LPM enabled
-> + * %QCOM_DDR_LEVEL_PERF:	DDR operates with LPM disabled
-> + */
-> +#define QCOM_DDR_LEVEL_AUTO	0x0
-> +#define QCOM_DDR_LEVEL_PERF	0x1
-> +
-> +#endif /* __DT_BINDINGS_QCOM_SCMI_VENDOR_H */
-> -- 
-> 2.34.1
 > 
 
