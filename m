@@ -1,97 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-22596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BC9790781A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:19:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28112907846
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:28:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFA3028498C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 16:19:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD4ED28334C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 16:28:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5D7D1448E6;
-	Thu, 13 Jun 2024 16:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3CDB1474AF;
+	Thu, 13 Jun 2024 16:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="2wCXN2VC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H4joEmRu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6282926AE4;
-	Thu, 13 Jun 2024 16:19:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE9C12D757;
+	Thu, 13 Jun 2024 16:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718295563; cv=none; b=GmWjfnjJX11saRIqUxb+UMIfr67hzlhG1uvfP9BjEQPqMwbMQT22EzR+0PoT3tktFE+xvgxrWAdVlUXtuY+qzSF0GJaoaTRrWijHM6iSTQJ7QaiFwwQDfcwhsXsevT7GzbrympPGSijBtXPM+LWbUi9NuucMlws7rqImbp2q6+o=
+	t=1718296131; cv=none; b=r99auG/MEILIqt7yvdeV+RHxIAVJZ5lUr2wXueLKRrdxzllgdb/Hfxe3eKcG92XFctMEAzleCaEqDI18TGabFa0y/cLHwnnNJph8byU0feFcvo5ZN8Xb8oW971XvoaS0vzBIhyNfrAcFWNNH/fXwRInZlDuvXvbORE0GIjXUj7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718295563; c=relaxed/simple;
-	bh=WpIiOcbHwANqWVqIm5ExegY6R8ZGDJCuGoZEPhc3ft4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ix/NO2cM8wlZCPKVYkJ8+8X0FAZR591MkFE+BGAOZyuZWf4J/sIZ2kYI6IDeSXoJmWMVAsDKrMZU7xvZZQv8xlDVM+3kmZyyQQ0aumGWfZ0jZXOXIRwUBXAk5r3OmvpUUrMRWyzAn3g6vtWGomY3Dc+3llKdR7uK6OE+Zm7PINQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=2wCXN2VC; arc=none smtp.client-ip=199.89.1.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 008.lax.mailroute.net (Postfix) with ESMTP id 4W0SKP5xgrz6Cnk9V;
-	Thu, 13 Jun 2024 16:19:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1718295559; x=1720887560; bh=EqUKSXP8U8eHmlIVt2N2fY/w
-	HbGNwccAvAZ1mcqBVuk=; b=2wCXN2VCrLeXob49GZxpU4hKceCTerxYyRVIGhxU
-	ZieUosDarLgSXfoyldgJ/5EH+1IC9OVlwfGNB1ZGjUglJDLj9m8TJpVxcd1aKNhi
-	VyQuh6SET0wRIE9VmNoSpQMEj9Ftl6mtl+XtUZ15DISzW1U8nTQxg/gMfuQO2u2N
-	J7g8ThqhX1B6ZafBPokbmmck4jd5rIZbpT35wxlZWc9vfGO1LR9L+wubE1K7kfgc
-	SPczzpJYsnIBM1UxhEHgbEf2t3gHmrDod40tsLuG0CiGgv22q0kO6Bl81EI39KST
-	U9asvy4lp2FYbQhv28/1LHHOcNBwb3PbCl7h8vlqO+mtMQ==
-X-Virus-Scanned: by MailRoute
-Received: from 008.lax.mailroute.net ([127.0.0.1])
- by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id RgN825rfIE8z; Thu, 13 Jun 2024 16:19:19 +0000 (UTC)
-Received: from [IPV6:2620:0:1000:5e10:c543:208b:8ce4:f55a] (unknown [104.132.0.90])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4W0SKK6mj8z6Cnk9Y;
-	Thu, 13 Jun 2024 16:19:17 +0000 (UTC)
-Message-ID: <132dedc1-ee11-44d8-b684-0ffbf994d164@acm.org>
-Date: Thu, 13 Jun 2024 09:19:16 -0700
+	s=arc-20240116; t=1718296131; c=relaxed/simple;
+	bh=KYCv3hQWoN1j7XUdm21Zt9d+voXjs1ywP3w3OudzhlI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FKc6LZ2OvP5E/rfwPaEhaAPTpDpnh0w+ybFPvK1qXYNYdNzYLWcdtxaEw6SZczggdalOTSnYYGZuHFpDJbJVjZ/o4r8XpDy9u/jH5RgDw0Bu3sIjKYyhrnGJJyvzW/xi+O2Q8jC8lty1vlyEZNyD92okbLFiaC3CaV6lRdJB0ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H4joEmRu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042F3C2BBFC;
+	Thu, 13 Jun 2024 16:28:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718296131;
+	bh=KYCv3hQWoN1j7XUdm21Zt9d+voXjs1ywP3w3OudzhlI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=H4joEmRucqYlJcLIeksv8iywzdSmaJd9cqa6dJAixBXwVFSpFyzU8YJKhU7pJ+gvG
+	 vLpL8FKNw8KThaS4h2m2IK1K7FlmlKTJvFmstu1DTz23syMuoDKTf6QUkXpAkgLcJc
+	 Jn8jWbVFNAkx7Oj4RdzOfyy5pioXEmc1GkDKRGR+Y85im0LON069CBynHJZofgUHFx
+	 tZEc/Es98a5g1yIRiSZHRPs2Kid8Plcpl08FKCEEsix46V962zyXwnrs6bPZxUWp32
+	 BC+DtiOl/bHQE4ObYTqhqNpnz89c/qkJfiuYyLFZYG8+NqXDjhYP3N1U9eldc1E0dp
+	 /jTk35oN/xJ4g==
+Date: Thu, 13 Jun 2024 10:28:48 -0600
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Odelu Kukatla <quic_okukatla@quicinc.com>
+Cc: quic_mdtipton@quicinc.com, linux-arm-msm@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	"Gustavo A . R . Silva" <gustavoars@kernel.org>,
+	devicetree@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	linux-pm@vger.kernel.org, Kees Cook <keescook@chromium.org>,
+	quic_rlaggysh@quicinc.com, Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Georgi Djakov <djakov@kernel.org>
+Subject: Re: [PATCH v5 3/4] dt-bindings: interconnect: add clock property to
+ enable QOS on SC7280
+Message-ID: <171829612654.1988993.3785634347630091942.robh@kernel.org>
+References: <20240607173927.26321-1-quic_okukatla@quicinc.com>
+ <20240607173927.26321-4-quic_okukatla@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scsi: ufs: qcom: add missing MODULE_DESCRIPTION() macro
-To: Jeff Johnson <quic_jjohnson@quicinc.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Can Guo <quic_cang@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
-References: <20240612-md-drivers-ufs-host-v1-1-df35924685b8@quicinc.com>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20240612-md-drivers-ufs-host-v1-1-df35924685b8@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240607173927.26321-4-quic_okukatla@quicinc.com>
 
-On 6/12/24 9:46 PM, Jeff Johnson wrote:
-> +MODULE_DESCRIPTION("QCOM specific hooks to UFS controller platform driver");
->   MODULE_LICENSE("GPL v2");
 
-That sounds weird to me. I think we are better of with no module
-description than with the above description.
+On Fri, 07 Jun 2024 23:09:26 +0530, Odelu Kukatla wrote:
+> Add clock property to enable the clocks required for accessing
+> QoS configuration registers.
+> 
+> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+> ---
+>  .../interconnect/qcom,sc7280-rpmh.yaml        | 53 +++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+> 
 
-How about the following description?
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-"Qualcomm UFS host controller driver".
-
-Thanks,
-
-Bart.
 
