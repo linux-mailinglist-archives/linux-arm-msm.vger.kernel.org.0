@@ -1,134 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-22609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BD5A90793B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 19:03:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBDE2907944
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 19:05:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA07928149A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 17:03:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48071B21C88
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 17:05:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B2DE1474D8;
-	Thu, 13 Jun 2024 17:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DDFD149C5A;
+	Thu, 13 Jun 2024 17:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WcKzJj41"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ru3YE+9g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BB14C6B;
-	Thu, 13 Jun 2024 17:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09814C6B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 17:05:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718298191; cv=none; b=GKlgLo0HGDiQ9wPgwBNoUaaiyLX3Tpl3jSURmQxgFR0Gtu0Gk1gKVE+zzDrcfUf2Vbq1YcTvwAQPkX0L74GMXiI81P+unK+4e9SVE7WTJJMjovKX4dXr3crj5DzjFa/HJQx7zqeKp+RrMuwVPlQXFYxmwiZN/lJK+f6xrAnK2So=
+	t=1718298311; cv=none; b=Vj3ohuA0fiY518RKvA7Q8ywfK2fcB6rN3SlcQa2gc3Vb4Ul+uRVPeyTxcNmuaeDo1bdZv04tLUJjZgRVYjfLZbGIHti1tqAYdhSfSxtu9IHjCsEPjjGboOYa/bN/gFj4blWK1NQpb5VAPMzscZNoLRFviBNXNMFK/11hPLiGdec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718298191; c=relaxed/simple;
-	bh=hY9/IYS4RiaVb9Xx3WBRsafNA7SrRdXdyOsBHATd91g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Vm09aBbfmG4ZKgtio4JHYf28tgn9Gd3TRdANoV78fnqHQnYlpZvhHg4k81Gcy9Q4A5Ch5dO4CXJ9VxA8qtLK6Av/OgI5eTkmI5iGzJVYQMwQchfmfgiewEDWXrw3BvW0ihmnYoN8sH3V6SrLNxFQXuM2Os2KfurTM5T6/xMVl/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WcKzJj41; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45D8wv8c001101;
-	Thu, 13 Jun 2024 17:02:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c0AIAamQnbcEzfp+dXj5IacM2uTRQ2jNA9dY7DbMN+A=; b=WcKzJj41XyOtLfE7
-	+8ZVBk13tD0YW9HMCXa9aY9nTAY1MYnysoT48Ps7DhabmGiJUxYGJCidMb7ZYVXv
-	t8KoE4cnGc2DePbpyQVZdIhDqgfJuH/8KrXV4padHI4C5RTC+bd82HWo06rPqGtB
-	JKCb+5imbzjgvnEn+o19tE5vfqEMGIiDKsqjz0mIpm8jNrEfNPd+8M97hEl+1YSR
-	+k1JEe02OVKc3atkQMQefn4VON07WZYG+edkeJK5gr7NCtmsJWtd4t2VoabejB1R
-	mwmw2DacfeDNhDq1QzYECGUF6ofKWI16EgiiN3eJIfQtM6VrgHGbO1rGPJCYsHDD
-	qA3hqA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ypp87y9yb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Jun 2024 17:02:58 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45DH2ueT007987
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Jun 2024 17:02:56 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 13 Jun
- 2024 10:02:51 -0700
-Message-ID: <5df5dc6b-872f-34c5-a6d2-a64f9c881193@quicinc.com>
-Date: Thu, 13 Jun 2024 22:32:48 +0530
+	s=arc-20240116; t=1718298311; c=relaxed/simple;
+	bh=V6OI1zdDevRN8dC7/6y23Sk+GAv4kSLgtWhdz6coRuE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aLB77t5Iwm1F6xMPiswm3p9FS5oA3j3M5kCI9T4OJCnYtHb08NT9JfPBX9jRIU5cKTM6RsFpT7dbGDyUW82d5cmo5Z1IwQyxKB8oAhIClhezKEqNde5bRwnaG6TdNguDMTKegy93q3k+fZPIOJRFV4TQdgka3z3U4zNngCrWM1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ru3YE+9g; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52bc335e49aso1544418e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 10:05:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718298307; x=1718903107; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5s81hRJV5Zx9U5qH2vAOJUfHtOUwvEenRjG7i+7iL4g=;
+        b=ru3YE+9gmEltZEuzUjOhJ4zSS9yrqDPsBeaKGgi638skUqP+uU/iZXh9MD/UR/4E/U
+         7HUtQcbkpgMZydT9VSAnpPyE8KpGZNhW0Fm8Mgu2yPgXlQB2moWA2fEy/ntuJrl0oQhX
+         j+Hn6AL7mYDqjlK/wtpR11pX0znuUU8qw4tRQ8hmNh1V2u61rZchqpFCGk7ZM/u+pL9S
+         EnrzjE65gIFQfcsQJci3rSxpfRR3iKmh0ja/yW+kTBPWXhQqO0gjEXeKJU9g8eQHXoEJ
+         E93rBRbb7O3B1Gb5OAHGywA3Upwpsg7rFIhrkmDrG8kGz+06UqwU3Bp2Mmi701Et2sDn
+         C7bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718298307; x=1718903107;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5s81hRJV5Zx9U5qH2vAOJUfHtOUwvEenRjG7i+7iL4g=;
+        b=e/oy3nUpFwlrV6qtCflvtj0Sf6/k4zUJvrZ7FyfYnCIsBM/TuN3txPoSTXC/pz13R9
+         7FdTdsY0U3cSk3pDPH17Steb2oYTaXPvoGmQ0riYqZdp7p9Bv68CkfKFgNoLK6a1u9Fk
+         nbMQM+HjauUwRrH/OkMa36xrMEUZomWZh8b+HRqnanbG3izO0eC6kJKRW13tFfcdJx8h
+         EBZ9Wxw0qsi+7S+xJzrp7izQYBWvQw2uR/wLvCUPj9OURB1+S35V1NgFG/KzdLP9KUC2
+         b9p6qSmrdoGhre44dwzNDUi1Y9JrzIGCm7tNzdWPnCN/66ARxs3pMc04eyHyWxugD7iO
+         WMGA==
+X-Gm-Message-State: AOJu0YzHSzp35O6pcVrGrzlTHXwJyTTYxJAL7hAqbp3VfbOtg8J0MSyt
+	4Sqdvw8YtmHG1KeiEch0yPLik8tH9E7ZX4406I64Xe6KcQjeH+qCe5YaWfifMzA=
+X-Google-Smtp-Source: AGHT+IHKrwhQZ9vxGVegzTyWBoWr/raE8v/Q+V1t2Hug77JcE2x2GspnZP88cLa5rhHl6EyTzJWpaQ==
+X-Received: by 2002:a05:6512:4819:b0:52b:ef61:cb73 with SMTP id 2adb3069b0e04-52ca6e6c91emr240352e87.36.1718298306813;
+        Thu, 13 Jun 2024 10:05:06 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca2825733sm287312e87.60.2024.06.13.10.05.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Jun 2024 10:05:06 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 0/8] drm/msm/dpu: handle non-default TE source pins
+Date: Thu, 13 Jun 2024 20:05:03 +0300
+Message-Id: <20240613-dpu-handle-te-signal-v2-0-67a0116b5366@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/4] soc: qcom: icc-bwmon: Allow for interrupts to be
- shared across instances
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <djakov@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-        <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <abel.vesa@linaro.org>
-References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
- <20240604011157.2358019-3-quic_sibis@quicinc.com>
- <5e5f052b-df59-47fb-aed0-10b4f980f151@linaro.org>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <5e5f052b-df59-47fb-aed0-10b4f980f151@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WtebBA6V2IZQ6CERDgXW4_tBdtnP1I82
-X-Proofpoint-ORIG-GUID: WtebBA6V2IZQ6CERDgXW4_tBdtnP1I82
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-13_11,2024-06-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- spamscore=0 suspectscore=0 mlxlogscore=483 priorityscore=1501 adultscore=0
- bulkscore=0 mlxscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406130122
+X-B4-Tracking: v=1; b=H4sIAL8ma2YC/22NwQ6CMBBEf4Xs2TXtgoic/A/DodAFNiEtaZFoC
+ P9uJR49vpnMmw0iB+EIdbZB4FWieJeAThl0o3EDo9jEQIoKddEF2vmJqbAT48IYZXBmworKMu8
+ Uad1aSNM5cC+vQ/toEo8SFx/ex8uqv+lPSOq/cNWosKdr3hZkVHXr7pM4E/zZhwGafd8/m4FX0
+ LkAAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2378;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=V6OI1zdDevRN8dC7/6y23Sk+GAv4kSLgtWhdz6coRuE=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmaybAGNxJLg/ANFwNRgQ8s2d4ZmCLfW5rXeILz
+ SUGetZ0ls+JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZmsmwAAKCRCLPIo+Aiko
+ 1dH7B/43p0LbaZKdVSHQbQqKu67/DTQgos56C68bQHGXcvDavLr8Ks81BXvV7JqhBwDeLNIew8Z
+ ROcjWND6fsJ/kTY5bbqwX7mVpj3bY6w/g5J3Jv/WwnY/+IpWZoRvARy0dLpLRwn+s40wb0LctH/
+ cPZJh/3+LDjgw+6FjoKKPim+btsmJcsNeJc/a7l1FjGIR98x67SpklgZfbpilXtIEMhsDlOTZzi
+ YWVnOAccNBhuQ49f0vCzq9ef3CLyJ5izA/2swjKlKgUfVRwsju/qwscUsYeepx9AjMoWfztDuGN
+ WjzW1PhDp34SXsKgTvZoslAkX7tszVGyeSQElDhXi60EZVBE
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
+Command-mode DSI panels need to signal the display controlller when
+vsync happens, so that the device can start sending the next frame. Some
+devices (Google Pixel 3) use a non-default pin, so additional
+configuration is required. Add a way to specify this information in DT
+and handle it in the DSI and DPU drivers.
 
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Changes in v2:
+- In DT bindings renamed mdp_gpioN to mdp_vsync_p/_s/_e per pins name (Abhinav)
+- Extended bindings to include default: mdp_vsync_p (Rob)
+- Renamed dpu_hw_setup_vsync_source() and
+  dpu_hw_setup_vsync_source_and_vsync_sel() to match the implementation
+  (Abhinav)
+- Link to v1: https://lore.kernel.org/r/20240520-dpu-handle-te-signal-v1-0-f273b42a089c@linaro.org
 
-On 6/4/24 12:16, Krzysztof Kozlowski wrote:
-> On 04/06/2024 03:11, Sibi Sankar wrote:
->> The multiple BWMONv4 instances available on the X1E80100 SoC use the
->> same interrupt number. Mark them are shared to allow for re-use across
->> instances.
+---
+Dmitry Baryshkov (8):
+      dt-bindings: display/msm/dsi: allow specifying TE source
+      drm/msm/dpu: convert vsync source defines to the enum
+      drm/msm/dsi: drop unused GPIOs handling
+      drm/msm/dpu: pull the is_cmd_mode out of _dpu_encoder_update_vsync_source()
+      drm/msm/dpu: rework vsync_source handling
+      drm/msm/dsi: parse vsync source from device tree
+      drm/msm/dpu: support setting the TE source
+      drm/msm/dpu: rename dpu_hw_setup_vsync_source functions
 
-Hey Krzysztof,
+ .../bindings/display/msm/dsi-controller-main.yaml  | 17 ++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 11 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  5 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        | 26 ++++++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         | 14 +++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h         |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 44 ++++++++++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi.h                      |  1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 | 48 +++++-----------------
+ drivers/gpu/drm/msm/dsi/dsi_manager.c              |  5 +++
+ drivers/gpu/drm/msm/msm_drv.h                      |  6 +++
+ 13 files changed, 114 insertions(+), 69 deletions(-)
+---
+base-commit: 03d44168cbd7fc57d5de56a3730427db758fc7f6
+change-id: 20240514-dpu-handle-te-signal-82663c0211bd
 
-Thanks for taking time to review the series :)
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 
-> Would be nice if you also mention you checked that it is safe to have
-> both devm and shared interrupts (so you investigated possibility of race
-> on exit path).
-
-I didn't see any problems with devm being used with SHARED when I posted
-it out. After your review comments I went back again to vett the exit
-path for races and ran into an pre-existing splat [1] but the bwmon
-instances work as expected on module removal/re-insertion.
-
-[1] - 
-https://lore.kernel.org/lkml/20240613164506.982068-1-quic_sibis@quicinc.com/
-
--Sibi
-
-> 
-> Best regards,
-> Krzysztof
-> 
 
