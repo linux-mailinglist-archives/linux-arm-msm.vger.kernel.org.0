@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-22649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 924FD907F05
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 00:37:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4D95907F02
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 00:37:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1700B1F222DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 22:37:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F4812855AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 22:37:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0A7913B5AD;
-	Thu, 13 Jun 2024 22:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 504A014D294;
+	Thu, 13 Jun 2024 22:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RFIoNNBD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xtW+pyUK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D152215533C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 22:36:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C7615534F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 22:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718318190; cv=none; b=DKIlGZ8KC+B8hhmDpCsznmAhm0Q28+7NK6Jh4suGgXJRLUR5HoRnv9Izz/xnXwSr2Lrra9p1txXOmdp7yhdTkkCHNrrnGdI3A41NZct2FojsSCYxKAwtknTju/LPhoU980BnrsHEjefxZtqSDwtP/VJOhKW0zwTIIxOH80+3afw=
+	t=1718318188; cv=none; b=JZu26vHNjVFIVCmlk9VkOJbXXD6XtJnxks6AcMmZv4bk8Ltt7B+Iaj1Hp9Dr8yX9NjdaWVPcvXDFdfYsGA7TgfTiRzp9bnktTsOXPV74tYOKOPmnVdu2Oc75RYDMb5JPvfAZWFM2mpgjkUAWvRdH6cPAIMTH0I3HlWuzQ2Jfiac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718318190; c=relaxed/simple;
-	bh=pZ7oPyGWmHw6VCc6/ttt0AWUU5hsQuBfozUKcZ4IBFY=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iMQa7Y0sKFwRbF9KB26yDj2bouYcdgSmOC7nhaddCcex9me8GrvY0a1Ghahftawcj7SJR1+kgwxKtaMDct+5KI2hqgVxOqvcuGjQ/hmVJY3bxcls9TnNTHQLfunZg7AC/73kg1VuJrgYnddVUf2hRdcHLOq5wbbKSUzpQB6I4xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RFIoNNBD; arc=none smtp.client-ip=209.85.208.179
+	s=arc-20240116; t=1718318188; c=relaxed/simple;
+	bh=k5AxVBAg751483RoZdOy+nlKC8NcuvgV+fnhcffv2Yw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Naj31X0Jux4Z4spNr9VZScpDlXLxPRgriFxse4Gj1iRodEUSYOFZ/Y8w27a90dE4pu7ADUJ0/S9ygCvi0um4+v5+M/ABeakLjkevBM4o197kiSUEwZZZkQIioNYkIcGcVP7FV0bDnRulXXAN9IUymuhqr1MeCWeMt0NpazFEC2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xtW+pyUK; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2e724bc466fso17750341fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 15:36:25 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2eaa89464a3so15668951fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 15:36:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1718318184; x=1718922984; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9UIwtLBs13vfBF3EvZYQsM2dOhlesEX9MFYzkb8adGI=;
-        b=RFIoNNBDbCLGGbR3zCLOCuwiQ6ZGEnHwZxxYjtp2WM2harAyyEkpXNRzRY/N9sK5f1
-         306gXJlnMYqot1qXMgoIftOQVj4RtaFk7vMEawmTG4mEJOI1fh08uxLntBpyxZJft0+9
-         vRohjF13doLFSjQ38Z5SvUMLYYG2NQBCELMAEzX1NuHK8mmXYkrYdedDcKExJr1XBWDk
-         r88BpR4KO2cYuiRvc5OgyYpwvhnSHlzP3etPUXUU/pMsSFmBNlE/Vb3iS37p7fKxvpEb
-         NndUisPHoG9s/JjTthErh+a62TXyPsx6fBJ71BhRdHIX9S0toFKM9oEOCyBLhK/uTI2Q
-         19KA==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d7jMEkdSEDz299yHKQKIQ1jrFL+ApUnOqabXFYC3R64=;
+        b=xtW+pyUKt6KsgASysRNgI0+SvkXHR1Kx8pcCK32azvMbRv6MSo9tP3QD+R6OD381uT
+         vC7MVtUT0Yhtvzo9ozVp3bijOtDllT5RkOXZghE+QB6EmIt+ue8KjVKq9Hp9gax2b1cL
+         k1wUGsuAFd4hF/5RolZ81No1uaud8j1NpnJJRbAVCPj0iSj1ojoVfhEVjROzcXygh7hB
+         QAHyn4+o/yaUzZf5MWzU440xm6eeFWn2qMNW9lrwSQmqPQ1Uf06FAS9x93Be2DiHqjBV
+         Vl5YEE+KvIn+dlE8n2cLYt50w9PePLpskoenr/SApUS9fm6RKi45igqBci83ZzLBMEfy
+         pL4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1718318184; x=1718922984;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9UIwtLBs13vfBF3EvZYQsM2dOhlesEX9MFYzkb8adGI=;
-        b=kZ9cu2JGpge2Wx6QpZvP8Dy7iHntkjrGwXizYbxOwYOIzE6Zva/vV0IJCZ663UL6i9
-         DpBN/jBrryFp487E6D+nO09NdyzVFLZY3ricqzj8aMiIVkUqa9rxysAVYLuek4ISNPTW
-         ZwqimUVQkPo+EC94M3n2f2vlPGLBJSQQ+THIQ+c1v9SvvWdaSBbo3ZNba+2NyEJyUe+S
-         tgaMG6hyY0lRkRnZS09AP8FwpwaQkcOigIswWNJeSsqpOY6MLcLil2TZN/cmAhM1eq24
-         ElltoxwaBjQh1vcGVJSGNv4BRhHugj+1JCu05Wkmpug9jwc0cvhirI4Ri2XGnTJ0nL6C
-         8iDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXUjC6IHUdS2dvT+un4nvbhwjJyxxPAptD2TNyRpOQgjNfhvNkt2o3PUE7cCpj7RvYB0O0L62uo8EPIw5LeKZfOVf7dj1jSQU4Kt/tD3A==
-X-Gm-Message-State: AOJu0YxwSfzOhroAc3Kx58dsLDgMp6dJLfMp6bN4c+tTnMdyJIme+i7u
-	j31EJAat/UhoH3NXdmijZ6dM7odCyZ3bxVnkTgWsJR71/5VwC3LZD+O9dJFJyGkd6hoPsH5lkol
-	m0QY=
-X-Google-Smtp-Source: AGHT+IGbEE3Un1z7f0FGQa3HX31yMrNdSY9J9K8qSEK+iPNDl2FkjBxgCuNEMC/b1GBxBKK2Yq+CNQ==
-X-Received: by 2002:a2e:9bc8:0:b0:2eb:d673:bf86 with SMTP id 38308e7fff4ca-2ec0e5d1834mr7855851fa.25.1718318183880;
-        Thu, 13 Jun 2024 15:36:23 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d7jMEkdSEDz299yHKQKIQ1jrFL+ApUnOqabXFYC3R64=;
+        b=YUcdx4pq1uSzQlDXiUH1fcOchDewvZJGb/CstIIHGzYVoxaLCxVnpGVES3CjRVqn8F
+         8SJqfzBFa92zBbtkv4poHKhCXTliypsUWrqCXJLmTIfsdf5sFtQdVce/LPqEuA3oWNsV
+         glkV3V2Xtj967x42z/AKM5eYEQ/HGGSOYGf9SkMyJOJ1hMfyAh5BMQHZMo2ObFV68JAJ
+         Veitg2D1OOFZUeBf7wak6OvGuHN76GCYVwInTtvUnh45+kqCFogorn5n/Ec+zKRU7IXg
+         DwDMyPCvl7uB3Jqam8R8Eb0rkhopS6FNDXAi/Z97KQ+TXFDN7ZLUQfZz55ad6GBirW2C
+         Ro+A==
+X-Forwarded-Encrypted: i=1; AJvYcCXkWO7I1cfXIq0Q0oCkvz8cU5lD4jU/M1Otdq6TLvpJi8q1U25jP01jUjlsgbOjF4K327R7lBTJwEt3HTGX5VrfS4iIHKneBhGp/xcpdA==
+X-Gm-Message-State: AOJu0YyetmE0pkPJZOZJBAgYEhODUxXwe/lQE0bbKnVnmP8eD97fvQiE
+	7MaKnSiV5BVfk35DAxQWfIrhUzJbc8j8Gj//kEP7nBpvlFraMt3vdttLBNGELtM=
+X-Google-Smtp-Source: AGHT+IFgPLu1htnP2BmoSQebGt9vmn8eoCydTJyPqNrbYznyW63TchUlHfy0rHpjJiXh+A/1b1oLlQ==
+X-Received: by 2002:a2e:7018:0:b0:2ea:e56c:f898 with SMTP id 38308e7fff4ca-2ec0e600462mr6546041fa.33.1718318184487;
+        Thu, 13 Jun 2024 15:36:24 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c04a08sm3865191fa.29.2024.06.13.15.36.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jun 2024 15:36:23 -0700 (PDT)
+        Thu, 13 Jun 2024 15:36:24 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v3 0/9] drm/msm/dpu: be more friendly to X.org
-Date: Fri, 14 Jun 2024 01:36:01 +0300
-Message-Id: <20240614-dpu-mode-config-width-v3-0-29ec4069c99b@linaro.org>
+Date: Fri, 14 Jun 2024 01:36:02 +0300
+Subject: [PATCH v3 1/9] drm/msm/dpu: check for overflow in
+ _dpu_crtc_setup_lm_bounds()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,10 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFF0a2YC/3XNTQ6CMBCG4auQrh3TH1vQlfcwLgptYRKlpMWqI
- dzdQmKMC5bvl8wzE4k2oI3kVEwk2IQRfZ9D7ArSdLpvLaDJTTjlBypYBWZ4wN0bC43vHbbwRDN
- 2oLgyoim1kVyTfDsE6/C1updr7g7j6MN7fZPYsn7F44aYGFAw1FlVu4rVjp1v2Ovg9z60ZCET/
- zGKii2GZ4Yp7SSnspRa/THzPH8AaQKlWAIBAAA=
+Message-Id: <20240614-dpu-mode-config-width-v3-1-29ec4069c99b@linaro.org>
+References: <20240614-dpu-mode-config-width-v3-0-29ec4069c99b@linaro.org>
+In-Reply-To: <20240614-dpu-mode-config-width-v3-0-29ec4069c99b@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
  Marijn Suijten <marijn.suijten@somainline.org>, 
@@ -90,69 +90,85 @@ Cc: Abel Vesa <abel.vesa@linaro.org>,
  Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2446;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2430;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=pZ7oPyGWmHw6VCc6/ttt0AWUU5hsQuBfozUKcZ4IBFY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBma3RlUNVR1sM459N6ky8gwjmZz7CGIh1kqkdYd
- uYvedHtUMKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZmt0ZQAKCRCLPIo+Aiko
- 1WspB/9G/JRw0RyUWD0jXdHNlUrSkbWeg5nxsvnZ9tQPDlxWV80K0DtwJBS2EO9E4CqEJ8bGbDY
- UjLg17MoCmJzl09gd0VetrRJbAECAcLIqtEbkXy9i033RtMj5nUq8nhwVt+WXyo8bM4LwqT5p8K
- wS+fjO9m8tgTA/dMIvpxZKhlf5+50A4LkcOtWyCOrKEKGV20qAE7wVrXPmiQVqRomJ9laNLvPZU
- RHIyOBWI9oR/GSS1k2sCnAfChjawMcjM/pq1zr9zK1jLEl2oJ9+NUaqpQO6H3wgvzvBSgcdeZH5
- rGVbf+Qm1N0nhMrWl7bOqIDTD7xzjdT7JFrQH9ZkGleIK3P4
+ bh=k5AxVBAg751483RoZdOy+nlKC8NcuvgV+fnhcffv2Yw=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBma3RlW49OCTPpG27+0A2iHGeKFky/sqczxDH6O
+ H6UZukjW32JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZmt0ZQAKCRCLPIo+Aiko
+ 1UlbB/99EudEEatLMPGrK0OVB23kjtre2i0vranT3Ug9A2So+6arY6Mc+OqDNo1nh0tbLgH6Iuq
+ bzI8z4a9F3qBS2SXWbWXWacjMsA2L7Ot9qMVc9Y222EIsFho8e8jZBG0L+7bQ0VCeemUt0TNab0
+ jNW7LlCCXNxDYngjhj2WOKdwYB1hgKn02eLQOelFo+184NQWQNV752fbxRHT5DQp76fq+8AaHEp
+ w1bLZ+RERCUt6ZhWeNFWJfdfdysa5mneSQl66WG5M1mf8hhR6nyQZ9dRRjPaIm5PxAdUqQBa45O
+ Y2GH1SEPDeEXMDXr7Y6RWjRHCTDK58hY/gM6ugOYJv8eg1oz
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Unlike other compositors X.org allocates a single framebuffer covering
-the whole screen space. This is not an issue with the single screens,
-but with the multi-monitor setup 5120x4096 becomes a limiting factor.
-Check the hardware-bound limitations and lift the FB max size to
-16383x16383.
+Make _dpu_crtc_setup_lm_bounds() check that CRTC width is not
+overflowing LM requirements. Rename the function accordingly.
 
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v3:
-- Reoder the functions to pull up a fix to the start of the patchset
-  (Abhinav)
-- Rename the _dpu_crtc_setup_lm_bounds() to
-  _dpu_crtc_check_and_setup_lm_bounds() (Abhinav)
-- Make dpu_crtc_mode_valid() static.
-- Link to v2: https://lore.kernel.org/r/20240603-dpu-mode-config-width-v2-0-16af520575a6@linaro.org
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-Changes in v2:
-- Added dpu_crtc_valid() to verify that 2*lm_width limit is enforced
-  (Abhinav)
-- Link to v1: https://lore.kernel.org/r/20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 9f2164782844..b0d81e8ea765 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -711,12 +711,13 @@ void dpu_crtc_complete_commit(struct drm_crtc *crtc)
+ 	_dpu_crtc_complete_flip(crtc);
+ }
+ 
+-static void _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
++static int _dpu_crtc_check_and_setup_lm_bounds(struct drm_crtc *crtc,
+ 		struct drm_crtc_state *state)
+ {
+ 	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
+ 	struct drm_display_mode *adj_mode = &state->adjusted_mode;
+ 	u32 crtc_split_width = adj_mode->hdisplay / cstate->num_mixers;
++	struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
+ 	int i;
+ 
+ 	for (i = 0; i < cstate->num_mixers; i++) {
+@@ -727,7 +728,12 @@ static void _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
+ 		r->y2 = adj_mode->vdisplay;
+ 
+ 		trace_dpu_crtc_setup_lm_bounds(DRMID(crtc), i, r);
++
++		if (drm_rect_width(r) > dpu_kms->catalog->caps->max_mixer_width)
++			return -E2BIG;
+ 	}
++
++	return 0;
+ }
+ 
+ static void _dpu_crtc_get_pcc_coeff(struct drm_crtc_state *state,
+@@ -803,7 +809,7 @@ static void dpu_crtc_atomic_begin(struct drm_crtc *crtc,
+ 
+ 	DRM_DEBUG_ATOMIC("crtc%d\n", crtc->base.id);
+ 
+-	_dpu_crtc_setup_lm_bounds(crtc, crtc->state);
++	_dpu_crtc_check_and_setup_lm_bounds(crtc, crtc->state);
+ 
+ 	/* encoder will trigger pending mask now */
+ 	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
+@@ -1197,8 +1203,11 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+ 	if (crtc_state->active_changed)
+ 		crtc_state->mode_changed = true;
+ 
+-	if (cstate->num_mixers)
+-		_dpu_crtc_setup_lm_bounds(crtc, crtc_state);
++	if (cstate->num_mixers) {
++		rc = _dpu_crtc_check_and_setup_lm_bounds(crtc, crtc_state);
++		if (rc)
++			return rc;
++	}
+ 
+ 	/* FIXME: move this to dpu_plane_atomic_check? */
+ 	drm_atomic_crtc_state_for_each_plane_state(plane, pstate, crtc_state) {
 
----
-Dmitry Baryshkov (9):
-      drm/msm/dpu: check for overflow in _dpu_crtc_setup_lm_bounds()
-      drm/msm/dpu: drop dpu_format_check_modified_format
-      drm/msm/dpu: drop dpu_format_populate_layout from dpu_plane_sspp_atomic_update
-      drm/msm/dpu: split dpu_format_populate_layout
-      drm/msm/dpu: move dpu_format_populate_plane_sizes to atomic_check
-      drm/msm/dpu: check for the plane pitch overflow
-      drm/msm/dpu: drop _dpu_crtc_check_and_setup_lm_bounds from atomic_begin
-      drm/msm/dpu: merge MAX_IMG_WIDTH/HEIGHT with DPU_MAX_IMG_WIDTH/HEIGHT
-      drm/msm/dpu: sync mode_config limits to the FB limits in dpu_plane.c
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           | 32 ++++++--
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  8 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c        | 91 ++++++----------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h        | 24 ++----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |  2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 10 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          | 37 +++++----
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h          |  3 +
- drivers/gpu/drm/msm/msm_kms.h                      |  6 --
- 10 files changed, 91 insertions(+), 126 deletions(-)
----
-base-commit: 03d44168cbd7fc57d5de56a3730427db758fc7f6
-change-id: 20240318-dpu-mode-config-width-626d3c7ad52a
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
