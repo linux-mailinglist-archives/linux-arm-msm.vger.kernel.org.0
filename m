@@ -1,118 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-22581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD3B1906D01
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 13:57:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FDFB907182
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 14:38:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C9A9286216
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 11:57:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C3A71C24410
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:38:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 727771448EF;
-	Thu, 13 Jun 2024 11:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 521E11442EF;
+	Thu, 13 Jun 2024 12:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nG3ZGyzs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yJ/rhK5L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87B5144D1D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 11:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1289D143C62
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 12:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718279506; cv=none; b=HAQ+V9cSm/3lYCy3wNUDp+3g1fSunHJG5Jx/Jtw1iQ6YZrw9i20V+A/6aE59lNonOxQ3z734hLRxXSixsyBk/DDLp70tCsLErDxGcqPeMbc7T2EBMX4ktiiiI3MJwAWsBkoSz0ou5HbqRgFOAV82SXB1AWtr81ZRo897ONLl8yA=
+	t=1718282247; cv=none; b=a8mAIwMLwN3QiKqJvwOSFBX4DjO8X+0eq4tF/AgFONJuupnyopF9taGjBjVUFMTqcZGAg/dTdLl0hgrj6jmgSj2sY2ksXr7RJd2le/W4cHguq6y2KK86YdYkUaNzsgpm7tzEgy7mp6e15GYYg41KGXPYphTvzh2xNzXsG+vChi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718279506; c=relaxed/simple;
-	bh=sZEKZfHubIqep01PYDDOG2DiKYyzvbmcvlOdh30m7Us=;
+	s=arc-20240116; t=1718282247; c=relaxed/simple;
+	bh=HO+x80vOL45DfnbGDH+HE4l2kGlmP8xcQBK47SIOSDk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mC7jw8f/z4LuCqUsq/WDdbIJFo//cLVpjxG7WaG6/YKT60ndy0594D7BSTdzAdcV8Rv2W8zBUzuZmWwoGMtXhAFlxUje54j8nngdjhbeTQIrBotxtevL/o0KpWVMyG+4rl6Z8W3BLy9w8x8BAgVde2/GaFcqWV5MPdCnOSRKro4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nG3ZGyzs; arc=none smtp.client-ip=209.85.128.169
+	 To:Cc:Content-Type; b=gdFzJsG5UmNjaj/GmsUDgY4dz4btJ1HME6z7uhHmFYEPK4rUpWh2cOGHQ7o0gw4e7okjf6kTTkKHifQXUPoD4lfXqfyBovFQCtY1YX5NCztOTpwMhFr25RePihzV7kWxbAPdkMYXAolj/ZGIvpycCUFpjRj96xgDiCuwLurqycI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yJ/rhK5L; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-62f86abc8abso9918057b3.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 04:51:44 -0700 (PDT)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-62cecde1db9so10399857b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 05:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718279504; x=1718884304; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718282244; x=1718887044; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YRvIRe1C8JF7J2k72Eq1IoWCS+jAa2AM8+ph/DDThXs=;
-        b=nG3ZGyzs0+FGeRWMyFqTafgjocV1ZCf4AZaydmP1Gn5Aw47SfjbW9cs6LMFL9Uz4nT
-         8HdsLKEc4nONPnRJ7XrCGPpNLpX5iSySpz9aFPXdO5oNWbfrHTQHaZKoBz1zCYscjoVu
-         s/URdGDMaVoGA0E8+QIE2IG0MAIvVGbTC5dVdJ7mFpycHwdIn54UtMeO4SNHA8ODWoVN
-         qyoKIgQl+4wXQxkwunl64Ep8/WoGjzv+12IUaZVK3JUfBskRaEtUUW9a8OPARY8mh0XF
-         4fV3FsknDPTcjrifA5j3C2nQehltVk4hTM21XtcPxXc4yl6VFEHqTSKgqEHdnEgE7TOi
-         5Klg==
+        bh=lK324ZHK2UbYkaord9YynZkPLQSYfxb5dYuVjUssGuM=;
+        b=yJ/rhK5Lg+rkWw8pq9YggxvBlPh8A/DOkCsY3uA/ktzMZgZYq+Yr/0NWUahCQMP55y
+         A41T+7/FLd5ADX08KV5D2c+XpBCfcH2zIojMMrU1rfH1EuPJBej6dvln/02u84kpGc4Y
+         RSJ8AGk5gJFAdRWE7vWEkN49G0p9CUUaAha0v5UlWEF02DAJtg3ETnq3Nz4o22RH4fou
+         AiXMaIEnKrl3zgNsdYIjul6ybY5XEC+8VKCPApSvCtwaLJR0Bz6y/ftradFMQO4fQ9C2
+         6f71NU6+8wmxDTe38KKrKwEGtfNHOCSAgdbnd2jzn5RlUOhv3R5MEkOiNbTqXbTVjlI3
+         41Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718279504; x=1718884304;
+        d=1e100.net; s=20230601; t=1718282244; x=1718887044;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YRvIRe1C8JF7J2k72Eq1IoWCS+jAa2AM8+ph/DDThXs=;
-        b=t547Zfp/GSct4kLuX3PtoAKbbmIBApHCa8nDmbaYOlfC+8IM9aOIkKfgGvrXy21nMZ
-         2kOfIGz/LBZ5rJ1pLiO9b4Z75NGtkSQwOoAv/0/UY1M0qs/9vczgLZD0uDX+gFqmLmmL
-         FJ/nLB7XghgnORe05kQdQ+Z8sOP8mFHKeUuO75pdLlqwbP/WAFhOm6App/UA68Kc04Oe
-         oGKcldJrh85Sk5J/0ffV4tHpLsQUL7I3oG/2nKisTcojKpiX3oBYgXn2EeH88BIYGQGA
-         LfiqvSj9dBCneyKRc3t6PJwW674RWWCKwWM7zgx/CWdtNvqST6sLtYgwAs3BNp0rV9bT
-         1VAg==
-X-Forwarded-Encrypted: i=1; AJvYcCWEknIigOAlH5RA09aDcBO0LdszKednhkvez6eNvKyUyGai35fXAfLVrmrHGYewyjNSWr1Uns5AFkUTk2q7fUA0D/ECV27W1+eCmmDeIg==
-X-Gm-Message-State: AOJu0YzjeGRd3iJPENNlu2e1k/nnDyD7iglL1LkcBaJ+L3oWYcfcGWXz
-	hXMQ9P4qadMdgk7e+zleX5SIC4XDLzgDfS/+Dipq9mx4uwD71PVnqwutZb8DNkq2JmNBOF6VRop
-	f0vW6br/GnTXM0GIpm1Hb9hn0OnBTDWnDypNNMw==
-X-Google-Smtp-Source: AGHT+IHsbTNLvjN8WuDB84rv+zysR6fpgX/dxzhUTfN9xcKd94L2FQdMlBq8iWThBr9t45yXD5czpiz8aOD25S8hU38=
-X-Received: by 2002:a0d:dc84:0:b0:62a:259f:74d1 with SMTP id
- 00721157ae682-62fb847d3a1mr45680067b3.5.1718279503794; Thu, 13 Jun 2024
- 04:51:43 -0700 (PDT)
+        bh=lK324ZHK2UbYkaord9YynZkPLQSYfxb5dYuVjUssGuM=;
+        b=FC3PZfcoMcObJCjGDQDV7OdSnVU19l6YiGrIY/hsY7po1EhIwhJXlL3mICAfaq7bsI
+         X5VKieXcj9Q2VLSGkAHEeBzWF5sohXMwMWlvQ5pAjcou/jsd8omnDPF8W2yDBQ1Vm9l/
+         oefNbwr8Xh2b3+ns1RIiTRMIB8bU0ihwKi9gY3G1kDIQIfeWGsOaTU9MNpa6NtFXez/o
+         N5gDQWbv2DKNiEg/4rZa9mJ62laQcqSMVqSETq5tbJL3671dZ6JYS6N1xnLfu4Si2g05
+         EjF+WlRaUVVxs6lb1u0sGQ4k/SQ4Q1M7dbVNJdypV8u3ifbXLRGF/Q+5ZPXKHyWUeHjk
+         YVFA==
+X-Forwarded-Encrypted: i=1; AJvYcCXWkJySL907O88F8xJ+5gqzewqkfxKImBHf6gip4nzm3wnpebrxFjrX6i62jw+hLlFzZdPJIuhDL2F8aMlTUf0ziAfviNElK+gZKcCJWQ==
+X-Gm-Message-State: AOJu0Yz/AbWzs7P0/YguF0SzjOMegcOqKFmEQj5ejVXV1raC28c3wTEP
+	Za+kTTVOPDRveyrn1z8tRm0elzM6HwZo6Tuu3+P9L/qC5i93Ht/EaK/5FAQtjwjxlffIBualyiR
+	J5cBbzHw6D77d62VFMrUCo0QDGVhabb/iP/6oxg==
+X-Google-Smtp-Source: AGHT+IHZvUBnLsMhW62XBAnxIb34bbF6VpwyWCJv6bXVbMOYQVTTwWrwK1vnVsv5FrvtFe2dwrIEhVqsavWTdlA/pfI=
+X-Received: by 2002:a81:8a42:0:b0:62f:9e2d:3e5d with SMTP id
+ 00721157ae682-62fbdba5388mr40959977b3.43.1718282243851; Thu, 13 Jun 2024
+ 05:37:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240524082236.24112-1-quic_kbajaj@quicinc.com>
- <CAA8EJpp9U-ucMAiNmVvWDuupd=OR_fLK9fQ+n21SVmktWMxhmA@mail.gmail.com> <ae289c19-2701-d00f-3f6f-5e87ec37e475@quicinc.com>
-In-Reply-To: <ae289c19-2701-d00f-3f6f-5e87ec37e475@quicinc.com>
+References: <20240613-q6apm-fixes-v1-1-d88953675ab3@linaro.org>
+In-Reply-To: <20240613-q6apm-fixes-v1-1-d88953675ab3@linaro.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 13 Jun 2024 14:51:32 +0300
-Message-ID: <CAA8EJpo4v1sfjo2nUEj0-kZ_0rrMh07s67LzhBs8POjkN2Nybg@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: qdu/qru1000-idp: Fix the voltage setting
-To: Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Melody Olvera <quic_molvera@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Date: Thu, 13 Jun 2024 15:37:11 +0300
+Message-ID: <CAA8EJpq7SN5J8Ye8nGfbJdKAC5Ws61iKMu6QO9ebnRV6q3EVNQ@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: q6apm-lpass-dai: close graph on prepare errors
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, alsa-devel@alsa-project.org, 
+	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 13 Jun 2024 at 14:43, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+On Thu, 13 Jun 2024 at 15:13, Srinivas Kandagatla
+<srinivas.kandagatla@linaro.org> wrote:
 >
+> There is an issue around with error handling and graph management with
+> the exising code, none of the error paths close the graph, which result in
+> leaving the loaded graph in dsp, however the driver thinks otherwise.
 >
+> This can have a nasty side effect specially when we try to load the same
+> graph to dsp, dsp returns error which leaves the board with no sound and
+> requires restart.
 >
-> On 5/24/2024 2:59 PM, Dmitry Baryshkov wrote:
-> > On Fri, 24 May 2024 at 11:23, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
-> >>
-> >> While adding the USB support, it was found that the configuration
-> >> for regulator smps5 was incorrectly set. Upon cross verifying for
-> >> all the regulators, found that smps4, smps6 and smps8 are also
-> >> incorrectly configured. This patch fixes the same.
-> >
-> > Nit: see Documentation/process/submitting-patches.rst, "This patch..."
+> Fix this by properly closing the graph when we hit errors between
+> open and close.
 >
-> Will update the commit message.
->
-> >
-> >> In particular -
-> >> - smps4 is 1.574V min and 2.04V max
-> >> - smps5 is 1.2V min and 1.4V max
-> >> - smps6 is 0.382V min and 1.12V max
-> >
-> > Just for my understanding, will anything further constraint these values?
->
-> As far as i know, this is going to be final.
+> Fixes: 30ad723b93ad ("ASoC: qdsp6: audioreach: add q6apm lpass dai support")
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-Ack
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # X13s
 
-> currently, usb device is not working without this min/max change.
+> ---
+>  sound/soc/qcom/qdsp6/q6apm-lpass-dais.c | 32 ++++++++++++++++++++------------
+>  1 file changed, 20 insertions(+), 12 deletions(-)
+
+[...]
+
+> ---
+> base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
+
+Note: this didn't go to linux-arm-msm, probably because of the use of
+an outdated tree for submission. This commit is v6.10-rc1, it probably
+should have been Mark's tree instead or linux-next.
+
+> change-id: 20240613-q6apm-fixes-6a9c84852713
+>
+> Best regards,
+> --
+> Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>
+
 
 -- 
 With best wishes
