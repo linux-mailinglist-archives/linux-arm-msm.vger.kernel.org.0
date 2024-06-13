@@ -1,31 +1,31 @@
-Return-Path: <linux-arm-msm+bounces-22637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2658907B2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 20:22:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D1ED4907B3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 20:24:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B5381F239FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:22:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 797F51F21660
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:24:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E238714A623;
-	Thu, 13 Jun 2024 18:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A0F514AD22;
+	Thu, 13 Jun 2024 18:24:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E47314AD2B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 18:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E66614A62D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 18:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718302928; cv=none; b=alHhuNIhOBDiR6RGjeu4qPT2jhk/qWLqyLHyKeE9v9HUGCmTVrj7AoUVSOY/1owVPA+3xv2gUKmLkrzrERcl60zw3xDIDUyvnZH9H5rXFjHVX2FZEA8XsR28deiT/VWPUPoe5E9oYuinVxGkqBZrI03CFEFglwVS1SiuW0+c/dU=
+	t=1718303072; cv=none; b=IXfd8tMrcFRCskp6lyVpRI6L1fYwIek5pF4JftzDABWJ763xhdjjEOtQe69LlajaHOeh8OWIt2D1gWEWClE+ibMQbXnnSbhFY8ARRuOGVPxcFq729tXYzE+fJpi/cEMv7CCdOruF9nEZn/ue9GZGQxLqT18uUu/n2IsKUcvMor4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718302928; c=relaxed/simple;
-	bh=axhE42B1nxQx4xbPpiCGOzD9X2DmAsH9f8VfIPAT2n8=;
+	s=arc-20240116; t=1718303072; c=relaxed/simple;
+	bh=FyhONvgPMFErEikD2z68HaPmcB+qkibRWuML8fkUFAM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DEHwRvqt6LDgPuuDNedbOkA+nceDTSccTYOhE7waCJCfGB2mMYGkWNdVORbZOGtshjOq/mpo2cruLyzHju7BLcV4XhD4aluP6c0omX0FKGGDvpKmiLqJjFzcHrcmmJVoT7p1AvMAmZ3kYsJAqICDVbA/olrxazz5lWQW8qkfqQ4=
+	 Content-Type:Content-Disposition:In-Reply-To; b=VFbQPeWfg5e0tixT/wofBfa5b/Av+/ITbbZKjgKmOcH6b9VZkt3PqYY/D7fm5elc+BJLJ+pahcfB0usXSsowfYHKjspZo5g9vwlOvgLV+xRcuQQ4+tpa5856xOnVayWvy6QDV2wvXgm6goL8d0D1yFuclWVCHwVWE5da4x7rNzM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.167
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
@@ -33,9 +33,9 @@ Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.8
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E801C3E9D4;
-	Thu, 13 Jun 2024 20:22:00 +0200 (CEST)
-Date: Thu, 13 Jun 2024 20:21:59 +0200
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9DE433E9C7;
+	Thu, 13 Jun 2024 20:24:27 +0200 (CEST)
+Date: Thu, 13 Jun 2024 20:24:26 +0200
 From: Marijn Suijten <marijn.suijten@somainline.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Rob Clark <robdclark@gmail.com>, 
@@ -46,10 +46,10 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
 	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
 	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 5/8] drm/msm/dpu: rework vsync_source handling
-Message-ID: <flxejwpqw75thyeu5ycnlichh37l4ltuied36jjzvgifury7lp@gjjcbohuhfa3>
+Subject: Re: [PATCH v2 6/8] drm/msm/dsi: parse vsync source from device tree
+Message-ID: <wacf234ei535ruqhmrmbpt6fqtlsi57242gsackxzso6ri7jhc@wvldjncf44le>
 References: <20240613-dpu-handle-te-signal-v2-0-67a0116b5366@linaro.org>
- <20240613-dpu-handle-te-signal-v2-5-67a0116b5366@linaro.org>
+ <20240613-dpu-handle-te-signal-v2-6-67a0116b5366@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,85 +58,112 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240613-dpu-handle-te-signal-v2-5-67a0116b5366@linaro.org>
+In-Reply-To: <20240613-dpu-handle-te-signal-v2-6-67a0116b5366@linaro.org>
 
-Maybe retitle this to something that more closely resembles "remove unset
-is_te_using_watchdog_timer field"?
+On 2024-06-13 20:05:09, Dmitry Baryshkov wrote:
+> Allow board's device tree to specify the vsync source (aka TE source).
+> If the property is omitted, the display controller driver will use the
+> default setting.
 
-On 2024-06-13 20:05:08, Dmitry Baryshkov wrote:
-> The struct msm_display_info has is_te_using_watchdog_timer field which
-> is neither used anywhere nor is flexible enough to specify different
+Well, that specific default handling is not really part of this patch, but
+how a followup patch is going to respond when msm_dsi_get_te_source() returns
+NULL. (Or how that followup patch is expected to deal with that - worth a
+doc-comment?)
 
-Well, it's "used", but not "set" (to anything other than the zero-initialized
-default). s/used/set?
-
-> sources. Replace it with the field specifying the vsync source using
-> enum dpu_vsync_source.
 > 
 > Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Patch itself is fine, just think the title could be clearer:
-
 Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 +----
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 5 ++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 2 ++
->  3 files changed, 5 insertions(+), 7 deletions(-)
+>  drivers/gpu/drm/msm/dsi/dsi.h         |  1 +
+>  drivers/gpu/drm/msm/dsi/dsi_host.c    | 11 +++++++++++
+>  drivers/gpu/drm/msm/dsi/dsi_manager.c |  5 +++++
+>  drivers/gpu/drm/msm/msm_drv.h         |  6 ++++++
+>  4 files changed, 23 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index bd37a56b4d03..b147f8814a18 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -743,10 +743,7 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
->  		vsync_cfg.pp_count = dpu_enc->num_phys_encs;
->  		vsync_cfg.frame_rate = drm_mode_vrefresh(&dpu_enc->base.crtc->state->adjusted_mode);
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> index afc290408ba4..87496db203d6 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> @@ -37,6 +37,7 @@ struct msm_dsi {
 >  
-> -		if (disp_info->is_te_using_watchdog_timer)
-> -			vsync_cfg.vsync_source = DPU_VSYNC_SOURCE_WD_TIMER_0;
-> -		else
-> -			vsync_cfg.vsync_source = DPU_VSYNC_SOURCE_GPIO_0;
-> +		vsync_cfg.vsync_source = disp_info->vsync_source;
+>  	struct mipi_dsi_host *host;
+>  	struct msm_dsi_phy *phy;
+> +	const char *te_source;
 >  
->  		hw_mdptop->ops.setup_vsync_source(hw_mdptop, &vsync_cfg);
+>  	struct drm_bridge *next_bridge;
 >  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> index 76be77e30954..cb59bd4436f4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> @@ -26,15 +26,14 @@
->   * @h_tile_instance:    Controller instance used per tile. Number of elements is
->   *                      based on num_of_h_tiles
->   * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
-> - * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
-> - *				 used instead of panel TE in cmd mode panels
-> + * @vsync_source:	Source of the TE signal for DSI CMD devices
->   */
->  struct msm_display_info {
->  	enum dpu_intf_type intf_type;
->  	uint32_t num_of_h_tiles;
->  	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
->  	bool is_cmd_mode;
-> -	bool is_te_using_watchdog_timer;
-> +	enum dpu_vsync_source vsync_source;
->  };
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index c4d72562c95a..c26ad0fed54d 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1786,9 +1786,11 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
 >  
->  /**
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 1955848b1b78..e9991f3756d4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -543,6 +543,8 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
+>  static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+>  {
+> +	struct msm_dsi *msm_dsi = platform_get_drvdata(msm_host->pdev);
+>  	struct device *dev = &msm_host->pdev->dev;
+>  	struct device_node *np = dev->of_node;
+>  	struct device_node *endpoint;
+> +	const char *te_source;
+>  	int ret = 0;
 >  
->  		info.is_cmd_mode = msm_dsi_is_cmd_mode(priv->dsi[i]);
+>  	/*
+> @@ -1811,6 +1813,15 @@ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+>  		goto err;
+>  	}
 >  
-> +		info.vsync_source = DPU_VSYNC_SOURCE_GPIO_0;
+> +	ret = of_property_read_string(endpoint, "qcom,te-source", &te_source);
+> +	if (ret && ret != -EINVAL) {
+> +		DRM_DEV_ERROR(dev, "%s: invalid TE source configuration %d\n",
+> +			__func__, ret);
+> +		goto err;
+> +	}
+> +	if (!ret)
+> +		msm_dsi->te_source = devm_kstrdup(dev, te_source, GFP_KERNEL);
 > +
->  		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI, &info);
->  		if (IS_ERR(encoder)) {
->  			DPU_ERROR("encoder init failed for dsi display\n");
+>  	if (of_property_read_bool(np, "syscon-sfpb")) {
+>  		msm_host->sfpb = syscon_regmap_lookup_by_phandle(np,
+>  					"syscon-sfpb");
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> index 5b3f3068fd92..a210b7c9e5ca 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+> @@ -603,3 +603,8 @@ bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi)
+>  {
+>  	return IS_MASTER_DSI_LINK(msm_dsi->id);
+>  }
+> +
+> +const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi)
+> +{
+> +	return msm_dsi->te_source;
+> +}
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 912ebaa5df84..afd98dffea99 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -330,6 +330,7 @@ bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
+>  bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
+>  bool msm_dsi_wide_bus_enabled(struct msm_dsi *msm_dsi);
+>  struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
+> +const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi);
+>  #else
+>  static inline void __init msm_dsi_register(void)
+>  {
+> @@ -367,6 +368,11 @@ static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_
+>  {
+>  	return NULL;
+>  }
+> +
+> +static inline const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi)
+> +{
+> +	return NULL;
+> +}
+>  #endif
+>  
+>  #ifdef CONFIG_DRM_MSM_DP
 > 
 > -- 
 > 2.39.2
