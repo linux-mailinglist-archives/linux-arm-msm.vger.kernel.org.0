@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-22568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E45A89069D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:18:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A08149069D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:20:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 826E9284772
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 10:18:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D26DB22AA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 10:20:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 799AB1422DD;
-	Thu, 13 Jun 2024 10:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD3201422D3;
+	Thu, 13 Jun 2024 10:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ormup/ZL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MCN8Todj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640FE136647
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 10:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4931422C9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 10:20:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718273926; cv=none; b=CbhQza675L+V+ey37f3NFeB0XqXVT6fmQfomym3fIe07dwdZrDmRQsrcTZvWmQZ+G8eMXR41URPvJg5QyMhU4lGZ4vtG07nWjPJpvogAb3r+VU8Ilfmf87U45OSvx7T9x0Y3E2zE583sYFCCMYvTTjnseZXmnWdChEDmQ2h/Pqg=
+	t=1718274037; cv=none; b=TrN0UU6e1gVnKijGNWYmJLvz4kFV6toAZpwabU02kmbzE66YjKi/fosdXLwA8VsWRvvaEA357hMtLnw5zWdA5eDvJWPldJNaVDjnbImMhLWp9TYL+bYHBHgrUff1q2xYgQo7A1Tet1BhFMVyCVivWhOh44TH8yR+mUoI/WFdqmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718273926; c=relaxed/simple;
-	bh=YUvQFJH1xmyseUhBIv/gGjLJET5MmLDldQznxc2OK4o=;
+	s=arc-20240116; t=1718274037; c=relaxed/simple;
+	bh=QNkIEu51DQcZ/rYzs3XDlNauHS42tIn5fBb8WrbdE9I=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=B1tVhtYamZ1CtsIWwJkTeT3M7gLwmhnnZ81RBPCbe/cAqZxjzQT/W0OdKMYga6mCzH2/qbo4FjDMiGsZtHtuoMTweRLT4l/T5TnTyHjhN+PipFywyVOMSoUajntJnNtWoi8OGpszfb42i4yc1Rn2ZXFCo4CY3yp6UsYcgvyBmKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ormup/ZL; arc=none smtp.client-ip=209.85.167.45
+	 In-Reply-To:Content-Type; b=QD/NFZ8nlnyhoBY3EeTXaoijiY2mQk0dSsTk5xbsM1OXAvY8SXMuQtfooc0tGQElSMShXlBAJ6R8nL00nmStg5wQr7fmemZFQUwcRUC2bOsO2WGOLQ/aDw2rSYxH8pwix1IRZxBaLXs+5oSQSKu0j7LlZMxJvMQ8vs49EGMoBJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MCN8Todj; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52c819f6146so1278032e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 03:18:43 -0700 (PDT)
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a6266ffdba8so92310366b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 03:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718273921; x=1718878721; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718274034; x=1718878834; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gz8Jr9tAelbj0mz7l81bvUL2cfeH6O4EAvWrEVqr2pk=;
-        b=Ormup/ZLLXr7loOq+hSvF3xgfLnE48kD4+o0l2vT+X2aR0+rYbETkss489YXtlqs/t
-         7UH+v7l+TvD1UZRnrsrX0tyb3GrfCmSxLZGmli/UGnsT6lcI8VwhqjYXQNhX49FlJzIY
-         qK+8jGg9bJCz+h13tZld3tV7eE0RAn2VoxbEo+Bp6xJWuxBXVXXihPLcBoe0mek3Y05m
-         lwANqX5rE3VPbJpiHBITXvFkfEGLHTIb1BVpSGeu8N+0YJXyHfrYSehqipoOgWufO7c6
-         VphzQKLVIg9Ywo3PNO/boFyNN74WOOOtbSPQGtu1REO0DvvQpSw4LShTHu2EVzpS4KUG
-         jHFA==
+        bh=8QZ+NCLQgLbaVK6YbbCv1p2KuIYd+8NexPeaQHEj57A=;
+        b=MCN8TodjfXlzscencDMf3cvd7lSPDyWPH7fKZ5WJOCs06rZQb1RzGZZsH+JdJX1Nwb
+         YLvOu0jjYRt8qCSjnGod+w7iiWalnxHw1bUVig+sjgH/ukaflnE1GSEfGfKllZWvjgKS
+         k+TxhZnNsV44VcVUH78C01dMIG1yfKtbrkJWeNAeAHM84yAY0WAxht2EsOl2Msub5735
+         ERUoSqLAGlfXaolxrsPByamjlWLEKZl1BqmSFVlIjaxv5ESHQ8/v9cF4q7cuxFMnc5QN
+         9JCSqZemUv6Tw0QsH8ZEbodB2NPO+DwM0DpBW2t63Hm/sqdOAFf9/pD90uKnmBJSUhXm
+         iAxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718273921; x=1718878721;
+        d=1e100.net; s=20230601; t=1718274034; x=1718878834;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=gz8Jr9tAelbj0mz7l81bvUL2cfeH6O4EAvWrEVqr2pk=;
-        b=WFRQgs1/P00GiCG+jJogm/wRdZoUiysrud7YiSw6EGIPXw3WG/yF2THr5MjclA/cAM
-         JF1/X5lzjkyMVlf7COUaYa83TR3v2AcTGNa5Vs7RyrVQDj3Lml9rLDHOEaMzfZ8MKBFc
-         4D1fbWoCnwrMQE0MpGhTlJylVuosiE4TLg6/GKCTb1LkZlrJOjugNz6ovuvb2823UUiJ
-         JSC95sccMn/+4F/p9Bmx28w8Qq9hN46UFngHUw9S4B7xpYryZAcFrRd5xTlCiJVtJvSe
-         TfrG36HQETvo7qTJx/u7CvtH2+dUg4Q3V+o21v/v+4Nektu4AANWyv70cfWit/ORmfxE
-         RZ/w==
-X-Forwarded-Encrypted: i=1; AJvYcCWpP2Gh5L0HLUsbMhNTPdQamaub2Veu0V78YUabHrsxWO4ibEDPN/hRf2cM074jToVEumEB8Qn6ev5DX4+hNgAx7LxEmcL2CExsOMcR9Q==
-X-Gm-Message-State: AOJu0Ywz8PN9s4fN55l+jzmq8BBM15jzugYB2Yq70wy5p9hP2IoXDYCT
-	pVOSnc/NvZhFJfA/x2yGCOVMeThehSXpJ1B75AIGHJdkBIADfva1cr3fgbYU96E=
-X-Google-Smtp-Source: AGHT+IEbD7oLf2BGEVhBB1lM7YbvXMhQDVXURKeZcbq+vbGXByyf1yn3I2TC3HslUJg3wVBZrQ9hmA==
-X-Received: by 2002:ac2:518c:0:b0:52c:247d:2cfa with SMTP id 2adb3069b0e04-52c9a3b8da6mr2924093e87.13.1718273921419;
-        Thu, 13 Jun 2024 03:18:41 -0700 (PDT)
+        bh=8QZ+NCLQgLbaVK6YbbCv1p2KuIYd+8NexPeaQHEj57A=;
+        b=gso2rBuPGf9CZBZfPe4eI5rQT+TIXXIHrkzFGjf6MDA7pzAihZI6tBXbJA1maDF0fa
+         7WJESeZN7KDatmJrcn2ZdfCXVc8/J0P3Gl0bw2EgrjImKdTSOFFeqsPF4kYysWW8TVkj
+         v1k3R68aO3CvMKr0m5FwA9R9QZqIcVpoYCkBZtP9GyRJWkG+EhPVzUBvdeoX4A2oGdix
+         G2RzMsXtBg4DOtBHZc88DRI/Pc/9qrAptXXU8tzpCSiLt6YbD+PEl6QGEIkfpzHMAxfL
+         V8dQm12mgcxVI8Z0DaDF1+J7NbgV50El732J3H8MrbvwWvFQ6e7Lk7y9VoTSaa/HIzuq
+         TLTQ==
+X-Gm-Message-State: AOJu0YxYNtI72Yln0D48gJW+o51cMPk9kZ7v3giFBhJVAu4/5e2TrW3f
+	RYYHyhANU1yBQrMmc8uypITz5NpnIVaX053mUTEBbl4GXTDbx4mzqEV6UBfwHVBhVxi1HwMkhUz
+	yJ3A=
+X-Google-Smtp-Source: AGHT+IHhLuwN6s2pgs2GbMvTpm2SCanz1Hu7FntRJZJCf6/a3NbHRkedsMTRJiQMmKNGepEbJ6+n2Q==
+X-Received: by 2002:a17:906:7f94:b0:a6f:277c:d890 with SMTP id a640c23a62f3a-a6f4801378bmr263358366b.56.1718274034038;
+        Thu, 13 Jun 2024 03:20:34 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:7d7b:a9a3:893:f3c7? ([2a01:e0a:982:cbb0:7d7b:a9a3:893:f3c7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422874e73b1sm57037815e9.45.2024.06.13.03.18.40
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f5952f85fsm42543366b.11.2024.06.13.03.20.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Jun 2024 03:18:41 -0700 (PDT)
-Message-ID: <9d7285d2-0dec-4d6f-a3f2-1490261c7206@linaro.org>
-Date: Thu, 13 Jun 2024 12:18:40 +0200
+        Thu, 13 Jun 2024 03:20:33 -0700 (PDT)
+Message-ID: <b0670c4a-9663-4ed9-8eac-45efce5527f4@linaro.org>
+Date: Thu, 13 Jun 2024 12:20:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,12 +80,15 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 0/2] ASoC: codecs: lpass: add support for v2.5 rx macro
-To: srinivas.kandagatla@linaro.org, broonie@kernel.org
-Cc: perex@perex.cz, lgirdwood@gmail.com, alsa-devel@alsa-project.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- krzk+dt@kernel.org, krzysztof.kozlowski@linaro.org
-References: <20240606122559.116698-1-srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH v3 0/3] ASoC: codecs: lpass: add support for v2.5 rx macro
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ Banajit Goswami <bgoswami@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, krzysztof.kozlowski@linaro.org,
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240612-lpass-codec-v25-v1-0-9f40611a1370@linaro.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -112,13 +115,11 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20240606122559.116698-1-srinivas.kandagatla@linaro.org>
+In-Reply-To: <20240612-lpass-codec-v25-v1-0-9f40611a1370@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 06/06/2024 14:25, srinivas.kandagatla@linaro.org wrote:
-> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> 
+On 12/06/2024 18:57, Srinivas Kandagatla wrote:
 > This patchset adds support to reading codec version and also adds
 > support for v2.5 codec version in rx macro.
 > 
@@ -136,20 +137,29 @@ On 06/06/2024 14:25, srinivas.kandagatla@linaro.org wrote:
 > Thanks,
 > Srini
 > 
-> Changes since v1:
->   - renamed all 2_6 variables with 2.5
->   - expanded checks for versions from 2.5 till 2.8
+> Changes since v2:
+> 	- added some locking around version variable.
+> 	- split 2.5 changes to a new patch.
 > 
-> Srinivas Kandagatla (2):
->    ASoC: codecs: lpass-macro: add helpers to get codec version
->    ASoC: codec: lpass-rx-macro: add suppor for 2.5 codec version
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+> Srinivas Kandagatla (3):
+>        ASoC: codecs: lpass-macro: add helpers to get codec version
+>        ASoC: codec: lpass-rx-macro: prepare driver to accomdate new codec versions
+>        ASoC: codec: lpass-rx-macro: add support for 2.5 codec version
 > 
->   sound/soc/codecs/lpass-macro-common.c |  14 +
->   sound/soc/codecs/lpass-macro-common.h |  35 ++
->   sound/soc/codecs/lpass-rx-macro.c     | 565 +++++++++++++++++++-------
+>   sound/soc/codecs/lpass-macro-common.c |  23 ++
+>   sound/soc/codecs/lpass-macro-common.h |  35 +++
+>   sound/soc/codecs/lpass-rx-macro.c     | 555 ++++++++++++++++++++++++----------
 >   sound/soc/codecs/lpass-va-macro.c     |  29 ++
->   4 files changed, 488 insertions(+), 155 deletions(-)
+>   4 files changed, 490 insertions(+), 152 deletions(-)
+> ---
+> base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
+> change-id: 20240612-lpass-codec-v25-4e960abd661f
 > 
+> Best regards,
+
+[replied to the wrong version, tested v3]
 
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
 
