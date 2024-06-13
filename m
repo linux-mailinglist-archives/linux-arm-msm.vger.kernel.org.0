@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-22542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56A659064B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 09:15:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59AEC90650A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 09:28:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E141B28341F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 07:15:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0215C1F22714
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 07:28:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A25D24F1FC;
-	Thu, 13 Jun 2024 07:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6823413A89C;
+	Thu, 13 Jun 2024 07:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YEUb6Lxt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qp7y6kVU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704F37FB;
-	Thu, 13 Jun 2024 07:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378EA7F47B;
+	Thu, 13 Jun 2024 07:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718262932; cv=none; b=sMtzO2OLpShFMswgOcPh5Az5F/61HS0p90UlmKUQKXv8G2lBA+Eeojo9VwbO6NMMfOE8ofBzR3CWKiloZPUk7Ii+VhU+pa22wlJBTBvl/w8eKUSj5gICLZBs3kIEZkbf+jw7cFtvpevjTQE4DQp44CO4ndVInzp0G1/0qPVtXyU=
+	t=1718263708; cv=none; b=Z+gAX9bSZQKMsUa60JTvLfQ9Q2xd3KmnULL1bD1OEFcjPOabQU446Wco5oLKWT98xgqmJu+OYXsA0a3rsF9zRFGTzD7tTmbKDEFFJfM+Jczm1gDierMz5WsTM47lpIkUowJG89oJD7CcKC4sMHK7jtkZYUcas6sl76VTAaJWc60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718262932; c=relaxed/simple;
-	bh=Tmo/BuogahgR5M93Y4MvIAIRnQBajprod5rkLlc7vm4=;
+	s=arc-20240116; t=1718263708; c=relaxed/simple;
+	bh=FD0IGfhk4hcLON28WCjwNZj1PYjYa3M6lZFgLxz5/6Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aTZS62a/Tq6BIxTcS5ufw156HJPfXrtLiOyd3W5NHc+f+ncgp2o9p4dFGblqWhKyfIbjyj8prB3Izjrfb/HIoSSou/sMpNPD9HoABlc0G9MWIygXVz2DRPL1dvVzyI8YpTmYSktQMZe48jdXmpV1K/VonoIvV7EJ2qq8cpenTck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YEUb6Lxt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125A3C32789;
-	Thu, 13 Jun 2024 07:15:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=GO6xYRhR2F8XgqI4p6bEnE+jg2SdmpqzP3wG8/8jP6cqdXEsyzrRLTgOMIVYdXYaLED+lksXo6m015/bcflCabxl+ycPNc3V+24NmeUuOskHSnJHgqruEayWumCucDnRjNJYOdCrYQ0091nkVSpCOKRnW3IvMjNfWLVSX3DgYRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qp7y6kVU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9182C2BBFC;
+	Thu, 13 Jun 2024 07:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718262932;
-	bh=Tmo/BuogahgR5M93Y4MvIAIRnQBajprod5rkLlc7vm4=;
+	s=k20201202; t=1718263708;
+	bh=FD0IGfhk4hcLON28WCjwNZj1PYjYa3M6lZFgLxz5/6Q=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YEUb6LxtH77IDUSV5/8g5JA73JmVYjf5AH9ec4P/xY1ZJFv4k1n0y3CRuzYpmskMS
-	 /BSPVBqQfdiyc0DTpZo8uP3cxQHFGHt3RmPcWxwzlYjTCN6hXnXQJZDyt+HulROKDR
-	 poDhM7eg867xaITURqO0eIrPiAmqRjHqUoKm+wsJtbRPxjcqLErXLZV8eq0KFPSIvO
-	 wZViSBss9HKV6iJmkyIKhvw3QbL0vuMRkxVtKaPFeugJG7FD5AL0C+AI5lTlVN+pPO
-	 Q8t3mHkj6y5FRtgNd+Kf1KK1pYxpYVK5M27SxqctUpM2SvsSNZwykrYkCNjtS48+JC
-	 kmVb+hn0hmGew==
-Message-ID: <e10eda85-68cf-4f66-ba34-3e746d286fa2@kernel.org>
-Date: Thu, 13 Jun 2024 09:15:26 +0200
+	b=qp7y6kVUcUqlLm8ApuEzXIfuGVaQjYosmNK/5zX7hfn4LD7eTkgP9AFLUffHMwOLr
+	 xEJ5B1hBsHWmfc5tYk37z3lclgxGdhrmI3B7AtQz41f4bObG6FE4+hlBTy0AAZ9rkJ
+	 sWKxVphF8fD2fbGiRiCZ2+j5RJjHX1/aekk9+mBtjJsvYuhQBtWxYqixjZHwSMbmyU
+	 ogc9zfs60L5Wqyb8iLnNRaVKP/chFJHokcnmDy4lNIP5yExoL2HnR9CIWSlGFM1uUe
+	 yPLFTohssHvnp+PXt7HBS1RW7OPzm/QTCCxLGy6Dv5Hi3pA3jc5pNRKo3zpwnEZC3c
+	 CYBqa+4rR5LGg==
+Message-ID: <e1424d12-4dd8-4a8a-a8b5-ac94476fa3d3@kernel.org>
+Date: Thu, 13 Jun 2024 09:28:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SM4250 pinctrl
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240612-sm4250-lpi-v1-0-f19c33e1cc6e@linaro.org>
- <20240612-sm4250-lpi-v1-1-f19c33e1cc6e@linaro.org>
-Content-Language: en-US
+Subject: Re: [PATCH 1/8] dt-bindings: clock: qcom: Add SA8775P video clock
+ controller
+To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_jkona@quicinc.com, quic_imrashai@quicinc.com
+References: <20240612-sa8775p-mm-clock-controllers-v1-0-db295a846ee7@quicinc.com>
+ <20240612-sa8775p-mm-clock-controllers-v1-1-db295a846ee7@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -104,24 +108,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240612-sm4250-lpi-v1-1-f19c33e1cc6e@linaro.org>
+In-Reply-To: <20240612-sa8775p-mm-clock-controllers-v1-1-db295a846ee7@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/06/2024 13:55, Srinivas Kandagatla wrote:
-> +
-> +description:
-> +  Top Level Mode Multiplexer pin controller in the Low Power Audio SubSystem
-> +  (LPASS) Low Power Island (LPI) of Qualcomm SM4250 SoC.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm4250-lpass-lpi-pinctrl
-> +
-> +  reg:
-> +    maxItems: 2
+On 12/06/2024 12:47, Taniya Das wrote:
+> Add device tree bindings for the video clock controller on Qualcomm
+> SA8775P platform.
 
-Nothing changed.
+You claim it is a v1, but I saw it and already commented on this. No
+changelog, no versioning, so my comments were ignored?
+
+Please go back to previous comments, implement then, respond and then
+send v3 with all comments addressed.
+
 
 Best regards,
 Krzysztof
