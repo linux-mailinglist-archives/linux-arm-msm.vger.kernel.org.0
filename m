@@ -1,138 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-22608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 648E49078F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:58:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BD5A90793B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 19:03:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E5641F210AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 16:58:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA07928149A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 17:03:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65F1314A081;
-	Thu, 13 Jun 2024 16:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B2DE1474D8;
+	Thu, 13 Jun 2024 17:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OBmPKlo2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WcKzJj41"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9752D149E13
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 16:58:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BB14C6B;
+	Thu, 13 Jun 2024 17:03:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718297920; cv=none; b=iQEKX05PQaHuk2Q45T5xHLAJmYB73YOf7tx9BAAkZfLoSaxH5nHNSUgej0hNkhoia9NH2pbFXZc7ksLUDdZ1+te8IWzrZRU06l3qhttk3IAsD1whjkYE+XQGFxNEFvs0xVtzUFEEFQRApYR5orcakh2NYo5dHWLCy5ihZuIEbBc=
+	t=1718298191; cv=none; b=GKlgLo0HGDiQ9wPgwBNoUaaiyLX3Tpl3jSURmQxgFR0Gtu0Gk1gKVE+zzDrcfUf2Vbq1YcTvwAQPkX0L74GMXiI81P+unK+4e9SVE7WTJJMjovKX4dXr3crj5DzjFa/HJQx7zqeKp+RrMuwVPlQXFYxmwiZN/lJK+f6xrAnK2So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718297920; c=relaxed/simple;
-	bh=Ko2U0XciqYiZd+52ExiI+tllpyZWj8YuZw6B1gktbbo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qlHiPgTWMwErOE9k7MDi0s3DlRrkz9MHm1HQJLv1EfTMwaDzfYtFtkmH+1AZpZiz2J+Ym3LdqfQUQuDOALsGRZnWw+I/IllG2/HtI0YZcvw31jR2b1YTiRdCgvKGOuMZk1bmx8gLx1nkIOiZf8b5jxu5hXSm7uJXoqgy7owuKYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OBmPKlo2; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52bbdc237f0so1578350e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 09:58:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718297917; x=1718902717; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=94cRgmNIJScPtZdK94CW4LdsaQMvPLRaBspPuDEVpOs=;
-        b=OBmPKlo29u+ky8APFdx9lrkw5zGFLOCnSEHWcoyLHBQX4iZ5RfnYXsM6jPjN8ZS5IL
-         mYUY5y6TPYU3fmW0ph3Xxi9dUZ6NiHeyGH0wCqkv4l/FWGeeZjm40wI5AJ34SawJBby5
-         d8xWyiRqDHS9xjOxL2k6QQiYgNBWn+vKRGJ8DdWVMBgv6B8hrvhayqIKuFidSOwM/hv+
-         kHBDuDPbDzsF3mmJs4Ih2hdAT3YqWb98Y5YSpMcllJ8itvO0cx6IG/mUgOTVd5cTb8jH
-         Wh0XDjjKkU5HPvt6ntMe5On5Qe8jncwdbRNibPLTVAJ952fJTGrTNVRcBbOrH2PdUDqS
-         1gNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718297917; x=1718902717;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=94cRgmNIJScPtZdK94CW4LdsaQMvPLRaBspPuDEVpOs=;
-        b=GSuPhr3w+D1ySkN/tAIeopRy4vIYLETjWKqaHARphREfZtGIRNnmmeEtSIzziCmQ5Q
-         VyXOF2i2F7bycRWYSgGfVXIUc80Mh/6tJPQxyHs/9Onzn9Rk9aGVulB1+5V71OASm7Rr
-         zhy0EZPP9lKTQggARTNJMudSXhkW8REkrrOVi8vAmvewzurjH46RpExg8OPGwutLb+yy
-         SCovDQnjQMD7tKHxiw8eUFBhkRxWUkoK2Kkx4B1A2REWTvXGrjqAfkN0y0oECHTsh5Ki
-         sgldSShSc+zkMwaQTl8LYkU8AGFNh6YRvjd12pfDDHHCiXVRB7V0z0/pGLN/qV5q5mT8
-         /rWA==
-X-Gm-Message-State: AOJu0Yzg8XPd8R1XcgEiYRvpn1qN/q6P8+WKrIAFRBzODLvO9/bymBnr
-	3f3UzC8JcXNUCAH+yIRxmyRglNpcyrhHKqaOmXhMmKrcFlAN3JLXReLPlrrT1sQ=
-X-Google-Smtp-Source: AGHT+IEyF4qoR9IYhKLhBMALpMTojh7HHUHgZZVfxWEoUECZp0xgvGWJZgNHhC77wpiXn4vOxAsA1Q==
-X-Received: by 2002:a05:6512:44c:b0:51a:f689:b4df with SMTP id 2adb3069b0e04-52ca6e91b34mr221587e87.44.1718297916719;
-        Thu, 13 Jun 2024 09:58:36 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:900a:a4b1:9ab2:4d92:821a:bb76? ([2a00:f41:900a:a4b1:9ab2:4d92:821a:bb76])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca2872466sm284108e87.143.2024.06.13.09.58.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Jun 2024 09:58:36 -0700 (PDT)
-Message-ID: <d1062fb2-860a-41fe-887f-14977181f5f3@linaro.org>
-Date: Thu, 13 Jun 2024 18:58:33 +0200
+	s=arc-20240116; t=1718298191; c=relaxed/simple;
+	bh=hY9/IYS4RiaVb9Xx3WBRsafNA7SrRdXdyOsBHATd91g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Vm09aBbfmG4ZKgtio4JHYf28tgn9Gd3TRdANoV78fnqHQnYlpZvhHg4k81Gcy9Q4A5Ch5dO4CXJ9VxA8qtLK6Av/OgI5eTkmI5iGzJVYQMwQchfmfgiewEDWXrw3BvW0ihmnYoN8sH3V6SrLNxFQXuM2Os2KfurTM5T6/xMVl/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WcKzJj41; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45D8wv8c001101;
+	Thu, 13 Jun 2024 17:02:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	c0AIAamQnbcEzfp+dXj5IacM2uTRQ2jNA9dY7DbMN+A=; b=WcKzJj41XyOtLfE7
+	+8ZVBk13tD0YW9HMCXa9aY9nTAY1MYnysoT48Ps7DhabmGiJUxYGJCidMb7ZYVXv
+	t8KoE4cnGc2DePbpyQVZdIhDqgfJuH/8KrXV4padHI4C5RTC+bd82HWo06rPqGtB
+	JKCb+5imbzjgvnEn+o19tE5vfqEMGIiDKsqjz0mIpm8jNrEfNPd+8M97hEl+1YSR
+	+k1JEe02OVKc3atkQMQefn4VON07WZYG+edkeJK5gr7NCtmsJWtd4t2VoabejB1R
+	mwmw2DacfeDNhDq1QzYECGUF6ofKWI16EgiiN3eJIfQtM6VrgHGbO1rGPJCYsHDD
+	qA3hqA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ypp87y9yb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Jun 2024 17:02:58 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45DH2ueT007987
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 13 Jun 2024 17:02:56 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 13 Jun
+ 2024 10:02:51 -0700
+Message-ID: <5df5dc6b-872f-34c5-a6d2-a64f9c881193@quicinc.com>
+Date: Thu, 13 Jun 2024 22:32:48 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 1/8] clk: qcom: clk-alpha-pll: Fix CAL_L_VAL override
- for LUCID EVO PLL
-To: Ajit Pandey <quic_ajipan@quicinc.com>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Vinod Koul <vkoul@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, stable@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20240611133752.2192401-1-quic_ajipan@quicinc.com>
- <20240611133752.2192401-2-quic_ajipan@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/4] soc: qcom: icc-bwmon: Allow for interrupts to be
+ shared across instances
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240611133752.2192401-2-quic_ajipan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <djakov@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <srinivas.kandagatla@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
+        <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <abel.vesa@linaro.org>
+References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
+ <20240604011157.2358019-3-quic_sibis@quicinc.com>
+ <5e5f052b-df59-47fb-aed0-10b4f980f151@linaro.org>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <5e5f052b-df59-47fb-aed0-10b4f980f151@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WtebBA6V2IZQ6CERDgXW4_tBdtnP1I82
+X-Proofpoint-ORIG-GUID: WtebBA6V2IZQ6CERDgXW4_tBdtnP1I82
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-13_11,2024-06-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ spamscore=0 suspectscore=0 mlxlogscore=483 priorityscore=1501 adultscore=0
+ bulkscore=0 mlxscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406130122
 
 
 
-On 6/11/24 15:37, Ajit Pandey wrote:
-> In LUCID EVO PLL CAL_L_VAL and L_VAL bitfields are part of single
-> PLL_L_VAL register. Update for L_VAL bitfield values in PLL_L_VAL
-> register using regmap_write() API in __alpha_pll_trion_set_rate
-> callback will override LUCID EVO PLL initial configuration related
-> to PLL_CAL_L_VAL bit fields in PLL_L_VAL register.
+On 6/4/24 12:16, Krzysztof Kozlowski wrote:
+> On 04/06/2024 03:11, Sibi Sankar wrote:
+>> The multiple BWMONv4 instances available on the X1E80100 SoC use the
+>> same interrupt number. Mark them are shared to allow for re-use across
+>> instances.
+
+Hey Krzysztof,
+
+Thanks for taking time to review the series :)
+
 > 
-> Observed random PLL lock failures during PLL enable due to such
-> override in PLL calibration value. Use regmap_update_bits() with
-> L_VAL bitfield mask instead of regmap_write() API to update only
-> PLL_L_VAL bitfields in __alpha_pll_trion_set_rate callback.
-> 
-> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/clk/qcom/clk-alpha-pll.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> index c51647e37df8..a538559caaa0 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -1665,7 +1665,7 @@ static int __alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
->   	if (ret < 0)
->   		return ret;
->   
-> -	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
-> +	regmap_update_bits(pll->clkr.regmap, PLL_L_VAL(pll), LUCID_EVO_PLL_L_VAL_MASK,  l);
+> Would be nice if you also mention you checked that it is safe to have
+> both devm and shared interrupts (so you investigated possibility of race
+> on exit path).
 
-Since you're altering a function used by LUCID and TRION PLLs.. how will
-that affect non-LUCID_EVO/OLE ones?
+I didn't see any problems with devm being used with SHARED when I posted
+it out. After your review comments I went back again to vett the exit
+path for races and ran into an pre-existing splat [1] but the bwmon
+instances work as expected on module removal/re-insertion.
 
-Konrad
+[1] - 
+https://lore.kernel.org/lkml/20240613164506.982068-1-quic_sibis@quicinc.com/
+
+-Sibi
+
+> 
+> Best regards,
+> Krzysztof
+> 
 
