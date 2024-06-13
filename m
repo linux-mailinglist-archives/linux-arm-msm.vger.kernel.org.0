@@ -1,86 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-22607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A7C29078E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:56:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 648E49078F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:58:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B387C2861D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 16:56:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E5641F210AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 16:58:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 863C314A084;
-	Thu, 13 Jun 2024 16:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65F1314A081;
+	Thu, 13 Jun 2024 16:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NhIGzCPJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OBmPKlo2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A741146A7B;
-	Thu, 13 Jun 2024 16:56:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9752D149E13
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 16:58:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718297774; cv=none; b=ZDim49y+LmokfGY9fu8zY5YHPEakfuEoo1vqGd6XMv5sVx/D+TnEJLK9jdHNe7pXuD+PVXYZVgPMjw2W+enyLIit5hb9FxuibxfMX0wNm1BoIA8kdltXFpWj5GNRk2lY64fDL9QRaeTd3wGx3h797GP1SylTGl1qfVpZPQyXEB8=
+	t=1718297920; cv=none; b=iQEKX05PQaHuk2Q45T5xHLAJmYB73YOf7tx9BAAkZfLoSaxH5nHNSUgej0hNkhoia9NH2pbFXZc7ksLUDdZ1+te8IWzrZRU06l3qhttk3IAsD1whjkYE+XQGFxNEFvs0xVtzUFEEFQRApYR5orcakh2NYo5dHWLCy5ihZuIEbBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718297774; c=relaxed/simple;
-	bh=AFsjejU6WOUxpZm3KWb1MCdL1at46hZYCD2xgeBCuII=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=TnoSVfHfJH9TGvUlJoG92m/z797z9yJLVdJsNtbWWHZT2R9LxdI4bOG46fjc360M6IqZ87IloUxM4NFWPEtTQEBWvh5sT9MWr7tin5zuTL/H9uzuE9sIWciK92Cj+kaI9QobCU90h4297F4JogwGMAnXXzfs05McMjbqwb7yfFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NhIGzCPJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269C1C32786;
-	Thu, 13 Jun 2024 16:56:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718297774;
-	bh=AFsjejU6WOUxpZm3KWb1MCdL1at46hZYCD2xgeBCuII=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=NhIGzCPJrsdHU5NRJPqliKJGNxWHDBZFky42hoImrCL3ysQrgM0XboZ7+9jfsUkPD
-	 CZYVOk2/77hkOSdD2opFzY9m/I+Eo0jXl9rcQJLZyRHVCrw9SvAZxCiX73S+Cg4w7D
-	 qQwtCIT7n26dt/9C/jK6LrDFMZ8lL5GxNcZVGO5ZOc+c5rhn2Wrpi6rww3hdEQPZw6
-	 01h2op1LtrRFXzrlw0AuzQFNsCefHpl3F0DP3r8Biht1B7upxyE6ZkwcMXj5tzTEWW
-	 yRAFD/zaHaeS1Gmn5c9GmyvaufF5e51c6Xip0LCOG4zhjuMXDiw6p8UddTV7y3PPUl
-	 phX0DMLCr84HQ==
-From: Lee Jones <lee@kernel.org>
-To: Andy Shevchenko <andy@kernel.org>, Liviu Dudau <liviu.dudau@arm.com>, 
- Sudeep Holla <sudeep.holla@arm.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc: patches@opensource.cirrus.com, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- kernel-janitors@vger.kernel.org
-In-Reply-To: <20240609-md-drivers-mfd-v1-1-47cdd0b394e9@quicinc.com>
-References: <20240609-md-drivers-mfd-v1-1-47cdd0b394e9@quicinc.com>
-Subject: Re: (subset) [PATCH] mfd: add missing MODULE_DESCRIPTION() macros
-Message-Id: <171829777189.2716745.4962313737090017638.b4-ty@kernel.org>
-Date: Thu, 13 Jun 2024 17:56:11 +0100
+	s=arc-20240116; t=1718297920; c=relaxed/simple;
+	bh=Ko2U0XciqYiZd+52ExiI+tllpyZWj8YuZw6B1gktbbo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qlHiPgTWMwErOE9k7MDi0s3DlRrkz9MHm1HQJLv1EfTMwaDzfYtFtkmH+1AZpZiz2J+Ym3LdqfQUQuDOALsGRZnWw+I/IllG2/HtI0YZcvw31jR2b1YTiRdCgvKGOuMZk1bmx8gLx1nkIOiZf8b5jxu5hXSm7uJXoqgy7owuKYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OBmPKlo2; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52bbdc237f0so1578350e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 09:58:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718297917; x=1718902717; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=94cRgmNIJScPtZdK94CW4LdsaQMvPLRaBspPuDEVpOs=;
+        b=OBmPKlo29u+ky8APFdx9lrkw5zGFLOCnSEHWcoyLHBQX4iZ5RfnYXsM6jPjN8ZS5IL
+         mYUY5y6TPYU3fmW0ph3Xxi9dUZ6NiHeyGH0wCqkv4l/FWGeeZjm40wI5AJ34SawJBby5
+         d8xWyiRqDHS9xjOxL2k6QQiYgNBWn+vKRGJ8DdWVMBgv6B8hrvhayqIKuFidSOwM/hv+
+         kHBDuDPbDzsF3mmJs4Ih2hdAT3YqWb98Y5YSpMcllJ8itvO0cx6IG/mUgOTVd5cTb8jH
+         Wh0XDjjKkU5HPvt6ntMe5On5Qe8jncwdbRNibPLTVAJ952fJTGrTNVRcBbOrH2PdUDqS
+         1gNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718297917; x=1718902717;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=94cRgmNIJScPtZdK94CW4LdsaQMvPLRaBspPuDEVpOs=;
+        b=GSuPhr3w+D1ySkN/tAIeopRy4vIYLETjWKqaHARphREfZtGIRNnmmeEtSIzziCmQ5Q
+         VyXOF2i2F7bycRWYSgGfVXIUc80Mh/6tJPQxyHs/9Onzn9Rk9aGVulB1+5V71OASm7Rr
+         zhy0EZPP9lKTQggARTNJMudSXhkW8REkrrOVi8vAmvewzurjH46RpExg8OPGwutLb+yy
+         SCovDQnjQMD7tKHxiw8eUFBhkRxWUkoK2Kkx4B1A2REWTvXGrjqAfkN0y0oECHTsh5Ki
+         sgldSShSc+zkMwaQTl8LYkU8AGFNh6YRvjd12pfDDHHCiXVRB7V0z0/pGLN/qV5q5mT8
+         /rWA==
+X-Gm-Message-State: AOJu0Yzg8XPd8R1XcgEiYRvpn1qN/q6P8+WKrIAFRBzODLvO9/bymBnr
+	3f3UzC8JcXNUCAH+yIRxmyRglNpcyrhHKqaOmXhMmKrcFlAN3JLXReLPlrrT1sQ=
+X-Google-Smtp-Source: AGHT+IEyF4qoR9IYhKLhBMALpMTojh7HHUHgZZVfxWEoUECZp0xgvGWJZgNHhC77wpiXn4vOxAsA1Q==
+X-Received: by 2002:a05:6512:44c:b0:51a:f689:b4df with SMTP id 2adb3069b0e04-52ca6e91b34mr221587e87.44.1718297916719;
+        Thu, 13 Jun 2024 09:58:36 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:900a:a4b1:9ab2:4d92:821a:bb76? ([2a00:f41:900a:a4b1:9ab2:4d92:821a:bb76])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca2872466sm284108e87.143.2024.06.13.09.58.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Jun 2024 09:58:36 -0700 (PDT)
+Message-ID: <d1062fb2-860a-41fe-887f-14977181f5f3@linaro.org>
+Date: Thu, 13 Jun 2024 18:58:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.13.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 1/8] clk: qcom: clk-alpha-pll: Fix CAL_L_VAL override
+ for LUCID EVO PLL
+To: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, stable@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20240611133752.2192401-1-quic_ajipan@quicinc.com>
+ <20240611133752.2192401-2-quic_ajipan@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240611133752.2192401-2-quic_ajipan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, 09 Jun 2024 19:21:28 -0700, Jeff Johnson wrote:
-> On x86, make allmodconfig && make W=1 C=1 reports:
-> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/arizona.o
-> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/pcf50633-gpio.o
-> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/timberdale.o
-> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/ssbi.o
-> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/rt4831.o
-> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/mfd/intel_soc_pmic_bxtwc.o
+
+
+On 6/11/24 15:37, Ajit Pandey wrote:
+> In LUCID EVO PLL CAL_L_VAL and L_VAL bitfields are part of single
+> PLL_L_VAL register. Update for L_VAL bitfield values in PLL_L_VAL
+> register using regmap_write() API in __alpha_pll_trion_set_rate
+> callback will override LUCID EVO PLL initial configuration related
+> to PLL_CAL_L_VAL bit fields in PLL_L_VAL register.
 > 
-> [...]
+> Observed random PLL lock failures during PLL enable due to such
+> override in PLL calibration value. Use regmap_update_bits() with
+> L_VAL bitfield mask instead of regmap_write() API to update only
+> PLL_L_VAL bitfields in __alpha_pll_trion_set_rate callback.
+> 
+> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index c51647e37df8..a538559caaa0 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -1665,7 +1665,7 @@ static int __alpha_pll_trion_set_rate(struct clk_hw *hw, unsigned long rate,
+>   	if (ret < 0)
+>   		return ret;
+>   
+> -	regmap_write(pll->clkr.regmap, PLL_L_VAL(pll), l);
+> +	regmap_update_bits(pll->clkr.regmap, PLL_L_VAL(pll), LUCID_EVO_PLL_L_VAL_MASK,  l);
 
-Applied, thanks!
+Since you're altering a function used by LUCID and TRION PLLs.. how will
+that affect non-LUCID_EVO/OLE ones?
 
-[1/1] mfd: add missing MODULE_DESCRIPTION() macros
-      commit: b3e691c26f55731fd937c4b7ccbc150e10aa30a3
-
---
-Lee Jones [李琼斯]
-
+Konrad
 
