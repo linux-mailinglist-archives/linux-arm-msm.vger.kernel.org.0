@@ -1,171 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-22638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1ED4907B3C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 20:24:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D96A907B45
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 20:28:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 797F51F21660
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:24:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3DA1C1C21909
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:28:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A0F514AD22;
-	Thu, 13 Jun 2024 18:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16DCE14AD1E;
+	Thu, 13 Jun 2024 18:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cBb8Z2tv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E66614A62D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 18:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD9214A4F3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 18:28:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718303072; cv=none; b=IXfd8tMrcFRCskp6lyVpRI6L1fYwIek5pF4JftzDABWJ763xhdjjEOtQe69LlajaHOeh8OWIt2D1gWEWClE+ibMQbXnnSbhFY8ARRuOGVPxcFq729tXYzE+fJpi/cEMv7CCdOruF9nEZn/ue9GZGQxLqT18uUu/n2IsKUcvMor4=
+	t=1718303330; cv=none; b=nkKtR3MZAVAgzC1d3FKrJTSRGLFMexLEJT/GDp8M+vc+tYJc07IJ7iy4WQ+tsb2kjH7TTHpxa5RhdVB3xE9J+W/pb5PAPJgBDhS/pX8JpYNWMrAYBwwXLQ/3kNvWrA8MnChjXTVG0iXdyHI39FdoCUT3wfkol71EeeCgpzjwMIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718303072; c=relaxed/simple;
-	bh=FyhONvgPMFErEikD2z68HaPmcB+qkibRWuML8fkUFAM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VFbQPeWfg5e0tixT/wofBfa5b/Av+/ITbbZKjgKmOcH6b9VZkt3PqYY/D7fm5elc+BJLJ+pahcfB0usXSsowfYHKjspZo5g9vwlOvgLV+xRcuQQ4+tpa5856xOnVayWvy6QDV2wvXgm6goL8d0D1yFuclWVCHwVWE5da4x7rNzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9DE433E9C7;
-	Thu, 13 Jun 2024 20:24:27 +0200 (CEST)
-Date: Thu, 13 Jun 2024 20:24:26 +0200
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 6/8] drm/msm/dsi: parse vsync source from device tree
-Message-ID: <wacf234ei535ruqhmrmbpt6fqtlsi57242gsackxzso6ri7jhc@wvldjncf44le>
-References: <20240613-dpu-handle-te-signal-v2-0-67a0116b5366@linaro.org>
- <20240613-dpu-handle-te-signal-v2-6-67a0116b5366@linaro.org>
+	s=arc-20240116; t=1718303330; c=relaxed/simple;
+	bh=q5ExunAWmbebKzotNJMdAXi6rxEoY/WwolotK+/xrJ8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rJJjQ25/3jxnoOd9Dbe2+stm/OUVlMpf9975Fs3K+wXk3TAwru1Dsw5qrr1jlCGKYYdGJAtkRjq8U06zK7NDb00EEu+5/xqo5oceOgep4zHjwOmtokE1j3D/H1iAprorJyH9YKp0MSj+hGPqrf4Lvi7K4cn8Nj4o1siCOkuJKsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cBb8Z2tv; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dff0c685292so836829276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 11:28:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718303327; x=1718908127; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=U+WGFNDC6mtg/f9cHnSYOLXVNUvNyEN8oDHQ1rCjvO4=;
+        b=cBb8Z2tvzh3z/fXzuxAOlifMFGHl+kgfdagaP6M8bB0Jgp9uynbGO0hYo0J2wIfg1U
+         GhaP4SzgpHpZL+JBcur+krQl2C2H2158FMpVmBQes7tbP1SfmbqbQKH+O4h+nPmf7v/j
+         WX6BXcDvH4S+aDJuJQ3E0QJCtIOKwXOd9nVLWUt9SVHg4ufDAgLyn5EbqBY4uArYG9av
+         T4vjNr+tWvi5tdAOsrv27GQSkUTW/ILeHH55F3ldWkImTTDhF4FZlGifucm2tEU78PoA
+         26M9S5x0PS+imFQPAR+vjR85ppSLMH5mYLKgU/VbCUSk5y8EPQ+lVRsLdM+I+4fCMH1J
+         jIbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718303327; x=1718908127;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U+WGFNDC6mtg/f9cHnSYOLXVNUvNyEN8oDHQ1rCjvO4=;
+        b=BFCE1NG0TI0JO+KQON9IRCPsvOd6oMME64oNEHUTDNkYtAx/BxGbdgCjKyI0E31fe1
+         CLeg1ZZgIgNr2FqS9Q9nO7gv2x71FyOIZl3xtF2nfdPsFhVnhndVTUiTODpRdUFQW7Fj
+         imBb0NTtkp2E1koR3CFijToTLsUDwumggDaAEV4QVwtCKC4uKz5QCwAikMmm1i3WPPjh
+         cJRnqWRI3G8j0OT4B4iyaX2QNG8I2rc7YVKGvvTcGrHSl6fJ5kegUM50eBPU1WuobU86
+         OOBYs+YWiMwiKEKm6MNakMpxUGB1Gay7Hlgpa2ufokeSxu0iPemp1U5oyCBSZ0ecRlWp
+         Sbgw==
+X-Forwarded-Encrypted: i=1; AJvYcCVG5js8fAkrOl4RrLbE0hWR8M3I0eVdiqh5xIfNY5EM4FuVeEJFsw6AvdGPpZIPXBHpovALIMXhQ9GMyzBKRhAobVpAPv7KAIQnOhg+5g==
+X-Gm-Message-State: AOJu0YylWsHSLSggd/gE6Syf3vSRye4dZYmX5oM3deWaPFzrMN4Dx5XR
+	OLEYrINnKCXbnez0rpl0woLR76o6OJ0QJlpHJ9QvT89PORaxQOoO+PpZxnkFe6xDrQtxLlx6BKT
+	ZGsiLXUz6GKKwI/6Eu03yZ/XNpNxSZAys1gQO1g==
+X-Google-Smtp-Source: AGHT+IG/LogtiqjFGi3ralediT2FCQjdnE/2k+qtPlJDqZS6gSIOLoajvxRo0WA2CCSBHqASlSsXhclFFYUs/1jkrbE=
+X-Received: by 2002:a25:accb:0:b0:dfa:7513:59d7 with SMTP id
+ 3f1490d57ef6-dff15500d87mr278860276.65.1718303327456; Thu, 13 Jun 2024
+ 11:28:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240613-dpu-handle-te-signal-v2-6-67a0116b5366@linaro.org>
+References: <20240613-dpu-handle-te-signal-v2-0-67a0116b5366@linaro.org>
+ <20240613-dpu-handle-te-signal-v2-1-67a0116b5366@linaro.org> <y2zzgi4m377rziplwtycijbbdqaaqgyenlrv6v43bpkkt6247y@2uen44jhbv5v>
+In-Reply-To: <y2zzgi4m377rziplwtycijbbdqaaqgyenlrv6v43bpkkt6247y@2uen44jhbv5v>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 13 Jun 2024 21:28:36 +0300
+Message-ID: <CAA8EJpqrJFAaS86s5S4uV_3b9h8Pi1rTE1KxOyvMSbrho4oQyQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] dt-bindings: display/msm/dsi: allow specifying TE source
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Krishna Manikandan <quic_mkrishn@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 2024-06-13 20:05:09, Dmitry Baryshkov wrote:
-> Allow board's device tree to specify the vsync source (aka TE source).
-> If the property is omitted, the display controller driver will use the
-> default setting.
+On Thu, 13 Jun 2024 at 21:16, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2024-06-13 20:05:04, Dmitry Baryshkov wrote:
+> > Command mode panels provide TE signal back to the DSI host to signal
+> > that the frame display has completed and update of the image will not
+> > cause tearing. Usually it is connected to the first GPIO with the
+> > mdp_vsync function, which is the default. In such case the property can
+> > be skipped.
+> >
+> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../bindings/display/msm/dsi-controller-main.yaml       | 17 +++++++++++++++++
+> >  1 file changed, 17 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> > index 1fa28e976559..e1cb3a1fee81 100644
+> > --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> > +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+> > @@ -162,6 +162,22 @@ properties:
+> >                  items:
+> >                    enum: [ 0, 1, 2, 3 ]
+> >
+> > +              qcom,te-source:
+> > +                $ref: /schemas/types.yaml#/definitions/string
+> > +                description:
+> > +                  Specifies the source of vsync signal from the panel used for
+> > +                  tearing elimination.
+> > +                default: mdp_vsync_p
+> > +                enum:
+> > +                  - mdp_vsync_p
+> > +                  - mdp_vsync_s
+> > +                  - mdp_vsync_e
+>
+> When discussing that these should be renamed, was it also documented what the
+> suffix means?  I can only guess something like primary/secondary/e...?
 
-Well, that specific default handling is not really part of this patch, but
-how a followup patch is going to respond when msm_dsi_get_te_source() returns
-NULL. (Or how that followup patch is expected to deal with that - worth a
-doc-comment?)
+external. Note, these names match the name in the datasheets.
 
-> 
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Are the mdp_intfX variants missing here that you're handling in patch 7/8?
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+I didn't test them, so I didn't document them.
 
-> ---
->  drivers/gpu/drm/msm/dsi/dsi.h         |  1 +
->  drivers/gpu/drm/msm/dsi/dsi_host.c    | 11 +++++++++++
->  drivers/gpu/drm/msm/dsi/dsi_manager.c |  5 +++++
->  drivers/gpu/drm/msm/msm_drv.h         |  6 ++++++
->  4 files changed, 23 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index afc290408ba4..87496db203d6 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -37,6 +37,7 @@ struct msm_dsi {
->  
->  	struct mipi_dsi_host *host;
->  	struct msm_dsi_phy *phy;
-> +	const char *te_source;
->  
->  	struct drm_bridge *next_bridge;
->  
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index c4d72562c95a..c26ad0fed54d 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -1786,9 +1786,11 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
->  
->  static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
->  {
-> +	struct msm_dsi *msm_dsi = platform_get_drvdata(msm_host->pdev);
->  	struct device *dev = &msm_host->pdev->dev;
->  	struct device_node *np = dev->of_node;
->  	struct device_node *endpoint;
-> +	const char *te_source;
->  	int ret = 0;
->  
->  	/*
-> @@ -1811,6 +1813,15 @@ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
->  		goto err;
->  	}
->  
-> +	ret = of_property_read_string(endpoint, "qcom,te-source", &te_source);
-> +	if (ret && ret != -EINVAL) {
-> +		DRM_DEV_ERROR(dev, "%s: invalid TE source configuration %d\n",
-> +			__func__, ret);
-> +		goto err;
-> +	}
-> +	if (!ret)
-> +		msm_dsi->te_source = devm_kstrdup(dev, te_source, GFP_KERNEL);
-> +
->  	if (of_property_read_bool(np, "syscon-sfpb")) {
->  		msm_host->sfpb = syscon_regmap_lookup_by_phandle(np,
->  					"syscon-sfpb");
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index 5b3f3068fd92..a210b7c9e5ca 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -603,3 +603,8 @@ bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi)
->  {
->  	return IS_MASTER_DSI_LINK(msm_dsi->id);
->  }
-> +
-> +const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi)
-> +{
-> +	return msm_dsi->te_source;
-> +}
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 912ebaa5df84..afd98dffea99 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -330,6 +330,7 @@ bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
->  bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
->  bool msm_dsi_wide_bus_enabled(struct msm_dsi *msm_dsi);
->  struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
-> +const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi);
->  #else
->  static inline void __init msm_dsi_register(void)
->  {
-> @@ -367,6 +368,11 @@ static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_
->  {
->  	return NULL;
->  }
-> +
-> +static inline const char *msm_dsi_get_te_source(struct msm_dsi *msm_dsi)
-> +{
-> +	return NULL;
-> +}
->  #endif
->  
->  #ifdef CONFIG_DRM_MSM_DP
-> 
-> -- 
-> 2.39.2
-> 
+>
+> > +                  - timer0
+> > +                  - timer1
+> > +                  - timer2
+> > +                  - timer3
+> > +                  - timer4
+> > +
+> >      required:
+> >        - port@0
+> >        - port@1
+> > @@ -452,6 +468,7 @@ examples:
+> >                            dsi0_out: endpoint {
+> >                                     remote-endpoint = <&sn65dsi86_in>;
+> >                                     data-lanes = <0 1 2 3>;
+> > +                                   qcom,te-source = "mdp_vsync_e";
+> >                            };
+> >                    };
+> >             };
+> >
+> > --
+> > 2.39.2
+> >
+
+
+
+-- 
+With best wishes
+Dmitry
 
