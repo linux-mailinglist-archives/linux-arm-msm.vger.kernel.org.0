@@ -1,153 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-22567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB9309069BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:13:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E45A89069D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:18:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0C8D1C203B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 10:13:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 826E9284772
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 10:18:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D3C114198A;
-	Thu, 13 Jun 2024 10:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 799AB1422DD;
+	Thu, 13 Jun 2024 10:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gKih+lwo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ormup/ZL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48131411DB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 10:13:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640FE136647
+	for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 10:18:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718273602; cv=none; b=rUQwCGIvgZT5KkdIqUJGSN5dsbpmjVYjGpsWJdXv8eC2YPcgid07bd2Wb8TaIX5V+Iz59bR6jin+M0S1ErO8QDU+2WExN8ltZQqlAaI5WsbPviv/LR1VKuYR4MEin1e36BWzk6eOHmpfbdTRMJJZdlO7ddo8UL4rH/xwh9Ru6yQ=
+	t=1718273926; cv=none; b=CbhQza675L+V+ey37f3NFeB0XqXVT6fmQfomym3fIe07dwdZrDmRQsrcTZvWmQZ+G8eMXR41URPvJg5QyMhU4lGZ4vtG07nWjPJpvogAb3r+VU8Ilfmf87U45OSvx7T9x0Y3E2zE583sYFCCMYvTTjnseZXmnWdChEDmQ2h/Pqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718273602; c=relaxed/simple;
-	bh=Jig0VbrF7vcRqgAzrjYh7+MqNViArZUDt8CaUtGL04U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pLJ1fEm23xZYNFnNnUw9fk7v0fVjejB4MbNNBJ/RXVGoCn3qBCZB2Wj38m6Av4mDMRwAO/sk+F7ReCr+/nfIoJaQTpdMeR28lfmSnmcRqYODIj97ZqWpP0TFTdK9GUev9Q51A6T3WDApcVH7ELOsFP5ZVKOe3T8uOaxCPyOjZao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gKih+lwo; arc=none smtp.client-ip=209.85.208.171
+	s=arc-20240116; t=1718273926; c=relaxed/simple;
+	bh=YUvQFJH1xmyseUhBIv/gGjLJET5MmLDldQznxc2OK4o=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=B1tVhtYamZ1CtsIWwJkTeT3M7gLwmhnnZ81RBPCbe/cAqZxjzQT/W0OdKMYga6mCzH2/qbo4FjDMiGsZtHtuoMTweRLT4l/T5TnTyHjhN+PipFywyVOMSoUajntJnNtWoi8OGpszfb42i4yc1Rn2ZXFCo4CY3yp6UsYcgvyBmKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ormup/ZL; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ebe6495aedso7291821fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 03:13:19 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52c819f6146so1278032e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Jun 2024 03:18:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718273598; x=1718878398; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6UhTMrFvQBB8mfMQ4c+fd/Ifc6ucfhQNCFOCAgSgYQ0=;
-        b=gKih+lwoYe9CzToEpk6oH9NrrUIyfwappEyPRKqMBA/OKcv9PKzVKTqm1/W0knRbc8
-         LXZITLVa+HnJ25bW6hBqculEPpwfSEaF0ig/UDIlwpLqEkrqPJnhlRKwMmbv47dA9JbR
-         On/5HFPo5lh+DIFdwmZA+GacbDcpmw4Ldx4AnpZoVeAAt+v3Ty3aMqPHeGkYDoJ/ADqj
-         7asCTFBVGLiYQnC+ilLg/qKortdgde3LoyPkM0fKQ+z87wFAAHQuU3sGE+mmCyQTV7YF
-         qgrrvnmlWIOvwxFAp/nzUd1OoDKXXUYOB+/XuKnMyvXLZM8YCbTAO4ribRiGH051sUK2
-         sjdw==
+        d=linaro.org; s=google; t=1718273921; x=1718878721; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gz8Jr9tAelbj0mz7l81bvUL2cfeH6O4EAvWrEVqr2pk=;
+        b=Ormup/ZLLXr7loOq+hSvF3xgfLnE48kD4+o0l2vT+X2aR0+rYbETkss489YXtlqs/t
+         7UH+v7l+TvD1UZRnrsrX0tyb3GrfCmSxLZGmli/UGnsT6lcI8VwhqjYXQNhX49FlJzIY
+         qK+8jGg9bJCz+h13tZld3tV7eE0RAn2VoxbEo+Bp6xJWuxBXVXXihPLcBoe0mek3Y05m
+         lwANqX5rE3VPbJpiHBITXvFkfEGLHTIb1BVpSGeu8N+0YJXyHfrYSehqipoOgWufO7c6
+         VphzQKLVIg9Ywo3PNO/boFyNN74WOOOtbSPQGtu1REO0DvvQpSw4LShTHu2EVzpS4KUG
+         jHFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718273598; x=1718878398;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6UhTMrFvQBB8mfMQ4c+fd/Ifc6ucfhQNCFOCAgSgYQ0=;
-        b=i8bzK0RDuW0Xumi3lvPeLbquM5DZgvvevAScPogsHFOvfA0ur3g9ZYROk8er38/kzl
-         jiHdcs5131ejhHnZZDiesKcze9VJn3yqRNh+9qDnyZqBAHaNyo045e+l6eOsfIfXbCyf
-         esB7YNQYVjbEqYs3WWZqS7WvmqSTbZ05F4zJq8EKQCZHwoOHHJvc5MAZ+JifT53Eyg7A
-         gLIORr+NUbiaLP6Fznw+NmVnB5G2xH01FOiBrzauHNksJZEdFJVLDkOsWbtob0rxOXIU
-         BIsdCo6O697tfnte6BO0Hhevl/JzZjx+MhjhaMGXJYHCXHFXyP9Fg/oHWyfMmv8jYJk+
-         OjqA==
-X-Forwarded-Encrypted: i=1; AJvYcCUH523NlfxdFMKQ7DJZqlvpmo9/IPWOCR+LSjCCR0Q13Gn6FUyz1gJUzaFvz0U8MHTf3UIscb4V81gWYl8gItYgL33cGNMNWEl2LDBMtQ==
-X-Gm-Message-State: AOJu0Yx/8ZLzgCbnhwKKep1gZeU5EtqCbRBKH7YmLDWvhQdU0KhSJZ2h
-	wmFr6Kawqe4gBx/ewmrsgwWLGSfsygMskKiDV8/GOA70ZJbxK0vomcOxhX7XLY8=
-X-Google-Smtp-Source: AGHT+IEqZFp6DfPOGQtW9vNfCAckczSMPw7RWxGa/vCjp53axsK6Fln9qoOgp1dvliTR80CJljmHPQ==
-X-Received: by 2002:a2e:88d2:0:b0:2e2:2791:9842 with SMTP id 38308e7fff4ca-2ebfc9aa3dbmr23103601fa.44.1718273598106;
-        Thu, 13 Jun 2024 03:13:18 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c9ac5bsm1561941fa.134.2024.06.13.03.13.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jun 2024 03:13:17 -0700 (PDT)
-Date: Thu, 13 Jun 2024 13:13:16 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Danila Tikhonov <danila@jiaxyga.com>, robdclark@gmail.com, 
-	quic_abhinavk@quicinc.com, sean@poorly.run, marijn.suijten@somainline.org, 
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, 
-	daniel@ffwll.ch, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	quic_rmccann@quicinc.com, konrad.dybcio@linaro.org, neil.armstrong@linaro.org, 
-	jonathan@marek.ca, swboyd@chromium.org, quic_khsieh@quicinc.com, 
-	quic_jesszhan@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] dt-bindings: display/msm: Add SM7150 DPU
-Message-ID: <4xqa6u3jh6z7zdfaamxl3jpucfymznxmd3ezhihgfky62iifkc@bdslrxujahxc>
-References: <20240612184336.11794-1-danila@jiaxyga.com>
- <20240612184336.11794-4-danila@jiaxyga.com>
- <0e7bd7f2-b445-4a59-b456-8d03af121a8e@kernel.org>
+        d=1e100.net; s=20230601; t=1718273921; x=1718878721;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gz8Jr9tAelbj0mz7l81bvUL2cfeH6O4EAvWrEVqr2pk=;
+        b=WFRQgs1/P00GiCG+jJogm/wRdZoUiysrud7YiSw6EGIPXw3WG/yF2THr5MjclA/cAM
+         JF1/X5lzjkyMVlf7COUaYa83TR3v2AcTGNa5Vs7RyrVQDj3Lml9rLDHOEaMzfZ8MKBFc
+         4D1fbWoCnwrMQE0MpGhTlJylVuosiE4TLg6/GKCTb1LkZlrJOjugNz6ovuvb2823UUiJ
+         JSC95sccMn/+4F/p9Bmx28w8Qq9hN46UFngHUw9S4B7xpYryZAcFrRd5xTlCiJVtJvSe
+         TfrG36HQETvo7qTJx/u7CvtH2+dUg4Q3V+o21v/v+4Nektu4AANWyv70cfWit/ORmfxE
+         RZ/w==
+X-Forwarded-Encrypted: i=1; AJvYcCWpP2Gh5L0HLUsbMhNTPdQamaub2Veu0V78YUabHrsxWO4ibEDPN/hRf2cM074jToVEumEB8Qn6ev5DX4+hNgAx7LxEmcL2CExsOMcR9Q==
+X-Gm-Message-State: AOJu0Ywz8PN9s4fN55l+jzmq8BBM15jzugYB2Yq70wy5p9hP2IoXDYCT
+	pVOSnc/NvZhFJfA/x2yGCOVMeThehSXpJ1B75AIGHJdkBIADfva1cr3fgbYU96E=
+X-Google-Smtp-Source: AGHT+IEbD7oLf2BGEVhBB1lM7YbvXMhQDVXURKeZcbq+vbGXByyf1yn3I2TC3HslUJg3wVBZrQ9hmA==
+X-Received: by 2002:ac2:518c:0:b0:52c:247d:2cfa with SMTP id 2adb3069b0e04-52c9a3b8da6mr2924093e87.13.1718273921419;
+        Thu, 13 Jun 2024 03:18:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:7d7b:a9a3:893:f3c7? ([2a01:e0a:982:cbb0:7d7b:a9a3:893:f3c7])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422874e73b1sm57037815e9.45.2024.06.13.03.18.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Jun 2024 03:18:41 -0700 (PDT)
+Message-ID: <9d7285d2-0dec-4d6f-a3f2-1490261c7206@linaro.org>
+Date: Thu, 13 Jun 2024 12:18:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0e7bd7f2-b445-4a59-b456-8d03af121a8e@kernel.org>
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 0/2] ASoC: codecs: lpass: add support for v2.5 rx macro
+To: srinivas.kandagatla@linaro.org, broonie@kernel.org
+Cc: perex@perex.cz, lgirdwood@gmail.com, alsa-devel@alsa-project.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ krzk+dt@kernel.org, krzysztof.kozlowski@linaro.org
+References: <20240606122559.116698-1-srinivas.kandagatla@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20240606122559.116698-1-srinivas.kandagatla@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 13, 2024 at 11:23:50AM +0200, Krzysztof Kozlowski wrote:
-> On 12/06/2024 20:43, Danila Tikhonov wrote:
-> > Document the DPU hardware found on the Qualcomm SM7150 platform.
+On 06/06/2024 14:25, srinivas.kandagatla@linaro.org wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > 
-> In general, this should be before MDSS, because it defines fully the
-> compatibles already used in the MDSS schema. For multi-binding devices
-> it always starts with children and ends with parent/top schema.
+> This patchset adds support to reading codec version and also adds
+> support for v2.5 codec version in rx macro.
 > 
-> > 
-> > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> > ---
-> >  .../bindings/display/msm/qcom,sm7150-dpu.yaml | 143 ++++++++++++++++++
-> >  1 file changed, 143 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
-> > 
-> > diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
-> > new file mode 100644
-> > index 0000000000000..1a44cad131a72
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
-> > @@ -0,0 +1,143 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/display/msm/qcom,sm7150-dpu.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm SM7150 Display DPU
+> LPASS 2.5 and up versions have changes in some of the rx blocks which
+> are required to get headset functional correctly.
 > 
-> What is DPU? Such acronyms should be explained in description or
-> expanded here, if there is space.
-
-Other bindings here use 'DPU', so probably we need to fix all of them at
-the same time.
-
+> Tested this on SM8450, X13s and x1e80100 crd.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> This changes also fixes issue with sm8450, sm8550, sm8660 and x1e80100.
 > 
-> > +
-> > +maintainers:
-> > +  - Danila Tikhonov <danila@jiaxyga.com>
-> > +
-> > +$ref: /schemas/display/msm/dpu-common.yaml#
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,sm7150-dpu
-> > +
+> @Neil Armstrong  can you pl test it on sm8650
 > 
+> @Krzysztof Kozlowski can you pl test it on sm8550
 > 
+> Thanks,
+> Srini
 > 
-> Best regards,
-> Krzysztof
+> Changes since v1:
+>   - renamed all 2_6 variables with 2.5
+>   - expanded checks for versions from 2.5 till 2.8
+> 
+> Srinivas Kandagatla (2):
+>    ASoC: codecs: lpass-macro: add helpers to get codec version
+>    ASoC: codec: lpass-rx-macro: add suppor for 2.5 codec version
+> 
+>   sound/soc/codecs/lpass-macro-common.c |  14 +
+>   sound/soc/codecs/lpass-macro-common.h |  35 ++
+>   sound/soc/codecs/lpass-rx-macro.c     | 565 +++++++++++++++++++-------
+>   sound/soc/codecs/lpass-va-macro.c     |  29 ++
+>   4 files changed, 488 insertions(+), 155 deletions(-)
 > 
 
--- 
-With best wishes
-Dmitry
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+
+Successfully fixes dual channel output on headset, previously I would only hear
+sound on a single channel.
+
+Thanks,
+Neil
 
