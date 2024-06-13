@@ -1,159 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-22604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 725269078C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:52:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2D5D9078C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 18:53:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6755DB22D1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 16:52:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1AA081F21A22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 16:53:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 695E2149C47;
-	Thu, 13 Jun 2024 16:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DF3A13EFE3;
+	Thu, 13 Jun 2024 16:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mWqAEkvd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L4MGqO1D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8104149C4D;
-	Thu, 13 Jun 2024 16:52:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E449C132124;
+	Thu, 13 Jun 2024 16:53:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718297531; cv=none; b=XEHAmIw7sVyvHqHqe25/kdvfCcTbwLhSUNkHh0TZzWfLMGi4wQ0FN0SuC5XpdCBZzD8h0MbDG/7JaKZgekt/sBeuAiMv9VlcVMHYZU+mpDFAdSl2ufB9V9LMC29fIwoB6QCTQ/tMO3ItPhg2me978T5X8kIjp4f2eFPChYfVXbM=
+	t=1718297615; cv=none; b=QzgUI+OwUjs9ZmSurU7n8E5A+sdbctnKbgZXCsWM1vppd4k03irvMjtv5MfbGgPDN0euWmoP8+rWcI5HlpIdt/D+qp8Fm6SzPGHOsvnj0JcA5Hw1CPX+koZ7z+R0sc2sEEVoZDvh5XALQXQ2MYMFpkFzPJCnZDucIvAasTWOO8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718297531; c=relaxed/simple;
-	bh=3szXYqumfIH8sAhIjGmW4LtFVp0L+ts8Zdxj0HtKBmM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SirAHP0nyvMWN9CUCb5L6VO2xWSrqQk5Qyt5Sx26P5a15puBCJURsxrzNSmonCuk2bE1fjkQOEcK4Yg57fPzha/vjogOA4xoXgH5kN23MTU6CyagD+rpRbOcyA93ebcL7cb70IN+V/S73OuEf4Soy9h63u+hS/4mSRkKQR6paTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mWqAEkvd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45D8pqPV017289;
-	Thu, 13 Jun 2024 16:52:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kxEJzwYk7wS8Rif0r0yLXavFu9aRsVgwexXYqoAERWc=; b=mWqAEkvdTH8iSvx8
-	d3gwsWXJ7VGWZtbbD1K/O/wFEbBzaHGQqJJTcPa+/ZzwS8x9lrEMi57e/dd0kDFM
-	0GWK9q9vVdr8wTOkA49XPZy2RZvtxiRqVDjmzIKqSAVsFCrzgpbtRf0TuI/xnLxb
-	QNHi6kxfb6hZJmNvqjIzACQNgf2i2YHQYybB1gdpNCvTfQeFb0+Pcgd7JmPS4kdt
-	NK3DcB6fu8rie6jN7OOJFDr3z/mi33lrejduiGy5+ddFyavzaMJ9TpfrSO3z52u1
-	emHV06vksxEtEASS0oL512Qq2lhv9J2SLvFer73dB2oPeqyvYZUMOGXiUKGoBuMT
-	wldvtQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yptuy6ake-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Jun 2024 16:52:06 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45DGq5jR024869
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 13 Jun 2024 16:52:05 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 13 Jun
- 2024 09:52:00 -0700
-Message-ID: <f2d81804-f4a3-d813-cbb0-5c4ada6a3fda@quicinc.com>
-Date: Thu, 13 Jun 2024 22:21:58 +0530
+	s=arc-20240116; t=1718297615; c=relaxed/simple;
+	bh=qsCzOIKZDVpVFgr7usAGnRf033LNJuB/tQRDt1YJFq4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qz0xtuEH28wWWLYi+DzjOanfiOkrsef48sEB45+sWdonniUXDZ5/HM9OTMsaeBZrdRwbQI7KCGRvHw7Di7VlQWyL2oB0pkVkaOKfEdNLSBuijCm9zCnsIWyOViml5EKavkVH1gRF5O0ySejetWr5Z26eG/dQcF5Lr7aUThNLZIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L4MGqO1D; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015DCC2BBFC;
+	Thu, 13 Jun 2024 16:53:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718297614;
+	bh=qsCzOIKZDVpVFgr7usAGnRf033LNJuB/tQRDt1YJFq4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=L4MGqO1DaCRRdOKauIlSwN2J7OtN0VxnhjExMt7ciaqVHpmcjkG30ZOQMhh1+v78S
+	 SgbjnDH13DRV8bT4ZCQCKO3HXPZ1Rc6P+LagK8ng5NQmGUwSCliBV6KJNW4RgPyGWX
+	 v7BBnP5uFF2bKG5vk1F17k7a5r4NKD4rMLFkdr1lqaYZNkyNuydR2ia7uf+HzNH5uT
+	 u8+tgMpqgBUIecMNA+n2MhF34L5Ieu6NNVt8W24LzDn7wujUpKI62Q2BNxkTIs98hP
+	 hzx0c77SOzhHDEDj52IQsAYNSjNRHz/eOADCOoPi5/e1AefasnvWB6HxHab45IGWkX
+	 yNiEy0bB2GQ1g==
+Date: Thu, 13 Jun 2024 17:53:29 +0100
+From: Lee Jones <lee@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
+	robh@kernel.org, u.kleine-koenig@pengutronix.de,
+	marijn.suijten@somainline.org, kees@kernel.org, morf3089@gmail.com,
+	quic_gurus@quicinc.com, quic_subbaram@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] leds: rgb: leds-qcom-lpg: Fix line wrapping style
+ issues
+Message-ID: <20240613165329.GP2561462@google.com>
+References: <20240607005250.4047135-1-quic_amelende@quicinc.com>
+ <20240607005250.4047135-2-quic_amelende@quicinc.com>
+ <mummt6hl5c4iih6dvc5qcg6uijkluareqmjbxcfyfyzvhadpcd@oswmwaecv5ic>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: x1e80100: Add BWMONs
-Content-Language: en-US
-To: Shivnandan Kumar <quic_kshivnan@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <djakov@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <quic_rgottimu@quicinc.com>, <conor+dt@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <abel.vesa@linaro.org>
-References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
- <20240604011157.2358019-4-quic_sibis@quicinc.com>
- <b9ee77da-bd51-4d32-8f35-d38fe8b77f44@quicinc.com>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <b9ee77da-bd51-4d32-8f35-d38fe8b77f44@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -PCezlkoOj47IvxEGs_i8VcTY2wMql0n
-X-Proofpoint-ORIG-GUID: -PCezlkoOj47IvxEGs_i8VcTY2wMql0n
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-13_11,2024-06-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
- impostorscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 clxscore=1015 mlxlogscore=999 phishscore=0 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406130121
+In-Reply-To: <mummt6hl5c4iih6dvc5qcg6uijkluareqmjbxcfyfyzvhadpcd@oswmwaecv5ic>
 
+On Fri, 07 Jun 2024, Bjorn Andersson wrote:
 
-
-On 6/6/24 14:39, Shivnandan Kumar wrote:
+> On Thu, Jun 06, 2024 at 05:52:52PM GMT, Anjelique Melendez wrote:
+> > Fix line wrapping style issues introduced in previous patches.
 > 
-> 
-> On 6/4/2024 6:41 AM, Sibi Sankar wrote:
->> Add the CPU and LLCC BWMONs on X1E80100 SoCs.
->>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Bending the line length guidelines is okay when it results in easier to
+> read code. I find the existing code easier to read...
 
-Hey Shiv,
-Thanks for taking time to review the series :)
+Agree.  This patch is not going to be accepted.
 
->> ---
->>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 169 +++++++++++++++++++++++++
->>   1 file changed, 169 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi 
->> b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> index 1929c34ae70a..d86c4d3be126 100644
->> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->> @@ -5329,6 +5329,175 @@ cpu_scp_lpri1: scp-sram-section@200 {
->>               };
->>           };
->> +        pmu@24091000 {
->> +            compatible = "qcom,x1e80100-llcc-bwmon", 
->> "qcom,sc7280-llcc-bwmon";
->> +            reg = <0 0x24091000 0 0x1000>;
->> +
->> +            interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +            interconnects = <&mc_virt MASTER_LLCC 3 &mc_virt 
->> SLAVE_EBI1 3>;
->> +
->> +            operating-points-v2 = <&llcc_bwmon_opp_table>;
->> +
->> +            llcc_bwmon_opp_table: opp-table {
->> +                compatible = "operating-points-v2";
->> +
->> +                opp-0 {
-> 
-> Nitpick,In one table, we start from ‘opp-0,’ while in the other table, 
-> it begins with ‘opp-1,it is better to make it consistent across table.
-> 
+> > Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> > ---
+> >  drivers/leds/rgb/leds-qcom-lpg.c | 19 +++++++++++++------
+> >  1 file changed, 13 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> > index e74b2ceed1c2..7c35b3ba09a3 100644
+> > --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> > +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> > @@ -620,6 +620,7 @@ static void lpg_sdam_apply_lut_control(struct lpg_channel *chan)
+> >  	u8 val = 0, conf = 0, lut_offset = 0;
+> >  	unsigned int hi_pause, lo_pause;
+> >  	struct lpg *lpg = chan->lpg;
+> > +	u16 addr;
+> >  
+> >  	if (!chan->ramp_enabled || chan->pattern_lo_idx == chan->pattern_hi_idx)
+> >  		return;
+> > @@ -640,17 +641,23 @@ static void lpg_sdam_apply_lut_control(struct lpg_channel *chan)
+> >  		lo_idx += lut_offset;
+> >  	}
+> >  
+> > -	nvmem_device_write(lpg_chan_sdam, SDAM_PBS_SCRATCH_LUT_COUNTER_OFFSET + chan->sdam_offset, 1, &val);
+> > -	nvmem_device_write(lpg_chan_sdam, SDAM_PATTERN_CONFIG_OFFSET + chan->sdam_offset, 1, &conf);
+> > -	nvmem_device_write(lpg_chan_sdam, SDAM_END_INDEX_OFFSET + chan->sdam_offset, 1, &hi_idx);
+> > -	nvmem_device_write(lpg_chan_sdam, SDAM_START_INDEX_OFFSET + chan->sdam_offset, 1, &lo_idx);
+> > +	addr = SDAM_PBS_SCRATCH_LUT_COUNTER_OFFSET + chan->sdam_offset;
+> > +	nvmem_device_write(lpg_chan_sdam, addr, 1, &val);
+> > +	addr = SDAM_PATTERN_CONFIG_OFFSET + chan->sdam_offset;
+> > +	nvmem_device_write(lpg_chan_sdam, addr, 1, &conf);
+> > +	addr = SDAM_END_INDEX_OFFSET + chan->sdam_offset;
+> > +	nvmem_device_write(lpg_chan_sdam, addr, 1, &hi_idx);
+> > +	addr = SDAM_START_INDEX_OFFSET + chan->sdam_offset;
+> > +	nvmem_device_write(lpg_chan_sdam, addr, 1, &lo_idx);
+> >  
+> >  	val = RAMP_STEP_DURATION(chan->ramp_tick_ms);
+> >  	nvmem_device_write(lpg_chan_sdam, SDAM_REG_RAMP_STEP_DURATION, 1, &val);
+> >  
+> >  	if (lpg->lut_sdam) {
+> > -		nvmem_device_write(lpg_chan_sdam, SDAM_PAUSE_HI_MULTIPLIER_OFFSET + chan->sdam_offset, 1, &hi_pause);
+> > -		nvmem_device_write(lpg_chan_sdam, SDAM_PAUSE_LO_MULTIPLIER_OFFSET + chan->sdam_offset, 1, &lo_pause);
+> > +		addr = SDAM_PAUSE_HI_MULTIPLIER_OFFSET + chan->sdam_offset;
+> > +		nvmem_device_write(lpg_chan_sdam, addr, 1, &hi_pause);
+> > +		addr = SDAM_PAUSE_LO_MULTIPLIER_OFFSET + chan->sdam_offset;
+> > +		nvmem_device_write(lpg_chan_sdam, addr, 1, &lo_pause);
+> >  	}
+> >  
+> >  }
+> > -- 
+> > 2.34.1
+> > 
 
-Will fix it in the next re-spin.
-
--Sibi
-
->> +                    opp-peak-kBps = <800000>;
->>               reg = <0 0x25000000 0 0x200000>,
-...
-[snip]
-...
-> 
-> 
-> Thanks,
-> Shivnandan
+-- 
+Lee Jones [李琼斯]
 
