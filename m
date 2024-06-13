@@ -1,211 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-22591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1C8290765B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 17:16:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE138907767
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 17:48:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D2CE281685
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 15:16:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3CBF02895BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 15:48:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D58E1494D6;
-	Thu, 13 Jun 2024 15:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29D5014A4DC;
+	Thu, 13 Jun 2024 15:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="LNJUEzSR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ns.iliad.fr (ns.iliad.fr [212.27.33.1])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921AB1474CE;
-	Thu, 13 Jun 2024 15:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.33.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B455912DDA5;
+	Thu, 13 Jun 2024 15:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718291808; cv=none; b=RPH+fJXAgKZmbp6lJQfLe3HeQ3y/lfoetOH/E8HxwXN/XEpLZwKfebqAOl+G+PopH5B567fI1RyL6zz4AEGak4egY3hke4OrX0NCu0QG2fOoDyNXRsaFPuRGho49c7vTnxZAirBICiTYOYXzG9bGaSL8Rssg/1O4mUcIYYMulTk=
+	t=1718293406; cv=none; b=I1kun8vfRtM1dN54STzywkmqJVTLBDXqr5fwL22p+lPYAfD6Nn6BcGkRQNE48FjLkoMSO+NufQ85Gl/M/r+C/cY0mzCWvBu3+LSP3GGR35E/8/U7JiZJhu6koXjPbkA0R77FKCNS2i++C6+3ir+BkPL5XYnr/P94Mvf/v5A76iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718291808; c=relaxed/simple;
-	bh=wntyBBNtb+Kk/4tGJA4KVgZYDk62XkaESCIOagS9K9g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=btyqVMz2v8BnhhUcqQXnTqaSxumeTXaeD+1g2+P5tbdffFbFkCRNz4pnHK59askJMuXaWRZLtSHprFA3r9/lf/NaIoqnb0XXyCzEN6OONKQAuEGxwA9Ra/rLwYJFAFMbmcuqRZ9xgF4EnBhZq62LWyil9Pc+yRPFzDQ4v1n4OfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=srs.iliad.fr; arc=none smtp.client-ip=212.27.33.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=srs.iliad.fr
-Received: from ns.iliad.fr (localhost [127.0.0.1])
-	by ns.iliad.fr (Postfix) with ESMTP id 1D9F520FC7;
-	Thu, 13 Jun 2024 17:16:37 +0200 (CEST)
-Received: from [127.0.1.1] (freebox.vlq16.iliad.fr [213.36.7.13])
-	by ns.iliad.fr (Postfix) with ESMTP id 0502920CF1;
-	Thu, 13 Jun 2024 17:16:37 +0200 (CEST)
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-Date: Thu, 13 Jun 2024 17:15:53 +0200
-Subject: [PATCH v4 4/4] arm64: dts: qcom: add HDMI nodes for msm8998
+	s=arc-20240116; t=1718293406; c=relaxed/simple;
+	bh=wuuRkupuSyLIHDwx1qrL9wK/w/CgUGVdFcSsUcJNGkQ=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=Lpet4EW6gdfIFQDk7vDydkS6wG6HfoviHnNEII1htcWrJsMVgytC1+E6eMN78Ha/6a90qglw6ReppMKV70iWRIYcsrxk7w1hKPKyng4ufP+vmYS+tdoi45/aeGhf4jHMlWI63dm4bZ5cC6+Q9VeOp6e4yizfko1yXNpFZ9zWmow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=LNJUEzSR; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1718293354; x=1718898154; i=markus.elfring@web.de;
+	bh=7fcDu+jAjKTUeYUTcm6nT/VKOpL7/vLs7dIgrQeJffo=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=LNJUEzSRtJ4s9iQHbH54cTGy1ouN6On874yZ2npBiEOFY80pZZFA5tks18EqHG01
+	 wpyeWVebam83eYtPIbbhzsqU4M0oxyPeFJgk3wHCrlejS+gA5I4d2Y1i7sfV5o10V
+	 XlYRG4zqLm9rdcnQK9P2axqomSmoMu+D/zj3o0yfGLp8ILJ+ZbAOdzdwK4C9ZGuL2
+	 AtqncLRaSFxzliD9iTwV3tyZw+nwz6jOO07W//sYkqmT45mSJ+ZMQMIo6a8u5zfrX
+	 GdMOYSuWxiB7YGYH1AFdkvXoTVJwk1dZFNHi3fpgV5CwxEf+O0E1Nvpz/00sChr6y
+	 KvUj8oSD0htlRKLcfQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MlbHE-1shnjs0jC6-00gPUD; Thu, 13
+ Jun 2024 17:42:34 +0200
+Message-ID: <531fdbbb-486d-4207-b9a9-3db23935d583@web.de>
+Date: Thu, 13 Jun 2024 17:42:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240613-hdmi-tx-v4-4-4af17e468699@freebox.fr>
-References: <20240613-hdmi-tx-v4-0-4af17e468699@freebox.fr>
-In-Reply-To: <20240613-hdmi-tx-v4-0-4af17e468699@freebox.fr>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>, 
- Pierre-Hugues Husson <phhusson@freebox.fr>, 
- Marc Gonzalez <mgonzalez@freebox.fr>
-X-Mailer: b4 0.13.0
+User-Agent: Mozilla Thunderbird
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ linux-pci@vger.kernel.org, linux-omap@vger.kernel.org,
+ linux-tegra@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-arm-kernel@axis.com, linux-arm-kernel@lists.infradead.org,
+ imx@lists.linux.dev, mhi@lists.linux.dev, Bjorn Helgaas
+ <bhelgaas@google.com>, Fabio Estevam <festevam@gmail.com>,
+ Jesper Nilsson <jesper.nilsson@axis.com>, Jingoo Han <jingoohan1@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Lucas Stach <l.stach@pengutronix.de>,
+ Marek Vasut <marek.vasut+renesas@gmail.com>,
+ Masami Hiramatsu <mhiramat@kernel.org>, Minghuan Lian
+ <minghuan.Lian@nxp.com>, Mingkai Hu <mingkai.hu@nxp.com>,
+ Niklas Cassel <cassel@kernel.org>, Richard Zhu <hongxing.zhu@nxp.com>,
+ Rob Herring <robh@kernel.org>, Roy Zang <roy.zang@nxp.com>,
+ Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>,
+ Siddharth Vadapalli <s-vadapalli@ti.com>,
+ Srikanth Thokala <srikanth.thokala@intel.com>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Vignesh Raghavendra <vigneshr@ti.com>,
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Cc: LKML <linux-kernel@vger.kernel.org>, kernel@pengutronix.de
+References: <20240606-pci-deinit-v1-2-4395534520dc@linaro.org>
+Subject: Re: [PATCH 2/5] PCI: endpoint: Introduce 'epc_deinit' event and
+ notify the EPF drivers
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20240606-pci-deinit-v1-2-4395534520dc@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:jXSJJJkAI8hN72kU1CJg3ufojWOHI1sFKaf7Q+GXWoK5SHvixA/
+ yrxpcO7iG26yVIJ6a+gDgi7IQ7X4UOlJm7doH6z6KQ09CoTZ4UXvjGVgP4qYQDw1TnsDnm+
+ QVgctN2V24QtpAjdxg0dM1CAxHvdlatDjFFXPjenuaogsqXyOG9yQTvPPKq9AalAtAN4qQW
+ hD6x4vYrIAaZEEVGxiS5w==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:PH53anvoYOY=;1/zV0cxQ7tZhIjrtlZ44ElZLM8Q
+ i/dBiizYx2JrGEKiG8sYkKHnGA384j5aU9TmG7r2D/cFkSPs/yZ0hmPDsuuelZSGCyHWZiRN/
+ oNO+wiyJAPxbMYILm8U3DhPAYJNZL7tChzi/zsp8B0Ib4ehYO2iwpmrdONugRbU5TIwAWBAtt
+ O9Cd1boR1HzXoKsuicQTXIRq42M0q+eeFrw4gHvF7+yVAWOODfM1RkDrMF04xo8/hIKWasMLk
+ GLOKEfJgm5NxvmR+h5J9rmAG2o7PdDilFFAtM4F5qG6niMNgdlmc8tMSNXWrTs5X7cNbolLND
+ GdfeoqXQhgszfzzgCYEC62hZsCKBPBLGFLk9gcEhQVWbhP/v2X6XcVwAwDTXagzQG1eRcaHvn
+ XWChBhxQIPWZJTDfcqUXc/ReGClUJqfuh9a3fj2HR3cYwKXHsMAM/0++GKDTGB3YK076k1DP0
+ 016ihg2akVY+zAqRjQdKi3POQKULjiiULpUCYLnenqi1xkm9viAf2ME6hMmoNZdCrIW2eUD/L
+ rEUUeKzuOB8gGXnQRywfc80Ounpdk42bjy4Spto3HpGg4b7ifudicAAzYTyfh+SXJQCUvKj2t
+ a7wk5vPHw5S0wj9yOnCqxHesNBoirF69BTsUr66isiVPFDNjClzWomn1oCL303/nqyRZNFdnv
+ UgbgIsRlXrUrB/UeMXpqN7c5K00XBixFRFBL5uLnpnFMlrZhtjCrFqooazZL0Of9zEvxbrkj3
+ vDLGyltl4po3ybGUSKAFLDQ4jpbUG/r51SqZRAar3YCVovQArVWZ6ze02zV+bOiJXSkPd5VUW
+ WMUlYtj68L5PQjuICaBMLKaGnwzPX9n/SgmiEdAohcyH0=
 
-From: Arnaud Vrac <avrac@freebox.fr>
+=E2=80=A6
+> +++ b/drivers/pci/endpoint/pci-epc-core.c
+=E2=80=A6
+> +void pci_epc_deinit_notify(struct pci_epc *epc)
+> +{
+=E2=80=A6
+> +	mutex_lock(&epc->list_lock);
+> +	list_for_each_entry(epf, &epc->pci_epf, list) {
+> +		mutex_lock(&epf->lock);
+> +		if (epf->event_ops && epf->event_ops->epc_deinit)
+> +			epf->event_ops->epc_deinit(epf);
+> +		mutex_unlock(&epf->lock);
+> +	}
+> +	epc->init_complete =3D false;
+> +	mutex_unlock(&epc->list_lock);
+> +}
+=E2=80=A6
 
-Port device nodes from vendor code.
+Would you become interested to apply lock guards?
+https://elixir.bootlin.com/linux/v6.10-rc3/source/include/linux/mutex.h#L1=
+96
 
-Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
----
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 100 +++++++++++++++++++++++++++++++++-
- 1 file changed, 99 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index ba5e873f0f35f..5c53957da61c5 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2785,7 +2785,7 @@ mmcc: clock-controller@c8c0000 {
- 				 <&mdss_dsi0_phy 0>,
- 				 <&mdss_dsi1_phy 1>,
- 				 <&mdss_dsi1_phy 0>,
--				 <0>,
-+				 <&hdmi_phy 0>,
- 				 <0>,
- 				 <0>,
- 				 <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
-@@ -2890,6 +2890,14 @@ dpu_intf2_out: endpoint {
- 							remote-endpoint = <&mdss_dsi1_in>;
- 						};
- 					};
-+
-+					port@2 {
-+						reg = <2>;
-+
-+						dpu_intf3_out: endpoint {
-+							remote-endpoint = <&hdmi_in>;
-+						};
-+					};
- 				};
- 			};
- 
-@@ -3045,6 +3053,96 @@ mdss_dsi1_phy: phy@c996400 {
- 
- 				status = "disabled";
- 			};
-+
-+			hdmi: hdmi-tx@c9a0000 {
-+				compatible = "qcom,hdmi-tx-8998";
-+				reg =	<0x0c9a0000 0x50c>,
-+					<0x00780000 0x6220>,
-+					<0x0c9e0000 0x2c>;
-+				reg-names = "core_physical",
-+					    "qfprom_physical",
-+					    "hdcp_physical";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <8>;
-+
-+				clocks = <&mmcc MDSS_MDP_CLK>,
-+					 <&mmcc MDSS_AHB_CLK>,
-+					 <&mmcc MDSS_HDMI_CLK>,
-+					 <&mmcc MDSS_HDMI_DP_AHB_CLK>,
-+					 <&mmcc MDSS_EXTPCLK_CLK>,
-+					 <&mmcc MDSS_AXI_CLK>,
-+					 <&mmcc MNOC_AHB_CLK>,
-+					 <&mmcc MISC_AHB_CLK>;
-+				clock-names =
-+					"mdp_core",
-+					"iface",
-+					"core",
-+					"alt_iface",
-+					"extp",
-+					"bus",
-+					"mnoc",
-+					"iface_mmss";
-+
-+				phys = <&hdmi_phy>;
-+				#sound-dai-cells = <1>;
-+
-+				pinctrl-names = "default", "sleep";
-+				pinctrl-0 = <&hdmi_hpd_default
-+					     &hdmi_ddc_default
-+					     &hdmi_cec_default>;
-+				pinctrl-1 = <&hdmi_hpd_sleep
-+					     &hdmi_ddc_default
-+					     &hdmi_cec_default>;
-+
-+				status = "disabled";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						hdmi_in: endpoint {
-+							remote-endpoint = <&dpu_intf3_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						hdmi_out: endpoint {
-+						};
-+					};
-+				};
-+			};
-+
-+			hdmi_phy: hdmi-phy@c9a0600 {
-+				compatible = "qcom,hdmi-phy-8998";
-+				reg = <0x0c9a0600 0x18b>,
-+				      <0x0c9a0a00 0x38>,
-+				      <0x0c9a0c00 0x38>,
-+				      <0x0c9a0e00 0x38>,
-+				      <0x0c9a1000 0x38>,
-+				      <0x0c9a1200 0x0e8>;
-+				reg-names = "hdmi_pll",
-+					    "hdmi_tx_l0",
-+					    "hdmi_tx_l1",
-+					    "hdmi_tx_l2",
-+					    "hdmi_tx_l3",
-+					    "hdmi_phy";
-+
-+				#clock-cells = <0>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&mmcc MDSS_AHB_CLK>,
-+					 <&gcc GCC_HDMI_CLKREF_CLK>,
-+					 <&rpmcc RPM_SMD_XO_CLK_SRC>;
-+				clock-names = "iface",
-+					      "ref",
-+					      "xo";
-+
-+				status = "disabled";
-+			};
- 		};
- 
- 		venus: video-codec@cc00000 {
-
--- 
-2.34.1
-
+Regards,
+Markus
 
