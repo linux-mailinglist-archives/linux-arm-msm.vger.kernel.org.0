@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-22585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19B6B9072EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 14:54:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EA99907365
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 15:17:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3255A1C20F24
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 12:54:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8C4D1F2215C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Jun 2024 13:17:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E8036EB56;
-	Thu, 13 Jun 2024 12:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 155EF143C5D;
+	Thu, 13 Jun 2024 13:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TurZugmn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PrJNonci"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D683717FD;
-	Thu, 13 Jun 2024 12:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BB11428E2;
+	Thu, 13 Jun 2024 13:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718283283; cv=none; b=adSl5JIcBBzS28jtTjsTegvmnvHtbXL8O0g10wj2IpeTAXThSPi5QOjLOiJfiMiEnutcmAnxtYnnqrBxOl3eui9dRkKTV0qoRVkuGtxDOdT6s04AsGp5UiYQn2we2U3bhNsFtIMERIBaMAA/V+eMwn3Hd8jdIYtrI6LbcnCxDag=
+	t=1718284660; cv=none; b=sVV65y4vKcS+OpE7ajyEbObCyIfQvn/9TJTTBgp0IYQedPMI0T2M2dFDwF+PciC8Rmo7F67ZohG42FSpHTVl2Cfk18ODg93oU7fI9R8poWEOos3BAbjj849QKq5gX+3vVDmd/2VYWaG82mgJL6gx9E9yUquHrA3RH+vuDdmiodw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718283283; c=relaxed/simple;
-	bh=dJYtdzaJMyEffYCt+yuyBL1OIf+l4LABJMoAMK9HJvw=;
+	s=arc-20240116; t=1718284660; c=relaxed/simple;
+	bh=MNEPDLoK2PpSr3mXs73h/X1IsDVoNn91Thnl+e7QMOk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t046PB7mNQwNhEftNQ7J+nQro5ktAJyb/y6H1vwkXpVaPyoWh9yLzX4f8Fd7os9UsHqkfvdjeSV0sTzrGMOF5+yas+uti08FxcsD5D/Lx9F2aJ5yszvbTCw7/AEpkNuqCu2i87KNqHPpV/6a/DDvtN3PZ5t13/x86UbP/F5jR4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TurZugmn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E25C2BBFC;
-	Thu, 13 Jun 2024 12:54:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=XUF+VKx672bniCJ80BRvr8A9FuHycsvIfAXvC7Vc4n7w8jbaahH4uvSuKUGZB/ryAzDpNn2gw6TlOv1NoyD7RKVBi1dcydpjYHRijWLAFe1FRxGQKK9wQUyx8Z0EuKDWWbNpnybmH3BH3UGMyTIBBsGkCVQSDxwxtlhGG5PPmZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PrJNonci; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9840FC2BBFC;
+	Thu, 13 Jun 2024 13:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718283283;
-	bh=dJYtdzaJMyEffYCt+yuyBL1OIf+l4LABJMoAMK9HJvw=;
+	s=k20201202; t=1718284659;
+	bh=MNEPDLoK2PpSr3mXs73h/X1IsDVoNn91Thnl+e7QMOk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TurZugmnIzofQ9eTCeBoNGSHYURq0axCq2cHg1MXb8+tWNU1BzPWdDics6Wyn9Oyw
-	 HESzGIwcYc8KUlKxUe9SFxPHUCrPbf/KCzxTEwhzA9f1kqayzXduQ7/GDYqo7D49xj
-	 YViBSHOuj86MOoYIgHRJakw2sAH6lObgLxf8nHcGNr6tr2TsTcC7SulFZR44xLu+T9
-	 mjPKOlUvdxoTt0qL004WS8eIUZe2Po08B6QtvXq9h70HQGULDMiR3nV3gCMZGah3hJ
-	 ijYxoEoi/R1EZ8cfrqMHBhif5YOdYXI7+hHFMTxWPDpswvXlM9uxzVr9c4saMue24b
-	 JPRa+BQ2v67rA==
-Message-ID: <b6713018-73d2-44a8-8f2c-f6a7c73308d1@kernel.org>
-Date: Thu, 13 Jun 2024 14:54:33 +0200
+	b=PrJNoncip6Fskk6khSzwVkZcP4VV4lL66FNijKu7vU7Sa2sDJxXcnY6X8XmLSQiA2
+	 4cB4hS1wXzFghXFB3J5yFAKY+IKpZgNy8qW0HPZhuZmz5DjP3vXmvgxzO4aWxQ43wP
+	 taLyw7OM6XqoXVoZdLh1xaql+VFaOhDe83nvyqml33dQwUsZNR5W8SNp+SZsHj+V0E
+	 ZevF626b65m9P7cUAMT3nA2qCvZnSTH1IIFeUSRQBfSEFqmhuFsLDjo/xbGSfh5iza
+	 OrbJgcAnTw7Yn4fFtj9AXgzmZt0aGT5SoaVsRV5proKczNLZZS+fl8ca4Uw1+Mr13q
+	 G7DB+bZAFs3cA==
+Message-ID: <c108719b-992f-4aa6-aa9d-c0276a0ec646@kernel.org>
+Date: Thu, 13 Jun 2024 15:17:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] dt-bindings: display/msm: Add SM7150 DPU
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Danila Tikhonov <danila@jiaxyga.com>, robdclark@gmail.com,
- quic_abhinavk@quicinc.com, sean@poorly.run, marijn.suijten@somainline.org,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
- airlied@gmail.com, daniel@ffwll.ch, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, quic_rmccann@quicinc.com, konrad.dybcio@linaro.org,
- neil.armstrong@linaro.org, jonathan@marek.ca, swboyd@chromium.org,
- quic_khsieh@quicinc.com, quic_jesszhan@quicinc.com,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240612184336.11794-1-danila@jiaxyga.com>
- <20240612184336.11794-4-danila@jiaxyga.com>
- <0e7bd7f2-b445-4a59-b456-8d03af121a8e@kernel.org>
- <4xqa6u3jh6z7zdfaamxl3jpucfymznxmd3ezhihgfky62iifkc@bdslrxujahxc>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-crd: fix DAI used for
+ headset recording
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20240611142555.994675-1-krzysztof.kozlowski@linaro.org>
+ <20240611142555.994675-2-krzysztof.kozlowski@linaro.org>
+ <90f5ad41-7192-4c01-90c0-ad9c54094917@linaro.org>
+ <9e9cbc0b-f9fd-439c-93d1-054179f7b07f@linaro.org>
+ <7rfoogp7w3gmtyawmil5lilx4blbpnb3nzl5tv2onydmzblcqw@qooqesspnrp4>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,48 +110,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <4xqa6u3jh6z7zdfaamxl3jpucfymznxmd3ezhihgfky62iifkc@bdslrxujahxc>
+In-Reply-To: <7rfoogp7w3gmtyawmil5lilx4blbpnb3nzl5tv2onydmzblcqw@qooqesspnrp4>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/06/2024 12:13, Dmitry Baryshkov wrote:
-> On Thu, Jun 13, 2024 at 11:23:50AM +0200, Krzysztof Kozlowski wrote:
->> On 12/06/2024 20:43, Danila Tikhonov wrote:
->>> Document the DPU hardware found on the Qualcomm SM7150 platform.
->>
->> In general, this should be before MDSS, because it defines fully the
->> compatibles already used in the MDSS schema. For multi-binding devices
->> it always starts with children and ends with parent/top schema.
->>
+On 13/06/2024 12:10, Dmitry Baryshkov wrote:
+> On Thu, Jun 13, 2024 at 11:11:05AM +0200, Krzysztof Kozlowski wrote:
+>> On 13/06/2024 09:45, Konrad Dybcio wrote:
 >>>
->>> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
->>> ---
->>>  .../bindings/display/msm/qcom,sm7150-dpu.yaml | 143 ++++++++++++++++++
->>>  1 file changed, 143 insertions(+)
->>>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
 >>>
->>> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
->>> new file mode 100644
->>> index 0000000000000..1a44cad131a72
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
->>> @@ -0,0 +1,143 @@
->>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/display/msm/qcom,sm7150-dpu.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm SM7150 Display DPU
+>>> On 6/11/24 16:25, Krzysztof Kozlowski wrote:
+>>>> The SWR2 Soundwire instance has 1 output and 4 input ports, so for the
+>>>> headset recording (via the WCD9385 codec and the TX macro codec) we want
+>>>> to use the next DAI, not the first one (see qcom,dout-ports and
+>>>> qcom,din-ports for soundwire@6d30000 node).
+>>>>
+>>>> Original code was copied from other devices like SM8450 and SM8550.  On
+>>>> the SM8450 this was a correct setting, however on the SM8550 this worked
+>>>> probably only by coincidence, because the DTS defined no output ports on
+>>>> SWR2 Soundwire.
+>>>
+>>> Planning to send a fix for that?
+>>>
+>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >>
->> What is DPU? Such acronyms should be explained in description or
->> expanded here, if there is space.
+>> Not really, because microphone works on these targets and changing it
+>> would require testing. I don't have boards suitable for testing, so
+>> let's just leave it.
 > 
-> Other bindings here use 'DPU', so probably we need to fix all of them at
-> the same time.
+> If you provide instructions, I can test microphones on SM8450 HDK.
+> 
 
-Well, we can also start it for new bindings but that's not a reason for
-resend itself.
+SM8550 and SM8650
 
 Best regards,
 Krzysztof
