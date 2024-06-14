@@ -1,88 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-22720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0001E9089B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 12:25:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0BE9908A0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 12:34:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0BDE1C265F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 10:24:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1012288A81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 10:34:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57E84194132;
-	Fri, 14 Jun 2024 10:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F028146582;
+	Fri, 14 Jun 2024 10:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZVZqrN1b"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="onFyQAFO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C615E19414A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 10:24:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAC3193099
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 10:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718360695; cv=none; b=MsE1Qp53y72WQl4oQQTKiWXLQJFUiI8IVhsLkWYCrdy8gHzd4tzfUJwDi4+478tlenW2PyiDQnrgKL9CUYb1tVDOFWg6Kjoli593aZyxdDlfv7TSUNB0Ip7zEryW9xn94EWHMVA2RFcavzvT0zBOL+LremiXoe2xY7H7cF0hpOo=
+	t=1718361242; cv=none; b=Kyl5DxjUu5UgZQUlbiy5/N0nThcIbWd5LoRa1FGRoY5Fv6vrj77K5gL++m1kk/ntDm4acNvh74fZ39sh5c+nlG3mT0GX5Qy+0GkdfMSf8UUjdlXayOxmyyYgzADsy4dn2nhz6SBYA9Bm8Ebv4jW3JuEyLFcqsu2EkaX8Z6rIzEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718360695; c=relaxed/simple;
-	bh=ZuwSgi9zLIoNZp877URK5FteNaoBqxpCKd2FeYdrG38=;
+	s=arc-20240116; t=1718361242; c=relaxed/simple;
+	bh=Cbj5rY7Q4042m6Tf1K2FyGsGbl9sIcaLxOrvxa3PI7s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qFfuDeE6JDJazSWw7E5uTABDXxkKJQiPscMmsEDPKJL3h3NDreeAU0acaVvGzZBpgH1yqYrHg5u8ofWVkwNKhaKHB4O0NBjtUOpNNVczz8UmfoEAM4QWXy7JeUkSGNQ36KKCDR32tuCGMRo5WxtZgkX/FJmBXTXj2BgfrxAWPsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZVZqrN1b; arc=none smtp.client-ip=209.85.167.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=eAEz46G+0VUnXOrjXb6ZLe+x1J1smH2IKdUR3mczPDshvq9mTbJcZS+Qs2UTCGwk6WSmESzI2AlnnJzXpA4fBGg3nrjQwW/D843/07tiA2HjGIETrnc+huUzWK//HllAtg2XgbXGjhfWy5V4r1pTc5/v7Foaugutsfohz01kWTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=onFyQAFO; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52c89d6b4adso1869268e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 03:24:52 -0700 (PDT)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ec1620a956so6807091fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 03:33:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718360691; x=1718965491; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718361237; x=1718966037; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=efnhjpqQgsmtdaUVLcqkEj44nSpt4V5RfvjPWerlFZk=;
-        b=ZVZqrN1bcVkscnqRfkObQYXi2bS6sEMRFe0GFJamipcs+6ukeqxE86Hgc/RVZfOKa/
-         ZCv4KAN3DAJwAH+Zigx4dimz5aDoBUIhFlkzXZWcZ1zCypnt10DmANYns33SxLm4omOg
-         eiCEMrgV1MHxZvbMcZ9li2buyyvPzmR+4NYXV0z+UVGCFK7hvImpwiSj0SCboHZ5wpTo
-         idF2fQyVdX4wiliiqvet9M+WVQX204+OcpE4EZW/hYEPnoUpwAd2wnJ5yNCjhVK5t8nj
-         V+x9FxyJDLpCvhEQ/iRZmKTYpU4S4ralN62CFSp6uZHs9olw4kfJvGfuZ098ZVF4D0ac
-         zm/g==
+        bh=nzzrXsvYFvoKMaClE4C1QUvbpC22b7f20EhDi4vOiQc=;
+        b=onFyQAFOUUdsdj8f2K8aHWXSoqdMmhoNPOuskohYQpS5fMSa8sI6mpIfsARSeEVDL0
+         s+fE0suWoFReX0jCcyN5NGwPZwEH9ep7/swTrMx/u/xBDP0TDH02VsOkfaMFA8Zi+f0r
+         hSwvZcw/jSvDTK2AE1yBeLwsQ5eI0Rq9iGfjRwQW61LZVDBj25E30GTzaJsBXspFZWPd
+         UGygFQl9mJvWCi5AWETLz58LbZfRdj4jJh3SU1pF6bSckmVVrD1CdLrnM6zqNshkh9IY
+         0DmRR8y5zHx5iH+DTzybPK/eNRVGM53dcueotEi9ZYePSxyKKEwYyGKNPSNAa1ENxZod
+         BeDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718360691; x=1718965491;
+        d=1e100.net; s=20230601; t=1718361237; x=1718966037;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=efnhjpqQgsmtdaUVLcqkEj44nSpt4V5RfvjPWerlFZk=;
-        b=NDIvzfS2ORAQaBdnf6q+zTK4AW5KGG8SX9E6Rl8eANBk+BG5LBUjJl24LloawZw8LP
-         CF3ouTrL5VbJpg3dU78zMHbvhCyFO0mV3NLYp7RaL+6ouwfdSGibZuCT7UxGhcfCG16e
-         XHgINmB4Uut2NZeuVCyX8iH7UkUlpFIBXRxtQH5WAjFUikoKNtDyEEVxPUQI5Eph0UQd
-         U/D8nhjpaHPXBo9mk1++vECYaMI4+dVGICKW8L6h5BqLorPYoTNTHSK7/mpccbz4HwQP
-         HdHRaHbfun4tzx7G2Rjz0nUqNXz5fiIcmqzMTY9Hf69LqTRiyTpidk1h/HoVa1B+CjqT
-         2FaA==
-X-Forwarded-Encrypted: i=1; AJvYcCX87iunZ/DuuRElBFaWGblmVulCceZe3EHTgMH6GmroeeCdsdUhAlG4+S7dtjPQScXWqaJbt0p71xpyIjab7hZb3qSGe3u+rkBCnsmAuw==
-X-Gm-Message-State: AOJu0Yxqr3lT46DfTWtlZtZAC2sVkzS/cALY+L/AbywLlEaeWAu52K4r
-	hbZIERk3HClXECLDJ8hohEbXBHEcLlR0erjF+Mi8eQigG+URCQbjDTBGJ0BNnUI=
-X-Google-Smtp-Source: AGHT+IEWORdeTtr6fZukAQJ2f/JpYbjWtk3eAvDeBEJR863+Icr9nb85v00/m9s9du9B/uAO5LpWzA==
-X-Received: by 2002:a19:914d:0:b0:52c:8a4e:f4bf with SMTP id 2adb3069b0e04-52ca6e90db1mr1229088e87.51.1718360690961;
-        Fri, 14 Jun 2024 03:24:50 -0700 (PDT)
+        bh=nzzrXsvYFvoKMaClE4C1QUvbpC22b7f20EhDi4vOiQc=;
+        b=frAozG1W+BvARgbTPFiH8i88y7RwjwFNA/VMQws9cy2Tyf2GG833Xyoo2D3Yn0omoz
+         HOGw5s7z8/+rtbcEg/sMkTAE1j23P5QinVtLnAuHbA2hD2UOv2xGc+8h2BIYKQBVBZpQ
+         bQAPLUY/tsGK920txSZxSv2REokHu2zAoWLwC/rLL9yx/W+7QAtuie7Rgs0ymvrE1ATU
+         bf3szdUzI4TlgiIt+zMyysAYDRr+xqltQie5r7OqQF0lK+QSxQfYrkq/FTGGe82KaUAd
+         XqjTWZ7IJaHRAF7HCac1/0B4CpThR2Nzr6YArIJm8U9Cs9jcMMY3bstKlh2QOm81wLaM
+         1Ezw==
+X-Forwarded-Encrypted: i=1; AJvYcCUe6IFPXyRbS3Qu/WJtBrj6ujlBfBtLXL0E0OaZxaFUeMd0ca8StDMb77OsAOumejovuW10FPrdA6KhKkjKDlg+x6ozLdcqekSAHOoq8Q==
+X-Gm-Message-State: AOJu0YxCjh4lugtAN+2g747WHH7o+hDOm9ZlJajJt8muNUnVYM5mK3yX
+	tSfmwhGpxbR7ceuvmcF9zYm//VDgs26N8dGXndM12UcSCyYQCgORmxo1MF6y9IM=
+X-Google-Smtp-Source: AGHT+IF6mEEorcmc78Jh2JqE/2g+YCduyT8m9BvWcoXYiiwCnJYwE/grVOArAgCLk+3BywJlJp44Og==
+X-Received: by 2002:a2e:9d05:0:b0:2eb:120c:1a59 with SMTP id 38308e7fff4ca-2ec0e5c6614mr15445521fa.16.1718361237579;
+        Fri, 14 Jun 2024 03:33:57 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca886e23asm168540e87.270.2024.06.14.03.24.50
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec0596521bsm5135361fa.0.2024.06.14.03.33.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jun 2024 03:24:50 -0700 (PDT)
-Date: Fri, 14 Jun 2024 13:24:49 +0300
+        Fri, 14 Jun 2024 03:33:57 -0700 (PDT)
+Date: Fri, 14 Jun 2024 13:33:55 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: Rob Herring <robh@kernel.org>, 
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Marc Gonzalez <mgonzalez@freebox.fr>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Hans de Goede <hdegoede@redhat.com>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-Subject: Re: [PATCH v6 4/6] power: supply: lenovo_yoga_c630_battery: add
- Lenovo C630 driver
-Message-ID: <s5ykyyczxrn7pblzbiu7st6barn47zrtjr6yn5shbeo7lwqkfk@hdctgjwpqu55>
-References: <20240612-yoga-ec-driver-v6-0-8e76ba060439@linaro.org>
- <20240612-yoga-ec-driver-v6-4-8e76ba060439@linaro.org>
- <r5wjdxqdechzxbyqwbyz7ou6nbxqewb6bruvklvcek2dhspixf@ujavcd3ky7n7>
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>, 
+	Pierre-Hugues Husson <phhusson@freebox.fr>
+Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: add HDMI nodes for msm8998
+Message-ID: <pprbxhow6gl6bqlhzoiozz7ymwqk5uwuyuwclviulie4ucyjok@xv34zrzw72oz>
+References: <20240613-hdmi-tx-v4-0-4af17e468699@freebox.fr>
+ <20240613-hdmi-tx-v4-4-4af17e468699@freebox.fr>
+ <348e16f1-0a1b-4cad-a3f0-3f7979a99a02@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,41 +93,133 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <r5wjdxqdechzxbyqwbyz7ou6nbxqewb6bruvklvcek2dhspixf@ujavcd3ky7n7>
+In-Reply-To: <348e16f1-0a1b-4cad-a3f0-3f7979a99a02@linaro.org>
 
-On Fri, Jun 14, 2024 at 03:35:25AM GMT, Sebastian Reichel wrote:
-> Hi,
+On Fri, Jun 14, 2024 at 01:55:46AM GMT, Konrad Dybcio wrote:
 > 
-> On Wed, Jun 12, 2024 at 12:59:35PM GMT, Dmitry Baryshkov wrote:
-> > On the Lenovo Yoga C630 WOS laptop the EC provides access to the adapter
-> > and battery status. Add the driver to read power supply status on the
-> > laptop.
+> 
+> On 6/13/24 17:15, Marc Gonzalez wrote:
+> > From: Arnaud Vrac <avrac@freebox.fr>
 > > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Port device nodes from vendor code.
+> > 
+> > Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 > > ---
-> >  drivers/power/supply/Kconfig                    |   9 +
-> >  drivers/power/supply/Makefile                   |   1 +
-> >  drivers/power/supply/lenovo_yoga_c630_battery.c | 500 ++++++++++++++++++++++++
-> >  3 files changed, 510 insertions(+)
-> > 
-> > diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-> > index 3e31375491d5..55ab8e90747d 100644
-> > --- a/drivers/power/supply/Kconfig
-> > +++ b/drivers/power/supply/Kconfig
-> > @@ -167,6 +167,15 @@ config BATTERY_LEGO_EV3
-> >  	help
-> >  	  Say Y here to enable support for the LEGO MINDSTORMS EV3 battery.
-> >  
-> > +config BATTERY_LENOVO_YOGA_C630
-> > +	tristate "Lenovo Yoga C630 battery"
-> > +	depends on OF && EC_LENOVO_YOGA_C630
 > 
-> The driver should no longer depend on OF. Otherwise LGTM.
-> Thanks for reworking it.
+> [...]
+> 
+> > +
+> > +			hdmi: hdmi-tx@c9a0000 {
+> > +				compatible = "qcom,hdmi-tx-8998";
+> > +				reg =	<0x0c9a0000 0x50c>,
+> > +					<0x00780000 0x6220>,
+> > +					<0x0c9e0000 0x2c>;
+> > +				reg-names = "core_physical",
+> > +					    "qfprom_physical",
+> > +					    "hdcp_physical";
+> 
+> The way qfprom is accessed (bypassing nvmem APIs) will need to be reworked..
+> but since we already have it like that on 8996, I'm fine with batch-reworking
+> these some time in the future..
 
-Ack, I'll post a fixed version once Ilpo announces an immutable branch.
 
+Yes. The whole qfprom / hdcp part needs to be reworked, but it should
+not stop the platform from flowing in.
 
+> 
+> > +
+> > +				interrupt-parent = <&mdss>;
+> > +				interrupts = <8>;
+> > +
+> > +				clocks = <&mmcc MDSS_MDP_CLK>,
+> 
+> Not sure if the MDP core clock is necessary here. Pretty sure it only
+> powers the display-controller@.. peripheral
+
+It might be, or it might be not. DSI interfaces also use MDP_CLK on
+those platforms.
+
+> 
+> > +					 <&mmcc MDSS_AHB_CLK>,
+> > +					 <&mmcc MDSS_HDMI_CLK>,
+> > +					 <&mmcc MDSS_HDMI_DP_AHB_CLK>,
+> > +					 <&mmcc MDSS_EXTPCLK_CLK>,
+> > +					 <&mmcc MDSS_AXI_CLK>,
+> > +					 <&mmcc MNOC_AHB_CLK>,
+> 
+> This one is an interconnect clock, drop it
+> 
+> > +					 <&mmcc MISC_AHB_CLK>;
+> 
+> And please confirm whether this one is necessary
+
+Let me quote the discussion on #linux-msm
+
+<lumag> jhugo, do you know anything about MNOC_AHB_CLK / MISC_AHB_CLK? Should they be enabled for HDMI to work?
+<jhugo> lumag: MNOC AHB, yes
+<jhugo> lumag: MISC, probably
+
+> > +				clock-names =
+> > +					"mdp_core",
+> > +					"iface",
+> > +					"core",
+> > +					"alt_iface",
+> > +					"extp",
+> > +					"bus",
+> > +					"mnoc",
+> > +					"iface_mmss";
+> > +
+
+[...]
+
+> > +
+> > +			hdmi_phy: hdmi-phy@c9a0600 {
+> > +				compatible = "qcom,hdmi-phy-8998";
+> > +				reg = <0x0c9a0600 0x18b>,
+> > +				      <0x0c9a0a00 0x38>,
+> > +				      <0x0c9a0c00 0x38>,
+> > +				      <0x0c9a0e00 0x38>,
+> > +				      <0x0c9a1000 0x38>,
+> > +				      <0x0c9a1200 0x0e8>;
+> > +				reg-names = "hdmi_pll",
+> > +					    "hdmi_tx_l0",
+> > +					    "hdmi_tx_l1",
+> > +					    "hdmi_tx_l2",
+> > +					    "hdmi_tx_l3",
+> > +					    "hdmi_phy";
+> > +
+> > +				#clock-cells = <0>;
+> > +				#phy-cells = <0>;
+> > +
+> > +				clocks = <&mmcc MDSS_AHB_CLK>,
+> > +					 <&gcc GCC_HDMI_CLKREF_CLK>,
+> > +					 <&rpmcc RPM_SMD_XO_CLK_SRC>;
+> > +				clock-names = "iface",
+> > +					      "ref",
+> > +					      "xo";
+> 
+> GCC_HDMI_CLKREF_CLK is a child of xo, so you can drop the latter.
+> It would also be worth confirming whether it's really powering the
+> PHY and not the TX.. You can test that by trying to only power on the
+> phy (e.g. call the phy_power_on or whatever APIs) with and without the
+> clock
+
+I'd prefer to keep it. I think the original DT used one of LN_BB clocks
+here, so it might be that the HDMI uses CXO2 / LN_BB instead of the main
+CXO.
+
+If somebody can check, which clock is actually used for the HDMI, it
+would be really great.
+
+> 
+> Konrad
+> 
+> -- 
+> linux-phy mailing list
+> linux-phy@lists.infradead.org
+> https://lists.infradead.org/mailman/listinfo/linux-phy
 
 -- 
 With best wishes
