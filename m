@@ -1,487 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-22745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D77A1909369
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 22:30:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18D69909390
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 23:00:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF47A1C226DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 20:30:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A284428865A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 21:00:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3B781836F9;
-	Fri, 14 Jun 2024 20:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AF69145A05;
+	Fri, 14 Jun 2024 21:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y+Qd+1M+"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="VKkGHVxY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4ABF14A4CF;
-	Fri, 14 Jun 2024 20:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B681EB25;
+	Fri, 14 Jun 2024 21:00:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718397037; cv=none; b=ZjzJfYB9xzBlsEceHm7X2ryVqn5pqNbOXHnmz4leY1VLFOuVQYuHrVQZAxR2n4WdUre8aWqUc0fLlDsEtkDdtxZCxI2YEpjWfziYILHGhaMAWpBpTEg/g81hUY6b7zwA1a0GfYyJJdJ2hoULbLG0uTvNdV11qrapdo6VSDnbn7s=
+	t=1718398824; cv=none; b=bXd7twWq6PAlKS6bkHwjIVE3y350++BGMmby7byu4O5vlF41yCArRmgplPBGtylcK+O9YVKJVCxKBdhVhtZQPVpnaCG+/0Ym3vEd6OCNgtpx6UONjfiq2/ysuE3/7EU/76j1O3cIGD+XPEmDCzExRcddPWT5IbzqRvcCNrA9EEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718397037; c=relaxed/simple;
-	bh=i+GYuBH4deuAMzLbZbJp8k3J9WIWhyDPoULBKiveZIw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=k1VlmIqfWHahtkPIdiH9UkSXXex43+VDJ0vE2pzLg8moHIRNR7YSy0JxJvcKpjuC8Cuo5n5xifPUqHos8oXLD+rHm/nhx9u9ZC0lESqrT2clCjF6LO6O7mvqKGDes9tuTQzDrucmC292274wxXcDf/6+oKcXv6yCOuH2+aa51lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y+Qd+1M+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45E9uBuW001898;
-	Fri, 14 Jun 2024 20:30:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SKZzSnNmBGLvVrFRCMOk90SXf4pI2wqapfbLj3tx9So=; b=Y+Qd+1M+KDsYVK+O
-	h6NxVry6OopR+3aXoyjjqsPjdIjdXwlDi7eChFhbPfA3REeHSbU3AKJCAB2X7XUr
-	ABFc6epVfcakE2KvYriqPmXG53kTGHEdHoHyOcXsES1wke86EFWEOsKgMJGLVsMg
-	N3WkCWFXgFoleDOlcBxEunHiWVZNc4C14ARDYAs9DBcqRDq8ledZFWvKF3n+bBdZ
-	7zGNwrXxuqybaz4le0mx4AJtLZOAXgGvOQLglwrqSjfZcfZNsNTSrM5BuQa+KfB8
-	LThUm3jjznPGozGmFfinM5EsAopvXDCMNTO9WSz37S+KBD4LIq7jZJGbbUlmaYeK
-	NVIkwQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yr6q4jm1d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Jun 2024 20:30:22 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45EKUK5u013412
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 14 Jun 2024 20:30:20 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 14 Jun
- 2024 13:30:16 -0700
-Message-ID: <4d21f140-351e-da3f-57b4-3041fb8684e9@quicinc.com>
-Date: Sat, 15 Jun 2024 02:00:12 +0530
+	s=arc-20240116; t=1718398824; c=relaxed/simple;
+	bh=oQ6arAMIY4W8JlFuhCva0WASFpdOy6AaDFmh/dcfYng=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nTvqXLYjzVDi/b5K4tTz1wfyUu54A099KY5OggHRi2/L4O9gNyTTgYl11Qu4ODdmq3Av9DnmAtwYANPUVcmhFgdHMEn5fJ716neVZ5UP3G35BGVGV/O7+rG/JDGFTk11prxIvLjQtVDWzCYW7mrjKOrgzzZ2NHY7JpilZiCdFCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=VKkGHVxY; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1718398820;
+	bh=oQ6arAMIY4W8JlFuhCva0WASFpdOy6AaDFmh/dcfYng=;
+	h=From:Date:Subject:To:Cc:From;
+	b=VKkGHVxY9SmUApWtxMiW8ZEBIhXb8eOgsRjdZAREYrvedg2cYTfIYkmILJwbKjyLB
+	 CVB0uCFj5pR6xskzzJjI3h2qeng3CMg4+xRrfD5KZOtKlCt6MAY7+SyjyjWPwrOlSq
+	 5lLerL0SDi4nQVKFDnIXEssz/om3YYhM9b4wgVi3OAChLuAsDVMDPBa+xdPlS6qwzX
+	 vhCp3htC5Fb7GzP7GMHnkf9xNauu9tStyXf888EC2Iw5s9FvP3JxX+69jScrJKXzGD
+	 9ywo3pHbpNb6he+j11iq7+AuNixKkIAn1wmZtsvySalgs3M6mi97A3AYKnhtDhNDQ3
+	 pRhTuICunZZBg==
+Received: from [192.168.1.207] (zone.collabora.co.uk [167.235.23.81])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nfraprado)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id E00F337804CF;
+	Fri, 14 Jun 2024 21:00:16 +0000 (UTC)
+From: =?utf-8?q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= <nfraprado@collabora.com>
+Date: Fri, 14 Jun 2024 16:59:36 -0400
+Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Disable pwmleds node
+ where unused
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFC V2 1/4] dt-bindings: firmware: Add support for QCOM Vendor
- Protocol
-Content-Language: en-US
-To: Rob Herring <robh@kernel.org>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-        <conor+dt@kernel.org>
-References: <20240612183031.219906-1-quic_sibis@quicinc.com>
- <20240612183031.219906-2-quic_sibis@quicinc.com>
- <20240613193625.GA2338851-robh@kernel.org>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <20240613193625.GA2338851-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PdPRlAZsWAUlcNRDk2u0id2oyrGaoedN
-X-Proofpoint-GUID: PdPRlAZsWAUlcNRDk2u0id2oyrGaoedN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-14_17,2024-06-14_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
- bulkscore=0 adultscore=0 clxscore=1015 malwarescore=0 phishscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406140142
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240614-sc7180-pwmleds-probe-v1-1-e2c3f1b42a43@collabora.com>
+X-B4-Tracking: v=1; b=H4sIADevbGYC/x3MTQqAIBBA4avErBtQMYuuEi0qxxroRxyoILp70
+ vJbvPeAUGISaIsHEp0sfOwZuixgWoZ9JmSfDUYZq5y2KFOtG4Xx2lbygjEdI6FprKsrP4xBWch
+ pTBT4/rdd/74fWbRaKWYAAAA=
+To: cros-qcom-dts-watchers@chromium.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@chromium.org>, 
+ Douglas Anderson <dianders@chromium.org>, 
+ Stephen Boyd <swboyd@chromium.org>
+Cc: kernel@collabora.com, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ =?utf-8?q?N=C3=ADcolas_F=2E_R=2E_A=2E_Prado?= <nfraprado@collabora.com>
+X-Mailer: b4 0.13.0
 
+Currently the keyboard backlight is described in the common
+sc7180-trogdor dtsi as an led node below a pwmleds node, and the led
+node is set to disabled. Only the boards that have a keyboard backlight
+enable it.
 
+However, since the parent pwmleds node is still enabled everywhere, even
+on boards that don't have keyboard backlight it is probed and fails,
+resulting in an error:
 
-On 6/14/24 01:06, Rob Herring wrote:
-> On Thu, Jun 13, 2024 at 12:00:28AM +0530, Sibi Sankar wrote:
->> Document the SCMI QCOM Vendor protocol v1.0 bindings and the various memory
->> buses that can be monitored and scaled by memory latency governor hosted
->> on it.
->>
+  leds_pwm pwmleds: probe with driver leds_pwm failed with error -22
 
-Hey Rob,
+as well as a failure in the DT kselftest:
 
-Thanks for taking time to review the series :)
+  not ok 45 /pwmleds
 
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>
->> v1:
->> * Add missing bindings for the protocol. [Konrad/Dmitry]
->> * Use alternate bindings. [Dmitry/Konrad]
->>
->>   .../bindings/firmware/arm,scmi.yaml           |  21 ++
->>   .../bindings/soc/qcom/qcom,scmi-memlat.yaml   | 243 ++++++++++++++++++
->>   include/dt-bindings/soc/qcom,scmi-vendor.h    |  22 ++
->>   3 files changed, 286 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
->>   create mode 100644 include/dt-bindings/soc/qcom,scmi-vendor.h
->>
->> diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
->> index 7de2c29606e5..21e4da53d02c 100644
->> --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
->> +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
->> @@ -278,6 +278,27 @@ properties:
->>       required:
->>         - reg
->>   
->> +  protocol@80:
->> +    $ref: '#/$defs/protocol-node'
->> +    unevaluatedProperties: false
->> +
->> +    properties:
->> +      reg:
->> +        const: 0x80
->> +
->> +      memlat-dvfs:
-> 
-> I don't see the purpose of this container node.
+Fix this by controlling the status of the parent pwmleds node instead of
+the child led, based on the presence of keyboard backlight. This is what
+is done on sc7280 already.
 
-Thanks, looks like I took a shortcut to show that the memory nodes
-are logically placed with this abstraction. I'll should be able to
-get it removed and achieve the same functionality.
+While at it add a missing blank line before the child node to follow the
+coding style.
 
-> 
->> +        type: object
->> +        additionalProperties: false
->> +        description:
->> +          The list of all memory buses that can be monitored and scaled by the
->> +          memory latency governor running on the SCMI controller.
->> +
->> +        patternProperties:
->> +          '^memory-[0-9]$':
->> +            type: object
->> +            $ref: /schemas/soc/qcom/qcom,scmi-memlat.yaml#
-> 
-> This schema needs to be at the level of the protocol node. See the i.MX
-> SCMI pinctrl patches for more details on what it should look like.
+Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+---
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts   | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts  | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts  | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts   | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts  | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts   | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts  | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi              | 5 +++--
+ 9 files changed, 11 insertions(+), 10 deletions(-)
 
-Thanks will take a look at that.
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
+index 919bfaea6189..340cb119d0a0 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-kb.dts
+@@ -12,6 +12,6 @@ / {
+ 	compatible = "google,lazor-rev1-sku2", "google,lazor-rev2-sku2", "qcom,sc7180";
+ };
+ 
+-&keyboard_backlight {
++&pwmleds {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
+index eb20157f6af9..d45e60e3eb9e 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1-lte.dts
+@@ -17,6 +17,6 @@ &ap_sar_sensor_i2c {
+ 	status = "okay";
+ };
+ 
+-&keyboard_backlight {
++&pwmleds {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
+index 45d34718a1bc..e906ce877b8c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-kb.dts
+@@ -18,6 +18,6 @@ / {
+ 	compatible = "google,lazor-sku2", "qcom,sc7180";
+ };
+ 
+-&keyboard_backlight {
++&pwmleds {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
+index 79028d0dd1b0..4b9ee15b09f6 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r10-lte.dts
+@@ -22,6 +22,6 @@ &ap_sar_sensor_i2c {
+ 	status = "okay";
+ };
+ 
+-&keyboard_backlight {
++&pwmleds {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
+index 3459b81c5628..a960553f3994 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-kb.dts
+@@ -21,6 +21,6 @@ / {
+ 		"qcom,sc7180";
+ };
+ 
+-&keyboard_backlight {
++&pwmleds {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+index ff8f47da109d..82bd9ed7e21a 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r3-lte.dts
+@@ -25,6 +25,6 @@ &ap_sar_sensor_i2c {
+ 	status = "okay";
+ };
+ 
+-&keyboard_backlight {
++&pwmleds {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
+index faf527972977..6278c1715d3f 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-kb.dts
+@@ -18,6 +18,6 @@ / {
+ 	compatible = "google,lazor-rev9-sku2", "qcom,sc7180";
+ };
+ 
+-&keyboard_backlight {
++&pwmleds {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
+index d737fd0637fb..0ec1697ae2c9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r9-lte.dts
+@@ -22,6 +22,6 @@ &ap_sar_sensor_i2c {
+ 	status = "okay";
+ };
+ 
+-&keyboard_backlight {
++&pwmleds {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 4d33c3fbedff..74ab321d3333 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -356,10 +356,11 @@ max98360a: audio-codec-0 {
+ 		#sound-dai-cells = <0>;
+ 	};
+ 
+-	pwmleds {
++	pwmleds: pwmleds {
+ 		compatible = "pwm-leds";
++		status = "disabled";
++
+ 		keyboard_backlight: led-0 {
+-			status = "disabled";
+ 			label = "cros_ec::kbd_backlight";
+ 			function = LED_FUNCTION_KBD_BACKLIGHT;
+ 			pwms = <&cros_ec_pwm 0>;
 
-> 
->> +            unevaluatedProperties: false
->> +
->>   additionalProperties: false
->>   
->>   $defs:
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
->> new file mode 100644
->> index 000000000000..c6e3d163c4a3
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
->> @@ -0,0 +1,243 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/soc/qcom/qcom,scmi-memlat.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm SCMI Memory Bus nodes
->> +
->> +maintainers:
->> +  - Sibi Sankar <quic_sibis@quicinc.com>
->> +
->> +description: |
-> 
-> Doesn't need '|' if no formatting.
+---
+base-commit: 6906a84c482f098d31486df8dc98cead21cce2d0
+change-id: 20240614-sc7180-pwmleds-probe-284675dabf04
 
-ack
+Best regards,
+-- 
+Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-> 
->> +  This binding describes the various memory buses that can be monitored and scaled
->> +  by memory latency governor running on the CPU Control Processor (SCMI controller).
->> +
->> +properties:
->> +  qcom,memory-type:
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    enum: [0, 1, 2]
->> +    description:
-> 
-> Needs a '|' if you want your formatting preserved.
-
-ack
-
-> 
->> +      Memory Bus Identifier
->> +        0 = QCOM_MEM_TYPE_DDR
->> +        1 = QCOM_MEM_TYPE_LLCC
->> +        2 = QCOM_MEM_TYPE_DDR_QOS
->> +
->> +  freq-table-hz:
->> +    items:
->> +      items:
->> +        - description: Minimum frequency of the memory bus in Hz
->> +        - description: Maximum frequency of the memory bus in Hz
->> +
->> +patternProperties:
->> +  '^monitor-[0-9]$':
->> +    type: object
->> +    unevaluatedProperties: false
->> +    description:
->> +      The list of all monitors detecting the memory latency bound workloads using
->> +      various counters.
->> +
->> +    properties:
->> +      qcom,compute-type:
->> +        description:
->> +          Monitors of type compute perform bus dvfs based on a rudimentary CPU
->> +          frequency to memory frequency map.
->> +        type: boolean
->> +
->> +      qcom,ipm-ceil:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description:
->> +          Monitors having this property perform bus dvfs based on the same
->> +          rudimentary table but the scaling is performed only if the calculated
->> +          IPM (Instruction Per Misses) exceeds the given ceiling.
->> +
->> +      qcom,cpulist:
->> +        $ref: /schemas/types.yaml#/definitions/phandle-array
->> +        description:
->> +          List of phandles to the CPUs nodes whose frequency and IPM are to be
->> +          monitored.
-> 
-> We have a standard property for this: cpus
-
-will use ^^ in the next re-spin
-
-> 
->> +
->> +      operating-points-v2: true
->> +      opp-table:
->> +        type: object
->> +
->> +    required:
->> +      - qcom,cpulist
->> +      - operating-points-v2
->> +      - opp-table
->> +
-> 
->> +    allOf:
->> +      - if:
->> +          properties:
->> +            qcom,compute-type: false
->> +        then:
->> +          required:
->> +            - qcom,ipm-ceil
->> +
->> +      - if:
->> +          properties:
->> +            qcom,ipm-ceil: false
->> +        then:
->> +          required:
->> +            - qcom,compute-type
-> 
-> Isn't all this just:
-> 
-> oneOf:
->    - required: [ qcom,compute-type ]
->    - required: [ qcom,ipm-ceil ]
-
-ack, will use ^^ in the next re-spin.
-
--Sibi
-
-> 
-> 
->> +
->> +required:
->> +  - qcom,memory-type
->> +  - freq-table-hz
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/soc/qcom,scmi-vendor.h>
->> +
->> +    firmware {
->> +        scmi {
->> +            compatible = "arm,scmi";
->> +            mboxes = <&cpucp_mbox 0>, <&cpucp_mbox 2>;
->> +            mbox-names = "tx", "rx";
->> +            shmem = <&cpu_scp_lpri0>, <&cpu_scp_lpri1>;
->> +
->> +            #address-cells = <1>;
->> +            #size-cells = <0>;
->> +
->> +            protocol@80 {
->> +                reg = <0x80>;
->> +
->> +                memlat-dvfs {
->> +                    memory-0 {
->> +                        qcom,memory-type = <QCOM_MEM_TYPE_DDR>;
->> +                        freq-table-hz = /bits/ 64 <200000000 4224000000>;
->> +
->> +                        monitor-0 {
->> +                            qcom,ipm-ceil = <20000000>;
->> +                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
->> +                                            &CPU8 &CPU9 &CPU10 &CPU11>;
->> +                            operating-points-v2 = <&memory0_monitor0_opp_table>;
->> +
->> +                            memory0_monitor0_opp_table: opp-table {
->> +                                compatible = "operating-points-v2";
->> +
->> +                                opp-999000000 {
->> +                                    opp-hz = /bits/ 64 <999000000 547000000>;
->> +                                };
->> +
->> +                                opp-1440000000 {
->> +                                    opp-hz = /bits/ 64 <1440000000 768000000>;
->> +                                };
->> +
->> +                                opp-1671000000 {
->> +                                    opp-hz = /bits/ 64 <1671000000 1555000000>;
->> +                                };
->> +
->> +                                opp-2189000000 {
->> +                                    opp-hz = /bits/ 64 <2189000000 2092000000>;
->> +                                };
->> +
->> +                                opp-2516000000 {
->> +                                    opp-hz = /bits/ 64 <2516000000 3187000000>;
->> +                                };
->> +
->> +                                opp-3860000000 {
->> +                                    opp-hz = /bits/ 64 <3860000000 4224000000>;
->> +                                };
->> +                            };
->> +                        };
->> +
->> +                        monitor-1 {
->> +                            qcom,compute-type;
->> +                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
->> +                                            &CPU8 &CPU9 &CPU10 &CPU11>;
->> +                            operating-points-v2 = <&memory0_monitor1_opp_table>;
->> +
->> +                            memory0_monitor1_opp_table: opp-table {
->> +                                compatible = "operating-points-v2";
->> +
->> +                                opp-1440000000 {
->> +                                        opp-hz = /bits/ 64 <1440000000 200000000>;
->> +                                };
->> +
->> +                                opp-2189000000 {
->> +                                        opp-hz = /bits/ 64 <2189000000 768000000>;
->> +                                };
->> +
->> +                                opp-2516000000 {
->> +                                        opp-hz = /bits/ 64 <2516000000 1555000000>;
->> +                                };
->> +
->> +                                opp-3860000000 {
->> +                                        opp-hz = /bits/ 64 <3860000000 4224000000>;
->> +                                };
->> +                            };
->> +                        };
->> +                    };
->> +
->> +                    memory-1 {
->> +                        qcom,memory-type = <QCOM_MEM_TYPE_LLCC>;
->> +                        freq-table-hz = /bits/ 64 <300000000 1067000000>;
->> +
->> +                        monitor-0 {
->> +                            qcom,ipm-ceil = <20000000>;
->> +                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
->> +                                            &CPU8 &CPU9 &CPU10 &CPU11>;
->> +                            operating-points-v2 = <&memory1_monitor0_opp_table>;
->> +
->> +                            memory1_monitor0_opp_table: opp-table {
->> +                                compatible = "operating-points-v2";
->> +
->> +                                opp-999000000 {
->> +                                    opp-hz = /bits/ 64 <999000000 300000000>;
->> +                                };
->> +
->> +                                opp-1440000000 {
->> +                                    opp-hz = /bits/ 64 <1440000000 466000000>;
->> +                                };
->> +
->> +                                opp-1671000000 {
->> +                                    opp-hz = /bits/ 64 <1671000000 600000000>;
->> +                                };
->> +
->> +                                opp-2189000000 {
->> +                                    opp-hz = /bits/ 64 <2189000000 806000000>;
->> +                                };
->> +
->> +                                opp-2516000000 {
->> +                                    opp-hz = /bits/ 64 <2516000000 933000000>;
->> +                                };
->> +
->> +                                opp-3860000000 {
->> +                                    opp-hz = /bits/ 64 <3860000000 1066000000>;
->> +                                };
->> +                            };
->> +                        };
->> +                    };
->> +
->> +                    memory-2 {
->> +                        qcom,memory-type = <QCOM_MEM_TYPE_DDR_QOS>;
->> +                        freq-table-hz = /bits/ 64 <QCOM_DDR_LEVEL_AUTO QCOM_DDR_LEVEL_PERF>;
->> +
->> +                        monitor-0 {
->> +                            qcom,ipm-ceil = <20000000>;
->> +                            qcom,cpulist = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6 &CPU7
->> +                                            &CPU8 &CPU9 &CPU10 &CPU11>;
->> +                            operating-points-v2 = <&memory2_monitor0_opp_table>;
->> +
->> +                            memory2_monitor0_opp_table: opp-table {
->> +                                compatible = "operating-points-v2";
->> +
->> +                                opp-2189000000 {
->> +                                    opp-hz = /bits/ 64 <2189000000>;
->> +                                    opp-level = <QCOM_DDR_LEVEL_AUTO>;
->> +                                };
->> +
->> +                                opp-3860000000 {
->> +                                    opp-hz = /bits/ 64 <3860000000>;
->> +                                    opp-level = <QCOM_DDR_LEVEL_PERF>;
->> +                                };
->> +                            };
->> +                        };
->> +                    };
->> +                };
->> +            };
->> +        };
->> +    };
->> diff --git a/include/dt-bindings/soc/qcom,scmi-vendor.h b/include/dt-bindings/soc/qcom,scmi-vendor.h
->> new file mode 100644
->> index 000000000000..7ae8d8d5623b
->> --- /dev/null
->> +++ b/include/dt-bindings/soc/qcom,scmi-vendor.h
->> @@ -0,0 +1,22 @@
->> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
->> +/*
->> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +#ifndef __DT_BINDINGS_QCOM_SCMI_VENDOR_H
->> +#define __DT_BINDINGS_QCOM_SCMI_VENDOR
->> +
->> +/* Memory IDs */
->> +#define QCOM_MEM_TYPE_DDR	0x0
->> +#define QCOM_MEM_TYPE_LLCC	0x1
->> +#define QCOM_MEM_TYPE_DDR_QOS	0x2
->> +
->> +/*
->> + * QCOM_MEM_TYPE_DDR_QOS supports the following states.
->> + *
->> + * %QCOM_DDR_LEVEL_AUTO:	DDR operates with LPM enabled
->> + * %QCOM_DDR_LEVEL_PERF:	DDR operates with LPM disabled
->> + */
->> +#define QCOM_DDR_LEVEL_AUTO	0x0
->> +#define QCOM_DDR_LEVEL_PERF	0x1
->> +
->> +#endif /* __DT_BINDINGS_QCOM_SCMI_VENDOR_H */
->> -- 
->> 2.34.1
->>
 
