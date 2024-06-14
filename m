@@ -1,199 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-22737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22738-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C249908C16
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 14:54:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF0D9908D62
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 16:31:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 222091F24F73
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 12:54:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 906AA28A376
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 14:31:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 342EB199EA1;
-	Fri, 14 Jun 2024 12:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15674D512;
+	Fri, 14 Jun 2024 14:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b="e/sNUWPz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fkAY6ikA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NTj3WqvQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from flow6-smtp.messagingengine.com (flow6-smtp.messagingengine.com [103.168.172.141])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615B8199247;
-	Fri, 14 Jun 2024 12:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF3E19D8B7;
+	Fri, 14 Jun 2024 14:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718369652; cv=none; b=tWAyftH6uu4grbUbbr2p7vCgoEFsvtHY1DuJe2LQ6UdCgjaXb5/oqy0cloUydqB7PoRqBCWCGN2TIYSJNbXImRSy9oYY7KD7SFU90DNGShJ0C1c9Empw9Q3jOtyPpRus5p8jML80x2YWzKoCSIbbJMAyGUYO5dPvX3gTgRO7FuQ=
+	t=1718375483; cv=none; b=GPETNfFj3bqwOXx9Og7gyCNKagba0rBiP36WqV2zUAnAvnMBZoFT3Rtbch2ng6eIyy0qv8GpAKKtp0Yy1lTX13oQmw5q7qN/15N0/vnsD8VL8PWxSAZRNVnHoGKWKt10sYIxxmJYDvBq8vC/XsEWz4Jl/FPirJlB+9sLz2pW07U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718369652; c=relaxed/simple;
-	bh=8S17m0g/GRM52gnnBJ2eIixlqDKuO32wjIb3d+7vdnw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M5+f3JV2KMF+U8c96AuU6tGYV3m8xgl35LMMC/utfE927oT5PAIdQtGAG7im7ztvv3W8p/W84um34Vd5jLOpweW7B6RWfGnbqef2Qcwz0vhOCqbIYyV/JUV1rt6fW9hWHgyJzdX7fFkWBXg1CuuUjOcB301bBYTCNF6xC2DFJcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se; spf=pass smtp.mailfrom=ragnatech.se; dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b=e/sNUWPz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fkAY6ikA; arc=none smtp.client-ip=103.168.172.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ragnatech.se
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailflow.nyi.internal (Postfix) with ESMTP id 448CD20036F;
-	Fri, 14 Jun 2024 08:54:07 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Fri, 14 Jun 2024 08:54:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ragnatech.se; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1718369647;
-	 x=1718376847; bh=kzkq65OIpuCs3ZdNQe9hETg6fCuxaq6pJOhxp3W4MzU=; b=
-	e/sNUWPzt41ZDlEJ0rbaHgsDAM6/Psb18uSYQwdiX0fvKqE47ANccOOWPj1FonOQ
-	N3piZ2RgrxAxEjJLHD/Tjg484eOsFcuuVq5Lcr70+sIdjPfPrUAW50u5y3sYMYwt
-	Trz5xVZ4smlNoFkAnnSsSDyXF5f/w9sxJ/aBOlaFkAnTbivmMXznJTEcaPN5esst
-	zyZ/mgTiM4RmKRGUwkRbrpD6HKOXu8Yttwi2uS/vWjJZ9+UfahWXIda2sjBXSeur
-	U0rI/xNHRV/jZzvLlSDHtRPC5Gz7cllMYqgOp6vzbyaXA0palhobbG5bGWRylVxS
-	oDrqU1xuVwRQ6gq/YrP6Sg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1718369647; x=
-	1718376847; bh=kzkq65OIpuCs3ZdNQe9hETg6fCuxaq6pJOhxp3W4MzU=; b=f
-	kAY6ikA50Nntgl2wgpRJZ9Ew6563PdZDxBLtifDJkORDnS00MMuwwyv9AsspdeUg
-	/HTOJFa71y+TfuEXFBHZaBOJPq0OyU1UrM4fJxxdMVCWfGMPFaxLdgJ2+0SjQ2/q
-	ZfO6pl1ptKLd43UMIp4LQA4sXKJv2FsHukJsNNgMErq1IwjgucZOmMiZE5f3QKHB
-	ZTyXQEVhj+6eVMMLiVIoEMnKsg2LYlP5j8ffsbsSXJNToBxvOCxvch6Gr1PemQdD
-	fL5hHJ2eGvyzxBLi5FrMgq0SawjdEbzWq+ultnPkAFTXQWqoJBF2gvN7ScwuaDKh
-	IjX5kLwAzcFwByEYbetyQ==
-X-ME-Sender: <xms:aj1sZm0YAf0zlUT593horrfn2ipIf6acHvfVQfKnkssTGEoa8Om9BA>
-    <xme:aj1sZpFw2wf-iUC0IxtB5DWqqMMCnfD5VwYNAWttsFCic6kzrQpS8fxftg6pDABVX
-    gMRKaPwKQJK1IO1REM>
-X-ME-Received: <xmr:aj1sZu6LnfoPNVf1i1OoOxnLt75iGeJAKkFzz6DKNOFoFPlHciJ07OnW_Ab6ov50yRtvLYs0artd5qzgETjo3Il5sf7KbpI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeduledgheeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefpihhk
-    lhgrshcuufpnuggvrhhluhhnugcuoehnihhklhgrshdrshhouggvrhhluhhnugesrhgrgh
-    hnrghtvggthhdrshgvqeenucggtffrrghtthgvrhhnpeevteegtddvvdfhtdekgefhfeef
-    heetheekkeegfeejudeiudeuleegtdehkeekteenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehnihhklhgrshdrshhouggvrhhluhhnugesrhgr
-    ghhnrghtvggthhdrshgv
-X-ME-Proxy: <xmx:aj1sZn3UF-l6IfHHyHpli8od0E7EfKnMJHiNOP4rjDLANiOlZP9VuA>
-    <xmx:aj1sZpGLjS1pUc8dzhTkicRu4rXw6-BHkx_QDjbMnwIN4RldTwsGMQ>
-    <xmx:aj1sZg9PO3n30TtGNYeLy_c9dRoyMDheA8jU9Iue3Y71RDgWVAyCcg>
-    <xmx:aj1sZum0uT3bn8S6g2d5fDuzN3HqD3y4vwBY3flT8LVQkY6RHWszlw>
-    <xmx:bz1sZrA4KYFKicBY-9XPwZyWW4hVJJyQ9KBkWa4ddbDjdQZY1aBRj8Ry>
-Feedback-ID: i80c9496c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Jun 2024 08:54:01 -0400 (EDT)
-Date: Fri, 14 Jun 2024 14:53:59 +0200
-From: Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Guillaume La Roque <glaroque@baylibre.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Vasily Khoruzhick <anarsoul@gmail.com>,	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,	Anson Huang <Anson.Huang@nxp.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Amit Kucheria <amitk@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
-	Biju Das <biju.das.jz@bp.renesas.com>,	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Pascal Paillet <p.paillet@foss.st.com>, Keerthy <j-keerthy@ti.com>,
-	Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	zhanghongchen <zhanghongchen@loongson.cn>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,	linux-pm@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org,	devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org,	linux-kernel@vger.kernel.org,
- linux-amlogic@lists.infradead.org,	linux-sunxi@lists.linux.dev,
- imx@lists.linux.dev,	linux-tegra@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH 13/22] dt-bindings: thermal: rcar-gen3: reference
- thermal-sensor schema
-Message-ID: <20240614125359.GH382677@ragnatech.se>
-References: <20240614-dt-bindings-thermal-allof-v1-0-30b25a6ae24e@linaro.org>
- <20240614-dt-bindings-thermal-allof-v1-13-30b25a6ae24e@linaro.org>
+	s=arc-20240116; t=1718375483; c=relaxed/simple;
+	bh=H5Yy/sxdwgIuX8tRfVn5eMnCQ3Elk6flBf23hdxKehg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KYcQo/4eLorFs9+KXz/ghhFg3of/7s2cIInsxdIBAebuk5cwJ4WZxdqIoTUGNxIfYASTg4ClpNfb6OmOA3ZCw9NsdHCjrbImNCIIR6kIqr21rMbafPn1FD/RyMuimuwfgn+D/+LXEis+Ops6pu/IXeJXXTETeEn0O823xa/i9xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NTj3WqvQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45E9GYAg004651;
+	Fri, 14 Jun 2024 14:31:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PmEScxo8p+jswVM+m3Pf0pxK0QWrkpyXHZXyuUSc9qQ=; b=NTj3WqvQk4Z8c2Mz
+	jQF2KEJtDN1iC9Waft6qYGiKp8KzqMEuOYNohR/AMQJSGko2a9CH1JkTDiEGj54q
+	COzrsJeNdacMyVu0zGBgQtsGkiQ/DwP5YR+C2nhphOCvYgSpwMb2D/x+mvQ7WUob
+	5jpLOe99RLvPSthL8kWa9W2DrugzIG/sVMCq85FQGE4oL6eaQb66+qJzgAKoElj9
+	Zq0kzvSqSarfevgBADU+HnOcN1N2eNW1zn/G9KOZCw0LCVlXjNzoYZTmQ93qwGUn
+	PE7ZjZuxzQtnZyEOzTkTDPreTN6ObL5ctie3d/sGtviyYE7yfzRwmGBZZHYuMZnj
+	Iso03g==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yr6q4j1j7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Jun 2024 14:31:06 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45EEV5In008383
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Jun 2024 14:31:05 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 14 Jun
+ 2024 07:31:04 -0700
+Message-ID: <c275ee49-ac59-058c-7482-c8a92338e7a2@quicinc.com>
+Date: Fri, 14 Jun 2024 08:31:03 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240614-dt-bindings-thermal-allof-v1-13-30b25a6ae24e@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
+Content-Language: en-US
+To: Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>
+CC: Slark Xiao <slark_xiao@163.com>, <ryazanov.s.a@gmail.com>,
+        <johannes@sipsolutions.net>, <netdev@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240612093842.359805-1-slark_xiao@163.com>
+ <20240612094609.GA58302@thinkpad>
+ <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
+ <20240612145147.GB58302@thinkpad>
+ <CAMZdPi-6GPWkj-wu4_mRucRBWXR03eYXu4vgbjtcns6mr0Yk9A@mail.gmail.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <CAMZdPi-6GPWkj-wu4_mRucRBWXR03eYXu4vgbjtcns6mr0Yk9A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OcAp4mqsCNinlbDH_rQGfAU64AzKUZHb
+X-Proofpoint-GUID: OcAp4mqsCNinlbDH_rQGfAU64AzKUZHb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-14_12,2024-06-14_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ bulkscore=0 adultscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ mlxlogscore=977 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406140096
 
-Hi Krzysztof,
-
-Thanks for your work.
-
-On 2024-06-14 11:46:12 +0200, Krzysztof Kozlowski wrote:
-> Device is a thermal sensor and it requires '#thermal-sensor-cells', so
-> reference the thermal-sensor.yaml to simplify it and bring the
-> common definition of '#thermal-sensor-cells' property.
+On 6/14/2024 4:17 AM, Loic Poulain wrote:
+> On Wed, 12 Jun 2024 at 16:51, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
+>>
+>> On Wed, Jun 12, 2024 at 08:19:13AM -0600, Jeffrey Hugo wrote:
+>>> On 6/12/2024 3:46 AM, Manivannan Sadhasivam wrote:
+>>>> On Wed, Jun 12, 2024 at 05:38:42PM +0800, Slark Xiao wrote:
+>>>>
+>>>> Subject could be improved:
+>>>>
+>>>> bus: mhi: host: Add configurable mux_id for MBIM mode
+>>>>
+>>>>> For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
+>>>>> This would lead to device can't ping outside successfully.
+>>>>> Also MBIM side would report "bad packet session (112)".
+>>>>> So we add a default mux_id value for SDX72. And this value
+>>>>> would be transferred to wwan mbim side.
+>>>>>
+>>>>> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+>>>>> ---
+>>>>>    drivers/bus/mhi/host/pci_generic.c | 3 +++
+>>>>>    include/linux/mhi.h                | 2 ++
+>>>>>    2 files changed, 5 insertions(+)
+>>>>>
+>>>>> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+>>>>> index 0b483c7c76a1..9e9adf8320d2 100644
+>>>>> --- a/drivers/bus/mhi/host/pci_generic.c
+>>>>> +++ b/drivers/bus/mhi/host/pci_generic.c
+>>>>> @@ -53,6 +53,7 @@ struct mhi_pci_dev_info {
+>>>>>            unsigned int dma_data_width;
+>>>>>            unsigned int mru_default;
+>>>>>            bool sideband_wake;
+>>>>> + unsigned int mux_id;
+>>>>>    };
+>>>>>    #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
+>>>>> @@ -469,6 +470,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
+>>>>>            .dma_data_width = 32,
+>>>>>            .mru_default = 32768,
+>>>>>            .sideband_wake = false,
+>>>>> + .mux_id = 112,
+>>>>>    };
+>>>>>    static const struct mhi_channel_config mhi_mv3x_channels[] = {
+>>>>> @@ -1035,6 +1037,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>>>>>            mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+>>>>>            mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+>>>>>            mhi_cntrl->mru = info->mru_default;
+>>>>> + mhi_cntrl->link_id = info->mux_id;
+>>>>
+>>>> Again, 'link_id' is just a WWAN term. Use 'mux_id' here also.
+>>>
+>>> Does this really belong in MHI?  If this was DT, I don't think we would put
+>>> this value in DT, but rather have the driver (MBIM) detect the device and
+>>> code in the required value.
+>>>
+>>
+>> I believe this is a modem value rather than MHI. But I was OK with keeping it in
+>> MHI driver since we kind of keep modem specific config.
+>>
+>> But if WWAN can detect the device and apply the config, I'm all over it.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> That would require at least some information from the MHI bus for the
+> MBIM driver
+> to make a decision, such as a generic device ID, or quirk flags...
 
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+I don't see why.
 
-> ---
->  Documentation/devicetree/bindings/thermal/rcar-gen3-thermal.yaml | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/thermal/rcar-gen3-thermal.yaml b/Documentation/devicetree/bindings/thermal/rcar-gen3-thermal.yaml
-> index 6a81cb6e11bc..d92e882c9e8d 100644
-> --- a/Documentation/devicetree/bindings/thermal/rcar-gen3-thermal.yaml
-> +++ b/Documentation/devicetree/bindings/thermal/rcar-gen3-thermal.yaml
-> @@ -15,6 +15,8 @@ description:
->  maintainers:
->    - Niklas Söderlund <niklas.soderlund@ragnatech.se>
->  
-> +$ref: thermal-sensor.yaml#
-> +
->  properties:
->    compatible:
->      enum:
-> @@ -57,7 +59,6 @@ required:
->    - clocks
->    - power-domains
->    - resets
-> -  - "#thermal-sensor-cells"
->  
->  if:
->    properties:
-> @@ -96,7 +97,7 @@ else:
->      required:
->        - interrupts
->  
-> -additionalProperties: false
-> +unevaluatedProperties: false
->  
->  examples:
->    - |
-> 
-> -- 
-> 2.43.0
-> 
+The "simple" way to do it would be to have the controller define a 
+different channel name, and then have the MBIM driver probe on that. 
+The MBIM driver could attach driver data saying that it needs to have a 
+specific mux_id.
 
--- 
-Kind Regards,
-Niklas Söderlund
+Or, with zero MHI/Controller changes, the MBIM driver could parse the 
+mhi_device struct, get to the struct device, for the underlying device, 
+and extract the PCIe Device ID and match that to a white list of known 
+devices that need this property.
+
+I guess if the controller could attach a private void * to the 
+mhi_device that is opaque to MHI, but allows MBIM to make a decision, 
+that would be ok.  Such a mechanism would be generic, and extensible to 
+other usecases of the same "class".
+
+-Jeff
 
