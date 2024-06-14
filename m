@@ -1,120 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-22679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF3A3908539
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 09:40:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0688390863A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 10:25:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 964241F26705
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 07:40:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F293E1C2140F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 08:25:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BEAD149011;
-	Fri, 14 Jun 2024 07:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23E1E185093;
+	Fri, 14 Jun 2024 08:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VyKdxxap"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RMtpL1ne"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701C614659D;
-	Fri, 14 Jun 2024 07:40:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3A6185087
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 08:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718350800; cv=none; b=lRRphEopqR86MDgl7jgfD0u+drY0XhJDTdpDiLvRIOEil9XHEFofXJJhboW63GAdpXuN8Qe8dzZuvV3Lq7gr7PsCzHtx1u4sbV5A4/yiLyeye1Vdb5qnvWx2+hFhOGaRShHKbtKfHNQyqM4n0Mwjlzz7WhC10RyWdEmub+T+pAs=
+	t=1718353460; cv=none; b=dwW/fCinrNO435NCnR5U/qfA/EODTYgjwUWUrKjbCkdOyN53Xkf60YnSWBg0IkTyqErWkL6kLybDwBqZeX90A3ovIv6lOfnYvRJlRSdPCwM4NTa13fFDAnJx31BvTdW8sPJeBYc0YI93ZIf7d7EvU0auymswYXrY6+gQJ/dEj7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718350800; c=relaxed/simple;
-	bh=g/A40lncVMiX2o0k461MBfftcA12NrxdvDlIiNCsmJA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qarEM9zPpVEMyITbsDGE8oTHkCoqFL45G32gPR+izlYG/lp2vhebFMXE3fH6THJ3KCG03sp7+lvhuYJumeqBk206o+MvJrc2a29EGYZ8dze6GWBwIA4EZ3hJC+Elf6yXWMxyATqQn5qvMScL9QL2vL70Adaj28p+ecAjrQ7PTw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VyKdxxap; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B389FC2BD10;
-	Fri, 14 Jun 2024 07:39:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718350799;
-	bh=g/A40lncVMiX2o0k461MBfftcA12NrxdvDlIiNCsmJA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VyKdxxapFVp+oPIIePXmda60YGdtkY0PbtoCU95ERB96HyHAPsSOdR2h+7d3AB0Q8
-	 JVlcMyTklqhm4gq7CT+fpi+MHbKv4Fvm5FdRU4OakrMeKGdQYYJCPzX1MdLH8aDKCB
-	 rG9ma4VylcxNy8iPbm7AP+l3IDDfsK8SDJ6Xqs8n2dHNWgw9sEj5LPwvK+AaJxmNsF
-	 QzTn6nIEt5E4QSYrKVp2PM+W+Yj1slhiMrfOT/yHN9egCB+HW6OuJwgbc8ck2ZQmq4
-	 0FxkZXElEX7N77WMXD6wNsYVyqIlBaNkkbeetW3A+4WRr4Cl8bg4msrjtvbGzoySe5
-	 UoT8SwCjc4yLA==
-Date: Fri, 14 Jun 2024 08:39:54 +0100
-From: Lee Jones <lee@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Das Srinagesh <quic_gurus@quicinc.com>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [GIT v2 PULL] Immutable branch between MFD and Regulator due for the
- v6.11 merge window
-Message-ID: <20240614073954.GA2561462@google.com>
-References: <20240608155526.12996-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1718353460; c=relaxed/simple;
+	bh=fv0TaSfIqslUmjuOoZwpyiDbVyDeYNBKgbCqOA67DE4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CQQFkfC/1x86/8LG4mW1zYR40drXZBEAQ7fQ6oDhE78M2bYz33oP0Lc96ar/azo/mYn3X3rj8x8uz+oa22tky3KA2xnNFajpM9ZCO3rP0zyTd20YJmTMxttcm6UFcWCrWlP+M/7Jt3sv/fHYHti0S+VM8CyVWlvnEGZ0cyBCLCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RMtpL1ne; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-57cb9efd8d1so2468772a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 01:24:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718353457; x=1718958257; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pCUM5zB/whIY+F5E3NPWVek5NaTuOm+4yywidCzp4Os=;
+        b=RMtpL1neE7BwaN2gMr0bfP+03xygkNktpJ74oOwxhR3ctp1gtpk4lwIdVjlIux2TW1
+         V/VF209iUNwt0zRUqyswJgmuThAuv2XlL0tGJVj3kFVLuCDOG5I5CELjuxDdWiigqULt
+         OpCfPQ12DWonGU00nKup6Ozy/aBxtmydix+z8NkwnbFvkRKiTcsbtrENo6G3VZJX2qu+
+         YdiL4q+5us0kyjy3ciABPuC6LoJTYijv6t8TUDXg1YjrGPnnScBZ+36D08FiDpBSu2h3
+         DecwZ8ftmXi78xzp0WD7scJA0Rcfg4+Ch0zhMKrzaGgd0/tBbIWV16LIYK1bKLtKIEAV
+         s7dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718353457; x=1718958257;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pCUM5zB/whIY+F5E3NPWVek5NaTuOm+4yywidCzp4Os=;
+        b=j73sRbJRcAvziN8+tFffGWEexsUTa+HAk11FfB14gt83c+QXLIBuXklhQc0fcTf0O/
+         +k67dbSEdq32C7iUJ9/W2UedWJFAKbFBdTb9gDqm4h223DNvUBw0envmJmB+xST32Osy
+         B7nFHQdb5s/pZFC8LPcgKSZsxydJaGudQYyJuIvylAJXr6us2dP2H8tTsdSOgfFnWBD+
+         uCGZO4F9jorWNwnvC10YWAlsjXAEyL72dVl1M+zi+oB3REQjtNGqN6A9grfE1z8H+aNJ
+         RiVhRaOhxsp9+unfVmDTDCHG+E5ttNZ0bYXTBTZeklXGmlTGJAG4+kQPV53b+aInbaXr
+         95aw==
+X-Forwarded-Encrypted: i=1; AJvYcCUjmyopoQ7IHzdnQ40J1zQICX+3dttwrLsLgrcXXZpQrOTsqDsrNsPVXldqG5Xtb57evCm6/1PrzoUoSZIDddW7rvbmAaWu0WNepbhl8w==
+X-Gm-Message-State: AOJu0YzcidOlObATNhjXCV6/FyDu4qCTiQPb6Sm2Mu/x6IcfwbXRsm0R
+	+zINBMTi8jGhoazE64Usg8Ds/qxKr50/ytWhWB/Fak4zwzfb6N25b627ZK0eXR8=
+X-Google-Smtp-Source: AGHT+IG5dXFX4FQjxsHkE+bXQUT7iPYQo4HzyMTeAPhjpUybtl9Gh1ZYex+QjtwhNT1jEV3hOTI02g==
+X-Received: by 2002:a17:907:9805:b0:a68:e681:be2c with SMTP id a640c23a62f3a-a6f52414868mr385966266b.20.1718353456776;
+        Fri, 14 Jun 2024 01:24:16 -0700 (PDT)
+Received: from [192.168.0.18] ([78.10.206.163])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57cb743adacsm1946396a12.86.2024.06.14.01.24.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Jun 2024 01:24:16 -0700 (PDT)
+Message-ID: <672b6156-e425-4f3b-86f4-02a34cab2b67@linaro.org>
+Date: Fri, 14 Jun 2024 10:24:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240608155526.12996-1-johan+linaro@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] soc: qcom: icc-bwmon: Allow for interrupts to be
+ shared across instances
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, djakov@kernel.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, srinivas.kandagatla@linaro.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+ quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
+ dmitry.baryshkov@linaro.org, abel.vesa@linaro.org
+References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
+ <20240604011157.2358019-3-quic_sibis@quicinc.com>
+ <5e5f052b-df59-47fb-aed0-10b4f980f151@linaro.org>
+ <5df5dc6b-872f-34c5-a6d2-a64f9c881193@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <5df5dc6b-872f-34c5-a6d2-a64f9c881193@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Let's try this again with the appropriate v6.11 based tag.
+On 13/06/2024 19:02, Sibi Sankar wrote:
+> 
+> 
+> On 6/4/24 12:16, Krzysztof Kozlowski wrote:
+>> On 04/06/2024 03:11, Sibi Sankar wrote:
+>>> The multiple BWMONv4 instances available on the X1E80100 SoC use the
+>>> same interrupt number. Mark them are shared to allow for re-use across
+>>> instances.
+> 
+> Hey Krzysztof,
+> 
+> Thanks for taking time to review the series :)
+> 
+>>
+>> Would be nice if you also mention you checked that it is safe to have
+>> both devm and shared interrupts (so you investigated possibility of race
+>> on exit path).
+> 
+> I didn't see any problems with devm being used with SHARED when I posted
+> it out. After your review comments I went back again to vett the exit
+> path for races and ran into an pre-existing splat [1] but the bwmon
+> instances work as expected on module removal/re-insertion.
 
-The following changes since commit 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0:
+Using devm and shared interrupts is in general sign of possible race
+issues and should be avoided. Just "not seeing problems" is not an
+argument for me, to be honest.
 
-  Linux 6.10-rc1 (2024-05-26 15:20:12 -0700)
+Best regards,
+Krzysztof
 
-are available in the Git repository at:
-
-  ssh://git@gitolite.kernel.org/pub/scm/linux/kernel/git/lee/mfd.git tags/ib-mfd-regulator-pm8008-v6.11
-
-for you to fetch changes up to 11d861d227ed1c4068597289267247aac5ac50fa:
-
-  regulator: add pm8008 pmic regulator driver (2024-06-13 18:42:21 +0100)
-
-----------------------------------------------------------------
-Immutable branch between MFD and Regulator due for the v6.11 merge window
-
-----------------------------------------------------------------
-Johan Hovold (11):
-      dt-bindings: mfd: pm8008: Add reset gpio
-      mfd: pm8008: Fix regmap irq chip initialisation
-      mfd: pm8008: Deassert reset on probe
-      mfd: pm8008: Mark regmap structures as const
-      mfd: pm8008: Use lower case hex notation
-      mfd: pm8008: Rename irq chip
-      mfd: pm8008: Drop unused driver data
-      dt-bindings: mfd: pm8008: Drop redundant descriptions
-      dt-bindings: mfd: pm8008: Rework binding
-      mfd: pm8008: Rework to match new DT binding
-      regulator: add pm8008 pmic regulator driver
-
- .../devicetree/bindings/mfd/qcom,pm8008.yaml       | 144 +++++++++------
- drivers/mfd/Kconfig                                |   1 +
- drivers/mfd/qcom-pm8008.c                          | 169 ++++++++++++------
- drivers/regulator/Kconfig                          |   7 +
- drivers/regulator/Makefile                         |   1 +
- drivers/regulator/qcom-pm8008-regulator.c          | 198 +++++++++++++++++++++
- include/dt-bindings/mfd/qcom-pm8008.h              |  19 --
- 7 files changed, 409 insertions(+), 130 deletions(-)
- create mode 100644 drivers/regulator/qcom-pm8008-regulator.c
- delete mode 100644 include/dt-bindings/mfd/qcom-pm8008.h
-
--- 
-Lee Jones [李琼斯]
 
