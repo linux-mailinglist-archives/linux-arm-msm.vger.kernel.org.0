@@ -1,171 +1,1330 @@
-Return-Path: <linux-arm-msm+bounces-22727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 322C8908A40
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 12:39:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1074A908A7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 12:50:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB0CD2815EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 10:39:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FEFF2897B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Jun 2024 10:50:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5A141946A7;
-	Fri, 14 Jun 2024 10:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D367D195805;
+	Fri, 14 Jun 2024 10:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Hb77qV0O"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tUN+DnOJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42431146582
-	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 10:39:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF671957E1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 10:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718361587; cv=none; b=PH5jHcbpl+VJoqdYALAMTFCjT3ZsGlxVyFLIpMITYnJ3ftdAdbREyJdKDdPvf9VHhOCeo1qdmn3cyRtwit/H+aLpA3AZNRUGWHjloO/LbJBpmVDiM/l9G3F8+Fs1LV5jnx1CvwmBFrcvIjY6CznW0QosgKJ3/v39dqjYsksAwBM=
+	t=1718362218; cv=none; b=T+732voq9vWVbXsSDFjQXstSNLsfHL0jkGL0Uz2CFuaywIt2u+KjHDwcAvfjL+VtLg2WP5V+aCAxDsBAIOiSHfGF24K5NfRHzhTTc+CuSD5YmJd3XmUY3LfE9hClG9uEUqcxxkkqKS/UydClr/IGGCzXjZ9nqi9Ib2iqtPkZYIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718361587; c=relaxed/simple;
-	bh=z+21OcPJAjV6D/4J7/6zO4ml+szueCiKIz5ZtXCez20=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LCJoVPpj8iQGSfsqzWuNtJildQd/RDTfQddet8rNO8/V9dpz6LH6XKZp8ymk27bmwi1/RP3uCxrE75FxEj7obztHbwAPzHGTLUvgtS5H/1gWgd+oaGrlo8n66zxu4hpcqmjdnCf7DOb5cLmtePOVNd9cwfjryC5fgGo8T4B2wbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Hb77qV0O; arc=none smtp.client-ip=209.85.218.45
+	s=arc-20240116; t=1718362218; c=relaxed/simple;
+	bh=/gQWO++YHZgX99DTxGQc3BWqrwjCHS2zRIQsO9zTxZw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Zfz/cglVr8peL/kzz1im++ZwNZmqswLr5PnEyItfWb1DmCYCPFbS8cKlsbnvk52J02Z0k10E8rVuazvGnw0mUR+8MNgwjtlbgFkKU2VanO6t9v9VF/NNEecUJWQRc8eF30UTjyG2/FhTB3DRPJMicXwD/2JISMSs2G5IswHdOiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tUN+DnOJ; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a6f04afcce1so263147466b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 03:39:46 -0700 (PDT)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52c9034860dso2545967e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Jun 2024 03:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718361584; x=1718966384; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=v046Ynuau3r+2icIo4svtRx0/kg7YGr+WrTgAD4SYDM=;
-        b=Hb77qV0OjJTp9rNwhKYPZPND9iZYFvdmJViEyZq7uKNsNQHBFHVKSotrnblHEEjipX
-         XO4ZhqA4O9N8mRhTTyUL+XYlU9PcWhxHZqJuZJwJsxGIEDT/G2uRaL8klCwbxK+I3IDE
-         OWKPxY2WiKZXN8xzxg1UlGn2JnyEmRP6LqrBris/NIvI7/iolqjQBg6M5suCk2wjtDr2
-         iUCM4uFLC+HtI6itrjJE353nFXHLcjxwUwq7IxOYkG2QYA5BTPrZct2CgQJk61z1OjDu
-         KrQkjaqrk8qovoVujhEukd7f3ajJWlCw79rNjpL+oxqFtINTQNKWZcgKGyakrbysmNv0
-         8TVQ==
+        d=linaro.org; s=google; t=1718362214; x=1718967014; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QCJoDOhUssVM6+Y2RBhvWlf+mDExbgEkwr4P2FqcMHU=;
+        b=tUN+DnOJuCfQQc9v4/RDSiFt0LFm1z0u8acmPrYuJaaC+7YNydtqGCKi06AOicttom
+         V9mm/SGKPPxkjFOfYBq04BEBlWv4Vul+ZqWm7VCX8Pak5RMZ1BO56EISSl6ybRgv5zqG
+         IJQLhE6l2TVL1A61ZTIXK8l8aTQh7c8GyMEm8rXhqTDGqRnaqUS+fBIIQYMxVZd2EkU5
+         zU3OHyb1tja9rGq67up9M3rmj8+I0VIKwhdbWiBheExElZ4x6u6rf2SlAusOg+BX0Cj9
+         F7o1F9jWhAstOv4nSTZNR/9fZ5NlLMyXuNX4iL7xdMRF7bNwVCiy8YARpIi2cd926qyQ
+         9gjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718361584; x=1718966384;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1718362214; x=1718967014;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=v046Ynuau3r+2icIo4svtRx0/kg7YGr+WrTgAD4SYDM=;
-        b=Ph9TXv4+dNOIGNUy3/jN/5Cxzno6G4fmoxTCG2SriyqucAqJ/iQcuGFzmpuv/iKd4M
-         ZzSHGVq8nuEKpMUdpBN4i4FG3p+Frd0bOzRBap9nVw04spqTQ/dQmkWxVYvVG40do8bj
-         L3sooDZ8bLxb81WPmbp9JPaoa9kcpHM7YyeHmfPCKGCzbWde+dBJSeIAE3dngoOEF2pY
-         Y7f6JBHM2EZI8nuKUdi8eMifTVHfO3hPwzacljpLYSkKBdon9cu3BTS3hfZtpLB1EpMA
-         7ArwukJu8fN0XKresUlCtwC5/PkVGba1nGKyUc0QOVa8fik+86akualOlJncbroW9Rww
-         l7kQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWl2NwBaLhgAShH0UGNyqaJMYV/tyr+Itxeq9RPLvx9wEII8ucRcofbX9O0f5XeqTZTgCufsDpJizbZ8A9bxoxFvAvgj3LU5AucJc6wZw==
-X-Gm-Message-State: AOJu0Yw9FV14MJ/D3IWH0v15QxcsJJtPgVXdWhih/TsKASUg8TNh4Y0Q
-	SCBGcZlNbxXj2lOwLjmlqyrH9jv0BRwDQTDBbU6r+1b52Q8xaggRWIWWWUXWCWlOLoVNKUN1C1E
-	f1Ak=
-X-Google-Smtp-Source: AGHT+IEx+k+d6jmLnxxySTuX+K3zHE/R51D+3f9To16Y8uYNB0SKgQpBH0n6JwaZnMUULpDr3sMbZA==
-X-Received: by 2002:a17:906:3c56:b0:a6f:12:8c48 with SMTP id a640c23a62f3a-a6f60d5f66bmr174412966b.39.1718361584558;
-        Fri, 14 Jun 2024 03:39:44 -0700 (PDT)
-Received: from [192.168.0.18] ([78.10.206.163])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56ecdd2asm175134166b.141.2024.06.14.03.39.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Jun 2024 03:39:44 -0700 (PDT)
-Message-ID: <7b9c8a44-d0cd-4689-986c-f16d1239c91b@linaro.org>
-Date: Fri, 14 Jun 2024 12:39:42 +0200
+        bh=QCJoDOhUssVM6+Y2RBhvWlf+mDExbgEkwr4P2FqcMHU=;
+        b=Fy0YxEvpQ5DxYUYbsSotFkpY/eayotIq8HlqHHTEAaPzMZPLHI53Snu4V1PMRzfx/J
+         4posLx53auI0y76M6EhFHIOOX97nnCUkR38y2dGVzo55CHxD6g0jnFswwdwdvnAp/6P2
+         oETeC7LC78jogpKDyDuXnTpsTthJgGkLO+IMWIE9Z/ig4jN/w4MQzclCfdjum/12MBtn
+         WxizchbkgZ1c+yruClk94oV18guzBHRp2t3vtizVogfwEIHwGHYwKQd+BtcAoTh6A4Sb
+         e2E2TbMazs2M9FbMhEe667Fb2VHyQy1N2z7aoFFxQEGNK3hSIZbHZeDg2vZ5TIfZzj7/
+         D9WA==
+X-Gm-Message-State: AOJu0YzKoXPO4nei1qgVwhUceWRVPhxxkQUGiGvBlZrkNgZ7GAOMz6Hm
+	paF1RE4R2Lq5WoyIL3ZB5ZtDXGZCg/woV2cVVXMKnJCsbwpi5FWVkifAparbXtI=
+X-Google-Smtp-Source: AGHT+IG6A/pIGScItJpp3TjiyYdxKXWMcaG0Eepdogf7Dw2tcjKQaUf+MfIxkTCRrBwNKat6G4W9pQ==
+X-Received: by 2002:a05:6512:b9c:b0:52c:aea5:9e09 with SMTP id 2adb3069b0e04-52caea5a347mr814131e87.20.1718362214162;
+        Fri, 14 Jun 2024 03:50:14 -0700 (PDT)
+Received: from [127.0.1.1] ([188.24.162.56])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56ecd5a4sm170581666b.110.2024.06.14.03.50.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jun 2024 03:50:13 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Fri, 14 Jun 2024 13:50:07 +0300
+Subject: [PATCH v2] arm64: dts: qcom: x1e80100: Enable tsens and thermal
+ zone nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] ASoC: codec: lpass-rx-macro: add support for 2.5
- codec version
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Banajit Goswami <bgoswami@quicinc.com>
-Cc: neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20240612-lpass-codec-v25-v4-0-f63d3676dbc4@linaro.org>
- <20240612-lpass-codec-v25-v4-3-f63d3676dbc4@linaro.org>
- <a6793126-ba1c-4679-a2c2-eabad4f5a506@linaro.org>
- <93b2de4e-dc2d-4781-9c1b-d6ad6d888eb2@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <93b2de4e-dc2d-4781-9c1b-d6ad6d888eb2@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240614-x1e80100-dts-thermal-v2-1-4d4f9effacc6@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAF4gbGYC/22NwQ6CMBBEf4Xs2TVthYKe/A/DocAWNkFqtoRgC
+ P9uxau3eZPMmw0iCVOEW7aB0MKRw5TAnDJoBzf1hNwlBqNMrrS64qqpSkFhN0ecB5KnGzEvu6a
+ w1lnVtJCmLyHP66F91IkHjnOQ9/Gy6G/7Exam/C9cNGokpy9N5Z31vr2PPDkJ5yA91Pu+fwDXa
+ NN+uQAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Rajendra Nayak <quic_rjendra@quicinc.com>, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=23313; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=eaIf67ERJLwvEbRU0gZ1zoNLBmsy0BlYH6WvZxbUxWk=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmbCBgCED8/zQtvWMwZ+1rgshZWhvltDvxDhV/m
+ /bR7PEnFseJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZmwgYAAKCRAbX0TJAJUV
+ VkrnEACbg1rMu17IuVpPz3AQvw1zW64DfTJrLq9t2Hm669eml3E9lUlWZy+rRQivB6sIpGHYSzo
+ KZ6eKw7q4nhL0A6oxXXt9+JzlDw9c9gKask4x5X8+TZXwN/vcQd3CaeWeQ1QVB5BqHkUCUIeqdm
+ 0xxx6gh2pehkH5A0FFkiYe1guW+sMvxCFqiCxuX0oErhrZKRUiXkXOJhCdZveexVBSzFceU2dPz
+ xuMf5pqwiHasaTRag6Bph1d3/in3Cmlefn3Wp6oJX9w85H2k8RA6xvUgWHx7F/o+8lx8cs0fK/R
+ NYRq1Y719ohwL9RZpb4vEm93NDgrZPu/gwvd8VeFK7JPDJP6ZhGXqU9SR/xl3i3zdszOcdGoBic
+ pDqn3M/dHBePEEdAUW2ULjx0b33LzjMikS0qEatLKoiqh6EiL71G8BqtWHiDSC1DLuDOxfmKlu4
+ 1jt/fsk/DNEQq9HN/KBKIEev3jJXJiIc/ee5Y0QArVTIw74bmXXy1Q78rvRHX4iZmU7d415iVfj
+ 7q2IZ8XNEgL3pFCFRlOnYh/rS7dCuHOP14gPiMtTsmHhDw8LSvUIBS/j+VYwd+SvTf9gl1fwPYS
+ DlpypQ2vN1Zo7wqRDd5k4DF+H0y18MdxqdhS3qHfE63v5yt6qYaaCC2CehCmxq3IYrZ2YfXOdaK
+ 3XLBuyyhrved6Kw==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 13/06/2024 13:04, Srinivas Kandagatla wrote:
-> 
-> 
-> On 13/06/2024 12:00, Krzysztof Kozlowski wrote:
->> On 13/06/2024 12:49, Srinivas Kandagatla wrote:
->>> LPASS Codec v2.5 has significant changes in the rx register strides.
->>> Due to this headset playback on SM8550, SM8650, x1e80100 and all SoCs
->>> after SM8450 have only Left working.
->>>
->>> This patch adjusts the registers to accomdate 2.5 changes. With this
->>> fixed now L and R are functional on Headset playback.
->>
->> I was just about to respond, are you sure this is suitable for sm8450? I
->> looked now at registers and sm8450 (which should have codec v2.5) has
->> old style register layout.
->>
-> from 2.5 the layout has changed, I have verified it on SM8450, with and 
-> without this patch, This fixes the issue one speaker issue.
+From: Rajendra Nayak <quic_rjendra@quicinc.com>
 
-I tested it now on SM8450 and indeed it fixes missing channel playback
-via headphones.
+Add tsens and thermal zones nodes for x1e80100 SoC.
 
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Changes in v2:
+- Dropped the thermal engine nodes.
+- Dropped comments from tsens nodes.
+- Droppd the polling-delay entirely and polling-delay-passive where not
+  necessary.
+- Added top/bottom location to all sensors (where applicable).
+- Fixed trip points with duplicate values for same temp.
+- Marked as critical the 125°C throughout all trip points.
+- Link to v1: https://lore.kernel.org/r/20240527-x1e80100-dts-thermal-v1-1-ea13b8fa6ffc@linaro.org
+---
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1176 ++++++++++++++++++++++++++++++++
+ 1 file changed, 1176 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 9944c654851e..df13df7967db 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -2505,6 +2505,66 @@ &config_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>,
+ 			};
+ 		};
+ 
++		tsens0: thermal-sensor@c271000 {
++			compatible = "qcom,x1e80100-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c271000 0 0x1000>,
++			      <0 0x0c222000 0 0x1000>;
++
++			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow",
++					  "critical";
++
++			#qcom,sensors = <16>;
++
++			#thermal-sensor-cells = <1>;
++		};
++
++		tsens1: thermal-sensor@c272000 {
++			compatible = "qcom,x1e80100-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c272000 0 0x1000>,
++			      <0 0x0c223000 0 0x1000>;
++
++			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 642 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow",
++					  "critical";
++
++			#qcom,sensors = <16>;
++
++			#thermal-sensor-cells = <1>;
++		};
++
++		tsens2: thermal-sensor@c273000 {
++			compatible = "qcom,x1e80100-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c273000 0 0x1000>,
++			      <0 0x0c224000 0 0x1000>;
++
++			interrupts = <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 643 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow",
++					  "critical";
++
++			#qcom,sensors = <16>;
++
++			#thermal-sensor-cells = <1>;
++		};
++
++		tsens3: thermal-sensor@c274000 {
++			compatible = "qcom,x1e80100-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c274000 0 0x1000>,
++			      <0 0x0c225000 0 0x1000>;
++
++			interrupts = <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 770 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow",
++					  "critical";
++
++			#qcom,sensors = <16>;
++
++			#thermal-sensor-cells = <1>;
++		};
++
+ 		usb_1_ss0_hsphy: phy@fd3000 {
+ 			compatible = "qcom,x1e80100-snps-eusb2-phy",
+ 				     "qcom,sm8550-snps-eusb2-phy";
+@@ -5469,4 +5529,1120 @@ timer {
+ 			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+ 			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+ 	};
++
++	thermal-zones {
++		aoss0-thermal {
++			thermal-sensors = <&tsens0 0>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				aoss0-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-0-top-thermal {
++			thermal-sensors = <&tsens0 1>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-0-bottom-thermal {
++			thermal-sensors = <&tsens0 2>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-1-top-thermal {
++			thermal-sensors = <&tsens0 3>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-1-bottom-thermal {
++			thermal-sensors = <&tsens0 4>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-2-top-thermal {
++			thermal-sensors = <&tsens0 5>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-2-bottom-thermal {
++			thermal-sensors = <&tsens0 6>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-3-top-thermal {
++			thermal-sensors = <&tsens0 7>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-3-bottom-thermal {
++			thermal-sensors = <&tsens0 8>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpuss0-top-thermal {
++			thermal-sensors = <&tsens0 9>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				cpuss2-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpuss0-bottom-thermal {
++			thermal-sensors = <&tsens0 10>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				cpuss2-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		mem-thermal {
++			polling-delay-passive = <250>;
++
++			thermal-sensors = <&tsens0 11>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				mem-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		video-thermal {
++			polling-delay-passive = <250>;
++
++			thermal-sensors = <&tsens0 12>;
++
++			trips {
++				trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++			};
++		};
++
++		aoss1-thermal {
++			thermal-sensors = <&tsens1 0>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				aoss0-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-0-top-thermal {
++			thermal-sensors = <&tsens1 1>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-0-bottom-thermal {
++			thermal-sensors = <&tsens1 2>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-1-top-thermal {
++			thermal-sensors = <&tsens1 3>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-1-bottom-thermal {
++			thermal-sensors = <&tsens1 4>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-2-top-thermal {
++			thermal-sensors = <&tsens1 5>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-2-bottom-thermal {
++			thermal-sensors = <&tsens1 6>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-3-top-thermal {
++			thermal-sensors = <&tsens1 7>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-3-bottom-thermal {
++			thermal-sensors = <&tsens1 8>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpuss1-top-thermal {
++			thermal-sensors = <&tsens1 9>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				cpuss2-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpuss1-bottom-thermal {
++			thermal-sensors = <&tsens1 10>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				cpuss2-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		aoss2-thermal {
++			thermal-sensors = <&tsens2 0>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				aoss0-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-0-top-thermal {
++			thermal-sensors = <&tsens2 1>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-0-bottom-thermal {
++			thermal-sensors = <&tsens2 2>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-1-top-thermal {
++			thermal-sensors = <&tsens2 3>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-1-bottom-thermal {
++			thermal-sensors = <&tsens2 4>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-2-top-thermal {
++			thermal-sensors = <&tsens2 5>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-2-bottom-thermal {
++			thermal-sensors = <&tsens2 6>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-3-top-thermal {
++			thermal-sensors = <&tsens2 7>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-3-bottom-thermal {
++			thermal-sensors = <&tsens2 8>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <95000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu-critical {
++					temperature = <110000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpuss2-top-thermal {
++			thermal-sensors = <&tsens2 9>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				cpuss2-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpuss2-bottom-thermal {
++			thermal-sensors = <&tsens2 10>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				cpuss2-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		aoss3-thermal {
++			thermal-sensors = <&tsens3 0>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				aoss0-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		nsp0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 1>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				nsp0-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		nsp1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 2>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				nsp1-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		nsp2-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 3>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				nsp2-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		nsp3-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 4>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				nsp3-critical {
++					temperature = <125000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpuss-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 5>;
++
++			trips {
++				trip-point0 {
++					temperature = <85000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <90000>;
++					hysteresis = <1000>;
++					type = "hot";
++				};
++
++				trip-point2 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpuss-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 6>;
++
++			trips {
++				trip-point0 {
++					temperature = <85000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <90000>;
++					hysteresis = <1000>;
++					type = "hot";
++				};
++
++				trip-point2 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpuss-2-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 7>;
++
++			trips {
++				trip-point0 {
++					temperature = <85000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <90000>;
++					hysteresis = <1000>;
++					type = "hot";
++				};
++
++				trip-point2 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpuss-3-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 8>;
++
++			trips {
++				trip-point0 {
++					temperature = <85000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <90000>;
++					hysteresis = <1000>;
++					type = "hot";
++				};
++
++				trip-point2 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpuss-4-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 9>;
++
++			trips {
++				trip-point0 {
++					temperature = <85000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <90000>;
++					hysteresis = <1000>;
++					type = "hot";
++				};
++
++				trip-point2 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpuss-5-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 10>;
++
++			trips {
++				trip-point0 {
++					temperature = <85000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <90000>;
++					hysteresis = <1000>;
++					type = "hot";
++				};
++
++				trip-point2 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpuss-6-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 11>;
++
++			trips {
++				trip-point0 {
++					temperature = <85000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <90000>;
++					hysteresis = <1000>;
++					type = "hot";
++				};
++
++				trip-point2 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpuss-7-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 12>;
++
++			trips {
++				trip-point0 {
++					temperature = <85000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <90000>;
++					hysteresis = <1000>;
++					type = "hot";
++				};
++
++				trip-point2 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		camera0-thermal {
++			thermal-sensors = <&tsens3 13>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				camera0-critical {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++
++		camera1-thermal {
++			thermal-sensors = <&tsens3 14>;
++
++			trips {
++				trip-point0 {
++					temperature = <90000>;
++					hysteresis = <2000>;
++					type = "hot";
++				};
++
++				camera0-critical {
++					temperature = <115000>;
++					hysteresis = <0>;
++					type = "critical";
++				};
++			};
++		};
++	};
+ };
+
+---
+base-commit: 6906a84c482f098d31486df8dc98cead21cce2d0
+change-id: 20240109-x1e80100-dts-thermal-47db566a60bc
 
 Best regards,
-Krzysztof
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
 
