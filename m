@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-22771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0077F909DF9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 16:55:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A10A6909E0E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 17:06:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB9D21C208B2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 14:55:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 229421F2156C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 15:06:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC0EF107A9;
-	Sun, 16 Jun 2024 14:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 295CA101EE;
+	Sun, 16 Jun 2024 15:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="LgQ5zGo4"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="pqUJPRmq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from msa.smtpout.orange.fr (msa-211.smtpout.orange.fr [193.252.23.211])
+Received: from msa.smtpout.orange.fr (msa-215.smtpout.orange.fr [193.252.23.215])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1EE19D8BA;
-	Sun, 16 Jun 2024 14:55:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.252.23.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0E717993;
+	Sun, 16 Jun 2024 15:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.252.23.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718549712; cv=none; b=MJL41sJDVIiLhjPKF1Jghr944y0LS/UBDA+eugxC+kyklOoqbQBDxgYmfvYwqtIGbiApGDwK/b2+Mp/LxGh3fUEdheKx62rJEGjm0w+tPuJS1PJlV8plO7GZWfHESfENoF3wGV8ulv9mvHfYxDpewPrXpkfZ5TxuwaRUxdd/vOQ=
+	t=1718550391; cv=none; b=r+nEA54GG1tXO5PDqQ2c/CaRlJ298XNH05FJIbmI/pqzf5IbuY5007X6j/y1hm/9kmQR+fywW+2ktBUEZXJJpwatDQb9HhK/51FS4MZ0YIYguHSQb8fkmuHzpWBJ+ThYxyTiP+Cyre+Ar8SG6KdQasmY13wjL9YRnhBAUnNbRCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718549712; c=relaxed/simple;
-	bh=O/z/vjCG75DIyxaHpKuZpK8HKPbP/ZzO9wdI9VnFK6g=;
+	s=arc-20240116; t=1718550391; c=relaxed/simple;
+	bh=MeP63kUoIGOhp+KS92FhAfCnit5QJFnb0n3OM4QPJPo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TUEdh7UzLXnlFh3l3bLQlWxIi7/4cjRkK/WYT0e+V7z6CnJZ6gQPoMOfiOY/EtbLCXc7dj3qFWUw3Na1NSSIC7CQYvHasXZHcgtgaDCCc7h3hcrfAEZWj2tZZUgKPynnMJzi/Tv8SddBb0TFQI1VrnwJgOi5RCTb+NNbH15qQl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=LgQ5zGo4; arc=none smtp.client-ip=193.252.23.211
+	 In-Reply-To:Content-Type; b=B//YuXlE8qMumjVklSDbnk5Q8ow0ZjJ//vwWoEzg/i+fylkzHnkjRtkiwhWq1RQ2eGzy96kRExCmeLCv4entleuqOnJtnJ6Lts429Mm/e8gABk98v/AsEyyktilpTm+yxYbVsW6ObkEmXHzIQBymKdud3q8RjPBf1kFBQmM5vBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=pqUJPRmq; arc=none smtp.client-ip=193.252.23.215
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
 Received: from [192.168.1.37] ([86.243.222.230])
 	by smtp.orange.fr with ESMTPA
-	id IrHWsSO0wuRA3IrHXsfkBD; Sun, 16 Jun 2024 16:55:01 +0200
+	id IrSUsCOuW4rg1IrSUs1Sr1; Sun, 16 Jun 2024 17:06:20 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1718549701;
-	bh=OAMsrwU7Q/Q7uwAy9o856/VzFrQmnQenr1H3/1+8Kos=;
+	s=t20230301; t=1718550380;
+	bh=ujR6qI66k3vQEhgvlbkTIaG+4S4k/x11/VEOuKw3pkE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=LgQ5zGo44dK1XzAx6t987fvlNEHvrWLkZCD71N2kHh41BoEaNCQ/RF8uZVnNXqx0Q
-	 tOMHoLsVMCETSBt50K8b4dlgtQpAKKgmKk5BHrXuT0emLD5LkKOw/cjMGyZtDRmAB9
-	 oFl1gwQZp58BcoeNruu7JUXLy1zqxMNqmONO5MelfMHVVpq3q/pRv49feBNDqmQjGW
-	 fk5QZGCRsBul/9vKSerElZL+zvVflkFJY0hXgXyUW4M6N1Dy0PkM0GXXQFoY5r/RHm
-	 KckU7bgYY1+5/5/qz3JqbHRfYE/PK25Bndo1zV6tyoBkqZ5izV4RuliXandilo7Asc
-	 fmNADNXO8D7OA==
+	b=pqUJPRmqiowTw3TYYioi9HHW3BS2VQuywKo8nfRiglMFqshCwso3qbgpqRg+INspt
+	 ALq25NbbSfAQJIP9Sc8h2IDHuWDfgS+/KJMbKT1z9UIXjD+nKg73j7FuTyxoolcvk7
+	 DzshJdyXTgWzb2sbbl/G+kxzLxSznuo1saqXxs61oVL0u3MVjbei4unCtfm5syQ5NW
+	 fHw/Al0dJur2vgVgeYjRKq5b7XQoPYlU3hHVE7qoF1G4GYMk24o73VRKSe28NV5ri6
+	 ZdeF/n9TEcdn+MXSQ1pf1QuYbxaz1GVMqywT4geO1np/NopaF3vk7xHFa7O9ZpbGfk
+	 srXGgwjer0yPw==
 X-ME-Helo: [192.168.1.37]
 X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 16 Jun 2024 16:55:01 +0200
+X-ME-Date: Sun, 16 Jun 2024 17:06:20 +0200
 X-ME-IP: 86.243.222.230
-Message-ID: <2b92c0f9-2595-4b73-8015-1abb825a61a1@wanadoo.fr>
-Date: Sun, 16 Jun 2024 16:54:58 +0200
+Message-ID: <834d31cc-f4bc-4db7-a25b-f9869e550eb6@wanadoo.fr>
+Date: Sun, 16 Jun 2024 17:06:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,7 +57,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/7] ASoC: codecs: wcd937x: add wcd937x codec driver
+Subject: Re: [PATCH v6 3/7] ASoC: codecs: wcd937x: add wcd937x codec driver -
+ another comment
 To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
  Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
@@ -95,77 +96,136 @@ Le 11/06/2024 à 09:45, Mohammad Rafi Shaik a écrit :
 > Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > ---
 
+
 Hi,
 
-this pathc has reached -next, but I have a question.
+this patch has reached -next, but I have a question.
 
 If I'm correct, I can send a patch, but if the fix can be folded 
 somewhere, this is also fine for me.
 
 ...
 
-> +static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
+> +static int wcd937x_probe(struct platform_device *pdev)
 > +{
+> +	struct component_match *match = NULL;
+> +	struct device *dev = &pdev->dev;
+> +	struct wcd937x_priv *wcd937x;
+> +	struct wcd_mbhc_config *cfg;
+> +	int ret;
+> +
+> +	wcd937x = devm_kzalloc(dev, sizeof(*wcd937x), GFP_KERNEL);
+> +	if (!wcd937x)
+> +		return -ENOMEM;
+> +
+> +	dev_set_drvdata(dev, wcd937x);
+> +	mutex_init(&wcd937x->micb_lock);
+> +
+> +	wcd937x->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
+> +	if (IS_ERR(wcd937x->reset_gpio))
+> +		return dev_err_probe(dev, PTR_ERR(wcd937x->reset_gpio),
+> +				     "failed to reset wcd gpio\n");
+> +
+> +	wcd937x->us_euro_gpio = devm_gpiod_get_optional(dev, "us-euro", GPIOD_OUT_LOW);
+> +	if (IS_ERR(wcd937x->us_euro_gpio))
+> +		return dev_err_probe(dev, PTR_ERR(wcd937x->us_euro_gpio),
+> +				"us-euro swap Control GPIO not found\n");
+> +
+> +	cfg = &wcd937x->mbhc_cfg;
+> +	cfg->swap_gnd_mic = wcd937x_swap_gnd_mic;
+> +
+> +	wcd937x->supplies[0].supply = "vdd-rxtx";
+> +	wcd937x->supplies[1].supply = "vdd-px";
+> +	wcd937x->supplies[2].supply = "vdd-mic-bias";
+> +
+> +	ret = devm_regulator_bulk_get(dev, WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "Failed to get supplies\n");
+> +
+> +	ret = regulator_bulk_enable(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "Failed to enable supplies\n");
+> +
+> +	/* Get the buck separately, as it needs special handling */
+> +	wcd937x->buck_supply = devm_regulator_get(dev, "vdd-buck");
+> +	if (IS_ERR(wcd937x->buck_supply))
 
-...
+regulator_bulk_disable() is missing here...
 
-> +	wcd937x->hphr_pdm_wd_int = regmap_irq_get_virq(wcd937x->irq_chip,
-> +						       WCD937X_IRQ_HPHR_PDM_WD_INT);
-> +	wcd937x->hphl_pdm_wd_int = regmap_irq_get_virq(wcd937x->irq_chip,
-> +						       WCD937X_IRQ_HPHL_PDM_WD_INT);
-> +	wcd937x->aux_pdm_wd_int = regmap_irq_get_virq(wcd937x->irq_chip,
-> +						      WCD937X_IRQ_AUX_PDM_WD_INT);
+> +		return dev_err_probe(dev, PTR_ERR(wcd937x->buck_supply),
+> +				     "Failed to get buck supply\n");
 > +
-> +	/* Request for watchdog interrupt */
-> +	ret = devm_request_threaded_irq(dev, wcd937x->hphr_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
-> +					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
-> +					"HPHR PDM WDOG INT", wcd937x);
+> +	ret = regulator_enable(wcd937x->buck_supply);
 > +	if (ret)
-> +		dev_err(dev, "Failed to request HPHR watchdog interrupt (%d)\n", ret);
+> +		return dev_err_probe(dev, ret, "Failed to enable buck supply\n");
+
+... and here...
+
+Also, should 'buck_supply' be disabled in the error handling path of the 
+probe and in the remove function? (and maybe even somewhere else related 
+to wcd937x_codec_enable_vdd_buck())
+
 > +
-> +	ret = devm_request_threaded_irq(dev, wcd937x->hphl_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
-> +					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
-> +					"HPHL PDM WDOG INT", wcd937x);
+> +	wcd937x_dt_parse_micbias_info(dev, wcd937x);
+> +
+> +	cfg->mbhc_micbias = MIC_BIAS_2;
+> +	cfg->anc_micbias = MIC_BIAS_2;
+> +	cfg->v_hs_max = WCD_MBHC_HS_V_MAX;
+> +	cfg->num_btn = WCD937X_MBHC_MAX_BUTTONS;
+> +	cfg->micb_mv = wcd937x->micb2_mv;
+> +	cfg->linein_th = 5000;
+> +	cfg->hs_thr = 1700;
+> +	cfg->hph_thr = 50;
+> +
+> +	wcd_dt_parse_mbhc_data(dev, &wcd937x->mbhc_cfg);
+> +
+> +	ret = wcd937x_add_slave_components(wcd937x, dev, &match);
 > +	if (ret)
-> +		dev_err(dev, "Failed to request HPHL watchdog interrupt (%d)\n", ret);
+> +		return ret;
+
+... and here...
+
 > +
-> +	ret = devm_request_threaded_irq(dev, wcd937x->aux_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
-> +					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
-> +					"AUX PDM WDOG INT", wcd937x);
+> +	wcd937x_reset(wcd937x);
+> +
+> +	ret = component_master_add_with_match(dev, &wcd937x_comp_ops, match);
 > +	if (ret)
-> +		dev_err(dev, "Failed to request Aux watchdog interrupt (%d)\n", ret);
+> +		return ret;
+
+... and here.
+
+Maybe a devm_add_action_ior_reset() could help?
+
 > +
-> +	/* Disable watchdog interrupt for HPH and AUX */
-> +	disable_irq_nosync(wcd937x->hphr_pdm_wd_int);
-> +	disable_irq_nosync(wcd937x->hphl_pdm_wd_int);
-> +	disable_irq_nosync(wcd937x->aux_pdm_wd_int);
-> +
-> +	ret = wcd937x_mbhc_init(component);
-> +	if (ret)
-> +		dev_err(component->dev, "mbhc initialization failed\n");
+> +	pm_runtime_set_autosuspend_delay(dev, 1000);
+> +	pm_runtime_use_autosuspend(dev);
+> +	pm_runtime_mark_last_busy(dev);
+> +	pm_runtime_set_active(dev);
+> +	pm_runtime_enable(dev);
+> +	pm_runtime_idle(dev);
 > +
 > +	return ret;
 > +}
 > +
-> +static void wcd937x_soc_codec_remove(struct snd_soc_component *component)
+> +static void wcd937x_remove(struct platform_device *pdev)
 > +{
-> +	struct wcd937x_priv *wcd937x = snd_soc_component_get_drvdata(component);
+> +	struct device *dev = &pdev->dev;
+> +	struct wcd937x_priv *wcd937x = dev_get_drvdata(dev);
 > +
-> +	wcd937x_mbhc_deinit(component);
-> +	free_irq(wcd937x->aux_pdm_wd_int, wcd937x);
-> +	free_irq(wcd937x->hphl_pdm_wd_int, wcd937x);
-> +	free_irq(wcd937x->hphr_pdm_wd_int, wcd937x);
-
-These irq have been requested wth devm_request_threaded_irq(), so either 
-this free_irq should be removed, or devm_free_irq() should be used if 
-the order is important.
-
-CJ
-
+> +	component_master_del(&pdev->dev, &wcd937x_comp_ops);
 > +
-> +	wcd_clsh_ctrl_free(wcd937x->clsh_info);
+> +	pm_runtime_disable(dev);
+> +	pm_runtime_set_suspended(dev);
+> +	pm_runtime_dont_use_autosuspend(dev);
+> +
+> +	regulator_bulk_disable(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
+> +	regulator_bulk_free(WCD937X_MAX_BULK_SUPPLY, wcd937x->supplies);
+
+This has been allocated with devm_regulator_bulk_get(), so this call 
+looks redundant (but harmless).
+
 > +}
 
-
+...
 
 
