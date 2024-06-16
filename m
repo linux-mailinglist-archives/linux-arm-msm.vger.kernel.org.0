@@ -1,263 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-22770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C15BE909DE9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 16:15:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0077F909DF9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 16:55:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C0C91F217BA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 14:15:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB9D21C208B2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 14:55:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A40A87492;
-	Sun, 16 Jun 2024 14:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC0EF107A9;
+	Sun, 16 Jun 2024 14:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l4H8jRIZ"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="LgQ5zGo4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from msa.smtpout.orange.fr (msa-211.smtpout.orange.fr [193.252.23.211])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB93525D;
-	Sun, 16 Jun 2024 14:15:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1EE19D8BA;
+	Sun, 16 Jun 2024 14:55:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.252.23.211
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718547353; cv=none; b=vBiYiTlelCNBiy1yGv/HJ3F8wxVQo1mtibAHSTRCL1kVfQkZvGvMwT8ych8xjKgn0MQ5jC5cpLmrFoZewttXNd9+lvbyYoF+hJSO4Xouo/+zDGYCqnYLW+OXezlBsMb0eMtX9Sr+aUDmd0j4McEeuzts3Kr4apY1pQ3SmERnQZE=
+	t=1718549712; cv=none; b=MJL41sJDVIiLhjPKF1Jghr944y0LS/UBDA+eugxC+kyklOoqbQBDxgYmfvYwqtIGbiApGDwK/b2+Mp/LxGh3fUEdheKx62rJEGjm0w+tPuJS1PJlV8plO7GZWfHESfENoF3wGV8ulv9mvHfYxDpewPrXpkfZ5TxuwaRUxdd/vOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718547353; c=relaxed/simple;
-	bh=TsiqY5ghTt6zNS7is2HIehRASQyN6+nUzZNoGJEVlqg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ux1+dq5BpOWQDaFJ3jDyONf0yolCLLxTg7ssR5SRcciC1MPfQF4MaVTkn0bShRurrJcy08tNCkZL1USW7ysEaaVicyw1FtoTJOqjQsTQDtvHOVxkg5qE7L0233qkHVQ0LW0rw3LT186N9EfVPFbK28B1lLXSRpBXzEAfEp+e9i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l4H8jRIZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BCF38C2BBFC;
-	Sun, 16 Jun 2024 14:15:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718547352;
-	bh=TsiqY5ghTt6zNS7is2HIehRASQyN6+nUzZNoGJEVlqg=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=l4H8jRIZnD6PJV6t+JXDSt4nEn629qeP/R7K1vL5YKIchvpqsfREE8WTmqHDITy+B
-	 Pj5tZsJzQ4nSaToAmyNmssNW1yFH/zncjIprmzd/iRImhYTcOCw/ykEdZ7PsZzCpJ6
-	 Uq22CSCNIhhmlYPgYD4eX7cujzGGvc2lH3n9CGXY525VOxmONhwsDnyu1JIYAtTlDQ
-	 JRCkgkEIsz2ENnD/jRY/2NR2tUCIjhPqVFQw49j+9bDIL7sX68SQg7X3b/cYvzYzQe
-	 INlVY3oNX5LDIf+iSrOApHkEGDUi4WpXbBGHbgI7dm/Z9BactcSei3iceG6fYgpJ3W
-	 3kG7rcTAbE3oQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2132C27C53;
-	Sun, 16 Jun 2024 14:15:52 +0000 (UTC)
-From: =?utf-8?q?Andr=C3=A9_Apitzsch_via_B4_Relay?= <devnull+git.apitzsch.eu@kernel.org>
-Date: Sun, 16 Jun 2024 16:15:45 +0200
-Subject: [PATCH] ARM: dts: qcom: msm8926-motorola-peregrine: Add
- accelerometer, magnetometer, regulator
+	s=arc-20240116; t=1718549712; c=relaxed/simple;
+	bh=O/z/vjCG75DIyxaHpKuZpK8HKPbP/ZzO9wdI9VnFK6g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TUEdh7UzLXnlFh3l3bLQlWxIi7/4cjRkK/WYT0e+V7z6CnJZ6gQPoMOfiOY/EtbLCXc7dj3qFWUw3Na1NSSIC7CQYvHasXZHcgtgaDCCc7h3hcrfAEZWj2tZZUgKPynnMJzi/Tv8SddBb0TFQI1VrnwJgOi5RCTb+NNbH15qQl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=LgQ5zGo4; arc=none smtp.client-ip=193.252.23.211
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from [192.168.1.37] ([86.243.222.230])
+	by smtp.orange.fr with ESMTPA
+	id IrHWsSO0wuRA3IrHXsfkBD; Sun, 16 Jun 2024 16:55:01 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1718549701;
+	bh=OAMsrwU7Q/Q7uwAy9o856/VzFrQmnQenr1H3/1+8Kos=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=LgQ5zGo44dK1XzAx6t987fvlNEHvrWLkZCD71N2kHh41BoEaNCQ/RF8uZVnNXqx0Q
+	 tOMHoLsVMCETSBt50K8b4dlgtQpAKKgmKk5BHrXuT0emLD5LkKOw/cjMGyZtDRmAB9
+	 oFl1gwQZp58BcoeNruu7JUXLy1zqxMNqmONO5MelfMHVVpq3q/pRv49feBNDqmQjGW
+	 fk5QZGCRsBul/9vKSerElZL+zvVflkFJY0hXgXyUW4M6N1Dy0PkM0GXXQFoY5r/RHm
+	 KckU7bgYY1+5/5/qz3JqbHRfYE/PK25Bndo1zV6tyoBkqZ5izV4RuliXandilo7Asc
+	 fmNADNXO8D7OA==
+X-ME-Helo: [192.168.1.37]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sun, 16 Jun 2024 16:55:01 +0200
+X-ME-IP: 86.243.222.230
+Message-ID: <2b92c0f9-2595-4b73-8015-1abb825a61a1@wanadoo.fr>
+Date: Sun, 16 Jun 2024 16:54:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/7] ASoC: codecs: wcd937x: add wcd937x codec driver
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com,
+ quic_pkumpatl@quicinc.com, Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20240611074557.604250-1-quic_mohs@quicinc.com>
+ <20240611074557.604250-4-quic_mohs@quicinc.com>
+Content-Language: en-MW
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20240611074557.604250-4-quic_mohs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240616-peregrine-v1-1-85d14ae1a11a@apitzsch.eu>
-X-B4-Tracking: v=1; b=H4sIAJDzbmYC/x3MQQqAIBBG4avIrBNU0kVXiRZlfzYbkxEikO6et
- Pzg8RpVCKPSpBoJbq585Q47KIrnmhM0793kjBtNsEEXCJJwhg6IHi5s1iNS74vg4Od/zcv7fu4
- y4albAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1718547355; l=4379;
- i=git@apitzsch.eu; s=20240325; h=from:subject:message-id;
- bh=fAaRpnS34tfTExhh2XisZxapKdoWeOZI5ZaxJ4uIxC0=;
- b=TsGnsIqG+BESQgTILEz3JVRyswhIQ43+1QR+8irCA1StScDthFMgV6jNYbBp9qeaRMF/fZ7KY
- IDtHYY8zb7LC7S3Me07s09pIr/K1wONbrIB/dsmKDI4NmbAIyrfnTqL
-X-Developer-Key: i=git@apitzsch.eu; a=ed25519;
- pk=wxovcZRfvNYBMcTw4QFFtNEP4qv39gnBfnfyImXZxiU=
-X-Endpoint-Received: by B4 Relay for git@apitzsch.eu/20240325 with
- auth_id=142
-X-Original-From: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Reply-To: git@apitzsch.eu
 
-From: André Apitzsch <git@apitzsch.eu>
+Le 11/06/2024 à 09:45, Mohammad Rafi Shaik a écrit :
+> From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+> 
+> This patch adds basic SoundWire codec driver to support for
+> WCD9370/WCD9375 TX and RX devices.
+> 
+> The WCD9370/WCD9375 has Multi Button Headset Control hardware to
+> support Headset insertion, type detection, 8 headset buttons detection,
+> Over Current detection and Impedence measurements.
+> This patch adds support for this using wcd-mbhc apis.
+> 
+> Co-developed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> ---
 
-Add the accelerometer, magnetometer and regulator that are present on
-the Motorola Moto G 4G (2013) device.
+Hi,
 
-While at it, update framebuffer supplies and temperature sensor.
+this pathc has reached -next, but I have a question.
 
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
----
- .../dts/qcom/qcom-msm8926-motorola-peregrine.dts   | 121 +++++++++++++++++++++
- 1 file changed, 121 insertions(+)
+If I'm correct, I can send a patch, but if the fix can be folded 
+somewhere, this is also fine for me.
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-motorola-peregrine.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-motorola-peregrine.dts
-index 0cbe2d2fbbb1..376a33125941 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8926-motorola-peregrine.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8926-motorola-peregrine.dts
-@@ -29,6 +29,10 @@ framebuffer0: framebuffer@3200000 {
- 			height = <1280>;
- 			stride = <(720 * 3)>;
- 			format = "r8g8b8";
-+			vsp-supply = <&reg_lcd_pos>;
-+			vsn-supply = <&reg_lcd_neg>;
-+			vdd-supply = <&pm8226_l28>;
-+			vddio-supply = <&vddio_disp_vreg>;
- 		};
- 	};
- 
-@@ -51,6 +55,18 @@ key-volume-up {
- 		};
- 	};
- 
-+	vddio_disp_vreg: regulator-vddio-disp {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vddio_disp";
-+		gpio = <&tlmm 34 GPIO_ACTIVE_HIGH>;
-+		startup-delay-us = <300>;
-+		enable-active-high;
-+		regulator-boot-on;
-+		vin-supply = <&pm8226_l8>;
-+		pinctrl-0 = <&disp_vddio_default>;
-+		pinctrl-names = "default";
-+	};
-+
- 	reserved-memory {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
-@@ -68,12 +84,67 @@ smem_region: smem@fa00000 {
- 	};
- };
- 
-+&blsp1_i2c2 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+
-+	magnetometer@c {
-+		compatible = "asahi-kasei,ak8963";
-+		reg = <0xc>;
-+		interrupts-extended = <&tlmm 38 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&tlmm 62 GPIO_ACTIVE_LOW>;
-+		vdd-supply = <&pm8226_l19>;
-+		pinctrl-0 = <&mag_int_default &mag_reset_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	accelerometer@18 {
-+		compatible = "st,lis3dh-accel";
-+		reg = <0x18>;
-+		interrupts-extended = <&tlmm 1 IRQ_TYPE_EDGE_FALLING>;
-+		vdd-supply = <&pm8226_l19>;
-+		pinctrl-0 = <&accel_int_default>;
-+		pinctrl-names = "default";
-+		st,drdy-int-pin = <1>;
-+	};
-+};
-+
- &blsp1_i2c3 {
-+	clock-frequency = <400000>;
- 	status = "okay";
- 
-+	regulator@3e {
-+		compatible = "ti,tps65132";
-+		reg = <0x3e>;
-+		pinctrl-0 = <&reg_lcd_default>;
-+		pinctrl-names = "default";
-+
-+		reg_lcd_pos: outp {
-+			regulator-name = "outp";
-+			regulator-min-microvolt = <4000000>;
-+			regulator-max-microvolt = <6000000>;
-+			regulator-active-discharge = <1>;
-+			regulator-boot-on;
-+			enable-gpios = <&tlmm 31 GPIO_ACTIVE_HIGH>;
-+		};
-+
-+		reg_lcd_neg: outn {
-+			regulator-name = "outn";
-+			regulator-min-microvolt = <4000000>;
-+			regulator-max-microvolt = <6000000>;
-+			regulator-active-discharge = <1>;
-+			regulator-boot-on;
-+			enable-gpios = <&tlmm 33 GPIO_ACTIVE_HIGH>;
-+		};
-+	};
-+
- 	sensor@48 {
- 		compatible = "ti,tmp108";
- 		reg = <0x48>;
-+		interrupts-extended = <&tlmm 13 IRQ_TYPE_LEVEL_LOW>;
-+		pinctrl-0 = <&temp_alert_default>;
-+		pinctrl-names = "default";
-+		#thermal-sensor-cells = <0>;
- 	};
- };
- 
-@@ -278,6 +349,56 @@ &smbb {
- 	status = "okay";
- };
- 
-+&tlmm {
-+	accel_int_default: accel-int-default-state {
-+		pins = "gpio1";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-disable;
-+	};
-+
-+	disp_vddio_default: disp-vddio-default-state {
-+		pins = "gpio34";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	mag_int_default: mag-int-default-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-disable;
-+	};
-+
-+	mag_reset_default: mag-reset-default-state {
-+		pins = "gpio62";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	reg_lcd_default: reg-lcd-default-state {
-+		pins = "gpio31", "gpio33";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	temp_alert_default: temp-alert-default-state {
-+		pins = "gpio13";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-disable;
-+	};
-+};
-+
- &usb {
- 	extcon = <&smbb>;
- 	dr_mode = "peripheral";
+...
 
----
-base-commit: c71189547381bb5f176c6b22a9edc3414f1837b9
-change-id: 20240616-peregrine-6ec5e26b15ec
+> +static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
+> +{
 
-Best regards,
--- 
-André Apitzsch <git@apitzsch.eu>
+...
+
+> +	wcd937x->hphr_pdm_wd_int = regmap_irq_get_virq(wcd937x->irq_chip,
+> +						       WCD937X_IRQ_HPHR_PDM_WD_INT);
+> +	wcd937x->hphl_pdm_wd_int = regmap_irq_get_virq(wcd937x->irq_chip,
+> +						       WCD937X_IRQ_HPHL_PDM_WD_INT);
+> +	wcd937x->aux_pdm_wd_int = regmap_irq_get_virq(wcd937x->irq_chip,
+> +						      WCD937X_IRQ_AUX_PDM_WD_INT);
+> +
+> +	/* Request for watchdog interrupt */
+> +	ret = devm_request_threaded_irq(dev, wcd937x->hphr_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
+> +					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+> +					"HPHR PDM WDOG INT", wcd937x);
+> +	if (ret)
+> +		dev_err(dev, "Failed to request HPHR watchdog interrupt (%d)\n", ret);
+> +
+> +	ret = devm_request_threaded_irq(dev, wcd937x->hphl_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
+> +					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+> +					"HPHL PDM WDOG INT", wcd937x);
+> +	if (ret)
+> +		dev_err(dev, "Failed to request HPHL watchdog interrupt (%d)\n", ret);
+> +
+> +	ret = devm_request_threaded_irq(dev, wcd937x->aux_pdm_wd_int, NULL, wcd937x_wd_handle_irq,
+> +					IRQF_ONESHOT | IRQF_TRIGGER_RISING,
+> +					"AUX PDM WDOG INT", wcd937x);
+> +	if (ret)
+> +		dev_err(dev, "Failed to request Aux watchdog interrupt (%d)\n", ret);
+> +
+> +	/* Disable watchdog interrupt for HPH and AUX */
+> +	disable_irq_nosync(wcd937x->hphr_pdm_wd_int);
+> +	disable_irq_nosync(wcd937x->hphl_pdm_wd_int);
+> +	disable_irq_nosync(wcd937x->aux_pdm_wd_int);
+> +
+> +	ret = wcd937x_mbhc_init(component);
+> +	if (ret)
+> +		dev_err(component->dev, "mbhc initialization failed\n");
+> +
+> +	return ret;
+> +}
+> +
+> +static void wcd937x_soc_codec_remove(struct snd_soc_component *component)
+> +{
+> +	struct wcd937x_priv *wcd937x = snd_soc_component_get_drvdata(component);
+> +
+> +	wcd937x_mbhc_deinit(component);
+> +	free_irq(wcd937x->aux_pdm_wd_int, wcd937x);
+> +	free_irq(wcd937x->hphl_pdm_wd_int, wcd937x);
+> +	free_irq(wcd937x->hphr_pdm_wd_int, wcd937x);
+
+These irq have been requested wth devm_request_threaded_irq(), so either 
+this free_irq should be removed, or devm_free_irq() should be used if 
+the order is important.
+
+CJ
+
+> +
+> +	wcd_clsh_ctrl_free(wcd937x->clsh_info);
+> +}
+
 
 
 
