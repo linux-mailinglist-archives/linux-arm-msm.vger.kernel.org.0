@@ -1,147 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-22775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 846E6909EC5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 19:27:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFF73909F14
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 20:23:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E58CBB21CCD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 17:27:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F11B1F23992
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 18:23:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C8A129410;
-	Sun, 16 Jun 2024 17:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D03F844C77;
+	Sun, 16 Jun 2024 18:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="DiAAoDov"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QLRIXrYv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5641D3AC16;
-	Sun, 16 Jun 2024 17:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8EA107A9;
+	Sun, 16 Jun 2024 18:23:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718558809; cv=none; b=n8LpZeAHEstOKuJQltCgISEe0RBEVta40B0F3qqgHao75+GNdHoQ8FMij0l3ED558qKVkz/+TV/XqD/6YDrVzwu3Hc+wvuta0vdy9Ui05tETfZdq0kzlasp6wRyK6NZ7CJdTKVdqzi8idtKNLMJEYs1g3Yt/zJr4KxQYS8yH1Ko=
+	t=1718562203; cv=none; b=XTH2TueG7FpawNsWrn4ixeN9D1i3suiHz1ImYiA4hh4lDM6W1QpLu+C2w/9kWYGfTpTLBbHyXiAA7xcDqzhtqX3jrGKvyx/Mk7aQXI2pwW2aVj2oz2iof9V18Bw70pS18rXOV9AfMxCFAyD4HmUKxPqKT3I6V/O1+ul/hy87rLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718558809; c=relaxed/simple;
-	bh=Xm/0Py7i6a9IMqxBVqF8drxyHQMhWCpJiWp2iMkPlSI=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=fTJrCkb8qooV4jyS7nWpwm/uxjlDGgNUb+5xwVIC+GPXfrPNGijYRoSMUUIudU/JF9hFDt8URM7uvmVElStyaux6gB0bwnoXzUYid72ZgjuA68e208sZjEHkdwfE5SXyyo3GU+pR01L/DC8KXuQjaYEyveFjhDOxUhWOavSqteM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=DiAAoDov; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1718558791; x=1719163591; i=markus.elfring@web.de;
-	bh=9nBqF5ESlkCFxxxtSfxxafJZFyJpQbDfqjP2Yj1FlIk=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=DiAAoDov0evEhITeHjo7u35qPLueFX6HSYuYpyisk4X5eKpIHooR7dBk95psSnjB
-	 AQdd0Y0o4dBP5/f7V43DJxJSnHNmUH5tDhZvxrR4V2DnXDnz8iec+DZ9PH5Sn2S6/
-	 isRjwpx/TkslV7whq9ZP/B2dwQtKAFOU4c/OrcikDIqhnjfflqywSI53aYT5ZesZT
-	 ndBVylcwSHNra2fOJ3b7DWC/VN0ONRplVeI3G3PM6Ks1U/ubC4ROK+RBO8fbR2xh0
-	 l0ruJxWrNTTxZ6PGXgmO95oRbHXwSBcDIE5yFFGWOqxdD0Kn05e1A5R7W4qpRFU1X
-	 MZOCO7WIm6G7yePL2g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M6pUQ-1sJTkO3WVq-00Ef4G; Sun, 16
- Jun 2024 19:26:30 +0200
-Message-ID: <2660e72f-e2a2-48d1-8571-b738d9739917@web.de>
-Date: Sun, 16 Jun 2024 19:26:29 +0200
+	s=arc-20240116; t=1718562203; c=relaxed/simple;
+	bh=+34Fi6O5qk3enPnEGjEgPYKQM4i6AHZtDMRieXM68qU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=eyidGdnjOpRXdkgNaqDVdjZPWqznT/OCRJ7uzPGCNIU9ncS7SgvISphrIXstVuTlnK4y1wJ0N7RKaunOxXcuD+tgXtZxA3nhHHmdhH30VpmzAcoVzo5jWWV6szarb1BT2wZ3ssn39G/+RIrbEx9podmfoGy9QL5tupSDqQi/PoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QLRIXrYv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2596AC2BBFC;
+	Sun, 16 Jun 2024 18:23:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718562203;
+	bh=+34Fi6O5qk3enPnEGjEgPYKQM4i6AHZtDMRieXM68qU=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=QLRIXrYv1/PFIAT3KjLi6qoG2tycisiPhb8fD+QiW3+ewTZMlC+5AVUQgwCtoORxy
+	 CeghWM+UsXt/vXdwdSzxjv0bbP9u8Qsj5bCUrd/NKlHh30rIf7Zw0wOQeiqexyyAvH
+	 hBKiB8OO6ivNJWAbIQP1MyxNkbP/1NBNm/+Kt9eYLIPe7KwdKa/eeVKAN8/ioLxhtF
+	 YuSZ3VTOuNVkTMzotf3VmG3O45BZSglzpkZk9+vSUE1irQRi+feK9t5tzNs5dJWqZm
+	 MnwXXyfymGlkg4KxGqgvZKTNNBXTi38Vq3nm8zBlds5DnGhZsxju45HLTLP43Yt6De
+	 ZrExL3kjumePA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E52CC27C53;
+	Sun, 16 Jun 2024 18:23:23 +0000 (UTC)
+From: =?utf-8?q?Andr=C3=A9_Apitzsch_via_B4_Relay?= <devnull+git.apitzsch.eu@kernel.org>
+Subject: [PATCH v4 0/3] Add sy7802 flash led driver
+Date: Sun, 16 Jun 2024 20:22:51 +0200
+Message-Id: <20240616-sy7802-v4-0-789994180e05@apitzsch.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
- Prasad Kumpatla <quic_pkumpatl@quicinc.com>, alsa-devel@alsa-project.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Banajit Goswami <bgoswami@quicinc.com>,
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Liam Girdwood
- <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Takashi Iwai <tiwai@suse.com>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Rohit kumar <quic_rohkumar@quicinc.com>,
- Christophe Jaillet <christophe.jaillet@wanadoo.fr>
-References: <20240611074557.604250-4-quic_mohs@quicinc.com>
-Subject: Re: [PATCH v6 3/7] ASoC: codecs: wcd937x: add wcd937x codec driver
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20240611074557.604250-4-quic_mohs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:c4qMevEEZoDUqoRZeATp8WmsNJbisvOlM4oORsHrrjrrsyD8K+Z
- nNih8QUYdTTgvUeNfktoQpIH4cAzbc3XB/e+ap8BXKwMBd8CT1AWDHCvs8pbYDpsfDsEmrj
- Y+tzfzcuVENc2x6GJZKi1BpOWh/TUa8Ocii93k1JzP3E8pBxPmHgismL4NvcBDZJcyCgd9d
- kEgzsm+XKdqqsYb7ndUfw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NhWsXH4dfU8=;YdKgy7veYd3vy2o4WUWvR6kCH9a
- IahlDipBDK+K6LYLz6A/eX6whnMhGi7fHhxH1fkkNL4BNBPVi25uGj3OOkoyKWxk7bDRp8y9M
- 6PHyxB3iYqN/HqHyKIn5IYaTkMgM5sEP7nc6VvINgSZ/NoLvrls8Fz9LLcUrPZIEkq21YhN2g
- FIYL2JmpoWzB/IgWsTiBFLMzWknPFCsaeacBXhPp7uQwfSIh6f0YRPR96vcMC7vCbQTM9M8tH
- xjUGcSMZxARJ8ePFWN1wIKAbG8D2cn2P/6c9pGIcUTKxuE53RJDe4fT/+iJPRGswLUSYNlqjh
- o9KrXhWRaUX2Fscbuut+AxArU84irUCsOoIv4rElYWrTV620gUegA+McSJ0FRfqbDI7NAQpWj
- 3RoJ+T7KMaFQdyBLy9SjeXb/a7zWdMCqGmzJwdWI422XoTV91/Ksinb5JS0jQuqNST4bAqAU1
- rHdTveJ3KV/OAhhFTv+2aYsbD7BO5mGVFO75nSd1cCYnhccju5ZzvoOMFDVRyg3hZ+N+zgDsm
- /cOjSCIlfyFS7gKuMZfh2QRt9ZyVb1sx34iNwNRCPGaHWv9b5FtCAjqj0vbQGy9z0stcqzQ3T
- oqbHwqNVXFVQDyMmXk8JYas7bYPFnwxU1ox6BbBbGvcP6jNz1gF+39aKq6gDJE1LXe5NUAVO4
- 7ru0uZ2RZF/OClscS2u++V+JhgSdkQj2hhpNiIjaZ+1H7dyMgDjqO4ewWXcfmsC5ujfEo0zZv
- a6NMbsSTyE6sbrWUmpol+FrIXjIBaiQR4tQ1i7Hjyxt31B+FdwgkM7CdUA32nc8d5hKfb3d8c
- ky9pOQn9kg0Y3xzFs4EqrN6JJQKC7TDx9UJgLxI9/2lkU=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAHstb2YC/2XMQQ6DIBCF4asY1qWBAUS66j2aLhChstEGLKk13
+ r1ooqbp8k3m+ycUbfA2oksxoWCTj77v8uCnAplWdw+LfZM3AgKcMBA4jrIigB0nzpROlAIEys/
+ PYJ1/r6HbPe/Wx6EP49pNdLluCbklEsUEN7XkumbgtHZX/fTDJ5r2bF9oiSQ4ICd0h5Ahpayii
+ mjJefUP2QFLCjtkC7TKGGqkqqX6hfM8fwF9snP3EAEAAA==
+To: Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>, 
+ Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Christophe JAILLET <christophe.jaillet@wanadoo.fr>, 
+ Trilok Soni <quic_tsoni@quicinc.com>, Kees Cook <kees@kernel.org>
+Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ phone-devel@vger.kernel.org, 
+ =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1718562205; l=2476;
+ i=git@apitzsch.eu; s=20240325; h=from:subject:message-id;
+ bh=+34Fi6O5qk3enPnEGjEgPYKQM4i6AHZtDMRieXM68qU=;
+ b=gE1fI6YjZgLtdJqRFeFDUaTlcZ3TQBuQL8js73hCZmIO5piaSqxYpd54j3VGkJAtOjPJOwTOX
+ XaYAb0oFz0pA2aqfbIUzHsP2UBcnhkiLTQHBiyTV4hX4mvOw1ohOBtc
+X-Developer-Key: i=git@apitzsch.eu; a=ed25519;
+ pk=wxovcZRfvNYBMcTw4QFFtNEP4qv39gnBfnfyImXZxiU=
+X-Endpoint-Received: by B4 Relay for git@apitzsch.eu/20240325 with
+ auth_id=142
+X-Original-From: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+Reply-To: git@apitzsch.eu
 
-=E2=80=A6
-> +++ b/sound/soc/codecs/wcd937x.c
-> @@ -0,0 +1,1677 @@
-=E2=80=A6
-> +static bool wcd937x_mbhc_get_moisture_status(struct snd_soc_component *=
-component)
-> +{
-> +	struct wcd937x_priv *wcd937x =3D snd_soc_component_get_drvdata(compone=
-nt);
-> +	bool ret =3D false;
-> +
-> +	if (wcd937x->mbhc_cfg.moist_rref =3D=3D R_OFF) {
-> +		snd_soc_component_write_field(component, WCD937X_MBHC_NEW_CTL_2,
-> +					      WCD937X_M_RTH_CTL_MASK, R_OFF);
-> +		goto done;
-> +	}
+This series introduces a driver for the Silergy SY7802 charge pump used
+in the BQ Aquaris M5 and X5 smartphones.
 
-I suggest to use the following statement.
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
-cumentation/process/coding-style.rst?h=3Dv6.10-rc3#n532
+The implementation is based on information extracted from downstream as
+the datasheet provided by a distributor of the hardware didn't include
+any information about the i2c register description.
 
-+		return false;
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+---
+Changes in v4:
+- Use for_each_available_child_of_node_scoped() to simplify code
+- Use dev_err_probe() to be consistent with the other code in
+  sy7802_probe()
+- Split devm_add_action() into 2 devm_add_action_or_reset() to simplify
+  code and balance regulator_enable()
+- Link to v3: https://lore.kernel.org/r/20240612-sy7802-v3-0-1e9cc1c79b79@apitzsch.eu
+
+Changes in v3:
+- Add R-b tag to first patch
+- Extend driver commit message
+- Improve readability of defines by using BIT()
+- Rename some variables/parameters
+  * led_no -> led_id
+  * level -> brightness
+  * curr -> fled_{strobe,torch}_used_tmp
+  * mask -> {flash,torch}_mask
+  * i -> child_num
+- Restructure structs ("Place th big stuff at the top")
+- Declare 'child' on a separate line
+- Move multi-line assignments out of declaration block
+- Update warning/error messages and comments
+- Use gotos to handle error path
+- Use devm API to cleanup module's resources
+- Init mutex before LED class device is registered to avoid race
+  condition
+- Link to v2: https://lore.kernel.org/r/20240401-sy7802-v2-0-1138190a7448@apitzsch.eu
+
+Changes in v2:
+- bindings: remove unneeded allOf
+- bindings: example: move flash-led-controller under i2c node to fix
+  check error
+- Cc to phone-devel
+- Link to v1: https://lore.kernel.org/r/20240327-sy7802-v1-0-db74ab32faaf@apitzsch.eu
+
+---
+André Apitzsch (3):
+      dt-bindings: leds: Add Silergy SY7802 flash LED
+      leds: sy7802: Add support for Silergy SY7802 flash LED controller
+      arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash
+
+ .../devicetree/bindings/leds/silergy,sy7802.yaml   | 100 ++++
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      |  26 +
+ drivers/leds/flash/Kconfig                         |  11 +
+ drivers/leds/flash/Makefile                        |   1 +
+ drivers/leds/flash/leds-sy7802.c                   | 542 +++++++++++++++++++++
+ 5 files changed, 680 insertions(+)
+---
+base-commit: 6a03b35e4395eb2d6e89a38aca00a9fe9cb39ba1
+change-id: 20240325-sy7802-f40fc6f56525
+
+Best regards,
+-- 
+André Apitzsch <git@apitzsch.eu>
 
 
-
-=E2=80=A6
-> +	/* Read moisture comparator status */
-> +	ret =3D ((snd_soc_component_read(component, WCD937X_MBHC_NEW_FSM_STATU=
-S)
-> +				       & 0x20) ? 0 : 1);
-> +done:
-> +	return ret;
-> +}
-=E2=80=A6
-
-How do you think about to use the following statement instead?
-
-+	return (snd_soc_component_read(component, WCD937X_MBHC_NEW_FSM_STATUS) &=
- 0x20) ? false : true;
-
-
-May the local variable =E2=80=9Cret=E2=80=9D and the label =E2=80=9Cdone=
-=E2=80=9D be omitted
-in this function implementation finally?
-
-Regards,
-Markus
 
