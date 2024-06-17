@@ -1,307 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-22783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22810909FC9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 22:55:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B472790A128
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 03:00:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E0DE1C212A7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Jun 2024 20:55:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C70B1F21B2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 01:00:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C72754F95;
-	Sun, 16 Jun 2024 20:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B28111CB8;
+	Mon, 17 Jun 2024 00:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L4uwD6lT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mIVazxxg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E32A2BD18;
-	Sun, 16 Jun 2024 20:55:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63308F47;
+	Mon, 17 Jun 2024 00:59:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718571319; cv=none; b=k+iYFDFODkGhWd5byyPQUVQjjDjAHAFNmYDJgZo3kMdYXtxvmDJ3xb0YZIIYZk4+IEWHvrJ9jjD5kmJKyDFZcG1LY5MiRwnTszNK5JmOiQnFfjWiIxnjhl11kcoHJQvl+C0Jewa0GbrVbWjbEr31bf8cg8kMWPsd6roX0f672ws=
+	t=1718585956; cv=none; b=SJ804ZNYg8EDRvFiZ/Ym2ZZ8jBHmGfPqVZPtdokux+Z2EPFW5BG1Hrai9GzG2pd68Lh/Iw0mEywmTCoDFFip27T3QkYuCbNpzW2eNM4xKwRmIy1avMY0tOPcAnNVikl6fIxsc7VdXmhnlGvBwNlZmc/YNBj8UaFGzQwPIbfgPBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718571319; c=relaxed/simple;
-	bh=WYzuDrXmO6AUW7fbmvjgsYXwIlVa0WM9LgyqmT8vBDE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TEKLYuxMqlI2ErP37E4QQryyP9n/kEhMCyf73HL3LeRB9v/KGKnIihnrpqZFHbc+yBW80JlKqtWJv0GhyrxzJTif7Uh9rK434sxQlQZMpt5JsCJIs+nMwNrBQhjIVUQnXBE6ZFYOLmgEtI0O8Mf4ul4kjqp7opJSI6rXerJ/w48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L4uwD6lT; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-57c60b13a56so4397366a12.0;
-        Sun, 16 Jun 2024 13:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718571315; x=1719176115; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=APPaSVkkIkLVp2kGB9USVnluHmcgSJhTWRI3mRmHmok=;
-        b=L4uwD6lTSAy2elbCHGJuidEXMF7wCXrvVeXYmqf579YmeqjmcZuasWsb+lUwWnuSFY
-         j8sSBuVdiFo+xDnZs5zlyJO5eRMfbKiuvM7KYoyG5iPJSkpOOjIW1QCNfNH3bwsgZ9f1
-         R9K68oOGvbTDD4dP0AMb/3xc8JV2K3u3NcBVtKmQM0/2Qth/qRPVAoiXGGNVQ28uMNKX
-         4WT1vPKTTPiDvRii+n7O8BjmIuwDktynqJA241BldMfCB5qiA81j5zHUTBKgz/MYpG5p
-         bDpmVzMvV2dZrL1wkzqnxiOJeVEZbpjbX+DZ9ZWU2xVbxIX93nSvnqPH5+ywexYwLJil
-         OTpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718571315; x=1719176115;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=APPaSVkkIkLVp2kGB9USVnluHmcgSJhTWRI3mRmHmok=;
-        b=v+EBDwH7SNfFZTOH/QlfGrUV6DV2OKgKz0PyudbqDZvlnVahD687IF9oaDB9vgmbRw
-         bELi4iLw06fRwrWpPdOin+i0pqYD+7UQU0woOGMJ0Ikgs6zL+N67x+fhq0SmUTLHDFaL
-         Ay12BBVnen7EjGkBSpqbNJ36lfg5ES8RKnYiCH0rj3Ul0RTfwDzjsekjVk9Gi9cXw5bW
-         iMC9GL+kI9pEI4AaxoxWgo8oA9MRIxXhltYGPGMCSaCGkzX49kKd4qbFJFFJZzzyKHUc
-         2qCzB0UwdNPFtICKAwBtrSmhTPo0jMgzxHD/6gTCWmmYFqSoB/ACljXdvPUy5d0tdisI
-         u6tw==
-X-Forwarded-Encrypted: i=1; AJvYcCXTzPU0mSyTIRm2rcVZHX9zStH5P3AtFeu+/0k6QIHYv2bXoTFXefAvl8/aHagG1VrJcMRpgBPYK2fZUmef62LKF5hFT6lhrEhvpbjGbNuNks+2jYGIoEWo0mKvJR8FfyfzXYDYPsz1/pd512//dLW27d0VTpvLwZHdv5CQX4AasPg6BWs6kb5NsA==
-X-Gm-Message-State: AOJu0Yx0x0wwZxEltzJ77p4n4CaEJZbgESw/TVfmkuL1//Ut7DOIzRrJ
-	yG+JbPad3vPNV/Ih7zI24PgKNw1E1yK6HTJNleiA6tCN9qnaG+/O
-X-Google-Smtp-Source: AGHT+IEVHjAFd1evmZPWjVr799mlnu88TZMUwRhtd/dvcsW1b+V2b2+3ux2JS7O63hkgjP1HoUggcA==
-X-Received: by 2002:a17:906:4144:b0:a6f:9a:db48 with SMTP id a640c23a62f3a-a6f60dc5609mr445522366b.61.1718571315054;
-        Sun, 16 Jun 2024 13:55:15 -0700 (PDT)
-Received: from ?IPV6:2a02:a466:68ed:1:b241:3c58:56ab:2e6a? (2a02-a466-68ed-1-b241-3c58-56ab-2e6a.fixed6.kpn.net. [2a02:a466:68ed:1:b241:3c58:56ab:2e6a])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56ecd666sm441732066b.135.2024.06.16.13.55.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Jun 2024 13:55:14 -0700 (PDT)
-Message-ID: <45d41a5d-384e-4dc9-8b43-8dd8734b822a@gmail.com>
-Date: Sun, 16 Jun 2024 22:55:13 +0200
+	s=arc-20240116; t=1718585956; c=relaxed/simple;
+	bh=fR69s1tRAc633PEvpZH5oRnVOKGBc0iV6KQJceGnkYw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HGvCzE/5RYsw/4vd37nM4cwHkthBxT6SVAmJomAoFIJxQcwpvIc9mVsQvTkYYk8Tte1yT6nZboHhvhyFhGzMg6dHuMeiEc6ZcA+uTveeYLk0O4dr94wVG/ErWWdS1uomA4CQ+c+bhlT18/oNU8rqX6v6tbV2dZfoVqCvcuIjRpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mIVazxxg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45GNx6dA024818;
+	Mon, 17 Jun 2024 00:58:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=aZ+ZQsmEke9+r+pC+kT6Vc
+	4w5p9Fal8f/qHdKA2Dx6Y=; b=mIVazxxg1/Ar3TrkGuQY4BG8Pixte6G/0k5Ydi
+	fH8WaW9a57kpbXZ80uuVVHLCx/PYi9U8E4fjlBVMRH+rzCWdDByiet8LNHQFMwXR
+	6HX69ohubSgadFEzwqmom7qoX6jEGZFxoyt3Qs8GmFiB855pNOebnHeeU/ugl7rX
+	D8aXzbrrL3cEOe0pQTKNL9pGz9/Tz33hV/MSNEZxR5c1ekY08KQdtI1yrJUHL/AE
+	JEkHwW2aiCpLZD7NARE/Trn4EI7AGVoIZq2TSfq952JHleNpqR+33M5it6CMo5lQ
+	UiQ5+G1SGG728n4ekn8I9RDxPHtn/h5zjQzaQihzAUuojUag==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ys3qf2cr6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Jun 2024 00:58:58 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45H0wvun001215
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Jun 2024 00:58:57 GMT
+Received: from hu-gaurkash-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 16 Jun 2024 17:58:52 -0700
+From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+To: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <andersson@kernel.org>, <ebiggers@google.com>,
+        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <robh+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <kernel@quicinc.com>, <linux-crypto@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_omprsing@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <bartosz.golaszewski@linaro.org>,
+        <konrad.dybcio@linaro.org>, <ulf.hansson@linaro.org>,
+        <jejb@linux.ibm.com>, <martin.petersen@oracle.com>, <mani@kernel.org>,
+        <davem@davemloft.net>, <herbert@gondor.apana.org.au>,
+        <psodagud@quicinc.com>, <quic_apurupa@quicinc.com>,
+        <sonalg@quicinc.com>, Gaurav Kashyap
+	<quic_gaurkash@quicinc.com>
+Subject: [PATCH v5 00/15] Hardware wrapped key support for qcom ice and ufs
+Date: Sun, 16 Jun 2024 17:50:55 -0700
+Message-ID: <20240617005825.1443206-1-quic_gaurkash@quicinc.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/15] tty: serial: switch from circ_buf to kfifo
-To: =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Ferry Toth <fntoth@gmail.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>, neil.armstrong@linaro.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- linux-serial <linux-serial@vger.kernel.org>,
- LKML <linux-kernel@vger.kernel.org>, Al Cooper <alcooperx@gmail.com>,
- Alexander Shiyan <shc_work@mail.ru>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Alim Akhtar <alim.akhtar@samsung.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>, Baruch Siach
- <baruch@tkos.co.il>, Bjorn Andersson <andersson@kernel.org>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- "David S. Miller" <davem@davemloft.net>, Fabio Estevam <festevam@gmail.com>,
- Hammer Hsieh <hammerh0314@gmail.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Chunyan Zhang <zhang.lyra@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Jonathan Hunter <jonathanh@nvidia.com>, Kevin Hilman <khilman@baylibre.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
- Laxman Dewangan <ldewangan@nvidia.com>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <michal.simek@amd.com>,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Nicholas Piggin <npiggin@gmail.com>, Orson Zhai <orsonzhai@gmail.com>,
- =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- Peter Korsgaard <jacmet@sunsite.dk>,
- Richard Genoud <richard.genoud@gmail.com>,
- Russell King <linux@armlinux.org.uk>, Sascha Hauer <s.hauer@pengutronix.de>,
- Shawn Guo <shawnguo@kernel.org>, Stefani Seibold <stefani@seibold.net>,
- Sumit Semwal <sumit.semwal@linaro.org>,
- Taichi Sugaya <sugaya.taichi@socionext.com>,
- Takao Orito <orito.takao@socionext.com>,
- Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
- Thierry Reding <thierry.reding@gmail.com>, Timur Tabi <timur@kernel.org>,
- Vineet Gupta <vgupta@kernel.org>, Marek Szyprowski
- <m.szyprowski@samsung.com>, Phil Edworthy <phil.edworthy@renesas.com>
-References: <20240405060826.2521-1-jirislaby@kernel.org>
- <daf06969-15fd-470e-88b8-a717066fe312@linaro.org>
- <cebad7f8-3f47-4e6a-93b7-32fcf2367874@kernel.org>
- <f42ef4a3-4bfe-4354-9220-ed742e093c86@gmail.com>
- <364fbb96-006f-4582-a0f8-a0f9edd50f6f@gmail.com>
- <f6dc3a45-7be8-4ce2-c7da-65c6bd9ce8d1@linux.intel.com>
-Content-Language: en-US
-From: Ferry Toth <fntoth@gmail.com>
-In-Reply-To: <f6dc3a45-7be8-4ce2-c7da-65c6bd9ce8d1@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YciprQkJV490rk1IXffMg-WvllDZReui
+X-Proofpoint-ORIG-GUID: YciprQkJV490rk1IXffMg-WvllDZReui
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-16_12,2024-06-14_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ malwarescore=0 spamscore=0 mlxlogscore=999 bulkscore=0 phishscore=0
+ lowpriorityscore=0 mlxscore=0 priorityscore=1501 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406170006
 
-Hi
+The fifth iteration of patches that add support to Qualcomm ICE (Inline Crypto Engine) for hardware wrapped keys using Qualcomm Hardware Key Manager (HWKM)
 
-adding Phil
+They patches do the following:
+- Address comments from previous versions (https://lore.kernel.org/all/20240127232436.2632187-1-quic_gaurkash@quicinc.com/)
+- Tested on top of Eric's latest fscrypt and block set: https://lore.kernel.org/all/20231104211259.17448-1-ebiggers@kernel.org/
+- Rebased and tested on top of Linaro's SHMBridge patches: (https://lore.kernel.org/all/20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org/)
 
-Op 12-06-2024 om 15:13 schreef Ilpo Järvinen:
-> On Mon, 10 Jun 2024, Ferry Toth wrote:
->> Op 07-06-2024 om 22:32 schreef Ferry Toth:
->>> Op 22-04-2024 om 07:51 schreef Jiri Slaby:
->>>> On 19. 04. 24, 17:12, Neil Armstrong wrote:
->>>>> On 05/04/2024 08:08, Jiri Slaby (SUSE) wrote:
->>>>>> This series switches tty serial layer to use kfifo instead of
->>>>>> circ_buf.
->>>>>>
->>>>>> The reasoning can be found in the switching patch in this series:
->>>>>> """
->>>>>> Switch from struct circ_buf to proper kfifo. kfifo provides much
->>>>>> better
->>>>>> API, esp. when wrap-around of the buffer needs to be taken into
->>>>>> account.
->>>>>> Look at pl011_dma_tx_refill() or cpm_uart_tx_pump() changes for
->>>>>> example.
->>>>>>
->>>>>> Kfifo API can also fill in scatter-gather DMA structures, so it easier
->>>>>> for that use case too. Look at lpuart_dma_tx() for example. Note that
->>>>>> not all drivers can be converted to that (like atmel_serial), they
->>>>>> handle DMA specially.
->>>>>>
->>>>>> Note that usb-serial uses kfifo for TX for ages.
->>>>>> """
->>>> Sadly, everyone had a chance to test the series:
->>>>     https://lore.kernel.org/all/20240319095315.27624-1-jirislaby@kernel.org/
->>>> for more than two weeks before I sent this version for inclusion. And then
->>>> it took another 5 days till this series appeared in -next. But noone with
->>>> this HW apparently cared enough back then. I'd wish they (you) didn't.
->>>> Maybe next time, people will listen more carefully:
->>>> ===
->>>> This is Request for Testing as I cannot test all the changes
->>>> (obviously). So please test your HW's serial properly.
->>>> ===
->>>>
->>>>> and should've been dropped immediately when the first regressions were
->>>>> reported.
->>>> Provided the RFT was mostly ignored (anyone who tested that here, or I
->>>> only wasted my time?), how exactly would dropping help me finding
->>>> potential issues in the series? In the end, noone is running -next in
->>>> production, so glitches are sort of expected, right? And I believe I
->>>> smashed them quickly enough (despite I was sidetracked to handle the n_gsm
->>>> issue). But I might be wrong, as usual.
->>> I arrived at this party a bit late, sorry about that. No good excuses.
->>>
->>>> So no, dropping is not helping moving forward, actions taken by e.g. Marek
->>>> Szyprowski <m.szyprowski@samsung.com> do, IMNSHO.
->>> Good news is I tested on Merrifield (Intel Edison) which is slow (500MHz)
->>> and has a HSU that can transmit up to 3.5Mb/s. It really normally needs DMA
->>> and just a single interrupt at the end of transmit and receive for which I
->>> my own patches locally. The bounce buffer I was using on transmit broke due
->>> to this patch, so I dropped that. Still, with the extra interrupts caused by
->>> the circ buffer wrapping around it seems to work well. Too late to add my
->>> Tested-by.
->>>
->>> One question though: in 8250_dma.c serial8250_tx_dma() you mention "/* kfifo
->>> can do more than one sg, we don't (quite yet) */".
->>>
->>> I see the opportunity to use 2 sg entries to get all the data out in one dma
->>> transfer, but there doesn't seem to be much documentation or examples on how
->>> to do that. It seems just increasing nents to 2 would do the trick?
->> Currently I have this working on mrfld:
+Explanation and use of hardware-wrapped-keys can be found here:
+Documentation/block/inline-encryption.rst
 
-diff --git a/drivers/tty/serial/8250/8250_dma.c 
-b/drivers/tty/serial/8250/8250_dma.c
+Testing: 
+Test platform: SM8650 MTP
 
-index 8a353e3cc3dd..d215c494ee24 100644
+The changes were tested by mounting initramfs and running the fscryptctl
+tool (Ref: https://github.com/ebiggers/fscryptctl/tree/wip-wrapped-keys) to
+generate and prepare keys, as well as to set policies on folders, which
+consequently invokes disk encryption flows through UFS.
 
---- a/drivers/tty/serial/8250/8250_dma.c
+Tested both standard and wrapped keys (Removing qcom,ice-use-hwkm from dtsi will support using standard keys)
 
-+++ b/drivers/tty/serial/8250/8250_dma.c
+Steps to test:
 
-@@ -89,7 +89,9 @@ int serial8250_tx_dma(struct uart_8250_port *p)
+The following configs were enabled:
+CONFIG_BLK_INLINE_ENCRYPTION=y
+CONFIG_QCOM_INLINE_CRYPTO_ENGINE=m
+CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
+CONFIG_SCSI_UFS_CRYPTO=y
 
-struct tty_port *tport = &p->port.state->port;
+Flash boot image to shell and run the following commands
 
-struct dma_async_tx_descriptor *desc;
+Creating and preparing keys
+- mkfs.ext4 -F -O encrypt,stable_inodes /dev/disk/by-partlabel/userdata
+- mount /dev/disk/by-partlabel/userdata -o inlinecrypt /mnt
+- ./fscryptctl generate_hw_wrapped_key /dev/disk/by-partlabel/userdata > /mnt/key.longterm  OR dd if=/dev/zero bs=32 count=1 | tr '\0' 'X' \ | fscryptctl import_hw_wrapped_key $BLOCKDEV > /mnt/key.longterm
+- ./fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/userdata < /mnt/key.longterm > /tmp/key.ephemeral
+- ./fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt
 
-struct uart_port *up = &p->port;
+Create a folder and associate created keys with the folder
+- rm -rf /mnt/dir
+- mkdir /mnt/dir
+- ./fscryptctl set_policy --hw-wrapped-key --iv-ino-lblk-64 "$keyid" /mnt/dir
+- dmesg > /mnt/dir/test.txt
+- sync
 
-- struct scatterlist sg;
+- Reboot
+- mount /dev/disk/by-partlabel/userdata -o inlinecrypt /mnt
+- ls /mnt/dir (You should see an encrypted file)
+- ./fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/userdata < /mnt/key.longterm > /tmp/key.ephemeral
+- 
 
-+ struct scatterlist *sg;
+- cat /mnt/dir/test.txt
 
-+ struct scatterlist sgl[2];
+NOTE: Evicting a key with HWKM is not supported in the current SCM call for HWKM v2 chipsets, TZ already supports a different call for this.
+Changes will be added separately for these after further internal discussions. But this should not stop merging the existing patches.
 
-+ int i;
+Merge Strategy:
 
-int ret;
+This is an open-ended question to the community and the respective component maintainers.
+The changes have the following components.
 
-if (dma->tx_running) {
+- SHMBridge patches (Bartosz Golaszewski)
+- Fscrypt and block patches (From Eric Biggers)
+- Qualcomm SCM (This patchset)
+- Qualcomm ICE (This patchset)
+- UFS Core ((This patchset))
+- Qualcomm UFS Host (This patchset)
 
-@@ -110,18 +112,17 @@ int serial8250_tx_dma(struct uart_8250_port *p)
+It would be ideal if one maintainer can take in all the changes together since working with many immutable branches shared with each other might get tricky.
 
-serial8250_do_prepare_tx_dma(p);
+Gaurav Kashyap (15):
+  ice, ufs, mmc: use blk_crypto_key for program_key
+  qcom_scm: scm call for deriving a software secret
+  qcom_scm: scm call for create, prepare and import keys
+  soc: qcom: ice: add hwkm support in ice
+  soc: qcom: ice: support for hardware wrapped keys
+  soc: qcom: ice: support for generate, import and prepare key
+  ufs: core: support wrapped keys in ufs core
+  ufs: core: add support to derive software secret
+  ufs: core: add support for generate, import and prepare keys
+  ufs: host: wrapped keys support in ufs qcom
+  ufs: host: implement derive sw secret vop in ufs qcom
+  ufs: host: support for generate, import and prepare key
+  dt-bindings: crypto: ice: document the hwkm property
+  arm64: dts: qcom: sm8650: add hwkm support to ufs ice
+  arm64: dts: qcom: sm8550: add hwkm support to ufs ice
 
-- sg_init_table(&sg, 1);
+ .../crypto/qcom,inline-crypto-engine.yaml     |  10 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |   5 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          |   4 +-
+ drivers/firmware/qcom/qcom_scm.c              | 240 ++++++++++++
+ drivers/firmware/qcom/qcom_scm.h              |   4 +
+ drivers/mmc/host/cqhci-crypto.c               |   7 +-
+ drivers/mmc/host/cqhci.h                      |   2 +
+ drivers/mmc/host/sdhci-msm.c                  |   6 +-
+ drivers/soc/qcom/ice.c                        | 351 +++++++++++++++++-
+ drivers/ufs/core/ufshcd-crypto.c              |  87 ++++-
+ drivers/ufs/host/ufs-qcom.c                   |  61 ++-
+ include/linux/firmware/qcom/qcom_scm.h        |   7 +
+ include/soc/qcom/ice.h                        |  18 +-
+ include/ufs/ufshcd.h                          |  22 ++
+ 14 files changed, 785 insertions(+), 39 deletions(-)
 
-- /* kfifo can do more than one sg, we don't (quite yet) */
+-- 
+2.43.0
 
-- ret = kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, &sg, 1,
-
-+ sg_init_table(sgl, ARRAY_SIZE(sgl));
-
-+
-
-+ ret = kfifo_dma_out_prepare_mapped(&tport->xmit_fifo, sgl, 
-ARRAY_SIZE(sgl),
-
-UART_XMIT_SIZE, dma->tx_addr);
-
-- /* we already checked empty fifo above, so there should be something */
-
-- if (WARN_ON_ONCE(ret != 1))
-
-- return 0;
-
-+ dma->tx_size = 0;
-
-- dma->tx_size = sg_dma_len(&sg);
-
-+ for_each_sg(sgl, sg, ret, i)
-
-+ dma->tx_size += sg_dma_len(sg);
-
-- desc = dmaengine_prep_slave_sg(dma->txchan, &sg, 1,
-
-+ desc = dmaengine_prep_slave_sg(dma->txchan, sgl, ret,
-
-DMA_MEM_TO_DEV,
-
-DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
-
-if (!desc) {
-
->> Nevertheless I got this to work. Very nice. Thanks for this series.
->> I am seeing only 2 interrupts (x2 as each interrupt happens twice), one for
->> dma complete. The 2nd, not sure but likely, uart tx done.
->> In any case the whole buffer is transferred without interchar gaps.
->>
->>> So, what was the reason to "don't (quite yet)"?
->> Before considering to send out a patch for this, are there any caveats that
->> I'm overlooking?
-> Not exactly related to that quoted comment, but you should Cc the person
-> who added RNZ1 DMA a year or two back (in 8250_dw.c) because it required
-
-RZN1
-
-I think you are referring to aa63d786cea2 ("serial: 8250: dw: Add 
-support for DMA flow controlling devices") by
-
-Phil Edworthy<phil.edworthy@renesas.com>?
-
-> writing Tx length into some custom register. I don't know the meaning of
-> that HW specific register so it would be good to get confirmation the HW
-I see dw8250_prepare_tx_dma() has RZN1_UART_xDMACR_BLK_SZ(dma->tx_size)
-> is okay if it gets more than 1 sg entry (at worst, a HW-specific limit
-> on nents might need to be imposed).
->
-And is there a way to get the maximum nents supported? I thought 
-kfifo_dma_out_prepare_mapped() would return a safe number.
 
