@@ -1,149 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-22934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D85A890BB73
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 21:54:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E39FD90BB93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 21:58:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73E761C22897
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 19:54:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40281282A07
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 19:58:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E92E188CAB;
-	Mon, 17 Jun 2024 19:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BA2E190058;
+	Mon, 17 Jun 2024 19:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="chfZ60Dz"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="h4FM0aEF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9920C187542
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 19:54:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C931F186287
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 19:57:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718654086; cv=none; b=p2k9NnRS/aY4tNOKKB3AFTiN79ZIaCs1EhoL/y7GTitTkFHi+KbHySIdCtJReKd622zlf5p2qOzIex5U/vFci3q3amnypuI2grDuBTKgSQsEuQt1wNNBbU7CIkTiuX/dmZS1EM9eN+jcmBlpYS/JavorlOj/hmUrWelZiaqzzGE=
+	t=1718654241; cv=none; b=Pi89PYO66eQl+tcg5IKatDGZRZjICDYsRfJPw6YIyqA6Z0W856v0ol4rE8dquI/VvMEfoLHQCPAs73UXoAXXAVGZys0yaz/EHY2/EhyHr+/LBmEsGnhJ1Sq2lR26+Gltm6joHX8E7tBt/1NuADngPihGC57vgjffB/p+4OubuBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718654086; c=relaxed/simple;
-	bh=Ki+PTbc1GxfDrvhVqHJ57W/XR1v1M3XS3dBT4kzMlkU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q1EB4ovXzt/4oLEQqlRBdCWeb8x9De5dZPdvi1KiwHUMuWzcHlNhEEidHkUdlG6OIFR12zjCTdB4MqmOdWoykiXE0v68Xafysi8DgPnk3SQeY6CvieFZGvEHtE4YhraKyqLOJZzKf4xIWvKoZN0j6bY0ERSenZ7m5j88GVWMfy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=chfZ60Dz; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2e72224c395so48440621fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 12:54:44 -0700 (PDT)
+	s=arc-20240116; t=1718654241; c=relaxed/simple;
+	bh=BPGfBSXIDGz7yjzlZ4GzjDeNK36NgkAUkgVC//2x3N0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ryp+Xi17y/UTEqC8SqYENvcMaZmM41cx3AtUhPpcf7iMVN7+NooO9VYhH/5Lfx9mOUvua0JsiBD6Osxlxsn0gALOYHuSMDs+fzntL8fOx6GoqhWD/y+6tGpITodFczPQ/Oo26GriArb6bZuG0O1vluAW0/nvzbbHRjsyF/C3uEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=h4FM0aEF; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ebe0a81dc8so51753951fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 12:57:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718654083; x=1719258883; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=D48MDGlr810xqpuSk4MZZtp4IG/NVS2nfRA2oR5Rofk=;
-        b=chfZ60DzE6l/kGOpAr0wAopbA9UTdLa+Scu5MkoUz2z9dUMRlO4g96KOLfddrF4Mog
-         g6YiB4lDm6dpLW8p7UmCfXMW4uCuHgjMtnlnzu0RASkPhQH/hY87K+bukLc26fnimKLE
-         VqPz9j1vZwXYzhBXzx3MkVJ6mDvuEDWptbkpeSNdCTNUaIfvLydPvJI/bPi0ucC9bDjP
-         EjlsXLn73qdggXcdf7QYN8HKgndjjkDWuyT05FnEWENOWSXjWOwVMQ4+ASuDLDqPsZN7
-         HAWZzoiX7uAqOpoOnIoCytzohez96CIAz0pSrYQQsxP4N3aZuVDF8CEKJJ8mtQi07OiF
-         Eiiw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718654238; x=1719259038; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BPGfBSXIDGz7yjzlZ4GzjDeNK36NgkAUkgVC//2x3N0=;
+        b=h4FM0aEFGHuZ0mu5fvJrmnRpR3162gXoaJGMrkX81jmsyAci13rhwTkbeFsWavsE02
+         8yRakAgqttTM3w+YPaGNNj+UcPEvhXAP97o7d5Vzja6D2KdhG7n10PkEhGjHXZC5nrY0
+         99xUYF/bi3g7EYeyRgp6CySYNoXoNSSTaPypyLgxz38XnVC2mrniq8SgmZAGUBjtwzGB
+         0FZkTLDWL6fkLtPrN7ivm3MEMoRNd04Vgctw3ugRCTpMnAuN+vRVLzoQFvf8+0mpephf
+         do8uDIyOtOhhwrg0nLgGD8DosjgKWjeT/2viBvXaX6MwRisdviQv/Y+M/XLulNcipKNf
+         CaCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718654083; x=1719258883;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D48MDGlr810xqpuSk4MZZtp4IG/NVS2nfRA2oR5Rofk=;
-        b=Rly4QDr1T+Inns6WwcuHg/K5UsFtf0EkX1U8SunGotTJktf36FcnCHmvMydx+hKt/t
-         IE+8xmE5ebaSM2KC3cRWK4869+Swl2yNJR/kKfEjx7+LhsPjl6PQ4gQ3rEvamoaYXXvb
-         3Fjv6yMcRSHS0toBelh80wheI6ZavAl9xhqjXFSHeHzWqRLfDz81cgig6MvR8CH6ZkeF
-         XRDlm3aiQMsRTbMtxZy+WSMt9Fx8kUecR+LKze6H9tDi9caE2BatYLMHYekWsnVywc2R
-         4zDDeQMvhEpNCVEyD0HPTTcR3IK/jKS/o60ZHPCIbh1q9Ca++2y0fQ41NJBwSr13bRsK
-         Bqgw==
-X-Forwarded-Encrypted: i=1; AJvYcCXBC5VADmhCAO6ooRf0oGnezlBuBpiUmifwkBMrAoat6EI3nSARXdELpp65Anlucc0h4ggsdjviGxPR8mD15KLFUW/meiVCdmEBlXgb5w==
-X-Gm-Message-State: AOJu0YxswsEVEu7+C8fCGUMKOuTFpQaF8QO8zHOXwhHHB+VPEyFHwNLc
-	eFm3ZmHkqwFMynEo9iDk+8rk2kFQf+JqOSp/Ehb+nG/HhUxo4h7h6WXxJHyh0geNAM85z/TadNr
-	O
-X-Google-Smtp-Source: AGHT+IHlIabr4uY5f6ymwX+qGJ4PmeSSEGNGNnK+82sLd5GTqP8sxe4S2CCHMad+L/kqLlQE0QMBcQ==
-X-Received: by 2002:a2e:9913:0:b0:2ec:35b5:81ce with SMTP id 38308e7fff4ca-2ec35b584c3mr782941fa.32.1718654082758;
-        Mon, 17 Jun 2024 12:54:42 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:cb2:a9df:5ff5:5bcf:651f:66f5? ([2a00:f41:cb2:a9df:5ff5:5bcf:651f:66f5])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c8a2a1sm14790851fa.114.2024.06.17.12.54.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jun 2024 12:54:42 -0700 (PDT)
-Message-ID: <b7b04cb8-03cb-4175-8575-b56004e65775@linaro.org>
-Date: Mon, 17 Jun 2024 21:54:39 +0200
+        d=1e100.net; s=20230601; t=1718654238; x=1719259038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BPGfBSXIDGz7yjzlZ4GzjDeNK36NgkAUkgVC//2x3N0=;
+        b=N7I2jJkE3AbGAdNVEOCWNQZQUAWQngIN+3j8bnc/pSvWevnq6RPyxPMc9Ok+TCB5Lx
+         RuS64qj9LjGql8Js/XHqd24OQGWYc3wFDYdM4zqLPwmHfqTC7JTjVzr0Ybh5MsH6mg+z
+         Ljye1DPIadV/ymZiqs0PdY5nF6DFs9PDFhSlpALh7Q/uLT5eCKYFvXPynnHVwdPDP9Zi
+         7tQPe6LPKnhKxZeqRm/8gNQvZX7Np0aHm34qxePBpELskxDy/C+LuoG0GPIV/tYf8nad
+         to9Dgb+/LfOjBo7Zksn/PCCr8f5z3GFCR3HAW3BAuk5FIZCtka7uYPKfFnjpTibf0RbT
+         j6dw==
+X-Gm-Message-State: AOJu0YxPLBXwVmQV+hZIGPFA7gfQBuIHOT7dN29kzUheIbzJLgKP45Vh
+	zTBCPCwogudr7Yy2+U3HsGLf5sjXqvdst9WSqJYP7dwqBmVswiPqtdlokrHOBe7+hec3Q8871kS
+	jPy7q2ZYwtMnQlobPZoxbm6iNjf+UoLD4wRacqw==
+X-Google-Smtp-Source: AGHT+IHTU7Jh6DU7VGE9POXczJ3FUWDY9c7qjW478IAmZHY0i+2WVDCPuGCN/ls9eDDXzEL66B9bz2LR8Y6OPn0iPqc=
+X-Received: by 2002:a2e:87da:0:b0:2ec:1dd1:b3ae with SMTP id
+ 38308e7fff4ca-2ec1dd1b5e3mr59198141fa.32.1718654237778; Mon, 17 Jun 2024
+ 12:57:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 8/8] serial: qcom-geni: Rework TX in FIFO mode to fix
- hangs/lockups
-To: Doug Anderson <dianders@chromium.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Yicong Yang <yangyicong@hisilicon.com>,
- Tony Lindgren <tony@atomide.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Johan Hovold <johan+linaro@kernel.org>,
- John Ogness <john.ogness@linutronix.de>, linux-arm-msm@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
- Rob Herring <robh@kernel.org>
-References: <20240610222515.3023730-1-dianders@chromium.org>
- <20240610152420.v4.8.I1af05e555c42a9c98435bb7aee0ee60e3dcd015e@changeid>
- <bc4892b7-7c34-4fcb-b4c0-e383890162f8@linaro.org>
- <CAD=FV=UuChPf0DH7aYq8r2XLCr7D+mbm4QSfthf-9ezvFeNUbg@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAD=FV=UuChPf0DH7aYq8r2XLCr7D+mbm4QSfthf-9ezvFeNUbg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org>
+In-Reply-To: <20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 17 Jun 2024 21:57:06 +0200
+Message-ID: <CAMRc=McQDBywMqu43vG=UXyEH6V6w1REyYAtEPQuogH7C=Sj-Q@mail.gmail.com>
+Subject: Re: [PATCH v10 00/15] firmware: qcom: implement support for and
+ enable SHM bridge
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Robert Marko <robimarko@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Maximilian Luz <luzmaximilian@gmail.com>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Elliot Berman <quic_eberman@quicinc.com>, Alex Elder <elder@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>, 
+	Deepti Jaggi <quic_djaggi@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, May 27, 2024 at 2:56=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
+>
+> SCM calls that take memory buffers as arguments require that they be
+> page-aligned, physically continuous and non-cachable. The same
+> requirements apply to the buffer used to pass additional arguments to SCM
+> calls that take more than 4.
+>
 
+[...]
 
-On 6/17/24 21:37, Doug Anderson wrote:
-> Hi,
-> 
-> On Mon, Jun 17, 2024 at 12:10 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 6/11/24 00:24, Douglas Anderson wrote:
->>> The fact that the Qualcomm GENI hardware interface is based around
->>> "packets" is really awkward to fit into Linux's UART design.
->>> Specifically, in order to send bytes you need to start up a new
->>> "command" saying how many bytes you want to send and then you need to
->>> send all those bytes. Once you've committed to sending that number of
->>> bytes it's very awkward to change your mind and send fewer, especially
->>> if you want to do so without dropping bytes on the ground.
->>
->> [...]
->>
->>
->>> +static void qcom_geni_serial_enable_cmd_done(struct uart_port *uport)
->>> +{
->>> +     struct qcom_geni_serial_port *port = to_dev_port(uport);
->>> +
->>> +     /* If we're not in FIFO mode we don't use CMD_DONE. */
->>> +     if (port->dev_data->mode != GENI_SE_FIFO)
->>> +             return;
->>> +
->>> +     writel(M_CMD_DONE_EN, uport->membase + SE_GENI_M_IRQ_EN_SET);
->>> +}
->>
->> IDK if this is worth of a separate function, instead of checking for the
->> FIFO in port_setup and writing it there, but generally this patch looks
->> good to me
-> 
-> Sure. Somehow it felt weird to me to put it straight in there, but I
-> could go either way. Do you think I should spin the series just for
-> this, or just make this change if I happen to need to spin the series
-> for something else?
+It's been three weeks. Ping?
 
-The latter.
-
-Konrad
+Bart
 
