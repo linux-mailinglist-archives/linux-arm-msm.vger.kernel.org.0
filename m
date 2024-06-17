@@ -1,239 +1,323 @@
-Return-Path: <linux-arm-msm+bounces-22911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3D8E90B61B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 18:19:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2774690B74A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 19:03:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F3CE283360
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 16:19:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0CA9283661
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 17:02:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4FB917BAF;
-	Mon, 17 Jun 2024 16:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F3B216848A;
+	Mon, 17 Jun 2024 17:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mn1bgqqC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZQMnO/q2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFD5134BD;
-	Mon, 17 Jun 2024 16:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE49157A41;
+	Mon, 17 Jun 2024 17:02:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718641151; cv=none; b=i9PP+5xu2RhCsJRkwHuet2kZAbzLy83SRdCmmRgWHZj3chSBv8asW/HaGfswh6+LQcrdmMzt+q9yEFzYlFqDBdj83ZMIkEgwIi2PogJoBSq3rzxTAEqe5/CJr2Bo4oFZY8yStUVABEttS12cFjDlAluKg34P8nkXPX4g0w7yVIQ=
+	t=1718643777; cv=none; b=MIUPFBdQ7fE+1JQfB1MALtEqax0iQxe7jfbOvuS4rECPbLRQVDQvQQFDRDdPwUfDVI1cuH+s5v5wGJp55adQ1D84IofN/s+c8tTHxEkbQ9ZfYKW+iYExSgCmIJWgs1mdVTpo0p0JDiBUSOxWSRRm54q3Pj3Xscei1w0tMbriTIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718641151; c=relaxed/simple;
-	bh=FmhPQfQ5feq6Pdtc9ii1dfPikGHb7AG/Rda3yIBJEP0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gkc1l7F+wcLv/bvdWoOYcCYi9TQD6rJqsC3zE4qfTRhzWwfBjz43BHpe0yZTkUX+0Adfiv6nrd6IObjVm74dOEjoxUAqUYkaOhC56CFuaFZpRW3qV722COS2CxdcrtjQ0pRhG7irr8X1QfsZI2gte6IOgz/Ei+d0mr+h72YiKis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mn1bgqqC; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-57cc1c00ba6so3708840a12.1;
-        Mon, 17 Jun 2024 09:19:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718641148; x=1719245948; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4f+Dl0F9St/jKePz11795biSESZ4u70V8qkqWg98PCo=;
-        b=Mn1bgqqCy4IQ473pJw4x65Me3rZr/FrAYi5RgmqB1Cw8JdgfOwHe4YyHBdM84tjMxB
-         hyB5oBd+j2mg112VQ74JjLELLasGvMKNPDD0IM/R315PkrSMniLo17ZKZxlBOZrlz3h8
-         +/87LbAGOhZHhQoh3kEoWYKn0f18tbZpO4M0AvCxpqvSoDxg89QDjSYfo3QDQrxE1ZNP
-         YWUDlP1TWnOQGQ3siZwWMLGS3VIw3fqrPg/fUGfp+XJUhjx/7MBrtpt9a+cjShwkMOGc
-         NwtDPxVkEAOXi0ZeRTU0lQ7y5Hoi0oGb4GiX1ZRl+71lSY+FBbh2IJSmzONl+J7C+Shu
-         MiMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718641148; x=1719245948;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4f+Dl0F9St/jKePz11795biSESZ4u70V8qkqWg98PCo=;
-        b=W0InM7pe/EAKqqvGGPFJl99Kx1nk/AdPIGys6CKsm74RHHzYOC7l7sUAH5hQT5ZHVk
-         X99bXZTxm8Yt2mvDsztC0N5I6LJsLMtKba/CPkcgVhmm4vV/1KxiGZzOYiDtIpxgI3JN
-         C5kQ3N1VNSdgjBYUd9hG/5iNToDm5gktiHHLz5wart2zDbTPjA1Ni4lnOLe+JSyoV7+7
-         hWcp0XD84ug2CfC8v3GIBFFYy/EqGhAudV2hb0RgSsas7Eg1a2b1p/kP+NUUjhefj8ub
-         xIcIXHXkQLSNHal0WVZMUbhXulZdt3pSOdxLNSuqPamVmXMw5LxiVh3Z/eXOfl5vBMn1
-         /X3g==
-X-Forwarded-Encrypted: i=1; AJvYcCWzZXAMhzYDWz98cOhA/fSlnUfG8SRs/OiXgCBGHcLlsVH7tqQwLv//b9S+JvRm2+GiiD9TJSjcE97H5eQJEhZb1BkzPR8YFHwEEhsQW3E4CQFAOCa8KwWdVBNshYIHyOXaVwlHhJHO/2RaWw==
-X-Gm-Message-State: AOJu0Yz9pqwtz8XU6AY/DSXg7dFsS9ZXd4PqBuivZUizg1tyb29PkQRv
-	nVDfQxiKFDjouYsGt+mJywFMByEqD98kURpPOwl1ZX3wMX0xG08qXV9MqsaL9sLvHmUshhar4Eb
-	K9+5FH0rCWmAaVVFfyyw7IceMIQY=
-X-Google-Smtp-Source: AGHT+IHqZzEdtlyMkCNsseF68BDJPs2czZokbGtFxCUl3W3wkWnizzsiBI7L1361ucsGCA7fQDzl+O8HU+dijyHkEPk=
-X-Received: by 2002:a50:cd49:0:b0:57c:a701:2311 with SMTP id
- 4fb4d7f45d1cf-57cbd6c6e20mr7027701a12.26.1718641147869; Mon, 17 Jun 2024
- 09:19:07 -0700 (PDT)
+	s=arc-20240116; t=1718643777; c=relaxed/simple;
+	bh=3JGhG02vtoZ1ijfk8c3Nd/z5OHJyc03LsZJnbgNIDQ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=C80hqxQcak+e+tT3+i9ruIQB4IaMJO0n25qF5fdPRdE2Shavz9UI4j80idBIj6H/Gv8h2j1bDR7Yv26JInfRlPZrtkt8oq2ppV6+8G+pDP2XnO/nBz1wzzArhQHlmxubR6yZBXGz/jfjbehByfFZfmr3/JIyjiLuakCEK3qldlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZQMnO/q2; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HE3k1v030595;
+	Mon, 17 Jun 2024 17:02:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GAb0X9XKILevg0s3K1b3t7RQbb42+rkRZsD2p+B37jg=; b=ZQMnO/q2rII2ut1J
+	sjiucoFbxhEcoBC0oYgZ3OpSJyrdGi+yi2zyKbBWeS0bKhUWe8Mtgc2YxZcfnncl
+	POodabHi8Z/cmIyCGtGFe1TWG2v1YJWQ6HSMTX/Y+C99qsM1ylNl2MX4KhS5bPxr
+	5x7PN0ZFDgquFKgeW2skSgI5WEWGoyu+HW3kxmv7BKPChIeS5jNGSuBh2XBzNSCs
+	ta2hNKHfJeFGjKhXAT3SdIYGGH73uwqeo6BNu1CRwmdA0fB5ILD1yalVwdqDFlTV
+	zWiEY8yjwlPsB9CIZtgFw6235R22FBQj+RZ1hijkFGqD7/YDnTltdlyhHATLIMyD
+	0kEzdA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ytfut1ej8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Jun 2024 17:02:29 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45HH2SH9008951
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 17 Jun 2024 17:02:28 GMT
+Received: from [10.110.93.116] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 17 Jun
+ 2024 10:02:27 -0700
+Message-ID: <096d59a0-5e18-092c-c9ae-d98130226f06@quicinc.com>
+Date: Mon, 17 Jun 2024 10:02:26 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240604150136.493962-1-robdclark@gmail.com> <6f97a4b4-cdbe-466c-80d4-adc8da305f75@arm.com>
-In-Reply-To: <6f97a4b4-cdbe-466c-80d4-adc8da305f75@arm.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 17 Jun 2024 09:18:55 -0700
-Message-ID: <CAF6AEGv+Ge2SD4=j1QhXfG+KkOzvFM+LieCqKuM20YL8gp5PRQ@mail.gmail.com>
-Subject: Re: [PATCH] iommu/arm-smmu: Pretty-print context fault related regs
-To: Robin Murphy <robin.murphy@arm.com>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@chromium.org>, 
-	Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Jerry Snitselaar <jsnitsel@redhat.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>, Pranjal Shrivastava <praan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v23 32/32] ASoC: doc: Add documentation for SOC USB
+Content-Language: en-US
+To: =?UTF-8?Q?Amadeusz_S=c5=82awi=c5=84ski?=
+	<amadeuszx.slawinski@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
+        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <robh@kernel.org>, <gregkh@linuxfoundation.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240610235808.22173-1-quic_wcheng@quicinc.com>
+ <20240610235808.22173-33-quic_wcheng@quicinc.com>
+ <5be51e1f-70c9-4bbc-96fa-1e50e441bd35@linux.intel.com>
+ <408d9e8e-0f40-7e66-54be-2f8d2c0783a3@quicinc.com>
+ <ca1e1063-e1bd-4e03-a7cd-91985e9954e9@linux.intel.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <ca1e1063-e1bd-4e03-a7cd-91985e9954e9@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6iEKt_voJesWSGLnIJI_1RjB-WcfLNX5
+X-Proofpoint-GUID: 6iEKt_voJesWSGLnIJI_1RjB-WcfLNX5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-17_14,2024-06-17_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0 mlxscore=0
+ adultscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406170131
 
-On Mon, Jun 17, 2024 at 6:07=E2=80=AFAM Robin Murphy <robin.murphy@arm.com>=
- wrote:
->
-> On 04/06/2024 4:01 pm, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Parse out the bitfields for easier-to-read fault messages.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> > Stephen was wanting easier to read fault messages.. so I typed this up.
-> >
-> > Resend with the new iommu list address
-> >
-> >   drivers/iommu/arm/arm-smmu/arm-smmu.c | 53 +++++++++++++++++++++++++-=
--
-> >   drivers/iommu/arm/arm-smmu/arm-smmu.h |  5 +++
-> >   2 files changed, 54 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/=
-arm-smmu/arm-smmu.c
-> > index c572d877b0e1..06712d73519c 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > @@ -411,6 +411,8 @@ static irqreturn_t arm_smmu_context_fault(int irq, =
-void *dev)
-> >       unsigned long iova;
-> >       struct arm_smmu_domain *smmu_domain =3D dev;
-> >       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
-> > +     static DEFINE_RATELIMIT_STATE(rs, DEFAULT_RATELIMIT_INTERVAL,
-> > +                                   DEFAULT_RATELIMIT_BURST);
-> >       int idx =3D smmu_domain->cfg.cbndx;
-> >       int ret;
-> >
-> > @@ -425,10 +427,53 @@ static irqreturn_t arm_smmu_context_fault(int irq=
-, void *dev)
-> >       ret =3D report_iommu_fault(&smmu_domain->domain, NULL, iova,
-> >               fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_F=
-AULT_READ);
-> >
-> > -     if (ret =3D=3D -ENOSYS)
-> > -             dev_err_ratelimited(smmu->dev,
-> > -             "Unhandled context fault: fsr=3D0x%x, iova=3D0x%08lx, fsy=
-nr=3D0x%x, cbfrsynra=3D0x%x, cb=3D%d\n",
-> > -                         fsr, iova, fsynr, cbfrsynra, idx);
-> > +     if (ret =3D=3D -ENOSYS && __ratelimit(&rs)) {
-> > +             static const struct {
-> > +                     u32 mask; const char *name;
-> > +             } fsr_bits[] =3D {
-> > +                     { ARM_SMMU_FSR_MULTI,  "MULTI" },
-> > +                     { ARM_SMMU_FSR_SS,     "SS"    },
-> > +                     { ARM_SMMU_FSR_UUT,    "UUT"   },
-> > +                     { ARM_SMMU_FSR_ASF,    "ASF"   },
-> > +                     { ARM_SMMU_FSR_TLBLKF, "TLBLKF" },
-> > +                     { ARM_SMMU_FSR_TLBMCF, "TLBMCF" },
-> > +                     { ARM_SMMU_FSR_EF,     "EF"     },
-> > +                     { ARM_SMMU_FSR_PF,     "PF"     },
-> > +                     { ARM_SMMU_FSR_AFF,    "AFF"    },
-> > +                     { ARM_SMMU_FSR_TF,     "TF"     },
-> > +             }, fsynr0_bits[] =3D {
-> > +                     { ARM_SMMU_FSYNR0_WNR,    "WNR"    },
-> > +                     { ARM_SMMU_FSYNR0_PNU,    "PNU"    },
-> > +                     { ARM_SMMU_FSYNR0_IND,    "IND"    },
-> > +                     { ARM_SMMU_FSYNR0_NSATTR, "NSATTR" },
-> > +                     { ARM_SMMU_FSYNR0_PTWF,   "PTWF"   },
-> > +                     { ARM_SMMU_FSYNR0_AFR,    "AFR"    },
-> > +             };
-> > +
-> > +             pr_err("%s %s: Unhandled context fault: fsr=3D0x%x (",
-> > +                    dev_driver_string(smmu->dev), dev_name(smmu->dev),=
- fsr);
-> > +
-> > +             for (int i =3D 0, n =3D 0; i < ARRAY_SIZE(fsr_bits); i++)=
- {
-> > +                     if (fsr & fsr_bits[i].mask) {
-> > +                             pr_cont("%s%s", (n > 0) ? "|" : "", fsr_b=
-its[i].name);
->
-> Given that SMMU faults have a high likelihood of correlating with other
-> errors, e.g. the initiating device also reporting that it got an abort
-> back, this much pr_cont is a recipe for an unreadable mess. Furthermore,
-> just imagine how "helpful" this would be when faults in two contexts are
-> reported by two different CPUs at the same time ;)
+Hi Amadeusz,
 
-It looks like arm_smmu_context_fault() is only used with non-threaded
-irq's.  And this fallback is only used if driver doesn't register it's
-own fault handler.  So I don't think this will be a problem.
+On 6/13/2024 12:46 AM, Amadeusz Sławiński wrote:
+> On 6/12/2024 9:28 PM, Wesley Cheng wrote:
+>> Hi Amadeusz,
+>>
+>> On 6/12/2024 7:47 AM, Amadeusz Sławiński wrote:
+>>> On 6/11/2024 1:58 AM, Wesley Cheng wrote:
+>>>
+>>> (...)
+>>>
+>>>> +In the case where the USB offload driver is unbounded, while USB 
+>>>> SND is
+>>>
+>>> unbounded -> unbound
+>>>
+>>> (...)
+>>>
+>>>> +SOC USB and USB Sound Kcontrols
+>>>> +===============================
+>>>> +Details
+>>>> +-------
+>>>> +SOC USB and USB sound expose a set of SND kcontrols for 
+>>>> applications to select
+>>>> +and fetch the current offloading status for the ASoC platform sound 
+>>>> card. Kcontrols
+>>>> +are split between two layers:
+>>>> +
+>>>> +    - USB sound - Notifies the sound card number for the ASoC 
+>>>> platform sound
+>>>> +      card that it is registered to for supporting audio offload.
+>>>> +
+>>>> +    - SOC USB - Maintains the current status of the offload path, 
+>>>> and device
+>>>> +      (USB sound card and PCM device) information.  This would be 
+>>>> the main
+>>>> +      card that applications can read to determine offloading 
+>>>> capabilities.
+>>>> +
+>>>> +Implementation
+>>>> +--------------
+>>>> +
+>>>> +**Example:**
+>>>> +
+>>>> +  **Sound Cards**:
+>>>> +
+>>>> +    ::
+>>>> +
+>>>> +      0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+>>>> +                     SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+>>>> +      1 [C320M          ]: USB-Audio - Plantronics C320-M
+>>>> +                     Plantronics Plantronics C320-M at 
+>>>> usb-xhci-hcd.1.auto-1, full speed
+>>>> +
+>>>> +
+>>>> +  **Platform Sound Card** - card#0:
+>>>> +
+>>>> +    ::
+>>>> +
+>>>> +      USB Offload Playback Route Card Select  1 (range -1->32)
+>>>> +      USB Offload Playback Route PCM Select   0 (range -1->255)
+>>>> +      USB Offload Playback Route Card Status  -1 (range -1->32)
+>>>> +      USB Offload Playback Route PCM Status   -1 (range -1->255)
+>>>> +
+>>>> +
+>>>> +  **USB Sound Card** - card#1:
+>>>> +
+>>>> +    ::
+>>>> +
+>>>> +      USB Offload Playback Capable Card         0 (range -1->32)
+>>>> +
+>>>> +
+>>>> +The platform sound card(card#0) kcontrols are created as part of 
+>>>> adding the SOC
+>>>> +USB device using **snd_soc_usb_add_port()**.  The following 
+>>>> kcontrols are defined
+>>>> +as:
+>>>> +
+>>>> +  - ``USB Offload Playback Route Card Status`` **(R)**: USB sound 
+>>>> card device index
+>>>> +    that defines which USB SND resources are currently offloaded. 
+>>>> If -1 is seen, it
+>>>> +    signifies that offload is not active.
+>>>> +  - ``USB Offload Playback Route PCM Status`` **(R)**: USB PCM 
+>>>> device index
+>>>> +    that defines which USB SND resources are currently offloaded. 
+>>>> If -1 is seen, it
+>>>> +    signifies that offload is not active.
+>>>> +  - ``USB Offload Playback Route Card Select`` **(R/W)**: USB sound 
+>>>> card index which
+>>>> +    selects the USB device to initiate offloading on.  If no value 
+>>>> is written to the
+>>>> +    kcontrol, then the last USB device discovered card index will 
+>>>> be chosen.
+>>>
+>>> I see only one kcontrol, what if hardware is capable of offloading on 
+>>> more cards, is it possible to do offloading on more than one device?
+>>>
+>>>> +  - ``USB Offload Playback Route PCM Select`` **(R/W)**: USB PCM 
+>>>> index which selects
+>>>> +    the USB device to initiate offloading on.  If no value is 
+>>>> written to the
+>>>> +    kcontrol, then the last USB device discovered PCM zero index 
+>>>> will be chosen.
+>>>> +
+>>>> +The USB sound card(card#1) kcontrols are created as USB audio 
+>>>> devices are plugged
+>>>> +into the physical USB port and enumerated.  The kcontrols are 
+>>>> defined as:
+>>>> +
+>>>> +  - ``USB Offload Playback Capable Card`` **(R)**: Provides the 
+>>>> sound card
+>>>> +    number/index that supports USB offloading.  Further/follow up 
+>>>> queries about
+>>>> +    the current offload state can be handled by reading the offload 
+>>>> status
+>>>> +    kcontrol exposed by the platform card.
+>>>> +
+>>>
+>>>
+>>> Why do we need to some magic between cards? I feel like whole 
+>>> kcontrol thing is overengineered a bit - I'm not sure I understand 
+>>> the need to do linking between cards. It would feel a lot simpler if 
+>>> USB card exposed one "USB Offload" kcontrol on USB card if USB 
+>>> controller supports offloading and allowed to set it to true/false to 
+>>> allow user to choose if they want to do offloading on device.
+>>>
+>>> (...)
+>>
+>> Based on feedback from Pierre, what I understood is that for some 
+>> applications, there won't be an order on which sound card is 
+>> queried/opened first.
+>>
+> 
+> Yes if you have multiple cards, they are probed in random order.
+> 
+>> So the end use case example given was if an application opened the USB 
+>> sound card first, it can see if there is an offload path available.  
+>> If there is then it can enable the offload path on the corresponding 
+>> card if desired.
+>>
+> 
+> This still doesn't explain why you need to link cards using controls. 
+> What would not work with simple "Enable Offload" with true/false values 
+> on USB card that works while you do have above routing controls?
+> 
 
-> I'd prefer to retain the original message as-is, so there is at least
-> still an unambiguous "atomic" view of a fault's entire state, then
-> follow it with a decode more in the style of arm64's ESR logging. TBH I
-> also wouldn't disapprove of hiding the additional decode behind a
-> command-line/runtime parameter, since a fault storm can cripple a system
-> enough as it is, without making the interrupt handler spend even longer
-> printing to a potentially slow console.
+Sorry for the late response.
 
-It _is_ ratelimited.  But we could perhaps use a higher loglevel (pr_debug?=
-)
+I think either way, even with the "Enable Offload" kcontrol in USB SND, 
+we'd need a way to link these cards, because if you have multiple USB 
+audio devices connected, and say... your offload mechanism only supports 
+one stream.  Then I assume we'd still need to way to determine if that 
+stream can be enabled for that USB SND device or not.
 
-BR,
--R
+Since the USB SND isn't really the entity maintaining the offload path, 
+I went with the decision to add that route selection to the ASoC 
+platform card. It would have access to all the parameters supported by 
+the audio DSP.
 
-> > +                             n++;
-> > +                     }
-> > +             }
-> > +
-> > +             pr_cont("), iova=3D0x%08lx, fsynr=3D0x%x (S1CBNDX=3D%u", =
-iova, fsynr,
-> > +                     (fsynr >> 16) & 0xff);
->
-> Please define all the bitfields properly (and I agree with Pranjal about
-> the naming).
->
-> Thanks,
-> Robin.
->
-> > +
-> > +             for (int i =3D 0; i < ARRAY_SIZE(fsynr0_bits); i++) {
-> > +                     if (fsynr & fsynr0_bits[i].mask) {
-> > +                             pr_cont("|%s", fsynr0_bits[i].name);
-> > +                     }
-> > +             }
-> > +
-> > +             pr_cont("|PLVL=3D%u), cbfrsynra=3D0x%x, cb=3D%d\n",
-> > +                     fsynr & 0x3,   /* FSYNR0.PLV */
-> > +                     cbfrsynra, idx);
-> > +
-> > +     }
-> >
-> >       arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
-> >       return IRQ_HANDLED;
-> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/=
-arm-smmu/arm-smmu.h
-> > index 836ed6799a80..3b051273718b 100644
-> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> > @@ -223,6 +223,11 @@ enum arm_smmu_cbar_type {
-> >
-> >   #define ARM_SMMU_CB_FSYNR0          0x68
-> >   #define ARM_SMMU_FSYNR0_WNR         BIT(4)
-> > +#define ARM_SMMU_FSYNR0_PNU          BIT(5)
-> > +#define ARM_SMMU_FSYNR0_IND          BIT(6)
-> > +#define ARM_SMMU_FSYNR0_NSATTR               BIT(8)
-> > +#define ARM_SMMU_FSYNR0_PTWF         BIT(10)
-> > +#define ARM_SMMU_FSYNR0_AFR          BIT(11)
-> >
-> >   #define ARM_SMMU_CB_FSYNR1          0x6c
-> >
+Thanks
+Wesley Cheng
+
+>>>> +Mixer Examples
+>>>> +--------------
+>>>> +
+>>>> +    ::
+>>>> +
+>>>> +      tinymix -D 0 set 'USB Offload Playback Route Card Select' 2
+>>>> +      tinymix -D 0 set 'USB Offload Playback Route PCM Select' 0
+>>>> +
+>>>> +
+>>>> +    ::
+>>>> +
+>>>> +      tinymix -D 0 get 'USB Offload Playback Route Card Select'
+>>>> +      --> 2 (range -1->32)
+>>>> +      tinymix -D 0 get 'USB Offload Playback Route PCM Select'
+>>>> +      --> 0 (range -1->255)
+>>>> +
+>>>> +    ::
+>>>> +
+>>>> +      tinymix -D 0 get 'USB Offload Playback Route Card Status'
+>>>> +      --> 2 (range -1->32)   [OFFLD active]
+>>>> +      --> -1 (range -1->32) [OFFLD idle]
+>>>> +      tinymix -D 0 get 'USB Offload Playback Route PCM Status'
+>>>> +      --> 0 (range -1->255)   [OFFLD active]
+>>>> +      --> -1 (range -1->255) [OFFLD idle]
+>>>> +
+>>>> +    ::
+>>>> +
+>>>> +      tinymix -D 1 get 'USB Offload Playback Capable Card'
+>>>> +      --> 0 (range -1->32)
+>>>>
+>>>
+>>> Yes, looking at examples again, I'm still not sure I understand. 
+>>> There are two cards and you do linking between them, this feels 
+>>> broken by design. From my point of view USB Offload should be 
+>>> property of USB card and not involve any other card in a system.
+>>>
+>>
+>> Main benefit to having two cards (keeping one for USB SND and another 
+>> for the ASoC platform sound card) is that current applications won't 
+>> break.  The behavior is the same, in that if something opens the USB 
+>> sound card, it will go through the same non-offloaded path.  During 
+>> initial reviews, I think this was a big point where folks wanted the 
+>> USB PCM path to still be an option.
+>>
+> 
+> I'm not against having two cards, in fact I hope that USB card looks and 
+> behaves the same as before this patch set, with only difference being 
+> controls for enabling offload.
+> 
+>> If applications want to add the offload capabilities to its 
+>> environment, they can enable it as an additional feature.
+> 
+> That sounds fine to me.
+> 
 
