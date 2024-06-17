@@ -1,117 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-22841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5910590AAE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 12:18:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B73B90AAFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 12:27:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 721F21C213D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 10:18:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DF8B1F2196E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 10:27:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A4B191460;
-	Mon, 17 Jun 2024 10:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1FA31940B2;
+	Mon, 17 Jun 2024 10:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="f1SVGucv"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tFOyCp1M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2140317FAA4;
-	Mon, 17 Jun 2024 10:18:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D832554918
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 10:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718619514; cv=none; b=qXP1LvRkBR+P61MW3c9f1TN8Ryt14a8NLd3GvgrhvS0Hg2+MkbDOEBkCp1Elj3gvEPtAmTbjuHAfE7Z5tmcmkrpblvoNonEAR8X5214+v6qB/9fjdIyJq/kpxI+PMc+jwukG+2hJ4NfqCtYEb0rvnFxJpfSX47meuydI2/znP4Y=
+	t=1718620039; cv=none; b=o7zAsre0a/p1zf3idGXoa4rkJ1zycgLievTz6HFrhCDRkE4W7pGz2tmlUUzDETcfa7bXtAdr39a9+NbvwM9x0yL1oWl76wWPmQFpfoL74JEyCZ5sUCVIlRb3xxa3H5adFLX6jt6E+uMHt2W50cDebAumCX9J9cV6EsIkVaE9Bn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718619514; c=relaxed/simple;
-	bh=gs8nsYiINFMYuTq1/6bicsbu3Ap1eDqXcnW2kJfLN2M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BH7/6vX/ttrDdzj3czwVitElSl8licj1zrwZRYzakYt6KG5V0jd9SieyjVmNhIPdb2AoS48rsWEIYsyC6cu+iNlUP7sWS1RjBHidUAH95OzgHhDTECw3HVLCUgvYdMFHXcl6b8MuouKVhr296OAyij1+wjKZThQUEyjtALPd53k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=f1SVGucv; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1718619493; x=1719224293; i=markus.elfring@web.de;
-	bh=gs8nsYiINFMYuTq1/6bicsbu3Ap1eDqXcnW2kJfLN2M=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=f1SVGucvJNeRunLW3wYC/+MjB1yhJpxPszMnL1auqXiWjXigo8aGxEGl6qIvmSeo
-	 mhTAqephXrUK+c9Y5XuUTJpyFnArk5wUIW/FCX850i5YuucExD71TwSx951yZkc3w
-	 Pw7jbD1V8QskKhDJgdimGyK+GRZswEwP4r7eSHIR0qxp4b0EdvRiaNFCUqfzKo2XS
-	 BDmiSoUl59dpYoUyQOrsq4qcsE325fKkIgK3KL86l/1yUMnIq0K18LXZ6PeqaFEca
-	 GKsjpWp6dfIu7crQ9tPEDXmxIpJVo8bVMTm9o7g8efLlDuMyF0pc2lD/0emYRLuC1
-	 qjWJ6BIskahAb8M3Ww==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mvslx-1scsVu1d4x-013Z2f; Mon, 17
- Jun 2024 12:18:13 +0200
-Message-ID: <e9fd75aa-3bd8-4227-ac07-fc762e558ea6@web.de>
-Date: Mon, 17 Jun 2024 12:18:11 +0200
+	s=arc-20240116; t=1718620039; c=relaxed/simple;
+	bh=SvwAskc/fCFbqGp3xdpej0VX4LFAyKSwyjET0MIsa04=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ig+egyZD3aBE8pb6KthOD1FLs65dP35e1UddhXVFMlsiHJZ3ECb5eETUCGeYlDYKIY3m/I5evto6/mz2jfKCcP09U9aOolsEvdCUEBh0vSoqzmjyWxjMDsXm7J0Hkx4fzoqHE25vE+6uXeu5ACyh9h76l/atpK6YWcMqTLqm6XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tFOyCp1M; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-57c8bd6b655so15465a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 03:27:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1718620036; x=1719224836; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=97HNlrom0vmgCUPq2mVyJqaT77fVYxrQT7MRjlCumz4=;
+        b=tFOyCp1MF1mZKDW/Xpt0FJIA6NXvnHjmsD8sXAnX+7YVF047NY4UzNRoOAtweCOsrX
+         zEwBEaVf5CVBAIQed7b7HX4bsDrbFrj3WYQIARvQl/lFF/R0YkDykUb5hS/H+mf5pHPe
+         8Xc8ktJkH2ZodXE9yH3OmF35hKRJ/PnfWAC1cU9l4gutAgYSGLnkX9GNK0v0bV/T1LMD
+         ZrC87vwLN9ukkRZo9eDXOmPry1sQqQzKTKTA3hqZefgy2EqPrA9r71YwHer7/6We8efU
+         3P7hs5FModnQhRAn1VWxFwFvp9UoGe9DGxYNzE/e/pY/jhB+mr14h1pG1YkVgM2vzJG2
+         RtDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718620036; x=1719224836;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=97HNlrom0vmgCUPq2mVyJqaT77fVYxrQT7MRjlCumz4=;
+        b=e/Xnupp0kwQ2Kd0faegiOCbK3IuxtbXLdI6slyr+0ahf1/HAuoVwqH+ST5QcJevOz6
+         qPKtuCxoBJ2CK3xqEUsZV4bASjIn1sRwphGkvhDVh0IcZ7xxZzR0lSQp5P3K3uEsA+//
+         UYaCR0wyU6wFn8xeMC1RArzfB9reeVIZ5ouH6JgVfNdqERgnGi+stWE/CZ7uc2Zn+H8j
+         zKFjdFq7aGaFasmW9YuenBXHyrP7gqo3TFNYiloAbXMNZvt5/P6teoz/S2VqXIQ5754r
+         i5PVGkxm1lITx1H6vvfz97fFCt5s3UMnEMGgoZ0x10g8XgLa/hpbirQr3KEJZFbcwOKB
+         QbMw==
+X-Forwarded-Encrypted: i=1; AJvYcCVPg59LkozkfEDHw/wJ3f0U8sRnZSP2YMQvLRLogtyhFhqOhZ83y2yXm3GO5DFalaFTmS4m/dMEhlIKHOtqxDAmMMVf0P4WsnOUTqs+Zg==
+X-Gm-Message-State: AOJu0Yx0JWL2kkB782FZXSocny/CP+zmONKtAIQQajH42PS7FhWlIFS3
+	/pnzIkF05A++qEvxt1e+StJGfvAdD+14MvgFp0fc+aue6WbzpqT9p4H4c6Bc7TlfHXngJx7wQqk
+	jRMobRwH4qKAOK7K9U/t8+uuRBazuosqj1tgh
+X-Google-Smtp-Source: AGHT+IE6YBCU6PK9TX7WgOKq154u5fmiFEOZ+kbbMuOv/cOg6c5dK4O+QtvjUVBauAMglII7sNP483BUPy+TaGxyVb8=
+X-Received: by 2002:a05:6402:50d2:b0:57c:cfa9:837b with SMTP id
+ 4fb4d7f45d1cf-57ccfa98704mr158097a12.0.1718620035876; Mon, 17 Jun 2024
+ 03:27:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v4 2/3] leds: sy7802: Add support for Silergy SY7802 flash LED
- controller
-To: Pavel Machek <pavel@ucw.cz>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?=
- <git@apitzsch.eu>, linux-leds@vger.kernel.org, phone-devel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
- Conor Dooley <conor+dt@kernel.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>, Kees Cook <kees@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Lee Jones <lee@kernel.org>, Trilok Soni <quic_tsoni@quicinc.com>,
- LKML <linux-kernel@vger.kernel.org>
-References: <20240616-sy7802-v4-2-789994180e05@apitzsch.eu>
- <5701d3e7-f67b-4189-a5fd-8a992b9155fb@web.de> <ZnAHsRn3N4mwPL7q@duo.ucw.cz>
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <ZnAHsRn3N4mwPL7q@duo.ucw.cz>
-Content-Type: text/plain; charset=UTF-8
+References: <20240604150136.493962-1-robdclark@gmail.com>
+In-Reply-To: <20240604150136.493962-1-robdclark@gmail.com>
+From: Pranjal Shrivastava <praan@google.com>
+Date: Mon, 17 Jun 2024 15:57:04 +0530
+Message-ID: <CAN6iL-Qz5--_bE=s8DKMtZFLJuNZca13ageGn48n4W7EKLUEUg@mail.gmail.com>
+Subject: Re: [PATCH] iommu/arm-smmu: Pretty-print context fault related regs
+To: Rob Clark <robdclark@gmail.com>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@chromium.org>, 
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, 
+	Jason Gunthorpe <jgg@ziepe.ca>, Jerry Snitselaar <jsnitsel@redhat.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GWDefmdWbG1KH9MY7c/q/UMZhu3vmaXaelD2g/jpUO59SEwLjKD
- xcQ2x2fBFoVcLhHLeByPN/a81Cc0RBoF0sDdroNflR+uEd1hZJ74gu9sBrOmpMNfs2zKYN+
- Jgz5RHxUZx5vvhJBcO5Gp9iAXmFHMMP0Q+nzm3OgVsT78C35oW529L97I2m46lVWJRj9ocC
- kHLtZ2shmBYruuQ16m6pw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:tQIynLLMl3Q=;wMNAskpkgNs3uqcrvyMtr7x6ALO
- RDAQ4X3uObUkU75GWXX00dyDkp5yJorSmA5BtT6y9Zpywlhb1+AlOCthnCM43e6dH1ETuYWjF
- SUkvQgH4QhQGie1HlDwxXvr7VhS4nsLNf0olVoBJWAcLhD2w+c2kVgix1XgBCmzLok2xfWYKq
- pBWwt+91lq+t1Gmq/NKHV8TGb8TMLGs3u0hFFm47PHfdXtwmDwMUvsSTSFfBe2OPEjKo3VumQ
- 7MNDQKbggCDbzt5CqzlNCMX6Bszb0BrMpFko6WgdYuzzlCzkCanWAQusQL8EVD3RvjGFQ2z5X
- CzK1S8D4rdAQHdlbk46uVFl/J+34tfhdgAtR/5+Cb3cvfAkJSl+H6IkuaZWvsccAEwcUDN45e
- SkHPtB3InkOQGfDwqfV7jKSGXDPRlrfYvyTFkValmPcq8nvCjGz8kk4i3VYxhFn1idYCtBTNb
- gb4KSSjQ74cO4Gw6afPmSgl0iB/E7aeV0GStZRTfDjMaEsYRb6pnzSjsKP9Qqnamzfi/R702z
- YBE538dl4FJGq2ddyimNTI15eGCU0G3/xJpZImpC/9lDq5hXsjGpFDefxiOQA/WhC9frfGTtC
- vi4smpj7ccGUITiABz8jsSPH3Yj1K5G3wE1L8wrIBtP+jOiNZadwYykp8656SYN9HvLpzKe+a
- A+GcRBEUU/HGRgmGNYvgWLJce3/7V+1CbDW8bUWH0UCfTNi1/l/wa1+QsCi0u8gkeko+riTS8
- oJOEibGA+ZoZ+cUSE8x8VgSzqNVYn0B5W54SqS8N7HLcaxSbWBGbZZqPdRRs8qnGFO0k9seMo
- m5sCfzph+EKhrD1TlWaTtbH+NbZ3RZY8j80nODPhwvx1c=
 
->> Would you become interested to apply a statement like =E2=80=9Cguard(mu=
-tex)(&chip->mutex);=E2=80=9D?
->> https://elixir.bootlin.com/linux/v6.10-rc3/source/include/linux/mutex.h=
-#L196
+Hi Rob,
+On Tue, Jun 4, 2024 at 8:32=E2=80=AFPM Rob Clark <robdclark@gmail.com> wrot=
+e:
 >
-> This does not look like real improvement for code this trivial.
+> From: Rob Clark <robdclark@chromium.org>
+>
+> Parse out the bitfields for easier-to-read fault messages.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+> Stephen was wanting easier to read fault messages.. so I typed this up.
+>
+> Resend with the new iommu list address
+>
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c | 53 +++++++++++++++++++++++++--
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h |  5 +++
+>  2 files changed, 54 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/ar=
+m-smmu/arm-smmu.c
+> index c572d877b0e1..06712d73519c 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -411,6 +411,8 @@ static irqreturn_t arm_smmu_context_fault(int irq, vo=
+id *dev)
+>         unsigned long iova;
+>         struct arm_smmu_domain *smmu_domain =3D dev;
+>         struct arm_smmu_device *smmu =3D smmu_domain->smmu;
+> +       static DEFINE_RATELIMIT_STATE(rs, DEFAULT_RATELIMIT_INTERVAL,
+> +                                     DEFAULT_RATELIMIT_BURST);
+>         int idx =3D smmu_domain->cfg.cbndx;
+>         int ret;
+>
+> @@ -425,10 +427,53 @@ static irqreturn_t arm_smmu_context_fault(int irq, =
+void *dev)
+>         ret =3D report_iommu_fault(&smmu_domain->domain, NULL, iova,
+>                 fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_F=
+AULT_READ);
+>
+> -       if (ret =3D=3D -ENOSYS)
+> -               dev_err_ratelimited(smmu->dev,
+> -               "Unhandled context fault: fsr=3D0x%x, iova=3D0x%08lx, fsy=
+nr=3D0x%x, cbfrsynra=3D0x%x, cb=3D%d\n",
+> -                           fsr, iova, fsynr, cbfrsynra, idx);
+> +       if (ret =3D=3D -ENOSYS && __ratelimit(&rs)) {
+> +               static const struct {
+> +                       u32 mask; const char *name;
+> +               } fsr_bits[] =3D {
+> +                       { ARM_SMMU_FSR_MULTI,  "MULTI" },
+> +                       { ARM_SMMU_FSR_SS,     "SS"    },
+> +                       { ARM_SMMU_FSR_UUT,    "UUT"   },
+> +                       { ARM_SMMU_FSR_ASF,    "ASF"   },
+> +                       { ARM_SMMU_FSR_TLBLKF, "TLBLKF" },
+> +                       { ARM_SMMU_FSR_TLBMCF, "TLBMCF" },
+> +                       { ARM_SMMU_FSR_EF,     "EF"     },
+> +                       { ARM_SMMU_FSR_PF,     "PF"     },
+> +                       { ARM_SMMU_FSR_AFF,    "AFF"    },
+> +                       { ARM_SMMU_FSR_TF,     "TF"     },
 
-Various source code places can be updated also according to referenced
-programming interfaces.
-https://elixir.bootlin.com/linux/v6.10-rc4/source/include/linux/cleanup.h#=
-L8
+I think we are missing to log the translation scheme i.e. `Format
+bits[10:9]` field of this register as per the SMMUv2 spec. Maybe add
+that too?
 
-Will corresponding collateral evolution become better supported?
+> +               }, fsynr0_bits[] =3D {
+> +                       { ARM_SMMU_FSYNR0_WNR,    "WNR"    },
+> +                       { ARM_SMMU_FSYNR0_PNU,    "PNU"    },
+> +                       { ARM_SMMU_FSYNR0_IND,    "IND"    },
+> +                       { ARM_SMMU_FSYNR0_NSATTR, "NSATTR" },
+> +                       { ARM_SMMU_FSYNR0_PTWF,   "PTWF"   },
+> +                       { ARM_SMMU_FSYNR0_AFR,    "AFR"    },
+> +               };
+> +
+> +               pr_err("%s %s: Unhandled context fault: fsr=3D0x%x (",
+> +                      dev_driver_string(smmu->dev), dev_name(smmu->dev),=
+ fsr);
+> +
+> +               for (int i =3D 0, n =3D 0; i < ARRAY_SIZE(fsr_bits); i++)=
+ {
+> +                       if (fsr & fsr_bits[i].mask) {
+> +                               pr_cont("%s%s", (n > 0) ? "|" : "", fsr_b=
+its[i].name);
+> +                               n++;
+> +                       }
+> +               }
 
-Regards,
-Markus
+Nit: Maybe add a line-wrap here after logging the iova?
+Not trying to sound like a terminal geek, but a full log with pr_cont
+could get very long (> 80 characters).
+So, let's log fsr & iova in one line, fsynr and others in the next.
+
+> +
+> +               pr_cont("), iova=3D0x%08lx, fsynr=3D0x%x (S1CBNDX=3D%u", =
+iova, fsynr,
+> +                       (fsynr >> 16) & 0xff);
+> +
+> +               for (int i =3D 0; i < ARRAY_SIZE(fsynr0_bits); i++) {
+> +                       if (fsynr & fsynr0_bits[i].mask) {
+> +                               pr_cont("|%s", fsynr0_bits[i].name);
+> +                       }
+> +               }
+> +
+> +               pr_cont("|PLVL=3D%u), cbfrsynra=3D0x%x, cb=3D%d\n",
+> +                       fsynr & 0x3,   /* FSYNR0.PLV */
+> +                       cbfrsynra, idx);
+> +
+> +       }
+>
+>         arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_FSR, fsr);
+>         return IRQ_HANDLED;
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/ar=
+m-smmu/arm-smmu.h
+> index 836ed6799a80..3b051273718b 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> @@ -223,6 +223,11 @@ enum arm_smmu_cbar_type {
+>
+>  #define ARM_SMMU_CB_FSYNR0             0x68
+>  #define ARM_SMMU_FSYNR0_WNR            BIT(4)
+> +#define ARM_SMMU_FSYNR0_PNU            BIT(5)
+> +#define ARM_SMMU_FSYNR0_IND            BIT(6)
+> +#define ARM_SMMU_FSYNR0_NSATTR         BIT(8)
+> +#define ARM_SMMU_FSYNR0_PTWF           BIT(10)
+> +#define ARM_SMMU_FSYNR0_AFR            BIT(11)
+>
+
+Nit: Worth prefixing these with "CB_" i.e. "ARM_SMMU_CB_FSYNR0_* " to
+avoid confusion with "GFSYNR0".
+
+>  #define ARM_SMMU_CB_FSYNR1             0x6c
+>
+> --
+> 2.45.1
+>
+>
+Thanks,
+Pranjal
 
