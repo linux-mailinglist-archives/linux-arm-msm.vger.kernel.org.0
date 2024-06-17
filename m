@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-22868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A6E090B22B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 16:34:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1368F90B22D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 16:34:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F270B1C237B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 14:34:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D20A1F2632F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 14:34:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59FFC1BC064;
-	Mon, 17 Jun 2024 13:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 703CB1BC088;
+	Mon, 17 Jun 2024 13:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="A3xXLBOV"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="rOTG6Jg6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7FC1BBBEB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 13:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B783F1BC06E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 13:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718632200; cv=none; b=dN65M1FDBpW1mhei+wFCMrLI44SkBD4XaB8hrDeAmHtY+7RdVheClWbcnrdDBz1IijaV+s3mE/e6QnbPFhECziyPoV32JcdvcXCYvR+kH7BsY+1FYJhLrivMUosRRevDeDfgxuiSDJBn+SDdL2elms5etyizhqYkJPBNqKz5j2M=
+	t=1718632202; cv=none; b=nPY+oIQFc0/iGKQNXmyx6MgaBhVvw258h9+aqT1DQfpuAbNe6IQ22pq2GGplWMFwlHaAC5shqZnsDm6JZPkB2Gc3RTX84K26jBUIJMMCDzfwcXG6x6ER2jxvf3jgA8f3AYKhHcvR2Z7wO4pqnSWEpxSkBttbqgn3eR98RrfRGX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718632200; c=relaxed/simple;
-	bh=UCswPzc07ScF6/5JfvW+wgRVfrWxtjhgBr2M86YwQWQ=;
+	s=arc-20240116; t=1718632202; c=relaxed/simple;
+	bh=StudXC8HM5AaA51joNKIseNwtqaK04Fr9WYaAPBMqi8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UWpXM8mDiMc487B+zlOYWKBsqPhbhCDWbJug161A7g3jfzKcK53PMljP++MKYne4yrxjroqwPTBClE2W/m1PoQhQZzV/PZDegOgJwiRAk/86uCTEfYnMaFfv9FKkXNuD6HTmm61gpryGBeyk5QcFwJEmYo/kcZOwluVhU0T5XzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=A3xXLBOV; arc=none smtp.client-ip=209.85.222.54
+	 In-Reply-To:To:Cc; b=kh2Ly8wxD9KDaWS7ANtWKZKrx+Cl7FvnlT/ZNt1zgzkMoBU6aOfQki49f44pa1qBkAsP/Lg6XbS84F92V2OUo0ha7R21awInhNgb+T2zLSHcKYsCQYTlPD1cL7Upw3o2KtQFcZqiwJRdbquyZXEWKHvwi611RPt+4RTddXQm9vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=rOTG6Jg6; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-80ba034bb3fso1369456241.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 06:49:58 -0700 (PDT)
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7955af79812so246233985a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 06:50:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1718632197; x=1719236997; darn=vger.kernel.org;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1718632200; x=1719237000; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=g6UQvfPsoXnGJXINmWjQmEBO62NliLdepCpDJh/A7YM=;
-        b=A3xXLBOVEYV2a1xaHfp8tGJxvVyJrhEgbLRL2iP38m5u6LJKCaPvEGN3R5j3rbSt3F
-         ixmA2AzuSygMF4vVqQ8kwQ4UzOpIbHjqG/R5qmMXw1rr6wwOQbg/emQNejk9mKMrPh6G
-         oBOnyWkhQHobo+sVutL7OvYFHjoPVJwotjkxj3UTr3JRvUGayeD2TVYYaWOZuajdZu3j
-         YG2HOc7FzoV0xyvUtsJlkvx1k1a8vaQ4YVxl/fIC5MV65wULii0QS1ybMJclLR4Kn1l0
-         BexxcW/dD4qrVPDV2+qyWy5NiejSJ4kp042DDKh2ZDXu/oG9aXrPSKghMFMZ8+1BXJ+i
-         4AIQ==
+        bh=YrcJbk8xCEXw8t4EaXrcTeVF+NCC1LSKzcpZFP4BG5g=;
+        b=rOTG6Jg6AFDvVQuvhTCMgfNkzi7Kzm7o+vUGfVhwN7vuApciSL3d4JkEooKRzezAnl
+         kgU2Abrb/yPqufSoeGsqocss7K6YGumoYv8mW/FN8wsDrILqttu8APaBqglKtx3GRpwR
+         10KLQphkQKUKTQeQoUQaTpN15YuRqUOJrKgg9lQYcmP+BurmG45MdHwXtdG79lX6B99M
+         MhEIWn2xpq2in4srZC1z/j8rMuOcu7g6guEhaqZ1z+B4MebhQKCTPHuaWHaZP9qI8VPI
+         khM5IL2/o1PWaMIPCVowUG6XGaTfZoVwNTWFknN09Fy5FHT1d8stbiiMMVL+JG7Ki3tN
+         y3Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718632197; x=1719236997;
+        d=1e100.net; s=20230601; t=1718632200; x=1719237000;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=g6UQvfPsoXnGJXINmWjQmEBO62NliLdepCpDJh/A7YM=;
-        b=bP25uaBRMd/pv5Zrx94uJO5kezjE8urbB/5YPs5oXkBUdIa0IYoqaxnOtqT8H83xOH
-         Qr83JQgYZC/NcljFPFVouPx+zesfJGtVwtp+GaPSOTTr6jbtUSQzmdwQhfiitfzdEgZH
-         mo+C7lVAg6G+gk5WSjXl/7hs+XgbWH5XBXbbO0Dt3uV9wsD23s0Yjtrqkm1SYzXuLWBA
-         Dq+oUkuWoOEcv2K14pcl65L/yZ1bOyem/juH3VGP3xge8DuvDef2R5mPNCNOBD8tP+rs
-         SIvJP/lGP7LxTlFBYNd7t9S8dBIqf5WcAk4mVzR+6tjR50jFC8d8tgRk/B1+zAXGkY1V
-         Vxaw==
-X-Forwarded-Encrypted: i=1; AJvYcCXl/8LUfcGBofFj5VhZGk7IUrtrXIxUowFkJrHTQqqfErUJ1wKmcWY02/rnaS9f4d21xahvsF3cMO60IwTcDCTwomkzCXX0Fm21/RCn8Q==
-X-Gm-Message-State: AOJu0YzMejRHo2am4mwNOujRBoQ+Nubzu2wej+8kxTVIj+UiwEUnIa38
-	UmEE8WOBor8H62iNue+/IxXR6/yfg5d7sgRRcoJdVe/pXqujsfwbB3LDENMT6iQ=
-X-Google-Smtp-Source: AGHT+IHh1rKlzT8+664YalrD1JcHiwA7k7yzEL0kYz4H+P2//V4FMw+RVSrpyNsoJMn06TFOuuRyhA==
-X-Received: by 2002:a67:f452:0:b0:48d:a159:dd80 with SMTP id ada2fe7eead31-48dae329fbdmr9819998137.12.1718632197524;
-        Mon, 17 Jun 2024 06:49:57 -0700 (PDT)
+        bh=YrcJbk8xCEXw8t4EaXrcTeVF+NCC1LSKzcpZFP4BG5g=;
+        b=INAlJOUcM8goHDrLY0jE49DTfy2NFnTVomnWLQwz67xyHEoyUfHM+yh4BucAaKjgyU
+         1TcpnFQ6pWAS1t+0QGx1hKqHMuabcxwstBl5s2V+fNfruh4nd1i6bAqubY/EajauEH4j
+         CtqVk/1NZu0WyT+8a6CglUu2ttKP2uvmtfJxqHo8KNZAy0B35uL5zcnz5ouL+1GoEKTo
+         G+l+ptVhK0l3HA/126CIQx0JlX+DAVh03kqGnRQb2vwa1jK147bt/2GNqcROERG0dA7C
+         ycF+0HMkUyGBaanrPJMgmjROntmmVEolOJfE2e5XjYbFQIOWkSuzzXCZYxVaxoqX6D0p
+         CJXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCMzvLgdbq+Adl7TRTb+3h3G5x8bQYaLCdQ0i9vgqHS1o+zjWF3ToHSJIVxdtb25clKcY5snIMK0PtyxnAjUWXVH3vl7jGMFobFZMjyA==
+X-Gm-Message-State: AOJu0YxjZ2ZCd50/z3PdquDBunIaTNPibqrbFzFdNnHXMcCi/NBeJk7m
+	n7r/pqOtUaZ2/C8b3S5KV2jJFz9RI7Zq0uvTGh9wbgwHXhD6MsuS1MSnQwYnVyM=
+X-Google-Smtp-Source: AGHT+IE5uBXfLurzd0jxJqKEavsP5xlBerQNz/5zZPhVz/sS8JYp4QTVcbxX+BgweFysUZBWMYLagg==
+X-Received: by 2002:a05:620a:1a81:b0:795:4e35:ea9d with SMTP id af79cd13be357-798d2692fc4mr1312471985a.60.1718632199656;
+        Mon, 17 Jun 2024 06:49:59 -0700 (PDT)
 Received: from megalith.oryx-coho.ts.net (d24-150-219-207.home.cgocable.net. [24.150.219.207])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-798aaecc004sm432892285a.31.2024.06.17.06.49.55
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-798aaecc004sm432892285a.31.2024.06.17.06.49.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jun 2024 06:49:57 -0700 (PDT)
+        Mon, 17 Jun 2024 06:49:59 -0700 (PDT)
 From: Trevor Gamblin <tgamblin@baylibre.com>
-Date: Mon, 17 Jun 2024 09:49:46 -0400
-Subject: [PATCH v3 06/41] iio: adc: axp288_adc: make use of
- regmap_set_bits()
+Date: Mon, 17 Jun 2024 09:49:47 -0400
+Subject: [PATCH v3 07/41] iio: adc: bcm_iproc_adc: make use of
+ regmap_clear_bits()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240617-review-v3-6-88d1338c4cca@baylibre.com>
+Message-Id: <20240617-review-v3-7-88d1338c4cca@baylibre.com>
 References: <20240617-review-v3-0-88d1338c4cca@baylibre.com>
 In-Reply-To: <20240617-review-v3-0-88d1338c4cca@baylibre.com>
 To: Jonathan Cameron <jic23@kernel.org>, 
@@ -113,30 +113,41 @@ Cc: linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
  Trevor Gamblin <tgamblin@baylibre.com>
 X-Mailer: b4 0.13.0
 
-Instead of using regmap_update_bits() and passing the mask twice, use
-regmap_set_bits().
+Instead of using regmap_update_bits() and passing val = 0, use
+regmap_clear_bits().
 
 Suggested-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
 ---
- drivers/iio/adc/axp288_adc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/bcm_iproc_adc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/adc/axp288_adc.c b/drivers/iio/adc/axp288_adc.c
-index 49fff1cabd0d..f135cf2362df 100644
---- a/drivers/iio/adc/axp288_adc.c
-+++ b/drivers/iio/adc/axp288_adc.c
-@@ -247,8 +247,8 @@ static int axp288_adc_initialize(struct axp288_adc_info *info)
+diff --git a/drivers/iio/adc/bcm_iproc_adc.c b/drivers/iio/adc/bcm_iproc_adc.c
+index 5bc514bd5ebc..6bc149c51414 100644
+--- a/drivers/iio/adc/bcm_iproc_adc.c
++++ b/drivers/iio/adc/bcm_iproc_adc.c
+@@ -357,8 +357,8 @@ static int iproc_adc_enable(struct iio_dev *indio_dev)
+ 	int ret;
+ 
+ 	/* Set i_amux = 3b'000, select channel 0 */
+-	ret = regmap_update_bits(adc_priv->regmap, IPROC_ANALOG_CONTROL,
+-				IPROC_ADC_CHANNEL_SEL_MASK, 0);
++	ret = regmap_clear_bits(adc_priv->regmap, IPROC_ANALOG_CONTROL,
++				IPROC_ADC_CHANNEL_SEL_MASK);
+ 	if (ret) {
+ 		dev_err(&indio_dev->dev,
+ 			"failed to write IPROC_ANALOG_CONTROL %d\n", ret);
+@@ -543,8 +543,8 @@ static int iproc_adc_probe(struct platform_device *pdev)
+ 	if (adc_priv->irqno < 0)
+ 		return adc_priv->irqno;
+ 
+-	ret = regmap_update_bits(adc_priv->regmap, IPROC_REGCTL2,
+-				IPROC_ADC_AUXIN_SCAN_ENA, 0);
++	ret = regmap_clear_bits(adc_priv->regmap, IPROC_REGCTL2,
++				IPROC_ADC_AUXIN_SCAN_ENA);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to write IPROC_REGCTL2 %d\n", ret);
  		return ret;
- 
- 	/* Turn on the ADC for all channels except TS, leave TS as is */
--	return regmap_update_bits(info->regmap, AXP20X_ADC_EN1,
--				  AXP288_ADC_EN_MASK, AXP288_ADC_EN_MASK);
-+	return regmap_set_bits(info->regmap, AXP20X_ADC_EN1,
-+			       AXP288_ADC_EN_MASK);
- }
- 
- static const struct iio_info axp288_adc_iio_info = {
 
 -- 
 2.45.2
