@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-22926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 442FA90B934
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 20:12:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CD0C90BA04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 20:46:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BDFF61F24DE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 18:12:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3D70A1C2399D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 18:46:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F79E19925A;
-	Mon, 17 Jun 2024 18:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 942BA198A35;
+	Mon, 17 Jun 2024 18:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ku6VU/Ao"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dhrp9DpT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E339B1993A5;
-	Mon, 17 Jun 2024 18:09:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5A0198A29
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 18:46:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718647780; cv=none; b=Y23/sf3jUZj+K3GQokj0q2J5waljGHCF64jKcxpwd6a7OK1auL6/bayX6vV6ArljZ4f7k54G/ftxO919SI3K3kyMkbOfkNyrp1j0vJLNaF4UJ7/DP6i/lSQdOOyaqaiEwok1u8LbRvqL+yZ8N4KNevGwsGMLF12Nq+JQ1gRlvTg=
+	t=1718649972; cv=none; b=PE5gjGXha5kRu9aZaiXWZ5YdueZF1WZlpXaqAOlZ8ASgRv10X4V2ToaTGq0wrhkuP+7IcN9J29M58esGk2s5YvKuVNLDDLIJ8Sgq5RzssPHPM9tA2jbkQKNKVJyB4UBVAV6Lutk94ibMWVVskQWBHCWeQkWgIA3c7NO+zgMg/1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718647780; c=relaxed/simple;
-	bh=BgaGJHJM8e0w3ayyh4Gy75kBov3Jf6uhGK/GjAr+ss4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HIF9BKj0i+9XYw0IgvL14SRaZWtaOft6Poyzdri3hWJ9cRhfgxrCme8ffcGKvUL5PzOcRfVF7VZ+ctfonPTUoiZf2GTJb1dq5kUduhpP9MOJ0gZfxpK/u8cNy5oMYLDbsxJH0ZOvpHz9MvGeIIst3tXxRIXyFJlFmSCRdI2P8LY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ku6VU/Ao; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HAetPo007945;
-	Mon, 17 Jun 2024 18:09:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ib0UBtopQ7Vlu5fIvwkd65iDqdQlVjR9uW1C9htA5NA=; b=Ku6VU/Aozk+Gg6la
-	AGOrUAbYcZCpxaJyfVwNKjYlq1+IwXRma0OgmNoQvn5WJLupdg+YAJ8x2LjR8F53
-	1vLzztQ1/MVETXu+GiIngbc70KZuKmDYuoMfn1TB1UNqEFaG7rN50fiWEo9p+YbL
-	4+c2ZfFMNcLN35JDE4FiiM920umxZ71r3P4JUjStOrLW4VXgpkB51Bu1mouT/ITB
-	8n95Qd5/yN2bPQieLdbb9hL/AkAwVCPZ2+HZgblvRlj2KbrYKcK43Luee+YOG8Bk
-	bf1sibk4gzZohu2peGvwIM1Q2JKG/ZT8UzPD1aEaCrlk3r5+3cGzBy3365/2v/PG
-	8//Yww==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ys0nfcqn7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Jun 2024 18:09:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45HI9MqO018146
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 17 Jun 2024 18:09:22 GMT
-Received: from [10.110.42.69] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 17 Jun
- 2024 11:09:21 -0700
-Message-ID: <3e45ed90-aacd-46ec-bb8b-408bc1a66883@quicinc.com>
-Date: Mon, 17 Jun 2024 11:09:21 -0700
+	s=arc-20240116; t=1718649972; c=relaxed/simple;
+	bh=vrAyJilbjcV5By4evqrxxBOp4Ux0PY6zIiSvzKsRCa0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ju0PcaYgwU6g1hYE0PGFeIoXRoFhbaqA+b+DaFSFBTILpId29NprU1Mzm7h7GmQanI74m5J8bm7xOG1FVBElZ3M+veHYeEz0X4A0Xw/8sKgA0WJCdcrhiQNZpArow7KSTGJxvdbzp0fbAQZ6ypZ4zdqpX1s/X/v/tnM/Q+ac93M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dhrp9DpT; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ec1620a956so42983591fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 11:46:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718649969; x=1719254769; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BgOgT/09Gam/jySqVngD92Hs65MR72xFegxS0POAmPU=;
+        b=dhrp9DpTCelF22LL0cAoCQxhCRWGO0EmsChOhEr7wuXKRJYnPpBB8cuqvRyzvwnXrS
+         bMl5qjvN161UvU3HSJkPcwcyIK9KHsfRuim4LPu0Cn10LBVbHj3LpTonwa8xhs8bdK6n
+         il7qu6oYrFpKhPTERoK/iTR9C53HCFodOTN/rbYe9czXz6J4AuN0d/H27G5on+ixxm15
+         b6PgJT6jqj1rfYAKdpYDhlG4Hc6EBOA2KpaVjABhe/gzq5j70q46i5VFABrwq8Zm1laU
+         tW++dfXDhH1mQvqZcpGxcyL9qcOxYDAcZqjjBa33vWyxj+mE5mFx8A/NeqbMZVV7jWlW
+         C/Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718649969; x=1719254769;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BgOgT/09Gam/jySqVngD92Hs65MR72xFegxS0POAmPU=;
+        b=sWc5qyS0O341jmj2Gn6Kdmi22JDyvC+rEUKgLmpKDj11bKjtgij49eaBnJzMfLrLLA
+         tTc70aUYtaejo69Np2i4mONutLvINp1XuOfksThVkGNPwIs/UJSQ/CBapk5BmfFRSzFC
+         Rrp3XVUzdqqQH5fky5l7qsmbxZlOYwp2IJnKMW3ZOvHExOZB137MTCkAuW1VWxMiBGYs
+         14+QO/KCSUNvdwQuGjLvsxS6BtkHnnnuC9S9C30LGHuDLYLK109bRpYRMKtCLmawHD45
+         +pD69knbq/TOMTH9E2e+IX14gvK8MZRHR4+mUuzoG9hozGNBnGpj3taKOFaqB7evsMLy
+         VFJg==
+X-Forwarded-Encrypted: i=1; AJvYcCVzCLycs4jQVBAU2uiXf/Oygft3xm1e4D50YOMigx0ED9pL84xy7q5/kEpyJs2mLI1bXf0S5F1SEh1glTFBtAV2sntmBtio8N0qqQJcHA==
+X-Gm-Message-State: AOJu0YyMhsM/AwBYAfsg6vRpi1e2mMi8dKGo7K+MnRr1IgPY1dsaWshf
+	Y1A/bvMnyCzl/AsSD7dSk1nhZKOumsAWV3R+duy18ObaXd3c7PdwNk0sg3EHY/Y=
+X-Google-Smtp-Source: AGHT+IGTvrqA0QMatNcJ9Ht9SMK9eh4QoBCbNSEqn42ZlCChdETJHTwIvkwYiX47qYq6wfh+YlZliA==
+X-Received: by 2002:a2e:2d02:0:b0:2ec:2525:95c with SMTP id 38308e7fff4ca-2ec25250c0bmr37270941fa.23.1718649968683;
+        Mon, 17 Jun 2024 11:46:08 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:cb2:a9df:9f88:17b:c7e7:fa59? ([2a00:f41:cb2:a9df:9f88:17b:c7e7:fa59])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c78400sm14420951fa.84.2024.06.17.11.46.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Jun 2024 11:46:08 -0700 (PDT)
+Message-ID: <5960e011-dd10-41c1-8805-765e0c1ddcde@linaro.org>
+Date: Mon, 17 Jun 2024 20:46:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,216 +76,65 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/2] PCI: Add Qualcomm PCIe ECAM root complex driver
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: Rob Herring <robh@kernel.org>, <linux-pci@vger.kernel.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>, <bhelgaas@google.com>,
-        <andersson@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_ramkri@quicinc.com>,
-        <quic_nkela@quicinc.com>, <quic_shazhuss@quicinc.com>,
-        <quic_msarkar@quicinc.com>, <quic_nitegupt@quicinc.com>
-References: <1712257884-23841-3-git-send-email-quic_mrana@quicinc.com>
- <20240405052918.GA2953@thinkpad>
- <e2ff3031-bd71-4df7-a3a4-cec9c2339eaa@quicinc.com>
- <20240406041717.GD2678@thinkpad>
- <0b738556-0042-43ab-80f2-d78ed3b432f7@quicinc.com>
- <20240410165829.GA418382-robh@kernel.org>
- <c623951e-1b47-4e0b-bfa4-338672a5eeb9@quicinc.com>
- <ee4c0b2b-7a3b-43d1-90b6-369be2194a65@quicinc.com>
- <20240606023952.GA3481@thinkpad>
- <ab551d96-c27e-40b7-9534-9e4b3c8a5a3c@quicinc.com>
- <20240612061454.GF2645@thinkpad>
+Subject: Re: [PATCH v4 3/8] serial: qcom-geni: Fix the timeout in
+ qcom_geni_serial_poll_bit()
+To: Douglas Anderson <dianders@chromium.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>
+Cc: Yicong Yang <yangyicong@hisilicon.com>, Tony Lindgren <tony@atomide.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Johan Hovold <johan+linaro@kernel.org>,
+ John Ogness <john.ogness@linutronix.de>, linux-arm-msm@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+ Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+References: <20240610222515.3023730-1-dianders@chromium.org>
+ <20240610152420.v4.3.I3e1968bbeee67e28fd4e15509950805b6665484a@changeid>
 Content-Language: en-US
-From: Mayank Rana <quic_mrana@quicinc.com>
-In-Reply-To: <20240612061454.GF2645@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ulhjlBKLiFF30fI3tGSGwY1eClQGkPzn
-X-Proofpoint-ORIG-GUID: ulhjlBKLiFF30fI3tGSGwY1eClQGkPzn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-17_14,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- adultscore=0 clxscore=1015 suspectscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406170141
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240610152420.v4.3.I3e1968bbeee67e28fd4e15509950805b6665484a@changeid>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
 
-On 6/11/2024 11:14 PM, Manivannan Sadhasivam wrote:
-> On Mon, Jun 10, 2024 at 10:17:31AM -0700, Mayank Rana wrote:
->>
->> On 6/5/2024 7:39 PM, Manivannan Sadhasivam wrote:
->>> On Fri, May 31, 2024 at 03:47:24PM -0700, Mayank Rana wrote:
->>>> Hi Rob / Mani
->>>>
->>>> On 4/15/2024 4:30 PM, Mayank Rana wrote:
->>>>> Hi Rob
->>>>>
->>>>> Excuse me for late response on this (was OOO).
->>>>> On 4/10/2024 9:58 AM, Rob Herring wrote:
->>>>>> On Mon, Apr 08, 2024 at 11:57:58AM -0700, Mayank Rana wrote:
->>>>>>> Hi Mani
->>>>>>>
->>>>>>> On 4/5/2024 9:17 PM, Manivannan Sadhasivam wrote:
->>>>>>>> On Fri, Apr 05, 2024 at 10:41:15AM -0700, Mayank Rana wrote:
->>>>>>>>> Hi Mani
->>>>>>>>>
->>>>>>>>> On 4/4/2024 10:30 PM, Manivannan Sadhasivam wrote:
->>>>>>>>>> On Thu, Apr 04, 2024 at 12:11:24PM -0700, Mayank Rana wrote:
->>>>>>>>>>> On some of Qualcomm platform, firmware
->>>>>>>>>>> configures PCIe controller into
->>>>>>>>>>> ECAM mode allowing static memory allocation for
->>>>>>>>>>> configuration space of
->>>>>>>>>>> supported bus range. Firmware also takes care of
->>>>>>>>>>> bringing up PCIe PHY
->>>>>>>>>>> and performing required operation to bring PCIe
->>>>>>>>>>> link into D0. Firmware
->>>>>>>>>>> also manages system resources (e.g.
->>>>>>>>>>> clocks/regulators/resets/ bus voting).
->>>>>>>>>>> Hence add Qualcomm PCIe ECAM root complex driver
->>>>>>>>>>> which enumerates PCIe
->>>>>>>>>>> root complex and connected PCIe devices.
->>>>>>>>>>> Firmware won't be enumerating
->>>>>>>>>>> or powering up PCIe root complex until this
->>>>>>>>>>> driver invokes power domain
->>>>>>>>>>> based notification to bring PCIe link into D0/D3cold mode.
->>>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>> Is this an in-house PCIe IP of Qualcomm or the same
->>>>>>>>>> DWC IP that is used in other
->>>>>>>>>> SoCs?
->>>>>>>>>>
->>>>>>>>>> - Mani
->>>>>>>>> Driver is validated on SA8775p-ride platform using PCIe DWC IP for
->>>>>>>>> now.Although this driver doesn't need to know used PCIe
->>>>>>>>> controller and PHY
->>>>>>>>> IP as well programming sequence as that would be taken
->>>>>>>>> care by firmware.
->>>>>>>>>
->>>>>>>>
->>>>>>>> Ok, so it is the same IP but firmware is controlling the
->>>>>>>> resources now. This
->>>>>>>> information should be present in the commit message.
->>>>>>>>
->>>>>>>> Btw, there is an existing generic ECAM host controller driver:
->>>>>>>> drivers/pci/controller/pci-host-generic.c
->>>>>>>>
->>>>>>>> This driver is already being used by several vendors as
->>>>>>>> well. So we should try
->>>>>>>> to extend it for Qcom usecase also.
->>>>>>
->>>>>> I would take it a bit further and say if you need your own driver, then
->>>>>> just use the default QCom driver. Perhaps extend it to support ECAM.
->>>>>> Better yet, copy your firmware setup and always configure the QCom h/w
->>>>>> to use ECAM.
->>>>> Good suggestion. Although here we are having 2 set of requirements:
->>>>> 1. ECAM configuration
->>>>> 2. Managing PCIe controller and PHY resources and programming from
->>>>> firmware as well
->>>>> Hence it is not feasible to use default QCOM driver.
->>>>>> If you want to extend the generic driver, that's fine, but we don't need
->>>>>> a 3rd.
->>>>> I did consider this part before coming up with new driver. Although I
->>>>> felt that
->>>>> below mentioned functionality may not look more generic to be part of
->>>>> pci-host-generic.c driver.
->>>>>>> I did review pci-host-generic.c driver for usage. although there
->>>>>>> are more
->>>>>>> functionalityneeded for use case purpose as below:
->>>>>>> 1. MSI functionality
->>>>>>
->>>>>> Pretty sure the generic driver already supports that.
->>>>> I don't find any MSI support with pci-host-generic.c driver.
->>>>>>> 2. Suspend/Resume
->>>>>>
->>>>>> Others might want that to work as well.
->>>>> Others firmware won't have way to handle D3cold and D0 functionality
->>>>> handling as
->>>>> needed here for supporting suspend/resume as I don't find any interface
->>>>> for pci-host-generic.c driver to notify firmware. here we are having way
->>>>> to talk to firmware using GenPD based power domain usage to communicate
->>>>> with firmware.
->>>>>
->>>>>>> 3. Wakeup Functionality (not part of current change, but would be added
->>>>>>> later)
->>>>>>
->>>>>> Others might want that to work as well.
->>>>> possible if suspend/resume support is available or used.
->>>>>>> 4. Here this driver provides way to virtualized PCIe controller.
->>>>>>> So VMs only
->>>>>>> talk to a generic ECAM whereas HW is only directed accessed by
->>>>>>> service VM.
->>>>>>
->>>>>> That's the existing driver. If if doesn't work for a VM, fix the VM.
->>>>> Correct.
->>>>>>> 5. Adding more Auto based safety use cases related implementation
->>>>>>
->>>>>> Now that's just hand waving.
->>>>> Here I am trying to provide new set of changes plan to be added as part
->>>>> of required functionality.
->>>>>
->>>>>>> Hence keeping pci-host-generic.c as generic driver where above
->>>>>>> functionality
->>>>>>> may not be needed.
->>>>>>
->>>>>> Duplicating things to avoid touching existing drivers is not how kernel
->>>>>> development works.
->>>>> I shall try your suggestion and see how it looks in terms of code
->>>>> changes. Perhaps then we can have more clarity in terms of adding more
->>>>> functionality into generic or having separate driver.
->>>> I just learnt that previously dwc related PCIe ECAM driver and MSI
->>>> controller driver tried out as:
->>>>
->>>> https://lore.kernel.org/linux-pci/20170821192907.8695-1-ard.biesheuvel@linaro.org/
->>>>
->>>> Although there were few concerns at that time. Due to that having dwc
->>>> specific MSI functionality based driver was dropped, and pci-host-generic.c
->>>> driver is being updated using with dwc/snps specific ECAM operation.
->>>>
->>>> In current discussion, it seems that we are discussing to have identical
->>>> approach here.
->>>>
->>>> Atleast on Qualcomm SA8775p platform, I don't have any other way to support
->>>> MSI functionality i.e. extended SPI or ITS/LPI based MSI or using GICv2m
->>>> functionality are not supported.
->>>>
->>>> I don't see any other approach other than MSI based implementation within
->>>> pci-host-generic.c driver for dwc/snps based MSI controller.
->>>>
->>>> Do you have any suggestion on this ?
->>>>
->>>
->>> Since this ECAM driver is going to be used in newer Qcom SoCs, why can't you use
->>> GICv3 for MSI handling?
->> Yes, that is plan further as look like we have limitation on just SA8775.
->> So I see two options here:
->> 1. Update pcie-host-generic.c without MSI based functionality, and leave
->> with MSI functionality differently on SA8775
->> 2. Also possible to make pcie-host-designware.c based MSI functionality as
->> separate driver, and try to use with pcie-host-generic.c driver. That way we
->> would still use existing MSI related code base, and able to use with ECAM
->> driver.
->>
->> Do you see using above option 2 as good way to allow SNPS/DWC based MSI
->> controller functionality with ECAM and Non-ECAM driver ?
->>
+On 6/11/24 00:24, Douglas Anderson wrote:
+> The qcom_geni_serial_poll_bit() is supposed to be able to be used to
+> poll a bit that's will become set when a TX transfer finishes. Because
+> of this it tries to set its timeout based on how long the UART will
+> take to shift out all of the queued bytes. There are two problems
+> here:
+> 1. There appears to be a hidden extra word on the firmware side which
+>     is the word that the firmware has already taken out of the FIFO and
+>     is currently shifting out. We need to account for this.
+> 2. The timeout calculation was assuming that it would only need 8 bits
+>     on the wire to shift out 1 byte. This isn't true. Typically 10 bits
+>     are used (8 data bits, 1 start and 1 stop bit), but as much as 13
+>     bits could be used (14 if we allowed 9 bits per byte, which we
+>     don't).
 > 
-> IMO, it is not worth splitting the code just for one platform since you said the
-> future ECAM based platforms will not require DWC MSI.
+> The too-short timeout was seen causing problems in a future patch
+> which more properly waited for bytes to transfer out of the UART
+> before cancelling.
 > 
-> But if you have a strong requirement to use upstream DWC MSI for SA8775, then
-> you can do the split.
-I feel it is better to have DWC MSI mechanism available in split fashion 
-so other driver like ECAM
-driver can utilize. So will update patchset here for review purpose.
+> Rather than fix the calculation, replace it with the core-provided
+> uart_fifo_timeout() function.
+> 
+> NOTE: during earlycon, uart_fifo_timeout() has the same limitations
+> about not being able to figure out the exact timeout that the old
+> function did. Luckily uart_fifo_timeout() returns the same default
+> timeout of 20ms in this case. We'll add a comment about it, though, to
+> make it more obvious what's happening.
+> 
+> Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
+> Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-> - Mani
-> 
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
 
