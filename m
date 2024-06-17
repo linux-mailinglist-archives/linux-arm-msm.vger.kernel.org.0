@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-22797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0596090A176
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 03:04:52 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71F9B90A160
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 03:03:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B096E1F20FD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 01:04:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 76A4CB2168A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 01:03:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5087313A895;
-	Mon, 17 Jun 2024 00:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CDBB13048C;
+	Mon, 17 Jun 2024 00:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nLyFzZjO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PcM92Xnc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7A2441F;
-	Mon, 17 Jun 2024 00:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66AE7D07D;
+	Mon, 17 Jun 2024 00:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718585984; cv=none; b=J6stmeJShWAwFymOMj+mw4a3XKiWcgtqS9zQogmsNW2s4/BTS/0rQHj40ldvs8k3dqRHdufrOMp0IiGU5Z6E0S7gJ4vLCb/i2MAc9NbQTQ7s+0SjX7GRNFO5mbvlWttT/J6H4iNxrUvTRUsnDB9nQzOayJf+6rBcicMaVtljQGk=
+	t=1718585964; cv=none; b=qlu1X1r5uM3uTo9ljC63K/pZq2GfBmtdaFI3fHkYxpXDFNyuOSPM5DeQHsciiwJeFECYVdw4/HO0XRZNmxHVGS3BZZmkTVBLR9fTHiHcdoOSeVNe8QRj5aJkObogCiLq46gS0bgvyL5spiQfMynIi59swpkekt+B0dTYFTMVcNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718585984; c=relaxed/simple;
-	bh=5bYHipe++QDfZuNjUSFAEEQHl1D6NdV4h+YnIjUT0Rk=;
+	s=arc-20240116; t=1718585964; c=relaxed/simple;
+	bh=nLaJ763JoKOtacNJ6G+28sdnSJvU/Bxl80quLsGmOX8=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DSHCrV9NlAZGYtqOym/mohtEK0whk32+sw8pvSB4EZEibjPKIM0FLhoYKGSCe490Pqw4/j+d9HSMbwJkYLEOw1p3S7HmIac0b+q/Yx0P/Npt2a97XFYhT2XWwRy+9kdN/DTgcisoVfO7Jb8R9YZr+8LDj6FUTkj11KQa60vEreQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nLyFzZjO; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=dFOfya2GB9fSHTUP5dBe34eH5m9u9GnRtUfRH+dqkN2E5M9Dh02RrbSvHF2FoTGam55XIiAbfOjF5UH9mlIs/Ezo9Fy5VAL97Z3DZ+m9JY7kTCFJHdrloQA9jsLZWp0QhTEG/uDy/wMZeQY4HKLzPL+QK0qLYMnmRjegouTYtr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PcM92Xnc; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45GMime2002279;
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45GN9UQR009282;
 	Mon, 17 Jun 2024 00:59:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wnnOipFym8Nc/CwOiHlCvif70ZzeDQ60T15CeLLjB1c=; b=nLyFzZjO/2GNhG8D
-	zBvKMYpfb7EbRJYMkTbwejsQvcKOssFXmNai+dB0k9MPzKgtjlliPUJtmulRZ4u2
-	Arj78gfzasGeFDaP6Kxi+bq/2uHlPFw7UHrULpu+rfJIU49DDXoEm7ks4uY73ueE
-	6pAlhZ2K9XRKZg4Da/o4MyzX7/m4BX26af3WMCwFHrvitCufLWABvMeuBcMlSayF
-	UMJzFpiVVWgJGi2MJrzaRDcbgA0S6u99o9XqTBxWZH+xszAyNV4IEiSRijk8S5K+
-	Ll8mCYX6sjglcxXfqfswFERabHgx4qrbufif1BuCsrtgig6BjrPk+aNFwx3qlKz7
-	zpuDiw==
+	PyLW/o4dvKubRNegnKftn1L2MxxP06Jt3vQL+ViGRzg=; b=PcM92XncvLJm7Bcf
+	ZEObgNDzNsEc7BzzTSSBO61m7KlX+gBfhbFC64whsECPMYFOgQb1DDdeHfQaRxYb
+	qB1lnhydFqF5E1tunmahSIIq4KHsCyGWHCoV8rpkBLbKfK2Jbtfh9nrsHbkBTAHM
+	Y4sWVcYQmBZ+Puhd4guoPiNnBezrYIT0suCIq6Jg5pvsEdqqLkgZCqvbFdAhzTuD
+	I5M92owMnCOxuiF6XXl60DMzjsMDgvVH0k0/peZRkh8bhwAr13kgGMLbs00aJJD0
+	aUQJ6fp8bcGzS2gItHDeQ2a82aKe8xLCd8J0CdMnR9AZk0NOpIwBp2IcJZKz3cQp
+	SfcBZg==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ys0nfancv-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ys0nfancw-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Mon, 17 Jun 2024 00:59:02 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45H0x1RR027026
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45H0x1RS027026
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Mon, 17 Jun 2024 00:59:01 GMT
 Received: from hu-gaurkash-lv.qualcomm.com (10.49.16.6) by
@@ -72,9 +72,9 @@ CC: <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
         <psodagud@quicinc.com>, <quic_apurupa@quicinc.com>,
         <sonalg@quicinc.com>, Gaurav Kashyap
 	<quic_gaurkash@quicinc.com>
-Subject: [PATCH v5 10/15] ufs: host: wrapped keys support in ufs qcom
-Date: Sun, 16 Jun 2024 17:51:05 -0700
-Message-ID: <20240617005825.1443206-11-quic_gaurkash@quicinc.com>
+Subject: [PATCH v5 11/15] ufs: host: implement derive sw secret vop in ufs qcom
+Date: Sun, 16 Jun 2024 17:51:06 -0700
+Message-ID: <20240617005825.1443206-12-quic_gaurkash@quicinc.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240617005825.1443206-1-quic_gaurkash@quicinc.com>
 References: <20240617005825.1443206-1-quic_gaurkash@quicinc.com>
@@ -90,8 +90,8 @@ X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DVGqQVOPhajQUVphC1C-8HECNrqS-Z0s
-X-Proofpoint-ORIG-GUID: DVGqQVOPhajQUVphC1C-8HECNrqS-Z0s
+X-Proofpoint-GUID: vb7tgVaQXLuMDxtqaTML0qMnqllkXHUa
+X-Proofpoint-ORIG-GUID: vb7tgVaQXLuMDxtqaTML0qMnqllkXHUa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-16_12,2024-06-14_03,2024-05-17_01
@@ -101,47 +101,53 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscor
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2405170001 definitions=main-2406170006
 
-Use the wrapped keys quirk when hwkm is supported/used.
-Whether to use HWKM or not would be decided during an ICE
-probe, and based on this information, UFS can decide to use
-wrapped keys or standard keys.
-
-Also, propagate the appropriate key size to the ICE driver
-when wrapped keys are used.
+UFS core defines a variant op to tie the corresponding
+derive software secret blk crypto op to the vendor specific
+implementation of wrapped keys. This patch implements
+this variant op.
 
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
 Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
 ---
- drivers/ufs/host/ufs-qcom.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/ufs/host/ufs-qcom.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 82584bb318fb..16f846f4a0c3 100644
+index 16f846f4a0c3..d6ac9c147303 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -129,6 +129,8 @@ static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
- 
- 	host->ice = ice;
- 	hba->caps |= UFSHCD_CAP_CRYPTO;
-+	if (qcom_ice_hwkm_supported(host->ice))
-+		hba->quirks |= UFSHCD_QUIRK_USES_WRAPPED_CRYPTO_KEYS;
- 
- 	return 0;
+@@ -182,9 +182,23 @@ static int ufs_qcom_ice_program_key(struct ufs_hba *hba,
+ 		return qcom_ice_evict_key(host->ice, slot);
  }
-@@ -166,7 +168,11 @@ static int ufs_qcom_ice_program_key(struct ufs_hba *hba,
- 	    cap.key_size != UFS_CRYPTO_KEY_SIZE_256)
- 		return -EOPNOTSUPP;
  
--	ice_key_size = QCOM_ICE_CRYPTO_KEY_SIZE_256;
-+	if (bkey->crypto_cfg.key_type == BLK_CRYPTO_KEY_TYPE_HW_WRAPPED)
-+		ice_key_size = QCOM_ICE_CRYPTO_KEY_SIZE_WRAPPED;
-+	else
-+		ice_key_size = QCOM_ICE_CRYPTO_KEY_SIZE_256;
++/*
++ * Derive a software secret from a hardware wrapped key. The key is unwrapped in
++ * hardware from trustzone and a software key/secret is then derived from it.
++ */
++static int ufs_qcom_ice_derive_sw_secret(struct ufs_hba *hba, const u8 wkey[],
++					 unsigned int wkey_size,
++					 u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
++{
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
 +
- 	if (config_enable)
- 		return qcom_ice_program_key(host->ice,
- 					    QCOM_ICE_CRYPTO_ALG_AES_XTS,
++	return qcom_ice_derive_sw_secret(host->ice, wkey, wkey_size, sw_secret);
++}
++
+ #else
+ 
+ #define ufs_qcom_ice_program_key NULL
++#define ufs_qcom_ice_derive_sw_secret NULL
+ 
+ static inline void ufs_qcom_ice_enable(struct ufs_qcom_host *host)
+ {
+@@ -1810,6 +1824,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
+ 	.device_reset		= ufs_qcom_device_reset,
+ 	.config_scaling_param = ufs_qcom_config_scaling_param,
+ 	.program_key		= ufs_qcom_ice_program_key,
++	.derive_sw_secret	= ufs_qcom_ice_derive_sw_secret,
+ 	.reinit_notify		= ufs_qcom_reinit_notify,
+ 	.mcq_config_resource	= ufs_qcom_mcq_config_resource,
+ 	.get_hba_mac		= ufs_qcom_get_hba_mac,
 -- 
 2.43.0
 
