@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-22901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07D9890B2AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 16:45:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 65C5390B2B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 16:45:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E99C41C2135B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 14:45:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E92C1C21D54
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 14:45:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F02C71D3652;
-	Mon, 17 Jun 2024 13:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30E851D1906;
+	Mon, 17 Jun 2024 13:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="oazY+j9j"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="hZXZGfed"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D991D0F77
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 13:51:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608EA1D18E4
+	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 13:51:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718632270; cv=none; b=UkIy1y1fPn2fiB6H0/d/LxmvFQ2HwRo/nzOh/J2f+0L5ZlfwokFI4B+nGHawPNdkSchq/Ij6w+kv5PO8qrm9tUYKxC8bBSIwa8dgD7gqOQxHO6YNee1JBVapRlwcxK8GN2ktuXwMWylpHzPJf5olp95VE5JP5kbTczMEoo1kmGk=
+	t=1718632273; cv=none; b=YXMf5RIxVX3PSu5A5s4fdX0vh2QAlAeTikcMjxvn42voEJW74gG3D1K6FtCnwjjn6yqzUaeq8DViWX9zSON4OduQjY7w6l8XFNUpNQQQ5rOrrpH6g0GIWE9p7prEtnajPHaHtQEKdkhF4m88mkElOSKW8z/WF4/CbkrKM+8W7XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718632270; c=relaxed/simple;
-	bh=lrT4UVJxbYPigfpUfvDqNd6ndl1eVcIzUfVJ/1QCCbs=;
+	s=arc-20240116; t=1718632273; c=relaxed/simple;
+	bh=/iTmUukNGLPGvGh+5363cpZBdKYe1qLwwMB3hsIs3J4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Gexd6DaQRSmu6B0nW0TMi1C+InTI4G0Ylhd2sB0np1XYsZKILuKPfBaKA7IfoxgL2bz/WAF/MUMHPpxl95KdhkeHiBhF7wcjpVpIXipZl/hP1cTaOTJYWQrIoBX0E0mFDx2PtQr7esU7d+dWtyCdZ9mPqljtLRWCRSP4S4YwrKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=oazY+j9j; arc=none smtp.client-ip=209.85.160.177
+	 In-Reply-To:To:Cc; b=EykoAq29jn79nRJNPUJjpQ3ErHQg2XVyISJS1FicRq5/ctr4e0eKGSa6scswdlUzmb3JnD9mo5UW6X5VEly+HqYd38TGbg28S/NYwC2wzFNpoL0b7SdRyJqGhRqCrgBlphe12iIsG2yQ0sY+elJf/CDmq4V9/RT1hxjuZhyYdxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=hZXZGfed; arc=none smtp.client-ip=209.85.222.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-44051a92f37so35894571cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 06:51:09 -0700 (PDT)
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-7953f1dcb01so389098485a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 06:51:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1718632268; x=1719237068; darn=vger.kernel.org;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1718632270; x=1719237070; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Tvabn+RMpG3uovvK1+JaZOuuhTQ0Y5v5qxh3XvN8Rq8=;
-        b=oazY+j9jwiHu0wxRO+kO36SdiQE/16HGaJhB4FIWY5UrZ0KsiD6p+Gd9qRuS1Vcw6u
-         C9kjFmUwnRGZ/kYmgeXlDQ9WBmPJUzoeOqDJMKgbItUFuqHB26M2343sNgn0D/PBKclg
-         TpmoiCWRVK0CD0JBqzqNpMNsYf3D7CjWKY7/MCq6AqlaU4eYgGz6i1jArVfQzzUVKV/p
-         VFoneSUaG/HOwh8a3O+hd9q3V+O5gPWPENe6Z1j/OxUqNTMKPMqEQ80UvQ6Nzt4ztsUr
-         UYi49OqvZJtFBZOC8DxCCm41vvVWjNUglGzoLV1i8X9k5nEijO0wiG9v//HY60KfvA7f
-         qoNw==
+        bh=DYef8rADT2ijxxEcxYPLN7/oRY6yNh5EaRUGzmb2a/I=;
+        b=hZXZGfedqGZ/DvNsGkX5tE4xAdw1NkCaAByg98DAM6mRkVK+7hhc9IDOL7MDFFarr4
+         4SnGUKI3mGGx6x6o8Mjo3PUErArmkWud2UV8xZJ5R1B3dMHdN2kX2zXYviJwaCzc7NA9
+         irPcuixmQBa5s3/YTD8+4dPuWHgUVo7/tvZHfpVrukT5TiJCo2Cf9jUpXYjNHlLp7466
+         dML4fLqKWyjFQfJPH4o4bmsTyYRUYokC7PkGTozMB0YPD+InMd1Iwb4/7bjB4D/hPB9K
+         CATwehPSVMi6RiZY72TtfCjH7A/j3JK5A5DHXHMEVmtKczhzOCyTJPtXnTJV5lzXZ4iJ
+         3Edw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718632268; x=1719237068;
+        d=1e100.net; s=20230601; t=1718632270; x=1719237070;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Tvabn+RMpG3uovvK1+JaZOuuhTQ0Y5v5qxh3XvN8Rq8=;
-        b=tM6V2V4X+nPX+jDv5ZcjQ5+7Szm6CJvIHjKdNtPzBqRYRkouYm8UCf9o/NILYCNrH+
-         ktZ54EUGidVPCxRUzCV/7Y8QvoeSv7cAo+aZnnPprvlZOAHKSNtrzRy7Cj+h9dYiw1sN
-         dxJxKnb/If1vjodxh+fYCxhA3Xp1Wk/jbFbL8sbcLN8y5PXsf1vdQM2Cvy6Ouww7XWc1
-         6OHwiULDaecpiNrpE6rFxeaFBNB659bGu0B4fAKKIM0IGHx2hE8nZsoiQXnwEi4csdXk
-         CbU5ChZG/RZrE968Q1PxDjCitJYhtL8RoFBgFPGwfTc2wIL84sxF1hnqzMaa3Y0zNgUZ
-         BG3A==
-X-Forwarded-Encrypted: i=1; AJvYcCV6Vz+PVvFczG6LoJY28BCd3kmnlx+cF5YNH5VujqJul92X56QeCfZvjznNjKmiMNkbJtvlYaF/SBja3i6O+850auDEIxI1iGWkN/NAUQ==
-X-Gm-Message-State: AOJu0Yy0FnkcjGJXbNI7HgA4rkYFqJz3DiMaNiS5PcZhLY7yEyiyPpZC
-	kwD2KGAzda9V48HGuRAmnel2qrI1xJtAij6HPx5ATeq/2pBApCX1nAsH84o5N0Q=
-X-Google-Smtp-Source: AGHT+IGCNTX7XI85nrdMwm8HgjdhSBF2upAbofRDQ4N0lo0/7MseIEDdacRNTzR/tFRJhwns3PxO2A==
-X-Received: by 2002:ac8:71d7:0:b0:442:198e:cb9 with SMTP id d75a77b69052e-442198e0e4bmr132788711cf.27.1718632268400;
-        Mon, 17 Jun 2024 06:51:08 -0700 (PDT)
+        bh=DYef8rADT2ijxxEcxYPLN7/oRY6yNh5EaRUGzmb2a/I=;
+        b=KhLbhwnCRfqJeyLQuM3YCY2RWiVvf4bWA2TQIYn7IbAM6laAuwGVymfu1gJjDrk94c
+         78iCq69RmmpWfsXibxTx853d2ig7i+qkAaeARom9o4X2BJw0Imy+DgLJzfeCmH8XFNh6
+         yJZDYuLC8RhEfuG9iT4+ED30YRS4Uu0FWTczQrk9yszTrvGkstOKwxCcgCApXIQMxO8I
+         KrtncbReEMXXTnfj7kig4US1QPH95B5AEYAhfgiO+wRVnS9tzCN819G5ZOXAxcZpHjAm
+         2g1EenPr/hzA8q037vwU3j6ahRuS8v1xmS0o5VPWMH85PB7q+RHtlf5hWnIguKphejoD
+         +/fg==
+X-Forwarded-Encrypted: i=1; AJvYcCWflwwyC8FSW9rFO9eeWMptmcPffO3BXdunf2Vcn3ifXuwS/Y/rIrHUuSZLUqKbRe07sfAFvXJBUXGYHZEHpj3wYxAdeeGX0v98gEAE0g==
+X-Gm-Message-State: AOJu0YywTw0zE6zNfLh4hyARUJWVdTrrhUZV02VX/kIt/3IoW6jl/pEX
+	RBswPn5dh2SsPN6jZ7n2t3xvvrqG2syAvJXc0RZGcYNyN4DtmZVJnMpYihwiF3I=
+X-Google-Smtp-Source: AGHT+IG+NTpXbmfTtgLV5kgHRYZJqicJgvBNrkkmD2PI5YKClqNlpZ4QFEOEqllRaBP9Jcn3G+Ldqw==
+X-Received: by 2002:a05:620a:24d5:b0:795:50ef:4030 with SMTP id af79cd13be357-798d242f345mr1050763085a.41.1718632270523;
+        Mon, 17 Jun 2024 06:51:10 -0700 (PDT)
 Received: from megalith.oryx-coho.ts.net (d24-150-219-207.home.cgocable.net. [24.150.219.207])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-798aaecc004sm432892285a.31.2024.06.17.06.51.06
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-798aaecc004sm432892285a.31.2024.06.17.06.51.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jun 2024 06:51:08 -0700 (PDT)
+        Mon, 17 Jun 2024 06:51:10 -0700 (PDT)
 From: Trevor Gamblin <tgamblin@baylibre.com>
-Date: Mon, 17 Jun 2024 09:50:19 -0400
-Subject: [PATCH v3 39/41] iio: proximity: sx_common: make use of
- regmap_clear_bits(), regmap_set_bits()
+Date: Mon, 17 Jun 2024 09:50:20 -0400
+Subject: [PATCH v3 40/41] iio: temperature: mlx90632: make use of
+ regmap_clear_bits()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240617-review-v3-39-88d1338c4cca@baylibre.com>
+Message-Id: <20240617-review-v3-40-88d1338c4cca@baylibre.com>
 References: <20240617-review-v3-0-88d1338c4cca@baylibre.com>
 In-Reply-To: <20240617-review-v3-0-88d1338c4cca@baylibre.com>
 To: Jonathan Cameron <jic23@kernel.org>, 
@@ -113,44 +113,31 @@ Cc: linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
  Trevor Gamblin <tgamblin@baylibre.com>
 X-Mailer: b4 0.13.0
 
-Instead of using regmap_update_bits() and passing the mask twice, use
-regmap_set_bits().
-
 Instead of using regmap_update_bits() and passing val = 0, use
 regmap_clear_bits().
 
 Suggested-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Acked-by: Crt Mori <cmo@melexis.com>
 Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
 ---
- drivers/iio/proximity/sx_common.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/iio/temperature/mlx90632.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/proximity/sx_common.c b/drivers/iio/proximity/sx_common.c
-index fe07d1444ac3..a95e9814aaf2 100644
---- a/drivers/iio/proximity/sx_common.c
-+++ b/drivers/iio/proximity/sx_common.c
-@@ -111,17 +111,16 @@ static int sx_common_enable_irq(struct sx_common_data *data, unsigned int irq)
- {
- 	if (!data->client->irq)
- 		return 0;
--	return regmap_update_bits(data->regmap, data->chip_info->reg_irq_msk,
--				  irq << data->chip_info->irq_msk_offset,
--				  irq << data->chip_info->irq_msk_offset);
-+	return regmap_set_bits(data->regmap, data->chip_info->reg_irq_msk,
-+			       irq << data->chip_info->irq_msk_offset);
- }
+diff --git a/drivers/iio/temperature/mlx90632.c b/drivers/iio/temperature/mlx90632.c
+index 8a57be108620..e7de30f613d2 100644
+--- a/drivers/iio/temperature/mlx90632.c
++++ b/drivers/iio/temperature/mlx90632.c
+@@ -334,8 +334,8 @@ static int mlx90632_perform_measurement(struct mlx90632_data *data)
+ 	unsigned int reg_status;
+ 	int ret;
  
- static int sx_common_disable_irq(struct sx_common_data *data, unsigned int irq)
- {
- 	if (!data->client->irq)
- 		return 0;
--	return regmap_update_bits(data->regmap, data->chip_info->reg_irq_msk,
--				  irq << data->chip_info->irq_msk_offset, 0);
-+	return regmap_clear_bits(data->regmap, data->chip_info->reg_irq_msk,
-+				 irq << data->chip_info->irq_msk_offset);
- }
+-	ret = regmap_update_bits(data->regmap, MLX90632_REG_STATUS,
+-				 MLX90632_STAT_DATA_RDY, 0);
++	ret = regmap_clear_bits(data->regmap, MLX90632_REG_STATUS,
++				MLX90632_STAT_DATA_RDY);
+ 	if (ret < 0)
+ 		return ret;
  
- static int sx_common_update_chan_en(struct sx_common_data *data,
 
 -- 
 2.45.2
