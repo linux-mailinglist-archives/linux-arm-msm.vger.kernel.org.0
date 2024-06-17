@@ -1,73 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-22920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B72690B81E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 19:33:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E00D190B823
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 19:33:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DDFFA1F21CB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 17:33:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB2D81C20AB3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 17:33:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4946185E47;
-	Mon, 17 Jun 2024 17:33:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eemRY1f9"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E01F5185E4B;
+	Mon, 17 Jun 2024 17:33:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F66D185E42
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 17:33:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 862351849FE;
+	Mon, 17 Jun 2024 17:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718645608; cv=none; b=dSPVkC+G4mfG0MxxWVRkAjQ4H7laEqlf6HqF38rGadIGPbBHaXLkvX/jVYq+5eTjVFtN7DL9e8ytIf5W+rrf1i+nF3Lvv8ezz+TvQDK/MTIovvMSUp0TEcyBQijwRUDECaUq7DowG64fg7nZS9sMK4gaNYbpiRqEgYwgWdhvQoQ=
+	t=1718645631; cv=none; b=CnNqrcKx7cSjRHkoMTgF4ff/VDVR8T5NqwIRQPvQ8mhqAAp7+8CLC1b/0s43gjRR9KfOZ+NH+ghxbg/rOX9UxzPY+4ioHv1+bn7KdIQD1B0HL91StQw6BLbggukYC/OVIirJuHwgPVMQCR1gr4It/CpZdj50D8PUkj5HbgeaBoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718645608; c=relaxed/simple;
-	bh=PG3BCj9R30OdLhZZyfrDaoTTRFm41wylvyZJx2O0h7s=;
+	s=arc-20240116; t=1718645631; c=relaxed/simple;
+	bh=8HD1zQ5zKjAaAh1DTzhjXCg/KrwBgt3VPLU3rNNeg9s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UvtTCl0IzXZ+Spu6LXmHWMdjDUSaeCKPtwZsT9h4eEUMAYCd/NiEctIVBgrlovsl5a2v2yuwd1BltKI76aSEu0Kcy2MXo4U1CIy0KjAr5tT/NMZz0WbSl82F+BDL8yrb/5r2vMMLS8zuz1P1MuJbYU8dei3LCKg3YT/f8fNV2W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eemRY1f9; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52c94cf4c9bso5524963e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 10:33:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718645605; x=1719250405; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QFQCWRaqmBJq8+m4mF5hIPHwI1FBZDEXFQrG/Y1yGWA=;
-        b=eemRY1f91RGS4plsryR4G48mZYcM/u3ovmFRhDeqyKlDEZ9eRJ1eePQgRqck8D5XK7
-         O3alz5IWKZJ2dSECt2gC4BuTCIpldwv9sv2IJlgCHHj5Y3x3DomKE/0vOq9XpOKmby1/
-         OcqBhff9ysPeG0kz+93LThbz6FnjSpsTw0BySAflJ14pvYArOzBP19X7/nTKAWgboOBr
-         Ja7vUY4xWmP8rQYWshuD2r7gCJRnnoGwnJBZb1x++JIvZV0tFaqnh+ki4w1VUBbYEBmf
-         8lop1fy27a/x66K2rRbp9WAGkQUuoJbrVmnboY3U7QhYTIuGt5qfFZvmB+sl6JoiFNiq
-         j5bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718645605; x=1719250405;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QFQCWRaqmBJq8+m4mF5hIPHwI1FBZDEXFQrG/Y1yGWA=;
-        b=uv/loEuyJpSMKmyMPkXOrOczWclgPfBEEC4O6QTlQcC3KCRaHZNLK5HflL6+mBzbgZ
-         QnZyrJLTb6l6XHxD8yGi/qmGCOU+ECUhjZn8kBhQ15Xq1IQS/yF6B/H0PAwKiRI2yZIT
-         GmRJ/XCIVqs1T6lDBhxAowENYsrf/vls5dRHEpUuF0UhPPjivvRtxqrCHTm923on1n42
-         2MxRkChEnjWSxXY53Q+uqE6nSk8cpfIz45dLuGuSSpw8PQY3L6T06lZYvTqTZ7UUnVUQ
-         KEGaxWkwi9kBuR09pKkDrb1x1eFtzMvfYpNuYSNOpkwcQ+2flHux2w0GxVLXp5YcrngP
-         +1Lw==
-X-Gm-Message-State: AOJu0Ywft856ivkxmhYNVRCYINwscfF4u5+afQiknCzN0oqzVGY/9ks0
-	gFz2K8roxOsTBbEfa3vsu9i0lLG+1eqmvAE0X0HpXtx8rE5UH0NWdk9Hd9jq4WU=
-X-Google-Smtp-Source: AGHT+IGZ0XGwW8+FJ9oSqx6R/jJKEbazLowEP92ZnnjcgIC15UcSwHMBJpzMR4oEGE/iPCzK3fqrvA==
-X-Received: by 2002:a19:f60d:0:b0:52c:82bd:bc6f with SMTP id 2adb3069b0e04-52ca6e563ebmr6789043e87.11.1718645605467;
-        Mon, 17 Jun 2024 10:33:25 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:cb2:a9df:20fa:cfbe:9ea6:1fe8? ([2a00:f41:cb2:a9df:20fa:cfbe:9ea6:1fe8])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca2825863sm1283308e87.55.2024.06.17.10.33.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jun 2024 10:33:25 -0700 (PDT)
-Message-ID: <a31a2f94-d125-48fa-8e57-7aedee98063e@linaro.org>
-Date: Mon, 17 Jun 2024 19:33:22 +0200
+	 In-Reply-To:Content-Type; b=ZbOKj1Kx5H5iF2B/a2UHy9wVyZLDPR7ozVBbmbyiX9rHYCn/PSaY5N1q9w2Pet2NLmsdntNcgN/NE7OyFmfbEdFYNu2foDbnvAh0cs6U5QOPBBodH6DxY6+1ZH1uhjr9ki15HYndZe5NGeFq5JWAEhVS0vL+v8CS5r7WZQfPYrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8728ADA7;
+	Mon, 17 Jun 2024 10:34:13 -0700 (PDT)
+Received: from [10.1.31.45] (010265703453.arm.com [10.1.31.45])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D595B3F64C;
+	Mon, 17 Jun 2024 10:33:46 -0700 (PDT)
+Message-ID: <80fc63e5-0e79-47b3-91ae-90d7c7bc3f66@arm.com>
+Date: Mon, 17 Jun 2024 18:33:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,38 +42,132 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] arm64: dts: qcom: sdx75: add missing qlink_logging
- reserved memory for mpss
-To: Naina Mehta <quic_nainmeht@quicinc.com>, andersson@kernel.org,
- mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, manivannan.sadhasivam@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240617093428.3616194-1-quic_nainmeht@quicinc.com>
- <20240617093428.3616194-4-quic_nainmeht@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240617093428.3616194-4-quic_nainmeht@quicinc.com>
+Subject: Re: [PATCH] iommu/arm-smmu: Pretty-print context fault related regs
+To: Rob Clark <robdclark@gmail.com>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ Stephen Boyd <swboyd@chromium.org>, Rob Clark <robdclark@chromium.org>,
+ Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Jerry Snitselaar <jsnitsel@redhat.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+ open list <linux-kernel@vger.kernel.org>,
+ Pranjal Shrivastava <praan@google.com>
+References: <20240604150136.493962-1-robdclark@gmail.com>
+ <6f97a4b4-cdbe-466c-80d4-adc8da305f75@arm.com>
+ <CAF6AEGv+Ge2SD4=j1QhXfG+KkOzvFM+LieCqKuM20YL8gp5PRQ@mail.gmail.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <CAF6AEGv+Ge2SD4=j1QhXfG+KkOzvFM+LieCqKuM20YL8gp5PRQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-
-
-On 6/17/24 11:34, Naina Mehta wrote:
-> The qlink_logging memory region is also used by the modem firmware,
-> add it to reserved memory regions.
-> Also split MPSS DSM region into 2 separate regions.
+On 2024-06-17 5:18 pm, Rob Clark wrote:
+> On Mon, Jun 17, 2024 at 6:07 AM Robin Murphy <robin.murphy@arm.com> wrote:
+>>
+>> On 04/06/2024 4:01 pm, Rob Clark wrote:
+>>> From: Rob Clark <robdclark@chromium.org>
+>>>
+>>> Parse out the bitfields for easier-to-read fault messages.
+>>>
+>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>> ---
+>>> Stephen was wanting easier to read fault messages.. so I typed this up.
+>>>
+>>> Resend with the new iommu list address
+>>>
+>>>    drivers/iommu/arm/arm-smmu/arm-smmu.c | 53 +++++++++++++++++++++++++--
+>>>    drivers/iommu/arm/arm-smmu/arm-smmu.h |  5 +++
+>>>    2 files changed, 54 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>> index c572d877b0e1..06712d73519c 100644
+>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>> @@ -411,6 +411,8 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>>>        unsigned long iova;
+>>>        struct arm_smmu_domain *smmu_domain = dev;
+>>>        struct arm_smmu_device *smmu = smmu_domain->smmu;
+>>> +     static DEFINE_RATELIMIT_STATE(rs, DEFAULT_RATELIMIT_INTERVAL,
+>>> +                                   DEFAULT_RATELIMIT_BURST);
+>>>        int idx = smmu_domain->cfg.cbndx;
+>>>        int ret;
+>>>
+>>> @@ -425,10 +427,53 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+>>>        ret = report_iommu_fault(&smmu_domain->domain, NULL, iova,
+>>>                fsynr & ARM_SMMU_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+>>>
+>>> -     if (ret == -ENOSYS)
+>>> -             dev_err_ratelimited(smmu->dev,
+>>> -             "Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
+>>> -                         fsr, iova, fsynr, cbfrsynra, idx);
+>>> +     if (ret == -ENOSYS && __ratelimit(&rs)) {
+>>> +             static const struct {
+>>> +                     u32 mask; const char *name;
+>>> +             } fsr_bits[] = {
+>>> +                     { ARM_SMMU_FSR_MULTI,  "MULTI" },
+>>> +                     { ARM_SMMU_FSR_SS,     "SS"    },
+>>> +                     { ARM_SMMU_FSR_UUT,    "UUT"   },
+>>> +                     { ARM_SMMU_FSR_ASF,    "ASF"   },
+>>> +                     { ARM_SMMU_FSR_TLBLKF, "TLBLKF" },
+>>> +                     { ARM_SMMU_FSR_TLBMCF, "TLBMCF" },
+>>> +                     { ARM_SMMU_FSR_EF,     "EF"     },
+>>> +                     { ARM_SMMU_FSR_PF,     "PF"     },
+>>> +                     { ARM_SMMU_FSR_AFF,    "AFF"    },
+>>> +                     { ARM_SMMU_FSR_TF,     "TF"     },
+>>> +             }, fsynr0_bits[] = {
+>>> +                     { ARM_SMMU_FSYNR0_WNR,    "WNR"    },
+>>> +                     { ARM_SMMU_FSYNR0_PNU,    "PNU"    },
+>>> +                     { ARM_SMMU_FSYNR0_IND,    "IND"    },
+>>> +                     { ARM_SMMU_FSYNR0_NSATTR, "NSATTR" },
+>>> +                     { ARM_SMMU_FSYNR0_PTWF,   "PTWF"   },
+>>> +                     { ARM_SMMU_FSYNR0_AFR,    "AFR"    },
+>>> +             };
+>>> +
+>>> +             pr_err("%s %s: Unhandled context fault: fsr=0x%x (",
+>>> +                    dev_driver_string(smmu->dev), dev_name(smmu->dev), fsr);
+>>> +
+>>> +             for (int i = 0, n = 0; i < ARRAY_SIZE(fsr_bits); i++) {
+>>> +                     if (fsr & fsr_bits[i].mask) {
+>>> +                             pr_cont("%s%s", (n > 0) ? "|" : "", fsr_bits[i].name);
+>>
+>> Given that SMMU faults have a high likelihood of correlating with other
+>> errors, e.g. the initiating device also reporting that it got an abort
+>> back, this much pr_cont is a recipe for an unreadable mess. Furthermore,
+>> just imagine how "helpful" this would be when faults in two contexts are
+>> reported by two different CPUs at the same time ;)
 > 
-> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> ---
+> It looks like arm_smmu_context_fault() is only used with non-threaded
+> irq's.  And this fallback is only used if driver doesn't register it's
+> own fault handler.  So I don't think this will be a problem.
 
-The commit message is very misleading.. You're not adding
-qlink_logging, you're renaming qdss@8800000 to qlink_logging.
+You don't think two different IRQs can fire on two different CPUs at the 
+same time (or close to)? It's already bad enough when multiple CPUs 
+panic and one has to pick apart line-by-line interleaving of the 
+registers/stacktraces - imagine how much more utterly unusable that 
+would be with bits of different dumps randomly pr_cont'ed together onto 
+the same line(s)...
 
-Then, you add qdss_mem @ 88500000 and split the dsmharq_mem into two
-and shrink mpssadsp_mem.
+Even when unrelated stuff gets interleaved because other CPUs just 
+happen to be calling printk() at the same time for unrelated reasons 
+it's still annoying, and pr_cont makes a bigger mess than not.
+>> I'd prefer to retain the original message as-is, so there is at least
+>> still an unambiguous "atomic" view of a fault's entire state, then
+>> follow it with a decode more in the style of arm64's ESR logging. TBH I
+>> also wouldn't disapprove of hiding the additional decode behind a
+>> command-line/runtime parameter, since a fault storm can cripple a system
+>> enough as it is, without making the interrupt handler spend even longer
+>> printing to a potentially slow console.
+> 
+> It _is_ ratelimited.  But we could perhaps use a higher loglevel (pr_debug?)
 
-Please rewrite the commit message.
+Yeah, I'd have no complaint with pr_debug/dev_dbg either, if that suits 
+your use case. True that the ratelimit may typically mitigate the 
+overall impact, but still in the worst case with a sufficiently slow 
+console and/or a sufficiently large amount to print per __ratelimit() 
+call, it can end up being slow enough to stay below the threshold. Don't 
+ask me how I know that :)
 
-Konrad
+Thanks,
+Robin.
 
