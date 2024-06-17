@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-22846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E63290ACA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 13:13:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02B6F90AD0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 13:35:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5CE0282573
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 11:13:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 286441C21042
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 11:35:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46ED61946C6;
-	Mon, 17 Jun 2024 11:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DD97194ACE;
+	Mon, 17 Jun 2024 11:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="TWun6Tz0"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="EgmUKSMl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BE5194120;
-	Mon, 17 Jun 2024 11:13:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06E0191461;
+	Mon, 17 Jun 2024 11:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718622782; cv=none; b=AyRFyY2YfySpAGEjBFaVJISK+CY/EfQNKrKjSOekmIeW5SNyFIxr8i/IDkrUxSTfpMyQtgSEgHKigpDPW3ALRyXkc7+jUri6UHSyuBaIyjiIHOC9dPCsiMzJZ2t41Xuf8iWLkwHy9M/gUde6u9mAXfC3LJO/W+fCVEtKASiOF+E=
+	t=1718624135; cv=none; b=mseqWyiOCD/Q7IQIXQ/H3bSxpX4ajf8Eqo85j0ZBaKauQh6dh9GqHbdR6TsPmebECp8k+KqyOR0n5Aq34DYHKYiue+8qWLRXe/pGfBUMFD12s2xpzy3HhJg4Vv8R6EOIy3pFMmbbCzH2CXTgfyKq0OsxtfMChV+gz+PG5TdC938=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718622782; c=relaxed/simple;
-	bh=/L6WYMxSMfjTIoWr9t9k/aRtdxtiTotpKJC0bwZmths=;
+	s=arc-20240116; t=1718624135; c=relaxed/simple;
+	bh=XxliRVqdpWsKsqcEu3t/96tFWK1GpkWqJETGL+PV4nc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C3VinOnlC0USxFk4saZMyno8Ffpdc9MCU09NGAB2YNVw9J+bZaBe6DIA/LVYOVpNb9ztWVJ/Ew/iRHSunqxzlqSM52rVGe2CGFfx68Oaz1EdvI6EQ87bsxUPlkRaqDpZrmE3XbKTdcN0Y36vKpt2BS5JBMFXJk2ow35Cs2zrDjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=TWun6Tz0; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1718622778;
-	bh=/L6WYMxSMfjTIoWr9t9k/aRtdxtiTotpKJC0bwZmths=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TWun6Tz0mrFyu0Doh3GSFs5086lVufoWIuFjkxiKsPZHUQOo5/kxB2MOvTdkHoK4M
-	 l4YUhTOvHS6iKdIwIxJr+SYFYE4R3tSubri3gpAKeg6QauwUwxk8RGrhWTgKsJRkga
-	 WmuEAq1gxUD4FXTikNClu2mpX/GqqqZR9v0VNhWXWVooGlwaZSnITzWYVtrWMAdY/Q
-	 Gc1Sy3KP5c8iVAVzEodL3ey7mM4zKdz2E7c0MAl9n4oWfGTO9aciNFSPuXhlGTSJ4A
-	 mnRmhAVp0wQ90eRATO9s4OC6Pw0gg5PJ3Gn/yeXaoaNP+Ktue2EHgnAsiuTtPDUH6E
-	 goMQ1PX6AMUzA==
-Received: from [100.113.186.2] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 42DB93780480;
-	Mon, 17 Jun 2024 11:12:55 +0000 (UTC)
-Message-ID: <33aac6a0-7bdf-48d3-bf79-0f3bf60394f2@collabora.com>
-Date: Mon, 17 Jun 2024 13:12:54 +0200
+	 In-Reply-To:Content-Type; b=m0JU8WnixFmls3n9oYBuTmkvztI9k3cBdNC9DXnd4BsmvBVYbn3mtFQE3cyOAgWwY4cIK4jrbdQPAWkG5IAl8RYIWxT3pUoNkggNBzn1UfFHhP1wQAQgh9yL8U/r8CGjtqCCfZQIjZm7KKZbUcqA1GNewQoZ6GNhh2jVOqxrKnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=EgmUKSMl; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1718624099; x=1719228899; i=markus.elfring@web.de;
+	bh=XxliRVqdpWsKsqcEu3t/96tFWK1GpkWqJETGL+PV4nc=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=EgmUKSMlpamrvnKIHEWFIOChO9V3zg3bFL17/I0VIZy2SQqHwf22ACzybQG6/coz
+	 DuWoO7nnPdhx2tfviapjmCsvtLeBeMbO6iKg7p7PRvsPuX0S0mXgdMw6KojEFNuaM
+	 9ojeq3wcFKgNIhxSRrnQeJRy77u4GiarVqCPnq1eXlNd3UC+7sQnxlwcLIlwov68o
+	 NCF9lEUjRI714mJ21j/3hPf/3wsfOHGxyTeXlvoxlbil567R/q2p9/LhbXIReXCTZ
+	 efL3ctTcY6BvKdFRrsFxH0ztyVtT0wj0FT9C7BzH4jANn9onze9zY+H8PMAD3hvTy
+	 XACrDO9kCCnSfIG3hg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M59jC-1sKGZD1XhU-00GfTD; Mon, 17
+ Jun 2024 13:34:59 +0200
+Message-ID: <cc44d8e8-a7fc-48d2-a497-956dde22ff46@web.de>
+Date: Mon, 17 Jun 2024 13:34:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,63 +58,61 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/22] dt-bindings: thermal: simplify few bindings
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Guillaume La Roque <glaroque@baylibre.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Vasily Khoruzhick <anarsoul@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Anson Huang <Anson.Huang@nxp.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Amit Kucheria <amitk@kernel.org>,
- =?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
- Heiko Stuebner <heiko@sntech.de>, Biju Das <biju.das.jz@bp.renesas.com>,
- Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Pascal Paillet <p.paillet@foss.st.com>, Keerthy <j-keerthy@ti.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>,
- Scott Branden <sbranden@broadcom.com>,
- zhanghongchen <zhanghongchen@loongson.cn>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: linux-pm@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-sunxi@lists.linux.dev, imx@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com,
- Florian Fainelli <f.fainelli@gmail.com>,
- linux-rpi-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
-References: <20240614-dt-bindings-thermal-allof-v1-0-30b25a6ae24e@linaro.org>
- <20240614-dt-bindings-thermal-allof-v1-21-30b25a6ae24e@linaro.org>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20240614-dt-bindings-thermal-allof-v1-21-30b25a6ae24e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [v4 2/3] leds: sy7802: Add support for Silergy SY7802 flash LED
+ controller
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Pavel Machek <pavel@ucw.cz>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?=
+ <git@apitzsch.eu>, linux-leds@vger.kernel.org, phone-devel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, Bjorn Andersson <andersson@kernel.org>
+Cc: Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+ Conor Dooley <conor+dt@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>, Kees Cook <kees@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Lee Jones <lee@kernel.org>, Trilok Soni <quic_tsoni@quicinc.com>,
+ Peter Zijlstra <peterz@infradead.org>, LKML <linux-kernel@vger.kernel.org>
+References: <20240616-sy7802-v4-2-789994180e05@apitzsch.eu>
+ <5701d3e7-f67b-4189-a5fd-8a992b9155fb@web.de> <ZnAHsRn3N4mwPL7q@duo.ucw.cz>
+ <e9fd75aa-3bd8-4227-ac07-fc762e558ea6@web.de>
+ <nxrodsfowjfn64dn6idoi56hzrhdszxylmw6kdhgxbt53akamf@aavvblj64syf>
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <nxrodsfowjfn64dn6idoi56hzrhdszxylmw6kdhgxbt53akamf@aavvblj64syf>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:jsuSdlwXKRSHY2XfCETjDQgmpLkmqyIzK7uZQAfoSU6PSrXsyD7
+ ZStOs2kQKAx19AgYuXCuvRLVJVDT3QvV6vPY6cqeH3HLFsCUloHBOw2mhuQd4DMku2tLwzf
+ qgyQyL3yAmmgZK3+hM4avQxih240BvmGLs59Q/O3+/TXITUzCU6wAB2IYVKWE3p+hQavC6M
+ bO6xPXQp65lPVH9ZcIivQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:dLTQFaCvbF8=;P4D+4gPaH91H11DXfXST39sHCtE
+ jYs3aV0U8NRlz9CF1fdHOksVa6wtSpnwpVK66dEq7ou4lM2Tjq+1VTy75DdJCxiAgDJxTOXtw
+ 6mbhPGMTl8AJHbCFayNzMC4SWqyam9rbWbbTn3ACqG/44Ec26BZfC2vkS1mReRTSjTuI+xH6b
+ ZsH2FSKLzGAyNyLzqc7gxmwpQHgLNLvFaimR0vuUuJNSU+FAyeryFJFl5gkoEUomEXwgY1SwV
+ /3Gbo3DVsd04khhqzqrg7l9Pqkae7ynQDpbU3S9ovm9siL9UiMTd1l3R/5naApAAvS59vd1Fd
+ RLT2g1uTkajDx7AMwYMhyIT0GMx6SAXtLc9IhpKjJsrPep3J3fehNZPpOwRvmqKy+D/gJ9j5Z
+ xc0NpIcOul0RkO8zH7o6v9WVDhBOZryYggdVUcgo3Hz98oSyRo0HzUCwCEGnFA9jvGyORbxLZ
+ agp8xZBxVElvUavd/VoMw2o2GlzQq78BIUyviGB4OxPpKo5uIK8buLO9IM8R3EqIi1vB02a2c
+ 9p5t2cdT6LblKwYNZpTL+0EsGeP6v/gsuZ4HDoJf6O3Kg4D1aA8y0FreiI/Se8Pm5Nkt94khu
+ 3mCX2GvfppT7aZCq9ZqRU3UwKay4imb2i2rT/BK1nediA7cVlr1l2k22j++XZr9n6hWxw5qfD
+ HNhW0F0o/ScPw+VmcFp5MgducJADb3NT7D0AoEvIYo2x6WUbNrbOH9KQ4cw+sg1HXoU9R2LUO
+ UkBbREsE0nempk7AwBxIqISoLbhm9VZzaYNBZ2ob7wO/L7LDOl1BSieb+zACki4gOBb0NdEZx
+ WYJ8F2OJPlXeFema846yhE0zpD784JGFtxJJKs0CMA7dU=
 
-Il 14/06/24 11:46, Krzysztof Kozlowski ha scritto:
-> Simplify few bindings which already reference thermal-sensor.yaml schema
-> by dropping unneeded requiring of '#thermal-sensor-cells' and dropping
-> assigned-clocks properties (core schema allows it if 'clocks' are
-> there).
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Various source code places can be updated also according to referenced
+>> programming interfaces.
+>> https://elixir.bootlin.com/linux/v6.10-rc4/source/include/linux/cleanup=
+.h#L8
+>>
+>> Will corresponding collateral evolution become better supported?
+>
+> Plesae stop this. cleanup.h might be a nice thing, but it should not be
+> used to make code less obvious or worse.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+These APIs were added to improve several software components,
+weren't they?
 
-
+Regards,
+Markus
 
