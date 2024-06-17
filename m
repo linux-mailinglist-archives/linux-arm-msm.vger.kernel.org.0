@@ -1,162 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-22904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4ABED90B43D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 17:28:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A32B290B3FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 17:22:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B815B3D8A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 15:00:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B5E991C230CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Jun 2024 15:22:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A615D13B288;
-	Mon, 17 Jun 2024 14:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B75FA15EFDA;
+	Mon, 17 Jun 2024 14:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g0Lz19i7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fTkKl7Go"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E3F13AD3D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 14:08:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ECB15EFB4;
+	Mon, 17 Jun 2024 14:42:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718633326; cv=none; b=sy+2KLureBAzixRm9v5uGdMHxdE9fSPvDQUNNhk4v74lMiQ2dAXXW43/+4RZ5DnmxpaZAHetbzzWH/hPcjMYvO0DBxmtX9YmxahyX+cFHAq2GsGTwc2G5P5ePaC7kimndA7Jncs9mM450oDNOCa7L1s30dAS6TFbilC21juxt40=
+	t=1718635349; cv=none; b=je8qgWvhTJMoCkbByTX+faTvnbfK3jK+4j542i6zcGh6BWe+gih6nPuGt7Ep0fcl6QeXjceQ3J4NU3fQNUbeMFm8FavfdhVS9NKm43YsGBTrUyvv8L+ig5qclohKtVfinx5URB3LQVvXnXgObRsNq0YQdhyDmW+02bhQBH4YTqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718633326; c=relaxed/simple;
-	bh=6mBQ9sxPm1+L1muWwT/oZLH3YefinaTlBp76n9Qq3EY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=pOFRKmbSMNdZOd/6WibML8OJKLJ9pROFee6hVyvn4HxJuGSpDnGyhcEbTYfl7ucVbQ74GnI9ivqyFVCK2qyIZPoD5jVtWDG88FdCRlepUm/KzRHhIuXKooOPAyrGfiJnIc2ERIgf+xcdQFvESAVLF4qcxCIxjve2G1/72qoSmb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g0Lz19i7; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52c525257feso5710918e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Jun 2024 07:08:44 -0700 (PDT)
+	s=arc-20240116; t=1718635349; c=relaxed/simple;
+	bh=E2YQNX6Tuz8HfUHpOihGxh9fyCb+mnp+I4qgACuBpKE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=fup+BB14RM6fq+v1Xn+ASJp346Nh9D5m8G8cYlqALdoxjf0OYm5B6H6BkRhe1TCxh/nqvkbL15kOQMvUJV9KlQpTHR4piqEoXPJ5rmvjRDAgsDitULVSVlBmzRHAKT+HZSSZpUCASZRhFqXtXvde/vM4TeXGes7WWnltSpB+gcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fTkKl7Go; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57cce3bc8c6so2410138a12.3;
+        Mon, 17 Jun 2024 07:42:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718633323; x=1719238123; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ut1uDZxGaHU7Y1Co+4s4ECfaXa9r8CDK31+uMSSSBQA=;
-        b=g0Lz19i7JNUpp+a+M+0n38TfdaU+hj+eO0Xky1W1Hsm+yC80uOnD5Bf8NGY/NweFZ1
-         O0IxT2SMPmKUTxFFgPWxACCjtm7vjq8ew+TOL4wes5HbV2oQcYaKWZFHnax28UtwweU2
-         JFCkka1X8600fTY/63SVBWZDypm43H24/rJssLtczhAG1jq025a4vH5w4wcwx8zMI+7m
-         HGB2UC0lpcLAsY3h3w/vz7K+T+8VOFGgXBAJpF6FWsopk7k4JBIEnI1pm57U3AXrzrq0
-         dJQq6gcU1ezoUeXf14K1gG2WjF7uvsiY0n7g4LBH/Adtfa79h9fmWydb2LWIi+TdD2WY
-         zmBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718633323; x=1719238123;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20230601; t=1718635346; x=1719240146; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ut1uDZxGaHU7Y1Co+4s4ECfaXa9r8CDK31+uMSSSBQA=;
-        b=goY55RoFDP2Ir1hsTn83nAjf3dOBi+sKPYFkkoA+da+npSvYYCfhen0ao59JlYBcnT
-         pq17kI3D25WPsfelHX+yOWpB65XAiAv3AQQWqueyvZzyILzddeaqz2vFfnmyo79Pw4+M
-         ajH0/h+H4NDnpLuoAABSKKjQZs5Uh6ehLw2kLCAzhsrnneZuE7PoVifXliYFYQbJ6U1u
-         T0Q2S0Xh3KBuVmiaD0UwzBdCCdh4b1EPuzY6MlSPkTooWACNwqJvIRCAV/XvQb+E1+Ni
-         bQqsf8z5q5jAgKDdGgHOouWgVsYC431gCvB7IDKuKbmHSAMsMxZXZq/ijZSiOcApR9o/
-         V5Eg==
-X-Gm-Message-State: AOJu0YxNW819rfjXGw/lQUr57675uZMfbLbMgL68Y+0/u36NE+7Yzf5i
-	Gw83FfhJ2GFZlKmb5WgKR1C3AJ5UWKBwOIohlSQUTwQhRjLpy+U6G7kb9ifibA0=
-X-Google-Smtp-Source: AGHT+IGf9az8bnelhhdQwXy6LIcfqWaXA9MCm6Bpzt1+j6XVLA3GxRhXjKny8rZdplSvoN+HlphXCw==
-X-Received: by 2002:ac2:46e3:0:b0:52b:7d16:2c7a with SMTP id 2adb3069b0e04-52ca6e55d4bmr6687102e87.3.1718633322602;
-        Mon, 17 Jun 2024 07:08:42 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:7f86:d83c:9278:7757? ([2a01:e0a:982:cbb0:7f86:d83c:9278:7757])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36075104b74sm11893173f8f.107.2024.06.17.07.08.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Jun 2024 07:08:42 -0700 (PDT)
-Message-ID: <11999928-b536-4257-980d-f98ca55285d6@linaro.org>
-Date: Mon, 17 Jun 2024 16:08:39 +0200
+        bh=E2YQNX6Tuz8HfUHpOihGxh9fyCb+mnp+I4qgACuBpKE=;
+        b=fTkKl7Go+98ESLVA+cWR/43Utnpy63+1wqWUZTjs8nQuY/6RO/2dhf78J+R0YLj24Q
+         0u2mDZLuBBOjPJvOCwy7WaseAaHrxqR+DIkfqbAFuu5ue9yQwznuo/9/T2RI3VR7gBD7
+         /tR9/d/yua4JC76k521xKY1GJp9XqMcWHwiMlwmMzrFEeEuW59xX/lsdKNqNU6yUeWLr
+         /dKk+uFdB3VMhbc7B23TuauMw4Z4FJi+VzdYMQ1gpU0/m7C8KVpc2O8vqCgfR6Gj4+6e
+         ypaWb/jdEF6JkugGrYH58haLkyr5KUxOJq/gKNWXA8z6HMAiIoscMlhjt6tTk6Tt1lLi
+         BAww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718635346; x=1719240146;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E2YQNX6Tuz8HfUHpOihGxh9fyCb+mnp+I4qgACuBpKE=;
+        b=SreACyD+L0cFlxcaB81kY2+NjcyayBs6gHNh9jyDeAS/40oJRpSdSmPtjeUk5DaUav
+         gkATSOFAQZm2Hg5dImcZ+XBpk6p7WVbYz9Xpf/zPAic5wFABtO2+3a1CAArOdCZS7r8t
+         dHCBeAZtbBcOLHvtaWVNjLUvstUS8h/4a09M/W5/KB+igTQeH6jERVTUVLe+jrO/yxSI
+         C5dAb7MzVx664NdJG5h8KBuZxOkr3xg2Dax/FqUM/G8zdnQ/D8NRkF0vI8Ds+tP63iL1
+         tGkqXNIzZJWHRmBHCOtDSyXYCmAUgtQViTbqEDBGo7yTMHQKV7pFwOUexb69BK7TtN0T
+         p8uw==
+X-Forwarded-Encrypted: i=1; AJvYcCXSSfzEpSfy4BRJfhiC/SKDa7RnI8FhDwdnJbGRzGGpeJz5hbTQt+l2SdxG/na3vKmK33SxrMOdAHJ3x0vLjNBd58JdmuY136Tp4c+psdskdbJruz5LviGdJXkgmdCnupxBvHCCi4e3/JiMtQ==
+X-Gm-Message-State: AOJu0YyCP4MfHnEPorB6DzKZni3VvEEom/os0ORJRAhzKGKZooGbDbQK
+	6RDhELVMY+PBD9wF5v9l3iPwWt203xVlykp4OJMAdPR5RlKWGe4W
+X-Google-Smtp-Source: AGHT+IGkzpQ7qdmk73JHhNvar3yzbeO/0JuLTETghlv9ovmWg6RAvgWc3MKokHO04h0aGO4cAJzoZA==
+X-Received: by 2002:a50:8753:0:b0:578:6378:bc4 with SMTP id 4fb4d7f45d1cf-57cbd69d997mr5941494a12.10.1718635346075;
+        Mon, 17 Jun 2024 07:42:26 -0700 (PDT)
+Received: from ?IPv6:2001:a61:35f9:9001:40df:88bb:5090:7ab6? ([2001:a61:35f9:9001:40df:88bb:5090:7ab6])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57cb743890dsm6514525a12.83.2024.06.17.07.42.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Jun 2024 07:42:25 -0700 (PDT)
+Message-ID: <a818344871a1dd2bf139732a7de9016ece456288.camel@gmail.com>
+Subject: Re: [PATCH v3 04/41] iio: adc: ad4130: make use of
+ regmap_clear_bits()
+From: Nuno =?ISO-8859-1?Q?S=E1?= <noname.nuno@gmail.com>
+To: Trevor Gamblin <tgamblin@baylibre.com>, Jonathan Cameron
+ <jic23@kernel.org>,  Lars-Peter Clausen <lars@metafoo.de>, Dmitry Rokosov
+ <ddrokosov@sberdevices.ru>, Michael Hennerich
+ <Michael.Hennerich@analog.com>, Cosmin Tanislav
+ <cosmin.tanislav@analog.com>,  Chen-Yu Tsai <wens@csie.org>, Hans de Goede
+ <hdegoede@redhat.com>, Ray Jui <rjui@broadcom.com>,  Scott Branden
+ <sbranden@broadcom.com>, Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team
+ <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, Jerome
+ Brunet <jbrunet@baylibre.com>, Martin Blumenstingl
+ <martin.blumenstingl@googlemail.com>, Saravanan Sekar
+ <sravanhome@gmail.com>, Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+ <alexandre.torgue@foss.st.com>, Nuno =?ISO-8859-1?Q?S=E1?=
+ <nuno.sa@analog.com>,  Linus Walleij <linus.walleij@linaro.org>,
+ Jean-Baptiste Maneyrol <jmaneyrol@invensense.com>, Crt Mori
+ <cmo@melexis.com>
+Cc: linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev, 
+ linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, Uwe
+ =?ISO-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
+Date: Mon, 17 Jun 2024 16:42:24 +0200
+In-Reply-To: <20240617-review-v3-4-88d1338c4cca@baylibre.com>
+References: <20240617-review-v3-0-88d1338c4cca@baylibre.com>
+	 <20240617-review-v3-4-88d1338c4cca@baylibre.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.2 (3.52.2-1.fc40) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2] dt-bindings: iommu: qcom,iommu: Add MSM8953 GPU IOMMU
- to SMMUv2 compatibles
-To: Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>
-Cc: linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20240606-topic-sm8953-upstream-smmu-gpu-v2-1-67be88007d87@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240606-topic-sm8953-upstream-smmu-gpu-v2-1-67be88007d87@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On 06/06/2024 15:15, Neil Armstrong wrote:
-> Add MSM8953 compatible string with "qcom,msm-iommu-v2" as fallback
-> for the MSM8953 GPU IOMMU which is compatible with Qualcomm's secure
-> fw "SMMU v2" implementation.
-
-Gentle ping !
-
-Thanks,
-Neil
-
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+On Mon, 2024-06-17 at 09:49 -0400, Trevor Gamblin wrote:
+> Instead of using regmap_update_bits() and passing val =3D 0, use
+> regmap_clear_bits().
+>=20
+> Suggested-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@baylibre.com>
+> Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
 > ---
-> [1] https://lore.kernel.org/all/20240523-topic-sdm450-upstream-tbx605f-v1-0-e52b89133226@linaro.org/
-> ---
->   Documentation/devicetree/bindings/iommu/qcom,iommu.yaml | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-> index a74eb899c381..571e5746d177 100644
-> --- a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-> +++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-> @@ -25,6 +25,7 @@ properties:
->             - const: qcom,msm-iommu-v1
->         - items:
->             - enum:
-> +              - qcom,msm8953-iommu
->                 - qcom,msm8976-iommu
->             - const: qcom,msm-iommu-v2
->   
-> 
-> ---
-> base-commit: ee78a17615ad0cfdbbc27182b1047cd36c9d4d5f
-> change-id: 20240606-topic-sm8953-upstream-smmu-gpu-2b582c34bcb6
-> 
-> Best regards,
+
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+
 
 
