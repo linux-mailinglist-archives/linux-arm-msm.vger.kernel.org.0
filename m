@@ -1,141 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-23107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D4B690D767
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 17:34:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CCE2290D790
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 17:43:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F0DA1C227AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 15:34:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E08DE1C21B97
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 15:43:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6D104437F;
-	Tue, 18 Jun 2024 15:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 977694595D;
+	Tue, 18 Jun 2024 15:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CuegVrQj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z/T0Q6No"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5A04120B;
-	Tue, 18 Jun 2024 15:34:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3A047A74;
+	Tue, 18 Jun 2024 15:43:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718724866; cv=none; b=RI/SKej/XIeL/WpIRh8sENrXVIfS3/VaGGNAFhV+WDB73+QmZOunxW2UudoK6KeetltR+mKxZQPXgtDw3IKKAbmJLzpIvvUAPy0MFtUCge1IGMxcvVvjIlAkP38cA1fjGOzaFebuS2GSOT5aNVcdFzY39JJwSuPJvjfMa8z6DFA=
+	t=1718725412; cv=none; b=LjdTmtJuCbcd8WC6UxRDEO/iyZrT3lLee/KshTSHOqPD7AOMmTirXSVplD281HRk0H63mTzP7a/te66zdpYcPpvjFEPFRWGtPk91+zaqx4AS2oyRsr5EqbNBRdmH97X5HT+GsO3P4mTQIs3//HEegg/hH96n01yiUAGnl7iy/A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718724866; c=relaxed/simple;
-	bh=+nQiJq6jvTQndJvGZiYobP2khJ0xmO2XzOZLZ/frEfY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tN2SkbBgYKyY20SFgybZnBIiV5zDxpk/jE1J6aZSSLjx+UtzmUz8br6dNsZif84ZEsr3wusqKfWVQxI9dT/NTHQIsifA6K9ZqrKRwS9Tecyo+UZ/zfO0PW07AVg8eKyCQIZNG2K+iauW7f4eRGoqbiPDStsoUh9hvmlclH7B/JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CuegVrQj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697B8C3277B;
-	Tue, 18 Jun 2024 15:34:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718724866;
-	bh=+nQiJq6jvTQndJvGZiYobP2khJ0xmO2XzOZLZ/frEfY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CuegVrQjPPoQBzx63RvFc+JE14Y3fYyjgERDi5hBBJZhwf08XwWG8hzJXk8Jsqk3P
-	 FgRO2Nlf3+qkTTGXlDf2BiO3B4VwXfGsfLlyQGWEXJzuCiO89yAiwd/NBWB7eR9lbl
-	 Zos0HBP5RHSaypeys4SxN0J6luoo3ioCGqNzON9uZK+L7Wu8BV20kq5K9KyDc5vk+/
-	 A/Tq6f+OoKE5jpNjAfKo8wuBvNFBUTl/DK9yw1cwSPNE74Ltn6r+37Jo3+dLxYbyiE
-	 v2pVmU7kMV3JDlUcWbBNXXVdYoXMk6r02zM7woVfqa7STdTLRomo85Abw9h1og2pdg
-	 gekUvQBeyKM0w==
-Date: Tue, 18 Jun 2024 16:34:20 +0100
-From: Will Deacon <will@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andrew Halaney <ahalaney@redhat.com>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/adreno: De-spaghettify the use of memory barriers
-Message-ID: <20240618153419.GC2354@willie-the-truck>
-References: <20240508-topic-adreno-v1-1-1babd05c119d@linaro.org>
- <20240514183849.6lpyplifero5u35r@hu-akhilpo-hyd.qualcomm.com>
- <ae4a77wt3kc73ejshptldqx6ugzrqguyq7etbbu54y4avhbdlt@qyt4r6gma7ev>
- <20240516145005.gdksmvxp35m45ifh@hu-akhilpo-hyd.qualcomm.com>
- <5vyrmxvkurdstqfiatxfqcqljwyiswda2vpkea27ighb2eqbav@n24yzdykbc23>
- <20240604144055.GE20384@willie-the-truck>
- <444f6a34-6636-44b0-850b-777c44fd62dd@linaro.org>
+	s=arc-20240116; t=1718725412; c=relaxed/simple;
+	bh=ebpbN/dNpywtDLCB8DP9glpqyeM0ApP6XhSkY8+iOqo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=c+HBd8iwVpbmlSG8zzebmlPjPBtQ8COfJwrdy6IaFSbuX+19dFbavxE4ERiG1SmrUI+3JiI1wGVBEVexpldMdyNoO2YIFk+Qp9gXsxvSY9OtvN74dp6Jq89SsYOrg7oaRt6LE54VQ3HxNdRs5JXQVptgC/3Wi+MPKSjGTXYrGHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z/T0Q6No; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45IBCq9C005316;
+	Tue, 18 Jun 2024 15:43:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=OqODJXPbx60YyCH10yYajv
+	QGq9at/EuxoeSseHwNRC8=; b=Z/T0Q6NomxomoptUYjg6H3EEsw7o3e7rlO2lWq
+	79uhgxu6d8uNCiXAYQ6gL3osN6NbxGJKFEPOeLUn+Y/tJkaJRH6nxhENSxX1iXGx
+	jYUEWmZZYcvkm+LqRMZmTkjc66pMs8lXHE/fxrcI4T4CAH6bvED/gvWRP6Kw1JHz
+	/3fhVMR6vrAELQd85KEyGuXmzVmKXP6ciLs5qPlcRjyrzXIGn3pCZqne7CN1ethW
+	olfY7/7VP1pui/P9LlNBHWyR+4zb7iiensLoG+Q7+1N6m4dQkO1SJIQ0nZksIzuj
+	+pTM7SIcq1/KMsyi64Vtz6q0hqG0F8venv7hckOxsuT9zDmg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yu95rgqpy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Jun 2024 15:43:27 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45IFhPxh016645
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Jun 2024 15:43:25 GMT
+Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 18 Jun 2024 08:43:20 -0700
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <srinivas.kandagatla@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
+        <quic_sibis@quicinc.com>, <conor+dt@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <abel.vesa@linaro.org>
+Subject: [PATCH V2 0/3] arm64: dts: qcom: x1e80100: Enable bwmon support
+Date: Tue, 18 Jun 2024 21:13:03 +0530
+Message-ID: <20240618154306.279637-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <444f6a34-6636-44b0-850b-777c44fd62dd@linaro.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: kBnSRCW1KWj95IMeLd0QO4y1wlHAoiVt
+X-Proofpoint-ORIG-GUID: kBnSRCW1KWj95IMeLd0QO4y1wlHAoiVt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 mlxscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 phishscore=0 mlxlogscore=957 suspectscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406180118
 
-On Thu, Jun 06, 2024 at 02:03:24PM +0200, Konrad Dybcio wrote:
-> On 4.06.2024 4:40 PM, Will Deacon wrote:
-> > On Thu, May 16, 2024 at 01:55:26PM -0500, Andrew Halaney wrote:
-> >> On Thu, May 16, 2024 at 08:20:05PM GMT, Akhil P Oommen wrote:
-> >>> On Thu, May 16, 2024 at 08:15:34AM -0500, Andrew Halaney wrote:
-> >>>> If I understand correctly, you don't need any memory barrier.
-> >>>> writel()/readl()'s are ordered to the same endpoint. That goes for all
-> >>>> the reordering/barrier comments mentioned below too.
-> >>>>
-> >>>> device-io.rst:
-> >>>>
-> >>>>     The read and write functions are defined to be ordered. That is the
-> >>>>     compiler is not permitted to reorder the I/O sequence. When the ordering
-> >>>>     can be compiler optimised, you can use __readb() and friends to
-> >>>>     indicate the relaxed ordering. Use this with care.
-> >>>>
-> >>>> memory-barriers.txt:
-> >>>>
-> >>>>      (*) readX(), writeX():
-> >>>>
-> >>>> 	    The readX() and writeX() MMIO accessors take a pointer to the
-> >>>> 	    peripheral being accessed as an __iomem * parameter. For pointers
-> >>>> 	    mapped with the default I/O attributes (e.g. those returned by
-> >>>> 	    ioremap()), the ordering guarantees are as follows:
-> >>>>
-> >>>> 	    1. All readX() and writeX() accesses to the same peripheral are ordered
-> >>>> 	       with respect to each other. This ensures that MMIO register accesses
-> >>>> 	       by the same CPU thread to a particular device will arrive in program
-> >>>> 	       order.
-> >>>>
-> >>>
-> >>> In arm64, a writel followed by readl translates to roughly the following
-> >>> sequence: dmb_wmb(), __raw_writel(), __raw_readl(), dmb_rmb(). I am not
-> >>> sure what is stopping compiler from reordering  __raw_writel() and __raw_readl()
-> >>> above? I am assuming iomem cookie is ignored during compilation.
-> >>
-> >> It seems to me that is due to some usage of volatile there in
-> >> __raw_writel() etc, but to be honest after reading about volatile and
-> >> some threads from gcc mailing lists, I don't have a confident answer :)
-> >>
-> >>>
-> >>> Added Will to this thread if he can throw some light on this.
-> >>
-> >> Hopefully Will can school us.
-> > 
-> > The ordering in this case is ensured by the memory attributes used for
-> > ioremap(). When an MMIO region is mapped using Device-nGnRE attributes
-> > (as it the case for ioremap()), the "nR" part means "no reordering", so
-> > readX() and writeX() to that region are ordered wrt each other.
-> > 
-> > Note that guarantee _doesn't_ apply to other flavours of ioremap(), so
-> > e.g. ioremap_wc() won't give you the ordering.
-> > 
-> > Hope that helps,
-> 
-> Just to make sure I'm following, would mapping things as nGnRnE effectively
-> get rid of write buffering, perhaps being a way of debugging whether that
-> in particular is causing issues (at the cost of speed)?
+This patch series enables bwmon support on X1E80100 SoCs.
 
-I think the "nE" part is just a hint, so it will depend on how the
-hardware has been built. On top of that, you'll still need something
-like a DSB to force the CPU to wait for the write response.
+V2:
+* Allow for opp-tables to be optional on X1E cpu-bwmon instances. [Konrad]
+* Drop Rb from Krzysztof due to more bindings changes.
+* Use explicit request/free irq and add comments regarding the race
+  introduced when adding the IRQF_SHARED flag. [Krzysztof/Dmitry]
+* Use consistent numbering of the opps across instances. [Shiv]
+* Use ICC_TAG_ACTIVE_ONLY instead of magic numbers. [Konrad]
+* Drop fastrpc enablement patch. [Bjorn]
 
-Will
+tag: next-20240617
+base-commit: 76db4c64526c5e8ba0f56ad3d890dce8f9b00bbc
+
+Sibi Sankar (3):
+  dt-bindings: interconnect: qcom,msm8998-bwmon: Add X1E80100 BWMON
+    instances
+  soc: qcom: icc-bwmon: Allow for interrupts to be shared across
+    instances
+  arm64: dts: qcom: x1e80100: Add BWMONs
+
+ .../interconnect/qcom,msm8998-bwmon.yaml      |  14 +-
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 120 ++++++++++++++++++
+ drivers/soc/qcom/icc-bwmon.c                  |  14 +-
+ 3 files changed, 144 insertions(+), 4 deletions(-)
+
+-- 
+2.34.1
+
 
