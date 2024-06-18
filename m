@@ -1,132 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-23054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B098B90D372
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 16:05:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5650E90D364
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 16:04:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 85EE6B2E58E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 14:02:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C71E3284607
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 14:04:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B811216631B;
-	Tue, 18 Jun 2024 13:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 945B6157495;
+	Tue, 18 Jun 2024 13:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Vhcezod9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FIAamhF0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0368416CD32
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 13:37:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC0B13C3F2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 13:38:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718717880; cv=none; b=sCul+fsnIOPkatM2cjEAOa6iArlgLchVE44Sz8aqrBOweMb1F1Du0uZSiYg/dEeyQnP6LrwQIcpRaO2iw8SWjIb0YmqQQHQF4mPn9MmDN1iGNSi9mRdaVm1vp4FQwYktYIt7t0wbun/UGNMUF3dJWnA/szJ6ayjMy2zqqK5+qMo=
+	t=1718717928; cv=none; b=CJgfetcR/uuYUzygPy52GKeIQB8Id107V85C7NxZOcOP6g5zEGwByRMx/g9mLSrFJUxM/adw/TaSkzBoZ9qual3rhgBJd69nRncqwYmCvN0LDmzcVV+9BgMgvFFyu1OWdwF4i0kL48I+20PGV49yc8d89K3m5hfr+QNSVIu6g7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718717880; c=relaxed/simple;
-	bh=LrbREgccmp+ApJP/aOqmOoRz76Y1lEsELda3PHy44H0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DvYGotiFuxhASzj8uloiw2grcKizOnvyTIzJffTO5Dy+PmEPtFcO0DuzhF+F4oufP+mTIgm5X7JPkwPNDw2ojGtiND+v+XUvKkNbNZmmNOQVo284cX3IsD+EtPVI5I394iQvh0M80of5WR7cr9MxlBPPVyfYxZQb8V6pJDCaGXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Vhcezod9; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-7955841fddaso443956085a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 06:37:58 -0700 (PDT)
+	s=arc-20240116; t=1718717928; c=relaxed/simple;
+	bh=ZXkUgUNTrV2Fb75kL30lUgvJVNwEi/AAcntzHmWItcE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UGj6kJA3GJsCxw1fTDjEJwh5UAtQYE3gMeGIN4zvlRyKrbDlP3zTktRuL1ZDD0NUFMw9F8qQTJZW5dkLPhgdmFj/CxwJ5cUsPf0iCkY8RTcly56tS9KnWYGOAK3D7pBzZwyo8xB4D14VdJxOea1Lxdazd4y2FyjhQjhKYoi/CFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FIAamhF0; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52c8342af5eso5726592e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 06:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1718717878; x=1719322678; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yg6dOdrePmQkedMibhUOvsYt1qJByOG1v6bUXQRrIc0=;
-        b=Vhcezod9bTjHhu5dqi2/RMzSrpi/ALRIrD13HlMTNDime5k71fOYHpXqTA0EAzSTOF
-         ibk6ZrbAFsxebknblBSyrY8gFdd8P+sBG7eAkQEU1IySvLTS8osLtrxzors5DvQwtf3o
-         3XUgD72NIfh8x5K1dQ4L+Br3iGldTXf0z4HmI=
+        d=linaro.org; s=google; t=1718717925; x=1719322725; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1Ro2D1q0Iet+JsxqYv5jvanxXyaHmbiQwWFVhwfDlws=;
+        b=FIAamhF0V9693BMdus4wQuGNWEmIOyfMJ/Odz0QiAdEzJwrz3GyHrD+4tyBCMwXRXV
+         8VlgHOUl3b0QmmGwqIM0biPJ+s2WC/ibIWJbrURUsdm6d25h80/JxaTFEBX82b0WK6Fv
+         ZvvA+Pl0YcIAXUz1kXpOW42PqxyTs3WKYUhoABQxe5w2SrmcbpqvlzoIkiFBpwL034N1
+         b427WaGr9dfjcoEwyr0hskfzytmjCcEZ96MIYiHZpsYhzYqOCy8dTrKCp6DKFoAhwEly
+         SpHmOcMDX9CiWGiC8iY9TEx3QN2O7vRfLT5ozhMLetR5U+y3kWYwr54d85n9Bt315HZT
+         nW6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718717878; x=1719322678;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yg6dOdrePmQkedMibhUOvsYt1qJByOG1v6bUXQRrIc0=;
-        b=a6cWmPJsxs6mpx+2RLg0ZJJDosCUZfBIjqS5daebWsSt1I1di9tZj1zTDzkbqqYt5f
-         h/oKBYPH6PqQV4LVoIvRawAE1fWZH21o24cISJLK4/meV0v6/nAsPxL3JMBkE1n59KRg
-         pEtABfgqO7TRAm+e8kuCiSYeTqHq8c/KviOkL1BvbxPdcYu6IEoRCaWjrS9A/QWXsU7j
-         xL/iUQd+dYaeU6K5wddU8YTPbXGP3g5pfNk8oZ1BYr2JWunG2Ur4RyQQuJijJ22U4YuK
-         5PgVcy/ImRphqsIs1Cl+jwnI0pGin2PrFh/3prHggtPYbpRaaHRdEiic3SfxZOQs/6Pp
-         tR0g==
-X-Forwarded-Encrypted: i=1; AJvYcCV7CHApfrD9CwBQJ0+oVwLhxLSQ9aGdn4rEw4ROOGSZP0vbxvHvnwCTC3ERVtSGd8Uj+OFcWJ031PLtODFTUEBNLg9XW5M0An8f8hQaaQ==
-X-Gm-Message-State: AOJu0YzTvHkIQTGGcmhqePcAsnk/NLtF2LRddAzjvZxvStP4AfXTU4PV
-	+Wq/nPN433TyuFfV8hdvpyYx5u7zPC5RlRhRWHjqenudATUXEdlQN1UPWLRNug==
-X-Google-Smtp-Source: AGHT+IGAgj3YnsFss9qEjXgsxLbOwfO0PDliSTE4TcCbevE5n9KjJc7F+p+/GujvK9mbnLR+t5wqXQ==
-X-Received: by 2002:a05:620a:4308:b0:798:5598:bdff with SMTP id af79cd13be357-79ba75e14e3mr450019785a.0.1718717878028;
-        Tue, 18 Jun 2024 06:37:58 -0700 (PDT)
-Received: from denia.c.googlers.com (123.178.145.34.bc.googleusercontent.com. [34.145.178.123])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-798abc06e93sm521666385a.82.2024.06.18.06.37.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 06:37:57 -0700 (PDT)
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Tue, 18 Jun 2024 13:37:51 +0000
-Subject: [PATCH v5 08/10] media: venus: Refactor hfi_sys_get_property_pkt
+        d=1e100.net; s=20230601; t=1718717925; x=1719322725;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Ro2D1q0Iet+JsxqYv5jvanxXyaHmbiQwWFVhwfDlws=;
+        b=QBkQfw3AStTo6DY7Qdl1hWcSF0kSd44A4AZkp+KRKr9jms0+5+avoPPGSWpzmw0LyD
+         FOrpXI5ldGqFGp4QVpNWDJeobR90Hzmxhmdd3uuUlL+roWWkGWdol5JFr5i4k4VB8Hap
+         8k/QGrVtaCjtnkw3jhK0WZvB9tptGUvbT0x0ZV+Pza0xgbjxCrQUfYcAOTxluZ+z/vn6
+         aaN/Cn9AoFoFS1FxaEZyBkrnunKEuZu/jvhbZcL3nU/VMXixamZyiva9+7QWL3/Xtkh4
+         TnmuSGfUZthmMnHFjgesGuM3TtJFt/90VotNsyEtfORhar4c2OSP+4cVe7t0uEtyfyH3
+         wc/A==
+X-Gm-Message-State: AOJu0YzIAz0LdPWYouc7XEHb2W7jl1SckzhQ/q7rpj/IlKLoCtZjZrQc
+	cPw1ebyw6e3MZycAVeCKXBHtetMRG0EOV0fpQQNaiXNp42je6kDlxWp1NyNXM4g=
+X-Google-Smtp-Source: AGHT+IF87ZxV1Eqx7KyoE3WteMFt56EssikJPs0A4NGrSgdY3b3dUyfEiaDVHF88FgnOxhFSt2XIWA==
+X-Received: by 2002:ac2:57c3:0:b0:52b:c292:f7c with SMTP id 2adb3069b0e04-52ca6e9886emr7565855e87.62.1718717924535;
+        Tue, 18 Jun 2024 06:38:44 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:9028:9df3:4fb7:492b:2c94:7283? ([2a00:f41:9028:9df3:4fb7:492b:2c94:7283])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cbc12bc4fsm627269e87.292.2024.06.18.06.38.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Jun 2024 06:38:44 -0700 (PDT)
+Message-ID: <e5b7a888-8ca3-463a-a2de-cf719e58d7a0@linaro.org>
+Date: Tue, 18 Jun 2024 15:38:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/5] arm64: dts: qcom: sdx75: update reserved memory
+ regions for mpss
+To: Naina Mehta <quic_nainmeht@quicinc.com>, andersson@kernel.org,
+ mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, manivannan.sadhasivam@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240618131342.103995-1-quic_nainmeht@quicinc.com>
+ <20240618131342.103995-4-quic_nainmeht@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240618131342.103995-4-quic_nainmeht@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240618-cocci-flexarray-v5-8-6a8294942f48@chromium.org>
-References: <20240618-cocci-flexarray-v5-0-6a8294942f48@chromium.org>
-In-Reply-To: <20240618-cocci-flexarray-v5-0-6a8294942f48@chromium.org>
-To: Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
- Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Hans Verkuil <hverkuil-cisco@xs4all.nl>, linux-media@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Ricardo Ribalda <ribalda@chromium.org>
-X-Mailer: b4 0.13.0
 
-Replace a single length element array with an element.
 
-This fixes the following cocci warning:
-drivers/media/platform/qcom/venus/hfi_cmds.h:77:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
 
-Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
----
- drivers/media/platform/qcom/venus/hfi_cmds.c | 2 +-
- drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+On 6/18/24 15:13, Naina Mehta wrote:
+> Rename qdss@88800000 memory region as qlink_logging memory region
+> and add qdss_mem memory region at address of 0x88500000.
+> Split mpss_dsmharq_mem region into 2 separate regions and
+> reduce the size of mpssadsp_mem region.
+> 
+> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
+> ---
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-index 75f4a3d3e748..0a4de8ca1df5 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-@@ -156,7 +156,7 @@ void pkt_sys_image_version(struct hfi_sys_get_property_pkt *pkt)
- 	pkt->hdr.size = sizeof(*pkt);
- 	pkt->hdr.pkt_type = HFI_CMD_SYS_GET_PROPERTY;
- 	pkt->num_properties = 1;
--	pkt->data[0] = HFI_PROPERTY_SYS_IMAGE_VERSION;
-+	pkt->data = HFI_PROPERTY_SYS_IMAGE_VERSION;
- }
- 
- int pkt_session_init(struct hfi_session_init_pkt *pkt, void *cookie,
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-index 2c56ae303989..f91bc9087643 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.h
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-@@ -74,7 +74,7 @@ struct hfi_sys_set_property_pkt {
- struct hfi_sys_get_property_pkt {
- 	struct hfi_pkt_hdr hdr;
- 	u32 num_properties;
--	u32 data[1];
-+	u32 data;
- };
- 
- struct hfi_sys_ping_pkt {
+Alright, we're getting somewhere. The commit message should however motivate
+why such changes are necessary. For all we know, the splitting in two is
+currently done for no reason, as qdss_mem and qlink_logging_mem are contiguous
+- does the firmware have some expectations about them being separate?
 
--- 
-2.45.2.627.g7a2c4fd464-goog
-
+Konrad
 
