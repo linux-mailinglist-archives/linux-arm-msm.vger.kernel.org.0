@@ -1,159 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-23128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FDA190DB0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 19:51:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83ADB90DBBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 20:40:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0AAFC283FAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 17:51:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 311661F23377
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 18:40:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F160B14D2A6;
-	Tue, 18 Jun 2024 17:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 359B415ECCD;
+	Tue, 18 Jun 2024 18:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UZbjvGBi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OHhlhrBV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5507146D49
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 17:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A14166317;
+	Tue, 18 Jun 2024 18:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718733063; cv=none; b=BUexhickA+jp2k3TQpf0tdijX3ZfpivR4EIOSjQvQ/vwYq5sHhLKs9IMdf0ghC4/8hkpFV611Rz6y0md25/UvmFlC2NVZq8bJlKe/tLzR0shQivQWjboTR16rDm68ZOL5OlSAQf7r+/2DAaKdtoOJSs/7oespOfsCYhUmASF2a8=
+	t=1718735909; cv=none; b=sXryqxl01EGwny1xzNUT1k1njyHHE/Q/JQn5wRFlsBTw8kBijMoaW06EpZW+ZZSgq9oWZBJzjXovg/M40K1Tf8NtO3c3q8fBeoiGfvLU1lLKb9xypSg6MMslq2p9Dr1WqE/BsoEoGnFhIhUIdGClQg8Yo+5AroPQvexFDH2oxL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718733063; c=relaxed/simple;
-	bh=d3mOZkwzhQUitJ9p5NHqTux2I2OqtKSPIYhdsh5PmW0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sI+52p6wogMFbVfuiFf1+Ro4b894hAGDPSpOFSLPj9k3w4WifpNQHO6Ba4dgBJ/UXJD2p55A0LaxRpm4o7bP1PzP1mQWyjsWAloeSP1aC8UvsAIJaSDB1sA+FcFefycMrILcHpsmXV2Ad5vZ2zcJqsCduAYLIZcl/+tGAt8el+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UZbjvGBi; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52bc035a7ccso6014856e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 10:51:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718733060; x=1719337860; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jdrPsOFRH9tibJcIwTVDIHrvX0et09f9Ar+HQWRvLZQ=;
-        b=UZbjvGBibP5eUYTkPaNxof/tkbNC8npO5YOvD3hQ4EtX1wH25FASo/SB13vTt+Rffx
-         FvZTPnWMvGFaWZSF3ry5vXYjC8RLeF5SU0gqaNoM2MMlDHlXcVOpT22HMh4mUZgpjset
-         gny+T5ZxSPjtbqBcELArMFbmZ4XICJl23MclKGrnMxm5xZptuKdYa+ovy+qi+yIQ4XiQ
-         FP4TNqGI5IgNzGlPsYveXlh0A4fqIthbYniUNqLC7sDn5XBj0DBFX0rTNpQnz0IvwFAd
-         3zPAwC/0kmTBHvsqH5zMEXCE49MrcAngFo4cqar0NuEPJU+a84CxoRcMIFrTXgksySPO
-         44YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718733060; x=1719337860;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jdrPsOFRH9tibJcIwTVDIHrvX0et09f9Ar+HQWRvLZQ=;
-        b=L9hfTrKO8cxsdw0CN1YVrC+2pbjFkcDmqd4MbLbMaEoMlatMw1f1VP3THXXcDHlyqv
-         upaRw59OWRiEPdyyZ8B9kTLgzrOixO7YQ/s+CxvG7VsXIrlBf0ZUkRbH6tPCn+KyZegj
-         WgVnysb1vov5CObZqVtVOjR5e4dR6R4NIObj0YjQs2FjHwgAllhFwtcdd+QWm6eM8lER
-         DllI1PTa3OfcigxOwhpkXVKxkhUSRHier7DSa1jNU/X9pcbkRu2FnzRiYMEKr3aPXiFK
-         04Sd3GXQEV1L5tVe07mfMpxGmJhNqVmvLxUKyo/TScfv2vLOdVrTPqvaTTfCG9HZiSvS
-         wqkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVJbA+Z4sL8Dh3c+We78ZT30QBmlVeVY+CDgyZhmKOAwHgj6t8tvdWpFg63SwnwmNlEbgicoF4F4orUPrlWV+nWFYOOp1SksJZ8V2XETA==
-X-Gm-Message-State: AOJu0YyZVRlWoaVKBw+0pBQPP5/IflL7Bz3CEgiDQWZ/dg/aOR8a+XnX
-	dV9TWNfKJ82yIN+w9DrAwr+Tlx2UcnxTzz6HSIGwyNw16FY3oz2kz62q5+lwjApmM2UPFtf9Srx
-	/7eo=
-X-Google-Smtp-Source: AGHT+IGM/U45FeUpxxsmNAsTgVBSD3mO9NOKixFEiUXqhhF6IJuZRODRDq1PxwN+t2vV3hmMxogugA==
-X-Received: by 2002:a2e:2416:0:b0:2ec:eee:f19e with SMTP id 38308e7fff4ca-2ec3cfe5a12mr3314651fa.37.1718733059948;
-        Tue, 18 Jun 2024 10:50:59 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec3d00ae2bsm499111fa.51.2024.06.18.10.50.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 10:50:59 -0700 (PDT)
-Date: Tue, 18 Jun 2024 20:50:58 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Dzmitry Sankouski <dsankouski@gmail.com>
-Cc: Sebastian Reichel <sre@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-input@vger.kernel.org, 
-	linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v3 02/23] gcc-sdm845: Add rates to the GP clocks
-Message-ID: <wnf3mfgdm4p4f5wrxdtlx4wccnizdvohc7iiyu5t22eeb67r57@xun3r73hksrg>
-References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
- <20240618-starqltechn_integration_upstream-v3-2-e3f6662017ac@gmail.com>
+	s=arc-20240116; t=1718735909; c=relaxed/simple;
+	bh=6vafE+NNpVQtd0n++Rsd3ICmN32Uzta329jfAyQTRl8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u2EZczqhQ3okxhgubbkMHR6DVC2q4CucnWZqOuSm1booGjWH8TmjEesMVlqeUwPIX6CNeXYsEGLvGfZoqtY7OUIGF/kd/1lyUE/aVqpheJEDVc1fWxuiNPSsaioAdTSFa2pacCI2CGYDvYHm27BEx0akHD71DmMvdBPouNidFPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OHhlhrBV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45ICqkDd006229;
+	Tue, 18 Jun 2024 18:38:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=hzJDQuddYS+nIuxMYXY3l1iu
+	roExK2HuuOngnKTN9oo=; b=OHhlhrBV7Sx4LXFm8LfK3XfN/ANxDhJTYWmIZuBc
+	Z5X23MWAil8xNCKgmCcVYS79wA834/rBWefMuAK/+YCx0kbYKi/wbsW4ZiQNdrJ9
+	U/7wXtRr/5sY1pRdSrq2rMeVTBOfpTJquPsa7qQpU5toHBjIZ6FdM7m7ENEJbv02
+	VyN95dvzEUMokeIto6/LDz/WbALpCxXhYgNgYjrpxHHriudmLSGu8fCC0D6HucKF
+	J7PHifJ9gVOaWiPpXyOhWsyEcAgufSy+cPtXh44RFpQCOTFtIOJWR847l5DLrx8+
+	AY1RlRdUgsb2GHiG292h+0KCFShSY8s7n9eptnu1jEOlSA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yuamp0v70-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Jun 2024 18:38:22 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45IIcKxF008425
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Jun 2024 18:38:20 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 18 Jun 2024 11:38:17 -0700
+Date: Wed, 19 Jun 2024 00:08:13 +0530
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3] arm64: dts: qcom: qdu1000: Add secure qfprom node
+Message-ID: <ZnHUFVFKTP+74Iie@hu-mojha-hyd.qualcomm.com>
+References: <20240618092711.15037-1-quic_kbajaj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240618-starqltechn_integration_upstream-v3-2-e3f6662017ac@gmail.com>
+In-Reply-To: <20240618092711.15037-1-quic_kbajaj@quicinc.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JzvoszPKtuzs-LwUahTW8hPU2ARboyyv
+X-Proofpoint-GUID: JzvoszPKtuzs-LwUahTW8hPU2ARboyyv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ malwarescore=0 spamscore=0 bulkscore=0 mlxlogscore=776 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 mlxscore=0 adultscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406180138
 
-On Tue, Jun 18, 2024 at 04:59:36PM GMT, Dzmitry Sankouski wrote:
-> sdm845 has "General Purpose" clocks that can be muxed to
-> SoC pins.
+On Tue, Jun 18, 2024 at 02:57:11PM +0530, Komal Bajaj wrote:
+> Add secure qfprom node and also add properties for multi channel
+> DDR. This is required for LLCC driver to pick the correct LLCC
+> configuration.
 > 
-> Those clocks may be used as e.g. PWM sources for external peripherals.
-> Add more frequencies to the table for those clocks so it's possible
-> for arbitrary peripherals to make use of them.
-> 
-> See also: bf8bb8eaccf(clk: qcom: gcc-msm8916: Add rates to the GP clocks)
-
-Each time I look at the table attached to the GP CLK, I feel that it's
-plain wrong. In the end the GPCLK can in theory have arbitrary value
-depending on the usecase.
-
-Bjorn, Konrad, maybe we should add special clk_ops for GP CLK which
-allow more flexibility than a default clk_rcg2_ops?
-
-> 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> Fixes: 6209038f131f ("arm64: dts: qcom: qdu1000: Add LLCC/system-cache-controller")
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
->  drivers/clk/qcom/gcc-sdm845.c | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+> Changes in v3:
+> * Addressed comment by Konrad
+> * Added Fixes tag in commit message as suggested by Dmitry
+> * Link to v2: https://lore.kernel.org/linux-arm-msm/20240612063424.2494-1-quic_kbajaj@quicinc.com/
 > 
-> diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
-> index ea4c3bf4fb9b..0efd3364e8f5 100644
-> --- a/drivers/clk/qcom/gcc-sdm845.c
-> +++ b/drivers/clk/qcom/gcc-sdm845.c
-> @@ -283,7 +283,21 @@ static struct clk_rcg2 gcc_sdm670_cpuss_rbcpr_clk_src = {
->  	},
->  };
->  
-> +/*
-> + * This is a frequency table for "General Purpose" clocks.
-> + * These clocks can be muxed to the SoC pins and may be used by
-> + * external devices. They're often used as PWM source.
-> + *
-> + * See comment in gcc-mam8916.c at ftbl_gcc_gp1_3_clk.
-> + */
->  static const struct freq_tbl ftbl_gcc_gp1_clk_src[] = {
-> +	F(10000,   P_BI_TCXO,    16,  1, 120),
-> +	F(20000,   P_BI_TCXO,    16,  1, 60),
-> +	F(100000,  P_BI_TCXO,    16,  1,  12),
-> +	F(500000,  P_GPLL0_OUT_EVEN, 12, 1, 100),
-> +	F(1000000, P_GPLL0_OUT_EVEN, 12, 1, 50),
-> +	F(2500000, P_GPLL0_OUT_EVEN, 12, 1, 10),
-> +	F(5000000, P_GPLL0_OUT_EVEN, 12, 1, 5),
->  	F(19200000, P_BI_TCXO, 1, 0, 0),
->  	F(25000000, P_GPLL0_OUT_EVEN, 12, 0, 0),
->  	F(50000000, P_GPLL0_OUT_EVEN, 6, 0, 0),
+> Changes in v2:
+> * Minor correction in commit message
+> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240607113445.2909-1-quic_kbajaj@quicinc.com/
+> ---
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 > 
-> -- 
-> 2.39.2
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> index 7a77f7a55498..27f9fc87079c 100644
+> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> @@ -1584,6 +1584,21 @@ system-cache-controller@19200000 {
+>  			reg-names = "llcc0_base",
+>  				    "llcc_broadcast_base";
+>  			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			nvmem-cells = <&multi_chan_ddr>;
+> +			nvmem-cell-names = "multi-chan-ddr";
+> +		};
+> +
+> +		sec_qfprom: efuse@221c8000 {
+> +			compatible = "qcom,qdu1000-sec-qfprom", "qcom,sec-qfprom";
+> +			reg = <0 0x221c8000 0 0x1000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +
+> +			multi_chan_ddr: multi-chan-ddr@12b {
+> +				reg = <0x12b 0x1>;
+> +				bits = <0 2>;
+> +			};
 
--- 
-With best wishes
-Dmitry
+LGTM, without this change, LLCC driver for QDU1000 will result in probe failure.
+
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+
+-Mukesh
+
+>  		};
+>  	};
+> 
+> --
+> 2.42.0
+> 
+> 
 
