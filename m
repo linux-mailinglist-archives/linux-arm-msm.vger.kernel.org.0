@@ -1,59 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-22971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D66F90C46C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 09:35:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05ECD90C488
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 09:42:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EA68BB21B89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 07:34:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BAA3283602
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 07:42:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48D8F13A895;
-	Tue, 18 Jun 2024 07:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D82915B556;
+	Tue, 18 Jun 2024 07:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EScJdUd7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZVXwK2UO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9841E863;
-	Tue, 18 Jun 2024 07:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40281E863;
+	Tue, 18 Jun 2024 07:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718695697; cv=none; b=i/5hMeqYEiE/FZBr/VoCCuv4zjUpMCTkeuKMX46RjRNtP+rp0g5Ru5QCqKd2a20N20BsWCbipqr3A40fqdtO7Z3SRAp/oSafiHi3N6t6fz0DPZirxc9DsjqD30buq3Pl/72xUQBY16at4kv4kTgV/O2H6QQd+Y0dSlkYXPdZD6g=
+	t=1718695706; cv=none; b=oeKOxR8VvXmlRY5OGcLnL98pIe/35nGP1621FeGANaN+RMEhDSzvTF/IfcsO0161XtBWpdgYMlcser5P0dEv5Ll3sYvCPVHePJwANfDGyFZHigc9RqCHhiJfbKov9PnhKzANYV53U/k8tQpkrTQBY/D0x4xb7FMa9t0IhQ95HV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718695697; c=relaxed/simple;
-	bh=Pm+g1zuO3lpBcnw4Y+4LbimsaZWAveg3kEfjlLAa/k0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=l1lu/PhVnWwbIlOgKIbKB4E2v7vpAnf4Wzupwk7eST11H0ANlEpqSFoNnNE8iuQUagvXXX/I+v9kolRPLIUmf4pYqcxDlapfe2vjj54+PelaDgxXUHSqVZ4BJdkkCx4cOVl2CHfX6N27WC/XZBLciWtol6L9vAlehkNrdzDzfIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EScJdUd7; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1718695706; c=relaxed/simple;
+	bh=oEjDln06QJsNagUC9A4L35gwVs7l/b2oJNPxkfp20uw=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=movEoh/8yLEg0VVjGWe6UZ4I3tNu0Ym0MvNnFNLwlpBBbXCWFaCt6bxzBvjaTZIE46aMUtUJ2dR4Vln6UJfZGemksRL2dLYS9ck0GNNukbZm0DOuI9C90k5RZ3UjyG3JKqwH53ZtYeiiBm8LfTY8INKyIIEZdW7U5Onkr/vjLd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZVXwK2UO; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HLfSXN025439;
-	Tue, 18 Jun 2024 07:27:59 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I2IGUQ001354;
+	Tue, 18 Jun 2024 07:28:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=WVaPTYXZ+AMwgmFA5PnrJu
-	PY3/z3kl0dMUW5njXHbq8=; b=EScJdUd7aEBQG/nPJUQEgIwpm1FS+ffW/EDANy
-	O9GVebWqzgFzHXRzB2jWirUvsZKHPsyEM3mXox+OL72B2A5J3/dCcDw6QZywiNJL
-	cc2/mm5Bf9U515U6KA6SVDd5ZOX02+YB/kmTmtbXt+/BGN2FeNeMjkKn0c68cLnA
-	86GG1JV/UBoKmoHdeMg66uUSAQGumQ0kUHuiVNFET3W0oPEoM9ck7JZdzAPeQqRG
-	YPXrAdzNGge0tK4WmAKG9W2kWKFxcMfC0DpXU8B8JBvjlVqb3IYbQHOCyP04wdO8
-	sMX+YEumNnk78i8lgc0IZ15yEl6+qiE31PPRi2q5XwAQvcMg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ys3qf5ta9-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ySKf1ov4DYy3Q0LnAi2e8Fyt34/Otz9gPUTSliULRwI=; b=ZVXwK2UOv2rr4Zrt
+	2lKdTyYFW/oi9Ntcp9miiSPMnFrOztF60vCdmpK/ucO15xpopL5OvSTMPPh2Sx/m
+	DmLVU940PWsTI1Vlj2Nji3PNIUiFJCUu5644vx/tNIMjXJXmJU5MlUaVwJm0Vp05
+	INXIAHHFyGsLbX1kP7Y3WNVl4eOPZ0gBYuUS7TKhwqpmB0+vH1claBg2ek4WLiju
+	IHpV5hOAEbR7jcAzTmreXKUfGbVPE3YjLlsSeKVM8Xat2UPXikTpVUBFF2gvQyBt
+	QJ3qWHd+2mS1jBvE+iFCJJCtm8GgUQqSQNcYuOUdCuVN4QVB9F2PUvLfJwqgXzPX
+	ekN53Q==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yu1b0rhfk-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 07:27:58 +0000 (GMT)
+	Tue, 18 Jun 2024 07:28:05 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45I7Rv2N024337
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45I7S4H8028143
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 07:27:57 GMT
+	Tue, 18 Jun 2024 07:28:04 GMT
 Received: from jiegan-gv.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 18 Jun 2024 00:27:45 -0700
+ 15.2.1544.9; Tue, 18 Jun 2024 00:27:57 -0700
 From: Jie Gan <quic_jiegan@quicinc.com>
 To: Mathieu Poirier <mathieu.poirier@linaro.org>,
         Suzuki K Poulose
@@ -80,102 +82,150 @@ CC: Jinlong Mao <quic_jinlmao@quicinc.com>,
         <quic_liuxin@quicinc.com>, <quic_yanzl@quicinc.com>,
         <quic_xinlon@quicinc.com>, <quic_xueqnie@quicinc.com>,
         <quic_sijiwu@quicinc.com>
-Subject: [PATCH v1 0/3] Add coresight slave register driver to support data filter function
-Date: Tue, 18 Jun 2024 15:27:23 +0800
-Message-ID: <20240618072726.3767974-1-quic_jiegan@quicinc.com>
+Subject: [PATCH v1 1/3] dt-bindings: arm: Add binding document for Coresight Slave Register device.
+Date: Tue, 18 Jun 2024 15:27:24 +0800
+Message-ID: <20240618072726.3767974-2-quic_jiegan@quicinc.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240618072726.3767974-1-quic_jiegan@quicinc.com>
+References: <20240618072726.3767974-1-quic_jiegan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jv1hjDa81jJN9reNr2ZGwldPlZi59B5j
-X-Proofpoint-ORIG-GUID: jv1hjDa81jJN9reNr2ZGwldPlZi59B5j
+X-Proofpoint-GUID: 3lSmKs2Mmku8ygoco9e0y7PJcvw0QTFi
+X-Proofpoint-ORIG-GUID: 3lSmKs2Mmku8ygoco9e0y7PJcvw0QTFi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
- malwarescore=0 spamscore=0 mlxlogscore=999 bulkscore=0 phishscore=0
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406180054
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ suspectscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 impostorscore=0
+ adultscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406180054
 
-The Coresight Slave Register(CSR) device hosts miscellaneous configuration
-registers to control various features related to TMC ETR device.
+Add binding document for Coresight Slave Register device.
 
-The CSR device works as a helper device physically connected to the TMC ETR device.
----------------------------------------------------------
-             |ETR0|             |ETR1|
-              . \                 / .
-              .  \               /  .
-              .   \             /   .
-              .    \           /    .
----------------------------------------------------     
-ETR0ATID0-ETR0ATID3     CSR     ETR1ATID0-ETR1ATID3
----------------------------------------------------
-Each ETR has four ATID registers with 128 bits long in total.
-e.g. ETR0ATID0-ETR0ATID3 registers are used by ETR0 device.
+Add a new property to TMC, qcom,csr-atid-offset, to indicate which
+ATID registers will be used by the TMC ETR. Each TMC ETR device is
+associated with four ATID registers that are continuous in address.
 
-Based on the trace id which is programed in CSR ATID register of
-specific ETR, trace data with that trace id can get into ETR's buffer
-while other trace data gets ignored. CSR may contain several ATID registers. 
-Each ATID register is associated with an ETR device.
-
-To achieve this function, the trace id is obtained and stored in the related
-ETR device's driver data just before enabling the CSR. Then, the CSR
-device can easily obtain the trace ID from the ETR's driver data because the
-ETR's driver data is passed to the CSR's enable/disable functions.
-
-Ensure that every source device has already allocated a trace ID in its probe
-session because the sink device should always be the first device to
-enable when operating coresight_enable_path function. As a helper device of the
-ETR, the CSR device will program the ATID register of a specific ETR according to
-the trace id to enable data filter function at a very early stage. Without the
-correct trace ID, the enablement session will not work.
-
-Each CSR's enable session will set one bit in the ATID register.
-Every CSR's disbale seesion will reset all bits of the ATID register.
-
-This patch only supports sysfs mode. I will send the perf mode part patch
-once it is ready.
-
-Looking forward to receiving comments as this is a new driver.
-
-Thanks!
-
-Jie Gan (3):
-  dt-bindings: arm: Add binding document for Coresight Slave Register
-    device.
-  coresight: Add coresight slave register driver to support data filter
-    function in sysfs mode
-  arm64: dts: qcom: Add CSR and ETR nodes for SA8775p
-
- .../bindings/arm/arm,coresight-tmc.yaml       |   8 +
- .../bindings/arm/qcom,coresight-csr.yaml      |  49 +++
- arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 167 ++++++++++
- drivers/hwtracing/coresight/Kconfig           |   6 +
- drivers/hwtracing/coresight/Makefile          |   1 +
- drivers/hwtracing/coresight/coresight-core.c  |   6 +-
- drivers/hwtracing/coresight/coresight-csr.c   | 315 ++++++++++++++++++
- drivers/hwtracing/coresight/coresight-csr.h   |  24 ++
- .../coresight/coresight-etm4x-core.c          |   1 +
- drivers/hwtracing/coresight/coresight-stm.c   |  50 ---
- drivers/hwtracing/coresight/coresight-sysfs.c |  45 ++-
- .../hwtracing/coresight/coresight-tmc-core.c  |   1 +
- drivers/hwtracing/coresight/coresight-tmc.h   |   2 +
- include/linux/coresight-stm.h                 |  44 +++
- 14 files changed, 665 insertions(+), 54 deletions(-)
+Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+---
+ .../bindings/arm/arm,coresight-tmc.yaml       |  8 ++
+ .../bindings/arm/qcom,coresight-csr.yaml      | 76 +++++++++++++++++++
+ 2 files changed, 84 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml
- create mode 100644 drivers/hwtracing/coresight/coresight-csr.c
- create mode 100644 drivers/hwtracing/coresight/coresight-csr.h
 
+diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-tmc.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-tmc.yaml
+index cb8dceaca70e..295641a96c21 100644
+--- a/Documentation/devicetree/bindings/arm/arm,coresight-tmc.yaml
++++ b/Documentation/devicetree/bindings/arm/arm,coresight-tmc.yaml
+@@ -82,6 +82,14 @@ properties:
+     $ref: /schemas/types.yaml#/definitions/uint32
+     maximum: 15
+ 
++  qcom,csr-atid-offset:
++    description:
++      Offset to the coresight slave register component's ATID register
++      that is used by specific TMC ETR. The ATID register can be programed according
++      to the trace id to filter out specific trace data which gets through the ETR
++      to the downstream components.
++    $ref: /schemas/types.yaml#/definitions/uint32
++
+   in-ports:
+     $ref: /schemas/graph.yaml#/properties/ports
+     additionalProperties: false
+diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml
+new file mode 100644
+index 000000000000..16f97cbe3d4b
+--- /dev/null
++++ b/Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml
+@@ -0,0 +1,76 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/qcom,coresight-csr.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: CoreSight Slave Register
++
++maintainers:
++  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
++  - Mao Jinlong <quic_jinlmao@quicinc.com>
++  - Jie Gan <quic_jiegan@quicinc.com>
++
++description:
++  The Coresight Slave Register controls various Coresight behaviors.
++  Used to enable/disable ETR’s data filter function based on trace ID.
++
++properties:
++  compatible:
++    const: qcom,coresight-csr
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  clock-names:
++    maxItems: 1
++    items:
++      - const: apb_pclk
++
++  reg-names:
++    items:
++      - const: csr-base
++
++  in-ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++
++    patternProperties:
++      '^port(@[0-7])?$':
++        description: Input connections from CoreSight Trace bus
++        $ref: /schemas/graph.yaml#/properties/port
++
++required:
++  - compatible
++  - reg
++  - in-ports
++
++additionalProperties: false
++
++examples:
++  - |
++    syscon@10001000 {
++        compatible = "qcom,coresight-csr";
++        reg = <0x0 0x10001000 0x0 0x1000>;
++        reg-names = "csr-base";
++
++        in-ports {
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            port@0 {
++                reg = <0>;
++                csr_in_port0: endpoint {
++                    remote-endpoint = <&etr0_out_port>;
++                };
++            };
++
++            port@1 {
++                reg = <1>;
++                csr_in_port1: endpoint {
++                    remote-endpoint = <&etr1_out_port>;
++                };
++            };
++        };
++    };
 -- 
 2.34.1
 
