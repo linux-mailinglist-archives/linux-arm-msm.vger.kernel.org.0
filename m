@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-23155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24E9B90DFF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 01:34:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07AFF90E034
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 01:52:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9EC811F2497B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 23:34:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D6541F22DC5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 23:52:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02DD21849E7;
-	Tue, 18 Jun 2024 23:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A5A3185E5D;
+	Tue, 18 Jun 2024 23:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JbjP8rHm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HvU3coHK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74A41849D9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 23:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B197185E46;
+	Tue, 18 Jun 2024 23:52:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718753634; cv=none; b=VjaVSlhcfVNzE5CltCC0pECJpmjhSssrl34AXJZAMAd7ItUcsZHHuZPHKRoWyDtW9XMnoiyFHaqnhVcRcnc068rsAB1L5X7h+JtrJpgEpALJ5Jhusbgam1q4CsNjghjMoxR61aIwAHrmEsCNtDOyCcnhlHuL88Rv4pntm2/rrOU=
+	t=1718754722; cv=none; b=phvdANsEpwW96yW+Y1r+GHISzKmVFeBUtcXz9FZNYB2MPufGDvIRIz6CWZmGCXzX7+PDdEP1dEmY+mxhK8UigfXyGuzVoQR1MCU4bH1wWCDWcVpgoTZyFA/edBUxt0dtxOuJLKyfYxR+wGmxCOhpRwLcGRBPFOnzN698IUYlUNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718753634; c=relaxed/simple;
-	bh=nvgJV2cU52xnEo2x3lWvM2rj+jo+RlJLSRb8gwhLWdM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MqeoVq8Htxu+N2yF2lAOEAgLIJdVzZbllCHbaL5osyj2788t6IQYZZHHcDgD7djxIU41sH9jksi98zr1VJciWMjUiWoBC5maRdw4ShR5YOKuEA49byOrTRWglsOjcc9RIy9yo2kSgOaRjOVhYJzZmVJDGvzrG4v0W3cdwaO5nno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JbjP8rHm; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42179dafd6bso1989285e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 16:33:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718753630; x=1719358430; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4BfwFOBcFxn/9yJmvVXLVigVaG5MzgevWsmMsZXB7Uc=;
-        b=JbjP8rHmyq3zumxmZRIXZtY+B1MML22PA4isRff3kpBRGzc6JAwhVn8ol8JYfHWGgd
-         WSdDkcK88n9oCYXXufkRiZj+uBpzBDxeLS+WN1WuHiWPDU4grRImh9mmC6/EPU2DtZBk
-         h9p283i2PPNN5ZxluKR0boZAo1QEJKJHxwIR/jMQWynbjG7XjntmZJPqhPScwANpBkbl
-         tk8oRCQsWs2J73zcrsvbNGfdvuxd2RG0p5L7Gtcn0sKsUw9e4yu5+65KkpZiZgwIAkUd
-         LpmAKGDfehXYad3x5LcaWPGvY+vIuelBtts874fx9WO/CslTIKhB/qs/AxoJGucfyrs2
-         SefQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718753630; x=1719358430;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4BfwFOBcFxn/9yJmvVXLVigVaG5MzgevWsmMsZXB7Uc=;
-        b=uk+HeAUmIUD5uXd+EZwe4nYag5O3MFvAO6aK36CvvKpssROV8wTfWv5YmHFkwmtAp/
-         dlVGW/FYeShB1xg6rXhbchkFiraPkcD6RwXdLHMo6+WXb6FDVgWWFCwJ5xnO1ZbhT4X2
-         PaiTzht3OrX8NiHEWzOi3zcMh0nLNpOhL+w01LJY7ttacyolhqWrh6GHnHEz9yjV26Q4
-         tGuJXTyyXHzRMmwtTiiPhXvPlvY3XkGJ34ZsvA8vqhOFCCOUaqFFZdMqMMPVhM3mtgbf
-         4sds9lM4g79+w/ilPNMrQELxD1SRa1A5PAH9/Ir54OH9bfl34tp06Lz2wdAf288k21/H
-         VJ/g==
-X-Forwarded-Encrypted: i=1; AJvYcCUIHz9zzIafs9jq7hg6bMT8QpyPgyBIeSTjfz/a9izz6OlgtCuiC1WNCLRII8IfNUMOqnTmMPqlMDUWkPrqZgOH2vCAosgyxc40onAIvA==
-X-Gm-Message-State: AOJu0Yz3a1NcTtMCDyFyOsYlaiWPxYXN86WKUR7c84MkF48SJkxIR6mE
-	h6ESyj4v70I5ObiXsoe57UUDctES4zpcNNBKnYBC2ff4Ho0RZyUtvSXrIxJA0CA=
-X-Google-Smtp-Source: AGHT+IHIao0OuSG1XYOKFMaqWoyuBFbBhjekObpcevx7N+l9Zi/ExgLk2u/T3YxpZnZSp4ND/MNIVQ==
-X-Received: by 2002:a05:600c:314a:b0:421:811b:b83e with SMTP id 5b1f17b1804b1-4246f5cfa54mr41545905e9.13.1718753629512;
-        Tue, 18 Jun 2024 16:33:49 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:9028:9df3:6f30:7340:4e06:bff7? ([2a00:f41:9028:9df3:6f30:7340:4e06:bff7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422f641a5b4sm205205785e9.41.2024.06.18.16.33.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jun 2024 16:33:49 -0700 (PDT)
-Message-ID: <f8cd4691-48fd-42a9-8e4e-e942c4475ddd@linaro.org>
-Date: Wed, 19 Jun 2024 01:33:45 +0200
+	s=arc-20240116; t=1718754722; c=relaxed/simple;
+	bh=3gBA5GF+7TWVB579rBP8VTIQZpGFvjxoyXEhaeLmSBE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=gQkIiD88QkgNGjTNyvcK1xTpD5uBB7QSyz5bzTiAVMJoldCmSMx2hm9MQYxZV8T9L7yMOk4CUaAfoKzqG3IkoLpOjwd+TBbO6LFXfM/VIAj+xRcy7DAcRQWqWSq/+0056go1Eus3eYCJJlHdl5YDb6ldBYC0Fu984N2iguW2jcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HvU3coHK; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45ILav2K007306;
+	Tue, 18 Jun 2024 23:51:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	J91iosksmeOdMOZzm+kOJZZC2FYeRzmBvrrl1NXM6ME=; b=HvU3coHKk0oI9+r/
+	j2NVV3Jnt4b16AQHSZbbq5sw3IMscW6IDZRPtvT+YbZnKbC1xt75K9xc1djG3VW6
+	iOVm9OCGiX6S+ENN3gISkGJGP/0J2iA0XcQ5sqLxjicyIZCQQ572ZDSc6Sr4Mm06
+	UPJXUy4Y8tWpaQi2P2K72XJ5evEnLi6Q02VN79CPgMrBFnSQ2HDEQGgfPi0G+IwB
+	42uydJtlU7dGLsNKBdMVfozJ5/DVmpLLbkR1AP8zHNCoZvuUaKnWbquaffiXPn1N
+	ZPQYChP1RgnlLLxOoi8ax8zw/ttCVvfH0bwgqIhBoaYLLnsqYRR0A9z4kO768RMK
+	NkzKPA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yuj9u06n1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Jun 2024 23:51:52 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45INppBr025257
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Jun 2024 23:51:51 GMT
+Received: from [10.71.108.229] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 18 Jun
+ 2024 16:51:51 -0700
+Message-ID: <badbf856-1b6d-42cd-880d-cdde2f293a86@quicinc.com>
+Date: Tue, 18 Jun 2024 16:51:51 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,82 +65,175 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 4/9] soc: qcom: cpr: Move common functions to new file
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, Niklas Cassel <nks@flawful.org>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Ulf Hansson
- <ulf.hansson@linaro.org>, Robert Marko <robimarko@gmail.com>,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org>
- <20230217-topic-cpr3h-v14-4-9fd23241493d@linaro.org>
- <20230829151509.GN818859@hu-bjorande-lv.qualcomm.com>
+Subject: Re: [PATCH v2 06/14] drm/msm/hdmi: switch to clk_bulk API
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230829151509.GN818859@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240522-fd-hdmi-hpd-v2-0-c30bdb7c5c7e@linaro.org>
+ <20240522-fd-hdmi-hpd-v2-6-c30bdb7c5c7e@linaro.org>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20240522-fd-hdmi-hpd-v2-6-c30bdb7c5c7e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XTn-NELIBobjl-y64lU50Y8cByUxh83c
+X-Proofpoint-ORIG-GUID: XTn-NELIBobjl-y64lU50Y8cByUxh83c
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-18_06,2024-06-17_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 mlxlogscore=999 clxscore=1011 mlxscore=0 phishscore=0
+ bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406180174
 
 
 
-On 8/29/23 17:15, Bjorn Andersson wrote:
-> On Mon, Aug 28, 2023 at 01:42:16PM +0200, Konrad Dybcio wrote:
->> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>
+On 5/22/2024 3:50 AM, Dmitry Baryshkov wrote:
+> The last platform using legacy clock names for HDMI block (APQ8064)
+> switched to new clock names in 5.16. It's time to stop caring about old
+> DT, drop hand-coded helpers and switch to clk_bulk_* API.
 > 
-> It seems reasonable to update the subject prefix, now that things have
-> moved to the genpd subsystem.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Ack
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
+> ---
+>   drivers/gpu/drm/msm/hdmi/hdmi.c     | 15 +++++---------
+>   drivers/gpu/drm/msm/hdmi/hdmi.h     |  2 +-
+>   drivers/gpu/drm/msm/hdmi/hdmi_hpd.c | 39 +++++++++++++------------------------
+>   3 files changed, 19 insertions(+), 37 deletions(-)
 > 
->> In preparation for implementing a new driver that will be handling
->> CPRv3, CPRv4 and CPR-Hardened, format out common functions to a new
->> file.
->>
->> Update cpr_get_fuses in preparation for CPR3 implementation, change
->> parameters where necessary to not take cpr.c private data structures.
->>
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->> [Konrad: rebase, apply review comments, improve msg, split]
->> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/genpd/qcom/Makefile     |   2 +-
->>   drivers/genpd/qcom/cpr-common.c | 350 ++++++++++++++++++++++++++++++++++++
->>   drivers/genpd/qcom/cpr-common.h | 103 +++++++++++
->>   drivers/genpd/qcom/cpr.c        | 384 +++-------------------------------------
->>   4 files changed, 475 insertions(+), 364 deletions(-)
->>
->> diff --git a/drivers/genpd/qcom/Makefile b/drivers/genpd/qcom/Makefile
->> index 403dfc5af095..b28c8d9128c4 100644
->> --- a/drivers/genpd/qcom/Makefile
->> +++ b/drivers/genpd/qcom/Makefile
->> @@ -1,4 +1,4 @@
->>   # SPDX-License-Identifier: GPL-2.0
->> -obj-$(CONFIG_QCOM_CPR)		+= cpr.o
->> +obj-$(CONFIG_QCOM_CPR)		+= cpr-common.o cpr.o
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index c14e009f38b1..7ec4ca3b7597 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -469,17 +469,12 @@ static int msm_hdmi_dev_probe(struct platform_device *pdev)
+>   	if (!hdmi->hpd_clks)
+>   		return -ENOMEM;
+>   
+> -	for (i = 0; i < config->hpd_clk_cnt; i++) {
+> -		struct clk *clk;
+> +	for (i = 0; i < config->hpd_clk_cnt; i++)
+> +		hdmi->hpd_clks[i].id = config->hpd_clk_names[i];
+>   
+> -		clk = msm_clk_get(pdev, config->hpd_clk_names[i]);
+> -		if (IS_ERR(clk))
+> -			return dev_err_probe(dev, PTR_ERR(clk),
+> -					     "failed to get hpd clk: %s\n",
+> -					     config->hpd_clk_names[i]);
+> -
+> -		hdmi->hpd_clks[i] = clk;
+> -	}
+> +	ret = devm_clk_bulk_get(&pdev->dev, config->hpd_clk_cnt, hdmi->hpd_clks);
+> +	if (ret)
+> +		return ret;
+>   
+>   	hdmi->extp_clk = devm_clk_get_optional(&pdev->dev, "extp");
+>   	if (IS_ERR(hdmi->extp_clk))
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> index c0d60ed23b75..eeba85ffef09 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> @@ -50,7 +50,7 @@ struct hdmi {
+>   
+>   	struct regulator_bulk_data *hpd_regs;
+>   	struct regulator_bulk_data *pwr_regs;
+> -	struct clk **hpd_clks;
+> +	struct clk_bulk_data *hpd_clks;
+>   	struct clk *extp_clk;
+>   
+>   	struct gpio_desc *hpd_gpiod;
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
+> index 7ae69b14e953..36266aa626dc 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
+> @@ -60,27 +60,6 @@ static void msm_hdmi_phy_reset(struct hdmi *hdmi)
+>   	}
+>   }
+>   
+> -static void enable_hpd_clocks(struct hdmi *hdmi, bool enable)
+> -{
+> -	const struct hdmi_platform_config *config = hdmi->config;
+> -	struct device *dev = &hdmi->pdev->dev;
+> -	int i, ret;
+> -
+> -	if (enable) {
+> -		for (i = 0; i < config->hpd_clk_cnt; i++) {
+> -			ret = clk_prepare_enable(hdmi->hpd_clks[i]);
+> -			if (ret) {
+> -				DRM_DEV_ERROR(dev,
+> -					"failed to enable hpd clk: %s (%d)\n",
+> -					config->hpd_clk_names[i], ret);
+> -			}
+> -		}
+> -	} else {
+> -		for (i = config->hpd_clk_cnt - 1; i >= 0; i--)
+> -			clk_disable_unprepare(hdmi->hpd_clks[i]);
+> -	}
+> -}
+> -
+>   int msm_hdmi_hpd_enable(struct drm_bridge *bridge)
+>   {
+>   	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+> @@ -107,7 +86,9 @@ int msm_hdmi_hpd_enable(struct drm_bridge *bridge)
+>   		gpiod_set_value_cansleep(hdmi->hpd_gpiod, 1);
+>   
+>   	pm_runtime_get_sync(dev);
+> -	enable_hpd_clocks(hdmi, true);
+> +	ret = clk_bulk_prepare_enable(config->hpd_clk_cnt, hdmi->hpd_clks);
+> +	if (ret)
+> +		goto fail;
+>   
+>   	msm_hdmi_set_mode(hdmi, false);
+>   	msm_hdmi_phy_reset(hdmi);
+> @@ -149,7 +130,7 @@ void msm_hdmi_hpd_disable(struct hdmi *hdmi)
+>   
+>   	msm_hdmi_set_mode(hdmi, false);
+>   
+> -	enable_hpd_clocks(hdmi, false);
+> +	clk_bulk_disable_unprepare(config->hpd_clk_cnt, hdmi->hpd_clks);
+>   	pm_runtime_put(dev);
+>   
+>   	ret = pinctrl_pm_select_sleep_state(dev);
+> @@ -193,14 +174,20 @@ void msm_hdmi_hpd_irq(struct drm_bridge *bridge)
+>   
+>   static enum drm_connector_status detect_reg(struct hdmi *hdmi)
+>   {
+> -	uint32_t hpd_int_status;
+> +	const struct hdmi_platform_config *config = hdmi->config;
+> +	uint32_t hpd_int_status = 0;
+> +	int ret;
+>   
+>   	pm_runtime_get_sync(&hdmi->pdev->dev);
+> -	enable_hpd_clocks(hdmi, true);
+> +	ret = clk_bulk_prepare_enable(config->hpd_clk_cnt, hdmi->hpd_clks);
+> +	if (ret)
+> +		goto out;
+>   
+>   	hpd_int_status = hdmi_read(hdmi, REG_HDMI_HPD_INT_STATUS);
+>   
+> -	enable_hpd_clocks(hdmi, false);
+> +	clk_bulk_disable_unprepare(config->hpd_clk_cnt, hdmi->hpd_clks);
+> +
+> +out:
+>   	pm_runtime_put(&hdmi->pdev->dev);
+>   
+>   	return (hpd_int_status & HDMI_HPD_INT_STATUS_CABLE_DETECTED) ?
 > 
-> Is there a reason for this to be split in two drivers? Would it make
-> sense to rewrite this such that the result ends up as a single .ko?
-
-cpr1 is far, far simpler.. I'm not sure if sprinkling millions of ifs
-everywhere is worth it
-
+> -- 
+> 2.39.2
 > 
-> Then you shouldn't need to EXPORT_SYMBOL between the two parts of the
-> same "driver".
-I suppose it's a balance of code complexity (see /\) vs kernel size
-
-Konrad
 
