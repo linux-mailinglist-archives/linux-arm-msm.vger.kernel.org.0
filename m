@@ -1,316 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-22974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F38F990C5DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 12:08:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 506C190C720
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 12:35:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C08BB21A58
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 10:08:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D5E1AB225E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 10:35:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BB3215B977;
-	Tue, 18 Jun 2024 07:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 593361AB8E8;
+	Tue, 18 Jun 2024 08:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nj8LQKu1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Sc8Q8mm+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3CB15B961;
-	Tue, 18 Jun 2024 07:28:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D10214BFAB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 08:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718695714; cv=none; b=exYPMzIb1apa/gtvpVxr9FHo3k6k0Y+i2NlMTIbxi7w1V6UIGpe9jEpDYdMHT6Ub4asHZO/LnMzJRPSLrLV+8dlFwgB30kw7c28oBISQiMUlNodtPkbHdk3oK+Y4UonBxLIhQfHQeumgydVOGd3LQcPt9csagxTL+o+upOlp+1c=
+	t=1718699326; cv=none; b=joCDcIMynTx949JI89IhTb1dpzOIukkG6Oiu5Y5AOpEKPMJ+Hv1EzckDNr5UNZmogNOUVfzkZCZNsDvFKYYRZOFerO+SJpbkuMZd1GLO6CX9YmvITLJJnTaWB7JVvzURzOE1WPiGu4lv3IBEcRzHrAalubQPqf31Zbazflpx7gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718695714; c=relaxed/simple;
-	bh=m9mfAIAxFRTHRRGCMHr8WfrPLpdo/UkEWwJT/VFUO+0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VEZhoI13dz1Gpstu3ntj77M3sCliX2hecN85QsYGGaIXmlmEnLe3NoCNDtoAQk0TOkQHqmck72tESd/Q12LovLmCT+ivgXVjOrtOguT56JhRaPsfrzPlTPww5YOyr3fI5BJyJEeAF1hx2/UnCt+vWuqVkJUo2ey+2j8feIRALcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nj8LQKu1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I7CC4Q015035;
-	Tue, 18 Jun 2024 07:28:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	RusiMmr0nnva8nL3kpuVHsHD2aHJ0tNXXvMQZYFsg/o=; b=nj8LQKu1F1n1wgKn
-	gkAmuojog1H38MszOqlAedXmsErNjhyinW9X2JUWlSTg9t1c2Ek3sKwPdhV5xn+Q
-	feiTspnTkheI92E6LybRur25WmmIOdtWWpPqzUA6y+MI6myNnYnHCe22Ohgi/VBi
-	JniTu12UkmsYrShp26R2++QvHVE9mbnH8JTck+0chSWIQBUg0Tv/Jc/195aVTOy0
-	Igq8+8/bWBz5sTzTRqVzzdWhFknZbcuNeUkNlIZ5qSNGn7ZbqlgEXafya+OR9pbC
-	Bu7MQP++26hPvRNASGFX5fmnCVLNY7XTZTX7k65KFl95wFcUkWIuyonf/WPRaSjf
-	jNjumA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ytt0tsd08-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 07:28:20 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45I7SJqa017546
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 07:28:19 GMT
-Received: from jiegan-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 18 Jun 2024 00:28:12 -0700
-From: Jie Gan <quic_jiegan@quicinc.com>
-To: Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC: Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang
-	<quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai
-	<quic_songchai@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>,
-        <quic_yijiyang@quicinc.com>, <quic_yuanjiey@quicinc.com>,
-        <quic_liuxin@quicinc.com>, <quic_yanzl@quicinc.com>,
-        <quic_xinlon@quicinc.com>, <quic_xueqnie@quicinc.com>,
-        <quic_sijiwu@quicinc.com>
-Subject: [PATCH v1 3/3] arm64: dts: qcom: Add CSR and ETR nodes for SA8775p
-Date: Tue, 18 Jun 2024 15:27:26 +0800
-Message-ID: <20240618072726.3767974-4-quic_jiegan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240618072726.3767974-1-quic_jiegan@quicinc.com>
-References: <20240618072726.3767974-1-quic_jiegan@quicinc.com>
+	s=arc-20240116; t=1718699326; c=relaxed/simple;
+	bh=J7Ubp8bWtL9MUA5mJeU224tE13X5WxGju7ElxE2/nnk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QI0cK9gilsXbYNxXyay3BBva8FZgWBZJ5pvKPBCObUumfkQL0c+sFqEENg4nFw2I1G2iSSxtA7veKMlApRTwxDNA8M0mGmqCQHitaywcWoS993M1aW2T9F8ZdnABvZ0g3Sw6LoCtuIJWcsMmPySanzIZN/XwkzWTSJf3mVbX9lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Sc8Q8mm+; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ebec2f11b7so50807951fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 01:28:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718699321; x=1719304121; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bYZjAGpgEt4oOgf7LT/jfEKyned/wQxFG9qSD5B+G2c=;
+        b=Sc8Q8mm+DIk1cJDvXMdlrDhYlT3dCmzSbWhtCjXyEyFOVzdxWXFx7mAppiYwcJmu0+
+         VV6PxTYonpHYfMylsVwX+BSkKStbOCTiPkH0ABj9DvMUIs5v+lx9K9tbiRXTLswQoV8o
+         JVfvpeFz8h2ANI4D7VsmwZ3VWP1p0MN+El1CxLOWO5VzE/eFfusYVrTql76kR4EazwIk
+         eRkp4Vleub+SV05JvqgsoVRhec9/vmMK4folP+bWEa1MjKaatbjVXQ7ee5sv/z9CVIky
+         s1Jw16p4GS/mEEz8lSSaKg8qLf4af97eJZUMtoWIk61UsbLmTQKiYHdFa3ZZw6Yr6+P2
+         /v/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718699321; x=1719304121;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bYZjAGpgEt4oOgf7LT/jfEKyned/wQxFG9qSD5B+G2c=;
+        b=ALjxM/Yo1YsjL9DHHmkSwNihA5RJLeRMqFmxe5RvHpK7Ir6KzoMm+zSz/NL1XJ9+iv
+         o5JbaPNLm/8x5emxQxdgplPigYyojsEGk73DwOwCtcM0AshvA1oDgBmw7eISvZO9QpYT
+         Rub61OfdBllWTM2BA1Xw7pOPiGYRXo+RFaFM18mXyzx1JasCAKRtvj+zMwmFmM2HXHXd
+         +jxufDJVh06QcAq577eKppA80XIEnHgF1ZljBN4n+JFhblS65spL7ajUV5AF7UiBwacQ
+         RTjqhkhBhM6YYj18IzC9fKu02iCwFxhlda5T8i9RD5nNXLM0uukwPqJiyHOpbA8Px7LT
+         BuiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVBQdni13dEflT/nVaHmu4/8DwJGEFRBMMFQw4sL3tqcaeZXmie9Gii7QBG/OhrUZixPTdjNjHKXK/2Xa4Urh6yKXw6r/G7oxaBVlmmOA==
+X-Gm-Message-State: AOJu0Ywk03wpxzRLBVL7N9AdaGa5E3dXKhFxA/He0D/+GCA8kNm5ga4p
+	WCx88XdCjSkIJsrSC2XXeg6PkvW0ywYDeWvaUPZVcBUPYczaHmWlHlTRXjaKOe0=
+X-Google-Smtp-Source: AGHT+IEwq8nhRRqn9q5YxuzIXR5AcAtlRS1/gJNxZ9ufr0fPbu7ispovCsrRMZxqawaZ5SghogxRog==
+X-Received: by 2002:a05:651c:b14:b0:2ec:f68:51d2 with SMTP id 38308e7fff4ca-2ec0f685646mr85838011fa.11.1718699321178;
+        Tue, 18 Jun 2024 01:28:41 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c7813dsm16388561fa.76.2024.06.18.01.28.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Jun 2024 01:28:40 -0700 (PDT)
+Date: Tue, 18 Jun 2024 11:28:39 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 5/5] drm/msm/adreno: Move CP_PROTECT settings to hw
+ catalog
+Message-ID: <eob2zex45yckr2ufuq5deerpuiwhcyfpzxrqj56zoc3t7w4uye@kwvr23fxhvex>
+References: <20240617225127.23476-1-robdclark@gmail.com>
+ <20240617225127.23476-6-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -pXA6eQcHzTx80S9Xf6g5sdzkghNLeBA
-X-Proofpoint-GUID: -pXA6eQcHzTx80S9Xf6g5sdzkghNLeBA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 clxscore=1015 mlxlogscore=999 lowpriorityscore=0
- phishscore=0 priorityscore=1501 spamscore=0 mlxscore=0 suspectscore=0
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406180053
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240617225127.23476-6-robdclark@gmail.com>
 
-Add CSR and ETR device tree nodes to enable related functions.
+On Mon, Jun 17, 2024 at 03:51:15PM GMT, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Move the CP_PROTECT settings into the hw catalog.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 247 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 257 +---------------------
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |   2 +
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h   |  13 ++
+>  4 files changed, 268 insertions(+), 251 deletions(-)
+> 
 
-Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 167 ++++++++++++++++++++++++++
- 1 file changed, 167 insertions(+)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 839c6ec0a957..1154d456c239 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -1657,6 +1657,36 @@ ice: crypto@1d88000 {
- 			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
- 		};
- 
-+		csr: csr@4001000 {
-+			compatible = "qcom,coresight-csr";
-+			reg = <0x0 0x4001000 0x0 0x1000>;
-+			reg-names = "csr-base";
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			in-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					csr_in0: endpoint {
-+						remote-endpoint =
-+						<&etr0_out>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					csr_in1: endpoint {
-+						remote-endpoint =
-+						<&etr1_out>;
-+					};
-+				};
-+			};
-+		};
-+
- 		stm: stm@4002000 {
- 			compatible = "arm,coresight-stm", "arm,primecell";
- 			reg = <0x0 0x4002000 0x0 0x1000>,
-@@ -1860,6 +1890,135 @@ qdss_funnel_in1: endpoint {
- 			};
- 		};
- 
-+		replicator@4046000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x4046000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					qdss_rep_out0: endpoint {
-+						remote-endpoint =
-+						<&etr_rep_in>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					qdss_rep_in: endpoint {
-+						remote-endpoint =
-+						<&swao_rep_out0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tmc_etr: tmc@4048000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0x0 0x4048000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			iommus = <&apps_smmu 0x04c0 0x00>;
-+
-+			arm,scatter-gather;
-+			qcom,csr-atid-offset = <0xf8>;
-+
-+			out-ports {
-+				port {
-+					etr0_out: endpoint {
-+						remote-endpoint =
-+						<&csr_in0>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					etr0_in: endpoint {
-+						remote-endpoint =
-+						<&etr_rep_out0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		replicator@404e000 {
-+			compatible = "arm,coresight-dynamic-replicator", "arm,primecell";
-+			reg = <0x0 0x404e000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+
-+			out-ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+					etr_rep_out0: endpoint {
-+						remote-endpoint =
-+						<&etr0_in>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+					etr_rep_out1: endpoint {
-+						remote-endpoint =
-+						<&etr1_in>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					etr_rep_in: endpoint {
-+						remote-endpoint =
-+						<&qdss_rep_out0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		tmc_etr1: tmc@404f000 {
-+			compatible = "arm,coresight-tmc", "arm,primecell";
-+			reg = <0x0 0x404f000 0x0 0x1000>;
-+
-+			clocks = <&aoss_qmp>;
-+			clock-names = "apb_pclk";
-+			iommus = <&apps_smmu 0x04a0 0x40>;
-+
-+			arm,scatter-gather;
-+			arm,buffer-size = <0x400000>;
-+			qcom,csr-atid-offset = <0x108>;
-+
-+			out-ports {
-+				port {
-+					etr1_out: endpoint {
-+						remote-endpoint =
-+						<&csr_in1>;
-+					};
-+				};
-+			};
-+
-+			in-ports {
-+				port {
-+					etr1_in: endpoint {
-+						remote-endpoint =
-+						<&etr_rep_out1>;
-+					};
-+				};
-+			};
-+		};
-+
- 		funnel@4b04000 {
- 			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
- 			reg = <0x0 0x4b04000 0x0 0x1000>;
-@@ -1935,6 +2094,14 @@ out-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-+				port@0 {
-+					reg = <0>;
-+					swao_rep_out0: endpoint {
-+						remote-endpoint =
-+						<&qdss_rep_in>;
-+					};
-+				};
-+
- 				port@1 {
- 					reg = <1>;
- 					swao_rep_out1: endpoint {
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
