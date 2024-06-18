@@ -1,139 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-23018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0564690CB62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 14:14:09 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC0B890CBA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 14:25:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0CA828BC5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 12:14:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 52F15B219DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 12:16:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F23F13AA53;
-	Tue, 18 Jun 2024 12:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 231777641E;
+	Tue, 18 Jun 2024 12:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kmWBQGSf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G7HY3ySI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8291081725;
-	Tue, 18 Jun 2024 12:11:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8768D2139A1;
+	Tue, 18 Jun 2024 12:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718712716; cv=none; b=KxM1SoehPoOMRK/xMhCmVwzI2LAAHXbNO2UYBquicL9lrBbR/YM70cq875B89Z4TAxp+KplJYVdBIWX6ElTFzfad1En4xDo2xrY+5fDUouvhwc8tuqD1B+tEUkj9HiVqyEIs4WvivGUW/zrX68cmEU/rx2tRyZnKZYL5fmAmek8=
+	t=1718712986; cv=none; b=e9RAMAd1tbqlSOs0MT5dj6NoEvEB7DzVtws8okUdVN/aUcpddRZCICR8V41fG61gib689nRyzsP0/hsJikos3wby0lErKgNfZpqriZaBqJbOlxcwM9kVFlWmsi7bXkGsXjjIc2muAogu/blBKiahwvLPR+lZQAQ66OD8gwT4WUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718712716; c=relaxed/simple;
-	bh=tkkmd7e83SLx6wWZRPA2+oL9p5SIi1EfrihV/aj5aNU=;
+	s=arc-20240116; t=1718712986; c=relaxed/simple;
+	bh=3ELa4g5gAmeQ2Nk2z4ZgNffs0Ns4gLnYP6LW44roiyU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PLNtv5LUjz/BTViUA7K6g5u3Zh2m20T051WmcP3loo0LLpKDYyK8uhhz5fXTOmkJUzTlMuXTeQc80Notwjdr0gGNCbSsyXtj/tsrZH0kNLaZO0oFwikNcMQre7wetjgSxWiLrmaTY+s7BJXIrVIA8p6yyAQmwytJPF3XJE6cXHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kmWBQGSf; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=gPoc+z7C1eMeUWTrRhT7HeNOjqmVkxE53x+Ro2hIRiQQbcbhM5cn0bwX82nVx/q24G4VRYltrs2U58h9cyiCHczxGeWYa6iIJP0DWSZgS6AdqJJVrXEZgDP3GKThMzhTfTxMWq41YCJl6tTvAkRYLzwSrs+1sIlQIkPHG40mgOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G7HY3ySI; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I3D4L8011398;
-	Tue, 18 Jun 2024 12:11:50 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45IC941e018676;
+	Tue, 18 Jun 2024 12:16:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	I8QJeXfloRrBSZk5mn02oFEFrNdkTUucnuv4dy6+P3U=; b=kmWBQGSfh7VSXDtZ
-	dk0M+HQerYn4zHGQsssrCP3WrhKcVeUo3zLGO+c2dboW2IfEODo5DLUWSC5Gu7/B
-	EDrUL7/CuTFp/N6NItE//9XYgbJigME2buNMCQcNtWU/UuX6ytSw0rYZsZeuONMo
-	+YPThcdJvU380XBoTVKY2mY9RlSdxPirUUIuGvRMSlQ+Rri/4WS5HRdUo/ke0Vhg
-	y8Q4v95DXND2IVqSixFrxL7DNZolW5idj1JnBRWjK2riruXl0CqfHFIYM8g8V2tL
-	/PnropZtbQEw4Af5KLmASp7OVfXT16Qw2jz8sKYJ9hZL8bsoIzk+LI+jCW7x85v/
-	geHG+g==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yu24n15x9-1
+	X7ajtZJswwVu9MW1cFewP/YIrgXB+PznxnrZTvcFK9c=; b=G7HY3ySIS76KIRfi
+	fUjvaOCxw55X2UFxhTkLQNuC7J6oxv1BU3Go1W1JuHAm5MAvBFKon5jsJ50LFDmv
+	zKiTgkKAcV1Avk0JJd/24JhAMpQe+sLZCjzDuwLWjhxOOMq7lquVSZULCi18h/CY
+	FFBz823Q9A0Kc3cgLpCzb0U69odRVzQjvbXcsvkbH1slNKBbu+ZlprgOjOn36yun
+	afNVSMofhrtELTmk7r9D6e+7+ArDRv1D4tCZzAlHKYa0qDTv7RLikIoVmMUUE5rs
+	/ZDyDwQbgws/IPAYriPok5ABm6OEm2jTWn3OTwdfo8kvaNED7O0mSZ4vgF6CpUZ4
+	VN681g==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yu22gs66e-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 12:11:49 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45ICBmxR015711
+	Tue, 18 Jun 2024 12:16:07 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45ICG6Sl013907
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 12:11:48 GMT
-Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 18 Jun 2024 12:16:06 GMT
+Received: from [10.216.29.175] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 18 Jun
- 2024 05:11:45 -0700
-Message-ID: <7bcb66c1-39a0-4296-aadf-4889475d6ba6@quicinc.com>
-Date: Tue, 18 Jun 2024 17:41:42 +0530
+ 2024 05:16:01 -0700
+Message-ID: <e80a1f91-8fc1-1897-0e82-014ca62e5b90@quicinc.com>
+Date: Tue, 18 Jun 2024 17:45:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH][RFT] arm64: dts: qcom: sm8550: Change camcc power domain
- from MMCX to MXC
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20240612214812.1149019-1-vladimir.zapolskiy@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 13/18] media: venus: Refactor struct
+ hfi_uncompressed_format_supported
 Content-Language: en-US
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <20240612214812.1149019-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Ricardo Ribalda <ribalda@chromium.org>,
+        Michael Tretter
+	<m.tretter@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Laurent Pinchart
+	<laurent.pinchart@ideasonboard.com>,
+        Michal Simek <michal.simek@amd.com>,
+        Andy Walls <awalls@md.metrocast.net>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad
+ Dybcio <konrad.dybcio@linaro.org>
+CC: <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Hans
+ Verkuil <hverkuil-cisco@xs4all.nl>
+References: <20240527-cocci-flexarray-v3-0-cda09c535816@chromium.org>
+ <20240527-cocci-flexarray-v3-13-cda09c535816@chromium.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20240527-cocci-flexarray-v3-13-cda09c535816@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -kwfyTtl-q2s6lBccDq9idjJnM9_tM81
-X-Proofpoint-ORIG-GUID: -kwfyTtl-q2s6lBccDq9idjJnM9_tM81
+X-Proofpoint-ORIG-GUID: 5erk0c96WMDWk88bKMq4mGw97qIMf1ID
+X-Proofpoint-GUID: 5erk0c96WMDWk88bKMq4mGw97qIMf1ID
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- lowpriorityscore=0 mlxscore=0 mlxlogscore=737 impostorscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 clxscore=1011 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406180090
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ clxscore=1015 malwarescore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ adultscore=0 impostorscore=0 phishscore=0 mlxlogscore=999 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406180091
 
 
 
-On 6/13/2024 3:18 AM, Vladimir Zapolskiy wrote:
-> Any attempt to enable titan_top_gdsc on SM8550-QRD fails and produces
-> an error message that the gdsc is stuck at 'off' state.
+On 5/28/2024 2:39 AM, Ricardo Ribalda wrote:
+> plane_info is not a typical array, the data is not contiguous:
+> pinfo = (void *)pinfo + sizeof(*constr) * num_planes +
+> 	2 * sizeof(u32);
 > 
-> However if MMCX power domain is simply replaced to MXC one, it allows
-> to turn titan_top_gdsc on successfully, even if MMCX is remained off
-> according to /sys/kernel/debug/pm_genpd/pm_genpd_summary report.
+> Replace the single element array with a single element field.
 > 
-> Note that at the moment qcom,sm8450-camcc.yaml gives a definite comment
-> that the supply power domain should be MMCX, and it may be needed in
-> some certain cases, but at the moment they are not unveiled on SM8550
-> platform.
+> This fixes the following cocci warning:
+> drivers/media/platform/qcom/venus/hfi_helper.h:1009:36-46: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
 > 
-> Fixes: e271b59e39a6 ("arm64: dts: qcom: sm8550: Add camera clock controller")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 > ---
-
-Thanks Vladimir for reporting this. I will check on this issue 
-internally and will get back on this.
-
-Thanks,
-Jagadeesh
-
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/media/platform/qcom/venus/hfi_helper.h | 2 +-
+>  drivers/media/platform/qcom/venus/hfi_parser.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 4234c92aafe3..a429115524a6 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -2754,7 +2754,7 @@ camcc: clock-controller@ade0000 {
->   				 <&bi_tcxo_div2>,
->   				 <&bi_tcxo_ao_div2>,
->   				 <&sleep_clk>;
-> -			power-domains = <&rpmhpd SM8550_MMCX>;
-> +			power-domains = <&rpmhpd SM8550_MXC>;
->   			required-opps = <&rpmhpd_opp_low_svs>;
->   			#clock-cells = <1>;
->   			#reset-cells = <1>;
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index eb0a4c64b7ef..dee439ea4d2e 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -1006,7 +1006,7 @@ struct hfi_uncompressed_plane_info {
+>  struct hfi_uncompressed_format_supported {
+>  	u32 buffer_type;
+>  	u32 format_entries;
+> -	struct hfi_uncompressed_plane_info plane_info[1];
+> +	struct hfi_uncompressed_plane_info plane_info;
+>  };
+>  
+>  struct hfi_uncompressed_plane_actual {
+> diff --git a/drivers/media/platform/qcom/venus/hfi_parser.c b/drivers/media/platform/qcom/venus/hfi_parser.c
+> index c43839539d4d..3df241dc3a11 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_parser.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+> @@ -157,7 +157,7 @@ static void
+>  parse_raw_formats(struct venus_core *core, u32 codecs, u32 domain, void *data)
+>  {
+>  	struct hfi_uncompressed_format_supported *fmt = data;
+> -	struct hfi_uncompressed_plane_info *pinfo = fmt->plane_info;
+> +	struct hfi_uncompressed_plane_info *pinfo = &fmt->plane_info;
+>  	struct hfi_uncompressed_plane_constraints *constr;
+>  	struct raw_formats rawfmts[MAX_FMT_ENTRIES] = {};
+>  	u32 entries = fmt->format_entries;
+> 
+Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 
