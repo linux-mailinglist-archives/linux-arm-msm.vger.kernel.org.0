@@ -1,345 +1,498 @@
-Return-Path: <linux-arm-msm+bounces-23141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A90A290DDD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 22:53:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C9D090DEF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 00:07:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17ABFB22F50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 20:53:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E48EAB21EC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 22:07:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12DAC1741FF;
-	Tue, 18 Jun 2024 20:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B403D178378;
+	Tue, 18 Jun 2024 22:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lyreBND0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fZmnRh7T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AA515EFAF;
-	Tue, 18 Jun 2024 20:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0281C2BD;
+	Tue, 18 Jun 2024 22:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718743962; cv=none; b=ZIspCrxhSiRB618spTR7uBObnO85BLRKPKL9ewIETc6PelIVuVtEgIH/4yopqWU6UaI54PjsXaDbaAP6jniDAY2V3I/34Q9Ymp38pdQYObKOocxY88lS+NsXgjaYqs51j1A2qCBnwF7br9MwCybvJtPGFldmftt/s0bjhIOFKDA=
+	t=1718748461; cv=none; b=YKdCZgcecNXQCHSoLbUZcF5+P+ldMyiuII/TLnzT4lfXRQiVWeqBPmWYxbcsg/giVKxzJc1KT1SlMgjYKctnJQGOe23x16zCNrgHv/+/kW5EApX8DFH49jqrA/RzvG0tAf93ZHzlyFxOJKaJ6v6L5dHGYhs8xmN/xyexdN0XJ2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718743962; c=relaxed/simple;
-	bh=Hi06hPfdn3udo4YD/TXcS150lCLSlF8kHt7+6Esd+M8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QkOdFNeUhWvReNFKc4WGmoLN0ChFGtfPSke0OS7SMoth/avLnCV2/5b1jU1A9iLpDYVHXMUNOIaKgiwILcyYxPmKuejU3B2cNfLeecuJPbAp74NV++tqjUD33EUCf89gyq6euyN/3xR4uGyErUHEsSoSsKQPUbOQrDZZ8aOcsCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lyreBND0; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1718748461; c=relaxed/simple;
+	bh=vshtYJ6auOWRkjWkQysHLBE7xhnTPobPLeAKIUjR0ak=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=FlTMyc6hD60yaWfVBFf8U68x74AuycRaKAtl4rs8/UqALlyquqSegTPDLYfSdYyeTdhHigQl/033ky4/ZDJxFlDR/9LnDy6bFAEstp2GBGsJkryf7aoDiLM17yAvOWip50ojkCvwVxe8BgPVPqM2wJcNwhN335gVRTL3Yz3E8nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fZmnRh7T; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45IBi8V2005389;
-	Tue, 18 Jun 2024 20:52:06 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45ILbUud007757;
+	Tue, 18 Jun 2024 22:07:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/pGKFLivsmybOVo2YC+Rib89/pjxJijeCpoCj7hnxew=; b=lyreBND0smqY0Lgz
-	mWqMtiFwJzazXeuI/RSZ+g0+0WBPMyN5l0zrYFFpTLRTyos+ASlUn7PE8eK0Ok+K
-	XvjqqmwHYBiadYINBrZMR5FuDfRFVQtxOFCCr40bTLS0zLcq9TA6Ue75Kl28moC6
-	KXt3TU+C1gFsiLwOoki4tL9wMTisKLXE/lwsOXWwQ5l7qbu2FnY3PR1VOA8P4SX+
-	SOkoKoaALQeEMrdyyVYZpzn08N5pcWddWmNW5jsPXqWs0VsZV2jRe+NYzFTSxQD+
-	PdT1qCB4IKLjGdzvNprCmiU0SKgrXbGnGpWnUvaHm/qK0mnHDZ4vvLU+1cl3LC67
-	xlEmrQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yu9m6sajc-1
+	e4GxQEU865+I+Ap5uFV4RigVEcUPLczIXhdKtfPyRfw=; b=fZmnRh7T8Bces6zh
+	SsmrVvD2sbd0FJBuvv7L25zhSmbsSHJpc3rUvUH+tghqLRqbsuLBIBb1w2dMYjXa
+	B0MqsyuuXOAFo8iKV/Gio76o5fHBlf19LfZ3fJkMh56PT4MK9iIQ0RgFe4oHTboZ
+	xOZCjwAhPfQGaJSE0pG8FFaN8or1x8kZm6xO25BsqSh2Ms74B+nKQQE3Z0io2bgF
+	iv0YnrEK+bzgHEgkG3xlQAh+Z4z502y7XWavxoCIl3Tw3m8QVEllDha32gOmKie0
+	lunmlayQz75GzskBfE/iuToj5b5sAs688IH7/4Q6HNXGXxA3M1rvm9UamcDeHJpK
+	RsZ/cw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yujag01jf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 20:52:06 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45IKq5up010378
+	Tue, 18 Jun 2024 22:07:19 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45IM7Ivf005763
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 20:52:05 GMT
-Received: from [10.110.93.116] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 18 Jun
- 2024 13:52:03 -0700
-Message-ID: <eb6370ea-47a0-3659-3c10-cb7f95e3e520@quicinc.com>
-Date: Tue, 18 Jun 2024 13:52:03 -0700
+	Tue, 18 Jun 2024 22:07:18 GMT
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 18 Jun 2024 15:07:14 -0700
+Received: from nalasex01a.na.qualcomm.com ([fe80::62ba:cee1:5495:c89]) by
+ nalasex01a.na.qualcomm.com ([fe80::62ba:cee1:5495:c89%4]) with mapi id
+ 15.02.1544.009; Tue, 18 Jun 2024 15:07:14 -0700
+From: "Gaurav Kashyap (QUIC)" <quic_gaurkash@quicinc.com>
+To: "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+        "Gaurav
+ Kashyap (QUIC)" <quic_gaurkash@quicinc.com>
+CC: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "andersson@kernel.org" <andersson@kernel.org>,
+        "ebiggers@google.com"
+	<ebiggers@google.com>,
+        "neil.armstrong@linaro.org"
+	<neil.armstrong@linaro.org>,
+        srinivas.kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        "krzysztof.kozlowski+dt@linaro.org"
+	<krzysztof.kozlowski+dt@linaro.org>,
+        "conor+dt@kernel.org"
+	<conor+dt@kernel.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        kernel
+	<kernel@quicinc.com>,
+        "linux-crypto@vger.kernel.org"
+	<linux-crypto@vger.kernel.org>,
+        "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>,
+        "Om Prakash Singh (QUIC)"
+	<quic_omprsing@quicinc.com>,
+        "Bao D. Nguyen (QUIC)"
+	<quic_nguyenb@quicinc.com>,
+        bartosz.golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        "konrad.dybcio@linaro.org"
+	<konrad.dybcio@linaro.org>,
+        "ulf.hansson@linaro.org"
+	<ulf.hansson@linaro.org>,
+        "jejb@linux.ibm.com" <jejb@linux.ibm.com>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+        "mani@kernel.org"
+	<mani@kernel.org>,
+        "davem@davemloft.net" <davem@davemloft.net>,
+        "herbert@gondor.apana.org.au" <herbert@gondor.apana.org.au>,
+        Prasad Sodagudi
+	<psodagud@quicinc.com>,
+        Sonal Gupta <sonalg@quicinc.com>
+Subject: RE: [PATCH v5 04/15] soc: qcom: ice: add hwkm support in ice
+Thread-Topic: [PATCH v5 04/15] soc: qcom: ice: add hwkm support in ice
+Thread-Index: AQHawFGQ2Cb4IdeC1UawBk8ySHD6CrHMC+2AgAKAhjA=
+Date: Tue, 18 Jun 2024 22:07:14 +0000
+Message-ID: <96e2ce4b154a4f918be0bc2a45011e6d@quicinc.com>
+References: <20240617005825.1443206-1-quic_gaurkash@quicinc.com>
+ <20240617005825.1443206-5-quic_gaurkash@quicinc.com>
+ <3eehkn3cdhhjfqtzpahxhjxtu5uqwhntpgu22k3hknctrop3g5@f7dhwvdvhr3k>
+In-Reply-To: <3eehkn3cdhhjfqtzpahxhjxtu5uqwhntpgu22k3hknctrop3g5@f7dhwvdvhr3k>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v23 32/32] ASoC: doc: Add documentation for SOC USB
-Content-Language: en-US
-To: =?UTF-8?Q?Amadeusz_S=c5=82awi=c5=84ski?=
-	<amadeuszx.slawinski@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
-        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <robh@kernel.org>, <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20240610235808.22173-1-quic_wcheng@quicinc.com>
- <20240610235808.22173-33-quic_wcheng@quicinc.com>
- <5be51e1f-70c9-4bbc-96fa-1e50e441bd35@linux.intel.com>
- <408d9e8e-0f40-7e66-54be-2f8d2c0783a3@quicinc.com>
- <ca1e1063-e1bd-4e03-a7cd-91985e9954e9@linux.intel.com>
- <096d59a0-5e18-092c-c9ae-d98130226f06@quicinc.com>
- <368d9019-2c96-468e-b472-7e1127f76213@linux.intel.com>
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <368d9019-2c96-468e-b472-7e1127f76213@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DeJ37znB1cfWADYf-25KNa9cNl2mA-Qo
-X-Proofpoint-ORIG-GUID: DeJ37znB1cfWADYf-25KNa9cNl2mA-Qo
+X-Proofpoint-GUID: 51Uig091LoehcODDGFqcphBcAsS3zefx
+X-Proofpoint-ORIG-GUID: 51Uig091LoehcODDGFqcphBcAsS3zefx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-18_04,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- spamscore=0 lowpriorityscore=0 mlxscore=0 suspectscore=0 adultscore=0
- bulkscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406180154
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 mlxscore=0 adultscore=0 mlxlogscore=999 impostorscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 clxscore=1011 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406180162
 
-Hi Amadeusz,
+Hello Dmitry,
 
-On 6/18/2024 4:42 AM, Amadeusz Sławiński wrote:
-> On 6/17/2024 7:02 PM, Wesley Cheng wrote:
->> Hi Amadeusz,
->>
->> On 6/13/2024 12:46 AM, Amadeusz Sławiński wrote:
->>> On 6/12/2024 9:28 PM, Wesley Cheng wrote:
->>>> Hi Amadeusz,
->>>>
->>>> On 6/12/2024 7:47 AM, Amadeusz Sławiński wrote:
->>>>> On 6/11/2024 1:58 AM, Wesley Cheng wrote:
->>>>>
->>>>> (...)
->>>>>
->>>>>> +In the case where the USB offload driver is unbounded, while USB 
->>>>>> SND is
->>>>>
->>>>> unbounded -> unbound
->>>>>
->>>>> (...)
->>>>>
->>>>>> +SOC USB and USB Sound Kcontrols
->>>>>> +===============================
->>>>>> +Details
->>>>>> +-------
->>>>>> +SOC USB and USB sound expose a set of SND kcontrols for 
->>>>>> applications to select
->>>>>> +and fetch the current offloading status for the ASoC platform 
->>>>>> sound card. Kcontrols
->>>>>> +are split between two layers:
->>>>>> +
->>>>>> +    - USB sound - Notifies the sound card number for the ASoC 
->>>>>> platform sound
->>>>>> +      card that it is registered to for supporting audio offload.
->>>>>> +
->>>>>> +    - SOC USB - Maintains the current status of the offload path, 
->>>>>> and device
->>>>>> +      (USB sound card and PCM device) information.  This would be 
->>>>>> the main
->>>>>> +      card that applications can read to determine offloading 
->>>>>> capabilities.
->>>>>> +
->>>>>> +Implementation
->>>>>> +--------------
->>>>>> +
->>>>>> +**Example:**
->>>>>> +
->>>>>> +  **Sound Cards**:
->>>>>> +
->>>>>> +    ::
->>>>>> +
->>>>>> +      0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
->>>>>> +                     SM8250-MTP-WCD9380-WSA8810-VA-DMIC
->>>>>> +      1 [C320M          ]: USB-Audio - Plantronics C320-M
->>>>>> +                     Plantronics Plantronics C320-M at 
->>>>>> usb-xhci-hcd.1.auto-1, full speed
->>>>>> +
->>>>>> +
->>>>>> +  **Platform Sound Card** - card#0:
->>>>>> +
->>>>>> +    ::
->>>>>> +
->>>>>> +      USB Offload Playback Route Card Select  1 (range -1->32)
->>>>>> +      USB Offload Playback Route PCM Select   0 (range -1->255)
->>>>>> +      USB Offload Playback Route Card Status  -1 (range -1->32)
->>>>>> +      USB Offload Playback Route PCM Status   -1 (range -1->255)
->>>>>> +
->>>>>> +
->>>>>> +  **USB Sound Card** - card#1:
->>>>>> +
->>>>>> +    ::
->>>>>> +
->>>>>> +      USB Offload Playback Capable Card         0 (range -1->32)
->>>>>> +
->>>>>> +
->>>>>> +The platform sound card(card#0) kcontrols are created as part of 
->>>>>> adding the SOC
->>>>>> +USB device using **snd_soc_usb_add_port()**.  The following 
->>>>>> kcontrols are defined
->>>>>> +as:
->>>>>> +
->>>>>> +  - ``USB Offload Playback Route Card Status`` **(R)**: USB sound 
->>>>>> card device index
->>>>>> +    that defines which USB SND resources are currently offloaded. 
->>>>>> If -1 is seen, it
->>>>>> +    signifies that offload is not active.
->>>>>> +  - ``USB Offload Playback Route PCM Status`` **(R)**: USB PCM 
->>>>>> device index
->>>>>> +    that defines which USB SND resources are currently offloaded. 
->>>>>> If -1 is seen, it
->>>>>> +    signifies that offload is not active.
->>>>>> +  - ``USB Offload Playback Route Card Select`` **(R/W)**: USB 
->>>>>> sound card index which
->>>>>> +    selects the USB device to initiate offloading on.  If no 
->>>>>> value is written to the
->>>>>> +    kcontrol, then the last USB device discovered card index will 
->>>>>> be chosen.
->>>>>
->>>>> I see only one kcontrol, what if hardware is capable of offloading 
->>>>> on more cards, is it possible to do offloading on more than one 
->>>>> device?
->>>>>
->>>>>> +  - ``USB Offload Playback Route PCM Select`` **(R/W)**: USB PCM 
->>>>>> index which selects
->>>>>> +    the USB device to initiate offloading on.  If no value is 
->>>>>> written to the
->>>>>> +    kcontrol, then the last USB device discovered PCM zero index 
->>>>>> will be chosen.
->>>>>> +
->>>>>> +The USB sound card(card#1) kcontrols are created as USB audio 
->>>>>> devices are plugged
->>>>>> +into the physical USB port and enumerated.  The kcontrols are 
->>>>>> defined as:
->>>>>> +
->>>>>> +  - ``USB Offload Playback Capable Card`` **(R)**: Provides the 
->>>>>> sound card
->>>>>> +    number/index that supports USB offloading.  Further/follow up 
->>>>>> queries about
->>>>>> +    the current offload state can be handled by reading the 
->>>>>> offload status
->>>>>> +    kcontrol exposed by the platform card.
->>>>>> +
->>>>>
->>>>>
->>>>> Why do we need to some magic between cards? I feel like whole 
->>>>> kcontrol thing is overengineered a bit - I'm not sure I understand 
->>>>> the need to do linking between cards. It would feel a lot simpler 
->>>>> if USB card exposed one "USB Offload" kcontrol on USB card if USB 
->>>>> controller supports offloading and allowed to set it to true/false 
->>>>> to allow user to choose if they want to do offloading on device.
->>>>>
->>>>> (...)
->>>>
->>>> Based on feedback from Pierre, what I understood is that for some 
->>>> applications, there won't be an order on which sound card is 
->>>> queried/opened first.
->>>>
->>>
->>> Yes if you have multiple cards, they are probed in random order.
->>>
->>>> So the end use case example given was if an application opened the 
->>>> USB sound card first, it can see if there is an offload path 
->>>> available. If there is then it can enable the offload path on the 
->>>> corresponding card if desired.
->>>>
->>>
->>> This still doesn't explain why you need to link cards using controls. 
->>> What would not work with simple "Enable Offload" with true/false 
->>> values on USB card that works while you do have above routing controls?
->>>
->>
->> Sorry for the late response.
->>
->> I think either way, even with the "Enable Offload" kcontrol in USB 
->> SND, we'd need a way to link these cards, because if you have multiple 
->> USB audio devices connected, and say... your offload mechanism only 
->> supports one stream.  Then I assume we'd still need to way to 
->> determine if that stream can be enabled for that USB SND device or not.
->>
->> Since the USB SND isn't really the entity maintaining the offload 
->> path, I went with the decision to add that route selection to the ASoC 
->> platform card. It would have access to all the parameters supported by 
->> the audio DSP.
->>
-> 
-> Problem with card selection is that it will most likely work in pretty 
-> random way during reboots and similar scenarios.
-> 
-> Taking from your example:
->      USB Offload Playback Route Card Select  1 (range -1->32)
->      USB Offload Playback Route PCM Select   0 (range -1->255)
->      USB Offload Playback Route Card Status  -1 (range -1->32)
->      USB Offload Playback Route PCM Status   -1 (range -1->255)
-> 
-> This tells that hw:1,0 will be offloaded USB card. What happens if after 
-> reboot the USB card and offload card change places, the control will be 
-> pointing at its owner... Another scenario to consider is that user 
-> attaches two USB cards and only first one does offload. Now what happens 
-> when they enumerate in different order after reboot (swapping places)? 
-> Taking into the account that most systems restore previous values of 
-> controls in some way - this will point at wrong card.
+On 06/17/2024 12:55 AM PDT, Dmitry Baryshkov wrote:
+> On Sun, Jun 16, 2024 at 05:50:59PM GMT, Gaurav Kashyap wrote:
+> > Qualcomm's ICE (Inline Crypto Engine) contains a proprietary key
+> > management hardware called Hardware Key Manager (HWKM).
+> > This patch integrates HWKM support in ICE when it is available. HWKM
+> > primarily provides hardware wrapped key support where the ICE
+> > (storage) keys are not available in software and protected in
+> > hardware.
+> >
+> > When HWKM software support is not fully available (from Trustzone),
+> > there can be a scenario where the ICE hardware supports HWKM, but it
+> > cannot be used for wrapped keys. In this case, standard keys have to
+> > be used without using HWKM. Hence, providing a toggle controlled by a
+> > devicetree entry to use HWKM or not.
+> >
+> > Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+> > ---
+> >  drivers/soc/qcom/ice.c | 153
+> +++++++++++++++++++++++++++++++++++++++--
+> >  include/soc/qcom/ice.h |   1 +
+> >  2 files changed, 150 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c index
+> > 6f941d32fffb..d5e74cf2946b 100644
+> > --- a/drivers/soc/qcom/ice.c
+> > +++ b/drivers/soc/qcom/ice.c
+> > @@ -26,6 +26,40 @@
+> >  #define QCOM_ICE_REG_FUSE_SETTING            0x0010
+> >  #define QCOM_ICE_REG_BIST_STATUS             0x0070
+> >  #define QCOM_ICE_REG_ADVANCED_CONTROL                0x1000
+> > +#define QCOM_ICE_REG_CONTROL                 0x0
+> > +/* QCOM ICE HWKM registers */
+> > +#define QCOM_ICE_REG_HWKM_TZ_KM_CTL                  0x1000
+> > +#define QCOM_ICE_REG_HWKM_TZ_KM_STATUS                       0x1004
+> > +#define QCOM_ICE_REG_HWKM_BANK0_BANKN_IRQ_STATUS     0x2008
+> > +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_0                       0x5000
+> > +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_1                       0x5004
+> > +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_2                       0x5008
+> > +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_3                       0x500C
+> > +#define QCOM_ICE_REG_HWKM_BANK0_BBAC_4                       0x5010
+> > +
+> > +/* QCOM ICE HWKM reg vals */
+> > +#define QCOM_ICE_HWKM_BIST_DONE_V1           BIT(16)
+> > +#define QCOM_ICE_HWKM_BIST_DONE_V2           BIT(9)
+> > +#define QCOM_ICE_HWKM_BIST_DONE(ver)
+> QCOM_ICE_HWKM_BIST_DONE_V##ver
+> > +
+> > +#define QCOM_ICE_HWKM_CRYPTO_BIST_DONE_V1            BIT(14)
+> > +#define QCOM_ICE_HWKM_CRYPTO_BIST_DONE_V2            BIT(7)
+> > +#define QCOM_ICE_HWKM_CRYPTO_BIST_DONE(v)
+> QCOM_ICE_HWKM_CRYPTO_BIST_DONE_V##v
+> > +
+> > +#define QCOM_ICE_HWKM_BOOT_CMD_LIST1_DONE            BIT(2)
+> > +#define QCOM_ICE_HWKM_BOOT_CMD_LIST0_DONE            BIT(1)
+> > +#define QCOM_ICE_HWKM_KT_CLEAR_DONE                  BIT(0)
+> > +
+> > +#define QCOM_ICE_HWKM_BIST_VAL(v)
+> (QCOM_ICE_HWKM_BIST_DONE(v) |           \
+> > +                                     QCOM_ICE_HWKM_CRYPTO_BIST_DONE(v)=
+ |     \
+> > +                                     QCOM_ICE_HWKM_BOOT_CMD_LIST1_DONE=
+ |     \
+> > +                                     QCOM_ICE_HWKM_BOOT_CMD_LIST0_DONE=
+ |     \
+> > +                                     QCOM_ICE_HWKM_KT_CLEAR_DONE)
+> > +
+> > +#define QCOM_ICE_HWKM_V1_STANDARD_MODE_VAL   (BIT(0) | BIT(1)
+> | BIT(2))
+> > +#define QCOM_ICE_HWKM_V2_STANDARD_MODE_MASK
+> GENMASK(31, 1) #define
+> > +QCOM_ICE_HWKM_DISABLE_CRC_CHECKS_VAL (BIT(1) | BIT(2))
+> > +#define QCOM_ICE_HWKM_RSP_FIFO_CLEAR_VAL     BIT(3)
+> >
+> >  /* BIST ("built-in self-test") status flags */
+> >  #define QCOM_ICE_BIST_STATUS_MASK            GENMASK(31, 28)
+> > @@ -34,6 +68,9 @@
+> >  #define QCOM_ICE_FORCE_HW_KEY0_SETTING_MASK  0x2  #define
+> > QCOM_ICE_FORCE_HW_KEY1_SETTING_MASK  0x4
+> >
+> > +#define QCOM_ICE_HWKM_REG_OFFSET     0x8000
+> > +#define HWKM_OFFSET(reg)             ((reg) +
+> QCOM_ICE_HWKM_REG_OFFSET)
+> > +
+> >  #define qcom_ice_writel(engine, val, reg)    \
+> >       writel((val), (engine)->base + (reg))
+> >
+> > @@ -46,6 +83,9 @@ struct qcom_ice {
+> >       struct device_link *link;
+> >
+> >       struct clk *core_clk;
+> > +     u8 hwkm_version;
+> > +     bool use_hwkm;
+> > +     bool hwkm_init_complete;
+> >  };
+> >
+> >  static bool qcom_ice_check_supported(struct qcom_ice *ice) @@ -63,8
+> > +103,21 @@ static bool qcom_ice_check_supported(struct qcom_ice *ice)
+> >               return false;
+> >       }
+> >
+> > -     dev_info(dev, "Found QC Inline Crypto Engine (ICE) v%d.%d.%d\n",
+> > -              major, minor, step);
+> > +     if (major >=3D 4 || (major =3D=3D 3 && minor =3D=3D 2 && step >=
+=3D 1))
+> > +             ice->hwkm_version =3D 2;
+> > +     else if (major =3D=3D 3 && minor =3D=3D 2)
+> > +             ice->hwkm_version =3D 1;
+> > +     else
+> > +             ice->hwkm_version =3D 0;
+> > +
+> > +     if (ice->hwkm_version =3D=3D 0)
+> > +             ice->use_hwkm =3D false;
+> > +
+> > +     dev_info(dev, "Found QC Inline Crypto Engine (ICE) v%d.%d.%d,
+> HWKM v%d\n",
+> > +              major, minor, step, ice->hwkm_version);
+> > +
+> > +     if (!ice->use_hwkm)
+> > +             dev_info(dev, "QC ICE HWKM (Hardware Key Manager) not
+> > + used/supported");
+> >
+> >       /* If fuses are blown, ICE might not work in the standard way. */
+> >       regval =3D qcom_ice_readl(ice, QCOM_ICE_REG_FUSE_SETTING); @@
+> > -113,27 +166,106 @@ static void qcom_ice_optimization_enable(struct
+> qcom_ice *ice)
+> >   * fails, so we needn't do it in software too, and (c) properly testin=
+g
+> >   * storage encryption requires testing the full storage stack anyway,
+> >   * and not relying on hardware-level self-tests.
+> > + *
+> > + * However, we still care about if HWKM BIST failed (when supported)
+> > + as
+> > + * important functionality would fail later, so disable hwkm on failur=
+e.
+> >   */
+> >  static int qcom_ice_wait_bist_status(struct qcom_ice *ice)  {
+> >       u32 regval;
+> > +     u32 bist_done_val;
+> >       int err;
+> >
+> >       err =3D readl_poll_timeout(ice->base + QCOM_ICE_REG_BIST_STATUS,
+> >                                regval, !(regval & QCOM_ICE_BIST_STATUS_=
+MASK),
+> >                                50, 5000);
+> > -     if (err)
+> > +     if (err) {
+> >               dev_err(ice->dev, "Timed out waiting for ICE self-test
+> > to complete\n");
+> > +             return err;
+> > +     }
+> >
+> > +     if (ice->use_hwkm) {
+> > +             bist_done_val =3D ice->hwkm_version =3D=3D 1 ?
+> > +                             QCOM_ICE_HWKM_BIST_VAL(1) :
+> > +                             QCOM_ICE_HWKM_BIST_VAL(2);
+> > +             if (qcom_ice_readl(ice,
+> > +
+> HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_STATUS)) !=3D
+> > +                                bist_done_val) {
+> > +                     dev_err(ice->dev, "HWKM BIST error\n");
+> > +                     ice->use_hwkm =3D false;
+> > +                     err =3D -ENODEV;
+> > +             }
+> > +     }
+> >       return err;
+> >  }
+> >
+> > +static void qcom_ice_enable_standard_mode(struct qcom_ice *ice) {
+> > +     u32 val =3D 0;
+> > +
+> > +     /*
+> > +      * When ICE is in standard (hwkm) mode, it supports HW wrapped
+> > +      * keys, and when it is in legacy mode, it only supports standard
+> > +      * (non HW wrapped) keys.
+>=20
+> I can't say this is very logical.
+>=20
+> standard mode =3D> HW wrapped keys
+> legacy mode =3D> standard keys
+>=20
+> Consider changing the terms.
+>=20
 
-That sounds like a problem that would exist with current USB SND 
-implementation too?  Removing the offloading perspective, how does the 
-system ensure that the previous setting stays persistent?  For example, 
-as you mentioned, depending on which USB device enumerates first, the 
-sound card may be different so cards will be switched.
+Ack, will make this clearer
 
-I think I mentioned this previously in another discussion, but I think 
-the idea was that with the
-USB Offload Playback Capable Card
+> > +      *
+> > +      * Put ICE in standard mode, ICE defaults to legacy mode.
+> > +      * Legacy mode - ICE HWKM slave not supported.
+> > +      * Standard mode - ICE HWKM slave supported.
+>=20
+> s/slave/some other term/
+>=20
+Ack - will address this.
 
-kcontrol, would allow the system to at least know there is an offload 
-capable path pointing to the ASoC platform card, and fetch more detailed 
-information about which device is selected for offloading, etc...
+> Is it possible to use both kind of keys when working on standard mode?
+> If not, it should be the user who selects what type of keys to be used.
+> Enforcing this via DT is not a way to go.
+>=20
 
-> 
-> In my opinion Offload capability should be the capability of the 
-> endpoint - in this case USB card (even if in the background it needs to 
-> talk to some other device) and it should be exposed as such. Currently 
-> you are mixing capabilities of your audio card with capabilities of USB 
-> card.
-> 
-> And adding more controls will not make it easy to use from end user 
-> perspective. Most users will most likely want for the devices to perform 
-> offload automatically if possible to save power and just have control to 
-> disable it in case they want to test if it works better without it in 
-> case of some problems.
+Unfortunately, that support is not there yet. When you say user, do you mea=
+n to have it as a filesystem
+mount option?
 
-I agree with you that we need to keep the controls at a minimum, but I 
-think what I have in place is fairly reasonable.  If we switch to having 
-the USB SND controlling things, we'd save maybe one control?  I think 
-keeping the offload status controls are still fairly valuable in both 
-scenarios, as userspace may need to verify which USB SND card is being 
-offloaded.
+The way the UFS/EMMC crypto layer is designed currently is that, this infor=
+mation
+is needed when the modules are loaded.
+https://lore.kernel.org/all/20231104211259.17448-2-ebiggers@kernel.org/#Z31=
+drivers:ufs:core:ufshcd-crypto.c
 
-> 
-> Additional question what happens if you want to offload two usb cards, 
-> currently the above set of controls allows you to only point at one 
-> card, will you be adding additional set of above controls dynamically 
-> for each USB card attached?
-> 
+I am thinking of a way now to do this with DT, but without having a new ven=
+dor property.
+Is it acceptable to use the addressable range as the deciding factor? Say u=
+se legacy mode of ICE
+when the addressable size is 0x8000 and use HWKM mode of ICE when the addre=
+ssable size is
+0x10000.
 
-It would depend on the number of offload streams that folks may be 
-supporting on their platform.  In our case we only have one available 
-stream, so applications would need to switch between the two devices 
-using the card/pcm selector.
+> > +      *
+> > +      * Depending on the version of HWKM, it is controlled by differen=
+t
+> > +      * registers in ICE.
+> > +      */
+> > +     if (ice->hwkm_version >=3D 2) {
+> > +             val =3D qcom_ice_readl(ice, QCOM_ICE_REG_CONTROL);
+> > +             val =3D val & QCOM_ICE_HWKM_V2_STANDARD_MODE_MASK;
+> > +             qcom_ice_writel(ice, val, QCOM_ICE_REG_CONTROL);
+> > +     } else {
+> > +             qcom_ice_writel(ice,
+> QCOM_ICE_HWKM_V1_STANDARD_MODE_VAL,
+> > +                             HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_CTL))=
+;
+> > +     }
+> > +}
+> > +
+> > +static void qcom_ice_hwkm_init(struct qcom_ice *ice) {
+> > +     /* Disable CRC checks. This HWKM feature is not used. */
+> > +     qcom_ice_writel(ice, QCOM_ICE_HWKM_DISABLE_CRC_CHECKS_VAL,
+> > +                     HWKM_OFFSET(QCOM_ICE_REG_HWKM_TZ_KM_CTL));
+> > +
+> > +     /*
+> > +      * Give register bank of the HWKM slave access to read and modify
+> > +      * the keyslots in ICE HWKM slave. Without this, trustzone will n=
+ot
+> > +      * be able to program keys into ICE.
+> > +      */
+> > +     qcom_ice_writel(ice, GENMASK(31, 0),
+> HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_0));
+> > +     qcom_ice_writel(ice, GENMASK(31, 0),
+> HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_1));
+> > +     qcom_ice_writel(ice, GENMASK(31, 0),
+> HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_2));
+> > +     qcom_ice_writel(ice, GENMASK(31, 0),
+> HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_3));
+> > +     qcom_ice_writel(ice, GENMASK(31, 0),
+> > + HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BBAC_4));
+> > +
+> > +     /* Clear HWKM response FIFO before doing anything */
+> > +     qcom_ice_writel(ice, QCOM_ICE_HWKM_RSP_FIFO_CLEAR_VAL,
+> > +
+> HWKM_OFFSET(QCOM_ICE_REG_HWKM_BANK0_BANKN_IRQ_STATUS));
+> > +     ice->hwkm_init_complete =3D true;
+> > +}
+> > +
+> >  int qcom_ice_enable(struct qcom_ice *ice)  {
+> > +     int err;
+> > +
+> >       qcom_ice_low_power_mode_enable(ice);
+> >       qcom_ice_optimization_enable(ice);
+> >
+> > -     return qcom_ice_wait_bist_status(ice);
+> > +     if (ice->use_hwkm)
+> > +             qcom_ice_enable_standard_mode(ice);
+> > +
+> > +     err =3D qcom_ice_wait_bist_status(ice);
+> > +     if (err)
+> > +             return err;
+> > +
+> > +     if (ice->use_hwkm)
+> > +             qcom_ice_hwkm_init(ice);
+> > +
+> > +     return err;
+> >  }
+> >  EXPORT_SYMBOL_GPL(qcom_ice_enable);
+> >
+> > @@ -149,6 +281,10 @@ int qcom_ice_resume(struct qcom_ice *ice)
+> >               return err;
+> >       }
+> >
+> > +     if (ice->use_hwkm) {
+> > +             qcom_ice_enable_standard_mode(ice);
+> > +             qcom_ice_hwkm_init(ice);
+> > +     }
+> >       return qcom_ice_wait_bist_status(ice);  }
+> > EXPORT_SYMBOL_GPL(qcom_ice_resume);
+> > @@ -156,6 +292,7 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
+> >  int qcom_ice_suspend(struct qcom_ice *ice)  {
+> >       clk_disable_unprepare(ice->core_clk);
+> > +     ice->hwkm_init_complete =3D false;
+> >
+> >       return 0;
+> >  }
+> > @@ -205,6 +342,12 @@ int qcom_ice_evict_key(struct qcom_ice *ice, int
+> > slot)  }  EXPORT_SYMBOL_GPL(qcom_ice_evict_key);
+> >
+>=20
+> Documentation?
+>=20
+> > +bool qcom_ice_hwkm_supported(struct qcom_ice *ice)
+> > +{
+> > +     return ice->use_hwkm;
+>=20
+> I see that use_hwkm can change during runtime. Will it have an impact on
+> a driver that calls this first?
+>=20
+> > +}
+> > +EXPORT_SYMBOL_GPL(qcom_ice_hwkm_supported);
+> > +
+> >  static struct qcom_ice *qcom_ice_create(struct device *dev,
+> >                                       void __iomem *base)
+> >  {
+> > @@ -239,6 +382,8 @@ static struct qcom_ice *qcom_ice_create(struct
+> device *dev,
+> >               engine->core_clk =3D devm_clk_get_enabled(dev, NULL);
+> >       if (IS_ERR(engine->core_clk))
+> >               return ERR_CAST(engine->core_clk);
+> > +     engine->use_hwkm =3D of_property_read_bool(dev->of_node,
+> > +                                              "qcom,ice-use-hwkm");
+>=20
+> DT bindings should come before driver changes.
+>=20
+> >
+> >       if (!qcom_ice_check_supported(engine))
+> >               return ERR_PTR(-EOPNOTSUPP);
+> > diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
+> > index 9dd835dba2a7..1f52e82e3e1c 100644
+> > --- a/include/soc/qcom/ice.h
+> > +++ b/include/soc/qcom/ice.h
+> > @@ -34,5 +34,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
+> >                        const struct blk_crypto_key *bkey,
+> >                        u8 data_unit_size, int slot);
+> >  int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
+> > +bool qcom_ice_hwkm_supported(struct qcom_ice *ice);
+> >  struct qcom_ice *of_qcom_ice_get(struct device *dev);
+> >  #endif /* __QCOM_ICE_H__ */
+> > --
+> > 2.43.0
+> >
+>=20
+> --
+> With best wishes
+> Dmitry
 
-In this case, there will be only one set of controls to select the 
-card/pcm device.  As of now (I think I'll change to to add another 
-separate set of controls per stream) if you did support multiple 
-streams, then the current card/PCM device selector would take in 
-multiple arugments. (ie for two streams the kcontrol can take in two values)
-
-Thanks
-Wesley Cheng
+Regards,
+Gaurav
 
