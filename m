@@ -1,271 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-23002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7D7A90CA61
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 13:52:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3ACB90CA98
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 13:55:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D6AF2826FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 11:52:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8000E1F21C29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 11:55:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E77413A257;
-	Tue, 18 Jun 2024 11:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48BCC157470;
+	Tue, 18 Jun 2024 11:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PKmmLshU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LjLYd5iD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC59F1482FA;
-	Tue, 18 Jun 2024 11:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E451DDDA;
+	Tue, 18 Jun 2024 11:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718710347; cv=none; b=cJqUC7XcPoI67TDrpiBT7Da4Xy6fb9R56i7N/GaDMEtGn4LziXdzdZ80ZQi7z8HJ2lzk805mWFerqnK8qAWNjNCgAYcKf7O1ZnK3jMhOfxvdbzxEvMMmtWSZMMlD8vmY0c6O6m2tSv7uruKj+SakdziX4Rcf1itPVPY/ih69TLg=
+	t=1718710861; cv=none; b=ei6RzZPsQcsRs4KYkftTvowe0jSaKseXU04UBfrIBYVvlGq0Q9UbMeLC1H4HDtzwVc5ZDaFx7+xu+6x7wmLOC+Z/8NA6Q2OR7hR7FMaj2fuqjGzMDFGOdFThaLAk/hWzXtS71PnXHjSN2Mk0ICRjSEfUfOiuaCRcjDiexf+IXGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718710347; c=relaxed/simple;
-	bh=9/VNuOy6f41HZQkBY0gWS/PVvybaUlmHcB4BzVq3fj0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=X/IbtO8AyBauWC8DSJ4ILafqKCvHxmdGy1fmibPlir2pDeLeJ/nOFF/wdhrtN+cq1IvCg4x1maT7McRwpQ7XUKTPoBRmGiV6wBc7ElVJwAm27XnvOTNdtoA+YKUzSvnJbvW8ULfDeNJUbJ9yPisORyuXep7zHo5SeDjBMz+LCd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PKmmLshU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45IBCqbl005316;
-	Tue, 18 Jun 2024 11:32:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fLHp7/SHMGmvtgP/YBRXcnsXboqjNC1Kcw5z6pT1Kow=; b=PKmmLshUv911AkHf
-	cMu8uDBhV4WpE13ywdvklDMwIqFi3UqLxitTunySvMX52+0tNqdm5CbNM6TFY/pF
-	eJStiXb3HhmvchHuFESpU4DP9gE+WPjCNGcgUa54MpqjGy+/Kr6tCzeRe3FeCHZY
-	bsdbOpE5COi/4SnA4JLk6rVSypiwzmGL3xLU16kMQMEJ76+tlgu3Z7SnnAT2TPaK
-	yuSl4J7n3NPNDvPo3WHyzDopZOTkdljk/Ct13dWwwkgvGL4mEC4+0oTJKgsjdJIk
-	RRy88aTlaIHTbnduac1VHsePpfDDFcrNbgKbe45dWZ5ysX2/gwLfkB9s6HdUpMWZ
-	I7botQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yu95rg2a9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 11:32:05 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45IBW4mi009390
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 11:32:04 GMT
-Received: from [10.216.29.175] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 18 Jun
- 2024 04:31:59 -0700
-Message-ID: <15adb142-b88b-e6e1-ddc7-1b4613d1a510@quicinc.com>
-Date: Tue, 18 Jun 2024 17:01:56 +0530
+	s=arc-20240116; t=1718710861; c=relaxed/simple;
+	bh=iDIeJMIVE5Xw9gFrWbn28dRlmrubU9PS94cMczEVSQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T30uujz7HyzwLaCht3CuDbdRKXBZYuQdBYSqoIZKvnB/ZjmRnG6OMwwkz2TCozLzY1ZWkaAJyIrryisP4OgnOyb8vKfr2v2muUgHOjZCeB71Fw1G0J8aCObXj1VpStQ40SqkP+f8c6hftfeWzPyFUrUx6HO6MuUat6fjbnV/bho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LjLYd5iD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEBCEC4AF48;
+	Tue, 18 Jun 2024 11:41:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718710861;
+	bh=iDIeJMIVE5Xw9gFrWbn28dRlmrubU9PS94cMczEVSQg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LjLYd5iDAn1NGIh98XCh+8Bg6hSIHFwd7vzh9FtKbxNVmyCvHUXtlUGaWXMKktayJ
+	 dhuXRXiyaKews/09nf6vCZE0EEqzTHbFdI71n9R7ElOpOExj4x9ReSHxV/YnD10K5x
+	 M322JGUzMwo7BTZrL6gZKCCFzCSp4NGhxWZWp5EoZtTpNINID8DuNFRs0Fv869EJSh
+	 3zJswoQekIQSYqbLBK9Q+74uJLORkqYmcORrO7zwcLvRywVY3ENoIbxj6H61YcPVXH
+	 oD+ztXBd96G5W8b3x3DO8J7VwMdcBHxeQPRtX3s6fIk/taeuJK3cmW8I8H86Ztz/ln
+	 pPZxiv3Bg2KAw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sJXCs-000000002oR-30Wa;
+	Tue, 18 Jun 2024 13:40:58 +0200
+Date: Tue, 18 Jun 2024 13:40:58 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100: Enable tsens and thermal
+ zone nodes
+Message-ID: <ZnFySuwi-Hz6DNDM@hovoldconsulting.com>
+References: <20240614-x1e80100-dts-thermal-v2-1-4d4f9effacc6@linaro.org>
+ <ZnAAxlH6yhlJf6fV@hovoldconsulting.com>
+ <ZnFapqOxQBK5YViU@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 09/18] media: venus: Remove unused structs
-To: Ricardo Ribalda <ribalda@chromium.org>,
-        Michael Tretter
-	<m.tretter@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Laurent Pinchart
-	<laurent.pinchart@ideasonboard.com>,
-        Michal Simek <michal.simek@amd.com>,
-        Andy Walls <awalls@md.metrocast.net>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad
- Dybcio <konrad.dybcio@linaro.org>
-CC: <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Hans
- Verkuil <hverkuil-cisco@xs4all.nl>
-References: <20240527-cocci-flexarray-v3-0-cda09c535816@chromium.org>
- <20240527-cocci-flexarray-v3-9-cda09c535816@chromium.org>
-Content-Language: en-US
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20240527-cocci-flexarray-v3-9-cda09c535816@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tNFSyOd5xrxEVQT2jHL6m7c7QQfraI0y
-X-Proofpoint-ORIG-GUID: tNFSyOd5xrxEVQT2jHL6m7c7QQfraI0y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 mlxscore=0 adultscore=0 clxscore=1011 priorityscore=1501
- spamscore=0 phishscore=0 mlxlogscore=991 suspectscore=0 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406180085
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZnFapqOxQBK5YViU@linaro.org>
 
-Hi Ricardo,
+On Tue, Jun 18, 2024 at 01:00:06PM +0300, Abel Vesa wrote:
+> On 24-06-17 11:24:22, Johan Hovold wrote:
 
-On 5/28/2024 2:38 AM, Ricardo Ribalda wrote:
-> This structures are not used, and have a single element array at the end
-> of them. Remove them.
+> > The CPU bottom thermal zones fail to register with v2:
+> > 
+> > [    0.146219] thermal_sys: Thermal zone name (cpu0-0-bottom-thermal) too long, should be under 20 chars
 > 
-> This fix the following cocci warnings:
-> drivers/media/platform/qcom/venus/hfi_helper.h:764:5-15: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1041:5-15: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1088:39-51: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1093:5-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1144:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1239:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_helper.h:1272:4-13: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:85:5-16: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:180:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-> drivers/media/platform/qcom/venus/hfi_cmds.h:189:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+> Urgh, did not test after renaming the zones.
 > 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> ---
->  drivers/media/platform/qcom/venus/hfi_cmds.h   | 26 -----------------
->  drivers/media/platform/qcom/venus/hfi_helper.h | 39 --------------------------
->  2 files changed, 65 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-> index 20acd412ee7b..41f765eac4d9 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-> @@ -77,14 +77,6 @@ struct hfi_sys_get_property_pkt {
->  	u32 data[1];
->  };
->  
-> -struct hfi_sys_set_buffers_pkt {
-> -	struct hfi_pkt_hdr hdr;
-> -	u32 buffer_type;
-> -	u32 buffer_size;
-> -	u32 num_buffers;
-> -	u32 buffer_addr[1];
-> -};
-> -
->  struct hfi_sys_ping_pkt {
->  	struct hfi_pkt_hdr hdr;
->  	u32 client_data;
-> @@ -171,24 +163,6 @@ struct hfi_session_empty_buffer_uncompressed_plane0_pkt {
->  	u32 data[1];
->  };
->  
-> -struct hfi_session_empty_buffer_uncompressed_plane1_pkt {
-> -	u32 flags;
-> -	u32 alloc_len;
-> -	u32 filled_len;
-> -	u32 offset;
-> -	u32 packet_buffer2;
-> -	u32 data[1];
-> -};
-> -
-> -struct hfi_session_empty_buffer_uncompressed_plane2_pkt {
-> -	u32 flags;
-> -	u32 alloc_len;
-> -	u32 filled_len;
-> -	u32 offset;
-> -	u32 packet_buffer3;
-> -	u32 data[1];
-> -};
-> -
->  struct hfi_session_fill_buffer_pkt {
->  	struct hfi_session_hdr_pkt shdr;
->  	u32 stream_id;
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index e4c05d62cfc7..7c0edef263ae 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -759,11 +759,6 @@ struct hfi_multi_stream_3x {
->  	u32 enable;
->  };
->  
-> -struct hfi_multi_view_format {
-> -	u32 views;
-> -	u32 view_order[1];
-> -};
-> -
->  #define HFI_MULTI_SLICE_OFF			0x1
->  #define HFI_MULTI_SLICE_BY_MB_COUNT		0x2
->  #define HFI_MULTI_SLICE_BY_BYTE_COUNT		0x3
-> @@ -1036,11 +1031,6 @@ struct hfi_codec_supported {
->  	u32 enc_codecs;
->  };
->  
-> -struct hfi_properties_supported {
-> -	u32 num_properties;
-> -	u32 properties[1];
-> -};
-> -
->  struct hfi_max_sessions_supported {
->  	u32 max_sessions;
->  };
-> @@ -1083,16 +1073,6 @@ struct hfi_resource_ocmem_requirement {
->  	u32 size;
->  };
->  
-> -struct hfi_resource_ocmem_requirement_info {
-> -	u32 num_entries;
-> -	struct hfi_resource_ocmem_requirement requirements[1];
-The struct "hfi_resource_ocmem_requirement" can also be removed alongwith this.
+> Talking to Daniel Lezcano, he seems to suggest that the size can become
+> dynamic at some point. For now will switch back to
+> cpu0-0-0-bottom-thermal and cpuss0-0-thermal. So that's O for top and 1
+> for bottom.
 
-> -};
-> -
-> -struct hfi_property_sys_image_version_info_type {
-> -	u32 string_size;
-> -	u8  str_image_version[1];
-> -};
-> -
->  struct hfi_codec_mask_supported {
->  	u32 codecs;
->  	u32 video_domains;
-> @@ -1135,15 +1115,6 @@ struct hfi_index_extradata_config {
->  	u32 index_extra_data_id;
->  };
->  
-> -struct hfi_extradata_header {
-> -	u32 size;
-> -	u32 version;
-> -	u32 port_index;
-> -	u32 type;
-> -	u32 data_size;
-> -	u8 data[1];
-> -};
-> -
->  struct hfi_batch_info {
->  	u32 input_batch_count;
->  	u32 output_batch_count;
-> @@ -1234,11 +1205,6 @@ static inline void hfi_bufreq_set_count_min_host(struct hfi_buffer_requirements
->  		req->count_min = val;
->  };
->  
-> -struct hfi_data_payload {
-> -	u32 size;
-> -	u8 data[1];
-> -};
-> -
->  struct hfi_enable_picture {
->  	u32 picture_type;
->  };
-> @@ -1267,11 +1233,6 @@ struct hfi_buffer_alloc_mode_supported {
->  	u32 data[1];
->  };
->  
-> -struct hfi_mb_error_map {
-> -	u32 error_map_size;
-> -	u8 error_map[1];
-> -};
-> -
->  struct hfi_metadata_pass_through {
->  	int enable;
->  	u32 size;
-> 
-Regards,
-Vikash
+Did you mean to say 'cpu0-0-0-thermal' and 'cpu0-0-1-thermal'?
+
+Abbreviating 'bottom' (e.g. as 'btm') also works and may be preferred as
+it's not very obvious what any of the zeroes in 'cpu0-0-0-thermal' stand
+for.
+
+Johan
 
