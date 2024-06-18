@@ -1,63 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-22984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EADC90C817
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 12:59:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F90C90C865
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 13:07:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33C6A1C22EEC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 10:59:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1770F1F21643
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 11:07:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC95D1D2A3A;
-	Tue, 18 Jun 2024 09:34:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MNJEuFqX"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98C3F204EEC;
+	Tue, 18 Jun 2024 09:47:39 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C98113B587;
-	Tue, 18 Jun 2024 09:34:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1205818036;
+	Tue, 18 Jun 2024 09:47:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718703297; cv=none; b=kHV4JTW7jv/5g2eyCn2fOXVzJTubXxxTCG+ShVU+65hxlLxjWNAfE0PAqyFZ/Tr6xCD7818xCIHcIPPDrjAtbVa4F/LMOEX7pTeJhtfwB2lqrNG06ayxZj8h2gkSnmvR/DeMxgyz46qXoz4LIchTYksctcLjJ1FnYCtU376E1pM=
+	t=1718704059; cv=none; b=KULPBsrTHyLTJ3v2CJivA47W5JvZL68giyvxIMNzsDVHYG4qWOYqHu2J46WYk9s4ZLlOXpvmHiSVVyiRvm9FYQCHAz0kIQsEbhHcORetur/zj9gC67yskolFMa2FYOiOp488LCN/cdzrbHahGedEiW4W9abH1mJepeAaT7m4Pw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718703297; c=relaxed/simple;
-	bh=OkAo6EIj92wKJXQtVAueFl/of18+ooI9LN/LRMNUFT8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NJ3TmB2XfmJvHucysTTgkQiKFrj9qZkRZact6nU1gElA6mLAWU+5MvTlE0a86arBOOP+tMDYzpgwqcI2s5oOtBWFmosBF2SDsbm0QJbV3okzThMOFEb+P63jfdjxBnshE+7taoYfq021KTbEzSC/NrfwmG5JPPUtuGGFzVygCLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MNJEuFqX; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I37ooU018347;
-	Tue, 18 Jun 2024 09:34:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4RP1l8jk2w2WRZlbBbGJ4pmrEVkuCZtj4kNaPexCg7c=; b=MNJEuFqXexvu8Qcn
-	AcU/C02rVrb2YHj9yf0YRNXb+ylxfqfLBWrbjnSEUds1vrlQiLZyumCuxNjkTL4r
-	Fhw8osCqP+0uTEGipo+oY6n8mjCgu/nDyVyfgn1kNhWvLlYWWR9eDM0oJkld7eBC
-	wppvTWcWRznHOGRczUUvZQpflLIet9DoMEuKf/zxxnetb4b2t6LaKUDmma9/nUUJ
-	I8FNNwyEpSQc6ORxkS+hKuQU3KJUKXs0mp0o6veNtZpXxFzI1Hwpm7EPUeJ1Qys7
-	vA3c/usOTp1VWJy2CZrIjw4QuDQNF7Vfja1D2X0rYPYp+e0U/Bt6IKY4wVL8l481
-	rJ68XQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yu22grrrh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 09:34:46 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45I9YjTI019073
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Jun 2024 09:34:45 GMT
-Received: from [10.218.5.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 18 Jun
- 2024 02:34:36 -0700
-Message-ID: <caedb219-f412-4511-8c92-90e87ca9a0f4@quicinc.com>
-Date: Tue, 18 Jun 2024 15:04:26 +0530
+	s=arc-20240116; t=1718704059; c=relaxed/simple;
+	bh=bvydH7RjBestTLmNs2zaUNf93eKOltBy+ZSBAHcAorQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I5Z8b6Vl4pY8ZA+bbOpzwV3SCz5OfQAlIcscVFARJDgA7+23FVp7j5hy1q/qS7unAyaz32WCXQaumZxBuaLjzaUjMLBI612zMobNxTtrD0+MN4qIhuCviQpePpo4YyK/QzFfh1l4iPP421wLisZKJfOKTYgg2V134FI1cPeDSjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D198DDA7;
+	Tue, 18 Jun 2024 02:48:00 -0700 (PDT)
+Received: from [10.57.72.20] (unknown [10.57.72.20])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AB13B3F64C;
+	Tue, 18 Jun 2024 02:47:32 -0700 (PDT)
+Message-ID: <243098a9-296b-4cbc-9f48-d37ab3b94153@arm.com>
+Date: Tue, 18 Jun 2024 10:47:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,147 +42,125 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 RESEND 5/5] venus: pm_helpers: Use
- dev_pm_genpd_set_hwmode to switch GDSC mode on V6
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Michael
- Turquette" <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        "Ulf
- Hansson" <ulf.hansson@linaro.org>,
-        "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Len Brown
-	<len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Andy
- Gross" <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        "Satya Priya
- Kakitapalli" <quic_skakitap@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20240413152013.22307-1-quic_jkona@quicinc.com>
- <20240413152013.22307-6-quic_jkona@quicinc.com>
- <5c78ad52-524b-4ad7-b149-0e7252abc2ee@linaro.org>
- <b96ef82c-4033-43e0-9c1e-347ffb500751@quicinc.com>
- <a522f25f-bb38-4ae1-8f13-8e56934e5ef5@linaro.org>
- <dbd1b86c-7b5f-4b92-ab1f-fecfe1486cfc@quicinc.com>
- <621dbaaa-6b86-45b5-988e-a6d9c39b13d7@linaro.org>
- <d36c1163-a3f0-4034-a430-91986e5bbce8@linaro.org>
- <ef194e5c-f136-4dba-bfe0-2c6439892e34@linaro.org>
- <d2e55523-f8fd-4cbe-909c-57de241107e8@linaro.org>
- <1df48a42-3b4e-4eb4-971b-cd4be001ba27@quicinc.com>
- <93a67151-02fa-4c53-8d6e-0ed1600128bf@quicinc.com>
- <01041302-120b-4f9d-87f2-bd841dcd227a@linaro.org>
-Content-Language: en-US
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <01041302-120b-4f9d-87f2-bd841dcd227a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH v1 0/3] Add coresight slave register driver to support
+ data filter function
+Content-Language: en-GB
+To: Jie Gan <quic_jiegan@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>,
+ Song Chai <quic_songchai@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ andersson@kernel.org, quic_yijiyang@quicinc.com, quic_yuanjiey@quicinc.com,
+ quic_liuxin@quicinc.com, quic_yanzl@quicinc.com, quic_xinlon@quicinc.com,
+ quic_xueqnie@quicinc.com, quic_sijiwu@quicinc.com
+References: <20240618072726.3767974-1-quic_jiegan@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20240618072726.3767974-1-quic_jiegan@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gt_jisChldo_9sVlyTERCw_uv13ANvua
-X-Proofpoint-GUID: gt_jisChldo_9sVlyTERCw_uv13ANvua
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 spamscore=0 suspectscore=0
- adultscore=0 impostorscore=0 phishscore=0 mlxlogscore=999 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406180070
 
-
-
-On 6/17/2024 3:21 PM, Bryan O'Donoghue wrote:
-> On 17/06/2024 03:31, Jagadeesh Kona wrote:
->>
->>
->> On 5/31/2024 5:26 PM, Jagadeesh Kona wrote:
->>>
->>>
->>> On 5/10/2024 6:31 PM, Bryan O'Donoghue wrote:
->>>> On 01/05/2024 10:14, Bryan O'Donoghue wrote:
->>>>> On 30/04/2024 21:01, Konrad Dybcio wrote:
->>>>>> On 24.04.2024 11:50 AM, Bryan O'Donoghue wrote:
->>>>>>> On 24/04/2024 10:45, Jagadeesh Kona wrote:
->>>>>>>>
->>>>>>>> Thanks Bryan for testing this series. Can you please confirm if 
->>>>>>>> this issue is observed in every run or only seen during the 
->>>>>>>> first run? Also please let me know on which platform this issue 
->>>>>>>> is observed?
->>>>>>>>
->>>>>>>> Thanks,
->>>>>>>> Jagadeesh
->>>>>>>
->>>>>>> rb5/sm8250
->>>>>>>
->>>>>>> My observation was on a previous _boot_ the stuttering was worse. 
->>>>>>> There is in the video capture three times that I count where the 
->>>>>>> video halts briefly, I guess we need to vote or set an OPP so the 
->>>>>>> firmware knows not to power-collapse quite so aggressively.
->>>>>>
->>>>>> We seem to be having some qualcomm-wide variance on perf/pwr usage 
->>>>>> on some
->>>>>> odd boots.. Any chance you could try like 5 times and see if it 
->>>>>> was a fluke?
->>>>>>
->>>>>> Konrad
->>>>>
->>>>> Sure.
->>>>>
->>>>> The first time I tried it, it was much worse.
->>>>>
->>>>> The second time, captured in the video is only noticeable because I 
->>>>> was *looking* for this specific error i.e. I don't think I would 
->>>>> have noticed the error on the second run, had I not seen the first 
->>>>> run.
->>>>>
->>>>> I'll find some time to do 5x with and 5x without.
->>>>>
->>>>> ---
->>>>> bod
->>>>
->>>> ping bod please remember to do this thanks
->>>>
->>>
->>> Hi Bryan, Could you please let me know if you got a chance to check 
->>> the above? Thank you!
->>>
->>
->> Hi Bryan, Kindly can you please help confirm if this is a real issue 
->> or observed as a fluke? so we can go ahead and mainline these changes.
->>
->> Thanks,
->> Jagadeesh
+On 18/06/2024 08:27, Jie Gan wrote:
+> The Coresight Slave Register(CSR) device hosts miscellaneous configuration
+> registers to control various features related to TMC ETR device.
 > 
-> So I'm happier with this patchset when I run gstreamer instead of ffmpeg.
-> 
-> There doesn't appear to be a discernable difference between before/after 
-> on framerate or subjective UX with/without this set.
-> 
-> gst-launch-1.0 -vvv -e filesrc location=sample-5s.mp4 ! qtdemux ! 
-> parsebin ! v4l2h264dec ! autovideosink
-> 
-> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> The CSR device works as a helper device physically connected to the TMC ETR device.
+> ---------------------------------------------------------
+>               |ETR0|             |ETR1|
+>                . \                 / .
+>                .  \               /  .
+>                .   \             /   .
+>                .    \           /    .
+> ---------------------------------------------------
+> ETR0ATID0-ETR0ATID3     CSR     ETR1ATID0-ETR1ATID3
+> ---------------------------------------------------
+> Each ETR has four ATID registers with 128 bits long in total.
+> e.g. ETR0ATID0-ETR0ATID3 registers are used by ETR0 device.
 
-Thanks a lot Bryan for helping with the testing.
+What is the maximum number of connections possible for CSR ? 2 ETRs ?
 
-Thanks,
-Jagadeesh
+> 
+> Based on the trace id which is programed in CSR ATID register of
+> specific ETR, trace data with that trace id can get into ETR's buffer
+
+How do you handle cases where there are multiple TraceIDs in a the 
+stream ? e.g., perf tracing a multi-threaded app ? Each ETM will have
+a distinct traceid. Is there way to disable filtering by CSR ?
+
+Side note, with James's trace id allocation per sink series makes this
+easier for the ETR to know the trace ids allocated for the current
+session. Works only for perf though.
+
+
+> while other trace data gets ignored. CSR may contain several ATID registers.
+> Each ATID register is associated with an ETR device.
+> 
+> To achieve this function, the trace id is obtained and stored in the related
+> ETR device's driver data just before enabling the CSR. Then, the CSR
+> device can easily obtain the trace ID from the ETR's driver data because the
+> ETR's driver data is passed to the CSR's enable/disable functions.
+> 
+> Ensure that every source device has already allocated a trace ID in its probe
+> session because the sink device should always be the first device to
+
+How is that possible ? We are going backwards in the trace id allocation
+with your proposal. What is the purpose of this hardware when you could 
+use a replicator with trace filtering based on masks ?
+
+> enable when operating coresight_enable_path function. As a helper device of the
+> ETR, the CSR device will program the ATID register of a specific ETR according to
+> the trace id to enable data filter function at a very early stage. Without the
+> correct trace ID, the enablement session will not work.
+> 
+> Each CSR's enable session will set one bit in the ATID register.
+
+So is this a bitmap of "enable/disable" ATID ? I really don't see the
+usecase of the CSR "device" yet. Please could you share "usecase" ?
+
+Suzuki
+
+
+> Every CSR's disbale seesion will reset all bits of the ATID register.
+> 
+> This patch only supports sysfs mode. I will send the perf mode part patch
+> once it is ready.
+> 
+> Looking forward to receiving comments as this is a new driver.
+> 
+> Thanks!
+> 
+> Jie Gan (3):
+>    dt-bindings: arm: Add binding document for Coresight Slave Register
+>      device.
+>    coresight: Add coresight slave register driver to support data filter
+>      function in sysfs mode
+>    arm64: dts: qcom: Add CSR and ETR nodes for SA8775p
+> 
+>   .../bindings/arm/arm,coresight-tmc.yaml       |   8 +
+>   .../bindings/arm/qcom,coresight-csr.yaml      |  49 +++
+>   arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 167 ++++++++++
+>   drivers/hwtracing/coresight/Kconfig           |   6 +
+>   drivers/hwtracing/coresight/Makefile          |   1 +
+>   drivers/hwtracing/coresight/coresight-core.c  |   6 +-
+>   drivers/hwtracing/coresight/coresight-csr.c   | 315 ++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-csr.h   |  24 ++
+>   .../coresight/coresight-etm4x-core.c          |   1 +
+>   drivers/hwtracing/coresight/coresight-stm.c   |  50 ---
+>   drivers/hwtracing/coresight/coresight-sysfs.c |  45 ++-
+>   .../hwtracing/coresight/coresight-tmc-core.c  |   1 +
+>   drivers/hwtracing/coresight/coresight-tmc.h   |   2 +
+>   include/linux/coresight-stm.h                 |  44 +++
+>   14 files changed, 665 insertions(+), 54 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-csr.yaml
+>   create mode 100644 drivers/hwtracing/coresight/coresight-csr.c
+>   create mode 100644 drivers/hwtracing/coresight/coresight-csr.h
+> 
+
 
