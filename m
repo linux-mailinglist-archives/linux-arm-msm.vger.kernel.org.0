@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-23097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D248390D5F3
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FBAE90D5F2
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 16:48:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5435282DC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 14:48:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6E631C237E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 14:48:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E24E153800;
-	Tue, 18 Jun 2024 14:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA29E1552FE;
+	Tue, 18 Jun 2024 14:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RNSBxOqJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VTRothG8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D55C153573
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 14:39:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038B8153517
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 14:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718721557; cv=none; b=pe+lzsc71A8xksBAC7surdgrR2nAhoisitEiPJhJ7J9IdvGQkdm6Koi2tnzUWY7dq3DkjLsrbepW7bAsYagCzAX6S6jPEJcpxPgJR9KgydeTyYDnl8abKxWCk0gWqK6isO8N5NzR9CHNcrY/kpn/29pSlODqtRBrNTnyM5Unq/M=
+	t=1718721590; cv=none; b=l5qNDt1tT5MW4Vr3sU4/iiXDaJvse53WzPgEUENFAEyF3aXUoUfxkZsZkoLzscbsEtwDmWGgE7Bp7WPR+6qKUuHePtOijDkgSLDzTYvNZklbjY28wBhxf8JjAoQxhofshnj+FKulcBwC6YqBaZ+tP/uzNxUDftNbRa3vECRrA5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718721557; c=relaxed/simple;
-	bh=zrVZtKOw1wtm34lfpGY8EB2vsDosS6TKH8DIDwhCmGo=;
+	s=arc-20240116; t=1718721590; c=relaxed/simple;
+	bh=LlbZznX9y6lL19O6CIWVKkviVlaTfPg4BWkTJswayts=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AYm+bTqY6jPrjwrxd6hKdWjwUkxFVzMkDGMhS57yawEYbzhZ7+Kh9uI8wiVg5hhhdWvs3RdbksY5d978lwZoVM4AD2Ls9Nz5768F4W5vkHDld8utDonzuVTIoqaGvsK8fMsoRPUJHuFyGCHtZhK93Z3L4iU9Xs1MUjfv8zekUBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RNSBxOqJ; arc=none smtp.client-ip=209.85.208.172
+	 In-Reply-To:Content-Type; b=LSGrcCIrzw3adwQtY+uzMilYbtx+Vz0Rk+shspLmWfSCZHuoSjmmUcoC0ixJ2rsXJzWcu3c5bXOF9OvX8lwJ1KvbQc+cluZRU7T3w/aO6W1Up7Upv1MTkk7GAQfMl1LpsDRCoXHhCTjj7bPwPb7F2Q3DqPSv7YmBmzpJPAu/sbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VTRothG8; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ec0f3b9cdbso38426471fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 07:39:14 -0700 (PDT)
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ebeefb9a6eso58998301fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 07:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718721553; x=1719326353; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718721587; x=1719326387; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wdAgFpCSfsBaoK3eiN4GlXTRiQPusSTXTIM+J24lOEM=;
-        b=RNSBxOqJIstc+XUQn7OUh9Bzi6stsMnI/6slcpqBKEn7bZUrrQF/20HJ5ivM63PoVV
-         NtY4EHFLUMMEkCn+qsNclFFnPPgvCgaIZ4upkeSFBARyTQcTXdtl23DYNoJqRmw1MFki
-         /ievN6j5MR9ui71olGFCmpk5WyrzBmK51TNKJV/iMeXQY++kAQK/ibOEI/j/ytGwcHf0
-         njFz3XdUhoZrZLaTw/6mBGuOvOJAygSGU3FfGvfG98La7cUsbh54LvLEZznEzcQqemge
-         mcJgu2BMrCZc/XZuKn7avqQ+b+Es4SxryLQc+/wet1a4zLbEz85UZLQkLZlr9bNFH207
-         f00Q==
+        bh=EhNeJnFIpKcMB1xsWo5K5A6vNF/FKcCi+sTOJve9a1Y=;
+        b=VTRothG8l3Fx9W2KoaJYhdLrzlT8IQIknXKAFvC5GvyefBb6fan4u1mpYQ7ZFUeWm2
+         u03y0ZztbxDWn51g21GzqN/ItR5CCa6htPrxWwia0ey+/qGKvl9D0b8b/WHdSD4mLFYn
+         IIeGUjXnzhqqBQos9aU5I/egJooteR3qe7lQKcPBGjDNHR3Kl/PvWeRpbgT/xoc8/7Dv
+         FTVbURm6X9Kh/N0JbTqyac3Y8kk9M7NHmPf6YmXDczCNlgGnkyteSLwBIb8ExBY25OmA
+         6p/tdByCAKnEDR4ztgqju8wq+YBxy56nw6Q0Otgg362u82T71tsVAo39p0uJxRBpMHs7
+         La8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718721553; x=1719326353;
+        d=1e100.net; s=20230601; t=1718721587; x=1719326387;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wdAgFpCSfsBaoK3eiN4GlXTRiQPusSTXTIM+J24lOEM=;
-        b=WLOJPQRPHXWEErNPlHi5a2r7TgKeAW2voN5bFyhHV8GEDOdQ+X7erkTBQSqmpU6LYn
-         fWn9kcAR51QNB65+c1yEQeMHdGj3Rp5+klGHU9jsyjDVd5FmAfV/1zi6mHEz1Kho8v15
-         KjUofcqM44XP1nGMIVE8qBpqaypw7WOBYTwmAGBE6azlBV2mVd64EBxJdn8pvBtyhUBR
-         vidOwI++WrVIfu/g55re63wNHBhN8FSwdFbUJ02w5Wh0QUBS6mjAxMtkRtvV8ji3yGk/
-         uEK55IwFlgWqxqi71b9gib3E/HxpU4hS3+gxGxcb3ea82gs6ECKv1NFyOvdeiCHdmmSZ
-         +9lA==
-X-Forwarded-Encrypted: i=1; AJvYcCU/0dlM/aWYJzXoSFcbndqg+giOr6jVJ7sUzEm0LmLxYdS97gdqzoRA5f/J3FlPdkYUYaYb5k+DpXJzBYTLlUqpo+YoxHKpV4WvUN6A9Q==
-X-Gm-Message-State: AOJu0YxBPoaHU2C6kOCdtfGvIDvdlVF+hzOA6BsQ5aMl5PlIN2JAVU0q
-	o2DMXQQxAawE197+RPKljYGl1j/z0gbttAS6aEKCLHOHzuh7uD0UcPfyINkg7F8=
-X-Google-Smtp-Source: AGHT+IFpKUjGdBUk/w3QFo4wFb49hKoT3v+xxZtiuL1ieNzPlljX7lEbvTogCzQzGRTD99k7+qiidw==
-X-Received: by 2002:a2e:a317:0:b0:2eb:d924:43fb with SMTP id 38308e7fff4ca-2ec3cfe9ee8mr277231fa.41.1718721553229;
-        Tue, 18 Jun 2024 07:39:13 -0700 (PDT)
+        bh=EhNeJnFIpKcMB1xsWo5K5A6vNF/FKcCi+sTOJve9a1Y=;
+        b=wwwm64cjweLgJIeEyrukDmwKW+8QpzNbWusGDpIugsUztWMc9qkJRLsgvyCKtWfl+S
+         Ni1oPxnLw5EnuKZkhKVGF8kXXgxI73Poa2/F9z4AlWPiasDte1u7LxlsA+ZxA9Zdug0P
+         h7ODYJUdNPcOYrCwrXIclCj+IRr145jsP9RAVb153rs4YyZkC26q1JhFx3KepaT2Vx53
+         INiVGZ+UNN8cnVGXFlzHsNxs4EtV6xrcBxIKEVokyqsuHOVmRuY2NMd+kjE+qYqEr28d
+         fdYwkyalTJghSfAD38C3L82coqxYIWlLlttzGoknnL0ANfIh81EtOB4TGQM0t+l4IAHy
+         xc2A==
+X-Forwarded-Encrypted: i=1; AJvYcCVnkFEUZ+751oZuNUewwXWP9c4HePF/tokswvAmWzOWHbaUhvO0A/1CGZrJpw94Jy4GX3TGe3RnImFHZgT6KLhxdNra7AaochXu5hrbLw==
+X-Gm-Message-State: AOJu0YwjnMSlpv8B6U9s9Z8zcMQVVd+cuKNOwQhAcbJGbMQkvLU0GZ90
+	fr7COIXwNSfId3C4H9gHt6B3dL5EyFsmM4JDtc59TKa9u60y1IpAjoPA6NQh+Ys=
+X-Google-Smtp-Source: AGHT+IEtUHXeRnHeDkSwwwTyi8cQv08pAIrgsIOFAWmu/k3nYB82ZVQbcr6BJrpdxbGGpPA4+n32aA==
+X-Received: by 2002:a2e:9510:0:b0:2ec:eee:f19d with SMTP id 38308e7fff4ca-2ec3cfe89e8mr303011fa.37.1718721587363;
+        Tue, 18 Jun 2024 07:39:47 -0700 (PDT)
 Received: from ?IPV6:2a00:f41:9028:9df3:4fb7:492b:2c94:7283? ([2a00:f41:9028:9df3:4fb7:492b:2c94:7283])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c0605bsm17294671fa.47.2024.06.18.07.39.09
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec0e600712sm15104691fa.88.2024.06.18.07.39.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jun 2024 07:39:12 -0700 (PDT)
-Message-ID: <7395f6ca-31d7-4ebc-b846-6c68e2ae2efe@linaro.org>
-Date: Tue, 18 Jun 2024 16:39:06 +0200
+        Tue, 18 Jun 2024 07:39:47 -0700 (PDT)
+Message-ID: <a03d415c-02c8-4eeb-9e16-122e61d333f6@linaro.org>
+Date: Tue, 18 Jun 2024 16:39:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,51 +76,52 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] arm64: dts: qcom: x1e80100: Enable bwmon and fastrpc
- support
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- djakov@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- srinivas.kandagatla@linaro.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
- quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
- dmitry.baryshkov@linaro.org, abel.vesa@linaro.org
-References: <20240604011157.2358019-1-quic_sibis@quicinc.com>
- <be2dc908-c8d3-4739-9f46-8f8daf0f328e@linaro.org>
- <24d2d3b3-d676-8e86-bae4-c3538b7b9981@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7180-trogdor: Disable pwmleds node
+ where unused
+To: =?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= <nfraprado@collabora.com>,
+ cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@chromium.org>,
+ Douglas Anderson <dianders@chromium.org>, Stephen Boyd <swboyd@chromium.org>
+Cc: kernel@collabora.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240614-sc7180-pwmleds-probe-v1-1-e2c3f1b42a43@collabora.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <24d2d3b3-d676-8e86-bae4-c3538b7b9981@quicinc.com>
+In-Reply-To: <20240614-sc7180-pwmleds-probe-v1-1-e2c3f1b42a43@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 6/13/24 19:27, Sibi Sankar wrote:
+On 6/14/24 22:59, Nícolas F. R. A. Prado wrote:
+> Currently the keyboard backlight is described in the common
+> sc7180-trogdor dtsi as an led node below a pwmleds node, and the led
+> node is set to disabled. Only the boards that have a keyboard backlight
+> enable it.
 > 
+> However, since the parent pwmleds node is still enabled everywhere, even
+> on boards that don't have keyboard backlight it is probed and fails,
+> resulting in an error:
 > 
-> On 6/6/24 16:00, Konrad Dybcio wrote:
->> On 4.06.2024 3:11 AM, Sibi Sankar wrote:
->>> This patch series enables bwmon and fastrpc support on X1E80100 SoCs.
->>>
->>> This series applies on:
->>> next-20240603 + https://lore.kernel.org/lkml/20240603205859.2212225-1-quic_sibis@quicinc.com/
->>>
->>
->> Going back to [1], is memlat-over-scmi not enough to give us good numbers
->> without OS intervention? Does probing bwmon and making some decisions in
->> Linux actually help here?
+>    leds_pwm pwmleds: probe with driver leds_pwm failed with error -22
 > 
-> Memlat and bwmon are meant to cover to different use cases. Though
-> they have a big overlap on when they get triggered bwmon is specifically
-> meant to address cases where band-width aggregation is required (meaning
-> if other peripherals already have a avg bw vote on active LLCC/DDR, the
-> vote from bwmon would be an additional request on top of that). However
-> to make use of this we should vote for avg-kbps in addition to peak from
-> icc-bwmon driver which we don't currently do (Shiv was planning on
-> sending a fix for it).
+> as well as a failure in the DT kselftest:
+> 
+>    not ok 45 /pwmleds
+> 
+> Fix this by controlling the status of the parent pwmleds node instead of
+> the child led, based on the presence of keyboard backlight. This is what
+> is done on sc7280 already.
+> 
+> While at it add a missing blank line before the child node to follow the
+> coding style.
+> 
+> Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+> Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+> ---
 
-Great, thanks for confirming
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
