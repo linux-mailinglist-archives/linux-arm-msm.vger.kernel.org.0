@@ -1,109 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-22993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-22994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 779DE90CA00
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 13:44:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0688290CA05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 13:44:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DDA228BDE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 11:44:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 148B61C237E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 11:44:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 261371586FB;
-	Tue, 18 Jun 2024 11:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE0C7158DB5;
+	Tue, 18 Jun 2024 11:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JEcvZMOE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oSAzLXR+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADCB158A1B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 11:08:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC74D19B58C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 11:09:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718708914; cv=none; b=ZPDDrzawrPzoornGRVdJ4a6WKP9GOx2LoVNlgRZvBVoe/4lQ751eFm9ITjIrUVooaNBxJxli8G9rVyh1IxPdj8pyr1HfQYGCd/CHhbbnTmJ5xFUrpF/6qIBQzXjgv/cPZMaZJcXl0mlzmSIQcZcjUZCIb3tA2/SIYnrSr8NnKow=
+	t=1718708973; cv=none; b=W51Ax3DJDrCdhb7KnBjz5r8d9oy8Dzad1tLP78qkQcH+VdHYDUEPIFC7hsDHjTWkLKyRD7kubdSwENSAA+mtfdiLDJvAXzB6ztvNSr5AMQHEPssjMquI9gBtrMn3BJ3nr5hwCZEjv3zrhKg9141iQ7ktlIe87HZ/bhcq22luz/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718708914; c=relaxed/simple;
-	bh=2DEddTNVPP2vZlXXyQ1f+AkVMj17m5QUW665940mq7o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MUIHc7WjHtiQ0NeYfI9+BfYa4jdX71XlZpOKDvM+9zwr0DAHFimPJ66Wv3ILpK5RrBjhqkZIRr9VXcrta2QjyrYdwPs6FKv+LuLKhtAgU9SbqZwAcGi9u6ZVN0r3v3uSHySMOCQmyfTiExccxmKOXazE8yijGbMVDf/SxFvdX+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JEcvZMOE; arc=none smtp.client-ip=209.85.167.46
+	s=arc-20240116; t=1718708973; c=relaxed/simple;
+	bh=RvD7TOS4EE1gHEN7QDkfjxYlgO+IfDmVHOBhN7+7Oyw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aFKnTg7pTGqzS6Eu822C2f03vmHxxRhd1W7JCGU1qIihfBwlvY2Es+yrjk7kYpgmq4o0Vqn60F2wKdiCKa6APlhamJOg2zQWgrXkE5qV3L0q98LVVAXn3BCcbT0PCFjKYzDCqWrxN3ajs6OLMD+iOJ4WT7hjRotMJcVVXE9c5h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oSAzLXR+; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52cc129c78fso1267515e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 04:08:30 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52c7fbad011so6218054e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 04:09:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718708909; x=1719313709; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Rx8LaT2iJCWh9sAWiRO7uFEZyjt/OGNDwxdgEioegZI=;
-        b=JEcvZMOEGu9FoZeESQOv2WWVjJHmxtAL0Us5vdnE0L+4T5Udm0SxDp8yyqG91WJRwN
-         OkP97NwiBr6VfAN9fzMW0zXx0jUF2Zaho7QEoZaLlukX+OPFlZRwhpGeIn05SyqNR1kO
-         7REWi5NT4V7Nf89e0V++tUMHQOCV2lkJ/1Xsp4IpeUAPGZQh0hTlM24eVunpa/2scIiM
-         NOy9ohh1ju2AsYAL0pzN1C5jzydvLFPHLdwS8kACh6NpQnjSkl3aodnNqjcugP8XNyfM
-         mN2fvNbtRZMFbZ1QkWlZBraAj0ZXVpcWPEEIZB+FcNbPu21oEzjNaGCwhEHQphpC7Tfl
-         /2Hg==
+        d=linaro.org; s=google; t=1718708970; x=1719313770; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RvD7TOS4EE1gHEN7QDkfjxYlgO+IfDmVHOBhN7+7Oyw=;
+        b=oSAzLXR+RVdFM4wEvTMIfkg7m2Nb974FQ1Vos1n5GiD8xHQ9rW+YWIlE7Zk1EryfLo
+         6uvjO3+XrvZC7BtkO2gz7JIauoisJDnfQf14c+F5eDxDI/fQgTMurSoarF3Yw0dzZGMe
+         zb/l8Vz7NO884V8pDtfULomBK7+WeVCufCDX02G2FtsePLYJm4hD2YM/N5Irrd14vOx0
+         cSsib4wI5yjLXPQ5bC6apLY85modfwBw7oNe9NIFqzH7CyYNg2ggIsw1D8k7YiJpn33f
+         PxCMLXn5hkbEGg6eHkcVOf2ys7eUK0dQZorTANcahBuF2n2Ekmwa6Jgx+sAeoJd86S4l
+         Pcgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718708909; x=1719313709;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rx8LaT2iJCWh9sAWiRO7uFEZyjt/OGNDwxdgEioegZI=;
-        b=QFHQvyoRNrbCu4CWTZXwWy+emzph/vwKHSAs9/Z25EuPGeG3Vi2tBHGML+5k7RMlk2
-         /NkLww88eDUiKf6cdTiVS5gXhcA5NZzjvR9NmKFlHYhpkreD+Fl2stQsIXbRcHJCPScz
-         IR0kRvEW9uwCFz5UcR6tOu7MqZrPv7B9e8FNQ2sfZ1v1GupHFqxshp1Eq/TVInSHrg4Q
-         q13K71Fcc3iEYdrsm4Zbzf/scgXXHTXgKoH/fHkdHDsahYNiqWIMyCYw2G9Dt7+V32Mk
-         g4dJstpCc7MBI/dK0Vt0Dbi8gNurPT46CqAsPiWOvbZ3ddhQq/gxS2y55SVX8/qdphEE
-         PdPQ==
-X-Gm-Message-State: AOJu0YxQsS3VXuF6Y7+mN6nqIMiM8BadSOEu3f7AZwH6DZza38YIvkCN
-	zO5GA7GDYgu+eQrzNaA/NMfMWm9Gw2T+zWrOX93Tvw4depbeRsC5ZLXih4xahUQ=
-X-Google-Smtp-Source: AGHT+IE8iLnoe7evxfTRQ3fUk5EMJX78UOkrfeDZUvup0x80fKNJfWmM6oYILoqiwu1riUTXQrFZ3g==
-X-Received: by 2002:a19:f703:0:b0:51b:214c:5239 with SMTP id 2adb3069b0e04-52ca6e9f465mr7402205e87.62.1718708909384;
-        Tue, 18 Jun 2024 04:08:29 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:9028:9df3:4fb7:492b:2c94:7283? ([2a00:f41:9028:9df3:4fb7:492b:2c94:7283])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca288858asm1485694e87.289.2024.06.18.04.08.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jun 2024 04:08:29 -0700 (PDT)
-Message-ID: <f074d638-ac47-4324-84f7-b7723f18ba8b@linaro.org>
-Date: Tue, 18 Jun 2024 13:08:26 +0200
+        d=1e100.net; s=20230601; t=1718708970; x=1719313770;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RvD7TOS4EE1gHEN7QDkfjxYlgO+IfDmVHOBhN7+7Oyw=;
+        b=EUmEeJ7pYvTVgwHT5lkLmh9dimzHzIer+y0LttR9XqwnvBCW4n9sRDwEQ/ILrG/rOB
+         szsGgRZV5QsplkZO5243q5LbrI4auCroF8Bt+HR1b455IF4X5obQ32QNzO5tfq8Lz7kG
+         gFnN9WDNyJi9u/EzoG+lmoA0wK6Mo6m9Cz5yedHaUrvQxcdcara/N7A88NLJl6a+s7Tm
+         GzuJetKz0PQ1BqRAkAaEEuv2fwPON7p9ZtJWs9FX8RgihzCqQ5IPGY7slHxQRRIDGaHl
+         AfoCIpvOG5g+wHohN/2iuT2p7LaGlastKi1DPAATVwke6V/epRV4jjpXyT1tJ2c7/uVE
+         fdYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX3RNdtmPg0bgRQYsQDp9rZvt1jBg1jHrYmLsNt118pl5je5MSwfAlrSl9z17+c93CHVHXukflKkAouB1YeRajEHjDYzVcOdLT1eORE8w==
+X-Gm-Message-State: AOJu0YzgZoCynKVpZg0p6ECbv8Va7hznRnCYij3p/yQzTYh0MbWsjw+f
+	/uO8GEd7Q2Q3XjBVeOOoL/hC7or1E6ZSQiZJnWW7JdoJ4dSBVeqNvyLGGXtqYJIml61r08wPivy
+	WsjYSMfuI30yflr0jjSdEiSrtj6Zz5zw0GnaLfw==
+X-Google-Smtp-Source: AGHT+IGoKxTkRYLabjHUEETT/B3IbExJAmXPzq9+RXs6bzZ+GQ8xGK2jG8c67xHQQUvRR1JIcG5ZA4yr3WPNV/0LYAU=
+X-Received: by 2002:a05:6512:2348:b0:52b:bf9c:7e28 with SMTP id
+ 2adb3069b0e04-52ca6e56012mr10869317e87.14.1718708970136; Tue, 18 Jun 2024
+ 04:09:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] drm/msm/adreno: Split up giant device table
-To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- open list <linux-kernel@vger.kernel.org>
-References: <20240617225127.23476-1-robdclark@gmail.com>
- <20240617225127.23476-2-robdclark@gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240617225127.23476-2-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240617-review-v3-0-88d1338c4cca@baylibre.com> <20240617-review-v3-2-88d1338c4cca@baylibre.com>
+In-Reply-To: <20240617-review-v3-2-88d1338c4cca@baylibre.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 18 Jun 2024 13:09:19 +0200
+Message-ID: <CACRpkdbos8og5=d4MXt4q11tQkhX=dOZdv382f1z2YJV44zidA@mail.gmail.com>
+Subject: Re: [PATCH v3 02/41] iio: accel: kxsd9: Make use of regmap_clear_bits()
+To: Trevor Gamblin <tgamblin@baylibre.com>
+Cc: Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, 
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>, Michael Hennerich <Michael.Hennerich@analog.com>, 
+	Cosmin Tanislav <cosmin.tanislav@analog.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Hans de Goede <hdegoede@redhat.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Saravanan Sekar <sravanhome@gmail.com>, 
+	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Chunyan Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, =?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>, 
+	Jean-Baptiste Maneyrol <jmaneyrol@invensense.com>, Crt Mori <cmo@melexis.com>, linux-iio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	imx@lists.linux.dev, linux-amlogic@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Jun 17, 2024 at 3:49=E2=80=AFPM Trevor Gamblin <tgamblin@baylibre.c=
+om> wrote:
 
+> Instead of using regmap_update_bits() and passing val =3D 0, use
+> regmap_clear_bits().
+>
+> Suggested-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@baylibre.com>
+> Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
 
-On 6/18/24 00:51, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Split into a separate table per generation, in preparation to move each
-> gen's device table to it's own file.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
+Yours,
+Linus Walleij
 
