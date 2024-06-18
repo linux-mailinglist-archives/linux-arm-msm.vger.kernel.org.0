@@ -1,72 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-23062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D03790D3AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 16:11:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D1B0490D3BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 16:12:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 298EB288558
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 14:11:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E49A285554
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Jun 2024 14:12:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D18E13A3E8;
-	Tue, 18 Jun 2024 13:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ED9015573F;
+	Tue, 18 Jun 2024 13:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="szSBS6H0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k36UooHe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAE027446
-	for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 13:55:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F8B1553BB;
+	Tue, 18 Jun 2024 13:59:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718718921; cv=none; b=LyEGydthsg0PQUsUj7GIq8k4NKFeX3R1XaniidlS6jeua0jAkGAK4bB+YsVbqd8kAj3oRobW9R+Yld9p6lLcgW+2vI2w9uwkTXm3PJm5aGQB0mv80571/xR4VU06WOg9wqdrnNBNDAWfhvxgR+WAHI4GrStaLlBuxnuEX4SXBbA=
+	t=1718719191; cv=none; b=pT8n3wR7vIetnW/n/TRGTVJB/mivYwKc54p3PjdoKXVn89B/jcBgXX/ce7I/RspYde7/WzX/fX1QvDHBbs3L/AxtEsWePrk6vNRqg2hrDSWz67Rc0U550bvojlYa9EoeOQ/l3gygLMcjemAae0pj+yeBucEjU9ta+1xsOl+C8Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718718921; c=relaxed/simple;
-	bh=+4CUL0HKoZlb276ERUwdvPbHn/bW1BFwyupgf2+mb/Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=W3bDEhNt+0w3eoXRyjr5rAUGft9nnfalMzkF2FrRPT09qAkz3zVL2tqybnNKfGH0AmNK0V8VCWA0+8KkxIHpJywduJsVUaBZU/6rrmPAVq2xBN2o4KwBtKt2/FvTQy8Kcf37KNOwvqvjsSBPIo6loX+3nIcghDWQ3w2iq1luUYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=szSBS6H0; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a6ef793f4b8so564157066b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Jun 2024 06:55:19 -0700 (PDT)
+	s=arc-20240116; t=1718719191; c=relaxed/simple;
+	bh=NSipSLp2nG6EjiX/c5tUJTeTkiL6bf1l/S7iaC8WvW0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=N8t5MzQ0f3Wqsw8zVI+4jTr4KHHY1dxV76fuA72wlFLG6U50CGmCtRaom3wD/2BeFBYZI3SeJkETg3UCYlD/5artVCzwIY1bgysUBIlz0akgPGdJSPAC0O2Z43kwggAIbv8rnN3dj9tsNaCpqmA9JwmPe7XCL0VloR1sc7GlVRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k36UooHe; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-57d06101d76so58990a12.3;
+        Tue, 18 Jun 2024 06:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718718918; x=1719323718; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=D6ChPm2ZVDCBI9wwPc6qqPViwCOCp7xGdlugGTVGuBk=;
-        b=szSBS6H0k4tNEYq9AOhG0ZzCrCbz3zMc5RqS+eKmSxqTTMdlYPRmuCCH4st+31gN4E
-         egw6EQKdzkrMg+bVC/jfpr38wKPLfVL6Su/iP51v2N+LK8cPm8+fJvk6W6TPtlp9DKYi
-         5qwSVd7DApIGUre8GFObqFDFOQkiFU23LrgCqwp0JZx0yURnhkCejJ9mTnshi8FZcUa+
-         Ck0FNLR6HmpiX7OVqqf/tqCDEd0yfxEgtOAUtGCH7w5JO6JnBsZkSVETJm3WFzcMTliA
-         EYKb0EPtuqEkNPXTPsvW9i4VOtjY8xDZAulxZs2X/hgDdPJKu+QeI3U8tba1DdyIshdr
-         2p0w==
+        d=gmail.com; s=20230601; t=1718719188; x=1719323988; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Adi2wWb7CQgdnxLc6JlMBQCMQ7TabQhjqNcj/v5iN0I=;
+        b=k36UooHeJsTzPzoUQkRKYHspmF+qjBs70zwjpj6VGnnlq/Td7A4NJLAnc72Vez5e81
+         dHGuKFrKUI6x9rTurN1oP/xJCdl2R1ymgBb2wd1UL5Whc8ZFTReerZbS4zwyHF+WhoWU
+         5+hitBYr0xyTmGN4RxC2RWgYmUJDDyzB8Vik7J7xz3e/h/6wavFtEitdA5nLuoPfECwV
+         ZlDQeWA7Nv9dC6ZJ6YeYcs9xxhKQfIdim4Qx9SXY5kbSLczMKwp9sGLgp3/jszzPELT8
+         QPpQuo4LmupEB0qu+hwvR6dGbz+U85pRKoKOWzaLf6uteq+Mn268f+isRXbYQoG96lEt
+         cvoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718718918; x=1719323718;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1718719188; x=1719323988;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=D6ChPm2ZVDCBI9wwPc6qqPViwCOCp7xGdlugGTVGuBk=;
-        b=EveaTyiu+p7u5xdNs3BNTsdHnj0mAVLh1+cqblmgO1FOQyPHWULtLwJgRVx2/3jlaq
-         c/ALNmonMqKOk+kFCmIT/rOwcozXvr+diaaoIDwDxEr8fcCn04hDV+nxuncBSyl8abPy
-         OFUMJ0C3bwDKxiTwbkdS4NPFFaE+Gjw4igkcTw6ZLm7Xw/RDSropgHhiDH+TKFV9mnr3
-         7byfJyP22/3hZVtavhxi77cotoKvbd/0Pcwnt25VlI1J21lO7Jl8DZWhdIEJt4D5k4py
-         7cSqNus9rdjlw7sDmWFUCK9QvAxZQRVEp9Kdd40mx19g1INnOEw2Oa9QUkh0cqdTJD5f
-         Ci2g==
-X-Gm-Message-State: AOJu0YyiN7rUSMGGC46vi24s+uOmh6AfnAH89k9zaTuoVy9ZTzXy1WDL
-	RQ6vXS42CgvZW8JFfTypcb1Wxmxuvnyl67RKtl33ZOLCKDrzM1lbywRlQUIcIw8=
-X-Google-Smtp-Source: AGHT+IG3ro8Zjz5M3lMie8NKLPIuT19SAyYyyup6jrLjzzoy1DgniE0/49fX7ZOxIcmnlH11xqxWAw==
-X-Received: by 2002:a17:907:c713:b0:a6f:69ee:dcd2 with SMTP id a640c23a62f3a-a6f69eee6famr911053966b.57.1718718917112;
-        Tue, 18 Jun 2024 06:55:17 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56f41721sm622645566b.154.2024.06.18.06.55.16
+        bh=Adi2wWb7CQgdnxLc6JlMBQCMQ7TabQhjqNcj/v5iN0I=;
+        b=hLG6LKtr2t1iFVXMT3/5qfKKxW849qYE3nfwxz3aehWVXxAEXAzsEcflNu/oexWP/Q
+         g1W+A8+F68nKFAIE4LG9BkZpmEh4aY7VLFQvdfpjk9/rl/rYqA9IgWh3K7JhPxAkSjnH
+         uh4jeWiCehjEDZf/1/E4eJ+H5aFbuhGmuz68zUQ785fbufx2kQ/cq5ZolPFgG0BBA4dt
+         76BuiQtuvDjw7NxKoVBDr6xFkT7lUKxqq37ds6S/2LIrIT04Z8sWycrs5wmOtSAaui0P
+         8+hHBIQzxx359AGYQV2OhfpcwQkbbQqHnZrUpGitEm6FVcYHpy9gvNMupndGWkZ+l8Zr
+         foPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUqpiFRUSJomeHWzoFHBkqyqX1mTywGAWRu+vOomHyyD1DDnoy479eYAMsUf32sgv2LJqbZyOgLJPM72xodXuyFh1t8TWqZkRMzx6Ob36GPAsyx2LLlUUd/Pi8RJvhw1EYssh+vcwCu2GfBdeUq3b1XOsFMEvXa1OUa9j8e1b4tWKEijT66SYTPgz2pDvlfXX44vn3WyKxRXmgGO2wwPY2NaI/ONhoh/lo33MH77ikJJfuRBRjoCYsfFEH1JKfmVFt/o07GeU/MQzedAr202bqtKpR/9GUBofHoQ21bXcCfpnoin2O7XBjXVTgb3Y9FuUuHDdV/FJT3VT5aNubqL+G2xC4G4MKh5Jbn6SqUbarOk5Lg82Qr8CkQuPmquH9Khr7mAgh/7b6iF4E6OG5FulcugS9gz1yb
+X-Gm-Message-State: AOJu0YzW2x+xDevQnVd+y2gzWRGwYwzNtsbwWBDCRx15Lnb+lwxm7Sha
+	Qq7JWgy4NMLYqz74S6ujYeetJz3jnnI7LEYVHuwYDLUThgTqExH4
+X-Google-Smtp-Source: AGHT+IHkXZgoTKxIUb0ylYKUXiHMUMsGLjdaUUwhyfeBvSUWkw++uYmoTYRWLAznXRQEGKmegPpZkA==
+X-Received: by 2002:a05:6402:2c5:b0:57d:5e:83f0 with SMTP id 4fb4d7f45d1cf-57d005e8481mr820906a12.14.1718719187201;
+        Tue, 18 Jun 2024 06:59:47 -0700 (PDT)
+Received: from [127.0.1.1] (mm-167-232-122-178.mgts.dynamic.pppoe.byfly.by. [178.122.232.167])
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-57cb72da156sm7731278a12.22.2024.06.18.06.59.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jun 2024 06:55:16 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Date: Tue, 18 Jun 2024 14:55:15 +0100
-Subject: [PATCH] drivers:soundwire: qcom: cleanup port maask calculations
+        Tue, 18 Jun 2024 06:59:46 -0700 (PDT)
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+Subject: [PATCH v3 00/23] This is continued work on Samsung S9(SM-9600)
+ starqltechn
+Date: Tue, 18 Jun 2024 16:59:34 +0300
+Message-Id: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,103 +77,147 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240618-soundwire-port-map-v1-1-9644e5545b9b@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAMKRcWYC/x2NQQqDQAwAvyI5NxClFO1XSg/RzdYc3F0Sawvi3
- 7v2OAzD7OBiKg73ZgeTTV1zqtBeGphmTi9BDZWho+5Kt7ZHz+8UPmqCJduKCxck6uMQIgvFAWo
- 4sguOxmmaz3RhX8VOUUyifv+3x/M4fgWldN59AAAA
-To: Vinod Koul <vkoul@kernel.org>, 
- Bard Liao <yung-chuan.liao@linux.intel.com>, 
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, 
- Sanyog Kale <sanyog.r.kale@intel.com>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
- linux-kernel@vger.kernel.org, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2420;
- i=srinivas.kandagatla@linaro.org; h=from:subject:message-id;
- bh=+4CUL0HKoZlb276ERUwdvPbHn/bW1BFwyupgf2+mb/Q=;
- b=owEBbQGS/pANAwAKAXqh/VnHNFU3AcsmYgBmcZHEZx0WD6S7YcEFm9sOro2WXS44qUag4slA8
- 6hz7200ceOJATMEAAEKAB0WIQQi509axvzi9vce3Y16of1ZxzRVNwUCZnGRxAAKCRB6of1ZxzRV
- N882B/9JXKa/oPIDvV+BnarwrBTCXvFaYTVycNw4sgqDsEa5a2aE+ggUnpksuZjjus/nv6VBUL8
- d80oUOZ6Y2d2qduf7Wvw76pLJtNYdDLeBE35ADRjR9yTYfFVSPlIXTi2HxpqanUkEJCF7MQ45Gn
- nnLw9qj2K7E8NCVzkgdVBAFNI9F0NoHbKf2WUSQSwEH+L6RUyxj8YCstMJEH5Wctwl8fphZZrOT
- RXWgc0sZ4pQfdULRQ+KTXGBGoJrMpwy5oMZa8ZhB6DiNnHJTaL7lhebUeRAY0u8hIcbALAkO2qC
- 8vcgFAOEuDXK/ttKLumsSmLcYRkJ0xhPPkrVn2GXEqsHZVIf
-X-Developer-Key: i=srinivas.kandagatla@linaro.org; a=openpgp;
- fpr=ED6472765AB36EC43B3EF97AD77E3FC0562560D6
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAMaScWYC/x2N0QrCMAxFf2Xk2ULddA5/RWSkNVsDNc60E2Hs3
+ w0+ngP33A0KKVOBa7OB0ocLv8SgOzQQE8pMjh/G0Pr25PvjxZWK+s6VYpKRpdKsWG0zrkupSvh
+ 0IQ79cPahnagDywQs5IKixGQhWXM2uShN/P3/3u77/gNgLEi3hwAAAA==
+To: Sebastian Reichel <sre@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-input@vger.kernel.org, linux-leds@vger.kernel.org, 
+ linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+ Dzmitry Sankouski <dsankouski@gmail.com>, Rose Hudson <rose@krx.sh>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1718719184; l=5095;
+ i=dsankouski@gmail.com; s=20240618; h=from:subject:message-id;
+ bh=NSipSLp2nG6EjiX/c5tUJTeTkiL6bf1l/S7iaC8WvW0=;
+ b=Sr8pA2ujQFTHIDig3qhFg2f1KEeBbgU4VxItfHedbfa6oxlb7f4Sec7x5JgfHjY52G/css65m
+ KY4otbWl+7dB0CpeN2Z/x/SuDr4cWH2saHT22U9tDUZGj+70EOppvtS
+X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
+ pk=6pMMVVDDReSiRgPCbMOUauN5nS3ty4Sf5b7a2gi4x0M=
 
-Cleanup the port map calculations, existing masks of having separate
-masks for in and out ports is not really required.
-Having a single mask for all the ports in the controller is simple and
-cuts of some unnecessary code.
+Add support for new features:
+- sound (headphones and mics only)
+- gpu
+- panel
+- buttons
+- MAX77705 MFD:
+  - charger
+  - fuelgauge
+  - haptic
+  - led
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Changes in version 2:
+- s2dos05 regulator:
+  - hex to decimal in regulator values
+  - fix compatible value
+  - remove interrupt specific code, because it's
+    empty in vendor kernel, and I cannot test it on
+    available hardware anyway.
+
+Changes in version 3:
+Version 3 has significant changes:
+- more drivers added
+- s2dos05 driver converted to MFD
+- disable crypto patch removed(disabled on distro level)
+- dts framebuffer node along with related patches removed,
+because panel driver added
+- fix 'make O=.output_arm64 CHECK_DTBS=y qcom/sdm845-samsung-starqltechn.dtb'
+errors, but it still complains on 'monitored-battery' and
+'power-supplies' though I have 'power-supply.yaml' link in charger
+and fuel gauge bindings.
+
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 ---
- drivers/soundwire/qcom.c | 22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+Dzmitry Sankouski (23):
+      power: supply: add undervoltage health status property
+      gcc-sdm845: Add rates to the GP clocks
+      dt-bindings: panel: add Samsung s6e3ha8
+      dt-bindings: mfd: add maxim,max77705
+      dt-bindings: input: add maxim,max77705-haptic
+      dt-bindings: power: supply: add maxim,max77705 charger
+      dt-bindings: power: supply: add maxim,max77705
+      dt-bindings: led: add maxim,max77705-leds
+      dt-bindings: mfd: add samsung,s2dos05
+      dt-bindings: regulator: add samsung,s2dos05
+      drm/panel: Add support for S6E3HA8 panel driver
+      mfd: Add new driver for MAX77705 PMIC
+      input: add max77705 haptic driver
+      power: supply: max77705: Add charger driver for Maxim 77705
+      power: supply: max77705: Add fuel gauge driver for Maxim 77705
+      leds: max77705: Add LEDs support
+      mfd: add s2dos series core driver
+      regulator: add s2dos05 regulator support
+      power: supply: s2dos05: Add fuel gauge driver for s2dos05
+      arm64: dts: qcom: starqltechn: remove wifi
+      arm64: dts: qcom: starqltechn: remove framebuffer
+      arm64: dts: qcom: starqltechn: fix usb regulator mistake
+      arm64: dts: qcom: starqltechn: add new features
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index ce5cf3ecceb5..aed57002fd0e 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -197,8 +197,7 @@ struct qcom_swrm_ctrl {
- 	int num_dout_ports;
- 	int cols_index;
- 	int rows_index;
--	unsigned long dout_port_mask;
--	unsigned long din_port_mask;
-+	unsigned long port_mask;
- 	u32 intr_mask;
- 	u8 rcmd_id;
- 	u8 wcmd_id;
-@@ -1146,11 +1145,7 @@ static void qcom_swrm_stream_free_ports(struct qcom_swrm_ctrl *ctrl,
- 	mutex_lock(&ctrl->port_lock);
- 
- 	list_for_each_entry(m_rt, &stream->master_list, stream_node) {
--		if (m_rt->direction == SDW_DATA_DIR_RX)
--			port_mask = &ctrl->dout_port_mask;
--		else
--			port_mask = &ctrl->din_port_mask;
--
-+		port_mask = &ctrl->port_mask;
- 		list_for_each_entry(p_rt, &m_rt->port_list, port_node)
- 			clear_bit(p_rt->num, port_mask);
- 	}
-@@ -1195,13 +1190,9 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
- 		if (ctrl->bus.id != m_rt->bus->id)
- 			continue;
- 
--		if (m_rt->direction == SDW_DATA_DIR_RX) {
--			maxport = ctrl->num_dout_ports;
--			port_mask = &ctrl->dout_port_mask;
--		} else {
--			maxport = ctrl->num_din_ports;
--			port_mask = &ctrl->din_port_mask;
--		}
-+		port_mask = &ctrl->port_mask;
-+		maxport = ctrl->num_dout_ports + ctrl->num_din_ports;
-+
- 
- 		list_for_each_entry(s_rt, &m_rt->slave_rt_list, m_rt_node) {
- 			slave = s_rt->slave;
-@@ -1401,8 +1392,7 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
- 		return -EINVAL;
- 
- 	/* Valid port numbers are from 1-14, so mask out port 0 explicitly */
--	set_bit(0, &ctrl->dout_port_mask);
--	set_bit(0, &ctrl->din_port_mask);
-+	set_bit(0, &ctrl->port_mask);
- 
- 	ret = of_property_read_u8_array(np, "qcom,ports-offset1",
- 					off1, nports);
-
+ .../bindings/display/panel/samsung,s6e3ha8.yaml    |  76 ++
+ .../devicetree/bindings/input/maxim,max77705.yaml  |  31 +
+ .../devicetree/bindings/leds/maxim,max77705.yaml   |  45 ++
+ .../devicetree/bindings/mfd/maxim,max77705.yaml    | 112 +++
+ .../devicetree/bindings/mfd/samsung,s2dos05.yaml   |  89 +++
+ .../power/supply/maxim,max77705-charger.yaml       |  30 +
+ .../bindings/power/supply/maxim,max77705-fg.yaml   |  35 +
+ .../bindings/regulator/samsung,s2dos05.yaml        |  36 +
+ MAINTAINERS                                        |  15 +
+ .../boot/dts/qcom/sdm845-samsung-starqltechn.dts   | 607 +++++++++++++++-
+ drivers/clk/qcom/gcc-sdm845.c                      |  14 +
+ drivers/gpu/drm/panel/Kconfig                      |   7 +
+ drivers/gpu/drm/panel/Makefile                     |   1 +
+ drivers/gpu/drm/panel/panel-samsung-s6e3ha8.c      | 426 ++++++++++++
+ drivers/input/misc/Kconfig                         |  11 +
+ drivers/input/misc/Makefile                        |   1 +
+ drivers/input/misc/max77705-haptic.c               | 378 ++++++++++
+ drivers/leds/Kconfig                               |   6 +
+ drivers/leds/Makefile                              |   1 +
+ drivers/leds/leds-max77705.c                       | 166 +++++
+ drivers/mfd/Kconfig                                |  25 +
+ drivers/mfd/Makefile                               |   3 +
+ drivers/mfd/max77705-core.c                        | 278 ++++++++
+ drivers/mfd/max77705-irq.c                         | 299 ++++++++
+ drivers/mfd/s2dos-core.c                           | 141 ++++
+ drivers/power/supply/Kconfig                       |  21 +
+ drivers/power/supply/Makefile                      |   3 +
+ drivers/power/supply/max77705_charger.c            | 772 +++++++++++++++++++++
+ drivers/power/supply/max77705_fuelgauge.c          | 624 +++++++++++++++++
+ drivers/power/supply/s2dos05-fg.c                  | 427 ++++++++++++
+ drivers/regulator/Kconfig                          |   8 +
+ drivers/regulator/Makefile                         |   1 +
+ drivers/regulator/s2dos05-regulator.c              | 362 ++++++++++
+ include/linux/mfd/max77705-private.h               | 281 ++++++++
+ include/linux/mfd/max77705.h                       |  20 +
+ include/linux/mfd/max77705_charger.h               | 225 ++++++
+ include/linux/mfd/s2dos05.h                        | 123 ++++
+ include/linux/mfd/samsung/s2dos-core.h             |  21 +
+ include/linux/mfd/samsung/s2dos05.h                | 115 +++
+ include/linux/power/max77705_fuelgauge.h           | 107 +++
+ include/linux/power_supply.h                       |   1 +
+ 41 files changed, 5927 insertions(+), 17 deletions(-)
 ---
-base-commit: 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0
-change-id: 20240618-soundwire-port-map-008f9dfae0f9
+base-commit: 6906a84c482f098d31486df8dc98cead21cce2d0
+change-id: 20240617-starqltechn_integration_upstream-bc86850b2fe3
 
 Best regards,
 -- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Dzmitry Sankouski <dsankouski@gmail.com>
 
 
