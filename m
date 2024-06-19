@@ -1,168 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-23234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6072390F21D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 17:28:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D90990F2C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 17:46:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E6A4B1F215A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 15:28:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 080F51F2708B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 15:46:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE30F14373A;
-	Wed, 19 Jun 2024 15:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E37E1514D4;
+	Wed, 19 Jun 2024 15:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZL4K/yMs"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a3LsaCld"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF697FBDF;
-	Wed, 19 Jun 2024 15:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C903E1514FF;
+	Wed, 19 Jun 2024 15:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718810903; cv=none; b=Xb19EKMCrfTZWmr0e1He1nlVBHmrB9rARGhC6cWxuLjJYdtf6duZPFbvHpzcpFJjfshn2BL3SrdM5zoh5SgnrJV3vXdc63ulyx6Jogh1Fb1vXMEan1xxZIQ9vGd12Q5YeF3D+uwOC/sikrKJSrRvTAHoD2Wl3Mut6MYjgfGKt/c=
+	t=1718811738; cv=none; b=gnLbrN/Qhm4qe0sugArOXTv34e37g6kQT9DxJQnaQdzugqwzb1sPCNDv2fofQlI6H3ZKN7cmgpBQLuTGcgeevF0+tHg0hrv1NatxD6vWfuBgrmiHyWH6AE/1G1to1r4nj0vYSxyQ8m1LPXfKYXQZ+O4l8lbP8Q4BIUo2wu5uzco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718810903; c=relaxed/simple;
-	bh=bv3STp8KBKC0DDs1k9/4Mh5MeA6oKIPOmMNrz9Lmxfk=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JsRGYXH+HXUvLihveDx7/8TbQPE6cmYkZIJ014ziUFFA5aF0118YZ2SCcrShezH8TeeGC6h4xb8xfx9leQESux8oTyMrGzFZ05/K+U4tckooe0xQAcBAs9A38qVSxbCrcSe0fsWJ7zjXx91dnwQPvVwBlEG2OBoDiYziPzfbhXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZL4K/yMs; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1718811738; c=relaxed/simple;
+	bh=mDeqP/sKc/AiS+vkB59fy7TDZDcUAoDaRDc/g//Qu2w=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=kZopSXiPdBmDF9O0NBsTDMrxNq4Yz85tMSpH1oKoHgmDPyKvpavKMUZQZhZ32Jzy2olylS0JwFSFzDQ4J589o6rFKdIJHMURQnDa3+52GF6o8UvpauEsQwJGR5EBl8PDTDL5Q/A6AzZMfDTba01cNqj6ipcHi9ClMZ7X4eh+j1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a3LsaCld; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45J9MSci005118;
-	Wed, 19 Jun 2024 15:28:09 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45JAJdI5024352;
+	Wed, 19 Jun 2024 15:42:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=cM57tgyraaxh2Y5ZsyMDB6eD
-	2mxEf0KJUWRxrjXip9M=; b=ZL4K/yMsGTSziM3zQ8iJPQ1q7Pu+BAmPdgaL2JXF
-	6hEGWp69NO3pKwi6VDrbN8tGDd06b5RvNMs8w5990nht1lVZkCipAr4c/AThtfQe
-	5Li3+AAURaMa2wrCm+z9EDPK4k/n0ywqyxEzECAJ3cuaPttWm23lVmEc747vjgOX
-	XIqUCjeuh9Lzwb+rWphDGOivzBE31dFiyPJuyyUTaiO70EaONi+if7owKQL/Gfsf
-	l33PVBpJFEuvBIgNgk2uRtx62AFsKtPeYgsNcBdC1m+i9fNXYHDIeiL4iRJM17A7
-	eud02/hSTTWACAWp4WA0Fcagou1/X1XmKCKlxp80p78aow==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yuja7a36h-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=rjGkieKHjJuNG2DdUFCsCx
+	8s1Dw+liQJJNIIPKCrxDo=; b=a3LsaCldDf92WKhJyq2CL7nw6veAsDzoYILz4s
+	CR5DsDlUZB7EO5O/rMMrrzKLB//KEv+HlcSfYNVnrvskY7C65fQ6Qeh1rbYw4vkf
+	/bQ8zD0rgJdeUuLQwLK9yJGj+vH4MKkLkGQOC7LfbpVFBhby1gNaWcAHuifVGShb
+	y1ogxqgye6mOiLsJm8EAJwk0G6CabvsHxll4lok3hF2bYdRq1emdFvmmCSemp7xp
+	7MSf5NYOofPImB+ZQxi65LcyKDOEitsb5vwSg8arnTcIclfbYM5tLCqA0xiJy2SJ
+	OXeDDB1Zf4LTLdLOB93odgtLdmMd3CGwNccnMbqzqcMs8l9Q==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yuja7a42r-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Jun 2024 15:28:09 +0000 (GMT)
+	Wed, 19 Jun 2024 15:42:13 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45JFS7SD024492
+	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45JFgChb019220
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Jun 2024 15:28:07 GMT
+	Wed, 19 Jun 2024 15:42:12 GMT
 Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 19 Jun 2024 08:28:07 -0700
-Date: Wed, 19 Jun 2024 08:28:06 -0700
+ 15.2.1544.9; Wed, 19 Jun 2024 08:42:11 -0700
 From: Elliot Berman <quic_eberman@quicinc.com>
-To: Sudeep Holla <sudeep.holla@arm.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andy Yan
-	<andy.yan@rock-chips.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Mark
- Rutland" <mark.rutland@arm.com>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Shivendra Pratap <quic_spratap@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
-Message-ID: <20240619080933071-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
- <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
- <20240619135143.kr2tx4ynxayc5v3a@bogus>
+Date: Wed, 19 Jun 2024 08:41:52 -0700
+Subject: [PATCH] clk: qcom: Remove QCOM_RPMCC symbol
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240619135143.kr2tx4ynxayc5v3a@bogus>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240619-drop-qcom-rpmcc-v1-1-b487c95162ef@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAD/8cmYC/x3MPQqAMAxA4atIZgNt/UG8ijiUNGoGbU1BBPHuF
+ sdveO+BzCqcYaweUL4kSzwKbF0Bbf5YGSUUgzOuNb0dMGhMeFLcUdNOhG5pwtB58sZbKFVSXuT
+ +j9P8vh9O8LueYQAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Elliot Berman <quic_eberman@quicinc.com>
+X-Mailer: b4 0.13.0
 X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OVQtWNf157rS_leVNyegDf2H0YEELSVJ
-X-Proofpoint-GUID: OVQtWNf157rS_leVNyegDf2H0YEELSVJ
+X-Proofpoint-ORIG-GUID: x16CFweXn5yL5KOk21xmjuUJBUvB8CoI
+X-Proofpoint-GUID: x16CFweXn5yL5KOk21xmjuUJBUvB8CoI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-19_02,2024-06-19_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=999 malwarescore=0
+ lowpriorityscore=0 adultscore=0 mlxlogscore=626 malwarescore=0
  phishscore=0 bulkscore=0 suspectscore=0 clxscore=1011 spamscore=0
  priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406190116
+ engine=8.19.0-2405170001 definitions=main-2406190118
 
-On Wed, Jun 19, 2024 at 02:51:43PM +0100, Sudeep Holla wrote:
-> On Mon, Jun 17, 2024 at 10:18:09AM -0700, Elliot Berman wrote:
-> > SoC vendors have different types of resets and are controlled through
-> > various registers. For instance, Qualcomm chipsets can reboot to a
-> > "download mode" that allows a RAM dump to be collected. Another example
-> > is they also support writing a cookie that can be read by bootloader
-> > during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
-> > vendor reset types to be implemented without requiring drivers for every
-> > register/cookie.
-> > 
-> > Add support in PSCI to statically map reboot mode commands from
-> > userspace to a vendor reset and cookie value using the device tree.
-> > 
-> > A separate initcall is needed to parse the devicetree, instead of using
-> > psci_dt_init because mm isn't sufficiently set up to allocate memory.
-> > 
-> > Reboot mode framework is close but doesn't quite fit with the
-> > design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
-> > be solved but doesn't seem reasonable in sum:
-> >  1. reboot mode registers against the reboot_notifier_list, which is too
-> >     early to call SYSTEM_RESET2. PSCI would need to remember the reset
-> >     type from the reboot-mode framework callback and use it
-> >     psci_sys_reset.
-> >  2. reboot mode assumes only one cookie/parameter is described in the
-> >     device tree. SYSTEM_RESET2 uses 2: one for the type and one for
-> >     cookie.
-> >  3. psci cpuidle driver already registers a driver against the
-> >     arm,psci-1.0 compatible. Refactoring would be needed to have both a
-> >     cpuidle and reboot-mode driver.
-> >
-> 
-> I need to think through it but when you first introduced the generic
-> Documentation/devicetree/bindings/power/reset/reboot-mode.yaml bindings
-> I also looked at drivers/power/reset/reboot-mode.c
-> 
-> I assumed this extension to that binding would reuse the same and
-> PSCI would just do reboot_mode_register(). I didn't expect to see these
-> changes. I might have missing something but since the bindings is still
-> quite generic with additional cells that act as additional cookie for
-> reboot call, I still think that should be possible.
-> 
-> What am I missing here then ?
-> 
+This symbol is selected by a couple drivers, but isn't used by anyone
+and hasn't been for years now. Drop it.
 
-Right, if that was only thing to "solve" to make it easy to use
-reboot-mode framework, I agree we should update reboot mode framework to
-work with the additional cells. There are a few other issues I mention
-above which, when combined, make me feel that PSCI is different enough
-from how reboot mode framework works that we shouldn't try to make PSCI
-work with the framework. Issues #1 and #2 are pretty easy to solve
-(whether they should be solved is different); I'm not sure a good
-approach to issue #3.
+No functional change intended.
 
-Thanks,
-Elliot
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+---
+ drivers/clk/qcom/Kconfig | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index f72838aa573b..67c9188d53cb 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -7,9 +7,6 @@ config QCOM_GDSC
+ 	bool
+ 	select PM_GENERIC_DOMAINS if PM
+ 
+-config QCOM_RPMCC
+-	bool
+-
+ menuconfig COMMON_CLK_QCOM
+ 	tristate "Support for Qualcomm's clock controllers"
+ 	depends on OF
+@@ -122,7 +119,6 @@ config QCOM_CLK_APCS_SDX55
+ config QCOM_CLK_RPM
+ 	tristate "RPM based Clock Controller"
+ 	depends on MFD_QCOM_RPM
+-	select QCOM_RPMCC
+ 	help
+ 	  The RPM (Resource Power Manager) is a dedicated hardware engine for
+ 	  managing the shared SoC resources in order to keep the lowest power
+@@ -135,7 +131,6 @@ config QCOM_CLK_RPM
+ config QCOM_CLK_SMD_RPM
+ 	tristate "RPM over SMD based Clock Controller"
+ 	depends on QCOM_SMD_RPM
+-	select QCOM_RPMCC
+ 	help
+ 	  The RPM (Resource Power Manager) is a dedicated hardware engine for
+ 	  managing the shared SoC resources in order to keep the lowest power
+
+---
+base-commit: eefb5ee4b41cdb68bf6feffe0d68b5bbe038e29d
+change-id: 20240618-drop-qcom-rpmcc-2f3d85aca0a1
+
+Best regards,
+-- 
+Elliot Berman <quic_eberman@quicinc.com>
 
 
