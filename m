@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-23261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C6E790F65E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:47:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53D9B90F664
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:47:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B437C1F24383
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:46:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D83C91F2481E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:47:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86CAA15A861;
-	Wed, 19 Jun 2024 18:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDAA915A48B;
+	Wed, 19 Jun 2024 18:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="WOErlLnr"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="H/4iIgVF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AFD158DB2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56B0158DA1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718822769; cv=none; b=m4OxdeWIXTa++ub4tUMNjUu6WaxW2/cYKBKKPPDxJPbgX7/VByy42zIp1P0UqlbRBZcXTWvKloYrZLaESCFb8bfefZ/mSRZlqXFsZIAaYUGo2GWEJNDiSlWRaIZn5PNHDZ3JcRFY6/AMqgwLLhMvdUqW0AZ0hO1gKfSQ2pwb2xg=
+	t=1718822770; cv=none; b=XwWS4IvjA+mWix8H8hD8h6yhYSfC4TBLwt2xOew/BJmyzByeUwGQq+7KDNr0W313HEGWvZpDvWfgDAWviCVfcUet4oHS/gANR64ezEBNt7Y966pWTPGhLdRE6iITn4YLmnQ9UDvlx9MJTNzkxc2PmSE0cNlURgzbI9kBoyyIQyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718822769; c=relaxed/simple;
-	bh=hMKuphYxcRk1Xq3wJs+eZtl8W7VRQW6ODJK+7oB9dN0=;
+	s=arc-20240116; t=1718822770; c=relaxed/simple;
+	bh=Z42Tj4eFx4jXVdlHNjeT3uH2cP3RYjlyUFGU2X7iXHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFWbue7MEWaxQwum/OYHOgV8MbgZQHRpBUFjqeho7YTkfHAJOA13LHKwGf7NN03vqmwW9Wf1vNmaAO0DVgh6NLvjiVkH5eZ4vPuPt4P0mUdhK8rgtRTR8ixXOzGbo0ay/3WmkrBpfzCI2JXEQZXt0IEAHIBJZY7BC8ZgZq575/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=WOErlLnr; arc=none smtp.client-ip=209.85.221.45
+	 MIME-Version; b=fUDVquXG55qnjLKAQywKNeqwcrkCPX9uuVqWp2K+pp5COBSUG9LT2jK3n0hjqYMYMX+GiRg981OFn1BYkolR1WM1kxyRGcJgyUhzGjFKgOeEAIJQe6NYefkBv/UhM1iGBigBud3Mf6TP6JNmmvkDKRJiFqgBBePhJVJfL+ZdhFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=H/4iIgVF; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-354b722fe81so63020f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:46:07 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-35f2c9e23d3so828228f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718822766; x=1719427566; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718822767; x=1719427567; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4DXl1d4Y8Fq/VGE/ZlCIrTHLlhnzc/4anlmd+PrIAuk=;
-        b=WOErlLnrZIlqTlGuSbB0U4WRLUB9rW6/bSiH4LGVNKHmLNy0gvPTqlZpibvwh0tT9U
-         1yONNwt9j4PqHP13/JEiPdWdMezovCwwGqTUWy5TzLYNEFH1DuixMZusKVBfvoOv6qmC
-         os247MyvRhAd9IZpkZRr86sTMIoKdI/fetO/oZyVsObBzM96zeB8tPFLbu2b1Q/oKkNH
-         crplNMBrSeXMXEt2Vp1Ju5tmNtMneS1z6XwsrrKbSggdWf56+2CskUtHk+/QoQjCKzfj
-         z30856nBbZZx1qARqyOxfrkmvVtO+B/HkEL23TCuXOHn6843p9SVd9oZicUqSp9D9pfH
-         eYuQ==
+        bh=m8OMC48GmXgiPxob9K29Y+tXmIST97gKgb0MYszQ6f4=;
+        b=H/4iIgVFdRaP2fd5+airGbRvBampN1nNczHbZFjCehyyn8XX9TmbKH0VEHflzh0NnR
+         wqET2K+BeoftJXbc/U6L/7rgk+7KSYdwSqbGPJP2vU41qoGu4zFzPgh/QkJf5PP0bGZP
+         LcbtsQ5ewIcYRnthGv06tRlTfKPEQFpHgWkqKkXhAr2onyRfMFT/cT0D5Q//Zg4cP3EM
+         ey4W2ZQik/UcfNWJUn00+bAk9ska9rYrWkDMbi8ggTN/NCUmUYL+/8yX2R4kD4I/svZM
+         WDk07/WtGsG2kIuLoQsO0UVjlN6EZu140k+Wy2GbO7LOiP+0hLsHa0hZ9EegmquYjbA+
+         jk/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718822766; x=1719427566;
+        d=1e100.net; s=20230601; t=1718822767; x=1719427567;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4DXl1d4Y8Fq/VGE/ZlCIrTHLlhnzc/4anlmd+PrIAuk=;
-        b=qI2kOOLPzyJcFYqTyks7B1OxwfPOZSWPKSGIH1UfuHhwkMRUTMA6/dAvkO1g5bLRHw
-         uGuie1HQb8j8idFZuiKDRvWnOM2/p+thQL6GeXdlsTKwkUewDqPtMQyoQ3QAtUpIgk5c
-         b5Lahfn8r764o4cHIG+kMBTg8XkEHNuCtgW7tQ9ixC+MGLQ0qmuaaVQPhJKTPDh/wdSM
-         dI03busXJ5SgmwZKuvLnTzsVnOr2P4HzuzimfEz+++DpmVQnjmH2dXDHtlJ4P2jI5oXm
-         wLUmrhfj1iZsptvYbMCg9yv4rpJkwJ8SwyIfdiNDC6FHqxu7/UX47GaVdv3q6oy9FWq6
-         NHBA==
-X-Forwarded-Encrypted: i=1; AJvYcCV3U2WAbpLdgFkOF9I8skqmLTlJR6jJuMlnZKhfxiE0g+ZkWiUmaRnCJYK+G4XyGDfVGphkJWg6ClNT7xd+rD6bHBNe9hzutAuRVWG2HA==
-X-Gm-Message-State: AOJu0Yzz4iWliXkgmTsJMCTvKHPkq9l6SFcyt44ZogYoZeLx9UiW9TCM
-	JEXahfOD7B2cu3ms5s0fkUnc+PZUX+Hv2SF8XQ02O8c+Uu1kKoNEIhK5cCKDwtM=
-X-Google-Smtp-Source: AGHT+IFnMG2uKDWMS0ODk8knrpOgQWkYuhtlFvM28oyZAff20pv5uomTc+TbnoChW8iQa/KMF1tSDw==
-X-Received: by 2002:a5d:5269:0:b0:362:4b65:1cd2 with SMTP id ffacd0b85a97d-36317d7311fmr2276902f8f.38.1718822766449;
-        Wed, 19 Jun 2024 11:46:06 -0700 (PDT)
+        bh=m8OMC48GmXgiPxob9K29Y+tXmIST97gKgb0MYszQ6f4=;
+        b=Dx7zhcwA8G2Il0qva37e0EB5wFCO0yW8bm0KfT8a0EHjtDwhOoUD1TxQaFfSsO30/W
+         /73gqiHRlLUJsqwSLGHR8NMKUmB5NCYwysb0TwJvej+RCyLAFCUWpdRrtKdYeV8O8/AF
+         /gNkCEKW4TM3GEh42jexyXXXliqp028EFywtoMI7uAEHXWlwpne077bMWvBoCYDCsl6L
+         M2ZxrYvuXMtuEgMfk9w8nUDhHpCjWIWbgcNkBwMXBFjRB2CzyniCz8tzCScxLNdY/Wk7
+         cztfMSIYGXCnyv/Mry7xhvSiTRv9D+VOfiWpQKtYgZEsfTWdAel3v6Acjf9UK0fZJX0Y
+         NK9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUwaXH8ZL0EODfquGuN2fceszeqcN27/fhT72zGD7fdVw/y3TC46/0tz3b1PXHV9bFiSoUtKoovJJJS7NGQB0dIeORXbMw2oIDDhEEcdQ==
+X-Gm-Message-State: AOJu0Yw4o+aBnG224PeastZeNIAcYA+hEeijJmqarogdiNTqfRajdkjI
+	rIxlPY+FPFMli9m7bO6KullPs6fCpCfNduuve3gruioh3u+rjUWV58rc73AnvfY=
+X-Google-Smtp-Source: AGHT+IHPbftWUm712EVMDPWc9/FAfLxNDa5SAVUKIsk+n79gLzuNi7krxSeOn0v4Ewzob/JdZzx81g==
+X-Received: by 2002:a5d:6d4c:0:b0:360:7856:fa62 with SMTP id ffacd0b85a97d-3609ea6c58emr6800607f8f.15.1718822767356;
+        Wed, 19 Jun 2024 11:46:07 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:991f:deb8:4c5d:d73d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36098c8c596sm7594156f8f.14.2024.06.19.11.46.05
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36098c8c596sm7594156f8f.14.2024.06.19.11.46.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 11:46:06 -0700 (PDT)
+        Wed, 19 Jun 2024 11:46:07 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Vinod Koul <vkoul@kernel.org>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
@@ -85,9 +85,9 @@ Cc: netdev@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH net-next 4/8] net: phy: aquantia: add support for aqr115c
-Date: Wed, 19 Jun 2024 20:45:45 +0200
-Message-ID: <20240619184550.34524-5-brgl@bgdev.pl>
+Subject: [PATCH net-next 5/8] net: phy: aquantia: wait for FW reset before checking the vendor ID
+Date: Wed, 19 Jun 2024 20:45:46 +0200
+Message-ID: <20240619184550.34524-6-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240619184550.34524-1-brgl@bgdev.pl>
 References: <20240619184550.34524-1-brgl@bgdev.pl>
@@ -101,101 +101,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Add support for a new model to the Aquantia driver. This PHY supports
-Overlocked SGMII mode with 2.5G speeds.
+Checking the firmware register before it boots makes no sense, it will
+report 0 even if FW is loaded. Always wait for FW to boot before
+continuing.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/net/phy/aquantia/aquantia_main.c | 41 ++++++++++++++++++++++--
- 1 file changed, 39 insertions(+), 2 deletions(-)
+ drivers/net/phy/aquantia/aquantia.h          | 1 +
+ drivers/net/phy/aquantia/aquantia_firmware.c | 4 ++++
+ drivers/net/phy/aquantia/aquantia_main.c     | 6 +++---
+ 3 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-index 6c14355744b7..11da460698b0 100644
---- a/drivers/net/phy/aquantia/aquantia_main.c
-+++ b/drivers/net/phy/aquantia/aquantia_main.c
-@@ -29,6 +29,7 @@
- #define PHY_ID_AQR113	0x31c31c40
- #define PHY_ID_AQR113C	0x31c31c12
- #define PHY_ID_AQR114C	0x31c31c22
-+#define PHY_ID_AQR115C	0x31c31c33
- #define PHY_ID_AQR813	0x31c31cb2
+diff --git a/drivers/net/phy/aquantia/aquantia.h b/drivers/net/phy/aquantia/aquantia.h
+index b8502793962e..2465345081f8 100644
+--- a/drivers/net/phy/aquantia/aquantia.h
++++ b/drivers/net/phy/aquantia/aquantia.h
+@@ -201,5 +201,6 @@ int aqr_phy_led_hw_control_set(struct phy_device *phydev, u8 index,
+ int aqr_phy_led_active_low_set(struct phy_device *phydev, int index, bool enable);
+ int aqr_phy_led_polarity_set(struct phy_device *phydev, int index,
+ 			     unsigned long modes);
++int aqr_wait_reset_complete(struct phy_device *phydev);
  
- #define MDIO_PHYXS_VEND_IF_STATUS		0xe812
-@@ -111,7 +112,6 @@ static u64 aqr107_get_stat(struct phy_device *phydev, int index)
- 	int len_h = stat->size - len_l;
- 	u64 ret;
- 	int val;
--
- 	val = phy_read_mmd(phydev, MDIO_MMD_C22EXT, stat->reg);
- 	if (val < 0)
- 		return U64_MAX;
-@@ -368,7 +368,7 @@ static int aqr107_read_status(struct phy_device *phydev)
- 		phydev->interface = PHY_INTERFACE_MODE_RXAUI;
- 		break;
- 	case MDIO_PHYXS_VEND_IF_STATUS_TYPE_OCSGMII:
--		phydev->interface = PHY_INTERFACE_MODE_2500BASEX;
-+		phydev->interface = PHY_INTERFACE_MODE_OCSGMII;
- 		break;
- 	default:
- 		phydev->interface = PHY_INTERFACE_MODE_NA;
-@@ -721,6 +721,18 @@ static int aqr113c_config_init(struct phy_device *phydev)
- 	return aqr107_fill_interface_modes(phydev);
- }
- 
-+static int aqr115c_config_init(struct phy_device *phydev)
-+{
-+	/* Check that the PHY interface type is compatible */
-+	if (phydev->interface != PHY_INTERFACE_MODE_SGMII &&
-+	    phydev->interface != PHY_INTERFACE_MODE_OCSGMII)
-+		return -ENODEV;
-+
-+	phy_set_max_speed(phydev, SPEED_2500);
-+
-+	return 0;
-+}
-+
- static int aqr107_probe(struct phy_device *phydev)
+ #endif /* AQUANTIA_H */
+diff --git a/drivers/net/phy/aquantia/aquantia_firmware.c b/drivers/net/phy/aquantia/aquantia_firmware.c
+index 0c9640ef153b..524627a36c6f 100644
+--- a/drivers/net/phy/aquantia/aquantia_firmware.c
++++ b/drivers/net/phy/aquantia/aquantia_firmware.c
+@@ -353,6 +353,10 @@ int aqr_firmware_load(struct phy_device *phydev)
  {
  	int ret;
-@@ -999,6 +1011,30 @@ static struct phy_driver aqr_driver[] = {
- 	.led_hw_control_get = aqr_phy_led_hw_control_get,
- 	.led_polarity_set = aqr_phy_led_polarity_set,
- },
-+{
-+	PHY_ID_MATCH_MODEL(PHY_ID_AQR115C),
-+	.name           = "Aquantia AQR115C",
-+	.probe          = aqr107_probe,
-+	.get_rate_matching = aqr107_get_rate_matching,
-+	.config_init    = aqr115c_config_init,
-+	.config_aneg    = aqr_config_aneg,
-+	.config_intr    = aqr_config_intr,
-+	.handle_interrupt = aqr_handle_interrupt,
-+	.read_status    = aqr107_read_status,
-+	.get_tunable    = aqr107_get_tunable,
-+	.set_tunable    = aqr107_set_tunable,
-+	.suspend        = aqr107_suspend,
-+	.resume         = aqr107_resume,
-+	.get_sset_count = aqr107_get_sset_count,
-+	.get_strings    = aqr107_get_strings,
-+	.get_stats      = aqr107_get_stats,
-+	.link_change_notify = aqr107_link_change_notify,
-+	.led_brightness_set = aqr_phy_led_brightness_set,
-+	.led_hw_is_supported = aqr_phy_led_hw_is_supported,
-+	.led_hw_control_set = aqr_phy_led_hw_control_set,
-+	.led_hw_control_get = aqr_phy_led_hw_control_get,
-+	.led_polarity_set = aqr_phy_led_polarity_set,
-+},
+ 
++	ret = aqr_wait_reset_complete(phydev);
++	if (ret)
++		return ret;
++
+ 	/* Check if the firmware is not already loaded by pooling
+ 	 * the current version returned by the PHY. If 0 is returned,
+ 	 * no firmware is loaded.
+diff --git a/drivers/net/phy/aquantia/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
+index 11da460698b0..eab779db225c 100644
+--- a/drivers/net/phy/aquantia/aquantia_main.c
++++ b/drivers/net/phy/aquantia/aquantia_main.c
+@@ -441,7 +441,7 @@ static int aqr107_set_tunable(struct phy_device *phydev,
+  * The chip also provides a "reset completed" bit, but it's cleared after
+  * read. Therefore function would time out if called again.
+  */
+-static int aqr107_wait_reset_complete(struct phy_device *phydev)
++int aqr_wait_reset_complete(struct phy_device *phydev)
  {
- 	PHY_ID_MATCH_MODEL(PHY_ID_AQR813),
- 	.name		= "Aquantia AQR813",
-@@ -1042,6 +1078,7 @@ static struct mdio_device_id __maybe_unused aqr_tbl[] = {
- 	{ PHY_ID_MATCH_MODEL(PHY_ID_AQR113) },
- 	{ PHY_ID_MATCH_MODEL(PHY_ID_AQR113C) },
- 	{ PHY_ID_MATCH_MODEL(PHY_ID_AQR114C) },
-+	{ PHY_ID_MATCH_MODEL(PHY_ID_AQR115C) },
- 	{ PHY_ID_MATCH_MODEL(PHY_ID_AQR813) },
- 	{ }
- };
+ 	int val;
+ 
+@@ -494,7 +494,7 @@ static int aqr107_config_init(struct phy_device *phydev)
+ 	WARN(phydev->interface == PHY_INTERFACE_MODE_XGMII,
+ 	     "Your devicetree is out of date, please update it. The AQR107 family doesn't support XGMII, maybe you mean USXGMII.\n");
+ 
+-	ret = aqr107_wait_reset_complete(phydev);
++	ret = aqr_wait_reset_complete(phydev);
+ 	if (!ret)
+ 		aqr107_chip_info(phydev);
+ 
+@@ -522,7 +522,7 @@ static int aqcs109_config_init(struct phy_device *phydev)
+ 	    phydev->interface != PHY_INTERFACE_MODE_2500BASEX)
+ 		return -ENODEV;
+ 
+-	ret = aqr107_wait_reset_complete(phydev);
++	ret = aqr_wait_reset_complete(phydev);
+ 	if (!ret)
+ 		aqr107_chip_info(phydev);
+ 
 -- 
 2.43.0
 
