@@ -1,182 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-23265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A66C90F66D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:48:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 481A090F671
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:48:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBA8D286A99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:48:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF6F11F252B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:48:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF6E615CD4B;
-	Wed, 19 Jun 2024 18:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 957191581EB;
+	Wed, 19 Jun 2024 18:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="ajzwoK9I"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e4/2D9r0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D66115B143
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:46:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D061586C8;
+	Wed, 19 Jun 2024 18:46:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718822773; cv=none; b=dBywXsWU1wv6Yqb19z8miFJ7rjw8QgN2IQ7BvrGAtgAuV4lAvn/EiWD6Y9L351Z5u6aEF1VLbjEIvLtnWCs8KS7KTQTrlZdhZYv7NJnCHIlESTIhJf0PUy67eKSLB+pth+qoHlZDVmawRbPbIdjHXkifO26jz+pLeblXegKHhrc=
+	t=1718822804; cv=none; b=A6KwbsdVFIGTyie1locLLM9O+XIPYkI63IBtPmszsz5I3gUhSI4qUlCDkAPQtMmVKx8jzTcO7DGQLeUBCvpkpqoDtG1sxq6WmzjDacOvLEsN5OOFw/U1Cql9ffmdEHPskqVt8Z63iSWrifUuVxGV3X8n+PyLXEKDNla+699qUTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718822773; c=relaxed/simple;
-	bh=+e447U9ZNkT7AYGVOo7aDCOA3wONE7KRmNgjVrgpyuI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKPYzqJShEC3+naWSmAx3MPNXw++axLNZP7LZXedoU6KE0A3vd1VYwgyCOjp/fX/P8O8qEiJbYWIepnXMAw/fr7RAK8IUjLT8qJaTwe2fKd8WU3NNom2/NKHeviGdyN18QjJLgjQSxekMKfNRD3VBuPGG6dAGb9ScdYD/DgmBUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=ajzwoK9I; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-35f2c9e23d3so828254f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:46:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718822770; x=1719427570; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XpAzXcNNxYpTdvfi+BDU0xCxyu40usRKC5CFcQJxaNM=;
-        b=ajzwoK9I6PthWpsuT2C98OMmoBEmve18tfYsICwcvOATXeIVHRXcHlxIlPY9D33Q4f
-         OzwEDX8OeCfiDFAob9on1whMJjwRkB8DP88cREwmo5PlhDYm2KLszzfKCboq30m53eyY
-         7FK0tC4ohRSmxshdLdFQFsOy4rdco6uR/Y75siyPThQIP8VDojZaFj0dk/Np9fxKsLDR
-         jbGdnDFVzbEtyzMlCzkbICbR6JHEbjIx1teyyY757UXNAR8KPgfrmGUJ9uu348dNo8Wv
-         zYE/UzimN5Y/uabEH2nha2a7ixGyKVBVYX/vwwa6VXiEnLGWaof9FOFyXQo5Nl1EkJzF
-         C9Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718822770; x=1719427570;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XpAzXcNNxYpTdvfi+BDU0xCxyu40usRKC5CFcQJxaNM=;
-        b=whR0wuj5VNGIf1/ZMmQ4xUPVcJnvQNJLFLj7oqJ/VIgOTpY8iWcDSzFaN3nNRTACQh
-         D0yRhRT8iagzOetjANejPO+KrWoPR6ojrkfMzDaQ6BR4ykz0b23f3QOgNqqyTXSEOO9U
-         Yv0W7u7WoNFg6UqioOH5HrzXsIJUYltqLUJVZ9hZjMnlM5nJ/H/ckg6pVNoOdHFwGjQ/
-         ptjUYjkMrPWSkYipotXun0jKyr3S/EelZ7vpaPtnYffdrUH2F31SF/xMrtrNxUBsR1dd
-         QMO5hp4pMC17kBLPUOP6ru8oX0Q9the4JuNbHrI57nVqA7jhc1WyT+NkNvTX8FcwbZHf
-         9ImA==
-X-Forwarded-Encrypted: i=1; AJvYcCV4+ub6ZOhEM9iGpnTwEp7aU8xZZTWSaepdkEOgOT19imqiftM4LwDfKo8NVP07u1YUuhnxMTqD6bsSsKRZN+aPK4M9j4fqatLlOayRNQ==
-X-Gm-Message-State: AOJu0Yztn6DO33H87wunOWXGPhwvoiYMwjkRCRBHBa0oxWid7yY278E1
-	Atewvq3aLZsdyVwwS4Rz3B9hjLqcTWRkFVjlNTlraKj5Zk3jyeg472xWl5Dv5bo=
-X-Google-Smtp-Source: AGHT+IHjF8mEpNI/gxyJaJmiFPRUJrocPqa3dz8xJy9EQvsllKfjPZWiH68BZOjcdaFrDoZZqxW6IA==
-X-Received: by 2002:adf:e390:0:b0:363:10cb:45aa with SMTP id ffacd0b85a97d-36310cb4a2bmr3050189f8f.24.1718822770504;
-        Wed, 19 Jun 2024 11:46:10 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:991f:deb8:4c5d:d73d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36098c8c596sm7594156f8f.14.2024.06.19.11.46.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 11:46:10 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Vinod Koul <vkoul@kernel.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>
-Cc: netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH net-next 8/8] net: stmmac: qcom-ethqos: add a DMA-reset quirk for sa8775p-ride-r3
-Date: Wed, 19 Jun 2024 20:45:49 +0200
-Message-ID: <20240619184550.34524-9-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240619184550.34524-1-brgl@bgdev.pl>
-References: <20240619184550.34524-1-brgl@bgdev.pl>
+	s=arc-20240116; t=1718822804; c=relaxed/simple;
+	bh=9KhVkcMv2AHPEVyx+V8X/KV3Sm2frmKjn5+qMC4EMhs=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m6dvvB0n0h5XTbMzleuKJDqki/Rasag0GwxUZ8t6/90WGq/N8f2VnfH0ETCSQNnLwIpmIS7lVb8UlvO8L2YFXb02ekxKHTNbcyxa4x+L4D+9luXwOwbVdpFAhSVyCubBsX7TsrcLwvzsoNBPqnyWHKgSZYWLgbH/Yjle6oepCM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e4/2D9r0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45J9CJsL026483;
+	Wed, 19 Jun 2024 18:46:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=s7oWrXeoCyNU99X38iIr4u+p
+	8EWQjXzXkuQ0Or33MOM=; b=e4/2D9r0bgbciqxVoDKKZszZECLnJ0ewXk2V8r1a
+	fAK/u2evO5W9zrGpWCYNsFeWnbcb8gYZa0wJdKn5e8V6bGzAw+/MJan4befccNOk
+	1qsY3/qpPdFwNugATggo9AESI7asD/PpKTbqqa5imJzUPo6fLzt5FQ3ylrIIYOAg
+	uF5RCAtb81m4G6Jo+4q+sDLmvbN/dasfyykZPHOhg9RttsYpba9dc63iFqn1OUa+
+	HIpsQAiSTllYl7yuLcadVu5oFJdyIN+NvYuj6jXhmTepZyqawaFrq1Gt2+xTF5fk
+	8TCOWWF6H9Oc7hGz3l2H3re4t/kLnZxUENT5XowxsousvA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yujc4jg94-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Jun 2024 18:46:32 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45JIkVev019927
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Jun 2024 18:46:31 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 19 Jun 2024 11:46:28 -0700
+Date: Thu, 20 Jun 2024 00:16:24 +0530
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla
+	<srinivas.kandagatla@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] arm64: defconfig: Enable secure QFPROM driver
+Message-ID: <ZnMngFbk6W1PebeA@hu-mojha-hyd.qualcomm.com>
+References: <20240619105642.18947-1-quic_kbajaj@quicinc.com>
+ <5582a2a0-c772-4573-9d55-2f963cb87df1@linaro.org>
+ <ZnLKwqENxC4wzrUm@hu-mojha-hyd.qualcomm.com>
+ <rx4kwsdzprnblczndf4t4ditxl64dztkzooqljpvz6eehuqqgy@rv745qkxmxmq>
+ <ZnMJcuJ0DvDHaY4S@hu-mojha-hyd.qualcomm.com>
+ <ZnMMpKdsGURdgAaM@hu-bjorande-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZnMMpKdsGURdgAaM@hu-bjorande-lv.qualcomm.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Imc4EjJy_jCHSIyBvYyHZ_ROXfIZ9eWE
+X-Proofpoint-GUID: Imc4EjJy_jCHSIyBvYyHZ_ROXfIZ9eWE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-19_02,2024-06-19_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ priorityscore=1501 mlxlogscore=934 malwarescore=0 lowpriorityscore=0
+ mlxscore=0 bulkscore=0 impostorscore=0 spamscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406190142
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Wed, Jun 19, 2024 at 09:51:48AM -0700, Bjorn Andersson wrote:
+> On Wed, Jun 19, 2024 at 10:08:10PM +0530, Mukesh Ojha wrote:
+> > On Wed, Jun 19, 2024 at 04:14:50PM +0300, Dmitry Baryshkov wrote:
+> > > On Wed, Jun 19, 2024 at 05:40:42PM GMT, Mukesh Ojha wrote:
+> > > > On Wed, Jun 19, 2024 at 01:08:48PM +0200, Krzysztof Kozlowski wrote:
+> > > > > On 19/06/2024 12:56, Komal Bajaj wrote:
+> > > > > > Enable the secure QFPROM driver which is used by QDU1000
+> > > > > 
+> > > > > Qualcomm QDU1000. You are changing kernel-wide defconfig, not some
+> > > > > Qualcomm downstream stuff.
+> > > > > 
+> > > > > > platform for reading the secure qfprom region to get the
+> > > > > > DDR channel configuration.
+> > > > > > 
+> > > > > > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> > > > > > ---
+> > > > > >  arch/arm64/configs/defconfig | 1 +
+> > > > > >  1 file changed, 1 insertion(+)
+> > > > > > 
+> > > > > > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> > > > > > index 838b4466d6f6..c940437ae1b3 100644
+> > > > > > --- a/arch/arm64/configs/defconfig
+> > > > > > +++ b/arch/arm64/configs/defconfig
+> > > > > > @@ -1575,6 +1575,7 @@ CONFIG_NVMEM_LAYERSCAPE_SFP=m
+> > > > > >  CONFIG_NVMEM_MESON_EFUSE=m
+> > > > > >  CONFIG_NVMEM_MTK_EFUSE=y
+> > > > > >  CONFIG_NVMEM_QCOM_QFPROM=y
+> > > > > > +CONFIG_NVMEM_QCOM_SEC_QFPROM=y
+> > > > > 
+> > > > > Module
+> > > > 
+> > > > Should not this be inline with what CONFIG_NVMEM_QCOM_QFPROM is having ?
+> > > > Either both CONFIG_NVMEM_QCOM_QFPROM and CONFIG_NVMEM_QCOM_SEC_QFPROM
+> > > > should be m or both y
+> > > 
+> > > Looking back in time, CONFIG_NVMEM_QCOM_QFPROM was enabled as built-in
+> > > to get TSENS to work (which makes sense, we don't want the CPUs to
+> > > burn). What the actual users for NVMEM_QCOM_SEC_QFPROM?
+> > 
+> > 
+> > CONFIG_NVMEM_QCOM_QFPROM and CONFIG_NVMEM_QCOM_SEC_QFPROM are similar driver
+> > for same device and only difference is register region lies in secure space
+> > for the latter;
+> > 
+> > Currently, LLCC is the only client for CONFIG_NVMEM_QCOM_SEC_QFPROM, however
+> > if someday if the region lies in non-secure space in that case, client
+> > started depending on CONFIG_NVMEM_QCOM_QFPROM.
+> > 
+> > It reminds me, we have not yet put depends on for LLCC on NVMEM_QCOM_SEC_QFPROM
+> > doing which is resulting in recursive dependency[1].
+> > 
+> 
+> Kconfig "depends on" describes build time dependencies and LLCC doesn't
+> depend on NVMEM_QCOM_SEC_QFPROM.
+> 
+> It does depend on nvmem_cell_read_u8() being defined, but as
+> CONFIG_NVMEM is bool there will either be a proper implementation (=y)
+> or a static inline stub (=n) of this function, so we don't need to
+> describe this dependency.
 
-On sa8775p-ride the RX clocks from the AQR115C PHY are not available at
-the time of the DMA reset so we need to loop TX clocks to RX and then
-disable loopback after link-up. Use the provided callbacks to do it for
-this board.
+I remember nvmem_cell_read_u8() patch., however, got misleaded by some of the
+in kernel example like.,
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 33 +++++++++++++++++++
- 1 file changed, 33 insertions(+)
+config ARM_QCOM_CPUFREQ_NVMEM
+        tristate "Qualcomm nvmem based CPUFreq"
+        depends on ARCH_QCOM
+        depends on NVMEM_QCOM_QFPROM
+        depends on QCOM_SMEM
+        select PM_OPP
+        help
+          This adds the CPUFreq driver for Qualcomm Kryo SoC based boards.
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index dac91bc72070..ec43449d0252 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -21,6 +21,7 @@
- #define RGMII_IO_MACRO_CONFIG2		0x1C
- #define RGMII_IO_MACRO_DEBUG1		0x20
- #define EMAC_SYSTEM_LOW_POWER_DEBUG	0x28
-+#define EMAC_WRAPPER_SGMII_PHY_CNTRL1	0xf4
- 
- /* RGMII_IO_MACRO_CONFIG fields */
- #define RGMII_CONFIG_FUNC_CLK_EN		BIT(30)
-@@ -79,6 +80,9 @@
- #define ETHQOS_MAC_CTRL_SPEED_MODE		BIT(14)
- #define ETHQOS_MAC_CTRL_PORT_SEL		BIT(15)
- 
-+/* EMAC_WRAPPER_SGMII_PHY_CNTRL1 bits */
-+#define SGMII_PHY_CNTRL1_SGMII_TX_TO_RX_LOOPBACK_EN	BIT(3)
-+
- #define SGMII_10M_RX_CLK_DVDR			0x31
- 
- struct ethqos_emac_por {
-@@ -678,6 +682,29 @@ static int ethqos_configure(struct qcom_ethqos *ethqos)
- 	return ethqos->configure_func(ethqos);
- }
- 
-+static void qcom_ethqos_set_serdes_loopback(struct qcom_ethqos *ethqos,
-+					    bool enable)
-+{
-+	rgmii_updatel(ethqos,
-+		      SGMII_PHY_CNTRL1_SGMII_TX_TO_RX_LOOPBACK_EN,
-+		      enable ? SGMII_PHY_CNTRL1_SGMII_TX_TO_RX_LOOPBACK_EN : 0,
-+		      EMAC_WRAPPER_SGMII_PHY_CNTRL1);
-+}
-+
-+static void qcom_ethqos_open(struct net_device *pdev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+
-+	qcom_ethqos_set_serdes_loopback(ethqos, true);
-+}
-+
-+static void qcom_ethqos_link_up(struct net_device *ndev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+
-+	qcom_ethqos_set_serdes_loopback(ethqos, false);
-+}
-+
- static void ethqos_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
- {
- 	struct qcom_ethqos *ethqos = priv;
-@@ -861,6 +888,12 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	if (data->dma_addr_width)
- 		plat_dat->host_dma_width = data->dma_addr_width;
- 
-+	if (of_device_is_compatible(np, "qcom,sa8775p-ethqos") &&
-+	    ethqos->phy_mode == PHY_INTERFACE_MODE_OCSGMII) {
-+		plat_dat->open = qcom_ethqos_open;
-+		plat_dat->link_up = qcom_ethqos_link_up;
-+	}
-+
- 	if (ethqos->serdes_phy) {
- 		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
- 		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
--- 
-2.43.0
+          If in doubt, say N.
 
+Here, ARM_QCOM_CPUFREQ_NVMEM should not depend on NVMEM_QCOM_QFPROM
+for compilation, as NVMEM_QCOM_QFPROM is the provider driver while
+all the stubs are available and ARM_QCOM_CPUFREQ_NVMEM is consumer here.
+
+-Mukesh
+> 
+> > It looks we need to select NVMEM_QCOM_SEC_QFPROM from QCOM_LLCC config and that
+> > may not need config enablement here.
+> > 
+> 
+> This is a runtime dependency, created through the nvmem framework by the
+> relationship defined in DeviceTree. We don't describe those.
+> 
+> Regards,
+> Bjorn
+> 
+> > [1]
+> > fs/sysfs/Kconfig:2:error: recursive dependency detected!
+> > fs/sysfs/Kconfig:2:     symbol SYSFS is selected by CONFIGFS_FS
+> > fs/configfs/Kconfig:2:  symbol CONFIGFS_FS is selected by GPIO_SIM
+> > drivers/gpio/Kconfig:1884:      symbol GPIO_SIM depends on GPIOLIB
+> > drivers/gpio/Kconfig:6: symbol GPIOLIB is selected by I2C_MUX_LTC4306
+> > drivers/i2c/muxes/Kconfig:47:   symbol I2C_MUX_LTC4306 depends on I2C_MUX
+> > drivers/i2c/Kconfig:62: symbol I2C_MUX is selected by DRM_SII902X
+> > drivers/gpu/drm/bridge/Kconfig:270:     symbol DRM_SII902X depends on DRM_BRIDGE
+> > drivers/gpu/drm/bridge/Kconfig:2:       symbol DRM_BRIDGE is selected by DRM_MSM
+> > drivers/gpu/drm/msm/Kconfig:3:  symbol DRM_MSM depends on QCOM_LLCC
+> > drivers/soc/qcom/Kconfig:47:    symbol QCOM_LLCC depends on NVMEM_QCOM_SEC_QFPROM
+> > drivers/nvmem/Kconfig:230:      symbol NVMEM_QCOM_SEC_QFPROM depends on NVMEM
+> > drivers/nvmem/Kconfig:2:        symbol NVMEM is selected by EEPROM_AT24
+> > drivers/misc/eeprom/Kconfig:4:  symbol EEPROM_AT24 depends on SYSFS
+> > For a resolution refer to Documentation/kbuild/kconfig-language.rst
+> > 
+> > -Mukesh
+> > 
+> > > 
+> > > > 
+> > > > -Mukesh
+> > > > > 
+> > > > > >  CONFIG_NVMEM_RMEM=m
+> > > > > >  CONFIG_NVMEM_ROCKCHIP_EFUSE=y
+> > > > > >  CONFIG_NVMEM_ROCKCHIP_OTP=y
+> > > > > > --
+> > > > > > 2.42.0
+> > > > > > 
+> > > > > 
+> > > > > Best regards,
+> > > > > Krzysztof
+> > > > > 
+> > > 
+> > > -- 
+> > > With best wishes
+> > > Dmitry
 
