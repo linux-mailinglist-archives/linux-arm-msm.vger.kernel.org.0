@@ -1,87 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-23255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A41F90F61A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:33:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19EE890F64F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:46:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EAB69B21543
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:33:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9F98B284DD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:46:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DA84158859;
-	Wed, 19 Jun 2024 18:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12DBA1586FB;
+	Wed, 19 Jun 2024 18:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="nPp/wZaR"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="CYgJUNPD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60D2158206
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:33:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC261BF37
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:46:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718821999; cv=none; b=sEqiBOMeS99L3/QKJgmIoJH5F3ZkUwYzy41WAmKHAPejkNew+VSVbvKxdQ3cQeIhk5OH2MCtHKtepIrOyY7ZplcM3mlJXUMVF4/pViJP+NtC0UCGauQjqoHbDXS9XnwkEOzwYKZHBKvmo7NXz226uA6Kcn6qPSHwW8EJkCcy27o=
+	t=1718822764; cv=none; b=uWe1E+TBr7MTNvdfA4av9T9xp8w2YX67JxNE5KeeRV+tkVCPyLwG5lLqAH+6b6Lfw64BGUURoYTKKtkLrLQ3HpeYrLZHZyA3jTWFKVPZ9eKnl/zxr0w9C/BhpQ0/VlizqMcss09LHcmBE0gIjM26Om1CtG8KrWxeQDwGDaG1Ye0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718821999; c=relaxed/simple;
-	bh=npr+JsWRhOLGgs/iyAHgchW0S+F3M7JDWhTYMWaxa4s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okGgC0Y3TwJ7Dz1dDllmiuoLihw1IHM6TUzME3Lho83tNwA5jChcum/FoqbjFzCJtTM/U9ecSVXRG/5Ts1rpjpJ8hZlLilepCIWXMs1ZeyXZvIR6KR6YLdrcbP5gdBF8cvVeYWJUmS2ejx5eU2zwGlHNAGqK98Th2PHvvolbJo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=nPp/wZaR; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1718822764; c=relaxed/simple;
+	bh=zPMoBTclesTxV19K2NhgdoO2cUtAkYyX/FhmCFJ4hp0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TjFax5flGZSC4ouStt5RiZ7KYG9kteAk3bAR+b189oBsENgL63fC/gVJccqpaADHN5dbTOGKskbLEivBY5eyL5A7aJxkbh1dbqoCUs1PuUMLcuG62RsRe11k8LPrlErY+1slWTr5jbCugrWH8LPYT/dWkzUY5XAav3/YGeUbVz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=CYgJUNPD; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3609565a1bdso69652f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:33:17 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4217136a74dso1000295e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718821996; x=1719426796; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2aO6Qz8DqhtKdR2lV/fzuJ9e652CmsqmVwWuOJ3eYns=;
-        b=nPp/wZaR4hgsJMJDL7XdsGzKhg+l9R5rlXTcnTfs09lOQU76XkJKmJR9SFqJ1RLdRH
-         1D01xz8CXdHCdcQ65i8BjTxVGQAmHVLx9cBmLQHqF52XjSWJvRaJ/KwJnGO0n+XwswJN
-         NvV/S1y+yxXttUl1eRD80MKF2273kY0F6M3lnL18RJKsSwSD5sIK6HJh9J+vHpIJtsnu
-         8PwuL/x/mQ2V9l2DC2LPNxm5KEu9qfGJbLSEin3kHegBaadSep66rsr/uQZwCaW0UHVt
-         +TTvL3obSABfZzhfEPQSh8BkkzKBW94R2xXRT8QjTQQQuwK5qHg7A1c3kGI2AiaZmFKq
-         Hi9A==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718822762; x=1719427562; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q803tOePwccb1h2zDMiIz3ozPcAah2s1cv6FSztbWf0=;
+        b=CYgJUNPDQ7ZPdksmZBrfeC+Mu1rT2mVPgLBZ8IMt0xyOeokMwvefJgBmYqjKmdjXKl
+         ppZFyA8jHHIgr2CsL+yjnua7eHsPxism5RwKoqcwpKoC8QNCEybccLmCf5kL+qd5kzEE
+         7K6wTCY7+H+jXbI+rGtTF2WEkyfg5n3E9vVQRzaC4iDnutVIP2WS+MeJV9M1EGgaOD44
+         7y6hSAtsrF0wYF6bAE/L6yZag4qsBGGiCeJJx0JsdJsTPt7rgrd3PJWa0qC1elHxWYxg
+         l0hF6BD5UPLQDnVKLf8QhI9IrUouQYAfEp6NZyf6PtbwFjN9OHYVOSd8KE0Hl7FfRycB
+         oMnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718821996; x=1719426796;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2aO6Qz8DqhtKdR2lV/fzuJ9e652CmsqmVwWuOJ3eYns=;
-        b=b6e2FUJ0d5q0U4L3ENHsACEhVnvSXA+Y0Z6E0ltg6VfMzhKVdcaPE338+IQZ1KGmxA
-         9INlxiVbFOUuUiDkE4w0/gcBN9ra0noSMXZh7RVB8mTphURK/SwS670A1jfna7M1TRol
-         8As/1aPxOGFKR3tGQQBYyNB2MVLevGLifR1R9UtLy5880Xn6xnKqM1oIskCGeagGZ+mE
-         KL6U3OYfMELfSkb+Csu8+v4Uet/Sp1xrmH/JWR5+Cae9DSwO9lSx8O4VPaphc7yx6SyV
-         r4s3QW6QDBmH52dTVnIFfCAjXMkjrFWlnedU6VCNi1M2KtnLTZsFdi34OZrObSXLdApZ
-         MEsg==
-X-Gm-Message-State: AOJu0YwXl/830Ma+U+Una4qVHzARUW2gmmaFPL/1DmRNRDXOtgElB8QG
-	ppT9aS7f6lid/8Ykh9Ljuvm550eXyBiQfYWa9m8bxd86lKFPfS2v1Fx5Wa1IiKM=
-X-Google-Smtp-Source: AGHT+IFvScl1lSA4FKhQ6Fmx86Xeee/Nl9ibn6cgSyfcX3a5H+BpJOZqLQI0Y89Adkiv+47GC78LJw==
-X-Received: by 2002:a5d:5683:0:b0:363:5e15:3bd9 with SMTP id ffacd0b85a97d-3635e153d16mr1881102f8f.57.1718821995833;
-        Wed, 19 Jun 2024 11:33:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718822762; x=1719427562;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q803tOePwccb1h2zDMiIz3ozPcAah2s1cv6FSztbWf0=;
+        b=umBvYdJfPQs4ycUseIM550189AKX+GcIKGYnYvWZOPhB8rCk7EgPfW3IKWCpr/OlUT
+         ihL6y0lxRVkc/t5uNKv2VMwhKZBs38b6dpTy5wrrscUHjZzb7T05+mCvo3Tk4vA/6KOs
+         6O3RyFOl5OM91uKVcttcjpzm2oeXJLcBNQK+98LRl1kqJCJqemX/H9d4VjnbCpzLpsDu
+         1K/IEXPZgYkNaLMvuGyHStFbPtR/G5XWaynTEqQpjHjbCmKSu9JW/7FrQkRVx4zZaLCV
+         rZh9u3pOlQTrgkchCXH9wji0O4/IJU8YqH2rfvbtimQ9UE14Yc7nYelSQKHKmAQLo527
+         aBdg==
+X-Forwarded-Encrypted: i=1; AJvYcCUI3/1G5tjOuqgQHsBFj5TiczNp6PfLRDQojPd1Z2YGl+Ph9xC0oUAhlq84uEEaX2lnPShD8yzaVt7eMC4C8HJn0UtphUOMvMLFEYocnA==
+X-Gm-Message-State: AOJu0YwwQ8d6kd3x8v3KXlTNbKkJszmw7/V3Ra71kJkVRCskQP0GmMtJ
+	IDtCg2G+bMrdR9mS5etVKzNogov5GYZ7fVRN7ePeTzf2lhGevX4SqIea0OI0JZI=
+X-Google-Smtp-Source: AGHT+IFWT+3bRELnyfZyXWx5RSUNx7IO660yuwGioJQSIgOSEIf5ViL1XqpqGrTP8TUu85sQWpkvPA==
+X-Received: by 2002:a5d:43c9:0:b0:35f:d6e:f7bd with SMTP id ffacd0b85a97d-36317b79cabmr2407085f8f.29.1718822761741;
+        Wed, 19 Jun 2024 11:46:01 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:991f:deb8:4c5d:d73d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36262f77ad9sm4603238f8f.109.2024.06.19.11.33.14
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36098c8c596sm7594156f8f.14.2024.06.19.11.46.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 11:33:14 -0700 (PDT)
+        Wed, 19 Jun 2024 11:46:01 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: Vinod Koul <vkoul@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>
+Cc: netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sa8775p-ride-r3: add new board file
-Date: Wed, 19 Jun 2024 20:32:54 +0200
-Message-ID: <20240619183255.34107-3-brgl@bgdev.pl>
+Subject: [PATCH net-next 0/8] net: support 2.5G ethernet in dwmac-qcom-ethqos
+Date: Wed, 19 Jun 2024 20:45:41 +0200
+Message-ID: <20240619184550.34524-1-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240619183255.34107-1-brgl@bgdev.pl>
-References: <20240619183255.34107-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,77 +97,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Revision 3 of the sa8775p-ride board uses a different PHY for the two
-ethernet ports and supports 2.5G speed. Create a new file for the board
-reflecting the changes.
+The following series introduces various related changes that allow
+supporting 2.5G ethernet on the sa8775p-ride board.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile            |  1 +
- arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts | 42 ++++++++++++++++++++
- 2 files changed, 43 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
+First two patches add support for the new SGMII mode in PHY core and the
+dwmac-qcom-ethqos driver. Next three introduce support for a new PHY
+model to the aquantia driver (while at it: fix two issues I noticed).
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0c1cebd16649..916fbdbf5631 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -112,6 +112,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sa8540p-ride.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-acer-aspire1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
-new file mode 100644
-index 000000000000..d7f0a25c1fc4
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
-@@ -0,0 +1,42 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include "sa8775p-ride.dtsi"
-+
-+&ethernet0 {
-+	phy-mode = "ocsgmii";
-+};
-+
-+&ethernet1 {
-+	phy-mode = "ocsgmii";
-+};
-+
-+&mdio {
-+	compatible = "snps,dwmac-mdio";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	sgmii_phy0: phy@8 {
-+		compatible = "ethernet-phy-id31c3.1c33";
-+		reg = <0x8>;
-+		device_type = "ethernet-phy";
-+		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-+		reset-assert-us = <11000>;
-+		reset-deassert-us = <70000>;
-+	};
-+
-+	sgmii_phy1: phy@0 {
-+		compatible = "ethernet-phy-id31c3.1c33";
-+		reg = <0x0>;
-+		device_type = "ethernet-phy";
-+		interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
-+		reset-assert-us = <11000>;
-+		reset-deassert-us = <70000>;
-+	};
-+};
+Final three provide a way to work around a DMA reset issue on the
+sa8775p-ride board where RX clocks from the PHY are not available during
+the reset.
+
+Bartosz Golaszewski (8):
+  net: phy: add support for overclocked SGMII
+  net: stmmac: qcom-ethqos: add support for 2.5G overlocked SGMII mode
+  net: phy: aquantia: add missing include guards
+  net: phy: aquantia: add support for aqr115c
+  net: phy: aquantia: wait for FW reset before checking the vendor ID
+  net: stmmac: provide the link_up() callback
+  net: stmmac: provide the open() callback
+  net: stmmac: qcom-ethqos: add a DMA-reset quirk for sa8775p-ride-r3
+
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 44 +++++++++++++++++
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c |  6 +++
+ drivers/net/phy/aquantia/aquantia.h           |  6 +++
+ drivers/net/phy/aquantia/aquantia_firmware.c  |  4 ++
+ drivers/net/phy/aquantia/aquantia_main.c      | 47 +++++++++++++++++--
+ drivers/net/phy/phy-core.c                    |  1 +
+ drivers/net/phy/phylink.c                     | 13 ++++-
+ include/linux/phy.h                           |  4 ++
+ include/linux/stmmac.h                        |  2 +
+ 9 files changed, 121 insertions(+), 6 deletions(-)
+
 -- 
 2.43.0
 
