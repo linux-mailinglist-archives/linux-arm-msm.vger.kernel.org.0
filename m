@@ -1,145 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-23211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D16D90ED2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 15:14:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7B8790EE3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 15:27:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 262C81F218C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 13:14:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B20A1F22888
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 13:27:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B20181422B8;
-	Wed, 19 Jun 2024 13:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D0C114E2D7;
+	Wed, 19 Jun 2024 13:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EQ738Xvk"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YSG+CvCn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D2014389C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 13:14:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718802895; cv=none; b=BlmimENMGdyP4czuBrQAprKKcd/Iqfwu0E+EsEmtSttJ94DrJ5RXDqJwab7E4s9vJOwrUMOfmvs6aoXaINIFhBinb9BONgZkxUdvdalhGrlAV2M2bMUDt2TYNE+4akkp4r/A6wxSclQ55rsi7Ke9dl7xc/yLq1n3n5WaZNwxI0Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718802895; c=relaxed/simple;
-	bh=R2OnpwciP0oC4IIhwvb0aevylEV7Krkhr8J7EtNkXG4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NpmNJhB2Iv6LA4dthP80YhcIGniuSVI8vJvOpHdFRR7uR9N53PAebHiixh6hq2dUt8WkKk4WinecQrfNlB6HCzNNqKvS2vRoJuAMn+GCjxjkiRzOYVD2l0yr+ZR7pPjzbE/SkB2GGMPGZHhrYs9A4CbIGEqwSJh4C+kbddADKrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EQ738Xvk; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ec3f875e68so7851001fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 06:14:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718802892; x=1719407692; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iQ0JJofFrf5mr0BiiHPeR/6U3FXiSH0jOw38NAMwcQM=;
-        b=EQ738XvkkJRWlrLNGhSx3CHx1msdZC85eWxyczqsG6paJO/ri+yesjkIE7bgFA6ISF
-         K2Yep1Qq3kgoXxwRaldiDMFHEge07PByEnzE04aegOu+doE/uaHTuTPzbXRjfZbkVjP1
-         0sVuENgD+c5zZr7b9fCcpxa/NU0nQRw5D6rMWgABFJbwZJ0CyjOgJ563BvWu0sOK3u0z
-         nUjFzFN0aiNiZguibzhFXTFV/gHBA6vAhTw6xnTl1aC0XM/9E/x1xVbtSVS/kESjgJe5
-         OCx4AyeNxvpAvtQlimkI7VZglqrvVPoPZpBEeUB60wFaxaawJxjp8rwaFoDdw86F6Log
-         T63Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718802892; x=1719407692;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iQ0JJofFrf5mr0BiiHPeR/6U3FXiSH0jOw38NAMwcQM=;
-        b=o7o6un/vw9NDB0GDMboXm5akSLT/a/Cgl+S6b9XKRDnsEBRsYc+1yz2L7JnXuL0vUt
-         FzTUqUP6E5jLHDFIdddq4crruhAZJbTPCthzvoDyj0Z24M0d57DW3xU48HrtuVW/3xNG
-         Nw745JxHia9YP6HXbDeCwA2ATRFcLVg2LeXCt9S0B43qlqRpnR7tz9/Dw+q6aNx6Ddav
-         DL4GQrTAwY/8z+93vsmmGvl+POoYSIHUWGdZ1PZHUMmfdKETKEaYpXQmo619Twj2rOsQ
-         c2u+rn3cqXyG+MeUy4J8awbBMjMYUKknTVackda7F0dQ0wV/mYCazAdPyR7yckljrN4K
-         sM1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWrEzjtkCoIewxuxcKZw2885pW8wqvCMa56rzed2jt8FBBvRM2xcNWdb/fsgHSUGr2ffOEt487qIjhDbjFNoOooaBQs5hrCXAtZiQyleQ==
-X-Gm-Message-State: AOJu0YxXbQKb+MuNwIxKlCqNxPuRbnC3lQPkM9ewcd7wUqJ4rnW7oIRT
-	0HKEY6DbSgAldDVSR1+43hGDgfDcCznEjrEEmDUTuBj3ZtRtKmjshzGFcYXA8V0=
-X-Google-Smtp-Source: AGHT+IGAr6zFuKGag3tE7C+jY+4YsV2wmalrV2K1g5pJkLBgtvhd5T1iZT+QiolbE08sTlZPilLXIg==
-X-Received: by 2002:a2e:be94:0:b0:2ec:3dd4:75f7 with SMTP id 38308e7fff4ca-2ec3dd476e4mr15443801fa.47.1718802892125;
-        Wed, 19 Jun 2024 06:14:52 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec05c07012sm19724001fa.48.2024.06.19.06.14.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 06:14:51 -0700 (PDT)
-Date: Wed, 19 Jun 2024 16:14:50 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	Komal Bajaj <quic_kbajaj@quicinc.com>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Bjorn Andersson <quic_bjorande@quicinc.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: defconfig: Enable secure QFPROM driver
-Message-ID: <rx4kwsdzprnblczndf4t4ditxl64dztkzooqljpvz6eehuqqgy@rv745qkxmxmq>
-References: <20240619105642.18947-1-quic_kbajaj@quicinc.com>
- <5582a2a0-c772-4573-9d55-2f963cb87df1@linaro.org>
- <ZnLKwqENxC4wzrUm@hu-mojha-hyd.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152BF143757;
+	Wed, 19 Jun 2024 13:26:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718803612; cv=fail; b=jOA0FjpJ98eerbXo7b+SB4BzGvMg3Q4ZCjlB3TXmIXKu+eUGhT0YZwDXhw21cY7Br7cn3Ll2av25Er2IGmlAmScDBVTcx3kWjb2KhYPvdzxIfCOGyzlZKl4N/H6Zf7ArRoKviNkrPw31Z0HttXFfvN3YCScUpRmQo28j7MAuTq8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718803612; c=relaxed/simple;
+	bh=mhRkH0QkVmPRQhuriZHNPxfVrM2YqxHz0HgTt+d6N6M=;
+	h=Date:From:To:CC:Subject:Message-ID:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=eoubzY1B8Xy+6pzWmS44zu90gg46hND5M6hqpAgYCYEG/qfA4DE+OFGI/fSNntokzur1WISvmfEOFTC17Z7AncNN5nqVz2QYiNS7es1WYoHjRe7rdEA8p0yr70htOaGEdK1UZtBLeLFQ7hGE+IU5lxNA+8VnT3bYnF3NV1lWb5o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YSG+CvCn; arc=fail smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1718803610; x=1750339610;
+  h=date:from:to:cc:subject:message-id:in-reply-to:
+   mime-version;
+  bh=mhRkH0QkVmPRQhuriZHNPxfVrM2YqxHz0HgTt+d6N6M=;
+  b=YSG+CvCnSgIfOXUpLuk5wh6GR9v72uJZng1sbSNBNaCH3gSdELql9Fvm
+   oM71XUy8hWZhT/Z5nH+dqtwgAm+59WRVcQ94G+1wSpUoo4yXL4cXU+zom
+   8URdaDg9NGjT5BMOMlpPdiLXm1wUwjWts0Kxft76CA3biG1h9WcR5kX9Z
+   7EzOHFh08I7Aj+3/Yv8izOMUV7ADh1RJRgBbntTL6KLxbiQ6OPhC5XGYr
+   k8oSuXmFOD+R2c/GHj/UMd+14E4U5eeatdMjQHDkU5oEAUujh0udjOLbh
+   DfBoaxVuNY5qf+UF3irL6Y0ahS5WEGpyWKufzPZNrTov06MY/4hh6hBIA
+   Q==;
+X-CSE-ConnectionGUID: +lnCaOmbQ86zXidXcbrolA==
+X-CSE-MsgGUID: GWwy3knQRYCr0SR0uA3agw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11108"; a="15579850"
+X-IronPort-AV: E=Sophos;i="6.08,250,1712646000"; 
+   d="scan'208";a="15579850"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jun 2024 06:26:49 -0700
+X-CSE-ConnectionGUID: Yp8W51S5Tsil/tIG52E2Rw==
+X-CSE-MsgGUID: K4qxWeKZRfqtBo8m0+5z4g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,250,1712646000"; 
+   d="scan'208";a="46862840"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by orviesa005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 19 Jun 2024 06:26:50 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 19 Jun 2024 06:26:49 -0700
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 19 Jun 2024 06:26:48 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Wed, 19 Jun 2024 06:26:48 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.47) by
+ edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 19 Jun 2024 06:26:48 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Rp7lGgjQE7rFnMURYjPAbengEi2dyZuDJTttjWvoxZ4baKae8FyTmEalraGQTik7yQsfS8naYagzul4C0hOJhoH07QahwaqkYiBep5tlIucRdnXDGM/ujeqGnKM3bBty8XOMaD2j0yv0AHZjH9eALsSO795rv8R/SGlN5Fd3LsSFWQIkJ0obfYovyMQagcN/ymt4ee6bbBi7LH3/n1q5zotKyPfsNC4UURMYquncXPmbiJs9tQwdt9F6mcQjAiESLmRT7zIwJhIzZcUzSi2ZdEuWbqgHUbt5h7LFERs5JwqwCYWG4QSYZ57Ua2I73mglNl4YmzcmYRxe4GRL3ROBJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xKJ32WcFtnGRXhoOGOnGiOLvrIxMoG4jdQsgHa+VRxY=;
+ b=PL0wLscmBFZN9hte9KTbWgG+e0vUxQIVQjW40opCB001RXxV2wAkJgMfKZiqiPEi4qsEX2bqB1kKbeQKv8nTvH8XZoCVrykbU7HPM8nQisWGj3qRt3Xi9sI7F2WOGlWj0cAVxeJDnvYv2mPi0H6JyF1bku/ET0u/o9rKNWhmmKMwEonPiw/nyVXtdTcCRq7q0Dl1OhuH9/981zN1NCCAmko20yNsF6y9i37dIIY3xbNgM0qpVt24FSCGM4F7C0Gm1hVBf17rO8YXA9hkdhKd+RIpPiE15KotPd7zYyvnjmm+JIT3YjL8/FlWyD8UhUf3r817Uo6A0hyJzo4yuncbZg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS7PR11MB6039.namprd11.prod.outlook.com (2603:10b6:8:76::6) by
+ SA1PR11MB8255.namprd11.prod.outlook.com (2603:10b6:806:252::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.19; Wed, 19 Jun
+ 2024 13:26:46 +0000
+Received: from DS7PR11MB6039.namprd11.prod.outlook.com
+ ([fe80::3f0c:a44c:f6a2:d3a9]) by DS7PR11MB6039.namprd11.prod.outlook.com
+ ([fe80::3f0c:a44c:f6a2:d3a9%3]) with mapi id 15.20.7698.019; Wed, 19 Jun 2024
+ 13:26:46 +0000
+Date: Wed, 19 Jun 2024 21:26:29 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dzmitry Sankouski <dsankouski@gmail.com>, Sebastian Reichel
+	<sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Michael Turquette
+	<mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Neil Armstrong
+	<neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, "Sam
+ Ravnborg" <sam@ravnborg.org>, Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones
+	<lee@kernel.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek
+	<pavel@ucw.cz>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown
+	<broonie@kernel.org>, Uwe =?iso-8859-1?Q?Kleine-K=F6nig?=
+	<ukleinek@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Chanwoo Choi
+	<cw00.choi@samsung.com>, <phone-devel@vger.kernel.org>
+CC: <oe-kbuild-all@lists.linux.dev>, <linux-pm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-clk@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+	<devicetree@vger.kernel.org>
+Subject: Re: [PATCH v3 18/23] regulator: add s2dos05 regulator support
+Message-ID: <ZnLchTQAUz6j8/ez@rli9-mobl>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240618-starqltechn_integration_upstream-v3-18-e3f6662017ac@gmail.com>
+X-ClientProxiedBy: SG2PR04CA0169.apcprd04.prod.outlook.com (2603:1096:4::31)
+ To DS7PR11MB6039.namprd11.prod.outlook.com (2603:10b6:8:76::6)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZnLKwqENxC4wzrUm@hu-mojha-hyd.qualcomm.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR11MB6039:EE_|SA1PR11MB8255:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1eaf13b0-f08d-4f96-c55c-08dc9063777a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230037|1800799021|366013|7416011|376011|921017;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?N4J64s51/nVCan7+c85qe33194NtHYGTziy349kPGX9CM5bWP7hNFbmLudMM?=
+ =?us-ascii?Q?0chGckdIuJ7lvS0CqOH8z4iFN8UmLQvLEvDufWedjXN+4OMXVRWwBN4RyAAi?=
+ =?us-ascii?Q?IkliLazY3ECzK72Fv693tBqF20YLQ6nKF9xpL37ZohvjsgzuAHpgtIuR7yZ4?=
+ =?us-ascii?Q?k36IAHRU1v8d6oDHYmdXTfXEoxr2ok9ENAWr50/Rb8v8qdg6+lhBJzexd5bW?=
+ =?us-ascii?Q?6MKulLgN0cxRBY36wzBbZPp/oj0QysgToei2lEqKWd/IpEkSkVdKXfgbY21j?=
+ =?us-ascii?Q?771zR/Ee7o2swsdg62dgYAm9Ib747cbPpKzCq1qh9HZjkHi3x0+KV8/SoDnf?=
+ =?us-ascii?Q?CN5A0FaoKCR2t0tY9VMd60urWQLOSiqM93T+t4iWwvwgPRiGcQ8HwRCx3oCg?=
+ =?us-ascii?Q?TMXU74xTF4B2uAByKguQREzeKb3eeAbP2Bt+nGgma/yxYQVqym/LKqT0k1u9?=
+ =?us-ascii?Q?WwBgIhXUvm9Mlf1WmFtVxO4gXigrDl3yKwVLAKqwNe0FBu2+mRjfYSf2viui?=
+ =?us-ascii?Q?AgGRdyzxvUjSt4wPlagyXHRXIGrDP6aOJoj8v2JvUmuAe13Rd5o0ek6JyOTu?=
+ =?us-ascii?Q?a3v1p9bd7a/x+FS97VFvgU723JW4mDPjJuh07SV8dKljgPFM0kHi+5pPEWgi?=
+ =?us-ascii?Q?rKB7KPDimhqfKNzvgj+5+V1zGdY0oV43J5IaDgRpKRKPnxXye2hDj3KuYjPu?=
+ =?us-ascii?Q?lS0HWwAblMtkrDcJNR1EmFIhx6fmObArAb6wSc6o5Ul/XfL+TAldOw48qG5y?=
+ =?us-ascii?Q?INDkyvRcM/ZJYuDCsT5yQ69xczWgIF5Wt6Vsl0ZO2dUwpBMkzb8mrQx43cj0?=
+ =?us-ascii?Q?auMKQ8nALSEbkXc1AlARCRSiFPJMu3bF4CaGnkX7a5GnMrxKNIfBkOTku7oy?=
+ =?us-ascii?Q?hUt4HTZsiwwH2BauegrNPMu6iT/12PhVe9G5H3qqfxQhOIjMRgJQ2fySBtVo?=
+ =?us-ascii?Q?pseyop/1GySRBthmJKxVzmcJ1Mk4oz+1lKx+9E6KfBZVEdeYC249PuN9Vaaq?=
+ =?us-ascii?Q?GVFB/IgPHZ42awRwMun0B9ifGT6Q67g/TbiYXcoe3PfSXpmSMS0jTMmBsay3?=
+ =?us-ascii?Q?ye1DTaAXGm/MSmlF90Tw1jcDgaeVM5lR/+V8ZB8E/n1DGHVroU+L/Eoeqjvo?=
+ =?us-ascii?Q?m8cfkJvUqJpkweEnfph8JN89rQpFwg6yDBzCfdfGQMFdcGRpxYQJUwDk0wVz?=
+ =?us-ascii?Q?tEH2sbAxYIhzQURupCqsv6VP9zw1k4QfNXpXgeXpQymvsCSqsrC7WhDtWpYg?=
+ =?us-ascii?Q?LW5XGMmARNVOqlhAKXEpGY1tD0CkspjvJaxJm/zAWbXo/T4cJgmsX112/IeJ?=
+ =?us-ascii?Q?+NU=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR11MB6039.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230037)(1800799021)(366013)(7416011)(376011)(921017);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?9i/PVD7AC+lKNcyEVCNMm1YahQzsRpkPL8z4elamjoEEoWt6ulmrAYNjcBGl?=
+ =?us-ascii?Q?RRNXFHPGXRBaB/CuIDK4AEoGanai0hVGo4K9xK99W1jnM+LSZKhQf1I8BxNU?=
+ =?us-ascii?Q?MPq79VuVuH09r9SkDNb08HJMv8UzWx+WHl/i/RO2Nppaojb10VC939dWJGuL?=
+ =?us-ascii?Q?NqiI1ElvVnQXN7S8xb/MNNN+L7HAh6HF5Z+TFmQXnFSRPuCIKqPdcLyuE24N?=
+ =?us-ascii?Q?+tzV+YV98hHXJljQpbP/YjtedU6/VYcVOHBESScUReGLMe70D0NVWACFSziC?=
+ =?us-ascii?Q?8JHF1G1F3Y1T66D718pyznP9IfaUQUcK7tXcAXhNoZDztRy9ENwexf8QZdvz?=
+ =?us-ascii?Q?bNLkXjs9sXfkWPKpAB/GQr9lP/VR6LkuPFBik4ttdbza1wPL/cR8DDUJahPn?=
+ =?us-ascii?Q?Pw/h/W8wqglYyLVJ7Kedz+155Xi8NgIsR5aeJL2bPUI4MLI7QL+t5H7E7V2E?=
+ =?us-ascii?Q?wSb+D8nC8a4tdA06Nm37C62H6KXFG1W81NMr8fYM5XCXv4zOQzhZKkHy362p?=
+ =?us-ascii?Q?rZKbfKTrdppfXBPrrXYDmPZqycgP9EPn7nbz8IroACBnQiKodIp7eq/Q5XHD?=
+ =?us-ascii?Q?LFFZXvXkerDROQdzFDVtzJri4W8c4mNtm69H6kzXWFD6ViZ4unJoMfn1q9bL?=
+ =?us-ascii?Q?ruDe1o3fujQoT2H1lbCo7yPj/xmlPvaXfLVj8h7iwu78i22E4zlpbKd7c5YL?=
+ =?us-ascii?Q?YTisQ1MCQ/DgI/U+ltQpGCtGpjSez9cApwLkcWBNZ49YMq/2x+TWPt/QCm6k?=
+ =?us-ascii?Q?YkG9msXOps5mc22XVr03j0AjOP3ODz7yXwJy8vrzSn+a4DSx2OxXeEZfoAs9?=
+ =?us-ascii?Q?Fuzk1xh6TtQU4zuSXFDDMxsgfjc8z4A00Okvut0uYkk571GsLjBPsCoYiZQs?=
+ =?us-ascii?Q?NUs1hAUbB3LCS3v45Z87yZzxTJgsz1x4z53Usx4jVUfRoUvAM56qRTsg7CD9?=
+ =?us-ascii?Q?l6jLKYWaH8n5fyUaQEurDrAmCEMavSxY2q5aaxrqO1fKKlXPiO2zlMzHgV1l?=
+ =?us-ascii?Q?qxUJe9JnaF+sY82GEsPoD/Y+/gzK66W3rmZrroX5NQNcSSzFwGtyaMBsU8d8?=
+ =?us-ascii?Q?7OVQysg1fmrQhf0AdW8/F3/zkEuiDO+yPgpyog6qc7K1uTuZQaP/A6QN7L/9?=
+ =?us-ascii?Q?PENo/+8+BYgWw48a1m9qH+Cz8FW+MbLWIR/PwFACBxvE8PD4tkaSdFj4dmLD?=
+ =?us-ascii?Q?FFISORGqR2sbPVu6z1wTyZej14nxbNyxhVnLF0eMkLGomFGK8603KGeFCvo9?=
+ =?us-ascii?Q?AU8EwddGaPOt0d8KXbz2mpVUzZJhB/+MjVLxF3f+QTwcb9TIfTnN3KHzdxjO?=
+ =?us-ascii?Q?O9GB9JEmeoMFBsSayPKJgbrDcPbTCLVY6c1EmZC7MsV5OW6tYEPKwszQoTzE?=
+ =?us-ascii?Q?04zWrnVnh8/YX7oPfvbXtfzvL80ue7Lx6VAJDWb6/SXimMBwosCBpr+XK/QP?=
+ =?us-ascii?Q?Gq3MZ8gjK9NewSnphvZ+CZhcUyHMlV4AlbBbKDKNYFb1ech2UOLGRB8Sooie?=
+ =?us-ascii?Q?/7AoFoerEmfncJzMeQpSAOAkrMOTA7xRDqKysrkado+2TdLheNj4Cbuk1UcQ?=
+ =?us-ascii?Q?PZ+IMN/81t/lq+sH+4rrJTqzwVL/iwR3ORX2sEmq?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1eaf13b0-f08d-4f96-c55c-08dc9063777a
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR11MB6039.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2024 13:26:46.7277
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: EoUk14WZcLvG6bAitwheFxfkuxqqWCKJESnY/SPuu7QN1JGj8dkyCel6CfoF+mbmrDo+uofPyLdd4OxfMjdItg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB8255
+X-OriginatorOrg: intel.com
 
-On Wed, Jun 19, 2024 at 05:40:42PM GMT, Mukesh Ojha wrote:
-> On Wed, Jun 19, 2024 at 01:08:48PM +0200, Krzysztof Kozlowski wrote:
-> > On 19/06/2024 12:56, Komal Bajaj wrote:
-> > > Enable the secure QFPROM driver which is used by QDU1000
-> > 
-> > Qualcomm QDU1000. You are changing kernel-wide defconfig, not some
-> > Qualcomm downstream stuff.
-> > 
-> > > platform for reading the secure qfprom region to get the
-> > > DDR channel configuration.
-> > > 
-> > > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> > > ---
-> > >  arch/arm64/configs/defconfig | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > > 
-> > > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > > index 838b4466d6f6..c940437ae1b3 100644
-> > > --- a/arch/arm64/configs/defconfig
-> > > +++ b/arch/arm64/configs/defconfig
-> > > @@ -1575,6 +1575,7 @@ CONFIG_NVMEM_LAYERSCAPE_SFP=m
-> > >  CONFIG_NVMEM_MESON_EFUSE=m
-> > >  CONFIG_NVMEM_MTK_EFUSE=y
-> > >  CONFIG_NVMEM_QCOM_QFPROM=y
-> > > +CONFIG_NVMEM_QCOM_SEC_QFPROM=y
-> > 
-> > Module
-> 
-> Should not this be inline with what CONFIG_NVMEM_QCOM_QFPROM is having ?
-> Either both CONFIG_NVMEM_QCOM_QFPROM and CONFIG_NVMEM_QCOM_SEC_QFPROM
-> should be m or both y
+Hi Dzmitry,
 
-Looking back in time, CONFIG_NVMEM_QCOM_QFPROM was enabled as built-in
-to get TSENS to work (which makes sense, we don't want the CPUs to
-burn). What the actual users for NVMEM_QCOM_SEC_QFPROM?
+kernel test robot noticed the following build warnings:
 
-> 
-> -Mukesh
-> > 
-> > >  CONFIG_NVMEM_RMEM=m
-> > >  CONFIG_NVMEM_ROCKCHIP_EFUSE=y
-> > >  CONFIG_NVMEM_ROCKCHIP_OTP=y
-> > > --
-> > > 2.42.0
-> > > 
-> > 
-> > Best regards,
-> > Krzysztof
-> > 
+[auto build test WARNING on 6906a84c482f098d31486df8dc98cead21cce2d0]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Dzmitry-Sankouski/power-supply-add-undervoltage-health-status-property/20240618-222456
+base:   6906a84c482f098d31486df8dc98cead21cce2d0
+patch link:    https://lore.kernel.org/r/20240618-starqltechn_integration_upstream-v3-18-e3f6662017ac%40gmail.com
+patch subject: [PATCH v3 18/23] regulator: add s2dos05 regulator support
+:::::: branch date: 18 hours ago
+:::::: commit date: 18 hours ago
+compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/r/202406191516.nzayiXgL-lkp@intel.com/
+
+includecheck warnings: (new ones prefixed by >>)
+>> drivers/regulator/s2dos05-regulator.c: linux/module.h is included more than once.
+
+vim +10 drivers/regulator/s2dos05-regulator.c
+
+  > 10	#include <linux/module.h>
+    11	#include <linux/bug.h>
+    12	#include <linux/delay.h>
+    13	#include <linux/err.h>
+    14	#include <linux/slab.h>
+  > 15	#include <linux/module.h>
+    16	#include <linux/regmap.h>
+    17	#include <linux/interrupt.h>
+    18	#include <linux/platform_device.h>
+    19	#include <linux/regulator/driver.h>
+    20	#include <linux/regulator/machine.h>
+    21	#include <linux/regulator/of_regulator.h>
+    22	#include <linux/mfd/samsung/s2dos-core.h>
+    23	#include <linux/mfd/samsung/s2dos05.h>
+    24	#include <linux/i2c.h>
+    25	#include <linux/debugfs.h>
+    26	
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
+
 
