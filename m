@@ -1,107 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-23194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F10B90E646
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 10:51:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC9EB90E643
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 10:50:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1DE6C1C217B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 08:51:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25E5E283E6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 08:50:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35D4E7E776;
-	Wed, 19 Jun 2024 08:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 276E17D06B;
+	Wed, 19 Jun 2024 08:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vgXGH7rX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i5IqqHzz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F0E7E0EA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 08:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E592139B1;
+	Wed, 19 Jun 2024 08:50:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718787055; cv=none; b=Hdnk4Z2WUow8Fma2l6hzhJqrBCBOu1gpNW/+5p/P+lf0EmqVsMxtqyc6GMwLtqhlDaxoU/ASkWYSwIJbvLNvSzJy5fw+mgug4WYn1RoMrefxPKJl/QVrpq1SczkU26jK1CKMwn4W4Rk3idcwILFPp/QdpBf1USF/AMWyRdvvC6c=
+	t=1718787052; cv=none; b=Hv2TlYhaWG7PlKpbZaWqezigfj+6RTBy4w2w/yWdg/CiRmkGwwEuRivNFPY8ruUVPpQc3SJmUnLn8jj+rShhgOijrJtlR1LwZlitK7InYG0ACeQxAxbiTBsD7mpJlKgPTHiG95zbG+yyh+mjtr8OoOA0MpEbFCFunWSbKPcHZiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718787055; c=relaxed/simple;
-	bh=X7o1c3TYSuCq5q1DybWKWIIdcYoHty2phjo0Ie4qcPw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bivuBou7xy8RSKM+oTh49fp0cm8zrrbQebdO/IZdB66GzaSqVTGtLsrxy6Wf0QmPsvhzqXNlzQgfiHmFFpYYOvVX1WFeYziPGkVyr8rcJGSSMZ4CqKM+R7+Lj8uGSSVglJ5Pt3EUeuHW32CXO65CsV6JjKSOQozaug3wUzRIR2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vgXGH7rX; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4217990f997so45838945e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 01:50:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718787052; x=1719391852; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XUIWJ32palMvTkwp4Jjn7mptyEJf6J1bH4hKXBn11CE=;
-        b=vgXGH7rXWK4PDuHcAmvJoZ5tPZ84sXWKZhhElXM/tR1+LKZmcjH9gg8ujnrqjNxhlz
-         MXQU0wNKB/n6iVCi8IOPaFDZi7HULdPWzkaIlB7DQbZCqYaG1yISW/7f8wCGmX3uCHea
-         xuOIcFcg+2rymAUuGsUTSFvsXLjYbl5jf7YGPCYjfOA7hzGaZGPfbVExCe5sw7GTGzEc
-         VhQgRkTwcu6cOy4JFavQWKGdeU46P/p3+N7lCnAlGHjQXzeV2/TXM/9xrjhCMQt5IIVv
-         57Utr8eF7ihpuU5+Y7C9EMe8Ft0xqwaGciE62oR70hOvp4WH4JzMDrtZx5WBJWZZoLUC
-         0IHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718787052; x=1719391852;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XUIWJ32palMvTkwp4Jjn7mptyEJf6J1bH4hKXBn11CE=;
-        b=WYFb/bkp7chbNIMcIhBvFzZ6v6Ts+I/soABTFb5kI/DzSwqx2Rc70Fv+JF34qVWXK8
-         JPNvJUANfvJf0IOP5sslnM6rJfNtgsOCEtYKx9LX12zdx8JJROb1PcvlxHQali0z8WwV
-         Asj/JqLVteR3+SZf2Opd1AaKG4fOlsSerLSsyPBJ0C2KFFFZoSLgZqqxwQKPEjYxG/Pa
-         9zG5zHnPzsW5QnpL1h+J+0C2VY8i0LqlEp7CGWHu9ZaNyj4Fre5FRoQl59u5R7cm0+1v
-         bX8i8/Za8p34ideADCw6UJZDpmY1eTYGx7zEu/hchHRnkFKWpanmz/+DH5Eoz/4hbKhk
-         vljA==
-X-Gm-Message-State: AOJu0YyUQ8zKjcegU5iC31B3Pax804sGsrL7VNmJ4di1AF0wDZu6ee1k
-	yrIq1ftNf1swu34s3mIihoF2RxMb9PT+I4XtE6ViZMuiF9DVN5h0JiGygQctcSk=
-X-Google-Smtp-Source: AGHT+IHhHXRoQELw3jalDwH9FjoJBhvyyyppYgi8JksmI+OWBoElE4LAnzmAImeHTX1iy3NE4ZdZFw==
-X-Received: by 2002:a05:600c:2ed2:b0:424:78c7:b4e0 with SMTP id 5b1f17b1804b1-42478c7b551mr5145295e9.8.1718787051662;
-        Wed, 19 Jun 2024 01:50:51 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:9028:9df3:ea6c:d102:5e8f:d5a9? ([2a00:f41:9028:9df3:ea6c:d102:5e8f:d5a9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-422f641a6c1sm221661225e9.40.2024.06.19.01.50.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Jun 2024 01:50:51 -0700 (PDT)
-Message-ID: <81ec895c-b0c7-4cd6-a1eb-ee3172ca5e2a@linaro.org>
-Date: Wed, 19 Jun 2024 10:50:49 +0200
+	s=arc-20240116; t=1718787052; c=relaxed/simple;
+	bh=ZCCMGl34xRrIKFTYqowJ46msSrObNO3g4OFsLbjVgBs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fNFEGQZM58fKi577pvnRiwl/C1dzJ9B2MbDw5lUfvBu4GB4n+NMq1S2bbFMDfFBq1aG/704v1MXaV3llMveHWFfGKA1X5JsJmMSIX0BGr5h0PIoxE7eF0128Z4ju2bOJQnpZwLL13XuKodD35GvhaktPiGCpLJyh8T9DtdVY4GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i5IqqHzz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2D9C2BBFC;
+	Wed, 19 Jun 2024 08:50:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718787051;
+	bh=ZCCMGl34xRrIKFTYqowJ46msSrObNO3g4OFsLbjVgBs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=i5IqqHzzyDvvOl6iLxEDIR5dMU74s6v2Y4FQ5uVlOuLUiiUQEkqvRWeVfyIC7XzW0
+	 LSe0P0Q91bQI3evoiNVkNgM+k81s2N6bhKzUZVpqsdcMt0dt948OKkIxsRkBopabvk
+	 ft4Fr0mVgNal3jNL5yVseCX+4FyOE5ui0YNo0UmxVecFAd8IDqO8XeGJcmgtp7MB5U
+	 dKjJZvfAGBODt7Y+t36+YK0RkrynGueLxL3lA45XhexXMgU0+KtT9ymog3h4qBpVNN
+	 4Pqs7iDuITxq/9wDCEqyCuNY49ITHpXtzWx/dGghtjg6TVm2luxTUxzz5bV7J5zZCl
+	 daMrlyGnuIVTQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sJr1m-000000003N9-3viY;
+	Wed, 19 Jun 2024 10:50:51 +0200
+Date: Wed, 19 Jun 2024 10:50:50 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
+	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Rob Herring <robh@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Subject: Re: [PATCH v4 0/8] serial: qcom-geni: Overhaul TX handling to fix
+ crashes/hangs
+Message-ID: <ZnKb6oMGcA-tWtxy@hovoldconsulting.com>
+References: <20240610222515.3023730-1-dianders@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: qdu1000: Fix LLCC reg property
-To: Komal Bajaj <quic_kbajaj@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Mukesh Ojha <quic_mojha@quicinc.com>
-References: <20240619061641.5261-1-quic_kbajaj@quicinc.com>
- <20240619061641.5261-2-quic_kbajaj@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20240619061641.5261-2-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240610222515.3023730-1-dianders@chromium.org>
 
+Hi Doug,
 
+and sorry about the late feedback on this (was out of office last
+week).
 
-On 6/19/24 08:16, Komal Bajaj wrote:
-> The LLCC binding and driver was corrected to handle the stride
-> varying between platforms. Switch to the new format to ensure
-> accesses are done in the right place.
+On Mon, Jun 10, 2024 at 03:24:18PM -0700, Douglas Anderson wrote:
 > 
-> Fixes: b0e0290bc47d ("arm64: dts: qcom: qdu1000: correct LLCC reg entries")
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
+> While trying to reproduce -EBUSY errors that our lab was getting in
+> suspend/resume testing, I ended up finding a whole pile of problems
+> with the Qualcomm GENI serial driver. I've posted a fix for the -EBUSY
+> issue separately [1]. This series is fixing all of the Qualcomm GENI
+> problems that I found.
+> 
+> As far as I can tell most of the problems have been in the Qualcomm
+> GENI serial driver since inception, but it can be noted that the
+> behavior got worse with the new kfifo changes. Previously when the OS
+> took data out of the circular queue we'd just spit stale data onto the
+> serial port. Now we'll hard lockup. :-P
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Thanks for taking a stab at this. This is indeed a known issue that has
+been on my ever growing TODO list for over a year now. I worked around a
+related regression with:
 
-Konrad
+	9aff74cc4e9e ("serial: qcom-geni: fix console shutdown hang")
+
+but noticed that the underlying bug can still easily be triggered, for
+example, using software flow control in a serial console.
+
+With 6.10-rc1 I started hitting this hang on every reboot. I was booting
+the new x1e80100 so wasn't sure at first what caused it, but after
+triggering the hang by interrupting a dmesg command I remembered the
+broken serial driver and indeed your (v2) series fixed the regression
+which was also present on sc8280xp.
+
+I did run a quick benchmark this morning to see if there was any
+significant performance penalty and I am seeing a 26% slow down (e.g.
+catting 544 kB takes 68 instead of 54 seconds at 115200).
+
+I've had a feeling that boot was slower with the series applied, but I
+haven't verified that (just printing dmesg takes an extra second,
+though).
+
+Correctness first, of course, but perhaps something can be done about
+that too.
+
+I'll comment on the individual patches as well, but for now:
+
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+
+(I did a quick test with Bluetooth / DMA as well.)
+
+Johan
 
