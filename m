@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-23259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DE0590F657
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:46:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2974390F65A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:46:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 550201F24058
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:46:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 16EAF1C23DC5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:46:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 763E1158DB1;
-	Wed, 19 Jun 2024 18:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9303B159562;
+	Wed, 19 Jun 2024 18:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="UhZR3aWJ"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="B7PTfcsD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D55158A33
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:46:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1630E158D98
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718822767; cv=none; b=olwptyBavNpDhE59SfVQHgsaJ/wx0LX70Qo1LYfGW52nwO7SFcGhKfM94Ri+SeSIrcXzrjQnSj1HEv4Wll0IPz3fQx6JuFRuF0pdKAnzR8dgc557HhndiQikyROnUbaGYa7ZIHujpibQzwfXY5+Myz1n4r2RDf/UfaO1vhkRahk=
+	t=1718822768; cv=none; b=aen9RtLzrDG7GMpqaEuOjqMhkltqDynSzlB/FV8684CcIF8Ws17ZzS8ywVDF0lm3cS5PGX7G0gHDpkv0dIY/6ge+MqB+OJwcmuCPfb66zp0GuLF0z2UXXY54SN8xHGOF6kV9TK7i2xJc/9zbYNJZ6fI5EjDhRRhZ878iHnzHjAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718822767; c=relaxed/simple;
-	bh=UgqhHqlcoo2GUEDYVQSY/0NQPdIbLo3HZeq6E2j6UQE=;
+	s=arc-20240116; t=1718822768; c=relaxed/simple;
+	bh=Gb2AtUPIZLOqvCXJxTsfKyEo0Y1lWpbQs78ViEnJLxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9MakCPYhfbeeJ4+TY4npEuqS0dLxk/A3ckKRvuVy6j2OW/C3270ftWvTyNcUayaOA5NhoHqqonXOOpxBcoCpobr6jhkdibitK+zSxeIMKAmIg85LHqGo7bLOVF8bC4bny2RQNTJa43cMz7LYLuEcSkMcZhkcnz0K61XjaOzz6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=UhZR3aWJ; arc=none smtp.client-ip=209.85.221.41
+	 MIME-Version; b=CvF/B3XliPlwU6RjPXJSxJNoxrhDDYQbBd4iZJHc2Z9kWlEX2TzcXfPaQ422AzUcscPke15lpTkbnZ6lWYnv6sWy5kL1CtIuTSRgZQ3j6SYsEn3RGdCVS4XyALD67uxURtR2waMC9TxCZ+bIYgatCQv9gw9cEg8Cg9iAK9MnCko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=B7PTfcsD; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-35f23f3da44so94091f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:46:05 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3636c572257so93281f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718822764; x=1719427564; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718822765; x=1719427565; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SJn78QxgCMJZC/Bt30akmrrLqCYwQcxiOnm8hqmwEKA=;
-        b=UhZR3aWJxp0gOrbcEpQNpumjbS8dyeRLGT5X9QdlNQExYb9ibz/xvMUMxFuBBVcdC3
-         Mu+7Exm7m1Hli3rwoo3YgBFu1LW7GaGzO/fKczVdiHW+UK38uF0OQ4KPXKh3lURkzqtD
-         jUReJmlXvic5in0KsOyBSb5PPHlDL9SNKP8xnDwL8ehPZHX0lerwqoBRuK1Sz7Y+bWb8
-         uIP7GGTAPvEYP3YzO8JfAhqTlXYTLgK+IqWSSF6GDTuWkrItvTo0eMoJr5C1A7Yh8L7B
-         A8i3NpqjldX+01WaerzRRn558W+K/T+gVA93uZgi6L3bc+WbJ8M+MtcQV4kgRGMv0ohx
-         0+zA==
+        bh=i2ZaP1GIFake6LOudA2QCXAqpH6bV7MuTKm6aVLhChY=;
+        b=B7PTfcsDSXbyDcRg9LalOo7qedZye4tGXhCXAUYV48UBq4EeFq3zXLSEFXIFH15DwS
+         oUvk44dQT9R5xrlkPM3AKlXs9sB9kEJp0C18gHErO7vhZgQY2FW54XqJPWT7/sEZxPDk
+         84tI+EyOaLCtidTCer3PAnRXUD96FHMDoPjitlmfdVvdeveDCIzf7EFVVgxWut4H76Ml
+         u3RROOmLoFmhvd3KiZGk74KGk4MDKHTwEcbjxOfD8L2MvCX1dhiaD5A5DpTHIy41YyRA
+         oFhvWRb/VaA9lw+hYTCmWYtPUZ4987dm/73v5MXBsqPNMRANjE5dV5XIK7y64EP36h4Y
+         UFrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718822764; x=1719427564;
+        d=1e100.net; s=20230601; t=1718822765; x=1719427565;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SJn78QxgCMJZC/Bt30akmrrLqCYwQcxiOnm8hqmwEKA=;
-        b=GvJLyZdUHtFFhQfacr+Lck4HDLPLo4H0zYratIduc5PMufJCq4mQqOF56D6rj0ugn9
-         YW/FmruV8IkOJwecIcTfKzvMLXIyMWeUuq4tAPE9ooYRRtys2L+BDIc7zdm2ClBBp+/n
-         Dc9xPkzONsFaXR/gEYJvRXnrfoa1LCQlroUhwjId8GtkQVnzlVsJf2/eyHkezPTRZZVX
-         9FXKYIfQdEY37KvJHgZ0uzqJzyqQMDKPD9O83XDUb93B7EpeOIEFRIoxoBEv4li4+6mI
-         nbu+RBhJFynQi/k8XBpMNJ7jdK1kbGD7jAMyzhLz9PJr3Oe3v4qfxzGGGDRF4v6uHr8u
-         cBnA==
-X-Forwarded-Encrypted: i=1; AJvYcCVB1Uyofd2kAWpX7c4bofcPJ9r4WSs2gIRgyg4Vdz0M82a8cz1ZhqVBoqHS+6bZofik5vUbvd7+88cH+FRilE5V7ZwoziTbqql7SAOp4Q==
-X-Gm-Message-State: AOJu0YzEAaOqPTq9ai0TTSHTUO5e2FYnpHQWDX+Ug4JULLXF+3QcSYCW
-	+mB0cLRRzwXGBsswXzcYHtBfPWqYlx23fFujLcHE5FLEt6IBtNuyDwAAcpMa2Gc=
-X-Google-Smtp-Source: AGHT+IGvNKdudrDJsFCz+vta1snIK9cUncMqGFnepCueFTkJUGgeHU0mX5Ge8h1gAZtVNK+LZc9FoA==
-X-Received: by 2002:a05:6000:1363:b0:362:dbc2:9486 with SMTP id ffacd0b85a97d-36319c6f86emr2312112f8f.68.1718822764283;
-        Wed, 19 Jun 2024 11:46:04 -0700 (PDT)
+        bh=i2ZaP1GIFake6LOudA2QCXAqpH6bV7MuTKm6aVLhChY=;
+        b=IHfm+MGYdLWium73Ju41u3LmQ4/1Ekmss0+m6Jj8eSBcxN4K3tPLoJaIuqBccwM9Ln
+         8jYXzaU7+810Oca8HttiSidzbTSFw/aN22lTwdFA4GZlu0CMAwVl9kCP1VoJr18QhHfQ
+         jUEZFqV+yqelKOw8jREXaVqxS9P1YFWBqOykqpEBXP6c61ASIlT3UXhpYHXRUVgpK10U
+         jkYJTEHYsV4InJNRPINcfccPavGC/TlfP0OxJepY0IVaCC7qDbmYvvwwBHRZdD/MCW39
+         LTDBYKWRq0JtnA4mkYlD1FMyM3YiCbxSdJwnLhE5Rtw5g/bHMVHAJD3Vwcf1wzkuuBAT
+         35nw==
+X-Forwarded-Encrypted: i=1; AJvYcCXSHvKKjCeitvSpM728kA0eKpBJRn8zo1bQ35dNCwn6RlFkQ6sXkY+H6Xkz+0lsUE24lZ/SnBW5UhS1i29gknMQdmkmG+w1ysZZj/v1UA==
+X-Gm-Message-State: AOJu0YxmXUTp0Bo1xbYEiLpQOi4mHma2150OGuT6McddgBF1boL+qQxz
+	/wuJyokK0EODdwTHufx0/p9h0LsyjFUo7qSDJJtX6sG8lCe36f9ibUrIt5BwlTQ=
+X-Google-Smtp-Source: AGHT+IFHpgEdcFxPeHRNEDbOoGGaHbIDTAIRX4vjn/KLZAdtQ8VVBfo3vmxuKjBv7nIHdarP5mwF1w==
+X-Received: by 2002:a5d:590c:0:b0:35f:1eba:cf66 with SMTP id ffacd0b85a97d-363199905dbmr3314238f8f.61.1718822765554;
+        Wed, 19 Jun 2024 11:46:05 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:991f:deb8:4c5d:d73d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36098c8c596sm7594156f8f.14.2024.06.19.11.46.03
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36098c8c596sm7594156f8f.14.2024.06.19.11.46.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 11:46:03 -0700 (PDT)
+        Wed, 19 Jun 2024 11:46:04 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Vinod Koul <vkoul@kernel.org>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
@@ -85,9 +85,9 @@ Cc: netdev@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH net-next 2/8] net: stmmac: qcom-ethqos: add support for 2.5G overlocked SGMII mode
-Date: Wed, 19 Jun 2024 20:45:43 +0200
-Message-ID: <20240619184550.34524-3-brgl@bgdev.pl>
+Subject: [PATCH net-next 3/8] net: phy: aquantia: add missing include guards
+Date: Wed, 19 Jun 2024 20:45:44 +0200
+Message-ID: <20240619184550.34524-4-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240619184550.34524-1-brgl@bgdev.pl>
 References: <20240619184550.34524-1-brgl@bgdev.pl>
@@ -101,43 +101,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Add support for 2.5G speed in Overclocked SGMII mode to the QCom ethqos
-driver.
+The header is missing the include guards so add them.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c   | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/phy/aquantia/aquantia.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 80eb72bc6311..dac91bc72070 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -665,6 +665,14 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
- 	return val;
- }
+diff --git a/drivers/net/phy/aquantia/aquantia.h b/drivers/net/phy/aquantia/aquantia.h
+index c0e1fd9d7152..b8502793962e 100644
+--- a/drivers/net/phy/aquantia/aquantia.h
++++ b/drivers/net/phy/aquantia/aquantia.h
+@@ -6,6 +6,9 @@
+  * Author: Heiner Kallweit <hkallweit1@gmail.com>
+  */
  
-+static void qcom_ethqos_speed_mode_2500(struct net_device *ndev, void *data)
-+{
-+	struct stmmac_priv *priv = netdev_priv(ndev);
++#ifndef AQUANTIA_H
++#define AQUANTIA_H
 +
-+	priv->plat->max_speed = 2500;
-+	priv->plat->phy_interface = PHY_INTERFACE_MODE_OCSGMII;
-+}
+ #include <linux/device.h>
+ #include <linux/phy.h>
+ 
+@@ -198,3 +201,5 @@ int aqr_phy_led_hw_control_set(struct phy_device *phydev, u8 index,
+ int aqr_phy_led_active_low_set(struct phy_device *phydev, int index, bool enable);
+ int aqr_phy_led_polarity_set(struct phy_device *phydev, int index,
+ 			     unsigned long modes);
 +
- static int ethqos_configure(struct qcom_ethqos *ethqos)
- {
- 	return ethqos->configure_func(ethqos);
-@@ -787,6 +795,9 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	case PHY_INTERFACE_MODE_RGMII_TXID:
- 		ethqos->configure_func = ethqos_configure_rgmii;
- 		break;
-+	case PHY_INTERFACE_MODE_OCSGMII:
-+		plat_dat->speed_mode_2500 = qcom_ethqos_speed_mode_2500;
-+		fallthrough;
- 	case PHY_INTERFACE_MODE_SGMII:
- 		ethqos->configure_func = ethqos_configure_sgmii;
- 		break;
++#endif /* AQUANTIA_H */
 -- 
 2.43.0
 
