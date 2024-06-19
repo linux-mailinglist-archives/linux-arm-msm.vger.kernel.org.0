@@ -1,121 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-23197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35ED590E8CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 12:57:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FBE190E8D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 12:58:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 183BF1C211F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 10:57:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0AD2C1F21D78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 10:58:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83C7C81722;
-	Wed, 19 Jun 2024 10:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A804F13210C;
+	Wed, 19 Jun 2024 10:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Om7QNbqx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bMjHODUw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70E512FF64;
-	Wed, 19 Jun 2024 10:57:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D3C80BFE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 10:57:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718794637; cv=none; b=b3Nwnh7oA9AJVKL+3bZmLl9W1NNNDdSpto68QZppJr/N5CK1egeaRFa3vYbGCrJeeIbZXx1Fj2/eFOMcH7fZXwxkwQzrwFl9NZUHWiKqUJtdKEO+nREyhFyF/ZvfYBGrk96b/mhE68WRJKzJeEl4IZro8Qqnoi3hyYgXlM69/X8=
+	t=1718794678; cv=none; b=hqLBwDGnps2QAq9UXasYuXuCQynSpdn01rpvEAoMPK132ShZMU5hIewpdnOMoqYK1NehaP+HQcf/BM466HUOdmaTqrqr94BFtXu6vebubdotG3QCHK6m4WdvpqUWyxmWkgiDZdMcNVEHFCLklDT2v7rnX1YTMgeqPYJswKqMKv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718794637; c=relaxed/simple;
-	bh=uj/2NtDFN60KENg4dlqpkC5POtuB01x5rjPuBdEDghE=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=q9IM77Zv2d4cF2XLZNLlHsMcodl23zHR8gAEdYTF6Li7o7EGL9lvxbjyijSRy8AGIe8yPpcbi6cuJSEReLAhC1Ok4/Lpyd9AOTR+QLYWRXQqJTJrtP36XGrm6ZdkV+MPoMCPB0p8t/BBPUKvHSU8Dol0ln5lg2VfKT9Qp1TK9Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Om7QNbqx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45J9ABbE001115;
-	Wed, 19 Jun 2024 10:57:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=uj/2NtDFN60KENg4dlqpkC
-	5POtuB01x5rjPuBdEDghE=; b=Om7QNbqxGNI8GyQNvHU3SaaMabHE7e/pBbaXbb
-	cmqk0PAsWJMjgab00UjYay/WYuMPbn/rm8atKiyVrE8f/q59o5k6YoGHKunm7m0D
-	iGb0rLzeeJe8khEa4+4Z4Q0BAdcnX3LEg0fwkgTq5msujXn7ZK8ggFWZMRX/U6pC
-	xh1Y7tG/Fjk+kx60Rvt6jyan+noJ6KLIE1g9k5g+dKlvJ2ah8qK+Vhro6yEGePvr
-	WQmaBuj0dTIjxXlbTjutoSvnUvp+kBrXQJHkiSWJ0ErX8YFV9KxVVagh4V9xFHdD
-	HGggHLmNJy8vv31sGXPMHPcdMUaQL5uqrwRCuNJ7pkcIS7lA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yuja29egr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Jun 2024 10:57:04 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45JAv28l022589
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Jun 2024 10:57:02 GMT
-Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 19 Jun 2024 03:56:58 -0700
-From: Komal Bajaj <quic_kbajaj@quicinc.com>
-To: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_mojha@quicinc.com>,
-        Komal Bajaj
-	<quic_kbajaj@quicinc.com>
-Subject: [PATCH] arm64: defconfig: Enable secure QFPROM driver
-Date: Wed, 19 Jun 2024 16:26:42 +0530
-Message-ID: <20240619105642.18947-1-quic_kbajaj@quicinc.com>
-X-Mailer: git-send-email 2.42.0
+	s=arc-20240116; t=1718794678; c=relaxed/simple;
+	bh=6SwUveGhsJ2yFgj2oXvWQ9NfEqHE2QpIS1PVhMYjA+I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WJk+JRehTEcLaSVCrnmo/N4jaT72lCeQD1nBlcxSvhIw4JhSaHhWNGLBaxXJl+Rsy33VCsX8/qyt7/RtHJTwBsBgZ56K5OaM/A8yxGfeDBVhLCMVnOpPv4Vajby2Im4TbwtgYjn/UOanZCfNdFFCRtkpRfukSjc8ggExtvSo7oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bMjHODUw; arc=none smtp.client-ip=209.85.219.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e0272692096so1602409276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 03:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718794676; x=1719399476; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4ltaKEL7XJMSkKIw8u+LhpWZOs3XHgOjod6ZHs6SZA8=;
+        b=bMjHODUwT6dpmd5d3FIZCGOzAehc529H7VyOZgd1ySrC8BeTaOtAmxvgSqIO7yne7d
+         IDwDy9EhE646EII8AM1LeezH32Ml/en0IDbOKQc+hts2j0dFN6bowjCcXY1PeSdZUZEU
+         1n8mTNFn3Q+lLM0Ko5u8p5gsO1rWD8hJFddZPQd2OB17BaHRhnsfCDJtgXs5YcZo5Bpl
+         /b9tRt7wV4lHIkQPf6FnY2EvwsNLPvh7ujtwW6HNGKqvEr55bt5iZgUrsvyjdXa5YtVR
+         d+nMBUjpAUfZ7pbKBMtJTkJscB1BZA6lM0C7JRDvcEgA14YBr7k5kme3qyMWa33+exZy
+         F+7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718794676; x=1719399476;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4ltaKEL7XJMSkKIw8u+LhpWZOs3XHgOjod6ZHs6SZA8=;
+        b=fKYriFaHBlkPh3ZpbE/SnQEVM+79jiOX0AU3sOx9sbsLBU1Ij+I0CQCqLQBqSQb4ai
+         O03zKKHcCyJ3/ABvnt8Fwyk7EXaRKV9dQqAaAT3uQ16aBs/l8NFqrnwVxkeCAFDJogtG
+         Gju7n4R+Ufs3Qygyu4Rwa3hNpCWb7tikcKtnUY51ZYY7d5vawwD6bvNp9kIO8nyVEmGT
+         w1l+9tzKLYrfaJKQn5USFnLcIsiMhod2GBl50r7idD9p0R+tMZ4zBnsHRXjsFWpX8HXy
+         SiGp52+OF6fAaCqUMVD0PLZCU2MSXSbiLgA+mmseEGdepebRmnBhNR8W4Vj+878OZElY
+         LOIg==
+X-Forwarded-Encrypted: i=1; AJvYcCVJHJ/6BY1bvGqrA9SKlgauxQIEjZdn03wMDQhEaR4Y+ToFjPprVn9ikueCG7CxebhKA74iPxG06l3Qy+faPo1EemAp6Yh79p1FQtL9fQ==
+X-Gm-Message-State: AOJu0YxZ8vSuIjpD8FQd8XE8qYaUP8F5HSsJ+7V83VCmgmZSjHbYI9AF
+	rzhGUQzCtq4uUCnk3sBrtOf//a/dOw+9dNlQVfo4rFsM8sE2+Os9aCXV0lPuWKtztkLMkz3B3yC
+	d763jP6HzEzTtqZza5WsiLp6ApYojxernSDrpSQ==
+X-Google-Smtp-Source: AGHT+IFfi4jDyEnaxZAO8wGIs81Q1Kv5j3U4KQFs3jfEOlyMDNcKN5AzMsT30FNnMyIoHQsBafG6yE9ZWHU3Hp6dvhU=
+X-Received: by 2002:a25:b02:0:b0:dff:1a17:dcbc with SMTP id
+ 3f1490d57ef6-e02be0fc880mr2350844276.2.1718794675921; Wed, 19 Jun 2024
+ 03:57:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AXcVSa1Ya3kZpHPg8HUzSRFr5L5g8Ogv
-X-Proofpoint-ORIG-GUID: AXcVSa1Ya3kZpHPg8HUzSRFr5L5g8Ogv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-19_02,2024-06-19_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=700 suspectscore=0 clxscore=1011 impostorscore=0
- malwarescore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- phishscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406190081
+References: <20240619105642.18947-1-quic_kbajaj@quicinc.com>
+In-Reply-To: <20240619105642.18947-1-quic_kbajaj@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 19 Jun 2024 13:57:44 +0300
+Message-ID: <CAA8EJpo=DsQeLirD5W98Cqi7eUo_-g676QmfJERrCpeGBtrg4Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: defconfig: Enable secure QFPROM driver
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	quic_mojha@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-Enable the secure QFPROM driver which is used by QDU1000
-platform for reading the secure qfprom region to get the
-DDR channel configuration.
+On Wed, 19 Jun 2024 at 13:57, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>
+> Enable the secure QFPROM driver which is used by QDU1000
+> platform for reading the secure qfprom region to get the
+> DDR channel configuration.
+>
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>  arch/arm64/configs/defconfig | 1 +
+>  1 file changed, 1 insertion(+)
 
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 838b4466d6f6..c940437ae1b3 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1575,6 +1575,7 @@ CONFIG_NVMEM_LAYERSCAPE_SFP=m
- CONFIG_NVMEM_MESON_EFUSE=m
- CONFIG_NVMEM_MTK_EFUSE=y
- CONFIG_NVMEM_QCOM_QFPROM=y
-+CONFIG_NVMEM_QCOM_SEC_QFPROM=y
- CONFIG_NVMEM_RMEM=m
- CONFIG_NVMEM_ROCKCHIP_EFUSE=y
- CONFIG_NVMEM_ROCKCHIP_OTP=y
---
-2.42.0
-
+-- 
+With best wishes
+Dmitry
 
