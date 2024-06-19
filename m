@@ -1,140 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-23288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39A8790F787
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 22:33:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE7FC90F7B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 22:45:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E4F801F223FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:33:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DC612845D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:45:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B54776413;
-	Wed, 19 Jun 2024 20:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DAF615AD99;
+	Wed, 19 Jun 2024 20:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bbqkDsYv"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="k/LdAn48"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from smtp.smtpout.orange.fr (smtp-29.smtpout.orange.fr [80.12.242.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2864158D62
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 20:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A019015A875;
+	Wed, 19 Jun 2024 20:45:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.29
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718829227; cv=none; b=IwQcgcPFqvP/takmMvh7BjLFy6lsDfs/PW/gbWQyamYIuaE5YXT6BIBgfcbvgjcJSLWmxd4Fn6wChbjmBVvXkdeGrSGv8Lo7Q4OMWhu1uQyoLaj75/3vBuv+2jcnG5NeW6qf1vEKYsIx8kJYKQdZZWgw7OpawEpXzrMWC9wtySo=
+	t=1718829944; cv=none; b=YymmAfXa6mMF9N+/ResEmJqx+Suds6mzyuVzpxzxgjpn2Rscm/lUGjhesdHlkPIaI1K1BQFtp9IQ4bubDSt9H4AFD7FesfSbm4/Wymh6yY+8biLl1r0GumvFsKHdng8wXgbWI4GGGDfzJBQWnPB9Pl8oJdzpWDFKb3ctrv9kGqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718829227; c=relaxed/simple;
-	bh=f67QJdbycqA6m6cnskiDGAXKC6TlZi9aPjOguev0G+k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ao33jf8VtF7dSAoZQvvSz5nRRJeaAnpSCKOIgCEI3vQ3l04pykPIWA8RJTlebFtv5Z1R2sH0CufjVGj1w9qpRYMFq+xMZ6W9yrDTFJW57a+BSIyckgwcfLh4o72OBtpph4iCOvpvByHU5YsCNaGjzZKNnmewiJwBUNfCDHaK1FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bbqkDsYv; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52cc5d5179aso289556e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 13:33:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718829224; x=1719434024; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CpjhB/J8xgo/XgOi5i1CrseMMYrRbkPzbmxro5VFmF8=;
-        b=bbqkDsYvnmFm2qNcRvD1oVWsNFksJ4m0jJyzSvNYXy9vrnQplZNYis5zhIU2MAX+z1
-         wFQ7+gVlwDNUcCmkkziF3Fi9JiqZbaRF5wA3kD/p+FlsPUedA4Fvc4Acfxn62HOby0/p
-         Ncp/sd6YvW/rQqXZwzRuhW4AgoOxWl0V7a3qd4uK6tWlPEowtw500AAt+ShVFy+JttdR
-         24Ki7jPHkxru0S5xapq6G3nYwpDGJSF9lu+uisOhd21I3ZpS6MBjvUURyhndFRn1EDys
-         KcrP02r0SetLHNdM7YYsg6bwQZYmCpgeYLV+hKxwsZlkGA1u3FVJxJiiRq/i5/riWwOl
-         d6Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718829224; x=1719434024;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CpjhB/J8xgo/XgOi5i1CrseMMYrRbkPzbmxro5VFmF8=;
-        b=tR9jk7ZdeMwH0auj/NHKKgRWx8657J1SJyXrA0ountGiX2VwkO70nDPlP23qPmJyJd
-         9vz5tNjpTI/cMelF/ijm2cdayCpVP+lqToJLWpv4Wnk0aDhue9NMv01D50SCysJkY6Zk
-         szudjqNO66uyYDUq08k6xYjOfcMoEjLkrTG9OJWCS528Q765LLP39gl22hGHGbuS8BRx
-         H2MEBdBJzidTYiAf4W7d12sZpmnbtxhm8bs1Yx8GptUxJYTDnkPRq2Iua7t87ArBOWja
-         9nveXu9J0RtkwRIo5j1ffVhhBn3BjpmgTP/ItCsfGsU9uc4STh9Z8Bf8NYJ47AVye6MH
-         tj9A==
-X-Forwarded-Encrypted: i=1; AJvYcCVpcD351qcs3QOVnMrLodNt/jADYmXneUmeo4Wd1GkPi6njp8qBabmhI52YuhY8xIAHoJtaI+9G92lAQjtJgNQ64okMrshpwg8x/oBIQg==
-X-Gm-Message-State: AOJu0YwTkyY9eved1nkxKC30ypCKrJyShDVafOB+CumGziWXkW6FuuGD
-	sED8U1J27DFFcV1Jym/Pr5Ikck1HNWLnMpPE22h7Fgj9JapWfQGvySbzcG6929c=
-X-Google-Smtp-Source: AGHT+IE63pZOGKhE+EYN8PeXRBqv7Y1lpn5RQo8SG9SKyzuvZkyzQ1N8bFAW4oFlRd3cPuE9+P36UQ==
-X-Received: by 2002:a05:6512:2087:b0:52c:8f56:3fcb with SMTP id 2adb3069b0e04-52ccaa2c886mr2151569e87.5.1718829223815;
-        Wed, 19 Jun 2024 13:33:43 -0700 (PDT)
-Received: from [192.168.0.113] ([2a02:8109:aa0d:be00::ebdd])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56db5c3dsm696864866b.55.2024.06.19.13.33.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 13:33:43 -0700 (PDT)
-From: Caleb Connolly <caleb.connolly@linaro.org>
-Date: Wed, 19 Jun 2024 22:33:39 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: qrb4210-rb2: set
- role-switch-default-mode
+	s=arc-20240116; t=1718829944; c=relaxed/simple;
+	bh=pS8lzvJ4CpcgfQaJff8VtAHN+nKsoV7ysP4T1j49V98=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KVKMKN73nKoY074w6Z81ydWVs1NNcJAwDidcBV0I3SVlvfuCC31e3Vr5F+O+CmccaiHk3BBIrIE15BGLZETMxUaPtI6sRslIC9J/pDbtdpWS8NqfFuIs2Vjg0zmgMy2TLVCDUqQ9XZJ+iRjzMrSCdIiiFbthnvW5RTP5Ykk3A0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=k/LdAn48; arc=none smtp.client-ip=80.12.242.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from [192.168.1.37] ([86.243.222.230])
+	by smtp.orange.fr with ESMTPA
+	id K2BMsLovPJk5EK2BMsLlKP; Wed, 19 Jun 2024 22:45:34 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1718829934;
+	bh=BI0l24CYzwU9Qjet60SgYpejzTHPgIlrhe+10WvNaFk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=k/LdAn48yWPg8B7gd4Cxhb1A7xM1ogt+/vJr9adNiZzIhxMLmNNnIfMZj4x5U8NY9
+	 Xx3AijbEKUXvpXbt/pO94zr54rcpzJbMffEDBKMkHdrlvd08gzw0zTxiMjuOpgP1AC
+	 rOrucKgnfER/GYheAN9nuUHjGpTddoHgkjC5VDq5ClmneN5YVpsneJzIer5LowCajM
+	 UZhKy/yaBDj+m058Ruqc1snQc2k7uTPDGiNCzvqHlEDr++PrHANAmkLXXqShLr0KDn
+	 ZWVOMu2iGceZlwq/rWcwjNornvarIBKBpwzsf81JSuePZcKt43v//hceCZDmLI3X9V
+	 qqCEEyPbkp9Ug==
+X-ME-Helo: [192.168.1.37]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Wed, 19 Jun 2024 22:45:34 +0200
+X-ME-IP: 86.243.222.230
+Message-ID: <09ea3565-9a0d-45ea-b12c-de79d3fb5efb@wanadoo.fr>
+Date: Wed, 19 Jun 2024 22:45:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240619-rb2-fixes-v1-2-1d2b1d711969@linaro.org>
-References: <20240619-rb2-fixes-v1-0-1d2b1d711969@linaro.org>
-In-Reply-To: <20240619-rb2-fixes-v1-0-1d2b1d711969@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Alexey Klimov <alexey.klimov@linaro.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, Caleb Connolly <caleb.connolly@linaro.org>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=683;
- i=caleb.connolly@linaro.org; h=from:subject:message-id;
- bh=f67QJdbycqA6m6cnskiDGAXKC6TlZi9aPjOguev0G+k=;
- b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBmc0Ck7QMt0pQEkDQiC5Xe14HyxG6DS5lnn0VMY
- 2QPDWUlRwiJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZnNApAAKCRAFgzErGV9k
- tp1pD/4y1U2IC4rfByl5kB/aRorRbUgCFj6DBZONlBoroyEC3X53gysSVeOD71iFNLb+wfpDKvi
- mMi5uPo+yXsgnkytSN+LcYghQ0Ogwr+PpVLQEjX/HSQzll9XyFVVFvtq9nvpug2Txgk7htF/1x8
- Dp+sYurTX5ygzOuZtGsrcjZBtk66IY/5TB6eJ5LkpU24RKw6Y9Yge/mxCcYHtZ0tYVNJupH7xNx
- apHNtLrxhuy7mauA66iNbEKCsUF8/XPMSkPSo+U7If2FYRQRSh2+2Yw6kyahWL3UcEruzlvkUrI
- VJ/b0tN2Dy4oFmC4kPGUPz6JfrUhbkIJbEYpjKCkmuglxpH93QzDxnoR+9hAsEHvfOXj7EelSqk
- 4AOEJ8nWrzPCqEx9X3GWsGfo0H0VZEt9amzNGYHXyATg1Mx6YehchAVAT3BbQvsvJB8U6DdMVuB
- 8wNWjoyqz/OCYRotRRZ0cw/jRCrqphjpJUHBKN2MkdUfgydKsbdCkZ+TG88ez+GaL8vAb4deBZX
- Dm3qg1V1JgYBXamANLKkD6r49gLrgVU0yXWEKm4CXyP03yeWH1oWeUPD6lF80mEGjxRkffFLbOB
- 59Cv2mKwyJLpzV12cZUWfLPdAoavV10ZyQ1s3CTzMY3TiGLZouj+4OtdW54CJYeujujDUW5ukUL
- ZhoJRFWJegjz3jA==
-X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
- fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/7] ASoC: codecs: wcd937x: add wcd937x codec driver
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+ Mark Brown <broonie@kernel.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_rohkumar@quicinc.com, quic_pkumpatl@quicinc.com,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20240611074557.604250-1-quic_mohs@quicinc.com>
+ <20240611074557.604250-4-quic_mohs@quicinc.com>
+ <2b92c0f9-2595-4b73-8015-1abb825a61a1@wanadoo.fr>
+ <f741630e-f9e8-45e1-b3e2-4866f0baeac2@sirena.org.uk>
+ <288156b9-2f72-6929-3422-c3aecb9c2c07@quicinc.com>
+Content-Language: en-MW
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <288156b9-2f72-6929-3422-c3aecb9c2c07@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Give a hint to the OS which role we prefer. Host mode generally makes
-the most sense.
+Le 19/06/2024 à 13:02, Mohammad Rafi Shaik a écrit :
+> On 6/17/2024 5:25 PM, Mark Brown wrote:
+>> On Sun, Jun 16, 2024 at 04:54:58PM +0200, Christophe JAILLET wrote:
+>>> Le 11/06/2024 à 09:45, Mohammad Rafi Shaik a écrit :
+>>
+>>>> +static void wcd937x_soc_codec_remove(struct snd_soc_component 
+>>>> *component)
+>>>> +{
+>>>> +    struct wcd937x_priv *wcd937x = 
+>>>> snd_soc_component_get_drvdata(component);
+>>>> +
+>>>> +    wcd937x_mbhc_deinit(component);
+>>>> +    free_irq(wcd937x->aux_pdm_wd_int, wcd937x);
+>>>> +    free_irq(wcd937x->hphl_pdm_wd_int, wcd937x);
+>>>> +    free_irq(wcd937x->hphr_pdm_wd_int, wcd937x);
+>>
+>>> These irq have been requested wth devm_request_threaded_irq(), so either
+>>> this free_irq should be removed, or devm_free_irq() should be used if 
+>>> the
+>>> order is important.
+>>
+>> Yes, this should be fixed.
+> 
+> okay, will check and provide the fix.
+> 
+> 
+> Thanks & Regards,
+> Rafi.
+> 
+> 
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+Hi,
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index 2c39bb1b97db..e9a63956b8b7 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -648,8 +648,12 @@ &uart4 {
- &usb {
- 	status = "okay";
- };
- 
-+&usb_dwc3 {
-+	role-switch-default-mode = "host";
-+};
-+
- &usb_dwc3_hs {
- 	remote-endpoint = <&pmi632_hs_in>;
- };
- 
+just to make things explicit, in case you missed it: I sent 2 comments 
+in 2 different mails.
 
--- 
-2.45.0
+   - the one above: 
+https://lore.kernel.org/all/2b92c0f9-2595-4b73-8015-1abb825a61a1@wanadoo.fr/
 
+   - and another one: 
+https://lore.kernel.org/all/834d31cc-f4bc-4db7-a25b-f9869e550eb6@wanadoo.fr/
+
+If you give it a look, could you please also check the 2nd one?
+
+CJ
 
