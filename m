@@ -1,118 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-23213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01E9790EE57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 15:28:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67ED590EF37
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 15:42:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71B85282AEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 13:28:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8BD741C226C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 13:42:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6041814B967;
-	Wed, 19 Jun 2024 13:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90E5813DB90;
+	Wed, 19 Jun 2024 13:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QP3fv3+W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hj0y7WIj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3196814373E;
-	Wed, 19 Jun 2024 13:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D342B78C73
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 13:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718803676; cv=none; b=TGM01Qzez7deyC/Z0SmgIgxov7xfwp7qf6Tx7Up0DjetHicOmZhsUCQgvIJWQOCcwFy3y0B2ukVjSsoTbfa5HQzmfFyx3GKRBEj8V9BjXVPuBVEbbrcloe/ohG4SF0SiaJJrZ9TeITu0sVHSMYS+vTRYmr3pDc86mtuuSrwp6DE=
+	t=1718804527; cv=none; b=chckHhNeFl25RSmO3dlMiNq/KOo4bJ3WxNkh8Hp7eBgaIwbUw3svy/lPrtRWJhW3nQ7dauVIlpUK+0I1PkoyfjqZEF50ngr/D4eDHYR6WSbReAGTqVcuyyXqxIwow5Wo63xmKofWAOsgXVz/xIcZZxBJ65h7w9ZpCCRFh7tuxdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718803676; c=relaxed/simple;
-	bh=rCR7QuMaFcOz1m7J9fyPFPxCKL6AfHbaF5fRTnWNcm4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k0V5Cc1bkJ+JeWgRWrV+yj5uXjljiSSan5034spXnBfrPKmq2fuwhKGhlvj+FZDQX4szPWzz1wguJgUk8RNSpejDJMJAt7S59aBT8DbFKSFJuVp/4/U/ymDF+dXuS6lKjq6wSVEv0jniym6xJNEbrsWjG/rLQ9/9YqGpkCefRRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QP3fv3+W; arc=none smtp.client-ip=209.85.222.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-80f50dadadfso490368241.1;
-        Wed, 19 Jun 2024 06:27:53 -0700 (PDT)
+	s=arc-20240116; t=1718804527; c=relaxed/simple;
+	bh=rgiEYLNQb3RpLZpQYuT7fM30aAaSLPjiSg2mR2Q0qdU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Ei/L4W52TUBr+mTnDPxhu5iq7dWSfmgEdQfDTOQKjRHe6K8GUK9eqtqTm+sWJuPrpYGL/UBpt1snryQ3HS6/k1cVLCYFrVA0BQaC6KyDC6bG/JyKX0+AxkvbQtRPRoYK9aY21Jr3FhO7YmhifiZ9xc2B4tB14tWx23d+1NuEGFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hj0y7WIj; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42165f6645fso53478885e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 06:42:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718803673; x=1719408473; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U+EdAOsIyAeNB2MEPeOqJ21gcXQroPI9pOzshoyJ47o=;
-        b=QP3fv3+W56QV7UuVAXuiJlym4GgyYQHId/jUXlxwzwPkMwHrMdvANdAlqqQYMtGf5p
-         Bzssto5mHvsI/GD0o5EwMsTuNtACFimiOk3542PgeSyqcACHrOyDAQLAFtL+iNumAaIt
-         WnhIixWXnpONc+3KewbACFsIR100GanZADsNZWTLCCUe1su5Yw1BM8g4vqkqhMNVq2qw
-         JaTxazc0JJze4U+9j5aNpQkqHIrVXoKACjXkHK2yrUqYGYiu8DYOkMlNe9oIqtAEeKKX
-         cnTRFB03yMhxG7e5iROZsYGDxfgKLlCcB8/WRhNrLHHtU1Ksz4u67kK1m8WAeYtf/4W1
-         sgsA==
+        d=linaro.org; s=google; t=1718804524; x=1719409324; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y7go2tHNRxtX3hgSDycL9uJw0C/nuPgmVzfI4zryzEA=;
+        b=hj0y7WIjBL6+bm4bKfhXM6ty1dItGe3hRwEy8yviOrfawVevSvOI0luzB+Xb38Ja2V
+         taKIg8MB4WlXwMw+eKffcm5UNVr6lRaMJpPBmBJTYuBAiey4jzDhgpKap/jBYbkH6YjR
+         rfKlzbj0QPm1/Q0jCvkHI3Z3EFVM0FKiW6LE1UBSlLnA75V9VCgiKvxscbYBpsr64meI
+         +QATvoqokHCLf+jPK0W8bx5wv2ykLy5IMNDpY44BKGkSQR3tHNae09OR8dKJCLZKSiWg
+         FDRjCcK9NxblQSzfqnL9bik02SSaJwgM3ELBEbSnA52bBK7fGMoKmHtDm6ObkjBX4axW
+         K1kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718803673; x=1719408473;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U+EdAOsIyAeNB2MEPeOqJ21gcXQroPI9pOzshoyJ47o=;
-        b=pfLzGOYytYSReNVLknEBZU8zrvehkZbkIVHtTHHY/jtoriWdOm4hcqok7OVkxShRg8
-         xk02bX0nkeNQwJb2wlo1+Mf24v3gk0jqInZJ+FcEliR231DwY9NlAXRPKODpLw8IThri
-         A9irogKS/vrdyNoTO3uroaZm/1oaVakOWDzBz+5Pre2lmXePGDJirYjeoSd+QzbtCLLz
-         kGZ6z5yFjQran20suzkCc7Pzbyq/lAQ4laAM1VOtmvM/aWYFayEMuoO0J0bewU575Gt2
-         EoBabAGScHakjYsQHW6sL+SQiGeIxfClmaayeTAtCRORq7wopnGd80hR9z6pDsiuEEUr
-         nDHw==
-X-Forwarded-Encrypted: i=1; AJvYcCUbYDxjS5dK7irEhd57hm+ApgPu20AaBJrz+5KTDMtSVfV/xoerJHqnY1pyidvreYa2UdYk6GM6RqNkIT4UmOFOozRycbwzPh8IAHJJLbT4Ba54dO/1umBTOkmfiU70/OMIE4lR5DOwkuisTW2FHV//koLVmb6G2bmVKw2B4j4hJhHCEjsbAv4bT4CKgqsXke6njx02hKHrZ4e0FUf/UwfikHLE/5ofgflCO9hnDcjUlTQcv5NNQe6rrYgxcfl0+ahjC2AbXdXmRybTJh06z0cwkrRj/4o9NRaX3k33nkC3zFE4bJ4lPcfBLsTRigMQkH+xZez2AxHU1mUmD4cAYsZnrVKNSaUjK5xmEnhns5HfyIzmSS+ytMchdVxA7TWJgZBdcyn1pHlZS+aug3prhgL4/IlTp5EzaFhpkAt09w4dh8kvFgCpNcFJdCIebM1pmrg=
-X-Gm-Message-State: AOJu0YwL+uZy8sFlSUBlunvKpmdjSUJkYl9ZmHhlLB6qoX1KkJA1OuFl
-	RcoADOg20Y4ZFFQEPPigLHjcSex1aHxpMFW9ebZRLf3ANBOiJi6GHvBcHcXIX/EC5OYDh7JurtD
-	w+yZLDvBPXRmTIuEuN7lEGgb1EA8=
-X-Google-Smtp-Source: AGHT+IGwE8bFf/VlY/jk/YXUnYkoze8GDMP6nvE5vZma8oxX1CjkKEtLu+mwZHIrK4bFz/7xDykwdahIAJ7lHkmGhA4=
-X-Received: by 2002:a67:ee4b:0:b0:48d:8904:3dad with SMTP id
- ada2fe7eead31-48f13140716mr2780689137.32.1718803671634; Wed, 19 Jun 2024
- 06:27:51 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718804524; x=1719409324;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y7go2tHNRxtX3hgSDycL9uJw0C/nuPgmVzfI4zryzEA=;
+        b=mLUoFeh77ujjMPoZ8TV67XslkJmgxeM/MiCPZZg1ElGL4Q2d+VLENvGeH9iVZDnQKX
+         RdqkfC7UON5kZxuc/NFim0FgCcmfUmwTOh0VQRcugQyrzLH1dvkKlVT3Nzo34tdgx9kA
+         R5O+sSStIgdZLi/wUKMY7OryeedUmANbngGgllgtqmDfPENu5QyrGiazEQATERxe4Geb
+         fL52ci/3Az+ZgE+P/phmA+GxMirv0EoSXua5z8WPG15jEWp/pldDgd3KrUKnkYtrAGYe
+         JsBbmYsdia0BDNk2BX+8KlEO8fm9bAKzBO/2yTldOjT3KDxI456XnrMFD7qFKqFAJgKx
+         +ZyA==
+X-Forwarded-Encrypted: i=1; AJvYcCWXMlI1ZnFrGTLsTN3EtqJrLWu+p1g3aAp7ch6tIyuLybqTqj1alqeat3ovi0cMGiuwij/oi++34vxURs7Pw0UUa6aoPc5/14XdNp7muw==
+X-Gm-Message-State: AOJu0YyA3bRDhVKE/gCx3uKe2ke7YIHe+I2UqOAWddbl6+iRZOcx76JX
+	DneuEzrkRrAzFl6G8H5wnajcLiOURqXo6mmjX7v0EyIPYS9HqRbLm3GzsaTozPo=
+X-Google-Smtp-Source: AGHT+IGEJY74VeA/iUAaIflTiACCdqFcTGgnATrpx3F86GZfFf5/C8nUkxOe22alnDGyRaQQxhM5bw==
+X-Received: by 2002:a7b:c3cc:0:b0:422:7d95:b815 with SMTP id 5b1f17b1804b1-42475293d79mr20545735e9.27.1718804524163;
+        Wed, 19 Jun 2024 06:42:04 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4229c60f758sm251639505e9.20.2024.06.19.06.42.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jun 2024 06:42:03 -0700 (PDT)
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH v2 0/2] ASoC: codecs: lpass-wsa: fix vi capture setup
+Date: Wed, 19 Jun 2024 14:41:59 +0100
+Message-Id: <20240619-lpass-wsa-vi-v2-0-7aff3f97a490@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
- <20240618-starqltechn_integration_upstream-v3-11-e3f6662017ac@gmail.com> <pkmxbxoc4sno6mbjsftz6hp5lxefc6yhwxjlhiy2pd4wbkzpvl@as43z4t64mm6>
-In-Reply-To: <pkmxbxoc4sno6mbjsftz6hp5lxefc6yhwxjlhiy2pd4wbkzpvl@as43z4t64mm6>
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Wed, 19 Jun 2024 16:27:40 +0300
-Message-ID: <CABTCjFABEY0urmgrr5E3-oq9u_aNR8KcCTMpJpoGLOTPOfKAGg@mail.gmail.com>
-Subject: Re: [PATCH v3 11/23] drm/panel: Add support for S6E3HA8 panel driver
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Sam Ravnborg <sam@ravnborg.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-input@vger.kernel.org, linux-leds@vger.kernel.org, 
-	linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACfgcmYC/x2NQQqDQAwAvyI5N7DGItivFA9ZjTVQomysCuLfX
+ XschmEOcEkqDq/igCSruk6WgR4FdCPbR1D7zECBnqEuG/zO7I6bM66KoarqgcrQUBTISWQXjIm
+ tG+/Ip5/1aLIvt5yTDLr/X+/2PC/kWKvBewAAAA==
+To: Banajit Goswami <bgoswami@quicinc.com>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Manikantan R <quic_manrav@quicinc.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=688;
+ i=srinivas.kandagatla@linaro.org; h=from:subject:message-id;
+ bh=rgiEYLNQb3RpLZpQYuT7fM30aAaSLPjiSg2mR2Q0qdU=;
+ b=owEBbQGS/pANAwAKAXqh/VnHNFU3AcsmYgBmcuArq9LaU4lDY1TIcq5GY+jXvwF5YzEAMvgpe
+ bbm0K09BZqJATMEAAEKAB0WIQQi509axvzi9vce3Y16of1ZxzRVNwUCZnLgKwAKCRB6of1ZxzRV
+ NySZB/9Kw+4BhXGebevZTGw4wsBxspq/E3A0lEhk3nUEqZvzMdPTOUMjnR9DuJA7U3BFcIUeWop
+ nckdsW4X21/tsrAxwFA+A5C39AJaLSiOUXttuPzFgguxCSUmmH/kFE9NCEEmIoQ2gnmHVJqN1py
+ 9nH2Bt7srdHximNA/isi13m5AZABHOB356Rg+CM/zowkFUzosKyVzVFkCun/Q++lSJjJIdh5l34
+ NWV5095lkn7+aApmunvisqxuvMIDqPHjG1xIhEQfpnW5tuOm2RqwY0XigpXRj7FOpQlAcIeJYkM
+ QUrW6oW62lmaYVjDHPiyLXoL07ZplToay30NJZqjTHy7afXD
+X-Developer-Key: i=srinivas.kandagatla@linaro.org; a=openpgp;
+ fpr=ED6472765AB36EC43B3EF97AD77E3FC0562560D6
 
-=D0=B2=D1=82, 18 =D0=B8=D1=8E=D0=BD. 2024=E2=80=AF=D0=B3. =D0=B2 21:39, Dmi=
-try Baryshkov <dmitry.baryshkov@linaro.org>:
->
-> > +     ret =3D mipi_dsi_compression_mode(dsi, true);
-> > +     if (ret < 0) {
-> > +             dev_err(dev, "Failed to set compression mode: %d\n", ret)=
-;
-> > +             return ret;
-> > +     }
->
-> Interesting, compression mode is being set before the PPS programming?
->
-Yes, as per vendor kernel:
-https://github.com/klabit87/twrp_android_samsung_kernel_sdm845/blob/e8bb630=
-39008e1704a2f1bde68d39ded9c16ea88/drivers/gpu/drm/msm/samsung/S6E3HA8_AMB57=
-7PX01/dsi_panel_S6E3HA8_AMB577PX01_wqhd_octa_cmd.dtsi#L5508
+This two patches fixes issues with VI capture rate and path setup.
+
+Changes since v1:
+- added missing break statements in switch case.
+
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+Srinivas Kandagatla (2):
+      ASoC: codecs:lpass-wsa-macro: Fix vi feedback rate
+      ASoC: codecs:lpass-wsa-macro: Fix logic of enabling vi channels
+
+ sound/soc/codecs/lpass-wsa-macro.c | 103 ++++++++++++++++++++++++++++---------
+ 1 file changed, 80 insertions(+), 23 deletions(-)
+---
+base-commit: 8aae76179d6b4587368d50614e114b391cf33ec9
+change-id: 20240619-lpass-wsa-vi-0336f21092be
+
+Best regards,
+-- 
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
 
