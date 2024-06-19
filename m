@@ -1,229 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-23224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5AAC90EFF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 16:16:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03A6690F08E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 16:31:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A9592858BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 14:16:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54846B2498B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 14:31:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DD2611CA1;
-	Wed, 19 Jun 2024 14:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63464182B5;
+	Wed, 19 Jun 2024 14:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gVvC58Mu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c/t2MPbq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850A028DA0;
-	Wed, 19 Jun 2024 14:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA4B1B948;
+	Wed, 19 Jun 2024 14:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718806539; cv=none; b=bDhYe+wCQo0XtR5IydTKcTxy/lp9g+tftZZclzmQfU4TxP/ds+R1qvpkBZWCFs+9SKLA3xbxuM14BhZ1OuHBKNHd0KIr0eEBxUv/YnViFZUDekqDPvH1HPBFiSPWgd9iEsKPclsMWkIuwTIiV0fvtPG2g5NNF4G8Gy35IBcbb+0=
+	t=1718807469; cv=none; b=N0pWJjiRLsjTMDpJL9r7AbXCi8cQXYMzVJx0GSPdtSRc53xRrtXUX6s6kKI8ORsdmN8uHfuwVXGH/MOvD5EBmqsqoxEDouVG3Nx78ASjMqard36F+IWyU7VLTznMLF9nWC92RaVu6H/EnYbe5er8TzPoZXvEejWQGnQLXhWi89Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718806539; c=relaxed/simple;
-	bh=EGaYFLGXnfHWlxLGmlwpGofz+AaoJSgY1Calo7leKj4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pTfzNYb4JQeI87iBCxj3EV02XQOrnyvzNVAgDIknKUZWcbEOv7gg5pJXmNpuI3AHSdjc9laIpIZVq9fzPwJJfTKXkhfgZ7aDukHFBac+SWHRfLqTIQR7Jwl+WE9UkYmkMv2WowGyMjkfwuRByvur8D5dAJcPvtwHV8FbVD7IN2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gVvC58Mu; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1718807469; c=relaxed/simple;
+	bh=BPMMwZn6Og0jszVG/cAk8PDDmPQrHjsG2/h68r5PxxM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=DBFsF59eXtJxLT6n+vt01/C3gbmJ3cUSKMIQX8EYemkH79MY4LEfokf4m4DOuhj+Ko/opDg+mFq6bxZ/HlWXzcW9A3ssdXv3lnc8bawKTcL62eKY4jP2/uluFG5nwtkekma9NK+FETAVMCnFud/MBcY1zcj1oUqOgtv9y0ZyX0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c/t2MPbq; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45J9uMjq016040;
-	Wed, 19 Jun 2024 14:15:30 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45JA5G9n016085;
+	Wed, 19 Jun 2024 14:30:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iCv/YklMc+UPKcyKvWf9alp8n6dhbs3BgQ/OGTAGMqo=; b=gVvC58MuZ2y3f0n6
-	jaO6Dly0uagBvLSwjIE7McFDi1bR3Ly3W9jLd6Snk9a2pxLmrZtEhKg9OZq8g2Uu
-	wUpsLcg/1dyhSrBK6crUvQcnMjYleS22r9G3ruR84UXzY0WVtsgD23Iv0s0jZVZa
-	19fMR9PQqgWfr/PMFdvDzRTvxWIEeBd9NEi2Ezcz67N6U2ObALUfbqlQykGIlxug
-	QIgo+rajQktuqvZUHB4a84twB7LWuiIospLXTv4OLGKIhRMv4xEv2fWMeq6mf19L
-	OJafnQuznx6Qw705w6nkDtWwO3xa7FZDh70PqxnfNzL+5op226z8890QA1RlIkpg
-	okn3Zg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yuja51wjs-1
+	WMej7sJwoexITPuS9vB+WUyYogZePWN8zXQSXbZHGJ8=; b=c/t2MPbqOLSGrOao
+	dP/r6yiiWlxbhjL8NLNexr8lzZfG7mIsF7ygRurxeXNl6eIILw6i7BudAGYqEW3n
+	s1yUInqKxfT7kx2GNjffhofrxRlCH+3AgRg8whPmp+ul2OL9OKFo7sviBz91/3iM
+	0kp6fLit3VeEqdOwXDttVzOuqKPwuLGmDAV8ND3elNeKqeZTvkXDlKsz0wceaFta
+	CvOylF/MPq+L+rqIyVDpyJH02RhoTGy0VCNYsJFqJQ/QryYsuNYHGzCpZo1TKmFJ
+	yMIvhIRJOzbHBx8FfpSEEDZfXUS2HZi00/QOR7NnaiP09BbSMEwreiXVbJGBDTb5
+	gIUwsA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yuja51xju-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Jun 2024 14:15:29 +0000 (GMT)
+	Wed, 19 Jun 2024 14:30:47 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45JEFSLL022873
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45JEUk9q018160
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Jun 2024 14:15:28 GMT
-Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 19 Jun 2024 07:15:20 -0700
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        "Rafael J .
- Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>, Pavel Machek
-	<pavel@ucw.cz>,
-        Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Andy
- Gross" <agross@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-CC: <linux-pm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh Kona" <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        "Ajit
- Pandey" <quic_ajipan@quicinc.com>
-Subject: [PATCH V6 5/5] venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode on V6
-Date: Wed, 19 Jun 2024 19:44:13 +0530
-Message-ID: <20240619141413.7983-6-quic_jkona@quicinc.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240619141413.7983-1-quic_jkona@quicinc.com>
-References: <20240619141413.7983-1-quic_jkona@quicinc.com>
+	Wed, 19 Jun 2024 14:30:46 GMT
+Received: from [10.216.5.74] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 19 Jun
+ 2024 07:30:37 -0700
+Message-ID: <15693666-edef-60c9-80e1-c74db00e07aa@quicinc.com>
+Date: Wed, 19 Jun 2024 20:00:21 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v14 3/4] PCI: Bring the PCIe speed to MBps logic to new
+ pcie_link_speed_to_mbps()
+Content-Language: en-US
+To: =?UTF-8?Q?Ilpo_J=c3=a4rvinen?= <ilpo.jarvinen@linux.intel.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
+	<kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>, <johan+linaro@kernel.org>,
+        <bmasney@redhat.com>, <djakov@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <vireshk@kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_parass@quicinc.com>, <krzysztof.kozlowski@linaro.org>
+References: <20240609-opp_support-v14-0-801cff862b5a@quicinc.com>
+ <20240609-opp_support-v14-3-801cff862b5a@quicinc.com>
+ <c76624fa-1c07-1bb4-dff0-e35fe072f176@linux.intel.com>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <c76624fa-1c07-1bb4-dff0-e35fe072f176@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: EXSTL0n_KyN-LBjU4vGlXYO5Z5MjKAU_
-X-Proofpoint-GUID: EXSTL0n_KyN-LBjU4vGlXYO5Z5MjKAU_
+X-Proofpoint-ORIG-GUID: j1Vg0VY4XtheVwORlXDUtqCV06y-ub8Q
+X-Proofpoint-GUID: j1Vg0VY4XtheVwORlXDUtqCV06y-ub8Q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-19_02,2024-06-19_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- adultscore=0 impostorscore=0 clxscore=1015 mlxscore=0 spamscore=0
+ adultscore=0 impostorscore=0 clxscore=1011 mlxscore=0 spamscore=0
  bulkscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
  mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406190106
+ engine=8.19.0-2405170001 definitions=main-2406190108
 
-The Venus driver requires vcodec GDSC to be ON in SW mode for clock
-operations and move it back to HW mode to gain power benefits. Earlier,
-as there is no interface to switch the GDSC mode from GenPD framework,
-the GDSC is moved to HW control mode as part of GDSC enable callback and
-venus driver is writing to its POWER_CONTROL register to keep the GDSC ON
-from SW whereever required. But the POWER_CONTROL register addresses
-are not constant and can vary across the variants.
 
-Also as per the HW recommendation, the GDSC mode switching needs to be
-controlled from respective GDSC register and this is a uniform approach
-across all the targets. Hence use dev_pm_genpd_set_hwmode() API which
-controls GDSC mode switching using its respective GDSC register.
 
-In venus V6 variants, the vcodec gdsc gets enabled in SW mode by default
-with new HW_CTRL_TRIGGER flag and there is no need to switch it to SW
-mode again after enable, hence add check to avoid switching gdsc to SW mode
-again after gdsc enable. Similarly add check to avoid switching GDSC to HW
-mode before disabling the GDSC, so GDSC gets enabled in SW mode in the next
-enable.
+On 6/14/2024 6:02 PM, Ilpo Järvinen wrote:
+> On Sun, 9 Jun 2024, Krishna chaitanya chundru wrote:
+> 
+>> Bring the switch case in pcie_link_speed_mbps() to new function to
+>> the header file so that it can be used in other places like
+>> in controller driver.
+>>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>> Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+>> ---
+>>   drivers/pci/pci.c | 19 +------------------
+>>   drivers/pci/pci.h | 22 ++++++++++++++++++++++
+>>   2 files changed, 23 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+>> index d2c388761ba9..6e50fa89b913 100644
+>> --- a/drivers/pci/pci.c
+>> +++ b/drivers/pci/pci.c
+>> @@ -6027,24 +6027,7 @@ int pcie_link_speed_mbps(struct pci_dev *pdev)
+>>   	if (err)
+>>   		return err;
+>>   
+>> -	switch (to_pcie_link_speed(lnksta)) {
+>> -	case PCIE_SPEED_2_5GT:
+>> -		return 2500;
+>> -	case PCIE_SPEED_5_0GT:
+>> -		return 5000;
+>> -	case PCIE_SPEED_8_0GT:
+>> -		return 8000;
+>> -	case PCIE_SPEED_16_0GT:
+>> -		return 16000;
+>> -	case PCIE_SPEED_32_0GT:
+>> -		return 32000;
+>> -	case PCIE_SPEED_64_0GT:
+>> -		return 64000;
+>> -	default:
+>> -		break;
+>> -	}
+>> -
+>> -	return -EINVAL;
+>> +	return pcie_link_speed_to_mbps(to_pcie_link_speed(lnksta));
+> 
+> pcie_link_speed_mbps() calls pcie_link_speed_to_mbps(), seems quite
+> confusing to me. Perhaps renaming one to pcie_dev_speed_mbps() would help
+> against the almost identical naming.
+> 
+Ack I will modify in the next patch.
+> In general, I don't like moving that code into a header file, did you
+> check how large footprint the new function is (when it's not inlined)?
+> 
+I checked with and without inline and I don't see any difference in both
+cases
+aarch64-linux-gnu-size ../drivers/pci/pci.o
+    text    data     bss     dec     hex filename
+   41440    1334      64   42838    a756 ../kobj/drivers/pci/pci.o
 
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- .../media/platform/qcom/venus/pm_helpers.c    | 39 +++++++++++--------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+   text    data     bss     dec     hex filename
+   41440    1334      64   42838    a756 ../kobj/drivers/pci/pci.o
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 502822059498..4ce76ce6dd4d 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -412,10 +412,9 @@ static int vcodec_control_v4(struct venus_core *core, u32 coreid, bool enable)
- 	u32 val;
- 	int ret;
- 
--	if (IS_V6(core)) {
--		ctrl = core->wrapper_base + WRAPPER_CORE_POWER_CONTROL_V6;
--		stat = core->wrapper_base + WRAPPER_CORE_POWER_STATUS_V6;
--	} else if (coreid == VIDC_CORE_ID_1) {
-+	if (IS_V6(core))
-+		return dev_pm_genpd_set_hwmode(core->pmdomains->pd_devs[coreid], !enable);
-+	else if (coreid == VIDC_CORE_ID_1) {
- 		ctrl = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_CONTROL;
- 		stat = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_STATUS;
- 	} else {
-@@ -451,9 +450,11 @@ static int poweroff_coreid(struct venus_core *core, unsigned int coreid_mask)
- 
- 		vcodec_clks_disable(core, core->vcodec0_clks);
- 
--		ret = vcodec_control_v4(core, VIDC_CORE_ID_1, false);
--		if (ret)
--			return ret;
-+		if (!IS_V6(core)) {
-+			ret = vcodec_control_v4(core, VIDC_CORE_ID_1, false);
-+			if (ret)
-+				return ret;
-+		}
- 
- 		ret = pm_runtime_put_sync(core->pmdomains->pd_devs[1]);
- 		if (ret < 0)
-@@ -467,9 +468,11 @@ static int poweroff_coreid(struct venus_core *core, unsigned int coreid_mask)
- 
- 		vcodec_clks_disable(core, core->vcodec1_clks);
- 
--		ret = vcodec_control_v4(core, VIDC_CORE_ID_2, false);
--		if (ret)
--			return ret;
-+		if (!IS_V6(core)) {
-+			ret = vcodec_control_v4(core, VIDC_CORE_ID_2, false);
-+			if (ret)
-+				return ret;
-+		}
- 
- 		ret = pm_runtime_put_sync(core->pmdomains->pd_devs[2]);
- 		if (ret < 0)
-@@ -488,9 +491,11 @@ static int poweron_coreid(struct venus_core *core, unsigned int coreid_mask)
- 		if (ret < 0)
- 			return ret;
- 
--		ret = vcodec_control_v4(core, VIDC_CORE_ID_1, true);
--		if (ret)
--			return ret;
-+		if (!IS_V6(core)) {
-+			ret = vcodec_control_v4(core, VIDC_CORE_ID_1, true);
-+			if (ret)
-+				return ret;
-+		}
- 
- 		ret = vcodec_clks_enable(core, core->vcodec0_clks);
- 		if (ret)
-@@ -506,9 +511,11 @@ static int poweron_coreid(struct venus_core *core, unsigned int coreid_mask)
- 		if (ret < 0)
- 			return ret;
- 
--		ret = vcodec_control_v4(core, VIDC_CORE_ID_2, true);
--		if (ret)
--			return ret;
-+		if (!IS_V6(core)) {
-+			ret = vcodec_control_v4(core, VIDC_CORE_ID_2, true);
-+			if (ret)
-+				return ret;
-+		}
- 
- 		ret = vcodec_clks_enable(core, core->vcodec1_clks);
- 		if (ret)
--- 
-2.43.0
-
+- Krishna chaitanya.
+> Unrelated to this patch, it would be nice if LNKSTA register read would
+> not be needed at all here but since cur_bus_speed is what it is currently,
+> it's just wishful thinki
+> 
+>>   }
+>>   EXPORT_SYMBOL(pcie_link_speed_mbps);
+>>   
+>> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+>> index 1b021579f26a..391a5cd388bd 100644
+>> --- a/drivers/pci/pci.h
+>> +++ b/drivers/pci/pci.h
+>> @@ -333,6 +333,28 @@ void pci_bus_put(struct pci_bus *bus);
+>>   	 (speed) == PCIE_SPEED_2_5GT  ?  2500*8/10 : \
+>>   	 0)
+>>   
+>> +static inline int pcie_link_speed_to_mbps(enum pci_bus_speed speed)
+>> +{
+>> +	switch (speed) {
+>> +	case PCIE_SPEED_2_5GT:
+>> +		return 2500;
+>> +	case PCIE_SPEED_5_0GT:
+>> +		return 5000;
+>> +	case PCIE_SPEED_8_0GT:
+>> +		return 8000;
+>> +	case PCIE_SPEED_16_0GT:
+>> +		return 16000;
+>> +	case PCIE_SPEED_32_0GT:
+>> +		return 32000;
+>> +	case PCIE_SPEED_64_0GT:
+>> +		return 64000;
+>> +	default:
+>> +		break;
+>> +	}
+>> +
+>> +	return -EINVAL;
+>> +}
+> 
+> 
+> 
 
