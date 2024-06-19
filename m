@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-23258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC4B090F656
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:46:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DE0590F657
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:46:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7985C1F23C73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:46:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 550201F24058
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:46:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9956158D7A;
-	Wed, 19 Jun 2024 18:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 763E1158DB1;
+	Wed, 19 Jun 2024 18:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="gAL+o4vV"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="UhZR3aWJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E5C1586F2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:46:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D55158A33
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 18:46:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718822766; cv=none; b=YwB9A3+fi0Gebj0mh5NiSAnQpHXnYoXaWBR/58nknwWMw+X9vJOBZoGgZq9wyi3/WaohC3pOqkZsUR3KB0ZEE39lyK9FrSACtdDXFkjePJ2DxRB8SUPRMhqSxcFGFXRsAJddx4HjixKSkLPfnoh4A4QETocx9SQjL59/oROK9C0=
+	t=1718822767; cv=none; b=olwptyBavNpDhE59SfVQHgsaJ/wx0LX70Qo1LYfGW52nwO7SFcGhKfM94Ri+SeSIrcXzrjQnSj1HEv4Wll0IPz3fQx6JuFRuF0pdKAnzR8dgc557HhndiQikyROnUbaGYa7ZIHujpibQzwfXY5+Myz1n4r2RDf/UfaO1vhkRahk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718822766; c=relaxed/simple;
-	bh=xQZfBrjg8Y1IyEOd4VaZKMauy6Z5Ydh+j9RZPVg6KZk=;
+	s=arc-20240116; t=1718822767; c=relaxed/simple;
+	bh=UgqhHqlcoo2GUEDYVQSY/0NQPdIbLo3HZeq6E2j6UQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKLMFkZHuJVvQA0shj7/ku0tsPYZOXNIru2QWCuzfPZGMqpMNL8H7rUh/UAA8thwi3HmeF4r+vIw2tivANd6zoZmjAmmaYEJWKU9QygXmBq4maLDzj2wy/GvdgiBpPuO9af2JRRNh+Uzum8a+8I+5yh6Q0jpiNxyEeXk1a1zCgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=gAL+o4vV; arc=none smtp.client-ip=209.85.128.45
+	 MIME-Version; b=T9MakCPYhfbeeJ4+TY4npEuqS0dLxk/A3ckKRvuVy6j2OW/C3270ftWvTyNcUayaOA5NhoHqqonXOOpxBcoCpobr6jhkdibitK+zSxeIMKAmIg85LHqGo7bLOVF8bC4bny2RQNTJa43cMz7LYLuEcSkMcZhkcnz0K61XjaOzz6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=UhZR3aWJ; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42172ed3487so1050875e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:46:04 -0700 (PDT)
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-35f23f3da44so94091f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 11:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718822763; x=1719427563; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718822764; x=1719427564; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Of1uWBxSEjvKTQJleea6ZxhN8mHuCcwxXxdGI9uF93A=;
-        b=gAL+o4vVw3jcnhq4PUbRpC74aZANSxP2sHepAl477+dHyw3hIiYtKS9iQYOzNR/aZl
-         7jG7iLmV3Eq2lBLWWUnK6mwdZDiAlv/bi52N9kVh0HgIjWYLsLw9y/CplYlywGk3vr6y
-         jbwWpbF3OYq7oBGO3aLvdLCbprYHWo+51G/sASidqzssMBKA+L8kkhB6GGuyGhS9xZVE
-         JSaetH0dSnfHCJDTFQf5ZtPdDY0xzTK2pTGGYRjhj1zHxTUF4OPeFToRxOpMpNMHNNyK
-         pOO33h0IRjazGywi2++BR6mrtBlZK+3jLdtOMH6cxOopJbiuilV4xGuNYqMzbTENJT2D
-         5ItQ==
+        bh=SJn78QxgCMJZC/Bt30akmrrLqCYwQcxiOnm8hqmwEKA=;
+        b=UhZR3aWJxp0gOrbcEpQNpumjbS8dyeRLGT5X9QdlNQExYb9ibz/xvMUMxFuBBVcdC3
+         Mu+7Exm7m1Hli3rwoo3YgBFu1LW7GaGzO/fKczVdiHW+UK38uF0OQ4KPXKh3lURkzqtD
+         jUReJmlXvic5in0KsOyBSb5PPHlDL9SNKP8xnDwL8ehPZHX0lerwqoBRuK1Sz7Y+bWb8
+         uIP7GGTAPvEYP3YzO8JfAhqTlXYTLgK+IqWSSF6GDTuWkrItvTo0eMoJr5C1A7Yh8L7B
+         A8i3NpqjldX+01WaerzRRn558W+K/T+gVA93uZgi6L3bc+WbJ8M+MtcQV4kgRGMv0ohx
+         0+zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718822763; x=1719427563;
+        d=1e100.net; s=20230601; t=1718822764; x=1719427564;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Of1uWBxSEjvKTQJleea6ZxhN8mHuCcwxXxdGI9uF93A=;
-        b=AR2zP+BaKKcT4WfjSVxKLAZ3hnPuSj6fRfXjC62y/FJKZXbJ0CUzaGAZ1mD2pA4vKo
-         gAgRrIh8cYteAcEYOPNgb3TkHEjXokZMn5ch5afJQ30mBLNYwoXc3oR3FImm5ym9+3AH
-         dqTclRw+vCTnL1pJgBLNCxKVqbmhgbKHdDIswbrTJ6Qjj7py2iqH2ayoWtjvl0/xWcML
-         vDFNrD67mTw6Jna7PRM9YQoAhzGDRylsgk+BzNNEz6cjjjOaFvYKuZo5Mf/13pgKMsiU
-         R/7T8M34UFhIb6o8JMeZf6H5wYUYJ3+tUkEaPDfov4Lz52EXAWuHb8BqYd7ABLbRwElX
-         WxnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUfnkIhHg4vC2h1/MtgBVD+cuVk5OC/M/yXGBTkenotNnmfIxn2VVq9vdnJVFZVt4hHViS6MVa1KUTknUQtMoDQQR4qIYXEDZJ8SvSYhA==
-X-Gm-Message-State: AOJu0Yxbmh6tx9gddUOfW9RQ5RrniPKc0AlMuTjXomlQKhFgGzd/IWtB
-	CYzMxvLbyeuLBBhPoeMeoJdK1e+amW0xI1iPoXT9SLNbIiStj/Q3VgvhjPVMw8g=
-X-Google-Smtp-Source: AGHT+IG94KmlBI+1kAFW/XzI6UK2YpoCtdBNr/zZ39tySmt8Nx0B1Rz4PfJT6D+Bu6Uwl7ILTiqtkg==
-X-Received: by 2002:a7b:cc13:0:b0:424:784c:b13b with SMTP id 5b1f17b1804b1-424784cb209mr15137645e9.13.1718822763293;
-        Wed, 19 Jun 2024 11:46:03 -0700 (PDT)
+        bh=SJn78QxgCMJZC/Bt30akmrrLqCYwQcxiOnm8hqmwEKA=;
+        b=GvJLyZdUHtFFhQfacr+Lck4HDLPLo4H0zYratIduc5PMufJCq4mQqOF56D6rj0ugn9
+         YW/FmruV8IkOJwecIcTfKzvMLXIyMWeUuq4tAPE9ooYRRtys2L+BDIc7zdm2ClBBp+/n
+         Dc9xPkzONsFaXR/gEYJvRXnrfoa1LCQlroUhwjId8GtkQVnzlVsJf2/eyHkezPTRZZVX
+         9FXKYIfQdEY37KvJHgZ0uzqJzyqQMDKPD9O83XDUb93B7EpeOIEFRIoxoBEv4li4+6mI
+         nbu+RBhJFynQi/k8XBpMNJ7jdK1kbGD7jAMyzhLz9PJr3Oe3v4qfxzGGGDRF4v6uHr8u
+         cBnA==
+X-Forwarded-Encrypted: i=1; AJvYcCVB1Uyofd2kAWpX7c4bofcPJ9r4WSs2gIRgyg4Vdz0M82a8cz1ZhqVBoqHS+6bZofik5vUbvd7+88cH+FRilE5V7ZwoziTbqql7SAOp4Q==
+X-Gm-Message-State: AOJu0YzEAaOqPTq9ai0TTSHTUO5e2FYnpHQWDX+Ug4JULLXF+3QcSYCW
+	+mB0cLRRzwXGBsswXzcYHtBfPWqYlx23fFujLcHE5FLEt6IBtNuyDwAAcpMa2Gc=
+X-Google-Smtp-Source: AGHT+IGvNKdudrDJsFCz+vta1snIK9cUncMqGFnepCueFTkJUGgeHU0mX5Ge8h1gAZtVNK+LZc9FoA==
+X-Received: by 2002:a05:6000:1363:b0:362:dbc2:9486 with SMTP id ffacd0b85a97d-36319c6f86emr2312112f8f.68.1718822764283;
+        Wed, 19 Jun 2024 11:46:04 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:991f:deb8:4c5d:d73d])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36098c8c596sm7594156f8f.14.2024.06.19.11.46.01
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36098c8c596sm7594156f8f.14.2024.06.19.11.46.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jun 2024 11:46:02 -0700 (PDT)
+        Wed, 19 Jun 2024 11:46:03 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
 To: Vinod Koul <vkoul@kernel.org>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
@@ -85,9 +85,9 @@ Cc: netdev@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH net-next 1/8] net: phy: add support for overclocked SGMII
-Date: Wed, 19 Jun 2024 20:45:42 +0200
-Message-ID: <20240619184550.34524-2-brgl@bgdev.pl>
+Subject: [PATCH net-next 2/8] net: stmmac: qcom-ethqos: add support for 2.5G overlocked SGMII mode
+Date: Wed, 19 Jun 2024 20:45:43 +0200
+Message-ID: <20240619184550.34524-3-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240619184550.34524-1-brgl@bgdev.pl>
 References: <20240619184550.34524-1-brgl@bgdev.pl>
@@ -101,131 +101,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The Aquantia AQR115C PHY supports the Overlocked SGMII mode. In order to
-support it in the driver, extend the PHY core with the new mode bits and
-pieces.
+Add support for 2.5G speed in Overclocked SGMII mode to the QCom ethqos
+driver.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/net/phy/phy-core.c |  1 +
- drivers/net/phy/phylink.c  | 13 ++++++++++++-
- include/linux/phy.h        |  4 ++++
- 3 files changed, 17 insertions(+), 1 deletion(-)
+ .../net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c   | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/phy/phy-core.c b/drivers/net/phy/phy-core.c
-index 15f349e5995a..7cf87cae11f0 100644
---- a/drivers/net/phy/phy-core.c
-+++ b/drivers/net/phy/phy-core.c
-@@ -138,6 +138,7 @@ int phy_interface_num_ports(phy_interface_t interface)
- 	case PHY_INTERFACE_MODE_RXAUI:
- 	case PHY_INTERFACE_MODE_XAUI:
- 	case PHY_INTERFACE_MODE_1000BASEKX:
-+	case PHY_INTERFACE_MODE_OCSGMII:
- 		return 1;
- 	case PHY_INTERFACE_MODE_QSGMII:
- 	case PHY_INTERFACE_MODE_QUSGMII:
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index 02427378acfd..ce07d41a233f 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -128,6 +128,7 @@ static const phy_interface_t phylink_sfp_interface_preference[] = {
- 	PHY_INTERFACE_MODE_5GBASER,
- 	PHY_INTERFACE_MODE_2500BASEX,
- 	PHY_INTERFACE_MODE_SGMII,
-+	PHY_INTERFACE_MODE_OCSGMII,
- 	PHY_INTERFACE_MODE_1000BASEX,
- 	PHY_INTERFACE_MODE_100BASEX,
- };
-@@ -180,6 +181,7 @@ static unsigned int phylink_interface_signal_rate(phy_interface_t interface)
- 	switch (interface) {
- 	case PHY_INTERFACE_MODE_SGMII:
- 	case PHY_INTERFACE_MODE_1000BASEX: /* 1.25Mbd */
-+	case PHY_INTERFACE_MODE_OCSGMII:
- 		return 1250;
- 	case PHY_INTERFACE_MODE_2500BASEX: /* 3.125Mbd */
- 		return 3125;
-@@ -231,6 +233,7 @@ static int phylink_interface_max_speed(phy_interface_t interface)
- 		return SPEED_1000;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 80eb72bc6311..dac91bc72070 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -665,6 +665,14 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+ 	return val;
+ }
  
- 	case PHY_INTERFACE_MODE_2500BASEX:
-+	case PHY_INTERFACE_MODE_OCSGMII:
- 		return SPEED_2500;
- 
- 	case PHY_INTERFACE_MODE_5GBASER:
-@@ -515,6 +518,10 @@ static unsigned long phylink_get_capabilities(phy_interface_t interface,
- 		caps |= MAC_1000HD | MAC_1000FD;
- 		fallthrough;
- 
-+	case PHY_INTERFACE_MODE_OCSGMII:
-+		caps |= MAC_2500FD;
-+		fallthrough;
++static void qcom_ethqos_speed_mode_2500(struct net_device *ndev, void *data)
++{
++	struct stmmac_priv *priv = netdev_priv(ndev);
 +
- 	case PHY_INTERFACE_MODE_REVRMII:
- 	case PHY_INTERFACE_MODE_RMII:
- 	case PHY_INTERFACE_MODE_SMII:
-@@ -929,6 +936,7 @@ static int phylink_parse_mode(struct phylink *pl,
- 		case PHY_INTERFACE_MODE_10GKR:
- 		case PHY_INTERFACE_MODE_10GBASER:
- 		case PHY_INTERFACE_MODE_XLGMII:
-+		case PHY_INTERFACE_MODE_OCSGMII:
- 			caps = ~(MAC_SYM_PAUSE | MAC_ASYM_PAUSE);
- 			caps = phylink_get_capabilities(pl->link_config.interface, caps,
- 							RATE_MATCH_NONE);
-@@ -1357,7 +1365,8 @@ static void phylink_mac_initial_config(struct phylink *pl, bool force_restart)
- 
- 	case MLO_AN_INBAND:
- 		link_state = pl->link_config;
--		if (link_state.interface == PHY_INTERFACE_MODE_SGMII)
-+		if (link_state.interface == PHY_INTERFACE_MODE_SGMII ||
-+		    link_state.interface == PHY_INTERFACE_MODE_OCSGMII)
- 			link_state.pause = MLO_PAUSE_NONE;
++	priv->plat->max_speed = 2500;
++	priv->plat->phy_interface = PHY_INTERFACE_MODE_OCSGMII;
++}
++
+ static int ethqos_configure(struct qcom_ethqos *ethqos)
+ {
+ 	return ethqos->configure_func(ethqos);
+@@ -787,6 +795,9 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	case PHY_INTERFACE_MODE_RGMII_TXID:
+ 		ethqos->configure_func = ethqos_configure_rgmii;
  		break;
- 
-@@ -3640,6 +3649,7 @@ void phylink_mii_c22_pcs_decode_state(struct phylink_link_state *state,
- 		break;
- 
++	case PHY_INTERFACE_MODE_OCSGMII:
++		plat_dat->speed_mode_2500 = qcom_ethqos_speed_mode_2500;
++		fallthrough;
  	case PHY_INTERFACE_MODE_SGMII:
-+	case PHY_INTERFACE_MODE_OCSGMII:
- 	case PHY_INTERFACE_MODE_QSGMII:
- 		phylink_decode_sgmii_word(state, lpa);
+ 		ethqos->configure_func = ethqos_configure_sgmii;
  		break;
-@@ -3715,6 +3725,7 @@ int phylink_mii_c22_pcs_encode_advertisement(phy_interface_t interface,
- 			adv |= ADVERTISE_1000XPSE_ASYM;
- 		return adv;
- 	case PHY_INTERFACE_MODE_SGMII:
-+	case PHY_INTERFACE_MODE_OCSGMII:
- 	case PHY_INTERFACE_MODE_QSGMII:
- 		return 0x0001;
- 	default:
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index e6e83304558e..73da0983d631 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -128,6 +128,7 @@ extern const int phy_10gbit_features_array[1];
-  * @PHY_INTERFACE_MODE_10GKR: 10GBASE-KR - with Clause 73 AN
-  * @PHY_INTERFACE_MODE_QUSGMII: Quad Universal SGMII
-  * @PHY_INTERFACE_MODE_1000BASEKX: 1000Base-KX - with Clause 73 AN
-+ * @PHY_INTERFACE_MODE_OCSGMII: Overclocked SGMII
-  * @PHY_INTERFACE_MODE_MAX: Book keeping
-  *
-  * Describes the interface between the MAC and PHY.
-@@ -168,6 +169,7 @@ typedef enum {
- 	PHY_INTERFACE_MODE_10GKR,
- 	PHY_INTERFACE_MODE_QUSGMII,
- 	PHY_INTERFACE_MODE_1000BASEKX,
-+	PHY_INTERFACE_MODE_OCSGMII,
- 	PHY_INTERFACE_MODE_MAX,
- } phy_interface_t;
- 
-@@ -289,6 +291,8 @@ static inline const char *phy_modes(phy_interface_t interface)
- 		return "100base-x";
- 	case PHY_INTERFACE_MODE_QUSGMII:
- 		return "qusgmii";
-+	case PHY_INTERFACE_MODE_OCSGMII:
-+		return "ocsgmii";
- 	default:
- 		return "unknown";
- 	}
 -- 
 2.43.0
 
