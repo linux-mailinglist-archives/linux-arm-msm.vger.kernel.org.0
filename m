@@ -1,144 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-23235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D90990F2C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 17:46:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D372C90F367
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 18:00:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 080F51F2708B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 15:46:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 668E2283319
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 16:00:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E37E1514D4;
-	Wed, 19 Jun 2024 15:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E23815885C;
+	Wed, 19 Jun 2024 15:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a3LsaCld"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Giu7MEVV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C903E1514FF;
-	Wed, 19 Jun 2024 15:42:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E8C1586CD;
+	Wed, 19 Jun 2024 15:49:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718811738; cv=none; b=gnLbrN/Qhm4qe0sugArOXTv34e37g6kQT9DxJQnaQdzugqwzb1sPCNDv2fofQlI6H3ZKN7cmgpBQLuTGcgeevF0+tHg0hrv1NatxD6vWfuBgrmiHyWH6AE/1G1to1r4nj0vYSxyQ8m1LPXfKYXQZ+O4l8lbP8Q4BIUo2wu5uzco=
+	t=1718812160; cv=none; b=hxqnNqfWskUQMDa7sTjztVzadXp+BAvhD9LtfUIhvhEYL/pjz6Vh8XGdZZsaauXHmj0LLRvXUn/81+oMZWV9YUxUsSxe3oH2+Lwh9zNiHzNfRKXvzfC8vrQ0oJ5Uw6AKbp4Yuz6KCS/Y6T0YBIqwYQOIeGrxbLE5DuyP3xaI5Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718811738; c=relaxed/simple;
-	bh=mDeqP/sKc/AiS+vkB59fy7TDZDcUAoDaRDc/g//Qu2w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=kZopSXiPdBmDF9O0NBsTDMrxNq4Yz85tMSpH1oKoHgmDPyKvpavKMUZQZhZ32Jzy2olylS0JwFSFzDQ4J589o6rFKdIJHMURQnDa3+52GF6o8UvpauEsQwJGR5EBl8PDTDL5Q/A6AzZMfDTba01cNqj6ipcHi9ClMZ7X4eh+j1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a3LsaCld; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45JAJdI5024352;
-	Wed, 19 Jun 2024 15:42:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=rjGkieKHjJuNG2DdUFCsCx
-	8s1Dw+liQJJNIIPKCrxDo=; b=a3LsaCldDf92WKhJyq2CL7nw6veAsDzoYILz4s
-	CR5DsDlUZB7EO5O/rMMrrzKLB//KEv+HlcSfYNVnrvskY7C65fQ6Qeh1rbYw4vkf
-	/bQ8zD0rgJdeUuLQwLK9yJGj+vH4MKkLkGQOC7LfbpVFBhby1gNaWcAHuifVGShb
-	y1ogxqgye6mOiLsJm8EAJwk0G6CabvsHxll4lok3hF2bYdRq1emdFvmmCSemp7xp
-	7MSf5NYOofPImB+ZQxi65LcyKDOEitsb5vwSg8arnTcIclfbYM5tLCqA0xiJy2SJ
-	OXeDDB1Zf4LTLdLOB93odgtLdmMd3CGwNccnMbqzqcMs8l9Q==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yuja7a42r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Jun 2024 15:42:13 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45JFgChb019220
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 19 Jun 2024 15:42:12 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 19 Jun 2024 08:42:11 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-Date: Wed, 19 Jun 2024 08:41:52 -0700
-Subject: [PATCH] clk: qcom: Remove QCOM_RPMCC symbol
+	s=arc-20240116; t=1718812160; c=relaxed/simple;
+	bh=sCo0S/t/wVuMA8QyWX9utK/82LOwdLvNdRyW93Wh9Zo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hvJ+ZJ4luCQz8jiND4nL6yYkxQtICTCIDOo5/NLR0mj3Vza7/Dz/Pm+FJK/E3SdxC00jzLeMcj2LYGckp1qDu3rjN28FlywFMjVRdcOdYj9OlSt6lYZNPUParPP1acOVlEAOsKQAZGpAanqJNdT+rLc/5fc+clemOiBUEelunGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Giu7MEVV; arc=none smtp.client-ip=209.85.222.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-80d6c63af28so2528192241.0;
+        Wed, 19 Jun 2024 08:49:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718812157; x=1719416957; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sCo0S/t/wVuMA8QyWX9utK/82LOwdLvNdRyW93Wh9Zo=;
+        b=Giu7MEVVW4CDe7/rxoWgXS+g3BfknXRz5SScKP9PTDBZ6+T0hjUTcqZXAhcTvKh+JA
+         xnnI+pJXlD2w7sq70hBGcLxYjGuzp+smoB0aaxENhSORF+vhQ5KcXE9btXcY4vaPWlam
+         6H51BZ5lkF/mGW2+7wYUwrzQ6jmz5zU5+Lrmw8zVCSCHJdaDdJhjQxu+PdQQfXt+oGzB
+         tEKz14AshBDyVn2d27Sk4pcdoiBqbiyV38scuI56oTipWtA+vzQGJZNDs58GvLJMUIxE
+         ecPwyS/5F8RRmGnNcla3IXv4v2LRIJPBXpiogYBt6OxipSL0aJ5sWI694cazCo54hOtR
+         zKfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718812157; x=1719416957;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sCo0S/t/wVuMA8QyWX9utK/82LOwdLvNdRyW93Wh9Zo=;
+        b=J82jj0LT/P6PFDqXvLRDP9I+G9MrnFGdgzbhB9iF7G0cC11K9N08/9gr5Hy9OfNFVb
+         KXDGMAjKAYChtHXOR7Cl8ya5h7TaVrHPT36QML4wlwh+sxYDC8i4Dajqk40WSJf3+mgo
+         DMtVHFPtQzBmba17f3ilEgdu/NtQmBmBnwI54fHxbBtblX/02WZlGlgWNMYmNxQKNbp4
+         jic0SZaxiuH841hz5yQ8jvKN4S30CbjP3n3cOXnMw+7eLZRGwKDLIfQmb11NrqUN3n+7
+         3hotV7z+/0UhdM9JXRsKSw4Licn6vclxt5MZMj8BSJgnjN2X1QmZ1XSD5XP2enCl5hAS
+         JpmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXNfV6/zxzeq9u504Dn+20+/NXomd8Rl9abPCmzU75Ls1SMzX7kEQlP29HL2l+xhplW/Un4qnMJbxXi7zvzDx0IVcaUF20U1XldnjFpxf6sjwXBCdqvb2zDEyDYRDVyhD4U8Mv3L9AKntC7v9msHUXIcUzG0rNnwWbPIOFd9lKR8SQfTXIYAwW0XRSaiBNWvA3GDeS8znYjDSSQ5hKwUezvY0Tq0lTW1k0MCBeG+90uLfi4IB6nM4g0fqqpPAAIBV7ACPR1trIYR9nDGJrfY82PwTDd+e+q7foHL6QR3rsVDG0Lrt2wwsRTqX/BSoa4Z6iPFvEL5tk7iIrYYAVkQzqsAzcFT0MjUR42f3iJHehuNBGAfobAkmpcWyLFr0fXcvm9yDS+bqsp9khF8RHWuy/bR78qCOphvIQ76W1UpQz33RbuHqw1yntFHvXGrpSm/Ko=
+X-Gm-Message-State: AOJu0YxQ/SnjNJ4BVcTpeDyEKgsFkRWz5mqL7lQLHR9BGg2ilF0YpSo+
+	eJ3XmUMeWVOOOLDirrWQp7pmeJbomedVaZtjVUXA1gHRe7bmBiB48uP/4ai5Biio6wtICX4ASuy
+	UiS7IGZq7NC1yrytmrED8gw8Q9uk=
+X-Google-Smtp-Source: AGHT+IHg0GWswSl3r9pwlr7iQjchG/nGHT//aM8i64MYsXIGAJArmngGDjmCxE9ZpGaKh9pHgPCRQReNLVUNTwTTHm4=
+X-Received: by 2002:a05:6102:26ce:b0:48c:40cd:e4da with SMTP id
+ ada2fe7eead31-48f1304b1c6mr3802757137.19.1718812157407; Wed, 19 Jun 2024
+ 08:49:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240619-drop-qcom-rpmcc-v1-1-b487c95162ef@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAD/8cmYC/x3MPQqAMAxA4atIZgNt/UG8ijiUNGoGbU1BBPHuF
- sdveO+BzCqcYaweUL4kSzwKbF0Bbf5YGSUUgzOuNb0dMGhMeFLcUdNOhG5pwtB58sZbKFVSXuT
- +j9P8vh9O8LueYQAAAA==
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Elliot Berman <quic_eberman@quicinc.com>
-X-Mailer: b4 0.13.0
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: x16CFweXn5yL5KOk21xmjuUJBUvB8CoI
-X-Proofpoint-GUID: x16CFweXn5yL5KOk21xmjuUJBUvB8CoI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-19_02,2024-06-19_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=626 malwarescore=0
- phishscore=0 bulkscore=0 suspectscore=0 clxscore=1011 spamscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406190118
+References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
+ <20240618-starqltechn_integration_upstream-v3-18-e3f6662017ac@gmail.com> <4eab619f-6da9-4aff-b956-69d8e2ecd47f@sirena.org.uk>
+In-Reply-To: <4eab619f-6da9-4aff-b956-69d8e2ecd47f@sirena.org.uk>
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+Date: Wed, 19 Jun 2024 18:49:06 +0300
+Message-ID: <CABTCjFDUKgeYWuwo8eLt+5WD=4O+kLbFwMRxsTufGnqK0Ecpvg@mail.gmail.com>
+Subject: Re: [PATCH v3 18/23] regulator: add s2dos05 regulator support
+To: Mark Brown <broonie@kernel.org>
+Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Sam Ravnborg <sam@ravnborg.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, 
+	Liam Girdwood <lgirdwood@gmail.com>, =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-input@vger.kernel.org, linux-leds@vger.kernel.org, 
+	linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This symbol is selected by a couple drivers, but isn't used by anyone
-and hasn't been for years now. Drop it.
-
-No functional change intended.
-
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
----
- drivers/clk/qcom/Kconfig | 5 -----
- 1 file changed, 5 deletions(-)
-
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index f72838aa573b..67c9188d53cb 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -7,9 +7,6 @@ config QCOM_GDSC
- 	bool
- 	select PM_GENERIC_DOMAINS if PM
- 
--config QCOM_RPMCC
--	bool
--
- menuconfig COMMON_CLK_QCOM
- 	tristate "Support for Qualcomm's clock controllers"
- 	depends on OF
-@@ -122,7 +119,6 @@ config QCOM_CLK_APCS_SDX55
- config QCOM_CLK_RPM
- 	tristate "RPM based Clock Controller"
- 	depends on MFD_QCOM_RPM
--	select QCOM_RPMCC
- 	help
- 	  The RPM (Resource Power Manager) is a dedicated hardware engine for
- 	  managing the shared SoC resources in order to keep the lowest power
-@@ -135,7 +131,6 @@ config QCOM_CLK_RPM
- config QCOM_CLK_SMD_RPM
- 	tristate "RPM over SMD based Clock Controller"
- 	depends on QCOM_SMD_RPM
--	select QCOM_RPMCC
- 	help
- 	  The RPM (Resource Power Manager) is a dedicated hardware engine for
- 	  managing the shared SoC resources in order to keep the lowest power
-
----
-base-commit: eefb5ee4b41cdb68bf6feffe0d68b5bbe038e29d
-change-id: 20240618-drop-qcom-rpmcc-2f3d85aca0a1
-
-Best regards,
--- 
-Elliot Berman <quic_eberman@quicinc.com>
-
+=D0=B2=D1=82, 18 =D0=B8=D1=8E=D0=BD. 2024=E2=80=AF=D0=B3. =D0=B2 17:08, Mar=
+k Brown <broonie@kernel.org>:
+>
+> On Tue, Jun 18, 2024 at 04:59:52PM +0300, Dzmitry Sankouski wrote:
+>
+> > index 000000000000..3c58a1bd2262
+> > --- /dev/null
+> > +++ b/drivers/regulator/s2dos05-regulator.c
+> > @@ -0,0 +1,362 @@
+> > +// SPDX-License-Identifier: GPL-2.0+
+> > +/*
+> > + * s2dos05.c - Regulator driver for the Samsung s2dos05
+> > + *
+>
+> Please make the entire comment a C++ one so things look more
+> intentional.
+>
+Do you mean enclosing the first line (license identifier) in /* */
+style comment?
 
