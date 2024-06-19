@@ -1,125 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-23284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0027F90F72E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 21:51:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2508B90F760
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 22:07:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 78E88B209C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 19:51:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8E0431F237BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Jun 2024 20:07:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B95275816;
-	Wed, 19 Jun 2024 19:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AB541422A2;
+	Wed, 19 Jun 2024 20:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="wykRAKO9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U4CO2fHx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA13F1876;
-	Wed, 19 Jun 2024 19:51:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5255A156F25
+	for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 20:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718826694; cv=none; b=ub+cbq3qzhGA1xGd66f/MQmEFvPqj/k9J4l0zpFfmZL0TvjZwypZhThnNCiq6Xws8MKPJpA+FWKvZjcdlhBeKxd3RJQWSQQTMeJAOxhjskHl6nvq2d8tF62Ut2pU6qu326k2UUz10u8u+TjIo7S0pRM7TQCEbfRNrBr/YK3XwPg=
+	t=1718827635; cv=none; b=QnL0u1MzvVRZulwFljwyMHyJYmVsJ3/8FzPgk6akCbdgVoIUCEDlykyAyen27qOMolXOSKSplFBmAFVG2nDStRY0Jvg9lxCduas19I9deO3tcd0a+DwwWS6FDB6k7YrmvV2BEFucPrCM/sK9Pg59mN+wKXHQhpv+OWl5lwepITg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718826694; c=relaxed/simple;
-	bh=Zqm1vtW+ID7zxTGrE2BVFpmEo5FykJURlDkbPF8Y448=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tzEQApkEgkKTVMRxN+ikGm7mFDy2wq2C9IFFnIcGFLMpfvF6X3OKEhdNE1p2Y7IgYgWNbBBgmAwtEBwCWDwIsIwJbW/fBT97wVJM1snFh1UTOszeotCKS+6abpvTv5SsR0chrB3AeKBr/xUKClFfIP4kxyr2WCxlv3wAtZllDRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=wykRAKO9; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Transfer-Encoding:Content-Disposition:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Content-Disposition:
-	In-Reply-To:References; bh=WnQdVdsbldNc+VO+2ej+8Ij/CjLH8t7u+69BlHcBJow=; b=wy
-	kRAKO9vKrjnz8H1Qso+72FuS2LpcBjC3qXjri4XnQgfwKy/G8smmugzkf+RXMAcXgQZCrs2u9Mvmk
-	GwDQH0IGVU3G0YetnxedN1jDAMkm8bsWJ7k4ycQCar76oRoOPFldxO8oVV1Y9chzE4GkHBELRTBiM
-	Xb4aDyh7xSFGETo=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1sK1Kq-000VKf-O5; Wed, 19 Jun 2024 21:51:12 +0200
-Date: Wed, 19 Jun 2024 21:51:12 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH net-next 1/8] net: phy: add support for overclocked SGMII
-Message-ID: <160b9abd-3972-449d-906d-71d12b2a0aeb@lunn.ch>
-References: <20240619184550.34524-1-brgl@bgdev.pl>
- <20240619184550.34524-2-brgl@bgdev.pl>
- <bedd74cb-ee1e-4f8d-86ee-021e5964f6e5@lunn.ch>
- <CAMRc=MeCcrvid=+KG-6Pe5_-u21PBJDdNCChVrib8zT+FUfPJw@mail.gmail.com>
+	s=arc-20240116; t=1718827635; c=relaxed/simple;
+	bh=/cGu5fDl/w12kc3ON5hDJfk7z/YiFPwjDsYd3Ws1/kI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UPicxudSWR/DZKrKbe81HKqJWDShAVCx8dcCBTr1vzU/kRbHvBhDmWS4OZ3xMhuLU4uJyo/MnmjN3BWV7QXfMfK4PhIuZX3VazfVQ8ngIj2rfemViMGE+1hvt5eD/FVga9NznTxp3Vgyt35ll6Xl9Vq06S3LN2xuaT8ru4R9TBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U4CO2fHx; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a6e43dad8ecso31890766b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Jun 2024 13:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718827632; x=1719432432; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DXltk2pj8KgRtNfCGdnICNOGzFk5REHMQ6uROpqHKxw=;
+        b=U4CO2fHxu7QH2aNZf36iTOyKdqoFDkeR+KKR/dSZr/rN6+G/+IIEB4PdrSQk6Yg+xY
+         ZYg16uMCNUVyaWWJDuUnlhiXEs7QfF/MPKVYS30frzSofvR70vpPRl7JHaKn/H3SuTqm
+         NNZQn87kt5zUCcPUi9IOoPtwuOQrQy9Ky5jkWZVv09Fw0P9aCPW5cNkTyDl01ht9AwhT
+         I3LQU5r8fWjS2YVunKTaWzcn3j0h/Z7WUrEyIFC5QnCAyJVD23tTWvy5DHG2FHZO0GrN
+         +3jHfCDjed8T5ewJBvTBMbD4ZdFMQUUNGITqHDCBOSCdSMBb9xQysgKmJ2jPXD7ZugyC
+         lK/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718827632; x=1719432432;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DXltk2pj8KgRtNfCGdnICNOGzFk5REHMQ6uROpqHKxw=;
+        b=m+OAS2ELSYFlKm6LgxN2M5RFYiS3sZTLW1ZxroTuqCgKuejQoG2BmAZZSH7RS6ZnHk
+         A87gqXZm7/TKksv3I+N6IQQatYBkPJD2CC33uqtJ3N4LA9n4HtXt9hXKKDzg1eTSl9tt
+         6m+lghtT6DGNl05tpCSTBWam4jim+3yHJ1qyhBNhExTLC9sTYunmDpdbfdjAp5wy9JIR
+         O4zbGCNzrwF0DcyurSG65T3E/QsEtR0MvHVO6qo1+6l9z1el0glvMf5ouJXZBmUxlvuO
+         MlClMtSoz33BFjudjyRnRfqsRFSzwflgJAMPYUuWl3cx1iWfR8xUXlAwlP7Olo703Thf
+         caGg==
+X-Forwarded-Encrypted: i=1; AJvYcCURO+LrZ9enoOt8rAt2Z+WeE8UvA6xUUVglKb96Y1TT+wSQ/g5NZIRfpBztHaefbvr81xl21s+OqS4+Ux/remNTKeaZnKoq/q7e6wpLew==
+X-Gm-Message-State: AOJu0YyE4u+NhkRMu6OpYaEffU4MZ+eWpkUgPrzBXb1ld/QBhrbqJmxx
+	jJqwzy5RuI9UWLUe+oCkYejgDuYJ7OGK2eXQTA1G2v6hGZVLbdpZPRdGCU9io3o=
+X-Google-Smtp-Source: AGHT+IGpVLdKvW9x1TLtFMIVprraYeiwC+PZrOrqrJwwmY5vpjguuk33olStWp+zoX41leRasvQbKg==
+X-Received: by 2002:a17:907:c30d:b0:a6f:3612:160 with SMTP id a640c23a62f3a-a6fa410b16cmr254820066b.14.1718827631493;
+        Wed, 19 Jun 2024 13:07:11 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:9028:9df3:4dba:9578:7545:6874? ([2a00:f41:9028:9df3:4dba:9578:7545:6874])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f99a09fe8sm144535566b.9.2024.06.19.13.07.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Jun 2024 13:07:10 -0700 (PDT)
+Message-ID: <f40a24da-d201-4d57-b472-6c98c0e2deaa@linaro.org>
+Date: Wed, 19 Jun 2024 22:07:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MeCcrvid=+KG-6Pe5_-u21PBJDdNCChVrib8zT+FUfPJw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 8/9] soc: qcom: Add support for Core Power Reduction
+ v3, v4 and Hardened
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, Niklas Cassel <nks@flawful.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Robert Marko <robimarko@gmail.com>,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+References: <20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org>
+ <20230217-topic-cpr3h-v14-8-9fd23241493d@linaro.org>
+ <CAPDyKFrNprXpdQBEzezyOJg6NJ8LLarZQV_mnQn5QyCrNmsRUw@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAPDyKFrNprXpdQBEzezyOJg6NJ8LLarZQV_mnQn5QyCrNmsRUw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 19, 2024 at 09:29:03PM +0200, Bartosz Golaszewski wrote:
-> On Wed, Jun 19, 2024 at 9:09 PM Andrew Lunn <andrew@lunn.ch> wrote:
-> >
-> > On Wed, Jun 19, 2024 at 08:45:42PM +0200, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > The Aquantia AQR115C PHY supports the Overlocked SGMII mode. In order to
-> > > support it in the driver, extend the PHY core with the new mode bits and
-> > > pieces.
-> >
-> > Here we go again....
-> >
+
+
+On 9/6/23 12:23, Ulf Hansson wrote:
+> On Mon, 28 Aug 2023 at 13:42, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>>
+>> This commit introduces a new driver, based on the one for cpr v1,
+>> to enable support for the newer Qualcomm Core Power Reduction
+>> hardware, known downstream as CPR3, CPR4 and CPRh, and support
+>> for MSM8998 and SDM630 CPU power reduction.
+>>
+>> In these new versions of the hardware, support for various new
+>> features was introduced, including voltage reduction for the GPU,
+>> security hardening and a new way of controlling CPU DVFS,
+>> consisting in internal communication between microcontrollers,
+>> specifically the CPR-Hardened and the Operating State Manager.
+>>
+>> The CPR v3, v4 and CPRh are present in a broad range of SoCs,
+>> from the mid-range to the high end ones including, but not limited
+>> to, MSM8953/8996/8998, SDM630/636/660/845.
+>>
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> [Konrad: rebase, apply review comments]
+>> Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+
+[...]
+
+>> +
+>> +static void cpr_pd_detach_dev(struct generic_pm_domain *domain,
+>> +                             struct device *dev)
+>> +{
+>> +       struct cpr_thread *thread = container_of(domain, struct cpr_thread, pd);
+>> +       struct cpr_drv *drv = thread->drv;
+>> +
+>> +       mutex_lock(&drv->lock);
+>> +
+>> +       dev_dbg(drv->dev, "detach callback for: %s\n", dev_name(dev));
+>> +       thread->attached_cpu_dev = NULL;
+>> +
+>> +       mutex_unlock(&drv->lock);
 > 
-> Admittedly I don't post to net very often and I assume there's a story
-> to this comment? Care to elaborate?
+> Don't you need to do some additional cleanup here? Like calling
+> dev_pm_opp_of_remove_table() for example?
+> 
 
-2.5G is a mess because vendors implemented it before the standard came
-out, in the form of 2500BaseX. They often did just what this seems to
-suggest, they overclocked CISCO SGMII.  But the in-band signalling
-SGMII uses cannot work at 2.5G, it makes no sense. So vendors disable
-the in-band signalling.
+Ouch, right..
 
-What you likely end up with, is 2500BaseX, but without in-band
-signalling.
+[...]
 
-Now, some real 2500BaseX devices require the peer to perform in-band
-signalling. Some will listen for the signalling a while, and if they
-hear nothing will go into some sort of fallback mode. Others can be
-told the peer does not support inband signalling, and so don't expect
-it.
+>> +
+>> +       /* CPR-Hardened performance states are managed in firmware */
+>> +       if (desc->cpr_type == CTRL_TYPE_CPRH)
+>> +               thread->pd.set_performance_state = cprh_dummy_set_performance_state;
+> 
+> The dummy function above always returns 0, without actually doing
+> anything. I am trying to understand the purpose of this.
+> 
+> Would you mind elaborating on this a bit?
 
-And then we have those which are overclocked SGMII which don't expect
-any signalling because SGMII signalling makes no sense at 2.5G.
+It looks like this was put in place to overcome the
 
-phylib supports out of band signalling, which is enough to make this
-work, so long as two peers will actually establish a link because they
-are sufficiently tolerant of what the other end is doing. Sometimes
-they need a hint. Russell King has been working on this mess, and i'm
-sure he will be along soon.
+.. && genpd->set_performance_state)
 
-What i expect will happen is you keep calling this 2500BaseX, without
-in band signalling. You can look back in the netdev mailling list for
-more details and those that have been here before you. It is always
-good to search the history, otherwise you are just going to repeat it.
+check in of_genpd_add_provider_onecell() that gatekeeps calling
+functions that parse OPP tables from DT
 
-   Andrew
+[...]
+
+> Note that, this was mostly a drive-by-review, looking at the genpd
+> provider specific parts. In general this looks good to me, other than
+> the minor comments I had above.
+
+No worries, every time I open this file, I end up fixing more and
+more things..
+
+Konrad
 
