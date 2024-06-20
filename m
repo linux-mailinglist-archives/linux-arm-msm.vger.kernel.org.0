@@ -1,176 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-23482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5C819116E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 01:37:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD5AE91170E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 01:54:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C314283AC5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 23:37:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C23C1C2091F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 23:54:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F30CA14387C;
-	Thu, 20 Jun 2024 23:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DEFA15A87A;
+	Thu, 20 Jun 2024 23:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dQBRcETp"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zEdyHzab"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220E7482ED;
-	Thu, 20 Jun 2024 23:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB570158865
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 23:54:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718926649; cv=none; b=OCIrMvdrebK5+OI1LLyNVuQqs+iQ3VmySdUtvFoqPoXICXZ2iz6H6Opg/OVWJdCEmoT9/c2vMt8ko2bpM6AuhuMsOXW2ETYPZORaV2Mz9dlgajnPorCavFBZ0ijoHH4Rw7jGd7M4OYZipJT7WEzQTNeLbduHp9/pkOkGLdaYVPs=
+	t=1718927644; cv=none; b=CA0QIRjnLFGgAHrC9n/6s15meML5uigkuIbsR/hMkAMk9tVtoVSQVimxVpaRhcyZU6csGopRog9zYNcyZ0Mbzs726riGejc/gzhaPQMYVUIvZGg8T5lLIUgrJ7M+Cz+gt7Z+jvoTm0cE3CLE2VW3MM0jYMJLTw3pPUYv/72nQms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718926649; c=relaxed/simple;
-	bh=ahjfBUeLfeo1fxhXjHk6wp/gQtPJzH+k5Vz/WaHQqDI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JBBm5/RtQnn67muElPHrKBEVusESyG61WxrG0xZkIJwdvtScgj7iRYz7tiFnDz4hVK36aYUJSEq6O5cf2CSaZ8HFVUhy13wrt4uYcrA/6JqETNXaBcrCC+ycx425yuGAW1Uk6K83hNzyHfCy6Q55keUZ5ZO5sFABDZxHaS4zQv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dQBRcETp; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45KHC6IK011849;
-	Thu, 20 Jun 2024 23:37:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=3TZij88SGIKu2ouzX+gUyKRo
-	FlEWEYwTyShDW092wco=; b=dQBRcETpCCEqrmLHQgvaggunSSZtkCtm1P6GWcTJ
-	JnomayxfAacDeLm/qhaBnhUwbWpSR5IDG7hOQouwS/oxrXNYiM7GT/Rku1xlUfRq
-	v5SGp6S6N34Aqu5pO7lm/B1m4KdRC90BgKvpVhteyO2p+ltc8H54yANmEdOnlp4Y
-	ZecWkKvDh8Fq/BT9xpx6qGPJOOolHHf44ZeKfkUtgHJYTmUu02p4vUsvdDbCyrcC
-	/1QjrAKPPf6C3+vC8RcIiLnoXefNIrQu1joz0oqJQGF/PCfuyWLxbc9hIRp9w5oc
-	FFMjJly+Ob+VHQivRn9axYxWYxBjTJKr2NuJsSK/+KjQJw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrkvgw5w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Jun 2024 23:37:12 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45KNbAx3016285
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Jun 2024 23:37:11 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 20 Jun 2024 16:37:10 -0700
-Date: Thu, 20 Jun 2024 16:37:09 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Sudeep Holla <sudeep.holla@arm.com>, Sebastian Reichel <sre@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andy Yan
-	<andy.yan@rock-chips.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        "Mark
- Rutland" <mark.rutland@arm.com>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Shivendra Pratap <quic_spratap@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
-Message-ID: <20240620162547309-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
- <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
- <20240619135143.kr2tx4ynxayc5v3a@bogus>
- <20240619080933071-0700.eberman@hu-eberman-lv.qualcomm.com>
+	s=arc-20240116; t=1718927644; c=relaxed/simple;
+	bh=6Kw4I2gz47xBlSWU1bCHtbmt7t3vLNmf2vRXulDomGk=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=JIR1zb1m0AX3ln6LHnMsz45mTzytAFqrQYNz9ls54vslGI+MNgQQLUjSIrA4XK7OIP/cI+rgGO6VoIBCL7sSEkUUH79TusUABZV+EaujrWXwrtvVH/QAogpekOwFNP/P62BeOKlvL4sKJn00gZINGTaxfR+fUngU3iePFBkiWO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zEdyHzab; arc=none smtp.client-ip=209.85.219.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dfefc2c8569so2568819276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 16:54:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1718927642; x=1719532442; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q0cRQk7/XDy8pfU62IMrgS6+Av/DI0qRpfb94ZPZk38=;
+        b=zEdyHzab9YYFEYAfspfHy/bz91yL58XO6vRgPkH76Ggy/AH38yBQhingLGl+9McGgf
+         2Px74oC3hlanRyJHv5OdfvK4SGwxGV4BZqYy9BNp37AJZN6FiWM4QcYu+fjII3NQwW27
+         wKgoDDnFlzn/8K1Qf3jmfML2qObWpHJi0YBolBeoT0yt3ASxki5RIr+tkhKI/d2Dk1Az
+         nrk0aHcsOAMm2eaot5hm/7D/FDiH05wyv1wiG18kY8WQXAT+WnSjzlVW8kLBH8t+QBMd
+         OuceQmJulS5lfDgVXIqfJVW6N1sBFzusKtMr60hAdzf7rigkd+esCiA5xNESSiU2KFSR
+         oh2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718927642; x=1719532442;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q0cRQk7/XDy8pfU62IMrgS6+Av/DI0qRpfb94ZPZk38=;
+        b=rZqpkXbT6J98sjzo4ie0AlKwVeRfCfVcYYI0sy86yHYAUfW0YtIf2ePj/iECqIHno2
+         zCX37hXGkVEUDQ3jqvrD8UYlHH98yt5peMm5ioZCSW6l9nzp+rLBr27yg+uFTZniIfrj
+         eP9xJ/H3ySeU4E6PO0yApMpSQGRGBhGJzR+Uye24M3+BV5mxz467Dj03CrwiSdmjOPlS
+         LDdGs5tJAp++c+Kk632WZDri9IFTs6dkj3hHL812x7jsdOMLfWtE2azFq3PTSPLknTBV
+         espWntLRe8t1ZjkQcSvRgWLHUpB4iF44sflnEk085Pb2SqjvdWnZbU7Oiz/JI2eJU3XS
+         wr5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXxwTfZFWIIgmyttwvdlIXT9YpcwH03RZLD0k/PipWob7fWkQ1asFnW4WmPz4TeJGw1dd++5IPjI01seP0gTUQHtFOrquqqSwlUzIrP4g==
+X-Gm-Message-State: AOJu0YxAJEMnCc7bscT9WzqCuTk5UorbhkETccWNwh3cMOn+5cXQ7uNR
+	RvBBtzIJpPRoouFqPZvHecHtfEk3meHlzHz2QcoBa4gwJugUAjOSgfuZ4D8FpNKzgyojWArth+w
+	TeQ==
+X-Google-Smtp-Source: AGHT+IFqao5Na4T3rzYX1N/evGid4F+5vGCBEQVSEibXvNgi7IKeL5G0APBP0MUgJnp7hbOtvkBt0IPXmEs=
+X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
+ (user=seanjc job=sendgmr) by 2002:a25:943:0:b0:dff:2f78:a5d7 with SMTP id
+ 3f1490d57ef6-e02be130582mr1296664276.5.1718927641763; Thu, 20 Jun 2024
+ 16:54:01 -0700 (PDT)
+Date: Thu, 20 Jun 2024 16:54:00 -0700
+In-Reply-To: <20240620231133.GN2494510@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0
+References: <ZnOsAEV3GycCcqSX@infradead.org> <CA+EHjTxaCxibvGOMPk9Oj5TfQV3J3ZLwXk83oVHuwf8H0Q47sA@mail.gmail.com>
+ <20240620135540.GG2494510@nvidia.com> <6d7b180a-9f80-43a4-a4cc-fd79a45d7571@redhat.com>
+ <20240620142956.GI2494510@nvidia.com> <385a5692-ffc8-455e-b371-0449b828b637@redhat.com>
+ <20240620163626.GK2494510@nvidia.com> <66a285fc-e54e-4247-8801-e7e17ad795a6@redhat.com>
+ <ZnSRZcap1dc2_WBV@google.com> <20240620231133.GN2494510@nvidia.com>
+Message-ID: <ZnTBGCeSN1u6wzLb@google.com>
+Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
+From: Sean Christopherson <seanjc@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>, 
+	Christoph Hellwig <hch@infradead.org>, John Hubbard <jhubbard@nvidia.com>, 
+	Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>, maz@kernel.org, 
+	kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+	pbonzini@redhat.com
 Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240619080933071-0700.eberman@hu-eberman-lv.qualcomm.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FPdfh-nyfdNH2V3YNMdyeKVIT0F722rp
-X-Proofpoint-ORIG-GUID: FPdfh-nyfdNH2V3YNMdyeKVIT0F722rp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-20_10,2024-06-20_04,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 mlxscore=0 bulkscore=0 malwarescore=0
- mlxlogscore=999 priorityscore=1501 suspectscore=0 impostorscore=0
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406200172
 
-Hi Sudeep and Sebastian,
-
-On Wed, Jun 19, 2024 at 08:28:06AM -0700, Elliot Berman wrote:
-> On Wed, Jun 19, 2024 at 02:51:43PM +0100, Sudeep Holla wrote:
-> > On Mon, Jun 17, 2024 at 10:18:09AM -0700, Elliot Berman wrote:
-> > > SoC vendors have different types of resets and are controlled through
-> > > various registers. For instance, Qualcomm chipsets can reboot to a
-> > > "download mode" that allows a RAM dump to be collected. Another example
-> > > is they also support writing a cookie that can be read by bootloader
-> > > during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
-> > > vendor reset types to be implemented without requiring drivers for every
-> > > register/cookie.
-> > > 
-> > > Add support in PSCI to statically map reboot mode commands from
-> > > userspace to a vendor reset and cookie value using the device tree.
-> > > 
-> > > A separate initcall is needed to parse the devicetree, instead of using
-> > > psci_dt_init because mm isn't sufficiently set up to allocate memory.
-> > > 
-> > > Reboot mode framework is close but doesn't quite fit with the
-> > > design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
-> > > be solved but doesn't seem reasonable in sum:
-> > >  1. reboot mode registers against the reboot_notifier_list, which is too
-> > >     early to call SYSTEM_RESET2. PSCI would need to remember the reset
-> > >     type from the reboot-mode framework callback and use it
-> > >     psci_sys_reset.
-> > >  2. reboot mode assumes only one cookie/parameter is described in the
-> > >     device tree. SYSTEM_RESET2 uses 2: one for the type and one for
-> > >     cookie.
-> > >  3. psci cpuidle driver already registers a driver against the
-> > >     arm,psci-1.0 compatible. Refactoring would be needed to have both a
-> > >     cpuidle and reboot-mode driver.
-> > >
-> > 
-> > I need to think through it but when you first introduced the generic
-> > Documentation/devicetree/bindings/power/reset/reboot-mode.yaml bindings
-> > I also looked at drivers/power/reset/reboot-mode.c
-> > 
-> > I assumed this extension to that binding would reuse the same and
-> > PSCI would just do reboot_mode_register(). I didn't expect to see these
-> > changes. I might have missing something but since the bindings is still
-> > quite generic with additional cells that act as additional cookie for
-> > reboot call, I still think that should be possible.
-> > 
-> > What am I missing here then ?
-> > 
+On Thu, Jun 20, 2024, Jason Gunthorpe wrote:
+> On Thu, Jun 20, 2024 at 01:30:29PM -0700, Sean Christopherson wrote:
+> > I.e. except for blatant bugs, e.g. use-after-free, we need to be able to guarantee
+> > with 100% accuracy that there are no outstanding mappings when converting a page
+> > from shared=>private.  Crossing our fingers and hoping that short-term GUP will
+> > have gone away isn't enough.
 > 
-> Right, if that was only thing to "solve" to make it easy to use
-> reboot-mode framework, I agree we should update reboot mode framework to
-> work with the additional cells. There are a few other issues I mention
-> above which, when combined, make me feel that PSCI is different enough
-> from how reboot mode framework works that we shouldn't try to make PSCI
-> work with the framework. Issues #1 and #2 are pretty easy to solve
-> (whether they should be solved is different); I'm not sure a good
-> approach to issue #3.
+> To be clear it is not crossing fingers. If the page refcount is 0 then
+> there are no references to that memory anywhere at all. It is 100%
+> certain.
 > 
+> It may take time to reach zero, but when it does it is safe.
 
-Does the reasoning I mention in the commit text make sense why PSCI should
-avoid using the reboot-mode.c framework?
+Yeah, we're on the same page, I just didn't catch the implicit (or maybe it was
+explicitly stated earlier) "wait for the refcount to hit zero" part that David
+already clarified.
+ 
+> Many things rely on this property, including FSDAX.
+> 
+> > For non-CoCo VMs, I expect we'll want to be much more permissive, but I think
+> > they'll be a complete non-issue because there is no shared vs. private to worry
+> > about.  We can simply allow any and all userspace mappings for guest_memfd that is
+> > attached to a "regular" VM, because a misbehaving userspace only loses whatever
+> > hardening (or other benefits) was being provided by using guest_memfd.  I.e. the
+> > kernel and system at-large isn't at risk.
+> 
+> It does seem to me like guest_memfd should really focus on the private
+> aspect.
+> 
+> If we need normal memfd enhancements of some kind to work better with
+> KVM then that may be a better option than turning guest_memfd into
+> memfd.
 
-Thanks,
-Elliot
+Heh, and then we'd end up turning memfd into guest_memfd.  As I see it, being
+able to safely map TDX/SNP/pKVM private memory is a happy side effect that is
+possible because guest_memfd isn't subordinate to the primary MMU, but private
+memory isn't the core idenity of guest_memfd.
 
+The thing that makes guest_memfd tick is that it's guest-first, i.e. allows mapping
+memory into the guest with more permissions/capabilities than the host.  E.g. access
+to private memory, hugepage mappings when the host is forced to use small pages,
+RWX mappings when the host is limited to RO, etc.
+
+We could do a subset of those for memfd, but I don't see the point, assuming we
+allow mmap() on shared guest_memfd memory.  Solving mmap() for VMs that do
+private<=>shared conversions is the hard problem to solve.  Once that's done,
+we'll get support for regular VMs along with the other benefits of guest_memfd
+for free (or very close to free).
 
