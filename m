@@ -1,96 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-23427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36060911264
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 21:43:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFDC79112B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 22:00:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0FE6B235A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 19:43:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A2A01F2259E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:00:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D44A61BA070;
-	Thu, 20 Jun 2024 19:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15B561BA073;
+	Thu, 20 Jun 2024 20:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RSZiEagy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="flDkmKok"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA901B9ACE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 19:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08431B9AAF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 20:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718912569; cv=none; b=IB+2ShsB0L4rYtzu7bc0eKVFl3oB5m8bYQj/5XxlFMG1kBNix9UbQDKbV6k5TPs6Cs/e7p5Ss9QqbdN9ngglTHcPrvOecS8lNrSc7Zk7oII55bS1MOIgGkh771MQq5Q/qlJYG/wvH+swTe2b0/dmE1OGl+aPffCTt55Fgjs6I6U=
+	t=1718913605; cv=none; b=rgRoCz3vQrcKdwsszW/tUlraGK/dw7CS5vZxKDG8fwKmdpCmrd7fwgoiHRtZE63EjAJ5ZEQxttFDh4OIfXp/v2rn8c5/wED9KCwP/7MrDw9wrRkXvqRNLuIewdiKTLU7/JXZ8qnT+UFt4zmv50OVkD86SI2BRjMPQVHozPMVG2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718912569; c=relaxed/simple;
-	bh=HehlRGEC8VVYuH4plXIVmqlAlRJGpeJ8Synul5a0NSM=;
+	s=arc-20240116; t=1718913605; c=relaxed/simple;
+	bh=2EWx4KYDnrDNkjCe8TXjn64YD4M1kKZ6OMRdencFrlE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yign7lZT0bcGBDxj/+BK0krBCOmf5JciVjhpyMi6ipQHhzBls43qjSQcE0BNDywo8IVUKPj5buthqBV53YR95AgORaZMhuk9r6tmLI5AdJZd8e+DV7K6IALLFx5MGI9tyGp0IlWbrFq8FRN0ReSq64cCxm7BadGaXxbrXYopo1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RSZiEagy; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1718912567;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1agS+ZvCUVxgkXGHHLIbPUJmAmNouL9iIY3PECE7ow4=;
-	b=RSZiEagyXXw84zqLbEl/yN/gi9sv9s+3O2xBe33Zxb4aMXtB/rLB8sXDD08gPdtNcpecc1
-	xnfdyxAP38ywRSbueZsydQnYTUOBgQZlZ9Zr8m/KwpOZZkoOovoty2N3OVqxidA8lT6aGq
-	iUU5x98Myg3pJnkO6/vPUxLzv2a+C64=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-7n6vftCSPh62xATB173N3w-1; Thu, 20 Jun 2024 15:42:45 -0400
-X-MC-Unique: 7n6vftCSPh62xATB173N3w-1
-Received: by mail-yb1-f200.google.com with SMTP id 3f1490d57ef6-dfab38b7f6bso1935127276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 12:42:45 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=c8rPJAR3SUtdRn8VhF8lkL6m5zkCNzDVOCCyaKntvuBqwHrPROVhbhLxwiYGosf+F3NPurGFV7MkNdf6Aqvl3y9y4opHf25Vispbrels+YS+GIEc4Mz+7UZ/jKrKi0u8shKUZ4pjQh3/hewtdpugcGIsQtzbUsJkCE2c8hwLqIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=flDkmKok; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52c525257feso1456210e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 13:00:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718913600; x=1719518400; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gMilNXtwVzUh+PE2x1zMrBwSzBscyeknBF0WgBRu6Ys=;
+        b=flDkmKoktAcMOeUdgFRoFs8lgFwLeYmRNv/SbvtvKEXUe7VzYzAjIKykgVHQeveXpm
+         vJcqwo3QuHUSCPUfGWMobqifdvCJcVJA2JUm75Swu/JbB8uAn64gDR0ZdVrwM6nZP2WX
+         9cD5LzqR5LVOnJgV7p3IpYqOxiPLlMWfxK1Nl1g5mxi+bApARHTjC8yQkFapg/BUAWYt
+         Rq1uGQtryp9kwxoiHVDjHyME+IqgEn6d4HyMZsM6i7wdb+nJkPucoU/MXkwADftG7amH
+         e4fPuZZpx0CjR//5TCut6UZfQpvtj171sF7GjCFtPLw4X7V94IpUEneO3VmE2hdNq+tg
+         fnLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718912565; x=1719517365;
+        d=1e100.net; s=20230601; t=1718913600; x=1719518400;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1agS+ZvCUVxgkXGHHLIbPUJmAmNouL9iIY3PECE7ow4=;
-        b=XQPQEWSsE0Nn6Fyfak/dbi6unkg86fXi6Cwf/s5ksvpo7GwlaJHWwYMD6mb8EMgE/S
-         HmlmyE7IplME3VYdf71gyWvu/blGPRelWrJdjUmeDkGNWNOJwoyy6WYNF24Lh1m2ZZJ9
-         CjM08RIIUSq84BZ6ts9S/6nWOMQWC03JiFbeLmraBZuZro0T0xYZq5UoRZGr87Ma50yv
-         ppvhpfIpk8zKCOdHoCTtcltRwIIJM6L/iEqWaW3URlyPo2pegfB1hUxlu6eulD4jGpdD
-         CHdgn5xKvAsU4JK9GvxfWTud5IGGkSI2ZeLOX7AgySUt8H/h9YJzdynq/eJYhZ1yg2yg
-         3m0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWDWLC6jY7cOMqMGWSBRAH4++7NtznZcwYLs1K8FP05l+TF8FFwPngMGldnPL7Ymj2jK6V9A5Y7rv4DVMzOk9CqArHausdxX+mfP3ELOA==
-X-Gm-Message-State: AOJu0YzRdidPeU41kRbgb2v+f/4tI46dH0PdAlVxnchwYr15YvCc4/gV
-	L9kqnwTFr4+l01KF70mnyJagnkxkcpR1MuJpyls2yT9lXs6Wbr/fhkRsaoTiGWboHYom8BoxtZh
-	VPZ0ht9gsH16md+JPf4Sx5wGGdf8j24hCIHtWOrEc79NUZ2eAHiEJFP3V7EVQgeM=
-X-Received: by 2002:a25:ae95:0:b0:dfa:5895:7814 with SMTP id 3f1490d57ef6-e02be17a2d8mr6265502276.36.1718912565194;
-        Thu, 20 Jun 2024 12:42:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEE4ky/fERanNc8cBhQKDDDU0GeIhg6HjUx/IE8xx/ZXGSXJJZV61VB95Bm+AQ66PZaqk4hXA==
-X-Received: by 2002:a25:ae95:0:b0:dfa:5895:7814 with SMTP id 3f1490d57ef6-e02be17a2d8mr6265480276.36.1718912564724;
-        Thu, 20 Jun 2024 12:42:44 -0700 (PDT)
-Received: from x1gen2nano ([2600:1700:1ff0:d0e0::13])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b5180dd3a1sm5935796d6.31.2024.06.20.12.42.43
+        bh=gMilNXtwVzUh+PE2x1zMrBwSzBscyeknBF0WgBRu6Ys=;
+        b=mh339HkfR8dfbH82igstqBvFWK3p3G2jsg/j0UHAQKmpv/Iw7JT6LCMJmeV904LI6p
+         JT0N2QBx+Fhgl1tl1P/dyJhT+4yFBJVQr3PosPFYItNfIXhAEiW+47BZWSaedJaprtCT
+         lUPPy0j1y1MgG2wAndVoBPvsd+7PAZVCUCq4QksIEbwPRyJ06HsG8n7iLKbMj71DwX7+
+         Bo2PBGr1VHFRIVMhzqzpLDBhoMv/9AN9YCqltMxYTXbyUQxDgYJ7OkRc/CQPjMQICSjy
+         mI8+Z7VmdDIEGIygkbyIiMNNQF2Zp4FbmXcoBRUVxUWGhnMh4Ym2uiQCRZL1cgQ3TpCs
+         W94Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW4W1kKjfD1bdvznvo9HhMwISOA/6JkYjl8H8DNx4TcQAXMsXtkZTuvp/NsR64GMdEDj4ny7FxQaC5hr/NgZPQQ55YAshn/gUhKjofRdA==
+X-Gm-Message-State: AOJu0YzbPZ4wg5k1L8/zAPAFJVJG5BDS0uO9QXP0MQHuYASWbMkTsJf6
+	o3tsyGBGdtXtjNeiT5sNkG/imC9HJV42oytOe/PWxl+Gexw93PbUfggry9FGuus=
+X-Google-Smtp-Source: AGHT+IHdCVdixc3RWfaztM0Yax6GeQG03rZH2fQxNQj3MXGnPGiL+pdPpHyRVEOOF2kRgRIM885D1Q==
+X-Received: by 2002:a05:6512:ac4:b0:52c:cb56:8e8d with SMTP id 2adb3069b0e04-52ccb568fc9mr4688542e87.37.1718913600095;
+        Thu, 20 Jun 2024 13:00:00 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cae91a0ccsm1763627e87.97.2024.06.20.12.59.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 12:42:44 -0700 (PDT)
-Date: Thu, 20 Jun 2024 14:42:41 -0500
-From: Andrew Halaney <ahalaney@redhat.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: Andrew Lunn <andrew@lunn.ch>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Vinod Koul <vkoul@kernel.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, "David S . Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Heiner Kallweit <hkallweit1@gmail.com>, netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH net-next 1/8] net: phy: add support for overclocked SGMII
-Message-ID: <4ts2ab5vwf7gnwqd557z62ozjdbl3kf7d64qfc6rjhuokav3th@brhzlsrpggk6>
-References: <20240619184550.34524-1-brgl@bgdev.pl>
- <20240619184550.34524-2-brgl@bgdev.pl>
- <bedd74cb-ee1e-4f8d-86ee-021e5964f6e5@lunn.ch>
- <CAMRc=MeCcrvid=+KG-6Pe5_-u21PBJDdNCChVrib8zT+FUfPJw@mail.gmail.com>
- <160b9abd-3972-449d-906d-71d12b2a0aeb@lunn.ch>
- <ZnNIib8GEpvAOlGd@shell.armlinux.org.uk>
+        Thu, 20 Jun 2024 12:59:59 -0700 (PDT)
+Date: Thu, 20 Jun 2024 22:59:58 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
+	quic_jesszhan@quicinc.com, dan.carpenter@linaro.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dpu: drop validity checks for
+ clear_pending_flush() ctl op
+Message-ID: <2fwo2pbplaxkkviln7m6jgidlspnur25qrth42s6jozksb22w6@qkyt2og57baj>
+References: <20240620191228.3673550-1-quic_abhinavk@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,61 +86,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZnNIib8GEpvAOlGd@shell.armlinux.org.uk>
+In-Reply-To: <20240620191228.3673550-1-quic_abhinavk@quicinc.com>
 
-On Wed, Jun 19, 2024 at 10:07:21PM GMT, Russell King (Oracle) wrote:
-> On Wed, Jun 19, 2024 at 09:51:12PM +0200, Andrew Lunn wrote:
-> > phylib supports out of band signalling, which is enough to make this
-> > work, so long as two peers will actually establish a link because they
-> > are sufficiently tolerant of what the other end is doing. Sometimes
-> > they need a hint. Russell King has been working on this mess, and i'm
-> > sure he will be along soon.
+On Thu, Jun 20, 2024 at 12:12:27PM GMT, Abhinav Kumar wrote:
+> clear_pending_flush() ctl op is always assigned irrespective of the DPU
+> hardware revision. Hence there is no needed to check whether the op has
+> been assigned before calling it.
 > 
-> ... and I'm rolling my eyes, wondering whether I will get time to
-> finish the code that I started any time soon. I'll note that the more
-> hacky code we end up merging, the harder it will become to solve this
-> problem (and we already have several differing behaviours merged with
-> 2500base-X already.)
+> Drop the checks across the driver for clear_pending_flush() and also
+> update its documentation that it is always expected to be assigned.
 > 
-> > What i expect will happen is you keep calling this 2500BaseX, without
-> > in band signalling. You can look back in the netdev mailling list for
-> > more details and those that have been here before you. It is always
-> > good to search the history, otherwise you are just going to repeat it.
+> changes in v2:
+> 	- instead of adding more validity checks just drop the one for clear_pending_flush
+> 	- update the documentation for clear_pending_flush() ctl op
+> 	- update the commit text reflecting these changes
 > 
-> That's where things start getting sticky, because at the moment,
-> phylink expects 2500base-X to be like 1000base-X, and be a media
-> interface mode rather than a MAC-to-PHY interface mode. This is partly
-> what my patches will address if I can get around to finishing them -
-> but at this point I really do not know when that will be.
+> Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
+> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> Closes: https://lore.kernel.org/all/464fbd84-0d1c-43c3-a40b-31656ac06456@moroto.mountain/T/
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c         | 3 +--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 +--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h          | 4 +++-
+>  3 files changed, 5 insertions(+), 5 deletions(-)
 > 
-> I still have the high priority work problem that I'm actively involved
-> with. I may have three weeks holiday at the start of July (and I really
-> need it right now!) Then, there's possibly quite a lot of down time in
-> August because I'm having early cataract ops which will substantially
-> change my eye sight. There's two possible outcomes from that. The best
-> case is that in just over two weeks after the first op, I'll be able to
-> read the screen without glasses. The worst case is that I have to wait
-> a further two to three weeks to see my optometrist (assuming he has
-> availability), and then wait for replacement lenses to be made up,
-> fitted and the new glasses sent.
-> 
-> So, I'm only finding the occasional time to be able to look at
-> mainline stuff, and I don't see that changing very much until maybe
-> September.
-> 
-> At this point, I think we may as well give up and let people do
-> whatever they want to do with 2500base-X (which is basically what we're
-> already doing), and when they have compatibility problems... well...
-> really not much we can do about that, and it will be way too late to
-> try and sort the mess out.
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> index ef56280bea93..6f8c7ffa2d27 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> @@ -83,7 +83,9 @@ struct dpu_hw_ctl_ops {
+>  
+>  	/**
+>  	 * Clear the value of the cached pending_flush_mask
+> -	 * No effect on hardware
+> +	 * No effect on hardware. This ctl op is always assigned
+> +	 * irrespective of hw version and hence no check is needed
+> +	 * for the callers to check its availability before calling it.
 
-I hope your holiday and operation go well Russell.
+A simple 'Required to be imlemented' or just 'Required' should be enough.
 
-Pardon my ignorance, but I know of quite a few things you have in flight
-and because of that I'm not entirely sure what specific patches you're
-referring to above. Have those hit the list? I know you're cleaning
-up stmmac's phylink/pcs usage, but I'm thinking that this is outside of
-that series. Thanks in advance for helping me understand all that's in
-progress around this mess of a topic!
+>  	 * @ctx       : ctl path ctx pointer
+>  	 */
+>  	void (*clear_pending_flush)(struct dpu_hw_ctl *ctx);
+> -- 
+> 2.44.0
+> 
 
+-- 
+With best wishes
+Dmitry
 
