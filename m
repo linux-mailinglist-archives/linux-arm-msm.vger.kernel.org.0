@@ -1,104 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-23360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A87CC91059A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 15:15:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 465399105B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 15:20:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1195FB219A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 13:15:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9F9DFB26023
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 13:20:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6E3C1E4A0;
-	Thu, 20 Jun 2024 13:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0226B1ACE93;
+	Thu, 20 Jun 2024 13:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jtvq/OrQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EszdFoqL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648C11E493
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 13:15:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C744D1E49E;
+	Thu, 20 Jun 2024 13:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718889317; cv=none; b=GxLYQs1620GLNvWHBhzkhrw3RKkQCGhQVBmGsmDTeYqN//C18HHjANcOW7ijOjvGtcVChvDUkATPx9NXk9tYR9jtpGs8lzK8dmawg5e9fd9dXviHhsH+4ZpKw3DG5BZTmUYHMyBOD3KX3UsDfdGqGQIhTXHEKWInSSnK2t6g78g=
+	t=1718889625; cv=none; b=aolAIpeRmFWUDRQxnFSx5CshH2Ia735/6aHtaWLJUGUShzgEdZ3VkQiuHLC/EzGRY/ZzzpUeEfEulhHt2sJGJzcHbPHR2v2Q2bb8voGyngA9665osfcFZ9fjMVCgn8UKBGltM2x0T19fLZeGOMabDMzCLx92dQJ/zoDemenlpEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718889317; c=relaxed/simple;
-	bh=kBLzfspHe7hKHDfbBHbG8TW9qCmp7NiEtdiB3iW7K9Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=quhre4d91+c3rPJXxq1e49b3PHroZORECAuWv6lgG+ThLNzRE7LHo1CYWKQPNGXt/xxo6RTDfBpz3h1tadN4XBeAGOINC7aAV6uX7zxsGD6ZS77kpnA+cxHXI9JaA4e959nTvE57iG3F2UNchyRc76ewS7uIQGSmNqmjayhtZ2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jtvq/OrQ; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-632843cff4fso8103277b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 06:15:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718889315; x=1719494115; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CkSFRwhot+Q+s4R6yyDj4mTZYzkLcyxsGikvlN6BeU0=;
-        b=Jtvq/OrQrOUF7Cv0JzvV6d9BN0Rudj8Rylfq5CB5jAd8u+YetnMGVjIXEP8oNUxxEr
-         T3Tu5xxrqSowg3UT4zPbAvzpcPZ2PTaQNlC9Cv/4RYxcpPELrv3hMF50IQ5DhxW5+hFT
-         lQnallWqddrXA3xpvlKhDlYLIbQefIwjpELes5zT68vcYaJPzBn59+q86mCADPYDcpoO
-         QxZehRciIHdZvoWaIPd0hDZbmxrrbUosPdbdQBIgS15LmDQYDklvJj9C4Cgpaze3D/yO
-         RMtvxH5G3LZrnbAg6aJB4mzMTki4Rt85fv6tlZxiq3ZOxlw4ClerJl1HdlijLaT+5ItT
-         ilGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718889315; x=1719494115;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CkSFRwhot+Q+s4R6yyDj4mTZYzkLcyxsGikvlN6BeU0=;
-        b=W6Sgt3/Xi2cFQvF8BEkAym0GmIIyrJ6X/MldYs+hIoybLCB97u74dYDC3mHgHbnDEX
-         4zHULVXyudFzsGaM1j+Ljhzy5w1gUPr4uGQE+VKldTzl5Y/uoxeRtb5jlhRXD1RkmKJ4
-         6h5tm7uotuXdGQdw+xSviUwGvnSAPtM/CDNkjYVnAdyIwC+urif0zOPcWaUJx6C3OHMi
-         y74tk/fP8obIKtvk5p3ENFpDKw+rrXgB1yEY0UMxBDMgR7MJ1NPGOdkcj9pZbRraCjwh
-         Z9RIQTZ63+7Qu8MnhgWAh83QuvI2+griHmgs0pXUShJO33ZPn9G+bdOyR8n7J1SM2UmQ
-         jdyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVKQRGco8oiwElbg9Ark9hcy4SKr0eflCZWWOrmTv5BPGDd7PQuaP4UhNTiZXUR5MYjXM15wklksnEc/h7VRLIq9XpOq9BTLGmt+geSgA==
-X-Gm-Message-State: AOJu0YwZTOzidWoAGZCMIm2xjAc+gFyvgw15nQkecnSrc12Qcd+YEvh6
-	w88fPzQ3M66fqYSEvZQqL0lwdks1U6vWqu/eBtyPKOA1dLE0wYaSuMVUOU5v5Hc7K5OMUzd4x3V
-	qcfv05hhz5CLn22ZN1aS/l3pQrf9RlHb6kL6E4Q==
-X-Google-Smtp-Source: AGHT+IGlaxOg+qhS8w/dfjzjflLigb7w15n22/6LqN/Z3zeD60eqK5Mqhbk9OZg4Q56aWj4Uad7s4AzBlrZsGGf1e7Q=
-X-Received: by 2002:a81:e249:0:b0:62c:f6c6:d5fc with SMTP id
- 00721157ae682-63a8e6af304mr51597497b3.26.1718889314811; Thu, 20 Jun 2024
- 06:15:14 -0700 (PDT)
+	s=arc-20240116; t=1718889625; c=relaxed/simple;
+	bh=KEROTR005kTLhtx/k+9f7IK2AIDNVt50nsFd2BWMl30=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WmKAvwUJeaQoA6hsNOoG5hTAuyaFh15Klhmo2ein1KxFpVd5EpUpBl67xpOvCQ6I0jm31iTQ3G8BbdTpUE8QvXw8ytWDzy/kul6lwbNQYiZET2APMjx0mf5bTfcEnrUZRBwAIwZXCtuAFyAdYZdbCQ7H49J/82vGBYbo2olwAvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EszdFoqL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063D0C2BD10;
+	Thu, 20 Jun 2024 13:20:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718889624;
+	bh=KEROTR005kTLhtx/k+9f7IK2AIDNVt50nsFd2BWMl30=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=EszdFoqLBct+twlYq5PmHlR+kk91HtkmqT/p8iQvXgoRrRldYFnFXcFToGnj+uSox
+	 h2Zu62R+tYk2I6O5LtvgAbtSR7d5rAxVIu9qXKOoOJumQlm2mDE0VI1PUEJfVvupcx
+	 BdHZ55BvhPklbpe/91BZN9nA8rM/Ca1Fu270Sx5JsoF3XkUXq0+FWkDVRneDgJfH1z
+	 wZH6JCoWcYlTvOn7esMlreYOoGxFeTS2i8idbDqIOxC3meF2lsx1+Xgm5ROdTVBfy6
+	 c3T25vIdJz8aJDEwiUwJRLTjD6BAGftmdxqBtFnzx9Au/8jbkltLtoBGN+CZAU+7pZ
+	 gSVNxJUBYwisg==
+Message-ID: <bf61b47d-e375-4f52-b25c-f02a5cd9b6dd@kernel.org>
+Date: Thu, 20 Jun 2024 15:20:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240619-rb2-fixes-v1-0-1d2b1d711969@linaro.org> <20240619-rb2-fixes-v1-2-1d2b1d711969@linaro.org>
-In-Reply-To: <20240619-rb2-fixes-v1-2-1d2b1d711969@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 20 Jun 2024 16:15:04 +0300
-Message-ID: <CAA8EJpo94qg0dDR-H64v0yC7jLKHuD9O59m3hG2tNR4v3NAkLA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qrb4210-rb2: set role-switch-default-mode
-To: Caleb Connolly <caleb.connolly@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] dt-bindings: remoteproc: mpss: Document
+ QDU1000/QRU1000 mpss devices
+To: Komal Bajaj <quic_kbajaj@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Melody Olvera <quic_molvera@quicinc.com>
+References: <20240620120143.12375-1-quic_kbajaj@quicinc.com>
+ <20240620120143.12375-2-quic_kbajaj@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240620120143.12375-2-quic_kbajaj@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 19 Jun 2024 at 23:33, Caleb Connolly <caleb.connolly@linaro.org> wrote:
->
-> Give a hint to the OS which role we prefer. Host mode generally makes
-> the most sense.
+On 20/06/2024 14:01, Komal Bajaj wrote:
+> From: Melody Olvera <quic_molvera@quicinc.com>
+> 
+> Document the compatible for the component used to boot the MPSS on the
+> QDU1000 and QRU1000 SoCs.
+> 
+> The QDU1000 and QRU1000 mpss boot process now requires the specification
+> of an RMB register space to complete the handshake needed to start or
 
-Why?
+What is RMB?
 
->
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> attach the mpss.
+
+mpss? MPSS?
+
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 4 ++++
->  1 file changed, 4 insertions(+)
+>  .../remoteproc/qcom,qdu1000-mpss-pas.yaml     | 129 ++++++++++++++++++
+>  1 file changed, 129 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-mpss-pas.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-mpss-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-mpss-pas.yaml
+> new file mode 100644
+> index 000000000000..71c5a85b679e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,qdu1000-mpss-pas.yaml
+> @@ -0,0 +1,129 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,qdu1000-mpss-pas.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm QDU1000 Modem Peripheral Authentication Service
+> +
+> +maintainers:
+> +  - Melody Olvera <quic_molvera@quicinc.com>
+> +  - Komal Bajaj <quic_kbajaj@quicinc.com>
+> +
+> +description:
+> +  Qualcomm QDU1000 SoC Peripheral Authentication Service loads and boots firmware
+> +  on the Qualcomm DSP Hexagon core.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qdu1000-mpss-pas
+> +
+> +  reg:
+> +    items:
+> +      - description: Address offset and size for MPSS PAS register set
+> +      - description: Address offset and size for MPSS RMB register set
 
-Would it make sense to set this for all the RB and HDK boards?
+10 words, 8 are entirely redundant. This cannot be anything else than
+address offset and size of some register set. Please write efficient and
+understandable code. E.g.
+"MPSS main Peripheral Authentication Service"
+"MPSS something-explain-what-is-rmb"
 
--- 
-With best wishes
-Dmitry
+
+...
+
+> +        glink-edge {
+> +            interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
+> +                                         IPCC_MPROC_SIGNAL_GLINK_QMP
+> +                                         IRQ_TYPE_EDGE_RISING>;
+> +            mboxes = <&ipcc IPCC_CLIENT_MPSS IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> +
+> +            label = "modem";
+> +            qcom,remote-pid = <2>;
+> +        };
+
+This wasn't tested.
+
+Best regards,
+Krzysztof
+
 
