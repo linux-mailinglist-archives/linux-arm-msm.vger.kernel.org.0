@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 046C390FD06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 08:50:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6D2F90FD0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 08:51:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28B391C23603
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 06:50:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 606A5B23DD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 06:51:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9164339FDD;
-	Thu, 20 Jun 2024 06:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3757F43ABC;
+	Thu, 20 Jun 2024 06:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ams20KYe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TC5R4jE3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEF2433C4;
-	Thu, 20 Jun 2024 06:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CC34207F;
+	Thu, 20 Jun 2024 06:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718866243; cv=none; b=RMYo68M4GNwQk08DvKzLwaU5jZF+So4rwFBJHFxua+GPQRlih9QAeks2GuX86yqv7YAnGSjPpAxoDz0ZTmvBCkeJc5h8rjVuQ/M5Ck7sOy9wlTFWmwsE0b5ojOseg0PnJeYEQB9S6MeHiMViJTntk90xv8xtaIsjOCBPUpaAJOA=
+	t=1718866249; cv=none; b=YDnzqhFSuM3nBifYMKqKq3EGmUbZwju424r45VEtZcTt0VZqGsHv/RHnuLuEDVZyUDVW2U4Vys12NoqqthvI5bW8MGHtY319Jgwxed/zbwxuYG5rZCa+yGHBXLVXF0IaRBCHB58aMtz8A59XkPTJzze1exRcRRIN2vl9CrvjyLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718866243; c=relaxed/simple;
-	bh=ZomPvsIvxIXW4ahErAQ+Ngcs75Dbc8y0MDOO8ficcN8=;
+	s=arc-20240116; t=1718866249; c=relaxed/simple;
+	bh=baXgiEe0ODp10Whq0wyruPc8ViNJffY0RBJUGVLSt/Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uKR01kEJZQeoFE4pVZ14pnG2bwuewDwDEtq696X3he3XHMonbBwdbn0Jhx7wDagcv0x6Itz9//XPW70pRFIa++Hoy+mxOXNN61STSiQk1P2/EmDA7lHlwfG6DwPQt4N3xxxImTrGt0X/7fqwYf4yAfYMqqtKSpW9X5rLP4tfkaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ams20KYe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC66C2BD10;
-	Thu, 20 Jun 2024 06:50:37 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=edYjLMUUYJnoYwWgxB4i3KYn1/fX7ueOcIuLBcL3wl+KyV8EI+T7az3GBt8iiH0PJ+dlbIUeCARUxNx2a4GIDOLvujeGvJPhA20+YhngeHKcKkuLt56fj3smISCtp5lP2izCKBaXFjBQt0CNaLh3H6kBQU9yXTV1Uczp9g7mDHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TC5R4jE3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5794DC4AF0A;
+	Thu, 20 Jun 2024 06:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718866242;
-	bh=ZomPvsIvxIXW4ahErAQ+Ngcs75Dbc8y0MDOO8ficcN8=;
+	s=k20201202; t=1718866248;
+	bh=baXgiEe0ODp10Whq0wyruPc8ViNJffY0RBJUGVLSt/Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ams20KYec5AjjavHkvIdKIvTa1e4YziZLknnB4K+aOcwcQfA1tz68eTqyx6xWKHFK
-	 NwaUE0I6O/XSiUefK7TxHX+XM5CD2/8z4hiYARp6Dg9PbGR4GzeU/RyKslpt0/OQ0S
-	 4XPkORmVTuFLkn9qnXa71+2hJGezXckpOTjQNuEcd7G/MaclnTMdqNxAxKg84tZJSc
-	 qEBwjJKzm5VwQR0CHwe/awZcpMZGG9de7aXPGSi6iZGm5q6vU+fBBbXp6UnYY/utdk
-	 x1lEH7Ewh7zeKA1xZdfwonVPafsuDCecF1GvECwnDQPe1o13mSvTJQp6Vt7TNe5TrI
-	 DIf9VcrvB5yFg==
-Message-ID: <30bc3417-afda-4ec5-bfc2-2dbebc805027@kernel.org>
-Date: Thu, 20 Jun 2024 08:50:35 +0200
+	b=TC5R4jE39JukwGnmugmO4mpHm/fn9rIrVv72719dcM8bhzpNeobEQLZpShwL5RfB7
+	 GSmfgBewyfCN2uPhyB5cLhqcuKatAjbhhZo7GU1u6QjP4trkTisiSpxZRNmRTqX5hQ
+	 LGEDfbhGUb6e727lIj+iW3jAd5U/KZ8vTQwrdxxkdoRvfMyYWcajuKE/bSUraXWLxG
+	 TE2yYc/w5Qip0Vth1c1oo+ig1q/roba+igYaIFOU4ZsKGbXIuS/ay7TQckslE/AORN
+	 nQNn+K+TSoMJklSNkJu/JpbSdg3MXPpV2k2reyShOJW8botF1BMYNcZvG1XWD+zT11
+	 2n5ulGfGiLCcw==
+Message-ID: <20bd14a0-bdfb-4fd3-912a-d28ab43b4db2@kernel.org>
+Date: Thu, 20 Jun 2024 08:50:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] dt-bindings: clock: qcom,a53pll: Add msm8226-a7pll
- compatible
+Subject: Re: [PATCH 2/7] dt-bindings: clock: qcom,a53pll: Allow opp-table
+ subnode
 To: Luca Weiss <luca@lucaweiss.eu>, ~postmarketos/upstreaming@lists.sr.ht,
  phone-devel@vger.kernel.org, Jassi Brar <jassisinghbrar@gmail.com>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -61,7 +61,7 @@ To: Luca Weiss <luca@lucaweiss.eu>, ~postmarketos/upstreaming@lists.sr.ht,
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org, linux-clk@vger.kernel.org
 References: <20240619-msm8226-cpufreq-v1-0-85143f5291d1@lucaweiss.eu>
- <20240619-msm8226-cpufreq-v1-3-85143f5291d1@lucaweiss.eu>
+ <20240619-msm8226-cpufreq-v1-2-85143f5291d1@lucaweiss.eu>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,17 +107,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240619-msm8226-cpufreq-v1-3-85143f5291d1@lucaweiss.eu>
+In-Reply-To: <20240619-msm8226-cpufreq-v1-2-85143f5291d1@lucaweiss.eu>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 19/06/2024 23:02, Luca Weiss wrote:
-> Add the compatible for the A7PLL found in MSM8226 SoCs.
+> Allow placing an opp-table as a subnode that can be assigned using
+> operating-points-v2 to specify the frequency table for the PLL.
 > 
 > Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
 > ---
+>  Documentation/devicetree/bindings/clock/qcom,a53pll.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
