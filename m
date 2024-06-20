@@ -1,129 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-23406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1E38910D47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:40:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28D0F910D59
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:42:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DBA0281FBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:40:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C74A71F22AE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:42:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA0911AED3C;
-	Thu, 20 Jun 2024 16:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15E981B29C7;
+	Thu, 20 Jun 2024 16:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCWILTeJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+Djnr/9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4879520B35;
-	Thu, 20 Jun 2024 16:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0171B1436;
+	Thu, 20 Jun 2024 16:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718901634; cv=none; b=dPrIjiPJVTeSC3O+BreDWliTE6BDVuZANHoE5J4LWk+yxfJZJHN5S40WuudmyUvrnbxJUck0Xiy7YkgGYrZ8CIoS+qgoyn3Y62ijhixiryQjz0nhBtNtxnbK5GS7gB5qwL9oPj2FhZzGwCfWgfGbTjmOiG+6DI9JmRlniWIHk14=
+	t=1718901735; cv=none; b=bX3vlan/ha0tUF9BVritgivZf02udYxY0qDYlqOFb5QtWboFNuRhmI5CmqEGWsMmYvsHgzqZssmhAbl7seKnSm5Jvy/6EYzrye2fET6soRD1n4of6b5N2tSfovf3OhOHGHvY1C/BxIb+1MTp2LwTqn5FEFYypehhaiyC9ZUj3ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718901634; c=relaxed/simple;
-	bh=+zQnkC1ohw23Q6GKsj1WBvQFO2P3lh97O3BY7g06Fx4=;
+	s=arc-20240116; t=1718901735; c=relaxed/simple;
+	bh=FfRRl+rsm+XdgwUHVha+tPzWG2zp10p4W/7/pDVEpW4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V5fvVG2WPz1xTkWGhLQmSImVlAxH6+gIqar9JPx6IQFvSchLbsTk6ohN39hWN/B+Hx0mKCR6YLTp1N6aeshkCevjInBD9Dc8WMiIHu1uwJjseT4z67gzpe5OOV/42hRJZmmc5FRmGBmr1r2Pd8LsAlujGvOgcZbHplTHqvTeFRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCWILTeJ; arc=none smtp.client-ip=209.85.208.174
+	 To:Cc:Content-Type; b=cQFzV+9xgjB7MzavoDXbq9abBKHW4GECZVzPITftRO8Vf0pkjBmBzgifbTbn9EMLb74Zxc3Wt5k7KL6j8UEXJ687uNxOJvjou8XdmPm4irDZF+KkjaaSySvYyPWf+27Qg3KONVwlpXIieSol/Gom/aburCbVDFifXGcrUfldIfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+Djnr/9; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2eaafda3b5cso12054711fa.3;
-        Thu, 20 Jun 2024 09:40:32 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ec4a11a297so5453501fa.0;
+        Thu, 20 Jun 2024 09:42:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718901631; x=1719506431; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1718901731; x=1719506531; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ybRqH+f3jYJpqHLaTIJ36+rntUDMcpku54YvTURH+dM=;
-        b=RCWILTeJFLmRT73Oaexl5olCoj0rj7qmDKWDQidcpgnr5dNJeU0Yoj6wnqcw9F9fpV
-         tpGMWPuP+fuK4znw48szRomLY08+tz5oswpurKbVPeMVpcXZiCxSvsIuEpMPpQcUlNqh
-         I5bTv00jfR5UWID0V3Tpn8K/ULKi1TkYL3PT/s3niCmwR7Jb23TpVZVpaGePTFvN9HkF
-         +MIxL36oYPbdBYjX0JBYV0u0lOdgnUh2Km+EhH0VOZmgvdFNpHYTMZzikzSdtEt07Nke
-         wpqzU4g1Emuwyiaad6jIn3DrFl3+mPl3KZAaW5kBLJPV5cmSjMyI5rjUheIjZZnzA1lv
-         8zLw==
+        bh=MvPWAGvnBNSgSHBYq/LlacrTlJVn4K7wbKBfHfFlQnU=;
+        b=h+Djnr/9nbePqhx18uANs11PllFw6CBysip6ENd3kYDiZUz6WCyoVeJqfUfHSl99GH
+         ZyQowyHQcmjemcMFIWWXYFfC7LIS8Gc5NN9O9YDVzuj9hnJd163UFBRPrn6lKc/QZyVQ
+         u2rGXJqi7ioVppVj8PE9CTvrO1KLLP+aI35EW/mmeQyBGYO5cQHdWKyih+LZKdoQojr0
+         QxzfR8g+IFr1WifBvKpUuMzLFWULyB8Blr4MmmEhUstFu/+Z+JyVJMNd4XNHBJzlJWzH
+         ceY2Tb12xL1Q37v7Ki7vsov/5CN7duTB2AyXceKyJirhEpgRQ/1LxZUI3yCz1SV3kTeN
+         1uUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718901631; x=1719506431;
+        d=1e100.net; s=20230601; t=1718901731; x=1719506531;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ybRqH+f3jYJpqHLaTIJ36+rntUDMcpku54YvTURH+dM=;
-        b=Y1D6PWrvYqBQnDb5Cc4WyzEXVZwPZvNfr0IZy2SADfwSzIp+1GL6TdK9dUZ1uopeh3
-         FAVJC2kvM0YXp6ifdEe+fQBx0hMh1W9ZL+GMMMxmemwHFzI+JbqB/yrCO3MfKS+88j9F
-         9Hmowe/cevM5gQYJsPp0Au75huzU4H2tHFWw0peKXd5gpPStTrKjhXpM6mpxJH5hpwGr
-         c9Po3ROIXoQufD0h4Ue09FCtyUM30Bml1bVv96DptavFguCUBNpAivcGsnwv8nY1xOzz
-         pcz6qcOEvyUE3S49rN348IBoHa5T2fSk7VAxl1FY9Xk6Bsd7S4Z9s4u2Bj+z5uoectIB
-         cerA==
-X-Forwarded-Encrypted: i=1; AJvYcCU11+kk6qoW7nLPq9KKeCcUy43LxNAE6rHbr2r8l73ZEbtXS7jXPyEIGJpCnwFKSQkd+DqbgC2gmW+YWZF5M0rnc5aAoQdNzCztRjbo35g+BMdRvCeDrMAl4n4E8ZfmeiDQFpfUDova8Iue0A==
-X-Gm-Message-State: AOJu0YxD/PvIkQfkLk0pvmwnI27Z3XxqYqgkuXs0+ujwWKIXMkLOXE2Z
-	yIvqIRTIsJlB5XAPoyS1fQ7e+rqNzF9C2Np8GwZBkfau+pWTFOb80VhFcvUSYUC+5mf/ENcgORn
-	jVADZJ2p3NzfJt4hEPctd4kFRIvU=
-X-Google-Smtp-Source: AGHT+IGvqdAlDx6Z6v6araLkEoxtUYIgBR7BNE4u41+u5r5Ox89EvqTbeZiT2Cqa/Zme0pueUrHwq2W88SeIlIYAC/Y=
-X-Received: by 2002:a2e:a9ac:0:b0:2ec:3d74:88ca with SMTP id
- 38308e7fff4ca-2ec3d748a31mr44402911fa.25.1718901631136; Thu, 20 Jun 2024
- 09:40:31 -0700 (PDT)
+        bh=MvPWAGvnBNSgSHBYq/LlacrTlJVn4K7wbKBfHfFlQnU=;
+        b=jay48Verfxc4CQISGMOCro5Ru3jtTLOpyrIMgnZBR9vubOoDMYw7B4QtaA9fYTrD0P
+         LV9EKmn9Redn9zhvMv63R+FdMP/SydIcpwrKBt1PXAsLKzKWZHoqZgoAyaGSLfhuPkI9
+         0upN36HtvjmaHOHt1fuWs2Dh8IAvNXipzg9bi8aae1iIgVp4Jg5evnTxsLu0Na7QbZ9R
+         4fejgSlXapMDC5RRT7VDjci6AdLJwPpD5acRsHl7aay67InXAfg7B5a+1URqNyFknw/B
+         6ScepRG2ALtGsE/PZ5yBGjD2B61PX/HBTCG7E9H4rI7ThfE0fKYw4dSmsrsSfALOlk9C
+         EggA==
+X-Forwarded-Encrypted: i=1; AJvYcCXK2G9GMkpKooGQdnZBWJ5NIb/dZzBA8rRGSSWL9VqF/XAeffWFYWFABcDUCDU7tWp8MOj1iY3GD+MTfpKF7VBp9+q7gh95sufOdx8FkH3/Yt5YNyvdDm9w6dS9guhXfIl6GIJbBHNCN7Rrwg==
+X-Gm-Message-State: AOJu0YyokwBRdtB8dH0cJ5mxTfBwWXlwZ9iBn21rCiR3l9qSn+4A4PJm
+	C0vbRdSHmlf74IjPjoO15BMmptMxz85l+VFzQCVo/XujCz5sz8Ckx4MdbKAoLM768arG2xSvsM8
+	Mu8tOu3jM5Yxj3op7DIlIfMnCvzo=
+X-Google-Smtp-Source: AGHT+IFlO0TjFwAgwe7jW4uv3d0LZl69UkHI5u0XxEuqIMBFANIynjGf5rVmxXcoSuPa4ro4jZJLuLzDKYolw72m6ao=
+X-Received: by 2002:a2e:be8c:0:b0:2ec:3dd4:75f9 with SMTP id
+ 38308e7fff4ca-2ec3dd476d9mr46118991fa.35.1718901731039; Thu, 20 Jun 2024
+ 09:42:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240618164303.66615-1-robdclark@gmail.com> <20240618164303.66615-6-robdclark@gmail.com>
- <ecadeb37-fd12-4b63-949b-136356a42362@linaro.org>
-In-Reply-To: <ecadeb37-fd12-4b63-949b-136356a42362@linaro.org>
+References: <20240619212743.3193985-1-quic_abhinavk@quicinc.com> <CAA8EJpowTONWNQH+Sqe1w1eL85Ty4tw8_Qkc1yToQu9s17Tokw@mail.gmail.com>
+In-Reply-To: <CAA8EJpowTONWNQH+Sqe1w1eL85Ty4tw8_Qkc1yToQu9s17Tokw@mail.gmail.com>
 From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 20 Jun 2024 09:40:18 -0700
-Message-ID: <CAF6AEGu1VArhyYO3+oV5WGcXTBZxCUFrQcpM_fuT7wJakA8AFQ@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] drm/msm/adreno: Move CP_PROTECT settings to hw catalog
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	open list <linux-kernel@vger.kernel.org>
+Date: Thu, 20 Jun 2024 09:41:59 -0700
+Message-ID: <CAF6AEGsQLqf96g9iaUqB1D6zcay8csvUH7oyirTd04x+bUzvYA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: protect ctl ops calls with validity checks
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, freedreno@lists.freedesktop.org, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
+	quic_jesszhan@quicinc.com, dan.carpenter@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 18, 2024 at 12:02=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linar=
-o.org> wrote:
+On Thu, Jun 20, 2024 at 6:08=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
->
->
-> On 6/18/24 18:42, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
+> On Thu, 20 Jun 2024 at 00:27, Abhinav Kumar <quic_abhinavk@quicinc.com> w=
+rote:
 > >
-> > Move the CP_PROTECT settings into the hw catalog.
+> > dpu_encoder_helper_phys_cleanup() calls the ctl ops without checking if
+> > the ops are assigned causing discrepancy between its callers where the
+> > checks are performed and the API itself which does not.
 > >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
+> > Two approaches can be taken: either drop the checks even in the caller
+> > OR add the checks even in dpu_encoder_helper_phys_cleanup().
+> >
+> > Adopt the latter approach as ctl ops are assigned revision based so may=
+ not
+> > be always assigned.
 >
-> [...]
->
-> > +static inline void __build_asserts(void)
-> > +{
-> > +     BUILD_BUG_ON(a630_protect.count > a630_protect.count_max);
-> > +     BUILD_BUG_ON(a650_protect.count > a650_protect.count_max);
-> > +     BUILD_BUG_ON(a660_protect.count > a660_protect.count_max);
-> > +     BUILD_BUG_ON(a690_protect.count > a690_protect.count_max);
-> > +     BUILD_BUG_ON(a730_protect.count > a730_protect.count_max);
-> > +}
-> > +
->
-> patch:394: new blank line at EOF
+> NAK, these calls are always assigned. Please make sure that they are
+> documented as required and drop offending checks.
 
-removed the extra blank line while applying, thx
+agreed, I'd rather see the obvious crash if somehow a required
+callback didn't get set up, than a subtle/silent problem.  It is
+easier to debug that way.
 
 BR,
 -R
 
-> other than that:
+> >
+> > Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for=
+ writeback")
+> > Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> > Closes: https://lore.kernel.org/all/464fbd84-0d1c-43c3-a40b-31656ac0645=
+6@moroto.mountain/T/
+> > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 9 ++++++---
+> >  1 file changed, 6 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/=
+drm/msm/disp/dpu1/dpu_encoder.c
+> > index 708657598cce..7f7e6d4e974b 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -2180,9 +2180,12 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_=
+encoder_phys *phys_enc)
+> >         if (ctl->ops.reset_intf_cfg)
+> >                 ctl->ops.reset_intf_cfg(ctl, &intf_cfg);
+> >
+> > -       ctl->ops.trigger_flush(ctl);
+> > -       ctl->ops.trigger_start(ctl);
+> > -       ctl->ops.clear_pending_flush(ctl);
+> > +       if (ctl->ops.trigger_flush)
+> > +               ctl->ops.trigger_flush(ctl);
+> > +       if (ctl->ops.trigger_start)
+> > +               ctl->ops.trigger_start(ctl);
+> > +       if (ctl->ops.clear_pending_flush)
+> > +               ctl->ops.clear_pending_flush(ctl);
+> >  }
+> >
+> >  void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_e=
+nc,
+> > --
+> > 2.44.0
+> >
 >
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >
-> Konrad
+> --
+> With best wishes
+> Dmitry
 
