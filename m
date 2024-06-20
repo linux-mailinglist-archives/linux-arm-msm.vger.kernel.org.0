@@ -1,201 +1,259 @@
-Return-Path: <linux-arm-msm+bounces-23421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97DFA911125
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:44:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C277A911178
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:54:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B96BD1C20CD1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:44:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7746D282A05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:54:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A6E1BC073;
-	Thu, 20 Jun 2024 18:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023341B3F2F;
+	Thu, 20 Jun 2024 18:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HzfBEEKn"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="FUkB6Xbe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869E31B5824;
-	Thu, 20 Jun 2024 18:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FDB1B29D5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 18:53:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718908347; cv=none; b=sgsg/2Qlu51p/wmW7yBRwd8Zr0ygIuJZhyvv5Y46zl/joF/qnLrbwiOdl1G4OtNgFoexI1h7yW87oVisWIM9tuuLNJIEdS/fEx7E2dmHDKbMV/hdTbSjcqcJ20JO12rIuC6vrJY80On/7oTT1JF8TaVbUHZPirlBiPo3ZaRCWF8=
+	t=1718909594; cv=none; b=Qcsae8tsLcWHM9hijUMA8zGKd3cPbH36kHZmQhXOgOLtq9Wl92jzy9jk3iNPRasGDHY01gjoEGESuv1kPM8GthtRNLxdOteM2XLjD7PPlU5MvUgv0vRfvRkzZFU0bWx/B8PSrThP5iF58Pd+NZLRG8Y2avhymQ5tShSPLXALgxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718908347; c=relaxed/simple;
-	bh=bcnNV5dpAp1ceLCDW/J9hztLgbbtYChtelB1u6t4YSQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qnd3fnhBfi4H87p5+0kk9tB+80VnxgTHwHf2Vzo7uPh/JSH1QvqMmhnBmfMKbXC7ASAlD02xzK2GeG6Av2SaCjZSp1spfKraMnNSJEHK6r3d+N5YkzvMscEf9VqwXpoF6Xyg6sOCAFzOLi/AddNfGics4+nozE7kzeU0MvqVM0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HzfBEEKn; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-6e40d54e4a3so920614a12.0;
-        Thu, 20 Jun 2024 11:32:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718908345; x=1719513145; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8iVi8v7MOsNpmY/+YQC9/JqsYXXSSMQtfI1oW5IIrXg=;
-        b=HzfBEEKnb7yMAtIc5pi9tlUmYi4AfFghtmFY1E+uM0IMwnBht3eJriKkN8NcNR7XVI
-         smfgFnp/9d8HBYzy5PhJisccqfDPtxDMPjwkclbQ1S6uEAq9wY15GK+MSBQif0TrsO8B
-         zbA+yRzNq7vYHOF2XXzjbO25SELOob70DWS35DMogw8ZmTKpvwHKWL70RyqrTriDopYr
-         HCJx5HkbWN3Emt1BC91boa3/B3Mkt+vswtjA05a4Z2Wx6f0KV7Y4kjvOrwnXGQo/MjIf
-         ZOiLdWIUEhyop6G/Yfk3tJw8QiW95Nc5KxUzQX6G3bK/X52BhrIiSMaWdINnEu7u17N4
-         mGHw==
+	s=arc-20240116; t=1718909594; c=relaxed/simple;
+	bh=UHsauWZAVsnR/2X1IKfQMEacjE0bgcBA+va4oRMDsUQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D3ecNY6rD+YC8rMw5m/ztdFUdVvIMZ/rnlmQbQHZYVYFgr6Pfei5pm/MoY3ITr5l4/6J/q+UHOK/1qLSwWXFSQvnlMUf1i/KF79ODb3G9a33RBbeeuvtm3XCGpR4y9vTFKyh+vXRt63HzZVjcKYt5KDiHtyL64cYyF/SIdnZO6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=FUkB6Xbe; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1718909592;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=nWMfq1+cMQVMteS3E1XpToh4XwOaxAJx3UrsgdMNLOA=;
+	b=FUkB6XbecSgSRqcjrLsFwzTnVEmeZNsCEYHsye3dVhSA52XTkM87siYbwktdi1/axK1Agt
+	HXHrXJYdZpnv2P6wx3TLGn1HvKosCDna3+s8yUj8em//ogWXiuJox90oOZUkAt6Rq8Bi7Y
+	j2mOiej4QsJC7N4hng+KnbBK0z4ioVQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-626-LnYb_6QPM-asH7oe5NrxKA-1; Thu, 20 Jun 2024 14:53:10 -0400
+X-MC-Unique: LnYb_6QPM-asH7oe5NrxKA-1
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-421805fadadso9380775e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 11:53:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718908345; x=1719513145;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8iVi8v7MOsNpmY/+YQC9/JqsYXXSSMQtfI1oW5IIrXg=;
-        b=C3ZlwU4hoHPLjNgIuYXG62Pp27j5nmaEfsNrLoCgmfz/tocAICKLPwpaKNaBY+kHyX
-         +VrrBQRTsFuswx7GCM2+XB/Y2eGuWGQOOSE8pWZQGLRlev/m//xv6jIvicbrq8bava7s
-         ZR9VTgy5mRpQtewslwIZybqpI4FVSSAiVIY50+45ApNrwPj0bb1xIdXhT83keJQvko7c
-         bckYIzOVUwVL2+qrgSZivKLe6g6JK0fwI1TgJIOnsNZD8iC+Yn3OaQlXSGv1KZl8lMVC
-         on+FotgLVFpBt2jqF7AK4wnuFofA9O2V1KJuyQ4mNPboXZZPrsro7Q10unE8qoKZ9FLx
-         xQLw==
-X-Forwarded-Encrypted: i=1; AJvYcCVOHoZ9qAgTmUNNpyljH5nCSrvXMKU/tYjPd7VK5kU8TSb9W3Tusy3600a1ufwKAq3VljcggSlWqcORpeqDG+X5kqHfklM5lA31mzWmFSQMbw1uXmQRXcuFs9YwOthoK9OuNRI3NdNCNapPD5iWxI2CBlTTUgF5FcLYPra1R/8xP2ogyc+2+qq1hAC9rNVEwrn+aA8/ibhbFOwTcA8pkBntxhh7vZrtmabSgiQEcV7gJC8S424cMt9nq6C51SsAS1dv8EoZRwGvUU+M5BetzEjOM7ulfcpOqFKyPgiQ+SZb9ia00Bj18KY5JxhIiFg/ZDhe+wT6UbKyQFB+I4SrBy35yy74C7iXncM7Z0Ub6JJz0+LqDqiv5hqxOIyyVjD/6L3o4czrsrcmgM+5dnpRBKvGfeK7K1wKwfYiisS/1d+AYgrEJE0Z47Q1dihizSj/CED/S7YTbo2T5a3esUTe7KV//WZxUflTU3YvnmOfSjns5eZ0NxvaFM3O7xJVFobHeRg2qjS/eFmS/GEnUq2fGvOfdE90zCZ8OSr0daEuqgkORdW34gGZhODRLK4PbFwfmaHM/59urbHiqiyMC2OO7Md0Z/2+wp0yBvhHlwqeK9PThd14BlscyM2RMwEdo4Yi+4hGZBABuHJlN6wmPyT60ZYPO5C2UTs4PBSL7AlBL/VCZ/s+GIcquQt2wvFD8y90Bt3pdZ1jrZrzOAw9Fr1wfKAUFkD21qMQAbdADw3leiKJTxiOp1OmpIoakAfTbjtmJtH5W4mq1Q==
-X-Gm-Message-State: AOJu0YwSVc+ntQF5icdUe82us6R41IQ282c8elg71bk7Dpzqkt9CE4b6
-	Jlfc/V/wjHffbEkwKLXhvJ8nYQ8uZ7lzEcd/N3Z6WYN3P/ovE/dz
-X-Google-Smtp-Source: AGHT+IGwYt1/AWmTgUMNjVMcs2dgiLwPkNhT8ZohuoeI/pLSbMfw85UksxqJbsocMe0+kY+O1HneTA==
-X-Received: by 2002:a17:903:230c:b0:1f9:bb35:f313 with SMTP id d9443c01a7336-1f9bb35f5b7mr46779535ad.30.1718908344747;
-        Thu, 20 Jun 2024 11:32:24 -0700 (PDT)
-Received: from localhost ([216.228.127.128])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855e80ef6sm140498555ad.115.2024.06.20.11.32.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 11:32:23 -0700 (PDT)
-Date: Thu, 20 Jun 2024 11:32:21 -0700
-From: Yury Norov <yury.norov@gmail.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Borislav Petkov <bp@alien8.de>, Chaitanya Kulkarni <kch@nvidia.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	David Disseldorp <ddiss@suse.de>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Hugh Dickins <hughd@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
-	Jiri Pirko <jiri@resnulli.us>, Jiri Slaby <jirislaby@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>, Karsten Graul <kgraul@linux.ibm.com>,
-	Karsten Keil <isdn@linux-pingi.de>,
-	Kees Cook <keescook@chromium.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Simek <monstr@monstr.eu>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Oliver Neukum <oneukum@suse.com>, Paolo Abeni <pabeni@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ping-Ke Shih <pkshih@realtek.com>, Rich Felker <dalias@libc.org>,
-	Rob Herring <robh@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>, Will Deacon <will@kernel.org>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	GR-QLogic-Storage-Upstream@marvell.com, alsa-devel@alsa-project.org,
-	ath10k@lists.infradead.org, dmaengine@vger.kernel.org,
-	iommu@lists.linux.dev, kvm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-	linux-hyperv@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
-	linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-net-drivers@amd.com, linux-pci@vger.kernel.org,
-	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
-	linux-scsi@vger.kernel.org, linux-serial@vger.kernel.org,
-	linux-sh@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, mpi3mr-linuxdrv.pdl@broadcom.com,
-	netdev@vger.kernel.org, sparclinux@vger.kernel.org, x86@kernel.org,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>, Jan Kara <jack@suse.cz>,
-	Matthew Wilcox <willy@infradead.org>,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>
-Subject: Re: [PATCH v4 00/40] lib/find: add atomic find_bit() primitives
-Message-ID: <ZnR1tQN01kN97G_F@yury-ThinkPad>
-References: <20240620175703.605111-1-yury.norov@gmail.com>
- <CAHk-=wiUTXC452qbypG3jW6XCZGfc8d-iehSavxn5JkQ=sv0zA@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1718909590; x=1719514390;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nWMfq1+cMQVMteS3E1XpToh4XwOaxAJx3UrsgdMNLOA=;
+        b=dwy2TfWqUesUvyBEaTjbPkDy6XlgJWEdOH32YClVzd6ZYBk8yXg0n9lk61uCdvZtgf
+         pfDKOTyYOzbtH1qev9++MahzYcD1ws8TVnYoNA0p3sj/C4vtVjBCSDWG/xREoC7M6hmZ
+         C/VG07eCsUnYB4RVzEP2ffB7KtUhYzGdgFmlgrT+U6a5tlMYCLHv2Gfn1/3naqyyzmGP
+         rZm5ylRseaSw+wyBbCwTttEp2JkGvyf+SIER2k7DVwct/rSxp54Qgdob7bQs9bHjMM3g
+         aY3JoZ6DkD3WSay1/YrG/S8VES2uJCoeL5dFhA16KgZpsTqNzklct4M4cGVDsfIA/Wyc
+         /k5A==
+X-Forwarded-Encrypted: i=1; AJvYcCU0YeXL8BMa8ll0FcRDrpDhMPo8Ch7QAML8UXfCln56DqX0irmNzEsuMeKBXZPBagZh48yTVXvrtUeZjroaO9m7r8mFa8sQ2F50JCEksw==
+X-Gm-Message-State: AOJu0YxIwyL1mInD4rLlGVPIO3mQGsW2YSfhT6uKmqdCr2Frw1WAhQWK
+	QfemWG1Bz2OgJE7oclEPZvoSZ7KhT7B4lquDjmNJeSeZx9NNvXgNYQ/WEIoVlZkowvlaRnpFLiU
+	oVZ+yc4P5tq4lLJfga2j7ni3vXtVWN7WQo+QR1ykAwY7HOpiP6CqbP0+8dNUemS1mhE4uY9A=
+X-Received: by 2002:adf:fe90:0:b0:356:48f5:4383 with SMTP id ffacd0b85a97d-36319a855a0mr4946442f8f.61.1718909589741;
+        Thu, 20 Jun 2024 11:53:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEfjXRdRXq39Gj/6Bp/g3arNHu5ZTNiLnZmmKAj1QUaaUhfikLvxFl9GJgycsizhlMOf3pULw==
+X-Received: by 2002:adf:fe90:0:b0:356:48f5:4383 with SMTP id ffacd0b85a97d-36319a855a0mr4946418f8f.61.1718909589296;
+        Thu, 20 Jun 2024 11:53:09 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c719:5b00:61af:900f:3aef:3af3? (p200300cbc7195b0061af900f3aef3af3.dip0.t-ipconnect.de. [2003:cb:c719:5b00:61af:900f:3aef:3af3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-362d76f10e8sm6459937f8f.15.2024.06.20.11.53.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jun 2024 11:53:08 -0700 (PDT)
+Message-ID: <66a285fc-e54e-4247-8801-e7e17ad795a6@redhat.com>
+Date: Thu, 20 Jun 2024 20:53:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wiUTXC452qbypG3jW6XCZGfc8d-iehSavxn5JkQ=sv0zA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Fuad Tabba <tabba@google.com>, Christoph Hellwig <hch@infradead.org>,
+ John Hubbard <jhubbard@nvidia.com>, Elliot Berman
+ <quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>,
+ Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>,
+ maz@kernel.org, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, pbonzini@redhat.com
+References: <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
+ <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
+ <CA+EHjTxWWEHfjZ9LJqZy+VCk43qd3SMKiPF7uvAwmDdPeVhrvQ@mail.gmail.com>
+ <20240619115135.GE2494510@nvidia.com> <ZnOsAEV3GycCcqSX@infradead.org>
+ <CA+EHjTxaCxibvGOMPk9Oj5TfQV3J3ZLwXk83oVHuwf8H0Q47sA@mail.gmail.com>
+ <20240620135540.GG2494510@nvidia.com>
+ <6d7b180a-9f80-43a4-a4cc-fd79a45d7571@redhat.com>
+ <20240620142956.GI2494510@nvidia.com>
+ <385a5692-ffc8-455e-b371-0449b828b637@redhat.com>
+ <20240620163626.GK2494510@nvidia.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240620163626.GK2494510@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 20, 2024 at 11:00:38AM -0700, Linus Torvalds wrote:
-> On Thu, 20 Jun 2024 at 10:57, Yury Norov <yury.norov@gmail.com> wrote:
-> >
-> >
-> > The typical lock-protected bit allocation may look like this:
+On 20.06.24 18:36, Jason Gunthorpe wrote:
+> On Thu, Jun 20, 2024 at 04:45:08PM +0200, David Hildenbrand wrote:
 > 
-> If it looks like this, then nobody cares. Clearly the user in question
-> never actually cared about performance, and you SHOULD NOT then say
-> "let's optimize this that nobody cares about":.
+>> If we could disallow pinning any shared pages, that would make life a lot
+>> easier, but I think there were reasons for why we might require it. To
+>> convert shared->private, simply unmap that folio (only the shared parts
+>> could possibly be mapped) from all user page tables.
 > 
-> Yury, I spend an inordinate amount of time just double-checking your
-> patches. I ended up having to basically undo one of them just days
-> ago.
-
-Is that in master already? I didn't get any email, and I can't find
-anything related in the master branch.
-
-> New rule: before you send some optimization, you need to have NUMBERS.
-
-I tried to underline that it's not a performance optimization at my
-best. People notice some performance differences, but it's ~3%, no
-more.
-
-> Some kind of "look, this code is visible in profiles, so we actually care".
-
-The original motivation comes from a KCSAN report, so it's already
-visible in profiles. See [1] in cover letter. This series doesn't fix
-that particular issue, but it adds tooling that allow people to search
-and acquire bits in bitmaps without firing KCSAN warnings.
-
-This series fixes one real bug in the codebase - see #33, and
-simplifies bitmaps usage in many other places. Many people like
-it, and acked the patches.
-
-Again, this is NOT a performance series.
-
-Thanks,
-Yury
-
-> Because without numbers, I'm just not going to pull anything from you.
-> These insane inlines for things that don't matter need to stop.
+> IMHO it should be reasonable to make it work like ZONE_MOVABLE and
+> FOLL_LONGTERM. Making a shared page private is really no different
+> from moving it.
 > 
-> And if they *DO* matter, you need to show that they matter.
+> And if you have built a VMM that uses VMA mapped shared pages and
+> short-term pinning then you should really also ensure that the VM is
+> aware when the pins go away. For instance if you are doing some virtio
+> thing with O_DIRECT pinning then the guest will know the pins are gone
+> when it observes virtio completions.
 > 
->                Linus
+> In this way making private is just like moving, we unmap the page and
+> then drive the refcount to zero, then move it.
+Yes, but here is the catch: what if a single shared subpage of a large 
+folio is (validly) longterm pinned and you want to convert another 
+shared subpage to private?
+
+Sure, we can unmap the whole large folio (including all shared parts) 
+before the conversion, just like we would do for migration. But we 
+cannot detect that nobody pinned that subpage that we want to convert to 
+private.
+
+Core-mm is not, and will not, track pins per subpage.
+
+So I only see two options:
+
+a) Disallow long-term pinning. That means, we can, with a bit of wait,
+    always convert subpages shared->private after unmapping them and
+    waiting for the short-term pin to go away. Not too bad, and we
+    already have other mechanisms disallow long-term pinnings (especially
+    writable fs ones!).
+
+b) Expose the large folio as multiple 4k folios to the core-mm.
+
+
+b) would look as follows: we allocate a gigantic page from the (hugetlb) 
+reserve into guest_memfd. Then, we break it down into individual 4k 
+folios by splitting/demoting the folio. We make sure that all 4k folios 
+are unmovable (raised refcount). We keep tracking internally that these 
+4k folios comprise a single large gigantic page.
+
+Core-mm can track for us now without any modifications per (previously 
+subpage,) now small folios GUP pins and page table mappings without 
+modifications.
+
+Once we unmap the gigantic page from guest_memfd, we recronstruct the 
+gigantic page and hand it back to the reserve (only possible once all 
+pins are gone).
+
+We can still map the whole thing into the KVM guest+iommu using a single 
+large unit, because guest_memfd knows the origin/relationship of these 
+pages. But we would only map individual pages into user page tables 
+(unless we use large VM_PFNMAP mappings, but then also pinning would not 
+work, so that's likely also not what we want).
+
+The downside is that we won't benefit from vmemmap optimizations for 
+large folios from hugetlb, and have more tracking overhead when mapping 
+individual pages into user page tables.
+
+OTOH, maybe we really *need* per-page tracking and this might be the 
+simplest way forward, making GUP and friends just work naturally with it.
+
+> 
+>>> I'm kind of surprised the CC folks don't want the same thing for
+>>> exactly the same reason. It is much easier to recover the huge
+>>> mappings for the S2 in the presence of shared holes if you track it
+>>> this way. Even CC will have this problem, to some degree, too.
+>>
+>> Precisely! RH (and therefore, me) is primarily interested in existing
+>> guest_memfd users at this point ("CC"), and I don't see an easy way to get
+>> that running with huge pages in the existing model reasonably well ...
+> 
+> IMHO it is an important topic so I'm glad you are thinking about it.
+
+Thank my manager ;)
+
+> 
+> There is definately some overlap here where if you do teach
+> guest_memfd about huge pages then you must also provide a away to map
+> the fragments of them that have become shared. I think there is little
+> option here unless you double allocate and/or destroy the performance
+> properties of the huge pages.
+
+Right, and that's not what we want.
+
+> 
+> It is just the nature of our system that shared pages must be in VMAs
+> and must be copy_to/from_user/GUP'able/etc.
+
+Right. Longterm GUP is not a real requirement.
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
