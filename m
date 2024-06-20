@@ -1,178 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-23404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35964910BA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:14:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CA49910D20
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:36:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B56AD1F21023
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:14:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6D8F6B28A31
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:36:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D8411B14E4;
-	Thu, 20 Jun 2024 16:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 703541B29D3;
+	Thu, 20 Jun 2024 16:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XZsWJn8o"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aKBNCDef"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47E43BB50;
-	Thu, 20 Jun 2024 16:14:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D913174EC1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 16:33:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718900095; cv=none; b=M/Dza0dWbpqjPrr5PskQwXRAYx7OT8xw9DEVjX3d+VdNVW8YJ6SPy5XFLA8UwLjFHduYPLUKEERl+uaeWvwo4dZeRtLWfiKGLGWqmCYhrEg4SYwv8vV9Hqxk9NyBlh/jZNMWli3lTWM40L8VX2SsE39dg5FwjZ8kZQIyNtYhdVw=
+	t=1718901201; cv=none; b=sIKWxT3iH56anhRc84A48OX9PblzHp7VbdMxQwVUf3pUPEnNeD7VZ2/ve5DpKWnLbN5BUncluaAsFhPdKP+05ubMdG+tkwoaczLZaj8N8XHLM8ssT2X78i944Xe8uBy7rcx7neXzkQC2Y+28vCwvMbM/GCqRG8KWi7lxtyK5JUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718900095; c=relaxed/simple;
-	bh=SsR5ywCmJcyAKgpGrGi2rRMSTDslVwxFinDE2yFQ3mA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TpBchcuqgS/f18Ek9jzuZAHv2IiG6tCnHBKtZpkiKtW/Pu6+LRmIBXlsjAtd7u0lHmS933mrEmJ/rcJiwjgigopNdOQulcX908GYrTIUolAC2cDxGCBOOhWvHvmFfQGd8wgDBCrBDoZIqgFFLltmooQk3S/qUGxfa9lR9Ew7e2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XZsWJn8o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4408C2BD10;
-	Thu, 20 Jun 2024 16:14:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718900094;
-	bh=SsR5ywCmJcyAKgpGrGi2rRMSTDslVwxFinDE2yFQ3mA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XZsWJn8oElL8FMl3rNOgzPMJqXIjdT1qF01Xjai5CDdm/nATHk10wXOkdRGVwCgKG
-	 m10SjL3TpyMCNkVOdpibrpfTeXjh9pP+sWU4CYyr5GfRPt+s2jD5yw14SF0i5gAufG
-	 2p9mhrJmSeTy9f+S3XuBSgOe09Q3fTjsx0C3u6Vm7KRf3JJesoXuNwUJhXeaG+swhM
-	 12acsWYszPRxjFxgFoeYzNT/GzoH9RVeRclI9dyjuCdVKalybfyWZg1PF0WTVwnv6Q
-	 7+T4xZxQ/rZZ6vvpAlOWakldkr2qmv61qKoiDAxMoX093hrCQihvj4i+9VeOHK545H
-	 PbdYVx4CY01sA==
-Message-ID: <2ebf44b2-4d79-4a5a-bdc2-e9b33ff8d37b@kernel.org>
-Date: Thu, 20 Jun 2024 18:14:41 +0200
+	s=arc-20240116; t=1718901201; c=relaxed/simple;
+	bh=UxbdEJzEfTFGGdJutifmUiiqZYkHXI3z/2GfVjcxnU0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mL+IYlccqFziEWVNSMI58IKrhHlXPmjpB4P00txNB2dJO3nZNy1Ji+0uUARSe3WpC8bYEx1SXQlHdlBUTGlGDOQd9m+uLRAItuF/VYWNHs/hxJD2sHGJbDUuhBHg7uc+BpaQOgVhAun1dhAHTvDsBLADWqm8DauHBlCVfBENqKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=aKBNCDef; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-422954bbe29so147475e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 09:33:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1718901198; x=1719505998; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4B53UjI6PoAGWaCsloRkiHZtuTpGHM2ZWrCUhiNKWNY=;
+        b=aKBNCDefQ8eWTyPfXJ9RtovKFKfxPq8D8X4PC1xQ3oQe3+eZTogbm4dH8debKbJiR7
+         X04ZlMc4OFNOvjKqqu4ElN/5/dspZOY1gICTkF/Ugizm4KoQADbw6w0S65PSPEjZoenY
+         CZks5w7KxyTKhPMzue6BQuDPLUI0idYbmFi5fgzYIwiTrz9hFxVOENEAGO/+AJMv+vqa
+         6gPJgNXiw1ZeY25o9d/p4w9xb7rvF1JJwP55WmkcSw5h6THtWMS7KbCfxMQ8bXmOepZr
+         WGVKZ7RKEi3pi0I2oPVLCMh6H+P54JJp7sO8FH6oapLtmOzTm3PYMr3N4SpmTKbp/kgq
+         +2fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718901198; x=1719505998;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4B53UjI6PoAGWaCsloRkiHZtuTpGHM2ZWrCUhiNKWNY=;
+        b=FaTYOQP6YBa84/2YvY4OFuM+PGq8POu+tFQ2+zRhdDph/tEYLjoamKeWjMbZpkjrxH
+         bKr/WvG8DQ1SVLj0oiVYAmBp2o5juECGFtesyQwurqViKNDWNiTa/u734wIEZs72RjsE
+         Q2icUaC3WSaLDlrkPb30EgrkJfnT56Po93Os4oSZcAMiouLVfMitD2jRfEgajeFiy/L9
+         QtAjuAmQkQYjMCL2eEeSLfphs7ihdxF9EB9/Y/ukEZ0nmHX9X7G1AbJCY1L7VN+MePli
+         adSF4Mq2XlIcgX2idegCZTsQ1yLuZyAGJSSD18t8GSl9T/CsjXqB9IcuX2u7ukdFs8Ag
+         ZjvA==
+X-Forwarded-Encrypted: i=1; AJvYcCVCM3O4Xy84u0ksnr+yLLNQScy5OmnHb3oF4xKIWB3u/bx8mGI+erVE2Y1/bovk1cu/uttDpnW91Ml3NlICOUf1zMNFvzMnXN/d1lFCGA==
+X-Gm-Message-State: AOJu0YzV6xkLL/Lpcjcy/n9OD4EF6SsS7xIL0KxMy+AChTxUzKI26GKd
+	NgKSwSYRka6N3UFQUQuXmN4s75EU0/YLSnaICwRhOTEM7wHXg5IBtWp5kiD2Gw==
+X-Google-Smtp-Source: AGHT+IEz2SgAboLf42+BQNW/d36kQQhVc7F1UusAvGsQvMHx+tzIbLyscYR5TmIlxga6H6/BKgdcwQ==
+X-Received: by 2002:a05:600c:34d6:b0:424:7ac9:4d9a with SMTP id 5b1f17b1804b1-4247ac95619mr2095555e9.1.1718901197463;
+        Thu, 20 Jun 2024 09:33:17 -0700 (PDT)
+Received: from google.com (205.215.190.35.bc.googleusercontent.com. [35.190.215.205])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d0c9e27sm30767025e9.23.2024.06.20.09.33.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jun 2024 09:33:16 -0700 (PDT)
+Date: Thu, 20 Jun 2024 16:33:12 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: John Hubbard <jhubbard@nvidia.com>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>,
+	maz@kernel.org, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, pbonzini@redhat.com,
+	Fuad Tabba <tabba@google.com>, Jason Gunthorpe <jgg@nvidia.com>
+Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
+Message-ID: <ZnRZyBy_uxtjQHsz@google.com>
+References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
+ <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
+ <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
+ <ZnQpslcah7dcSS8z@google.com>
+ <1ab73f42-9397-4fc7-8e62-2627b945f729@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/23] dt-bindings: power: supply: add maxim,max77705
-To: Dzmitry Sankouski <dsankouski@gmail.com>,
- Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
- linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
-References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
- <20240618-starqltechn_integration_upstream-v3-7-e3f6662017ac@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240618-starqltechn_integration_upstream-v3-7-e3f6662017ac@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1ab73f42-9397-4fc7-8e62-2627b945f729@redhat.com>
 
-On 18/06/2024 15:59, Dzmitry Sankouski wrote:
-> add maxim,max77705 fuel gauge binding part
+Hi David,
+
+On Thu, Jun 20, 2024 at 04:14:23PM +0200, David Hildenbrand wrote:
+> On 20.06.24 15:08, Mostafa Saleh wrote:
+> > Hi David,
+> > 
+> > On Wed, Jun 19, 2024 at 09:37:58AM +0200, David Hildenbrand wrote:
+> > > Hi,
+> > > 
+> > > On 19.06.24 04:44, John Hubbard wrote:
+> > > > On 6/18/24 5:05 PM, Elliot Berman wrote:
+> > > > > In arm64 pKVM and QuIC's Gunyah protected VM model, we want to support
+> > > > > grabbing shmem user pages instead of using KVM's guestmemfd. These
+> > > > > hypervisors provide a different isolation model than the CoCo
+> > > > > implementations from x86. KVM's guest_memfd is focused on providing
+> > > > > memory that is more isolated than AVF requires. Some specific examples
+> > > > > include ability to pre-load data onto guest-private pages, dynamically
+> > > > > sharing/isolating guest pages without copy, and (future) migrating
+> > > > > guest-private pages.  In sum of those differences after a discussion in
+> > > > > [1] and at PUCK, we want to try to stick with existing shmem and extend
+> > > > > GUP to support the isolation needs for arm64 pKVM and Gunyah.
+> > > 
+> > > The main question really is, into which direction we want and can develop
+> > > guest_memfd. At this point (after talking to Jason at LSF/MM), I wonder if
+> > > guest_memfd should be our new target for guest memory, both shared and
+> > > private. There are a bunch of issues to be sorted out though ...
+> > > 
+> > > As there is interest from Red Hat into supporting hugetlb-style huge pages
+> > > in confidential VMs for real-time workloads, and wasting memory is not
+> > > really desired, I'm going to think some more about some of the challenges
+> > > (shared+private in guest_memfd, mmap support, migration of !shared folios,
+> > > hugetlb-like support, in-place shared<->private conversion, interaction with
+> > > page pinning). Tricky.
+> > > 
+> > > Ideally, we'd have one way to back guest memory for confidential VMs in the
+> > > future.
+> > > 
+> > > 
+> > > Can you comment on the bigger design goal here? In particular:
+> > > 
+> > > 1) Who would get the exclusive PIN and for which reason? When would we
+> > >     pin, when would we unpin?
+> > > 
+> > > 2) What would happen if there is already another PIN? Can we deal with
+> > >     speculative short-term PINs from GUP-fast that could introduce
+> > >     errors?
+> > > 
+> > > 3) How can we be sure we don't need other long-term pins (IOMMUs?) in
+> > >     the future?
+> > 
+> > Can you please clarify more about the IOMMU case?
+> > 
+> > pKVM has no merged upstream IOMMU support at the moment, although
+> > there was an RFC a while a go [1], also there would be a v2 soon.
+> > 
+> > In the patches KVM (running in EL2) will manage the IOMMUs including
+> > the page tables and all pages used in that are allocated from the
+> > kernel.
+> > 
+> > These patches don't support IOMMUs for guests. However, I don't see
+> > why would that be different from the CPU? as once the page is pinned
+> > it can be owned by a guest and that would be reflected in the
+> > hypervisor tracking, the CPU stage-2 and IOMMU page tables as well.
 > 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
->  .../bindings/power/supply/maxim,max77705-fg.yaml   | 35 ++++++++++++++++++++++
->  1 file changed, 35 insertions(+)
+> So this is my thinking, it might be flawed:
 > 
-> diff --git a/Documentation/devicetree/bindings/power/supply/maxim,max77705-fg.yaml b/Documentation/devicetree/bindings/power/supply/maxim,max77705-fg.yaml
-> new file mode 100644
-> index 000000000000..b24db0aba0d7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/power/supply/maxim,max77705-fg.yaml
-> @@ -0,0 +1,35 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/power/supply/maxim,max77705-fg.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Maxim MAX77705 Companion Power Management IC fuelgauge
-> +
-> +maintainers:
-> +  - Dzmitry Sankouski <dsankouski@gmail.com>
-> +
-> +description: |
-> +  This is a part of device tree bindings for Maxim MAX77705 multi functional device.
-> +
-> +  MAX77705 fuelgauge with ModelGauge m5 EZ algorithm support.
-> +
-> +  See also Documentation/devicetree/bindings/mfd/maxim,max77705.yaml for
-> +  additional information and example.
-> +
-> +allOf:
-> +  - $ref: power-supply.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: maxim,max77705-fg
-> +
-> +  rsense:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
+> In the "normal" world (e.g., vfio), we FOLL_PIN|FOLL_LONGTERM the pages to
+> be accessible by a dedicated device. We look them up in the page tables to
+> pin them, then we can map them into the IOMMU.
+> 
+> Devices that cannot speak "private memory" should only access shared memory.
+> So we must not have "private memory" mapped into their IOMMU.
+> 
+> Devices that can speak "private memory" may either access shared or private
+> memory. So we may have"private memory" mapped into their IOMMU.
+> 
 
-Look at other bindings how this is defined. shunt-resistor-micro-ohms
+Private pages must not be accessible to devices owned by the
+host, and for that we have the same rules as the CPU:
+A) The hypervisor doesn’t trust the host, and must enforce that using the CPU
+   stage-2 MMU.
+B) It’s preferable that userspace doesn’t, and hence these patches (or guest_memfd...)
 
-> +    description: |
-> +      Sense resistor value in mOhm
+We need the same rules for DMA, otherwise it is "simple" to instrument a DMA attack,
+so we need a protection by the IOMMU. pKVM at the moment provides 2 ways of
+establishing that (each has their own trade-off which are not relevant here):
 
-Merge the node into parent node. No resources here.
+1) pKVM manages the IOMMUs and provides a hypercall interface to map/unmap in
+   the IOMMU, looking at the rules
 
-Best regards,
-Krzysztof
+   For A), pKVM has its own per-page metadata which tracks page state, which can
+   prevent mapping private pages in the IOMMU and transitioning pages to private
+   if they are mapped in the IOMMU.
 
+   For B), userspace won’t be able to map private pages(through VFIO/IOMMUFD), as
+   the hypercall interface would fail if the pages are private.
+
+   This proposal is the one on the list.
+
+2) pKVM manages a second stage of the IOMMU (as SMMUv3), and let the kernel map what
+   it wants in stage-1 and pKVM would use a mirrored page table of the CPU MMU stage-2.
+
+   For A) Similar to the CPU, stage-2 IOMMU will protect the private pages.
+
+   For B) userspace can map private pages in the first stage IOMMU, and that would
+   result in stage-2 fault, AFAIK, SMMUv3 is the only Arm implementation that
+   supports nesting in Linux, for that the driver would only print a page fault,
+   and ideally the kernel wouldn’t crash, although that is really hardware
+   dependant how it handle faults, and I guess assigning a device through VFIO
+   to userspace comes with similar risks already (bogus MMIO access can
+   crash the system).
+
+   This proposal only exists in Android at the moment(However I am working on
+   getting an SMMUv3 compliant implementation that can be posted upstream).
+
+> 
+> What I see (again, I might be just wrong):
+> 
+> 1) How would the device be able to grab/access "private memory", if not
+>    via the user page tables?
+
+I hope the above answers the question, but just to confirmn, a device owned by
+the host shouldn’t access the memory as the host kernel is not trusted and
+can instrument DMA attacks. Device assignment (passthrough) is another story.
+
+> 2) How would we be able to convert shared -> private, if there is a
+>    longterm pin from that IOMMU? We must dynamically unmap it from the
+>    IOMMU.
+
+Depending on which solution from the above, for
+1) The transition from shared -> private would fail
+2) The private page would be unmapped from the stage-2 IOMMU (similar to the
+   stage-2 CPU MMU)
+
+> 
+> I assume when you're saying "In the patches KVM (running in EL2) will manage
+> the IOMMUs  including the page tables", this is easily solved by not relying
+> on pinning: KVM just knows what to update and where. (which is a very
+> different model than what VFIO does)
+> 
+
+Yes, that's is not required to protect private memory.
+
+Thanks,
+Mostafa
+
+> Thanks!
+> 
+> -- 
+> Cheers,
+> 
+> David / dhildenb
+> 
 
