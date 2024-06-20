@@ -1,134 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-23324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D5BA90FD59
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 09:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C06090FDA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 09:25:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78079287384
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 07:13:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7B59282AE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 07:25:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D17D4207F;
-	Thu, 20 Jun 2024 07:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67E2445022;
+	Thu, 20 Jun 2024 07:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lh+UaT4k"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Rql91ceP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6DD45BEF;
-	Thu, 20 Jun 2024 07:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D648F43AD2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 07:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718867575; cv=none; b=hrbnyGRuGDWq9RWHkOFHwuRw+msMIfnMnPRXtQgGPfOBXARZMFdy3o7EDzY9dhlAPgD87QPX2ElTxP5In13iq93OKe4UBQALdOido+rxLpwHbHFOFz397aoswSDopmx4vILsKPcMJDiCRuCmWxqdLzNmULJzuEs8zgctZG1MRnM=
+	t=1718868314; cv=none; b=Rx15eRyjTWXGjyyMdLjt4Ww9kD7cxVurNsSXhDrN1DC7KQBv1JBMWibiPwXxGcuOzgBJE4zB+KFKinbj3rmVQAa/7lmvKmmBIe/zOhah1EmLNs/1R/TtU5dMwk7A9Ir6FtBGadX0HtLU4nGQoMY8SwFcndGTUvwMmwJg38pAmCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718867575; c=relaxed/simple;
-	bh=rrzPp9VuHNNKHwlwOms3dI+sJh+KAerUh/wOmDb9Ldc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O3xz8WIU66X0hW48n8cgwTo66de7hHK+fAcnw4uJzhu8eZvLQkjM0+ca84jpHXRW6jGZDXaofHvCsmzr9P1QLPIw5Ol0ruVC8V+hqTjy+WYWLyosnPbwiV/w1GVTuqlmK9euq4zqedI34T1kHmQ48bjCKCqv1kbDhxaUF6oWexU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lh+UaT4k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75003C2BD10;
-	Thu, 20 Jun 2024 07:12:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718867575;
-	bh=rrzPp9VuHNNKHwlwOms3dI+sJh+KAerUh/wOmDb9Ldc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Lh+UaT4k3rK2t7ZyuI+KU/oopHcM0TGuORyVOxp5EavORQTX+PeAa45BnacpnPAFX
-	 7gMGx6ttqEGSQZMiBnJlmkejqeTtqS2tsLgjvALARgWcXWhASAPiO5DDwJ0hklscym
-	 PcSEJ9F5nG9Oz4fMdAzHgcKGVoJ3bXaSBTL/ZY4Q/XePiaffmBqjVqNHjNneouxZ/N
-	 U1kV9hXvqlo6oDB0bRc6v23D0Lr6Ya7XxJ4JKPMiYA1nBaOu6txo3zEal4ymmiXWPe
-	 zO52dElSKPY/xLDobDtB+1E/6q19Q34VuBYtWdfJCrBVhtomYfsIb6aD7ILbtMVtTc
-	 ocbJo93aUuRCA==
-Message-ID: <1083ae52-867a-4abe-88df-419830cdaeed@kernel.org>
-Date: Thu, 20 Jun 2024 09:12:46 +0200
+	s=arc-20240116; t=1718868314; c=relaxed/simple;
+	bh=jSwahG1fUc4nuo9lDEw9TRn4gAVc7Sv8Lfe1Q7iPXNQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BJZiHsfTy3EcB7ZMyvXppzRTk5528xEItJvP78iQLO0OzjHTTwgOUWiwMln0uH1rJ4R5uYFov2tQuaytNTmOO2wWgm7OAPkvW5ipyPiClfFgbk6/blFpAFUj8Eq+t6NQTN9/2+ZkRLEe86/OPEWuAmj8MocyORxt/6bcgTZhnMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Rql91ceP; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52cc671f170so1421806e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 00:25:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718868311; x=1719473111; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yRH5412s3wX0CB4KIXqQXWuDqJc61xtQQ1UqcTmYbLs=;
+        b=Rql91cePriLwtxiq4n/1I2OAgbYmoN3CqoOuEPIEgDiAfvJlW2u2G2uw9Vz2saoT+A
+         0gs2VRfIbQJs7bAex9J3TASgHuBSEpoSDpkv/3zWRrogIn8dbSgioD6zQ6Ttf2fyI9DL
+         Szq1dftbfmzU4hmFNQ8eM6v3BkD8s4+ceMzPREzMxQUbWFWT7Ic84mtz6gZPFikN0b3y
+         vIBNI3neNx9kX+Fv1urTCpvdm9r13BgT3PHqRjwjNLREBzxiOrGuBGVW+7a5hgHFiF/0
+         1A3fU8YEuWlKaVNnER8kEtA28f2NJTqfCBYRYLinICkE81L3Klyqzh/J5JE2SGhdj4KQ
+         9AEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718868311; x=1719473111;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yRH5412s3wX0CB4KIXqQXWuDqJc61xtQQ1UqcTmYbLs=;
+        b=ZkTpV2MlhNlDEk6ZBNeC+2CbAVXsx8FR1xGmV0ca5m+IhUWAPVdwJJe49ntOzo3viu
+         bjTN5Ri8Pk4ZSERtNRZgyS3dJNuJe0WfOMYCTuCkRLkke9/TQsiKP09tLICtWb9hXjDz
+         NM1aDOXzkKRZ+i/3QUMuk58n4P9gvjUodqEkPRABWUA+lfkE2+TEmtSXExtQ8CcGuUry
+         t/9xk1FCIu2NQcEr9noLSSkaNeBmNY8PWRi++GLCKlZex+Jj12wsnWYPKaSFxbFfyQPD
+         xmMeHar6MKjdbnRkhBlD0SuWlF4DQmmnQqMzEFj4mSR4IeVqlmOl4QmD7yrnlfzqwQLf
+         fETA==
+X-Forwarded-Encrypted: i=1; AJvYcCVaLQ1l8ZcLyocf695E8T0Bi1hyGyRK+hFnyTXCVLZoebSNEM/qfyXi5scbctHfEUKBNKKpxc6srZ3iub0P5HBhIb+CmM1r82Ym6kZA2A==
+X-Gm-Message-State: AOJu0YzarPYP6DPUdLY9rE+MUz2mBqttaivphxwklYdwDZEdf7v2GbZb
+	rCmYQcoPYNR/GpvZ7JYLUK+VWmYXXYhNV1Mi70wqli9h33V4mRrEI2eng+EKbrhpVYe/mrQV/+B
+	Eu5Pfq226KvI8mhtmkYOw+5eepl7TAb263L7nyA==
+X-Google-Smtp-Source: AGHT+IEdeM9R3n/NNtQDYZHx3TkVh4Vr7+gb+bkwvyCIBlqBU2TmaHrNNS+3vlKpjGfCJsXmfuuse+wN8rhE8KzDejs=
+X-Received: by 2002:a05:6512:ad5:b0:52c:86e0:97b5 with SMTP id
+ 2adb3069b0e04-52cca1c57b8mr1464365e87.16.1718868310875; Thu, 20 Jun 2024
+ 00:25:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] net: stmmac: Add interconnect support in qcom-ethqos
- driver
-To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>,
- Vinod Koul <vkoul@kernel.org>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin
- <mcoquelin.stm32@gmail.com>, Russell King <linux@armlinux.org.uk>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc: kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>,
- linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240619-icc_bw_voting_from_ethqos-v1-0-6112948b825e@quicinc.com>
- <20240619-icc_bw_voting_from_ethqos-v1-1-6112948b825e@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240619-icc_bw_voting_from_ethqos-v1-1-6112948b825e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240619184550.34524-1-brgl@bgdev.pl> <20240619184550.34524-6-brgl@bgdev.pl>
+ <44cf011b-ec81-4826-b7c2-1a8d57594fca@lunn.ch>
+In-Reply-To: <44cf011b-ec81-4826-b7c2-1a8d57594fca@lunn.ch>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 20 Jun 2024 09:24:59 +0200
+Message-ID: <CAMRc=Mc0wN=zkduCnKetXyMsuY2k-BzrZ19ehPDntZRDu_o6fA@mail.gmail.com>
+Subject: Re: [PATCH net-next 5/8] net: phy: aquantia: wait for FW reset before
+ checking the vendor ID
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Vinod Koul <vkoul@kernel.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Russell King <linux@armlinux.org.uk>, netdev@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 20/06/2024 00:41, Sagar Cheluvegowda wrote:
->  
-> @@ -813,6 +824,14 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
->  		return dev_err_probe(dev, PTR_ERR(ethqos->link_clk),
->  				     "Failed to get link_clk\n");
->  
-> +	ethqos->axi_icc_path = devm_of_icc_get(dev, "axi_icc_path");
+On Wed, Jun 19, 2024 at 9:27=E2=80=AFPM Andrew Lunn <andrew@lunn.ch> wrote:
+>
+> On Wed, Jun 19, 2024 at 08:45:46PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Checking the firmware register before it boots makes no sense, it will
+> > report 0 even if FW is loaded. Always wait for FW to boot before
+> > continuing.
+>
+> Please split this patch up. One patch which renames the method to the
+> more generic aqr_ since it is used by more than aqr107. Then add the
+> new use of it.
+>
 
-Order your patches correctly. Bindings always go before users.
+Will do.
 
-Best regards,
-Krzysztof
+> Is this actually a fix? What happens to the firmware if you try to
+> download it while it is still booting? Or do you end up downloading
+> firmware when it is not actually needed? Please expand the commit
+> message.
+>
 
+It says '0' and the driver tries to load it from nvmem, then the
+filesystem and bails-out after these two fail. I'll extend the commit
+message.
+
+Bart
+
+>     Andrew
+>
+> ---
+> pw-bot: cr
 
