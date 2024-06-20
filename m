@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFA6C90FD50
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 09:12:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D5BA90FD59
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 09:13:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 59DD01F22B3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 07:12:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78079287384
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 07:13:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 253AC42078;
-	Thu, 20 Jun 2024 07:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D17D4207F;
+	Thu, 20 Jun 2024 07:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SlpQ2bwK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lh+UaT4k"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC313A29C;
-	Thu, 20 Jun 2024 07:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6DD45BEF;
+	Thu, 20 Jun 2024 07:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718867533; cv=none; b=eyK2K/OFNqHwMwUsFME5Q+8HXqjnONN5km3JL59pyoj07wxjWO5HrsglwEGkq1M5Gd3UQX6vV52Qp5maoB7rfilYB26Q1NK5nmJ4/70CWO6oEoHctzngyfuKkvzdc08CBQ+T7YElYAXQ9Z9/lKLDhyn3UBzJ8WAeP9yh7wAlwzQ=
+	t=1718867575; cv=none; b=hrbnyGRuGDWq9RWHkOFHwuRw+msMIfnMnPRXtQgGPfOBXARZMFdy3o7EDzY9dhlAPgD87QPX2ElTxP5In13iq93OKe4UBQALdOido+rxLpwHbHFOFz397aoswSDopmx4vILsKPcMJDiCRuCmWxqdLzNmULJzuEs8zgctZG1MRnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718867533; c=relaxed/simple;
-	bh=X4JnYkyGbVJM0iTtxc51LAeo3XXfftm4x3WTTw1hfY8=;
+	s=arc-20240116; t=1718867575; c=relaxed/simple;
+	bh=rrzPp9VuHNNKHwlwOms3dI+sJh+KAerUh/wOmDb9Ldc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MiZk/s9954NVFPwL70nedXFScrv3P0jerSDxR0JoG10+3dsDBRiTssg+XTR77wFAAWwFOaAtqTKKjEyUFCo/byxGjScrLra28JAHto3y4wi49KYXJC9kaZA5YJmSk/G14YJ3yZusPFHdxoHFiCSp/yDfyF3pV0yPcDpwIJhINKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SlpQ2bwK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C7DC2BD10;
-	Thu, 20 Jun 2024 07:12:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=O3xz8WIU66X0hW48n8cgwTo66de7hHK+fAcnw4uJzhu8eZvLQkjM0+ca84jpHXRW6jGZDXaofHvCsmzr9P1QLPIw5Ol0ruVC8V+hqTjy+WYWLyosnPbwiV/w1GVTuqlmK9euq4zqedI34T1kHmQ48bjCKCqv1kbDhxaUF6oWexU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lh+UaT4k; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75003C2BD10;
+	Thu, 20 Jun 2024 07:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718867532;
-	bh=X4JnYkyGbVJM0iTtxc51LAeo3XXfftm4x3WTTw1hfY8=;
+	s=k20201202; t=1718867575;
+	bh=rrzPp9VuHNNKHwlwOms3dI+sJh+KAerUh/wOmDb9Ldc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SlpQ2bwKO/v2qWPG1Ah474O5xpg+8FnEWrl+1J/4q0Q2qeFDN4CfrXvPLHF95xGbo
-	 Iow9J9SC9LwMxiMZmsecRDw03IFVxI9Wpu3ORADxvk7CiHkDuJvvSwvZlHrSPg9XTL
-	 s2M2aniIJAF5aW1r211kKvcvecLpq24VKOHf9JaaDWQSWutym5uff2gOKzxhEVIjuN
-	 TmvT2gjyXp5dqdaUD4s6UvmP6mI48+JohJS7mQId2zDA+xjtf/2ubnBGoETrRBkbYG
-	 HQPp8KQkNFNLV/bTaF3u2JfS75PBYA+nN761oXom9q6ifQbHQ4zMX1ztVf8nBwRjGk
-	 siaXbTN4QBUfA==
-Message-ID: <505739da-6724-4928-bea8-f03d673544bc@kernel.org>
-Date: Thu, 20 Jun 2024 09:12:02 +0200
+	b=Lh+UaT4k3rK2t7ZyuI+KU/oopHcM0TGuORyVOxp5EavORQTX+PeAa45BnacpnPAFX
+	 7gMGx6ttqEGSQZMiBnJlmkejqeTtqS2tsLgjvALARgWcXWhASAPiO5DDwJ0hklscym
+	 PcSEJ9F5nG9Oz4fMdAzHgcKGVoJ3bXaSBTL/ZY4Q/XePiaffmBqjVqNHjNneouxZ/N
+	 U1kV9hXvqlo6oDB0bRc6v23D0Lr6Ya7XxJ4JKPMiYA1nBaOu6txo3zEal4ymmiXWPe
+	 zO52dElSKPY/xLDobDtB+1E/6q19Q34VuBYtWdfJCrBVhtomYfsIb6aD7ILbtMVtTc
+	 ocbJo93aUuRCA==
+Message-ID: <1083ae52-867a-4abe-88df-419830cdaeed@kernel.org>
+Date: Thu, 20 Jun 2024 09:12:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] dt-bindings: net: qcom: ethernet: Add interconnect
- properties
+Subject: Re: [PATCH 1/3] net: stmmac: Add interconnect support in qcom-ethqos
+ driver
 To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>,
  Vinod Koul <vkoul@kernel.org>,
  Alexandre Torgue <alexandre.torgue@foss.st.com>,
@@ -68,7 +68,7 @@ Cc: kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20240619-icc_bw_voting_from_ethqos-v1-0-6112948b825e@quicinc.com>
- <20240619-icc_bw_voting_from_ethqos-v1-3-6112948b825e@quicinc.com>
+ <20240619-icc_bw_voting_from_ethqos-v1-1-6112948b825e@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,38 +114,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240619-icc_bw_voting_from_ethqos-v1-3-6112948b825e@quicinc.com>
+In-Reply-To: <20240619-icc_bw_voting_from_ethqos-v1-1-6112948b825e@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/06/2024 00:41, Sagar Cheluvegowda wrote:
-> Add documentation for the interconnect and interconnect-names
-> properties required when voting for AHB and AXI buses.
-> 
-> Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> index 6672327358bc..bf2a197342a5 100644
-> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> @@ -63,6 +63,14 @@ properties:
 >  
->    dma-coherent: true
+> @@ -813,6 +824,14 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  		return dev_err_probe(dev, PTR_ERR(ethqos->link_clk),
+>  				     "Failed to get link_clk\n");
 >  
-> +  interconnects:
-> +    maxItems: 2
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: axi_icc_path
-> +      - const: ahb_icc_path
+> +	ethqos->axi_icc_path = devm_of_icc_get(dev, "axi_icc_path");
 
-Drop "_icc_path", redundant and instead describe it like other bindings.
-Also, names use hyphens. Just open any Qualcomm DTS.
-
+Order your patches correctly. Bindings always go before users.
 
 Best regards,
 Krzysztof
