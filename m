@@ -1,165 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-23424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C37C59111E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 21:13:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5703A91122D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 21:33:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6EAD1281AEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 19:13:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A16941F21CCB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 19:33:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A60DD1B47D0;
-	Thu, 20 Jun 2024 19:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26E201B47B0;
+	Thu, 20 Jun 2024 19:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ofQiXoqy"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="hzfcH2pF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE571B143E;
-	Thu, 20 Jun 2024 19:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA821AC765
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 19:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718910797; cv=none; b=HZqWMRf6hOezCDd6QGoeCKUA/WH46Yq5WQhgr2rfISJoct02bE4SsnTOicz/WN4m6JVKlKDaUerYGXA/EFHHzwJyxDj2grEWC8Xk9YY+4SXwHkHTEiBK4KmY9rVn6esyiD4N65G4A6WNdVARYkIvvXjYj2N+SwB+yJBWd2MClss=
+	t=1718912028; cv=none; b=QZ+LX3ErjM5g9RtwaGs5Zvapfk4YtREGH/QOVsaHNZOzeuxbBNLEvned+/jEqR/b3hvMmjDQkhorPQVsRClWdbN98yi3C/81fV5ZSIh7g676NL0mNcXkHRxRojb0ZhxIQmndaci6U/VlkRUG1lx0cqvvQXdIrbzdisT7HMUeGcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718910797; c=relaxed/simple;
-	bh=Z1CSkm7u5R10aSONZqkfu8dCZVlCCCMzy8WBf8nzOpo=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AxFrJYBluiXD/j4T47zKNEBmHWk92GeIiYTkCGPCm0C+EnybiOheIHMgwqIjGu7tMoxG24ArOOTmWFdyRvpQDLOP4W5gQfhDFsvjF4f3u0L1cSPbvqTrv7s9oqXzS9zw0GshcAKQgiFC2GXqnOogrpUf+Jr5SZtARv5X4ec2S0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ofQiXoqy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45KHBOm8019749;
-	Thu, 20 Jun 2024 19:13:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=uVJH59PqSWsUNgNIb5ofnm
-	GciM6m1RX6m75dTbJllWs=; b=ofQiXoqyxTI4orLyCOMtD4tsRSrJzW3LdAEuKm
-	OmEAcCWbk9cVEl8A/gZpAe6MuyJrmFZDLX0eQh1UxoTium7sxXyvtVJS/CCth9Tf
-	coDivkyRVOIgTKk3gFayxQfkSpEPGrKLCtGntvdTOcKBiJWifBLyQ8VnZxqu4tiS
-	I52N+0MCpI5GGGcC0SnQSYJWhLoayMSTyCNxMSs03Npzy6oNHTP9CLePuiY1obEB
-	yakxEyeDddbYP5e5UV1lDlsW4fGx8nOH8dD5+illqdEd6OFh8VnfwcEHQiQyNqH1
-	/HEMepbBBcGY8EWsnH8BDSPNXg88KFFQs7UYGI7mVXsifkaw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrkw8b4e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Jun 2024 19:13:08 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45KJD6MU021307
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Jun 2024 19:13:06 GMT
-Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 20 Jun 2024 12:13:05 -0700
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-To: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>
-CC: <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
-        <dan.carpenter@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] drm/msm/dpu: drop validity checks for clear_pending_flush() ctl op
-Date: Thu, 20 Jun 2024 12:12:27 -0700
-Message-ID: <20240620191228.3673550-1-quic_abhinavk@quicinc.com>
-X-Mailer: git-send-email 2.44.0
+	s=arc-20240116; t=1718912028; c=relaxed/simple;
+	bh=LMJhwXKqZKwDoZfSA47gsl66tl0ZA7Fm/pP5alDoprs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Yztlo8oyrTv2jRYZ5wmra+mX/O1KmsXSOudmZbxuIhI/OGOPA7toLacTFIR7GEj1m4ft6JWITvdbeGO0zTnEJtW7vipEVGTuHsMiI4RUV9335wAFqewyReAw7I/gN9+tIOfXNruP2i1bX5qQau/StDxIp03l9JXaunx3L3xfS0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=hzfcH2pF; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a6ef8bf500dso126145866b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 12:33:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1718912024; x=1719516824; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rxmltmQrKwAluprbf/AG1nvFIcYg57/7dnDwU0ucSDg=;
+        b=hzfcH2pFwQpmELdWSKsdWyJfy59qqJ+KZm7vlj8gHp24mX4pewuYIe0t0CB024FKtf
+         elJpPzOFpcXiSrxQmtMdAUy5mKmwAAbyFd0Xc5osG6F5F9s0lr9SUfpnr3GMljaqZ+on
+         Dzn3uOAVVXg+RHbCZuEyxi+6Zy9AJcfjg2aOo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718912024; x=1719516824;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rxmltmQrKwAluprbf/AG1nvFIcYg57/7dnDwU0ucSDg=;
+        b=xIyae/sm5ZwbXYrxz7/+lcVGEo7COBkMKt4R4AFjIMEEVzuk97/nJax2EgdFQ88XOV
+         UTEZMMiqeUxvDYh0V5v319bho3SiQ6k+lLN+Pydt4D0IPCKlbKE6DX4tYgmG7DXTC9pZ
+         x7v5vMHN6y49gSIgqmaTmr3kC67uEK9bw8v/CNmTsw/ekjGWP80J2bVaCC1Crjj2WeoP
+         /QcNwwAj7A11z2DU+3ksgzhaq5H2Anxru/eptvknBBZkL+UfTTdSvpys4PP6rM0HH/ea
+         vESnyXPbmJHZTekL+VqYcQzW/PrLt9u+ybdGwnHnlQYWVeOESi2Dh0V+lg9SoBsk1DYU
+         u55A==
+X-Forwarded-Encrypted: i=1; AJvYcCW4CLKgHdu83jqFW0jTB8cnMTTGUMxITF08zHYa88AxM7l5z4WFE3lGarJjVeLfW6EiE5Yy3OLq6teMsD6qg84RbRPJSqfXFcipWBeT1g==
+X-Gm-Message-State: AOJu0YxtrXDoSFi1J3ULaRmMKMNmAmgjYKkvnGnuAT87sz2lcna4J+VC
+	3PW+NoUIaCid/M6u+HC2mL141aYQMHXlsvP61+Zc3JvO3amq4dtuvDV2EUmqDfey9AOK7sSXTID
+	amt1ieK3g
+X-Google-Smtp-Source: AGHT+IHtuo1RhGltbpJiZ8Wp+59DpSSvFhcMeGFWYPkPcHcPnChKlfXTJz8RphrlC+reKGotGcZoqQ==
+X-Received: by 2002:a17:906:b356:b0:a6e:f997:7d8e with SMTP id a640c23a62f3a-a6fab643525mr401225166b.36.1718912024407;
+        Thu, 20 Jun 2024 12:33:44 -0700 (PDT)
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com. [209.85.221.47])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6fcf5493e7sm3164566b.118.2024.06.20.12.33.44
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jun 2024 12:33:44 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3608e6d14b6so903517f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 12:33:44 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUtRpPMgIOaM0YD7zYaI7Uufus/MTjOojDu15NpY4d1kpMOM4AsLvDZ1QV0b2OuD3O45wOEExlu0hg1L6AT/zEpuiGdlQjPKuUKoaCsaw==
+X-Received: by 2002:a5d:6152:0:b0:35f:308a:cab0 with SMTP id
+ ffacd0b85a97d-363170ecbe5mr4379764f8f.13.1718911595412; Thu, 20 Jun 2024
+ 12:26:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BiZK4oQ-74tOkeph2UBIw-Cq3HTwYxpJ
-X-Proofpoint-ORIG-GUID: BiZK4oQ-74tOkeph2UBIw-Cq3HTwYxpJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-20_08,2024-06-20_04,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
- clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
- mlxscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406200139
+References: <20240620175703.605111-1-yury.norov@gmail.com> <CAHk-=wiUTXC452qbypG3jW6XCZGfc8d-iehSavxn5JkQ=sv0zA@mail.gmail.com>
+ <ZnR1tQN01kN97G_F@yury-ThinkPad>
+In-Reply-To: <ZnR1tQN01kN97G_F@yury-ThinkPad>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 20 Jun 2024 12:26:18 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjv-DkukaKb7f04WezyPjRERp=xfxv34j5fA8cDQ_JudA@mail.gmail.com>
+Message-ID: <CAHk-=wjv-DkukaKb7f04WezyPjRERp=xfxv34j5fA8cDQ_JudA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/40] lib/find: add atomic find_bit() primitives
+To: Yury Norov <yury.norov@gmail.com>
+Cc: linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, 
+	"H. Peter Anvin" <hpa@zytor.com>, "James E.J. Bottomley" <jejb@linux.ibm.com>, 
+	"K. Y. Srinivasan" <kys@microsoft.com>, "Md. Haris Iqbal" <haris.iqbal@ionos.com>, 
+	Akinobu Mita <akinobu.mita@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Borislav Petkov <bp@alien8.de>, Chaitanya Kulkarni <kch@nvidia.com>, 
+	Christian Brauner <brauner@kernel.org>, Damien Le Moal <damien.lemoal@opensource.wdc.com>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, David Disseldorp <ddiss@suse.de>, 
+	Edward Cree <ecree.xilinx@gmail.com>, Eric Dumazet <edumazet@google.com>, 
+	Fenghua Yu <fenghua.yu@intel.com>, Geert Uytterhoeven <geert@linux-m68k.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Gregory Greenman <gregory.greenman@intel.com>, 
+	Hans Verkuil <hverkuil@xs4all.nl>, Hans de Goede <hdegoede@redhat.com>, 
+	Hugh Dickins <hughd@google.com>, Ingo Molnar <mingo@redhat.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>, 
+	Jiri Pirko <jiri@resnulli.us>, Jiri Slaby <jirislaby@kernel.org>, Kalle Valo <kvalo@kernel.org>, 
+	Karsten Graul <kgraul@linux.ibm.com>, Karsten Keil <isdn@linux-pingi.de>, 
+	Kees Cook <keescook@chromium.org>, Leon Romanovsky <leon@kernel.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Martin Habets <habetsm.xilinx@gmail.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <monstr@monstr.eu>, 
+	Nicholas Piggin <npiggin@gmail.com>, Oliver Neukum <oneukum@suse.com>, Paolo Abeni <pabeni@redhat.com>, 
+	Paolo Bonzini <pbonzini@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Ping-Ke Shih <pkshih@realtek.com>, Rich Felker <dalias@libc.org>, Rob Herring <robh@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Sean Christopherson <seanjc@google.com>, 
+	Shuai Xue <xueshuai@linux.alibaba.com>, Stanislaw Gruszka <stf_xl@wp.pl>, 
+	Steven Rostedt <rostedt@goodmis.org>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
+	Thomas Gleixner <tglx@linutronix.de>, Valentin Schneider <vschneid@redhat.com>, 
+	Vitaly Kuznetsov <vkuznets@redhat.com>, Wenjia Zhang <wenjia@linux.ibm.com>, 
+	Will Deacon <will@kernel.org>, Yoshinori Sato <ysato@users.sourceforge.jp>, 
+	GR-QLogic-Storage-Upstream@marvell.com, alsa-devel@alsa-project.org, 
+	ath10k@lists.infradead.org, dmaengine@vger.kernel.org, iommu@lists.linux.dev, 
+	kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-block@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-hyperv@vger.kernel.org, 
+	linux-m68k@lists.linux-m68k.org, linux-media@vger.kernel.org, 
+	linux-mips@vger.kernel.org, linux-net-drivers@amd.com, 
+	linux-pci@vger.kernel.org, linux-rdma@vger.kernel.org, 
+	linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-serial@vger.kernel.org, linux-sh@vger.kernel.org, 
+	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+	mpi3mr-linuxdrv.pdl@broadcom.com, netdev@vger.kernel.org, 
+	sparclinux@vger.kernel.org, x86@kernel.org, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Bart Van Assche <bvanassche@acm.org>, Jan Kara <jack@suse.cz>, 
+	Matthew Wilcox <willy@infradead.org>, Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>, 
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>, Sergey Shtylyov <s.shtylyov@omp.ru>
+Content-Type: text/plain; charset="UTF-8"
 
-clear_pending_flush() ctl op is always assigned irrespective of the DPU
-hardware revision. Hence there is no needed to check whether the op has
-been assigned before calling it.
+On Thu, 20 Jun 2024 at 11:32, Yury Norov <yury.norov@gmail.com> wrote:
+>
+> Is that in master already? I didn't get any email, and I can't find
+> anything related in the master branch.
 
-Drop the checks across the driver for clear_pending_flush() and also
-update its documentation that it is always expected to be assigned.
+It's 5d272dd1b343 ("cpumask: limit FORCE_NR_CPUS to just the UP case").
 
-changes in v2:
-	- instead of adding more validity checks just drop the one for clear_pending_flush
-	- update the documentation for clear_pending_flush() ctl op
-	- update the commit text reflecting these changes
+> > New rule: before you send some optimization, you need to have NUMBERS.
+>
+> I tried to underline that it's not a performance optimization at my
+> best.
 
-Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/464fbd84-0d1c-43c3-a40b-31656ac06456@moroto.mountain/T/
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c         | 3 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h          | 4 +++-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+If it's not about performance, then it damn well shouldn't be 90%
+inline functions in a header file.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 708657598cce..697ad4a64051 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1743,8 +1743,7 @@ void dpu_encoder_trigger_kickoff_pending(struct drm_encoder *drm_enc)
- 		phys = dpu_enc->phys_encs[i];
- 
- 		ctl = phys->hw_ctl;
--		if (ctl->ops.clear_pending_flush)
--			ctl->ops.clear_pending_flush(ctl);
-+		ctl->ops.clear_pending_flush(ctl);
- 
- 		/* update only for command mode primary ctl */
- 		if ((phys == dpu_enc->cur_master) &&
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 356dca5e5ea9..882c717859ce 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -538,8 +538,7 @@ static void dpu_encoder_phys_wb_disable(struct dpu_encoder_phys *phys_enc)
- 	}
- 
- 	/* reset h/w before final flush */
--	if (phys_enc->hw_ctl->ops.clear_pending_flush)
--		phys_enc->hw_ctl->ops.clear_pending_flush(phys_enc->hw_ctl);
-+	phys_enc->hw_ctl->ops.clear_pending_flush(phys_enc->hw_ctl);
- 
- 	/*
- 	 * New CTL reset sequence from 5.0 MDP onwards.
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-index ef56280bea93..6f8c7ffa2d27 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-@@ -83,7 +83,9 @@ struct dpu_hw_ctl_ops {
- 
- 	/**
- 	 * Clear the value of the cached pending_flush_mask
--	 * No effect on hardware
-+	 * No effect on hardware. This ctl op is always assigned
-+	 * irrespective of hw version and hence no check is needed
-+	 * for the callers to check its availability before calling it.
- 	 * @ctx       : ctl path ctx pointer
- 	 */
- 	void (*clear_pending_flush)(struct dpu_hw_ctl *ctx);
--- 
-2.44.0
+If it's a helper function, it needs to be a real function elsewhere. Not this:
 
+ include/linux/find_atomic.h                  | 324 +++++++++++++++++++
+
+because either performance really matters, in which case you need to
+show profiles, or performance doesn't matter, in which case it damn
+well shouldn't have special cases for small bitsets that double the
+size of the code.
+
+              Linus
 
