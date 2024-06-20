@@ -1,229 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-23385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6E08910A03
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 17:37:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E9E8910A40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 17:44:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 38D661F22064
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 15:37:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44CAF281007
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 15:44:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60D621B140B;
-	Thu, 20 Jun 2024 15:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48C991B011B;
+	Thu, 20 Jun 2024 15:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yNoLuSR+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SCGhAfXB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05B61B0139
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 15:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2C81B0109;
+	Thu, 20 Jun 2024 15:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718897827; cv=none; b=g/2VpwgPzXshvq+WQ/jYBiFx08vzQsf6ikbEuzYypfYt7KuDiQFBGd11GUSZlGIyNyB6vpwMK8mjUsPDQcT82ypinaQAR8joXbLtUi2p1v4d9mThzuTfTESnOOIy9SDpPNmH/Jf7YJFt/2G4DxnVZrX83zSJA9j9pw1rRqVxvcc=
+	t=1718898265; cv=none; b=rwgcBmhHdL+I+iGsy2rI5y035THMmK4m69opb2o5q/a0JgIXGif0VR7Jcs6PxrRWrvphbXDwol4yggf4l7D8sCRuVoKhTUCGkL6ae2fi2wD13BuIqUH1iVpsdxzcsp+B0SS4G+IuiEfpnhrN+DYzAm4yvDOWjlrh0z218JBZ3jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718897827; c=relaxed/simple;
-	bh=dQq91PMv6Hkh8U29G1UUbSNmF8C3plGL3zWrnxSr1eM=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=anTuqDQ86I6aXhvIy65na6pQYBW87xskaeNRRds/S8IVeBYSnNi2KBqhcEFFH0jrquArZfhskRnXrxZvTzRNegun+LZq8fvQVgN0Q2NoISDtBajpLPHCD/H5XPn8/YJWDYo863xQ5uPFAw4BqO635z7Sbpbdk/s7WDYXtI5ojPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=yNoLuSR+; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2c7a68c3a85so1154004a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 08:37:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1718897825; x=1719502625; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YcvtK+onJiZBymHPHugY4FRoclgetOnfb6qMYuc/RYA=;
-        b=yNoLuSR+bnSKkFDS2PNQ6Acibp41lJSgBOgUVCWGIxVcxcEwmysZxaADQqQyQPnOYF
-         a1neb757Ngznv26AR4GB1FC/VfV2z6S4zWsJ8IDgdl0pdnGdgAdd44LSRx8Bwfdq2pRC
-         anxA245nafljElRXEM43PtNkqa4J6j58cj7ICnP2hMwhPrz55PKvym1r3fFRslSYNJ7u
-         GIGLgSvHhrVGWcbXwsoO7GOzAsYioFSgRoUZ+d3ZdzcZx2lYs0b8iH/zq8cHIYstLGBR
-         Qq69jibbwsp8f2+cVw0d84wVLW5YVcjulFss/qnxhmpiR58R/bT7zoDRB7M2NOhe0QxA
-         /wTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718897825; x=1719502625;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YcvtK+onJiZBymHPHugY4FRoclgetOnfb6qMYuc/RYA=;
-        b=iWAGMr6UVo/i2wsnx+H/0/yoXLjNL9Wciff2TIc9T0sQyWJVk9320i/DIiQFUxCdEC
-         soug9XkqzaqtBarXLvy0AF4xBJcVCQm9NHEq5Rm/1zSG3p6CHJTmYo1kPb1WrmLC9MSM
-         jo3dFx+awXhO4aCuTywTJzaicsr6jDs67qU0qsNeirZ77yw6pFOcGlSE2aveXEF2UjTi
-         YlaucXW0xJiyiDQLjeXA/b+0rRhrwTA9lMjySY7Po7LoRMFKiBOX+bha6q4rYnFT0f9q
-         lFCMpvRo8X1fq88X9fKJAcEmXmNNSpKuwD0Nox2BqMbciCnu/ddXdgxxnmg2yvi5iv6Q
-         vhFg==
-X-Forwarded-Encrypted: i=1; AJvYcCUGxtkAJuS0mHksC67dA6KHT0CikkrX1RKWInPiB7VxzfUkxv6vrXPm9IWAjjyjaKMA3mI9bqS9LTiMrU2sTuua8D4f8lNPzSI6eULeUg==
-X-Gm-Message-State: AOJu0YwmOTO1e7y7HTmlKi7dYSrnkl3VrXZmvVKfskHvnUikv2S+/bI3
-	xcIi87smo5wwD1ZZnW29Q+0CN6CbPbYiEGVlz/uXzIuYXSdDujgSRhFXwVlqPOnjHJ5fJQltyGc
-	e6g==
-X-Google-Smtp-Source: AGHT+IHXhor/kuVW03oouyq1tDyLAY6GkCcCTg8hiO3HTvemYmIW2WnCN2V89ElanisIBodVVNdjjBCJ40M=
-X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a17:90b:3703:b0:2c4:aafe:75ec with SMTP id
- 98e67ed59e1d1-2c7b4e45665mr16589a91.0.1718897824912; Thu, 20 Jun 2024
- 08:37:04 -0700 (PDT)
-Date: Thu, 20 Jun 2024 08:37:03 -0700
-In-Reply-To: <CA+EHjTz_=J+bDpqciaMnNja4uz1Njcpg5NVh_GW2tya-suA7kQ@mail.gmail.com>
+	s=arc-20240116; t=1718898265; c=relaxed/simple;
+	bh=NDXoArYoOi42/owc5Xd/tf23JKVgVR3hxxrlHPGBiaQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PoLrKmU/Kmo5eD/RJWF5N8xxi99e7+OJcyFbIcP6a4MKXJsA2ck7ScUj38esJKtwXKv8yTKL/7VfMVafEAtk1EQER5XTGK5ufiKGl4c0NUq69WxvGEnpka7a/zUls0QJb8860OaJy5ZDlgB1Qjb4ScPpUnfwHMuEePK82tqUI4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SCGhAfXB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4C6C2BD10;
+	Thu, 20 Jun 2024 15:44:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718898264;
+	bh=NDXoArYoOi42/owc5Xd/tf23JKVgVR3hxxrlHPGBiaQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SCGhAfXB6TvNGpmFq4tkdAMjT0BGXqUhPg0hCTxr4beUuDJ7W29IQNBlij8Cf97ul
+	 tMAx8kSFiZsGyzK+EgtVuGcVinfB1I5FxjCd9puEHkPe/IwygmoKhclQPxjek8s+9F
+	 NFGGcW/AKfDQAnIzbFrpKn/wXoT0A1L9DmQX9o/HtHSo9mCs3xypVAjykhijQM218T
+	 PgvBX+5tM24zkzmwOofxt0PICy2ZsV/tAvomvknU3jOd7PvTJ2KOn5eoARpX/scLHo
+	 T++IMGjqjR3IGx+v2EdrMge7LGse2qKcePLOIz1LkXT6OAYWH46HsykEJ+j6PnoAm5
+	 aqzl4xqMU9vMw==
+Message-ID: <5e263066-5d05-4645-a695-0e7e62562666@kernel.org>
+Date: Thu, 20 Jun 2024 17:44:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
- <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com> <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
- <CA+EHjTxWWEHfjZ9LJqZy+VCk43qd3SMKiPF7uvAwmDdPeVhrvQ@mail.gmail.com>
- <20240619115135.GE2494510@nvidia.com> <CA+EHjTz_=J+bDpqciaMnNja4uz1Njcpg5NVh_GW2tya-suA7kQ@mail.gmail.com>
-Message-ID: <ZnRMn1ObU8TFrms3@google.com>
-Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-From: Sean Christopherson <seanjc@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, David Hildenbrand <david@redhat.com>, John Hubbard <jhubbard@nvidia.com>, 
-	Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>, maz@kernel.org, 
-	kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	pbonzini@redhat.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/23] dt-bindings: panel: add Samsung s6e3ha8
+To: Dzmitry Sankouski <dsankouski@gmail.com>,
+ Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
+ linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
+ <20240618-starqltechn_integration_upstream-v3-3-e3f6662017ac@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240618-starqltechn_integration_upstream-v3-3-e3f6662017ac@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 19, 2024, Fuad Tabba wrote:
-> Hi Jason,
->=20
-> On Wed, Jun 19, 2024 at 12:51=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com>=
- wrote:
-> >
-> > On Wed, Jun 19, 2024 at 10:11:35AM +0100, Fuad Tabba wrote:
-> >
-> > > To be honest, personally (speaking only for myself, not necessarily
-> > > for Elliot and not for anyone else in the pKVM team), I still would
-> > > prefer to use guest_memfd(). I think that having one solution for
-> > > confidential computing that rules them all would be best. But we do
-> > > need to be able to share memory in place, have a plan for supporting
-> > > huge pages in the near future, and migration in the not-too-distant
-> > > future.
-> >
-> > I think using a FD to control this special lifetime stuff is
-> > dramatically better than trying to force the MM to do it with struct
-> > page hacks.
-> >
-> > If you can't agree with the guest_memfd people on how to get there
-> > then maybe you need a guest_memfd2 for this slightly different special
-> > stuff instead of intruding on the core mm so much. (though that would
-> > be sad)
-> >
-> > We really need to be thinking more about containing these special
-> > things and not just sprinkling them everywhere.
->=20
-> I agree that we need to agree :) This discussion has been going on
-> since before LPC last year, and the consensus from the guest_memfd()
-> folks (if I understood it correctly) is that guest_memfd() is what it
-> is: designed for a specific type of confidential computing, in the
-> style of TDX and CCA perhaps, and that it cannot (or will not) perform
-> the role of being a general solution for all confidential computing.
+On 18/06/2024 15:59, Dzmitry Sankouski wrote:
+> Add binding for the Samsung s6e3ha8 panel found in the Samsung S9.
+> 
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> ---
+>  .../bindings/display/panel/samsung,s6e3ha8.yaml    | 76 ++++++++++++++++++++++
+>  MAINTAINERS                                        |  5 ++
+>  2 files changed, 81 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/panel/samsung,s6e3ha8.yaml b/Documentation/devicetree/bindings/display/panel/samsung,s6e3ha8.yaml
+> new file mode 100644
+> index 000000000000..9d7d747264dd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/samsung,s6e3ha8.yaml
+> @@ -0,0 +1,76 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/samsung,s6e3ha8.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Samsung s6e3ha8 AMOLED DSI panel
+> +
+> +description: The s6e3ha8 is a 1440x2960 DPI display panel from Samsung Mobile
+> +  Displays (SMD).
+> +
+> +maintainers:
+> +  - Dzmitry Sankouski <dsankouski@gmail.com>
+> +
+> +allOf:
+> +  - $ref: panel-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: samsung,s6e3ha8
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  reset-gpios:
+> +    description: reset gpio
 
-That isn't remotely accurate.  I have stated multiple times that I want gue=
-st_memfd
-to be a vehicle for all VM types, i.e. not just CoCo VMs, and most definite=
-ly not
-just TDX/SNP/CCA VMs.
+Pointless description. I think this can be reset-gpios: true, because
+gpio-consumer-common provides constrain.
 
-What I am staunchly against is piling features onto guest_memfd that will c=
-ause
-it to eventually become virtually indistinguishable from any other file-bas=
-ed
-backing store.  I.e. while I want to make guest_memfd usable for all VM *ty=
-pes*,
-making guest_memfd the preferred backing store for all *VMs* and use cases =
-is
-very much a non-goal.
+> +
+> +  port: true
+> +
+> +  vdd3-supply:
+> +    description: VDD regulator
+> +
+> +  vci-supply:
+> +    description: VCI regulator
+> +
+> +  vddr-supply:
+> +    description: VDDR regulator
+> +
+> +required:
+> +  - compatible
+> +  - reset-gpios
+> +  - vdd3-supply
+> +  - vddr-supply
+> +  - vci-supply
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    dsi {
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      panel@0 {
+> +      	compatible = "samsung,s6e3ha8";
+> +      	reg = <0>;
 
-From an earlier conversation[1]:
+Messed indentation. Keep consistent one.
 
- : In other words, ditch the complexity for features that are well served b=
-y existing
- : general purpose solutions, so that guest_memfd can take on a bit of comp=
-lexity to
- : serve use cases that are unique to KVM guests, without becoming an unmai=
-ntainble
- : mess due to cross-products.
 
-> > > Also, since pin is already overloading the refcount, having the
-> > > exclusive pin there helps in ensuring atomic accesses and avoiding
-> > > races.
-> >
-> > Yeah, but every time someone does this and then links it to a uAPI it
-> > becomes utterly baked in concrete for the MM forever.
->=20
-> I agree. But if we can't modify guest_memfd() to fit our needs (pKVM,
-> Gunyah), then we don't really have that many other options.
 
-What _are_ your needs?  There are multiple unanswered questions from our la=
-st
-conversation[2].  And by "needs" I don't mean "what changes do you want to =
-make
-to guest_memfd?", I mean "what are the use cases, patterns, and scenarios t=
-hat
-you want to support?".
+Best regards,
+Krzysztof
 
- : What's "hypervisor-assisted page migration"?  More specifically, what's =
-the
- : mechanism that drives it?
-
- : Do you happen to have a list of exactly what you mean by "normal mm stuf=
-f"?  I
- : am not at all opposed to supporting .mmap(), because long term I also wa=
-nt to
- : use guest_memfd for non-CoCo VMs.  But I want to be very conservative wi=
-th respect
- : to what is allowed for guest_memfd.   E.g. host userspace can map guest_=
-memfd,
- : and do operations that are directly related to its mapping, but that's a=
-bout it.
-
-That distinction matters, because as I have stated in that thread, I am not
-opposed to page migration itself:
-
- : I am not opposed to page migration itself, what I am opposed to is addin=
-g deep
- : integration with core MM to do some of the fancy/complex things that lea=
-d to page
- : migration.
-
-I am generally aware of the core pKVM use cases, but I AFAIK I haven't seen=
- a
-complete picture of everything you want to do, and _why_.
-
-E.g. if one of your requirements is that guest memory is managed by core-mm=
- the
-same as all other memory in the system, then yeah, guest_memfd isn't for yo=
-u.
-Integrating guest_memfd deeply into core-mm simply isn't realistic, at leas=
-t not
-without *massive* changes to core-mm, as the whole point of guest_memfd is =
-that
-it is guest-first memory, i.e. it is NOT memory that is managed by core-mm =
-(primary
-MMU) and optionally mapped into KVM (secondary MMU).
-
-Again from that thread, one of most important aspects guest_memfd is that V=
-MAs
-are not required.  Stating the obvious, lack of VMAs makes it really hard t=
-o drive
-swap, reclaim, migration, etc. from code that fundamentally operates on VMA=
-s.
-
- : More broadly, no VMAs are required.  The lack of stage-1 page tables are=
- nice to
- : have; the lack of VMAs means that guest_memfd isn't playing second fiddl=
-e, e.g.
- : it's not subject to VMA protections, isn't restricted to host mapping si=
-ze, etc.
-
-[1] https://lore.kernel.org/all/Zfmpby6i3PfBEcCV@google.com
-[2] https://lore.kernel.org/all/Zg3xF7dTtx6hbmZj@google.com
 
