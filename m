@@ -1,85 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-23460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85B5C9114C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 23:39:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E42C29114CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 23:39:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2135B219A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 21:39:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 12B751C21EA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 21:39:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A78697FBBD;
-	Thu, 20 Jun 2024 21:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 946C480605;
+	Thu, 20 Jun 2024 21:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xf6bmuRc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HN6nY52p"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98F57602B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 21:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E668005C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 21:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718919540; cv=none; b=G+1Bl9fqSTkWtKdKZ4QVIbV/UJI/t9WQVdGNTvMBR+ajeMVloG04y+RLsOv36NRoNuqgb9OPKHeHle+JiVY+2ShZ01uAa+/oRoA9s2QXmhyQa9e8VQAWFJDeGlZ/FVbDeRpW/gKzWon8saRQpmdpopyTi7vyd4r0cV6yZj7J6rI=
+	t=1718919551; cv=none; b=LMHqnpEtvy4MurmC+0b7CltariGX/9biQXHVBRK+KwV2lIiFvFL6uJCED+MAOX09EUVIQI0s5TEI9l4pCP71KzHlJRWzCLyzKYdSh/8eYM0Ao9imFsaCjCfkoJEBJLvhJrGKyyGBmuVVKnjf0Pcl+b1LTzNvYM2a73su61jvoyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718919540; c=relaxed/simple;
-	bh=R+gP8GWTKEf6vW2sVTmz7saJ84W+0KRqig3G9hZeYTg=;
+	s=arc-20240116; t=1718919551; c=relaxed/simple;
+	bh=RXgx7JjhJq26kg8SSR6ByE5dIYJdkgNUTahrtOV+2D0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gC6AKrSnIzM3FXfboSiHq0bRp3Hnr4VriND7x+pyZW5Dv7opqaNVg+8cb1L9tZKgjnOn9nKRyGyW0/JlB5LgCjTpPUuPurM20YJtR+gHgNp5rhMSt49gCP1yIJ+7/XH8tQJk+S+E6UqfnoltyzTtU2I3nhbniaiKYpzq3qqSJ6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xf6bmuRc; arc=none smtp.client-ip=209.85.208.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=jTVm4tQ2DqtTRuq7XeVutFa5sgz9ugEjj6Bl3nmE/OZZWKICXx6vJte+1zkKSOtInU15xhAN1Ie9x0nrMI/oPUhf0E+ZEXLcNvnlFkHhm0tNARDPPRJP7YDtx6m3B54gkNa8J/GLlHQKFvdBFRK9aLGMswY6Q7rdk2rZAlh1F0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HN6nY52p; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ec002caeb3so16828661fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 14:38:58 -0700 (PDT)
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ebd421a931so13538241fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 14:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718919537; x=1719524337; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718919548; x=1719524348; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=A9KCIXUhFa5F6js3PXOw4A1bh3KoXXlrj5hfzxoF/A0=;
-        b=Xf6bmuRcIBSs6UIqrNKcuq6P1dkrjnFFEEe3i1cW2OADRLdsH+CnUKg3he6BG3fMAL
-         owLPQ8VqHXKBH8STQfZwQ/NgPSHEQsHBBb69E76Pel9XIboU0ls1aNSsnkiMNy9hyWg/
-         syOltxdCh7IYypo88M0X88oYisqlBQwde7eWQHLVMHgKDHf1+goUOOthqayXVzI4E/5x
-         3jKgDvf+SR+DwccenD+JohCVgk7ZKBqpphNpmYQ4D/xtJgoiXtzuUMSABNA+2mAjMe+R
-         AymCQ2tyzPzkVo3k2z0VfD0h682YGNWrYTPTejVaI3kD0XI+I9BR7PzuAEboxPGMoXHt
-         pXtA==
+        bh=NoXCToDT0oayacNmh7qfNjnirLUvAMNFUEgGw4n22jE=;
+        b=HN6nY52pqhFoks2OE6rUkHb/N4zYYNcejtlvUxUdvPTwfBNV6WdXdm15xEdigd4DSk
+         ZoGIbL7ycvYP3NSzu0IR3QeeuWuD6qlO1g92GyTq8PtdStY7t72MU+ZSUUa496BObfl3
+         +mnUqs3HkG1cklaUHw9lcBWLZ7j4KG9CkefIelEpDKzaI7OWw/zoO12Jjf3wlChnbZi1
+         2Vnke9PmpfJRvpEXdATJZU6IpHslfwSiGDdOVfFTPYTua5z5SWmD0qrwoXLW5mULcphJ
+         GK7PyGNT6LMfUtVSB1A+5xktOCr6x2Tb7LILIWf1PPeDHxaU7p5K0TLc5Gpkcwf/SNA6
+         fZAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718919537; x=1719524337;
+        d=1e100.net; s=20230601; t=1718919548; x=1719524348;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A9KCIXUhFa5F6js3PXOw4A1bh3KoXXlrj5hfzxoF/A0=;
-        b=bE5z4RhOV5Kskj+7OXmhHkyVQEDXGCi/NoX+MDhfOsApA1kN8ij3bGvBJfPEqvoL8U
-         DkGAkX2lQAR1Bmz+huiZjq1Ng1cZgN52GwkX62qu2rqfXYTuAmzgnSQrxbn1OM2BFhkk
-         8s/8lXgB8zVLHIcdNia9Q70W+7T5H+lg30z4ofN2vbkpJHUVqwfKXJL3d+wCNZ0iGoXk
-         5zb2H2Rss2tWqOK0V7AaJWktxGnM53rKlJrQ8oxVjC5DgAxO3w8Ur/03F5z7TZdtpbW9
-         cnC9XFpX0zuzPbl77n5N+ReI4N2Pu6cucfw26H9tJe6UNp3CF+tcsyN2YBoIVfiGj9kK
-         0Rlw==
-X-Forwarded-Encrypted: i=1; AJvYcCUH6fBQqIKRwZwemL0d5el6IGH2qVUPoHDclb1KxzQ+pDnGJY5MiD7l2hxvmNbbsSozewZ8e3tJ7jtE3dX7caG+xaKZl/wfmYlQjFox+w==
-X-Gm-Message-State: AOJu0Yx347UkMLAXvAMrF815zdYgC98F2zLZff/klmdBQ5UPNAt1qKCx
-	AWR/b085JprNssOcE+BJq7QNQgkk0Irtm3Cw+oZgtuvAD/Ny1fPwFRnfTQjD1VFgLMYN+gThYuv
-	+HtE=
-X-Google-Smtp-Source: AGHT+IHiMxxgvNQOz2qJ9dqor7EtzwDmQRBfBf4gn70dlQm9/1P3yzhIJXB4quhP1LKkp/I04wrZuA==
-X-Received: by 2002:a2e:914b:0:b0:2ec:1c9:badb with SMTP id 38308e7fff4ca-2ec3ce7dcd8mr44568761fa.9.1718919537058;
-        Thu, 20 Jun 2024 14:38:57 -0700 (PDT)
+        bh=NoXCToDT0oayacNmh7qfNjnirLUvAMNFUEgGw4n22jE=;
+        b=v8fdviANcN1IwT0x5/3CqZDEwDHvlfQTxTEILkOrsGZka/lKy+2v73iN8iRnnTucgp
+         RN33jIJ7wmK9J+MjiKtnv1cbohAozBwd6Kp8zczUtM8hmg0L8Lsd7sqfW/U6xeTXgpf5
+         X4ryDZBRHrSjUVjoGCeOC6JRht4q94IPr6aQAQFkGlh2bcKcd0YK/SYhSQXSOZbut6P+
+         ujYfqVkubNcLesftHKUZXvMNt+jqlblRcIjP+VGgbPRhpQLr+U0YGMB1P2T6yjpm9sJy
+         mB075VvMLHL3tN84NwDmhM3hiNtbwq8Hqco7b2FojXoYyD7EAdJD8ikKQzThQfJtjikf
+         KwQA==
+X-Forwarded-Encrypted: i=1; AJvYcCWFYdmuEfE3G+1/tzz8uSrXPW6m/6UYXjGkpNveHmDOSyMG2Y1acoAhKk6yEtUPkwQNY1hcz1+s+Fy8bCJs3S+V8HLknl1hA/wENL38Ag==
+X-Gm-Message-State: AOJu0YxLUhH2p21MSK/5wSquizOkG9nqTwxNZ4WYGuZQsUbX2T/hfrRG
+	yOcw1E5yo+kW+1iESfnys6G00ILCY4vTE2P09Zrq+zN3VIMF4erz9w0L4SoDijJTKiPvZTHSD9Y
+	pzbw=
+X-Google-Smtp-Source: AGHT+IEQRTJl/rOrzu9m6Wlj8kl3vPK9M2QWTZpjyBU8GvueUf8afsLIPCfkO5C14T15YrWusARHBg==
+X-Received: by 2002:a2e:99ca:0:b0:2ec:301a:174c with SMTP id 38308e7fff4ca-2ec3cfe1735mr38322931fa.49.1718919548195;
+        Thu, 20 Jun 2024 14:39:08 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec4d7090f2sm319011fa.56.2024.06.20.14.38.56
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec4d76f683sm313171fa.125.2024.06.20.14.39.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 14:38:56 -0700 (PDT)
-Date: Fri, 21 Jun 2024 00:38:55 +0300
+        Thu, 20 Jun 2024 14:39:07 -0700 (PDT)
+Date: Fri, 21 Jun 2024 00:39:06 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Komal Bajaj <quic_kbajaj@quicinc.com>
+To: Elliot Berman <quic_eberman@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Melody Olvera <quic_molvera@quicinc.com>
-Subject: Re: [PATCH v3 2/4] remoteproc: qcom: q6v5: Add support for q6 rmb
- registers
-Message-ID: <o6aqjxyinwowtexwsucavwfqylx3wv3sihxvla442kskzqprbr@37rfxxzwsolg>
-References: <20240620120143.12375-1-quic_kbajaj@quicinc.com>
- <20240620120143.12375-3-quic_kbajaj@quicinc.com>
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: Remove QCOM_RPMCC symbol
+Message-ID: <vwx5mqkd6b4cma43in2ho7jn242lqhd3g22ozohpa2ta6za272@vtsfoy474dqk>
+References: <20240619-drop-qcom-rpmcc-v1-1-b487c95162ef@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,73 +84,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240620120143.12375-3-quic_kbajaj@quicinc.com>
+In-Reply-To: <20240619-drop-qcom-rpmcc-v1-1-b487c95162ef@quicinc.com>
 
-On Thu, Jun 20, 2024 at 05:31:41PM GMT, Komal Bajaj wrote:
-> From: Melody Olvera <quic_molvera@quicinc.com>
+On Wed, Jun 19, 2024 at 08:41:52AM GMT, Elliot Berman wrote:
+> This symbol is selected by a couple drivers, but isn't used by anyone
+> and hasn't been for years now. Drop it.
 > 
-> When attaching a running Q6, the remoteproc driver needs a way
-> to communicate with the Q6 using rmb registers, so allow the
-> rmb register to be gotten from the device tree if present.
-
-rmb or RMB? And what is it?
-
+> No functional change intended.
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  drivers/remoteproc/qcom_q6v5.h     | 8 ++++++++
->  drivers/remoteproc/qcom_q6v5_pas.c | 4 ++++
->  2 files changed, 12 insertions(+)
+>  drivers/clk/qcom/Kconfig | 5 -----
+>  1 file changed, 5 deletions(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5.h b/drivers/remoteproc/qcom_q6v5.h
-> index 5a859c41896e..95824d5b64ce 100644
-> --- a/drivers/remoteproc/qcom_q6v5.h
-> +++ b/drivers/remoteproc/qcom_q6v5.h
-> @@ -7,6 +7,12 @@
->  #include <linux/completion.h>
->  #include <linux/soc/qcom/qcom_aoss.h>
-> 
-> +#define RMB_BOOT_WAIT_REG 0x8
-> +#define RMB_BOOT_CONT_REG 0xC
-> +#define RMB_Q6_BOOT_STATUS_REG 0x10
-> +
-> +#define RMB_POLL_MAX_TIMES 250
-> +
->  struct icc_path;
->  struct rproc;
->  struct qcom_smem_stat;
-> @@ -16,6 +22,8 @@ struct qcom_q6v5 {
->  	struct device *dev;
->  	struct rproc *rproc;
-> 
-> +	void __iomem *rmb_base;
-> +
 
-Why is this a part of the common structure and is not a part of the _pas
-struct?
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
->  	struct qcom_smem_state *state;
->  	struct qmp *qmp;
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 8458bcfe9e19..b9759f6b2283 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -770,6 +770,10 @@ static int adsp_probe(struct platform_device *pdev)
->  		goto free_rproc;
->  	adsp->proxy_pd_count = ret;
-> 
-> +	adsp->q6v5.rmb_base = devm_platform_ioremap_resource_byname(pdev, "rmb");
-> +	if (IS_ERR(adsp->q6v5.rmb_base))
-> +		adsp->q6v5.rmb_base = NULL;
-> +
->  	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem, desc->load_state,
->  			     qcom_pas_handover);
->  	if (ret)
-> --
-> 2.42.0
-> 
 
 -- 
 With best wishes
