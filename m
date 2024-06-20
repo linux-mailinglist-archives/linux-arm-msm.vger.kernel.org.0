@@ -1,157 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-23418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D01D911068
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:13:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 424619110E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:27:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 486A71F213C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:13:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2C741F21534
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:27:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DB3C1D363C;
-	Thu, 20 Jun 2024 18:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CB9E1BD4FD;
+	Thu, 20 Jun 2024 18:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="V+wOkkYY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sTmoj9cT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFE51BD8E1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 18:01:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0DA1BD4F4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 18:22:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718906481; cv=none; b=pS83ESl+5sGuUMC5z2BgxmigvgLSW33+Q/hOADFLxPTDK1A5KWuVM5oFPST+iRRAUkaWmoKqFkMSKgIMO8R3Bhx9Oe24hx9WiQurMJv5+3q8AErtsLfgeks6hfydT4R+tFvg8Dqv1HZoe7YaLxuew6cvF4M4j74qksK5GtFoRu0=
+	t=1718907757; cv=none; b=pUZLntS43kUuppgTw/prZTItH5lHGzJRKfTF0uPTjHHTVq54VulVxp3hralphiFXyKzISeRx87VOh6/gFdlPnJeCqkSK+aQPtBPmiTAbhAQvU0LQG2Iuw88l90Dq6PEUFWKvG7hp8/oU4sax7wNJIcyCBdojiL09YuG+ANyTquw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718906481; c=relaxed/simple;
-	bh=29OxgEL3l6wtk/wr9HSlAcydEGnms+qvS9bonjZCeq4=;
+	s=arc-20240116; t=1718907757; c=relaxed/simple;
+	bh=8aM4Ph0eOvNFwrdP2WzLOXk6R3ipiL8t6qIpQ9eq3IU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bbX+L8jtmcG6zQPGeAg52mc8Vhz8WCy3cqCybOf2+5gtIUmjXLAWcdoYnN41jVLcMICPAKFZ7sFRfrqgww4Pi+v8p93JGt577uzM4UzWCK3sGmwjO1P7yTMwYTYqOFZwwhrSp9O9KYVGmr5f3+gumaLjCRqD+cAdcOngaab8/Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=V+wOkkYY; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52bc29c79fdso1337961e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 11:01:19 -0700 (PDT)
+	 To:Cc:Content-Type; b=cmZtdwU3ZiF18wOD7IjU72NuJ/CvBM/wcqMNBiuEQ7KrTphd3PLi3OY5F7RFnWgEbJaZ/XSJ2MbIsq0flj6CrjGzewUIJucsIQVhfM+tMq4u/ZhkyNIIe28oRJt5YwVi9hT8G2T9q4kbexNvkRCeHt0PpzHQcNFkXf6/OPKHD3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sTmoj9cT; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e02a6d4bdbeso1117384276.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 11:22:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1718906477; x=1719511277; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718907749; x=1719512549; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fuatl8An2r1cXJScFESolD1f90VPFvdc9a3mKIi/oro=;
-        b=V+wOkkYYR8Vr1ouUmxA3Rz1kx9u301U6NkRgSuN3yRAswX2FJyGU3pvUngiUunJRv6
-         zgsUhdbIHal3pvOlYRw3IcZGg5d38PnlxHon172utGDFdgrJpl8ZX+eIi0p8XUI851JK
-         ml2xzptai5M1N9BqvW1Yj+AYtd2x3/p6BaO04=
+        bh=y+/jeB60Bm2B2G46o3kb3rBx4IuCHoUReNPsRUwKQSQ=;
+        b=sTmoj9cTDil9/LC7ftHUWLfA15nJFHix9hVXr0PzichaSvR0iHIuCmu9PCbd8Bxu33
+         3LzEE5bQfkjTuoG32MivQzS5NL+FltP2AsjRS3fILazdmbRX6JOgYzCHwVD7nDrcfm7b
+         Wbm7g0QvnwFWl6IUZv+71OjP6/rlXLU8XqV/w91vDDW0m3MV5TX05V9FpilOKw4ymLCf
+         MXCNVIzHFP4zEDDq8ydZXCuEoy36bOcD2wk79oV/SW9/snJQV45MU7sgLLvNssS+rlkI
+         7HeNbbbYBCDs5qyZ+uHSLn861RlxWRMCBGqKAk/wEwqMjRmoHj2CkLqrjCv8cHrC2RkN
+         t+iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718906477; x=1719511277;
+        d=1e100.net; s=20230601; t=1718907749; x=1719512549;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fuatl8An2r1cXJScFESolD1f90VPFvdc9a3mKIi/oro=;
-        b=Q0T7yd592F0V8nY57/HRJyv7ah+lDDTsNXcNB2XYarSvxlH/XJOa1iypXYNFDbABMm
-         WAnzsf8Xj/Lnxt/72bvCoefzEdrzwe2H3phDltCB6tKaGoSJGNTwzk5d/wWZ7nAecRf3
-         tyo/KaCd+C6KgRGljs5HVlG/sMFXlGuMLovSykNph6LIcaNFCG9rllKUBNReYVYqSK7u
-         PQgsz8Cg/awWE/hwebxVJKFaRbl4ZM7ulojGoh/ng1NA3iJvr9kma9ZMLbDks+nWwzs7
-         9YyIqUAcKQCVQvFYhsgxF3I8zD/sUzXPC88GmW35HXwA4SgCvC3b5xO4LPzFGZ4aIsmT
-         LShw==
-X-Forwarded-Encrypted: i=1; AJvYcCWV9RlSq+BPL29/6AS1ur38vdhrGI968kVjmU1KGxDIRj8Rl+3yysFdmg1aGF3BkqTvmNtrlbzmpL+fVoZJC3XAO2JSgZ3RKtnrC0tFOQ==
-X-Gm-Message-State: AOJu0YwZSwpz3If55/in4EvC7bYt0gICkFGcmY3NqMTmIjhnlJD6qqDv
-	LJPl8OaQsrl5sntVS4B61MXkjPOXzm4O4L+rrB7tACTVP2qibkxss4HZQnWMod3oqUMyXmpQVvq
-	aZNWrHwNR
-X-Google-Smtp-Source: AGHT+IFcdDk4X4vJBKwCYLVN/VCZQF8HuUqFJlX/F/LIfaRcgUex8egd2Ba5y459C9YxO4SXFlcVQQ==
-X-Received: by 2002:a05:6512:3b29:b0:52c:98b1:36d9 with SMTP id 2adb3069b0e04-52ccaa595f9mr5944428e87.62.1718906477523;
-        Thu, 20 Jun 2024 11:01:17 -0700 (PDT)
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com. [209.85.128.50])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f8cc20663sm338231566b.190.2024.06.20.11.01.16
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jun 2024 11:01:16 -0700 (PDT)
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-421757d217aso13818975e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 11:01:16 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXrZEDCf7K1p8Mer2v3tN8TOS1mbZALqA2d73lnYolWqtW51Uu9l/TUZ2V9wL7lbklZ88d+EeA9SpFKlmA9e06kBnunb8W7TY7ma/QlBQ==
-X-Received: by 2002:a50:96cf:0:b0:57c:5874:4f5c with SMTP id
- 4fb4d7f45d1cf-57d07ea857fmr5124279a12.32.1718906455555; Thu, 20 Jun 2024
- 11:00:55 -0700 (PDT)
+        bh=y+/jeB60Bm2B2G46o3kb3rBx4IuCHoUReNPsRUwKQSQ=;
+        b=wjG8a/z21rjbHv7mR5HTn9t8k508iIbP3BtZiEbmUjtogC5xDUybQYiCLe9zC9GW9p
+         e3BqYXnHkd94FjS/X+/hoFAPqzBmy4mJOhbBARmpFYAOvXz1ThSFnntLfoBXJ1BU5XSo
+         wKfWN3yWxMPM1X8sJ0C+hvbjm0MiVqapM77SMF4Wpj+3uJxYrYJ1mtFDG70MK4J+MQTk
+         eNnae+Zp60qI9PV6NTFzE9mh1+ymhe7VG4tgyPLEPq3/UzAy7YicVoFl9Wyy7ZgLtJ5b
+         ltqmv6oXe4DQBim/k80sA/dngM4+1y/5QYfpEBAuePGfFpP1T9JKMlDIVjebEg4wFrQg
+         hMGA==
+X-Forwarded-Encrypted: i=1; AJvYcCWziwvrDugo7hGpC74f3GVmWICPidIsSNfo4oD1c4sLV6XEw4nTeWq64CzJgxXeTfBrdg2moSNeD7r72obl2Hut7EKSj5NzlmAMXmQh8Q==
+X-Gm-Message-State: AOJu0YwhHKPIobw1N+PHETXpdAYrYd/5eXBxrd6y72R7LDSdKy1uhu5Y
+	wy5EiSAV7N6zhQhGsWMuA89UQnRCvYhaWYPbghhEWJnc60gslje2HKe/m9NZXV/f+qyAMbWvp5L
+	zv3nZUscyWZARyvohRZiWeiZzJMyy8JkHvMe4TA==
+X-Google-Smtp-Source: AGHT+IEZ6ucq7WUpXl7uqlICYldXWVE5EUSOoAVmKLtPOIw/yWqu639Qkfd8yDB3a9wxxaCLte6aHXlDElHhwozKVik=
+X-Received: by 2002:a25:ad89:0:b0:e02:bd25:9ac8 with SMTP id
+ 3f1490d57ef6-e02be13aad8mr6866253276.18.1718907749227; Thu, 20 Jun 2024
+ 11:22:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240620175703.605111-1-yury.norov@gmail.com>
-In-Reply-To: <20240620175703.605111-1-yury.norov@gmail.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 20 Jun 2024 11:00:38 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wiUTXC452qbypG3jW6XCZGfc8d-iehSavxn5JkQ=sv0zA@mail.gmail.com>
-Message-ID: <CAHk-=wiUTXC452qbypG3jW6XCZGfc8d-iehSavxn5JkQ=sv0zA@mail.gmail.com>
-Subject: Re: [PATCH v4 00/40] lib/find: add atomic find_bit() primitives
-To: Yury Norov <yury.norov@gmail.com>
-Cc: linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, 
-	"H. Peter Anvin" <hpa@zytor.com>, "James E.J. Bottomley" <jejb@linux.ibm.com>, 
-	"K. Y. Srinivasan" <kys@microsoft.com>, "Md. Haris Iqbal" <haris.iqbal@ionos.com>, 
-	Akinobu Mita <akinobu.mita@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Borislav Petkov <bp@alien8.de>, Chaitanya Kulkarni <kch@nvidia.com>, 
-	Christian Brauner <brauner@kernel.org>, Damien Le Moal <damien.lemoal@opensource.wdc.com>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, David Disseldorp <ddiss@suse.de>, 
-	Edward Cree <ecree.xilinx@gmail.com>, Eric Dumazet <edumazet@google.com>, 
-	Fenghua Yu <fenghua.yu@intel.com>, Geert Uytterhoeven <geert@linux-m68k.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Gregory Greenman <gregory.greenman@intel.com>, 
-	Hans Verkuil <hverkuil@xs4all.nl>, Hans de Goede <hdegoede@redhat.com>, 
-	Hugh Dickins <hughd@google.com>, Ingo Molnar <mingo@redhat.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>, 
-	Jiri Pirko <jiri@resnulli.us>, Jiri Slaby <jirislaby@kernel.org>, Kalle Valo <kvalo@kernel.org>, 
-	Karsten Graul <kgraul@linux.ibm.com>, Karsten Keil <isdn@linux-pingi.de>, 
-	Kees Cook <keescook@chromium.org>, Leon Romanovsky <leon@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, Martin Habets <habetsm.xilinx@gmail.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <monstr@monstr.eu>, 
-	Nicholas Piggin <npiggin@gmail.com>, Oliver Neukum <oneukum@suse.com>, Paolo Abeni <pabeni@redhat.com>, 
-	Paolo Bonzini <pbonzini@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Ping-Ke Shih <pkshih@realtek.com>, Rich Felker <dalias@libc.org>, Rob Herring <robh@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Sean Christopherson <seanjc@google.com>, 
-	Shuai Xue <xueshuai@linux.alibaba.com>, Stanislaw Gruszka <stf_xl@wp.pl>, 
-	Steven Rostedt <rostedt@goodmis.org>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
-	Thomas Gleixner <tglx@linutronix.de>, Valentin Schneider <vschneid@redhat.com>, 
-	Vitaly Kuznetsov <vkuznets@redhat.com>, Wenjia Zhang <wenjia@linux.ibm.com>, 
-	Will Deacon <will@kernel.org>, Yoshinori Sato <ysato@users.sourceforge.jp>, 
-	GR-QLogic-Storage-Upstream@marvell.com, alsa-devel@alsa-project.org, 
-	ath10k@lists.infradead.org, dmaengine@vger.kernel.org, iommu@lists.linux.dev, 
-	kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-block@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, linux-hyperv@vger.kernel.org, 
-	linux-m68k@lists.linux-m68k.org, linux-media@vger.kernel.org, 
-	linux-mips@vger.kernel.org, linux-net-drivers@amd.com, 
-	linux-pci@vger.kernel.org, linux-rdma@vger.kernel.org, 
-	linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-serial@vger.kernel.org, linux-sh@vger.kernel.org, 
-	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
-	mpi3mr-linuxdrv.pdl@broadcom.com, netdev@vger.kernel.org, 
-	sparclinux@vger.kernel.org, x86@kernel.org, 
-	Alexey Klimov <alexey.klimov@linaro.org>, Bart Van Assche <bvanassche@acm.org>, Jan Kara <jack@suse.cz>, 
-	Matthew Wilcox <willy@infradead.org>, Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>, 
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>, Sergey Shtylyov <s.shtylyov@omp.ru>
+References: <20240619-rb2-fixes-v1-0-1d2b1d711969@linaro.org>
+ <20240619-rb2-fixes-v1-2-1d2b1d711969@linaro.org> <CAA8EJpo94qg0dDR-H64v0yC7jLKHuD9O59m3hG2tNR4v3NAkLA@mail.gmail.com>
+ <c10b1343-921b-494b-94dd-6f5acc894e6d@linaro.org> <v3dgoeybewgegi2xuixhaq5c7jwju6wojrmzcq3rtb5f5r5nfu@6gj4tfz5blx7>
+ <35d9f16d-c009-4383-a616-9b21f0819b46@linaro.org>
+In-Reply-To: <35d9f16d-c009-4383-a616-9b21f0819b46@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 20 Jun 2024 21:22:18 +0300
+Message-ID: <CAA8EJprLNZwTdKN8h_RduGMBJyCHY5CoiYkzru4bNfkzU6WCog@mail.gmail.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: qrb4210-rb2: set role-switch-default-mode
+To: Caleb Connolly <caleb.connolly@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 20 Jun 2024 at 10:57, Yury Norov <yury.norov@gmail.com> wrote:
+On Thu, 20 Jun 2024 at 19:49, Caleb Connolly <caleb.connolly@linaro.org> wrote:
 >
 >
-> The typical lock-protected bit allocation may look like this:
+>
+> On 20/06/2024 17:07, Dmitry Baryshkov wrote:
+> > On Thu, Jun 20, 2024 at 03:30:29PM GMT, Caleb Connolly wrote:
+> >>
+> >>
+> >> On 20/06/2024 15:15, Dmitry Baryshkov wrote:
+> >>> On Wed, 19 Jun 2024 at 23:33, Caleb Connolly <caleb.connolly@linaro.org> wrote:
+> >>>>
+> >>>> Give a hint to the OS which role we prefer. Host mode generally makes
+> >>>> the most sense.
+> >>>
+> >>> Why?
+> >>
+> >> I guess this is subjective, but on these boards the more common usecase is
+> >> host mode (before we had role switching we forced them to host mode...).
+> >>>
+> >>>>
+> >>>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> >>>> ---
+> >>>>    arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 4 ++++
+> >>>>    1 file changed, 4 insertions(+)
+> >>>
+> >>> Would it make sense to set this for all the RB and HDK boards?
+> >>
+> >> The rb1/2 are the only boards which lack multiple USB controllers. For
+> >> others it's fine to leave the default (peripheral mode).
+> >
+> > SM8450-HDK and SM8650-HDK also have just a single USB-C port. My logic
+> > was slightly different. We consider these devices to be SBCs, so I'd
+> > expect that they act as hosts _by_default_. If somebody plugs RB board
+> > into a laptop, then it's logical that it should work as a device, but
+> > between the phone and the RB board the RB is a host.
+>
+> Ahh I see, then yes perhaps it makes sense. I can send v2 with patches
+> for other boards too.
+>
+> * qrb2210-rb1
+> * qrb4210-rb2
+> * sm8450-hdk
+> * sm8650-hdk
+>
+> Any others?
 
-If it looks like this, then nobody cares. Clearly the user in question
-never actually cared about performance, and you SHOULD NOT then say
-"let's optimize this that nobody cares about":.
+I checked, sm8550-hdk also doesn't seem to have the USB-A port. I
+think that's it for now.
 
-Yury, I spend an inordinate amount of time just double-checking your
-patches. I ended up having to basically undo one of them just days
-ago.
-
-New rule: before you send some optimization, you need to have NUMBERS.
-
-Some kind of "look, this code is visible in profiles, so we actually care".
-
-Because without numbers, I'm just not going to pull anything from you.
-These insane inlines for things that don't matter need to stop.
-
-And if they *DO* matter, you need to show that they matter.
-
-               Linus
+-- 
+With best wishes
+Dmitry
 
