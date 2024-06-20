@@ -1,82 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-23436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F98F911315
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 22:24:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43916911319
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 22:26:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 298562832B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:24:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2EA71F228AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:26:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BCF84D8AD;
-	Thu, 20 Jun 2024 20:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91F441BA097;
+	Thu, 20 Jun 2024 20:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qE4YyeQ1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MjzbVqr9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B1C1A8C2D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 20:24:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B5F1B9AC7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 20:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718915056; cv=none; b=Undzrsp9YysMQbqFwXZ4HPK8zHI0Ag/ZJuv4i7wl0DPUGWBmo0k4zBcQlsczvNq2ZTyKNXCqZCGoP0wFG3Aiv7usH7Ywwj5jGdryvUw9e/iCWK/tivagEMRaRwpbwq+b7KUXxCTXHUUya0wZ2iz4dQuqiBGk3mDmZbHB/cdSyx8=
+	t=1718915209; cv=none; b=YpnOoVNMEc2d9Lo1cQ2jLBfmkDdb9Bj6q2bQcgJyTFZ6zNQEn4XCr/gwLTRnlXSAtjQgbhaMtGG2v5CjKCv0fkquvA8KvT5yYv9l40G3j6xBmF0ntdp9WKGG1f5HjfCNjYsZEtsS4eMFze9c5bQMKtG0X/5YpHOo03yTdDoQFhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718915056; c=relaxed/simple;
-	bh=DXU+kaQ13mDGzc/ERef772ITWHwfMHgJ1whdUUQWN5M=;
+	s=arc-20240116; t=1718915209; c=relaxed/simple;
+	bh=sFCHX618nzTm6sLAYJPe7BYHyHyu7xj0KoZYjZgfiFw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fSY3wII9fsL0HnWUhKlIEp0MEMvo/NRVK18QRcPh3m9JySHDRVz1Go9npeDg5CMzIvAVQ4kcjPCLsFvZCPJV9QL9ExzL8Thsgu1//gXbLtbiV71Sd0dGPBZqDheYOObuZIyFG6TM99Cda7EwPwEmVB6B1oK+eMXdonLjPRqVgg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qE4YyeQ1; arc=none smtp.client-ip=209.85.167.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=nef/GJzFlHXRVm09zfUInLy6qKFJnxZghFFx3LO5YsnSfLSyYRiKl86e32HLpccDiHHBqMqaDVw3UwuOMlTDj7fhakFMnJOUrEznaXzxXQNNB4P/wyB8G6YtKW54NWc6mmsOjZuH0Ve4JsB5w3Ca4dChERqLH1UOJShJbFl36dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MjzbVqr9; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52c32d934c2so1341183e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 13:24:14 -0700 (PDT)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52c84a21c62so1488264e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 13:26:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718915053; x=1719519853; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1718915206; x=1719520006; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bjwgpUTvj0kF3WJiIA1rR+AvckGLAoKpZg/E+Ljg++0=;
-        b=qE4YyeQ1jlqKNCbJwysMQtB2F/3JuJboDCc51OUgaRRNdeR8yzQy17/WTz3seimzB1
-         IDECObgnpRBftgq7JvM8jtr7BPWcleXZqx2yKY0+NxwCVfm2tWzbsTAIsIiLJH8ibQjb
-         Y7qGyvf6OvVX6fgB0DYISjxN4DbV55/fzTDixBK5MyBVYS9JniNV0T4wEvlfVvLcBnwM
-         63RiqE49rBH3d6RqNStPqZSOG8GN3AkYbROaeSLYZEQNpzrd+U3CxEc5ThRg4dBIaRyy
-         iSMgL4M6F0GNg1xschNsCjxRSvyTSY+biDtDllWo7s/ASaQjeUxAfylgvcswhWTCtkrz
-         iKCg==
+        bh=G8kmsXX8+t7q4fze1b5xWV2DOaP1fCecJ7UVyeVkxV4=;
+        b=MjzbVqr9J1d8ylUDIZvykMfEAXk6/9Omn9iWjzl4XE6Gk5YLSh9/sqpK6OvdZNHGrz
+         BdYQ1B12ke295UytS1hagJNaccA6IQjtW50LxXG4iBjxaLZR4eGtKvex8nVHYBrTUEg1
+         xhPnh0X8LhZCSg0gQ8Om8981WsNYHgYpmAtXd/KnBWYDlE5xBXf2uYU1OKDn60CoHnHR
+         kbZ8hm4orlJjQH6qCIaw7AqG4L4dSedaqL8Nc13vyfX6bZgWYm3pK+FzVlt38nZsxCj1
+         9Ey/a7C1/aY4BvQdQiB0F3U2gdYVfhKZp4wyjs6+/FK5bceYmXYhLo5g2nIhxlsbNcOg
+         myAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718915053; x=1719519853;
+        d=1e100.net; s=20230601; t=1718915206; x=1719520006;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bjwgpUTvj0kF3WJiIA1rR+AvckGLAoKpZg/E+Ljg++0=;
-        b=OexYzw9g9WOhWlLaAYjeAaSXkre6CCqdu4dRYpp/+t90csdBkYcvwy9e6nfLo5sj1U
-         ZVMfiJJrMFAIlRxFZhCvydSaNgRN1ZoMnY8GUTqAVqO8opwhArdjQa7GEY9L99P2I8MF
-         G9nZQrakMGWAsnqP3dhM4SICPO8Ie9Vx5EU4u5/g+3Ve2rFqSJ4F5x1rEg2F5o402PJB
-         ZNB+EFwUVmAVjh1srm+iRVZ7dmIWUN0AcvutZcZYfm3Tpneaa+YG3ip4RavlUI/fTh6K
-         zv53iPEJdA35dnufyDJ+hy8hnD50BU6tKHnf4PKjOsP8ITGq31Tzh0LA1PuRdKIvtHud
-         NpAg==
-X-Forwarded-Encrypted: i=1; AJvYcCXytf7E7cXgWAaQLIdiN2JIvc9sw29zdTOgqvwAdqm+EGluXtmR4qBZo5FNr3jDEAiKjqyO3bFpLVWjVSkPumqiabLXOXChX3b/9h3jXg==
-X-Gm-Message-State: AOJu0Yy6qwwboyr3gRfR0K5SyV+2DcoZADwfOQZzcgti4ZXoJjCWG44v
-	GC3DG7MT8P95d/VjLz4oSfvZDqFcLlog2wjohVdRtkRytY5UwDEmuoDO6ebwNX0=
-X-Google-Smtp-Source: AGHT+IH9EWkurMSwiLpS9SksacWAo23NNuhZoV9rS+DFQjCv4svEZZXVS1qoWFAt8tLMdslowIQ2nQ==
-X-Received: by 2002:ac2:4e06:0:b0:52c:80fa:2967 with SMTP id 2adb3069b0e04-52ccaa2d61amr4627356e87.12.1718915053081;
-        Thu, 20 Jun 2024 13:24:13 -0700 (PDT)
+        bh=G8kmsXX8+t7q4fze1b5xWV2DOaP1fCecJ7UVyeVkxV4=;
+        b=VUoFlvjO8uT8xEBHZiPFlRDpVtXffhFYnMODTnAnN4T0mThMt9qEA1q6QBe5SrY3Tx
+         naH5AHFgEBRjkAyFCVnTjmQLsZTan7IVBM+RP+1xGWwMAjSMgtIC0K4ns3rd51JESZmn
+         66J8h4WuM6xmpcJP2H1EHxOp0I12TdJQRE0YiL9flfcaKgaO9ptusWtY62igAjj+VvvE
+         LbbkSjk67HDjBbwWbozHMIGUeRat0WObhyO8V8vKyLumIVOEvknUsUB1YOztgBzFCN4P
+         ONRgJBR3aZHEupt4Qn03bMtvX/ze3Mj45pU1fkjMZnlkVRoAYkhqwZN2LiolAQvG/LhU
+         0XhA==
+X-Forwarded-Encrypted: i=1; AJvYcCWASXx2LDaSJQrv/pdZRvVCr+uTuhe2FpuqkpKjQG18UMCiS9ERmwFJkshcKktYAsW4cE7QRWjrNyUr5HmVhaRP+MnvlIAyKXbQvuCi/Q==
+X-Gm-Message-State: AOJu0YwO9FprxRZcaqbpO23kRh6Ck6RoOlpHCi1l8MDB+NHCQHWK4EIL
+	CdaeSz3EHzzfYKlzDKby8wR6sJciyJ13AwHnbzcg5luiFIR6BFiw9OuX4BdIv84=
+X-Google-Smtp-Source: AGHT+IHzDL4LA0M5hK+v+OwKwF0rXAEquerAfuzkP8LWy81w8k3FKZLYPQ1yOmy3eJQg3LBJXI1g6g==
+X-Received: by 2002:a05:6512:318e:b0:52c:cc40:a732 with SMTP id 2adb3069b0e04-52ccc40a864mr4612649e87.43.1718915205915;
+        Thu, 20 Jun 2024 13:26:45 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca282ed95sm2154233e87.75.2024.06.20.13.24.12
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca282edc1sm2142712e87.115.2024.06.20.13.26.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 13:24:12 -0700 (PDT)
-Date: Thu, 20 Jun 2024 23:24:11 +0300
+        Thu, 20 Jun 2024 13:26:45 -0700 (PDT)
+Date: Thu, 20 Jun 2024 23:26:44 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Lukas Bulwahn <lbulwahn@redhat.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Lukas Bulwahn <lukas.bulwahn@redhat.com>
-Subject: Re: [PATCH] clk: qcom: select right config in CLK_QCM2290_GPUCC
- definition
-Message-ID: <lrvvogzmhtxsjyebebjngnhu2s7rwwrxl6urvl35kte6n4panl@hvejq4mbwvb3>
-References: <20240620201431.93254-1-lukas.bulwahn@redhat.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Banajit Goswami <bgoswami@quicinc.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] ASoC: codecs:lpass-wsa-macro: Fix vi feedback rate
+Message-ID: <45iy6ksg25iqfnfezzsutmh7ihgbdy5wukul5bek2rmzm7jbbl@65rk4o6ednor>
+References: <20240619-lpass-wsa-vi-v2-0-7aff3f97a490@linaro.org>
+ <20240619-lpass-wsa-vi-v2-1-7aff3f97a490@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,28 +86,120 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240620201431.93254-1-lukas.bulwahn@redhat.com>
+In-Reply-To: <20240619-lpass-wsa-vi-v2-1-7aff3f97a490@linaro.org>
 
-On Thu, Jun 20, 2024 at 10:14:31PM GMT, Lukas Bulwahn wrote:
-> From: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+On Wed, Jun 19, 2024 at 02:42:00PM GMT, Srinivas Kandagatla wrote:
+> Currently the VI feedback rate is set to fixed 8K, fix this by getting
+> the correct rate from params_rate.
+
+What kind of issues are observed without this patch? What is the actual
+issue that is getting fixed?
+
 > 
-> Commit 8cab033628b1 ("clk: qcom: Add QCM2290 GPU clock controller driver")
-> adds the config CLK_QCM2290_GPUCC, which intends to select the support for
-> the QCM2290 Global Clock Controller. It however selects the non-existing
-> config CLK_QCM2290_GCC, whereas the config for the QCM2290 Global Clock
-> Controller is named QCM_GCC_2290.
-> 
-> Adjust the config to the intended one.
-> 
-> Signed-off-by: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+> Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > ---
->  drivers/clk/qcom/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-Fixes: 8cab033628b1 ("clk: qcom: Add QCM2290 GPU clock controller driver")
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+>  sound/soc/codecs/lpass-wsa-macro.c | 39 +++++++++++++++++++++++++++++++++++---
+>  1 file changed, 36 insertions(+), 3 deletions(-)
+> 
+> diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+> index 6ce309980cd1..ec9f0b5d6778 100644
+> --- a/sound/soc/codecs/lpass-wsa-macro.c
+> +++ b/sound/soc/codecs/lpass-wsa-macro.c
+> @@ -66,6 +66,10 @@
+>  #define CDC_WSA_TX_SPKR_PROT_CLK_DISABLE	0
+>  #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK	GENMASK(3, 0)
+>  #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K	0
+> +#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K	1
+> +#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K	2
+> +#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K	3
+> +#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K	4
+>  #define CDC_WSA_TX0_SPKR_PROT_PATH_CFG0		(0x0248)
+>  #define CDC_WSA_TX1_SPKR_PROT_PATH_CTL		(0x0264)
+>  #define CDC_WSA_TX1_SPKR_PROT_PATH_CFG0		(0x0268)
+> @@ -347,6 +351,7 @@ struct wsa_macro {
+>  	int ear_spkr_gain;
+>  	int spkr_gain_offset;
+>  	int spkr_mode;
+> +	u32 pcm_rate_vi;
+>  	int is_softclip_on[WSA_MACRO_SOFTCLIP_MAX];
+>  	int softclip_clk_users[WSA_MACRO_SOFTCLIP_MAX];
+>  	struct regmap *regmap;
+> @@ -974,6 +979,7 @@ static int wsa_macro_hw_params(struct snd_pcm_substream *substream,
+>  			       struct snd_soc_dai *dai)
+>  {
+>  	struct snd_soc_component *component = dai->component;
+> +	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+>  	int ret;
+>  
+>  	switch (substream->stream) {
+> @@ -985,6 +991,11 @@ static int wsa_macro_hw_params(struct snd_pcm_substream *substream,
+>  				__func__, params_rate(params));
+>  			return ret;
+>  		}
+> +		break;
+> +	case SNDRV_PCM_STREAM_CAPTURE:
+> +		if (dai->id == WSA_MACRO_AIF_VI)
+> +			wsa->pcm_rate_vi = params_rate(params);
+> +
+>  		break;
+>  	default:
+>  		break;
+> @@ -1159,6 +1170,28 @@ static int wsa_macro_enable_vi_feedback(struct snd_soc_dapm_widget *w,
+>  	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+>  	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+>  	u32 tx_reg0, tx_reg1;
+> +	u32 rate_val;
+> +
+> +	switch (wsa->pcm_rate_vi) {
+> +	case 8000:
+> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
+> +		break;
+> +	case 16000:
+> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K;
+> +		break;
+> +	case 24000:
+> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K;
+> +		break;
+> +	case 32000:
+> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K;
+> +		break;
+> +	case 48000:
+> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K;
+> +		break;
+> +	default:
+> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
+> +		break;
+> +	}
+>  
+>  	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
+>  		tx_reg0 = CDC_WSA_TX0_SPKR_PROT_PATH_CTL;
+> @@ -1170,7 +1203,7 @@ static int wsa_macro_enable_vi_feedback(struct snd_soc_dapm_widget *w,
+>  
+>  	switch (event) {
+>  	case SND_SOC_DAPM_POST_PMU:
+> -			/* Enable V&I sensing */
+> +		/* Enable V&I sensing */
+>  		snd_soc_component_update_bits(component, tx_reg0,
+>  					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
+>  					      CDC_WSA_TX_SPKR_PROT_RESET);
+> @@ -1179,10 +1212,10 @@ static int wsa_macro_enable_vi_feedback(struct snd_soc_dapm_widget *w,
+>  					      CDC_WSA_TX_SPKR_PROT_RESET);
+>  		snd_soc_component_update_bits(component, tx_reg0,
+>  					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
+> -					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
+> +					      rate_val);
+>  		snd_soc_component_update_bits(component, tx_reg1,
+>  					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
+> -					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
+> +					      rate_val);
+>  		snd_soc_component_update_bits(component, tx_reg0,
+>  					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
+>  					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
+> 
+> -- 
+> 2.25.1
+> 
 
 -- 
 With best wishes
