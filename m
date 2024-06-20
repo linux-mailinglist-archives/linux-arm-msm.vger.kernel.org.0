@@ -1,138 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-23420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A6BF911134
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:46:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97DFA911125
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:44:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7320CB24B45
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:32:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B96BD1C20CD1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:44:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86F9E1BE852;
-	Thu, 20 Jun 2024 18:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A6E1BC073;
+	Thu, 20 Jun 2024 18:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sj6vxR1b"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HzfBEEKn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2864B1BC09E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 18:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869E31B5824;
+	Thu, 20 Jun 2024 18:32:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718907858; cv=none; b=PxcIL7uj1KG+ahSBvUexqWUKHPNLW36C64Iy/ATzJzZ8V+zHJm8m17u3xls5XGQf3yp9HP4CBDnDDWg0ptl4zMC0XPH4vzp1Z1PI2wUxJ7dyfDrya+5qUApvHCPkj2Zjl4qPMNpjiN7ZUewh+GmY567uoHM5p8ZekVRPZ9pUUII=
+	t=1718908347; cv=none; b=sgsg/2Qlu51p/wmW7yBRwd8Zr0ygIuJZhyvv5Y46zl/joF/qnLrbwiOdl1G4OtNgFoexI1h7yW87oVisWIM9tuuLNJIEdS/fEx7E2dmHDKbMV/hdTbSjcqcJ20JO12rIuC6vrJY80On/7oTT1JF8TaVbUHZPirlBiPo3ZaRCWF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718907858; c=relaxed/simple;
-	bh=ifAiEhdNxcCznj/6L+j038GgLUQAUxaTpXv5ZK5nkug=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sDs1/KNrJ1kSvPGgskoGbRjjdTrygXe+jJiX4vjgc/zsfNFP8XS3ho3RvX2Yt0s9Dcf+X8OEPQHVNZzwKqv4gwGNntyXdlItTvQufysX/qYgYNTS8sMA5LrU0t+gcF0GqLYJ2XXB42Lz32QJpQKrrfAfZOZT88ItnGYXxq+H7fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sj6vxR1b; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-630daaec9c7so11293087b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 11:24:12 -0700 (PDT)
+	s=arc-20240116; t=1718908347; c=relaxed/simple;
+	bh=bcnNV5dpAp1ceLCDW/J9hztLgbbtYChtelB1u6t4YSQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qnd3fnhBfi4H87p5+0kk9tB+80VnxgTHwHf2Vzo7uPh/JSH1QvqMmhnBmfMKbXC7ASAlD02xzK2GeG6Av2SaCjZSp1spfKraMnNSJEHK6r3d+N5YkzvMscEf9VqwXpoF6Xyg6sOCAFzOLi/AddNfGics4+nozE7kzeU0MvqVM0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HzfBEEKn; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-6e40d54e4a3so920614a12.0;
+        Thu, 20 Jun 2024 11:32:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718907852; x=1719512652; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SLXE8J+NTsLyBECHCrJAgVS17SAByDOT+Kx7JyJFgyw=;
-        b=sj6vxR1b9zV/4+EGoD4jc7NSrVEG8Q8aY3SiRrmvugigbi4tC1ANNGoVgxqF4gk0XV
-         wqVISqceGyF7JyvbMXe+6nisiJpA+zz4kNlNg4uRu/t2w97KcLZEGlUMxvYbLRiV/GHL
-         MGPqJHc1O6Bxe5bGEiwhZAzzX8RM5gO1BnA6sLmafW1iEduRHr1ovnB8eDvy4o5aAayx
-         umq80DWuP3da1laezQs77d/O62RevdGrXhz9VNCbXk7GxN+Atdh9ZD8N4p+KV+dKPSew
-         +RlNlY8HqCywgWif+V4J8YgW686FkwMI9Irz/dkonMwqtRQWKjkqDNpHzWjCRol6xPBT
-         x+VA==
+        d=gmail.com; s=20230601; t=1718908345; x=1719513145; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8iVi8v7MOsNpmY/+YQC9/JqsYXXSSMQtfI1oW5IIrXg=;
+        b=HzfBEEKnb7yMAtIc5pi9tlUmYi4AfFghtmFY1E+uM0IMwnBht3eJriKkN8NcNR7XVI
+         smfgFnp/9d8HBYzy5PhJisccqfDPtxDMPjwkclbQ1S6uEAq9wY15GK+MSBQif0TrsO8B
+         zbA+yRzNq7vYHOF2XXzjbO25SELOob70DWS35DMogw8ZmTKpvwHKWL70RyqrTriDopYr
+         HCJx5HkbWN3Emt1BC91boa3/B3Mkt+vswtjA05a4Z2Wx6f0KV7Y4kjvOrwnXGQo/MjIf
+         ZOiLdWIUEhyop6G/Yfk3tJw8QiW95Nc5KxUzQX6G3bK/X52BhrIiSMaWdINnEu7u17N4
+         mGHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718907852; x=1719512652;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SLXE8J+NTsLyBECHCrJAgVS17SAByDOT+Kx7JyJFgyw=;
-        b=aACvoSP1WtoEaVuOhgWyo/GuqcPlSEiPkBUXjkqfvY6svSzsgN2b1QhMgJ21jBGnED
-         7S/pLaVRhCDi5w7EXfrZs0Fo7FUJfXbQTQZzXLvxj7yH8NHtsavoM1HH7jOGNSY5qX1Y
-         yZgiX4TiPhZRT5rE435kUChltnb7kk8uxVI/YII0vkRp5N7iddFUG4V8jsWAlpzwKpwV
-         cGU2aSa9CFGnmPWOiOM3gbsnha0+0X5aUC48RfqYspJPuZr6WQc5TDBDuJNyzamv9bbe
-         /p5H06I3dr774IlK24N1LKv+bIxBSL8Ti0BAf8+cHY3cNcI6/WFiC7onQ6zLl+N7Mpg2
-         nW5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCW/zU5UdXMoZctJnc5I+kSVbkBEUAMEwspsOtNX8TLf+ZSv6NMY21NVCNeZUEJhgsqsHEvoPiFmOe6qkk6jXypqjTiOPWv1+jFjnf3tTA==
-X-Gm-Message-State: AOJu0Yy4bhy7nZpsBvjOfwuFMetnt5kKy+q2IH65I/g9OSPfAOT5LVao
-	xiqj5jgeO2Apt7uWnm+yLWWZ0J6WLFtwwCcS/nOV86M1PfC8806pXlNpviMgyfjjQFApK8054sw
-	QIO4Vct7gAV1LJ97WzP5eMgNhGx81JQKvVkGa2g==
-X-Google-Smtp-Source: AGHT+IGxZxE4jiQmLPcc9xGdx4Tub95V70nV8FZmgGqTvXqYLyCBLK33Pgqp319QX+0uSThE9zzO7MdMgj6QQB/WPuA=
-X-Received: by 2002:a05:690c:987:b0:63b:bd20:8e1b with SMTP id
- 00721157ae682-63d932aa027mr19723827b3.19.1718907851789; Thu, 20 Jun 2024
- 11:24:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718908345; x=1719513145;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8iVi8v7MOsNpmY/+YQC9/JqsYXXSSMQtfI1oW5IIrXg=;
+        b=C3ZlwU4hoHPLjNgIuYXG62Pp27j5nmaEfsNrLoCgmfz/tocAICKLPwpaKNaBY+kHyX
+         +VrrBQRTsFuswx7GCM2+XB/Y2eGuWGQOOSE8pWZQGLRlev/m//xv6jIvicbrq8bava7s
+         ZR9VTgy5mRpQtewslwIZybqpI4FVSSAiVIY50+45ApNrwPj0bb1xIdXhT83keJQvko7c
+         bckYIzOVUwVL2+qrgSZivKLe6g6JK0fwI1TgJIOnsNZD8iC+Yn3OaQlXSGv1KZl8lMVC
+         on+FotgLVFpBt2jqF7AK4wnuFofA9O2V1KJuyQ4mNPboXZZPrsro7Q10unE8qoKZ9FLx
+         xQLw==
+X-Forwarded-Encrypted: i=1; AJvYcCVOHoZ9qAgTmUNNpyljH5nCSrvXMKU/tYjPd7VK5kU8TSb9W3Tusy3600a1ufwKAq3VljcggSlWqcORpeqDG+X5kqHfklM5lA31mzWmFSQMbw1uXmQRXcuFs9YwOthoK9OuNRI3NdNCNapPD5iWxI2CBlTTUgF5FcLYPra1R/8xP2ogyc+2+qq1hAC9rNVEwrn+aA8/ibhbFOwTcA8pkBntxhh7vZrtmabSgiQEcV7gJC8S424cMt9nq6C51SsAS1dv8EoZRwGvUU+M5BetzEjOM7ulfcpOqFKyPgiQ+SZb9ia00Bj18KY5JxhIiFg/ZDhe+wT6UbKyQFB+I4SrBy35yy74C7iXncM7Z0Ub6JJz0+LqDqiv5hqxOIyyVjD/6L3o4czrsrcmgM+5dnpRBKvGfeK7K1wKwfYiisS/1d+AYgrEJE0Z47Q1dihizSj/CED/S7YTbo2T5a3esUTe7KV//WZxUflTU3YvnmOfSjns5eZ0NxvaFM3O7xJVFobHeRg2qjS/eFmS/GEnUq2fGvOfdE90zCZ8OSr0daEuqgkORdW34gGZhODRLK4PbFwfmaHM/59urbHiqiyMC2OO7Md0Z/2+wp0yBvhHlwqeK9PThd14BlscyM2RMwEdo4Yi+4hGZBABuHJlN6wmPyT60ZYPO5C2UTs4PBSL7AlBL/VCZ/s+GIcquQt2wvFD8y90Bt3pdZ1jrZrzOAw9Fr1wfKAUFkD21qMQAbdADw3leiKJTxiOp1OmpIoakAfTbjtmJtH5W4mq1Q==
+X-Gm-Message-State: AOJu0YwSVc+ntQF5icdUe82us6R41IQ282c8elg71bk7Dpzqkt9CE4b6
+	Jlfc/V/wjHffbEkwKLXhvJ8nYQ8uZ7lzEcd/N3Z6WYN3P/ovE/dz
+X-Google-Smtp-Source: AGHT+IGwYt1/AWmTgUMNjVMcs2dgiLwPkNhT8ZohuoeI/pLSbMfw85UksxqJbsocMe0+kY+O1HneTA==
+X-Received: by 2002:a17:903:230c:b0:1f9:bb35:f313 with SMTP id d9443c01a7336-1f9bb35f5b7mr46779535ad.30.1718908344747;
+        Thu, 20 Jun 2024 11:32:24 -0700 (PDT)
+Received: from localhost ([216.228.127.128])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855e80ef6sm140498555ad.115.2024.06.20.11.32.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jun 2024 11:32:23 -0700 (PDT)
+Date: Thu, 20 Jun 2024 11:32:21 -0700
+From: Yury Norov <yury.norov@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Borislav Petkov <bp@alien8.de>, Chaitanya Kulkarni <kch@nvidia.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	David Disseldorp <ddiss@suse.de>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Hugh Dickins <hughd@google.com>, Ingo Molnar <mingo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
+	Jiri Pirko <jiri@resnulli.us>, Jiri Slaby <jirislaby@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>, Karsten Graul <kgraul@linux.ibm.com>,
+	Karsten Keil <isdn@linux-pingi.de>,
+	Kees Cook <keescook@chromium.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Martin Habets <habetsm.xilinx@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Simek <monstr@monstr.eu>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Oliver Neukum <oneukum@suse.com>, Paolo Abeni <pabeni@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ping-Ke Shih <pkshih@realtek.com>, Rich Felker <dalias@libc.org>,
+	Rob Herring <robh@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>, Will Deacon <will@kernel.org>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	GR-QLogic-Storage-Upstream@marvell.com, alsa-devel@alsa-project.org,
+	ath10k@lists.infradead.org, dmaengine@vger.kernel.org,
+	iommu@lists.linux.dev, kvm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+	linux-hyperv@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
+	linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
+	linux-net-drivers@amd.com, linux-pci@vger.kernel.org,
+	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-serial@vger.kernel.org,
+	linux-sh@vger.kernel.org, linux-sound@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, mpi3mr-linuxdrv.pdl@broadcom.com,
+	netdev@vger.kernel.org, sparclinux@vger.kernel.org, x86@kernel.org,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>, Jan Kara <jack@suse.cz>,
+	Matthew Wilcox <willy@infradead.org>,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>
+Subject: Re: [PATCH v4 00/40] lib/find: add atomic find_bit() primitives
+Message-ID: <ZnR1tQN01kN97G_F@yury-ThinkPad>
+References: <20240620175703.605111-1-yury.norov@gmail.com>
+ <CAHk-=wiUTXC452qbypG3jW6XCZGfc8d-iehSavxn5JkQ=sv0zA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <64ec16b9-c680-408c-b547-5debae2f7f87@freebox.fr>
- <dkmtnizbuyswyvocczjfgmhsuedawliabycig4urw42a65hu3j@jglxzumuzamd>
- <a9e4dba6-2317-4b6f-968f-d607937f5157@freebox.fr> <CAF6AEGtvHzF-KNyMwmysz7idLYE7XuXhDnBLdQFFhEdgYo6oqQ@mail.gmail.com>
-In-Reply-To: <CAF6AEGtvHzF-KNyMwmysz7idLYE7XuXhDnBLdQFFhEdgYo6oqQ@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 20 Jun 2024 21:24:01 +0300
-Message-ID: <CAA8EJpqCmu+TPmdCxwa84s+15inmdi6SeR5XQRVey56RKqdRuQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: log iommu init failure
-To: Rob Clark <robdclark@gmail.com>
-Cc: Marc Gonzalez <mgonzalez@freebox.fr>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, MSM <linux-arm-msm@vger.kernel.org>, 
-	freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>, 
-	Bryan O Donoghue <bryan.odonoghue@linaro.org>, Luca Weiss <luca.weiss@fairphone.com>, 
-	Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Jeffrey Hugo <quic_jhugo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wiUTXC452qbypG3jW6XCZGfc8d-iehSavxn5JkQ=sv0zA@mail.gmail.com>
 
-On Thu, 20 Jun 2024 at 20:32, Rob Clark <robdclark@gmail.com> wrote:
->
-> On Thu, May 30, 2024 at 2:48=E2=80=AFAM Marc Gonzalez <mgonzalez@freebox.=
-fr> wrote:
+On Thu, Jun 20, 2024 at 11:00:38AM -0700, Linus Torvalds wrote:
+> On Thu, 20 Jun 2024 at 10:57, Yury Norov <yury.norov@gmail.com> wrote:
 > >
-> > On 16/05/2024 10:43, Marijn Suijten wrote:
 > >
-> > > On 2024-05-15 17:09:02, Marc Gonzalez wrote:
-> > >
-> > >> When create_address_space() fails (e.g. when smmu node is disabled)
->
-> Note that smmu support is going to become a hard dependency with the
-> drm_gpuvm/VM_BIND conversion.. which I think means we should never get
-> far enough to hit this error path..
+> > The typical lock-protected bit allocation may look like this:
+> 
+> If it looks like this, then nobody cares. Clearly the user in question
+> never actually cared about performance, and you SHOULD NOT then say
+> "let's optimize this that nobody cares about":.
+> 
+> Yury, I spend an inordinate amount of time just double-checking your
+> patches. I ended up having to basically undo one of them just days
+> ago.
 
-Does that mean that we will lose GPU support on  MSM8974?
+Is that in master already? I didn't get any email, and I can't find
+anything related in the master branch.
 
->
-> BR,
-> -R
->
-> > >> msm_gpu_init() silently fails:
-> > >>
-> > >> msm_dpu c901000.display-controller: failed to load adreno gpu
-> > >> msm_dpu c901000.display-controller: failed to bind 5000000.gpu (ops =
-a3xx_ops): -19
-> > >>
-> > >> Log create_address_space() failure.
-> > >>
-> > >> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-> > >
-> > > Thanks!
-> > >
-> > > Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > >
-> > > And, after checking the below:
-> > >
-> > > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > >
+> New rule: before you send some optimization, you need to have NUMBERS.
 
+I tried to underline that it's not a performance optimization at my
+best. People notice some performance differences, but it's ~3%, no
+more.
 
+> Some kind of "look, this code is visible in profiles, so we actually care".
 
---=20
-With best wishes
-Dmitry
+The original motivation comes from a KCSAN report, so it's already
+visible in profiles. See [1] in cover letter. This series doesn't fix
+that particular issue, but it adds tooling that allow people to search
+and acquire bits in bitmaps without firing KCSAN warnings.
+
+This series fixes one real bug in the codebase - see #33, and
+simplifies bitmaps usage in many other places. Many people like
+it, and acked the patches.
+
+Again, this is NOT a performance series.
+
+Thanks,
+Yury
+
+> Because without numbers, I'm just not going to pull anything from you.
+> These insane inlines for things that don't matter need to stop.
+> 
+> And if they *DO* matter, you need to show that they matter.
+> 
+>                Linus
 
