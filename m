@@ -1,173 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-23396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04E47910AFA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:04:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08F74910B00
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:04:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5FDE7B24568
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:04:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A61DD283BAC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:04:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 031C11B1409;
-	Thu, 20 Jun 2024 16:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 451261B1422;
+	Thu, 20 Jun 2024 16:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dnFjDq6Z"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="H5PjkJ7x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB071B0109
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 16:04:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6E31B013F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 16:04:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718899445; cv=none; b=jmea0I8uSH+z9yajKoFIBOiRdNOWAg7zD0TSwKkXWXIWuSUQMHZCtBJu3NvjXMp7LPyUSj6fpi01XlOJpf03BOSsieocGB4b+4jsByWg3mur+svFXfC0wDmUPsq8S7jmQUz72IgG93y2N6D8ezSYl1ldrjlJSMrpuC2UEaGXdZs=
+	t=1718899473; cv=none; b=jqEbs56OFkhwH1h5yHx5A39F7okWW1X7eG+8DuV2cNH7HT+kFiHhKb6Y/pElTtwTFNLuJfph1vTWM8ztO26q4Yd+Pd82+dush9pouOyQtQ2gJYacYBED9Me75bZKkTgMgUxDT4FKSNxlKZTvcleBNn71JrYv53SJZTlXtK8WPv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718899445; c=relaxed/simple;
-	bh=sQzq/TKljZMD4pKsJgwfiUeJ9tPpo+3DV47u3VvC5mA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LrCab9JCyPDeqIHmg6HccEAgUx3aqFzhk0l0OW7pOPjzOZUETyBBBn7ln4zSaV50pLjvwxDiT53JHGkPbN53pNbiJN2q/WBun3nHXZGN17rvEiVOa5y4lla4J/NabsoXgz9D13oCWb1efaK2DWMmVSHGgla6WX8bwiDNstUoL90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dnFjDq6Z; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1718899443;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iDqQrPGd42O44YfWw+IRXhYqcC8xwDaLQyCUqbKdOfM=;
-	b=dnFjDq6ZsonAJNQhsaM4rpXhvCiB2n8ns22NgXS5juoKLUNd03SOQZ1EsMtk1d2KobOJ61
-	80IMf28XW2cWMn+iIq3OeUpLFCq1taVt/3P4w1Q7bP4A3GbvcXzicC/2mcgqDagNWrX+zM
-	IK8RYr2J3EkPcY8JDrLPezerKqiG1Ms=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-99-vSl9D91SNTaAptjiNez15g-1; Thu, 20 Jun 2024 12:03:59 -0400
-X-MC-Unique: vSl9D91SNTaAptjiNez15g-1
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4404a08e4d0so20358791cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 09:03:59 -0700 (PDT)
+	s=arc-20240116; t=1718899473; c=relaxed/simple;
+	bh=L+sRaUROFLiedBrG2sWDIkuJ5o3pE63VZuzrZpIf2Fc=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=smtovBT55Hfmnpq6xuvhgEwmqPiMshSk2+LeGfZ0C4St2Oux017To6Mrfg5dC8ups3MJ8LjhI0HkuG/MKyG7FqaFuvpc6byH1wFMWB90PyMCglkGD3vlyj9HuNBdIJQkZyHuYjwF+j1PnBVEp+74sDcWLMpf2RHlLy9q4bj8w2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=H5PjkJ7x; arc=none smtp.client-ip=209.85.215.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-6e53ddbbb1fso1214134a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 09:04:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1718899471; x=1719504271; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GM34BWwCNXiLOvG2mLkdqlEK4NIZT0q6djBzomdsWyE=;
+        b=H5PjkJ7xfs83q10hkyTRCTnHarYxN6jsat87cynb3dCvPgi97F1+2vVjd+mGIZCJ+/
+         3vbj6W/DaEKbIvMf3gz5vWKIMC5pHHEcOPDq3JfrUtsW1mUEGxD4P5LFLpTmdVQ430jA
+         ipeL2Y5xYBNg67xC5Y08wZufdFWCPJL5Yy3fQNCCellnWrU20Cvu5aYoI9KYeQ/16YhW
+         DbmvY9D0LUs4ano+MrVwYvKYfXKdvs2e+hAN2WvwKsYF4cXcdEeUDE/m34dLYkQ/HzVw
+         UsINpLhKM6cNRPgntd0qVsDFXrrlw04ULYcx3k74Z1JWPtlwGY/T9csxZmLAFXaRMIVi
+         B68A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718899439; x=1719504239;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iDqQrPGd42O44YfWw+IRXhYqcC8xwDaLQyCUqbKdOfM=;
-        b=pMeT3pc2Gfi/7U34EVHlqniNyprlM6Py+JraQ+O9F/wj1RHzUPR2rIBLaPIWsTGMvz
-         KzhJ7bKxfXdE7ekxGDfrB899yPeCisd2yLE70c/SpSV0Ldx8c+u4Rkb8pAuyC9S64N2H
-         Cz6kTDAvxosBQqvqA6vN5lRSGwTI/4RB8UEMdmIETAP1FJqlMt6A8duBddWLaRA8zfIN
-         FAbzlVPYHEGK3JN8oUbhMCUulacziZfPLW0/FqDsaNDSukIVhqPHN/UXzLTpJyZy1nlu
-         1rjEYc7DNM0KE1DNz+ngT5+29ZQr4Di2jY/+Y/6legAi8fJpgKe/eXkN9Y+MKT5OqweE
-         BLIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWYHsSpOsUYIVoqZt4aMQuRF3mw4aogRz2Bam22BthrvjFx0c0TASbVW1dfm8XHt6jsqrRJT42Ege+5FQ3hk2tyhPbhxENhS8A7AxyFwQ==
-X-Gm-Message-State: AOJu0YxWTD+vARj79GW3Hpj2bSYt49YXcX1yXfBN9iVT26go9M1OJ2XK
-	jkNgCvI9B7MwSRvt685pKxd+Ju8fl73WHlbfz+K19KLvmg2jHw7O3DT7yEYWZ8O09bt0W1C6PEi
-	zFUie2Pmx3PinzvBy0BrprVd4vD8Dg5vVkV1EkPWpWtnbydFr+HQq8KBwGykBRm8=
-X-Received: by 2002:ac8:574f:0:b0:440:e39:372a with SMTP id d75a77b69052e-4449b8cc771mr147429511cf.3.1718899439060;
-        Thu, 20 Jun 2024 09:03:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEhB1DYbQ7e1+d1lc5JGo+U74y4WtMNDo+mQhkOQObAXNZnPDXfG8If9cx7sbaD1+JFxdxvwQ==
-X-Received: by 2002:ac8:574f:0:b0:440:e39:372a with SMTP id d75a77b69052e-4449b8cc771mr147429061cf.3.1718899438587;
-        Thu, 20 Jun 2024 09:03:58 -0700 (PDT)
-Received: from x1gen2nano ([2600:1700:1ff0:d0e0::13])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-442198f6160sm66411891cf.45.2024.06.20.09.03.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 09:03:58 -0700 (PDT)
-Date: Thu, 20 Jun 2024 11:03:55 -0500
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p-ride-r3: add new board file
-Message-ID: <henuash23dwkj5fcmub6sabygwo4kam7fgots2pp2j3eu4asuk@cn3o7a62lo74>
-References: <20240619183255.34107-1-brgl@bgdev.pl>
- <20240619183255.34107-3-brgl@bgdev.pl>
+        d=1e100.net; s=20230601; t=1718899471; x=1719504271;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GM34BWwCNXiLOvG2mLkdqlEK4NIZT0q6djBzomdsWyE=;
+        b=AQGTlgoKOYmIWWnFsZjS07OsRyaxuHA7KqNzy5NYYETgG2QuqgY4WXqtB2VSADrwAw
+         w1Rcu9X0l7emSlvLNTdJWIIUarqfCTc7pVzkC3eNR2rvXGCX0v8i+qSfzt7wcUFZvBtq
+         up+N0hCE2u+gE68bS6m1PiZQO4v8Lw155kSKbg9QFmSUu6AQhmRTaDFw9M8LfVDjV6Q5
+         DKwhvEXwWN5Fr/8r54bF5wkVVKW9k5RhNqU8DsGJSmJkmm1fKB83o+PEpJBBShsW+TJW
+         UsrK6k19m1ONzbfPzF2WVp97wjyHrr8J7RbuMD6KRK9qUPbiudTKtRiiiOtNgw8QFen4
+         NPDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWy+eItJdZcf259a5/cn+Zum03ngMf3F0YwUHJsvG492rLQc1bwB3cFg5i4rlqT3HAg61DvTul2gDPu8Q9qWuVbqMCt1e54lIDgNJgDlQ==
+X-Gm-Message-State: AOJu0Yx8D0enrD+ae1PPzZb4ZAX51nmxInX6p42fguIkIfrURQekGFML
+	CIViRerk6LbBltwjKCsEFcXB7ks+duKJri25o1EN2WaWz5O26FQ/NOqSx0F0zW93BejFIzm9JD/
+	HYQ==
+X-Google-Smtp-Source: AGHT+IEQboNcvlNMXMXTQphakoihDkY0lsVfoV/sk/4m49kyvfsdiCALpaLxGs2jQVK54zSq5Uy3vdD10AI=
+X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
+ (user=seanjc job=sendgmr) by 2002:a17:90a:fa8d:b0:2c2:ff46:312a with SMTP id
+ 98e67ed59e1d1-2c7b5d647d3mr16281a91.4.1718899470904; Thu, 20 Jun 2024
+ 09:04:30 -0700 (PDT)
+Date: Thu, 20 Jun 2024 09:04:29 -0700
+In-Reply-To: <385a5692-ffc8-455e-b371-0449b828b637@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240619183255.34107-3-brgl@bgdev.pl>
+Mime-Version: 1.0
+References: <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
+ <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com> <CA+EHjTxWWEHfjZ9LJqZy+VCk43qd3SMKiPF7uvAwmDdPeVhrvQ@mail.gmail.com>
+ <20240619115135.GE2494510@nvidia.com> <ZnOsAEV3GycCcqSX@infradead.org>
+ <CA+EHjTxaCxibvGOMPk9Oj5TfQV3J3ZLwXk83oVHuwf8H0Q47sA@mail.gmail.com>
+ <20240620135540.GG2494510@nvidia.com> <6d7b180a-9f80-43a4-a4cc-fd79a45d7571@redhat.com>
+ <20240620142956.GI2494510@nvidia.com> <385a5692-ffc8-455e-b371-0449b828b637@redhat.com>
+Message-ID: <ZnRTDUqLQ4XBRykl@google.com>
+Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
+From: Sean Christopherson <seanjc@google.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, Fuad Tabba <tabba@google.com>, 
+	Christoph Hellwig <hch@infradead.org>, John Hubbard <jhubbard@nvidia.com>, 
+	Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>, maz@kernel.org, 
+	kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
+	pbonzini@redhat.com
+Content-Type: text/plain; charset="us-ascii"
 
-On Wed, Jun 19, 2024 at 08:32:54PM GMT, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Thu, Jun 20, 2024, David Hildenbrand wrote:
+> On 20.06.24 16:29, Jason Gunthorpe wrote:
+> > On Thu, Jun 20, 2024 at 04:01:08PM +0200, David Hildenbrand wrote:
+> > > On 20.06.24 15:55, Jason Gunthorpe wrote:
+> > > > On Thu, Jun 20, 2024 at 09:32:11AM +0100, Fuad Tabba wrote:
+> > > Regarding huge pages: assume the huge page (e.g., 1 GiB hugetlb) is shared,
+> > > now the VM requests to make one subpage private.
+> > 
+> > I think the general CC model has the shared/private setup earlier on
+> > the VM lifecycle with large runs of contiguous pages. It would only
+> > become a problem if you intend to to high rate fine granual
+> > shared/private switching. Which is why I am asking what the actual
+> > "why" is here.
 > 
-> Revision 3 of the sa8775p-ride board uses a different PHY for the two
-> ethernet ports and supports 2.5G speed. Create a new file for the board
-> reflecting the changes.
+> I am not an expert on that, but I remember that the way memory
+> shared<->private conversion happens can heavily depend on the VM use case,
+
+Yeah, I forget the details, but there are scenarios where the guest will share
+(and unshare) memory at 4KiB (give or take) granularity, at runtime.  There's an
+RFC[*] for making SWIOTLB operate at 2MiB is driven by the same underlying problems.
+
+But even if Linux-as-a-guest were better behaved, we (the host) can't prevent the
+guest from doing suboptimal conversions.  In practice, killing the guest or
+refusing to convert memory isn't an option, i.e. we can't completely push the
+problem into the guest
+
+https://lore.kernel.org/all/20240112055251.36101-1-vannapurve@google.com
+
+> and that under pKVM we might see more frequent conversion, without even
+> going to user space.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile            |  1 +
->  arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts | 42 ++++++++++++++++++++
->  2 files changed, 43 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
+> > 
+> > > How to handle that without eventually running into a double
+> > > memory-allocation? (in the worst case, allocating a 1GiB huge page
+> > > for shared and for private memory).
+> > 
+> > I expect you'd take the linear range of 1G of PFNs and fragment it
+> > into three ranges private/shared/private that span the same 1G.
+> > 
+> > When you construct a page table (ie a S2) that holds these three
+> > ranges and has permission to access all the memory you want the page
+> > table to automatically join them back together into 1GB entry.
+> > 
+> > When you construct a page table that has only access to the shared,
+> > then you'd only install the shared hole at its natural best size.
+> > 
+> > So, I think there are two challenges - how to build an allocator and
+> > uAPI to manage this sort of stuff so you can keep track of any
+> > fractured pfns and ensure things remain in physical order.
+> > 
+> > Then how to re-consolidate this for the KVM side of the world.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 0c1cebd16649..916fbdbf5631 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -112,6 +112,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sa8540p-ride.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride-r3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-acer-aspire1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
-> new file mode 100644
-> index 000000000000..d7f0a25c1fc4
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
-> @@ -0,0 +1,42 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023, Linaro Limited
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sa8775p-ride.dtsi"
-> +
-> +&ethernet0 {
-> +	phy-mode = "ocsgmii";
-> +};
-> +
-> +&ethernet1 {
-> +	phy-mode = "ocsgmii";
-> +};
-> +
-> +&mdio {
-> +	compatible = "snps,dwmac-mdio";
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +
-> +	sgmii_phy0: phy@8 {
-> +		compatible = "ethernet-phy-id31c3.1c33";
-> +		reg = <0x8>;
-> +		device_type = "ethernet-phy";
-> +		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
-> +		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-> +		reset-assert-us = <11000>;
-> +		reset-deassert-us = <70000>;
+> Exactly!
+> 
+> > 
+> > guest_memfd, or something like it, is just really a good answer. You
+> > have it obtain the huge folio, and keep track on its own which sub
+> > pages can be mapped to a VMA because they are shared. KVM will obtain
+> > the PFNs directly from the fd and KVM will not see the shared
+> > holes. This means your S2's can be trivially constructed correctly.
+> > 
+> > No need to double allocate..
+> 
+> Yes, that's why my thinking so far was:
+> 
+> Let guest_memfd (or something like that) consume huge pages (somehow, let it
+> access the hugetlb reserves). Preallocate that memory once, as the VM starts
+> up: just like we do with hugetlb in VMs.
+> 
+> Let KVM track which parts are shared/private, and if required, let it map
+> only the shared parts to user space. KVM has all information to make these
+> decisions.
+> 
+> If we could disallow pinning any shared pages, that would make life a lot
+> easier, but I think there were reasons for why we might require it. To
+> convert shared->private, simply unmap that folio (only the shared parts
+> could possibly be mapped) from all user page tables.
+> 
+> Of course, there might be alternatives, and I'll be happy to learn about
+> them. The allcoator part would be fairly easy, and the uAPI part would
+> similarly be comparably easy. So far the theory :)
+> 
+> > 
+> > I'm kind of surprised the CC folks don't want the same thing for
+> > exactly the same reason. It is much easier to recover the huge
+> > mappings for the S2 in the presence of shared holes if you track it
+> > this way. Even CC will have this problem, to some degree, too.
+>
+> Precisely! RH (and therefore, me) is primarily interested in existing
+> guest_memfd users at this point ("CC"), and I don't see an easy way to get
+> that running with huge pages in the existing model reasonably well ...
 
-I need to read your other series still wrt "ocsgmii", but any chance you
-have access to docs indicating the reset timing? I've never had docs for
-the specific Marvell phy on the prior board or the Aquantia one on the
-new board...
-
-Boot time is something automotive is always concerned over, so I just
-want to make sure that this timing isn't any longer than it needs to be.
-Right now it looks the same as the Marvell phy's in the "v2" boards etc
-and that made me raise my eyebrows.
-
-Thanks,
-Andrew
-
+This is the general direction guest_memfd is headed, but getting there is easier
+said than done.  E.g. as alluded to above, "simply unmap that folio" is quite
+difficult, bordering on infeasible if the kernel is allowed to gup() shared
+guest_memfd memory.
 
