@@ -1,190 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-23397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08F74910B00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:04:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89FCB910B0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:05:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A61DD283BAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:04:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ADF141C24154
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:05:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 451261B1422;
-	Thu, 20 Jun 2024 16:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF75B1B1416;
+	Thu, 20 Jun 2024 16:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="H5PjkJ7x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uyuA3tv9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6E31B013F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 16:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D201AED4A;
+	Thu, 20 Jun 2024 16:05:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718899473; cv=none; b=jqEbs56OFkhwH1h5yHx5A39F7okWW1X7eG+8DuV2cNH7HT+kFiHhKb6Y/pElTtwTFNLuJfph1vTWM8ztO26q4Yd+Pd82+dush9pouOyQtQ2gJYacYBED9Me75bZKkTgMgUxDT4FKSNxlKZTvcleBNn71JrYv53SJZTlXtK8WPv0=
+	t=1718899511; cv=none; b=Mra56sfM6+DB9h1QrTn01BonYW49HUQgk+RiUAxYfo6a6xscw4tGWgzMomWg2ky42q1wdMoS9zFBT9CHUIYG6Weo6pdyQq3uzUdLMr+CSsMv5mfa7afCyp8uqfYe8b68qf2lcoNETpITtOpoHDJnGZkWGTbal4K2dMWIxe3udo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718899473; c=relaxed/simple;
-	bh=L+sRaUROFLiedBrG2sWDIkuJ5o3pE63VZuzrZpIf2Fc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=smtovBT55Hfmnpq6xuvhgEwmqPiMshSk2+LeGfZ0C4St2Oux017To6Mrfg5dC8ups3MJ8LjhI0HkuG/MKyG7FqaFuvpc6byH1wFMWB90PyMCglkGD3vlyj9HuNBdIJQkZyHuYjwF+j1PnBVEp+74sDcWLMpf2RHlLy9q4bj8w2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=H5PjkJ7x; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-6e53ddbbb1fso1214134a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 09:04:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1718899471; x=1719504271; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GM34BWwCNXiLOvG2mLkdqlEK4NIZT0q6djBzomdsWyE=;
-        b=H5PjkJ7xfs83q10hkyTRCTnHarYxN6jsat87cynb3dCvPgi97F1+2vVjd+mGIZCJ+/
-         3vbj6W/DaEKbIvMf3gz5vWKIMC5pHHEcOPDq3JfrUtsW1mUEGxD4P5LFLpTmdVQ430jA
-         ipeL2Y5xYBNg67xC5Y08wZufdFWCPJL5Yy3fQNCCellnWrU20Cvu5aYoI9KYeQ/16YhW
-         DbmvY9D0LUs4ano+MrVwYvKYfXKdvs2e+hAN2WvwKsYF4cXcdEeUDE/m34dLYkQ/HzVw
-         UsINpLhKM6cNRPgntd0qVsDFXrrlw04ULYcx3k74Z1JWPtlwGY/T9csxZmLAFXaRMIVi
-         B68A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718899471; x=1719504271;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GM34BWwCNXiLOvG2mLkdqlEK4NIZT0q6djBzomdsWyE=;
-        b=AQGTlgoKOYmIWWnFsZjS07OsRyaxuHA7KqNzy5NYYETgG2QuqgY4WXqtB2VSADrwAw
-         w1Rcu9X0l7emSlvLNTdJWIIUarqfCTc7pVzkC3eNR2rvXGCX0v8i+qSfzt7wcUFZvBtq
-         up+N0hCE2u+gE68bS6m1PiZQO4v8Lw155kSKbg9QFmSUu6AQhmRTaDFw9M8LfVDjV6Q5
-         DKwhvEXwWN5Fr/8r54bF5wkVVKW9k5RhNqU8DsGJSmJkmm1fKB83o+PEpJBBShsW+TJW
-         UsrK6k19m1ONzbfPzF2WVp97wjyHrr8J7RbuMD6KRK9qUPbiudTKtRiiiOtNgw8QFen4
-         NPDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWy+eItJdZcf259a5/cn+Zum03ngMf3F0YwUHJsvG492rLQc1bwB3cFg5i4rlqT3HAg61DvTul2gDPu8Q9qWuVbqMCt1e54lIDgNJgDlQ==
-X-Gm-Message-State: AOJu0Yx8D0enrD+ae1PPzZb4ZAX51nmxInX6p42fguIkIfrURQekGFML
-	CIViRerk6LbBltwjKCsEFcXB7ks+duKJri25o1EN2WaWz5O26FQ/NOqSx0F0zW93BejFIzm9JD/
-	HYQ==
-X-Google-Smtp-Source: AGHT+IEQboNcvlNMXMXTQphakoihDkY0lsVfoV/sk/4m49kyvfsdiCALpaLxGs2jQVK54zSq5Uy3vdD10AI=
-X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a17:90a:fa8d:b0:2c2:ff46:312a with SMTP id
- 98e67ed59e1d1-2c7b5d647d3mr16281a91.4.1718899470904; Thu, 20 Jun 2024
- 09:04:30 -0700 (PDT)
-Date: Thu, 20 Jun 2024 09:04:29 -0700
-In-Reply-To: <385a5692-ffc8-455e-b371-0449b828b637@redhat.com>
+	s=arc-20240116; t=1718899511; c=relaxed/simple;
+	bh=VxwxD9NlRx02IyNbc/jHsn3Pas/lBfmDoifITi881bg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YQoPN7N/y+E/2it5M29JzC8R7iNkFhlvmU1nn2PbD8SuMVT+/Qg+ZuZ88AJJ3LzHxysgsc3c9iLdc1imS+c3HEc8K8VU0MgMMuIMY47g5HHgwNxJhi4vrBIRMY+jAi4sGhKO8/FJfp8JRquBRaMRYkglvYjB7pTTdlljkSSnkb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uyuA3tv9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815E2C2BD10;
+	Thu, 20 Jun 2024 16:04:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718899511;
+	bh=VxwxD9NlRx02IyNbc/jHsn3Pas/lBfmDoifITi881bg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=uyuA3tv9HEGJ0cbi+XB62kPlv8bBvRWLA1xMi447pWjJl+MwiU9oRbgaGaqbAjiJm
+	 0uaW8CxfqAw5ujZj+iLTxPMLxjqoVI14D4KLfAGDCjfnGPDjKnKULYfREWZu6L13qh
+	 uoxKbtqfUE6NxpenmMBzvHw5P82UTD72luGvTOa1LBXGJo2VjX+8lxdnaFSgbxQUTo
+	 MIcU7Vxgo+h79ekBibAC/3Z2kPXJDwOkoYOM9vIz+6a/PoLRpoZa2RYLD3QsfTxhAi
+	 XECwf0XuI67epGZOHyA/sRtACxfM3MU1AWzpMB1p8raEkr3fh937YuY6+mcCCcx0C0
+	 +JI+q1MIvIkfQ==
+Message-ID: <da34df13-bc57-4142-b558-88a6628d8b81@kernel.org>
+Date: Thu, 20 Jun 2024 18:04:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
- <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com> <CA+EHjTxWWEHfjZ9LJqZy+VCk43qd3SMKiPF7uvAwmDdPeVhrvQ@mail.gmail.com>
- <20240619115135.GE2494510@nvidia.com> <ZnOsAEV3GycCcqSX@infradead.org>
- <CA+EHjTxaCxibvGOMPk9Oj5TfQV3J3ZLwXk83oVHuwf8H0Q47sA@mail.gmail.com>
- <20240620135540.GG2494510@nvidia.com> <6d7b180a-9f80-43a4-a4cc-fd79a45d7571@redhat.com>
- <20240620142956.GI2494510@nvidia.com> <385a5692-ffc8-455e-b371-0449b828b637@redhat.com>
-Message-ID: <ZnRTDUqLQ4XBRykl@google.com>
-Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-From: Sean Christopherson <seanjc@google.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, Fuad Tabba <tabba@google.com>, 
-	Christoph Hellwig <hch@infradead.org>, John Hubbard <jhubbard@nvidia.com>, 
-	Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>, maz@kernel.org, 
-	kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	pbonzini@redhat.com
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 13/23] input: add max77705 haptic driver
+To: Dzmitry Sankouski <dsankouski@gmail.com>,
+ Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
+ linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
+ <20240618-starqltechn_integration_upstream-v3-13-e3f6662017ac@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240618-starqltechn_integration_upstream-v3-13-e3f6662017ac@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 20, 2024, David Hildenbrand wrote:
-> On 20.06.24 16:29, Jason Gunthorpe wrote:
-> > On Thu, Jun 20, 2024 at 04:01:08PM +0200, David Hildenbrand wrote:
-> > > On 20.06.24 15:55, Jason Gunthorpe wrote:
-> > > > On Thu, Jun 20, 2024 at 09:32:11AM +0100, Fuad Tabba wrote:
-> > > Regarding huge pages: assume the huge page (e.g., 1 GiB hugetlb) is shared,
-> > > now the VM requests to make one subpage private.
-> > 
-> > I think the general CC model has the shared/private setup earlier on
-> > the VM lifecycle with large runs of contiguous pages. It would only
-> > become a problem if you intend to to high rate fine granual
-> > shared/private switching. Which is why I am asking what the actual
-> > "why" is here.
+On 18/06/2024 15:59, Dzmitry Sankouski wrote:
+> Add support for haptic controller on MAX77705 Multifunction
+> device.
 > 
-> I am not an expert on that, but I remember that the way memory
-> shared<->private conversion happens can heavily depend on the VM use case,
+> This driver supports external pwm and LRA (Linear Resonant Actuator) motor.
+> User can control the haptic device via force feedback framework.
+> 
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> ---
 
-Yeah, I forget the details, but there are scenarios where the guest will share
-(and unshare) memory at 4KiB (give or take) granularity, at runtime.  There's an
-RFC[*] for making SWIOTLB operate at 2MiB is driven by the same underlying problems.
+> +static int max77705_haptic_bias(struct max77705_haptic *haptic, bool on)
+> +{
+> +	int error;
+> +
+> +	error = regmap_update_bits(haptic->regmap_haptic,
+> +							   MAX77705_PMIC_REG_MAINCTRL1,
+> +							   MAX77705_MAINCTRL1_BIASEN_MASK,
+> +							   on << MAX77705_MAINCTRL1_BIASEN_SHIFT);
+> +
+> +	if (error) {
+> +		dev_err(haptic->dev, "failed to %s bias: %d\n",
+> +			on ? "enable" : "disable", error);
+> +		return error;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int max77705_haptic_configure(struct max77705_haptic *haptic,
+> +				     bool enable)
+> +{
+> +	unsigned int value, config_reg;
+> +	int error;
+> +
+> +	value = ((haptic->type << MAX77705_CONFIG2_MODE_SHIFT) |
+> +		(enable << MAX77705_CONFIG2_MEN_SHIFT) |
+> +		(haptic->mode << MAX77705_CONFIG2_HTYP_SHIFT) |
+> +		MAX77705_HAPTIC_PWM_DIVISOR_128);
+> +	config_reg = MAX77705_PMIC_REG_MCONFIG;
+> +
+> +	error = regmap_write(haptic->regmap_haptic,
+> +			     config_reg, value);
+> +	if (error) {
+> +		dev_err(haptic->dev,
+> +			"failed to update haptic config: %d\n", error);
+> +		return error;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void max77705_haptic_enable(struct max77705_haptic *haptic)
+> +{
+> +	int error;
+> +
+> +	if (haptic->enabled)
+> +		return;
+> +
+> +	error = pwm_enable(haptic->pwm_dev);
+> +	if (error) {
+> +		dev_err(haptic->dev,
+> +			"failed to enable haptic pwm device: %d\n", error);
+> +		return;
+> +	}
+> +
+> +	error = max77705_haptic_configure(haptic, true);
+> +	if (error)
+> +		goto err_enable_config;
+> +
+> +	haptic->enabled = true;
+> +
+> +	return;
+> +
+> +err_enable_config:
+> +	pwm_disable(haptic->pwm_dev);
+> +}
+> +
+> +static void max77705_haptic_disable(struct max77705_haptic *haptic)
+> +{
+> +	int error;
+> +
+> +	if (!haptic->enabled)
+> +		return;
+> +
+> +	error = max77705_haptic_configure(haptic, false);
+> +	if (error)
+> +		return;
+> +
+> +	pwm_disable(haptic->pwm_dev);
+> +	haptic->enabled = false;
+> +}
+> +
+> +static void max77705_haptic_play_work(struct work_struct *work)
+> +{
+> +	struct max77705_haptic *haptic =
+> +			container_of(work, struct max77705_haptic, work);
+> +	int error;
+> +
+> +	error = max77705_haptic_set_duty_cycle(haptic);
+> +	if (error) {
+> +		dev_err(haptic->dev, "failed to set duty cycle: %d\n", error);
+> +		return;
+> +	}
+> +
+> +	if (haptic->magnitude)
+> +		max77705_haptic_enable(haptic);
+> +	else
+> +		max77705_haptic_disable(haptic);
+> +}
+> +
+> +static int max77705_haptic_play_effect(struct input_dev *dev, void *data,
+> +				       struct ff_effect *effect)
+> +{
+> +	struct max77705_haptic *haptic = input_get_drvdata(dev);
+> +	struct pwm_args pargs;
+> +	u64 period_mag_multi;
+> +
+> +	haptic->magnitude = effect->u.rumble.strong_magnitude;
+> +	if (!haptic->magnitude)
+> +		haptic->magnitude = effect->u.rumble.weak_magnitude;
+> +
+> +	/*
+> +	 * The magnitude comes from force-feedback interface.
+> +	 * The formula to convert magnitude to pwm_duty as follows:
+> +	 * - pwm_duty = (magnitude * pwm_period) / MAX_MAGNITUDE(0xFFFF)
+> +	 */
+> +	pr_info("magnitude: %d(%x)", haptic->magnitude, haptic->magnitude);
 
-But even if Linux-as-a-guest were better behaved, we (the host) can't prevent the
-guest from doing suboptimal conversions.  In practice, killing the guest or
-refusing to convert memory isn't an option, i.e. we can't completely push the
-problem into the guest
+Do not use pr_xxx in your drivers. That's a generic comment so please
+apply it everywhere. Anyway driver should be silent.
 
-https://lore.kernel.org/all/20240112055251.36101-1-vannapurve@google.com
 
-> and that under pKVM we might see more frequent conversion, without even
-> going to user space.
-> 
-> > 
-> > > How to handle that without eventually running into a double
-> > > memory-allocation? (in the worst case, allocating a 1GiB huge page
-> > > for shared and for private memory).
-> > 
-> > I expect you'd take the linear range of 1G of PFNs and fragment it
-> > into three ranges private/shared/private that span the same 1G.
-> > 
-> > When you construct a page table (ie a S2) that holds these three
-> > ranges and has permission to access all the memory you want the page
-> > table to automatically join them back together into 1GB entry.
-> > 
-> > When you construct a page table that has only access to the shared,
-> > then you'd only install the shared hole at its natural best size.
-> > 
-> > So, I think there are two challenges - how to build an allocator and
-> > uAPI to manage this sort of stuff so you can keep track of any
-> > fractured pfns and ensure things remain in physical order.
-> > 
-> > Then how to re-consolidate this for the KVM side of the world.
-> 
-> Exactly!
-> 
-> > 
-> > guest_memfd, or something like it, is just really a good answer. You
-> > have it obtain the huge folio, and keep track on its own which sub
-> > pages can be mapped to a VMA because they are shared. KVM will obtain
-> > the PFNs directly from the fd and KVM will not see the shared
-> > holes. This means your S2's can be trivially constructed correctly.
-> > 
-> > No need to double allocate..
-> 
-> Yes, that's why my thinking so far was:
-> 
-> Let guest_memfd (or something like that) consume huge pages (somehow, let it
-> access the hugetlb reserves). Preallocate that memory once, as the VM starts
-> up: just like we do with hugetlb in VMs.
-> 
-> Let KVM track which parts are shared/private, and if required, let it map
-> only the shared parts to user space. KVM has all information to make these
-> decisions.
-> 
-> If we could disallow pinning any shared pages, that would make life a lot
-> easier, but I think there were reasons for why we might require it. To
-> convert shared->private, simply unmap that folio (only the shared parts
-> could possibly be mapped) from all user page tables.
-> 
-> Of course, there might be alternatives, and I'll be happy to learn about
-> them. The allcoator part would be fairly easy, and the uAPI part would
-> similarly be comparably easy. So far the theory :)
-> 
-> > 
-> > I'm kind of surprised the CC folks don't want the same thing for
-> > exactly the same reason. It is much easier to recover the huge
-> > mappings for the S2 in the presence of shared holes if you track it
-> > this way. Even CC will have this problem, to some degree, too.
->
-> Precisely! RH (and therefore, me) is primarily interested in existing
-> guest_memfd users at this point ("CC"), and I don't see an easy way to get
-> that running with huge pages in the existing model reasonably well ...
+> +	pwm_get_args(haptic->pwm_dev, &pargs);
+> +	period_mag_multi = (u64)pargs.period * haptic->magnitude;
+> +	haptic->pwm_duty = (unsigned int)(period_mag_multi >>
+> +						MAX_MAGNITUDE_SHIFT);
+> +
+> +	schedule_work(&haptic->work);
+> +
+> +	return 0;
+> +}
 
-This is the general direction guest_memfd is headed, but getting there is easier
-said than done.  E.g. as alluded to above, "simply unmap that folio" is quite
-difficult, bordering on infeasible if the kernel is allowed to gup() shared
-guest_memfd memory.
+
+> +
+> +static DEFINE_SIMPLE_DEV_PM_OPS(max77705_haptic_pm_ops,
+> +				max77705_haptic_suspend,
+> +				max77705_haptic_resume);
+> +
+> +static const struct of_device_id of_max77705_haptic_dt_match[] = {
+> +	{ .compatible = "maxim,max77705-haptic", },
+> +	{ /* sentinel */ },
+> +};
+> +MODULE_DEVICE_TABLE(of, of_max77705_haptic_dt_match);
+> +
+> +static struct platform_driver max77705_haptic_driver = {
+> +	.driver		= {
+> +		.name	= "max77705-haptic",
+> +		.pm	= pm_sleep_ptr(&max77705_haptic_pm_ops),
+> +		.of_match_table = of_max77705_haptic_dt_match,
+> +	},
+> +	.probe		= max77705_haptic_probe,
+> +	.remove_new	= max77705_haptic_remove,
+> +};
+> +module_platform_driver(max77705_haptic_driver);
+> +
+> +MODULE_AUTHOR("Dzmitry Sankouski <dsankouski@gmail.com>");
+> +MODULE_AUTHOR("Jaewon Kim <jaewon02.kim@samsung.com>");
+> +MODULE_AUTHOR("Krzysztof Kozlowski <krzk@kernel.org>");
+
+I doubt that this driver is needed. Everything is copy of max777693.
+
+
+Best regards,
+Krzysztof
+
 
