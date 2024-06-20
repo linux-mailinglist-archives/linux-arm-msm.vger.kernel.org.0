@@ -1,113 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-23411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 617B3910DB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 18:55:21 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 048F1910E82
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 19:29:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CF0628137D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 16:55:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 84DD0B2539F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 17:29:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C69701B3732;
-	Thu, 20 Jun 2024 16:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4A9C1B3754;
+	Thu, 20 Jun 2024 17:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uI+t2g5l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lh5s59ea"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23241B3721
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 16:55:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1681AB8F0;
+	Thu, 20 Jun 2024 17:29:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718902512; cv=none; b=h+lxrSjR60wx0G6LUwpal8E65uGwrYvGJ2/BPdcRLSusF/QUA0a21pjXpc/EROVCemdhZf/wMtsapBAP2i028+XJeWO6eiG5srCYwcQ10SyKzZluSI0Hj4txqXlk5BOzamWUA+NDdqTCMo/T4wtgFJmIK5b+nGGmjxHrhqZQ4Eo=
+	t=1718904553; cv=none; b=f9AfwxFP1rzfLKapLihzNdm/c6hjEdc6yL8veR/dPO8KZzXwTvKBdpFN6aQQIBUZ5wYk7ImyDNOEIIHSfVoANBG4BkF2+nhYMP0ZjusGG3U7k29V6pbDnh4WoZEe/TNaiMVgjPaU2Y4h5rXYnRjY7mdot/mm5vnR/wGFvbzXLc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718902512; c=relaxed/simple;
-	bh=DEnJDlxI7ouq96kG4nCeuDwbggk9NVBb52c1U9fIEjU=;
+	s=arc-20240116; t=1718904553; c=relaxed/simple;
+	bh=MFhmUKjvDtTBlQ9Bn+GX9qD5W1UERPoEYpFB4l7lIEc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U8rBAEV4QCeiIIue+pSD19tCbObysvRyoblWCq4UgDnrVU8wOUxUg2zQCBQUYeNuuc0TfMnw5LapN4oQIR6703cy7pB2U7iaFfuetIK9QK6rcVHyxsc9Rss1ooqMWJB0S6uV+QwvhG0kLuOklzZbYUUBHiRLXaszHx19yqvdJak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uI+t2g5l; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2701DC4AF0A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 16:55:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718902512;
-	bh=DEnJDlxI7ouq96kG4nCeuDwbggk9NVBb52c1U9fIEjU=;
-	h=References:In-Reply-To:From:Date:Subject:To:List-Id:Cc:From;
-	b=uI+t2g5l1BFfPdesTtSIFTPaMgfMR6HezZqGoxJ/ovjrLyDXBVjSTS0clU6o7eGit
-	 5nLIMJVDtfvuZYwHNjC2LBlyvMo5oUiwrJ1SnAfnSX0n44eCynfcYOem8ycmEgFxQA
-	 GWcc++mkLrhv4uXqfXtKbn9+ehgNMps642mw+Wzza7ebmO1tLKhIxoZD5B4gSwHv4N
-	 dXtNetBP71s3d5Wodek/EAnTZT2jY6h+buy4pPr0z86iyXOigTs6AHmfMb4iyw9IFd
-	 TsuqQG6DL0KCg/vhkAgp98Jj3MbZbuVDpVMVhrNNjyfrHun0qyN5jBk+fOTYafZawT
-	 DDYEDqQuS3pHw==
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-63bdb089ffdso9503207b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 09:55:12 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWRx3ONJ1s3NdVra/2OT0b+GDVt6tDXVe63Kf8jISsh+2otfakpgzv5UBHaPtpurVPmNYi+8EIsNNj1KvJCw03d4qW1M4daTZ28xVi93w==
-X-Gm-Message-State: AOJu0YxewItNVa39hQtbeRTpPSPb3tmyNld5gd6Mhq+c8VaBVDwUp6ou
-	ZDcBj+AgwEJLGrKyKBQJxxa2DxI2/FdShL24g6sV6nFnKnzfDhHM/oA2cM9sgScVNv8IFzQRMCS
-	2NUO9pIUiSSUi6uXVvYN0J6eXxsc=
-X-Google-Smtp-Source: AGHT+IEcr3aOuT1qTMt+LOxl8yiBethc9VJtr9f8RnE9QvExWNaQ0rHzl1p3jcDr9H7hGczigEfcRpCwz/UvJ5GjRhg=
-X-Received: by 2002:a05:690c:988:b0:63b:c3ed:f171 with SMTP id
- 00721157ae682-63bc3edf56fmr39145767b3.35.1718902511249; Thu, 20 Jun 2024
- 09:55:11 -0700 (PDT)
+	 To:Cc:Content-Type; b=sKpLxGBtv0fF0KqUA6yKJFvp/0EpKcXT0St8p8RPLVJqm9fTcT5GhSzz6OUaIRsHtgMTrnZcmKKgc5DFIONXg1ntYnCP1PiYc8kz8LCehuvS0RXVorvifGqFi0W+5w0yevflKxE2PXOg91aJj/s7J0iared5BtqS8OCd+cINvwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lh5s59ea; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-43ff9d1e0bbso5199471cf.3;
+        Thu, 20 Jun 2024 10:29:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718904551; x=1719509351; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n0iu5V6CVJ2htaSZURuMvsIrPmxFYUDGGtOzfJvtWgk=;
+        b=lh5s59eaCJJIz53N1csZb+6Wqs3X2Jxp2X2PAl0RS8h5UzNKB0xU4fnNOC1ZCGpehK
+         HdML4rIcU8OAQgS3ucByVHGaT+jTWKnekMSxD2+swAjd23TR+BlBdDrDdV5TAueJYKt/
+         +JI6GDsBdlNLUZFytTN62K+dOj6ppR1s1Me7XRrlZucn8B93i0pQmZxh0SAHg7NUbo6H
+         7W8Lz7nPGNCQrqGF2RI/C9HqTlFe//v5JVT7NgC9qP9AngOlaAjhIvdaMd8l5nbk+rQ9
+         jgiUUH0GmlB0pAslRMscRL/ieALVXv605sbiLNQB9wykRLPSfaYPyjv10rOQ013QuLOf
+         HrAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718904551; x=1719509351;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n0iu5V6CVJ2htaSZURuMvsIrPmxFYUDGGtOzfJvtWgk=;
+        b=n89rsQDiroWMnTpflwQ4AlugWJgsqIycJb3yunXhlzKDKdsVTWyjIE6oJi9XR2gBK3
+         oNskcU3lGmStW3aWx6ZrRFPuZvAKhEXVz2ZF1kyjCZRcc5RoImr4FW20Vn7QrEdoezU4
+         Fob1OSepMVTpxG1gjMR1wj7mAAsy55AVi2QSFC3x7uiJQR4wIdzMj74YQUlF4ClJI6CC
+         4mRfycbyl+4HpaAWeif8W0KxqZUCANIfe+x156upHQmiRO5sIPoMFkjAr8yMgZLtU/nd
+         9KUIrYWLpAjkQ7Z570LBMcbaRpio5sCVrg5eZt/qrI7Ej8zPxsE0VP2Rn2DC5a2oenjK
+         qlVg==
+X-Forwarded-Encrypted: i=1; AJvYcCVoUHcxvGoJ6wAU96c6Yb9SzMlHS+psuVJYL6AfuzLZYluafWZpOBHFHwuiQlMCSwluVBIObeHhC/8nWl6M7Mj0GW4bGLfRp3qK2zDbP5CbfvZnZUQY7mxzbLL12Y4P0eTZLMivVZ0AherE4w==
+X-Gm-Message-State: AOJu0Yyf2ETsUmjA8XeBrQe+agNT9thhWHSzcSzS57Qcez99HRNIgzI/
+	KckN3w1YbE0i0RscrcsUEKURj7FaHE+lg81bIwG+yB6jfgxhvwK4YOQ9H8wNfc5cI1hgt+FuEOl
+	QSPps/BlSThmoHkyb+DL3RbT0+PY=
+X-Google-Smtp-Source: AGHT+IHnU4Kfz0hQPXXVFIATrwZUVqfWopwRtu2bkf4SRPQCq8ZqbWpdRu8EZFIAv5Jal3eFR36wqu1MCkoHLXxZDIg=
+X-Received: by 2002:ac8:5709:0:b0:441:575a:786d with SMTP id
+ d75a77b69052e-444a79c2f7bmr65856181cf.26.1718904550945; Thu, 20 Jun 2024
+ 10:29:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1c0d33f8-6cd7-e7f1-b130-09b6279cd4bd@quicinc.com>
-In-Reply-To: <1c0d33f8-6cd7-e7f1-b130-09b6279cd4bd@quicinc.com>
-From: Josh Boyer <jwboyer@kernel.org>
-Date: Thu, 20 Jun 2024 12:54:59 -0400
-X-Gmail-Original-Message-ID: <CA+5PVA72zBGVp7CFR1T6irDzKvzh1axmL=RCuLiGe-EQJy6exw@mail.gmail.com>
-Message-ID: <CA+5PVA72zBGVp7CFR1T6irDzKvzh1axmL=RCuLiGe-EQJy6exw@mail.gmail.com>
-Subject: Re: [PULL]: Add firmware for Qualcomm AIC100
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: linux-firmware@kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240528-a306a-v1-1-03a66dacd8c7@gmail.com> <76a124b6-8cc3-4060-866c-03f47da450cc@linaro.org>
+In-Reply-To: <76a124b6-8cc3-4060-866c-03f47da450cc@linaro.org>
+From: Rob Clark <robdclark@gmail.com>
+Date: Thu, 20 Jun 2024 10:28:57 -0700
+Message-ID: <CAF6AEGuHSG0t6CH=+JGzZqiZa_JsOgPkcgO_UhCbO3vAgFZK_g@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/adreno: Add A306A support
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 20, 2024 at 12:06=E2=80=AFPM Jeffrey Hugo <quic_jhugo@quicinc.c=
-om> wrote:
+On Wed, May 29, 2024 at 3:41=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
 >
-> The following changes since commit a34a7ad5014c2b833c6a2c0f89357f98a0bdda=
-b0:
+> On 28.05.2024 9:43 PM, Barnab=C3=A1s Cz=C3=A9m=C3=A1n wrote:
+> > From: Otto Pfl=C3=BCger <otto.pflueger@abscue.de>
+> >
+> > Add support for Adreno 306A GPU what is found in MSM8917 SoC.
+> > This GPU marketing name is Adreno 308.
+> >
+> > Signed-off-by: Otto Pfl=C3=BCger <otto.pflueger@abscue.de>
+> > [use internal name of the GPU, reword the commit message]
+> > Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <trabarni@gmail.com>
+> > ---
 >
->    Merge branch 'upstream' into 'main' (2024-06-18 11:34:55 +0000)
+> [...]
 >
-> are available in the Git repository at:
 >
->    https://github.com/quic-jhugo/linux-firmware aic100_1_15_4_0
+> >
+> > +static inline bool adreno_is_a306a(const struct adreno_gpu *gpu)
+> > +{
+> > +     /* a306a marketing name is a308 */
+> > +     return adreno_is_revn(gpu, 308);
+> > +}
+>
+> The .c changes look good. Rob, do we still want .rev nowadays?
 
-Merged and pushed out.
+mostly I just want to avoid revn for newer GPUs, but I suppose we
+should be consistent and drop it for "new old" GPUs..
 
-https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/234
+Also, it would be nice to rebase on
+https://patchwork.freedesktop.org/series/127393/
 
-josh
-
->
-> for you to fetch changes up to 335a6a3769201aca271c7265b43a092b4a616aa0:
->
->    qcom: Add AIC100 firmware files (2024-06-20 09:48:59 -0600)
->
-> ----------------------------------------------------------------
-> Jeffrey Hugo (1):
->        qcom: Add AIC100 firmware files
->
->   WHENCE               |  12 ++++++++++++
->   qcom/aic100/fw1.bin  | Bin 0 -> 1571360 bytes
->   qcom/aic100/fw10.bin | Bin 0 -> 249439 bytes
->   qcom/aic100/fw2.bin  | Bin 0 -> 771016 bytes
->   qcom/aic100/fw5.bin  | Bin 0 -> 24576 bytes
->   qcom/aic100/fw9.bin  | Bin 0 -> 750416 bytes
->   qcom/aic100/sbl.bin  | Bin 0 -> 805808 bytes
->   7 files changed, 12 insertions(+)
->   create mode 100644 qcom/aic100/fw1.bin
->   create mode 100644 qcom/aic100/fw10.bin
->   create mode 100644 qcom/aic100/fw2.bin
->   create mode 100644 qcom/aic100/fw5.bin
->   create mode 100644 qcom/aic100/fw9.bin
->   create mode 100644 qcom/aic100/sbl.bin
+BR,
+-R
 
