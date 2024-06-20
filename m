@@ -1,135 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-23473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFCCE9115D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 00:47:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B58C9115D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 00:47:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 683551F23878
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 22:47:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74D121C20B8B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 22:47:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1114813D8A7;
-	Thu, 20 Jun 2024 22:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9085B7E563;
+	Thu, 20 Jun 2024 22:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jzDuUyQG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A6TDDorv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5324D79949;
-	Thu, 20 Jun 2024 22:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9D45FEE4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 22:47:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718923669; cv=none; b=CzkGQmJMWZ8eqsktGXK4K47asKhjogkx4ayaZ5anF3OF1R1zM2cpCSyPFpNDURD50aFiI9DZ1NxQlXviMBxEWPhVx5YT2nhUQPr8X/Ye8phXNVwhFTB7kOMC+uSP2ROhkPoWaYMwux5qXwIbnpex3g/xGB+iMoPmumqeeerzwRM=
+	t=1718923668; cv=none; b=pTEAVXzIdwak6rhvCG06pMxNmyiPVyLBV0Ix3h0ukHXaAMBjb24xfcWvjEA1/VV2ITK2VSQVGLg7iKH0YLtsfFgUuVohgK7aMkDF3Y3GmeQS4xu3S7pFrpeYZDUluDhqpdwjZHwzijUdOGBCjdZJFOy6nmLWRVQTQhyBkZnzhTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718923669; c=relaxed/simple;
-	bh=VVG0u6kJx6gy9QOoxI0WCnMXxw0wTHsd0ZhQUmx+USY=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mRmmIuyuFDCd55xpGC9COrhv+USOcDApPYmeWjQz7EsJItYhS7jot0fyyJaOUGNshuRbMIaOuaZhQAu9aT2DPHwMqcvJcED/hjmAXllm83ODX77/aw1mJ+bOfDZBDRDLElRpYnzwteJq6Ff0MkYF3+lWiLcMq7YHJfRSvVsZ+rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jzDuUyQG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45KHL5uN010657;
-	Thu, 20 Jun 2024 22:47:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=UzU1DFJ4xrF/xX5fZgyh2T96
-	UuT9FhaFK+d/7JtKvNI=; b=jzDuUyQGbn/J5EKIcYa/VYyT6OqYGWRl6bqvdfBm
-	3wqaJ1kW3cK+p3bp+S8gDKtYC2fjQKzeafmoZOdNL5jgDJAlv5dHmWM3iYx6boFC
-	k3gtvbWxU1U6uPELCKJJklxknTxfqq857nvR8yrOnU0E9WFI57Y3Bp5sAlzTgSxP
-	0f1K34rmJ/hg4RCtOtL9GNcM1T599TPeJFAUNzYoeb8Xd6afUpkGpFgfo8YHSuak
-	Ygf1FYljOGhG+Cu69kI4+siX7WaQyk9h1FQpyeb6AY3tfs5IsyMmfEppO7aK18nC
-	IBAAIYcIebPJBK0YN1PA30VlduHppw5LISHTDmfqwYJtMw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrrc8stu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Jun 2024 22:47:26 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45KMlORB009447
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 20 Jun 2024 22:47:24 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 20 Jun 2024 15:47:24 -0700
-Date: Thu, 20 Jun 2024 15:47:23 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>,
-        Christoph Hellwig <hch@infradead.org>,
-        John Hubbard <jhubbard@nvidia.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>,
-        <maz@kernel.org>, <kvm@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-mm@kvack.org>,
-        <linux-kernel@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
-        <pbonzini@redhat.com>
-Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-Message-ID: <20240620140516768-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
- <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
- <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
- <CA+EHjTxWWEHfjZ9LJqZy+VCk43qd3SMKiPF7uvAwmDdPeVhrvQ@mail.gmail.com>
- <20240619115135.GE2494510@nvidia.com>
- <ZnOsAEV3GycCcqSX@infradead.org>
- <CA+EHjTxaCxibvGOMPk9Oj5TfQV3J3ZLwXk83oVHuwf8H0Q47sA@mail.gmail.com>
- <20240620135540.GG2494510@nvidia.com>
- <6d7b180a-9f80-43a4-a4cc-fd79a45d7571@redhat.com>
- <20240620142956.GI2494510@nvidia.com>
+	s=arc-20240116; t=1718923668; c=relaxed/simple;
+	bh=N7791Drbbolvz/Zi4CEkZ0XIrcd/Ukk3RAfAstpZLV0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AvDyaiY1H9naG13tsn6HPHKhMVaVVpmlq2cFpJHeEVygtCRw7Lzf3jpgqq37ozDK6zLjHjj1TurKmMpcHUglvwztDEEvyKInSPCN+/EtvkLgyC/kQs/y3rRfqdFmPQ0DzUr9D7WZL/1pWwmFKkuYzJHRL3T66MSDUAuXCeEO48E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A6TDDorv; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a6f1c4800easo152557566b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 15:47:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718923664; x=1719528464; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4I073d0BTX95Go5STXxxrqm3YTQm7wdPzYcykgxi0es=;
+        b=A6TDDorvlQWugQVQo2/tWnvWH/7QiAxEs8bs4qfEbAU3MeldtJNr8YGeYAntf9iMrG
+         eCjDPZcBLTDZZbEYQEL62ZPo/1z/foxr/pAH9rdagtXj/ILi8nO47tKnUfH+DBpAzPhy
+         hgO3FDUt4GiHGwBnEmsMjCbEkHduLreEFI3M/jpbWDRweL2+wjUrxsz8EI5PcppNCoCn
+         nDR3/PGuXdGaZqyd/uUAuESow8kKZuM0NL21x37Km/b3mT6opgXY2f4GwbGPogvjj81I
+         bRZ5H7C0JXd/ossjTiDdv1B/vf52hXR1DIOYdujAbFu+be8OKeNrSwQCA++3tCzUA6By
+         aVHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718923664; x=1719528464;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4I073d0BTX95Go5STXxxrqm3YTQm7wdPzYcykgxi0es=;
+        b=bOIy7/Hc0fG4uJYPkwjmE+Npxzx8k0yFqrTS5NNJ0lDdxMay9qrpBbTt+FOzts3yUX
+         be0NGAJpEfK28whb+av4XgDqIDP2CitYUaMeQ/1wKrRl/NN+7EU1ccQo+M9bzvNVzQhx
+         54JE/zeoqe/R+t6LCt6vm/SZOJM1XPA4j6wGnz8xtZBO6k23BrJz8uSSVKCQ5kaL5qTA
+         +0FVHmkYNj9gSf2q6L468DVqjKQWrm0iHin7GKQVFwCVh9aj6TcQWh+RMjTNg/ibiO+O
+         KrnzePXCi2ACbLuvbCFcyfY6LZe0QET9cfbhkUxyImVEjVBRy5vfE+u96jL/DJsnq1Wr
+         o87Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXdVmj1ofGMgJTFjorvf/cC2WQhTKkHfjXJ+Vg0tzitTsifc8LCO3GQ1sb6RYsLKjKmdHUt+H3PKrMxSwZ8kcSNkI4cOZ+WYY/tqU3/tA==
+X-Gm-Message-State: AOJu0YziOSjmXR+WJMTpzhyaA+ws9XeFoWaQpI+r2WVcgbLKAxym7mBZ
+	VwTw5Q5rJ/nr79yqytif4o1O4MnTMlgHRf6Gl3byMkbO9cfygAyXByCQs+RXu+Y=
+X-Google-Smtp-Source: AGHT+IHmD+Gya/nhlhxOrWtEB0hFxetdUkl4tZxvwdn9QG78XjNenK5hvKKgWCxgXbZXFjeg6GZ8WQ==
+X-Received: by 2002:a17:907:cb81:b0:a6f:af8e:b76d with SMTP id a640c23a62f3a-a6faf8ec937mr336001266b.49.1718923664033;
+        Thu, 20 Jun 2024 15:47:44 -0700 (PDT)
+Received: from ?IPV6:2a00:f41:9090:3594:c427:be6a:c9:3e84? ([2a00:f41:9090:3594:c427:be6a:c9:3e84])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6fcf48b38esm17300266b.79.2024.06.20.15.47.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jun 2024 15:47:43 -0700 (PDT)
+Message-ID: <717ee43e-41f5-4940-b404-c348812c84c9@linaro.org>
+Date: Fri, 21 Jun 2024 00:47:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240620142956.GI2494510@nvidia.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rmA4Wwy_3KWwSQd6c-bmt4HkSHSDNN4N
-X-Proofpoint-ORIG-GUID: rmA4Wwy_3KWwSQd6c-bmt4HkSHSDNN4N
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-20_10,2024-06-20_04,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 mlxlogscore=771 spamscore=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 adultscore=0 mlxscore=0 suspectscore=0
- malwarescore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2406140001 definitions=main-2406200166
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm: log iommu init failure
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>
+Cc: Marc Gonzalez <mgonzalez@freebox.fr>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ MSM <linux-arm-msm@vger.kernel.org>, freedreno@lists.freedesktop.org,
+ Sean Paul <sean@poorly.run>, Bryan O Donoghue <bryan.odonoghue@linaro.org>,
+ Luca Weiss <luca.weiss@fairphone.com>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Bjorn Andersson <andersson@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>
+References: <64ec16b9-c680-408c-b547-5debae2f7f87@freebox.fr>
+ <dkmtnizbuyswyvocczjfgmhsuedawliabycig4urw42a65hu3j@jglxzumuzamd>
+ <a9e4dba6-2317-4b6f-968f-d607937f5157@freebox.fr>
+ <CAF6AEGtvHzF-KNyMwmysz7idLYE7XuXhDnBLdQFFhEdgYo6oqQ@mail.gmail.com>
+ <CAA8EJpqCmu+TPmdCxwa84s+15inmdi6SeR5XQRVey56RKqdRuQ@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAA8EJpqCmu+TPmdCxwa84s+15inmdi6SeR5XQRVey56RKqdRuQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 20, 2024 at 11:29:56AM -0300, Jason Gunthorpe wrote:
-> On Thu, Jun 20, 2024 at 04:01:08PM +0200, David Hildenbrand wrote:
-> > Regarding huge pages: assume the huge page (e.g., 1 GiB hugetlb) is shared,
-> > now the VM requests to make one subpage private. 
+
+
+On 6/20/24 20:24, Dmitry Baryshkov wrote:
+> On Thu, 20 Jun 2024 at 20:32, Rob Clark <robdclark@gmail.com> wrote:
+>>
+>> On Thu, May 30, 2024 at 2:48 AM Marc Gonzalez <mgonzalez@freebox.fr> wrote:
+>>>
+>>> On 16/05/2024 10:43, Marijn Suijten wrote:
+>>>
+>>>> On 2024-05-15 17:09:02, Marc Gonzalez wrote:
+>>>>
+>>>>> When create_address_space() fails (e.g. when smmu node is disabled)
+>>
+>> Note that smmu support is going to become a hard dependency with the
+>> drm_gpuvm/VM_BIND conversion.. which I think means we should never get
+>> far enough to hit this error path..
 > 
-> I think the general CC model has the shared/private setup earlier on
-> the VM lifecycle with large runs of contiguous pages. It would only
-> become a problem if you intend to to high rate fine granual
-> shared/private switching. Which is why I am asking what the actual
-> "why" is here.
-> 
+> Does that mean that we will lose GPU support on  MSM8974?
 
-I'd let Fuad comment if he's aware of any specific/concrete Anrdoid
-usecases about converting between shared and private. One usecase I can
-think about is host providing large multimedia blobs (e.g. video) to the
-guest. Rather than using swiotlb, the CC guest can share pages back with
-the host so host can copy the blob in, possibly using H/W accel. I
-mention this example because we may not need to support shared/private
-conversions at granularity finer than huge pages. The host and guest can
-negotiate the minimum size that can be converted and you never run into
-issue where subpages of a folio are differently shared. I can't think of
-a usecase where we need such granularity for converting private/shared.
+Yeah, that was brought up on #freedreno some time ago
 
-Jason, do you have scenario in mind? I couldn't tell if we now had a
-usecase or are brainstorming a solution to have a solution.
-
-Thanks,
-Elliot
-
+Konrad
 
