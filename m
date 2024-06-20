@@ -1,209 +1,272 @@
-Return-Path: <linux-arm-msm+bounces-23463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 797B791152A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 23:52:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCED7911538
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 23:58:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D6971C227FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 21:52:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57E1B1F235B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 21:58:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F24CC7FBBD;
-	Thu, 20 Jun 2024 21:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3244C13D8A7;
+	Thu, 20 Jun 2024 21:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WuD2yNi+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rxOje7aO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4EC81723;
-	Thu, 20 Jun 2024 21:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741FB13777F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 21:58:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718920336; cv=none; b=GHCOPkhCyyxU5pZzbYr2BqUYRwuIPBBywdnzgSmYxaYau/+busCKv8P3vMjlMc6eYZUA1x4I8K/N5sjDFcfWwuLde1XzlOQxexKKjI2k23uvNE9q3QQKi/LzngE0ovPpq6A98UbVCcrSZxSukH5q8UmVC3fXRvixUwxy0WxAfrY=
+	t=1718920702; cv=none; b=q1Zpdfo8RpA84MhGoyQSBb0tD4ZnFTNMz1i0XsAeUwn9RxHTU4oL1dGtSBO00BBZqwIbxZvXVeJ//N5B0hbFcE6Z4eIbFno7Fn2wNrUbda7fLPphPz7idjaAeDNbrZo2MNISmTjHgbOs+Q0WHEmKyRbUf/ZfuTNMjCgw2sfnKko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718920336; c=relaxed/simple;
-	bh=qbJ5cuBXNm6raaDmGjLTRPvi8S+nF+VkBUm0YaHsu9Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nGWUaG78bE2Z8050LCGxS32BLKCqmgDlb1gyhPXv+US+QtOBbBtCS2cajq1IweyP3c9NhJAdDLF9erj000KcH2dggoU8aMlX7E/9dMK0SMDWQ6MqiiOgZe9iJ2hTz5kIyKWOjAF8tfUqbUBzwTFiuTMMDyMLsWDOcYQAFEElMBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WuD2yNi+; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-57cc1c00b97so1251996a12.0;
-        Thu, 20 Jun 2024 14:52:14 -0700 (PDT)
+	s=arc-20240116; t=1718920702; c=relaxed/simple;
+	bh=WNglnG4EG0a7w+NKdY5AjsKivBJFc0j8XEYGEoDzLEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nVYfjVxxQ1Di1Vc2t+Df8Fi8CVaq0hC5AwXPJM2+QDtoYj/hecbvUCvyCxwMiVU3gaiPrU8Cy9ev60VKs34LatiXC8wltff03BdL1hM5RSsWargR8/y7VAYrAjtjlIxDx3uhKKVlh1IUSIByBMk5sHlmGXsjRiQuU+km6AEOMCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rxOje7aO; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52c82101407so2208776e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 14:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718920333; x=1719525133; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4PfbEs1C8SkvZmo4+nwHcxpTvuiwrdBVKtL6B4M3SqY=;
-        b=WuD2yNi+oC5tuXsIgWOZl225qQAuSDlGlLIXrx7VWtaKEuz+S7fSMnBBlWj52rgRoT
-         0rAzW++DNmCX+KLP5ldnWgHmadfTOhfF66g6u766J7bxV4bpxnIKdkr5XMspF+eTvK+J
-         MNlUV2A0QnerjuVENNLK9o/GxjfxqnnmXDle8pfZ9OFwiGpie4fQ+yXvPFz09bYYThm/
-         LxPIRRNmwsw+ucJgHzhleKwieNo/HmYGL1wn1Wsv5eCqBy1girSVD977EBoPwQmQPyV2
-         fSpGnlv/Bre7oTg27tJXjNMi+b8p9eKx5SJzGuKJRsIGyrmKjp4tQjVH0ChMI5FX/P71
-         lLPg==
+        d=linaro.org; s=google; t=1718920697; x=1719525497; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=suCYK5x+Ifl4Je+hw0NA8NqpAzbzYiXDl0FFP7E4Y3U=;
+        b=rxOje7aOA3fgC8BPeK1FbvcF91dADJGXC0UX58lWuHVf8FTvdDiRBvqcPMq44zjmSh
+         H5kr2EHGIUwjnHCLzWVVbI7Mbtv17p8nfmuhnlhsdUBHucUq4edkKwilF5f9IFYaQpER
+         P2VJphKZunx2hXguHnIjK8YPejiFs8erCP1nF7Fq939Lg33iwHHiIAPVRhiU9P+7+nqu
+         h5SkYZbVoWMahtZNiJtMJQD94RbUdbdeZv9SO+ZB0y9sJTlFvmz5iiLivgS4Mf5yTotU
+         blwmx8WMLYz0YZ8CQvB5+AYTaOox+WlktIbIBKkVXqV1DiB0CSehzWHLMxiGHAukOivi
+         4zsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718920333; x=1719525133;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4PfbEs1C8SkvZmo4+nwHcxpTvuiwrdBVKtL6B4M3SqY=;
-        b=bj8oAjmk1V4pF2/EVQWbJ61a6yzUIcTS+GpVd5JIUPN7UpJhCJM84cSXMxElk4/4a6
-         JVSFgUUbZgVPrU1YHsEx090dFP0HDpU4QbiLCHdow94ZZ68hVOV5r6gZJAaN1/8d7K2B
-         WIpzu2fHXYSJpnUnlLmlvdlps01z/eeVsDCKHcbDsW09cGh1YsG4KYK5pNFZz0PfHXBr
-         vTIIpqQqE+bDRxTlNANX1eZD7EqvqXJVtCAZFFahZ8Glg0GIpmXMLWtSGaIDicdgfNmB
-         cMnHdEXz3kc+7j1vPLQRrEbINONB+4nIv2SyeiLApE3ZL7B/wablI3ToqoyQzwKPKqX5
-         BH7g==
-X-Forwarded-Encrypted: i=1; AJvYcCWUIdBGu2pk84V2kP5x4KHioUdOgGalgjuCKHZhT+/StPeD97QwRA4fmFzE2HVABzD70PtH03RAZ7CbEfnSzMmAdY5lvZVjUzzqh7hV
-X-Gm-Message-State: AOJu0YwDnotZiNqx+tU+/RbCxX91r4T0jYJy18OdSOKvuT/OCGTA3NGm
-	15AkP13vwA/NlKxmzJiomqwLtALRHKg9VtiNHsyTn/eLkErzPQyb
-X-Google-Smtp-Source: AGHT+IGnc2o/KQaEM68uGi8PrWr3sDLJsmNHZL8AdbVkEJ5WsQzrQZoRNCK9RAXEoutmUgSecDByug==
-X-Received: by 2002:a50:d4da:0:b0:57c:68fd:2bc6 with SMTP id 4fb4d7f45d1cf-57d07eaab61mr3355795a12.26.1718920332879;
-        Thu, 20 Jun 2024 14:52:12 -0700 (PDT)
-Received: from [192.168.1.90] (20014C4E1812920074CAF9406985B739.dsl.pool.telekom.hu. [2001:4c4e:1812:9200:74ca:f940:6985:b739])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d30535005sm60919a12.69.2024.06.20.14.52.11
+        d=1e100.net; s=20230601; t=1718920697; x=1719525497;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=suCYK5x+Ifl4Je+hw0NA8NqpAzbzYiXDl0FFP7E4Y3U=;
+        b=azm5bt4yqctWB9nyJQ4NXquneea98hwGcRz9+vegcR88TVlGX1qzc1J23IzbdRF6n2
+         jVPSwZguqdrEwgHeBfjIj/0sVSLW+2uwvzClF/iMN2GWxqLkndLhgTObmLUhbJrFP3Ue
+         //S8KrXHcDFZttqbF45plQww5CBOX7Z6vELTuoZ9jZiEFsrwGmOWW+XtozFX4xnd+MPJ
+         N7puciKtCyZgAXOKl/xhfO7TI7BH8LoDGOdfSqDuPZJWj17Dq8nvMZ9CI+VtIG8GNIaZ
+         b5o0BkD2Xudah9CP3CD0OMmCKRWD5l2EdrKmZCVtN0a+I2V/bJaoNNUnR3Bia90tTiLb
+         LyNw==
+X-Forwarded-Encrypted: i=1; AJvYcCVDCEVDzHfmXgaLWIp1dxkvZaLmUxz/4QdVzvCfFJ9yovZpK8kmcBB/w63hf+dsGMT2CNB1UcPBSZuzZ9j2MDGrb7x05kqRzQMsl25U/Q==
+X-Gm-Message-State: AOJu0YzLeRUiy4mihHrmRLYHqRyEx5JV8SDc4iPMJIxPyWxKeYTaY8gf
+	cTpQ/huI7oj0KQVSrLtCu5Lekayx0qT1UKDoZHdK2EJqOjUZWmSUBNqJ3Cdd82U=
+X-Google-Smtp-Source: AGHT+IG2UKUdwMoL1E6WFS1yCsso1Lh5TB7om64xk3wpfPrZVhCKJBRkYxVyN+C2fz2d8gWiuEApEg==
+X-Received: by 2002:a05:6512:4ca:b0:52c:d5e4:9a99 with SMTP id 2adb3069b0e04-52cd5e49ccfmr88672e87.17.1718920697507;
+        Thu, 20 Jun 2024 14:58:17 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cd644c1f3sm5921e87.283.2024.06.20.14.58.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 14:52:12 -0700 (PDT)
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-Date: Thu, 20 Jun 2024 23:52:09 +0200
-Subject: [PATCH v2] drm/msm/adreno: Add A306A support
+        Thu, 20 Jun 2024 14:58:17 -0700 (PDT)
+Date: Fri, 21 Jun 2024 00:58:15 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Melody Olvera <quic_molvera@quicinc.com>
+Subject: Re: [PATCH v3 3/4] remoteproc: qcom_q6v5_pas: Add support to attach
+ a DSP
+Message-ID: <v6z2t53rfeaurrxttwqbab4emajzuvgr63qfro6t7vlexiusm3@bcoyybirzofg>
+References: <20240620120143.12375-1-quic_kbajaj@quicinc.com>
+ <20240620120143.12375-4-quic_kbajaj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240620-a306a-v2-1-0d388e1deebf@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAIikdGYC/13OTWrDMBCG4asYraugH3s8MiX0HiWLkTROROO4k
- VzTEnL3Ks6i0OU3DA/vTRTOiYsYmpvIvKaS5ksd5qUR4USXI8sU6xZGmVZ1BiVZBSRbZN3b3rQ
- Rgqi/n5nH9L0574e6T6ksc/7Z2FU/rv+FVUstlSWASCFi6N+OE6XzLsyTONyfZObrVy1anq6Yu
- BTaiobmdeNAo4bWKrsDAN1VMc8+hjPljz9u/wj0VFjWMaVlaLxzxvcuEPpgLYyEbAIq55TvaET
- FEcd6jjXk/gvuY3GTIgEAAA==
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- =?utf-8?q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>, 
- 20240618164303.66615-1-robdclark@gmail.com
-X-Mailer: b4 0.14.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240620120143.12375-4-quic_kbajaj@quicinc.com>
 
-From: Otto Pflüger <otto.pflueger@abscue.de>
+On Thu, Jun 20, 2024 at 05:31:42PM GMT, Komal Bajaj wrote:
+> From: Melody Olvera <quic_molvera@quicinc.com>
+> 
+> Some chipsets will have DSPs which will have begun running prior
+> to linux booting, so add support to late attach these DSPs by
+> adding support for:
+> - run-time checking of an offline or running DSP via rmb register
+> - a late attach framework to attach to the running DSP
+> - a handshake mechanism to ensure full and proper booting via rmb
+> 
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>  drivers/remoteproc/qcom_q6v5_pas.c | 102 +++++++++++++++++++++++++++++
+>  1 file changed, 102 insertions(+)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index b9759f6b2283..32d45c18e15e 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -11,6 +11,7 @@
+>  #include <linux/delay.h>
+>  #include <linux/firmware.h>
+>  #include <linux/interrupt.h>
+> +#include <linux/iopoll.h>
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> @@ -258,6 +259,94 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+>  	return ret;
+>  }
+> 
+> +static int adsp_signal_q6v5(struct qcom_adsp *adsp)
+> +{
+> +	unsigned int val;
+> +	int ret;
+> +
+> +	if (adsp->q6v5.rmb_base) {
+> +		ret = readl_poll_timeout(adsp->q6v5.rmb_base + RMB_BOOT_WAIT_REG,
+> +					 val, val, 20000,
+> +					 RMB_POLL_MAX_TIMES * 20000);
+> +		if (ret < 0)
+> +			return ret;
+> +
+> +		writel_relaxed(1, adsp->q6v5.rmb_base + RMB_BOOT_CONT_REG);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int adsp_attach(struct rproc *rproc)
+> +{
+> +	struct qcom_adsp *adsp = (struct qcom_adsp *)rproc->priv;
+> +	int ret;
+> +
+> +	ret = qcom_q6v5_prepare(&adsp->q6v5);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = adsp_pds_enable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+> +	if (ret < 0)
+> +		goto disable_irqs;
+> +
+> +	ret = clk_prepare_enable(adsp->xo);
+> +	if (ret)
+> +		goto disable_proxy_pds;
+> +
+> +	ret = clk_prepare_enable(adsp->aggre2_clk);
+> +	if (ret)
+> +		goto disable_xo_clk;
+> +
+> +	if (adsp->cx_supply) {
+> +		ret = regulator_enable(adsp->cx_supply);
+> +		if (ret)
+> +			goto disable_aggre2_clk;
+> +	}
+> +
+> +	if (adsp->px_supply) {
+> +		ret = regulator_enable(adsp->px_supply);
+> +		if (ret)
+> +			goto disable_cx_supply;
+> +	}
 
-Add support for Adreno 306A GPU what is found in MSM8917 SoC.
-This GPU marketing name is Adreno 308.
+Don't c&p code from adsp_start(). Extract common function instead.
 
-Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
-[use internal name of the GPU, reword the commit message]
-Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
----
-Changes in v2:
-- Rebase on https://patchwork.freedesktop.org/series/127393/
-- Link to v1: https://lore.kernel.org/r/20240528-a306a-v1-1-03a66dacd8c7@gmail.com
----
- drivers/gpu/drm/msm/adreno/a3xx_catalog.c | 11 +++++++++++
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c     | 14 +++++++++++---
- drivers/gpu/drm/msm/adreno/adreno_gpu.h   |  6 ++++++
- 3 files changed, 28 insertions(+), 3 deletions(-)
+> +
+> +	/* if needed, signal Q6 to continute booting */
+> +	ret = adsp_signal_q6v5(adsp);
+> +	if (ret < 0) {
+> +		dev_err(adsp->dev, "Didn't get rmb signal from  %s\n", rproc->name);
+> +		goto disable_px_supply;
+> +	};
+> +
+> +	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
+> +	if (ret == -ETIMEDOUT) {
+> +		dev_err(adsp->dev, "start timed out\n");
+> +		qcom_scm_pas_shutdown(adsp->pas_id);
+> +		goto disable_px_supply;
+> +	}
+> +
+> +	return 0;
+> +
+> +disable_px_supply:
+> +	if (adsp->px_supply)
+> +		regulator_disable(adsp->px_supply);
+> +disable_cx_supply:
+> +	if (adsp->cx_supply)
+> +		regulator_disable(adsp->cx_supply);
+> +disable_aggre2_clk:
+> +	clk_disable_unprepare(adsp->aggre2_clk);
+> +disable_xo_clk:
+> +	clk_disable_unprepare(adsp->xo);
+> +disable_proxy_pds:
+> +	adsp_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+> +disable_irqs:
+> +	qcom_q6v5_unprepare(&adsp->q6v5);
+> +
+> +	/* Remove pointer to the loaded firmware, only valid in adsp_load() & adsp_start() */
+> +	adsp->firmware = NULL;
+> +
+> +	return ret;
+> +}
+> +
+>  static int adsp_start(struct rproc *rproc)
+>  {
+>  	struct qcom_adsp *adsp = rproc->priv;
+> @@ -320,6 +409,13 @@ static int adsp_start(struct rproc *rproc)
+>  		goto release_pas_metadata;
+>  	}
+> 
+> +	/* if needed, signal Q6 to continute booting */
+> +	ret = adsp_signal_q6v5(adsp);
+> +	if (ret < 0) {
+> +		dev_err(adsp->dev, "Didn't get rmb signal from  %s\n", rproc->name);
 
-diff --git a/drivers/gpu/drm/msm/adreno/a3xx_catalog.c b/drivers/gpu/drm/msm/adreno/a3xx_catalog.c
-index 0de8465b6cf0..61aeac5054a2 100644
---- a/drivers/gpu/drm/msm/adreno/a3xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a3xx_catalog.c
-@@ -41,6 +41,17 @@ static const struct adreno_info a3xx_gpus[] = {
- 		.gmem  = SZ_128K,
- 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
- 		.init  = a3xx_gpu_init,
-+	}, {
-+		.chip_ids = ADRENO_CHIP_IDS(0x03000620),
-+		.family = ADRENO_3XX,
-+		.revn  = 308,
-+		.fw = {
-+			[ADRENO_FW_PM4] = "a300_pm4.fw",
-+			[ADRENO_FW_PFP] = "a300_pfp.fw",
-+		},
-+		.gmem  = SZ_128K,
-+		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
-+		.init  = a3xx_gpu_init,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(
- 			0x03020000,
-diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-index 5273dc849838..b46ff49f47cf 100644
---- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-@@ -145,6 +145,10 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
- 		gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003);
- 		gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x0000000a);
- 		gpu_write(gpu, REG_A3XX_VBIF_OUT_WR_LIM_CONF0, 0x0000000a);
-+	} else if (adreno_is_a306a(adreno_gpu)) {
-+		gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003);
-+		gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x00000010);
-+		gpu_write(gpu, REG_A3XX_VBIF_OUT_WR_LIM_CONF0, 0x00000010);
- 	} else if (adreno_is_a320(adreno_gpu)) {
- 		/* Set up 16 deep read/write request queues: */
- 		gpu_write(gpu, REG_A3XX_VBIF_IN_RD_LIM_CONF0, 0x10101010);
-@@ -237,7 +241,9 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
- 	gpu_write(gpu, REG_A3XX_UCHE_CACHE_MODE_CONTROL_REG, 0x00000001);
- 
- 	/* Enable Clock gating: */
--	if (adreno_is_a305b(adreno_gpu) || adreno_is_a306(adreno_gpu))
-+	if (adreno_is_a305b(adreno_gpu) ||
-+	    adreno_is_a306(adreno_gpu) ||
-+	    adreno_is_a306a(adreno_gpu))
- 		gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xaaaaaaaa);
- 	else if (adreno_is_a320(adreno_gpu))
- 		gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xbfffffff);
-@@ -334,8 +340,10 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
- 		gpu_write(gpu, REG_A3XX_CP_PFP_UCODE_DATA, ptr[i]);
- 
- 	/* CP ROQ queue sizes (bytes) - RB:16, ST:16, IB1:32, IB2:64 */
--	if (adreno_is_a305(adreno_gpu) || adreno_is_a306(adreno_gpu) ||
--			adreno_is_a320(adreno_gpu)) {
-+	if (adreno_is_a305(adreno_gpu) ||
-+	    adreno_is_a306(adreno_gpu) ||
-+	    adreno_is_a306a(adreno_gpu) ||
-+	    adreno_is_a320(adreno_gpu)) {
- 		gpu_write(gpu, REG_AXXX_CP_QUEUE_THRESHOLDS,
- 				AXXX_CP_QUEUE_THRESHOLDS_CSQ_IB1_START(2) |
- 				AXXX_CP_QUEUE_THRESHOLDS_CSQ_IB2_START(6) |
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index b8ee9320a315..3b361a077688 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -292,6 +292,12 @@ static inline bool adreno_is_a306(const struct adreno_gpu *gpu)
- 	return adreno_is_revn(gpu, 307);
- }
- 
-+static inline bool adreno_is_a306a(const struct adreno_gpu *gpu)
-+{
-+	/* a306a marketing name is a308 */
-+	return adreno_is_revn(gpu, 308);
-+}
-+
- static inline bool adreno_is_a320(const struct adreno_gpu *gpu)
- {
- 	return adreno_is_revn(gpu, 320);
+Move the error message to adsp_signal_q6v5(). Make the call conditional.
 
----
-base-commit: b992b79ca8bc336fa8e2c80990b5af80ed8f36fd
-change-id: 20240528-a306a-48e173724d6c
-prerequisite-message-id: <20240618164303.66615-1-robdclark@gmail.com>
-prerequisite-patch-id: b26cd6e5aa23ea623fec94f938a06d1e3359de55
-prerequisite-patch-id: 301e8fe4c2687a4606ee7debce95a5ada732e27f
-prerequisite-patch-id: 24a5654d9b52079c010b0594d8599d84af1659c7
-prerequisite-patch-id: b09a3d28d04b7ebe968e05835ebf8397c27f8d7d
-prerequisite-patch-id: a74556e25862c22f0ec543b8a7c7d92cb2e55099
+> +		goto release_pas_metadata;
+> +	}
+> +
+>  	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
+>  	if (ret == -ETIMEDOUT) {
+>  		dev_err(adsp->dev, "start timed out\n");
+> @@ -432,6 +528,7 @@ static unsigned long adsp_panic(struct rproc *rproc)
+>  static const struct rproc_ops adsp_ops = {
+>  	.unprepare = adsp_unprepare,
+>  	.start = adsp_start,
+> +	.attach = adsp_attach,
+>  	.stop = adsp_stop,
+>  	.da_to_va = adsp_da_to_va,
+>  	.parse_fw = qcom_register_dump_segments,
+> @@ -442,6 +539,7 @@ static const struct rproc_ops adsp_ops = {
+>  static const struct rproc_ops adsp_minidump_ops = {
+>  	.unprepare = adsp_unprepare,
+>  	.start = adsp_start,
+> +	.attach = adsp_attach,
+>  	.stop = adsp_stop,
+>  	.da_to_va = adsp_da_to_va,
+>  	.parse_fw = qcom_register_dump_segments,
+> @@ -779,6 +877,10 @@ static int adsp_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto detach_proxy_pds;
+> 
+> +	if (adsp->q6v5.rmb_base &&
+> +			readl_relaxed(adsp->q6v5.rmb_base + RMB_Q6_BOOT_STATUS_REG))
 
-Best regards,
+Misaligned
+
+> +		rproc->state = RPROC_DETACHED;
+> +
+>  	qcom_add_glink_subdev(rproc, &adsp->glink_subdev, desc->ssr_name);
+>  	qcom_add_smd_subdev(rproc, &adsp->smd_subdev);
+>  	adsp->sysmon = qcom_add_sysmon_subdev(rproc,
+> --
+> 2.42.0
+> 
+
 -- 
-Barnabás Czémán <trabarni@gmail.com>
-
+With best wishes
+Dmitry
 
