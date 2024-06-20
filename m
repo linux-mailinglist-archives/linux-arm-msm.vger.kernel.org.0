@@ -1,132 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-23340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC32A910099
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 11:42:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3EAE9100A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 11:44:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 963E81F2231B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 09:42:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5AF471F25456
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 09:44:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E64481A4F37;
-	Thu, 20 Jun 2024 09:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE12119B3E1;
+	Thu, 20 Jun 2024 09:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=salutedevices.com header.i=@salutedevices.com header.b="SJ9C2RT/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jStVfnrk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx1.sberdevices.ru (mx1.sberdevices.ru [37.18.73.165])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666FB1A01B9;
-	Thu, 20 Jun 2024 09:41:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.18.73.165
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1761E176FA1;
+	Thu, 20 Jun 2024 09:44:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718876520; cv=none; b=dYE9bQyDzoJQEz/egvLziA3zekHqFvI0kq9XmFB3M4uBI0xMB7gBdhBwv0BAJig9+RkTmD/6YV+tU3fE5q39C2LPVp5uFFxyJmzvi7vVWyONi9vyBfi/y9LrpUYLzN3fSVvwxookCVGoxIAzhxGLHOildy0D+G0ujqqps0tNXNg=
+	t=1718876649; cv=none; b=u8tLcE0S1xfnb6pOV9uyRFAtnDTV1X9qYAlByfIcsmi1Lqzcymq5fv7GmRdFzNT3qhH+Oy5I3GmS8SyVRpQlMUhKPZU8xLR5JknpwVU+YDImkdQkbXioxmk7+5MaLDeeX1T0M/MK1Fx03/zWLo/5CslBmmuIwdRmlJuHYs4x4l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718876520; c=relaxed/simple;
-	bh=+XomlozgwEM7W7jw1RV2XyzUdCf14DpPm3CMqpPk4RU=;
+	s=arc-20240116; t=1718876649; c=relaxed/simple;
+	bh=HTzGvt8cdfXE0OHYxoQkKocUFMRL+hzPcQyDYgCACo4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LDAHnCzesrn5y+OqLBaTm09hAfs9b0k7viiHriJnlkNQsLKM2ij3bpmVkSj+iLTP/xrkhLug9qdT4IXqV0dlT47+FrDmfU8u84In0ts/kzdEfLntJ5NA6DtUM2sr4R7Lvxyz38ZZTbq8vKaacQUuw4dnnnM7Bl7+0uKNk5R8iyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=salutedevices.com; spf=pass smtp.mailfrom=salutedevices.com; dkim=pass (2048-bit key) header.d=salutedevices.com header.i=@salutedevices.com header.b=SJ9C2RT/; arc=none smtp.client-ip=37.18.73.165
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=salutedevices.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=salutedevices.com
-Received: from p-infra-ksmg-sc-msk01.sberdevices.ru (localhost [127.0.0.1])
-	by mx1.sberdevices.ru (Postfix) with ESMTP id 095FB10001E;
-	Thu, 20 Jun 2024 12:41:47 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.sberdevices.ru 095FB10001E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=salutedevices.com;
-	s=mail; t=1718876507;
-	bh=eHWSHU6IOFj9d81lzeTSCSoajp29AFtL+A3T39sy4lk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
-	b=SJ9C2RT/3zxNcETOlA+R7zdR9bgqCBWrTAJKs6yKjHsLD92MS0HKFRJ6tgF47uJdC
-	 2D8JzU4ZBZKqQnlDmhNQ+jJtM1LsUuZBkWCbqfNu2SC19RrO0B826IIgjtAkuiNku/
-	 qBYufLJfpgbHyadnxpSGN91F/1bTEMqag/3CjsSxfsBxyU+Hzwmh/fAn5uZs9e27rS
-	 8oFLwkDs8ETXGGDo8UvUi5s1W0z8adnonSe/14p0m+nKmy8Hi7+NN62ydlW+kqKcR0
-	 rpbSQTmuo0fxX2N5/quj+Z7SS1mGSIC/X9sZm23PbhFf7smSqqyLTNQZASjKuMF15q
-	 OepCAAht5MUOg==
-Received: from smtp.sberdevices.ru (p-i-exch-sc-m02.sberdevices.ru [172.16.192.103])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mx1.sberdevices.ru (Postfix) with ESMTPS;
-	Thu, 20 Jun 2024 12:41:46 +0300 (MSK)
-Received: from [172.28.129.141] (100.64.160.123) by
- p-i-exch-sc-m02.sberdevices.ru (172.16.192.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 20 Jun 2024 12:41:46 +0300
-Message-ID: <dc787966-2920-459f-b091-ce09fe97315d@salutedevices.com>
-Date: Thu, 20 Jun 2024 12:41:45 +0300
+	 In-Reply-To:Content-Type; b=AVYRoyqsbfBYpr87+9Uf9SxbhsTWEt5jClTzLGOzbdkbe1eKZ0UyCShTN5YPp++ZIHr4/ChyrAyfCjGmSqEnzNTpsl5q0OKTDiHZ/bgCAZYSN0aWhsn6TA3OYnhCaeS48JBV3NFAlMNFkB5UikxFktNw0z07jIJCwwyrIY0JS7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jStVfnrk; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45JKbqsZ022148;
+	Thu, 20 Jun 2024 09:44:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	R2JDyZ4UzOKKd/PPEpfYp/WSOavvVShxLFRCnYnfGTA=; b=jStVfnrkVzu/0PgL
+	qE8gD7AyxTymRFmgxVu3NsA4JkqNSoByloZnt44KPtcknswHDW15IDZEhCBeCPnD
+	gN7lXLHJxTKTP5kvjIcj14jwKrLMK3+WvzAelogIv7fAZNwSohzMK09y7zI29pke
+	+YRo+X3vOj8BdAqLJkE5aXhN0w3M8tEaYh2TR1oRYbh3pT4a+1pUPH9agCtY7/DR
+	sL0xNgDLG+BBYgCZhzPcUi9ctnM9DNLPgTmO6oQCqehO6fYpwe4oMeHXO3uOC6ZC
+	lRxmFHkOlOEVCLn3RLzWd0Dd1ikUvoiQRdJF7XsXd8/uuKzbB7A62aSSAczyt26z
+	GjdiJA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yv6hn1dfj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Jun 2024 09:43:59 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45K9hwn2023250
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Jun 2024 09:43:58 GMT
+Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 20 Jun
+ 2024 02:43:55 -0700
+Message-ID: <c23f9f69-d095-233e-c20e-b99e6f3921e5@quicinc.com>
+Date: Thu, 20 Jun 2024 15:13:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/41] iio: adc: meson_saradc: make use of
- regmap_clear_bits(), regmap_set_bits()
-To: Trevor Gamblin <tgamblin@baylibre.com>
-CC: <linux-iio@vger.kernel.org>, Jean-Baptiste Maneyrol
-	<jmaneyrol@invensense.com>, Crt Mori <cmo@melexis.com>, Fabio Estevam
-	<festevam@gmail.com>, Broadcom internal kernel review list
-	<bcm-kernel-feedback-list@broadcom.com>, Scott Branden
-	<sbranden@broadcom.com>, Ray Jui <rjui@broadcom.com>, Chen-Yu Tsai
-	<wens@csie.org>, Shawn Guo <shawnguo@kernel.org>, Martin Blumenstingl
-	<martin.blumenstingl@googlemail.com>, Sascha Hauer <s.hauer@pengutronix.de>,
-	Michael Hennerich <Michael.Hennerich@analog.com>, Neil Armstrong
-	<neil.armstrong@linaro.org>, Jerome Brunet <jbrunet@baylibre.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Linus Walleij
-	<linus.walleij@linaro.org>, =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>, Baolin Wang
-	<baolin.wang@linux.alibaba.com>, Saravanan Sekar <sravanhome@gmail.com>,
-	Dmitry Rokosov <ddrokosov@sberdevices.ru>, Lars-Peter Clausen
-	<lars@metafoo.de>, Kevin Hilman <khilman@baylibre.com>, Alexandre Torgue
-	<alexandre.torgue@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	Cosmin Tanislav <cosmin.tanislav@analog.com>, <imx@lists.linux.dev>,
-	<linux-amlogic@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-stm32@st-md-mailman.stormreply.com>, =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?=
-	<u.kleine-koenig@baylibre.com>, Jonathan Cameron <jic23@kernel.org>, Hans de
- Goede <hdegoede@redhat.com>, Orson Zhai <orsonzhai@gmail.com>
-References: <20240617-review-v3-0-88d1338c4cca@baylibre.com>
- <20240617-review-v3-13-88d1338c4cca@baylibre.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH] arm64: defconfig: Enable secure QFPROM driver
 Content-Language: en-US
-From: George Stark <gnstark@salutedevices.com>
-In-Reply-To: <20240617-review-v3-13-88d1338c4cca@baylibre.com>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Mukesh Ojha
+	<quic_mojha@quicinc.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Catalin Marinas
+	<catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20240619105642.18947-1-quic_kbajaj@quicinc.com>
+ <5582a2a0-c772-4573-9d55-2f963cb87df1@linaro.org>
+ <ZnLKwqENxC4wzrUm@hu-mojha-hyd.qualcomm.com>
+ <ZnMKh5X+Bm11L/T4@hu-bjorande-lv.qualcomm.com>
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <ZnMKh5X+Bm11L/T4@hu-bjorande-lv.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: p-i-exch-sc-m02.sberdevices.ru (172.16.192.103) To
- p-i-exch-sc-m02.sberdevices.ru (172.16.192.103)
-X-KSMG-Rule-ID: 10
-X-KSMG-Message-Action: clean
-X-KSMG-AntiSpam-Lua-Profiles: 186025 [Jun 20 2024]
-X-KSMG-AntiSpam-Version: 6.1.0.4
-X-KSMG-AntiSpam-Envelope-From: gnstark@salutedevices.com
-X-KSMG-AntiSpam-Rate: 0
-X-KSMG-AntiSpam-Status: not_detected
-X-KSMG-AntiSpam-Method: none
-X-KSMG-AntiSpam-Auth: dkim=none
-X-KSMG-AntiSpam-Info: LuaCore: 20 0.3.20 743589a8af6ec90b529f2124c2bbfc3ce1d2f20f, {Tracking_from_domain_doesnt_match_to}, smtp.sberdevices.ru:7.1.1,5.0.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2;salutedevices.com:7.1.1;100.64.160.123:7.1.2, FromAlignment: s, ApMailHostAddress: 100.64.160.123
-X-MS-Exchange-Organization-SCL: -1
-X-KSMG-AntiSpam-Interceptor-Info: scan successful
-X-KSMG-AntiPhishing: Clean
-X-KSMG-LinksScanning: Clean
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.0.1.6960, bases: 2024/06/20 08:22:00 #25655230
-X-KSMG-AntiVirus-Status: Clean, skipped
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OEcZAlljB6IH6FWxMMgR7e9HdgTZfafY
+X-Proofpoint-GUID: OEcZAlljB6IH6FWxMMgR7e9HdgTZfafY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-20_07,2024-06-19_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ mlxlogscore=835 impostorscore=0 suspectscore=0 mlxscore=0 malwarescore=0
+ adultscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406200068
 
-On 6/17/24 16:49, Trevor Gamblin wrote:
-> Instead of using regmap_update_bits() and passing the mask twice, use
-> regmap_set_bits().
+
+
+On 6/19/2024 10:12 PM, Bjorn Andersson wrote:
+> On Wed, Jun 19, 2024 at 05:40:42PM +0530, Mukesh Ojha wrote:
+>> On Wed, Jun 19, 2024 at 01:08:48PM +0200, Krzysztof Kozlowski wrote:
+>>> On 19/06/2024 12:56, Komal Bajaj wrote:
+>>>> Enable the secure QFPROM driver which is used by QDU1000
+>>>
+>>> Qualcomm QDU1000. You are changing kernel-wide defconfig, not some
+>>> Qualcomm downstream stuff.
+>>>
+>>>> platform for reading the secure qfprom region to get the
+>>>> DDR channel configuration.
+>>>>
+>>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>>>> ---
+>>>>   arch/arm64/configs/defconfig | 1 +
+>>>>   1 file changed, 1 insertion(+)
+>>>>
+>>>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+>>>> index 838b4466d6f6..c940437ae1b3 100644
+>>>> --- a/arch/arm64/configs/defconfig
+>>>> +++ b/arch/arm64/configs/defconfig
+>>>> @@ -1575,6 +1575,7 @@ CONFIG_NVMEM_LAYERSCAPE_SFP=m
+>>>>   CONFIG_NVMEM_MESON_EFUSE=m
+>>>>   CONFIG_NVMEM_MTK_EFUSE=y
+>>>>   CONFIG_NVMEM_QCOM_QFPROM=y
+>>>> +CONFIG_NVMEM_QCOM_SEC_QFPROM=y
+>>>
+>>> Module
+>>
+>> Should not this be inline with what CONFIG_NVMEM_QCOM_QFPROM is having ?
+>> Either both CONFIG_NVMEM_QCOM_QFPROM and CONFIG_NVMEM_QCOM_SEC_QFPROM
+>> should be m or both y
+>>
 > 
-> Instead of using regmap_update_bits() and passing val = 0, use
-> regmap_clear_bits().
+> While that would be a convenient guideline, you're adding runtime
+> overhead to all other targets (Qualcomm and non-Qualcomm) so the desire
+> to keep anything that can module outweigh such convenience.
 > 
-> Suggested-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-> Signed-off-by: Trevor Gamblin <tgamblin@baylibre.com>
+> Based on the recent addition of llcc and qfprom nodes I'm _guessing_
+> that LLCC is the one user of this today, and it is =m, so therefore
+> SEC_QFPROM can be =m as well.
+> 
+> 
+> By expanding the commit message slightly, we could have avoided the
+> "why?" questions and the need for me to "guess" the actual dependency.
+> 
 
-Reviewed-by: George Stark <gnstark@salutedevices.com>
+Thanks Bjorn for the suggestion.
+I will incorporate the suggested changes in the next patch.
 
--- 
-Best regards
-George
+Thanks
+Komal
+
+> Regards,
+> Bjorn
+> 
+>> -Mukesh
+>>>
+>>>>   CONFIG_NVMEM_RMEM=m
+>>>>   CONFIG_NVMEM_ROCKCHIP_EFUSE=y
+>>>>   CONFIG_NVMEM_ROCKCHIP_OTP=y
+>>>> --
+>>>> 2.42.0
+>>>>
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
 
