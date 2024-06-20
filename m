@@ -1,207 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-23437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43916911319
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 22:26:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DDDC91131E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 22:27:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2EA71F228AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:26:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32BCF2812BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 20:27:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91F441BA097;
-	Thu, 20 Jun 2024 20:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 344451BA071;
+	Thu, 20 Jun 2024 20:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MjzbVqr9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O8o84KHH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B5F1B9AC7
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 20:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933E92E859;
+	Thu, 20 Jun 2024 20:27:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718915209; cv=none; b=YpnOoVNMEc2d9Lo1cQ2jLBfmkDdb9Bj6q2bQcgJyTFZ6zNQEn4XCr/gwLTRnlXSAtjQgbhaMtGG2v5CjKCv0fkquvA8KvT5yYv9l40G3j6xBmF0ntdp9WKGG1f5HjfCNjYsZEtsS4eMFze9c5bQMKtG0X/5YpHOo03yTdDoQFhQ=
+	t=1718915272; cv=none; b=UzbeG7qw8eQrEWrLB1zjmN+4EKDdweaOrekLmMAJAg38XK7vj3zt5WS9hXzIyh119hh3EZxjmIqxnGOC7HnFEVAIyFMXpK0xrgmL0YM52851sc1HF3tpk1KQU6EZip7yKlIxb524imPQRDTHyLaSmGqDiC2V+8B+6feHb0KAN6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718915209; c=relaxed/simple;
-	bh=sFCHX618nzTm6sLAYJPe7BYHyHyu7xj0KoZYjZgfiFw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nef/GJzFlHXRVm09zfUInLy6qKFJnxZghFFx3LO5YsnSfLSyYRiKl86e32HLpccDiHHBqMqaDVw3UwuOMlTDj7fhakFMnJOUrEznaXzxXQNNB4P/wyB8G6YtKW54NWc6mmsOjZuH0Ve4JsB5w3Ca4dChERqLH1UOJShJbFl36dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MjzbVqr9; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52c84a21c62so1488264e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 13:26:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718915206; x=1719520006; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=G8kmsXX8+t7q4fze1b5xWV2DOaP1fCecJ7UVyeVkxV4=;
-        b=MjzbVqr9J1d8ylUDIZvykMfEAXk6/9Omn9iWjzl4XE6Gk5YLSh9/sqpK6OvdZNHGrz
-         BdYQ1B12ke295UytS1hagJNaccA6IQjtW50LxXG4iBjxaLZR4eGtKvex8nVHYBrTUEg1
-         xhPnh0X8LhZCSg0gQ8Om8981WsNYHgYpmAtXd/KnBWYDlE5xBXf2uYU1OKDn60CoHnHR
-         kbZ8hm4orlJjQH6qCIaw7AqG4L4dSedaqL8Nc13vyfX6bZgWYm3pK+FzVlt38nZsxCj1
-         9Ey/a7C1/aY4BvQdQiB0F3U2gdYVfhKZp4wyjs6+/FK5bceYmXYhLo5g2nIhxlsbNcOg
-         myAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718915206; x=1719520006;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G8kmsXX8+t7q4fze1b5xWV2DOaP1fCecJ7UVyeVkxV4=;
-        b=VUoFlvjO8uT8xEBHZiPFlRDpVtXffhFYnMODTnAnN4T0mThMt9qEA1q6QBe5SrY3Tx
-         naH5AHFgEBRjkAyFCVnTjmQLsZTan7IVBM+RP+1xGWwMAjSMgtIC0K4ns3rd51JESZmn
-         66J8h4WuM6xmpcJP2H1EHxOp0I12TdJQRE0YiL9flfcaKgaO9ptusWtY62igAjj+VvvE
-         LbbkSjk67HDjBbwWbozHMIGUeRat0WObhyO8V8vKyLumIVOEvknUsUB1YOztgBzFCN4P
-         ONRgJBR3aZHEupt4Qn03bMtvX/ze3Mj45pU1fkjMZnlkVRoAYkhqwZN2LiolAQvG/LhU
-         0XhA==
-X-Forwarded-Encrypted: i=1; AJvYcCWASXx2LDaSJQrv/pdZRvVCr+uTuhe2FpuqkpKjQG18UMCiS9ERmwFJkshcKktYAsW4cE7QRWjrNyUr5HmVhaRP+MnvlIAyKXbQvuCi/Q==
-X-Gm-Message-State: AOJu0YwO9FprxRZcaqbpO23kRh6Ck6RoOlpHCi1l8MDB+NHCQHWK4EIL
-	CdaeSz3EHzzfYKlzDKby8wR6sJciyJ13AwHnbzcg5luiFIR6BFiw9OuX4BdIv84=
-X-Google-Smtp-Source: AGHT+IHzDL4LA0M5hK+v+OwKwF0rXAEquerAfuzkP8LWy81w8k3FKZLYPQ1yOmy3eJQg3LBJXI1g6g==
-X-Received: by 2002:a05:6512:318e:b0:52c:cc40:a732 with SMTP id 2adb3069b0e04-52ccc40a864mr4612649e87.43.1718915205915;
-        Thu, 20 Jun 2024 13:26:45 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ca282edc1sm2142712e87.115.2024.06.20.13.26.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 13:26:45 -0700 (PDT)
-Date: Thu, 20 Jun 2024 23:26:44 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Banajit Goswami <bgoswami@quicinc.com>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
-	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] ASoC: codecs:lpass-wsa-macro: Fix vi feedback rate
-Message-ID: <45iy6ksg25iqfnfezzsutmh7ihgbdy5wukul5bek2rmzm7jbbl@65rk4o6ednor>
-References: <20240619-lpass-wsa-vi-v2-0-7aff3f97a490@linaro.org>
- <20240619-lpass-wsa-vi-v2-1-7aff3f97a490@linaro.org>
+	s=arc-20240116; t=1718915272; c=relaxed/simple;
+	bh=teoOgLVhvJmVyGAJEaT2ksDLnzS3a+jdcFB3qLuK4Fg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=PwyzKuh6NCTMsqSUyrmcjSE6cUwrxm0DYSDDC5HZTLYY1CbzdiOAEJFhu3ywzv5U0vEwkDSa32ICXPwFKiVBjV8/stYPEOEMcEixWYqytS/RY8bTREWbBKh9WbuwuvLph3vnrcyyb+PhKS23bEftYweUphSY9OEungioGO55abM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O8o84KHH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45KHBdIP017939;
+	Thu, 20 Jun 2024 20:27:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PPaPB05HLWMKsCPYWmyIbSGuP55gTQawsDAD7m5/uv0=; b=O8o84KHHOK/KG+nU
+	YC7mvqPrZn8v/2WEdE6SYBgVJ136n+L83/0SaEoY8SBOnRNyEDgbUwkI4PBCuQMV
+	pjGSnQBE7qVMLiBC6BUW0HP834b/H5ZtzNARm+HBElhHpxSPTkob4orTas7Y2GFf
+	Dd0/2JPvtZbanH0XUzJNxLgy26pc5ktObqG+lMzgjCLPFeUQFIEgUKB3rzQhlg0U
+	ikCI0anVAVArMMEzUqngALbUyUZs14WhCXP2+ekQPO4lRVIDmvlUUk15cA/MRYTK
+	FuNsZiOdnYs+7a5ZTtDf9oJMfAHbAD6owFFSz50EHlDpNiLog+JUpNQpnKLBLSe2
+	AbKKEg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrm08g10-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Jun 2024 20:27:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45KKRNSr021753
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 20 Jun 2024 20:27:23 GMT
+Received: from [10.110.82.141] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 20 Jun
+ 2024 13:27:17 -0700
+Message-ID: <f34c4210-fd59-9d27-0987-3345631c9e35@quicinc.com>
+Date: Thu, 20 Jun 2024 13:27:15 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240619-lpass-wsa-vi-v2-1-7aff3f97a490@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v5 5/9] drm/msm/hdmi: turn mode_set into atomic_enable
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andrzej Hajda
+	<andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert
+ Foss <rfoss@kernel.org>,
+        Laurent Pinchart
+	<Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej
+ Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC: <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240607-bridge-hdmi-connector-v5-0-ab384e6021af@linaro.org>
+ <20240607-bridge-hdmi-connector-v5-5-ab384e6021af@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240607-bridge-hdmi-connector-v5-5-ab384e6021af@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cneJARBo0b7n6cXXWZNOdwcqOuhQsZay
+X-Proofpoint-GUID: cneJARBo0b7n6cXXWZNOdwcqOuhQsZay
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-20_08,2024-06-20_04,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 adultscore=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0 mlxscore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406200149
 
-On Wed, Jun 19, 2024 at 02:42:00PM GMT, Srinivas Kandagatla wrote:
-> Currently the VI feedback rate is set to fixed 8K, fix this by getting
-> the correct rate from params_rate.
 
-What kind of issues are observed without this patch? What is the actual
-issue that is getting fixed?
 
+On 6/7/2024 6:23 AM, Dmitry Baryshkov wrote:
+> The mode_set callback is deprecated, it doesn't get the
+> drm_bridge_state, just mode-related argumetns. Turn it into the
+> atomic_enable callback as suggested by the documentation.
 > 
-> Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+mode_set is deprecated but atomic_mode_set is not.
+
+I would rather use atomic_mode_set because moving to atomic_enable() 
+would be incorrect.
+
+That would be called after encoder's enable and hence changes the 
+sequence. That was not the intention of this patch.
+
+NAK.
+
+> Acked-by: Maxime Ripard <mripard@kernel.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  sound/soc/codecs/lpass-wsa-macro.c | 39 +++++++++++++++++++++++++++++++++++---
->  1 file changed, 36 insertions(+), 3 deletions(-)
+>   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 33 ++++++++++++++++++++++++++-------
+>   1 file changed, 26 insertions(+), 7 deletions(-)
 > 
-> diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
-> index 6ce309980cd1..ec9f0b5d6778 100644
-> --- a/sound/soc/codecs/lpass-wsa-macro.c
-> +++ b/sound/soc/codecs/lpass-wsa-macro.c
-> @@ -66,6 +66,10 @@
->  #define CDC_WSA_TX_SPKR_PROT_CLK_DISABLE	0
->  #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK	GENMASK(3, 0)
->  #define CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K	0
-> +#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K	1
-> +#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K	2
-> +#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K	3
-> +#define CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K	4
->  #define CDC_WSA_TX0_SPKR_PROT_PATH_CFG0		(0x0248)
->  #define CDC_WSA_TX1_SPKR_PROT_PATH_CTL		(0x0264)
->  #define CDC_WSA_TX1_SPKR_PROT_PATH_CFG0		(0x0268)
-> @@ -347,6 +351,7 @@ struct wsa_macro {
->  	int ear_spkr_gain;
->  	int spkr_gain_offset;
->  	int spkr_mode;
-> +	u32 pcm_rate_vi;
->  	int is_softclip_on[WSA_MACRO_SOFTCLIP_MAX];
->  	int softclip_clk_users[WSA_MACRO_SOFTCLIP_MAX];
->  	struct regmap *regmap;
-> @@ -974,6 +979,7 @@ static int wsa_macro_hw_params(struct snd_pcm_substream *substream,
->  			       struct snd_soc_dai *dai)
->  {
->  	struct snd_soc_component *component = dai->component;
-> +	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
->  	int ret;
->  
->  	switch (substream->stream) {
-> @@ -985,6 +991,11 @@ static int wsa_macro_hw_params(struct snd_pcm_substream *substream,
->  				__func__, params_rate(params));
->  			return ret;
->  		}
-> +		break;
-> +	case SNDRV_PCM_STREAM_CAPTURE:
-> +		if (dai->id == WSA_MACRO_AIF_VI)
-> +			wsa->pcm_rate_vi = params_rate(params);
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> index d839c71091dc..f259d6268c0f 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> @@ -129,12 +129,25 @@ static void msm_hdmi_config_avi_infoframe(struct hdmi *hdmi)
+>   static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
+>   					      struct drm_bridge_state *old_bridge_state)
+>   {
+> +	struct drm_atomic_state *state = old_bridge_state->base.state;
+>   	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+>   	struct hdmi *hdmi = hdmi_bridge->hdmi;
+>   	struct hdmi_phy *phy = hdmi->phy;
+> +	struct drm_encoder *encoder = bridge->encoder;
+> +	struct drm_connector *connector;
+> +	struct drm_connector_state *conn_state;
+> +	struct drm_crtc_state *crtc_state;
+> +	const struct drm_display_mode *mode;
+>   
+>   	DBG("power up");
+>   
+> +	connector = drm_atomic_get_new_connector_for_encoder(state, encoder);
+> +	conn_state = drm_atomic_get_new_connector_state(state, connector);
+> +	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
+> +	mode = &crtc_state->adjusted_mode;
 > +
->  		break;
->  	default:
->  		break;
-> @@ -1159,6 +1170,28 @@ static int wsa_macro_enable_vi_feedback(struct snd_soc_dapm_widget *w,
->  	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
->  	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
->  	u32 tx_reg0, tx_reg1;
-> +	u32 rate_val;
+> +	hdmi->pixclock = mode->clock * 1000;
 > +
-> +	switch (wsa->pcm_rate_vi) {
-> +	case 8000:
-> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
-> +		break;
-> +	case 16000:
-> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_16K;
-> +		break;
-> +	case 24000:
-> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_24K;
-> +		break;
-> +	case 32000:
-> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_32K;
-> +		break;
-> +	case 48000:
-> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_48K;
-> +		break;
-> +	default:
-> +		rate_val = CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K;
-> +		break;
-> +	}
->  
->  	if (test_bit(WSA_MACRO_TX0, &wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
->  		tx_reg0 = CDC_WSA_TX0_SPKR_PROT_PATH_CTL;
-> @@ -1170,7 +1203,7 @@ static int wsa_macro_enable_vi_feedback(struct snd_soc_dapm_widget *w,
->  
->  	switch (event) {
->  	case SND_SOC_DAPM_POST_PMU:
-> -			/* Enable V&I sensing */
-> +		/* Enable V&I sensing */
->  		snd_soc_component_update_bits(component, tx_reg0,
->  					      CDC_WSA_TX_SPKR_PROT_RESET_MASK,
->  					      CDC_WSA_TX_SPKR_PROT_RESET);
-> @@ -1179,10 +1212,10 @@ static int wsa_macro_enable_vi_feedback(struct snd_soc_dapm_widget *w,
->  					      CDC_WSA_TX_SPKR_PROT_RESET);
->  		snd_soc_component_update_bits(component, tx_reg0,
->  					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
-> -					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
-> +					      rate_val);
->  		snd_soc_component_update_bits(component, tx_reg1,
->  					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_MASK,
-> -					      CDC_WSA_TX_SPKR_PROT_PCM_RATE_8K);
-> +					      rate_val);
->  		snd_soc_component_update_bits(component, tx_reg0,
->  					      CDC_WSA_TX_SPKR_PROT_CLK_EN_MASK,
->  					      CDC_WSA_TX_SPKR_PROT_CLK_ENABLE);
+>   	if (!hdmi->power_on) {
+>   		msm_hdmi_phy_resource_enable(phy);
+>   		msm_hdmi_power_on(bridge);
+> @@ -177,18 +190,24 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
+>   	}
+>   }
+>   
+> -static void msm_hdmi_bridge_mode_set(struct drm_bridge *bridge,
+> -		 const struct drm_display_mode *mode,
+> -		 const struct drm_display_mode *adjusted_mode)
+> +static void msm_hdmi_bridge_atomic_enable(struct drm_bridge *bridge,
+> +					  struct drm_bridge_state *old_bridge_state)
+>   {
+> +	struct drm_atomic_state *state = old_bridge_state->base.state;
+>   	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+>   	struct hdmi *hdmi = hdmi_bridge->hdmi;
+> +	struct drm_encoder *encoder = bridge->encoder;
+> +	struct drm_connector *connector;
+> +	struct drm_connector_state *conn_state;
+> +	struct drm_crtc_state *crtc_state;
+> +	const struct drm_display_mode *mode;
+>   	int hstart, hend, vstart, vend;
+>   	uint32_t frame_ctrl;
+>   
+> -	mode = adjusted_mode;
+> -
+> -	hdmi->pixclock = mode->clock * 1000;
+> +	connector = drm_atomic_get_new_connector_for_encoder(state, encoder);
+> +	conn_state = drm_atomic_get_new_connector_state(state, connector);
+> +	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
+> +	mode = &crtc_state->adjusted_mode;
+>   
+>   	hstart = mode->htotal - mode->hsync_start;
+>   	hend   = mode->htotal - mode->hsync_start + mode->hdisplay;
+> @@ -305,8 +324,8 @@ static const struct drm_bridge_funcs msm_hdmi_bridge_funcs = {
+>   	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
+>   	.atomic_reset = drm_atomic_helper_bridge_reset,
+>   	.atomic_pre_enable = msm_hdmi_bridge_atomic_pre_enable,
+> +	.atomic_enable = msm_hdmi_bridge_atomic_enable,
+>   	.atomic_post_disable = msm_hdmi_bridge_atomic_post_disable,
+> -	.mode_set = msm_hdmi_bridge_mode_set,
+>   	.mode_valid = msm_hdmi_bridge_mode_valid,
+>   	.edid_read = msm_hdmi_bridge_edid_read,
+>   	.detect = msm_hdmi_bridge_detect,
 > 
-> -- 
-> 2.25.1
-> 
-
--- 
-With best wishes
-Dmitry
 
