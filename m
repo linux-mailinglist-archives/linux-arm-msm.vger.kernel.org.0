@@ -1,165 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-23342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F3AC9101EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 12:51:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A84CB910202
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 12:57:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E41741F22B00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 10:51:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43EF62827EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 10:57:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08AD51AB372;
-	Thu, 20 Jun 2024 10:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6BA71A8C28;
+	Thu, 20 Jun 2024 10:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gACcXxg7"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="gqnnX1Vh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FCF1AB35F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 10:48:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0482D15A49F;
+	Thu, 20 Jun 2024 10:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718880493; cv=none; b=t0Iqg/WQaY6Fx8pyhCkOPsUElvysMmF4QSr9E8tNhtzk8FeMkx7Xh9HNV8RvTTA2wKMUpgfln0TWyK7jlgrMyDQMOi2KMPWDiFxU0+prbERGQk6tjmUwmERwRKl5xoKS/ZYidR3poyC11apbDVQdOx9qJ8oJ6RENlaMvnX3Rx34=
+	t=1718881072; cv=none; b=NkTkcrxfp9SubQTqIexUvqy5rRWF5QwgwgyoijhDmxix4lEp2vnm4TC7C+4cpj91l1+8JvT3uLG0WA7j3n73esu/Kxx5lixSgXsdEP/hjSrgOkalL/fbDXlBoD8hz0j4pfjLNoqL4E1Dfr/9EvegrgIfTjBwZJRGsNJExH/47Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718880493; c=relaxed/simple;
-	bh=WnwzDhWU2vuMNlVusbhTuup82VlccFT1cDbMuKQqgW0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XYlaHVKFcKPF8x8igAgzjXDNjyKCc3rtX20CrjDGEOqMgfe+15apeL27+mvaCHNsxI9mRiemJRMYvzp2eyZ9KteI0RzlehZPOvG21KtynJEsZHng7c8IA3Tf4yxFYbV1/Pf+4RQ6l5YLLF0CBuLAEmZJvAKq0S0tGooR2elnVP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gACcXxg7; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a689ad8d1f6so82821266b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 03:48:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718880490; x=1719485290; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ssi3u2sUWLAUnYFmjTL2KX+Ig53JDnPKZSLWW0Sd3zg=;
-        b=gACcXxg7bYYKRuCnaOrVmEAbslu7EHh+ndMYY1usUgMCYvWS12bt2BaxjuAYbt8sdz
-         M/BImD1oef7vb/rNaazK4NWRM1oOZLapCmcs937u/iR+QULoyEBNupivRpLmu3tqQzYj
-         6IajViKQvQyx5pyan28mZQrUztZ/vw3m9FoORow82iM5yzNjtqzAo67gKiSbwwMNzF1V
-         mQQqbyND1M8OyPDrPowypWjIJU6niBr6RqwePaAjp9MjDKBy64uSQqqcXFBbP5RNMvkZ
-         HP3s5cDdT+jlFtm+62+Y79NmbwEnGe/kfKg7S1E9YeYSNzMeViGrst0dK7eEewbhb6hg
-         VWfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718880490; x=1719485290;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ssi3u2sUWLAUnYFmjTL2KX+Ig53JDnPKZSLWW0Sd3zg=;
-        b=Y5UCnnvaW21GVnPqo/n1YdVg5mpYaKpOcWtk0HJ9PR3WDmpCX30kfiMBqd8lL02UYi
-         ucT6FYB8qUfT84/jLb6R9Cj3FTtceSqbWfCoCTSo5TnyNqUNmTSXJ42Hh9sskHFLXqFk
-         w6QrVn5/uUyBIOxKL7rwenct8U2gsTKU7XM5A1GZ7RrR2/wq230gibMX9upGV6VLfAmt
-         c5gE9FpM2ppOnSgajVjkswO3+Ht8FiX77HE1OT+u8CbV/0Kuk6bfq+fxcyPHDw7QZAD4
-         igqEMPXlfsaL+UYtVHZe9G4EmOC7kDM0GpPZLtMzIECsLxmnD0VshZyKGHcKXlDEbY/q
-         9WwA==
-X-Forwarded-Encrypted: i=1; AJvYcCWqiX19w7RcAyLBfCFGyMkpWQwpyruHvcp5AGA4sC4lAuGJbBtT0rIn2/CiJcncjRtmIDmijFmgKRP5PtzcSdiL66GrYtjOk/IPj6PyEA==
-X-Gm-Message-State: AOJu0YxrUvL20QIpX6k8eBHg3lDkPMFHy/Rkx/k6Oiqy3z+Cy37wXTtL
-	/6UHtmw4vjmLKm92DlHmBsxcti7F2HhdOU4Ra5+l1f0bwgklLof2rRnENpHd3BE=
-X-Google-Smtp-Source: AGHT+IEfCXv2Nqgqup0/L5GJOy515Z9CxKRQ0kVK99cSNe8qdURehmaOtNg9bR51juUSUN9B19qLlQ==
-X-Received: by 2002:a17:906:b88d:b0:a68:379d:d623 with SMTP id a640c23a62f3a-a6fab648910mr248443966b.36.1718880489903;
-        Thu, 20 Jun 2024 03:48:09 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:9028:9df3:107a:8a0:b540:2c8? ([2a00:f41:9028:9df3:107a:8a0:b540:2c8])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56f9c86esm753096966b.219.2024.06.20.03.48.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Jun 2024 03:48:09 -0700 (PDT)
-Message-ID: <e84c3ab5-4064-425f-8c04-1d49f0425234@linaro.org>
-Date: Thu, 20 Jun 2024 12:48:04 +0200
+	s=arc-20240116; t=1718881072; c=relaxed/simple;
+	bh=ryPeJySBmmVSDjWpYuz6jKygUByAWjhbdVd6q0mftxw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HFcH2e/4dj/KvIXri97k9rUGKh5RbMEmaFvhT/wQvc7hilWX93dXzAvTAqldnGSIcxayDmFGn+sWJXgRb4bpupoRI+MCEGUZBhVDgN3FexhaE+1WTrWff8JcXsjVkGowxfjv7npixq7l/h/OZeud3E3N49ZeofEY5DPb73jSLx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=gqnnX1Vh; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=JL1dgGAqb9hLYRxS4TGWl0ExqWTdbEg1InyHIVddSDI=; b=gqnnX1Vh1PSSDC8IoumrXSiDNV
+	AVnNoRLO4X+4HrAt2e2Gk1SGD1rZvPiYN4vL8sl53pOY2Mvy1UvxA/RpV1NGVTbEppKDnCSZ6bg5b
+	lcLIhcWGa44XjZ9mv/nwTxCn+9Th8080Ftd4hCf+mh+k/wgZ/dWXlUkyDpOYRhnUy7HLYf6j/pZny
+	pZKq8ceRbSzUcwvXH9UvQuej7sm3O74ttio97QoiEHDHqTAZHz4qpvzYAZJhL8NIEmoWP6OW54Dof
+	0AzkkSmiUkq1exokIMAdtHpah6zkJEw0a+O7GTq+6cDPrLc3RDRSZOHHUMn+hZoLn0nf+RUGDzDJ9
+	VOhZoe4g==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:32904)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1sKFTm-0001cl-2i;
+	Thu, 20 Jun 2024 11:57:22 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1sKFTk-0007ba-Gl; Thu, 20 Jun 2024 11:57:20 +0100
+Date: Thu, 20 Jun 2024 11:57:20 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH net-next 8/8] net: stmmac: qcom-ethqos: add a DMA-reset
+ quirk for sa8775p-ride-r3
+Message-ID: <ZnQLED/C3Opeim5q@shell.armlinux.org.uk>
+References: <20240619184550.34524-1-brgl@bgdev.pl>
+ <20240619184550.34524-9-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: icc-bwmon: Add tracepoints in
- bwmon_intr_thread
-To: Shivnandan Kumar <quic_kshivnan@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- quic_rgottimu@quicinc.com
-References: <20240619135140.3581119-1-quic_kshivnan@quicinc.com>
- <a30fb728-d832-4309-8415-a28fed301e27@linaro.org>
- <461966ee-11ce-45e7-8ea8-abbb71431458@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <461966ee-11ce-45e7-8ea8-abbb71431458@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240619184550.34524-9-brgl@bgdev.pl>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-
-
-On 6/20/24 10:55, Shivnandan Kumar wrote:
+On Wed, Jun 19, 2024 at 08:45:49PM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> 
-> On 6/20/2024 12:46 AM, Konrad Dybcio wrote:
->>
->>
->> On 6/19/24 15:51, Shivnandan Kumar wrote:
->>> Add tracepoint for tracing the measured traffic in kbps,
->>> up_kbps and down_kbps in bwmon. This information is valuable
->>> for understanding what bwmon hw measures at the system cache
->>> level and at the DDR level which is helpful in debugging
->>> bwmon behavior.
->>>
->>> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
->>> ---
->>>   MAINTAINERS                        |  1 +
->>>   drivers/soc/qcom/icc-bwmon.c       |  7 +++--
->>>   drivers/soc/qcom/trace_icc-bwmon.h | 49 ++++++++++++++++++++++++++++++
->>>   3 files changed, 55 insertions(+), 2 deletions(-)
->>>   create mode 100644 drivers/soc/qcom/trace_icc-bwmon.h
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index 242fc612fbc5..1b410c0183bb 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -18573,6 +18573,7 @@ M:    Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>   L:    linux-arm-msm@vger.kernel.org
->>>   S:    Maintained
->>>   F: Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
->>> +F:    drivers/soc/qcom/trace_icc-bwmon.h
->>>   F:    drivers/soc/qcom/icc-bwmon.c
->>>
->>>   QUALCOMM IOMMU
->>> diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
->>> index fb323b3364db..9b5ac1e62673 100644
->>> --- a/drivers/soc/qcom/icc-bwmon.c
->>> +++ b/drivers/soc/qcom/icc-bwmon.c
->>> @@ -17,6 +17,8 @@
->>>   #include <linux/pm_opp.h>
->>>   #include <linux/regmap.h>
->>>   #include <linux/sizes.h>
->>> +#define CREATE_TRACE_POINTS
->>> +#include "trace_icc-bwmon.h"
->>>
->>>   /*
->>>    * The BWMON samples data throughput within 'sample_ms' time. With three
->>> @@ -645,9 +647,9 @@ static irqreturn_t bwmon_intr_thread(int irq, void *dev_id)
->>>       struct icc_bwmon *bwmon = dev_id;
->>>       unsigned int irq_enable = 0;
->>>       struct dev_pm_opp *opp, *target_opp;
->>> -    unsigned int bw_kbps, up_kbps, down_kbps;
->>> +    unsigned int bw_kbps, up_kbps, down_kbps, meas_kbps;
->>>
->>> -    bw_kbps = bwmon->target_kbps;
->>> +    meas_kbps = bw_kbps = bwmon->target_kbps;
->>>
->>>       target_opp = dev_pm_opp_find_bw_ceil(bwmon->dev, &bw_kbps, 0);
->>
->> This breaks bwmon, as dev_pm_opp_find_bw_ceil is now fed a random
->> (uninitialized variable) value
->>
-> 
-> Thank you for reviewing the patch.
-> I didn't get it, still the variable "bw_kbps" is being initialized along with "meas_kbps". Which variable are you referring to as being fed to dev_pm_opp_find_bw_ceil  with an uninitialized value?
+> On sa8775p-ride the RX clocks from the AQR115C PHY are not available at
+> the time of the DMA reset so we need to loop TX clocks to RX and then
+> disable loopback after link-up. Use the provided callbacks to do it for
+> this board.
 
-Oh this one's on me, I skipped over the middle assignment.. Sorry!
+If you're using true Cisco SGMII, there are _no_ clocks transferred
+between the PHY and PCS/MAC. There are two balanced pairs of data
+lines and that is all - one for transmit and one for receive. So this
+explanation doesn't make sense to me.
 
-Konrad
+> +static void qcom_ethqos_set_serdes_loopback(struct qcom_ethqos *ethqos,
+> +					    bool enable)
+> +{
+> +	rgmii_updatel(ethqos,
+> +		      SGMII_PHY_CNTRL1_SGMII_TX_TO_RX_LOOPBACK_EN,
+> +		      enable ? SGMII_PHY_CNTRL1_SGMII_TX_TO_RX_LOOPBACK_EN : 0,
+> +		      EMAC_WRAPPER_SGMII_PHY_CNTRL1);
+> +}
+> +
+> +static void qcom_ethqos_open(struct net_device *pdev, void *priv)
+> +{
+> +	struct qcom_ethqos *ethqos = priv;
+> +
+> +	qcom_ethqos_set_serdes_loopback(ethqos, true);
+> +}
+> +
+> +static void qcom_ethqos_link_up(struct net_device *ndev, void *priv)
+> +{
+> +	struct qcom_ethqos *ethqos = priv;
+> +
+> +	qcom_ethqos_set_serdes_loopback(ethqos, false);
+> +}
+> +
+
+So you enable loopback at open time, and disable it when the link comes
+up. This breaks inband signalling (should stmmac ever use that) because
+enabling loopback prevents the PHY sending the SGMII result to the PCS
+to indicate that the link has come up... thus phylink won't call
+mac_link_up().
+
+So no, I really hate this proposed change.
+
+What I think would be better is if there were hooks at the appropriate
+places to handle the lack of clock over _just_ the period that it needs
+to be handled, rather than hacking the driver as this proposal does,
+abusing platform callbacks because there's nothing better.
+
+I don't have time to go through stmmac and make any suggestions (sorry)
+so I can only to say NAK to this change.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
