@@ -1,68 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-23356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E88291056E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 15:09:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DF4D91057A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 15:10:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 26ED7286A36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 13:09:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2CDE6B23D32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 13:10:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBCF31AD9F3;
-	Thu, 20 Jun 2024 13:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 194631AD3E0;
+	Thu, 20 Jun 2024 13:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rn01+XQV"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jye64+iQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20631ACE7F;
-	Thu, 20 Jun 2024 13:04:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B021A4F2B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 13:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718888648; cv=none; b=ONMFnws3+ygcn6fE6uWXbgTUcEPtwrAQOrx8MjVxbXei9d/78Y1XTNpfdOKqtu0sm3epLbqsZ5PgZ9JfIqL+HqL1ocNK4DlvUf4DWQxF3MVbKlDapG8w1fJ5Uu9W+Gmm0jRnuA9UIOn+GghW5V930AHs+JVlpawBwXQVjvBJSPQ=
+	t=1718888891; cv=none; b=gFSVS79FIW8C2X66bgdxDwXLqQEnjZOs9sGOqIkK0tggHFhYPeKgHxBmpjmff+pZhwcuh+YEhxT59LzNU2gORO5u9+p1qWTWztuNylpARn70LqBfDKmR5LqATQUnSrtdnN1hlDpDE1C91MGfeBWlL/nqsoZQ7dbEzAz9RZwxbY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718888648; c=relaxed/simple;
-	bh=KxrT3UVj8PRk2cbBOHYEf2xQYsyGdNtZoNIhfJxp/rE=;
+	s=arc-20240116; t=1718888891; c=relaxed/simple;
+	bh=Nd5/hPdaVzyaCPja9J9QJBucAO/XJpZ+1uhijZYQ7fg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n/jlz8S0cpNwM8TgEq4mRxXZMWZGgh6zwrrCzeOQ6KmQH6kMZ2l21Zlp3XJjSSJKVAEXWwTDPXks6DQ+05UC/GOhHlDKYnueRsqLFNCPW4VGnZ+acNU+GDKGqat7osf1zETFcSBNE1n23+1Ol8fvcoPSsDq+WaZxYyYj1mxDnX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rn01+XQV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F552C4AF10;
-	Thu, 20 Jun 2024 13:04:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718888648;
-	bh=KxrT3UVj8PRk2cbBOHYEf2xQYsyGdNtZoNIhfJxp/rE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Rn01+XQVZHQZwEkjljYELTuenWlJ7KE+DLaXzEKjZrzl2j9RVj5K1tbz4KIUQZFN/
-	 qA/zNpgPMziNEdluQINMzb1MSjyXWKsDor72iEFynciUZdPHzhkxQGLCno0ICkHPZw
-	 74KCvUGv5tmdcu8Pg2YkVPaTvRLxV6/uys5hIHfTtQdzwEgyQMGBntjS6BvX3HhfkQ
-	 5ZWLM2AZvwLuCwtav4LW8pSicJfmTxiBPzlZcWrizCMa5nMh2WKQe81TdOnogwiOm/
-	 64bADmj2RmdJBz1gsWLOALcDVAku4SnxVksjyv99H8ohswnbMq4N7HEDxJSO/Oh5u7
-	 FzFSf+bpRxZAQ==
-Date: Thu, 20 Jun 2024 14:04:01 +0100
-From: Will Deacon <will@kernel.org>
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Andrew Halaney <ahalaney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/adreno: De-spaghettify the use of memory barriers
-Message-ID: <20240620130400.GA4750@willie-the-truck>
-References: <20240508-topic-adreno-v1-1-1babd05c119d@linaro.org>
- <20240514183849.6lpyplifero5u35r@hu-akhilpo-hyd.qualcomm.com>
- <ae4a77wt3kc73ejshptldqx6ugzrqguyq7etbbu54y4avhbdlt@qyt4r6gma7ev>
- <20240516145005.gdksmvxp35m45ifh@hu-akhilpo-hyd.qualcomm.com>
- <5vyrmxvkurdstqfiatxfqcqljwyiswda2vpkea27ighb2eqbav@n24yzdykbc23>
- <20240604144055.GE20384@willie-the-truck>
- <20240618161158.qpqbv77tqveo5g6l@hu-akhilpo-hyd.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=OPimOzMSg2+NPnHBiNAcJayf/lu/f3DFX9MQvYeEH9WC5IrWOVqcDbgqDy1gTYb6pqHOZ9HMsGF1Z4PiqHFPN5GnhZ3f5OMi0mIn3kZOgSL4bfBGvBGs+Gs3HuV7SFdPztM2161sAP8V1Dzocyn+A8QsWNtNupZACmQIGQDbs6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jye64+iQ; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-422f7c7af49so156415e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 06:08:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1718888887; x=1719493687; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=sokuciGEMqDWfb/GyCKAbwKFQZy9XN+HQFh0M9GkJEc=;
+        b=jye64+iQUf5Q22WYI1bW2qakhtko/K6W5NB1dXd/wdVeLgH5b8VP9R3SJjkU5Xg/Qg
+         NTkGml8A1f3UfF3IVPp/XroIcpCVV0ed2h8JV7hMFZH+bWmNt7flwiPFB4zNJcOjsrfk
+         MU58yhn0vKKAJJVzwmsmdqMZLBsK0k45PsUlWtXm5MpJ2ga/UFy5m/UUfJ3iDdCkuj04
+         lAJDLk9uDGhOoiOVzhYu1UXWSQX9ok6rsgLhdh8ATjEzHBSwhkcNtqmEWEZcsot9IOAu
+         yJL4xmekP5Tt+qPD5Nmx645PRWhY6Tc+43L2Zv0dRr+gmjWnRGS2AuKsUjhCG0jv/X1y
+         cQoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718888887; x=1719493687;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sokuciGEMqDWfb/GyCKAbwKFQZy9XN+HQFh0M9GkJEc=;
+        b=fqhJJGPPmAq819A79vayDxRytVzUNQFZXe/WOXaUckAv2/RgCbF7nVI4ssXos+Ua9j
+         qUhuxV9GdhKH9t05sn01pWL31QSoibd5tjee/dneUy8k2nx9N6LMMORSK8buRqmL4jcY
+         rsl+fbP7bOeUJM5UdptQZeTavHLji4ig6CjEYBeo7IMujpWtFgN10CUxYa/x//hnlxTT
+         /Ro2u2BDKoDKtJYO/jwT1WnLOlwLtJCCLyq6xSkyXmY1rfvrFN8GtepwQS+/4nVpQ9MW
+         LLcw4p+0nlqCkUQfuK+uNldYj8a+LuYT3F1N9w2KwBZ6MwDZBY68GI87RByFI19YPere
+         uQrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW4WtFLqEkHUaEunv+cITEmnHENpR37Tb4D8jCSdhux2TsgGcreUJY/6pwWh6r9xUZxehRveUkTFtbgZpLOOd1qeIX1w87K/T3G4cJkdg==
+X-Gm-Message-State: AOJu0YzMKhMJ5uoheAbw1ysu2nDijT8jFSje/T3NainJoZB01PrYxvL3
+	tCyzdyQ7iDYz3aSwoIT46PDBHoDjiF2Fk6rvwOMNV4pUhtA/rQ2KAcDj+UNBfg==
+X-Google-Smtp-Source: AGHT+IHp9bazFhbmExqFkMfkC/8CdeFqGQa/Ablhwe0BqRz1q3OFlFoqlZtJH067QyRn9E0j/SDL1Q==
+X-Received: by 2002:a05:600c:4e0c:b0:41b:8715:1158 with SMTP id 5b1f17b1804b1-424758fd22bmr3600115e9.6.1718888887221;
+        Thu, 20 Jun 2024 06:08:07 -0700 (PDT)
+Received: from google.com (205.215.190.35.bc.googleusercontent.com. [35.190.215.205])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36075c6fa4esm19579496f8f.67.2024.06.20.06.08.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jun 2024 06:08:06 -0700 (PDT)
+Date: Thu, 20 Jun 2024 13:08:02 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: John Hubbard <jhubbard@nvidia.com>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>,
+	maz@kernel.org, kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, pbonzini@redhat.com,
+	Fuad Tabba <tabba@google.com>, Jason Gunthorpe <jgg@nvidia.com>
+Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
+Message-ID: <ZnQpslcah7dcSS8z@google.com>
+References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
+ <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
+ <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,73 +90,130 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240618161158.qpqbv77tqveo5g6l@hu-akhilpo-hyd.qualcomm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
 
-On Tue, Jun 18, 2024 at 09:41:58PM +0530, Akhil P Oommen wrote:
-> On Tue, Jun 04, 2024 at 03:40:56PM +0100, Will Deacon wrote:
-> > On Thu, May 16, 2024 at 01:55:26PM -0500, Andrew Halaney wrote:
-> > > On Thu, May 16, 2024 at 08:20:05PM GMT, Akhil P Oommen wrote:
-> > > > On Thu, May 16, 2024 at 08:15:34AM -0500, Andrew Halaney wrote:
-> > > > > If I understand correctly, you don't need any memory barrier.
-> > > > > writel()/readl()'s are ordered to the same endpoint. That goes for all
-> > > > > the reordering/barrier comments mentioned below too.
-> > > > > 
-> > > > > device-io.rst:
-> > > > > 
-> > > > >     The read and write functions are defined to be ordered. That is the
-> > > > >     compiler is not permitted to reorder the I/O sequence. When the ordering
-> > > > >     can be compiler optimised, you can use __readb() and friends to
-> > > > >     indicate the relaxed ordering. Use this with care.
-> > > > > 
-> > > > > memory-barriers.txt:
-> > > > > 
-> > > > >      (*) readX(), writeX():
-> > > > > 
-> > > > > 	    The readX() and writeX() MMIO accessors take a pointer to the
-> > > > > 	    peripheral being accessed as an __iomem * parameter. For pointers
-> > > > > 	    mapped with the default I/O attributes (e.g. those returned by
-> > > > > 	    ioremap()), the ordering guarantees are as follows:
-> > > > > 
-> > > > > 	    1. All readX() and writeX() accesses to the same peripheral are ordered
-> > > > > 	       with respect to each other. This ensures that MMIO register accesses
-> > > > > 	       by the same CPU thread to a particular device will arrive in program
-> > > > > 	       order.
-> > > > > 
-> > > > 
-> > > > In arm64, a writel followed by readl translates to roughly the following
-> > > > sequence: dmb_wmb(), __raw_writel(), __raw_readl(), dmb_rmb(). I am not
-> > > > sure what is stopping compiler from reordering  __raw_writel() and __raw_readl()
-> > > > above? I am assuming iomem cookie is ignored during compilation.
+Hi David,
+
+On Wed, Jun 19, 2024 at 09:37:58AM +0200, David Hildenbrand wrote:
+> Hi,
+> 
+> On 19.06.24 04:44, John Hubbard wrote:
+> > On 6/18/24 5:05 PM, Elliot Berman wrote:
+> > > In arm64 pKVM and QuIC's Gunyah protected VM model, we want to support
+> > > grabbing shmem user pages instead of using KVM's guestmemfd. These
+> > > hypervisors provide a different isolation model than the CoCo
+> > > implementations from x86. KVM's guest_memfd is focused on providing
+> > > memory that is more isolated than AVF requires. Some specific examples
+> > > include ability to pre-load data onto guest-private pages, dynamically
+> > > sharing/isolating guest pages without copy, and (future) migrating
+> > > guest-private pages.  In sum of those differences after a discussion in
+> > > [1] and at PUCK, we want to try to stick with existing shmem and extend
+> > > GUP to support the isolation needs for arm64 pKVM and Gunyah.
+> 
+> The main question really is, into which direction we want and can develop
+> guest_memfd. At this point (after talking to Jason at LSF/MM), I wonder if
+> guest_memfd should be our new target for guest memory, both shared and
+> private. There are a bunch of issues to be sorted out though ...
+> 
+> As there is interest from Red Hat into supporting hugetlb-style huge pages
+> in confidential VMs for real-time workloads, and wasting memory is not
+> really desired, I'm going to think some more about some of the challenges
+> (shared+private in guest_memfd, mmap support, migration of !shared folios,
+> hugetlb-like support, in-place shared<->private conversion, interaction with
+> page pinning). Tricky.
+> 
+> Ideally, we'd have one way to back guest memory for confidential VMs in the
+> future.
+> 
+> 
+> Can you comment on the bigger design goal here? In particular:
+> 
+> 1) Who would get the exclusive PIN and for which reason? When would we
+>    pin, when would we unpin?
+> 
+> 2) What would happen if there is already another PIN? Can we deal with
+>    speculative short-term PINs from GUP-fast that could introduce
+>    errors?
+> 
+> 3) How can we be sure we don't need other long-term pins (IOMMUs?) in
+>    the future?
+
+Can you please clarify more about the IOMMU case?
+
+pKVM has no merged upstream IOMMU support at the moment, although
+there was an RFC a while a go [1], also there would be a v2 soon.
+
+In the patches KVM (running in EL2) will manage the IOMMUs including
+the page tables and all pages used in that are allocated from the
+kernel.
+
+These patches don't support IOMMUs for guests. However, I don't see
+why would that be different from the CPU? as once the page is pinned
+it can be owned by a guest and that would be reflected in the
+hypervisor tracking, the CPU stage-2 and IOMMU page tables as well.
+
+[1] https://lore.kernel.org/kvmarm/20230201125328.2186498-1-jean-philippe@linaro.org/
+
+Thanks,
+Mostafa
+
+> 
+> 4) Why are GUP pins special? How one would deal with other folio
+>    references (e.g., simply mmap the shmem file into a different
+>    process).
+> 
+> 5) Why you have to bother about anonymous pages at all (skimming over s
+>    some patches), when you really want to handle shmem differently only?
+> 
+> > > To that
+> > > end, we introduce the concept of "exclusive GUP pinning", which enforces
+> > > that only one pin of any kind is allowed when using the FOLL_EXCLUSIVE
+> > > flag is set. This behavior doesn't affect FOLL_GET or any other folio
+> > > refcount operations that don't go through the FOLL_PIN path.
+> 
+> So, FOLL_EXCLUSIVE would fail if there already is a PIN, but !FOLL_EXCLUSIVE
+> would succeed even if there is a single PIN via FOLL_EXCLUSIVE? Or would the
+> single FOLL_EXCLUSIVE pin make other pins that don't have FOLL_EXCLUSIVE set
+> fail as well?
+> 
 > > > 
-> > > It seems to me that is due to some usage of volatile there in
-> > > __raw_writel() etc, but to be honest after reading about volatile and
-> > > some threads from gcc mailing lists, I don't have a confident answer :)
+> > > [1]: https://lore.kernel.org/all/20240319143119.GA2736@willie-the-truck/
 > > > 
-> > > > 
-> > > > Added Will to this thread if he can throw some light on this.
-> > > 
-> > > Hopefully Will can school us.
 > > 
-> > The ordering in this case is ensured by the memory attributes used for
-> > ioremap(). When an MMIO region is mapped using Device-nGnRE attributes
-> > (as it the case for ioremap()), the "nR" part means "no reordering", so
-> > readX() and writeX() to that region are ordered wrt each other.
+> > Hi!
+> > 
+> > Looking through this, I feel that some intangible threshold of "this is
+> > too much overloading of page->_refcount" has been crossed. This is a very
+> > specific feature, and it is using approximately one more bit than is
+> > really actually "available"...
 > 
-> But that avoids only HW reordering, doesn't it? What about *compiler reordering* in the
-> case of a writel following by a readl which translates to:
-> 	1: dmb_wmb()
-> 	2: __raw_writel() -> roughly "asm volatile('str')
-> 	3: __raw_readl() -> roughly "asm volatile('ldr')
-> 	4: dmb_rmb()
+> Agreed.
 > 
-> Is the 'volatile' keyword sufficient to avoid reordering between (2) and (3)? Or
-> do we need a "memory" clobber to inhibit reordering?
+> > 
+> > If we need a bit in struct page/folio, is this really the only way? Willy
+> > is working towards getting us an entirely separate folio->pincount, I
+> > suppose that might take too long? Or not?
 > 
-> This is still not clear to me even after going through some compiler documentions.
-
-I don't think the compiler should reorder volatile asm blocks wrt each
-other.
-
-Will
+> Before talking about how to implement it, I think we first have to learn
+> whether that approach is what we want at all, and how it fits into the
+> bigger picture of that use case.
+> 
+> > 
+> > This feels like force-fitting a very specific feature (KVM/CoCo handling
+> > of shmem pages) into a more general mechanism that is running low on
+> > bits (gup/pup).
+> 
+> Agreed.
+> 
+> > 
+> > Maybe a good topic for LPC!
+> 
+> The KVM track has plenty of guest_memfd topics, might be a good fit there.
+> (or in the MM track, of course)
+> 
+> -- 
+> Cheers,
+> 
+> David / dhildenb
+> 
 
