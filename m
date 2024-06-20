@@ -1,117 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-23387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CBDF910A49
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 17:44:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70323910A58
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 17:46:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CF661C22C40
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 15:44:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EEBE0B22884
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Jun 2024 15:46:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CD811B1408;
-	Thu, 20 Jun 2024 15:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 271741EB44;
+	Thu, 20 Jun 2024 15:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bNS3gFlT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RJPoJQnT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DB61AE0B6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 15:44:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D3B171A5;
+	Thu, 20 Jun 2024 15:45:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718898266; cv=none; b=dwE+JvtQiW6Vdz3uKEZb4o2x5C94Xz1+YSgllKCrWgDDYw8Gjqu+6EikDMu4EKo+OnY5XxujsMp4F2pyg/h7qcJOg/Ioxyyc77tmT3i/djlTI+CHA3y7Y3gnPO4972u+iAfN7SXR5ZiOIb35hwk0jylW8OQuVDmqQNbiUU0UKcQ=
+	t=1718898360; cv=none; b=HwjjQ8u+QDrFo2/oI88q93lgAtRLX3PHUd1/4bhJIzFWCNG0rhj8YT//RjUHiCIw2IpyeWQyoO7HoBHy7h85pn6j80Wle5Zdh/HSF/fZusDsotzqWT9ZJX+Ep9UBhYsRMrnk9Q72IsxmjlZMmncNp512jbYC2vEqvYhARch1emI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718898266; c=relaxed/simple;
-	bh=ogZMxd+1FYUQWMng1Y8qNe/15VwGRE4+XFCXtGVC5eQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lcH/4EZyqpavSyc+npN5WfJHmWhyWRLxg99FncZeUao92O/R5crncOdd0IL9NBzDN8ZFkHMMYUao/E4Jnep+3IZ0qHp+PbD5+2IE+vGr0EQ7xhVi2936Bm1eFfEHH74hk80vwnuu4uoA7TbhwlybS99HL3+k/+ahdAvL+x87zgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bNS3gFlT; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52bc335e49aso1114807e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Jun 2024 08:44:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718898263; x=1719503063; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9tWRo6cEOERtjp9Vlw6tlL4I6ASG3axwxU4zpe6oJ5c=;
-        b=bNS3gFlTE/z5hKF/3Nrvfn+cv/dYPPIZwK74DMcLLQObGPsq882Jgkb2DOE9OV8fG4
-         1cASfn7WtO4NNoraDHoTj/kzdTWiC5XWw8VpSJkQM+d22csDUcbsZcqmtangw56QoVVH
-         zAylxBMRpPNAND+ieK16aMwIHwQk1as+k+FLnMfa2EK3jG7JAEb4G0baRFvpKiFWOkCV
-         Jbc4p5uI2kf4HpM/vRbbBehqgI5VKPlW4Z9SBkfKQUgA4kjSXmR+++L5gd8cWfPSrW1Y
-         dCcymS/1S+20mSBYJwrhxT0bSFZflIgQrnT6fGJExvw95vjizGrH6F99rJM2l+cz6mUl
-         kqFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718898263; x=1719503063;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9tWRo6cEOERtjp9Vlw6tlL4I6ASG3axwxU4zpe6oJ5c=;
-        b=FL5siIAnQdg2XiH74OQVkYk+jLEE/Y1dEfnjw/xjITe091Z2aJHdaUzVW5xwAKMrDF
-         tDDVU1s2K28Jl0KN1kxDXfylVCChNypIGaTNG1pXThpu0vFit35UimX/JAH7o0/WfRcA
-         aCasPo9pKEaTmWYMrwlxB92JZv+3g0pqFPn/MtsIF/jdYfXHVIQ+2bERe6r5DQfr+r9A
-         IXkft5tBCX725hbYmZBsw6woX7EhzJaKocSjXzF5nGz8GxlZOd9cbpUzuSoSg7xVESiP
-         oC0qjJQCheUKRclQDQ82bYr3Xuv6xdUtUiI6WudzKdNX/7CscI+woUeBkCiefCyTnZ9L
-         O4wA==
-X-Forwarded-Encrypted: i=1; AJvYcCU2QakoOU3yx/xBArkTyk6NbQDm6BVgDJ26Tuf3NtP9nxcX+uKMaV/okeieC4vG6XSVauPP8O+PVLE/iIpKdpsJk2k42dp5Dxexu8O3xw==
-X-Gm-Message-State: AOJu0Yx+VzbTXJv2mjNCdL9Y/sxQ3gBe/BgynufmyfKplvKf/wkFt0rn
-	NF1pJYHBovbASZAEuwwQw4ijiOIxshIiJ2sjUiHyrM6PyZmIeR1EQ3klXHbUZcY=
-X-Google-Smtp-Source: AGHT+IFCpS984ANy97xL8ZuN4RP3xgQuf3Puse0Rs2EDtrKBP3a1mYYqXpq2aQH3bEPCSv7SfUpchw==
-X-Received: by 2002:a05:6512:3190:b0:52c:881b:73c0 with SMTP id 2adb3069b0e04-52ccaa5dee7mr4853484e87.17.1718898262858;
-        Thu, 20 Jun 2024 08:44:22 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cbf72e9d4sm1030554e87.245.2024.06.20.08.44.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jun 2024 08:44:22 -0700 (PDT)
-Date: Thu, 20 Jun 2024 18:44:20 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Bjorn Andersson <quic_bjorande@quicinc.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, quic_mojha@quicinc.com
-Subject: Re: [PATCH v2] arm64: defconfig: Enable secure QFPROM driver
-Message-ID: <rwdkuhxom2ynyq4lvax6bgqstzxby5e65umvj2okrjve2x25sy@l6v47jhgzhwu>
-References: <20240620112716.1339-1-quic_kbajaj@quicinc.com>
+	s=arc-20240116; t=1718898360; c=relaxed/simple;
+	bh=iDtyYM5l+koUw3HZY0hhLpeAIfDRM2XNnvLWh3MtEJA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PRmlNpzgAT9PXRynQTw5zBFvqiuSnOWqZWVIAqeqZMcdc09HNtwmEKZPNrtmvNsidZGNsX886x2c3GW2xEgtAZnhIXWxSClVc4kyZfmhoEnV8NVFozQsRk9v5necrxU2jhMcH7dd2R3IUrepqAZGgyTBoRT0hyA0+gnnf8xqrDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJPoJQnT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F20C4AF08;
+	Thu, 20 Jun 2024 15:45:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718898359;
+	bh=iDtyYM5l+koUw3HZY0hhLpeAIfDRM2XNnvLWh3MtEJA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RJPoJQnTV5atULIzNJC3yZhph4GSueyXzhEuMFejaawSci6iaMbviBkI6FNx0t/Rz
+	 fOc7xb8iVP5Lc8rmi2/EsM46xxrOME0wXJCKiSmaR6PfPVzLcdMKrA2BBUsRmJcw8n
+	 be69d+KzpTTwpG34avRpH7eZPeqpsWX5BZqoBVv+6vaunBA99svyrj8rF4olvC9/w1
+	 qtxHbacCHkBlTGapziv9A2TvBGPKixjrFNVVGxpOpzfUjx/a1S8o0waJ19CoI13PHz
+	 IjpEz9MzGMLo1ajBaT+JKbxSiLaOjXdEatFiGyZ1WECrX51CrYbcsMkkMi/W9+iOxl
+	 eB7WtP83nIT3g==
+Message-ID: <13a650f4-7ca7-4c95-b536-9814a22f00ff@kernel.org>
+Date: Thu, 20 Jun 2024 17:45:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240620112716.1339-1-quic_kbajaj@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/23] dt-bindings: mfd: add maxim,max77705
+To: Dzmitry Sankouski <dsankouski@gmail.com>,
+ Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-leds@vger.kernel.org,
+ linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
+ <20240618-starqltechn_integration_upstream-v3-4-e3f6662017ac@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240618-starqltechn_integration_upstream-v3-4-e3f6662017ac@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 20, 2024 at 04:57:16PM GMT, Komal Bajaj wrote:
-> Enable the secure QFPROM driver used by Qualcomm QDU1000
-> platform to read the secure qfprom region allowing LLCC driver
-> to get the DDR channel configuration.
+On 18/06/2024 15:59, Dzmitry Sankouski wrote:
+> maxim,max77705 is MAX77705 pmic binding part
 > 
-> Currently, LLCC is the only user of secure QFPROM, and hence
-> setting CONFIG_NVMEM_QCOM_SEC_QFPROM as module to the convenience
-> of LLCC module.
-> 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 > ---
-> Changes in v2:
-> * Setting the CONFIG_NVMEM_QCOM_SEC_QFPROM as module
-> * Modified the commit message to mention the need for driver enablement
-> * Link to v1: https://lore.kernel.org/all/20240619105642.18947-1-quic_kbajaj@quicinc.com/
-> ---
+>  .../devicetree/bindings/mfd/maxim,max77705.yaml    | 112 +++++++++++++++++++++
+
+Your patch order is totally messed. Not tested by automation. Only
+limited review follows.
+
+
+>  MAINTAINERS                                        |   1 +
+>  2 files changed, 113 insertions(+)
 > 
->  arch/arm64/configs/defconfig | 1 +
->  1 file changed, 1 insertion(+)
-> 
+> diff --git a/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml b/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml
+> new file mode 100644
+> index 000000000000..b54408e3d792
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml
+> @@ -0,0 +1,112 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/maxim,max77705.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Maxim MAX77705 Companion Power Management IC and USB Type-C interface IC
+> +
+> +maintainers:
+> +  - Dzmitry Sankouski <dsankouski@gmail.com>
+> +
+> +description: |
+> +  This is a part of device tree bindings for Maxim MAX77705 multi functional device.
+> +
+> +  The Maxim MAX77705 is a Companion Power Management and Type-C interface IC which
+> +  includes charger, fuelgauge, LED, haptic motor driver and Type-C management IC.
+> +
+> +properties:
+> +  compatible:
+> +    const: maxim,max77705
+> +
+> +  reg:
+> +    description:
+> +      I2C device address.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Drop description, obvious.
+
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interrupt-names:
+> +    description:
+> +      MAX77705 shared irq.
+> +    items:
+> +      - const: max77705_irq
+
+Drop entire property, not really useful.
+
+> +
+> +  charger:
+> +    $ref: /schemas/power/supply/maxim,max77705-charger.yaml
+> +
+> +  fuelgauge:
+> +    $ref: /schemas/power/supply/maxim,max77705-fg.yaml
+> +
+> +  haptic:
+> +    $ref: /schemas/input/maxim,max77705.yaml
+> +
+> +  leds:
+> +    $ref: /schemas/leds/maxim,max77705.yaml
+> +
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/leds/common.h>
+> +
+> +    i2c14 {
+
+i2c
+
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +    	pmic@66 {
+> +    		compatible = "maxim,max77705";
+> +    		reg = <0x66>;
+
+Totally messed indentation. Fix your code.
 
 
--- 
-With best wishes
-Dmitry
+
+Best regards,
+Krzysztof
+
 
