@@ -1,97 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-23643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B36D912E97
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 22:34:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CABC912EC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 22:45:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD48A1C21C72
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 20:34:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4FD811C22313
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 20:45:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 294E616D4F9;
-	Fri, 21 Jun 2024 20:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E69717BB2A;
+	Fri, 21 Jun 2024 20:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SD438gxj"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PP5DBmEu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED66374DD;
-	Fri, 21 Jun 2024 20:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA30A16D311
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 20:44:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719002072; cv=none; b=BBHlsu0jM+YChzzUaavtuVJTh3upLdoUQgIp22Jaxwd5Wz6PaKsDQ3p47FLaA0jM1LBfzdZq/IC4q09/WdYGjzYkGn+FKA8tkAS2YhCN+kdMLBZdJiBkFHvxfIoihdnPOynNQGZfIZQWnvb4iRt8KakYVZ9lZXaRd7stzVVfQLc=
+	t=1719002698; cv=none; b=jk6SuRIENDODj8ESenFI0/JLfk308TJQ0UIzFgfZ2PIKiZ8s6BFt8UvRt3LiYQkCskUpj/kqbDWXwPhDgvoj1JYgZ2S5sAkP8/NpAikR0Rzgi2X/xRKn7i20PEWAf9WA+RkqV7iwPs5PG/qDOA/HKZjOQPwwt4aTjXFSwr11fkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719002072; c=relaxed/simple;
-	bh=g+pouUiiT7AeZC4HcBnx+iVl1hBdooJPKlXz8f+L6E4=;
+	s=arc-20240116; t=1719002698; c=relaxed/simple;
+	bh=EVjOk2Qvik+pOzl2DFM0KDrYTyxssV7z+Gs7LWahwhI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lsjS2X85DUtmnvoWYWtmGJZ4y/2gicBuG3/nKMCwPbCW/u/W5HoUVVd6Q5fIWoWzCnfLBVYDTGYMjqSE7D7Jkonq0vxFC4rpoXccPBA+Us5XUKV8EFtNT0OIznZuWXGN4sH0QQ4P5ebgP0dvYUnO6QqGHhMGj0s2DZXAEQFlnkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SD438gxj; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1719002069; x=1750538069;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=g+pouUiiT7AeZC4HcBnx+iVl1hBdooJPKlXz8f+L6E4=;
-  b=SD438gxjfaW0H6Ot29Y7gVWTQfsjT7ugHgQL5YNXNfYpGc4GF5TqneXN
-   q+PV3Dubj5Ses4G05Iod2ROHaONSjMu/fuvcAjk6nWpVJ0ViXbhtEXViW
-   uSOZdRIJUkzodAC2Ezcqt9twg1Wk63Zy0IRVOWxa892rRi6beYh+p3u4i
-   zFYpTzhJgMl9eBzzZzuc4eg9nsf5t7dkwTE6g2hpf9jhgeNEomolpniip
-   quXHH/PlFiY4u6tZLM2TprIxymZxLaJogiS2FkOTl/J5kH3QHg2PNtVS9
-   Li5xAiJV7G0VS5gJIQJA8b7M5LZCbqe+FWAvmjGimrnS1YZoxiULTlX7p
-   g==;
-X-CSE-ConnectionGUID: 87oLkz+/Qy2juagB+ZP4yQ==
-X-CSE-MsgGUID: gCrQrSrTSlyTaZvLL3d9RQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11110"; a="16285626"
-X-IronPort-AV: E=Sophos;i="6.08,255,1712646000"; 
-   d="scan'208";a="16285626"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2024 13:34:28 -0700
-X-CSE-ConnectionGUID: vjURhEvVTDqAJ4kaNuOtEg==
-X-CSE-MsgGUID: LfHac5txTsiEbj3rI22Gnw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,255,1712646000"; 
-   d="scan'208";a="73910113"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by fmviesa001.fm.intel.com with ESMTP; 21 Jun 2024 13:34:22 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sKkxf-0008za-1z;
-	Fri, 21 Jun 2024 20:34:19 +0000
-Date: Sat, 22 Jun 2024 04:33:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dzmitry Sankouski <dsankouski@gmail.com>,
-	Sebastian Reichel <sre@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Pavel Machek <pavel@ucw.cz>, Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 17/23] mfd: add s2dos series core driver
-Message-ID: <202406220455.UpxNyPhg-lkp@intel.com>
-References: <20240618-starqltechn_integration_upstream-v3-17-e3f6662017ac@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=FfHN4O62cQqH4t8qEgYZKJvKfeBTaehKhEwGB875006+TK4swE2J7SugBlF0KfVfXMU0KtsmfoNaOnjjsPJAJ4GYSaU5QoY29LRTFndK3fVi4YRkJgzwNi7iQjQWFZ+Od5KRInhvFIiykXtw93eei12OEsbQIwohgD8K8b4kFnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PP5DBmEu; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1719002695;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=IBRyGrjkPd5CIS4XoIva4gQOV3Q+VtL43fiauuhlKtM=;
+	b=PP5DBmEud1E2RLh4VfHLdt/IYIVsU4fLmdotvL/wQ/0fSwdpPtbAKfltakEIxRxPHiAJcc
+	mlIJScrZQrbdUVccbuqmP1p9l7LQBys7zBOzE8btaffEAWM7uJ6nh33lLbwMaxQBnqa92P
+	lTmfEv8Dcj5AuPxHiTuQmHUyMCG5dU0=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-662-QfXTgR99OP-NKJkvg8dhlA-1; Fri, 21 Jun 2024 16:44:54 -0400
+X-MC-Unique: QfXTgR99OP-NKJkvg8dhlA-1
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-6b51db044edso16452796d6.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 13:44:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719002693; x=1719607493;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IBRyGrjkPd5CIS4XoIva4gQOV3Q+VtL43fiauuhlKtM=;
+        b=dulcGUupO+x2qRe2uR85lq7gV9zAf93e7S6O/A5P3iPOXoZ0wy2YLF2dTAiTbjkosc
+         X9c9DBzgHw8oBhzsEWSmXxgqb6iT4JO87QrDbyW2+FtnoslgupvJmVcu/kOt2vFm+orb
+         ZqQSbejKhiAl9DbrBdEheGu+7xloJzbu0JjJKy+9LYVW/oeznL9kwennGT4Dy9cOvUoO
+         8NOXtzVvFW5xiGZcd4fnWQPuLXiHrqPjWJCrzLJ9JMq0USuZIlPwyHEYTB36gI45aOZ0
+         wmc+/16b5iQrXpi3DOf+WaUupvOOJHJMuZNxGy89UcAoNdFSRQ/nbLoA5Ok7hbSO4mfI
+         PCDw==
+X-Forwarded-Encrypted: i=1; AJvYcCVbnMDKAgo3EQ4YXWKkEvRk0i68agEZrbhYTeI9Hi2Xvhi8M0RtSZAY/POuD/5fVpzjX8wQPETjhtKpJsPpv89F3R8EFAkEO8mAvaBfTQ==
+X-Gm-Message-State: AOJu0Yxr6hJql3fj8L14zegNMsAeNksw+RKKooPdQwpIX/DaO6lanMzQ
+	dnWqLy3BfUFYIeWU0zSucW734Qrcq8uwLwQAA+FIwicsOmah3wwDIU9im9eAlh3JKLivypi25Z9
+	L+PSo/46Gk4DWKGYtQ1FBVVTte5Tfd0Cwp7sEA43n1I/qFC4azvzLoeao7l4148E=
+X-Received: by 2002:ad4:4e2a:0:b0:6b2:cdaf:300e with SMTP id 6a1803df08f44-6b501e03d2cmr96084096d6.1.1719002693498;
+        Fri, 21 Jun 2024 13:44:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHpK5D9TDm/aP5jldornZZLwHdWh2EXn0K0pkw6eEyjdSKLkGZH9gNAROZfr7QzFOXxvhc+rQ==
+X-Received: by 2002:ad4:4e2a:0:b0:6b2:cdaf:300e with SMTP id 6a1803df08f44-6b501e03d2cmr96083876d6.1.1719002693102;
+        Fri, 21 Jun 2024 13:44:53 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::13])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b51ef30d47sm12047126d6.83.2024.06.21.13.44.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Jun 2024 13:44:52 -0700 (PDT)
+Date: Fri, 21 Jun 2024 15:44:50 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Sagar Cheluvegowda <quic_scheluve@quicinc.com>, 
+	Vinod Koul <vkoul@kernel.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Russell King <linux@armlinux.org.uk>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, kernel@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/3] net: stmmac: Add interconnect support in qcom-ethqos
+ driver
+Message-ID: <ymg2rf4vlp6kcsb6fbass3rntaxfz4ox4hbhcn56engfqcboqr@kp47u5rk3mvk>
+References: <20240619-icc_bw_voting_from_ethqos-v1-0-6112948b825e@quicinc.com>
+ <20240619-icc_bw_voting_from_ethqos-v1-1-6112948b825e@quicinc.com>
+ <159700cc-f46c-4f70-82aa-972ba6e904ca@lunn.ch>
+ <b075e5a8-ca75-49cc-84d6-84e28bc38eee@quicinc.com>
+ <b5096113-de85-485e-a226-a8112b3d5490@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,82 +101,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240618-starqltechn_integration_upstream-v3-17-e3f6662017ac@gmail.com>
+In-Reply-To: <b5096113-de85-485e-a226-a8112b3d5490@lunn.ch>
 
-Hi Dzmitry,
+On Fri, Jun 21, 2024 at 10:01:39PM GMT, Andrew Lunn wrote:
+> > > This all looks pretty generic. Any reason why this is just in the
+> > > Qualcomm device, and not at a higher level so it could be used for all
+> > > stmmac devices if the needed properties are found in DT?
+> > > 
+> > >        Andrew
+> > ICC is a software framework to access the NOC bus topology of the
+> > system, all though "axi" and "ahb" buses seem generic but the 
+> > topologies of these NOC's are specific to the vendors of synopsys chipset hence
+> > this framework might not be applicable to all the vendors of stmmac driver.
+> 
+> There are however a number of SoCs using synopsys IP. Am i right in
+> says they could all make use of this? Do we really want them to one by
+> one copy/paste what you have here to other vendor specific parts of
+> stmmac?
+> 
+> This code looks in DT. If there are no properties in DT, it does
+> nothing. So in general it should be safe, right?
 
-kernel test robot noticed the following build warnings:
+That logic makes sense to me, and thinking about it more you request a
+"path" between two "endpoints" in the network, and that's pretty
+generic. Sort of like the clocks, etc, and then let the provider figure
+out the gory SoC specific details.
 
-[auto build test WARNING on 6906a84c482f098d31486df8dc98cead21cce2d0]
+i.e., for example I see the UFS driver uses the paths "ufs-ddr" and
+"cpu-ufs", and thinking about it generically for this IP that's probably
+the same thing going on here (and lends weight to Krzysztof's request to
+use names similar to other interconnect users).
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dzmitry-Sankouski/power-supply-add-undervoltage-health-status-property/20240618-222456
-base:   6906a84c482f098d31486df8dc98cead21cce2d0
-patch link:    https://lore.kernel.org/r/20240618-starqltechn_integration_upstream-v3-17-e3f6662017ac%40gmail.com
-patch subject: [PATCH v3 17/23] mfd: add s2dos series core driver
-config: mips-allyesconfig (https://download.01.org/0day-ci/archive/20240622/202406220455.UpxNyPhg-lkp@intel.com/config)
-compiler: mips-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240622/202406220455.UpxNyPhg-lkp@intel.com/reproduce)
+That being said, grepping around I don't see users outside of platform
+driver bits (i.e. I was hoping to see drivers/pci/controller/dwc/ doing
+some shared usage, but that's not the case). Given what you said I'm
+of the opinion now this should be done in stmmac_platform.c
+and described for all stmmac users since it feels like a property of the
+IP itself similar to the clocks required, etc. The interconnect framework handles
+when they're not described in the dts gracefully so it shouldn't break any
+other SoCs that don't describe interconnects currently.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202406220455.UpxNyPhg-lkp@intel.com/
+Thanks,
+Andrew
 
-All warnings (new ones prefixed by >>):
-
-   drivers/mfd/s2dos-core.c: In function 's2dos05_i2c_probe':
->> drivers/mfd/s2dos-core.c:88:13: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
-      88 |         int ret = 0;
-         |             ^~~
-
-
-vim +/ret +88 drivers/mfd/s2dos-core.c
-
-    79	
-    80	
-    81	static int s2dos05_i2c_probe(struct i2c_client *i2c)
-    82	{
-    83		struct s2dos_core *s2dos05;
-    84		struct regmap *regmap;
-    85		struct device *dev = &i2c->dev;
-    86	
-    87		unsigned int reg_data;
-  > 88		int ret = 0;
-    89	
-    90		s2dos05 = kzalloc(sizeof(struct s2dos_core), GFP_KERNEL);
-    91		if (!s2dos05)
-    92			return -ENOMEM;
-    93	
-    94		regmap = devm_regmap_init_i2c(i2c, &s2dos05_regmap_config);
-    95		if (IS_ERR(regmap)) {
-    96			dev_err(dev, "Unable to initialise I2C Regmap\n");
-    97			return PTR_ERR(regmap);
-    98		}
-    99		s2dos05->regmap = regmap;
-   100	
-   101		if (regmap_read(regmap, S2DOS05_REG_DEV_ID, &reg_data) < 0) {
-   102			dev_err(dev,
-   103				"device not found on this channel (this is not an error)\n");
-   104			ret = -ENODEV;
-   105		} else {
-   106			dev_info(dev, "%s device found with id: .0x%x\n",
-   107					__func__, reg_data);
-   108		}
-   109	
-   110		i2c_set_clientdata(i2c, s2dos05);
-   111	
-   112		debugfs_file = debugfs_create_file("s2dos05-regs",
-   113					0664, NULL, (void *)s2dos05,
-   114					  &s2dos05_debugfs_fops);
-   115		if (!debugfs_file)
-   116			dev_err(dev, "Failed to create debugfs file\n");
-   117	
-   118		return mfd_add_devices(dev, -1, s2dos05_devs,
-   119				ARRAY_SIZE(s2dos05_devs), NULL, 0, NULL);
-   120	}
-   121	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
