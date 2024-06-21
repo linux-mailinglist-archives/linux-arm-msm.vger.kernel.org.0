@@ -1,132 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-23626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D9CE912B11
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 18:15:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FA63912B22
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 18:17:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9EC461C26174
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 16:15:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D1885B2722C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 16:17:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D34915F40B;
-	Fri, 21 Jun 2024 16:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64A0015FA67;
+	Fri, 21 Jun 2024 16:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PlKBEnFj"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R7ypmpXw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF4A2772A;
-	Fri, 21 Jun 2024 16:15:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF80210A39;
+	Fri, 21 Jun 2024 16:17:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718986542; cv=none; b=Vr3vyXd87UefXdR0YsGhDa82zbFPU+jf95b+LwNjjFX2p+QM7FAWJ0I9pDtUCcxTyKWxjMiGOrm54c7AyaCDddJeKVWOlACH282qqGHUg2KXv0fD5xlxPCoEIPlIUbFConI9UGueYtWCBYZr8hSIg7qNcq8i1tkWA+AV1kd+Prc=
+	t=1718986641; cv=none; b=FPHYBhw6hWtFeE2LKhfWhWp9y+fSXvzQIZmiJkYT/SQ1lrzX+Q4RSCDdGgA9c7CTWFIcRZH3LmkevxqYXQm0LbRF9DAimi9I27ZmBnJrB8YYVqSQMp7wBERd58rwnrBflBjBTc7Q635JMcBK90oLBIgu6XFD51K91LKvh/k2nM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718986542; c=relaxed/simple;
-	bh=mIBPSubn+A+rwfRdqEMhcD6Z9rKRDA+vQOru7HxGBSg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=O4Yy7ruXef5LpBX1yOb7S67hOV937Q1u3J8pN6Pbdh6410d0EAyaOqlkjmH+K76ytoOs2E3wQyrLt5Un75mOPgSKBRkZG2yH5XsRqCfeW2Z50iqXOakxL3CfjjTnvJzoBysapbICSA88+LFZvPIDxTov33h/V2P6hxgyyfCqXQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PlKBEnFj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45LDI6rV017550;
-	Fri, 21 Jun 2024 16:15:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Gn6OCO8KpDARrbaPjyz9cq4ME5Nm1k9iw+OzFSfwA2U=; b=PlKBEnFjb2NI5jKA
-	DpsCVcnMmV4CYQfnP8K5ryJ+oEMTprIVLiC01xnAPbpPmimhQ2Fwv8yTHyM93F1C
-	97H5/WDm1TWHrsbasLyk+JaTRhovVt+aBeEuJZX47olU02se13ehr9Vld7xY/hXU
-	d2hKw+L7plJ2XlEKUkhDiDrG5TTetPhTrMkXADylLG7J/I9eJutyg4uLVVaum4p3
-	0zXu5ryo7P+TdmdeUF72/IzIeYt8NPcY4Q8unjvYvs4i2P6ay3qmBne9mhHEBfKD
-	rmvM1Wgqup9xsw1MLc9KIojcNP2ghNOycvyE0WNsGXtB5ktP1C5XdDko1CW4gwt6
-	6leLvw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrkrb3qj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 16:15:05 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45LGF4Dq010537
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 16:15:04 GMT
-Received: from [10.216.56.78] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 21 Jun
- 2024 09:14:57 -0700
-Message-ID: <815b4da1-606e-4cc9-8c62-cefc605c209c@quicinc.com>
-Date: Fri, 21 Jun 2024 21:44:51 +0530
+	s=arc-20240116; t=1718986641; c=relaxed/simple;
+	bh=+Fxx6Sx301djtEaBC0yUcjU4BqsqCf6HkSgOkb8DcPk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=svshcKo8c+MxLPHCIOLnbRti5/LUfsoclwMfD9GEZ9ekOs5mAR5TUFD9Tf650KnUkHJkkEZgT8ORlGxJN6HPohMw++rPy9vsEueKY2DBoQ91ZTuTzAC8GC7iPX7un6QEE9LTUv5ds2h8iJN51e2cjPQVvBz0ZawdBo3zaX7cISw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R7ypmpXw; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1718986640; x=1750522640;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=+Fxx6Sx301djtEaBC0yUcjU4BqsqCf6HkSgOkb8DcPk=;
+  b=R7ypmpXwXDNF/p83FdyaLh/0g1cjCXj/G8OtzvvNbC1JSH38s4/ptFDa
+   7LPQKSni8OKTwdKlvj7UyqUrSOyz/TrXx0li2RftArLNumEVFuyUVrFqS
+   URcdzQlRDc2isPbEXgzHLFn6fcePTSPb5wuQpk/WzPA9bVf4tgDC2++sS
+   T0ElcqJ5mW5yuHDr/VLacLsaAioQylEidDui7AmZu3vnUrZTnmzU2NFXO
+   wk8JqMWVFmBaaGBs9oX1XOnuqwP1TozEIGW1/NzcQckpzo85/j2OmNFDl
+   31suEpE7tvQyCW3sWEQVJTJ4Zw4aJoUi/leRwM/jhRln4SPEXwroNiCLN
+   Q==;
+X-CSE-ConnectionGUID: VZtd603tSmKnAux4yErCcA==
+X-CSE-MsgGUID: QmJwelXgQBKrlOSc9xRAUw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11110"; a="16156307"
+X-IronPort-AV: E=Sophos;i="6.08,255,1712646000"; 
+   d="scan'208";a="16156307"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2024 09:17:19 -0700
+X-CSE-ConnectionGUID: GMnlQ7Z/R/acySIjDxt19w==
+X-CSE-MsgGUID: 1L4S/m1VTmS4FwAsgUW4jQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,255,1712646000"; 
+   d="scan'208";a="43077647"
+Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
+  by orviesa006.jf.intel.com with ESMTP; 21 Jun 2024 09:17:12 -0700
+Received: from kbuild by 68891e0c336b with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sKgwn-0008kC-2J;
+	Fri, 21 Jun 2024 16:17:09 +0000
+Date: Sat, 22 Jun 2024 00:16:38 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dzmitry Sankouski <dsankouski@gmail.com>,
+	Sebastian Reichel <sre@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Pavel Machek <pavel@ucw.cz>, Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Chanwoo Choi <cw00.choi@samsung.com>, phone-devel@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 12/23] mfd: Add new driver for MAX77705 PMIC
+Message-ID: <202406220025.tZN8mAeW-lkp@intel.com>
+References: <20240618-starqltechn_integration_upstream-v3-12-e3f6662017ac@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 7/8] clk: qcom: Add WCSSAON reset
-Content-Language: en-US
-To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, <sboyd@kernel.org>,
-        <andersson@kernel.org>, <bjorn.andersson@linaro.org>,
-        <david.brown@linaro.org>, <devicetree@vger.kernel.org>,
-        <jassisinghbrar@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <mark.rutland@arm.com>,
-        <mturquette@baylibre.com>, <ohad@wizery.com>, <robh@kernel.org>,
-        <sricharan@codeaurora.org>
-CC: <gokulsri@codeaurora.org>
-References: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
- <20240621114659.2958170-8-quic_gokulsri@quicinc.com>
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <20240621114659.2958170-8-quic_gokulsri@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WNHLYVBFJwBEdrhRIs57Zv6DPAroIWAp
-X-Proofpoint-GUID: WNHLYVBFJwBEdrhRIs57Zv6DPAroIWAp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-21_08,2024-06-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 mlxlogscore=999 phishscore=0 impostorscore=0
- adultscore=0 bulkscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406210117
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240618-starqltechn_integration_upstream-v3-12-e3f6662017ac@gmail.com>
+
+Hi Dzmitry,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on 6906a84c482f098d31486df8dc98cead21cce2d0]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Dzmitry-Sankouski/power-supply-add-undervoltage-health-status-property/20240618-222456
+base:   6906a84c482f098d31486df8dc98cead21cce2d0
+patch link:    https://lore.kernel.org/r/20240618-starqltechn_integration_upstream-v3-12-e3f6662017ac%40gmail.com
+patch subject: [PATCH v3 12/23] mfd: Add new driver for MAX77705 PMIC
+config: mips-allmodconfig (https://download.01.org/0day-ci/archive/20240622/202406220025.tZN8mAeW-lkp@intel.com/config)
+compiler: mips-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240622/202406220025.tZN8mAeW-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202406220025.tZN8mAeW-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   In file included from drivers/mfd/max77705-core.c:20:
+>> include/linux/mfd/max77705-private.h:243:26: error: 'MAX77705_USBC_REG_END' undeclared here (not in a function); did you mean 'MAX77705_PMIC_REG_END'?
+     243 |         u8 reg_muic_dump[MAX77705_USBC_REG_END];
+         |                          ^~~~~~~~~~~~~~~~~~~~~
+         |                          MAX77705_PMIC_REG_END
 
 
+vim +243 include/linux/mfd/max77705-private.h
 
-On 6/21/2024 5:16 PM, Gokul Sriram Palanisamy wrote:
-> Add WCSSAON reset required for Q6v5 on IPQ8074 SoC.
+   216	
+   217	struct max77705_dev {
+   218		struct device *dev;
+   219		struct i2c_client *i2c; /* 0xCC; Haptic, PMIC */
+   220		struct i2c_client *charger; /* 0xD2; Charger */
+   221		struct i2c_client *fuelgauge; /* 0x6C; Fuelgauge */
+   222		struct i2c_client *muic; /* 0x4A; MUIC */
+   223		struct i2c_client *debug; /* 0xC4; Debug */
+   224		struct mutex i2c_lock;
+   225	
+   226		struct regmap *regmap;
+   227		struct regmap *regmap_fg;
+   228		struct regmap *regmap_charger;
+   229		struct regmap *regmap_leds;
+   230	
+   231		int type;
+   232	
+   233		int irq;
+   234		int irq_base;
+   235		int irq_masks_cur[MAX77705_IRQ_GROUP_NR];
+   236		int irq_masks_cache[MAX77705_IRQ_GROUP_NR];
+   237		bool wakeup;
+   238		struct mutex irqlock;
+   239	
+   240	#ifdef CONFIG_HIBERNATION
+   241		/* For hibernation */
+   242		u8 reg_pmic_dump[MAX77705_PMIC_REG_END];
+ > 243		u8 reg_muic_dump[MAX77705_USBC_REG_END];
+   244		u8 reg_led_dump[MAX77705_LED_REG_END];
+   245	#endif
+   246	
+   247		/* pmic VER/REV register */
+   248		u8 pmic_rev;	/* pmic Rev */
+   249		u8 pmic_ver;	/* pmic version */
+   250	
+   251		u8 cc_booting_complete;
+   252	
+   253		wait_queue_head_t queue_empty_wait_q;
+   254		int doing_irq;
+   255		int is_usbc_queue;
+   256	
+   257		struct max77705_platform_data *pdata;
+   258	};
+   259	
 
-Commit title can be written as "clk: qcom: ipq8074: Add WCSSAON reset" ?
-
-With that,
-
-Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-
-> 
-> Signed-off-by: Nikhil Prakash V <quic_nprakash@quicinc.com>
-> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-> Acked-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->   drivers/clk/qcom/gcc-ipq8074.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-> index 32fd01ef469a..d382d16b9c10 100644
-> --- a/drivers/clk/qcom/gcc-ipq8074.c
-> +++ b/drivers/clk/qcom/gcc-ipq8074.c
-> @@ -4712,6 +4712,7 @@ static const struct qcom_reset_map gcc_ipq8074_resets[] = {
->   	[GCC_NSSPORT4_RESET] = { .reg = 0x68014, .bitmask = BIT(27) | GENMASK(9, 8) },
->   	[GCC_NSSPORT5_RESET] = { .reg = 0x68014, .bitmask = BIT(28) | GENMASK(11, 10) },
->   	[GCC_NSSPORT6_RESET] = { .reg = 0x68014, .bitmask = BIT(29) | GENMASK(13, 12) },
-> +	[GCC_WCSSAON_RESET] = { 0x59010, 0 },
->   };
->   
->   static struct gdsc *gcc_ipq8074_gdscs[] = {
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
