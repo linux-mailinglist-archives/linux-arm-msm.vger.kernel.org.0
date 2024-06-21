@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-23512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F553911B1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:14:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC1B6911B20
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:14:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A991280D45
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:13:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 870D1282030
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:14:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39A5916D4F3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0F8416D9AF;
 	Fri, 21 Jun 2024 06:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FXwYC0M6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9ZU8SJM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCDE16D4E8;
-	Fri, 21 Jun 2024 06:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808A116D9A8;
+	Fri, 21 Jun 2024 06:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718950304; cv=none; b=Iinv0abbu1utB7Y3hIJ9kQJGiemWbYFukyvC4J+DIajGuM1TFSNDBBb01XiJFlFW+kDt4A3YOGvaRWv37GmAAiYH0udxe/IQodpsasp3EpDfEuLsf32X+C/QJhJNdefPHO6KvH85OTLgF7vdjnnTE6uUwxLWhiajO4xM+lSzUmc=
+	t=1718950304; cv=none; b=X/oCPYtVITfUqvUjGolSe0h6j8v21U/R7DCH3QJBARsyVD73eWDzxR5joszqEJ9EtfHE4YBSkA6uFzJmsxdOv1wg/4yCzgN7OEZXDPKUpsTMYGkLpSdCDi5djtt7Xin58ZZ3IkNDt/+osAS0Gjw7fp59/EJVAer2UxMRxdNNlJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718950304; c=relaxed/simple;
-	bh=9/VAdNtFSFHza6lYbJgLX57zw99VzG9352qUO24IWOs=;
+	bh=SnlVex2au9WIDVFBuKTqnVLh0QtiLPrt8mCOwpktnRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y2WtzMbeBo6F+UrwoqWdz+8KOHxMFRTFBonHAjZ8urJ0Lbjl+6Yqz2Bipr45WzfaUwsvcIsuJE5K1cuDTmNXN2gwSetXOqhSaMBQn1LyJFkR0QF6298E5K8aVDBLRwoE9IXpo6HdEggMThatwOb3/nx6UGkI2my1ooBZc1sYg3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FXwYC0M6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37A3C4AF0A;
-	Fri, 21 Jun 2024 06:11:42 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Hg03nFZTc5hLuy5aIE+8psyfwlBeTPQGljlhdECsp8vApIEDsDmMaD3HVpaQJbV3LENsmxrU2+DI2DLbOSQof8dA8QGJfTd0Ch7zn4h0G1wRbNKysn4uUkUTmY3FJmdyfYHWQEHWlRFFdIcvUtd2QVgAEuhS/OYF2UCHnqR/dP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9ZU8SJM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF8FC2BBFC;
+	Fri, 21 Jun 2024 06:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718950303;
-	bh=9/VAdNtFSFHza6lYbJgLX57zw99VzG9352qUO24IWOs=;
+	s=k20201202; t=1718950304;
+	bh=SnlVex2au9WIDVFBuKTqnVLh0QtiLPrt8mCOwpktnRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXwYC0M63ovs5psNA1nl2D+XJKYYQhRavwreWkG6F8VvnAR9QtL/a1a9k6z5WmFJw
-	 rjst/cOG/8d7lz4SUjk7G21wI6M6HaYuzZR+yJSVnfPyPtbmgEZFhlOrxZmP7bewLb
-	 nEQbu4m/xuc9hRCRand3ogV8fXeqBCGwr30kYL/fM6MUUzlah+bnl05uE2evZkKcvx
-	 NNtSrl/7PTLwELpFjJQxwxzFG5KfYoWl5i42N+8CeDCIfUX3to1q/nptSswcU0tIf7
-	 /zuXKd0UDG5oyEAr/WFeqnMMvb4YpHeaF0XwZgwn/ZDp517XPPMje0KIV5eL/z1T4l
-	 oTAQAdXrx6kdQ==
+	b=b9ZU8SJMOVB+fBoV6UreMtWrEIBnjoo0KsZtHeXHyy4p/nmC3FT6fwds2a4yH/BiK
+	 4mBhZhvRmIOeLrC3sSeccaT1QFqHE9Dl2tSln8SG+n1itPvmfgy7Jh3/NechpiNATo
+	 MbYpOle+pWHZx3qNNm8wFONT9hNRc9i+IrQYM7ZYnGCQbgh4ov/hEcTGvd4AzPUZft
+	 gabf22vQHf2YzkL08TvzNv8CqlO7Flyy00ic7cejlJMqAILzZiNg8zUs2iC62tYiQG
+	 mgiT6gsLwbb8TbxRIHL4YBIREw/phObzQqCsvTtzpgvXd64tzu1FA6d7fRdyrb9SH5
+	 GwBVQ/G1GxooA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh@kernel.org>,
@@ -50,14 +50,13 @@ To: Konrad Dybcio <konrad.dybcio@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qdu1000: fix usb interrupts properties
-Date: Fri, 21 Jun 2024 01:11:25 -0500
-Message-ID: <171895028811.12506.10681719894217760161.b4-ty@kernel.org>
+	Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: Re: [PATCH v2 0/2] qdu1000: Fix LLCC reg property
+Date: Fri, 21 Jun 2024 01:11:26 -0500
+Message-ID: <171895028802.12506.3175097705958876053.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240617115624.29875-1-quic_kbajaj@quicinc.com>
-References: <20240617115624.29875-1-quic_kbajaj@quicinc.com>
+In-Reply-To: <20240619061641.5261-1-quic_kbajaj@quicinc.com>
+References: <20240619061641.5261-1-quic_kbajaj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,22 +67,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 17 Jun 2024 17:26:24 +0530, Komal Bajaj wrote:
-> Update the usb interrupts properties to fix the following
-> bindings check errors:
-> usb@a6f8800: interrupt-names:0: 'pwr_event' was expected
->         from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-> usb@a6f8800: interrupt-names:1: 'hs_phy_irq' was expected
-> 	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-> usb@a6f8800: interrupt-names: ['hs_phy_irq', 'ss_phy_irq', 'dm_hs_phy_irq', 'dp_hs_phy_irq'] is too short
->         from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+On Wed, 19 Jun 2024 11:46:39 +0530, Komal Bajaj wrote:
+> The LLCC binding and driver was corrected to handle the stride
+> varying between platforms. Switch to the new format to obtain
+> the base address of each LLCC bank from devicetree.
+> 
+> -----
+> Changes in v2:
+> * Updated the commit message for bindings, marking the change as revert
+> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240612062719.31724-1-quic_kbajaj@quicinc.com/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qdu1000: fix usb interrupts properties
-      commit: 38b55ddb4a9f364b68cb1db174cadfae7cf4696e
+[1/2] arm64: dts: qcom: qdu1000: Fix LLCC reg property
+      commit: af355e799b3dc3dd0ed8bf2143641af05d8cd3d4
+[2/2] Revert "dt-bindings: cache: qcom,llcc: correct QDU1000 reg entries"
+      commit: e32ac54b0529a8727235c04aebe1f2d689fa5cfe
 
 Best regards,
 -- 
