@@ -1,62 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-23513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC1B6911B20
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:14:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23011911B24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:14:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 870D1282030
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:14:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC3B31F2178F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:14:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0F8416D9AF;
-	Fri, 21 Jun 2024 06:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2FAB16DEA9;
+	Fri, 21 Jun 2024 06:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9ZU8SJM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IMgH9NLM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808A116D9A8;
-	Fri, 21 Jun 2024 06:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC8416DEA2;
+	Fri, 21 Jun 2024 06:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718950304; cv=none; b=X/oCPYtVITfUqvUjGolSe0h6j8v21U/R7DCH3QJBARsyVD73eWDzxR5joszqEJ9EtfHE4YBSkA6uFzJmsxdOv1wg/4yCzgN7OEZXDPKUpsTMYGkLpSdCDi5djtt7Xin58ZZ3IkNDt/+osAS0Gjw7fp59/EJVAer2UxMRxdNNlJE=
+	t=1718950305; cv=none; b=j4nVU16xGjz0Syl0n/8txFmNP+7ktOxwJ4BDDKStvn4i6+rXAZIS9wT3rkoL5YPqTa+oi7XTIzMMj1h/WxopFixufy5SpqBQ19xqKT9Gdm7E1VnjVQRxSu1w8ZEpl6Did5YPoMbh0gz94cRdIqTrk3vXcaqi5o/70OBCTUh1Yf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718950304; c=relaxed/simple;
-	bh=SnlVex2au9WIDVFBuKTqnVLh0QtiLPrt8mCOwpktnRE=;
+	s=arc-20240116; t=1718950305; c=relaxed/simple;
+	bh=DeYqlfXV5PCkIiTjWckT5kb7Ag0arctocPyZOyxJzTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hg03nFZTc5hLuy5aIE+8psyfwlBeTPQGljlhdECsp8vApIEDsDmMaD3HVpaQJbV3LENsmxrU2+DI2DLbOSQof8dA8QGJfTd0Ch7zn4h0G1wRbNKysn4uUkUTmY3FJmdyfYHWQEHWlRFFdIcvUtd2QVgAEuhS/OYF2UCHnqR/dP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9ZU8SJM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF8FC2BBFC;
-	Fri, 21 Jun 2024 06:11:43 +0000 (UTC)
+	 MIME-Version:Content-Type; b=r0ugwEUIKPB/xfiE8KuoZ02HI6QYMmpaCruIXQaBdxeTzUHRYKn5D/DWm4ZcoDQRReH5ofmYlzsmVrYWpxx9qMd3BPw07O1KJjutghbDf1UI6CuaiwPThkZU+35qBtQJR2ptAEDRAs9s3dKH6WyxVEf9n3FrwOURiSFM+qkv/fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IMgH9NLM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90026C4AF07;
+	Fri, 21 Jun 2024 06:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718950304;
-	bh=SnlVex2au9WIDVFBuKTqnVLh0QtiLPrt8mCOwpktnRE=;
+	s=k20201202; t=1718950305;
+	bh=DeYqlfXV5PCkIiTjWckT5kb7Ag0arctocPyZOyxJzTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9ZU8SJMOVB+fBoV6UreMtWrEIBnjoo0KsZtHeXHyy4p/nmC3FT6fwds2a4yH/BiK
-	 4mBhZhvRmIOeLrC3sSeccaT1QFqHE9Dl2tSln8SG+n1itPvmfgy7Jh3/NechpiNATo
-	 MbYpOle+pWHZx3qNNm8wFONT9hNRc9i+IrQYM7ZYnGCQbgh4ov/hEcTGvd4AzPUZft
-	 gabf22vQHf2YzkL08TvzNv8CqlO7Flyy00ic7cejlJMqAILzZiNg8zUs2iC62tYiQG
-	 mgiT6gsLwbb8TbxRIHL4YBIREw/phObzQqCsvTtzpgvXd64tzu1FA6d7fRdyrb9SH5
-	 GwBVQ/G1GxooA==
+	b=IMgH9NLMeNXl5hCURukcVZBBY5gDfBjuD+3T3vlkk+AthmNL1TTboELa8AV95Dm0A
+	 izOusQCDoTDACJZI4NoLjqnaz7pS9gefG8ZBtrBnBTzk/SATghhTmaimxl6ao5t7P4
+	 iJzi3EVLk/+V5SnGHGJ52Ka5JnC9UYZGwucTgwQpbcK42yD7e4CkqB8V6BicRJDxL4
+	 XS8SJpFDVezoV8isn+QB8tZ7Msd1OGW7ij9eAISuhMMJtqLYO6rtWCh8eLGDwlnRaE
+	 6i2KeEFmUSQ+E00lTcVdZsnkC0zDCQGK9KZkiTO0oyrUS9EcqpldiCrdOetCrDfkNu
+	 rUkt9KUGOGAAg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+To: Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+Cc: linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
-	Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: Re: [PATCH v2 0/2] qdu1000: Fix LLCC reg property
-Date: Fri, 21 Jun 2024 01:11:26 -0500
-Message-ID: <171895028802.12506.3175097705958876053.b4-ty@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	quic_mojha@quicinc.com
+Subject: Re: [PATCH v2] arm64: defconfig: Enable secure QFPROM driver
+Date: Fri, 21 Jun 2024 01:11:27 -0500
+Message-ID: <171895028806.12506.8259478812930238190.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240619061641.5261-1-quic_kbajaj@quicinc.com>
-References: <20240619061641.5261-1-quic_kbajaj@quicinc.com>
+In-Reply-To: <20240620112716.1339-1-quic_kbajaj@quicinc.com>
+References: <20240620112716.1339-1-quic_kbajaj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,24 +70,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 19 Jun 2024 11:46:39 +0530, Komal Bajaj wrote:
-> The LLCC binding and driver was corrected to handle the stride
-> varying between platforms. Switch to the new format to obtain
-> the base address of each LLCC bank from devicetree.
+On Thu, 20 Jun 2024 16:57:16 +0530, Komal Bajaj wrote:
+> Enable the secure QFPROM driver used by Qualcomm QDU1000
+> platform to read the secure qfprom region allowing LLCC driver
+> to get the DDR channel configuration.
 > 
-> -----
-> Changes in v2:
-> * Updated the commit message for bindings, marking the change as revert
-> * Link to v1: https://lore.kernel.org/linux-arm-msm/20240612062719.31724-1-quic_kbajaj@quicinc.com/
+> Currently, LLCC is the only user of secure QFPROM, and hence
+> setting CONFIG_NVMEM_QCOM_SEC_QFPROM as module to the convenience
+> of LLCC module.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: qdu1000: Fix LLCC reg property
-      commit: af355e799b3dc3dd0ed8bf2143641af05d8cd3d4
-[2/2] Revert "dt-bindings: cache: qcom,llcc: correct QDU1000 reg entries"
-      commit: e32ac54b0529a8727235c04aebe1f2d689fa5cfe
+[1/1] arm64: defconfig: Enable secure QFPROM driver
+      commit: 847ee7c314b88cc77e13cd91f87f50e36d108fdc
 
 Best regards,
 -- 
