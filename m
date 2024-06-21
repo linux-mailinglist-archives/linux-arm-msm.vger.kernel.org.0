@@ -1,117 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-23639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18D54912DFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 21:38:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 329B6912E19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 21:48:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 49A031C214A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 19:38:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B1BE11F25565
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 19:48:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C06C017B4FA;
-	Fri, 21 Jun 2024 19:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E4B713B59F;
+	Fri, 21 Jun 2024 19:48:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LnqAdrUR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6DA17C7D0;
-	Fri, 21 Jun 2024 19:37:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A675664
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 19:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718998668; cv=none; b=uoLujswBTru3z/WNKt/6lqqZUuTIrCpQ3oazKzuqExTsT+3LwtxdLNotF9Nd0CFw0lMwOSLuuhKVwvD7NaOhZLMbfEP8Zor03awLQXSac4YoB+oHaPE7ZmlBSpcJW3QYycSu32IgPXUfkIPErZje5DB9LtbSQKvbJ1RxdvG+xWg=
+	t=1718999321; cv=none; b=r+/ruKQ/KItz6TKxhbwmB3yk6Mdk/RJbfNhsez8eVYzMEwhnlJodWThSm96YmP96uuCxRo1qP+n4EROIPN3sdjbAMB4ul1FrL0pbamQhxfGgIR5N29Qlhzb3GmPUCCfCGQBu8T5JPQm6zpyGwqI1UuYAlmg1F1W3zXC2ApcIdM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718998668; c=relaxed/simple;
-	bh=Z6XDvtd/xm4xSg8Kzfwtsmbr9qvvXnf1QYMN9sGi2k0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O3I8zIHqOtzkW3Zz1foPfRFHETafmXtVRcRH5thYVtFMqpG/0PA52+74eTQNAju/PrLWqjrml5AzYuFV/6Wp/5baTRnm5pne9zzG3IMIHakZPzWRtZlJwP0Q45bv4lnCSaklThFSyfAzxxxinBU67/ntGZuKP1xOiipJqHTY//I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.166.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-37613975e20so8888245ab.2;
-        Fri, 21 Jun 2024 12:37:47 -0700 (PDT)
+	s=arc-20240116; t=1718999321; c=relaxed/simple;
+	bh=8LS+B4TJzrSUFzU9GSEIAKTPmujsOf5ACBaxrf9HeIQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NoZSYAhqsJRPNRK/WVxG7XnOtb78BtiQ2mp59MBS7h5wFBP6wpw1Cl+CSsDg147UQqdTjGK6MoThgWn5mgMvIbWevzlYNEJEfkZXWWNOUezmVdcfO/V4e3LAyhqMqTlipinFdkthkuvCfYZKL7AJQBvGifQggPpkndT+TBPM7nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LnqAdrUR; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-63bd10df78dso22571447b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 12:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1718999319; x=1719604119; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=P/c8cghJ6uMh9jC1Qg2cHE9CahIR6DPBACZ2TcXW56A=;
+        b=LnqAdrURw6j4VZyaBnjJ4VdP/yDHiUaz00gAMNzTXumIJdG3ACz0T724vIo2asi9Dc
+         BpYITd+TSU2fWLcX4T4O/VEyEFI08KPFgGMMWLavE0+zO7RKEAOarFOxyuEMo56aT1Jh
+         J+iT3zBpCGVaIYclmyQPhYcXWO1M1wYbq376iSfpVknVYgnQQBEjt9xEse0kCwccqCgm
+         3huGY/wkL6Va2UfRBXXN6XZu27K2zrw9rwLOEFtrF26itwUoI/Qba11FT0ZScFoBQdPA
+         ew9qE7vrNtx2QoUHiVDA7ppBMZZEIXr6odFf4FkUGMJ8Tvt69CtCUHB6FGAU6ZPGU79z
+         lFBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718998666; x=1719603466;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sXQhvL9a6CYV2VK3wKh6O5gxH2nHkFbrE11g//vArPo=;
-        b=KPHaaBT1LMxQLIT4qrJNsjC+lg8V94zRvKp9SWweVsgJAc2bk1mqTe56NOpi+nBi8V
-         ASUVXmFspc1vbid9akyRDEkgw7nS3BW7XL6/FmVEXWgjVzqdkcNC/6nOcPd749CWAzZX
-         Zrv2F63MpyNCR4GQxu95fpGlJPGEssKBbnqQb7EpVHDdmjhIN5YmD8VSIaK7k1sCRBMf
-         +zqk/ZlzPd2bIPa120aZ+3FJ3rOHMcnCPhSxyFOLD1eJ79tAl7k9qDEc6hmx57hDHmWj
-         7g6LOEKwTuf3ExBdzpVOJbF2BUTQ5KQM94SmEC6zDUkMNQ2rtd8z9V/Ykr/5Spgt7Eib
-         Myyg==
-X-Forwarded-Encrypted: i=1; AJvYcCWlQBCeRa+f/1GAeABhmRcCkdLoTk3InGb2ixDCRhf6qjVg5UX2LTQyl9nZAva7Dba0icKNZtmRvPB/1IoL6Vrp2bVm+qx4sTB841Wo25K1D9ryYIf7CPC6AFRazTFCLHA3boHa6bJxoGBec0VvTEobTCubDrxGY3MQK7SlzPjp++QGGeCLARs50ARsx7RyyslI5YKVJb0YvqqNf0V05//o7AKsYw2YXrFF3Yglutd558upLGkXiHXeqFTw5oGOp8pxE85ZWgjFD5liEMBWySfUGpLadxsEe0EXNuQVeMqV7fQ9
-X-Gm-Message-State: AOJu0Yy4m+4WgmgVHw3UiKJ/+/RFiKwqlB555k/jJG3S0Xs9OY5Es944
-	re6wSH8+1MsxZTXCUt9UoPGZCSu+YJkfoA1yCgEIN80Pd4JRr+va
-X-Google-Smtp-Source: AGHT+IGlUL9QwPxUHX7nV3tXeYRMDnq/je2PsJ3NCGAtSFvVXOze8EobQXpZtTE4zHujIy0ctpA41A==
-X-Received: by 2002:a05:6e02:1c85:b0:375:a185:f00f with SMTP id e9e14a558f8ab-3761d709758mr109157335ab.22.1718998666403;
-        Fri, 21 Jun 2024 12:37:46 -0700 (PDT)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-716b3ee8c95sm1492640a12.31.2024.06.21.12.37.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jun 2024 12:37:45 -0700 (PDT)
-Date: Sat, 22 Jun 2024 04:37:44 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Minghuan Lian <minghuan.Lian@nxp.com>,
-	Mingkai Hu <mingkai.hu@nxp.com>, Roy Zang <roy.zang@nxp.com>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-omap@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@axis.com, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org,
-	mhi@lists.linux.dev, Niklas Cassel <cassel@kernel.org>,
-	Bjorn Helgaas <helgaas@kernel.org>
-Subject: Re: [PATCH 0/5] PCI: endpoint: Add EPC 'deinit' event and
- dw_pcie_ep_linkdown() API
-Message-ID: <20240621193744.GA3008482@rocinante>
-References: <20240606-pci-deinit-v1-0-4395534520dc@linaro.org>
- <20240610065324.GA7660@thinkpad>
+        d=1e100.net; s=20230601; t=1718999319; x=1719604119;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P/c8cghJ6uMh9jC1Qg2cHE9CahIR6DPBACZ2TcXW56A=;
+        b=p4yJdVfZf1j89gvhwnKVrfPAMInDygrgJEYAEcSqiHiwvMovPDf2EIDaAisOtqbJfj
+         nQXYdZeriIgXMVEPVkcJBxH6CK90O8nH/ApscHTH6toMEF9j4O+JZzgLYs64wPBOM/xK
+         u/TsG4A83wSfircvNBjuCvn6o3BlUI+tJH6iZzbWk06b/o68IT4Ho8Fcj7Zw+vudCegX
+         sSl0qZkdf/fcGCxytXd/yvV4w1gOCbPWI16WmNRLSWROv4jjswLUUUfUod+Jyp1SFrA3
+         BXmW7YMGB6sv723nep+4NMtp/0EFj50DQfnk0n0G4SNlXeEyDvrhRMvI4j5r7xHI05UJ
+         37RA==
+X-Forwarded-Encrypted: i=1; AJvYcCUMZyTwfo99wKl9Mqq2n4WEnxuacYQxe+LwnxPLwAodr0xd/I5JSMEtkCh0TOX1KeogdTqb3JmMtph0+SENEFJ2j4gB+qE/FfSp/OmSTA==
+X-Gm-Message-State: AOJu0Yy6LKm+a1oj5yKtQ7DhdVeiSQHzLAu4Tg9ECCloiDLRk/FD9jrL
+	KHE0L2dgKd3TMMfodouvWnuwX9Q83Z1QcV3wRWZtr51AkLk2fdBMia4EYulX4ZbsdLBKqGdXr2y
+	HhXSPpCT5EBOyEOG29qE+hIUqGtgF7qzkcUEVlQ==
+X-Google-Smtp-Source: AGHT+IFvOw/kHfTfZo+OrqgAX4CDfPljUrETGvD6Moa3aTJuLqtsXuUSv/1M4m37lNwuXK/7MTl9DPjJyvK+nqkQaqI=
+X-Received: by 2002:a0d:d48d:0:b0:622:c901:950b with SMTP id
+ 00721157ae682-63a8fddc9d9mr103318627b3.43.1718999318614; Fri, 21 Jun 2024
+ 12:48:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240610065324.GA7660@thinkpad>
+References: <20240612064731.25651-1-quic_ekangupt@quicinc.com>
+ <zbpia232dh4ojfsvhcqxrp6cwfygaalu5cycdrs47pqmnrisvk@dq24nww26gkm>
+ <z6g5ool5vomkudiroyaxh532rhlfu5x4i3l5xoqrsho2sxv4im@v5ghemjkpc3v>
+ <CAA8EJprgCJKOnZo7Q31KZV3SA3NqWxcMmoUxuqnVF+8cQW5ucg@mail.gmail.com>
+ <6f59552d-d7a3-5e05-3465-e707c1b7eaf2@quicinc.com> <ZnWhwJtTXS32UI9H@phenom.ffwll.local>
+In-Reply-To: <ZnWhwJtTXS32UI9H@phenom.ffwll.local>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 21 Jun 2024 22:48:27 +0300
+Message-ID: <CAA8EJppRP0HdM6AfmL0uga2esDey12LVjuSn=wJZtV4Uz0CgZg@mail.gmail.com>
+Subject: Re: [PATCH v1] misc: fastrpc: Move fastrpc driver to misc/fastrpc/
+To: Jeffrey Hugo <quic_jhugo@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Ekansh Gupta <quic_ekangupt@quicinc.com>, 
+	Oded Gabbay <ogabbay@kernel.org>, srinivas.kandagatla@linaro.org, 
+	linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org, 
+	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, 
+	Dave Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Content-Type: text/plain; charset="UTF-8"
 
-Hello,
+On Fri, 21 Jun 2024 at 18:52, Daniel Vetter <daniel@ffwll.ch> wrote:
+>
+> On Fri, Jun 21, 2024 at 09:40:09AM -0600, Jeffrey Hugo wrote:
+> > On 6/21/2024 5:19 AM, Dmitry Baryshkov wrote:
+> > > On Fri, 21 Jun 2024 at 09:19, Bjorn Andersson <andersson@kernel.org> wrote:
+> > > >
+> > > > On Wed, Jun 12, 2024 at 09:28:39PM GMT, Dmitry Baryshkov wrote:
+> > > > > On Wed, Jun 12, 2024 at 12:17:28PM +0530, Ekansh Gupta wrote:
+> > > > > > Move fastrpc.c from misc/ to misc/fastrpc/. New C files are planned
+> > > > > > to be added for PD notifications and other missing features. Adding
+> > > > > > and maintaining new files from within fastrpc directory would be easy.
+> > > > > >
+> > > > > > Example of feature that is being planned to be introduced in a new C
+> > > > > > file:
+> > > > > > https://lore.kernel.org/all/20240606165939.12950-6-quic_ekangupt@quicinc.com/
+> > > > > >
+> > > > > > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> > > > > > ---
+> > > > > >   MAINTAINERS                          |  2 +-
+> > > > > >   drivers/misc/Kconfig                 | 13 +------------
+> > > > > >   drivers/misc/Makefile                |  2 +-
+> > > > > >   drivers/misc/fastrpc/Kconfig         | 16 ++++++++++++++++
+> > > > > >   drivers/misc/fastrpc/Makefile        |  2 ++
+> > > > > >   drivers/misc/{ => fastrpc}/fastrpc.c |  0
+> > > > > >   6 files changed, 21 insertions(+), 14 deletions(-)
+> > > > > >   create mode 100644 drivers/misc/fastrpc/Kconfig
+> > > > > >   create mode 100644 drivers/misc/fastrpc/Makefile
+> > > > > >   rename drivers/misc/{ => fastrpc}/fastrpc.c (100%)
+> > > > >
+> > > > > Please consider whether it makes sense to move to drivers/accel instead
+> > > > > (and possibly writing a better Kconfig entry, specifying that the driver
+> > > > > is to be used to offload execution to the DSP).
+> > > > >
+> > > >
+> > > > Wouldn't this come with the expectation of following the ABIs of
+> > > > drivers/accel and thereby breaking userspace?
+> > >
+> > > As I wrote earlier, that depends on the accel/ maintainers decision,
+> > > whether it's acceptable to have non-DRM_ACCEL code underneath.
+> > > But at least I'd try doing that on the grounds of keeping the code at
+> > > the proper place in the drivers/ tree, raising awareness of the
+> > > FastRPC, etc.
+> > > For example current fastrpc driver bypasses dri-devel reviews, while
+> > > if I remember correctly, at some point it was suggested that all
+> > > dma-buf-handling drivers should also notify the dri-devel ML.
+> > >
+> > > Also having the driver under drivers/accels makes it possible and
+> > > logical to  implement DRM_ACCEL uAPI at some point. In the ideal world
+> > > we should be able to declare existing FastRPC uAPI as legacy /
+> > > deprecated / backwards compatibility only and migrate to the
+> > > recommended uAPI approach, which is DRM_ACCEL.
+> > >
+> >
+> > I suspect Vetter/Airlie need to be involved in this.
+> >
+> > Its my understanding that accelerator drivers are able to reside in misc as
+> > long as there is no use of dma-buf.  Use of dma-buf means they need to be in
+> > drm/accel.
+> >
+> > There is precedent for moving a driver from misc to accel (HabanaLabs).
+> >
+> > Right now, I'm not aware that fastRPC meets the requirements for drm/accel.
+> > There is an open source userspace driver, but I'm not aware of an open
+> > source compiler.  From what I know of the architecture, it should be
+> > possible to utilize upstream LLVM to produce one.
+>
+> Yeah so fastrpc is one of the reasons why I've added a dma_buf regex match
+> to MAINTAINERS, and given this move has shown up here on dri-devel that
+> seems to work.
+>
+> But also, it slipped through, can't break uapi, so I just pretend it's not
+> really there :-)
+>
+> That aside, going forward it might make sense to look into drivers/accel,
+> and also going forward new dma_buf uapi will be reviewed to fairly
+> stringent standards. We're not going to impose the dri-devel userspace
+> rules on everyone, each subsystem tends to know what's best in their
+> ecosystem. But if something just ends up in misc so it can avoid the drm
+> or accel rules (and I think media is also pretty much on the same page
+> nowadays), then expect some serious heat ...
 
-> Applied patch 2/5 to pci/endpoint! Krzysztof, please apply patches 1/5 and 5/5
-> to controller/dwc (patches 3/5 and 4/5 are already applied by you).
+After discussing this on #dri-devel, I'm going to retract my
+suggestion of moving the driver to drivers/accel/, unless there is an
+actual interest in moving to drm_accel.h style of uAPI.
 
-Applied to controller/dwc, thank you!
+It should still be noted that there is a strong recommendation to
+start from scratch and to use DRM / accel uAPI, either using the
+existing driver for the legacy platforms or dropping it completely.
+When the fastrpc driver was started by Qualcomm engineers, there was
+no standard method of implementing the accel drivers. Since 1st of
+November 2022 we have drm_accel.h.
 
-[01/02] PCI: dwc: ep: Remove dw_pcie_ep_init_notify() wrapper
-        https://git.kernel.org/pci/pci/c/9eba2f70362f
-
-[02/02] PCI: layerscape-ep: Use the generic dw_pcie_ep_linkdown() API to handle Link Down event
-        https://git.kernel.org/pci/pci/c/14638af66309
-
-	Krzysztof
+-- 
+With best wishes
+Dmitry
 
