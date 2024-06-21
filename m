@@ -1,209 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-23585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E074591269D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:24:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96D149126E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:43:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17E12B25F92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 13:24:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BDE3BB2734C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 13:42:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA65A15574B;
-	Fri, 21 Jun 2024 13:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A21F68BFD;
+	Fri, 21 Jun 2024 13:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="bjtyj2p4"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Gro7t4v8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3814155732
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 13:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A2FB67D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 13:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718976233; cv=none; b=hKn/WCI5FV9J8yN+2twAewpMTxpJ5Za4LaZZOfv/NfBDqmqtgguIqf7qALk6jbVaxSratAg8eWYco+ZCkX2EO6k8AVyF3+eBXPd4loLNl6jphk/6FpPeYSmKSHU9oNvdAUmYgu1eQoNZ2xC9NAP5sCXzNvAzSYmP0hC9fO5avTc=
+	t=1718977375; cv=none; b=dkVrQvaqKd8gkcmvbp6/BC+SkZu+FqcLw6x/xNQRICw/T7u73aFlxtwbktqHM4Fz9dmeBYMupgfhkdFXl4UvYdk5iF+HXQmND6RQ+lfDvbcq/WoUWgPvbw1+J2k88SwX8TSedb20c7Mud+ou5F153V5Wj5yYCo3g2qOJ4SDnWKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718976233; c=relaxed/simple;
-	bh=wQtusHT7PTHfNhISON3c4fk/0f68+/Mcm3emwcz0W2Q=;
+	s=arc-20240116; t=1718977375; c=relaxed/simple;
+	bh=xTDco5y5zMHfNQrIXpXx9hG93QyktZFABb4TC1wrwiA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=im1NuolE5boMgBd3lvqLb4bNAtNdn3NS3MIpcHZAr+Nk4BtdhMQWghBKKkVrLawd6Wblq9U6xiaKvzYJ5/5DOUxmiJDVkoWyFZ4Z3EuwPRxzCuO87cwTkYpmLDqu/wAD8Mdbp524lKdN3L4qmXObbu29fCZTnStiypG45CC0YFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=bjtyj2p4; arc=none smtp.client-ip=209.85.167.41
+	 To:Cc:Content-Type; b=ZjtnVVjtxQBmV1Zvgd7tGDQ/3wPvm39iSKAIWAyo8K7BZtZqlENyCqxW2gcyddigMQEKWU3zhaxeIq1FqkPHix0tUpPH946gpuFxEs22nN5+IXu96LyfA1is9GYjEISeqUAsHfFPTtq1zqirZeeKRcoc5F9giBHYjUU7Cw+KYWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Gro7t4v8; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52bc335e49aso2333530e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 06:23:50 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52c32d934c2so2076510e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 06:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718976229; x=1719581029; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1718977372; x=1719582172; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Lh6DHy5f3eoMV1E961uZI87Rq1n/gY0n/fr9bCAQrdo=;
-        b=bjtyj2p4U32GeMDYPSUWmtE2chTbi1v+y5UfIGQC9LEUpC/OkUlilX5eOFlWPjKkF2
-         qGe2Q+8jPSNTYIRSXG62GOsDi+9yNmRjVL1O4136JvCl8YCVbSJmMiDn0iyE48QF+noj
-         pNXmYpbCubSyKA/c8TV0D4sg1tw2fB1XAG0PChFXO1DR863DYtqrGl/uIFqlLVSpw2XD
-         7wFFJ7AJdLdvFSUYayx5g+q8kYUwqmnSx6u+f8T3NdMv42+yEaRWhWiWs0NZcPQwrJ9z
-         0gunHamNuRjqeEvfoiC00FK96wfDMMJUaAV0APR2FVMtD2VMV69wLgtapdkgfAKz6Ry2
-         jacQ==
+        bh=/ok5aSN9mBgn8wrFYODhxaqdyy2yPpSIKzg8yKMrNqU=;
+        b=Gro7t4v8IQ1tvOAerQff5wO4SCPfoMGUkwnreo7DcOe5UmIQFKkZBF0JYyzYgJY9Du
+         O9lu9SJwbcCfqOhlS5jzNM0A81tdNrB63xQx9iyTUUfIKSS7YX0IYqrwGeIwNFtl2Ocl
+         O6O26Cu1jwU286u2H1PVTWXAwLI+TdemYeGWiuP7t9HVRw+ijNd9cIx45QHE1rte6Sbq
+         VAlcgq98LX1ZL4lPLdxzOo9WNzVQkVpAaC30DVdFr5vE1mPnxEL+uJElrjdy+kkHK/z6
+         QFDHVoJa+I7N9cAFz7G6sszKMQbTe152cj7OfyDfTB9E9P4Qws9p32cpSCdPk9titY+W
+         oJFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718976229; x=1719581029;
+        d=1e100.net; s=20230601; t=1718977372; x=1719582172;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Lh6DHy5f3eoMV1E961uZI87Rq1n/gY0n/fr9bCAQrdo=;
-        b=DoYJPxFaqPZDa8xbeivIj8qsFuIANL6YNQkTVOUaLgt2L0kt8kHfJTKafNUVk1WMHU
-         XB0L0OKkwQb+FKyyF6mEuiN1ZiC/qjpf/mWd0O2JKFOl7tKBI8RUtj0+tYIA/GrRGnxY
-         yBxcQKJ3aCsvxM5A06EsNnoQSrAeXgc3bHAPYAgoZhWmbORLhrtgPZ+SrE9HSfNuy/nm
-         rCIHxmqQU0+FwwpB+YTZdm8l/xCrNjdYybnuOuj1QaLCsLmSK46KErVY8d1nmMiytWB7
-         F/iSCym3tsvCDmNBwBvD6kyAd+IB4s9ILSOHpdSi6cdnm3XdsaJaPhdEqwzD5WinJ6dM
-         bkWA==
-X-Forwarded-Encrypted: i=1; AJvYcCXkkD1CsW5zjRwp5weosxkaRaoBCGUoNQVD3rKAzk63PNuUoi/zROKScMNTLH7vOecQfObm6hQejblrmqU2Dr/hzJ0ZjpEp2KaWoK80UQ==
-X-Gm-Message-State: AOJu0Yw6i32q022+JhBYKIAupo3XP59RQCPllo/bixJAJSwy+Or8jSR8
-	CBcs55A1dqH/ibqf7lV0LtUJFcN2k/5CBKqDwJtupNs7OMLfy5kEctg68YK+SLLN9+WdvyVxJzR
-	PgLL7B7IcEOfJ+X99FfIuKfK0QamKT/wOC2wooQ==
-X-Google-Smtp-Source: AGHT+IG5Y1gn2ekPnM1m7JqqJu9Ttsj5bBzwQpCQM5QC3ClAcEetDkpxMFp8GreL0i+Q2R/FLHudf9Yf2q2tQ+uH6IQ=
-X-Received: by 2002:ac2:5e91:0:b0:52c:b199:940b with SMTP id
- 2adb3069b0e04-52ccaa62a3emr5131441e87.32.1718976228569; Fri, 21 Jun 2024
- 06:23:48 -0700 (PDT)
+        bh=/ok5aSN9mBgn8wrFYODhxaqdyy2yPpSIKzg8yKMrNqU=;
+        b=KLR8yBP+YNuL7oI1hiAX+xeLE59DexrpnkGlR1ErjC/egZc2tmaJJw7j7MXndEe9og
+         aLtqFHm6MJYIZ1H4ie5fz+jBxoNtNLZPtg36X7GI3UsoRO/mz4heOG7yq6jBDT679fEC
+         w0jVWJnO/4eQcqGDtRDv7oucf4IQSJn6Xs3rp9RNBoZ75qBTGrF/70r6017isDzF5lmF
+         WtQiN+AzUX5tGFSd77oGoIMTcpD+iyWc7HKKbyHmtABhhqCDWFZjYskctrlYUprOop4y
+         DAV9G/I4qxYy+j4fu8w0JvzTL8gASSV9HXEMZgtc4LSEYvSIjpo/weCTzBNFLVUhWeuP
+         7O0g==
+X-Forwarded-Encrypted: i=1; AJvYcCV3QgejvGS0Hapfd7fv5dH/likAofMFAvBdbalwIm7Gfgxqmbmj5GShoSqR9t7mxLCjNnBIGr0+lALdxukdqhCxHQxo+N+SWMwguWee0Q==
+X-Gm-Message-State: AOJu0YwrF/rh7YNFopC8FSudJP5dGzX/K04eSg7iqsB1bCscFCrFGGJy
+	vOQOsRZ4J0omsOGFUS7Qhso/hheeuY+GaJaGC3P7uEzQjE79i1+2PXlrJDDFGr+hKZrU3EDNk2z
+	f2310djJrV3wIQriQ35T0rNPwz23ADvNE0kYh6A==
+X-Google-Smtp-Source: AGHT+IHdpPft57o1H9+QCaSg+D/jEJgjvnJh9jmVAke5h3wFi+XaALCQ+22Vt7cHkTOx5G0TXYGs34rFU5FJ7o52p94=
+X-Received: by 2002:a05:6512:3582:b0:52c:dbc7:3d36 with SMTP id
+ 2adb3069b0e04-52cdbc73f0bmr285147e87.26.1718977372099; Fri, 21 Jun 2024
+ 06:42:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240605123850.24857-1-brgl@bgdev.pl> <171889385036.4585.6482250630135606154.git-patchwork-notify@kernel.org>
- <0b144517-4cc5-4c23-be57-d6f5323690ec@163.com> <CAMRc=Mf2C4ywa+wQ6pcq5RtehQD00dDhzvS6sDcD8tAn=UypUA@mail.gmail.com>
- <33c7587b-83a4-4be7-b00a-d30874df8c22@163.com>
-In-Reply-To: <33c7587b-83a4-4be7-b00a-d30874df8c22@163.com>
+References: <20240527-shm-bridge-v10-0-ce7afaa58d3a@linaro.org>
+ <20240527-shm-bridge-v10-13-ce7afaa58d3a@linaro.org> <20240620155335645-0700.eberman@hu-eberman-lv.qualcomm.com>
+In-Reply-To: <20240620155335645-0700.eberman@hu-eberman-lv.qualcomm.com>
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 21 Jun 2024 15:23:37 +0200
-Message-ID: <CAMRc=Me8h-L6mbmOfHce9FF8Koh4_fp=cWAeWrQAj-ukxBOL2g@mail.gmail.com>
-Subject: Re: [PATCH v9 0/2] pwrseq: introduce the subsystem and first driver
-To: Lk Sii <lk_sii@163.com>, marcel@holtmann.org, luiz.dentz@gmail.com
-Cc: patchwork-bot+bluetooth@kernel.org, davem@davemloft.net, 
-	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, robh@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, kvalo@kernel.org, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, lgirdwood@gmail.com, 
-	broonie@kernel.org, catalin.marinas@arm.com, will@kernel.org, 
-	bhelgaas@google.com, saravanak@google.com, geert+renesas@glider.be, 
-	arnd@arndb.de, neil.armstrong@linaro.org, m.szyprowski@samsung.com, 
-	elder@linaro.org, srinivas.kandagatla@linaro.org, gregkh@linuxfoundation.org, 
-	abel.vesa@linaro.org, mani@kernel.org, lukas@wunner.de, 
-	dmitry.baryshkov@linaro.org, amit.pundir@linaro.org, wuxilin123@gmail.com, 
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
+Date: Fri, 21 Jun 2024 15:42:40 +0200
+Message-ID: <CAMRc=McKtc5CSJPhJ8syqukGnVC8MXuWdv0oEFY-Jaxi_GM19g@mail.gmail.com>
+Subject: Re: [PATCH v10 13/15] firmware: qcom: scm: clarify the comment in qcom_scm_pas_init_image()
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Robert Marko <robimarko@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Maximilian Luz <luzmaximilian@gmail.com>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Alex Elder <elder@kernel.org>, linux-arm-msm@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-pci@vger.kernel.org, 
-	linux-pm@vger.kernel.org, bartosz.golaszewski@linaro.org
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, 
+	Andrew Halaney <ahalaney@redhat.com>, Deepti Jaggi <quic_djaggi@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 21, 2024 at 11:04=E2=80=AFAM Lk Sii <lk_sii@163.com> wrote:
+On Fri, Jun 21, 2024 at 12:54=E2=80=AFAM Elliot Berman <quic_eberman@quicin=
+c.com> wrote:
 >
-> On 2024/6/21 14:36, Bartosz Golaszewski wrote:
-> > On Fri, Jun 21, 2024 at 3:14=E2=80=AFAM Lk Sii <lk_sii@163.com> wrote:
-> >>
-> >>
-> >>
-> >> On 2024/6/20 22:30, patchwork-bot+bluetooth@kernel.org wrote:
-> >>> Hello:
-> >>>
-> >>> This series was applied to bluetooth/bluetooth-next.git (master)
-> >>> by Bartosz Golaszewski <bartosz.golaszewski@linaro.org>:
-> >>>
-> >> Hi luiz,
-> >>
-> >> i am curious why Bartosz is able to merge his changes into bluetooth
-> >> development tree bluetooth-next directly.
-> >>
+> On Mon, May 27, 2024 at 02:55:03PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > >
-> > This conversation is getting progressively worse...
+> > The "memory protection" mechanism mentioned in the comment is the SHM
+> > Bridge. This is also the reason why we do not convert this call to usin=
+g
+> > the TZ memory allocator.
 > >
-> >> 1)
-> >> his changes should belong to *POWER* scope instead of *Bluetooth*
-> >> obviously, however, there are *NOT* any SOB tag from either power and
-> >> bluetooth maintainer. these changes currently only have below Acked-by
-> >> and Signed-off-by tags:
-> >>
-> >> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
-> >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > Tested-by: Andrew Halaney <ahalaney@redhat.com> # sc8280xp-lenovo-think=
+pad-x13s
+> > Tested-by: Deepti Jaggi <quic_djaggi@quicinc.com> #sa8775p-ride
+> > Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
+> > ---
+> >  drivers/firmware/qcom/qcom_scm.c | 7 +++++++
+> >  1 file changed, 7 insertions(+)
 > >
-> > It's a new subsystem that has been discussed and reviewed for months
-> > and thoroughly tested. Please refer to the cover letter under v8
-> > linked in this thread. It's not related to power-management or
-> > power-supply, it's its own thing but IMO the best place to put it is
-> > under drivers/power/. And I will maintain it.
-> >
-> >> 2)
-> >> his changes have not merged into linus mainline tree yet.
-> >>
-> >
-> > This is why they are in next! They are scheduled to go in during the
-> > upcoming merge window. But since changes belong in multiple trees, we
-> > need a cross-tree merge.
-> >
-> >> 3)
-> >> perhaps, it is safer to pull his changes from linus mainline tree when
-> >> merged than to merge into bluetooth-next firstly.
-> >>
-> >
-> > It's not safer at all, why would spending less time in next be safer?
-> >
-> it seems this patch serial(new subsystem) does not depend on bluetooth
-> and also does not belong to bluetooth subsystem, but have been contained
-> by tip of bluetooth tree.
->
+> > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/q=
+com_scm.c
+> > index c82957727650..86e26f17ca19 100644
+> > --- a/drivers/firmware/qcom/qcom_scm.c
+> > +++ b/drivers/firmware/qcom/qcom_scm.c
+> > @@ -583,6 +583,13 @@ int qcom_scm_pas_init_image(u32 peripheral, const =
+void *metadata, size_t size,
+> >        * During the scm call memory protection will be enabled for the =
+meta
+> >        * data blob, so make sure it's physically contiguous, 4K aligned=
+ and
+> >        * non-cachable to avoid XPU violations.
+> > +      *
+> > +      * For PIL calls the hypervisor creates SHM Bridges for the blob
+> > +      * buffers on behalf of Linus so we must not do it ourselves henc=
+e
+>                                 Linux
 
-It's the other way around: bluetooth changes (namely the hci_qca
-driver) depend on the power sequencing changes.
-
-> why not follow below merging produce?
-> 1) you send this patch serials to Linus to merge within linus mainline tr=
-ee
-> 2) luiz then pull your changes from linus mainline tree.
->
-
-I explained this in my previous email. Why would you want these
-changes to needlessly wait for another release cycle? It makes no
-sense. It's just a regular cross-tree merge like hundreds that are
-performed every release.
-
-> >>> On Wed,  5 Jun 2024 14:38:48 +0200 you wrote:
-> >>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >>>>
-> >>>> Hi!
-> >>>>
-> >>>> These are the power sequencing patches sent separately after some
-> >>>> improvements suggested by Bjorn Helgaas. I intend to pick them up in=
-to a
-> >>>> new branch and maintain the subsystem from now on. I then plan to
-> >>>> provide an immutable tag to the Bluetooth and PCI subsystems so that=
- the
-> >>>> rest of the C changes can be applied. This new branch will then be
-> >>>> directly sent to Linus Torvalds for the next merge window.
-> >>>>
-> >>>> [...]
-> >>>
-> >>> Here is the summary with links:
-> >>>   - [v9,1/2] power: sequencing: implement the pwrseq core
-> >>>     https://git.kernel.org/bluetooth/bluetooth-next/c/249ebf3f65f8
-> >>>   - [v9,2/2] power: pwrseq: add a driver for the PMU module on the QC=
-om WCN chipsets
-> >>>     https://git.kernel.org/bluetooth/bluetooth-next/c/2f1630f437df
-> >>>
-> >>> You are awesome, thank you!
-> >>
-> >
-> > Why are you top-posting anyway?
-> >
-> it is caused by my bad mail client settings. thanks for reminder.
-> > Bart
->
-
-Luiz, Marcel: Am I wasting my time with this person? Is this another
-Markus Elfring and I unknowingly got pulled into a nonsensical
-argument?
+Can this be fixed when applying? I don't think there's anything else
+that warrants a respin.
 
 Bart
+
+> > +      * not using the TZMem allocator here.
+> > +      *
+> > +      * If we pass a buffer that is already part of an SHM Bridge to t=
+his
+> > +      * call, it will fail.
+> >        */
+> >       mdata_buf =3D dma_alloc_coherent(__scm->dev, size, &mdata_phys,
+> >                                      GFP_KERNEL);
+> >
+> > --
+> > 2.43.0
+> >
 
