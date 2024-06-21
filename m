@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-23573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F310B912464
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 13:49:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 081A5912466
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 13:49:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9109286CF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 11:49:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2AB8A1C250A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 11:49:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 660AC176AC0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB0EE176AD5;
 	Fri, 21 Jun 2024 11:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bLZT9Zgr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aJVZeIPx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6405176257;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4DF176AA7;
 	Fri, 21 Jun 2024 11:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718970489; cv=none; b=ktsxo0SBWfFXnEf8SrM96Vy69RXbDjwNzW2OcqluKxNYc1OetJVlalUZDyfA65XFJYG03h3/Uw6+pCukbSj4pr/l1k0A8KD0y0b0OZytU15LPc+/sUOfqS/N4tih1OCYlV+v/YHThNYsSEQEqxWLPr+31r3GgfSH+VMAaplpmuE=
+	t=1718970489; cv=none; b=Hlzmt0d8tQ5T611hKRmgKlvbpzNSlgDFhbykz/kISx0+XXM5wCqw2Bd1lwo4s2C94pfxyn+/G/iXgG3sP/5k8vaRSpe/XGF7pIuQFSGtWt7f3jvJ9Cj5XncS2EO3rR7mi9GtT4wXQIl5Zb70pN61QkN0aG2yDEQQ3n2t5f5N3kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718970489; c=relaxed/simple;
-	bh=ygbFLeS48MFXuzmbuE8IrfD+K0cdCC1gPEzCAqoVfwc=;
+	bh=h3I+TqoaPneIEj9D7OTgSgTz+xxqlxX1BVqtlEMW0tA=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wt716KMOni/0XZcdBAmlOEPtup7mX/UrAFz6ptSqlTaU/WKw+b/mhHXa6JWziXq6wdy/u8/YZ2UMvQgQnf1vQiX3L2zvnFvbQ/UA0Zc6Ornn5NXDFZcxfcwKYY1wXcFi1XFC7vcrAFZLX4RG1hoX80uIj9uU0VIoCTs75p0KDrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bLZT9Zgr; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=nJyPi9KTvDqMpB5pvEsa5AGOayqtEF65ao+mx4iJChqF3obYaz6LJLy+WBKkPgJhYOoIyBnSg8Y+n/sYkabvXhgPEXcuwiS6s6vbn2Tju7DHdHEzZmzBwrqupoxCFX1GpK9/ByApM8ZUs0FHgN4eq6vCWWr9pHNSX0EPHfKSLzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aJVZeIPx; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45L8i3oK021483;
-	Fri, 21 Jun 2024 11:47:27 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45L69GPN017857;
+	Fri, 21 Jun 2024 11:47:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Wq1n9gyIzwAxVaQciP3YbNps3VVpeSllnFziyOsGGH4=; b=bLZT9ZgrbXN7EauK
-	5E9rdjKKlYyw7bo90LvGTAf29Jac9VrPfDdM9w3knFm3o5YDsOr2wZNS8wJ5l6gH
-	0ztbpFVJKpUfMDfylMuWbcbVP7QKzRk4UhNOmt+QJkmpv1hwr40hKSxnmn+pW4PI
-	yt5VLr8V1E6dT4MZhDvQ4UzzUHTEmCxNpxXk9RWVi6P6rhWmXksc1v5kacUs8LpQ
-	G9UfXp2WWYqMBf+5xOL2+TlIqAvwfiiw9NYoUWxFSwN5TS96OxeUBVrXld3kZAA5
-	ayqdSk+N3xgwDdYYryXym8kt2cGVbewEWj1MUobc2nDxxn2SoCXj5Mcgn8GfiEFi
-	H3XjyA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yw6920dwc-1
+	EN2wiiFVSzvzzihgqqzsYt2ihgSlhL9Jqm2XUYH0BWU=; b=aJVZeIPx489JBRpt
+	XheGu6gdFwer5PoHXvPp3NQYkQzDALmt9WbpjttdXsOAaxCt2BE/MFy/MUUDJRyn
+	7K1N+enTyCp1ymPldmSfsqFcR/luGhVvOBwuEAJUg7pK84Cq2Ai/ghdg6xBrlC8s
+	dkL5myp88mc4XAF2PCEByyV9sugg3EAgNC73AB7L2iYleWAHB6gHh/v2sqxnQmqD
+	mtj5SYgbyafbitecmHlKWRa/9n5n7G1hhjH01dH47QawFPblYE9M57QWnDyUS/b0
+	vZ6nNHqbLyXGtj6kCRCX1w/dGsmPgl7FzXA1BJpyA1xVwR5Pcp/TySPQscf5mkrI
+	z1inzA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrm0aer8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 11:47:27 +0000 (GMT)
+	Fri, 21 Jun 2024 11:47:33 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45LBlQYg030961
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45LBlVEU023405
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 11:47:26 GMT
+	Fri, 21 Jun 2024 11:47:31 GMT
 Received: from hu-gokulsri-blr.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 21 Jun 2024 04:47:21 -0700
+ 15.2.1544.9; Fri, 21 Jun 2024 04:47:26 -0700
 From: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
 To: <sboyd@kernel.org>, <andersson@kernel.org>, <bjorn.andersson@linaro.org>,
         <david.brown@linaro.org>, <devicetree@vger.kernel.org>,
@@ -65,9 +65,9 @@ To: <sboyd@kernel.org>, <andersson@kernel.org>, <bjorn.andersson@linaro.org>,
         <mturquette@baylibre.com>, <ohad@wizery.com>, <robh@kernel.org>,
         <sricharan@codeaurora.org>
 CC: <gokulsri@codeaurora.org>
-Subject: [PATCH v9 1/8] remoteproc: qcom: Add PRNG proxy clock
-Date: Fri, 21 Jun 2024 17:16:52 +0530
-Message-ID: <20240621114659.2958170-2-quic_gokulsri@quicinc.com>
+Subject: [PATCH v9 2/8] remoteproc: qcom: Add secure PIL support
+Date: Fri, 21 Jun 2024 17:16:53 +0530
+Message-ID: <20240621114659.2958170-3-quic_gokulsri@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
 References: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
@@ -83,169 +83,157 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YJitBBiyyeJyZzxF1B5pcXmbbpEku6zu
-X-Proofpoint-GUID: YJitBBiyyeJyZzxF1B5pcXmbbpEku6zu
+X-Proofpoint-ORIG-GUID: QGyc0jgDHQxiIlYldQN9Xe7x3iibZCSr
+X-Proofpoint-GUID: QGyc0jgDHQxiIlYldQN9Xe7x3iibZCSr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-21_04,2024-06-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- bulkscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 mlxscore=0
- priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 adultscore=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0 mlxscore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2406140001 definitions=main-2406210087
 
-PRNG clock is needed by the secure PIL, support for the same
-is added in subsequent patches.
+IPQ8074 uses secure PIL. Hence, adding the support for the same.
 
 Signed-off-by: Nikhil Prakash V <quic_nprakash@quicinc.com>
 Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
 Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
 ---
- drivers/remoteproc/qcom_q6v5_wcss.c | 65 +++++++++++++++++++++--------
- 1 file changed, 47 insertions(+), 18 deletions(-)
+ drivers/remoteproc/qcom_q6v5_wcss.c | 43 +++++++++++++++++++++++++++--
+ 1 file changed, 40 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index 94f68c919ee6..366b19cbd994 100644
+index 366b19cbd994..e45e79d80238 100644
 --- a/drivers/remoteproc/qcom_q6v5_wcss.c
 +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -91,19 +91,6 @@ enum {
- 	WCSS_QCS404,
- };
+@@ -18,6 +18,7 @@
+ #include <linux/regulator/consumer.h>
+ #include <linux/reset.h>
+ #include <linux/soc/qcom/mdt_loader.h>
++#include <linux/firmware/qcom/qcom_scm.h>
+ #include "qcom_common.h"
+ #include "qcom_pil_info.h"
+ #include "qcom_q6v5.h"
+@@ -86,6 +87,9 @@
+ #define TCSR_WCSS_CLK_ENABLE	0x14
  
--struct wcss_data {
--	const char *firmware_name;
--	unsigned int crash_reason_smem;
--	u32 version;
--	bool aon_reset_required;
--	bool wcss_q6_reset_required;
--	const char *ssr_name;
--	const char *sysmon_name;
--	int ssctl_id;
--	const struct rproc_ops *ops;
--	bool requires_force_stop;
--};
--
- struct q6v5_wcss {
- 	struct device *dev;
- 
-@@ -128,6 +115,7 @@ struct q6v5_wcss {
- 	struct clk *qdsp6ss_xo_cbcr;
- 	struct clk *qdsp6ss_core_gfmux;
- 	struct clk *lcc_bcr_sleep;
-+	struct clk *prng_clk;
- 	struct regulator *cx_supply;
- 	struct qcom_sysmon *sysmon;
- 
-@@ -151,6 +139,21 @@ struct q6v5_wcss {
- 	struct qcom_rproc_ssr ssr_subdev;
- };
- 
-+struct wcss_data {
-+	int (*init_clock)(struct q6v5_wcss *wcss);
-+	int (*init_regulator)(struct q6v5_wcss *wcss);
-+	const char *firmware_name;
-+	unsigned int crash_reason_smem;
-+	u32 version;
-+	bool aon_reset_required;
-+	bool wcss_q6_reset_required;
-+	const char *ssr_name;
-+	const char *sysmon_name;
-+	int ssctl_id;
-+	const struct rproc_ops *ops;
-+	bool requires_force_stop;
-+};
+ #define MAX_HALT_REG		3
 +
++#define WCNSS_PAS_ID		6
++
+ enum {
+ 	WCSS_IPQ8074,
+ 	WCSS_QCS404,
+@@ -134,6 +138,7 @@ struct q6v5_wcss {
+ 	unsigned int crash_reason_smem;
+ 	u32 version;
+ 	bool requires_force_stop;
++	bool need_mem_protection;
+ 
+ 	struct qcom_rproc_glink glink_subdev;
+ 	struct qcom_rproc_ssr ssr_subdev;
+@@ -152,6 +157,7 @@ struct wcss_data {
+ 	int ssctl_id;
+ 	const struct rproc_ops *ops;
+ 	bool requires_force_stop;
++	bool need_mem_protection;
+ };
+ 
  static int q6v5_wcss_reset(struct q6v5_wcss *wcss)
- {
- 	int ret;
-@@ -240,6 +243,12 @@ static int q6v5_wcss_start(struct rproc *rproc)
+@@ -251,6 +257,15 @@ static int q6v5_wcss_start(struct rproc *rproc)
+ 
+ 	qcom_q6v5_prepare(&wcss->q6v5);
+ 
++	if (wcss->need_mem_protection) {
++		ret = qcom_scm_pas_auth_and_reset(WCNSS_PAS_ID);
++		if (ret) {
++			dev_err(wcss->dev, "wcss_reset failed\n");
++			return ret;
++		}
++		goto wait_for_reset;
++	}
++
+ 	/* Release Q6 and WCSS reset */
+ 	ret = reset_control_deassert(wcss->wcss_reset);
+ 	if (ret) {
+@@ -285,6 +300,7 @@ static int q6v5_wcss_start(struct rproc *rproc)
+ 	if (ret)
+ 		goto wcss_q6_reset;
+ 
++wait_for_reset:
+ 	ret = qcom_q6v5_wait_for_start(&wcss->q6v5, 5 * HZ);
+ 	if (ret == -ETIMEDOUT)
+ 		dev_err(wcss->dev, "start timed out\n");
+@@ -718,6 +734,15 @@ static int q6v5_wcss_stop(struct rproc *rproc)
  	struct q6v5_wcss *wcss = rproc->priv;
  	int ret;
  
-+	ret = clk_prepare_enable(wcss->prng_clk);
-+	if (ret) {
-+		dev_err(wcss->dev, "prng clock enable failed\n");
-+		return ret;
++	if (wcss->need_mem_protection) {
++		ret = qcom_scm_pas_shutdown(WCNSS_PAS_ID);
++		if (ret) {
++			dev_err(wcss->dev, "not able to shutdown\n");
++			return ret;
++		}
++		goto pas_done;
 +	}
 +
- 	qcom_q6v5_prepare(&wcss->q6v5);
- 
- 	/* Release Q6 and WCSS reset */
-@@ -733,6 +742,7 @@ static int q6v5_wcss_stop(struct rproc *rproc)
+ 	/* WCSS powerdown */
+ 	if (wcss->requires_force_stop) {
+ 		ret = qcom_q6v5_request_stop(&wcss->q6v5, NULL);
+@@ -742,6 +767,7 @@ static int q6v5_wcss_stop(struct rproc *rproc)
  			return ret;
  	}
  
-+	clk_disable_unprepare(wcss->prng_clk);
++pas_done:
+ 	clk_disable_unprepare(wcss->prng_clk);
  	qcom_q6v5_unprepare(&wcss->q6v5);
  
- 	return 0;
-@@ -899,7 +909,21 @@ static int q6v5_alloc_memory_region(struct q6v5_wcss *wcss)
- 	return 0;
- }
- 
--static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
-+static int ipq8074_init_clock(struct q6v5_wcss *wcss)
-+{
-+	int ret;
-+
-+	wcss->prng_clk = devm_clk_get(wcss->dev, "prng");
-+	if (IS_ERR(wcss->prng_clk)) {
-+		ret = PTR_ERR(wcss->prng_clk);
-+		if (ret != -EPROBE_DEFER)
-+			dev_err(wcss->dev, "Failed to get prng clock\n");
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+static int qcs404_init_clock(struct q6v5_wcss *wcss)
- {
+@@ -765,9 +791,15 @@ static int q6v5_wcss_load(struct rproc *rproc, const struct firmware *fw)
+ 	struct q6v5_wcss *wcss = rproc->priv;
  	int ret;
  
-@@ -989,7 +1013,7 @@ static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
- 	return 0;
- }
- 
--static int q6v5_wcss_init_regulator(struct q6v5_wcss *wcss)
-+static int qcs404_init_regulator(struct q6v5_wcss *wcss)
- {
- 	wcss->cx_supply = devm_regulator_get(wcss->dev, "cx");
- 	if (IS_ERR(wcss->cx_supply))
-@@ -1033,12 +1057,14 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
+-	ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
+-				    0, wcss->mem_region, wcss->mem_phys,
+-				    wcss->mem_size, &wcss->mem_reloc);
++	if (wcss->need_mem_protection)
++		ret = qcom_mdt_load(wcss->dev, fw, rproc->firmware,
++				    WCNSS_PAS_ID, wcss->mem_region,
++				    wcss->mem_phys, wcss->mem_size,
++				    &wcss->mem_reloc);
++	else
++		ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
++					    0, wcss->mem_region, wcss->mem_phys,
++					    wcss->mem_size, &wcss->mem_reloc);
  	if (ret)
  		return ret;
  
--	if (wcss->version == WCSS_QCS404) {
--		ret = q6v5_wcss_init_clock(wcss);
-+	if (desc->init_clock) {
-+		ret = desc->init_clock(wcss);
- 		if (ret)
- 			return ret;
-+	}
+@@ -1035,6 +1067,9 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
+ 	if (!desc)
+ 		return -EINVAL;
  
--		ret = q6v5_wcss_init_regulator(wcss);
-+	if (desc->init_regulator) {
-+		ret = desc->init_regulator(wcss);
- 		if (ret)
- 			return ret;
- 	}
-@@ -1078,6 +1104,7 @@ static void q6v5_wcss_remove(struct platform_device *pdev)
- }
++	if (desc->need_mem_protection && !qcom_scm_is_available())
++		return -EPROBE_DEFER;
++
+ 	rproc = devm_rproc_alloc(&pdev->dev, pdev->name, desc->ops,
+ 				 desc->firmware_name, sizeof(*wcss));
+ 	if (!rproc) {
+@@ -1048,6 +1083,7 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
  
- static const struct wcss_data wcss_ipq8074_res_init = {
-+	.init_clock = ipq8074_init_clock,
- 	.firmware_name = "IPQ8074/q6_fw.mdt",
- 	.crash_reason_smem = WCSS_CRASH_REASON,
- 	.aon_reset_required = true,
-@@ -1087,6 +1114,8 @@ static const struct wcss_data wcss_ipq8074_res_init = {
+ 	wcss->version = desc->version;
+ 	wcss->requires_force_stop = desc->requires_force_stop;
++	wcss->need_mem_protection = desc->need_mem_protection;
+ 
+ 	ret = q6v5_wcss_init_mmio(wcss, pdev);
+ 	if (ret)
+@@ -1111,6 +1147,7 @@ static const struct wcss_data wcss_ipq8074_res_init = {
+ 	.wcss_q6_reset_required = true,
+ 	.ops = &q6v5_wcss_ipq8074_ops,
+ 	.requires_force_stop = true,
++	.need_mem_protection = true,
  };
  
  static const struct wcss_data wcss_qcs404_res_init = {
-+	.init_clock = qcs404_init_clock,
-+	.init_regulator = qcs404_init_regulator,
- 	.crash_reason_smem = WCSS_CRASH_REASON,
- 	.firmware_name = "wcnss.mdt",
- 	.version = WCSS_QCS404,
 -- 
 2.34.1
 
