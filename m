@@ -1,233 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-23620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00693912A71
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 17:39:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A34E8912A79
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 17:40:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 239E41C21394
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:39:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C63B61C223A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:40:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5544E80605;
-	Fri, 21 Jun 2024 15:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD24D82897;
+	Fri, 21 Jun 2024 15:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NjYcQVXn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jdR3/hBf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2113381AA5;
-	Fri, 21 Jun 2024 15:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7555824B0;
+	Fri, 21 Jun 2024 15:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718984382; cv=none; b=oAeRqJIeLDV6N7nel0Y/GgFkzk2Ejj9ZOmR0oeSDONd8xjiPR7lqVk7Qv9BKqqWhe0j0p4Qo37XF1G00MojDMf7Yw7pdRoq3Vwx1OI/wCqmSPHHEZhy+ZtLaPYueIcVozJxPZ16uWWgS3NjJEMN4vWgTGJNsu30Ftxc9XWwT5+U=
+	t=1718984421; cv=none; b=TowtbpAeHhus/nZeiDKtgD53Rb7uY7RzgJRcQPfe8pk7cR0wrufH63C1xmO4+7K0rZpTzDwGdxxOQ9H8TxDEsylR6S4FS/zCrKX0eLGjP8KgCuP/b1aPnXRPJLEtaZN5Y6FKvc4A16YJBv3+k22jzV670hPSwHLja+3UiRyY7jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718984382; c=relaxed/simple;
-	bh=EOau0dfsyRwYfKXixdZIbYkEwGVX1Gwagh7/S9mgfG8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QZvlFhSh/lmIZ0p918QhPhLbOC7JFk+6rXRky9aWjfkGdu6Mn72vd6uvZ0XUu0koWoRKa4GBukAuDVIPSRD/wLYUigUyvSSc8bVNrRkqSdeCH9TRU4UohYTonuhr9c33otDLi3mSMphbYYSR/VDdR0A9DiozKNjzZ3LOknW/bno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NjYcQVXn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1462C2BBFC;
-	Fri, 21 Jun 2024 15:39:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718984381;
-	bh=EOau0dfsyRwYfKXixdZIbYkEwGVX1Gwagh7/S9mgfG8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NjYcQVXn/sIYnlO0dK68AKO94KqGZMwdy6Pr81nk/Lmr8FH0Vv0UZEjrHMXSKnlw+
-	 vngDe3mIAhMk9tM3Kzx2iaKIr3tqaG9PymZadCK6ZZZkfNGBZ/A/7r91OqjgNG5vsL
-	 /JaLexUt7vXX9hSdOxOpsFv+XMQY3JcIFsIXbMX3I4nndu2jM56tJm3IXB7VNNpmAx
-	 toz4J0mOr+fRotTCZbr0CTgL+cWc7ckin5lEB2ApWB/cbOfe+gz1yhyn+VR3PwFEKm
-	 td4ju0s/5dZwri0GAkDXovKfYsws1dFQNhAYgRyLrpTdGGzDd7M361pJ+GyVUi+1G8
-	 BorVxP+fe0WZw==
-Date: Fri, 21 Jun 2024 08:39:39 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: "Gaurav Kashyap (QUIC)" <quic_gaurkash@quicinc.com>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
-	"andersson@kernel.org" <andersson@kernel.org>,
-	"neil.armstrong@linaro.org" <neil.armstrong@linaro.org>,
-	"srinivas.kandagatla" <srinivas.kandagatla@linaro.org>,
-	"krzysztof.kozlowski+dt@linaro.org" <krzysztof.kozlowski+dt@linaro.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>,
-	"robh+dt@kernel.org" <robh+dt@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
-	kernel <kernel@quicinc.com>,
-	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"Om Prakash Singh (QUIC)" <quic_omprsing@quicinc.com>,
-	"Bao D. Nguyen (QUIC)" <quic_nguyenb@quicinc.com>,
-	"bartosz.golaszewski" <bartosz.golaszewski@linaro.org>,
-	"konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-	"ulf.hansson@linaro.org" <ulf.hansson@linaro.org>,
-	"jejb@linux.ibm.com" <jejb@linux.ibm.com>,
-	"martin.petersen@oracle.com" <martin.petersen@oracle.com>,
-	"mani@kernel.org" <mani@kernel.org>,
-	"davem@davemloft.net" <davem@davemloft.net>,
-	"herbert@gondor.apana.org.au" <herbert@gondor.apana.org.au>,
-	Prasad Sodagudi <psodagud@quicinc.com>,
-	Sonal Gupta <sonalg@quicinc.com>
-Subject: Re: [PATCH v5 04/15] soc: qcom: ice: add hwkm support in ice
-Message-ID: <20240621153939.GA2081@sol.localdomain>
-References: <20240617005825.1443206-1-quic_gaurkash@quicinc.com>
- <20240617005825.1443206-5-quic_gaurkash@quicinc.com>
- <3eehkn3cdhhjfqtzpahxhjxtu5uqwhntpgu22k3hknctrop3g5@f7dhwvdvhr3k>
- <96e2ce4b154a4f918be0bc2a45011e6d@quicinc.com>
- <CAA8EJppGpv7N_JQQNJZrbngBBdEKZfuqutR9MPnS1R_WqYNTQw@mail.gmail.com>
- <3a15df00a2714b40aba4ebc43011a7b6@quicinc.com>
- <CAA8EJpoZ0RR035QwzMLguJZvdYb-C6aqudp1BgHgn_DH2ffsoQ@mail.gmail.com>
- <20240621044747.GC4362@sol.localdomain>
- <CAA8EJppXsbpFCeGJOMGKOQddy0fF4uW3rt4RUuDTQq6mPunBkg@mail.gmail.com>
+	s=arc-20240116; t=1718984421; c=relaxed/simple;
+	bh=Z/cpLHCDPB+T2x8Fy1MS5vo61mKQvCFpMRLmdrxYIAU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=u98iiqUreeSh3V795L2j5+to8mRZ45e7Z090yTTyKb7wUVIV+UbxUVrqr7Et10HMRz4GD3LPN20zHCbsMxmaxR5eaA/Usl4GFAkx4bGg4IOXFVJBbFJsMpUjjJINBppEScGykx+46un3kcNfxalk9VlC0d5h+LrTDFBzqyddfTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jdR3/hBf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45LDeY8X011782;
+	Fri, 21 Jun 2024 15:40:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YBk4CF4UPEXWbB98EgNPocGwgxm/YWpqMdILVUQfhUg=; b=jdR3/hBfUiNJnXJx
+	I38h2ZAsHWdFhRhgagKMnPRSFJqc9TLZ2U0dnJIxYYFNnnsatkFph16PdhZ3ECaI
+	EAeWSeGZWN8F1rzjeP0hJSEOzd38l5EiziKEe21vmbENa9A5q+DfyauvRFTWoUxY
+	aIEla9pTkLYFdm7auWla0DCfloFBLHkml/ZgQMRENUrBpyrrw7aquotLTX7T83Xy
+	w/JEqNPsUskwrBqsojj0/PNHKWd+PS/iRWByc12Bx47er0cW03eGDX0pCxPdm7x6
+	+STuJyVoKTMefNSJ64nJz377CZcN/HRLRfkPuQeYF3JI9K/XFqXWFhNsZgJz0h5J
+	l+Rdow==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrrcaxr0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Jun 2024 15:40:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45LFeAcO028417
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Jun 2024 15:40:10 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 21 Jun
+ 2024 08:40:09 -0700
+Message-ID: <6f59552d-d7a3-5e05-3465-e707c1b7eaf2@quicinc.com>
+Date: Fri, 21 Jun 2024 09:40:09 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJppXsbpFCeGJOMGKOQddy0fF4uW3rt4RUuDTQq6mPunBkg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v1] misc: fastrpc: Move fastrpc driver to misc/fastrpc/
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>
+CC: Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        Oded Gabbay
+	<ogabbay@kernel.org>, <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <gregkh@linuxfoundation.org>,
+        <quic_bkumar@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <quic_chennak@quicinc.com>, <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter
+	<daniel@ffwll.ch>, Dave Airlie <airlied@gmail.com>
+References: <20240612064731.25651-1-quic_ekangupt@quicinc.com>
+ <zbpia232dh4ojfsvhcqxrp6cwfygaalu5cycdrs47pqmnrisvk@dq24nww26gkm>
+ <z6g5ool5vomkudiroyaxh532rhlfu5x4i3l5xoqrsho2sxv4im@v5ghemjkpc3v>
+ <CAA8EJprgCJKOnZo7Q31KZV3SA3NqWxcMmoUxuqnVF+8cQW5ucg@mail.gmail.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <CAA8EJprgCJKOnZo7Q31KZV3SA3NqWxcMmoUxuqnVF+8cQW5ucg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: d1R3fDJ_FJG53irXbXHK7jysFboLvO4o
+X-Proofpoint-ORIG-GUID: d1R3fDJ_FJG53irXbXHK7jysFboLvO4o
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-21_07,2024-06-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 adultscore=0 mlxscore=0 suspectscore=0
+ malwarescore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2406210114
 
-On Fri, Jun 21, 2024 at 06:16:37PM +0300, Dmitry Baryshkov wrote:
-> On Fri, 21 Jun 2024 at 07:47, Eric Biggers <ebiggers@kernel.org> wrote:
-> >
-> > On Thu, Jun 20, 2024 at 02:57:40PM +0300, Dmitry Baryshkov wrote:
-> > > > > >
-> > > > > > > Is it possible to use both kind of keys when working on standard mode?
-> > > > > > > If not, it should be the user who selects what type of keys to be used.
-> > > > > > > Enforcing this via DT is not a way to go.
-> > > > > > >
-> > > > > >
-> > > > > > Unfortunately, that support is not there yet. When you say user, do
-> > > > > > you mean to have it as a filesystem mount option?
-> > > > >
-> > > > > During cryptsetup time. When running e.g. cryptsetup I, as a user, would like
-> > > > > to be able to use either a hardware-wrapped key or a standard key.
-> > > > >
-> > > >
-> > > > What we are looking for with these patches is for per-file/folder encryption using fscrypt policies.
-> > > > Cryptsetup to my understanding supports only full-disk , and does not support FBE (File-Based)
-> > >
-> > > I must admit, I mostly used dm-crypt beforehand, so I had to look at
-> > > fscrypt now. Some of my previous comments might not be fully
-> > > applicable.
-> > >
-> > > > Hence the idea here is that we mount an unencrypted device (with the inlinecrypt option that indicates inline encryption is supported)
-> > > > And specify policies (links to keys) for different folders.
-> > > >
-> > > > > > The way the UFS/EMMC crypto layer is designed currently is that, this
-> > > > > > information is needed when the modules are loaded.
-> > > > > >
-> > > > > > https://lore.kernel.org/all/20231104211259.17448-2-ebiggers@kernel.org
-> > > > > > /#Z31drivers:ufs:core:ufshcd-crypto.c
-> > > > >
-> > > > > I see that the driver lists capabilities here. E.g. that it supports HW-wrapped
-> > > > > keys. But the line doesn't specify that standard keys are not supported.
-> > > > >
-> > > >
-> > > > Those are capabilities that are read from the storage controller. However, wrapped keys
-> > > > Are not a standard in the ICE JEDEC specification, and in most cases, is a value add coming
-> > > > from the SoC.
-> > > >
-> > > > QCOM SOC and firmware currently does not support both kinds of keys in the HWKM mode.
-> > > > That is something we are internally working on, but not available yet.
-> > >
-> > > I'd say this is a significant obstacle, at least from my point of
-> > > view. I understand that the default might be to use hw-wrapped keys,
-> > > but it should be possible for the user to select non-HW keys if the
-> > > ability to recover the data is considered to be important. Note, I'm
-> > > really pointing to the user here, not to the system integrator. So
-> > > using DT property or specifying kernel arguments to switch between
-> > > these modes is not really an option.
-> > >
-> > > But I'd really love to hear some feedback from linux-security and/or
-> > > linux-fscrypt here.
-> > >
-> > > In my humble opinion the user should be able to specify that the key
-> > > is wrapped using the hardware KMK. Then if the hardware has already
-> > > started using the other kind of keys, it should be able to respond
-> > > with -EINVAL / whatever else. Then the user can evict previously
-> > > programmed key and program a desired one.
-> > >
-> > > > > Also, I'd have expected that hw-wrapped keys are handled using trusted
-> > > > > keys mechanism (see security/keys/trusted-keys/). Could you please point
-> > > > > out why that's not the case?
-> > > > >
-> > > >
-> > > > I will evaluate this.
-> > > > But my initial response is that we currently cannot communicate to our TPM directly from HLOS, but
-> > > > goes through QTEE, and I don't think our qtee currently interfaces with the open source tee
-> > > > driver. The interface is through QCOM SCM driver.
-> > >
-> > > Note, this is just an API interface, see how it is implemented for the
-> > > CAAM hardware.
-> > >
-> >
-> > The problem is that this patchset was sent out without the patches that add the
-> > block and filesystem-level framework for hardware-wrapped inline encryption
-> > keys, which it depends on.  So it's lacking context.  The proposed framework can
-> > be found at
-> > https://lore.kernel.org/linux-block/20231104211259.17448-1-ebiggers@kernel.org/T/#u
+On 6/21/2024 5:19 AM, Dmitry Baryshkov wrote:
+> On Fri, 21 Jun 2024 at 09:19, Bjorn Andersson <andersson@kernel.org> wrote:
+>>
+>> On Wed, Jun 12, 2024 at 09:28:39PM GMT, Dmitry Baryshkov wrote:
+>>> On Wed, Jun 12, 2024 at 12:17:28PM +0530, Ekansh Gupta wrote:
+>>>> Move fastrpc.c from misc/ to misc/fastrpc/. New C files are planned
+>>>> to be added for PD notifications and other missing features. Adding
+>>>> and maintaining new files from within fastrpc directory would be easy.
+>>>>
+>>>> Example of feature that is being planned to be introduced in a new C
+>>>> file:
+>>>> https://lore.kernel.org/all/20240606165939.12950-6-quic_ekangupt@quicinc.com/
+>>>>
+>>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>>>> ---
+>>>>   MAINTAINERS                          |  2 +-
+>>>>   drivers/misc/Kconfig                 | 13 +------------
+>>>>   drivers/misc/Makefile                |  2 +-
+>>>>   drivers/misc/fastrpc/Kconfig         | 16 ++++++++++++++++
+>>>>   drivers/misc/fastrpc/Makefile        |  2 ++
+>>>>   drivers/misc/{ => fastrpc}/fastrpc.c |  0
+>>>>   6 files changed, 21 insertions(+), 14 deletions(-)
+>>>>   create mode 100644 drivers/misc/fastrpc/Kconfig
+>>>>   create mode 100644 drivers/misc/fastrpc/Makefile
+>>>>   rename drivers/misc/{ => fastrpc}/fastrpc.c (100%)
+>>>
+>>> Please consider whether it makes sense to move to drivers/accel instead
+>>> (and possibly writing a better Kconfig entry, specifying that the driver
+>>> is to be used to offload execution to the DSP).
+>>>
+>>
+>> Wouldn't this come with the expectation of following the ABIs of
+>> drivers/accel and thereby breaking userspace?
 > 
-> Thank you. I have quickly skimmed through the patches, but I didn't
-> review them thoroughly. Maybe the patchset already implements the
-> interfaces that I'm thinking about. In such a case please excuse me. I
-> will give it a more thorough look later today.
+> As I wrote earlier, that depends on the accel/ maintainers decision,
+> whether it's acceptable to have non-DRM_ACCEL code underneath.
+> But at least I'd try doing that on the grounds of keeping the code at
+> the proper place in the drivers/ tree, raising awareness of the
+> FastRPC, etc.
+> For example current fastrpc driver bypasses dri-devel reviews, while
+> if I remember correctly, at some point it was suggested that all
+> dma-buf-handling drivers should also notify the dri-devel ML.
 > 
-> > As for why "trusted keys" aren't used, they just aren't helpful here.  "Trusted
-> > keys" are based around a model where the kernel can request that keys be sealed
-> > and unsealed using a trust source, and the kernel gets access to the raw
-> > unsealed keys.  Hardware-wrapped inline encryption keys use a different model
-> > where the kernel never gets access to the raw keys.  They also have the concept
-> > of ephemeral wrapping which does not exist in "trusted keys".  And they need to
-> > be properly integrated with the inline encryption framework in the block layer.
+> Also having the driver under drivers/accels makes it possible and
+> logical to  implement DRM_ACCEL uAPI at some point. In the ideal world
+> we should be able to declare existing FastRPC uAPI as legacy /
+> deprecated / backwards compatibility only and migrate to the
+> recommended uAPI approach, which is DRM_ACCEL.
 > 
-> Then what exactly does qcom_scm_derive_sw_secret() do? Does it rewrap
-> the key under some other key?
 
-It derives a secret for functionality such as filenames encryption that can't
-use inline encryption.
+I suspect Vetter/Airlie need to be involved in this.
 
-> I had the feeling that there are two separate pieces of functionality
-> being stuffed into a single patchset and into a single solution.
-> 
-> First one is handling the keys. I keep on thinking that there should
-> be a separate software interface to unseal the key and rewrap it under
-> an ephemeral key.
+Its my understanding that accelerator drivers are able to reside in misc 
+as long as there is no use of dma-buf.  Use of dma-buf means they need 
+to be in drm/accel.
 
-There is.  That's what the BLKCRYPTOPREPAREKEY ioctl is for.
+There is precedent for moving a driver from misc to accel (HabanaLabs).
 
-> Some hardware might permit importing raw keys.
+Right now, I'm not aware that fastRPC meets the requirements for 
+drm/accel.  There is an open source userspace driver, but I'm not aware 
+of an open source compiler.  From what I know of the architecture, it 
+should be possible to utilize upstream LLVM to produce one.
 
-That's what BLKCRYPTOIMPORTKEY is for.
-
-> Other hardware might insist on generating the keys on-chip so that raw keys
-> can never be used.
-
-And that's what BLKCRYPTOGENERATEKEY is for.
-
-> Second part is the actual block interface. Gaurav wrote about
-> targeting fscrypt, but there should be no actual difference between
-> crypto targets. FDE or having a single partition encrypted should
-> probably work in the same way. Convert the key into blk_crypto_key
-> (including the cookie for the ephemeral key), program the key into the
-> slot, use the slot to en/decrypt hardware blocks.
-> 
-> My main point is that the decision on the key type should be coming
-> from the user.
-
-That's exactly how it works.  There is a block interface for specifying an
-inline encryption key along with each bio.  The submitter of the bio can specify
-either a standard key or a HW-wrapped key.
-
-Again, take a look at the patchset
-https://lore.kernel.org/linux-block/20231104211259.17448-1-ebiggers@kernel.org/T/#u.
-That's where all this stuff is.
-
-Thanks,
-
-- Eric
+-Jeff
 
