@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-23493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D84FD911949
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:21:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 112FB911951
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:25:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F39501C21469
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 04:21:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 73669B21C6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 04:25:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C95658615A;
-	Fri, 21 Jun 2024 04:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BACD12BF3A;
+	Fri, 21 Jun 2024 04:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G2l+QFV3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UDb3M3Ah"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2732882D7F;
-	Fri, 21 Jun 2024 04:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAD51E535;
+	Fri, 21 Jun 2024 04:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718943675; cv=none; b=YFpdq3XjOzOl+lV+1dos32N7VIV69OZ9IMNAQhGcliXX8UxJ5Lsh3A2dyfSTNVSBj+OODAgGB0CbmZutC/OJBmzcRNhCo7TlpMTygeGA2FxMhzx440LhUYQ8jgz/MFfv/gyi8wSfDEN/LsQUwvIgJwj3Q8nGrf4LEoVwtvNtwTQ=
+	t=1718943936; cv=none; b=gPQj+I668YzgOwzhkkpU8qJxv7U8d7Lq0T2NoG4vMjIZEIRkBwEwZ4svW0vzncWnFj1fguTo7hS6AYTR4JQ0S2kcJFUWXA6h51zXWJ/BjwuBXYlqmBN3F2PupuHGA3W0sG54PKp7uS0Nk2ps5gFXKF/BE5pHDVu0qP4IdINEk9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718943675; c=relaxed/simple;
-	bh=zF8TicuZO0BZHKSV1kqiWeNwOO5RZ32D+d92PXfxUo4=;
+	s=arc-20240116; t=1718943936; c=relaxed/simple;
+	bh=2cTZ604Ar95swiOr3iQOQyFMx2TXtPaf8GtYJqAZFwg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=RL9AzIn80jeIOizo7p5uPyM56QrSON2BMvgOELOgRAoQz2utvCVAdwa/ycbcxwGLAzUmOvaLx8wgWbdDCeaEyqIO0td1so73NVkyThOCJqLY+6CO49Sx9NDRoWjbyQng7ujfhCJvc3p/Xdc+oYJw/PaeEN/FeXathp7425Ewx24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G2l+QFV3; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=cMKg340+WrmipOlEkBUBhElu81Oo+QF/WoOmvAftUyIbCmX5OVTJmBiByWABzpkTBGMakX62Kb8h5DfoafFI/0vFV8Ut1pvnGbNSMSVn/zbH+qimQcIy1gFm1FxaUCbhnfe1fvB5II/oDyZ5TTLMhDck/taDJUlgVXb+cn+WEdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UDb3M3Ah; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45KHFpqd018165;
-	Fri, 21 Jun 2024 04:21:08 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45KHFxLw013496;
+	Fri, 21 Jun 2024 04:25:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6TPOm6I+QKWSWACRLrK/n5fcUX3w4K7lhw0KTM4oJfI=; b=G2l+QFV3KVSpWOS9
-	DyGN33iUZkzkwMAMSfU1cTN5ueJuSEpBX2sV68XacUCuJOet618IifP3AWwsS3rN
-	AQfXqCLnCGmt9mpuIATAB8K6Te7VatSmWD+pEjQhDU5F/eJtEVWbdn9pm/VAuaqM
-	S0U9mPeC44PK9s4PzyTY5y/3Wi/h+3hGbNE8DNNPONiVpk6zZ6fZj6fQpgn8+lHf
-	7KRUMBxaZ+4es6+pam6AlJAMwsu1o2nMtW1bA9Xi71RGquDf69jdw4GXiXGwlDGX
-	cClNsPFrjASdk0LZcvqSf3XQP/ehzZCJ8/sGBz90jGganAthz9q8HuRL3rvPHWYU
-	JXn2tg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrp19ash-1
+	sV/by03nprfCagOxCGFMtDuem6G+JpmzOCIiwNrt9CI=; b=UDb3M3Ah2YWK9Oxw
+	qh/3vRVlvVorL53bkcXVErTjqIU6toUv+DPXmr33jb0zXHpZdKdG0B1W3bzOpxse
+	U86yVK5LF5fNK2t0NVev9hR9L0pSP72BklDCcEgyLENPYpmytiO8RhyXSk0zKJIB
+	1GEAQ8y0b+0UVSN6PpI21GFMq6ioYw0AO6fvOjd+MxWKueMN8Hi/yLh/ywNVtSQF
+	TLiU/WDPCgbYZKGf+0PXiZ+0ozE0QEqnHR+0XEH5twkAWAJ4R/kGqQRVhQ6hNjS0
+	4vLFnaLEF1h+9lsTKHEk4w57J7NCsjc03f35Qq3/YYRW70BR5zRsqwNVXV1S8zKu
+	mIYyQA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrnyhbw4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 04:21:08 +0000 (GMT)
+	Fri, 21 Jun 2024 04:25:25 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45L4L7eo018830
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45L4PEqI029596
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 04:21:07 GMT
+	Fri, 21 Jun 2024 04:25:14 GMT
 Received: from [10.217.216.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 20 Jun
- 2024 21:21:03 -0700
-Message-ID: <9b6d03f4-d853-47ce-90dd-f085a893f639@quicinc.com>
-Date: Fri, 21 Jun 2024 09:50:58 +0530
+ 2024 21:25:08 -0700
+Message-ID: <ac8781fe-e8f1-4ba7-8f7d-ebfcbaadbcee@quicinc.com>
+Date: Fri, 21 Jun 2024 09:54:59 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,133 +65,82 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pmdomain: qcom: rpmhpd: Skip retention level for Power
- Domains
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+Subject: Re: [PATCH 1/8] dt-bindings: clock: qcom: Add SA8775P video clock
+ controller
+To: Krzysztof Kozlowski <krzk@kernel.org>,
         Bjorn Andersson
 	<andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, Ulf Hansson
-	<ulf.hansson@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <quic_jkona@quicinc.com>, <quic_imrashai@quicinc.com>
-References: <20240531114148.8550-1-quic_tdas@quicinc.com>
- <99967eee-da39-4a35-b80f-a78fe3c10733@linaro.org>
- <76f0e79c-b100-4b61-b861-17b324e1e4f7@quicinc.com>
- <e1ab08cb-4373-416b-9e04-b6ee5c03d112@linaro.org>
+References: <20240612-sa8775p-mm-clock-controllers-v1-0-db295a846ee7@quicinc.com>
+ <20240612-sa8775p-mm-clock-controllers-v1-1-db295a846ee7@quicinc.com>
+ <e1424d12-4dd8-4a8a-a8b5-ac94476fa3d3@kernel.org>
 Content-Language: en-US
 From: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <e1ab08cb-4373-416b-9e04-b6ee5c03d112@linaro.org>
+In-Reply-To: <e1424d12-4dd8-4a8a-a8b5-ac94476fa3d3@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: XADHCR6XAwP7Ch702gjyVTfCkprcMuPu
-X-Proofpoint-ORIG-GUID: XADHCR6XAwP7Ch702gjyVTfCkprcMuPu
+X-Proofpoint-GUID: O5ggWtnhqmUe8sBytdKaDIBBNI5oHEd0
+X-Proofpoint-ORIG-GUID: O5ggWtnhqmUe8sBytdKaDIBBNI5oHEd0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-20_12,2024-06-20_04,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 mlxscore=0 phishscore=0 mlxlogscore=999
- bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406210029
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 spamscore=0 bulkscore=0
+ adultscore=0 mlxlogscore=999 clxscore=1011 phishscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2406210030
 
 
 
-On 6/18/2024 6:47 PM, Konrad Dybcio wrote:
+On 6/13/2024 12:58 PM, Krzysztof Kozlowski wrote:
+> On 12/06/2024 12:47, Taniya Das wrote:
+>> Add device tree bindings for the video clock controller on Qualcomm
+>> SA8775P platform.
 > 
+> You claim it is a v1, but I saw it and already commented on this. No
+> changelog, no versioning, so my comments were ignored?
 > 
-> On 6/10/24 11:42, Taniya Das wrote:
->>
->>
->> On 6/4/2024 5:46 PM, Konrad Dybcio wrote:
->>>
->>>
->>> On 5/31/24 13:41, Taniya Das wrote:
->>>> In the cases where the power domain connected to logics is allowed to
->>>> transition from a level(L)-->power collapse(0)-->retention(1) or
->>>> vice versa retention(1)-->power collapse(0)-->level(L)  will cause the
->>>> logic to lose the configurations. The ARC does not support retention
->>>> to collapse transition on MxC rails.
->>>
->>> This is not very legible. Are you saying that:
->>>
->>> a) transitioning to/from LEVEL_RETENTION causes the resource to be 
->>> powered
->>> off internally for some short time and lose state
->>>
->>
->> If there is a logic connected to MxC and the vote on that logic(MXC) 
->> from a subsystem is initially to LEVEL_RETENTION and then to power 
->> collapse [0], then the PLL connected to MxC will loose the contents. 
->> This the transition I am referring here.
-> 
-> Okay, is there *always* some logic connected to MxC?
+> Please go back to previous comments, implement then, respond and then
+> send v3 with all comments addressed.
 > 
 
- From the clock controller PoV PLLs logic (majorly Multimedia clock 
-controller PLLs) would be connected to MxC.
-There can be logics from the other subsystems (other than APSS) 
-connected to MxC.
+Krzysztof, I mentioned the below in the cover letter of this series. Did 
+I still miss something?
 
->>
->>> or
->>>
->>> b) the linux implementation of rpmhpd handling causes that transition to
->>> include a power collapse step that makes it lose the state
->>
->> No, this is not the case of SW implementation, it is more from the HW 
->> ARC implementation.
->>>
->>> ?
->>>
->>>>
->>>> The targets from SM8450 onwards the PLL logics of clock controllers are
->>>> connected to MxC rails and the recommended configurations are carried
->>>> out during the clock controller probes. The MxC transition as mentioned
->>>> above should be skipped to ensure the PLL settings are intact across
->>>> clock controller power on & off.
->>>
->>> So is this a workaround for clock controller drivers specifically, or 
->>> should
->>> MXC never enter retention, and only poweroff? (the latter sounds like 
->>> it makes
->>> more sense given MXC's purpose)
->>>
->>
->> This is avoid MxC to not enter retention to OFF state.
+Add support for videocc, camcc, dispcc0 and dispcc1 on Qualcomm SA8775P
+platform.
+
+These multimedia clock controller and device tree patches are split
+from the below series.
+https://lore.kernel.org/all/20240531090249.10293-1-quic_tdas@quicinc.com/
+
+Changes in this series compared to above series:
+  [PATCH 1/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 3/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 5/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 7/8]: Split updating sleep_clk frequency to separate patch
+  [PATCH 8/8]: Newly added to update sleep_clk frequency to 32000
+
 > 
-> I'm still not sure I understand. Is this to prevent MxC being switched off
-> while Linux is voting for LEVEL_RETENTION, as RPMh sees no other user and
-> decides it's okay to cut the power?
+> Best regards,
+> Krzysztof
 > 
-
-It is to prevent Linux from voting for LEVEL_RETENTION and then voting 
-for an OFF state or vice versa. By avoiding this transition we ensure 
-that the PLL configurations are not lost.
-
-Other users(subsystems) also avoid voting for RETENTION.
-
->>
->>>>
->>>> On older generation of targets which supports only Mx the logic is 
->>>> never
->>>> collapsed and it is parked always at RETENTION, thus this issue is 
->>>> never
->>>> observed on those targets.
->>>
->>> "On older targets that do not split MX into MXA and MXC..."
->>
->> Yes, but that is only Mx :).
-> 
-> My point is about the wording.. There is no such thing as "supporting Mx".
-> 
-
-Sure, I can update the commit text in the next patch.
-
-> Konrad
 
 -- 
 Thanks & Regards,
