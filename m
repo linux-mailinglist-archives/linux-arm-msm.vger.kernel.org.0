@@ -1,45 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-23546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ABEA91200A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 11:05:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C711D91202B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 11:10:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33E0C1F23D5E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 09:05:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7EE7D28CD61
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 09:10:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78C3A16D4C9;
-	Fri, 21 Jun 2024 09:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1440916D9AE;
+	Fri, 21 Jun 2024 09:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="XSVkVAVA"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="b0qIaDK5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA2181C02;
-	Fri, 21 Jun 2024 09:05:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D6A82D89
+	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 09:10:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718960739; cv=none; b=hXnh2d5+7WmW4K0azgH7LZicVIHJgbu3lscEna+ty0d3XO2kzvpr95rGeEPmMQAEBtN9iKey1zhj9LXoPmLGBL+d2FbfnvI3h/tXtMa5kOniOrjjFsEDSnk0KLyHazhGJ/5BmE3rY7yIR1idaXt15tkRWf0IKTeJVvF9YBJsZLQ=
+	t=1718961020; cv=none; b=Tw562KNhZ62yOzEmOqwda77qTunYDCH6jxdm6e9VtCEiV/3f6a1bn/Rr6kAyBGpp32nv7x8k05+1WbiRZ1JVS9HKmOPW6jPAZkobYin1qQ9e1LEyb7sseRBX8NE9ihl/vBgiyHAR4aZdiNFD2RpO1xcpwpXq/uOkna799eM5r8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718960739; c=relaxed/simple;
-	bh=u3vsruWw3m6yWhKiI6k/Bp6Kz8w7AjrzmFbFuOLhVYk=;
+	s=arc-20240116; t=1718961020; c=relaxed/simple;
+	bh=dG8ontMkTSewrc/LNzIbCPSnZVnWuN0xsvIe9bkTG7I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d3KcjybfRXq1d05YzNrV7oWNbkWgLEj/TuiodzasvSHGks1opNoISRV9RaUThRXTOCgksuTxzrOPFjBdcr4WemLoA1Rn9RPcVW9hwt8Ijanyl9nXzkeICY/fFraqxX7+2N2mOkHfeWMPiznIMFlEv5Xp4M9b4bIJEGyPM9O15yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=XSVkVAVA; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:From:
-	Content-Type; bh=+JO4ER5bv9lk/4SoTsJyJX99aDmjGIgbmbYr1Bo8tQk=;
-	b=XSVkVAVAsNqJ+96Z02pJ31GaBFNz9YN//CbiAY3xSDXlzW9DZRGpWkfLE6D4t6
-	dY01mCKPdLNTRImIVZmlHRr2T4mAsCiZU1wET095pPdbUMdnFIB4fzTj6ORn8he6
-	RwFAJ91fUibN1xiEzWdCOrk51MvJGOB/qS+XfaX2POMzY=
-Received: from [192.168.1.26] (unknown [183.195.6.47])
-	by gzga-smtp-mta-g3-4 (Coremail) with SMTP id _____wDn1xgVQnVmlNLkEg--.36559S2;
-	Fri, 21 Jun 2024 17:04:23 +0800 (CST)
-Message-ID: <33c7587b-83a4-4be7-b00a-d30874df8c22@163.com>
-Date: Fri, 21 Jun 2024 17:04:21 +0800
+	 In-Reply-To:Content-Type; b=Y6tGleZdX2N+J9LkiQ1R5oVM36jnAr+oWcPRtAikoGm3lG5drPEqPzPMRgojtN8Mpai3NS7U2eUylrGPKuKNxt61LMGZ/+WMnSnXHS8RZyB1J4PTYJ/ZKj/iBwSfXQxt+6SbAz36oYHaTalWsZ6gUAlp4BF6pvopskkdvBjtCUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=b0qIaDK5; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1718961017;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=gYejcBX91Zhx9zBhD+bnNzE1FrYHOgpUiQ+y0qItqUU=;
+	b=b0qIaDK5qkn14rmCiJIk+9GJRyGnxL9Eju95bhBmMZO7DvgnwlkApmx6j/HCO8l/wAW8ry
+	uujWNl6XVlohN3cikh7MBrT/hZPO+a6M/30QP0NxLFYFAZa86sHE36cC3sFlGJRaFYueW5
+	9AgVeo/zBGeR5YQWCWnvqUx/vR2yaXY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-314-5gd6QNx0PR-iZ5vY2oq-eA-1; Fri, 21 Jun 2024 05:10:15 -0400
+X-MC-Unique: 5gd6QNx0PR-iZ5vY2oq-eA-1
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-42117a61bccso14693845e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 02:10:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718961014; x=1719565814;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gYejcBX91Zhx9zBhD+bnNzE1FrYHOgpUiQ+y0qItqUU=;
+        b=gpGM9h462XtU15AvHgFqxIWVHjeWYPoKFbmmX5n3jbNsn++cuaQpCe3re4WwfjWnF2
+         RNLr05zTsupab8SN9uxBA0R7/hPMduL/+S17JV4LZkQZLm2rW2ub73uNe3JpZ4adYgJm
+         gE8fp5p8Aq/SVNkAWZ6c2KkSnIaNJYn/6Xk9nLQwbT+jn3XhnfmGfcbGEkH2LMDRYNjA
+         JI8vvxVp8/sfk6Eu5q7+k40alT3C3vWQo4dEjzuQ6xP3bLnmZnL8DRLLTKdVv/dixfdk
+         1XlKXtbPZKnXeS2Ydyy+INSaBr8s4j43UfjHYoySMW9Eh9QRja6dhXLTWtvLQl9ESib0
+         94+A==
+X-Forwarded-Encrypted: i=1; AJvYcCVK0WZJ5h7KcG90vYrmXJ/VjThjG6q3YrO2UarIKnJ6Ya5UcGNXdvR77IxeDsIstYj8aCcu4p8/3m8IoBGB4LIJMaEiOcsvnMto8cxOFQ==
+X-Gm-Message-State: AOJu0YzxceF6tgN2+aqXfsShZHMCzIQp3ADU5WaHQtBV1PP5fq9OeIV4
+	9m2Mpq9ZvQRa9nE8gPz11A9XLvNsiVVHuEOjTCyxgHcMkIeq1N3KL52j91SFZqMf9fqHlC25kHI
+	MHgDUioLnFfW+WoEHPMWNo2oRNvckB5/oNdVf+G19LE8oNkLGmum8RpPEN4RO5aE=
+X-Received: by 2002:a05:600c:1d05:b0:424:7780:ffc3 with SMTP id 5b1f17b1804b1-424778101b9mr48375215e9.5.1718961014323;
+        Fri, 21 Jun 2024 02:10:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGU90oPuoG7ZEQHn11qd8u510OI3LfnmEaaKKjLepvgJT1/MBU6PiG7DAfnb5yOTq9erHiYHw==
+X-Received: by 2002:a05:600c:1d05:b0:424:7780:ffc3 with SMTP id 5b1f17b1804b1-424778101b9mr48375035e9.5.1718961013836;
+        Fri, 21 Jun 2024 02:10:13 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c725:e600:4063:2059:fd18:9d65? (p200300cbc725e60040632059fd189d65.dip0.t-ipconnect.de. [2003:cb:c725:e600:4063:2059:fd18:9d65])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366383f6d16sm1140229f8f.3.2024.06.21.02.10.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Jun 2024 02:10:13 -0700 (PDT)
+Message-ID: <8e9436f2-6ebb-4ce1-a44f-2a941d354e2a@redhat.com>
+Date: Fri, 21 Jun 2024 11:10:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -47,125 +83,133 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 0/2] pwrseq: introduce the subsystem and first driver
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: patchwork-bot+bluetooth@kernel.org, marcel@holtmann.org,
- luiz.dentz@gmail.com, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, robh@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, kvalo@kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org, lgirdwood@gmail.com,
- broonie@kernel.org, catalin.marinas@arm.com, will@kernel.org,
- bhelgaas@google.com, saravanak@google.com, geert+renesas@glider.be,
- arnd@arndb.de, neil.armstrong@linaro.org, m.szyprowski@samsung.com,
- elder@linaro.org, srinivas.kandagatla@linaro.org,
- gregkh@linuxfoundation.org, abel.vesa@linaro.org, mani@kernel.org,
- lukas@wunner.de, dmitry.baryshkov@linaro.org, amit.pundir@linaro.org,
- wuxilin123@gmail.com, linux-bluetooth@vger.kernel.org,
- netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-pci@vger.kernel.org, linux-pm@vger.kernel.org,
- bartosz.golaszewski@linaro.org
-References: <20240605123850.24857-1-brgl@bgdev.pl>
- <171889385036.4585.6482250630135606154.git-patchwork-notify@kernel.org>
- <0b144517-4cc5-4c23-be57-d6f5323690ec@163.com>
- <CAMRc=Mf2C4ywa+wQ6pcq5RtehQD00dDhzvS6sDcD8tAn=UypUA@mail.gmail.com>
+Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
+To: Fuad Tabba <tabba@google.com>, David Rientjes <rientjes@google.com>
+Cc: Sean Christopherson <seanjc@google.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, John Hubbard <jhubbard@nvidia.com>,
+ Elliot Berman <quic_eberman@quicinc.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Shuah Khan <shuah@kernel.org>,
+ Matthew Wilcox <willy@infradead.org>, maz@kernel.org, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ pbonzini@redhat.com
+References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
+ <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
+ <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
+ <CA+EHjTxWWEHfjZ9LJqZy+VCk43qd3SMKiPF7uvAwmDdPeVhrvQ@mail.gmail.com>
+ <20240619115135.GE2494510@nvidia.com>
+ <CA+EHjTz_=J+bDpqciaMnNja4uz1Njcpg5NVh_GW2tya-suA7kQ@mail.gmail.com>
+ <ZnRMn1ObU8TFrms3@google.com>
+ <CA+EHjTxvOyCqWRMTS3mXHznQtAJzDJLgqdS0Er2GA9FGdxd1vA@mail.gmail.com>
+ <4c8b81a0-3a76-4802-875f-f26ff1844955@redhat.com>
+ <CA+EHjTzvjsc4DKsNFA6LVT44YR_1C5A2JhpVSPG=R9ottfu70A@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-From: Lk Sii <lk_sii@163.com>
-In-Reply-To: <CAMRc=Mf2C4ywa+wQ6pcq5RtehQD00dDhzvS6sDcD8tAn=UypUA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CA+EHjTzvjsc4DKsNFA6LVT44YR_1C5A2JhpVSPG=R9ottfu70A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDn1xgVQnVmlNLkEg--.36559S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxXrW7tr1rWw15KrW8XFy3CFg_yoW5CFW5pF
-	W3G3Z0kF4UJr18AF1jgw1fZFy2qw47Xw1fur1Dt3s8ZF90gr18tr1Sy34F9ry7urWI9r18
-	tFWjyrySgw48urDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRWmhrUUUUU=
-X-CM-SenderInfo: 5onb2xrl6rljoofrz/1tbiExoFNWXAlu3dLwAAsV
 
-On 2024/6/21 14:36, Bartosz Golaszewski wrote:
-> On Fri, Jun 21, 2024 at 3:14 AM Lk Sii <lk_sii@163.com> wrote:
+On 21.06.24 10:54, Fuad Tabba wrote:
+> Hi David,
+> 
+> On Fri, Jun 21, 2024 at 9:44 AM David Hildenbrand <david@redhat.com> wrote:
 >>
->>
->>
->> On 2024/6/20 22:30, patchwork-bot+bluetooth@kernel.org wrote:
->>> Hello:
+>>>> Again from that thread, one of most important aspects guest_memfd is that VMAs
+>>>> are not required.  Stating the obvious, lack of VMAs makes it really hard to drive
+>>>> swap, reclaim, migration, etc. from code that fundamentally operates on VMAs.
+>>>>
+>>>>    : More broadly, no VMAs are required.  The lack of stage-1 page tables are nice to
+>>>>    : have; the lack of VMAs means that guest_memfd isn't playing second fiddle, e.g.
+>>>>    : it's not subject to VMA protections, isn't restricted to host mapping size, etc.
+>>>>
+>>>> [1] https://lore.kernel.org/all/Zfmpby6i3PfBEcCV@google.com
+>>>> [2] https://lore.kernel.org/all/Zg3xF7dTtx6hbmZj@google.com
 >>>
->>> This series was applied to bluetooth/bluetooth-next.git (master)
->>> by Bartosz Golaszewski <bartosz.golaszewski@linaro.org>:
->>>
->> Hi luiz,
+>>> I wonder if it might be more productive to also discuss this in one of
+>>> the PUCKs, ahead of LPC, in addition to trying to go over this in LPC.
 >>
->> i am curious why Bartosz is able to merge his changes into bluetooth
->> development tree bluetooth-next directly.
+>> I don't know in  which context you usually discuss that, but I could
+>> propose that as a topic in the bi-weekly MM meeting.
 >>
-> 
-> This conversation is getting progressively worse...
-> 
->> 1)
->> his changes should belong to *POWER* scope instead of *Bluetooth*
->> obviously, however, there are *NOT* any SOB tag from either power and
->> bluetooth maintainer. these changes currently only have below Acked-by
->> and Signed-off-by tags:
+>> This would, of course, be focused on the bigger MM picture: how to mmap,
+>> how how to support huge pages, interaction with page pinning, ... So
+>> obviously more MM focused once we are in agreement that we want to
+>> support shared memory in guest_memfd and how to make that work with core-mm.
 >>
->> Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
->> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
+>> Discussing if we want shared memory in guest_memfd might be betetr
+>> suited for a different, more CC/KVM specific meeting (likely the "PUCKs"
+>> mentioned here?).
 > 
-> It's a new subsystem that has been discussed and reviewed for months
-> and thoroughly tested. Please refer to the cover letter under v8
-> linked in this thread. It's not related to power-management or
-> power-supply, it's its own thing but IMO the best place to put it is
-> under drivers/power/. And I will maintain it.
+> Sorry, I should have given more context on what a PUCK* is :) It's a
+> periodic (almost weekly) upstream call for KVM.
 > 
->> 2)
->> his changes have not merged into linus mainline tree yet.
->>
+> [*] https://lore.kernel.org/all/20230512231026.799267-1-seanjc@google.com/
 > 
-> This is why they are in next! They are scheduled to go in during the
-> upcoming merge window. But since changes belong in multiple trees, we
-> need a cross-tree merge.
-> 
->> 3)
->> perhaps, it is safer to pull his changes from linus mainline tree when
->> merged than to merge into bluetooth-next firstly.
->>
-> 
-> It's not safer at all, why would spending less time in next be safer?
-> 
-it seems this patch serial(new subsystem) does not depend on bluetooth
-and also does not belong to bluetooth subsystem, but have been contained
-by tip of bluetooth tree.
+> But yes, having a discussion in one of the mm meetings ahead of LPC
+> would also be great. When do these meetings usually take place, to try
+> to coordinate across timezones.
 
-why not follow below merging produce?
-1) you send this patch serials to Linus to merge within linus mainline tree
-2) luiz then pull your changes from linus mainline tree.
+It's Wednesday, 9:00 - 10:00am PDT (GMT-7) every second week.
 
->>> On Wed,  5 Jun 2024 14:38:48 +0200 you wrote:
->>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>>
->>>> Hi!
->>>>
->>>> These are the power sequencing patches sent separately after some
->>>> improvements suggested by Bjorn Helgaas. I intend to pick them up into a
->>>> new branch and maintain the subsystem from now on. I then plan to
->>>> provide an immutable tag to the Bluetooth and PCI subsystems so that the
->>>> rest of the C changes can be applied. This new branch will then be
->>>> directly sent to Linus Torvalds for the next merge window.
->>>>
->>>> [...]
->>>
->>> Here is the summary with links:
->>>   - [v9,1/2] power: sequencing: implement the pwrseq core
->>>     https://git.kernel.org/bluetooth/bluetooth-next/c/249ebf3f65f8
->>>   - [v9,2/2] power: pwrseq: add a driver for the PMU module on the QCom WCN chipsets
->>>     https://git.kernel.org/bluetooth/bluetooth-next/c/2f1630f437df
->>>
->>> You are awesome, thank you!
->>
-> 
-> Why are you top-posting anyway?
-> 
-it is caused by my bad mail client settings. thanks for reminder.
-> Bart
+If we're in agreement, we could (assuming there are no other planned 
+topics) either use the slot next week (June 26) or the following one 
+(July 10).
+
+Selfish as I am, I would prefer July 10, because I'll be on vacation 
+next week and there would be little time to prepare.
+
+@David R., heads up that this might become a topic ("shared and private 
+memory in guest_memfd: mmap, pinning and huge pages"), if people here 
+agree that this is a direction worth heading.
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
