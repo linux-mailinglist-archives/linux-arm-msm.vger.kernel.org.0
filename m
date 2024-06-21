@@ -1,127 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-23518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C895911B2F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:15:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCB0D911B47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:17:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 372ED1F220E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:15:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8833E1F229D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:17:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C498116EBF6;
-	Fri, 21 Jun 2024 06:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BADB616C857;
+	Fri, 21 Jun 2024 06:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="biQBUHB4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DdFuMzNa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A86316EBE8;
-	Fri, 21 Jun 2024 06:11:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315D21534EA;
+	Fri, 21 Jun 2024 06:15:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718950308; cv=none; b=gNmYDLOvUJaHBFrWLMXkRl0aYcpwL7Fhi+1swCWSUgmffDWpcq8FkZtI198ghCzsQjMfUK5F248m7lLOrF2b3QHRTm+VB0srlhfc+QNOCI74OIV6U2pP6JbrgxEwq0T4oDSfqzMqMx88dkmwtOVseXLmurckvdo82yV6OY39s3I=
+	t=1718950546; cv=none; b=HnX6/+n/w9xbzI4/WCYB97bpdJJjUTFULHZzjAvmAQRkRYiYGArspgqrPT4/Dc0FIJ2wksFgpoGiOGXgW3je1I1WUiGnX/wBo8GkjV/G00DUb9cgFurdyF3TiWvgVWNHaez5O4dM00ken3u4SlEcE5v1y2WtjioQ2J7iNiDPzbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718950308; c=relaxed/simple;
-	bh=Rjeq2f6+/LU/dx94vTkY6FX6cQL8X5ChA6Y7UFLcU0U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hcv8WnuMuXMMqMe7Iu8PZ3isUc915of0V3mk8ZHGmjpUDWJNRKSK5gT2lX+7EvnOIOBROfgonDB0e8Ghy7yJ4uXzT4iVSojRpmHiY/TT26RMD+XYpLdZ/heykCU3BmVU8GPrGpryHsxAQzlDy1Pi87V70h+FB7kPV1zL1VnxLi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=biQBUHB4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D737DC4AF09;
-	Fri, 21 Jun 2024 06:11:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718950308;
-	bh=Rjeq2f6+/LU/dx94vTkY6FX6cQL8X5ChA6Y7UFLcU0U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=biQBUHB4De/RqAisRyrC8Mu9OHu8Bx0lYR09gBef5pFHVykrB1RiPkHBkqr2bl34W
-	 OEVsafsDbPHhKmySY8z7TzTrcGistSmpeDu5j0I81b10uoCOX3OY/rGoIHVCCXM3fC
-	 viMEJ3HD8+++1GcJZaRh9IluzuqEaXdvCNDmWUUan2vsplnukahERxXyEQwwAqYrzL
-	 5iWUGMrNSel6JLMbypnD0P0QfCq+orLzRZxKZpLusLTbgQWYJT9RPObWw0IRB6ai+w
-	 8PB0Dee3kVipo2UCZOH5CvIKOrn37rhGZCqVyVTKyDu4EiGspqg3cWiif3b/aeCXEB
-	 900wSWK2M+8LQ==
-From: Bjorn Andersson <andersson@kernel.org>
-To: konrad.dybcio@linaro.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	dmitry.baryshkov@linaro.org,
-	Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel@quicinc.com
-Subject: Re: [PATCH v10 0/4] arm64: dts: qcom: aim300: add AIM300 AIoT
-Date: Fri, 21 Jun 2024 01:11:31 -0500
-Message-ID: <171895028812.12506.17324795855835558511.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240618072202.2516025-1-quic_tengfan@quicinc.com>
-References: <20240618072202.2516025-1-quic_tengfan@quicinc.com>
+	s=arc-20240116; t=1718950546; c=relaxed/simple;
+	bh=O9evRJX2gCyOvgN7D3f4v4px9aaOmtIKONVbD/a3e7s=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WPR7mcqnYWuBryG231mCyrMFXIYV9uMBO67j3HP2dqEmb3mgVokvqVSo5v+6kT1+fFhO0pk6yOfO0PzEzL5QAuFWxmFdSG5qz/rqm+oOG1RyCpbTa0y3i6Ff00AfZ8LUnDuRCz2iXJQ1Tyvnid9eYTuTjnO6ZplEk1BfVCcweGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DdFuMzNa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45L6AF1A017939;
+	Fri, 21 Jun 2024 06:15:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ubTw/SGh4Hd1iy6B/oYlG5
+	X2s+gU3U2DrGQmpFCywno=; b=DdFuMzNandpwFEa1hCH184xLj2+yJ0aVyY7SxI
+	HxYbct6oOVaGI1givPnXp2q1r2Qh+PY6vxtoCi0bpY3xsrPsoqUrDwnwFrX+hEdD
+	P1zYmjdbOAbnDoUT+cA43pDPCJA2vevUdlIhfWdxEBQYSZZMyE284Yx3OSV//id/
+	70Ct+pAunA+TPETqTtTR5Ws3mZw5bIx3BLnJjfG3Sl4vT7cXy1WDV443VSHbHwqm
+	3Rwwbg0c8ibWahkuxd6JS8XoHKAJDrKviAMhF7ONOTblvyBGAEWWk8AYc1HtWolG
+	yr6SlMugo3oTKVXSmz+L1fa7fDfwam5OoJMarlnqAl74zMZA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrm09jqb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Jun 2024 06:15:37 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45L6FaNc019800
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 21 Jun 2024 06:15:36 GMT
+Received: from yijiyang-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 20 Jun 2024 23:15:29 -0700
+From: YijieYang <quic_yijiyang@quicinc.com>
+To: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_tengfan@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <quic_jiegan@quicinc.com>
+CC: <kernel@quicinc.com>, <quic_yijiyang@quicinc.com>
+Subject: [PATCH] dt-bindings: phy: qcom,qmp-usb: fix spelling error
+Date: Fri, 21 Jun 2024 14:15:21 +0800
+Message-ID: <20240621061521.332567-1-quic_yijiyang@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: yw65nC8FemhvEFmxEkjssmvn7FEc2_QL
+X-Proofpoint-GUID: yw65nC8FemhvEFmxEkjssmvn7FEc2_QL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-20_12,2024-06-20_04,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=846 adultscore=0 impostorscore=0 clxscore=1011
+ lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0 mlxscore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406210044
 
+From: Yijie Yang <quic_yijiyang@quicinc.com>
 
-On Tue, 18 Jun 2024 15:21:58 +0800, Tengfei Fan wrote:
-> Add AIM300 AIoT support along with usb, ufs, regulators, serial, PCIe,
-> and PMIC functions.
-> AIM300 Series is a highly optimized family of modules designed to
-> support AIoT applications. It integrates QCS8550 SoC, UFS and PMIC
-> chip etc.
-> Here is a diagram of AIM300 AIoT Carrie Board and SoM
->  +--------------------------------------------------+
->  |             AIM300 AIOT Carrier Board            |
->  |                                                  |
->  |           +-----------------+                    |
->  |power----->| Fixed regulator |---------+          |
->  |           +-----------------+         |          |
->  |                                       |          |
->  |                                       v VPH_PWR  |
->  | +----------------------------------------------+ |
->  | |                          AIM300 SOM |        | |
->  | |                                     |VPH_PWR | |
->  | |                                     v        | |
->  | |   +-------+       +--------+     +------+    | |
->  | |   | UFS   |       | QCS8550|     |PMIC  |    | |
->  | |   +-------+       +--------+     +------+    | |
->  | |                                              | |
->  | +----------------------------------------------+ |
->  |                                                  |
->  |                    +----+          +------+      |
->  |                    |USB |          | UART |      |
->  |                    +----+          +------+      |
->  +--------------------------------------------------+
-> The following functions have been verified:
->   - uart
->   - usb
->   - ufs
->   - PCIe
->   - PMIC
->   - display
->   - adsp
->   - cdsp
->   - tlmm
-> 
-> [...]
+Correct the spelling error, changing 'com' to 'qcom'.
 
-Applied, thanks!
+Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+---
+ .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[1/4] dt-bindings: arm: qcom: Document QCS8550 SoC and the AIM300 AIoT board
-      commit: 6d97b93acf9d0b29d3eddf38186d9556e5360368
-[2/4] arm64: dts: qcom: qcs8550: introduce qcs8550 dtsi
-      commit: bb8a2dc3bd89628a7f4aac577894d47dd0f4db3c
-[3/4] arm64: dts: qcom: add base AIM300 dtsi
-      commit: 0b12da4e28d8f6ecb492c98313e325eff11b5bb8
-[4/4] arm64: dts: qcom: aim300: add AIM300 AIoT
-      commit: e7931a52c7b68fb5143e118778092a23cfc5b0fc
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+index 5755245ecfd6..0e0b6cae07bc 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+@@ -20,7 +20,7 @@ properties:
+       - qcom,ipq8074-qmp-usb3-phy
+       - qcom,ipq9574-qmp-usb3-phy
+       - qcom,msm8996-qmp-usb3-phy
+-      - com,qdu1000-qmp-usb3-uni-phy
++      - qcom,qdu1000-qmp-usb3-uni-phy
+       - qcom,sa8775p-qmp-usb3-uni-phy
+       - qcom,sc8180x-qmp-usb3-uni-phy
+       - qcom,sc8280xp-qmp-usb3-uni-phy
 
-Best regards,
+base-commit: b992b79ca8bc336fa8e2c80990b5af80ed8f36fd
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.34.1
+
 
