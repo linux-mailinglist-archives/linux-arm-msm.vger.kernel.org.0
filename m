@@ -1,96 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-23622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BA6A912AA7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 17:52:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A6C5912ACE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 18:03:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8D4E1F214DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:52:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BABF5B253A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 16:01:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05E3B15EFD5;
-	Fri, 21 Jun 2024 15:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8D7715FA8E;
+	Fri, 21 Jun 2024 16:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="LlzMtzB3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e3Kx0nfV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1354115EFA6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 15:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B236215FA80;
+	Fri, 21 Jun 2024 16:01:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718985158; cv=none; b=qKsE0nB5PTPUNrn+yKmMFwmRibiucM+7h8eqh0BTED7sjpWgjiaP3HCAsm2GHA5HJrc3zD0w0M4aR/8eyD/fiT7BM8RHAKqXAm1XYlkVvxI9O74cCoe1aMFqhe18sAPZsUsUHClGHK+RdXR1kRZVmKDuA19/c3BoO5Ai0KkZvYk=
+	t=1718985707; cv=none; b=DqTTOM37t2/1mlOukZKaM4hSPSlVSO68FnHhybcjONsWEivGoFRjFwqV/5WVVZOoX7sZdcKDOG3aa4BFjWEB2YmJk8DuEoiMT2sk/u4H3pHNcEVMy11cO88vlEAuTHbdmcjdTCbu+ZE9d5bf+tyNoPrbcOKKpCRzoQLAuR0E8ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718985158; c=relaxed/simple;
-	bh=7QtTWpzSkAfcmaeTt2hMYoNG7lS04QTiDzb4LCrYk1g=;
+	s=arc-20240116; t=1718985707; c=relaxed/simple;
+	bh=8v/eEGyFKY5gIZxnTxHoa5Tk339bix4846v13RAQ1fU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sP4BnrcuFvR47oYtjriZOjrskVRLeTe/0i8ZuWE1CNZjiuRHB+BTIOuOdIO02DP5RUdfWLl1E7BX4vNfUysKLruU6spflFzf1ZIP1gDEPigAt6KkRTtAk+5e4CIMwzp07UVZ61PFHdWB+VpGHAK5CvkwwZEZKTq3c4iXvbIqsC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=LlzMtzB3; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4217f072531so2639885e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 08:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1718985155; x=1719589955; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vd3HeTeZMYz+szCMLjJ+nPKJvussyehfNdDyWJdflY8=;
-        b=LlzMtzB3iqcpGQFsu/JbUoRa/u5wvSn8Y3OCFFMvgbSmo5pqc3jBLQeS5OkUHVRhGu
-         VSCpCmv3YpAUsBC3/uXYhPz6ZGmBtbW5OoRh8IgsQ+zva73aoo9NGnsg1haP/0a5xSxV
-         3GjU7+qH7IkKu4OaLvvYriF8tw3B7GtKHmmn0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718985155; x=1719589955;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vd3HeTeZMYz+szCMLjJ+nPKJvussyehfNdDyWJdflY8=;
-        b=YYa19/IDHQVtq5aVxzRB/2TLjqTufg1OOCaFgyhEEmEg4P2Hs0zbaB9n/IJIn4zcM3
-         GwaTnqksIy7rlHy4zn1DhPRbsM7zUuxepElQ9y7HvBNsSMAAw+SGEQEpg5s3fDxCtaJJ
-         IrcJ7jf1wxbenUjgGz+zNQlOWsp6wbHbiz+m+Oykr4St3NSUF4fG8Ihi55Z/klc0h22e
-         bOKsMBYfe+m2fhtw6kvrp+6b4o3Aaalm7ac6EjT5+9xw9r7frkW6J5P0cLSVqtKQrWR6
-         +/Xi4RLFstaSrh6LIab/iTQo/z49WTlftlgKDKIz9NiWWSAOqVOs+K6hHLhTPTx2r9IV
-         HA7w==
-X-Forwarded-Encrypted: i=1; AJvYcCVCDPq1Sa9PbyaUemAJ1h6XEgJC8aqF5SRRt+gx8S/K6b5tOYY3JM6hXh0PTNmQOhPHdK3hNSXZ4CuF9jLuwhRQqMDxHqM+e5E5An3o1Q==
-X-Gm-Message-State: AOJu0YxNSLOTvI6woQo49yel/eeT6JCVsrK8aS3rt1uKq0dd6loojbtP
-	RYQTANW+qH9hdSOHORx5OjH/AxzlM7lThsYLWnAA+MH4Zd85voxbWunFLicMucs=
-X-Google-Smtp-Source: AGHT+IHTT6f9c44NGR6g+VcrdzZyAm7iHTscK4tEiWZvq36vM9pBm1QlBHsawMSX9ZVQwhSsjv6Cbg==
-X-Received: by 2002:a7b:c5ca:0:b0:424:7876:b6ca with SMTP id 5b1f17b1804b1-4247876b78bmr54773525e9.1.1718985155185;
-        Fri, 21 Jun 2024 08:52:35 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247101a955sm102812785e9.0.2024.06.21.08.52.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jun 2024 08:52:34 -0700 (PDT)
-Date: Fri, 21 Jun 2024 17:52:32 +0200
-From: Daniel Vetter <daniel@ffwll.ch>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Oded Gabbay <ogabbay@kernel.org>, srinivas.kandagatla@linaro.org,
-	linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org,
-	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-	Daniel Vetter <daniel@ffwll.ch>, Dave Airlie <airlied@gmail.com>
-Subject: Re: [PATCH v1] misc: fastrpc: Move fastrpc driver to misc/fastrpc/
-Message-ID: <ZnWhwJtTXS32UI9H@phenom.ffwll.local>
-Mail-Followup-To: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Oded Gabbay <ogabbay@kernel.org>, srinivas.kandagatla@linaro.org,
-	linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org,
-	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-	Dave Airlie <airlied@gmail.com>
-References: <20240612064731.25651-1-quic_ekangupt@quicinc.com>
- <zbpia232dh4ojfsvhcqxrp6cwfygaalu5cycdrs47pqmnrisvk@dq24nww26gkm>
- <z6g5ool5vomkudiroyaxh532rhlfu5x4i3l5xoqrsho2sxv4im@v5ghemjkpc3v>
- <CAA8EJprgCJKOnZo7Q31KZV3SA3NqWxcMmoUxuqnVF+8cQW5ucg@mail.gmail.com>
- <6f59552d-d7a3-5e05-3465-e707c1b7eaf2@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=q0O03+x7uLOjH2MtX2GYpqFplAjcID23IhIQb9735tNeC2fn4Fg9Qpb+rcWMfoy9Reba5HtSP06Dpl5rfrY4fxlE0a2qrRrnBPqIcofyJMjA0kk/niQYGCA1dXpcaFWFDTpVYQKN8jIkOAfAdYVYyBEJaazbxs7t+GGPkpGpYl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e3Kx0nfV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EDEC2BBFC;
+	Fri, 21 Jun 2024 16:01:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718985707;
+	bh=8v/eEGyFKY5gIZxnTxHoa5Tk339bix4846v13RAQ1fU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=e3Kx0nfVNTQdGiS+EXiNuS8Ff9ugwc/B9NUkC0TH+vzENHZ4xwj8vql3R3uFeY6wz
+	 K4k4NsKJ+54dLDGjyYdiDsZNGSeE2eSi8nny45lw3cPVjVYm1/vl9LePRAV/hF15Z1
+	 C9mBsXCgN5JQi/72ufehpDqtVl3Bji9Yv1vNJ/vTzWSx0F3tYm8+J98pKXnUkj/PBL
+	 9Y4UwN5zguSJkKfNWZisLZl/14Y6O89kvnyeL2efq/S5CyxUmIVS32nbLBUKhzaOly
+	 mW1aLqaDbhiyI32S30aPL6C9dOaGJcHi3hGab/I97tGVOWoUKKCZ6JyY3kJmdj/dXK
+	 yITUPP3efhCWQ==
+Date: Fri, 21 Jun 2024 09:01:44 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Gaurav Kashyap <gaurkash@qti.qualcomm.com>
+Cc: "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
+	"Gaurav Kashyap (QUIC)" <quic_gaurkash@quicinc.com>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+	"andersson@kernel.org" <andersson@kernel.org>,
+	"neil.armstrong@linaro.org" <neil.armstrong@linaro.org>,
+	"srinivas.kandagatla" <srinivas.kandagatla@linaro.org>,
+	"krzysztof.kozlowski+dt@linaro.org" <krzysztof.kozlowski+dt@linaro.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>,
+	"robh+dt@kernel.org" <robh+dt@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+	kernel <kernel@quicinc.com>,
+	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"Om Prakash Singh (QUIC)" <quic_omprsing@quicinc.com>,
+	"Bao D. Nguyen (QUIC)" <quic_nguyenb@quicinc.com>,
+	"bartosz.golaszewski" <bartosz.golaszewski@linaro.org>,
+	"konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
+	"ulf.hansson@linaro.org" <ulf.hansson@linaro.org>,
+	"jejb@linux.ibm.com" <jejb@linux.ibm.com>,
+	"martin.petersen@oracle.com" <martin.petersen@oracle.com>,
+	"mani@kernel.org" <mani@kernel.org>,
+	"davem@davemloft.net" <davem@davemloft.net>,
+	"herbert@gondor.apana.org.au" <herbert@gondor.apana.org.au>,
+	Prasad Sodagudi <psodagud@quicinc.com>,
+	Sonal Gupta <sonalg@quicinc.com>
+Subject: Re: [PATCH v5 04/15] soc: qcom: ice: add hwkm support in ice
+Message-ID: <20240621160144.GB2081@sol.localdomain>
+References: <20240617005825.1443206-1-quic_gaurkash@quicinc.com>
+ <20240617005825.1443206-5-quic_gaurkash@quicinc.com>
+ <3eehkn3cdhhjfqtzpahxhjxtu5uqwhntpgu22k3hknctrop3g5@f7dhwvdvhr3k>
+ <96e2ce4b154a4f918be0bc2a45011e6d@quicinc.com>
+ <CAA8EJppGpv7N_JQQNJZrbngBBdEKZfuqutR9MPnS1R_WqYNTQw@mail.gmail.com>
+ <3a15df00a2714b40aba4ebc43011a7b6@quicinc.com>
+ <CAA8EJpoZ0RR035QwzMLguJZvdYb-C6aqudp1BgHgn_DH2ffsoQ@mail.gmail.com>
+ <20240621044747.GC4362@sol.localdomain>
+ <CY8PR02MB9502E314820C659AF080DB93E2C92@CY8PR02MB9502.namprd02.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,91 +90,112 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6f59552d-d7a3-5e05-3465-e707c1b7eaf2@quicinc.com>
-X-Operating-System: Linux phenom 6.8.9-amd64 
+In-Reply-To: <CY8PR02MB9502E314820C659AF080DB93E2C92@CY8PR02MB9502.namprd02.prod.outlook.com>
 
-On Fri, Jun 21, 2024 at 09:40:09AM -0600, Jeffrey Hugo wrote:
-> On 6/21/2024 5:19 AM, Dmitry Baryshkov wrote:
-> > On Fri, 21 Jun 2024 at 09:19, Bjorn Andersson <andersson@kernel.org> wrote:
-> > > 
-> > > On Wed, Jun 12, 2024 at 09:28:39PM GMT, Dmitry Baryshkov wrote:
-> > > > On Wed, Jun 12, 2024 at 12:17:28PM +0530, Ekansh Gupta wrote:
-> > > > > Move fastrpc.c from misc/ to misc/fastrpc/. New C files are planned
-> > > > > to be added for PD notifications and other missing features. Adding
-> > > > > and maintaining new files from within fastrpc directory would be easy.
-> > > > > 
-> > > > > Example of feature that is being planned to be introduced in a new C
-> > > > > file:
-> > > > > https://lore.kernel.org/all/20240606165939.12950-6-quic_ekangupt@quicinc.com/
-> > > > > 
-> > > > > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> > > > > ---
-> > > > >   MAINTAINERS                          |  2 +-
-> > > > >   drivers/misc/Kconfig                 | 13 +------------
-> > > > >   drivers/misc/Makefile                |  2 +-
-> > > > >   drivers/misc/fastrpc/Kconfig         | 16 ++++++++++++++++
-> > > > >   drivers/misc/fastrpc/Makefile        |  2 ++
-> > > > >   drivers/misc/{ => fastrpc}/fastrpc.c |  0
-> > > > >   6 files changed, 21 insertions(+), 14 deletions(-)
-> > > > >   create mode 100644 drivers/misc/fastrpc/Kconfig
-> > > > >   create mode 100644 drivers/misc/fastrpc/Makefile
-> > > > >   rename drivers/misc/{ => fastrpc}/fastrpc.c (100%)
-> > > > 
-> > > > Please consider whether it makes sense to move to drivers/accel instead
-> > > > (and possibly writing a better Kconfig entry, specifying that the driver
-> > > > is to be used to offload execution to the DSP).
-> > > > 
-> > > 
-> > > Wouldn't this come with the expectation of following the ABIs of
-> > > drivers/accel and thereby breaking userspace?
+On Fri, Jun 21, 2024 at 03:35:40PM +0000, Gaurav Kashyap wrote:
+> Hello Eric
+> 
+> On 06/20/2024, 9:48 PM PDT, Eric Biggers wrote:
+> > On Thu, Jun 20, 2024 at 02:57:40PM +0300, Dmitry Baryshkov wrote:
+> > > > > >
+> > > > > > > Is it possible to use both kind of keys when working on standard
+> > mode?
+> > > > > > > If not, it should be the user who selects what type of keys to be
+> > used.
+> > > > > > > Enforcing this via DT is not a way to go.
+> > > > > > >
+> > > > > >
+> > > > > > Unfortunately, that support is not there yet. When you say user,
+> > > > > > do you mean to have it as a filesystem mount option?
+> > > > >
+> > > > > During cryptsetup time. When running e.g. cryptsetup I, as a user,
+> > > > > would like to be able to use either a hardware-wrapped key or a
+> > standard key.
+> > > > >
+> > > >
+> > > > What we are looking for with these patches is for per-file/folder
+> > encryption using fscrypt policies.
+> > > > Cryptsetup to my understanding supports only full-disk , and does
+> > > > not support FBE (File-Based)
+> > >
+> > > I must admit, I mostly used dm-crypt beforehand, so I had to look at
+> > > fscrypt now. Some of my previous comments might not be fully
+> > > applicable.
+> > >
+> > > > Hence the idea here is that we mount an unencrypted device (with the
+> > > > inlinecrypt option that indicates inline encryption is supported) And
+> > specify policies (links to keys) for different folders.
+> > > >
+> > > > > > The way the UFS/EMMC crypto layer is designed currently is that,
+> > > > > > this information is needed when the modules are loaded.
+> > > > > >
+> > > > > > https://lore.kernel.org/all/20231104211259.17448-2-ebiggers@kern
+> > > > > > el.org /#Z31drivers:ufs:core:ufshcd-crypto.c
+> > > > >
+> > > > > I see that the driver lists capabilities here. E.g. that it
+> > > > > supports HW-wrapped keys. But the line doesn't specify that standard
+> > keys are not supported.
+> > > > >
+> > > >
+> > > > Those are capabilities that are read from the storage controller.
+> > > > However, wrapped keys Are not a standard in the ICE JEDEC
+> > > > specification, and in most cases, is a value add coming from the SoC.
+> > > >
+> > > > QCOM SOC and firmware currently does not support both kinds of keys in
+> > the HWKM mode.
+> > > > That is something we are internally working on, but not available yet.
+> > >
+> > > I'd say this is a significant obstacle, at least from my point of
+> > > view. I understand that the default might be to use hw-wrapped keys,
+> > > but it should be possible for the user to select non-HW keys if the
+> > > ability to recover the data is considered to be important. Note, I'm
+> > > really pointing to the user here, not to the system integrator. So
+> > > using DT property or specifying kernel arguments to switch between
+> > > these modes is not really an option.
+> > >
+> > > But I'd really love to hear some feedback from linux-security and/or
+> > > linux-fscrypt here.
+> > >
+> > > In my humble opinion the user should be able to specify that the key
+> > > is wrapped using the hardware KMK. Then if the hardware has already
+> > > started using the other kind of keys, it should be able to respond
+> > > with -EINVAL / whatever else. Then the user can evict previously
+> > > programmed key and program a desired one.
+> > >
+> > > > > Also, I'd have expected that hw-wrapped keys are handled using
+> > > > > trusted keys mechanism (see security/keys/trusted-keys/). Could
+> > > > > you please point out why that's not the case?
+> > > > >
+> > > >
+> > > > I will evaluate this.
+> > > > But my initial response is that we currently cannot communicate to
+> > > > our TPM directly from HLOS, but goes through QTEE, and I don't think
+> > > > our qtee currently interfaces with the open source tee driver. The
+> > interface is through QCOM SCM driver.
+> > >
+> > > Note, this is just an API interface, see how it is implemented for the
+> > > CAAM hardware.
+> > >
 > > 
-> > As I wrote earlier, that depends on the accel/ maintainers decision,
-> > whether it's acceptable to have non-DRM_ACCEL code underneath.
-> > But at least I'd try doing that on the grounds of keeping the code at
-> > the proper place in the drivers/ tree, raising awareness of the
-> > FastRPC, etc.
-> > For example current fastrpc driver bypasses dri-devel reviews, while
-> > if I remember correctly, at some point it was suggested that all
-> > dma-buf-handling drivers should also notify the dri-devel ML.
-> > 
-> > Also having the driver under drivers/accels makes it possible and
-> > logical to  implement DRM_ACCEL uAPI at some point. In the ideal world
-> > we should be able to declare existing FastRPC uAPI as legacy /
-> > deprecated / backwards compatibility only and migrate to the
-> > recommended uAPI approach, which is DRM_ACCEL.
+> > The problem is that this patchset was sent out without the patches that add
+> > the block and filesystem-level framework for hardware-wrapped inline
+> > encryption keys, which it depends on.  So it's lacking context.  The proposed
+> > framework can be found at https://lore.kernel.org/linux-
+> > block/20231104211259.17448-1-ebiggers@kernel.org/T/#u
 > > 
 > 
-> I suspect Vetter/Airlie need to be involved in this.
+> I have only been adding the fscryp patch link as part of the cover letter - as a dependency.
+> https://lore.kernel.org/all/20240617005825.1443206-1-quic_gaurkash@quicinc.com/
+> If you would like me to include it in the patch series itself, I can do that as well.
 > 
-> Its my understanding that accelerator drivers are able to reside in misc as
-> long as there is no use of dma-buf.  Use of dma-buf means they need to be in
-> drm/accel.
-> 
-> There is precedent for moving a driver from misc to accel (HabanaLabs).
-> 
-> Right now, I'm not aware that fastRPC meets the requirements for drm/accel.
-> There is an open source userspace driver, but I'm not aware of an open
-> source compiler.  From what I know of the architecture, it should be
-> possible to utilize upstream LLVM to produce one.
 
-Yeah so fastrpc is one of the reasons why I've added a dma_buf regex match
-to MAINTAINERS, and given this move has shown up here on dri-devel that
-seems to work.
+I think including all prerequisite patches would be helpful for reviewers.
 
-But also, it slipped through, can't break uapi, so I just pretend it's not
-really there :-)
+Thanks for continuing to work on this!
 
-That aside, going forward it might make sense to look into drivers/accel,
-and also going forward new dma_buf uapi will be reviewed to fairly
-stringent standards. We're not going to impose the dri-devel userspace
-rules on everyone, each subsystem tends to know what's best in their
-ecosystem. But if something just ends up in misc so it can avoid the drm
-or accel rules (and I think media is also pretty much on the same page
-nowadays), then expect some serious heat ...
+I still need to get ahold of a sm8650 based device and test this out.  Is the
+SM8650 HDK the only option, or is there a sm8650 based phone with upstream
+support yet?
 
-Cheers, Sima
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+- Eric
 
