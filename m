@@ -1,119 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-23519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCB0D911B47
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:17:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B358911B7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:21:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8833E1F229D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:17:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01F091F242E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 06:21:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BADB616C857;
-	Fri, 21 Jun 2024 06:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCBCA14A615;
+	Fri, 21 Jun 2024 06:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DdFuMzNa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fcYAvO1L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315D21534EA;
-	Fri, 21 Jun 2024 06:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D9412D742;
+	Fri, 21 Jun 2024 06:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718950546; cv=none; b=HnX6/+n/w9xbzI4/WCYB97bpdJJjUTFULHZzjAvmAQRkRYiYGArspgqrPT4/Dc0FIJ2wksFgpoGiOGXgW3je1I1WUiGnX/wBo8GkjV/G00DUb9cgFurdyF3TiWvgVWNHaez5O4dM00ken3u4SlEcE5v1y2WtjioQ2J7iNiDPzbU=
+	t=1718950789; cv=none; b=K4dYZgE6qQB53/DOZyOKktYopddVFUpygko2QfbgWbMWNRb4X+E207lH679dNW44VWLy22GM4u6O8QsIS6UAb05HgKLd7YJbmtiz31RsZSPeEn65TQLSUPF73tnX3NX3lGyhopdkyAcXbsHWFWk03rdviDZsOuUBn3/Qzpo17WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718950546; c=relaxed/simple;
-	bh=O9evRJX2gCyOvgN7D3f4v4px9aaOmtIKONVbD/a3e7s=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WPR7mcqnYWuBryG231mCyrMFXIYV9uMBO67j3HP2dqEmb3mgVokvqVSo5v+6kT1+fFhO0pk6yOfO0PzEzL5QAuFWxmFdSG5qz/rqm+oOG1RyCpbTa0y3i6Ff00AfZ8LUnDuRCz2iXJQ1Tyvnid9eYTuTjnO6ZplEk1BfVCcweGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DdFuMzNa; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45L6AF1A017939;
-	Fri, 21 Jun 2024 06:15:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=ubTw/SGh4Hd1iy6B/oYlG5
-	X2s+gU3U2DrGQmpFCywno=; b=DdFuMzNandpwFEa1hCH184xLj2+yJ0aVyY7SxI
-	HxYbct6oOVaGI1givPnXp2q1r2Qh+PY6vxtoCi0bpY3xsrPsoqUrDwnwFrX+hEdD
-	P1zYmjdbOAbnDoUT+cA43pDPCJA2vevUdlIhfWdxEBQYSZZMyE284Yx3OSV//id/
-	70Ct+pAunA+TPETqTtTR5Ws3mZw5bIx3BLnJjfG3Sl4vT7cXy1WDV443VSHbHwqm
-	3Rwwbg0c8ibWahkuxd6JS8XoHKAJDrKviAMhF7ONOTblvyBGAEWWk8AYc1HtWolG
-	yr6SlMugo3oTKVXSmz+L1fa7fDfwam5OoJMarlnqAl74zMZA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yvrm09jqb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 06:15:37 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45L6FaNc019800
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 21 Jun 2024 06:15:36 GMT
-Received: from yijiyang-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 20 Jun 2024 23:15:29 -0700
-From: YijieYang <quic_yijiyang@quicinc.com>
-To: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_tengfan@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <quic_jiegan@quicinc.com>
-CC: <kernel@quicinc.com>, <quic_yijiyang@quicinc.com>
-Subject: [PATCH] dt-bindings: phy: qcom,qmp-usb: fix spelling error
-Date: Fri, 21 Jun 2024 14:15:21 +0800
-Message-ID: <20240621061521.332567-1-quic_yijiyang@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1718950789; c=relaxed/simple;
+	bh=er+wYh9AQ6uJk85XjeYB5lcqPTMyxJ8Uawx5iswT9Ho=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p4UmSj5tYsvUkMorKmhPfOer060UNgnnJTRMAqBjLlNbv4OLCjN5Io1FrfllC0KPK2mh55AwxKnXxTwdvq+YNVK1C7384ss4iYRFld9psCzpcm2lb18IwKzEh5m63LPpOYR/pPW1J5zK8hfWH2KVYKTLsoeKrD44VsXAVQ3Vhu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fcYAvO1L; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D732C2BBFC;
+	Fri, 21 Jun 2024 06:19:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718950789;
+	bh=er+wYh9AQ6uJk85XjeYB5lcqPTMyxJ8Uawx5iswT9Ho=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fcYAvO1LsTvIcT0CLhh8l+htxR7UMoL1BsRb+zcm/D6vSpiCunj2mcHqm6Xm3qGqz
+	 LAFR6e1nTNMct62czOEgsxapSV96QojElKOu87PNe0/H8QVVnlIGcbKbqoYTcFl8g7
+	 YDwAohZZoVcC9D+hXvG0O3GPY4Lm+TgN1nWuLVb0dlLN8FZXk0ra7DIbZ5rcZdP1ru
+	 s2WeQ6FWOvVJZxV3BlAb4oACtOqaNVGVBbSUktMnkTNJdbf1mGAsCot82Ny8BhU4l7
+	 O4KAJky0OW0uHyO4aco8oo1I3G7zB5ygpBajaCwFlhZ+rksgnqADZrGya+LBEoehy9
+	 3PX7HDNNOiNiQ==
+Date: Fri, 21 Jun 2024 01:19:46 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>, 
+	Oded Gabbay <ogabbay@kernel.org>, srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v1] misc: fastrpc: Move fastrpc driver to misc/fastrpc/
+Message-ID: <z6g5ool5vomkudiroyaxh532rhlfu5x4i3l5xoqrsho2sxv4im@v5ghemjkpc3v>
+References: <20240612064731.25651-1-quic_ekangupt@quicinc.com>
+ <zbpia232dh4ojfsvhcqxrp6cwfygaalu5cycdrs47pqmnrisvk@dq24nww26gkm>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yw65nC8FemhvEFmxEkjssmvn7FEc2_QL
-X-Proofpoint-GUID: yw65nC8FemhvEFmxEkjssmvn7FEc2_QL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-20_12,2024-06-20_04,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=846 adultscore=0 impostorscore=0 clxscore=1011
- lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0 mlxscore=0
- bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406210044
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <zbpia232dh4ojfsvhcqxrp6cwfygaalu5cycdrs47pqmnrisvk@dq24nww26gkm>
 
-From: Yijie Yang <quic_yijiyang@quicinc.com>
+On Wed, Jun 12, 2024 at 09:28:39PM GMT, Dmitry Baryshkov wrote:
+> On Wed, Jun 12, 2024 at 12:17:28PM +0530, Ekansh Gupta wrote:
+> > Move fastrpc.c from misc/ to misc/fastrpc/. New C files are planned
+> > to be added for PD notifications and other missing features. Adding
+> > and maintaining new files from within fastrpc directory would be easy.
+> > 
+> > Example of feature that is being planned to be introduced in a new C
+> > file:
+> > https://lore.kernel.org/all/20240606165939.12950-6-quic_ekangupt@quicinc.com/
+> > 
+> > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> > ---
+> >  MAINTAINERS                          |  2 +-
+> >  drivers/misc/Kconfig                 | 13 +------------
+> >  drivers/misc/Makefile                |  2 +-
+> >  drivers/misc/fastrpc/Kconfig         | 16 ++++++++++++++++
+> >  drivers/misc/fastrpc/Makefile        |  2 ++
+> >  drivers/misc/{ => fastrpc}/fastrpc.c |  0
+> >  6 files changed, 21 insertions(+), 14 deletions(-)
+> >  create mode 100644 drivers/misc/fastrpc/Kconfig
+> >  create mode 100644 drivers/misc/fastrpc/Makefile
+> >  rename drivers/misc/{ => fastrpc}/fastrpc.c (100%)
+> 
+> Please consider whether it makes sense to move to drivers/accel instead
+> (and possibly writing a better Kconfig entry, specifying that the driver
+> is to be used to offload execution to the DSP).
+> 
 
-Correct the spelling error, changing 'com' to 'qcom'.
+Wouldn't this come with the expectation of following the ABIs of
+drivers/accel and thereby breaking userspace?
 
-Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
----
- .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-index 5755245ecfd6..0e0b6cae07bc 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-@@ -20,7 +20,7 @@ properties:
-       - qcom,ipq8074-qmp-usb3-phy
-       - qcom,ipq9574-qmp-usb3-phy
-       - qcom,msm8996-qmp-usb3-phy
--      - com,qdu1000-qmp-usb3-uni-phy
-+      - qcom,qdu1000-qmp-usb3-uni-phy
-       - qcom,sa8775p-qmp-usb3-uni-phy
-       - qcom,sc8180x-qmp-usb3-uni-phy
-       - qcom,sc8280xp-qmp-usb3-uni-phy
-
-base-commit: b992b79ca8bc336fa8e2c80990b5af80ed8f36fd
--- 
-2.34.1
-
+Regards,
+Bjorn
 
