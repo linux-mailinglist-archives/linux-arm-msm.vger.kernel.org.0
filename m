@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEF6D912903
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 17:10:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9232491290D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 17:11:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E6B91C260A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:10:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E3551F29E49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:11:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3205C5CDE9;
-	Fri, 21 Jun 2024 15:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9791B55E73;
+	Fri, 21 Jun 2024 15:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J/COZ9j4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hcpQ2S94"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D495A0E0;
-	Fri, 21 Jun 2024 15:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BC41F60A;
+	Fri, 21 Jun 2024 15:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718982574; cv=none; b=gQ76D6N62KXcuSsRj3S+ilFkKRoiQXpH0LEpmDKmV4FguGn6lr0XWw+9Lslg9oSaIDjKKa92pKUAjuKZ7sjZ7JT9cW3MLviIu1w98VddFy76z/ew4s/8j21//b8SYguJgJpY+Cm+owIbmGsUGFRSewaZTitfmu8aK48CBHqylqw=
+	t=1718982638; cv=none; b=oAPAbC695mRw9LM6e4WUQN6TVhGr3nHNkUbcFDkgl1cf3qGZeX4pGseWq1TFmLCbxGF04Q07k+9NbVE9TYJcRXozD/fUx3jB/e31dCvzMHqxgewEXJ9A6uIHXEy3UptImK+YvVfd4X1oJLyY+bnPKM9h2BspzEOA/ewd7PRENEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718982574; c=relaxed/simple;
-	bh=bDKB1wHsiRH388Qngx6ZzxxVAop7Ev34W6mUhLjovhA=;
+	s=arc-20240116; t=1718982638; c=relaxed/simple;
+	bh=wQHU6gBu0YJXY5YHxeViVP31ei8YXHTa6wr4DVtAbWA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SEbXzPfC8cr0oZYrPGK9FPVi7CHdtV7AAwldFOLruDNmsXh3Ig1qkNQdsDDUW9Ry39oWMQRTo+2YknWPO6b8Za323F0QnhZjnqI2HI4U7II+swlKWbC/WpGvMrYuXrVPzMxRKzCHs0V4N3GPVcSM3UjKZi+JIMpQZhw3XHpz+Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J/COZ9j4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE3FC2BBFC;
-	Fri, 21 Jun 2024 15:09:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=BFnWRni5uFkzkiwMIPDVyKQ1Q6cLK/jKnpQHOhburfPTsoJtWdIz7RkxZtMurXJOLnBijwzTNYQw8t9MBOs0dgZQiYigkMSvlow9Q5+ttdt+nxys0Bb6pPWTG8TwcyGGjxoTvrjU2dcmhTDDWP8WTJGdZkyfvlKSCYi55QyUN5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hcpQ2S94; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F93C2BBFC;
+	Fri, 21 Jun 2024 15:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718982573;
-	bh=bDKB1wHsiRH388Qngx6ZzxxVAop7Ev34W6mUhLjovhA=;
+	s=k20201202; t=1718982637;
+	bh=wQHU6gBu0YJXY5YHxeViVP31ei8YXHTa6wr4DVtAbWA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=J/COZ9j4oVhToipxXF6nDEREjszpOIi9ReiR2qsXx/av2FUGRSSgrSJMYFq8tkY6Z
-	 IoMOeejYYhD0ey+PY7Q9gBSeSY+zkja2j0MIYyvLorLfktEy3XOZQOvYmrjrWBxA7h
-	 d8Ok7V5378nXUJWXEFshiGt6kVdgh9RQRAFgEhk9RSKNoFEW6jSV/7pkDN5UtnKgbm
-	 R6wFHJBpJ+ZEcSM+MCeRBXDbC+AEi01BWH4Qq6omWxUlSSNclU7tH9r/L9HjkgQGvJ
-	 MIiYV+fYdYl7KK+bzNycEQjVM08ZO2n0vtg2sOeq74ExJNANUXwkQc2gRP2xX2lt2a
-	 cibnEnJVVOIzw==
-Message-ID: <cd0533b8-bb47-4c68-b970-6bad4204c636@kernel.org>
-Date: Fri, 21 Jun 2024 17:09:25 +0200
+	b=hcpQ2S94WOPowgsv62htRJ2bLizDGa/GxapxfYYaHIgAASWz8rWXG/QBj8kQedvyj
+	 VMtxpOenV61fx0zhVugNAd6ZcUuWzUn82NLRCGaOenpGQM5vggJaGkS83xlT3UmDXD
+	 5wVlJ7noLuGbeu2kadxTI2ZRsnigIQ8bgHEczpyKL/lJQN/uxC1i3rycBiGCtgs5Yb
+	 ZRMX+tOcRhJOk5oCaDo0LR35cNXpaTKo60XezqUUdyqkkZiDS4qhdUdfDlcAbF8RJD
+	 17Uht8cozcDPNIpFgYeckyjjNV9XNhZisJr/JKhDP2QyXCiXG0JAmUU1vrcmGtUuLW
+	 cmff2O1kf5JyA==
+Message-ID: <d7923435-ba13-4aad-b3f1-67e3469ec7fc@kernel.org>
+Date: Fri, 21 Jun 2024 17:10:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 1/8] remoteproc: qcom: Add PRNG proxy clock
+Subject: Re: [PATCH v9 4/8] remoteproc: qcom: Add ssr subdevice identifier
 To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, sboyd@kernel.org,
  andersson@kernel.org, bjorn.andersson@linaro.org, david.brown@linaro.org,
  devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
@@ -60,7 +60,7 @@ To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, sboyd@kernel.org,
  robh@kernel.org, sricharan@codeaurora.org
 Cc: gokulsri@codeaurora.org
 References: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
- <20240621114659.2958170-2-quic_gokulsri@quicinc.com>
+ <20240621114659.2958170-5-quic_gokulsri@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,20 +106,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240621114659.2958170-2-quic_gokulsri@quicinc.com>
+In-Reply-To: <20240621114659.2958170-5-quic_gokulsri@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/06/2024 13:46, Gokul Sriram Palanisamy wrote:
->  
-> -static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
-> +static int ipq8074_init_clock(struct q6v5_wcss *wcss)
-> +{
-> +	int ret;
-> +
-> +	wcss->prng_clk = devm_clk_get(wcss->dev, "prng");
+> Add name for ssr subdevice on IPQ8074 SoC.
 
-Missing binding.
+Why?
+
+> 
+> Signed-off-by: Nikhil Prakash V <quic_nprakash@quicinc.com>
+> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+
+Three people developed that single line?
+
+Something is really odd with your DCO chain.
+
 
 Best regards,
 Krzysztof
