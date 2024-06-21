@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E56B9128FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 17:09:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEF6D912903
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 17:10:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65F1EB214B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:09:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E6B91C260A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 15:10:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03ABF36AF8;
-	Fri, 21 Jun 2024 15:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3205C5CDE9;
+	Fri, 21 Jun 2024 15:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SpOHQkCR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J/COZ9j4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1602C6BD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 15:09:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D495A0E0;
+	Fri, 21 Jun 2024 15:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718982544; cv=none; b=iEgzn5PuIv/YRGCJJPqpGL0fbj+LoQRgxU52ckIa9Q8bv8f/6I8nUmGQyTOE/b5yqY6dbaBwB/gzsVjvsLLYNoavlFwUDUShogkmCBhTureCyrvSQ0KnMMdJj0SCwWcn/Wnj+CAcHLrkzSJm9gy4rw1ECHAOCZ8pGzg8yod/WJ4=
+	t=1718982574; cv=none; b=gQ76D6N62KXcuSsRj3S+ilFkKRoiQXpH0LEpmDKmV4FguGn6lr0XWw+9Lslg9oSaIDjKKa92pKUAjuKZ7sjZ7JT9cW3MLviIu1w98VddFy76z/ew4s/8j21//b8SYguJgJpY+Cm+owIbmGsUGFRSewaZTitfmu8aK48CBHqylqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718982544; c=relaxed/simple;
-	bh=5rAiojQsTigWicXmeRh0G3zeGjSh5M2Z4R9eMuRP03o=;
+	s=arc-20240116; t=1718982574; c=relaxed/simple;
+	bh=bDKB1wHsiRH388Qngx6ZzxxVAop7Ev34W6mUhLjovhA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=onTQLvAhtmmic+lyn5empbFp57o4Qw5f6DgWZMpagCFO/GJUTEOuuk8mppj5qLGDV7sCyAqn4hpb/wf8oENG7pjCoTCZcnyyAQqxY67letYuVJynREQL/ZCyKCnTTqxJmO3X0dvWCAYUQrPslqTnYGzE1iT9uffUzpA88ANXc68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SpOHQkCR; arc=none smtp.client-ip=209.85.221.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-3627ef1fc07so1667841f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 08:09:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718982542; x=1719587342; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=//HkFPNKhQCDrBklAqKNRQHsY6okQNFrsrBgpNJVhqs=;
-        b=SpOHQkCRR6j/MSHjaghFG7HDGcYrS+B4p+kYGw8Rg3BeZkIKbH6j5/bGCmrp0rQUO5
-         zdR+VqjpfrmBqKi6jJZuvRsJ5lrXuule5KFSn6rC5XIVdde2sh9cCMO05SwNnFnixOit
-         30P1Bn7dfb7rYW6GgH73waanBeQPmSVMqdRaJHK5Kh02vHuXh8g2y6AtCj2FtZocmIyE
-         qCfDQi8t/8EjJoxQ8E0vT8yyzLPVre+4ESxijWFBNB5MuODbqtlyGub649o0AxkGmEBN
-         UI8lWhXrymPFNXAvG60swIxBUl0HaA1M/yeNRAdZwpAjLBpUHPtI2eEetlpf/6K1S5Gx
-         phWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718982542; x=1719587342;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=//HkFPNKhQCDrBklAqKNRQHsY6okQNFrsrBgpNJVhqs=;
-        b=xUdqjHwtrQgNL4jWhiMd0Ej6p2Mz1A0nHMjSfT8ADlvhISUYtCe0PwBDk6Ge3tHRxg
-         pnEi0qP20n4uMsdLqHOI2zGBrrKrAjnnJGbXkeXtBUhn/oAe3PViPLF9bVkokd9qLIqP
-         M87+Lge0j7WF01UuZVhy+fpnHkN+m9P9LrBO7Ya4Erobn9yTra7hBfTRAqjclrlYgcBi
-         DfPaGh2CiZGR9VMokhFv9+819rYJMNX3zT8WY+sWTBXtaK5B2oLOAFXz743u191IQLBM
-         ynAfhMKqj98OszXFAekyF/HdHWoCwaE4Qo/yv4BzVSB7pP1L49oFw2JqOoBF8z9mT39Z
-         pXyA==
-X-Forwarded-Encrypted: i=1; AJvYcCWdRXANdC4/gZWz6GzLdNFdEgNobUzaGTf1uVg+f4gP54hsaFaBHCz1IK+VzQuT5jHMr/kW496gU+zETUQnezmyahxJ5625C88Fh0O4lw==
-X-Gm-Message-State: AOJu0YzOs1muGqPPvDH6XMpOumH1VQuUlSMJudRVaVOUjZ4oriRmxKIj
-	zN+8bK3mVb92STDMkxfS8nuanxyLezEUMbhe2WPbx/TXL0kzPwXYMSHc+B6flWQ=
-X-Google-Smtp-Source: AGHT+IEGnNGgEhdZNo+A4PyZkLewBw+hk+J0cWFK1e7wUugiFCIuZNoRwrcESwM31W13TJnjrOc5VA==
-X-Received: by 2002:a5d:64c5:0:b0:363:7bbf:efcc with SMTP id ffacd0b85a97d-3637bbff072mr7044215f8f.62.1718982541786;
-        Fri, 21 Jun 2024 08:09:01 -0700 (PDT)
-Received: from [192.168.0.3] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3663a2f679bsm2001097f8f.81.2024.06.21.08.09.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Jun 2024 08:09:01 -0700 (PDT)
-Message-ID: <b0785dc2-aa91-4b81-9d5b-f49bb1ab6fb6@linaro.org>
-Date: Fri, 21 Jun 2024 16:09:00 +0100
+	 In-Reply-To:Content-Type; b=SEbXzPfC8cr0oZYrPGK9FPVi7CHdtV7AAwldFOLruDNmsXh3Ig1qkNQdsDDUW9Ry39oWMQRTo+2YknWPO6b8Za323F0QnhZjnqI2HI4U7II+swlKWbC/WpGvMrYuXrVPzMxRKzCHs0V4N3GPVcSM3UjKZi+JIMpQZhw3XHpz+Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J/COZ9j4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE3FC2BBFC;
+	Fri, 21 Jun 2024 15:09:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718982573;
+	bh=bDKB1wHsiRH388Qngx6ZzxxVAop7Ev34W6mUhLjovhA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=J/COZ9j4oVhToipxXF6nDEREjszpOIi9ReiR2qsXx/av2FUGRSSgrSJMYFq8tkY6Z
+	 IoMOeejYYhD0ey+PY7Q9gBSeSY+zkja2j0MIYyvLorLfktEy3XOZQOvYmrjrWBxA7h
+	 d8Ok7V5378nXUJWXEFshiGt6kVdgh9RQRAFgEhk9RSKNoFEW6jSV/7pkDN5UtnKgbm
+	 R6wFHJBpJ+ZEcSM+MCeRBXDbC+AEi01BWH4Qq6omWxUlSSNclU7tH9r/L9HjkgQGvJ
+	 MIiYV+fYdYl7KK+bzNycEQjVM08ZO2n0vtg2sOeq74ExJNANUXwkQc2gRP2xX2lt2a
+	 cibnEnJVVOIzw==
+Message-ID: <cd0533b8-bb47-4c68-b970-6bad4204c636@kernel.org>
+Date: Fri, 21 Jun 2024 17:09:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,63 +50,78 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/8] media: qcom: camss: Split testgen, RDI and RX for
- CSID 170
-To: kernel test robot <lkp@intel.com>,
- Gjorgji Rosikopulos <quic_grosikop@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, andersson@kernel.org, konrad.dybcio@linaro.org,
- mchehab@kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- laurent.pinchart@ideasonboard.com, hverkuil-cisco@xs4all.nl,
- quic_hariramp@quicinc.com
-References: <20240522154659.510-7-quic_grosikop@quicinc.com>
- <202405232059.8lLokYw2-lkp@intel.com>
+Subject: Re: [PATCH v9 1/8] remoteproc: qcom: Add PRNG proxy clock
+To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, sboyd@kernel.org,
+ andersson@kernel.org, bjorn.andersson@linaro.org, david.brown@linaro.org,
+ devicetree@vger.kernel.org, jassisinghbrar@gmail.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com,
+ robh@kernel.org, sricharan@codeaurora.org
+Cc: gokulsri@codeaurora.org
+References: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
+ <20240621114659.2958170-2-quic_gokulsri@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <202405232059.8lLokYw2-lkp@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240621114659.2958170-2-quic_gokulsri@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/05/2024 13:59, kernel test robot wrote:
-> Hi Gjorgji,
-> 
-> kernel test robot noticed the following build warnings:
-> 
-> [auto build test WARNING on media-tree/master]
-> [also build test WARNING on linus/master next-20240523]
-> [cannot apply to v6.9]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch#_base_tree_information]
-> 
-> url:https://github.com/intel-lab-lkp/linux/commits/Gjorgji-Rosikopulos/media-qcom-camss-Add-per-sub-device-type-resources/20240522-235220
-> base:   git://linuxtv.org/media_tree.git master
-> patch link:https://lore.kernel.org/r/20240522154659.510-7-quic_grosikop%40quicinc.com
-> patch subject: [PATCH v4 6/8] media: qcom: camss: Split testgen, RDI and RX for CSID 170
-> config: arm64-defconfig (https://download.01.org/0day-ci/archive/20240523/202405232059.8lLokYw2-lkp@intel.com/config)
-> compiler: aarch64-linux-gcc (GCC) 13.2.0
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240523/202405232059.8lLokYw2-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot<lkp@intel.com>
-> | Closes:https://lore.kernel.org/oe-kbuild-all/202405232059.8lLokYw2-lkp@intel.com/
-> 
-> All warnings (new ones prefixed by >>):
-> 
->     drivers/media/platform/qcom/camss/camss-csid-gen2.c: In function '__csid_configure_rdi_stream':
->>> drivers/media/platform/qcom/camss/camss-csid-gen2.c:265:13: warning: variable 'phy_sel' set but not used [-Wunused-but-set-variable]
->       265 |         u32 phy_sel = 0;
->           |             ^~~~~~~
+On 21/06/2024 13:46, Gokul Sriram Palanisamy wrote:
+>  
+> -static int q6v5_wcss_init_clock(struct q6v5_wcss *wcss)
+> +static int ipq8074_init_clock(struct q6v5_wcss *wcss)
+> +{
+> +	int ret;
+> +
+> +	wcss->prng_clk = devm_clk_get(wcss->dev, "prng");
 
-Gjorgji.
+Missing binding.
 
-This appears to be a dead variable now.
+Best regards,
+Krzysztof
 
-I don't see a need to respin this series but, could you send a 
-supplementary patch to fix this up ?
-
----
-bod
 
