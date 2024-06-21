@@ -1,62 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-23500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9CCC911A6A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 07:32:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D66B911A90
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 07:45:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73DB5283F82
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 05:32:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ECB4E281E30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 05:45:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E25DB12BF25;
-	Fri, 21 Jun 2024 05:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4B361422D5;
+	Fri, 21 Jun 2024 05:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8KeKQiv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FByPLpwk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7DE2A1CA;
-	Fri, 21 Jun 2024 05:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B952912C7F9;
+	Fri, 21 Jun 2024 05:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718947975; cv=none; b=F+tNCN12q8gCxNQr7WSwxA7Vy1uFckW6dBY2TC1XSBms/2Mq+kTlh6spfxTgDNS0Rjzh7Sqr3WR0gmkbR8BN3wbbeQ2VRSQY/cWlfi/lkREvmxOqT3iLHtrwoAT9qdwu+BzjCuXwHtRO6JOTPrj1K7eIOY3ooyvkCHv8RDNEx3g=
+	t=1718948717; cv=none; b=ezE5f7XtlpbLsJwLZvBA1Kdb2lNQzB0UtQJd3Xs6dRV61bputtLaxELaNe3uo5xazIGtVMnnCPRmYqtZauivdRHikuKwBELVzibYg3cEzSHMVPBtOMD78LF4r3euaINrQCKwUTwvBALH2ywy2zzAyupl5gyeX2Iy98XiNzC/o/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718947975; c=relaxed/simple;
-	bh=4CqgCqa3Q1dTMpcb7hgK8MqFA+9AJzBM37tCOxteDrU=;
+	s=arc-20240116; t=1718948717; c=relaxed/simple;
+	bh=h5D18kB/jJ92V9TMO/5fhp21VV4JzGcvLvRCpsgdkQ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iDBbXEoUtpDqnH956A3yu0WVOiUOwNdmNojCsffxRiQq1rmTwhxCtWArRHZqen+UGvr/dI0y6fNlDwA97bx1dStdl5pi1wXshuXbGCTzCHt3ewxDWpli0lv4DvZ06bjKZ1pNs0C5S4Spy/yZoyKE46wWACk5IxQ2smQPSKzST0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H8KeKQiv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC42BC2BBFC;
-	Fri, 21 Jun 2024 05:32:54 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=kZzaISNXkiFwOKMIKpKZTQLhzWFkWZIByDcC4yZX5xEUerq1PmSRobOhw3QqLYSDyG3BOU70yocfCuotLHZwexMwXIaHilH+mIm3d7O5JJUEmPR62NW2BcLTpgkb/duOeji+fAQqXmG63qzni5f1PbZL984EvQWoTPYo9QTE3Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FByPLpwk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271C8C2BBFC;
+	Fri, 21 Jun 2024 05:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718947975;
-	bh=4CqgCqa3Q1dTMpcb7hgK8MqFA+9AJzBM37tCOxteDrU=;
+	s=k20201202; t=1718948717;
+	bh=h5D18kB/jJ92V9TMO/5fhp21VV4JzGcvLvRCpsgdkQ0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H8KeKQivB5V901OEXvQ+oU8gSVn550UtTRbXdUwynm8nZUpDlbpw/i4tIM25ukdC8
-	 BO9RTAvHUalicwtw2p84Kfsba8S4nO/6LZwV+SSuEhbUN5I39vlx2rMHZDYbU3SP22
-	 PUBiQp5XtGgY6TfxtcGpyPWe093//tcJRiR5Er/UrZVJhNW2uHxvtnoHwxPFTX6qAh
-	 kEsdThjutbFd/JsihmbxUj0gd1EOc5GPoEBhwVq2Gd9CNLpeP1JyezvkLBQM6RnTtV
-	 u+FNLjDzNCi0GC2PdzmyO2u8nn4TV1zgVPOjZ+Rhz42u80ZSjU2f1NOYYpdxJaPAEK
-	 iJRC6SHfHyA8g==
-Date: Fri, 21 Jun 2024 00:32:52 -0500
+	b=FByPLpwkqnhIX2qh0PzKcNtRAh7HHeQhNhg5LjlvwtVeQypznKWAn9A93W7c3oQc5
+	 /Z9AicwJAVWHuuXljtbN/GxMoXFeEi1QMXMIWI4BtzdqR9+cPGih2aAQTerFXk3p6l
+	 40NHPSftykwyTq64CgbXYHBL8vciwqzDoMPcPhL1q1dlwMqkWNp2SUQkv8P95ZBSao
+	 zPOSumIY6Nkb1gR23gLZmHpq0nEctPZHujQNEsLmgNJ/3ThBU4gd2ZpAXRcOhxUhVK
+	 5kqFZ7SLJ1Fc93uD6/LU9ifM6dwZSxHqvv7Ys5fteuv1KpApkJyxxmSbkW0TGGrRPF
+	 VrWODNPreVT5g==
+Date: Fri, 21 Jun 2024 00:45:14 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Caleb Connolly <caleb.connolly@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexey Klimov <alexey.klimov@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qrb4210-rb2: set
- role-switch-default-mode
-Message-ID: <6fpp4noq76tphgsmkuacp6jcgy4b73emgt76wxain6jisiidxt@itj2hedhlea3>
-References: <20240619-rb2-fixes-v1-0-1d2b1d711969@linaro.org>
- <20240619-rb2-fixes-v1-2-1d2b1d711969@linaro.org>
- <CAA8EJpo94qg0dDR-H64v0yC7jLKHuD9O59m3hG2tNR4v3NAkLA@mail.gmail.com>
- <c10b1343-921b-494b-94dd-6f5acc894e6d@linaro.org>
- <v3dgoeybewgegi2xuixhaq5c7jwju6wojrmzcq3rtb5f5r5nfu@6gj4tfz5blx7>
- <35d9f16d-c009-4383-a616-9b21f0819b46@linaro.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: konrad.dybcio@linaro.org, djakov@kernel.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, srinivas.kandagatla@linaro.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-pm@vger.kernel.org, 
+	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org, 
+	dmitry.baryshkov@linaro.org, abel.vesa@linaro.org
+Subject: Re: [PATCH V2 2/3] soc: qcom: icc-bwmon: Allow for interrupts to be
+ shared across instances
+Message-ID: <vjes4lm3um44f6oguvrq3gozemquzmmmicj47ieczwfuqkmaqp@aby3dj6ttdig>
+References: <20240618154306.279637-1-quic_sibis@quicinc.com>
+ <20240618154306.279637-3-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,62 +62,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <35d9f16d-c009-4383-a616-9b21f0819b46@linaro.org>
+In-Reply-To: <20240618154306.279637-3-quic_sibis@quicinc.com>
 
-On Thu, Jun 20, 2024 at 06:49:46PM GMT, Caleb Connolly wrote:
-> 
-> 
-> On 20/06/2024 17:07, Dmitry Baryshkov wrote:
-> > On Thu, Jun 20, 2024 at 03:30:29PM GMT, Caleb Connolly wrote:
-> > > 
-> > > 
-> > > On 20/06/2024 15:15, Dmitry Baryshkov wrote:
-> > > > On Wed, 19 Jun 2024 at 23:33, Caleb Connolly <caleb.connolly@linaro.org> wrote:
-> > > > > 
-> > > > > Give a hint to the OS which role we prefer. Host mode generally makes
-> > > > > the most sense.
-> > > > 
-> > > > Why?
-> > > 
-> > > I guess this is subjective, but on these boards the more common usecase is
-> > > host mode (before we had role switching we forced them to host mode...).
-> > > > 
-> > > > > 
-> > > > > Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> > > > > ---
-> > > > >    arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 4 ++++
-> > > > >    1 file changed, 4 insertions(+)
-> > > > 
-> > > > Would it make sense to set this for all the RB and HDK boards?
-> > > 
-> > > The rb1/2 are the only boards which lack multiple USB controllers. For
-> > > others it's fine to leave the default (peripheral mode).
-> > 
-> > SM8450-HDK and SM8650-HDK also have just a single USB-C port. My logic
-> > was slightly different. We consider these devices to be SBCs, so I'd
-> > expect that they act as hosts _by_default_. If somebody plugs RB board
-> > into a laptop, then it's logical that it should work as a device, but
-> > between the phone and the RB board the RB is a host.
-> 
-> Ahh I see, then yes perhaps it makes sense. I can send v2 with patches for
-> other boards too.
-> 
-> * qrb2210-rb1
-> * qrb4210-rb2
-> * sm8450-hdk
-> * sm8650-hdk
-> 
-> Any others?
+On Tue, Jun 18, 2024 at 09:13:05PM GMT, Sibi Sankar wrote:
+> The multiple BWMONv4 instances available on the X1E80100 SoC use the
+> same interrupt number. Mark them are shared to allow for re-use across
+> instances. Handle the ensuing race introduced by relying on bwmon_disable
 
-qcs6490-rb3gen2 please.
+In an effort to educate the reader, could you please describe what the
+race condition is here.
 
-I'm picking patch 1 for v6.10, no need to repost it.
+It would also make sense to break this ("Handle...") into a separate
+paragraph.
 
 Regards,
 Bjorn
 
-> > 
+> to disable the interrupt and coupled with explicit request/free irqs.
 > 
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+> 
+> v2:
+> * Use explicit request/free irq and add comments regarding the race
+>   introduced when adding the IRQF_SHARED flag. [Krzysztof/Dmitry]
+> 
+>  drivers/soc/qcom/icc-bwmon.c | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
+> index fb323b3364db..4a4e28b41509 100644
+> --- a/drivers/soc/qcom/icc-bwmon.c
+> +++ b/drivers/soc/qcom/icc-bwmon.c
+> @@ -781,9 +781,10 @@ static int bwmon_probe(struct platform_device *pdev)
+>  	bwmon->dev = dev;
+>  
+>  	bwmon_disable(bwmon);
+> -	ret = devm_request_threaded_irq(dev, bwmon->irq, bwmon_intr,
+> -					bwmon_intr_thread,
+> -					IRQF_ONESHOT, dev_name(dev), bwmon);
+> +
+> +	/* SoCs with multiple cpu-bwmon instances can end up using a shared interrupt line */
+> +	ret = request_threaded_irq(bwmon->irq, bwmon_intr, bwmon_intr_thread,
+> +				   IRQF_ONESHOT | IRQF_SHARED, dev_name(dev), bwmon);
+>  	if (ret)
+>  		return dev_err_probe(dev, ret, "failed to request IRQ\n");
+>  
+> @@ -798,6 +799,13 @@ static void bwmon_remove(struct platform_device *pdev)
+>  	struct icc_bwmon *bwmon = platform_get_drvdata(pdev);
+>  
+>  	bwmon_disable(bwmon);
+> +
+> +	/*
+> +	 * Handle the race introduced, when dealing with multiple bwmon instances
+> +	 * using a shared interrupt line, by relying on bwmon_disable to disable
+> +	 * the interrupt and followed by an explicit free.
+> +	 */
+> +	free_irq(bwmon->irq, bwmon);
+>  }
+>  
+>  static const struct icc_bwmon_data msm8998_bwmon_data = {
 > -- 
-> // Caleb (they/them)
+> 2.34.1
+> 
 
