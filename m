@@ -1,276 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-23539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54F21911E98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 10:24:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF86F911EB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 10:27:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D2C8E1F234E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:24:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 07ED51C214B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Jun 2024 08:27:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3228D16D335;
-	Fri, 21 Jun 2024 08:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63D2B127B5A;
+	Fri, 21 Jun 2024 08:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K8TjsYdi"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="K/+F0EfU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C848E12D210
-	for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 08:24:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F48616B3B9;
+	Fri, 21 Jun 2024 08:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718958261; cv=none; b=DllTAveLwi0FlDx6OOHAiPshN9o8CvlZUSwA4XViHryEXUdgRimmICRaxxy6J+5qbIZWuyOra086NjvYEODwz1azpDk1KCOClBUmmhrvT5DND4a/9Osvky3lfJg04sKdddyVju8ZkrCb16DJ2fJ3YuG2byoiAdTn6Sy4AFXlZFQ=
+	t=1718958460; cv=none; b=O7LZTeg9hZ8UwLeUi+nf0APQVmoCBDxNCikcntnnSPFd6zceZJKGKjYhWizMD4WYnY7idG5EGBYtmj9DV7Eu6VWwx0H7oL+4CLLwhgKZFN/s+2+YGcO+f3FLgThNdkY1FKWKGSAm1MGIBAGwiEe5ILQNzGqIrx2qeXR3yIJ0OlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718958261; c=relaxed/simple;
-	bh=zNb31ljHYMVCkZLfGOU3WfbbUpuUMo7NTgMJDQTRcKc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EvaxhIaMLVKPUOmKadi6roVnY4MmMyG3tz2NqQvw2ToLq4smfE0waOCrMYYCIC/kKYk4J4cotP4R1ndtLnXkeK2kAkw8GXHaIbt7qE1lGUV4JrvLs2AeGFvZWFW67DOmIvNLmZFrchrbbiq8rJ53wv15aMu0Sq2a3m8/ZXTzBtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=K8TjsYdi; arc=none smtp.client-ip=209.85.222.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-80b755c6c06so438368241.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Jun 2024 01:24:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1718958258; x=1719563058; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hSL4jxfV9+DvzrB5xjyOhPkA4JDFq4ANvkv63lZh6Ho=;
-        b=K8TjsYdiD7kZJZbBfwTUAiUFNTHViBXFGQngxHYwrxLUpbelkzCaPX635p540o76/W
-         RLOv6fibpMqPI8+oDVQN+pApxzlCIbfSTTjTei4jkvqMVEMtU3NTGtLGdP0Us0EzRN0+
-         DbfKKa5Q+kY4oPkzkRiQlp7CRCzboGsY+0OsTrbxtgQPcKEgh1vwAGN6fWppy7fe4JJ7
-         gsVFwySyNJKH35bCfY/HIZJUwAlVaWhrpTRcMOpYr0jbUBtDYF1cHb58tYiX1gWvROOj
-         S/EKTmvvNms4fog7s0CZkNPVkvJSCod6wHPtDkpKbcCRnxKbl43xUXnPVTcJe77MfVqJ
-         zoCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718958258; x=1719563058;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hSL4jxfV9+DvzrB5xjyOhPkA4JDFq4ANvkv63lZh6Ho=;
-        b=jVxXEgjIOydQ5A5eeIQkr8grJw6d4ePPtn9HzY2q5nEuXm80JPDJXzZFMygzpVVCm6
-         anNr/SIkRoTkfpADW9fOtDe6O9r/CfQoC/TTkJlRAwofQeCkJJ03Z2WJ10wjwmdgSSWQ
-         dNFYHbehYbhy07N73ugDW93jD7J6FwWpxehetUFYeYeqbnVE5/QhbtJ+1Uqc/XdR/qjz
-         yc04pA1yZKnKgDloqF7eaeFiVOD0cBMCZ17iqZZaqw2omq0fXO1OqJ6akvp6FCaZCfFx
-         WCBH95//d+n7awHMHTruiDd8U0pZdDnW53n1I9gcriehGOlcuR43a1sHByDnXLuNFOEi
-         dh9A==
-X-Forwarded-Encrypted: i=1; AJvYcCXYOxDb4NPZj/d5Q8IZM/V/lXPtTfA97G6XlGGX8BvWNALceB4O5YO/1vGlkl9NeMTjeoYL8/XyvqUlEVlcwoNnvAOGpSXwHoBP7zzAMQ==
-X-Gm-Message-State: AOJu0YwpaweGgo/utpHaaI8no/CE4atRTs1xfYSJ6Q9P41NUAp9hwNkZ
-	GPVkcgvOnfU0dYSCf1fe2Z76z4W17YydTrjjCx6c1jdhTQ1grUyIvt2Ajw2tArtUis5zkcPHbdd
-	bbMO04e5kgbg7JkVNE5P6G6UWpDE3JIcTRbU+
-X-Google-Smtp-Source: AGHT+IFOm3+J7HmNxfiqvxOkkiwF5vyaMcHsOCQZWMdwd3gCNyLm2HD7cdpJGLriJIJX24RcWbLSAdpJ42Ukykvu0xA=
-X-Received: by 2002:a05:6102:743:b0:48f:205e:9b8 with SMTP id
- ada2fe7eead31-48f205e0aafmr5713897137.34.1718958257567; Fri, 21 Jun 2024
- 01:24:17 -0700 (PDT)
+	s=arc-20240116; t=1718958460; c=relaxed/simple;
+	bh=wuZBbOonZAFOS0sB1XJO28DAm8t6RfuaFgesGkuVgmA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BUP0bxOjnJIm//43Xi8AHE1px/KSriZqtvgfs9/1SF5S2R2kPSdxdgAkzNgoJcrs64fFzo6AlFpP+lZdZyi8N5a9RANS0xCdLgxIdOqGQWQuav3ftiJRTckul4mUnAkRyPCOIJ8mH8/xaP5sy/jw4PLzdVP8gkp8Z7JYLhInGZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=K/+F0EfU; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1718958459; x=1750494459;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=wuZBbOonZAFOS0sB1XJO28DAm8t6RfuaFgesGkuVgmA=;
+  b=K/+F0EfUyMc/mjYwXznhW5pimJVD33jNdWIL4G9Qn6tMhTRn+YUyere4
+   AsD423Yy30WbD93SvKN7pM4qrAcwxnotCY0A7j1b7RTkWl2pc9d8iMKsC
+   OURIDPVtPPZ2fqs1WdrSzuJBcLLNv0Lt9HKjGkUYiv1OpXolQ4ZW2mxHX
+   7oNrzIYc9DY7N4XTXZeTLNodLE5N4knv8tZeQys+UmXnP0m3rtTsLamyJ
+   c0bAuo5OypSUpqKNRZB712Be3xOPOf1YttvjoX0bh8bm/GcPN40pXjoS9
+   Og31rpqRL2LPwhv3RUXnpmDh1iUBjeWIWTqgebr/InSHeLXgocWMvevBV
+   Q==;
+X-CSE-ConnectionGUID: mK8Vwa3sQ0WD3Dp7TfoKFA==
+X-CSE-MsgGUID: k3kIITlfQha56Vt1fJC7Tg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11109"; a="33438310"
+X-IronPort-AV: E=Sophos;i="6.08,254,1712646000"; 
+   d="scan'208";a="33438310"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2024 01:27:38 -0700
+X-CSE-ConnectionGUID: 83RXG4JlThiu0gr95hxjnw==
+X-CSE-MsgGUID: bZhtUY6HTEaIIglKI2p5DA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,254,1712646000"; 
+   d="scan'208";a="42628778"
+Received: from bergbenj-mobl1.ger.corp.intel.com (HELO [10.245.246.142]) ([10.245.246.142])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2024 01:27:33 -0700
+Message-ID: <90463a4e-c2e7-4b59-9a79-23533b4acd1e@linux.intel.com>
+Date: Fri, 21 Jun 2024 10:27:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
- <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com> <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
- <CA+EHjTxWWEHfjZ9LJqZy+VCk43qd3SMKiPF7uvAwmDdPeVhrvQ@mail.gmail.com>
- <20240619115135.GE2494510@nvidia.com> <CA+EHjTz_=J+bDpqciaMnNja4uz1Njcpg5NVh_GW2tya-suA7kQ@mail.gmail.com>
- <ZnRMn1ObU8TFrms3@google.com>
-In-Reply-To: <ZnRMn1ObU8TFrms3@google.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Fri, 21 Jun 2024 09:23:41 +0100
-Message-ID: <CA+EHjTxvOyCqWRMTS3mXHznQtAJzDJLgqdS0Er2GA9FGdxd1vA@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-To: Sean Christopherson <seanjc@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, David Hildenbrand <david@redhat.com>, John Hubbard <jhubbard@nvidia.com>, 
-	Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>, maz@kernel.org, 
-	kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v23 32/32] ASoC: doc: Add documentation for SOC USB
+To: Wesley Cheng <quic_wcheng@quicinc.com>,
+ =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
+ <amadeuszx.slawinski@linux.intel.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+ Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+ robh@kernel.org, gregkh@linuxfoundation.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240610235808.22173-1-quic_wcheng@quicinc.com>
+ <20240610235808.22173-33-quic_wcheng@quicinc.com>
+ <5be51e1f-70c9-4bbc-96fa-1e50e441bd35@linux.intel.com>
+ <408d9e8e-0f40-7e66-54be-2f8d2c0783a3@quicinc.com>
+ <ca1e1063-e1bd-4e03-a7cd-91985e9954e9@linux.intel.com>
+ <096d59a0-5e18-092c-c9ae-d98130226f06@quicinc.com>
+ <368d9019-2c96-468e-b472-7e1127f76213@linux.intel.com>
+ <eb6370ea-47a0-3659-3c10-cb7f95e3e520@quicinc.com>
+ <510468c7-b181-48d0-bf2d-3e478b2f2aca@linux.intel.com>
+ <c7a95157-1b71-1489-3657-8fe67f9acb4e@quicinc.com>
+Content-Language: en-US
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <c7a95157-1b71-1489-3657-8fe67f9acb4e@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Sean,
 
-On Thu, Jun 20, 2024 at 4:37=E2=80=AFPM Sean Christopherson <seanjc@google.=
-com> wrote:
->
-> On Wed, Jun 19, 2024, Fuad Tabba wrote:
-> > Hi Jason,
-> >
-> > On Wed, Jun 19, 2024 at 12:51=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.co=
-m> wrote:
-> > >
-> > > On Wed, Jun 19, 2024 at 10:11:35AM +0100, Fuad Tabba wrote:
-> > >
-> > > > To be honest, personally (speaking only for myself, not necessarily
-> > > > for Elliot and not for anyone else in the pKVM team), I still would
-> > > > prefer to use guest_memfd(). I think that having one solution for
-> > > > confidential computing that rules them all would be best. But we do
-> > > > need to be able to share memory in place, have a plan for supportin=
-g
-> > > > huge pages in the near future, and migration in the not-too-distant
-> > > > future.
-> > >
-> > > I think using a FD to control this special lifetime stuff is
-> > > dramatically better than trying to force the MM to do it with struct
-> > > page hacks.
-> > >
-> > > If you can't agree with the guest_memfd people on how to get there
-> > > then maybe you need a guest_memfd2 for this slightly different specia=
-l
-> > > stuff instead of intruding on the core mm so much. (though that would
-> > > be sad)
-> > >
-> > > We really need to be thinking more about containing these special
-> > > things and not just sprinkling them everywhere.
-> >
-> > I agree that we need to agree :) This discussion has been going on
-> > since before LPC last year, and the consensus from the guest_memfd()
-> > folks (if I understood it correctly) is that guest_memfd() is what it
-> > is: designed for a specific type of confidential computing, in the
-> > style of TDX and CCA perhaps, and that it cannot (or will not) perform
-> > the role of being a general solution for all confidential computing.
->
-> That isn't remotely accurate.  I have stated multiple times that I want g=
-uest_memfd
-> to be a vehicle for all VM types, i.e. not just CoCo VMs, and most defini=
-tely not
-> just TDX/SNP/CCA VMs.
 
-I think that there might have been a slight misunderstanding between
-us. I just thought that that's what you meant by:
 
-: And I'm saying say we should stand firm in what guest_memfd _won't_
-support, e.g.
-: swap/reclaim and probably page migration should get a hard "no".
+> I'll spend some time to evaluate your suggestion about moving the logic
+> to control the offloading from USB SND versus ASoC, since there are
+> valid points.  However, before I do that, I just want to make sure folks
+> are also inline with that thinking.  I've had to put a lot of effort
+> moving things around such as the previous example, and now you've
+> suggested to move it back to the vendor specific drivers.
+> 
+> @Pierre, since you've helped with providing a lot of valuable input in
+> the previous revisions on the kcontrol uses, what do you think about the
+> proposal from Amadeusz?  Basically shifting the offload device selection
+> into USB SND from the ASoC USB BE driver, and having this per USB SND
+> device.
+> 
+> [1]
+> https://lore.kernel.org/linux-usb/20231017200109.11407-30-quic_wcheng@quicinc.com/
 
-https://lore.kernel.org/all/Zfmpby6i3PfBEcCV@google.com/
+This thread is very hard to follow, I am not sure I fully understood the
+initial proposal, and I am not sure I follow Amadeusz' either.
 
-> What I am staunchly against is piling features onto guest_memfd that will=
- cause
-> it to eventually become virtually indistinguishable from any other file-b=
-ased
-> backing store.  I.e. while I want to make guest_memfd usable for all VM *=
-types*,
-> making guest_memfd the preferred backing store for all *VMs* and use case=
-s is
-> very much a non-goal.
->
-> From an earlier conversation[1]:
->
->  : In other words, ditch the complexity for features that are well served=
- by existing
->  : general purpose solutions, so that guest_memfd can take on a bit of co=
-mplexity to
->  : serve use cases that are unique to KVM guests, without becoming an unm=
-aintainble
->  : mess due to cross-products.
-> > > > Also, since pin is already overloading the refcount, having the
-> > > > exclusive pin there helps in ensuring atomic accesses and avoiding
-> > > > races.
-> > >
-> > > Yeah, but every time someone does this and then links it to a uAPI it
-> > > becomes utterly baked in concrete for the MM forever.
-> >
-> > I agree. But if we can't modify guest_memfd() to fit our needs (pKVM,
-> > Gunyah), then we don't really have that many other options.
->
-> What _are_ your needs?  There are multiple unanswered questions from our =
-last
-> conversation[2].  And by "needs" I don't mean "what changes do you want t=
-o make
-> to guest_memfd?", I mean "what are the use cases, patterns, and scenarios=
- that
-> you want to support?".
+There are really multiple layers to deal with
 
-I think Quentin's reply in this thread outlines what it is pKVM would
-like to do, and why it's different from, e.g., TDX:
-https://lore.kernel.org/all/ZnUsmFFslBWZxGIq@google.com/
+a) is the controller able to support the offload path? IIRC this is
+embedded in an obscure XHCI property, it would make sense to expose it
+as a control, or component string, of the USB card.
 
-To summarize, our requirements are the same as other CC
-implementations, except that we don't want to pay a penalty for
-operations that pKVM (and Gunyah) can do more efficiently than
-encryption-based CC, e.g., in-place conversion of private -> shared.
+b) is there a companion card capable of dealing with the offload path?
+Since the presence of this card may depend on driver probe, there should
+be a control on the USB card. userspace could detect changes to this
+control and detect if that path is or is no longer enabled.
 
-Apart from that, we are happy to use an interface that can support our
-needs, or at least that we can extend in the (near) future to do that.
-Whether it's guest_memfd() or something else.
+c) which PCM device is actually offloaded? This could be plural for some
+implementations. The mapping between PCM devices exposed by the USB
+card, and those exposed by the companion card, should be known to
+userspace. I am not sure how this would be done though, a variable
+number of controls is a sure way to confuse userspace.
 
->  : What's "hypervisor-assisted page migration"?  More specifically, what'=
-s the
->  : mechanism that drives it?
+At any rate, I would put all the controls under the USB generic card,
+because it's always present no matter what the controller or DSP
+configurations are.
 
-I believe what Will specifically meant by this is that, we can add
-hypervisor support for migration in pKVM for the stage 2 page tables.
 
-We don't have a detailed implementation for this yet, of course, since
-there's no point yet until we know whether we're going with
-guest_memfd(), or another alternative.
 
->  : Do you happen to have a list of exactly what you mean by "normal mm st=
-uff"?  I
->  : am not at all opposed to supporting .mmap(), because long term I also =
-want to
->  : use guest_memfd for non-CoCo VMs.  But I want to be very conservative =
-with respect
->  : to what is allowed for guest_memfd.   E.g. host userspace can map gues=
-t_memfd,
->  : and do operations that are directly related to its mapping, but that's=
- about it.
->
-> That distinction matters, because as I have stated in that thread, I am n=
-ot
-> opposed to page migration itself:
->
->  : I am not opposed to page migration itself, what I am opposed to is add=
-ing deep
->  : integration with core MM to do some of the fancy/complex things that l=
-ead to page
->  : migration.
 
-So it's not a "hard no"? :)
-
-> I am generally aware of the core pKVM use cases, but I AFAIK I haven't se=
-en a
-> complete picture of everything you want to do, and _why_.
-> E.g. if one of your requirements is that guest memory is managed by core-=
-mm the
-> same as all other memory in the system, then yeah, guest_memfd isn't for =
-you.
-> Integrating guest_memfd deeply into core-mm simply isn't realistic, at le=
-ast not
-> without *massive* changes to core-mm, as the whole point of guest_memfd i=
-s that
-> it is guest-first memory, i.e. it is NOT memory that is managed by core-m=
-m (primary
-> MMU) and optionally mapped into KVM (secondary MMU).
-
-It's not a requirement that guest memory is managed by the core-mm.
-But, like we mentioned, support for in-place conversion from
-shared->private, huge pages, and eventually migration are.
-
-> Again from that thread, one of most important aspects guest_memfd is that=
- VMAs
-> are not required.  Stating the obvious, lack of VMAs makes it really hard=
- to drive
-> swap, reclaim, migration, etc. from code that fundamentally operates on V=
-MAs.
->
->  : More broadly, no VMAs are required.  The lack of stage-1 page tables a=
-re nice to
->  : have; the lack of VMAs means that guest_memfd isn't playing second fid=
-dle, e.g.
->  : it's not subject to VMA protections, isn't restricted to host mapping =
-size, etc.
->
-> [1] https://lore.kernel.org/all/Zfmpby6i3PfBEcCV@google.com
-> [2] https://lore.kernel.org/all/Zg3xF7dTtx6hbmZj@google.com
-
-I wonder if it might be more productive to also discuss this in one of
-the PUCKs, ahead of LPC, in addition to trying to go over this in LPC.
-
-Cheers,
-/fuad
 
