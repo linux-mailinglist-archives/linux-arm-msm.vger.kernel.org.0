@@ -1,189 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-23702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31D0F913407
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 14:48:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C4B191343D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 15:47:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8522AB23971
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 12:48:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D62B1282457
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 13:47:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E1F0155342;
-	Sat, 22 Jun 2024 12:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C61CD16EC0B;
+	Sat, 22 Jun 2024 13:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jldh+qU5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ikEo3zAR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13A31CA9C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 12:48:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DE114D6EE;
+	Sat, 22 Jun 2024 13:47:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719060493; cv=none; b=Vu3HtuuvA/zxKoskfD+pUmsRVsi8JksKKEDbzfeBYSeCsqPh2sRl5AMnY0T53F+6n9pkb9KUmhMSFVs3QHCYhmGNY9vMSOEX5YpnmxMSGNen5ZrXMbn+kUZ1Mqogeg9lxQqyJD3+PyaJsa4QkynRC8avQTFVi3pE0VLBd40n9UM=
+	t=1719064046; cv=none; b=FG3uF7/UBORvQCYIiQ6VRLsV9pQTCldPOuRUONLM8Lm5OnpDey88hSFrPJCyY4vEB5BB5D9sdCfMdPURvQPKrTc4kq19OjG4hBJPqQmGylpQ4CC7Gb9qxVkKtZwWa7apF3aseDOIt/X5/Hb33ngXIr1GVzeJj+SVJR6UYq0jYhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719060493; c=relaxed/simple;
-	bh=KLCgkGvxQQObDNE0tZPyDFWipoGL33A5pTK/r40Ftys=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uCqrwgnJTujkz7l3CxbZQxGU2pnYlZyrnrbQCbhhXTqZBNl6l+ZzsQDSuUwAiain/w9/J7UagW1n5UoRZsXn6a9+usida9mwr3FBcEIseBq9sYWjR1G7GC8x8vV1ZEEnQ0rgZJnEmKZ1B3ExiuNWSsbR5RsA9UHoSRWAG4ezqOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jldh+qU5; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2eaa89464a3so33590071fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 05:48:11 -0700 (PDT)
+	s=arc-20240116; t=1719064046; c=relaxed/simple;
+	bh=aYz1ndkOaTKnkrgbvyIOa27eGl/WVWdVOEBR6M52qOo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P2y+H87xZMyKAZZV8ppX3K/EJmoz7QDzGzbBbQalAisNMqWrXwA1wGBRMo9OmuzRQ+xqX36yQI8CgkJfRi7gUgcvqzILvx6eLX+OAlKDfa9Xx1JNCi1SnYn/oVKCe7f1Rcv1E0/pFva3IxswEjM8mcV+xZZ2+lV1ee2ZyuxhLFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ikEo3zAR; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52cdb9526e2so976222e87.0;
+        Sat, 22 Jun 2024 06:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719060490; x=1719665290; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J4NrzrquMu2wm+RaIJw1sglld6u4UvhjbmFh93smTfA=;
-        b=Jldh+qU5s3WDNNs5wjW9+xHvGWQO6BFXNEKONnp0gngyYCmBYUu0b5Ty5XpMOy3yAY
-         IXGDtxm/VVADgTk03sy9htALWVSHufNBUmc2DZh0i4EOuy/hfbEF8IXVwin+usxVHG9u
-         tn/l029GRbq1dD8+QcvAJtsN2Yzax2BpD0XcvQIPs3smavVb0cjf7aXZ6yTWA0hOrS3i
-         Vjm4pQ1ljcuQXab3NILAMOhcJolr1f/8LNzs11gzsUafiiNsEil7KOO8Gbcuf7/CiSwq
-         IuqFsDyEsWTsq5310eUHOpyoTsrXcHMlRyLAa7WJ9TxmWcvqqA3UdjX2h4CjhL5flhmI
-         Lk+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719060490; x=1719665290;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1719064043; x=1719668843; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J4NrzrquMu2wm+RaIJw1sglld6u4UvhjbmFh93smTfA=;
-        b=YWbM6F8/8J1INpfE9+8mBADJVydKOTM1NNM7NXU+7Ann4gA5cTfrHX9gOQnQHYdZ6w
-         MgUZCJzhCDOsTAOfoxT4uaoT98eYCyU2Ohy8D7jc1J0NQcxMAxV9tcgMjTmY9CVuimxI
-         3SBVxDkWK/DwP9THSKmEaFIqFiywQXP+0/wZNDKscBOjqrY4cmd6ZTiestDgKEl89g9V
-         RvE5c5B5Y4mABpGU0xcRe7DmWYSymOT3pjkXSp/XwsNXQOB/UQECTZKFjDrPVg5blctq
-         8qxR52JB80Us+l3SbKUa9jqJpeviM0Xp1jCID5BkCn05Q5wj3m+mZkJPZjdC9i/+TiG+
-         fzww==
-X-Forwarded-Encrypted: i=1; AJvYcCUqwKpTTkftJf4J1L1IJ0erzjlOw1A5jTnNo7c3GKaXgs+lBUzWrtoSPenwWUjt3E5YRr833qOktSj5scdkr4T+TxNiLJCrSgIAvdJ2dw==
-X-Gm-Message-State: AOJu0YzeYf5tLBxE/RurENSFu/Cvmkrq5/D/Qa3i/WUihmVP2hnv7Bb/
-	/cOFacYmW9RKeC+QJTrfpzjHFZ34ZkhI/IJkntLOQEkkh8legNMbaGwdOIxJeiE=
-X-Google-Smtp-Source: AGHT+IHUtcMthGyb2HAUJ4dSJgS1RvVhsTp9d+IwnhEYCqcGykisBn3lTkmOciLbVOJPHTGKWoptCw==
-X-Received: by 2002:a2e:998e:0:b0:2ec:4d5b:3d03 with SMTP id 38308e7fff4ca-2ec579845dbmr6014601fa.31.1719060489910;
-        Sat, 22 Jun 2024 05:48:09 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec50860130sm3380151fa.140.2024.06.22.05.48.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Jun 2024 05:48:09 -0700 (PDT)
-Date: Sat, 22 Jun 2024 15:48:07 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 5/8] drm/msm/dpu: rework vsync_source handling
-Message-ID: <zxnlq4vc7w2j6jzwyuyvg65qguexs75y5urn3xub5wlqdm2hlu@ntfkwwvbplax>
-References: <20240613-dpu-handle-te-signal-v2-0-67a0116b5366@linaro.org>
- <20240613-dpu-handle-te-signal-v2-5-67a0116b5366@linaro.org>
- <flxejwpqw75thyeu5ycnlichh37l4ltuied36jjzvgifury7lp@gjjcbohuhfa3>
+        bh=qzDOBWm1Bza76au5EMycUxKs7sf6PRvFgQtnTRvoO68=;
+        b=ikEo3zARimxyubyhIcj+6SNwwy0E9c6EYtohtYI8A89Dnhn2Gx8FsuNFjhBTn0OYUC
+         Gh7l+MTymSwJHEibI8pRnQJ40/fJb3twQ/ic+pDQEjOxkOSTGLda8pqMjRvUkjbeUnUj
+         UpzgXeWOUXTHYqKCFVgnArb58K5f4R1XR6vqYeeGvJdmaHAgqUAKKPtnf9xIcAqlt+Hp
+         ZANrkNhYimWwKQzSog0wxkU2nbD5/oDH145xLhyJuuoi9U3YTCxqaFL7q2KqHdceC/Ow
+         itr+P5c+VVZqJQz7koDhyZPljY6zHcaOsIjaofZ9DbbceMTzrSxZ0sTqn93KD01XBI0E
+         t8gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719064043; x=1719668843;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qzDOBWm1Bza76au5EMycUxKs7sf6PRvFgQtnTRvoO68=;
+        b=KkLJkwiGuVCEX/Wah7Q4DgzjeHFhdvM8FZioN4h5yB9NAROgRNUCX5CN2YxKuW8Va+
+         gwaQE0xxwHvADXTcdcQTi5GhbADmhqSLDJm5deLUEsjyBJKdkdtXUIgeFda+egVnxA17
+         2xpaDVhzxdbu8OvJwlE7zr+cmDgLfPgxLfgluU4v8EWKiUwJlW2mDT7/7JN+pSydhAB6
+         Lz5/iu4jU5qMvY8wZmrWT6Kr+YKPB8YjzI9VJqXy4uou5JNL50wVjSPNxytg/SoNMdSZ
+         fF/M8NXU4LxumLB8Asu0rkrHpstJ0OO8EOktICqpTVNVfndGAQXk88PbQjcPgIKAM61Q
+         bpOg==
+X-Forwarded-Encrypted: i=1; AJvYcCXNuxsaZnrnu9bfaf3zr426yBnM3uhvsSDC/zbzlubywJ0TEH+zvoYmRqptN5LyNAzQ2WWR4KuPjRLgnV5Y/aMWJZiA6KTpDtupYvAUOz0e4cw82KSSqB4R19XWREFOhZIBOHXngNv81Ror/HNPkHs/DQzLsLJUVwAYkCRB3p2GCGvj6UaFCPMbIulnI8SW9jV0febV/GTHpawCU+Uk82j+oaqMOw==
+X-Gm-Message-State: AOJu0Ywf9Xca4CamY8VLIWYQUMCfJzNzWV3aqzJAycnhhEcMoIA1Kmst
+	81oWLLnbgV77uMDJpzG0YaFxfeQInAi1k2UdQOy+fk2mVIDy+YCiOomzhIzPnRZuClLycevzIok
+	FsDu75+EE83dh9Kgrw37XvsfFuUo=
+X-Google-Smtp-Source: AGHT+IH2lCl3T4pcjIHWIZp3BqoW9t0WI6X26FHKqKGqVsndzfblFuk7xQwvtcuSKJOI80Q9Xta6H8JLozf1v3p6aso=
+X-Received: by 2002:a05:6512:32b5:b0:52c:80e6:60c7 with SMTP id
+ 2adb3069b0e04-52cdf3317bamr337302e87.13.1719064042778; Sat, 22 Jun 2024
+ 06:47:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <flxejwpqw75thyeu5ycnlichh37l4ltuied36jjzvgifury7lp@gjjcbohuhfa3>
+References: <20240621-b4-sc7180-camss-v1-0-14937929f30e@gmail.com>
+ <20240621-b4-sc7180-camss-v1-3-14937929f30e@gmail.com> <cd9b5612-1160-4284-be7f-4efbcbbbe346@linaro.org>
+ <b9deca88-8e1a-4017-a0fc-6a77672d684d@linaro.org>
+In-Reply-To: <b9deca88-8e1a-4017-a0fc-6a77672d684d@linaro.org>
+From: george chan <gchan9527@gmail.com>
+Date: Sat, 22 Jun 2024 21:47:09 +0800
+Message-ID: <CADgMGSunjhnjv5+KpRskL+F22zz+E60dJPkzCdfTVTcEM+HRpw@mail.gmail.com>
+Subject: Re: [PATCH 3/6] media: qcom: camss: csiphy-3ph: Add Gen2 v1.2.2
+ two-phase MIPI CSI-2 DPHY init
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 13, 2024 at 08:21:59PM GMT, Marijn Suijten wrote:
-> Maybe retitle this to something that more closely resembles "remove unset
-> is_te_using_watchdog_timer field"?
+resend with plain text
 
-Well, it really moves vsync_source selection to
-_dpu_kms_initialize_dsi(), it doesn't just drop the
-is_te_using_watchdog_timer.
+On Sat, Jun 22, 2024 at 7:20=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> On 21.06.2024 1:25 PM, Bryan O'Donoghue wrote:
+> > On 21/06/2024 10:40, George Chan via B4 Relay wrote:
+> >> From: George Chan <gchan9527@gmail.com>
+> >>
+> >> Add a PHY configuration sequence for the sc7180 which uses a Qualcomm
+> >> Gen 2 version 1.2.2 CSI-2 PHY.
+> >>
+> >> The PHY can be configured as two phase or three phase in C-PHY or D-PH=
+Y
+> >> mode. This configuration supports two-phase D-PHY mode.
+> >>
+> >> Signed-off-by: George Chan <gchan9527@gmail.com>
+> >> ---
+> >>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 120 +++++++++++=
+++++++++++
+> >>   1 file changed, 120 insertions(+)
+> >>
+> >> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c =
+b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> >> index df7e93a5a4f6..181bb7f7c300 100644
+> >> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> >> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> >> @@ -348,6 +348,121 @@ csiphy_reg_t lane_regs_sm8250[5][20] =3D {
+> >>       },
+> >>   };
+> >>   +/* GEN2 1.2.2 2PH */
+> >
+> > This is the init sequence for 1_2_1 not 1_2_2
 
-> 
-> On 2024-06-13 20:05:08, Dmitry Baryshkov wrote:
-> > The struct msm_display_info has is_te_using_watchdog_timer field which
-> > is neither used anywhere nor is flexible enough to specify different
-> 
-> Well, it's "used", but not "set" (to anything other than the zero-initialized
-> default). s/used/set?
+Yes, undesirable copy-n-paste result.
 
-ack
+> >
+> > https://review.lineageos.org/c/LineageOS/android_kernel_xiaomi_sm8250/+=
+/311931/10/techpack/camera/drivers/cam_sensor_module/cam_csiphy/include/cam=
+_csiphy_1_2_1_hwreg.h
+> >
+> > https://review.lineageos.org/c/LineageOS/android_kernel_xiaomi_sm8250/+=
+/311931/10/techpack/camera/drivers/cam_sensor_module/cam_csiphy/include/cam=
+_csiphy_1_2_2_hwreg.h
+>
+> FWIW 1.2.2 seems to be the desired one: [1]
+>
+> Konrad
+>
+> [1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/UC.UM.1.0.r1=
+-02500-sa8155.0/arch/arm64/boot/dts/qcom/atoll-camera.dtsi#L22
 
-> 
-> > sources. Replace it with the field specifying the vsync source using
-> > enum dpu_vsync_source.
-> > 
-> > Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Patch itself is fine, just think the title could be clearer:
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 +----
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 5 ++---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 2 ++
-> >  3 files changed, 5 insertions(+), 7 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > index bd37a56b4d03..b147f8814a18 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > @@ -743,10 +743,7 @@ static void _dpu_encoder_update_vsync_source(struct dpu_encoder_virt *dpu_enc,
-> >  		vsync_cfg.pp_count = dpu_enc->num_phys_encs;
-> >  		vsync_cfg.frame_rate = drm_mode_vrefresh(&dpu_enc->base.crtc->state->adjusted_mode);
-> >  
-> > -		if (disp_info->is_te_using_watchdog_timer)
-> > -			vsync_cfg.vsync_source = DPU_VSYNC_SOURCE_WD_TIMER_0;
-> > -		else
-> > -			vsync_cfg.vsync_source = DPU_VSYNC_SOURCE_GPIO_0;
-> > +		vsync_cfg.vsync_source = disp_info->vsync_source;
-> >  
-> >  		hw_mdptop->ops.setup_vsync_source(hw_mdptop, &vsync_cfg);
-> >  
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> > index 76be77e30954..cb59bd4436f4 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-> > @@ -26,15 +26,14 @@
-> >   * @h_tile_instance:    Controller instance used per tile. Number of elements is
-> >   *                      based on num_of_h_tiles
-> >   * @is_cmd_mode		Boolean to indicate if the CMD mode is requested
-> > - * @is_te_using_watchdog_timer:  Boolean to indicate watchdog TE is
-> > - *				 used instead of panel TE in cmd mode panels
-> > + * @vsync_source:	Source of the TE signal for DSI CMD devices
-> >   */
-> >  struct msm_display_info {
-> >  	enum dpu_intf_type intf_type;
-> >  	uint32_t num_of_h_tiles;
-> >  	uint32_t h_tile_instance[MAX_H_TILES_PER_DISPLAY];
-> >  	bool is_cmd_mode;
-> > -	bool is_te_using_watchdog_timer;
-> > +	enum dpu_vsync_source vsync_source;
-> >  };
-> >  
-> >  /**
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > index 1955848b1b78..e9991f3756d4 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > @@ -543,6 +543,8 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
-> >  
-> >  		info.is_cmd_mode = msm_dsi_is_cmd_mode(priv->dsi[i]);
-> >  
-> > +		info.vsync_source = DPU_VSYNC_SOURCE_GPIO_0;
-> > +
-> >  		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI, &info);
-> >  		if (IS_ERR(encoder)) {
-> >  			DPU_ERROR("encoder init failed for dsi display\n");
-> > 
-> > -- 
-> > 2.39.2
-> > 
+Here is the log from sm7125 joyeuse phone, not sure if it helps or not.
+[  204.034767] qcom-camss acb3000.camss: CSIPHY 3PH HW Version =3D 0x010000=
+00
 
--- 
-With best wishes
-Dmitry
+I carefully looked into this csiphy_2ph_v1_2_2_reg of various trees,
+and concluded below version:
+(1)atoll, sdm845[1]
+(2)surya[2], sa8155, factory-trogdor-13443.B-chromeos-5.4[3]
+
+I was tempted to use (1)atoll one but it looked like (2) is newer. Is
+it worthy to create CAMSS_7125 specially for SM7125. Please give me
+some advice about it.
+
+Regards,
+George
+
+[1] https://github.com/LineageOS/android_kernel_xiaomi_sm6250/blob/lineage-=
+21/drivers/media/platform/msm/camera/cam_sensor_module/cam_csiphy/include/c=
+am_csiphy_1_2_2_hwreg.h
+[2] https://github.com/LineageOS/android_kernel_xiaomi_surya/blob/lineage-2=
+1/drivers/media/platform/msm/camera/cam_sensor_module/cam_csiphy/include/ca=
+m_csiphy_1_2_2_hwreg.h
+[3] https://chromium.googlesource.com/chromiumos/third_party/kernel/+/refs/=
+heads/factory-trogdor-13443.B-chromeos-5.4/drivers/media/platform/camx/cam_=
+sensor_module/cam_csiphy/include/cam_csiphy_1_2_2_hwreg.h
 
