@@ -1,395 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-23709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2416913539
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 18:50:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D2D891356A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 19:42:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1CDC1C21166
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 16:50:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1673FB212D9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 17:42:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB8141805E;
-	Sat, 22 Jun 2024 16:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B07A91863E;
+	Sat, 22 Jun 2024 17:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pUp3pbwb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qOtV/Hd1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75C1D524
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 16:49:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F4B182D2;
+	Sat, 22 Jun 2024 17:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719074986; cv=none; b=kYBf0H1GtkoEg5jX6LS5h6z642oI3hGGeTh1EFNJf5xuUUB0SUkUeWOJpJ6FNOyYInQtnK5CWqt42dt5IQbRX7HSJ0abgFTvvZcR+iRBhh/V2ddEw/amAWTEse2CqGF94oqDg4QTRQgZIP9lw/YGH0zxVmv+3zXbaqTrCgSZ86A=
+	t=1719078114; cv=none; b=u3rSIGWrInyf2jKATvHgh3+tjpZNTKaNQkU0bxIWQcymomwLhTg3BTQ1PFd8mbwzJzdVGlJegn1irzigGdTKmMU767M25q0GrRe4SYOLCU9ZK32FGs4Yizen0p4CgPluIawZGTmxQkxnZeTSwyoNEc5JIpPlieEkaSDD0lHDpQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719074986; c=relaxed/simple;
-	bh=RSHRfB7yFv744+oXoN0fW/gI1EQ2qQj7XY9p4L9Iaxw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BioOkGnKOpcnZuJj7sUvr3BNHccYN1E4PZDq0WUED21SQ7UqR3lxm548fBb4HvoYoITU7eibXATtc8A8Kw07dtEs3bpqWduDMPE7OJngpNSuMlA+/VzW4jWS4NS9NFfIliArL7CIAkMAWHvSNxTPjgF6ELtHsO70KNolpqHMDzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pUp3pbwb; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-366e70d0330so187763f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 09:49:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719074983; x=1719679783; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hP6Lz1CO+lqIq0GdN2MgiAFkI30RBlWJtTtLyJkZjNQ=;
-        b=pUp3pbwblCmf9qT6jVvxk5FqNp1RO8HHnSgGwv8ysqaa+BaPzYGcmZ+CzlZ5cI0GbD
-         Ryd3hP0rtL85xqEzhW5DscQnkcN5bLt8AVyXV/tSxVaUJ2+2KiLjx0xDjp5yVt5WIblB
-         BsVvzv90EkA7qVlaKmUlhW5h6oF54ZQZSyZ2uIBEWTe1XMV69r1uvUFC1C6reBxE/gJt
-         CZQ1+bdgvjAMUmQ5SCur8q6qVsZno8+07f+800NETYWW2qRU2SCmwuhhJQqcRh7Ml6ZB
-         m7clVHT5m+JEB5rNMGdLfGCXDxy8G9MQ4h4LzWKM+O290hXE5+GBl2yM3GqTuCeeCmzA
-         iBAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719074983; x=1719679783;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hP6Lz1CO+lqIq0GdN2MgiAFkI30RBlWJtTtLyJkZjNQ=;
-        b=XTmQi4D5OyHGdzUAZ4qWwkbD6AKa50CipEYIoxJGpw6OJQL0avK4TtT0mwKa18OMOn
-         Wp/2Ye7Sjh87cg7SCSN7yw0jRrTesM09+LFckJ8oWOS1UlSgcMWASnMHV2shFDkirH2P
-         AWMhMrm4E876UchiuzUauO/nMJlMRY6VqSfadcZwKB8silycvHxufcmDO+h22JYp+r0b
-         K8yZdlKXoRZS+K8diMmswyZetmq/ZTNhsFCAY8pWBVaVuicopN9yCPARNQhbaFke0Qj6
-         yCj/Ap6clWlxcfDByVZ/W9Hu+VihDUz3LOvSN6iUz1gWmzTM4OFkdjQ6soLwOFr2/fxE
-         IVTA==
-X-Gm-Message-State: AOJu0Yxcw231cmcrTTuq4xg66Xc8TzjqC5GsHAEArkSsGf8KSr95t222
-	Wf67hZnUq8TyGA03MvLh3bHWdgDVH3RaMu+Rl2MdK2U3QW14I1PrGhzRqwwYOPc=
-X-Google-Smtp-Source: AGHT+IGccMTr/lofoSoxWYBoScxI/x/3Kmy2XcyNhCuKbH7ba4SIoTP5Xe7Q5/t6y8S3fuQF7TV0Gg==
-X-Received: by 2002:a5d:6950:0:b0:366:e683:c2d with SMTP id ffacd0b85a97d-366e9652974mr124545f8f.57.1719074982845;
-        Sat, 22 Jun 2024 09:49:42 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3663a8c8b27sm5030730f8f.104.2024.06.22.09.49.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Jun 2024 09:49:41 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Date: Sat, 22 Jun 2024 17:49:31 +0100
-Subject: [PATCH v2 v4 2/2] pinctrl: qcom: Introduce SM4250 LPI pinctrl
- driver
+	s=arc-20240116; t=1719078114; c=relaxed/simple;
+	bh=RZ5LAEmzBnNGgd3UpEVbjbDwc57F7VOPS9Upg/UngfY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=V696rBYEQ7Dx96eyLqSSF4rFQsbBu/oJKEpLdG3YEz29Rdm91FAJDNb9Okcggb29w1CHYPk9sxp2q5v/EebO6eQrdXhzhbpX6WUaNJRMrhA4+LdcwN2bRuiby8wEugcdCZIQwdHCYtKsdAZZ0Kf4ayjAMs7eLujx2le0XPkVtUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qOtV/Hd1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92DFC3277B;
+	Sat, 22 Jun 2024 17:41:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719078114;
+	bh=RZ5LAEmzBnNGgd3UpEVbjbDwc57F7VOPS9Upg/UngfY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=qOtV/Hd1R8oXoaExmi9nXBT9oevGv/U96wHKUIsbpA7OWkXF+/7GeQFrdTCp6Vm6S
+	 gsOKqfSdU3lUzPl0ix2KdAXrQjxslZYPsqw6R0gpJpsJTrTucTPdLUVlg7gxhCG4F2
+	 0vlVDq+VVHAVI79V2FxHOeFKuNx1kFsfPScEmWCDk8RFwUpeeUzfsV3ZIsRTQq37XS
+	 LNE6G9zCLgUvua9loghitU3HGjc6ia9RUJnfpuG2b0Ay2lSp2mjlvMRWsZW7/NF0fK
+	 NXFOgCm03Jw18EFd3lbK2st+caKmZJjsto1e7Mj4k/pjceGD3OTu69u9s6jHGHnfuF
+	 eY++yOGg74bpA==
+Date: Sat, 22 Jun 2024 12:41:52 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>, lpieralisi@kernel.org,
+	kw@linux.com, bhelgaas@google.com, robh@kernel.org,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_mrana@quicinc.com
+Subject: Re: [PATCH v1] PCI: qcom: Avoid DBI and ATU register space mirror to
+ BAR/MMIO region
+Message-ID: <20240622174152.GA1432494@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240612-sm4250-lpi-v4-2-a0342e47e21b@linaro.org>
-References: <20240612-sm4250-lpi-v4-0-a0342e47e21b@linaro.org>
-In-Reply-To: <20240612-sm4250-lpi-v4-0-a0342e47e21b@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- alexey.klimov@linaro.org, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11218;
- i=srinivas.kandagatla@linaro.org; h=from:subject:message-id;
- bh=RSHRfB7yFv744+oXoN0fW/gI1EQ2qQj7XY9p4L9Iaxw=;
- b=owEBbQGS/pANAwAKAXqh/VnHNFU3AcsmYgBmdwCiMRgF+6apKhx+UM9qSix2XtHZ8N5Vo+Zsd
- 2m9IrX4wGqJATMEAAEKAB0WIQQi509axvzi9vce3Y16of1ZxzRVNwUCZncAogAKCRB6of1ZxzRV
- N133CACGt9US/9bvFnRPbWcd/TNNuyH5EEGhxkVjLqzwffk67Quyis9yMBex0euyU+eTcR3xQwD
- wY/My+k35Ae6xeeTTrLR/3mx+Flx0UAA8+AdphE3uv9Z8NcSeD5T0RA2Nhe3xq8gNiRSPLVWsds
- iGoTZElyEfHgE4r/e6T7b2XjnXRFNsSCVKQ18G1C35P4HR9phyiNdyRwd0UrnRCEnABJnoVSW+P
- I/XvEpowwLCpZRQz75KozpADMMj+27XoD/oIJzN5b3+CSbkEJvNIzr3naJ1thNgjhP6IGBqtFRp
- hsLV20NLukyRuaHqwf2QBKLCYEtT4H6I2Ihm8mkkIKtZg1lz
-X-Developer-Key: i=srinivas.kandagatla@linaro.org; a=openpgp;
- fpr=ED6472765AB36EC43B3EF97AD77E3FC0562560D6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240622035444.GA2922@thinkpad>
 
-Add support for the pin controller block on SM4250 Low Power Island.
+On Sat, Jun 22, 2024 at 09:24:44AM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Jun 20, 2024 at 02:34:05PM -0700, Prudhvi Yarlagadda wrote:
+> > PARF hardware block which is a wrapper on top of DWC PCIe controller
+> > mirrors the DBI and ATU register space. It uses PARF_SLV_ADDR_SPACE_SIZE
+> > register to get the size of the memory block to be mirrored and uses
+> > PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR registers to determine the base
+> > address of DBI and ATU space inside the memory block that is being
+> > mirrored.
+> 
+> This PARF_SLV_ADDR_SPACE register is a mystery to me. I tried getting to the
+> bottom of it, but nobody could explain it to me clearly. Looks like you know
+> more about it...
+> 
+> From your description, it seems like this register specifies the size of the
+> mirroring region (ATU + DBI), but the response from your colleague indicates
+> something different [1].
+> 
+> [1] https://lore.kernel.org/linux-pci/f42559f5-9d4c-4667-bf0e-7abfd9983c36@quicinc.com/
+> 
+> > When a memory region which is located above the SLV_ADDR_SPACE_SIZE
+> > boundary is used for BAR region then there could be an overlap of DBI and
+> > ATU address space that is getting mirrored and the BAR region. This
+> > results in DBI and ATU address space contents getting updated when a PCIe
+> > function driver tries updating the BAR/MMIO memory region. Reference
+> > memory map of the PCIe memory region with DBI and ATU address space
+> > overlapping BAR region is as below.
+> > 
+> > 			|---------------|
+> > 			|		|
+> > 			|		|
+> > 	-------	--------|---------------|
+> > 	   |	   |	|---------------|
+> > 	   |	   |	|	DBI	|
+> > 	   |	   |	|---------------|---->DBI_BASE_ADDR
+> > 	   |	   |	|		|
+> > 	   |	   |	|		|
+> > 	   |	PCIe	|		|---->2*SLV_ADDR_SPACE_SIZE
+> > 	   |	BAR/MMIO|---------------|
+> > 	   |	Region	|	ATU	|
+> > 	   |	   |	|---------------|---->ATU_BASE_ADDR
+> > 	   |	   |	|		|
+> > 	PCIe	   |	|---------------|
+> > 	Memory	   |	|	DBI	|
+> > 	Region	   |	|---------------|---->DBI_BASE_ADDR
+> > 	   |	   |	|		|
+> > 	   |	--------|		|
+> > 	   |		|		|---->SLV_ADDR_SPACE_SIZE
+> > 	   |		|---------------|
+> > 	   |		|	ATU	|
+> > 	   |		|---------------|---->ATU_BASE_ADDR
+> > 	   |		|		|
+> > 	   |		|---------------|
+> > 	   |		|	DBI	|
+> > 	   |		|---------------|---->DBI_BASE_ADDR
+> > 	   |		|		|
+> > 	   |		|		|
+> > 	----------------|---------------|
+> > 			|		|
+> > 			|		|
+> > 			|		|
+> > 			|---------------|
+> > 
+> > Currently memory region beyond the SLV_ADDR_SPACE_SIZE boundary is
+> > not used for BAR region which is why the above mentioned issue is
+> > not encountered. This issue is discovered as part of internal
+> > testing when we tried moving the BAR region beyond the
+> > SLV_ADDR_SPACE_SIZE boundary. Hence we are trying to fix this.
+> 
+> I don't quite understand this. PoR value of SLV_ADDR_SPACE_SIZE is
+> 16MB and most of the platforms have the size of whole PCIe region
+> defined in DT as 512MB (registers + I/O + MEM). So the range is
+> already crossing the SLV_ADDR_SPACE_SIZE boundary.
+> 
+> Ironically, the patch I pointed out above changes the value of this
+> register as 128MB, and the PCIe region size of that platform is also
+> 128MB. The author of that patch pointed out that if the
+> SLV_ADDR_SPACE_SIZE is set to 256MB, then they are seeing
+> enumeration failures. If we go by your description of that register,
+> the SLV_ADDR_SPACE_SIZE of 256MB should be > PCIe region size of
+> 128MB. So they should not see any issues, right?
+> 
+> > As PARF hardware block mirrors DBI and ATU register space after
+> > every PARF_SLV_ADDR_SPACE_SIZE (default 0x1000000) boundary
+> > multiple, write U64_MAX to PARF_SLV_ADDR_SPACE_SIZE register to
+> > avoid mirroring DBI and ATU to BAR/MMIO region.
+> 
+> Looks like you are trying to avoid this mirroring on a whole. First
+> of all, what is the reasoning behind this mirroring?
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/pinctrl/qcom/Kconfig                    |   9 +
- drivers/pinctrl/qcom/Makefile                   |   1 +
- drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c | 236 ++++++++++++++++++++++++
- 3 files changed, 246 insertions(+)
-
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index 24619e80b2cc..dd9bbe8f3e11 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -68,6 +68,15 @@ config PINCTRL_SC7280_LPASS_LPI
- 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
- 	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280 platform.
- 
-+config PINCTRL_SM4250_LPASS_LPI
-+	tristate "Qualcomm Technologies Inc SM4250 LPASS LPI pin controller driver"
-+	depends on ARM64 || COMPILE_TEST
-+	depends on PINCTRL_LPASS_LPI
-+	help
-+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-+	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-+	  (Low Power Island) found on the Qualcomm Technologies Inc SM4250 platform.
-+
- config PINCTRL_SM6115_LPASS_LPI
- 	tristate "Qualcomm Technologies Inc SM6115 LPASS LPI pin controller driver"
- 	depends on ARM64 || COMPILE_TEST
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index e2e76071d268..eb04297b6388 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -43,6 +43,7 @@ obj-$(CONFIG_PINCTRL_SDM845) += pinctrl-sdm845.o
- obj-$(CONFIG_PINCTRL_SDX55) += pinctrl-sdx55.o
- obj-$(CONFIG_PINCTRL_SDX65) += pinctrl-sdx65.o
- obj-$(CONFIG_PINCTRL_SDX75) += pinctrl-sdx75.o
-+obj-$(CONFIG_PINCTRL_SM4250_LPASS_LPI) += pinctrl-sm4250-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SM4450) += pinctrl-sm4450.o
- obj-$(CONFIG_PINCTRL_SM6115) += pinctrl-sm6115.o
- obj-$(CONFIG_PINCTRL_SM6115_LPASS_LPI) += pinctrl-sm6115-lpass-lpi.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c
-new file mode 100644
-index 000000000000..2d2c636a3e20
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c
-@@ -0,0 +1,236 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2020, 2023 Linaro Ltd.
-+ */
-+
-+#include <linux/gpio/driver.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+enum lpass_lpi_functions {
-+	LPI_MUX_dmic01_clk,
-+	LPI_MUX_dmic01_data,
-+	LPI_MUX_dmic23_clk,
-+	LPI_MUX_dmic23_data,
-+	LPI_MUX_dmic4_clk,
-+	LPI_MUX_dmic4_data,
-+	LPI_MUX_ext_mclk0_a,
-+	LPI_MUX_ext_mclk0_b,
-+	LPI_MUX_ext_mclk1_a,
-+	LPI_MUX_ext_mclk1_b,
-+	LPI_MUX_ext_mclk1_c,
-+	LPI_MUX_i2s1_clk,
-+	LPI_MUX_i2s1_data,
-+	LPI_MUX_i2s1_ws,
-+	LPI_MUX_i2s2_clk,
-+	LPI_MUX_i2s2_data,
-+	LPI_MUX_i2s2_ws,
-+	LPI_MUX_i2s3_clk,
-+	LPI_MUX_i2s3_data,
-+	LPI_MUX_i2s3_ws,
-+	LPI_MUX_qup_io_00,
-+	LPI_MUX_qup_io_01,
-+	LPI_MUX_qup_io_05,
-+	LPI_MUX_qup_io_10,
-+	LPI_MUX_qup_io_11,
-+	LPI_MUX_qup_io_25,
-+	LPI_MUX_qup_io_21,
-+	LPI_MUX_qup_io_26,
-+	LPI_MUX_qup_io_31,
-+	LPI_MUX_qup_io_36,
-+	LPI_MUX_qua_mi2s_data,
-+	LPI_MUX_qua_mi2s_sclk,
-+	LPI_MUX_qua_mi2s_ws,
-+	LPI_MUX_slim_clk,
-+	LPI_MUX_slim_data,
-+	LPI_MUX_sync_out,
-+	LPI_MUX_swr_rx_clk,
-+	LPI_MUX_swr_rx_data,
-+	LPI_MUX_swr_tx_clk,
-+	LPI_MUX_swr_tx_data,
-+	LPI_MUX_swr_wsa_clk,
-+	LPI_MUX_swr_wsa_data,
-+	LPI_MUX_gpio,
-+	LPI_MUX__,
-+};
-+
-+static const struct pinctrl_pin_desc sm4250_lpi_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+	PINCTRL_PIN(15, "gpio15"),
-+	PINCTRL_PIN(16, "gpio16"),
-+	PINCTRL_PIN(17, "gpio17"),
-+	PINCTRL_PIN(18, "gpio18"),
-+	PINCTRL_PIN(19, "gpio19"),
-+	PINCTRL_PIN(20, "gpio20"),
-+	PINCTRL_PIN(21, "gpio21"),
-+	PINCTRL_PIN(22, "gpio22"),
-+	PINCTRL_PIN(23, "gpio23"),
-+	PINCTRL_PIN(24, "gpio24"),
-+	PINCTRL_PIN(25, "gpio25"),
-+	PINCTRL_PIN(26, "gpio26"),
-+};
-+
-+static const char * const dmic01_clk_groups[] = { "gpio6" };
-+static const char * const dmic01_data_groups[] = { "gpio7" };
-+static const char * const dmic23_clk_groups[] = { "gpio8" };
-+static const char * const dmic23_data_groups[] = { "gpio9" };
-+static const char * const dmic4_clk_groups[] = { "gpio10" };
-+static const char * const dmic4_data_groups[] = { "gpio11" };
-+static const char * const ext_mclk0_a_groups[] = { "gpio13" };
-+static const char * const ext_mclk0_b_groups[] = { "gpio5" };
-+static const char * const ext_mclk1_a_groups[] = { "gpio18" };
-+static const char * const ext_mclk1_b_groups[] = { "gpio9" };
-+static const char * const ext_mclk1_c_groups[] = { "gpio17" };
-+static const char * const slim_clk_groups[] = { "gpio14" };
-+static const char * const slim_data_groups[] = { "gpio15" };
-+static const char * const i2s1_clk_groups[] = { "gpio6" };
-+static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
-+static const char * const i2s1_ws_groups[] = { "gpio7" };
-+static const char * const i2s2_clk_groups[] = { "gpio10" };
-+static const char * const i2s2_data_groups[] = { "gpio12", "gpio13" };
-+static const char * const i2s2_ws_groups[] = { "gpio11" };
-+static const char * const i2s3_clk_groups[] = { "gpio14" };
-+static const char * const i2s3_data_groups[] = { "gpio16", "gpio17" };
-+static const char * const i2s3_ws_groups[] = { "gpio15" };
-+static const char * const qup_io_00_groups[] = { "gpio19" };
-+static const char * const qup_io_01_groups[] = { "gpio21" };
-+static const char * const qup_io_05_groups[] = { "gpio23" };
-+static const char * const qup_io_10_groups[] = { "gpio20" };
-+static const char * const qup_io_11_groups[] = { "gpio22" };
-+static const char * const qup_io_25_groups[] = { "gpio23" };
-+static const char * const qup_io_21_groups[] = { "gpio25" };
-+static const char * const qup_io_26_groups[] = { "gpio25" };
-+static const char * const qup_io_31_groups[] = { "gpio26" };
-+static const char * const qup_io_36_groups[] = { "gpio26" };
-+static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4", "gpio5" };
-+static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
-+static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
-+static const char * const sync_out_groups[] = { "gpio19", "gpio20", "gpio21", "gpio22",
-+						"gpio23", "gpio24", "gpio25", "gpio26"};
-+static const char * const swr_rx_clk_groups[] = { "gpio3" };
-+static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
-+static const char * const swr_tx_clk_groups[] = { "gpio0" };
-+static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2" };
-+static const char * const swr_wsa_clk_groups[] = { "gpio10" };
-+static const char * const swr_wsa_data_groups[] = { "gpio11" };
-+
-+
-+static const struct lpi_pingroup sm4250_groups[] = {
-+	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
-+	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
-+	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
-+	LPI_PINGROUP(5, 12, swr_rx_data, ext_mclk0_b, qua_mi2s_data, _),
-+	LPI_PINGROUP(6, LPI_NO_SLEW, dmic01_clk, i2s1_clk, _, _),
-+	LPI_PINGROUP(7, LPI_NO_SLEW, dmic01_data, i2s1_ws, _, _),
-+	LPI_PINGROUP(8, LPI_NO_SLEW, dmic23_clk, i2s1_data, _, _),
-+	LPI_PINGROUP(9, LPI_NO_SLEW, dmic23_data, i2s1_data, ext_mclk1_b, _),
-+	LPI_PINGROUP(10, 16, i2s2_clk, swr_wsa_clk, dmic4_clk, _),
-+	LPI_PINGROUP(11, 18, i2s2_ws, swr_wsa_data, dmic4_data, _),
-+	LPI_PINGROUP(12, LPI_NO_SLEW, dmic23_clk, i2s2_data, _, _),
-+	LPI_PINGROUP(13, LPI_NO_SLEW, dmic23_data, i2s2_data, ext_mclk0_a, _),
-+	LPI_PINGROUP(14, LPI_NO_SLEW, i2s3_clk, slim_clk, _, _),
-+	LPI_PINGROUP(15, LPI_NO_SLEW, i2s3_ws, slim_data, _, _),
-+	LPI_PINGROUP(16, LPI_NO_SLEW, i2s3_data, _, _, _),
-+	LPI_PINGROUP(17, LPI_NO_SLEW, i2s3_data, ext_mclk1_c, _, _),
-+	LPI_PINGROUP(18, 20, ext_mclk1_a, swr_rx_data, _, _),
-+	LPI_PINGROUP(19, LPI_NO_SLEW, qup_io_00, sync_out, _, _),
-+	LPI_PINGROUP(20, LPI_NO_SLEW, qup_io_10, sync_out, _, _),
-+	LPI_PINGROUP(21, LPI_NO_SLEW, qup_io_01, sync_out, _, _),
-+	LPI_PINGROUP(22, LPI_NO_SLEW, qup_io_11, sync_out, _, _),
-+	LPI_PINGROUP(23, LPI_NO_SLEW, qup_io_25, qup_io_05, sync_out, _),
-+	LPI_PINGROUP(25, LPI_NO_SLEW, qup_io_26, qup_io_21, sync_out, _),
-+	LPI_PINGROUP(26, LPI_NO_SLEW, qup_io_36, qup_io_31, sync_out, _),
-+};
-+
-+static const struct lpi_function sm4250_functions[] = {
-+	LPI_FUNCTION(dmic01_clk),
-+	LPI_FUNCTION(dmic01_data),
-+	LPI_FUNCTION(dmic23_clk),
-+	LPI_FUNCTION(dmic23_data),
-+	LPI_FUNCTION(dmic4_clk),
-+	LPI_FUNCTION(dmic4_data),
-+	LPI_FUNCTION(ext_mclk0_a),
-+	LPI_FUNCTION(ext_mclk0_b),
-+	LPI_FUNCTION(ext_mclk1_a),
-+	LPI_FUNCTION(ext_mclk1_b),
-+	LPI_FUNCTION(ext_mclk1_c),
-+	LPI_FUNCTION(i2s1_clk),
-+	LPI_FUNCTION(i2s1_data),
-+	LPI_FUNCTION(i2s1_ws),
-+	LPI_FUNCTION(i2s2_clk),
-+	LPI_FUNCTION(i2s2_data),
-+	LPI_FUNCTION(i2s2_ws),
-+	LPI_FUNCTION(i2s3_clk),
-+	LPI_FUNCTION(i2s3_data),
-+	LPI_FUNCTION(i2s3_ws),
-+	LPI_FUNCTION(qup_io_00),
-+	LPI_FUNCTION(qup_io_01),
-+	LPI_FUNCTION(qup_io_05),
-+	LPI_FUNCTION(qup_io_10),
-+	LPI_FUNCTION(qup_io_11),
-+	LPI_FUNCTION(qup_io_25),
-+	LPI_FUNCTION(qup_io_21),
-+	LPI_FUNCTION(qup_io_26),
-+	LPI_FUNCTION(qup_io_31),
-+	LPI_FUNCTION(qup_io_36),
-+	LPI_FUNCTION(qua_mi2s_data),
-+	LPI_FUNCTION(qua_mi2s_sclk),
-+	LPI_FUNCTION(qua_mi2s_ws),
-+	LPI_FUNCTION(slim_clk),
-+	LPI_FUNCTION(slim_data),
-+	LPI_FUNCTION(sync_out),
-+	LPI_FUNCTION(swr_rx_clk),
-+	LPI_FUNCTION(swr_rx_data),
-+	LPI_FUNCTION(swr_tx_clk),
-+	LPI_FUNCTION(swr_tx_data),
-+	LPI_FUNCTION(swr_wsa_clk),
-+	LPI_FUNCTION(swr_wsa_data),
-+};
-+
-+static const struct lpi_pinctrl_variant_data sm4250_lpi_data = {
-+	.pins = sm4250_lpi_pins,
-+	.npins = ARRAY_SIZE(sm4250_lpi_pins),
-+	.groups = sm4250_groups,
-+	.ngroups = ARRAY_SIZE(sm4250_groups),
-+	.functions = sm4250_functions,
-+	.nfunctions = ARRAY_SIZE(sm4250_functions),
-+};
-+
-+static const struct of_device_id lpi_pinctrl_of_match[] = {
-+	{ .compatible = "qcom,sm4250-lpass-lpi-pinctrl", .data = &sm4250_lpi_data },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
-+
-+static struct platform_driver lpi_pinctrl_driver = {
-+	.driver = {
-+		.name = "qcom-sm4250-lpass-lpi-pinctrl",
-+		.of_match_table = lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove_new = lpi_pinctrl_remove,
-+};
-+
-+module_platform_driver(lpi_pinctrl_driver);
-+MODULE_DESCRIPTION("QTI SM4250 LPI GPIO pin control driver");
-+MODULE_AUTHOR("Srinivas Kandagatla <srinivas.kandagatla@linaro.org>");
-+MODULE_LICENSE("GPL");
-
--- 
-2.25.1
-
+This sounds like what we usually call "aliasing" that happens when
+some upper address bits are ignored.
 
