@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-23687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D47C91334B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 13:18:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F70391334F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 13:20:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17E13283212
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 11:18:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 739B21C214C9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 11:20:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 063B414D70B;
-	Sat, 22 Jun 2024 11:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB9C7153BF0;
+	Sat, 22 Jun 2024 11:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nN+a9oHT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r2VL2iC0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359584C8A
-	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 11:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24F84C8A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 11:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719055092; cv=none; b=Q0FxI+vSmN5o2Soo5lIJ8XhYbMLqagkjlS0mSmndginAk9ZI4YP8L/U7BfhL4prllY4TRrarYX2yXpobjADTmm6YAWA7KJJXBVbwoEu1BV/OwG/oMOKkHuD46JleD3/18HBClEiXh/MmhG3nzjWztBLun3NTgCmjobp5EyCgDgo=
+	t=1719055242; cv=none; b=gxMMkeMdlCiPdjVBrF2UkXqRW5qcO1KWeFWqUzOQkuJYKgL1zOwzhGrAZhAXNBvSWblSbTa8NY8tF1RHtJSozSg861hD6CMg0+EqqhNUQFDtP0wM0Xf91s5nHeIhDDiOT72a8fc2CvI4k8Hhjkpz4krZxSDJ4G8OJKOnHZT9AqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719055092; c=relaxed/simple;
-	bh=OVGsGcULAd+tm0Vg7GHlWNp6LFLAHZM/qfneNJMZlxo=;
+	s=arc-20240116; t=1719055242; c=relaxed/simple;
+	bh=6OweLc4eBvs/JJvGZrwlp8hNSSJPNRIvBHl6/QSlhA4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sNzygybDuOHiF7kCoSnA1NeKk/FVtF5PPP092Ei0HXmKzgIjFUcNzPFxHbxjRBZy7rriQwlWZcPsmahK7Cy6tC4QCZf0SXKGrOGLfeaIYO3XzRikrwsk+qeqCJsPS9S5u+ZfrWlZCdQJhl5RN0tYZrnGnuEKFOZMbV3rMu8cMc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nN+a9oHT; arc=none smtp.client-ip=209.85.208.53
+	 In-Reply-To:Content-Type; b=UAJo3DqJjzPOXcEh8f2OaaNONDhYZitnoXTruVVOM5JJGgAE6bWvaPwKD3zu8Bf9ilK/wVOFaan6GP2fpvWdm8o2mUD4+sV3iYwK3RMdqDXsKVLKKRkZVKKXktPQbwfCBqg/dJxxzECbu1mcR/zN30edqM1hkB6/iY1Bvt7NA/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r2VL2iC0; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-57d457357easo239828a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 04:18:09 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a6fe118805dso46730066b.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 04:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719055088; x=1719659888; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719055238; x=1719660038; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6gw8DfMPxQlCfKy+ZVvAQOOA7tVUV5IG3EFW3SPyUVE=;
-        b=nN+a9oHTofXVRBtSMd5Od6aVoUgcp/z/Sw2bjgqe9eWfygHP6Bsrl4Gak+wuFGE405
-         HL0/Fo5Bi6Q0icnGk/qodIChNTLzT2vpsFeuWfVjmonHhoRBhuHtEC8kXyAdRnLOEeej
-         iLrVfNWPkE14OFb7ct6xcnMAW3GRyMEAnj9yKbyg4Adkn7N1kBbo5vElIGtgc9UI+OZ/
-         3rGqPF9pCmIESgdaZS0lbIX8XycOxqnIfA0G4MB56ffuY0V0dj+KHKhfrOTw0KE90wGh
-         TvTFkJj9SWGpNT1Siv9izB+NNH6tO/OtITAwXO5U047zlmgvbZZmUP+gMImvKNA5Bi9U
-         077Q==
+        bh=72431nl2SzDcS3jDBD6K/aeYHATt9J2PsD5YXQmzkR8=;
+        b=r2VL2iC0f1dR8gNn5BuQBo+5g1eXLevTV9msSsayXkxRezFx4VNqEqKNjLtiHGpyvu
+         AmTTFKCgvCn5V9MHIP1PmabX0HhbtO63oMzWYQ5VYkHK/AJcbsCdJo0GPwxujPe1m4xB
+         oTK+HEN2laicocILNjga2rRxFPLTiFzDOTpHA0d3AoyqsXxM39raj33tIHGvvnNpVHj+
+         Jbg7X0RTvRVJoLI7uUiUmpuvuCpgkd+gPuobi9hCMBqPw2K0AUOMKkIH/Y7i/OZdxqik
+         nhxKe9/t7s6prPmCF2D7d/qucxZ2B90CKsRB50ifhLZjiJ1N9nr7FfLzP2oH66VNc+FP
+         xyQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719055088; x=1719659888;
+        d=1e100.net; s=20230601; t=1719055238; x=1719660038;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6gw8DfMPxQlCfKy+ZVvAQOOA7tVUV5IG3EFW3SPyUVE=;
-        b=chVuaDrMvhWGWI3oU23Tn9XfUqR0Myi2nHk1+jZhhqulZuy9BESgI/MgpAVsT2Wr3u
-         l65QKbI3kAZUHIytwHeut98hPxteVyxZuS2P3Mmf9kpMm/V0dBV8VUFavD4ylVs/tCZf
-         9GEizrrYs8zDjsZP7H8v4eo6k2NwGxcVVCctG1FmQqOtxZHIVDLUnLVqr9k6/1DeP7JX
-         sje/S2zir7lcEZQjE1nudJZY+NPkg8UNojQ9BzmZNN/9EsNpeV2LJfTYJ0zpYUeDeIM4
-         LHN9FCXx0iWbIZXpHrEg82Oh73uQOv8ddN+p+GF1VHg5MOc+paNAx2PCmSTtc+aeJ60G
-         Xq7w==
-X-Forwarded-Encrypted: i=1; AJvYcCVdYgasyFB9mKB8hhsVNjDnpDU+LvAo9RZp96+cD/j+3xp8Yw+BA7GvmZwvlycGdkufk6KXO/rchA0rZYagaBcYjMGtBarN+2sTiGZ3AA==
-X-Gm-Message-State: AOJu0YxMYhwFfo32viD7+NcWrjn/gUozytvF+bD2cCclqQ7ZM0SrzSlA
-	dsFUziTjLudpFiDto33SWZ3+KoDdFOXQACuG7kqQHzL5ynylW/NUfFcPP6GBDqI=
-X-Google-Smtp-Source: AGHT+IEGl09yCfUVjE+wkwdBqE2TH1nQo3iaXzRoYMg4XBas3g3QfYdOFkUtr5VyAYAg0iHfHQmJtw==
-X-Received: by 2002:a50:d699:0:b0:579:ca97:da1b with SMTP id 4fb4d7f45d1cf-57d07e0d427mr6300172a12.6.1719055088268;
-        Sat, 22 Jun 2024 04:18:08 -0700 (PDT)
+        bh=72431nl2SzDcS3jDBD6K/aeYHATt9J2PsD5YXQmzkR8=;
+        b=CKrZb5MQnDb6kR8Z1qsePnkCyRUfaGCj+Jc7KfB+aiIwwk+5jGGcyGAO1qLHOw/Ils
+         pxh9ZYaM273dr2+RB3nFaQtyUwkRy0WupDDIHRywZ/ReRFopkBRdaXpEK5BRYJKk4VeY
+         YTBeu5q/cYMeB6DJWBYTs1RDcjiGXP3ZV2CzpchEZ1+DNQ06l2RzSIS8kdk7AmAnxT2c
+         1IVs3mN18emY7tXHOoMsVjuRxSu1ZkXqedwFE10QB6zOBdBrAsCYd5U6QKpXP0d2fCRq
+         z2ts+jGaNVQ6ne8IRpNDmWLyrOa0JMDx4dRGTb1WAtbzQ0ZGXW0NN+m5qmoaw17tVhsz
+         9C8A==
+X-Forwarded-Encrypted: i=1; AJvYcCU/Ko+WpIyt0YH+jvCIIEbSQoFgaH3/qNrut4se0pG8d0lAtGRw6vKqbaNPxEuGjPYB3L2J1rEgzwhVn1/PXO/lPy1w1TkFmRET4r4K4Q==
+X-Gm-Message-State: AOJu0YwFgBxahaXdev9eM0Pfh5rZo0t8szZpSpN/ZNXSfJ6XCvvUqv4u
+	7/OiFDgrMzv008dKCaqjYaUdoqoVJ8elQn5Dv/afuY1EDSwiqFCuZGcmNyWweHU=
+X-Google-Smtp-Source: AGHT+IFnkN8a7raSH73gXKwC6s4jpempe+oDE2AIgwSkj4jFfdgTskKwT+iexeGZeZ0CFWRMPu9nPA==
+X-Received: by 2002:a17:906:2e94:b0:a6f:e47d:a965 with SMTP id a640c23a62f3a-a6fe47dab12mr62240466b.41.1719055237199;
+        Sat, 22 Jun 2024 04:20:37 -0700 (PDT)
 Received: from [192.168.128.35] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d3048b93asm2253205a12.56.2024.06.22.04.18.06
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6fcf428b15sm184204966b.9.2024.06.22.04.20.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Jun 2024 04:18:07 -0700 (PDT)
-Message-ID: <3660e37e-2716-4d9f-a9cf-b69568d4e77c@linaro.org>
-Date: Sat, 22 Jun 2024 13:18:05 +0200
+        Sat, 22 Jun 2024 04:20:36 -0700 (PDT)
+Message-ID: <b9deca88-8e1a-4017-a0fc-6a77672d684d@linaro.org>
+Date: Sat, 22 Jun 2024 13:20:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,10 +77,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] media: qcom: camss: Add sc7180 resources
-To: gchan9527@gmail.com, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+Subject: Re: [PATCH 3/6] media: qcom: camss: csiphy-3ph: Add Gen2 v1.2.2
+ two-phase MIPI CSI-2 DPHY init
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, gchan9527@gmail.com,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
  Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
@@ -88,7 +88,8 @@ To: gchan9527@gmail.com, Robert Foss <rfoss@kernel.org>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240621-b4-sc7180-camss-v1-0-14937929f30e@gmail.com>
- <20240621-b4-sc7180-camss-v1-5-14937929f30e@gmail.com>
+ <20240621-b4-sc7180-camss-v1-3-14937929f30e@gmail.com>
+ <cd9b5612-1160-4284-be7f-4efbcbbbe346@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -126,38 +127,43 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240621-b4-sc7180-camss-v1-5-14937929f30e@gmail.com>
+In-Reply-To: <cd9b5612-1160-4284-be7f-4efbcbbbe346@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 21.06.2024 11:40 AM, George Chan via B4 Relay wrote:
-> From: George Chan <gchan9527@gmail.com>
+On 21.06.2024 1:25 PM, Bryan O'Donoghue wrote:
+> On 21/06/2024 10:40, George Chan via B4 Relay wrote:
+>> From: George Chan <gchan9527@gmail.com>
+>>
+>> Add a PHY configuration sequence for the sc7180 which uses a Qualcomm
+>> Gen 2 version 1.2.2 CSI-2 PHY.
+>>
+>> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
+>> mode. This configuration supports two-phase D-PHY mode.
+>>
+>> Signed-off-by: George Chan <gchan9527@gmail.com>
+>> ---
+>>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 120 +++++++++++++++++++++
+>>   1 file changed, 120 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> index df7e93a5a4f6..181bb7f7c300 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> @@ -348,6 +348,121 @@ csiphy_reg_t lane_regs_sm8250[5][20] = {
+>>       },
+>>   };
+>>   +/* GEN2 1.2.2 2PH */
 > 
-> This commit describes the hardware layout for the sc7180 for the
-> following hardware blocks:
+> This is the init sequence for 1_2_1 not 1_2_2
 > 
-> - 2 x VFE
-> - 1 x VFE Lite
-> - 2 x CSID
-> - 1 x CSID Lite
-> - 4 x CSI PHY
+> https://review.lineageos.org/c/LineageOS/android_kernel_xiaomi_sm8250/+/311931/10/techpack/camera/drivers/cam_sensor_module/cam_csiphy/include/cam_csiphy_1_2_1_hwreg.h
 > 
-> Signed-off-by: George Chan <gchan9527@gmail.com>
-> ---
+> https://review.lineageos.org/c/LineageOS/android_kernel_xiaomi_sm8250/+/311931/10/techpack/camera/drivers/cam_sensor_module/cam_csiphy/include/cam_csiphy_1_2_2_hwreg.h
 
-[...]
-
->  		if (ret) {
-> -			dev_err(dev, "clock enable failed: %d\n", ret);
-> +			dev_err(dev, "clock enable failed: %s %d\n", clock[i].name, ret);
-
-This is a good change, but should be separate
-
-
-Generally this looks quite in line with [1], although I wasn't able to find
-the matching clock rates
+FWIW 1.2.2 seems to be the desired one: [1]
 
 Konrad
 
-[1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/UC.UM.1.0.r1-02500-sa8155.0/arch/arm64/boot/dts/qcom/atoll-camera.dtsi
+[1] https://git.codelinaro.org/clo/la/kernel/msm-4.14/-/blob/UC.UM.1.0.r1-02500-sa8155.0/arch/arm64/boot/dts/qcom/atoll-camera.dtsi#L22
 
