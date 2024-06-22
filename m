@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-23731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4B2C9136D9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 01:26:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 792409136E0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 01:26:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EA67A1C2168C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 23:26:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3141A283FD7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 23:26:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E44D79B9C;
-	Sat, 22 Jun 2024 23:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C57208174C;
+	Sat, 22 Jun 2024 23:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IeF9sq++"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOWyIiOw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0462904;
-	Sat, 22 Jun 2024 23:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21ADD3FBA7;
+	Sat, 22 Jun 2024 23:25:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719098758; cv=none; b=bhK0gUWKaf1boMdCYttPnhuKD8hJUxTp9k9USjsMVNmn7uwPeC7pmdIgb2l8JBQxauEN72G5biC0DWWmwMT9O1OxTE3/HZpnTnKeT8RrE+g810/yfhSnGzUbZl1jqCDg3Dwi1aMLLRdx4jIZmGUWND2QZeWU0WQ2XpXJYq6PQmo=
+	t=1719098759; cv=none; b=fGcyJFcR6oFj78qQonYJmVgCAfyTBh2ooGJKN+d/3Lfsl/psguRd6mX/r8oiBVoFvGDaNQjgriOxh5XpRoPtvXekfUxp+jHYIjjIOUV6mipk5gsyDlfBUt1SurSAwmgsfIHpCqULwgQ6GFovWcuNc5VjBAmaN3DnJG4MRkQXG78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719098758; c=relaxed/simple;
-	bh=QWveozn7pL0B2oB0aNoLxMHaBOcG+Q1GhrVuUFYLOZc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=X5gnULLzyFOlbvZc8gMGxN5baBy+ti7M7QRRv9yfQ0KCTmysMTqfzE+bG3Dva6r0IIhbUraFLROEA7/QazD4tFqM0k/1NuOB0gEdepyxWbToGN4M/JJSikrm4zZU9iUYQlBAA1taBBYd82G3RsYYOouShEaGw+/a3EvMp8DvIxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IeF9sq++; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1719098759; c=relaxed/simple;
+	bh=2Xrp4BfEH7oom8u4Kb44md8JG1fUZgQoZXMJPeOIVuk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=dnXP2oGzAC7YQsfgNDlRAZB9SWDNKvJAnQHtDOePb5JSEtPeLm9p61G8uTrHl5iJgrS8pWnPwiFEVN58DRhFrnq8kHJja+tdqIRzdeSqY3yDkbr0VVOMGWltUPurPdRalDpN2DCVTM1BCD74M6Z0+oTZFBwPAIQK+EE4Oe4IuEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOWyIiOw; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3632a6437d7so1820751f8f.0;
-        Sat, 22 Jun 2024 16:25:56 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42121d27861so27796475e9.0;
+        Sat, 22 Jun 2024 16:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719098755; x=1719703555; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1XFhrpr/qn0mm91IgxOnqVHLrq+I4jLwILenECz4N48=;
-        b=IeF9sq++wYhZj+apt/UUVH932Z0akdyfMuu8a+ZrdMVeT22BR3VzSTmTwn7lXh5nRM
-         mHkkZWG/XvLQWn6am3v7CgeUbPwtoly+vUnmFKjZ5Fo/iAGd39JGgNPN5Ph13/zvDiTw
-         6UpJSl3sHptaOWpLizQK+XZltiq2une+wjCL0rCNBXIGmEYfzd5rj0URqQmeyzvYdMy8
-         rB3QfzwOOreppnC7KcoOKBKNH5h7uuzp77DDs+1KmlB0r+AGFg5ekBZlsHXi1MxYCNIN
-         ojKv9nUKYyf9c8whs7DhIvY5r5V0dmydNW9Evtm65jh+ZsaVOj+Y1LqqbBPZ/UH/i4Y6
-         u4wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719098755; x=1719703555;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1719098756; x=1719703556; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1XFhrpr/qn0mm91IgxOnqVHLrq+I4jLwILenECz4N48=;
-        b=KhFtXUXTMLRSfrm6F1NufH9Ze0rF3mKFv+6TK7WkY3iBZjwbVt2y7LLf9EJdG2z4Gn
-         Bc5HxoTo/fSZT72VvIAdWqXIrutR5VCSmFDINlnJ8IK8CTraMss2VoW5aKPrQEPvSJM0
-         easxWxWiWGBm9wnRzYfIGMrhXBMGPl8QmHEzWM3Pcu6I7FrmWfu8WzUK4tBsjmYzStao
-         0bLtyn/H07eyJ2NGu2LYQMbabvDdZ/2nS4Zhwcbbyds1/xOc//RhJoAhzI+TLusXOR8Y
-         pzZ+ltSzg+JcTo4IaHVBGj48HFdK8fmDpDfIJxsQsJ8rwuZpK31AQW/Ocoa3UJoVhS41
-         /lmA==
-X-Forwarded-Encrypted: i=1; AJvYcCWfLtjPpXHaiz/sy2D5aMTm25bSjgxmHYlBrVkNMTSyFSVQmu7fF70aQCGAvoO9A0OYWfl+YaigTjATmlAggruZry8DcDqYTeSHf9Ng42Gq9DbtXCBn8/pzoxf4pVF3A2Fes+nnCw1WGA==
-X-Gm-Message-State: AOJu0YzNcxV4gSsR4gHmwxtQ1/HQr6NTeu41wfrfPG5QF4krOzFPxXmE
-	8dFeHmjB3dMICqJmUMDUqRe3XKoacq7lD0+thPykBCxbzKUmY/eb
-X-Google-Smtp-Source: AGHT+IERaYMQYvY5/RJh2ZzxyaVVENtd4pMEGEL3xCcdxmEeMraPnma827Y4G6+IKY86Bl6iZD3AXA==
-X-Received: by 2002:a05:6000:1a8c:b0:363:776:821b with SMTP id ffacd0b85a97d-366e31bc9f4mr2237353f8f.0.1719098754835;
-        Sat, 22 Jun 2024 16:25:54 -0700 (PDT)
+        bh=MWHAXFFmaSZgvBXZR/Mxp9Pkz4SLmkvmM+jATo6r8UE=;
+        b=TOWyIiOw9Ws6fytGuEUAGZO2BhNTBXKJovQtvpX39D1U10CNVqLB0Y6Fi4y8H4RMYv
+         KQ+qHLvGj0lGWKvwpGCyjYBioREn6P24MzENm2HgCtSp78X6ZXZM9dV2Wl+wfudgApPO
+         yGGyO4u1tOe3UCRAsUhAaqX8EQ6eidMvATxW/XwujLGywDTEIOhwhJUVpCEn6CLIe8qD
+         sCxGiKKJuH2uevy+c/aCchSELTyjg6BFDVMrSQ9z5zTJTbw+67T2tIBIrXB8kViHAI6L
+         lgBpTz5ZfL3WCemGMesHeUqAET+VgRdMJ9YiWG5tpd2gNknPzJUOf/88BRDx7DADxvzj
+         cKiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719098756; x=1719703556;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MWHAXFFmaSZgvBXZR/Mxp9Pkz4SLmkvmM+jATo6r8UE=;
+        b=sWwi3J+1ls4hL06IF8e4og+xuTZwAa6N1lEIPCJ9cVQ4Csq7VJSGod7RsW6ba6qlWT
+         yw6sQewzSfAh7wzDnWJp1dK4MnqK61Y/rfXt0fYRkAl/3lwIheDr+vFN1lX2EeEn+5QI
+         eRDGkNtkUnY7LeeeZGzfm28nRevgGtxLwxV7G+yayaLXGONOTuDL3ymKUiRCfSxH8+vd
+         9uuLwUbaR0+YpZ/+AMYlnI0uhfwVBqdvfRTqtKbi60KhCN2XrzaZ5NdR6krHaVyMjow8
+         SPAfUxCXpz1cfaZTJ4NQEgjvfh+m8s7U2Ju1m0+jjZvozrrxIPmm8zt00urkQbC+jwNe
+         Ns2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCU2BqGmMQsjYc2lxeLkK77b2kdT/7wUjg63b1FsKgOS9tT77sJYRoGUa4TMgfGP+4F19UBR6cWdzlqlv3HDILvMDeEsAD3YktC5V7R3HIkw4oGxsmnVQrLkOGKq/SfUNVURkkQkmQhb2Q==
+X-Gm-Message-State: AOJu0Yyub/ZDSj0o3pRCZ/z1jrHyEOmWi09xjv7XnpN1coMSX16wEAab
+	UuHmK96hpKv6IOdTuwgLeyxchiWrl40YdZQRVcOmXI0+bbu1WPP1
+X-Google-Smtp-Source: AGHT+IFhTw2K1zlg7CzOin7QPXHZw+j792pc9HEAWcyNu9FkjvzuZaBZouhfEhzH1nRepX8KYSZ8Ag==
+X-Received: by 2002:a05:600c:56cc:b0:421:7bed:5274 with SMTP id 5b1f17b1804b1-4248b95d0edmr11914775e9.10.1719098756419;
+        Sat, 22 Jun 2024 16:25:56 -0700 (PDT)
 Received: from [192.168.1.90] (20014C4E18129200DEAEE2020304A5A2.dsl.pool.telekom.hu. [2001:4c4e:1812:9200:deae:e202:304:a5a2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d2190desm120301875e9.48.2024.06.22.16.25.53
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d2190desm120301875e9.48.2024.06.22.16.25.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Jun 2024 16:25:54 -0700 (PDT)
+        Sat, 22 Jun 2024 16:25:55 -0700 (PDT)
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-Subject: [PATCH 0/4] MSM8937 MDP/DSI PHY enablement
-Date: Sun, 23 Jun 2024 01:25:50 +0200
-Message-Id: <20240623-dsi-v1-0-4ab560eb5bd9@gmail.com>
+Date: Sun, 23 Jun 2024 01:25:51 +0200
+Subject: [PATCH 1/4] dt-bindings: display/msm: qcom, mdp5: Add msm8937
+ compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAH5dd2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDMwNz3ZTiTF0LU8PUpCQjI7NEixQloMqCotS0zAqwKdGxtbUAZzx7tVU
- AAAA=
+Message-Id: <20240623-dsi-v1-1-4ab560eb5bd9@gmail.com>
+References: <20240623-dsi-v1-0-4ab560eb5bd9@gmail.com>
+In-Reply-To: <20240623-dsi-v1-0-4ab560eb5bd9@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -93,37 +95,30 @@ To: Rob Clark <robdclark@gmail.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  devicetree@vger.kernel.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>, 
- Daniil Titov <daniilt971@gmail.com>
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
 X-Mailer: b4 0.14.0
 
-This patch series adds support for the MDP and DSI PHY as found on the
-MSM8937 platform.
+Add the compatible for the MDP5 found on MSM8937.
 
 Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
 ---
-Barnabás Czémán (2):
-      dt-bindings: display/msm: qcom, mdp5: Add msm8937 compatible
-      dt-bindings: msm: dsi-phy-28nm: Document msm8937 compatible
+ Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Daniil Titov (2):
-      drm/msm/mdp5: Add MDP5 configuration for MSM8937
-      drm/msm/dsi: Add phy configuration for MSM8937
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+index 91c774f106ce..e153f8d26e7a 100644
+--- a/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
++++ b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+@@ -25,6 +25,7 @@ properties:
+               - qcom,msm8226-mdp5
+               - qcom,msm8916-mdp5
+               - qcom,msm8917-mdp5
++              - qcom,msm8937-mdp5
+               - qcom,msm8953-mdp5
+               - qcom,msm8974-mdp5
+               - qcom,msm8976-mdp5
 
- .../bindings/display/msm/dsi-phy-28nm.yaml         |  1 +
- .../devicetree/bindings/display/msm/qcom,mdp5.yaml |  1 +
- .../devicetree/bindings/display/msm/qcom,mdss.yaml |  1 +
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           | 89 ++++++++++++++++++++++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |  2 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |  1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c         | 18 +++++
- 7 files changed, 113 insertions(+)
----
-base-commit: f76698bd9a8ca01d3581236082d786e9a6b72bb7
-change-id: 20240607-dsi-851ebb226a8d
-
-Best regards,
 -- 
-Barnabás Czémán <trabarni@gmail.com>
+2.45.2
 
 
