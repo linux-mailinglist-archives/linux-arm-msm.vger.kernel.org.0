@@ -1,205 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-23770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DA6A913B1F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 15:49:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E967913BA1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 16:14:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5A8DEB2142C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 13:49:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A3A1E1C20618
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 14:14:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC7B518C338;
-	Sun, 23 Jun 2024 13:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EABB7148300;
+	Sun, 23 Jun 2024 14:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dB6L9MQK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cek9IP7X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E713618A927
-	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 13:44:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA694C6E;
+	Sun, 23 Jun 2024 14:13:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719150283; cv=none; b=jvrT3VR8w1OBb3gf2bsbPkCZmckAu/Vrf6qoDVYWdVAeIwJLlwB/0WKF4OiqkWMN++71sNUC3pawSKuXQxUL+XspP1c03rGt6HgIsWECpkVcNGMWIfep9FtrQkZEj8nU+8lXC1/rK5dOapGPGU54eZ51u0Cijy1KTlP+wJ5hBlo=
+	t=1719152039; cv=none; b=AhzDv03KnTk/GELRJ3Fa6djTjlp+99FBa/S1I5KD5I3dL5NdiTrs59e4CCmUnJ4pC3QcudB0bp3hpnJ3yjowKHQJZHXN4ruiz4fHOPTh5/UQf9NpWZwxrvFIxVoH9C35rsaYSRrykarx2QBo1OiaznoAua4HzFqCOHkPgl5+dRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719150283; c=relaxed/simple;
-	bh=SyEF3mPeQlo+RKtM1lZCiiRHkvz/G6we80eXB2CMCmc=;
+	s=arc-20240116; t=1719152039; c=relaxed/simple;
+	bh=vBdi7Y+JsMuywpAhKODLZF5AlDKmn0t9bNsBl3+S104=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MhWfIAKPCumGoePW4WOlB74/8HtVuRSriJVz49afkxiNLXK+iE7fjrXnupLwjhD5U2wyDB3D+pi6xSCryVMBIyW9+amRcb1ZwNOQ+lT4MKkcM8qFufLzkMTMVY3dhyBmBi+ZOnZtVZa8yMDlgOmrjRLe3MbyUsNPWbA/UTuqyHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dB6L9MQK; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1f4c7b022f8so30827835ad.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 06:44:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719150280; x=1719755080; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Iy31pgzD/xfnAQ+ZZ5Vhlt8srfwkXvh9RHbo/cOv1WA=;
-        b=dB6L9MQKIZYW50dAlEfK1WW7/c14rz8/a2wjDDiQMgDZCTmg1Khgm6kJNViR5qWHaM
-         +wPxuMYUQvkTk/IS6y+naiM9VX3HiH3HApFeSOHsmXP+p+3YxdFAzln9DZT8fyWTbRJJ
-         fIU+EX0AGupj1xhM6jCH+eUiHpS/+SmLdVj7AkXoRpl0HVT9+HIXRr3Ddu8zmOsw1k3Y
-         t3+sYm/5+78pOPekZg44kelxiwUYWjxRjek/kEccMgMga4DrREUCESB9/hY+2zYZ0eb6
-         BG4qh2Rnf+749QgIPGYh5i6Z7l7wXkQORVndVYjTr92h9jDmc+M/s+sGklymmOe08qkM
-         98Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719150280; x=1719755080;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Iy31pgzD/xfnAQ+ZZ5Vhlt8srfwkXvh9RHbo/cOv1WA=;
-        b=MnAw4dVdEdayb7iFFgyzujq2Y6nEw8Ucq1dFZXFEM5BKYRoRgRwtHs53rq1F3vUTNK
-         rsedyZmom5mS2TOL2xll3t2s3c3XD7sOAreJbW5SBtE9Dr7olqr16tCysX+/+fmZlll8
-         Rg4/07h38bwvKv477SCSOO/Vf6VUf3cQhI4IfheP6muD+ewF7dezUKaTWvybCEhg1G4G
-         FwAsGx64mWvVPLPvYyPCqRX4TeFZOBHoy+R6fhZ/CoqolrcdbXjpxgsxzJldeXwWM9s6
-         FsVmJ+o+lWt1igrn4NVpYvg5UMOWmqnC0nwKpSQX3QGMlxzMsyZZRF/zLVUQxL1XNgte
-         Gr1w==
-X-Forwarded-Encrypted: i=1; AJvYcCXkGzaD1iUYLWoEf679W/BeIDvXzqtKDawFHF4wfmqlZLm6tNcD+G0gZnI2lHtTQrgts0V6WSmUmQIeAv+V09nzeZZLq7HW4dmFhaOXAg==
-X-Gm-Message-State: AOJu0YxPaUXMK1BD4Qw88xlcWsLLBaSHCmSu5j+Fmv/VLgTqilZKrkOo
-	Mt8N6o66zCZxpzUEOm4RbajN6PGx5GOSEkmnPS5pBCPLy0NzofpJRs9oA9nw0g==
-X-Google-Smtp-Source: AGHT+IEWGBAaA+9n4CQ1cGOYm2S0J1RVuhAM689jKtTg+X6pdgHcJ0xuxY7rtOkT1rl0335/07l1sA==
-X-Received: by 2002:a17:902:6548:b0:1f7:167d:e291 with SMTP id d9443c01a7336-1fa23ef7e87mr23794255ad.47.1719150280014;
-        Sun, 23 Jun 2024 06:44:40 -0700 (PDT)
-Received: from thinkpad ([220.158.156.124])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f9eb2f2690sm45736585ad.40.2024.06.23.06.44.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jun 2024 06:44:39 -0700 (PDT)
-Date: Sun, 23 Jun 2024 19:14:30 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Slark Xiao <slark_xiao@163.com>
-Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Loic Poulain <loic.poulain@linaro.org>, ryazanov.s.a@gmail.com,
-	johannes@sipsolutions.net, netdev@vger.kernel.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: Re: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
-Message-ID: <20240623134430.GD58184@thinkpad>
-References: <20240612093842.359805-1-slark_xiao@163.com>
- <20240612094609.GA58302@thinkpad>
- <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
- <20240612145147.GB58302@thinkpad>
- <CAMZdPi-6GPWkj-wu4_mRucRBWXR03eYXu4vgbjtcns6mr0Yk9A@mail.gmail.com>
- <c275ee49-ac59-058c-7482-c8a92338e7a2@quicinc.com>
- <5055db15.37d8.19038cc602c.Coremail.slark_xiao@163.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=lb7oWKHdka5HjWPZ577zZ6r+q1dMvKk13J1mWJ7ArLPBHiqIHC4QIePC6YfFOXskCAP/ntPVIBY2DlSlRIBxJP7Z2lPzipL35B0E9xQazWBYQkHtylh1OCOaQtQcpxoEPn4JdT12XNIj4LKKqbFPvH5JmVZKxLQizw5m/AiN6i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cek9IP7X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841CBC2BD10;
+	Sun, 23 Jun 2024 14:13:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719152039;
+	bh=vBdi7Y+JsMuywpAhKODLZF5AlDKmn0t9bNsBl3+S104=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Cek9IP7Xgn1QM9wB01Y3Yr0SqV4RbNSgLWMkpE6D17axquFUkuIkd8uSSMNXRHCHt
+	 fqI87GccXTIvpidLR3Z3b3nYZHgOq1K72shetjWPlynD8slLSx/voTnuqh97/jjVu6
+	 hwVO2rQC4KvOUTpAGk701A6DovOF+MobIfR7oTqNbqvL6x+PJ7meDazOrZWGkxb0ZT
+	 LdBD1bQ90SQMAR9KmPrG5QFSe8ehzHVH1k+USDA7uR+6MtuFDu7W7l335mPFtvH+vD
+	 E+PcJo6XpTSu3Pyd3S+RrrTj8VsJnQwJNAebpsREl5D9sXEGRVeHczW8EUkbj+Mjin
+	 qyLQRVZX/WD1A==
+Date: Sun, 23 Jun 2024 15:13:53 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] dt-bindings: display/msm/gpu: constrain
+ reg/reg-names per variant
+Message-ID: <20240623-mule-plank-b63d0e3f3819@spud>
+References: <20240623120026.44198-1-krzysztof.kozlowski@linaro.org>
+ <20240623120026.44198-3-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="EJYLbj7ym6Q16epL"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5055db15.37d8.19038cc602c.Coremail.slark_xiao@163.com>
+In-Reply-To: <20240623120026.44198-3-krzysztof.kozlowski@linaro.org>
 
-On Fri, Jun 21, 2024 at 11:17:16AM +0800, Slark Xiao wrote:
-> 
-> At 2024-06-14 22:31:03, "Jeffrey Hugo" <quic_jhugo@quicinc.com> wrote:
-> >On 6/14/2024 4:17 AM, Loic Poulain wrote:
-> >> On Wed, 12 Jun 2024 at 16:51, Manivannan Sadhasivam
-> >> <manivannan.sadhasivam@linaro.org> wrote:
-> >>>
-> >>> On Wed, Jun 12, 2024 at 08:19:13AM -0600, Jeffrey Hugo wrote:
-> >>>> On 6/12/2024 3:46 AM, Manivannan Sadhasivam wrote:
-> >>>>> On Wed, Jun 12, 2024 at 05:38:42PM +0800, Slark Xiao wrote:
-> >>>>>
-> >>>>> Subject could be improved:
-> >>>>>
-> >>>>> bus: mhi: host: Add configurable mux_id for MBIM mode
-> >>>>>
-> >>>>>> For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
-> >>>>>> This would lead to device can't ping outside successfully.
-> >>>>>> Also MBIM side would report "bad packet session (112)".
-> >>>>>> So we add a default mux_id value for SDX72. And this value
-> >>>>>> would be transferred to wwan mbim side.
-> >>>>>>
-> >>>>>> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> >>>>>> ---
-> >>>>>>    drivers/bus/mhi/host/pci_generic.c | 3 +++
-> >>>>>>    include/linux/mhi.h                | 2 ++
-> >>>>>>    2 files changed, 5 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> >>>>>> index 0b483c7c76a1..9e9adf8320d2 100644
-> >>>>>> --- a/drivers/bus/mhi/host/pci_generic.c
-> >>>>>> +++ b/drivers/bus/mhi/host/pci_generic.c
-> >>>>>> @@ -53,6 +53,7 @@ struct mhi_pci_dev_info {
-> >>>>>>            unsigned int dma_data_width;
-> >>>>>>            unsigned int mru_default;
-> >>>>>>            bool sideband_wake;
-> >>>>>> + unsigned int mux_id;
-> >>>>>>    };
-> >>>>>>    #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
-> >>>>>> @@ -469,6 +470,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
-> >>>>>>            .dma_data_width = 32,
-> >>>>>>            .mru_default = 32768,
-> >>>>>>            .sideband_wake = false,
-> >>>>>> + .mux_id = 112,
-> >>>>>>    };
-> >>>>>>    static const struct mhi_channel_config mhi_mv3x_channels[] = {
-> >>>>>> @@ -1035,6 +1037,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-> >>>>>>            mhi_cntrl->runtime_get = mhi_pci_runtime_get;
-> >>>>>>            mhi_cntrl->runtime_put = mhi_pci_runtime_put;
-> >>>>>>            mhi_cntrl->mru = info->mru_default;
-> >>>>>> + mhi_cntrl->link_id = info->mux_id;
-> >>>>>
-> >>>>> Again, 'link_id' is just a WWAN term. Use 'mux_id' here also.
-> >>>>
-> >>>> Does this really belong in MHI?  If this was DT, I don't think we would put
-> >>>> this value in DT, but rather have the driver (MBIM) detect the device and
-> >>>> code in the required value.
-> >>>>
-> >>>
-> >>> I believe this is a modem value rather than MHI. But I was OK with keeping it in
-> >>> MHI driver since we kind of keep modem specific config.
-> >>>
-> >>> But if WWAN can detect the device and apply the config, I'm all over it.
-> >> 
-> >> That would require at least some information from the MHI bus for the
-> >> MBIM driver
-> >> to make a decision, such as a generic device ID, or quirk flags...
-> >
-> >I don't see why.
-> >
-> >The "simple" way to do it would be to have the controller define a 
-> >different channel name, and then have the MBIM driver probe on that. 
-> >The MBIM driver could attach driver data saying that it needs to have a 
-> >specific mux_id.
-> >
-> >Or, with zero MHI/Controller changes, the MBIM driver could parse the 
-> >mhi_device struct, get to the struct device, for the underlying device, 
-> >and extract the PCIe Device ID and match that to a white list of known 
-> >devices that need this property.
-> >
-> >I guess if the controller could attach a private void * to the 
-> >mhi_device that is opaque to MHI, but allows MBIM to make a decision, 
-> >that would be ok.  Such a mechanism would be generic, and extensible to 
-> >other usecases of the same "class".
-> >
-> >-Jeff
-> 
-> Hi guys,
-> This patch mainly refer to the feature of mru setting between mhi and wwan side.
-> We ransfer this value to wwan side if we define it in mhi side, otherwise a default
-> value would be used in wwan side. Why don't we just align with that?
-> 
 
-Well, the problem is that MRU has nothing to do with MHI. I initially thought
-that it could fit inside the controller config, but thinking more I agree with
-Jeff that this doesn't belong to MHI at all.
+--EJYLbj7ym6Q16epL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-At the same time, I also do not want to extract the PCI info from the client
-drivers since the underlying transport could change with MHI. So the best
-solution I can think of is exposing the modem name in 'mhi_controller_config' so
-that the client drivers can do a match.
+On Sun, Jun 23, 2024 at 02:00:26PM +0200, Krzysztof Kozlowski wrote:
+> MMIO address space is known per each variant of Adreno GPU, so we can
+> constrain the reg/reg-names entries for each variant.  There is no DTS
+> for A619, so that part is not accurate but could be corrected later.
+>=20
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../devicetree/bindings/display/msm/gpu.yaml  | 87 +++++++++++++++++--
+>  1 file changed, 79 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Doc=
+umentation/devicetree/bindings/display/msm/gpu.yaml
+> index baea1946c65d..e83f13123fc9 100644
+> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+> @@ -130,6 +130,22 @@ required:
+>  additionalProperties: false
+> =20
+>  allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            pattern: '^qcom,adreno-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a=
+-f][0-9a-f][0-9a-f][0-9a-f]$'
 
-Please try to implement that.
+Does the regex "^qcom,adreno-[0-9a-f]{8}$" not work in dt-schema, rather
+than this repeat-a-number-of-times-I-cannot-grok that's happening here?
+(I know you probably just copied this from above in the file...)
 
-- Mani
+--EJYLbj7ym6Q16epL
+Content-Type: application/pgp-signature; name="signature.asc"
 
--- 
-மணிவண்ணன் சதாசிவம்
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZngtoQAKCRB4tDGHoIJi
+0vseAP45JYysyf/QkbBti8k51VjLu7arXjS3WiUYbjteE5D4pwEA0cj4u0rfZtAB
+y43jQ3wv5a6CjHyNWibOH5MhtfHEZwU=
+=JM/k
+-----END PGP SIGNATURE-----
+
+--EJYLbj7ym6Q16epL--
 
