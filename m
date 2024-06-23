@@ -1,208 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-23775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C35A4913C4B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 17:26:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B559913CA2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 18:11:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4783C1F218BF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 15:26:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7755F282748
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 16:11:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F9B7181B91;
-	Sun, 23 Jun 2024 15:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 650451822E1;
+	Sun, 23 Jun 2024 16:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ban/izBq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PxxwxAvK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AFF144317;
-	Sun, 23 Jun 2024 15:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D936181D02
+	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 16:11:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719156376; cv=none; b=qmQcPlR70QNnEwqXLab3DjCCAVuU/JQ/lQAeVspjoXK6KbPTln0QFu3pJpDb89PTkLn59eejFBP15KEPM0jciH1JkCD3sQDx1GMLazZgjkj+npCex+dMH78J3OS22fmsgmmYDvPr8VN+ciID7PxhKdmQ3EdiL4bOQ9qVizYpPGI=
+	t=1719159075; cv=none; b=u/WT6i3hY0NYzM3xP3Ks24hjXe41tmsGbSk69re49rCNexJ3u+FSlVCY9I1tbPHY+V3evGDLhNRmEwHUYbZEDg3SBIgVvTc65Q1tNHCzNQmy/XpbISScsjDn0fqzcqz8ajKvEZFrSSp+cAsLfif3nHoGk+Q2SX9RAm3dL7R9sBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719156376; c=relaxed/simple;
-	bh=DY6uM7OX57kgmjD4vL9DUxcQqMOpVRETNce3hEurQL0=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=e/27yQawWcQSY7vYTHG8W7fC9f8MiDZpCcitGMCWw7TamsZfG/SJZrHpWK8cQb2D/wcNhUX4tT/4xsOobfPMHTeANvs+2nWu1UBN46Q4eAKTWhCsZm0X0aqwX4cU4yGKxaY7uSAK3VwSekqytUbjfZWq3IkDbRze3D+nDU2TOKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ban/izBq; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1719156374; x=1750692374;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=DY6uM7OX57kgmjD4vL9DUxcQqMOpVRETNce3hEurQL0=;
-  b=ban/izBqU1WGlUVv5OKEDh3IUlLJUY6PeDYQCD1l/sLvkJdY6RUVN1oX
-   d9uwNgyfCRvmYtsxSb8ok2i3RF69zOff5GX3sUKukkSkH+Ierh04i5jTe
-   SE+TNU0DgOEUr72pYNOIv6J1Nt7+wPyEFPIihs8mng6dEz9X22gBFXNdh
-   n6KSg2+fYBiae75GxPwGzkUeLILjCneih1V+GruCjwLxFLlnJ/CZm1YPJ
-   MROkDyOuC4qZQFkiR9vOTwXmXhWmwFiqvj06QisoWj3coEcBXUErizV+U
-   QIogFMT990s3wQnwOjAdQyqzlxZqEJ9ZXFlBX7jT/W823NqWcYE1cgKRu
-   Q==;
-X-CSE-ConnectionGUID: 9hNzcwkySmGnoTkX1MS/Dw==
-X-CSE-MsgGUID: VNNNzUW/Snm/qAcdENwsSg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11112"; a="19905324"
-X-IronPort-AV: E=Sophos;i="6.08,260,1712646000"; 
-   d="scan'208";a="19905324"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2024 08:26:14 -0700
-X-CSE-ConnectionGUID: VkPUhKB7RnCb+xtzdVVDkQ==
-X-CSE-MsgGUID: PIsxdQ11TdirC6xbtvNH2w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,260,1712646000"; 
-   d="scan'208";a="80588234"
-Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.247.55])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2024 08:26:07 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Sun, 23 Jun 2024 18:26:03 +0300 (EEST)
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-cc: Bjorn Andersson <andersson@kernel.org>, 
-    Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-    Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-    Conor Dooley <conor+dt@kernel.org>, 
-    Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kw@linux.com>, 
-    Bjorn Helgaas <bhelgaas@google.com>, johan+linaro@kernel.org, 
-    bmasney@redhat.com, djakov@kernel.org, 
-    Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-    devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    linux-pci@vger.kernel.org, vireshk@kernel.org, quic_vbadigan@quicinc.com, 
-    quic_skananth@quicinc.com, quic_nitegupt@quicinc.com, 
-    quic_parass@quicinc.com, krzysztof.kozlowski@linaro.org
-Subject: Re: [PATCH v14 3/4] PCI: Bring the PCIe speed to MBps logic to new
- pcie_link_speed_to_mbps()
-In-Reply-To: <3ed39bb0-f1bb-6973-21e5-aaa34db8013e@quicinc.com>
-Message-ID: <e501971f-e9e1-d87a-ca44-b2be61f79f3e@linux.intel.com>
-References: <20240609-opp_support-v14-0-801cff862b5a@quicinc.com> <20240609-opp_support-v14-3-801cff862b5a@quicinc.com> <c76624fa-1c07-1bb4-dff0-e35fe072f176@linux.intel.com> <3ed39bb0-f1bb-6973-21e5-aaa34db8013e@quicinc.com>
+	s=arc-20240116; t=1719159075; c=relaxed/simple;
+	bh=XDN9qPuDqsIqYC3L+6yyyIkXLatPhRpNnIuQKbdFK1w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PxvzuWR44kPPvwyZxSPEYa0tLOvfdeU6RG1PdijMWYg6kov/E4d/vEVgTjO46wd5/d4mhgEqY3A+BI+y0Xupx5wje3rN2XZ1eRRKq8wiA9LqDZckRwvgvB9uhNUnKUz42Xanob9+Gf/Za9eHT4m5YAzQtL6MUP+wj+wg7FjoyEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PxxwxAvK; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-361785bfa71so2681971f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 09:11:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719159072; x=1719763872; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+mnX9lajA6LQdkj02vpQbrHaMbxgtcIsPUD8ZpDqg20=;
+        b=PxxwxAvK9+ywZaO+7duUZyHi9UA6VSHx1iU19Kba4WTSL0tHbj6PGXXovu/6Is/asL
+         NkvyY6lWQK/2MN/DmvvfxqnKKR5Ap9tyciFVP1SieaP1ZcmOAGs8IegOmDRKITqGb5XU
+         baHYBnILLcomDcOkJ0acDamPI9dVNsc94jtP1K/iz/B4L00tBr7NZ0SgFmjlBHo164rE
+         xWNe7AOdxt/2+eKh1RF9pDA1VkBy5bC41ONMX/6TLLNmKE8R/BU8v00mmHIPVN5yoEwu
+         dtcYYrd4nh6NasZVSpjXbqGmQlAImC7S+YUf3Jg+tLdlSA4Qdoi374AyGJ3DPZwLTrG3
+         +qyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719159072; x=1719763872;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+mnX9lajA6LQdkj02vpQbrHaMbxgtcIsPUD8ZpDqg20=;
+        b=ccLaN9BNeLpdb3/bQETqNkN9CdOfL55kTDnbUP+aIixbRbRsAv1W54ZuIWZ3c1jttE
+         GrDl5XWcvldCA/W47XQ65Ed++yIE9Y+AMTPHHe+jCJVTlWm319Lr2MX3KaB/uHDYwS39
+         aaYHpgB5y2hwjC7Vvf7HPbWIgqV/wjmobidfC002CULm+NZHjycyQ45I18zrQVwlZqzD
+         nSA2ziRmiOZ7W2kvq+OVglzuHDGo6J8gY6Q1l2miREfvt1kcdeXLyIXj6QwJqR7rUtWC
+         qDGdVHcnlaW1ijVZ6Z9IBP+iNj1Yt1bv+k0vRjjslXBa1f2E67cTHIzPyAwW5bNAEU2P
+         S7Wg==
+X-Forwarded-Encrypted: i=1; AJvYcCVH508uo30jPwi+00XFREwMqBm106YT/SOUgATYj+wsdV/XcVybn9wkiN73CJzYilCjUDTyqmx5qWDW6bdVlMWGBZEMGye2brAQOyvySQ==
+X-Gm-Message-State: AOJu0YwjAKInOaYQPKaY4WenM4TUVXrD/A4xgqrUQae8nVcyPfHcoEpE
+	hJjSSiHpYZW5I5AYmB3dDnw2b2fjIVe562kD4if7KkptBZ7v0WJ0Gh00sagCehs=
+X-Google-Smtp-Source: AGHT+IH84BwJtBZR5doFAF9s3WnMAqR5VQO/WGB1Y0yjGvdBBB7b0pz3z8LCuK7ijEVTXgRL2ZUXLQ==
+X-Received: by 2002:a5d:4ac9:0:b0:35f:1bb2:4354 with SMTP id ffacd0b85a97d-366e7a1065bmr1547613f8f.35.1719159071960;
+        Sun, 23 Jun 2024 09:11:11 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3663a2f9924sm7699556f8f.72.2024.06.23.09.11.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Jun 2024 09:11:11 -0700 (PDT)
+Message-ID: <7a64ddb3-40b0-4ea8-8749-8ce42a842920@linaro.org>
+Date: Sun, 23 Jun 2024 18:11:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-556282923-1719156363=:1423"
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-556282923-1719156363=:1423
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] dt-bindings: display/msm/gpu: constrain reg/reg-names
+ per variant
+To: Conor Dooley <conor@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240623120026.44198-1-krzysztof.kozlowski@linaro.org>
+ <20240623120026.44198-3-krzysztof.kozlowski@linaro.org>
+ <20240623-mule-plank-b63d0e3f3819@spud>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240623-mule-plank-b63d0e3f3819@spud>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 
-On Wed, 19 Jun 2024, Krishna Chaitanya Chundru wrote:
+On 23/06/2024 16:13, Conor Dooley wrote:
+> On Sun, Jun 23, 2024 at 02:00:26PM +0200, Krzysztof Kozlowski wrote:
+>> MMIO address space is known per each variant of Adreno GPU, so we can
+>> constrain the reg/reg-names entries for each variant.  There is no DTS
+>> for A619, so that part is not accurate but could be corrected later.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>>  .../devicetree/bindings/display/msm/gpu.yaml  | 87 +++++++++++++++++--
+>>  1 file changed, 79 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+>> index baea1946c65d..e83f13123fc9 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+>> @@ -130,6 +130,22 @@ required:
+>>  additionalProperties: false
+>>  
+>>  allOf:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            pattern: '^qcom,adreno-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]$'
+> 
+> Does the regex "^qcom,adreno-[0-9a-f]{8}$" not work in dt-schema, rather
+> than this repeat-a-number-of-times-I-cannot-grok that's happening here?
+> (I know you probably just copied this from above in the file...)
 
->=20
->=20
-> On 6/14/2024 6:02 PM, Ilpo J=C3=A4rvinen wrote:
-> > On Sun, 9 Jun 2024, Krishna chaitanya chundru wrote:
-> >=20
-> > > Bring the switch case in pcie_link_speed_mbps() to new function to
-> > > the header file so that it can be used in other places like
-> > > in controller driver.
-> > >=20
-> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-> > > ---
-> > >   drivers/pci/pci.c | 19 +------------------
-> > >   drivers/pci/pci.h | 22 ++++++++++++++++++++++
-> > >   2 files changed, 23 insertions(+), 18 deletions(-)
-> > >=20
-> > > diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> > > index d2c388761ba9..6e50fa89b913 100644
-> > > --- a/drivers/pci/pci.c
-> > > +++ b/drivers/pci/pci.c
-> > > @@ -6027,24 +6027,7 @@ int pcie_link_speed_mbps(struct pci_dev *pdev)
-> > >   =09if (err)
-> > >   =09=09return err;
-> > >   -=09switch (to_pcie_link_speed(lnksta)) {
-> > > -=09case PCIE_SPEED_2_5GT:
-> > > -=09=09return 2500;
-> > > -=09case PCIE_SPEED_5_0GT:
-> > > -=09=09return 5000;
-> > > -=09case PCIE_SPEED_8_0GT:
-> > > -=09=09return 8000;
-> > > -=09case PCIE_SPEED_16_0GT:
-> > > -=09=09return 16000;
-> > > -=09case PCIE_SPEED_32_0GT:
-> > > -=09=09return 32000;
-> > > -=09case PCIE_SPEED_64_0GT:
-> > > -=09=09return 64000;
-> > > -=09default:
-> > > -=09=09break;
-> > > -=09}
-> > > -
-> > > -=09return -EINVAL;
-> > > +=09return pcie_link_speed_to_mbps(to_pcie_link_speed(lnksta));
-> >=20
-> > pcie_link_speed_mbps() calls pcie_link_speed_to_mbps(), seems quite
-> > confusing to me. Perhaps renaming one to pcie_dev_speed_mbps() would he=
-lp
-> > against the almost identical naming.
-> >=20
-> > In general, I don't like moving that code into a header file, did you
-> > check how large footprint the new function is (when it's not inlined)?
-> >=20
-> if we remove this patch we see difference of 8, I think it should be fine=
-=2E
-> with change
-> aarch64-linux-gnu-size ../drivers/pci/pci.o
->    text    data     bss     dec     hex filename
->   41440    1334      64   42838    a756 ../kobj/drivers/pci/pci.o
-> without the change
-> text    data     bss     dec     hex filename
->   41432    1334      64   42830    a74e ../kobj/drivers/pci/pci.o
+I copied to be consistent, but let me simplify original code and use it
+also here.
 
-Thanks for checking it out, seems the inline here was a non-problem.
+Best regards,
+Krzysztof
 
---=20
- i.
-
-> > Unrelated to this patch, it would be nice if LNKSTA register read would
-> > not be needed at all here but since cur_bus_speed is what it is current=
-ly,
-> > it's just wishful thinking.
-> >=20
-> > >   }
-> > >   EXPORT_SYMBOL(pcie_link_speed_mbps);
-> > >   diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-> > > index 1b021579f26a..391a5cd388bd 100644
-> > > --- a/drivers/pci/pci.h
-> > > +++ b/drivers/pci/pci.h
-> > > @@ -333,6 +333,28 @@ void pci_bus_put(struct pci_bus *bus);
-> > >   =09 (speed) =3D=3D PCIE_SPEED_2_5GT  ?  2500*8/10 : \
-> > >   =09 0)
-> > >   +static inline int pcie_link_speed_to_mbps(enum pci_bus_speed speed=
-)
-> > > +{
-> > > +=09switch (speed) {
-> > > +=09case PCIE_SPEED_2_5GT:
-> > > +=09=09return 2500;
-> > > +=09case PCIE_SPEED_5_0GT:
-> > > +=09=09return 5000;
-> > > +=09case PCIE_SPEED_8_0GT:
-> > > +=09=09return 8000;
-> > > +=09case PCIE_SPEED_16_0GT:
-> > > +=09=09return 16000;
-> > > +=09case PCIE_SPEED_32_0GT:
-> > > +=09=09return 32000;
-> > > +=09case PCIE_SPEED_64_0GT:
-> > > +=09=09return 64000;
-> > > +=09default:
-> > > +=09=09break;
-> > > +=09}
-> > > +
-> > > +=09return -EINVAL;
-> > > +}
-> >=20
-> >=20
-> >=20
->=20
---8323328-556282923-1719156363=:1423--
 
