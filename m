@@ -1,164 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-23786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 069EA913DEF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 22:04:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADA36913DF1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 22:06:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 292511C20D27
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 20:04:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DEA4A1C20E10
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 20:06:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62DBD186E21;
-	Sun, 23 Jun 2024 20:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B7D7184113;
+	Sun, 23 Jun 2024 20:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nkSmZ0oy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dji3KbKK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDC9185E76
-	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 20:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A60274420;
+	Sun, 23 Jun 2024 20:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719173014; cv=none; b=b7JeEq4DqJKqaO12bPt7m5N3ASbOansv845foN2hCpJTy65U5nWBaU1VluYp13PPUil7f3pKc7JinARTQXfF9hvJfAH1+G5YsvTpfWmFQH8vF9Xv30sNaXHw3YFdcm+jQ00u3PsnrNJYQ9iXJSQLkYWdhPHTlwzRByrM1m3hgLI=
+	t=1719173160; cv=none; b=jZjik4g9ssiES2GrYK9V4932bdDqfVfeKpjGo1hyI2sd0xiyJVTl33nu09Bqow77tSIuZ+TpxTqn58BCgseNxRUwvzdTgv338JNu8dowXd+cmdojRgfQtrLB9PdUmt2ooLBwxugw6SAeJx9W5iqaG84ggIYxSvdkShMFkpd8lAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719173014; c=relaxed/simple;
-	bh=uYQQZshlwOKHfwbC3/MKr6ThTNfJ0nfXfyifQvYX5aw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mPxAI5ayxWNqcR7pw6X27jxfx+Zdc1V2HqdsdSQnLpF8R7/usZOz2JW10kcudRPVcTJxdrTu5LqSU0KlW52nsxTjw0lRnUGFXJTP73tLLTdoXREra3F+Ip2xT4nUowf0t0W2Rt2VKx2LVlnQOzil/HfUr/vecm4E5WqKNGu8Xc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nkSmZ0oy; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42172ed3597so21036505e9.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 13:03:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719173011; x=1719777811; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5ow/UhD/hlWMO1wQnP7yw4KEZ9Zhh7chAKMjsQ2L54M=;
-        b=nkSmZ0oyXO8mlQyHxhT6RnBu2203ZHg2TZjOVe7UeIFH1BfRHHDeML/DPDiFL1cIpk
-         qC/oLUY6HTsCrjGSpps1qnH0ryk1JXUDrbhzbGWG5zusBOYsW66/pSp9yBgubKiV71jY
-         9XBcqn1Gn+TzmSPCwdOXrgFaFKhUjYeqoKoczxrhl6Q5C+qw1DDvJRGey5cYnyZpn2an
-         Y+nfjkhHHn3V7n8jlbl04bjS1k+7f9pFAETNNajXyq+Gm8uBA8xHuD7f7gIWOWBXg+AI
-         oIS2nqVLgi1sbdOmM7dh/WnHyv77EWyD8Ax89mjHJ5opCGgtlNk1/KrOPfdy3eeOw3CR
-         p2QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719173011; x=1719777811;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5ow/UhD/hlWMO1wQnP7yw4KEZ9Zhh7chAKMjsQ2L54M=;
-        b=hf9YabzEgwOB25jktGqdTtVPHcAZ8RszBbhnx5Ts2fBgW1NE1e/GSm7+qqgxQLbBGE
-         cbZQmpOt2vP6XgDSA1b3x6uY39UtaP5x5AqrBp3yZnYPBW9iw52bvzHSncktfzzf7xlm
-         6Tv/W6mrcp0nAdWSuKJWwjNV8QT5Dreno9g6RkN7Ftn9MhvOd+idhI9uiouw43vggjQn
-         3xB+l6CzLJuoWNvNUWpC3DVG2v1Ov4nUypSmjKGlaSYnNa3pDueEamj8+RALjogqgtG/
-         cD9QmEEAOSM+S9NaPpWiKIcGJtEAnETlbHLyWkDSiOE/rKMFAotakkJBXy+SiTZskgbH
-         rL/A==
-X-Gm-Message-State: AOJu0Yz5ZYam048YjzFWi9tE65wz/aKYc2bsnPz+vQshexBTwekGlV6B
-	WncIpdlC/upXWUKta1aAL6HZHnWVsdLIjj0lFdZeST7Iq4xp4D1K/c9Y3DFfigg=
-X-Google-Smtp-Source: AGHT+IHrrG07tlhKq0T0Q79qbLjtMFRHlvGdVpaV7mYi8SG2IESOG+UD+fskJ99LX6kwwDcvImU8NA==
-X-Received: by 2002:a05:600c:511a:b0:421:b906:8088 with SMTP id 5b1f17b1804b1-4248932858fmr38166325e9.0.1719173011286;
-        Sun, 23 Jun 2024 13:03:31 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d0c54c9sm150685345e9.27.2024.06.23.13.03.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jun 2024 13:03:30 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Sun, 23 Jun 2024 22:03:03 +0200
-Subject: [PATCH v2 4/4] dt-bindings: display/msm/gpu: fix the schema being
- not applied
+	s=arc-20240116; t=1719173160; c=relaxed/simple;
+	bh=6MJaJnSFRSDD74t9l6ED+9mrDMF5zGOiZ4Ie+r+PKBY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tXxpUflaYLdpnxaSuBmdUfhcF+qDUDNErpSGltAClNCEimZCbu+A2gBfSdMEoZJlN5T43g0SQTx4zVYmZ1MphdX+0kaRJne3CHELd3t1QyM6e4nvzKmF0uo+3yCnpO0CFNKcCgfguZ5af8bmJRDqZk9+9y/8vaNRFq/lj8HXCrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dji3KbKK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD48C2BD10;
+	Sun, 23 Jun 2024 20:05:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719173159;
+	bh=6MJaJnSFRSDD74t9l6ED+9mrDMF5zGOiZ4Ie+r+PKBY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Dji3KbKKm7bhono33iiav0GSX7+Qe0eUiyC4nmTiWfcOe79dXvXoapeQ667Dj8XaR
+	 qktzbA7gG63nXyBCYQr87RuRpGq6aEZp1IqYLDpnJJu7va3JHqboqTW86Nm3wUy4+T
+	 C21fEOj1aaZoXQkQ3ii2itiSYnmeSQIab8crXJCmFvpUmIMxfCKnWxwKthnDIS/djc
+	 Xif/vaH0kH22Uro1nrZEWxqpPBWLCLDdEP1vVe01f01j9v1XNiGNoaWeWt1fTp+EZn
+	 q+uv3d36i5/qtW5hnpiEjTeao3+voIoHF0q+Jgl2Tu8jdYwkXJVpxE1sWUQFxITX5p
+	 fhWwJLitWNulQ==
+Message-ID: <bbd15b19-fd16-428e-ad6d-0ba7eb00ca9f@kernel.org>
+Date: Sun, 23 Jun 2024 22:05:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: x1e80100: Add gpu support
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: freedreno <freedreno@lists.freedesktop.org>,
+ dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Rob Clark <robdclark@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
+ <20240623110753.141400-4-quic_akhilpo@quicinc.com>
+ <a458a3a7-2b6d-4032-949c-b2c021d339e8@kernel.org>
+ <20240623122856.kqf4x6mft74hzk7y@hu-akhilpo-hyd.qualcomm.com>
+ <7d69e98d-a870-4200-8f22-2a16fcf02794@kernel.org>
+ <20240623151630.bskqwqhp25mu3yuf@hu-akhilpo-hyd.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20240623151630.bskqwqhp25mu3yuf@hu-akhilpo-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240623-qcom-adreno-dts-bindings-driver-v2-4-9496410de992@linaro.org>
-References: <20240623-qcom-adreno-dts-bindings-driver-v2-0-9496410de992@linaro.org>
-In-Reply-To: <20240623-qcom-adreno-dts-bindings-driver-v2-0-9496410de992@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1593;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=uYQQZshlwOKHfwbC3/MKr6ThTNfJ0nfXfyifQvYX5aw=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmeH+JCn5CmF8odDAYUWyh3ZfkGfRdXyfcRPrJC
- IUygQKvOO+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZnh/iQAKCRDBN2bmhouD
- 1+3WD/44hZ2+Ejzsx7aMXg7D/6Ygl8Izp702yxIeltA13k0IeWn+kA+5s2BTVil3rTgt/eg87Ow
- pNEQEF2kPTwsKyWTK0Bwbx7IK3JSLwM3aO2Uj1616luFBxWM9iVZwbuzBB+QTZi9EkOA2kLNKqb
- cbaBPJnQanCj2mWNljqDNzqTdKI7jQz//kb3+lwgiyUUQAdlyJ8ADEWhIyzi7UMdJ/zxtPkOkM5
- o5HLek/GG/EHEUbmwfDVCbf5pY8hvvSN+67LfWH4bVhHuwWohjw9HyJZtKgsYGML1sgywvSxW9v
- pNp+lTs5c9YNRSZthyT/h3WaAM/l/8Jtn9jappiCgUVs9GZr3A8O2wt+8d7HhSWZC9d17JCVzVp
- Uop25wBsZd/YFGz8kpUcbhfkWl+1Sv4th0n+VRnKamr2a0s8sxRssNagsSIeqb89dUgxhDexXbA
- zeNwrh9uuRvimJXbSgDGsYEYUo1ElgfTAz+pMCwNEliycnK3lhhIVswP4dIIT4iAKHHO/CLldnn
- pO5RPMxBKYpHl5w9i+Y2uEG1JM7h/5AxcWKzmfhY4pnSrEBqnhcjS0YShfrTBOzjmXZebLKO3qR
- jmrwZayAczdOZrTwDuHNN7p4irlhLZqBNytEjqQJVghirPOHu/Erx6xpbOtHu7zanf/Q9sP8Xss
- vcRgKjFhttepKyw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-dtschema v2024.4, v2024.5 and maybe earlier do not select device nodes for
-given binding validation if the schema contains compatible list with
-pattern and a const fallback.  This leads to binding being a no-op - not
-being applied at all.  Issue should be fixed in the dtschema but for now
-add a work-around do the binding can be used against DTS validation.
+On 23/06/2024 17:16, Akhil P Oommen wrote:
+> On Sun, Jun 23, 2024 at 02:53:17PM +0200, Krzysztof Kozlowski wrote:
+>> On 23/06/2024 14:28, Akhil P Oommen wrote:
+>>> On Sun, Jun 23, 2024 at 01:17:16PM +0200, Krzysztof Kozlowski wrote:
+>>>> On 23/06/2024 13:06, Akhil P Oommen wrote:
+>>>>> Add the necessary dt nodes for gpu support in X1E80100.
+>>>>>
+>>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>>>>> ---
+>>>>> +		gmu: gmu@3d6a000 {
+>>>>> +			compatible = "qcom,adreno-gmu-x185.1", "qcom,adreno-gmu";
+>>>>> +			reg = <0x0 0x03d50000 0x0 0x10000>,
+>>>>> +			      <0x0 0x03d6a000 0x0 0x35000>,
+>>>>> +			      <0x0 0x0b280000 0x0 0x10000>;
+>>>>> +			reg-names =  "rscc", "gmu", "gmu_pdc";
+>>>>
+>>>> Really, please start testing your patches. Your internal instructions
+>>>> tells you to do that, so please follow it carefully. Don't use the
+>>>> community as the tool, because you do not want to run checks and
+>>>> investigate results.
+>>>
+>>> This was obviously tested before (and retested now) and everything works. I am
+>>> confused about what you meant. Could you please elaborate a bit? The device
+>>> and the compilation/test setup is new for me, so I am wondering if I
+>>> made any silly mistake!
+>>
+>> Eh, your DTS is not correct, but this could not be pointed out by tests,
+>> because the binding does not work. :(
+> 
+> I reordered both "reg" and "reg-names" arrays based on the address. Not sure if
+> that is what we are talking about here. Gpu driver uses platform_get_resource_byname()
+> to query mmio resources.
+> 
+> I will retest dt-bindings and dts checks after picking the patches you
+> just posted and report back. Is the schema supposed to enforce strict
+> order?
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Yes, because the lists are strictly ordered (with exceptions).
 
----
-
-This will uncover issues with DTS, which is expected and fixed in:
-1. Incorrect AMD compatible:
-   https://lore.kernel.org/linux-arm-msm/20240623193420.333735-1-krzysztof.kozlowski@linaro.org/T/#t
-
-2. alwayson clock:
-   https://lore.kernel.org/linux-arm-msm/20240121194221.13513-6-a39.skl@gmail.com/
----
- Documentation/devicetree/bindings/display/msm/gpu.yaml | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-index 03aaced1abda..6ddc72fd85b0 100644
---- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-@@ -10,6 +10,18 @@ title: Adreno or Snapdragon GPUs
- maintainers:
-   - Rob Clark <robdclark@gmail.com>
- 
-+# dtschema does not select nodes based on pattern+const, so add custom select
-+# as a work-around:
-+select:
-+  properties:
-+    compatible:
-+      contains:
-+        enum:
-+          - qcom,adreno
-+          - amd,imageon
-+  required:
-+    - compatible
-+
- properties:
-   compatible:
-     oneOf:
-
--- 
-2.43.0
+Best regards,
+Krzysztof
 
 
