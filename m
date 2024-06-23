@@ -1,170 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-23735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DCFC9136EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 01:26:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11A54913810
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 07:59:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1AFE1C2163C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Jun 2024 23:26:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65B4BB21D21
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 05:59:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B04D886652;
-	Sat, 22 Jun 2024 23:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3748B171BA;
+	Sun, 23 Jun 2024 05:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O+xVE3pH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wjjK8Hst"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D713684A24;
-	Sat, 22 Jun 2024 23:26:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C5C7FD
+	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 05:59:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719098763; cv=none; b=KgYQ6242uqJo9deFKppxrqO38so0dmhEkYrHub9FzXKbKXYYADroJX4J3aUDoOYxa7l++9Kiv0FflkMYlolUaUyTtwTx/UNGLPRUsx5ywyEPciff6I61gKAcstBgb+qSqkdow9LZAWxm/YdD4UhvJ3kI2Oqkx84uJqWLWSFPyvs=
+	t=1719122367; cv=none; b=sNayfPqq2mNO3/tQrgiT5++o8MHACgDer1llchjBXkFrm0TdzAhF/VKCWM6aqf/P4+bB0wz+KVeyRchHLy4lrAUxmx7YzXCfgn0UjwTOG+V3Gnj/q9IvJUjG0iIpOz5CUC6zRwgu9fFZ6UIUHO82dWI49MBYYYWH7oDx1yiD7MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719098763; c=relaxed/simple;
-	bh=3ByRKPZCxRzOwxwLlWyit3OOc6nnUrkfnIT8Zo6676A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VxbLB4ES0iw8g95jJxXJ4H/QWJ/ytiUq0aCwIdPDW3JtFrmWLMu3/eeOr83fZa97wvr531l8COkIqpFHclPVqcVSCsMEiQ7EDhVo9EwcYRM2TGQNFkCR5my8FTISc9M7N1sagShcTCghUTijiG/wzmIEL4R6jlH4uSZ0kBcM4Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O+xVE3pH; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-36226e98370so1916760f8f.3;
-        Sat, 22 Jun 2024 16:26:01 -0700 (PDT)
+	s=arc-20240116; t=1719122367; c=relaxed/simple;
+	bh=YjxfZqe0EZANRqjml3+wYXxJUqgsw3jOPlTubWLT1AM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oKnbpLewRbyaD+vPcyPgY8tu2GwSRRewrDKkEtbQimFpj4AU2jp3MEKtNfH85U95YyGmHH3Eg8JlzBw21H+lr2yoiZh2RPiZTAVDPufrWfA31KT+0v2FcQf1fxq9Zcx4QVXQ6PfAQZW44O66L9PK7+RiMck5IMF+whzz8A9XzZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wjjK8Hst; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2ec4eefbaf1so19797131fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Jun 2024 22:59:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719098760; x=1719703560; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9HxxfvJUbEcWAuUqzp/z3HeawFFFv82S2A3aKWCvEsY=;
-        b=O+xVE3pHpMTcjuTYrrxs2pwtWs5tRRch3fl5l39j7Pyr7gnxO4lcPl4d1UaLbpoihr
-         60kZXVFsbIRIZgzxWbUZsB1ev1ZbbStvkdvB31Oi2er53gQSL4Emu3wunwjtdcFDGxWp
-         PWMeROs1w0vgkC/ul9FaUefVbPYYqIgWYZu/erHlsj47quGrfFjrQ5kS2E7LZeoWhOf/
-         Wsl6vXE9ctRGnhqs/WBajljGtFVwow5gdsP0usVHUxOy+axmVycVSPrq9g8kDJdWfswc
-         xk7Y1QU9uTSHEPI29+pTR7QjtIyxQwmURbTsM4n88EhLnAc4e/2/tunEmymuwjdVAf9d
-         lP2A==
+        d=linaro.org; s=google; t=1719122364; x=1719727164; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uV6ZdsyWs/0K8RTllxKQAwLax2534ZjABCMu7Optue0=;
+        b=wjjK8HsthXgxVtnhgAO1JK+6cOBifSFYmV+zi6uXfudHKd28C8BQGwqurqX9EX5jb+
+         K3Ri3mdm1Wmchq7kbraTt5NAGTuH5rTTXTD+/mD+aGkJ1clThXon+DIB5x1SWOW4WlaI
+         pMJ2QRLLDN1rsQGDBOHSHFDiaX0ag836manWVi9TpwHna+G+7rKxchu6t4SGEFP/SkbW
+         PA7z3XcgA6eAtQaGlk6d6diRAdEoyMvm6J/y8TQ85oL/xecyJ59pjhJUhbP2XoallK8J
+         fOVLAoPTcNgO2UKj215tw5q7kxwLkNoZEcNN7Stn7OMpNbwaOAgzIk56qv64EsnC1Fiv
+         xmqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719098760; x=1719703560;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9HxxfvJUbEcWAuUqzp/z3HeawFFFv82S2A3aKWCvEsY=;
-        b=Pw071lcD8fWJESmCqntzTe5g4gwlRoQf9q9TAzvc4Y9J2wbw1/dvUntmU9CwEe8AhY
-         FcJSRc7YOwdLUOzPzG3bft+/c5CbcoNcYz/1Dx87g3F9uh9NVAxauc6LYooPEthKM6aU
-         uYcs7dsSuzedYtGnS6of+RflLGvgGOe/b2Ch5MtwDhT+dU3XmaEYTMhyK7SVMutpHeTQ
-         VWvlngs8oBspuZZ19/78qeyDzDZ1gMQVOMq5nEdTSAs6B9WiXbkabtqlhfx7ecl/vRKJ
-         dZ9LPUh1Gmnyh6PlLTf4v/KkXYnSmWnuwP3FTn7opQTKLflHMAHV+WBfPNUCq+fdl/Eh
-         bD7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUjpqPrVcQxJiXzcu3PjXj0x/8ZxdQlj0tYgo9EQkCPZ7r/c9v7yIGehGOhSRTfRTrk8ojZ+Er7mWZND9oAYAD15bTCAB7KV98UC4NMb55fbGYiVooad8jCqS8J78HpfUL6U5iHOnRc6A==
-X-Gm-Message-State: AOJu0YwxkR61UxUUJ3gjLYwZ3PiM6OeNQ+H8LK7ek33XtIynYQLwzM6k
-	nhyugvnsR4EI5NgxiS4oz46ke/eDv67E4yhI3Qq7fumqWZfogLgm
-X-Google-Smtp-Source: AGHT+IF+eQztVkaYxVTPniLTiN0Q2Wuwvs1PNUhkt+p/MWOEuEvm4JylLlMlCQKx4FGcg1T83BFCHA==
-X-Received: by 2002:a05:6000:2c2:b0:366:eb45:6d55 with SMTP id ffacd0b85a97d-366eb456ecemr217579f8f.49.1719098760243;
-        Sat, 22 Jun 2024 16:26:00 -0700 (PDT)
-Received: from [192.168.1.90] (20014C4E18129200DEAEE2020304A5A2.dsl.pool.telekom.hu. [2001:4c4e:1812:9200:deae:e202:304:a5a2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d2190desm120301875e9.48.2024.06.22.16.25.59
+        d=1e100.net; s=20230601; t=1719122364; x=1719727164;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uV6ZdsyWs/0K8RTllxKQAwLax2534ZjABCMu7Optue0=;
+        b=gDlN6KD6VI7NDar9Zo/u8AymsK3RXk3OTErQAYPZWcLV6P06E2vAsIy1pTMo/UMby1
+         sFSX2OAxmyd2JZA3yDWByGIwN23+xojozEy16P0K52HpzyjGkt1jHvuJ+pUnz58hCSaj
+         E8bTji8CWO/XExsXNwrn5n1HKQKN1GsOl55+e/NduvI8GYyGDkC5YC+87sFqtdiyPvcr
+         eieyZ+5vnYuhVAxuFa3LziU9Dq6BfVuxCvuyiQee0hm3C3IipfG8tacqd+3Fx48TcdeP
+         zYhZqClrTeAqHpss56ZahakuuIk4cqZWwniX8Z7Vg++x+n/RIk8vmFWIC7aswoWkUJBZ
+         Vwgw==
+X-Forwarded-Encrypted: i=1; AJvYcCVeW2T93S+gpNTSq0ZswvuBjzFNlv6LHBMp/JXRMmHRLiaGUThfGkqUHm/KfwPqBcWAaUr/ScSElk3aT9AUGS7uMJBDY5mptNmKXfux2A==
+X-Gm-Message-State: AOJu0YzpVIAS7N1LvsR4tXGQLAcR+ea7rDDLeDivqdwPz1Pxw3/1zk5W
+	PxLu9ttzoOSF7L7gva3SDyqAEG5C13xRw0/mk9gJjS6KbAH6mR0TnGIYMGLH+EQ=
+X-Google-Smtp-Source: AGHT+IGcHezaqPv4f6l+aRS6cpymyT8QWqnho+MGi0nRzclFQouvXc2Vz5OXXDqk0xU0di91OghoDA==
+X-Received: by 2002:a2e:9f05:0:b0:2ec:fa4:e310 with SMTP id 38308e7fff4ca-2ec5b3d48ccmr7355091fa.34.1719122363747;
+        Sat, 22 Jun 2024 22:59:23 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec4d60130csm6301061fa.13.2024.06.22.22.59.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Jun 2024 16:25:59 -0700 (PDT)
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-Date: Sun, 23 Jun 2024 01:25:54 +0200
-Subject: [PATCH 4/4] drm/msm/dsi: Add phy configuration for MSM8937
+        Sat, 22 Jun 2024 22:59:23 -0700 (PDT)
+Date: Sun, 23 Jun 2024 08:59:21 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Daniil Titov <daniilt971@gmail.com>
+Subject: Re: [PATCH 2/4] drm/msm/mdp5: Add MDP5 configuration for MSM8937
+Message-ID: <hzslz54iq5sjmfhcbuj3my7cbjsu73acxeelih3jekr6rznz44@qie4c4w5lt2d>
+References: <20240623-dsi-v1-0-4ab560eb5bd9@gmail.com>
+ <20240623-dsi-v1-2-4ab560eb5bd9@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240623-dsi-v1-4-4ab560eb5bd9@gmail.com>
-References: <20240623-dsi-v1-0-4ab560eb5bd9@gmail.com>
-In-Reply-To: <20240623-dsi-v1-0-4ab560eb5bd9@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>, 
- Daniil Titov <daniilt971@gmail.com>
-X-Mailer: b4 0.14.0
+In-Reply-To: <20240623-dsi-v1-2-4ab560eb5bd9@gmail.com>
 
-From: Daniil Titov <daniilt971@gmail.com>
+On Sun, Jun 23, 2024 at 01:25:52AM GMT, Barnab·s CzÈm·n wrote:
+> From: Daniil Titov <daniilt971@gmail.com>
+> 
+> Add the mdp5_cfg_hw entry for MDP5 version v1.14 found on msm8937.
+> 
+> Signed-off-by: Daniil Titov <daniilt971@gmail.com>
+> Signed-off-by: Barnab·s CzÈm·n <trabarni@gmail.com>
+> ---
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 89 ++++++++++++++++++++++++++++++++
+>  1 file changed, 89 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> index c5179e4c393c..6413c0d3e237 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> @@ -1011,6 +1011,94 @@ static const struct mdp5_cfg_hw msm8917_config = {
+>  	.max_clk = 320000000,
+>  };
+>  
+> +static const struct mdp5_cfg_hw msm8937_config = {
+> +	.name = "msm8937",
+> +	.mdp = {
+> +		.count = 1,
+> +		.caps = MDP_CAP_CDM |
+> +			MDP_CAP_SRC_SPLIT,
 
-Add phy configuration for 28nm dsi phy found on MSM8937 SoC. Only
-difference from existing msm8916 configuration is number of phy
-and io_start addresses.
+Could you please point out the SRC_SPLIT reference?
 
-Signed-off-by: Daniil Titov <daniilt971@gmail.com>
-Signed-off-by: Barnab√°s Cz√©m√°n <trabarni@gmail.com>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c      |  2 ++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h      |  1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 18 ++++++++++++++++++
- 3 files changed, 21 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 24a347fe2998..dd58bc0a49eb 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -545,6 +545,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
- 	  .data = &dsi_phy_28nm_lp_cfgs },
- 	{ .compatible = "qcom,dsi-phy-28nm-8226",
- 	  .data = &dsi_phy_28nm_8226_cfgs },
-+	{ .compatible = "qcom,dsi-phy-28nm-8937",
-+	  .data = &dsi_phy_28nm_8937_cfgs },
- #endif
- #ifdef CONFIG_DRM_MSM_DSI_20NM_PHY
- 	{ .compatible = "qcom,dsi-phy-20nm",
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index 5a5dc3faa971..a9b4eb2c0e8c 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -47,6 +47,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8226_cfgs;
-+extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8937_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
- extern const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-index ceec7bb87bf1..3afc8b1c9bdf 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-@@ -917,3 +917,21 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_8226_cfgs = {
- 	.num_dsi_phy = 1,
- 	.quirks = DSI_PHY_28NM_QUIRK_PHY_8226,
- };
-+
-+const struct msm_dsi_phy_cfg dsi_phy_28nm_8937_cfgs = {
-+	.has_phy_regulator = true,
-+	.regulator_data = dsi_phy_28nm_regulators,
-+	.num_regulators = ARRAY_SIZE(dsi_phy_28nm_regulators),
-+	.ops = {
-+		.enable = dsi_28nm_phy_enable,
-+		.disable = dsi_28nm_phy_disable,
-+		.pll_init = dsi_pll_28nm_init,
-+		.save_pll_state = dsi_28nm_pll_save_state,
-+		.restore_pll_state = dsi_28nm_pll_restore_state,
-+	},
-+	.min_pll_rate = VCO_MIN_RATE,
-+	.max_pll_rate = VCO_MAX_RATE,
-+	.io_start = { 0x1a94400, 0x1a96400 },
-+	.num_dsi_phy = 2,
-+	.quirks = DSI_PHY_28NM_QUIRK_PHY_LP,
-+};
+Other than that LGTM
 
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
