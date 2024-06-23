@@ -1,123 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-23752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90DE49139B5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 13:01:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD4C29139C2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 13:08:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFBBE1C209BE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 11:01:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09ED81C20983
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 11:08:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D832779B6F;
-	Sun, 23 Jun 2024 11:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54D8612E1FE;
+	Sun, 23 Jun 2024 11:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2yLDd/O"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TGig5pBO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4C82F25;
-	Sun, 23 Jun 2024 11:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3272BCE3;
+	Sun, 23 Jun 2024 11:08:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719140458; cv=none; b=nLnCUOYoJPsZXKnzmEKrDvuFBOzq/PJWe68wiTiQZOzF0YbY0aD7By5wfOlsCqyqL6zryidWk3p39VtBkU7OHLec/+ZhwLUsqiFrWXgzrtQwNJsQPQaykwGsQlEhcwthubE3sm8TwpL4CQo7zR4vZL7oQWxKdc9oQg8yITWfDbk=
+	t=1719140930; cv=none; b=P7f63QNyPQsRk3YPIrbI84IOxAN0KywZi020WfK5SCMtwisPSrbMVhvj+T6vgoFOMHxfTnWjp9+MB5zTURQ3XN+awljpoMOvNsNMmVh2Jnyu3ZPcU//1jkrJwevjUg1aw3HJvz0CH2R00rDtDHORoc6lFj3ND95A/m1ws4CYY+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719140458; c=relaxed/simple;
-	bh=s9ktlOk5rgXLTV0qoIMyyFh2wcN/yDHTrOkU07p8qIs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kxQmK4Fqez/9uO1OeLRmguO6IYKJV2gMRR2PgpNcyfY9znDTDrvUocksN7p88ZzEMDJafqREhG0iUxku93jQkFVpZynABLeg57ejUxdSKNj1Cozp1FU2xNu8HbbpNDd8t+JplorPv2nnQwMMXbgVaIEkcJVArJ92RYGPNSpsgSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2yLDd/O; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DADC2BD10;
-	Sun, 23 Jun 2024 11:00:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719140458;
-	bh=s9ktlOk5rgXLTV0qoIMyyFh2wcN/yDHTrOkU07p8qIs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=h2yLDd/ObKLK12CpZE+wCyc83k4+iC7iWie8ZvuVhUdnU7Fe16L7C8I3+Gp6s/1HL
-	 5il8b9FaQQ07DICugKEJM4samgCSFJQu+SzeFw5rk8lU6dQZzk+aMnED/F5EENV/Bs
-	 3PL9nqmizHh2VT1Mbm/Qg7tck49K88t0jJecEaInpgHzJ3L0n5ZHr4WlOJITe5jOsY
-	 t2UpAoHgPRAnuTZ3KbriSd7ZXGz1xPJfqddKzSALYc9iIKMW4rbqiiHfvGC4ALdkh+
-	 QI9Nxxnc4L11mGK2XGLcwckULHIaTJLj0R9zGOC7lQ3Q6w8fBuq83vyDAre2MzDraq
-	 +uXf3R1e9/+sw==
-Message-ID: <880ac2b8-c2d0-4d62-a723-5353588ce3ae@kernel.org>
-Date: Sun, 23 Jun 2024 13:00:52 +0200
+	s=arc-20240116; t=1719140930; c=relaxed/simple;
+	bh=ycyd9WJUTPHmOfSuVwnVGKKrDNgRBCFvHNCMah5CgLk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BDJ6VXllo5bzG9hX6aGLABhfz594GTCR9pXkaAAIyZAC8zJ5/wX4Bz3WXS7RH2XDB2Fh8pIquXFWfjwq8zpAvbjI6S5tWH4cG5Er9lev0RYBbl1DnTaK3rhWepozvT9lbTVlD1D+UEZFLpV88lnGa8IjSX9sb3PPYFBMIK8nER4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TGig5pBO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45NAOpKW005802;
+	Sun, 23 Jun 2024 11:08:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=zj91Xq7KorbNH+Z0iK+27U
+	sO3l2jvEUsXJeRHl4se38=; b=TGig5pBOlv9YREULzuGWDyYIT03wJZ8HLXI21y
+	3LIt44UMckLg2AOix+FKqphhAIAjxaMdxKwsh3XjMWcPMwwwzbq/TQOccEKih2sw
+	rWvQhIKJOMeJ9RjA6xST4a9MEvCUIpx7gHd69S4kUpoav5GU0w2Vv5NWPUOHQN/l
+	z635nvGcGjyv3414E62tos9cmV3TTqQ7riBRRD5R/UABHycLGobxD6ZQvMfSfgLz
+	LF9bTJG5L4V1ld4ixo0Xk6oJxhnPIpDV6TCSqS8zQ2VZM1xwP5ntaC72hK7+xzzy
+	n0DVNgkC+w0XGISjqMz6OrIEOtmaNgKFeEt7RVCTtp0hJ1ZQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywmaestam-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 23 Jun 2024 11:08:30 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45NB8TjY001719
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 23 Jun 2024 11:08:29 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 23 Jun 2024 04:08:23 -0700
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>
+CC: Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Conor Dooley <conor+dt@kernel.org>, "Daniel
+ Vetter" <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Maxime Ripard <mripard@kernel.org>, "Rob
+ Herring" <robh@kernel.org>,
+        Sean Paul <sean@poorly.run>, Thomas Zimmermann
+	<tzimmermann@suse.de>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v1 0/3] Support for Adreno X1-85 GPU
+Date: Sun, 23 Jun 2024 16:36:27 +0530
+Message-ID: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add msm8916 based LG devices
-To: Nikita Travkin <nikita@trvn.ru>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20240623-msm8916-lg-initial-v1-0-6fbcf714d69b@trvn.ru>
- <20240623-msm8916-lg-initial-v1-1-6fbcf714d69b@trvn.ru>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240623-msm8916-lg-initial-v1-1-6fbcf714d69b@trvn.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: x5r5Kx23Oeooa3OCSVioykwlvMhkVPWc
+X-Proofpoint-GUID: x5r5Kx23Oeooa3OCSVioykwlvMhkVPWc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-23_04,2024-06-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ clxscore=1011 mlxscore=0 lowpriorityscore=0 priorityscore=1501
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2406230088
 
-On 23/06/2024 11:26, Nikita Travkin wrote:
-> Add compatible values for the msm8916 based LG smartphones.
-> 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 2 +
+This series adds support for the Adreno X1-85 GPU found in Qualcomm's
+compute series chipset, Snapdragon X1 Elite (x1e80100). In this new
+naming scheme for Adreno GPU, 'X' stands for compute series, '1' denotes
+1st generation and '8' & '5' denotes the tier and the SKU which it
+belongs.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X1-85 has major focus on doubling core clock frequency and bandwidth
+throughput. It has a dedicated collapsible Graphics MX rail (gmxc) to
+power the memories and double the number of data channels to improve
+bandwidth to DDR.
 
-Best regards,
-Krzysztof
+Mesa has the necessary bits present already to support this GPU. We are
+able to bring up Gnome desktop by hardcoding "0xffff43050a01" as
+chipid. Also, verified glxgears and glmark2. We have plans to add the
+new chipid support to Mesa in next few weeks, but these patches can go in
+right away to get included in v6.11.
+
+This series is rebased on top of v6.10-rc4. P3 cherry-picks cleanly on
+qcom/for-next.
+
+P1 & P2 for Rob, P3 for Bjorn to pick up.
+
+
+Akhil P Oommen (3):
+  dt-bindings: display/msm/gmu: Add Adreno X185 GMU
+  drm/msm/adreno: Add support for X185 GPU
+  arm64: dts: qcom: x1e80100: Add gpu support
+
+ .../devicetree/bindings/display/msm/gmu.yaml  |   4 +
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 195 ++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |  19 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |   6 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c    |  14 ++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h       |   5 +
+ 6 files changed, 235 insertions(+), 8 deletions(-)
+
+-- 
+2.45.1
 
 
