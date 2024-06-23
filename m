@@ -1,114 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-23814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 052F0913EE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 00:14:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47756913EFB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 00:26:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3650C1C2095F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 22:14:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9FAD281D2A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 22:26:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8956E1850BD;
-	Sun, 23 Jun 2024 22:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28D0A156678;
+	Sun, 23 Jun 2024 22:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fHK61IzI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H28ULjXL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABBD1850A0
-	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 22:14:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F51B65C;
+	Sun, 23 Jun 2024 22:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719180890; cv=none; b=fPd+YJshiFpIqSco68SQ2bg4yfXA0vebJ6z8TV2Ga57mzkuwyDBHIGQHkYvi7d0bGp+VePiua53Zkedb/lxNuZTeMfwGQwVapG70AfNLMkPbqq0xEHl77fjpE5w/6xNwmgNDvqtHFG71d/GtXyb4BV4hj4KZpViq/KB3hBkSRA8=
+	t=1719181567; cv=none; b=P1ftcM7fSsoUvfN4t8ShaWWa0vuo6iVTRpCnk4pYQJefkZymhv3SFiV9YB9ZavTA8BwTMmAm8Yd9V34sbeM4EweQ018z9gVgvJOj5Y+iHbApBhYsYA/8sH7eRgYO5sU7m11wuwSdd1N+WTAmU/4hxvyK3noiIHm5m5HuLny87zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719180890; c=relaxed/simple;
-	bh=KhdNskchLeDApnWkGDxU5Sq24O6CEaqHoy7IJJBE4oM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ieA/5Elmt3Ux9gnyveno+FgjKFp5EtIxdTd6S3K6HfIa93A2WdXyQBLeGMQUJQx5QwzEojT3ad40qz2E8YuqRgAEiv9mix3bCoH4W+ZnCvDDRNE4BP1U/ocvKtwnRIdMkdBLNdkdbO2BuXuQmACZamQV10Q65FY6P3J8rsrqY20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fHK61IzI; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-424798859dfso31063455e9.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 15:14:48 -0700 (PDT)
+	s=arc-20240116; t=1719181567; c=relaxed/simple;
+	bh=oxTQy4TFEJ8h879vlyRixiuEuYtLGpIFDUeycmM8EQA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=E9RFDjTuzZLfyhuuc5wmFar7JiAjBhfzz4vtW+dl6oQRWjYyxJMZ3khNi46iy6aEzDNuvn6XzN0bzpv6sHYOE73Q964Ayv/FXRcRgpwHrSneACwOMvWKU52ce/+kBPqqXGqeNFs5Ju091Ya9DhXEeoQuSEoNZuZJloN7wnJvF/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H28ULjXL; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4218008c613so30959285e9.2;
+        Sun, 23 Jun 2024 15:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719180887; x=1719785687; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PcyCWI/SyZb+hCdFNulsc2XJgQPFELvZuwY2XlhkJkg=;
-        b=fHK61IzIIg/fezu7tmYHd84bXr53jRkGyk75m1tsha/nXr0ADiDanZ+74KmSkbK0t/
-         CYwV2y+X6KkOW5L9eSM+TWBTE2cl1GfpHH4IWbhM7YFtDRfW5ENAT5Mu7ytsobjqPcF+
-         thwj49i+VT79CrxpiQkg1oKvAFQmygUnnYs5vQI4Dp7lNk8rSTqeY/I8nLTksLp6S9Bt
-         2cX2B3vYuwjiOhi7JTC9HOwDbmWN/ni6VUX8ENokVQSE24cQ+wkNgHiZ3G98LYIoBv6O
-         kc85yxRHxFouenMm3mjIGSM9XhMBW7SwtSAS1AGMC3xnI1pT5O2eE4+SpBdz4uZWC1RC
-         /YnQ==
+        d=gmail.com; s=20230601; t=1719181564; x=1719786364; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3gQk/oUu6SEUrWcMlUI7v/b2a8RoP0ZC8zDXKyAf8bM=;
+        b=H28ULjXLh9i2T6VLxa9dGP8Sm/vPj1MbLxQU4pjWwSJQS4stmKEajwLM1+wSvlGuze
+         9Jv+xHUt0GbXmO/CpbHB4rsWRNpmHknboG7b/m+6huLTCFusYlMHFDb+cnosz7zocFpU
+         rtOMSYCPCsroYkYyhOQ9VzfFDblMCYMYZhZ5as1X6Z42t+mB4mzY3fwRHx8jmVSYF6ho
+         s3ln4zd+S+XX4MJbao88gVlSKnqWeSnL/lO/y/EhKZM4s1wE8lJq7sGoeFQTIVhBfj29
+         vtr+nETuj7Pg2QUUpUDK0E8AbFDwbf+0XdYFGA1djOBnkb25Bz7vTBJ0xNUKm4f8UaLn
+         VvZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719180887; x=1719785687;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PcyCWI/SyZb+hCdFNulsc2XJgQPFELvZuwY2XlhkJkg=;
-        b=QsAFJQYZrwl9IowHZ5ylitlePTYb8bZC2C1xLugueIFoMSCWfOnID+31ZydFZ0pcBx
-         ElK1f659c3tl2iQcFES2uGAmWn42lI1YT7zm2aiP4IJOBZWTfrHng9L/3C//5KlJjfjw
-         0KlTdORMqPzGTo0UJJuan2TXKe7Ttrf1KLCW0+lxwaGAiMussENR/K+TMOhN1mhtB2Q5
-         dgP1fETUI2IO8Zp8s9Peaj7Y/+25Owwnrf3OKSt4PHF4EQnqF0qlUB7RlJ0hPv4ApDi+
-         56P8b2WG5N2T+XjsCp1BcwBnKlP0NgHP6qa7TB0vNtLntuX6QM1GfVpqMBOMcqG4KmEu
-         CvOA==
-X-Forwarded-Encrypted: i=1; AJvYcCXguNuFraJ+uR6/vPh2J9aUcFyR4WvzaKwrOcEcoY+b7HeRaVaY0OVEKeXulmUVNKIdJnTfxn+O2OGvPuOXg3B6JbwjIdQMrMBb8Znzjw==
-X-Gm-Message-State: AOJu0YwgV65VpRRHRxNdVtzCR0bF5N63VVOiLA5oKNe1MXNoVu80mjBL
-	FA1TQxHwy+wW5jWvlpcogY8kEDM5AzrhURyHeeXvqxkAdNwkwlUi25kOA9SlX+I=
-X-Google-Smtp-Source: AGHT+IFAglmH2G7XopkfkT24UuJJex/2o4e+J9z1bRPsQmuB+V8LfY2Wg7IcUlCFQg92UWR9gf/1uw==
-X-Received: by 2002:a05:600c:4186:b0:421:7c6b:4003 with SMTP id 5b1f17b1804b1-4248cc66c43mr22649025e9.38.1719180887288;
-        Sun, 23 Jun 2024 15:14:47 -0700 (PDT)
-Received: from [192.168.0.3] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d211881sm151103635e9.46.2024.06.23.15.14.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Jun 2024 15:14:46 -0700 (PDT)
-Message-ID: <51e95bad-1caa-4dd4-b319-7bde11a13f58@linaro.org>
-Date: Sun, 23 Jun 2024 23:14:46 +0100
+        d=1e100.net; s=20230601; t=1719181564; x=1719786364;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3gQk/oUu6SEUrWcMlUI7v/b2a8RoP0ZC8zDXKyAf8bM=;
+        b=BWIg/pwgerVT3I/DRsXrBxJR+qouQAuTI6lKZsuBIDs28+fyLoq6jSy4lj26nQMclG
+         n9MAmKfdYgoxUytKcfsidkslfSS9/qmDERJjdvq4iet49blv0M5EBIqnPo+34kkJ8WoS
+         eiFyF0doWhUYuAethHnzjTQKG3TfOWpSre6YtLihAJWEgDjD/sDHgjRmHexuMNVIKcSF
+         ATpjH3xeRHX5xYjxeBldPQbXURD6oTk0EUw3IDHWD+n8uSrs7TeEr191bN2NG8+4Mu2e
+         TzukKuTcXYwzp2D5hsHhmXob+RfbqJsmfx9NPzGwyIAhnpbzCqIYqeVKkhFGD3+53QKs
+         L+Hw==
+X-Forwarded-Encrypted: i=1; AJvYcCW3KQ4XvwICTWUjWzWAJe84Oi4DzuauR306XI8RmDozhrkmjd9l/242pnFiXi8BRhESFP7FQl4qTdAoKEC08aM5d1zljfZeYkQ6KnZ9oTW0HlPUU3W5dtzuP7nVfpDH67tRR4FZ8/HBAGRXq6wn4Girro+aK+pXrhs/hxkniat+HlHI8mttLAHS
+X-Gm-Message-State: AOJu0YxJ2zsk8TPbeZhN+apscb4Arlww/upgUaKk24QdGmFPtLYEFNOq
+	+NJe5SVq14juH/L/mWGPdHbINW9PKTqglA/zA4aHhFc3TmpqKw9n
+X-Google-Smtp-Source: AGHT+IFuLGS5VXiY8gWVaO57f37QjPUM9TkmU9oDjUF5Scuicyy01NZzE1pEN95APiSxY+wXB8af3w==
+X-Received: by 2002:a05:600c:5690:b0:424:7992:c21f with SMTP id 5b1f17b1804b1-4248cc18c65mr20456165e9.3.1719181563531;
+        Sun, 23 Jun 2024 15:26:03 -0700 (PDT)
+Received: from [192.168.1.130] (BC2492F3.dsl.pool.telekom.hu. [188.36.146.243])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4248179d982sm117663975e9.1.2024.06.23.15.26.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Jun 2024 15:26:03 -0700 (PDT)
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
+Date: Mon, 24 Jun 2024 00:26:01 +0200
+Subject: [PATCH] drm/msm/mdp5: Remove MDP_CAP_SRC_SPLIT from msm8x53_config
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] media: qcom: camss: Add sc7180 resources
-To: george chan <gchan9527@gmail.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
- Bjorn Andersson <andersson@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240621-b4-sc7180-camss-v1-0-14937929f30e@gmail.com>
- <20240621-b4-sc7180-camss-v1-5-14937929f30e@gmail.com>
- <3660e37e-2716-4d9f-a9cf-b69568d4e77c@linaro.org>
- <CADgMGSva0_DjYX0QVFL+i3YXmrPAuVa4gQVa-DNHCwg-UA3VNw@mail.gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <CADgMGSva0_DjYX0QVFL+i3YXmrPAuVa4gQVa-DNHCwg-UA3VNw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Message-Id: <20240624-msm8953-mdp-fix-v1-1-be4d3262ebe3@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAPigeGYC/x2MQQqAIBAAvxJ7bkHNQvtKdIhcaw+aKEQg/T3pO
+ AMzFQplpgJzVyHTzYWv2ED2HeznFg9Cdo1BCaXFpDSGEowdBwwuoecHzeY17XK0wihoVcrU9H9
+ c1vf9ACnzRGlhAAAA
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Sireesh Kodali <sireeshkodali1@gmail.com>, 
+ Vladimir Lypak <vladimir.lypak@gmail.com>
+Cc: Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
+X-Mailer: b4 0.14.0
 
-On 23/06/2024 22:48, george chan wrote:
-> On Sat, Jun 22, 2024 at 7:18 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> although I wasn't able to find
->> the matching clock rates
-> The clk rate is in the camcc clk driver, isn't it? ;-)
-> 
+Remove MDP_CAP_SRC_SPLIT from msm8x53_config because
+it is not referenced in downstream.
 
-Yes but what we are saying here is you should have two patches. One 
-patch to add the resources and a separate patch to add extended error 
-messaging.
+Fixes: fb25d4474fa0 ("drm/msm/mdp5: Add configuration for MDP v1.16")
+Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
+---
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+index c5179e4c393c..92d06b7faa0a 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+@@ -837,8 +837,7 @@ static const struct mdp5_cfg_hw msm8x53_config = {
+ 	.name = "msm8x53",
+ 	.mdp = {
+ 		.count = 1,
+-		.caps = MDP_CAP_CDM |
+-			MDP_CAP_SRC_SPLIT,
++		.caps = MDP_CAP_CDM,
+ 	},
+ 	.ctl = {
+ 		.count = 3,
 
 ---
-bod
+base-commit: f76698bd9a8ca01d3581236082d786e9a6b72bb7
+change-id: 20240624-msm8953-mdp-fix-8af4ec159082
+
+Best regards,
+-- 
+Barnabás Czémán <trabarni@gmail.com>
+
 
