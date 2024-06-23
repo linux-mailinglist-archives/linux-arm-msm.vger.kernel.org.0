@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A98FD9138EA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 10:08:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C73C49138EE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 10:09:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1ACC9B207FB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 08:08:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F9131F219DC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 08:09:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45FC85A110;
-	Sun, 23 Jun 2024 08:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0F2554903;
+	Sun, 23 Jun 2024 08:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E7eRRjIx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZoHaplOR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D4749633;
-	Sun, 23 Jun 2024 08:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C131C6EB55;
+	Sun, 23 Jun 2024 08:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719130116; cv=none; b=CjPpqGIh2MliPm28QmisqXqpYFnVnc1HrJGx1Py9OPV3OryumF8SJGILXn5Tp5A3kR5OEMv5so6qzLYMqSPizHrQhdvYjMsuQBxCBi9+llA6YvrI1NYwKCssAPqWplR/87Y7xK3VKYXno1ZNGdUuhceCQ7qXIU1+N1wqALVUuGE=
+	t=1719130184; cv=none; b=kSjN2EzoZBWZAJm6813evcebUIBqml9mJFNiw19ibUW4BmI9lmoefpPg4zaGDpa5hJKKHxQ6nwnA8foyI6oW8GCta6PcgtlOF5r9OsWJb2/7dz8DOGa7c7rARe/EZHmU1C7NcX16rSA06OmuviTnfFfZ/b7aMBhMggBBR0ocg+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719130116; c=relaxed/simple;
-	bh=+pLFZBPj//YztSi5TcONh3iuWLjMYcTw1nhqxWanKBs=;
+	s=arc-20240116; t=1719130184; c=relaxed/simple;
+	bh=8G5ZgzbV0vjNrCMg3A32EmuZwZksI7exlwTcjhzWUZ8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O+sBvBIhdSm1qHgmmsbfkqHWzVO3LIWfxdVQq5lmDrvBnL0dv9h4dnV2m6DOWcUblAbariDu2PQTYApBunpdApwUvELYIyPI3G1S5qql4G3shHAjd0t38EpRnEetqMWpawBKbdaGJLpHLR/TsmMLUXaBPoRj0XhXOGUNUdLE/J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E7eRRjIx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9DA1C2BD10;
-	Sun, 23 Jun 2024 08:08:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=HAwrO8RCCw7Rki5z2oZLSo0by2lSF9zMRgwppl9UWbx9Sr6N0D95XSlC5LMXRsnK8TlFFVfZtn42MF2afl+K4grqTTi0eRrF/6CgD4opNFXjNOVLr7ZogjgWQsZmWEjth28KMa1nB/sJ6/08VddWTB7/zc1Q5coiqOJFStIzwiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZoHaplOR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5CDC2BD10;
+	Sun, 23 Jun 2024 08:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719130115;
-	bh=+pLFZBPj//YztSi5TcONh3iuWLjMYcTw1nhqxWanKBs=;
+	s=k20201202; t=1719130184;
+	bh=8G5ZgzbV0vjNrCMg3A32EmuZwZksI7exlwTcjhzWUZ8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=E7eRRjIxkckqVPDNvXfDiCOmNFkRIyKC7Wm14jgZz+A9Kbo0Sy1uNafMXPhqmSM9V
-	 HPaVQVMP0w9cXGxTFdwhbOBu2gRyhywYU8JH/ck6YQ36lAJ1LI/Ct5ME575u+ammfZ
-	 gGYcxX3NZMRDuRIJT1A5VRAqdc3Z8yuGU/ZJzVM1KYH0C9ktQZTn/2+OTBY/YldVf6
-	 3gTtj0D0jRB5ufhkFbP8aRxifmLyiKzlRmPAvsuF8NgiGv0zPpIqrN0U20MSsmbbqR
-	 YdlaipJ13VLAlbPqsczbJxLYvLdiW8VIOx1SDTp0YOEr1+75ios4YFvKieVg/XqfIS
-	 2qJM9qdKZ2Jpw==
-Message-ID: <77987fdd-5cd5-4683-87af-18c5c31e1357@kernel.org>
-Date: Sun, 23 Jun 2024 10:08:26 +0200
+	b=ZoHaplORax60W+WkzsW2UPl643GGKfxk6QD4+9qTRurtj9WidUWjh+oFeSoq8aI72
+	 e429PDQOkI+pdi5aeYpYuf5HM6omm/lEkmFoBPU8j5w3fToUz8O7Y8o1tinyTZ4kU+
+	 GCLNaP++pS9mcu3cbdlheitGgKKQOpOi8tCOziE8hgGiqF6OHHpggTbjlfpHjrdZpW
+	 HC70oSEUw/omaVh0MDNn/CA6FIdX4ZR9/2y9IwMTOVICvROcRRerx5nJouBYZW3soB
+	 6HqHUmTICLnZW+PhP9VIXdljE7l7wALd4NLAeRzJqIisvaDQ+hZqBSDPmm0qAYIB29
+	 cb4WQMTs++GhQ==
+Message-ID: <59459f7a-846c-4988-a0f0-a64be217dbee@kernel.org>
+Date: Sun, 23 Jun 2024 10:09:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: display/msm: qcom, mdp5: Add msm8937
+Subject: Re: [PATCH 3/4] dt-bindings: msm: dsi-phy-28nm: Document msm8937
  compatible
 To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>,
  Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -66,7 +66,7 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20240623-dsi-v1-0-4ab560eb5bd9@gmail.com>
- <20240623-dsi-v1-1-4ab560eb5bd9@gmail.com>
+ <20240623-dsi-v1-3-4ab560eb5bd9@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,37 +112,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240623-dsi-v1-1-4ab560eb5bd9@gmail.com>
+In-Reply-To: <20240623-dsi-v1-3-4ab560eb5bd9@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 On 23/06/2024 01:25, Barnabás Czémán wrote:
-> Add the compatible for the MDP5 found on MSM8937.
+> The MSM8937 SoC uses a slightly different 28nm dsi phy. Add a new
+> compatible for it.
 > 
 > Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
 > ---
 
+
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-
-
----
-
-<form letter>
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-</form letter>
-
 
 Best regards,
 Krzysztof
