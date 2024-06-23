@@ -1,128 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-23815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47756913EFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 00:26:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55A94913F09
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 01:16:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9FAD281D2A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 22:26:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1E22EB21750
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 23:16:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28D0A156678;
-	Sun, 23 Jun 2024 22:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE4221850A3;
+	Sun, 23 Jun 2024 23:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H28ULjXL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CZ6ybpng"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F51B65C;
-	Sun, 23 Jun 2024 22:26:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD85175AD;
+	Sun, 23 Jun 2024 23:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719181567; cv=none; b=P1ftcM7fSsoUvfN4t8ShaWWa0vuo6iVTRpCnk4pYQJefkZymhv3SFiV9YB9ZavTA8BwTMmAm8Yd9V34sbeM4EweQ018z9gVgvJOj5Y+iHbApBhYsYA/8sH7eRgYO5sU7m11wuwSdd1N+WTAmU/4hxvyK3noiIHm5m5HuLny87zM=
+	t=1719184577; cv=none; b=m/Fvb9BkUc89ZBWd1UpqyUm7Cg5tDFgkt6Ttsw9Cx76CzrGLSs5fZlxD5tLr1nRogG90Bm8Px6YNhJECozv2dR/m9Q6ymbCpyR5JfLHi53vqrgYpZN5BjenlAKpDhMhX+vrslYnCBccePZjgQwVOF2tVICvyk9+a+aVPqjG/nIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719181567; c=relaxed/simple;
-	bh=oxTQy4TFEJ8h879vlyRixiuEuYtLGpIFDUeycmM8EQA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=E9RFDjTuzZLfyhuuc5wmFar7JiAjBhfzz4vtW+dl6oQRWjYyxJMZ3khNi46iy6aEzDNuvn6XzN0bzpv6sHYOE73Q964Ayv/FXRcRgpwHrSneACwOMvWKU52ce/+kBPqqXGqeNFs5Ju091Ya9DhXEeoQuSEoNZuZJloN7wnJvF/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H28ULjXL; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1719184577; c=relaxed/simple;
+	bh=SJ35TR0aVMthObi4Tq8IVJJfUp0GdCYPLfsDJ44pKu4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gYNa1qXSfceqQUZkWU03Lz3grAky5BhAhDDG0A6T49vaZUNWQAIQFyaQ6dHGLu9485M11a47mD7pnFHsPNdXYziNQ1cZfSNLj0wcDDyDST/EfIzCmXkKC31cyqIs1kyqtr4YVpGEZBUQVOxG4E4BiTXVfreECdj7oXrwbPOR3MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CZ6ybpng; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4218008c613so30959285e9.2;
-        Sun, 23 Jun 2024 15:26:05 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52cc671f170so4088887e87.1;
+        Sun, 23 Jun 2024 16:16:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719181564; x=1719786364; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3gQk/oUu6SEUrWcMlUI7v/b2a8RoP0ZC8zDXKyAf8bM=;
-        b=H28ULjXLh9i2T6VLxa9dGP8Sm/vPj1MbLxQU4pjWwSJQS4stmKEajwLM1+wSvlGuze
-         9Jv+xHUt0GbXmO/CpbHB4rsWRNpmHknboG7b/m+6huLTCFusYlMHFDb+cnosz7zocFpU
-         rtOMSYCPCsroYkYyhOQ9VzfFDblMCYMYZhZ5as1X6Z42t+mB4mzY3fwRHx8jmVSYF6ho
-         s3ln4zd+S+XX4MJbao88gVlSKnqWeSnL/lO/y/EhKZM4s1wE8lJq7sGoeFQTIVhBfj29
-         vtr+nETuj7Pg2QUUpUDK0E8AbFDwbf+0XdYFGA1djOBnkb25Bz7vTBJ0xNUKm4f8UaLn
-         VvZQ==
+        d=gmail.com; s=20230601; t=1719184574; x=1719789374; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SJ35TR0aVMthObi4Tq8IVJJfUp0GdCYPLfsDJ44pKu4=;
+        b=CZ6ybpngznQ/XFIS3ezsdKUp0+dfL5v7pMMwA/Ur9Ps3ztGjTs9N3xwIjN1Bw8Hq1/
+         6QtWuyVCnv0aqViN1dHgLZ6GJJL4eH9aL4P1KICvOFKBNpV8N/tYDgqbOwi8t3pq43Ut
+         fBEDjRTeUwVSuFIES1imSwlrIXBiAGBjOo6yf404wMN33oQ/QYSJHKAzql4COGUyjONe
+         48rONmj6vMwNmeITJX0JOyXwdU3nwUsGbTZIbJMMQNxPlv+hmHCyQqTpgMPLUqEF9wdQ
+         HPMZOZcYwWE6hnj14bATI5i7sYoz9K70W8zt3kkbLAnvWh9CIWUegYBTQPWdbjNVGGSs
+         fd+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719181564; x=1719786364;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3gQk/oUu6SEUrWcMlUI7v/b2a8RoP0ZC8zDXKyAf8bM=;
-        b=BWIg/pwgerVT3I/DRsXrBxJR+qouQAuTI6lKZsuBIDs28+fyLoq6jSy4lj26nQMclG
-         n9MAmKfdYgoxUytKcfsidkslfSS9/qmDERJjdvq4iet49blv0M5EBIqnPo+34kkJ8WoS
-         eiFyF0doWhUYuAethHnzjTQKG3TfOWpSre6YtLihAJWEgDjD/sDHgjRmHexuMNVIKcSF
-         ATpjH3xeRHX5xYjxeBldPQbXURD6oTk0EUw3IDHWD+n8uSrs7TeEr191bN2NG8+4Mu2e
-         TzukKuTcXYwzp2D5hsHhmXob+RfbqJsmfx9NPzGwyIAhnpbzCqIYqeVKkhFGD3+53QKs
-         L+Hw==
-X-Forwarded-Encrypted: i=1; AJvYcCW3KQ4XvwICTWUjWzWAJe84Oi4DzuauR306XI8RmDozhrkmjd9l/242pnFiXi8BRhESFP7FQl4qTdAoKEC08aM5d1zljfZeYkQ6KnZ9oTW0HlPUU3W5dtzuP7nVfpDH67tRR4FZ8/HBAGRXq6wn4Girro+aK+pXrhs/hxkniat+HlHI8mttLAHS
-X-Gm-Message-State: AOJu0YxJ2zsk8TPbeZhN+apscb4Arlww/upgUaKk24QdGmFPtLYEFNOq
-	+NJe5SVq14juH/L/mWGPdHbINW9PKTqglA/zA4aHhFc3TmpqKw9n
-X-Google-Smtp-Source: AGHT+IFuLGS5VXiY8gWVaO57f37QjPUM9TkmU9oDjUF5Scuicyy01NZzE1pEN95APiSxY+wXB8af3w==
-X-Received: by 2002:a05:600c:5690:b0:424:7992:c21f with SMTP id 5b1f17b1804b1-4248cc18c65mr20456165e9.3.1719181563531;
-        Sun, 23 Jun 2024 15:26:03 -0700 (PDT)
-Received: from [192.168.1.130] (BC2492F3.dsl.pool.telekom.hu. [188.36.146.243])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4248179d982sm117663975e9.1.2024.06.23.15.26.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jun 2024 15:26:03 -0700 (PDT)
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-Date: Mon, 24 Jun 2024 00:26:01 +0200
-Subject: [PATCH] drm/msm/mdp5: Remove MDP_CAP_SRC_SPLIT from msm8x53_config
+        d=1e100.net; s=20230601; t=1719184574; x=1719789374;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SJ35TR0aVMthObi4Tq8IVJJfUp0GdCYPLfsDJ44pKu4=;
+        b=BIdOuiQv1lT1QA6Zvb7Lj7nEQFPCoaEIa5BnGe4O9s8mIZSwWJq/NZjCv2t3iH1h04
+         ifgDsyVgEoXWPbNZFHK9vkNlw9nw1xJCi/W8tVcbvHUia+QHLxFX/fNCFeOog8tPTOxo
+         aPeiM+YHYwyLY30AKH8qBemiiI9qXK36858L2DxOVHNOfFVQ44oJY5q/Yl3gC2o+cBjy
+         TXd0Pt30ZDyFKJpbq/AaNbbUdno0DNsHL5+04EQfnn+80qqOIm7F4bD3u0AiPnpzU7sM
+         j3PMfsEvM9GnKUGf29/X/6+gA8feCTJweWs86tssSFgCy8CZ7MoZyCSi5QJXyfy7WBM5
+         TTvA==
+X-Forwarded-Encrypted: i=1; AJvYcCUcx+H6sXs0BLWZO9AJMySTS0Cu4uPvMoSsYn6hN3tWsiQMeQ5frIBuiYanuNqQQBNzyB0bxpWaQGjeUfKXdBN7Zz4KEczVmn4bUYC6bBE6Utl+VbuM5lC1YSUTJkE7LRCpDIaDwvzAghqGtIJ/ZHHDq3l7m01PXCR+boJHVdRCiC5WJV/lnVACg3HLsZXafhEyxMFxgTpf9U/DTrQN3eGuILVIUA==
+X-Gm-Message-State: AOJu0YxIKZkfiDhN391jmayTxs0RLVCPHsG+iKO7dZsuZ9UHkbz/K9Q1
+	6JFHn2uQAEoB+ExM501UvzJHX8IPRbofk1+yOXPb5sgu6o5yHIwD/8FJMf7X7SACL4Qc6fRbDPQ
+	Mi5EqOM3EDJGKevax+ZZ8UbbnGfg=
+X-Google-Smtp-Source: AGHT+IEkFCsbNLUYqCPBDMMGovH2SszWnW6MECsXIbIlwNX/5XBMF+1TVFDhjaeIlLIA8sbbFeFBvXetlHRDhAvcCZs=
+X-Received: by 2002:a19:7702:0:b0:52c:ad70:6feb with SMTP id
+ 2adb3069b0e04-52cdf355114mr1085376e87.20.1719184573846; Sun, 23 Jun 2024
+ 16:16:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240624-msm8953-mdp-fix-v1-1-be4d3262ebe3@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAPigeGYC/x2MQQqAIBAAvxJ7bkHNQvtKdIhcaw+aKEQg/T3pO
- AMzFQplpgJzVyHTzYWv2ED2HeznFg9Cdo1BCaXFpDSGEowdBwwuoecHzeY17XK0wihoVcrU9H9
- c1vf9ACnzRGlhAAAA
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Sireesh Kodali <sireeshkodali1@gmail.com>, 
- Vladimir Lypak <vladimir.lypak@gmail.com>
-Cc: Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-X-Mailer: b4 0.14.0
+References: <20240621-b4-sc7180-camss-v1-0-14937929f30e@gmail.com>
+ <20240621-b4-sc7180-camss-v1-3-14937929f30e@gmail.com> <cd9b5612-1160-4284-be7f-4efbcbbbe346@linaro.org>
+ <b9deca88-8e1a-4017-a0fc-6a77672d684d@linaro.org> <CADgMGSs7owyvvvRTr4YvCdmMiJV86CjD5YLsJiBZZONDhfFisQ@mail.gmail.com>
+ <ef218f06-283a-4e7b-bafd-382c47248106@linaro.org> <CADgMGSuaKKNgkVjcWA__fJkmeHYXgE47YfObHddp4e-gTH3NEw@mail.gmail.com>
+ <f0c3e0f5-e5a3-49e1-8b9c-57fc7af5d71a@linaro.org>
+In-Reply-To: <f0c3e0f5-e5a3-49e1-8b9c-57fc7af5d71a@linaro.org>
+From: george chan <gchan9527@gmail.com>
+Date: Mon, 24 Jun 2024 07:16:01 +0800
+Message-ID: <CADgMGSsu4FEPHydWu1mj2BaJjt1=7Ws514ig0YH0TbToFhk-0Q@mail.gmail.com>
+Subject: Re: [PATCH 3/6] media: qcom: camss: csiphy-3ph: Add Gen2 v1.2.2
+ two-phase MIPI CSI-2 DPHY init
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Remove MDP_CAP_SRC_SPLIT from msm8x53_config because
-it is not referenced in downstream.
+On Mon, Jun 24, 2024 at 6:13=E2=80=AFAM Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 23/06/2024 22:37, george chan wrote:
+> > User-space tool can't tell so I made some guesses.
 
-Fixes: fb25d4474fa0 ("drm/msm/mdp5: Add configuration for MDP v1.16")
-Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Sorry for misleading, actually i mean user-space too can't tell the
+difference. As all 3 kinds of init sequences are working, I can't get
+a strong conclusion of "correct" init sequence between atoll's and
+trodger's.
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index c5179e4c393c..92d06b7faa0a 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -837,8 +837,7 @@ static const struct mdp5_cfg_hw msm8x53_config = {
- 	.name = "msm8x53",
- 	.mdp = {
- 		.count = 1,
--		.caps = MDP_CAP_CDM |
--			MDP_CAP_SRC_SPLIT,
-+		.caps = MDP_CAP_CDM,
- 	},
- 	.ctl = {
- 		.count = 3,
+> So how are you testing ?
+>
+> Libcamera on your target rootfs ?
 
----
-base-commit: f76698bd9a8ca01d3581236082d786e9a6b72bb7
-change-id: 20240624-msm8953-mdp-fix-8af4ec159082
+Yes, a similar test was carried out early days with the "wrong" v1.2.1
+init sequence, on pmOS qcam installed into xiaomi redmi note 9 pro
+(sm7125). It showed nice output. And I was excited so I took a video
+recording too:
+https://www.youtube.com/watch?v=3DU_do11pSf1s
 
-Best regards,
--- 
-Barnabás Czémán <trabarni@gmail.com>
+After your indication, I replaced the v1.2.1 init sequence with
+atoll's and trodger's and carried some simple test with below cmd and
+both are outputting files.
 
+media-ctl --reset
+media-ctl -V '"msm_csid0":0[fmt:SRGGB10/2592x1944 field:none]'
+media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/2592x1944 field:none]'
+media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+v4l2-ctl -d /dev/v4l-subdev4 -c test_pattern=3D0
+v4l2-ctl -d /dev/v4l-subdev5 -c test_pattern=3D0
+v4l2-ctl -d /dev/v4l-subdev6 -c test_pattern=3D0
+v4l2-ctl -d /dev/v4l-subdev19 -c test_pattern=3D$1
+
+media-ctl -V '"s5k5e9 13-002d":0[fmt:SRGGB10/2592x1944 field:none]'
+media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/2592x1944 field:none]'
+media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+yavta -B capture-mplane --capture=3D3 -n 3 -f SRGGB10P -s 2592x1944 /dev/vi=
+deo0 -F
+
+As you can see the cmos named s5k5e9. and this time simply do yavta
+dump, no pmOS qcam test.
+
+Since this test is carried out in sm7125 SOC, in theory, it is better
+to test with sc7180 (less likely form-factor available in the market)
+so I will send out v2 with trogdor init sequence for other dev have
+sc7180 board to have a test.
+
+Stay tuned.
 
