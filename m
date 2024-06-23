@@ -1,61 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-23797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A7AA913E4F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 23:02:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EB0C913E51
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 23:02:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B160BB20A49
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 21:02:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 593C61C20BE3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 21:02:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C56D7185098;
-	Sun, 23 Jun 2024 21:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C721D185E55;
+	Sun, 23 Jun 2024 21:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kj2oNCAx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pFPXhVkj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98016185093;
-	Sun, 23 Jun 2024 21:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCEC185E45;
+	Sun, 23 Jun 2024 21:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719176544; cv=none; b=RUBQGGbLS00coVQOBeysX9JwSwBrn00bVHYGMbdu74Qu/RCfNMFXAwNOPpUrqvfFumLgeVJXhBNFPOPoXLM04srGfPpiSOglxXsAX3Nz2fUhW2Tw2YJGFbxSM6sGDCtVRXC5gzHEggnd/K0nuQ8CSS3O7A5EQywIlqShVKlwqsc=
+	t=1719176545; cv=none; b=aGwo8GmhNqABOqkZ8pFO8OYr/f6ai7Y2KkC7cCgMqG5548sCV7iZRK0awSvYEFBe/yqHax2J1YTXRGqbnyLa/HGGqdSFe9j60l2wOKSmF6yv99MSKyLE+jwVPFRXycPrtRshPZQHKOHSMLZwhsAme3kS8RiVSMiiIpbDfyY6rB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719176544; c=relaxed/simple;
-	bh=jbeIn4+CBL0EfOHFDB0YonTaoHiUvbYluP4SzykUnEE=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c1XKOgPIZbRHiRzxZsPMZ+czUHOE6ZV/czlo1j9FAP9DPr2WPY7TgqKWYisYq0oWyzLlRbaJ/ze7iDqDQnb71YNVFym5QZQgLsBtkv1Pjkb+FvMHWcEUKBIt2DlGC9NfXcWkakhrT1/zqGIkbXqR9FxrM28vah2oX6LpciAOMiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kj2oNCAx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717FFC4AF0C;
-	Sun, 23 Jun 2024 21:02:23 +0000 (UTC)
+	s=arc-20240116; t=1719176545; c=relaxed/simple;
+	bh=t7TgurxsfE4m6PvnqrAHv9KBUFSVR7gLduawgM0sIj0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Xfa7bJBPTl2M7HfHoLVldHGR0ej0bH/qvQnSwfd0RNx2DPaAhnq09dbba+OzVspEdoBhNuTwq6c4Us9Rp+uWqGJ8qce5pA8As9XRSyt9a7laXLcz7tfhr73KIzsJpZl288YVTj14tsIBLR7WrltbtOuoWqCTA39W41uawVSSuMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pFPXhVkj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D4BC2BD10;
+	Sun, 23 Jun 2024 21:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719176544;
-	bh=jbeIn4+CBL0EfOHFDB0YonTaoHiUvbYluP4SzykUnEE=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=Kj2oNCAxyO1nMyfhUMJRUARFy4HLPrc7NXl41JX1mbowBngxysIsLQEBfgh2j3JLo
-	 afA5XB7nuzqpqMiyUYA3bVkRBCZuPJwfa28rjanvOnML90IcDe1Zi5InrIu1Ey2/Yv
-	 vN/UQeiJwOx3pZ+w6Y/W/mvY5xsurCU1NfN5NuDwwsDX6COgIqElM+41AQQ+S1Q4nM
-	 X8IXhyXjjmp/y79wET2sU9quj6gnMFAiM3iYtzgAMLUl5Oqz7c8/TeuSbM0p2eHMDW
-	 6vHouhinfDYaTC/NAUwnmonQesH0TqrUsmACAFxi70UAWmFHHdAKRKembFPO8pgqq5
-	 6p8ABOgvI18zg==
+	s=k20201202; t=1719176545;
+	bh=t7TgurxsfE4m6PvnqrAHv9KBUFSVR7gLduawgM0sIj0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pFPXhVkjXSJoDO4BYA4vr0VkVk8elqlOB2dI6F0MeBTiu9C6oG2QF6T1zOxNJ634w
+	 rABHK4NnW+X44Rdyv53c5znd8scqW7xRrPqH2qV9e0MvyboIDYZ6bDz1LFQ8fVc3ku
+	 70XF2iFzSJtlayvU7IGsLHJHxbtGQqsOXEtnZJ8AdGG5KuZWY5kgIXxQyWmFZNi+d+
+	 xMCeefeNnkmhVn49ylZG/T41d6ccxA+FnPdkm3YZJZsA+AJ8S5NYzre4eMBW53Npk0
+	 17ib7q1BO0Zs9oVN4kNT0+79WklY+ucPtNgtK+VeFHeCwOiFNpo9vc8WJkMsUjqGgg
+	 ycFK9x3klEgMQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: linux-kernel@vger.kernel.org,
+	"Lin, Meng-Bo" <linmengbo06890@proton.me>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Nikita Travkin <nikita@trvn.ru>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH] ARM: dts: qcom: use generic node names for Adreno and QFPROM
-Date: Sun, 23 Jun 2024 16:02:15 -0500
-Message-ID: <171917653471.4580.9431450557222191260.b4-ty@kernel.org>
+	~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-gplus-fl8005a: Add BMS
+Date: Sun, 23 Jun 2024 16:02:16 -0500
+Message-ID: <171917653474.4580.13059967965677778281.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240623120707.45764-1-krzysztof.kozlowski@linaro.org>
-References: <20240623120707.45764-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240621141319.347088-1-linmengbo06890@proton.me>
+References: <20240621141319.347088-1-linmengbo06890@proton.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,16 +69,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sun, 23 Jun 2024 14:07:07 +0200, Krzysztof Kozlowski wrote:
-> Use recommended generic node names for the Adreno GPU and QFPROM fused
-> values device nodes.
+On Fri, 21 Jun 2024 14:13:33 +0000, Lin, Meng-Bo wrote:
+> There is PM8916 Battery voltage monitor on GPLUS FL8005A.
+> Add PM8916 BMS and the battery to the device tree.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] ARM: dts: qcom: use generic node names for Adreno and QFPROM
-      commit: 81fc54e62b5b391d78f741bf33c3a91f18464ffb
+[1/1] arm64: dts: qcom: msm8916-gplus-fl8005a: Add BMS
+      commit: 61ba969e0e7d26a9260bcc658c54d2bf9a1f0a2b
 
 Best regards,
 -- 
