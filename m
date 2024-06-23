@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABE86913A9C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 14:40:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCD7E913AB0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 14:53:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 31CAD1F21551
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 12:40:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE15D1C20A41
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 12:53:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C0141474D8;
-	Sun, 23 Jun 2024 12:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09A2C181324;
+	Sun, 23 Jun 2024 12:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lS9PfT0o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o1VrMHeG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB6612C559;
-	Sun, 23 Jun 2024 12:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC93D181312;
+	Sun, 23 Jun 2024 12:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719146423; cv=none; b=rSOi2zkeANxqFU6B6Clz1kaf+ohcij2wIlWeMvb8HY0cpbFI9USSq1Fh4lnYhnmJtoJvP6ROjTCSbIudYbesRm5wcVElPDpu0VzJK+LA2OXoPn89gbAFZMr3lGm1LMSfN6Iwdzatqu0yDgQ/zpzvSECQT12kjTUrCTSuhM8q2dU=
+	t=1719147204; cv=none; b=umn/bxthtdKhS2msErvcYlrwh0y5W8w4HYcfEBbBAUhlVkNjdRQsHdHM5LuX9loycyT30mFG/HbyhfQG1WkbJ6TrvYjHS14US55HCuvLm55JntM+t7H6kM+IVw1vzhmh+iLoNMoviSsmGU9oJ0eKs5ezT/Pr6VidqzDejYwopUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719146423; c=relaxed/simple;
-	bh=RdWVCJOCVMoiKYMrJxdGXBUQsWO1ntwkZTHi/vmoRyA=;
+	s=arc-20240116; t=1719147204; c=relaxed/simple;
+	bh=7psjLZBIi/OMT9tAC6CXxcU0ylmhMM6sdzBr7izDH8s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D31O9N5w8JxKsqw/oSj3IWqJ9vL1bU+a7jmON1UHnSNXRDrgdG+TpCWcU14zOQ9DscrQeAPeMN8hkf/SoNlBMlo7rYvin1F9jjUXsmnzMy9k/gAYDUhvAU4bcEFEle1IgJHe9K8piOUjmqM51JulIhHOzK340zdVjVw4sUAZ6wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lS9PfT0o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BD1C2BD10;
-	Sun, 23 Jun 2024 12:40:16 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QKfDyqL4QLBseTSvPbRBu8uQhZjSYuwpJps3WvdERfvWKPMzYn2ifW7fFmFvzLnhHhPFb3N5Zy2gx71FU3Z3wWrLq+iBFSsNvKKiPR4YlLJlMYfY9SzTvDbnO1O3F80YHqNIflXM82cG5FbEAyst6YXgpP2l2vK7/5mpeNgkwW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o1VrMHeG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92274C2BD10;
+	Sun, 23 Jun 2024 12:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719146422;
-	bh=RdWVCJOCVMoiKYMrJxdGXBUQsWO1ntwkZTHi/vmoRyA=;
+	s=k20201202; t=1719147204;
+	bh=7psjLZBIi/OMT9tAC6CXxcU0ylmhMM6sdzBr7izDH8s=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lS9PfT0oAO2YZdDIIrIc4dY8+yNNmLhZN8ohDN4zep8FHwC5LMvB3I0ANXD53KC7U
-	 tjViCm1u9I6VLwJWU/Pqr2b/KkV7DiSOLxRiM0gmdG/uDQBQsPdY9AF+Ftb7SEZsJq
-	 63y97QhXyY/hkLLg63qj6fai0KG6fLvZx8IJ1eFWjBpn0N0cTzFF07VNiZQWR8tGjV
-	 6MG1LXnKkVOirLJ9p/ROydPcgONG0EaJ/WWf1bTUSnte/1EvwF96OykHWKq8pFvptx
-	 /ZE/bKsvFh7G5aeRJLifgtNkaxujxCP54m2fD5hxuTfOovHhLLFPS994iMfmCuLa4c
-	 OM+Av+rA86KIw==
-Message-ID: <248e8983-1b91-4fff-a941-74c6dc4fcbc1@kernel.org>
-Date: Sun, 23 Jun 2024 14:40:14 +0200
+	b=o1VrMHeGHRgVHtPYbdbKtWUGf9IiM+NMUVW/GNZOsZ/BV+G4cqCqwHsgMGL9GXalj
+	 1liCyXdXwYfFFs2iT6zEgkFJMo2BnOirTSU4OLo1zKAkXFwbkuHxkKnyuouOhPifJ3
+	 yqYqgwbwG8ZYLx/SpT/od/HaEEXiXhqjNP3TmF02oJNqM60vNu0rBqMKsEBhXJ3/7v
+	 gXZhz1tIRnXhplHPJVjDicdocj5rYpbWotPvjhX2ftiEpNT5qmUQCjDLSCulupEORA
+	 xxBC+fKn3bgMNJC/dNKorjQ6U1JaVovGN7Cz0Jvf0ekA+zDVu/IEpHIVJBTr0mtkFA
+	 BMBVIssFuw+4Q==
+Message-ID: <7d69e98d-a870-4200-8f22-2a16fcf02794@kernel.org>
+Date: Sun, 23 Jun 2024 14:53:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] dt-bindings: display/msm/gmu: Add Adreno X185 GMU
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
- freedreno <freedreno@lists.freedesktop.org>,
+Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: x1e80100: Add gpu support
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: freedreno <freedreno@lists.freedesktop.org>,
  dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- Rob Clark <robdclark@gmail.com>, Bjorn Andersson <andersson@kernel.org>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
- David Airlie <airlied@gmail.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Maxime Ripard <mripard@kernel.org>, Rob Herring <robh@kernel.org>,
- Sean Paul <sean@poorly.run>, Thomas Zimmermann <tzimmermann@suse.de>,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+ Rob Clark <robdclark@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
- <20240623110753.141400-2-quic_akhilpo@quicinc.com>
+ <20240623110753.141400-4-quic_akhilpo@quicinc.com>
+ <a458a3a7-2b6d-4032-949c-b2c021d339e8@kernel.org>
+ <20240623122856.kqf4x6mft74hzk7y@hu-akhilpo-hyd.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,32 +108,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240623110753.141400-2-quic_akhilpo@quicinc.com>
+In-Reply-To: <20240623122856.kqf4x6mft74hzk7y@hu-akhilpo-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/06/2024 13:06, Akhil P Oommen wrote:
-> Document Adreno X185 GMU in the dt-binding specification.
+On 23/06/2024 14:28, Akhil P Oommen wrote:
+> On Sun, Jun 23, 2024 at 01:17:16PM +0200, Krzysztof Kozlowski wrote:
+>> On 23/06/2024 13:06, Akhil P Oommen wrote:
+>>> Add the necessary dt nodes for gpu support in X1E80100.
+>>>
+>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>>> ---
+>>> +		gmu: gmu@3d6a000 {
+>>> +			compatible = "qcom,adreno-gmu-x185.1", "qcom,adreno-gmu";
+>>> +			reg = <0x0 0x03d50000 0x0 0x10000>,
+>>> +			      <0x0 0x03d6a000 0x0 0x35000>,
+>>> +			      <0x0 0x0b280000 0x0 0x10000>;
+>>> +			reg-names =  "rscc", "gmu", "gmu_pdc";
+>>
+>> Really, please start testing your patches. Your internal instructions
+>> tells you to do that, so please follow it carefully. Don't use the
+>> community as the tool, because you do not want to run checks and
+>> investigate results.
 > 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
-> 
->  Documentation/devicetree/bindings/display/msm/gmu.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> index b3837368a260..9aa7151fd66f 100644
-> --- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-> @@ -23,6 +23,9 @@ properties:
->        - items:
->            - pattern: '^qcom,adreno-gmu-[67][0-9][0-9]\.[0-9]$'
->            - const: qcom,adreno-gmu
-> +      - items:
-> +          - pattern: '^qcom,adreno-gmu-[x][1-9][0-9][0-9]\.[0-9]$'
+> This was obviously tested before (and retested now) and everything works. I am
+> confused about what you meant. Could you please elaborate a bit? The device
+> and the compilation/test setup is new for me, so I am wondering if I
+> made any silly mistake!
 
-'[x]' is odd. Should be just 'x'.
+Eh, your DTS is not correct, but this could not be pointed out by tests,
+because the binding does not work. :(
 
+I'll fix up the binding and then please test on top of my patch (see
+your internal guideline about necessary tests before sending any binding
+or DTS patch).
 
 Best regards,
 Krzysztof
