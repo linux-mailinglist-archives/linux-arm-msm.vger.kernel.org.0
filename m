@@ -1,99 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-23764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CD7C913A50
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 14:01:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38387913A5C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 14:07:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 063DF2824AE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 12:01:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5DEEA1C20863
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 12:07:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E906181D10;
-	Sun, 23 Jun 2024 12:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 603D4180A92;
+	Sun, 23 Jun 2024 12:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wqqMvFoK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nWiJVsR+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F669181CEA
-	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 12:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42A7180A8C
+	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 12:07:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719144037; cv=none; b=NxWfXtp4OWK9w6u0VtlUBUKSTbDW2ZhEO6HYA7szBVcc40wq6KlEiZqIXMZI0Yn39yQRgCWrTjjMjIkpLv+kbf3IH+EnRtE2EA6vG1RZYCmfi13B3hZQGckCdHT4eIeir4ewmOF7hEtcyZHJYGWJyRbV11CYOQMsyqP4M4dSAeg=
+	t=1719144434; cv=none; b=aKWH5zYuwE4skBYZbsXQuKZD3LjimEEEdKz9UBRPw/0W81vJu2ZIPMPTWkVWAb+RFBryM5IlhqIPiYmYybDD6+AWH6xKT8k+LX1aD1UzxTziekWQkRr91E/IoIR6cvYCRqTEddZm67KV6n5giXjhf8sM3Twt9doCVWS61tL0Us8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719144037; c=relaxed/simple;
-	bh=ZkimSwvr82NPcbaA0foj0eXzI4jvTaBVQ88EJATB1tM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6HEycXnRKe0PcOuVaqhIdTCXcp0Sk/v7+lxLlHk9/ur4wh1fePSzW4+7fbBajI7i+/7+H/vTdaHYrHGMHy7SxJxOWWy3RmuukHlm9OLzgdYnD9kcRvZ7l1EKMqDovUfZKA9tASrjyJDxv0hjEfeUD5Qpl1Uz1m5XeCSfu59+uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wqqMvFoK; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1719144434; c=relaxed/simple;
+	bh=uHYvDYR/0OCKZLGvvzWmpbwWIBr305LjSa6MiZXxS8M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KOzBw8on/oEWSIC4w5+eRWrGXTGDAprH9OdrfYB8XzyajqQBRbWW4UbdsHrXRh/+QiNoJbA9lg0YYow7EMwitUhVHVDnUwCrqsurXeUL9M22Hww+I9/zQjclpqwfK8M4rXh2V175vl25DwuZE0s62+XKt0OQgAz/lWieID3J3+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nWiJVsR+; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4217926991fso30554525e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 05:00:34 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a6fe118805dso104742066b.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 05:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719144033; x=1719748833; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ecK+toW3Ns4ZNrqgQybbNewCzjgaGGXdUaWN+FWF27c=;
-        b=wqqMvFoK8jJWfr9t0LsWpsLYdW3UQOXfjzw9jiehORzP6bvgLq9PtCaOtmFnsIcPfs
-         q3zb1gaKvdz+/uNWWBdHdijtxJaP7eDDb+xsSwSKWaYMQcnlskRkxoUyNrsrFIYUFznP
-         clGuSs4UtUo6OCnb371HjXFhVLh7sRwo/ZTv7s90e5E8WhnjqUCJNo3UKAeAmB6oPyVk
-         iPO1cFCZbFtZQRBOlknTdNZbpXKJCtPWGeWXvpcMWQoseXzVxnfPob0ZuFfAXiRDMcfu
-         kAMh5PLhtuosEjw8Ve7klAS3rXSITv+AnSspJjzP83kdnS3KdnRhqhY74i471uWSuPhp
-         /0yQ==
+        d=linaro.org; s=google; t=1719144431; x=1719749231; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Im9pps3F9eSCq1woRzWsXbS8wxrxaZe4+MW3D6HBN4=;
+        b=nWiJVsR+G0sv2Cqfk5kghvfAhkVc7YEKiGtte+mIKBX7nmDvNWJE8ELrtddf4Bvj27
+         lnuwwWhVLBJcDiRuUnPcISQvapoDiYan0e6evYuaC+2iWgWmxGlTLh9EZeWQbOzn78er
+         q/Hu8xswUDUoWY0WLY5B7MvBNkr48Sga6eamRjCepS2yXMuL4ajuJV8Gbf4MYqhOD9CJ
+         hyhyH6ZUB6djPptBiJXzIZsnjpIDLC2z5zxKkoCFuz2sDUYCvXnMYrDkZ1gmk67mDCdz
+         CwKG/ndgl6iN9p87lnHZG7X//5wCE4sjJO5CIcuLyGnh75TgjBcyRQhj/oDMeIVwyXzc
+         PhuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719144033; x=1719748833;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ecK+toW3Ns4ZNrqgQybbNewCzjgaGGXdUaWN+FWF27c=;
-        b=RUq2ODhqPvILYf+/jfVYzuzizFkMiMLP1Zclq+5X+evYqOf+iqGJ7v1mMw6zwImoB1
-         PnHATvXpYua9hSpjUHDzqH4WN0wi4SOmxGH2uOtr7KNk4jtDV24zYpDwZtXEq4rlvogK
-         hvWx6S3mOuz/UMAtcWs7Q+/kXewFn2SDsRQJ2leG2loXK+zsDGffEIJwggstZ3JisvHx
-         KEDF4DLGXl2dWS2xkwFEvtMA7veK/FgGcRO6roZfEdJkxxLr9I0pHkhfIk2Wok8KCsRA
-         YGJINlk8oBwZyAMxs0dnH6XbPfNUiiP1KQETFo9k+xlA/PXqdqdthC3QbRs6uZJhe3b6
-         VAWg==
-X-Forwarded-Encrypted: i=1; AJvYcCVyq5QTFwyCIifWA6bwvdhl2LqiDOItQrw3IIfaZ33VvVkse5Oz3vRxA7MjTACtgKccMU/AvFzsxr3LkjrAEppQj09NqKzUawAFUatK2A==
-X-Gm-Message-State: AOJu0YyRqsL+wuxJEuUfqMFZTtjBB5hQFfvUP+rsfax6mYEjc/X7iJLh
-	T7ZYv0Z+31qGSEHE3fKizfxqzfoQgDQ5XRz/vdzAQqb/ol2Tv/UNFm1Dti+4YGQ=
-X-Google-Smtp-Source: AGHT+IGH65kKS7M6vcnw+GFLjPcYiLfNI3yhUCA7KwnzudEhnrCZRo0tzHlu9MxebLYKwwKlOaegOQ==
-X-Received: by 2002:a05:600c:3c93:b0:424:9024:d468 with SMTP id 5b1f17b1804b1-4249024d4e1mr4347895e9.17.1719144032825;
-        Sun, 23 Jun 2024 05:00:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719144431; x=1719749231;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6Im9pps3F9eSCq1woRzWsXbS8wxrxaZe4+MW3D6HBN4=;
+        b=T/QhviRsLQNwHOA3qATnbUvHfjImYVlrUXL3S+Qeov1eB8S4GFXnNUShoseMPaxLBL
+         ZWvVW//x+Qopg/qwcIs4UTERkkoTKxhJ65HIj0h738GYbEXsBADTjpx9eRPfOzKs5IaU
+         7eOgkwv2W7YyRjkqOta9LUXiDpN4jI0czFJ3Cv/D0SEFs9tffPRdsEPHpN/0irzQudmE
+         rLunf9LElWW3mFRqdBzlFdK/6bHqBrIjuVlbRI7vj1j0BrkRXV9rh2JEyl3grp3CEFZB
+         sDhfcvDtlKoacp2U3m2lNACuTJ11OgfHdA2R94q1v7HCrdwyM31HvdnKPB9VhOkd1jsh
+         z1UQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUkLdsPkIkLMQVTWy2WficU6t1cyUwHpzYecgs6pzrEJhVJ01zVtq9BSKJ5RN3QydGThixVX2IJIDxdIeq1BqlnWdKxV1OzYiEb7FDphw==
+X-Gm-Message-State: AOJu0Yy4qIySkZBEhFcfEQiaGEIF/V9h6LQpL6y79IrVO+qXKWEd68qZ
+	MMvrNp0DQOnpP0k9CzcFpM9j+2dbjaoz5hfQmIqbBumsWUcSzbbDuyDiVUaRgTg=
+X-Google-Smtp-Source: AGHT+IFFOnAlnUD5SZlHKO+8g/23aF3khBJGARG75g3tsfD2hW3IYT329v2VSFQKwncszwU9X7alAA==
+X-Received: by 2002:a17:906:9c93:b0:a6f:b7a0:3e68 with SMTP id a640c23a62f3a-a7245ccda3dmr140352366b.20.1719144430919;
+        Sun, 23 Jun 2024 05:07:10 -0700 (PDT)
 Received: from krzk-bin.. ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4248179d3basm105465515e9.4.2024.06.23.05.00.31
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6ff4f68248sm162501566b.127.2024.06.23.05.07.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jun 2024 05:00:32 -0700 (PDT)
+        Sun, 23 Jun 2024 05:07:10 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
+To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] dt-bindings: display/msm/gpu: constrain reg/reg-names per variant
-Date: Sun, 23 Jun 2024 14:00:26 +0200
-Message-ID: <20240623120026.44198-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] ARM: dts: qcom: use generic node names for Adreno and QFPROM
+Date: Sun, 23 Jun 2024 14:07:07 +0200
+Message-ID: <20240623120707.45764-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240623120026.44198-1-krzysztof.kozlowski@linaro.org>
-References: <20240623120026.44198-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,137 +87,110 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-MMIO address space is known per each variant of Adreno GPU, so we can
-constrain the reg/reg-names entries for each variant.  There is no DTS
-for A619, so that part is not accurate but could be corrected later.
+Use recommended generic node names for the Adreno GPU and QFPROM fused
+values device nodes.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../devicetree/bindings/display/msm/gpu.yaml  | 87 +++++++++++++++++--
- 1 file changed, 79 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 4 ++--
+ arch/arm/boot/dts/qcom/qcom-apq8084.dtsi | 2 +-
+ arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi | 2 +-
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 4 ++--
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 4 ++--
+ 5 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-index baea1946c65d..e83f13123fc9 100644
---- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-@@ -130,6 +130,22 @@ required:
- additionalProperties: false
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+index 178a3b424670..d73ea1434b36 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+@@ -666,7 +666,7 @@ ssbi: ssbi@500000 {
+ 			qcom,controller-type = "pmic-arbiter";
+ 		};
  
- allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            pattern: '^qcom,adreno-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]$'
-+    then:
-+      properties:
-+        reg:
-+          minItems: 3
-+
-+        reg-names:
-+          items:
-+            - const: kgsl_3d0_reg_memory
-+            - const: cx_mem
-+            - const: cx_dbgc
-+
-   - if:
-       properties:
-         compatible:
-@@ -164,6 +180,13 @@ allOf:
-           minItems: 2
-           maxItems: 7
+-		qfprom: qfprom@700000 {
++		qfprom: efuse@700000 {
+ 			compatible = "qcom,apq8064-qfprom", "qcom,qfprom";
+ 			reg = <0x00700000 0x1000>;
+ 			#address-cells = <1>;
+@@ -992,7 +992,7 @@ tcsr: syscon@1a400000 {
+ 			reg = <0x1a400000 0x100>;
+ 		};
  
-+        reg:
-+          maxItems: 1
-+
-+        reg-names:
-+          items:
-+            - const: kgsl_3d0_reg_memory
-+
-       required:
-         - clocks
-         - clock-names
-@@ -196,11 +219,12 @@ allOf:
-             - const: xo
-               description: GPUCC clocksource clock
+-		gpu: adreno-3xx@4300000 {
++		gpu: gpu@4300000 {
+ 			compatible = "qcom,adreno-320.2", "qcom,adreno";
+ 			reg = <0x04300000 0x20000>;
+ 			reg-names = "kgsl_3d0_reg_memory";
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi
+index ca53dff820ef..2b52e5d5eb51 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi
+@@ -245,7 +245,7 @@ sram@fc190000 {
+ 			reg = <0xfc190000 0x10000>;
+ 		};
  
-+        reg:
-+          maxItems: 1
-+
-         reg-names:
--          minItems: 1
-           items:
-             - const: kgsl_3d0_reg_memory
--            - const: cx_dbgc
+-		qfprom: qfprom@fc4bc000 {
++		qfprom: efuse@fc4bc000 {
+ 			compatible = "qcom,apq8084-qfprom", "qcom,qfprom";
+ 			reg = <0xfc4bc000 0x1000>;
+ 			#address-cells = <1>;
+diff --git a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
+index 4e36fe4bf2a1..0b04ea856f7c 100644
+--- a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
+@@ -372,7 +372,7 @@ ssbi@500000 {
+ 			qcom,controller-type = "pmic-arbiter";
+ 		};
  
-       required:
-         - clocks
-@@ -217,12 +241,59 @@ allOf:
-           clocks: false
-           clock-names: false
+-		qfprom: qfprom@700000 {
++		qfprom: efuse@700000 {
+ 			compatible = "qcom,ipq8064-qfprom", "qcom,qfprom";
+ 			reg = <0x00700000 0x1000>;
+ 			#address-cells = <1>;
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+index 270973e85625..b2f92ad6499a 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
+@@ -635,7 +635,7 @@ restart@fc4ab000 {
+ 			reg = <0xfc4ab000 0x4>;
+ 		};
  
--          reg-names:
--            minItems: 1
--            items:
--              - const: kgsl_3d0_reg_memory
--              - const: cx_mem
--              - const: cx_dbgc
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,adreno-640.1
-+              - qcom,adreno-680.1
-+    then:
-+      properties:
-+        reg:
-+          maxItems: 1
-+
-+        reg-names:
-+          items:
-+            - const: kgsl_3d0_reg_memory
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,adreno-619.0
-+              - qcom,adreno-630.2
-+    then:
-+      properties:
-+        reg:
-+          minItems: 2
-+          maxItems: 2
-+
-+        reg-names:
-+          items:
-+            - const: kgsl_3d0_reg_memory
-+            - const: cx_mem
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,adreno-618.0
-+              - qcom,adreno-635.0
-+              - qcom,adreno-690.0
-+              - qcom,adreno-730.1
-+    then:
-+      properties:
-+        reg:
-+          minItems: 3
-+
-+        reg-names:
-+          items:
-+            - const: kgsl_3d0_reg_memory
-+            - const: cx_mem
-+            - const: cx_dbgc
+-		qfprom: qfprom@fc4bc000 {
++		qfprom: efuse@fc4bc000 {
+ 			compatible = "qcom,msm8226-qfprom", "qcom,qfprom";
+ 			reg = <0xfc4bc000 0x1000>;
+ 			#address-cells = <1>;
+@@ -1046,7 +1046,7 @@ cci_i2c0: i2c-bus@0 {
+ 			};
+ 		};
  
- examples:
-   - |
+-		gpu: adreno@fdb00000 {
++		gpu: gpu@fdb00000 {
+ 			compatible = "qcom,adreno-305.18", "qcom,adreno";
+ 			reg = <0xfdb00000 0x10000>;
+ 			reg-names = "kgsl_3d0_reg_memory";
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
+index 1bea3cef4ba7..f9820d996910 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
+@@ -1235,7 +1235,7 @@ restart@fc4ab000 {
+ 			reg = <0xfc4ab000 0x4>;
+ 		};
+ 
+-		qfprom: qfprom@fc4bc000 {
++		qfprom: efuse@fc4bc000 {
+ 			compatible = "qcom,msm8974-qfprom", "qcom,qfprom";
+ 			reg = <0xfc4bc000 0x2100>;
+ 			#address-cells = <1>;
+@@ -2131,7 +2131,7 @@ cci_i2c1: i2c-bus@1 {
+ 			};
+ 		};
+ 
+-		gpu: adreno@fdb00000 {
++		gpu: gpu@fdb00000 {
+ 			compatible = "qcom,adreno-330.1", "qcom,adreno";
+ 			reg = <0xfdb00000 0x10000>;
+ 			reg-names = "kgsl_3d0_reg_memory";
 -- 
 2.43.0
 
