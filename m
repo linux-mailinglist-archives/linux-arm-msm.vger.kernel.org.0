@@ -1,135 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-23761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A91E9139F1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 13:17:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CA24913A48
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 14:00:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E0D3D1F21BE8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 11:17:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8A521F2197A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 12:00:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FDE912EBC7;
-	Sun, 23 Jun 2024 11:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE7F718133B;
+	Sun, 23 Jun 2024 12:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kicdWBwZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cryfDCVg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619D764D;
-	Sun, 23 Jun 2024 11:17:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FD7180A8C
+	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 12:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719141443; cv=none; b=IVPufsaFP7vLrWCztejtm1SgRZpFEDvk7TFRZ7YT3iTXRXNM7cS10yAxiEbL0+0TAvqIiQkLwFa45JAyB2PMm+31phVnKZvC9TNvdtttoCtSA7DowlPf14z6YoJXkkpvUThyjPPKwjzyKMfnPijyfkLUwl7H9HWSBY8la1aFaeo=
+	t=1719144032; cv=none; b=p4t34ULpslWeTNZ+RcYdQBVmgeIoycXZYsC2zqTZh9LgemLHMrKGJYlkx70mngaCmYPN5OEsFgYhnK76AW4/6Tnuh7RdMeC4ZYpqOG+8ApzRMgTlOe/jZiEJPxBi/Mug27xbadrMwAPvo7BP0jQ+DNL+9KjxAtM47DGYk1LHcJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719141443; c=relaxed/simple;
-	bh=7PMJh1IV9P4084It6la8SIga/HlxLlyZ153yooL7pA0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Dzpjrk7P5Xmg/XmiZhARMv6h3ZhLm5GgEY8vL+swoVDpzgtS9Z0qOoE0e7feyNiWtHI0kMT5etMU+Qet5lDfRK60i4EgvcW9q0FYrNNPimhy0Q2vdqxGaZH4FDM/JI6yASzz0xot0/mREegpNiFw1v8qfYcysgwu2HjC2vXQuOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kicdWBwZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59B1C2BD10;
-	Sun, 23 Jun 2024 11:17:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719141443;
-	bh=7PMJh1IV9P4084It6la8SIga/HlxLlyZ153yooL7pA0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=kicdWBwZpB6XBYekNsv0O/sm4JP3gnEJRMSFlp3P7/D8V/HiESyof/zXJM8wvr6CN
-	 AMIsunwKMKqYnoq1086kxWNvntSP/bsDy5Isadq39XBEOnl7YmXVZIM11mv6ZBwP3+
-	 5TlrbCSGAKUwV8kQO50ojib2+yi5iaj8hJXBor3wMMZ63HUtkAsUR9FNgDcuwKa1bu
-	 +ORKKv7H/G5o+mfGDWozmODbvk6yAMFpRB7AM+GH5nIwXnaaiq4hU6YjTt8NG9E+He
-	 V28kFYR7PKlTYWB2Ntnv2mdjrkNC+Mppc9AqwKlDh3Qzd/YtQC4VLNtMmbwwsB4nDF
-	 OiZhh2+Yd55oQ==
-Message-ID: <a458a3a7-2b6d-4032-949c-b2c021d339e8@kernel.org>
-Date: Sun, 23 Jun 2024 13:17:16 +0200
+	s=arc-20240116; t=1719144032; c=relaxed/simple;
+	bh=MQKKDaIGCGbRLN1AzCvjvVCiUpvORFMPwHtaVwKOtaI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qZp2I9OZMV0tk/y6E1qW62z7NmTpy1+y0CV8qY13NfIwlDeGxp9wLT4EoWsrQCliOJUZaPc4VPujbDpqxA/quzTT+/UykeGfshCZKpIChXm4ZXPo3TrTEi7JXUJw+9KBLBz3M3vbJe66wKkE8IYs/07pz3kvo15+tj41ZLB5cLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cryfDCVg; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-421eab59723so25295195e9.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 05:00:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719144029; x=1719748829; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wq0GDSPoIp4+sLNJUnd9TkEoaORchJ/hKSadjq9Ps7M=;
+        b=cryfDCVgqCvZEUY0c+t7jEnyytH88L5XWsxgFbJfWN/k8P/G2AhX9oUVEcLdAI105c
+         Tt90mjbWsRN7DqTEolwunC2PFbtXmbuX4EHxgaMBv8OKGOziM/z7mKcRrlkX5/uz7bvf
+         Hx7l4ZhylyGJS16vzWXdZtmFL3eueuwo3bPkC7lBQmaqLXD3kXxPq5bSb9Ay3xkW0Bos
+         Jq8gXAaL/LXBhM4jVf3Z6gqXfh/EdAeyCUJuAi8S6AHUqepgiKr8UulUhVQ8wOMNtMG0
+         7XJQTkIov+8V3CMUJ0KQBOiHz1az365yFm5h+/4uEz4ouFRXeChL3ZuErX9NLgZ8m18m
+         WmMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719144029; x=1719748829;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Wq0GDSPoIp4+sLNJUnd9TkEoaORchJ/hKSadjq9Ps7M=;
+        b=QWnpyksNSdSu/jOPtDF1zIbdkWBZ2aax5FQnrN63gRCOEiKOkwap8DOE/lATXcxoYM
+         loJMOd8udASsYt9iuichpx8Y/f/7AyhjkksXR6j9sKnEKp/d/pUEw+ll49Qn3n0BeCxc
+         RSsdNHLwhtC4K+UMgoem2l9hFxqAM2ezSOSL8HyMR8nydi3Xp8pupQLftCjlWLtetVvy
+         6DG1H0jtTDKcfvFlM+E5F+95xZymjFKpzwtf/LGTYqtGDb1lS8P+lqOZDVkpU1NtSVWc
+         VG9qyogLolH994XJHPxvQ5UhXyw1RZil9cJaVykSDZXlPg0Xy/stvDHzr9YOo2OfDfqp
+         TAOA==
+X-Forwarded-Encrypted: i=1; AJvYcCXbutpFq5kiBLR9Ebq41yJKky2sI9tceEqFXXMuoPS1ff5quoMbdSbBzzMLqwOGXG5UU0vCzKkEuDHRHicVhobEyD5RRQlbZOZ3WjuBog==
+X-Gm-Message-State: AOJu0YxaX010Ekympwmj8Jvey0oUAZ8n76EkmOCxNh0LUx88Qe3D9Za8
+	9BB0wS5Ebk1vze4n9ixsPNHJVGcbxjpqF8v6JxQU2jV1B1aAiCEM1oeTeE1QkGY=
+X-Google-Smtp-Source: AGHT+IENFAK7IVpV/k8lzPMo9UahIiF1uHLMk0nrZAmjoYC0Fijkz3aInqbbeS6fxxaaR/xdi+aTqA==
+X-Received: by 2002:a05:600c:b44:b0:424:784c:b13b with SMTP id 5b1f17b1804b1-42489e3ac94mr22668335e9.13.1719144029481;
+        Sun, 23 Jun 2024 05:00:29 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4248179d3basm105465515e9.4.2024.06.23.05.00.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Jun 2024 05:00:28 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/3] dt-bindings: display/msm/gpu: constrain clocks in top-level
+Date: Sun, 23 Jun 2024 14:00:24 +0200
+Message-ID: <20240623120026.44198-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: x1e80100: Add gpu support
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
- freedreno <freedreno@lists.freedesktop.org>,
- dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- Rob Clark <robdclark@gmail.com>, Bjorn Andersson <andersson@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
- <20240623110753.141400-4-quic_akhilpo@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240623110753.141400-4-quic_akhilpo@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 23/06/2024 13:06, Akhil P Oommen wrote:
-> Add the necessary dt nodes for gpu support in X1E80100.
-> 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
-> +		gmu: gmu@3d6a000 {
-> +			compatible = "qcom,adreno-gmu-x185.1", "qcom,adreno-gmu";
-> +			reg = <0x0 0x03d50000 0x0 0x10000>,
-> +			      <0x0 0x03d6a000 0x0 0x35000>,
-> +			      <0x0 0x0b280000 0x0 0x10000>;
-> +			reg-names =  "rscc", "gmu", "gmu_pdc";
+We expect each schema with variable number of clocks, to have the widest
+constrains in top-level "properties:".  This is more readable and also
+makes binding stricter, if there is no "if:then:" block for given
+variant.
 
-Really, please start testing your patches. Your internal instructions
-tells you to do that, so please follow it carefully. Don't use the
-community as the tool, because you do not want to run checks and
-investigate results.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/display/msm/gpu.yaml | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-NAK.
-
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+index 40b5c6bd11f8..253e68d92779 100644
+--- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
++++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
+@@ -32,9 +32,13 @@ properties:
+           - pattern: '^amd,imageon-200\.[0-1]$'
+           - const: amd,imageon
+ 
+-  clocks: true
++  clocks:
++    minItems: 2
++    maxItems: 7
+ 
+-  clock-names: true
++  clock-names:
++    minItems: 2
++    maxItems: 7
+ 
+   reg:
+     minItems: 1
+-- 
+2.43.0
 
 
