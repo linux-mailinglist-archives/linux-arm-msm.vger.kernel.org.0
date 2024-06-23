@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 879B49139DB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 13:12:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6D429139E5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 13:13:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E89D281E93
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 11:12:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 16D5AB20EFF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 11:13:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 085C012EBCE;
-	Sun, 23 Jun 2024 11:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E0DF12EBEA;
+	Sun, 23 Jun 2024 11:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DkHNb8cH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nP//XyQu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D427946B5;
-	Sun, 23 Jun 2024 11:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1278A46B5;
+	Sun, 23 Jun 2024 11:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719141117; cv=none; b=mJXK07CZjMEFH8youW9V3mmq3QuUwDGKVwQfjhtMzGY68mS/cpjgYmNJ6/d30n11ne/Vcnhtoi4j/7DYEsyX20B2xx7ZSRNcWpEV3CHP/kBuIHPl7POexiesKNbc8JNlsh2s8izUkrQp4NCfRrlKZhkfOFN5Lu9GhlYjBJ6bs2c=
+	t=1719141212; cv=none; b=H7NELnIkkoA1rgeu7jgYwuPDg09UUbWJR50guxVi4EKFgttjYZGKJaD8DVs4FzqOL2PxO1EJbr7k49EsRlpYXddhkhe/pJpc/Shp9s496afbMC3YYD3M0jzOIkFxXHm+XeOUdodDc2oTPjiYj4qWk+zAx10HlyR3jOgeSSZG5VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719141117; c=relaxed/simple;
-	bh=qPHRh4yMZ/8cbJeSrJYArisc4wUo1J35/Y4h2m255rw=;
+	s=arc-20240116; t=1719141212; c=relaxed/simple;
+	bh=pb/S6Tg5OwzW1hhoo2u/dWQWRmQFLrxvO+bT2mvdqB4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xb0JOXrQVPbxmUymqwSgmPXbjbEGpdaUrjRKoXeX7FsJUhmj/SxeZ4+uUtI3DxbNL4vIwRml6QewtJEGxjztAuchJje/ShAD8udo8cuiU3xw/fJ69QqotpUFiIC0ZGBs5bg4kiUQzZBmzZwzTVzzLxU9sHOpF2/awNGShdyXtoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DkHNb8cH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029DAC2BD10;
-	Sun, 23 Jun 2024 11:11:50 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=GZmo3lb9yO3yiG/7lcoN21g8ijMZUVsqOalFTLXpQ4PZvq1H2y2cENqQRNQ0gkAY7HOtAqC1AiU9wG++t8IKGJWvBIaqIg946FxjmPaThdyX2t3POCro8ZGhyj21nHnuRCwvG2HBO0/jMbXGR/Pp2CqU0mmYA/67pw2HZ3tP3e4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nP//XyQu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C0BC2BD10;
+	Sun, 23 Jun 2024 11:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719141117;
-	bh=qPHRh4yMZ/8cbJeSrJYArisc4wUo1J35/Y4h2m255rw=;
+	s=k20201202; t=1719141211;
+	bh=pb/S6Tg5OwzW1hhoo2u/dWQWRmQFLrxvO+bT2mvdqB4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DkHNb8cHjRXLxIe2qK2ZoIz91F8AbEayWx6OEU+flIl7vQP7oFp+fFnWqKfotDwZi
-	 dtbKJR4J0VwMAnyJxwQbx/OW9+IbCoWlNMZ9MVvlSvMSNMjTUkTCJjS8jcK6DS907P
-	 fBKnool6pOC7E1LZpSalexxFub0WbsC3bSWnuzBi6aUL8R3lrNHfXwere5OIU3XzMC
-	 4Tx93Cqmy/2wCn9x9PNO30xCzkTo7k7+5ZFl7dlOdqh3Ynfg2ifeW6i8DBV5ynuOd3
-	 tbBuxF2KaJpzYlF1k/mbcqRAomnmd7WGTtvjWS+xEfOzSG5CIS/EhQB9dbb8MOhe60
-	 arAzzJ1eSY7Qw==
-Message-ID: <26abe6cd-e9da-4db9-9035-76edd5dda614@kernel.org>
-Date: Sun, 23 Jun 2024 13:11:48 +0200
+	b=nP//XyQuuMFA10yJBwQFp2PwmjbWL1N1K4R+0xwI3okVJ6hoh9FNNvgKcCQQ0XALP
+	 VsHvbXC5SgQqHuoerFzB0PmIfTnWV2En6rVa3OiyQiWBrRpjXRUDNkspuTI+73LzTq
+	 hi64uNwjJU8ADlD1PaVpscWDVQWp3fEKH2IY5QxfcaoZYZC5gpBP0a0qEFrvfxNahl
+	 9M0IWjykBDSUVc3872nybGkuMNvpXNT46Jn1sIi9XIkEH/M5o9frinLKgwN7aVjPS0
+	 bELgWrJEQb6yoFA//xGc/UIDRzpzfSvSmjlXXfGIX7GRmJWhgQl+47Kla2YcA5Dx14
+	 XdEa4uQtjVmQg==
+Message-ID: <fc090682-6610-4dfd-896a-640366b5975b@kernel.org>
+Date: Sun, 23 Jun 2024 13:13:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/3] Support for Adreno X1-85 GPU
+Subject: Re: [PATCH v1 1/3] dt-bindings: display/msm/gmu: Add Adreno X185 GMU
 To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
  freedreno <freedreno@lists.freedesktop.org>,
  dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -59,7 +59,6 @@ Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
  David Airlie <airlied@gmail.com>,
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
  Marijn Suijten <marijn.suijten@somainline.org>,
@@ -67,6 +66,7 @@ Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>,
  Sean Paul <sean@poorly.run>, Thomas Zimmermann <tzimmermann@suse.de>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
+ <20240623110753.141400-2-quic_akhilpo@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,36 +112,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
+In-Reply-To: <20240623110753.141400-2-quic_akhilpo@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 23/06/2024 13:06, Akhil P Oommen wrote:
-> This series adds support for the Adreno X1-85 GPU found in Qualcomm's
-> compute series chipset, Snapdragon X1 Elite (x1e80100). In this new
-> naming scheme for Adreno GPU, 'X' stands for compute series, '1' denotes
-> 1st generation and '8' & '5' denotes the tier and the SKU which it
-> belongs.
+> Document Adreno X185 GMU in the dt-binding specification.
 > 
-> X1-85 has major focus on doubling core clock frequency and bandwidth
-> throughput. It has a dedicated collapsible Graphics MX rail (gmxc) to
-> power the memories and double the number of data channels to improve
-> bandwidth to DDR.
+> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> ---
 > 
-> Mesa has the necessary bits present already to support this GPU. We are
-> able to bring up Gnome desktop by hardcoding "0xffff43050a01" as
-> chipid. Also, verified glxgears and glmark2. We have plans to add the
-> new chipid support to Mesa in next few weeks, but these patches can go in
-> right away to get included in v6.11.
-> 
-> This series is rebased on top of v6.10-rc4. P3 cherry-picks cleanly on
-> qcom/for-next.
-> 
-> P1 & P2 for Rob, P3 for Bjorn to pick up.
+>  Documentation/devicetree/bindings/display/msm/gmu.yaml | 4 ++++
 
-Which Rob?
 
-Why bindings cannot go as usual way - via the subsystem?
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
