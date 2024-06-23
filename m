@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-23748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4129C913951
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 11:42:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1184191394F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 11:42:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B96FE1F214A3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 09:42:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F2E41F21281
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 09:42:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF43F84A40;
-	Sun, 23 Jun 2024 09:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE44179B9C;
+	Sun, 23 Jun 2024 09:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="d5hAw2Fy"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="XUbqly1N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29027442F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D288438C;
 	Sun, 23 Jun 2024 09:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719135754; cv=none; b=BEFcTr5RJVAxEhTon7RHYitixFdcO+Pfsv8dj0qccIcclJpH/DYpAw00sRijFMRxrjriOnrQsmWGiEIlq2Biulwn+gCXojRIBRTpWn+S5/oys+RbTpCreWXFOWOB8z+vrpifRjJzVjOuWfcDC3K6uLDvSbJaOuwse9cw2eUIDOQ=
+	t=1719135753; cv=none; b=e2CourG6f4A9Ni/gPooc8qd9YRwx+Cf1FDtAak3B1T8Sm69FE4yBYef1rChHzuxgWygvBjZDk7w7XlXN2kEjhQsLQ31AIiwe8yFPIfWBdhLcfufXxgTRXBd7YxCkMbkTKxmqwF9HwjnfBfxDGsEfhzLV33WG0k5VYb23CDQre4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719135754; c=relaxed/simple;
-	bh=kaIIElErIyvMao5LsfXWTg+r3egznA0m7XqzZbuzJ/Q=;
+	s=arc-20240116; t=1719135753; c=relaxed/simple;
+	bh=zmniZvRHoh5jL1vf5EYtGQpxPG2Az2hORSfAnvblczI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EWcV0iCHlBJsZQZtPoeM1C77rPkDIlB3+mU+nu+xTZwPLb7UPelnxVWOUWDA44whiIsCCbOpNo/dsL9lMNOCXidRFN82ZvA95DZT1EEjON9oXskMtCTdIu0eQCCJr085s7ewbpO96Gn30Gr0hJQicuYnvKiZtgMe0EHEsd59rwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=d5hAw2Fy; arc=none smtp.client-ip=194.87.146.52
+	 In-Reply-To:To:Cc; b=Edxq8xRu35GMyb0Rdx0KIDQDNWjslicUh1AzYbY5RhWogAZx1Hvrv40kVZjbHjyg/tSZbkOVjniVIHDKmOyQTmWvu3TJaDxJf+ZyRDmCfE5AG4Ma4SSQjIOE5fbxI1KJho5CvzXvo+XHmsa6yQsX74rCHej6EikU2l3fmGRbND4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=XUbqly1N; arc=none smtp.client-ip=194.87.146.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
 Received: from authenticated-user (box.trvn.ru [194.87.146.52])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
 	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id A690942237;
-	Sun, 23 Jun 2024 14:27:09 +0500 (+05)
+	by box.trvn.ru (Postfix) with ESMTPSA id 5661442238;
+	Sun, 23 Jun 2024 14:27:10 +0500 (+05)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1719134830; bh=kaIIElErIyvMao5LsfXWTg+r3egznA0m7XqzZbuzJ/Q=;
+	t=1719134830; bh=zmniZvRHoh5jL1vf5EYtGQpxPG2Az2hORSfAnvblczI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=d5hAw2FytQmToAUf7Q63JQ8oVUtPpOybg+7VczMXPcEcMJhv/JLphiETb62VUMyqL
-	 SWZuyvO1evsUgV8D10CjdZfADjjOR+TgpiMG3Uv1H2TQWKiJwe9XMwRyWCOGFpnEBq
-	 DaoMaS+xcAg1+Y1GJhE9mEMqyQ86JNlwqRp9tODFUlx5c97u9mYGMOCcwGLYqUjwqP
-	 3DLe6ITkq2naxHCNTVLhZOuMea6jBMOY/pNEy5F5CV31pOor2g72/9Ral81kscQ0Kn
-	 GaHJS/8vq1QMGq7/63UKP9sbqVTVMPrRkbbhd0ZDrTR3GQnL3csMf6HP0GTJUNBMSB
-	 0LJfS2yOmfFaA==
+	b=XUbqly1NREiOYgUvzIxAciOjSTqFq+/CoMieTM9Rmf73Z1/MZLhX25e9ne7Ca2vVY
+	 8PSCx97uKyXnRg3rAZI5AtlhRKAGh4mp+BSMeA8uKFNS5AzL+nXG/qrrdjOmUfonkl
+	 Yz8mOje8DR7ezcrh2Dc036qkXwaeMr+Ib/H6RKNtE81NCKLpQFtTlXbC7IHara1ijf
+	 uAW3j9Ucfw7MQ94EAbSkZtyb75M1d0VbqPnooi12WM0nSkjROJPMId+iG//9RU6RML
+	 1OstRxoZCU+o6Kl5ZcKGTLa57sWzhIBRLPiZrFxRnFtQkSzkjdJ5oB+g5J3AWPWSNI
+	 OSDfLyESVBjpw==
 From: Nikita Travkin <nikita@trvn.ru>
-Date: Sun, 23 Jun 2024 14:26:31 +0500
-Subject: [PATCH 2/3] arm64: dts: qcom: msm8916-lg-m216: Add initial device
- tree
+Date: Sun, 23 Jun 2024 14:26:32 +0500
+Subject: [PATCH 3/3] arm64: dts: qcom: msm8916-lg-c50: add initial dts for
+ LG Leon LTE
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240623-msm8916-lg-initial-v1-2-6fbcf714d69b@trvn.ru>
+Message-Id: <20240623-msm8916-lg-initial-v1-3-6fbcf714d69b@trvn.ru>
 References: <20240623-msm8916-lg-initial-v1-0-6fbcf714d69b@trvn.ru>
 In-Reply-To: <20240623-msm8916-lg-initial-v1-0-6fbcf714d69b@trvn.ru>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -67,76 +67,71 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  ~postmarketos/upstreaming@lists.sr.ht, Nikita Travkin <nikita@trvn.ru>, 
- Cristian Cozzolino <cristian_ci@protonmail.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6642; i=nikita@trvn.ru;
- h=from:subject:message-id; bh=gCB2ewzd39u2E4FIZVdSVIr9W9ZHYMsjQEAGwlCVruU=;
- b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBmd+ppPfOlfe1mJkncD8fBtZFze4jpLIBYvfmmg
- TUlnDRQ+7KJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZnfqaQAKCRBDHOzuKBm/
- dVaRD/90wvJKGPjD1pffjvHAk1bPZaErl+fayeXlkrHZ39ZHiTXxz1sStdI6QTgXn+OwuNZJQ6t
- Fiac0fMCM2kbl3BH7w+fr9f6StzEGIOckz6djHgtCJs2YfzWH815w6/Pfw1xCqm0HVcE06M9OoD
- Z0a59lAdzbvUCHkjBvu1t4HE3U3ZVIRqJqGAiMpWuURFx8MWMZ47QfE6KPrNpZ98NMgGrdz9tvB
- tJcG8rrVuJzGTVRofkpBPzilD6Tpnh3TKAHj2A2jP9oPQmjoacV/7/z05aNiGjfHfxDN9RLwKek
- AAadN1rpTb7zE1luYrP/1ONYyXhkOt0jmPHve6aePurdNxxefF0D+M/MtzmP1V6VdpNbtvrTBkK
- ccmi2sk7pSFa9LhV/vloMUhPKHOlAcwAsKQQb5qC/kaHk37Hr/kp7fqXvdqFjbQQUCwKLRalfmw
- 4f3NNlTqumunHEQV4H0u24xZtsOWN8mLQubHN15+0U2vL5eURRiUcF8iZkY9PjXmLUyiWDFgvfR
- Yaiuu0d2yV2m1uqnnct9hZYxK7dzdKI0jMIwTOBkzCF0SlOu9z4LkWY9Jx3ISM5s9Rouz1Ba/qC
- cNhcwKp/OfdErnLiIddQN1iBMmkFYSAMFlSY2s7pi030aPKOOBA7amGpQNvWjtfjuCplYsN8KX+
- XQEPXUQ8vmvujUw==
+ Anton Bambura <jenneron@postmarketos.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3842; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=bC4SZtN+AFLyi1JYMGkC2HvTobEFyqaaDyPlFLIZKfE=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBmd+ppFeSvpz1i9ux/cTpIbt6hiS4fahhBIh/88
+ mvE4hfNJ3mJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZnfqaQAKCRBDHOzuKBm/
+ dRMuEACfHQlU50aDd43dm3nTkZJKSdD/W5qyjZalh8XT2Dg7jSaB5Q9uv2JgO4kWZDG1iq4rL/Y
+ JD6WKaLrvvQWV+WNGDA6Yd8UNYM6e7/9XfCYc0ORAKHKjdlKRPkyk3zkBo8FyOXHIxjnG4kuVvx
+ WHBJpbaTZwIXiPDgiYHihyWN58tuIPSaaOnLT6MK5829rcQR3E+FINMy0d7jrozxFZJD4etOwie
+ fOQVvouRyZ3TrUf80XNC40sPpCu6yOPEtDseJmZ9wQY0duG5+GeT1V4ukAJnNY7XaWQ8g/AtBBa
+ kA7p0FR7L1KCHOSRQHJncBOgy+yI7p/kkl3BnhfD1K+6uCQ9U1tgg3hKesXVWT3SYEah0n/8crl
+ iY783Ctq7zsOqau4FNwbOyrgMiCb8WbMhhx6mRtp+RhlMc0q/LisSO+l+JUw+dAgN+Rw9/HqzJ0
+ PcfJ2ClCpZeLmx52uY361IhNk6jTT90NSQSEFkxE/t6oqmSBjwHMu8rjV71/YY+Fgg7rKDg5hdd
+ kHT0BK7vY6dq7QHWDOuWFHLc+1EZ46/LmTmTbElXLhw78/u9lwTNsO035VWxrfl4nzxhUleuiNc
+ bkpA9apYfEKYaVHBUAJpTNDjmKGIrVDRRGnyFsOIaKC19GlQ87JL6oVbYHe2ltWB32S9SHqIN6y
+ Xg60yUPk/Pu539w==
 X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
  fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 
-From: Cristian Cozzolino <cristian_ci@protonmail.com>
+From: Anton Bambura <jenneron@postmarketos.org>
 
-This commit adds initial support for the LG K10 smartphone.
+Add initial device-tree for LG Leon LTE (lg-c50), currently supported
+features:
+- eMMC;
+- MicroSD;
+- usb in peripheral mode;
+- WiFi/BT;
+- vibration;
+- keys.
 
-Support for the following features is included:
-
-- Serial
-- Keys
-- Battery and charger
-- Accelerometer, magnetometer
-- Touchscreen
-- Sound and modem
-- Haptic
-
-Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
-[Nikita: Minor cleanup]
+Signed-off-by: Anton Bambura <jenneron@postmarketos.org>
 Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 ---
- arch/arm64/boot/dts/qcom/Makefile            |   1 +
- arch/arm64/boot/dts/qcom/msm8916-lg-m216.dts | 251 +++++++++++++++++++++++++++
- 2 files changed, 252 insertions(+)
+ arch/arm64/boot/dts/qcom/Makefile           |   1 +
+ arch/arm64/boot/dts/qcom/msm8916-lg-c50.dts | 140 ++++++++++++++++++++++++++++
+ 2 files changed, 141 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 5576c7d6ea06..b35e46d75a1d 100644
+index b35e46d75a1d..919dfcb26d15 100644
 --- a/arch/arm64/boot/dts/qcom/Makefile
 +++ b/arch/arm64/boot/dts/qcom/Makefile
 @@ -31,6 +31,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-asus-z00l.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-gplus-fl8005a.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-huawei-g7.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-lg-m216.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-lg-c50.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-lg-m216.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8150.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8910.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-motorola-harpia.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-lg-m216.dts b/arch/arm64/boot/dts/qcom/msm8916-lg-m216.dts
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-lg-c50.dts b/arch/arm64/boot/dts/qcom/msm8916-lg-c50.dts
 new file mode 100644
-index 000000000000..07345e694f6f
+index 000000000000..a823a1c40208
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-lg-m216.dts
-@@ -0,0 +1,251 @@
++++ b/arch/arm64/boot/dts/qcom/msm8916-lg-c50.dts
+@@ -0,0 +1,140 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +
 +/dts-v1/;
 +
 +#include "msm8916-pm8916.dtsi"
-+#include "msm8916-modem-qdsp6.dtsi"
 +
 +#include <dt-bindings/gpio/gpio.h>
 +
 +/ {
-+	model = "LG K10 (K420n)";
-+	compatible = "lg,m216", "qcom,msm8916";
++	model = "LG Leon LTE";
++	compatible = "lg,c50", "qcom,msm8916";
 +	chassis-type = "handset";
 +
 +	aliases {
@@ -149,24 +144,6 @@ index 000000000000..07345e694f6f
 +		stdout-path = "serial0";
 +	};
 +
-+	battery: battery {
-+		compatible = "simple-battery";
-+		voltage-min-design-microvolt = <3300000>;
-+		voltage-max-design-microvolt = <4350000>;
-+		energy-full-design-microwatt-hours = <8800000>;
-+		charge-full-design-microamp-hours = <2300000>;
-+
-+		ocv-capacity-celsius = <25>;
-+		ocv-capacity-table-0 = <4342000 100>, <4266000 95>, <4206000 90>,
-+			<4148000 85>, <4094000 80>, <4046000 75>, <3994000 70>,
-+			<3956000 65>, <3916000 60>, <3866000 55>, <3831000 50>,
-+			<3808000 45>, <3789000 40>, <3776000 35>, <3769000 30>,
-+			<3760000 25>, <3740000 20>, <3712000 16>, <3684000 13>,
-+			<3676000 11>, <3674000 10>, <3672000 9>, <3669000 8>,
-+			<3665000 7>, <3660000 6>, <3643000 5>, <3602000 4>,
-+			<3542000 3>, <3458000 2>, <3326000 1>, <3000000 0>;
-+	};
-+
 +	gpio-keys {
 +		compatible = "gpio-keys";
 +
@@ -177,63 +154,29 @@ index 000000000000..07345e694f6f
 +
 +		volume-up-button {
 +			label = "Volume Up";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
++			gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
 +			linux,code = <KEY_VOLUMEUP>;
 +		};
 +
 +		volume-down-button {
 +			label = "Volume Down";
-+			gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
++			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
 +			linux,code = <KEY_VOLUMEDOWN>;
 +		};
 +	};
-+};
 +
-+&blsp_i2c2 {
-+	status = "okay";
++	reg_sd_vmmc: regulator-sdcard-vmmc {
++		compatible = "regulator-fixed";
++		regulator-name = "sdcard-vmmc";
++		regulator-min-microvolt = <2950000>;
++		regulator-max-microvolt = <2950000>;
 +
-+	accelerometer@11 {
-+		compatible = "bosch,bmc150_accel";
-+		reg = <0x11>;
++		gpio = <&tlmm 60 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
 +
-+		interrupts-extended = <&tlmm 115 IRQ_TYPE_EDGE_RISING>;
++		startup-delay-us = <5000>;
 +
-+		mount-matrix =	 "0", "1", "0",
-+				"-1", "0", "0",
-+				 "0", "0", "1";
-+
-+		vdd-supply = <&pm8916_l17>;
-+		vddio-supply = <&pm8916_l6>;
-+
-+		pinctrl-0 = <&accel_int_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	magnetometer@13 {
-+		compatible = "bosch,bmc150_magn";
-+		reg = <0x13>;
-+
-+		interrupts-extended = <&tlmm 69 IRQ_TYPE_EDGE_RISING>;
-+
-+		vdd-supply = <&pm8916_l17>;
-+		vddio-supply = <&pm8916_l6>;
-+
-+		pinctrl-0 = <&magn_int_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp_i2c5 {
-+	status = "okay";
-+
-+	touchscreen@34 {
-+		compatible = "melfas,mip4_ts";
-+		reg = <0x34>;
-+
-+		interrupts-extended = <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
-+		ce-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&touchscreen_default>;
++		pinctrl-0 = <&sd_vmmc_en_default>;
 +		pinctrl-names = "default";
 +	};
 +};
@@ -242,38 +185,8 @@ index 000000000000..07345e694f6f
 +	status = "okay";
 +};
 +
-+&mpss_mem {
-+	reg = <0x0 0x86800000 0x0 0x4a00000>;
-+};
-+
-+&pm8916_bms {
-+	monitored-battery = <&battery>;
-+	power-supplies = <&pm8916_charger>;
-+
++&pm8916_usbin {
 +	status = "okay";
-+};
-+
-+&pm8916_charger {
-+	qcom,fast-charge-safe-current = <700000>;
-+	qcom,fast-charge-safe-voltage = <4300000>;
-+
-+	monitored-battery = <&battery>;
-+	status = "okay";
-+};
-+
-+&pm8916_codec {
-+	qcom,micbias1-ext-cap;
-+	qcom,micbias-lvl = <2800>;
-+	qcom,mbhc-vthreshold-low = <75 100 120 180 500>;
-+	qcom,mbhc-vthreshold-high = <75 100 120 180 500>;
-+	qcom,hphl-jack-type-normally-open;
-+};
-+
-+&pm8916_rpm_regulators {
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+	};
 +};
 +
 +&pm8916_vib {
@@ -285,30 +198,25 @@ index 000000000000..07345e694f6f
 +};
 +
 +&sdhc_2 {
++	vmmc-supply = <&reg_sd_vmmc>;
++
 +	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
 +	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
 +	pinctrl-names = "default", "sleep";
 +
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
++	cd-gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>;
 +
 +	status = "okay";
-+};
-+
-+&sound {
-+	audio-routing =
-+		"AMIC1", "MIC BIAS External1",
-+		"AMIC2", "MIC BIAS Internal2",
-+		"AMIC3", "MIC BIAS External1";
 +};
 +
 +&usb {
 +	dr_mode = "peripheral";
-+	extcon = <&pm8916_charger>;
++	extcon = <&pm8916_usbin>;
 +	status = "okay";
 +};
 +
 +&usb_hs_phy {
-+	extcon = <&pm8916_charger>;
++	extcon = <&pm8916_usbin>;
 +};
 +
 +&venus {
@@ -332,13 +240,6 @@ index 000000000000..07345e694f6f
 +};
 +
 +&tlmm {
-+	accel_int_default: accel-int-default-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
 +	gpio_keys_default: gpio-keys-default-state {
 +		pins = "gpio107", "gpio108";
 +		function = "gpio";
@@ -346,8 +247,8 @@ index 000000000000..07345e694f6f
 +		bias-pull-up;
 +	};
 +
-+	magn_int_default: magn-int-default-state {
-+		pins = "gpio69";
++	sd_vmmc_en_default: sd-vmmc-en-default-state {
++		pins = "gpio60";
 +		function = "gpio";
 +		drive-strength = <2>;
 +		bias-disable;
@@ -357,23 +258,7 @@ index 000000000000..07345e694f6f
 +		pins = "gpio38";
 +		function = "gpio";
 +		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	touchscreen_default: touchscreen-default-state {
-+		touchscreen-pins {
-+			pins = "gpio13";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		ce-pins {
-+			pins = "gpio12";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
++		bias-pull-down;
 +	};
 +};
 
