@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-23791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98648913E1E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 22:31:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B315913E22
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 22:31:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 534B0281DD3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 20:31:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9B631F21E86
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 20:31:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6397F185E59;
-	Sun, 23 Jun 2024 20:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D569185E7B;
+	Sun, 23 Jun 2024 20:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QyZuaK6i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BEYd5ZjB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A114818509C;
-	Sun, 23 Jun 2024 20:30:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EC71850A7;
+	Sun, 23 Jun 2024 20:30:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719174648; cv=none; b=Q0WxnfWw/h8HJU6QH2okarbWFurSw9yY3bSBiUpbpVPaw3D1svRFZIXtIcG5/kAunogPsofaPy/afzoMMI+pRhxWjNWyoubKWCNk90uyCixqnFurESW2pnzRsBqa0V2S08ujMzhit+O3zRuWsQtR1G457PhIxBIWTowJidD666o=
+	t=1719174649; cv=none; b=tYNFALbjPDpESuTxiRDslWO7uVf8+k59Gap8WbHmZg4Tb3HsmzMGinoWQaTFJo35twtdewcQa7ydW2Y1wp5MimJnqh3DWoJwhsUlAtzYcyis/wxa0c/RY8+tVXCdG7QJw58fayI0PRbFofwiPbec5JQtKMYc4ceBvrAiBX2tNx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719174648; c=relaxed/simple;
-	bh=yhOYS/9FzCoKFqg5QuOKMh14E/pcAsr+79fAB77M6Pk=;
+	s=arc-20240116; t=1719174649; c=relaxed/simple;
+	bh=WdkY9UKGQiYMlf5HGSUdpPWLYG2/Z2l6HTKM772afyM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hdjVxRnrbawsp7JbTwBTVcIIAA1iwEytGWizuuXhChEIi+h2VeNdew95IHoObyHLuFWDPjljNClYGPbZS2bW5V2wdkEV1qM4xPlyVQG1gUMXPYRbaAhgAp05v6EKB6fWZc43BzCgEZk5bmLTd3/UcE0eWcV61aghLeqCbgxEXOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QyZuaK6i; arc=none smtp.client-ip=209.85.221.52
+	 In-Reply-To:To:Cc; b=nNvZPIUXHqd7HAQGOCfrzss0D97iqunZWZkO/x2Pgl3OdPsyG1DalwvZxs1OOIngYajzSti9FxHnBbXU78XNL/30xti42FOMwsaE/s/YKuslBXSqheDTHYbJfTRzZJHjaE9zmA4p4NOkhsaBbwmBXIX/pk2S9GRBTPYbZyfk25E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BEYd5ZjB; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-366dcd21604so1136984f8f.1;
-        Sun, 23 Jun 2024 13:30:45 -0700 (PDT)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42249a4f9e4so27659805e9.2;
+        Sun, 23 Jun 2024 13:30:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719174644; x=1719779444; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1719174646; x=1719779446; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WcQwj4t9zR+7uYrgBkNTvxKkblY1AhgJTZPnMnuWT20=;
-        b=QyZuaK6iQOnAkrk94vX6yH7VNJdGDPG/IOqeU2VRhRXxJqGDQD6n229gEWBJypk4JK
-         rVVAt0NK74PTnHl5tIbTmtHfWQMBpAWnIidFMyn8kXTtnRHYFlEBorQ2cD+T+vNo4tAL
-         b+IH2anvCkjOe2UQ9ZKFSindaDlFQJYrGTQJpVwSCebRBeCos9HF+kKF8ZArrjVjBBBu
-         WrMeum1dmlhzVlfrKZG3wONE0CoDseHyOZeC50pDDuv6Cs9qnmWYcsCtqiHId20z1iXT
-         OdqcMqOJ9pdQNyIpypWhiWjOKoZx3GO7gj4mgKbVU4Ooiv+LHVQ0KwU/bmCBJ60q84j9
-         D15A==
+        bh=LSLZRfc59PgjAu3IAfb10/Y7qX+44+MtwIvZ2wCAgyw=;
+        b=BEYd5ZjBc1sYztPpGfehRH5QZrRT/oKIpu8smm/9B8d0fNihnOI6m8WAUBb3uVh90F
+         dtGiUjcKTvLxqmDQKiywRTie7W3hh+a2um6WXRefsetSgPFuBKl03coiMGg+LpgoLCa6
+         pxSoecoFL+HxUK3AsMmjW6gyTxNUnBdxDi4YpdFT8UsUIITjA3xrg4EYlLW7U4Sye0PN
+         i5dwsuFTXY7Tc2YYjyEQsmnVbAtkluQWvtIDJyWOcZgfQFmp8bH4lBJpuInW32QG52M2
+         mjoISq77XQvONjjBVuQKbdEGJlcd14VnHjvvRVw+l+zLVQZdqtn9niJ/v1kQZ5KcrS8k
+         ffUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719174644; x=1719779444;
+        d=1e100.net; s=20230601; t=1719174646; x=1719779446;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WcQwj4t9zR+7uYrgBkNTvxKkblY1AhgJTZPnMnuWT20=;
-        b=h+C/t19rQN9ymMG4LjiH2/E+VoP7DGvojzSAvCxImc9rfWV02awZcHXAkQy+wpU3UO
-         2wcmcm74Lp61NGQm82LEv7xBmByjBUtXz61foL0umKbly8PR6fFED7poy2oeiAcxhkJT
-         swqOO4WgbSk3LjuZJL68YfGpmumzXk4SCChaq1qkyuaTV2sJJVVCG9nr24WdwetUxhAi
-         gFOev77nz1G4EIwLzsPMS/K0QzCTsWArTOflxJ1HVBImNIASf2kMjARs/S8Ub36tlC1k
-         Cud33x1UFQBej/pkG6pQ1OiLwqaCG2nBVF7tH0NKHupgjzg4b6OVlE/v4QqU6bTYHplw
-         lwbA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3PDddft63cODVYFaO9OtDVqgOe/WER0D/UsCF2ilWvtgBJFdsiAZu8uAM/40Cy8bZnVjPg0lJWBuA+vSnjWkTr5dl5T5/OFwhzQs2hMvj+lPISzsXADKOSJlnWT2s/yNBbjkoEI/7GbjWkN7pzN5NeZUpyN0y4R1FepafVY8dffstIlQq
-X-Gm-Message-State: AOJu0YxwEW89MmOdQdIoJk3uzZLjFmODcgItYSWB/D3aiiZbHBA+uw1T
-	liTMz+5DCcXtsY4roWLXMdg/qIEksUhmobyiDsKcMptNMIaYDIXx
-X-Google-Smtp-Source: AGHT+IGQquz5k2BVLGaucgi4cKq8o9F9G60dY1wEBUIUTqJaF6oBnYohr7FR/h/6RtTQnKBlHZ0zVA==
-X-Received: by 2002:a05:6000:1f83:b0:366:f496:c0c2 with SMTP id ffacd0b85a97d-366f496c101mr220821f8f.6.1719174644185;
-        Sun, 23 Jun 2024 13:30:44 -0700 (PDT)
+        bh=LSLZRfc59PgjAu3IAfb10/Y7qX+44+MtwIvZ2wCAgyw=;
+        b=elIDRWunWzXQuhZE4gqat9hl74+mXZ/qsQYEEx0HuKIciUPPsVJOjxLq5wJHw11VoT
+         yMcHWcO9hnXUskvU4o1aMVV2PEZqnyNzKJe/9jaMW0UAtUCb++sCtUCyTC/FWTonWg2H
+         DWwcc6A2eNmu9/DEfkxjnnUke/vrRA+wMcWybVTgtBcrbsfzltR51mY/QfBjxmG+C07B
+         dl+WNyGd3I+Y41bvaRGAYDrr+nc3EI5AX3zUiNFEfkEO+ErT4g/cRRJoFsbn+qmynFSo
+         dfMIrj0c/A4k+CewbriPLK4nGrpJu8XheA1ox1OcBbAgSnjTnY8vwDt5Av7x5KV82FyZ
+         Y9CA==
+X-Forwarded-Encrypted: i=1; AJvYcCWNRRTg5VauVq1NTPiogCdJN3j8l6wbwSrE5d3PB4pjDlgb5WK1xRGyRUJblvtVWi8onTEAqbhocHz36o2cHcAIuqs+gQaDGBzRlt7kGPEwx/N8r3peshTZON1jYXaHGI79kv32xpDee4hYsqzo7WQFxkUhnzqjXPTL/hip14ki3w/q1Zdp
+X-Gm-Message-State: AOJu0YzrfbBO8Op15lF3dEDZUo2xeBGZwcIagJM4eDB69Jl77vYda7lS
+	Wt/TbhWJwW7IJLY20VQlooCPQTC66uH+WgAqAuxM+R/ICrmj3VML
+X-Google-Smtp-Source: AGHT+IFQYzva89WBUwkGC27QsYMXMAq2H+qOvshVT5ndxoilTZ70p8PAYKz5+yc8iBxI+YDaJVklkA==
+X-Received: by 2002:a5d:64c4:0:b0:366:f627:37 with SMTP id ffacd0b85a97d-366f6270197mr171245f8f.53.1719174645659;
+        Sun, 23 Jun 2024 13:30:45 -0700 (PDT)
 Received: from [192.168.1.130] (BC2492F3.dsl.pool.telekom.hu. [188.36.146.243])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366389b8ad2sm8088599f8f.33.2024.06.23.13.30.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366389b8ad2sm8088599f8f.33.2024.06.23.13.30.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jun 2024 13:30:43 -0700 (PDT)
+        Sun, 23 Jun 2024 13:30:45 -0700 (PDT)
 From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>
-Date: Sun, 23 Jun 2024 22:30:37 +0200
-Subject: [PATCH v2 2/4] drm/msm/mdp5: Add MDP5 configuration for MSM8937
+Date: Sun, 23 Jun 2024 22:30:38 +0200
+Subject: [PATCH v2 3/4] dt-bindings: msm: dsi-phy-28nm: Document msm8937
+ compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240623-dsi-v2-2-a0ca70fb4846@gmail.com>
+Message-Id: <20240623-dsi-v2-3-a0ca70fb4846@gmail.com>
 References: <20240623-dsi-v2-0-a0ca70fb4846@gmail.com>
 In-Reply-To: <20240623-dsi-v2-0-a0ca70fb4846@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -95,125 +96,43 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  devicetree@vger.kernel.org, 
  =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <trabarni@gmail.com>, 
- phone-devel@vger.kernel.org, Daniil Titov <daniilt971@gmail.com>
+ phone-devel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
 X-Mailer: b4 0.14.0
 
-From: Daniil Titov <daniilt971@gmail.com>
+The MSM8937 SoC uses a slightly different 28nm dsi phy. Add a new
+compatible for it.
 
-Add the mdp5_cfg_hw entry for MDP5 version v1.14 found on msm8937.
-
-Signed-off-by: Daniil Titov <daniilt971@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 88 ++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+ Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml | 1 +
+ Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml    | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index c5179e4c393c..fac8e276da52 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -1011,6 +1011,93 @@ static const struct mdp5_cfg_hw msm8917_config = {
- 	.max_clk = 320000000,
- };
- 
-+static const struct mdp5_cfg_hw msm8937_config = {
-+	.name = "msm8937",
-+	.mdp = {
-+		.count = 1,
-+		.caps = MDP_CAP_CDM,
-+	},
-+	.ctl = {
-+		.count = 3,
-+		.base = { 0x01000, 0x01200, 0x01400 },
-+		.flush_hw_mask = 0xffffffff,
-+	},
-+	.pipe_vig = {
-+		.count = 1,
-+		.base = { 0x04000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SCALE	|
-+			MDP_PIPE_CAP_CSC	|
-+			MDP_PIPE_CAP_DECIMATION	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
-+	},
-+	.pipe_rgb = {
-+		.count = 2,
-+		.base = { 0x14000, 0x16000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_DECIMATION	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
-+	},
-+	.pipe_dma = {
-+		.count = 1,
-+		.base = { 0x24000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			0,
-+	},
-+	.pipe_cursor = {
-+		.count = 1,
-+		.base = { 0x34000 },
-+		.caps = MDP_PIPE_CAP_HFLIP	|
-+			MDP_PIPE_CAP_VFLIP	|
-+			MDP_PIPE_CAP_SW_PIX_EXT	|
-+			MDP_PIPE_CAP_CURSOR	|
-+			0,
-+	},
-+
-+	.lm = {
-+		.count = 2,
-+		.base = { 0x44000, 0x45000 },
-+		.instances = {
-+				{ .id = 0, .pp = 0, .dspp = 0,
-+				  .caps = MDP_LM_CAP_DISPLAY |
-+					  MDP_LM_CAP_PAIR },
-+				{ .id = 1, .pp = 1, .dspp = -1,
-+				  .caps = MDP_LM_CAP_DISPLAY },
-+			     },
-+		.nb_stages = 5,
-+		.max_width = 2048,
-+		.max_height = 0xFFFF,
-+	},
-+	.dspp = {
-+		.count = 1,
-+		.base = { 0x54000 },
-+
-+	},
-+	.pp = {
-+		.count = 2,
-+		.base = { 0x70000, 0x70800 },
-+	},
-+	.cdm = {
-+		.count = 1,
-+		.base = { 0x79200 },
-+	},
-+	.intf = {
-+		.base = { 0x00000, 0x6a800, 0x6b000 },
-+		.connect = {
-+			[0] = INTF_DISABLED,
-+			[1] = INTF_DSI,
-+			[2] = INTF_DSI,
-+		},
-+	},
-+	.max_clk = 320000000,
-+};
-+
- static const struct mdp5_cfg_hw msm8998_config = {
- 	.name = "msm8998",
- 	.mdp = {
-@@ -1325,6 +1412,7 @@ static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
- 	{ .revision = 9, .config = { .hw = &msm8x94_config } },
- 	{ .revision = 7, .config = { .hw = &msm8x96_config } },
- 	{ .revision = 11, .config = { .hw = &msm8x76_config } },
-+	{ .revision = 14, .config = { .hw = &msm8937_config } },
- 	{ .revision = 15, .config = { .hw = &msm8917_config } },
- 	{ .revision = 16, .config = { .hw = &msm8x53_config } },
- };
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+index 288d8babb76a..a55c2445d189 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
+@@ -16,6 +16,7 @@ properties:
+   compatible:
+     enum:
+       - qcom,dsi-phy-28nm-8226
++      - qcom,dsi-phy-28nm-8937
+       - qcom,dsi-phy-28nm-8960
+       - qcom,dsi-phy-28nm-hpm
+       - qcom,dsi-phy-28nm-hpm-fam-b
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
+index e4576546bf0d..7c6462caa442 100644
+--- a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
++++ b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
+@@ -126,6 +126,7 @@ patternProperties:
+           - qcom,dsi-phy-14nm-8953
+           - qcom,dsi-phy-20nm
+           - qcom,dsi-phy-28nm-8226
++          - qcom,dsi-phy-28nm-8937
+           - qcom,dsi-phy-28nm-hpm
+           - qcom,dsi-phy-28nm-hpm-fam-b
+           - qcom,dsi-phy-28nm-lp
 
 -- 
 2.45.2
