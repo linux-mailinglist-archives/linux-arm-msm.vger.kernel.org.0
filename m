@@ -1,137 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-23751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B40A9139AF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 12:49:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90DE49139B5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 13:01:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C30F31F220C8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 10:49:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFBBE1C209BE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 11:01:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8002012E1E0;
-	Sun, 23 Jun 2024 10:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D832779B6F;
+	Sun, 23 Jun 2024 11:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O0pURa1c"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2yLDd/O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA7D944E;
-	Sun, 23 Jun 2024 10:49:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4C82F25;
+	Sun, 23 Jun 2024 11:00:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719139747; cv=none; b=kQZrER/W5xLl9jWLt/HOW+8qjUGZg13fpAQ07w1eBRckfbNbiSIYBzFZ76wtUmaOUp5IPJsaDULiNyKXR7FYH3Bl7WaWtNTq+i0NB5/CfJawaRuo4kq9gKSFnhcZx4u6BZDsWjbrNvvHW/zumxp/Gc3PELvK/F8B9RP9pOOesnk=
+	t=1719140458; cv=none; b=nLnCUOYoJPsZXKnzmEKrDvuFBOzq/PJWe68wiTiQZOzF0YbY0aD7By5wfOlsCqyqL6zryidWk3p39VtBkU7OHLec/+ZhwLUsqiFrWXgzrtQwNJsQPQaykwGsQlEhcwthubE3sm8TwpL4CQo7zR4vZL7oQWxKdc9oQg8yITWfDbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719139747; c=relaxed/simple;
-	bh=X6fFwcZ2bciYxHGg1tV+do5pO+J0UpUU9qrl+KByrH4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DUJBuKn3UT/U8bahqqhf1ZDjG5raXihPDukgNnSM5z5vW3Q7hhgTmP9BXttwZ9OtOibi9usQvmVBRNVbYOshT3g3gxOK4GApw0yui3eloHvZbY6tSYwm8Ccs0jmq8fo8IwcYZU3z7yBEF4vA1ecZLZY2v1KWyF15CHlQuz4fg3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O0pURa1c; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-71816f36d4dso1118160a12.2;
-        Sun, 23 Jun 2024 03:49:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719139745; x=1719744545; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5tOKBNF1K6kM4/l3Ir2w3oOEOvrznnr6BloYrKa9764=;
-        b=O0pURa1cOzyVKAtG9QML4oivBW49aGJ4dmSgRzH1Q/oeoUqivDPeCZcqEE0ijWqo8v
-         n3E5bsJeFNm9YQb1uqaTAr8E2J2YAtvYbkfN52jbS5pSrS5V2fUWcOsN4L0WmOgTeVP4
-         1pYXSg9niS37jDNtYn6rVEZavNQdg7mbF81rAufOlnkmh8z8lYyi6Fp2b5in8vk2uRC3
-         rsPwDBWDZJt7Le+X1tOm8URI+2cz3sseKPR5EZFHgMlhnZr92vLk4tNyEPkbUrzI+3LK
-         FguUA5iS/2H1FZKe6SNyBhiDVBRPA6soJbbfDeeltsxLtLvfBMNij+QIcZ/+vqBiwGJC
-         8J4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719139745; x=1719744545;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5tOKBNF1K6kM4/l3Ir2w3oOEOvrznnr6BloYrKa9764=;
-        b=HwKL2mN7k0vMhIavzf8DiMeaSdoLrjyUCPXIfkBbo9mq3gYfHXl9Vy1Dk2BfOv+HPh
-         g6aKQnIQPIHYSXgb6GAVT9omGJ8AIIig/KnadkiAjLrV+G3Whmn6Cm4/YmGOan+f1eRU
-         cHgpfeTIwmgW5l9eji+gs/j10Z8MR+UB2WsRi9as2/mlK4uMlBME+zn6+xNMj2qRat6w
-         eObGuuKr0hQz1XYnUSNqWGnr15A/Yt5ysXWoy6wZhJIQBjH2C6LUV7b6Wv/KyxLTMZsK
-         sMUiztrCtLKWlv2PX7815Z9OtNaFHex+FaFBrZNNeSuqW9CIuQhWjlU5PTLop+G5AMsc
-         Rc1w==
-X-Forwarded-Encrypted: i=1; AJvYcCW1zgJwBRONwUZ4uRkU518zawwJIJ+aVjKqmVe6yG9NlalMCAab9BQFGUgMIokHs+grGkDwAcAdvVAxopZ59xTbyQI5g12t0P7HQL5ZEuTTu3jN8BsrPKoX7KC8HQ9dUPllxuzL8CwpMnxmc0I/ThP+koabLj5Ds2f0bw7JDoLte6cfwQ+S+ZM=
-X-Gm-Message-State: AOJu0YzJkaGXMLkLxeKwcg5nJRfNVK5iAjl0d96jJJZPnjCJgEH/6MFB
-	rQTn65FjugQg9CIKn7LqNG8XSMQyozP5FucocrQI+9yuowMUCCFvVpnMgACBIekyz3RevKV3WKk
-	cIvDU2shNE05bNWJIm9xAAy0+T4U=
-X-Google-Smtp-Source: AGHT+IEYhaua3z+8fvVxYKOlzI0SeXlh1Mqqe1m7wg491bift0wbb0Sz1XkAToMjWcbemVJ9AJKorDfG72cQicJRWyw=
-X-Received: by 2002:a05:6a21:7882:b0:1b5:1feb:b3f9 with SMTP id
- adf61e73a8af0-1bcf7e32018mr2620120637.9.1719139745149; Sun, 23 Jun 2024
- 03:49:05 -0700 (PDT)
+	s=arc-20240116; t=1719140458; c=relaxed/simple;
+	bh=s9ktlOk5rgXLTV0qoIMyyFh2wcN/yDHTrOkU07p8qIs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kxQmK4Fqez/9uO1OeLRmguO6IYKJV2gMRR2PgpNcyfY9znDTDrvUocksN7p88ZzEMDJafqREhG0iUxku93jQkFVpZynABLeg57ejUxdSKNj1Cozp1FU2xNu8HbbpNDd8t+JplorPv2nnQwMMXbgVaIEkcJVArJ92RYGPNSpsgSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2yLDd/O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DADC2BD10;
+	Sun, 23 Jun 2024 11:00:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719140458;
+	bh=s9ktlOk5rgXLTV0qoIMyyFh2wcN/yDHTrOkU07p8qIs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=h2yLDd/ObKLK12CpZE+wCyc83k4+iC7iWie8ZvuVhUdnU7Fe16L7C8I3+Gp6s/1HL
+	 5il8b9FaQQ07DICugKEJM4samgCSFJQu+SzeFw5rk8lU6dQZzk+aMnED/F5EENV/Bs
+	 3PL9nqmizHh2VT1Mbm/Qg7tck49K88t0jJecEaInpgHzJ3L0n5ZHr4WlOJITe5jOsY
+	 t2UpAoHgPRAnuTZ3KbriSd7ZXGz1xPJfqddKzSALYc9iIKMW4rbqiiHfvGC4ALdkh+
+	 QI9Nxxnc4L11mGK2XGLcwckULHIaTJLj0R9zGOC7lQ3Q6w8fBuq83vyDAre2MzDraq
+	 +uXf3R1e9/+sw==
+Message-ID: <880ac2b8-c2d0-4d62-a723-5353588ce3ae@kernel.org>
+Date: Sun, 23 Jun 2024 13:00:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240623-dsi-v1-0-4ab560eb5bd9@gmail.com> <20240623-dsi-v1-2-4ab560eb5bd9@gmail.com>
- <hzslz54iq5sjmfhcbuj3my7cbjsu73acxeelih3jekr6rznz44@qie4c4w5lt2d>
-In-Reply-To: <hzslz54iq5sjmfhcbuj3my7cbjsu73acxeelih3jekr6rznz44@qie4c4w5lt2d>
-From: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>
-Date: Sun, 23 Jun 2024 12:48:53 +0200
-Message-ID: <CAGsSOWUDbvUMW95Xnjrg4z7TJ9=tj7_KHyek3xTuzbDP2_VhHw@mail.gmail.com>
-Subject: Re: [PATCH 2/4] drm/msm/mdp5: Add MDP5 configuration for MSM8937
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Krishna Manikandan <quic_mkrishn@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Daniil Titov <daniilt971@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add msm8916 based LG devices
+To: Nikita Travkin <nikita@trvn.ru>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20240623-msm8916-lg-initial-v1-0-6fbcf714d69b@trvn.ru>
+ <20240623-msm8916-lg-initial-v1-1-6fbcf714d69b@trvn.ru>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240623-msm8916-lg-initial-v1-1-6fbcf714d69b@trvn.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Jun 23, 2024 at 7:59=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Sun, Jun 23, 2024 at 01:25:52AM GMT, Barnab=C3=A1s Cz=C3=A9m=C3=A1n wr=
-ote:
-> > From: Daniil Titov <daniilt971@gmail.com>
-> >
-> > Add the mdp5_cfg_hw entry for MDP5 version v1.14 found on msm8937.
-> >
-> > Signed-off-by: Daniil Titov <daniilt971@gmail.com>
-> > Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <trabarni@gmail.com>
-> > ---
-> >  drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 89 ++++++++++++++++++++++++=
-++++++++
-> >  1 file changed, 89 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm=
-/msm/disp/mdp5/mdp5_cfg.c
-> > index c5179e4c393c..6413c0d3e237 100644
-> > --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-> > +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-> > @@ -1011,6 +1011,94 @@ static const struct mdp5_cfg_hw msm8917_config =
-=3D {
-> >       .max_clk =3D 320000000,
-> >  };
-> >
-> > +static const struct mdp5_cfg_hw msm8937_config =3D {
-> > +     .name =3D "msm8937",
-> > +     .mdp =3D {
-> > +             .count =3D 1,
-> > +             .caps =3D MDP_CAP_CDM |
-> > +                     MDP_CAP_SRC_SPLIT,
->
-> Could you please point out the SRC_SPLIT reference?
-Is this would be qcom,mdss-has-source-split in downstream, because if
-it is i think it is a mistake and it is wrong at msm8953 also.
->
-> Other than that LGTM
->
-> --
-> With best wishes
-> Dmitry
+On 23/06/2024 11:26, Nikita Travkin wrote:
+> Add compatible values for the msm8916 based LG smartphones.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 2 +
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
 
