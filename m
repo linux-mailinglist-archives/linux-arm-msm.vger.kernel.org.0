@@ -1,197 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-23765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38387913A5C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 14:07:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58FA5913A96
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 14:29:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5DEEA1C20863
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 12:07:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E5601F21950
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 12:29:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 603D4180A92;
-	Sun, 23 Jun 2024 12:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86AE018130F;
+	Sun, 23 Jun 2024 12:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nWiJVsR+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YLoVCq+M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42A7180A8C
-	for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 12:07:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99BA12E1DC;
+	Sun, 23 Jun 2024 12:29:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719144434; cv=none; b=aKWH5zYuwE4skBYZbsXQuKZD3LjimEEEdKz9UBRPw/0W81vJu2ZIPMPTWkVWAb+RFBryM5IlhqIPiYmYybDD6+AWH6xKT8k+LX1aD1UzxTziekWQkRr91E/IoIR6cvYCRqTEddZm67KV6n5giXjhf8sM3Twt9doCVWS61tL0Us8=
+	t=1719145759; cv=none; b=FzHDSCaD4jIHdybQiOsONZKnefT0gSORdthfU1/O0h1afZqOdMvEVsgcK3sLIahLTgDAtbLtnT0v2OrlepGqQKPeCDiF+EsUht973eisXP1WN0RkfC+VRGFypVL79San3YC8k9UCqISD7vS/XxSCZDMO6Xmb2ZL3xR45Mze7cLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719144434; c=relaxed/simple;
-	bh=uHYvDYR/0OCKZLGvvzWmpbwWIBr305LjSa6MiZXxS8M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KOzBw8on/oEWSIC4w5+eRWrGXTGDAprH9OdrfYB8XzyajqQBRbWW4UbdsHrXRh/+QiNoJbA9lg0YYow7EMwitUhVHVDnUwCrqsurXeUL9M22Hww+I9/zQjclpqwfK8M4rXh2V175vl25DwuZE0s62+XKt0OQgAz/lWieID3J3+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nWiJVsR+; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a6fe118805dso104742066b.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 05:07:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719144431; x=1719749231; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Im9pps3F9eSCq1woRzWsXbS8wxrxaZe4+MW3D6HBN4=;
-        b=nWiJVsR+G0sv2Cqfk5kghvfAhkVc7YEKiGtte+mIKBX7nmDvNWJE8ELrtddf4Bvj27
-         lnuwwWhVLBJcDiRuUnPcISQvapoDiYan0e6evYuaC+2iWgWmxGlTLh9EZeWQbOzn78er
-         q/Hu8xswUDUoWY0WLY5B7MvBNkr48Sga6eamRjCepS2yXMuL4ajuJV8Gbf4MYqhOD9CJ
-         hyhyH6ZUB6djPptBiJXzIZsnjpIDLC2z5zxKkoCFuz2sDUYCvXnMYrDkZ1gmk67mDCdz
-         CwKG/ndgl6iN9p87lnHZG7X//5wCE4sjJO5CIcuLyGnh75TgjBcyRQhj/oDMeIVwyXzc
-         PhuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719144431; x=1719749231;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6Im9pps3F9eSCq1woRzWsXbS8wxrxaZe4+MW3D6HBN4=;
-        b=T/QhviRsLQNwHOA3qATnbUvHfjImYVlrUXL3S+Qeov1eB8S4GFXnNUShoseMPaxLBL
-         ZWvVW//x+Qopg/qwcIs4UTERkkoTKxhJ65HIj0h738GYbEXsBADTjpx9eRPfOzKs5IaU
-         7eOgkwv2W7YyRjkqOta9LUXiDpN4jI0czFJ3Cv/D0SEFs9tffPRdsEPHpN/0irzQudmE
-         rLunf9LElWW3mFRqdBzlFdK/6bHqBrIjuVlbRI7vj1j0BrkRXV9rh2JEyl3grp3CEFZB
-         sDhfcvDtlKoacp2U3m2lNACuTJ11OgfHdA2R94q1v7HCrdwyM31HvdnKPB9VhOkd1jsh
-         z1UQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUkLdsPkIkLMQVTWy2WficU6t1cyUwHpzYecgs6pzrEJhVJ01zVtq9BSKJ5RN3QydGThixVX2IJIDxdIeq1BqlnWdKxV1OzYiEb7FDphw==
-X-Gm-Message-State: AOJu0Yy4qIySkZBEhFcfEQiaGEIF/V9h6LQpL6y79IrVO+qXKWEd68qZ
-	MMvrNp0DQOnpP0k9CzcFpM9j+2dbjaoz5hfQmIqbBumsWUcSzbbDuyDiVUaRgTg=
-X-Google-Smtp-Source: AGHT+IFFOnAlnUD5SZlHKO+8g/23aF3khBJGARG75g3tsfD2hW3IYT329v2VSFQKwncszwU9X7alAA==
-X-Received: by 2002:a17:906:9c93:b0:a6f:b7a0:3e68 with SMTP id a640c23a62f3a-a7245ccda3dmr140352366b.20.1719144430919;
-        Sun, 23 Jun 2024 05:07:10 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6ff4f68248sm162501566b.127.2024.06.23.05.07.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jun 2024 05:07:10 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] ARM: dts: qcom: use generic node names for Adreno and QFPROM
-Date: Sun, 23 Jun 2024 14:07:07 +0200
-Message-ID: <20240623120707.45764-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1719145759; c=relaxed/simple;
+	bh=cky/kSkaCeylvXef85j3RyeX3RYPaIwSjScPJhylWA4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fmWkhr+xEnL0nzmw0lUdtVbl+kCglKRVKWTam5fl5QsjL2MXh9oR0xhrapZgLnYJbTNfhdK+rOZ0Qp4nGLEKhGBleSVb7BOfk18kzlDRYW+oZbrBDFEb/Gvzkkax2iTD8T7PB9n7pjGQqn2Cbgk3A2eUke+Obpr8286miMTDVOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YLoVCq+M; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45NCNQTY018008;
+	Sun, 23 Jun 2024 12:29:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=gcOBVNuicamzRrxkqh3J9eaD
+	ckZU8bubeR6mJxEkb8U=; b=YLoVCq+MToIZdDxGR133ksW0KGB1V3VPjpe4Ssf6
+	lXvCDL0dYMVmy3jpHfi10y/MKsey8zofgiZh0xEh+q2QAdqyzoOGQekQrJfZvFEG
+	7UqP6Snvn+AYC+XlJpO4eKVPOWMHZEtPou/8tcexCKfJiDYlLXeeETSV1U9bT6gF
+	5lIby9gitZIHNuEqTj+YWTj7/aIA564A3EdK3qwRSbHRyJ/dB4cjWlmueDODwD+N
+	cKXMQfMbxi+XFMZ3Do3rKIbFW5PeTdMfBFKomLzW50ituGGJRcNLr173xBlMVf7q
+	JUnzxWlJXBR+/B65n9YE982M4VvNS2sS4XUZXFDchLfULQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywkyn1v1p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 23 Jun 2024 12:29:05 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45NCT4aB002310
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 23 Jun 2024 12:29:04 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 23 Jun 2024 05:29:00 -0700
+Date: Sun, 23 Jun 2024 17:58:56 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof
+ Kozlowski <krzk+dt@kernel.org>,
+        Rob Herring <robh@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: x1e80100: Add gpu support
+Message-ID: <20240623122856.kqf4x6mft74hzk7y@hu-akhilpo-hyd.qualcomm.com>
+References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
+ <20240623110753.141400-4-quic_akhilpo@quicinc.com>
+ <a458a3a7-2b6d-4032-949c-b2c021d339e8@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <a458a3a7-2b6d-4032-949c-b2c021d339e8@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: UVPanTcHEq44dPrcdpGON_SISnjPdDus
+X-Proofpoint-GUID: UVPanTcHEq44dPrcdpGON_SISnjPdDus
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-23_04,2024-06-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ mlxscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
+ mlxlogscore=999 spamscore=0 clxscore=1011 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406230099
 
-Use recommended generic node names for the Adreno GPU and QFPROM fused
-values device nodes.
+On Sun, Jun 23, 2024 at 01:17:16PM +0200, Krzysztof Kozlowski wrote:
+> On 23/06/2024 13:06, Akhil P Oommen wrote:
+> > Add the necessary dt nodes for gpu support in X1E80100.
+> > 
+> > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> > ---
+> > +		gmu: gmu@3d6a000 {
+> > +			compatible = "qcom,adreno-gmu-x185.1", "qcom,adreno-gmu";
+> > +			reg = <0x0 0x03d50000 0x0 0x10000>,
+> > +			      <0x0 0x03d6a000 0x0 0x35000>,
+> > +			      <0x0 0x0b280000 0x0 0x10000>;
+> > +			reg-names =  "rscc", "gmu", "gmu_pdc";
+> 
+> Really, please start testing your patches. Your internal instructions
+> tells you to do that, so please follow it carefully. Don't use the
+> community as the tool, because you do not want to run checks and
+> investigate results.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 4 ++--
- arch/arm/boot/dts/qcom/qcom-apq8084.dtsi | 2 +-
- arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi | 2 +-
- arch/arm/boot/dts/qcom/qcom-msm8226.dtsi | 4 ++--
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 4 ++--
- 5 files changed, 8 insertions(+), 8 deletions(-)
+This was obviously tested before (and retested now) and everything works. I am
+confused about what you meant. Could you please elaborate a bit? The device
+and the compilation/test setup is new for me, so I am wondering if I
+made any silly mistake!
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
-index 178a3b424670..d73ea1434b36 100644
---- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
-@@ -666,7 +666,7 @@ ssbi: ssbi@500000 {
- 			qcom,controller-type = "pmic-arbiter";
- 		};
- 
--		qfprom: qfprom@700000 {
-+		qfprom: efuse@700000 {
- 			compatible = "qcom,apq8064-qfprom", "qcom,qfprom";
- 			reg = <0x00700000 0x1000>;
- 			#address-cells = <1>;
-@@ -992,7 +992,7 @@ tcsr: syscon@1a400000 {
- 			reg = <0x1a400000 0x100>;
- 		};
- 
--		gpu: adreno-3xx@4300000 {
-+		gpu: gpu@4300000 {
- 			compatible = "qcom,adreno-320.2", "qcom,adreno";
- 			reg = <0x04300000 0x20000>;
- 			reg-names = "kgsl_3d0_reg_memory";
-diff --git a/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi
-index ca53dff820ef..2b52e5d5eb51 100644
---- a/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-apq8084.dtsi
-@@ -245,7 +245,7 @@ sram@fc190000 {
- 			reg = <0xfc190000 0x10000>;
- 		};
- 
--		qfprom: qfprom@fc4bc000 {
-+		qfprom: efuse@fc4bc000 {
- 			compatible = "qcom,apq8084-qfprom", "qcom,qfprom";
- 			reg = <0xfc4bc000 0x1000>;
- 			#address-cells = <1>;
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
-index 4e36fe4bf2a1..0b04ea856f7c 100644
---- a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
-@@ -372,7 +372,7 @@ ssbi@500000 {
- 			qcom,controller-type = "pmic-arbiter";
- 		};
- 
--		qfprom: qfprom@700000 {
-+		qfprom: efuse@700000 {
- 			compatible = "qcom,ipq8064-qfprom", "qcom,qfprom";
- 			reg = <0x00700000 0x1000>;
- 			#address-cells = <1>;
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-index 270973e85625..b2f92ad6499a 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8226.dtsi
-@@ -635,7 +635,7 @@ restart@fc4ab000 {
- 			reg = <0xfc4ab000 0x4>;
- 		};
- 
--		qfprom: qfprom@fc4bc000 {
-+		qfprom: efuse@fc4bc000 {
- 			compatible = "qcom,msm8226-qfprom", "qcom,qfprom";
- 			reg = <0xfc4bc000 0x1000>;
- 			#address-cells = <1>;
-@@ -1046,7 +1046,7 @@ cci_i2c0: i2c-bus@0 {
- 			};
- 		};
- 
--		gpu: adreno@fdb00000 {
-+		gpu: gpu@fdb00000 {
- 			compatible = "qcom,adreno-305.18", "qcom,adreno";
- 			reg = <0xfdb00000 0x10000>;
- 			reg-names = "kgsl_3d0_reg_memory";
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-index 1bea3cef4ba7..f9820d996910 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-@@ -1235,7 +1235,7 @@ restart@fc4ab000 {
- 			reg = <0xfc4ab000 0x4>;
- 		};
- 
--		qfprom: qfprom@fc4bc000 {
-+		qfprom: efuse@fc4bc000 {
- 			compatible = "qcom,msm8974-qfprom", "qcom,qfprom";
- 			reg = <0xfc4bc000 0x2100>;
- 			#address-cells = <1>;
-@@ -2131,7 +2131,7 @@ cci_i2c1: i2c-bus@1 {
- 			};
- 		};
- 
--		gpu: adreno@fdb00000 {
-+		gpu: gpu@fdb00000 {
- 			compatible = "qcom,adreno-330.1", "qcom,adreno";
- 			reg = <0xfdb00000 0x10000>;
- 			reg-names = "kgsl_3d0_reg_memory";
--- 
-2.43.0
+-Akhil.
 
+> 
+> NAK.
+> 
+> Best regards,
+> Krzysztof
+> 
 
