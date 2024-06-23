@@ -1,64 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-23798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EB0C913E51
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 23:02:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C10FE913E54
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 23:02:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 593C61C20BE3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 21:02:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CBD52810FB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Jun 2024 21:02:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C721D185E55;
-	Sun, 23 Jun 2024 21:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9565318628F;
+	Sun, 23 Jun 2024 21:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pFPXhVkj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rgV7ps5v"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCEC185E45;
-	Sun, 23 Jun 2024 21:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6686B185E7F;
+	Sun, 23 Jun 2024 21:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719176545; cv=none; b=aGwo8GmhNqABOqkZ8pFO8OYr/f6ai7Y2KkC7cCgMqG5548sCV7iZRK0awSvYEFBe/yqHax2J1YTXRGqbnyLa/HGGqdSFe9j60l2wOKSmF6yv99MSKyLE+jwVPFRXycPrtRshPZQHKOHSMLZwhsAme3kS8RiVSMiiIpbDfyY6rB8=
+	t=1719176546; cv=none; b=a2g5wgqp78iPq/JJrnQqA4uLTc45ipSEpRJbglgo0dLeSzlOOOBc0jY6rRE1Aq9+K4Y9sgVBmBaVDXm7e1ehqtW3mFB2zrbf6ihODXERT/4dIUrdRN6LaMDaDxfLDYWqNE+g/YFzhTIm60iQJ+mLyAVlc3Px2QTHE6ZmbJEZMf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719176545; c=relaxed/simple;
-	bh=t7TgurxsfE4m6PvnqrAHv9KBUFSVR7gLduawgM0sIj0=;
+	s=arc-20240116; t=1719176546; c=relaxed/simple;
+	bh=yvJT/cmcZAfndheoRjv8i9540icE9Y7nROXCDIiKrso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xfa7bJBPTl2M7HfHoLVldHGR0ej0bH/qvQnSwfd0RNx2DPaAhnq09dbba+OzVspEdoBhNuTwq6c4Us9Rp+uWqGJ8qce5pA8As9XRSyt9a7laXLcz7tfhr73KIzsJpZl288YVTj14tsIBLR7WrltbtOuoWqCTA39W41uawVSSuMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pFPXhVkj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D4BC2BD10;
-	Sun, 23 Jun 2024 21:02:24 +0000 (UTC)
+	 MIME-Version:Content-Type; b=srcR47iW637W2NOiCx6t5dhx5dNQ5CQff1DOhlItdoiIZrsv/jxs9/mkJhLmrH6ShjKT89W/RhsKhyIkm+k22vcWhg3pUE64X5nEV/Z8vAXyp9Vb7sxzWG3SeK9ROv0Pyka1C+JE2pef1KWu5HjpDYeBQsg18jz7Oa054ReiOx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rgV7ps5v; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6CEC4AF0A;
+	Sun, 23 Jun 2024 21:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719176545;
-	bh=t7TgurxsfE4m6PvnqrAHv9KBUFSVR7gLduawgM0sIj0=;
+	s=k20201202; t=1719176546;
+	bh=yvJT/cmcZAfndheoRjv8i9540icE9Y7nROXCDIiKrso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFPXhVkjXSJoDO4BYA4vr0VkVk8elqlOB2dI6F0MeBTiu9C6oG2QF6T1zOxNJ634w
-	 rABHK4NnW+X44Rdyv53c5znd8scqW7xRrPqH2qV9e0MvyboIDYZ6bDz1LFQ8fVc3ku
-	 70XF2iFzSJtlayvU7IGsLHJHxbtGQqsOXEtnZJ8AdGG5KuZWY5kgIXxQyWmFZNi+d+
-	 xMCeefeNnkmhVn49ylZG/T41d6ccxA+FnPdkm3YZJZsA+AJ8S5NYzre4eMBW53Npk0
-	 17ib7q1BO0Zs9oVN4kNT0+79WklY+ucPtNgtK+VeFHeCwOiFNpo9vc8WJkMsUjqGgg
-	 ycFK9x3klEgMQ==
+	b=rgV7ps5vIFmOUe3dZ/DXur1MNZrLe/D9CrDQ96oZLNUsm5bx9h6pmYyuPzDGS85jp
+	 /D1EvqrYwkaF7m/K3gTGynLkatjOUxG02qUDpxhEJJTR4WIGhZTjREctSm8kdExwIi
+	 dg2Y4D5j6v5g4vcXi+ba9a5tYTMdQ3FyHk8QrokFZSSLruQXdqTAwQuxF4Tmt51UXE
+	 /BZFNE/BfSRsXPiXXaN2+MpHx2s/PRlGphGukAMhiqe1vMNriH+V6KlND2RIvkeJyf
+	 YUINRyqsE21s9CibgK+gLdPq9DYc+z+Gs78R8SPQ5z46wZLXePWGMIDuSsOid3qzfT
+	 cu56JrBHlIRGQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	"Lin, Meng-Bo" <linmengbo06890@proton.me>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Nikita Travkin <nikita@trvn.ru>,
-	linux-arm-msm@vger.kernel.org,
+	Luca Weiss <luca@lucaweiss.eu>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916-gplus-fl8005a: Add BMS
-Date: Sun, 23 Jun 2024 16:02:16 -0500
-Message-ID: <171917653474.4580.13059967965677778281.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/5] Use mboxes in smsm node for all dtsi where possible
+Date: Sun, 23 Jun 2024 16:02:17 -0500
+Message-ID: <171917653478.4580.6060139020291195660.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240621141319.347088-1-linmengbo06890@proton.me>
-References: <20240621141319.347088-1-linmengbo06890@proton.me>
+In-Reply-To: <20240619-smsm-mbox-dts-v1-0-268ab7eef779@lucaweiss.eu>
+References: <20240619-smsm-mbox-dts-v1-0-268ab7eef779@lucaweiss.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,16 +68,29 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 21 Jun 2024 14:13:33 +0000, Lin, Meng-Bo wrote:
-> There is PM8916 Battery voltage monitor on GPLUS FL8005A.
-> Add PM8916 BMS and the battery to the device tree.
+On Wed, 19 Jun 2024 18:42:26 +0200, Luca Weiss wrote:
+> With the binding and driver patches queued for 6.11[0][1], it's time to
+> update the dtsi files to use the new binding.
 > 
+> [0] https://lore.kernel.org/linux-arm-msm/171840533352.102487.9576671528001022676.b4-ty@kernel.org/
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=drivers-for-6.11
 > 
+> @Bjorn: I think this makes sense to only apply these patches for 6.12 so
+> that also in the arm64 tree the driver will exist already, so git bisect
+> is not impeded by that.
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: msm8916-gplus-fl8005a: Add BMS
-      commit: 61ba969e0e7d26a9260bcc658c54d2bf9a1f0a2b
+[2/5] arm64: dts: qcom: msm8916: Use mboxes in smsm node
+      commit: d605f9c75949997150dbb32bf082695326d3e110
+[3/5] arm64: dts: qcom: msm8939: Use mboxes in smsm node
+      commit: 9f8b7c4e3d8bbb6eb787752ad14a82e714d917ff
+[4/5] arm64: dts: qcom: msm8953: Use mboxes in smsm node
+      commit: e36402b55684c64af23575f39e0a6ce27272b5f7
+[5/5] arm64: dts: qcom: msm8976: Use mboxes in smsm node
+      commit: 585141c57a49315f6522d5f7265a3f1aa05424c1
 
 Best regards,
 -- 
