@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88B5991416F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 06:53:16 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A837914172
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 06:54:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 272D51F21CC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 04:53:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 26D19B20A14
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 04:54:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F862FC12;
-	Mon, 24 Jun 2024 04:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C0B81094E;
+	Mon, 24 Jun 2024 04:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WccOrnJk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/oDft5C"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F85D15E86;
-	Mon, 24 Jun 2024 04:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF861DDDC;
+	Mon, 24 Jun 2024 04:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719204784; cv=none; b=aWtdD4EBCfei9+T5lJurvFGQcvaRqvZQ6LGN6q9+QZaNBjCrPhy83n5Ka+FhtSHsYt1rfj+3Jc0X4YxvC84M7aLk42tr5JhUhgcPt7AaY3eDTbV1bTKOrB3vGf1IuXQ7LtnGGGBcf+XgZc1HO6FEyUivIqhTSnd+mALn9aUvyh8=
+	t=1719204859; cv=none; b=dH33/gDlTacNFjmyIm9KxB18XpSgByzCqecRa62ce95vLJSL4mfTH2izbLUN0+2+Ny2r0wPIps+Vl+uq5umWuQETuXeFaYWNizyQfpYpqEzRLbrVRfXk7K76GoRw2yJfToU5jin67zXyJiHIvOjyaNEOiAJCot4ltxuif2GNxdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719204784; c=relaxed/simple;
-	bh=CM0gyn7aeKkVe7mpP1FYr6joZa5sUcvkQm+5NjiLodM=;
+	s=arc-20240116; t=1719204859; c=relaxed/simple;
+	bh=+KhE1nin1+J6mV81PIS1zCV9B7Y6T+LW+8GmzP/ct7c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H1bmfm9V3VFgTqY87ZU0fevBrM+egJvbMJGhnyge3DBJIoLftCyDwf7KBVjDvAxjsh6msCaYbrYpbDOnbK2CR+ihhsocfkTrBNWHVVQxSYCDXeO4F29lYMd8LGyZNYPPCqpfmPJylgeuheNWtbNkixdRMSOy2fUQTzGgskdFmeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WccOrnJk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84149C2BBFC;
-	Mon, 24 Jun 2024 04:52:57 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=pdIyMZ+W81q0sk/kvxQGgfH/Re6csCklbOZlHOHHOmW5LEiVghI3TAe5kQx9m7K2L+RdGkI06dhsnVlfQU9puCe5lmYZrwE5Je+sxaMzgHJ2kcnRDK2i4eX+9G7XI7C1DGdY56BWGi/sdWQLdBJfolV2Dn6dX6wxHErKKvux7Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/oDft5C; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53946C2BBFC;
+	Mon, 24 Jun 2024 04:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719204783;
-	bh=CM0gyn7aeKkVe7mpP1FYr6joZa5sUcvkQm+5NjiLodM=;
+	s=k20201202; t=1719204859;
+	bh=+KhE1nin1+J6mV81PIS1zCV9B7Y6T+LW+8GmzP/ct7c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WccOrnJkg+uS4KZkLDdsc/2NcVrgSvV887CTPORgpKglS9+6nnoqaiwDvp7X+9fxz
-	 2xKLOH2J8RMDoxngMovYFLRUAPMd5ifaPdQzrBm4GykDiV7wajZnKE2kdQGJkh01Ys
-	 QmqsXakvErT/E7d7PuqE/NoI0nXPaqKxGoGc+BEhm1abfFWnamWvyQG/x0bWJ0OZXH
-	 4OxPc4Al8XXn9A8SHIB+plXskl25xhYqW+sB32JcP70bN+ekWV9Sow+aZBQmpAFC0e
-	 3BUtZ5IUmwxmxrwIQkBWoc1F9XjGNcDA+5tityb7bbNPdyB1boteYDkibxw+OUa3nU
-	 do5XnlLYs+Hsg==
-Message-ID: <4c6cf4a5-6f4e-4a1d-8a4a-d720409852e8@kernel.org>
-Date: Mon, 24 Jun 2024 06:52:54 +0200
+	b=V/oDft5CQrOwoCVxH63Kh/3H7Hda7UWqHloI3qCINlhsJpdqzdur53PKo3lBJhs7g
+	 mS4KGJ2jSJKLnrrEIfWMakNGvcSkgGaeudAKdJxUyZ4A7N80F63mdjirNvfwouJph5
+	 zFWT3ZX9DDf78RSv1apPzbfajeVIjo9lxdL8YvKAqM+3uLMDm77o3xyKDDGq/u1DCC
+	 vhLUxmRGTjHUsQnZIi+Zs0ZXc3Xe/Hgixk7amSUIKOQhwecqk6Dqo67+NwLo3Xqoec
+	 edm0+tkRt9Wzxz3nB2t8pOWS5Rp/JZqrasfkCJIjni+ebnV6zR/OiXftfAR83HWMrM
+	 bYTGum1weHaBA==
+Message-ID: <1c96444f-996a-431f-a8e9-28512bcc4431@kernel.org>
+Date: Mon, 24 Jun 2024 06:54:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] dt-bindings: arm: qcom: add OnePlus 8 series
-To: Caleb Connolly <caleb@postmarketos.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+Subject: Re: [PATCH v2 0/8] Add sc7180 camss subsys support
+To: gchan9527@gmail.com, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Henrik Rydberg <rydberg@bitmath.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20240624-oneplus8-v1-0-388eecf2dff7@postmarketos.org>
- <20240624-oneplus8-v1-3-388eecf2dff7@postmarketos.org>
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240624-b4-sc7180-camss-v2-0-0dfecdc50073@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,16 +107,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240624-oneplus8-v1-3-388eecf2dff7@postmarketos.org>
+In-Reply-To: <20240624-b4-sc7180-camss-v2-0-0dfecdc50073@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/06/2024 03:30, Caleb Connolly wrote:
-> Add bindings for the OnePlus 8, 8 Pro, and 8T devices.
+On 24/06/2024 01:22, George Chan via B4 Relay wrote:
+> SM7125 is the SoC found in the Xiaomi Redmi Note 9 Pro(joyeuse) cellphone.
+> This series adds support to bring up the CSIPHY, CSID, VFE/RDI interfaces.
 > 
-> Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
+> Since SM7125 is a low-speed variant of SC7180, SC7180 testers please
+> take a look and have a test as well.
+> 
+> sc7180 provides
+> 
+> - 2 x VFE
+> - 1 x VFE Lite
+> - 2 x CSID
+> - 1 x CSID Lite
+> - 4 x CSI PHY
+> 
+> The sc7180-camss binding should be comaptible with sdm845 yaml.
+> I've copied a new yaml from sdm845-camss.yaml, strip all _src clk and
+> put new maintainer information. If this is not desirable then i can add binding to
+> existing sdm845 yaml instead.
+> 
+> In addition, a bootable tree of sm7125/joyeuse is availble at:
+> https://github.com/99degree/linux/tree/camss
+>   
+> 
+> Signed-off-by: George Chan <gchan9527@gmail.com>
+> ---
+> Changes in v2:
+> - Revised dt-binding as stated by krzk
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+What changed exactly? That's too vague.
 
 Best regards,
 Krzysztof
