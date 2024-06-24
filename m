@@ -1,111 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-23923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C084914873
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 13:22:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D66E39148CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 13:33:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CBE31F2322F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 11:22:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 937D72878EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 11:33:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5B2E139587;
-	Mon, 24 Jun 2024 11:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D28C4139D03;
+	Mon, 24 Jun 2024 11:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QuCakSZD"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="mxK9HyWv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB9013776F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 11:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C085918654
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 11:33:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719228153; cv=none; b=Z3I2HdamUjNtZH6lBTA9wE5H7HUya4xkuU2kCPz4CchjAoAWy5qzFUWiy6M+JXB/Kv7JTZg/f3GWDPnxjslpffYF3MzA0grqjOrJsIiCkfrRvJzYNY48jatYj21TyZyjSkhDwVFJz73ooqd3lI9VnGjsKKjgXFRu0NPlM2adE0I=
+	t=1719228784; cv=none; b=tTob6+wjunx8zI+Wj612DKfrKyimeF9HXmpDzNwVd5aFTww/kmvy/Ab+JFCuEtd88E6zpj3mQXh+Lbu1GgBAWcTbBNEJo+5arFyI//jw/TSGTiFOpUcOBKtqsUPBo6gYn04WBR5iLt2R7GrQk8yNRZrg5EpuEuaWWFkzQI405Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719228153; c=relaxed/simple;
-	bh=tj/iTCzjdXvi/zfbFIrmimPnpDiaDxpS/wGQiHsbX3E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h6ZrxhPTHj1D24l757OxdHzDhGa8aN2vZ3Wzu6HMtFaSQXzlwz9Hdi/Gp6qYVmeLGV2A4z1zA9L29+d5lVedMbWELdaDmEWSdnISiRcoZwgqujblzU0SuzSSVVPIM1lf/5jNwlKY8Eg5RGTE1VgwNo2QHXo17AxFZkXDST51Bxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QuCakSZD; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ebe6495aedso43831741fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 04:22:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719228150; x=1719832950; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gWZ/zkTzOz+4RUMc7GXfG9YQuN8dDai+AXES1QteZ/E=;
-        b=QuCakSZD1Nb6EUBu88msViSAVa7Kf/lGdqZ/5e+eTARfPfvkmVvFs3dXTolZMDLy2v
-         ftZiFe3HM8n4HOPK/R2kLuP7ulqJW8BFxZ7lf8OXAy1R2nikjUjqnp4EQGng3QoxAXBL
-         qv7IutSeLituCvkwX3WmKRgPS/0pfZI03I7ViumYAdoz4ENrihHdxKJXUu8np7ObDTKA
-         RMYEg0i+T769qcHseKVU1LHcqw0uxYw7krTeRjBF2eNXKV/Swp7Lj1sjUmdnmseqT/mc
-         M2WwiuJFZjC3OLUEY9VCNkmNbBs2b+Z8sx7WM83UbDcX4+hiEdccGsZbfMDriU2t7oJP
-         cZPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719228150; x=1719832950;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gWZ/zkTzOz+4RUMc7GXfG9YQuN8dDai+AXES1QteZ/E=;
-        b=ZWMoPrBC5JFf7z9Hf92QrfnY+SzSv+h8/2JBhS9/S1XDZ4gh61YN8sgj3w2u3fZLmV
-         eHAGKqMF0zfZLCSuqGeaaSdQ5HWPI0HdxI+FWHlu/UHS5EikqSbVZx+PBpzGKdB7ixUE
-         XDqbsFNIkKS86hBlsHnojJo2UFgtsnW9UHNenej/diwaC7fR7Ex5B70DSnX0ozfhD2L4
-         4IkvuURapZxPFy6uAuqVsNl2ANqV0qfJYmr+bWCMLAuvgLYZWbHmFDt8pw+7hypbREHq
-         yp7mWc1u2uZ/1oIAzitT95nj6dQApK7tA1OGyr3xJzwB5/WtnFP3fbCoay0opRL8g3B7
-         rkmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXRBWF6Rz+KCDjhMVV5b+PYtiC5JUfNqz3swDmva+94iVh3C/jPRS5IdqV7uJXBU7y6n14PxT9pAzddKIfjpd1mQV8Jw0UVkaXGj7OG9Q==
-X-Gm-Message-State: AOJu0YwJvntkjpMchupflO7HNhQTkOUHg6UTXheihbD4DVfi3pPS4XMD
-	EkUtLlg6aqbGcUKzJ/AX6UA1wcWbmbjkDuKBInrWSMUshpJp/UUJVsMUno8y2ps=
-X-Google-Smtp-Source: AGHT+IEdzIJ3YjVg/cE36iG6t1bmSvgUzscBQ4gPJYkUm80mgCexRGGdLZEulw/LZtp3Pn6VrM7qhw==
-X-Received: by 2002:a2e:97d6:0:b0:2ec:5172:dbbc with SMTP id 38308e7fff4ca-2ec5b2844damr27182781fa.5.1719228150408;
-        Mon, 24 Jun 2024 04:22:30 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec520fc3b9sm7800581fa.114.2024.06.24.04.22.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jun 2024 04:22:30 -0700 (PDT)
-Date: Mon, 24 Jun 2024 14:22:28 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: x1e80100: Add soundwire controller
- resets
-Message-ID: <mzcofsmnqkxgxarcbxh2gqtdusyzpxr4edjcpurerurzape7da@4dky45iy5iph>
-References: <20240624-x1e-swr-reset-v1-0-da326d0733d4@linaro.org>
- <p6ooqgfwld7stzevozs7huztputc7vpc7652wx6rvg4cly5mj5@fwrzeu6alhgq>
- <ea57a3a1-1037-4d59-a384-50c98e1f9387@linaro.org>
+	s=arc-20240116; t=1719228784; c=relaxed/simple;
+	bh=i0UpEvQZYO12T8KBC7z/GmNe7URjhVyNHlyByV/Als0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g2voc7YYvSievQ0oowJ1G8FekoSZJNJciGTxG2a/6sltZoFdx/Bj0SXtIWCTTD2/KG195vqFYFUhWBlVVyPCvfKB+cY2JpxK1QvaLA/OwFFvk0gtbIEZRWAoveVnhM0eTcPdMzZ0GifQ7v+ax5Dhnwz1AEQ5R3BkATeyjdAL/9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=mxK9HyWv; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+X-Envelope-To: dmitry.baryshkov@linaro.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1719228780;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=75G0OkMLqe4Ot81fVo3yHPQqIVOtvkVsPdLFfHdHxi0=;
+	b=mxK9HyWvmS3iBkmkN7bcMVsuwKw67DmtU8BUB2NPcnLqlEwsdLKfveCmxmqp2668iGbrli
+	11g6N4344Xx1ZvsMI2GOy8/o7yuvtFs4XI37pLLScINHpZPtBJvHJ/blxWbKxbjJ+jUvV2
+	dxkxhbKkCLsA5vYw/3jT4n4R811pP0N41G3O68iWpo1nMayZ4TCs3lttEd2wq64K2CAS8n
+	Pzzq4w60g3XFeGNAe3+2NuWwqY4f6jYa32QZwfdZ+2WN6+SY0J7Vpwk+nLOZJwn5zJfuMK
+	SKSJ6pe++v8mrOxsJVl/zkxKCNzMK2l0cxn7dldmqG1QQQ2XJX+ONL533TdSnw==
+X-Envelope-To: neil.armstrong@linaro.org
+X-Envelope-To: quic_jesszhan@quicinc.com
+X-Envelope-To: airlied@gmail.com
+X-Envelope-To: daniel@ffwll.ch
+X-Envelope-To: maarten.lankhorst@linux.intel.com
+X-Envelope-To: mripard@kernel.org
+X-Envelope-To: tzimmermann@suse.de
+X-Envelope-To: robh@kernel.org
+X-Envelope-To: krzk+dt@kernel.org
+X-Envelope-To: conor+dt@kernel.org
+X-Envelope-To: dmitry.torokhov@gmail.com
+X-Envelope-To: andersson@kernel.org
+X-Envelope-To: konrad.dybcio@linaro.org
+X-Envelope-To: rydberg@bitmath.org
+X-Envelope-To: dri-devel@lists.freedesktop.org
+X-Envelope-To: devicetree@vger.kernel.org
+X-Envelope-To: linux-input@vger.kernel.org
+X-Envelope-To: linux-arm-msm@vger.kernel.org
+X-Envelope-To: ~postmarketos/upstreaming@lists.sr.ht
+X-Envelope-To: frieder.hannenheim@proton.me
+Message-ID: <722dab04-03f9-49ce-9c7c-4a3a9f898fc9@postmarketos.org>
+Date: Mon, 24 Jun 2024 13:32:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ea57a3a1-1037-4d59-a384-50c98e1f9387@linaro.org>
+Subject: Re: [PATCH 0/7] qcom: initial support for the OnePlus 8T
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Henrik Rydberg <rydberg@bitmath.org>, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Frieder Hannenheim <frieder.hannenheim@proton.me>
+References: <20240624-oneplus8-v1-0-388eecf2dff7@postmarketos.org>
+ <ufc7sq5s5nymjncp5w2446dq5xcmmqbmsuubhpo2fxtsz5dpgg@xtqtmmsio6sr>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Caleb Connolly <caleb@postmarketos.org>
+In-Reply-To: <ufc7sq5s5nymjncp5w2446dq5xcmmqbmsuubhpo2fxtsz5dpgg@xtqtmmsio6sr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Jun 24, 2024 at 12:11:08PM GMT, Srinivas Kandagatla wrote:
+
+
+On 24/06/2024 07:18, Dmitry Baryshkov wrote:
+> On Mon, Jun 24, 2024 at 03:30:24AM GMT, Caleb Connolly wrote:
+>> Add bindings for the SM8250 OnePlus devices, a common devicetree,
+>> touchscreen and display drivers, and a dts for the OnePlus 8T (kebab).
+>>
+>> The OnePlus 8 series is made up of 3 flagship smartphones from 2019,
+>> featuring the Qualcomm X55 5G PCIe modem.
+>>
+>> This series introduces initial support for the 8T, adding drivers for
+>> the 1080x2400 120Hz DSC panel and the Synaptics TCM Oncell touchscreen.
+>>
+>> The panel driver suffers from similar limitations to the LG SW43408
+>> panel found on the Pixel 3, namely that after toggling the reset GPIO it
+>> is not possible to get the panel into a working state.
 > 
+> Just to point it out: this is no longer true for SW43408. The panel
+> wakes up and works after toggling the reset. It seems, there is an issue
+> with one of the regulators, but not with the reset and/or panel startup.
+
+Hmm ok, I've heard mixed reports then, I should try it out myself again.
+
+I'll update the cover letter to reflect this. Thanks.
 > 
-> On 24/06/2024 12:08, Dmitry Baryshkov wrote:
-> > On Mon, Jun 24, 2024 at 11:55:29AM GMT, Srinivas Kandagatla wrote:
-> > > Soundwire resets are missing in the existing dts, add resets for all the 4
-> > > instances of Soundwire controllers (WSA, WSA2, RX, TX).
-> > > 
-> > > Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> > 
-> > Could you please point out the driver changes?
-> If you mean, soundwire controller driver, it already has the reset support.
-
-No, I was looking for audiocc drivers.
-
--- 
-With best wishes
-Dmitry
+>> Given the apparent prevelance of this issue, particularly with DSC
+>> panels, I believe this is a bug in the core DSI code, and not a device
+>> or panel specific issue. I think it is still useful to accept these
+>> panel drivers into upstream since, from a users perspective, the panel
+>> is fully functional just by leaving the reset GPIO alone and keeping the
+>> regulator on. The only (theoretical) downside is worse battery life,
+>> which is a small price to pay for a working display.
+>>
+> 
 
