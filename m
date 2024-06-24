@@ -1,248 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-23898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CDCE914651
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 11:24:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93988914658
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 11:25:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E882FB23A56
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 09:24:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B66911C208EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 09:25:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F18513210F;
-	Mon, 24 Jun 2024 09:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCD145C603;
+	Mon, 24 Jun 2024 09:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h+PiHUrA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n+0JPqbf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8BC13774D;
-	Mon, 24 Jun 2024 09:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0990F18E29
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 09:25:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719220995; cv=none; b=mWKUUnJ9QwTcGlA7Fih+A4rqP/mRxs5IS7KarVtpZyAJ+1+m4QvJaT4tLtAUae026zxgkHFt5Je14jm+nuwsr34L/XCMVvttwJH+ETrVsMZjGeXypbygFvsnzj6qGj0rLZMsz2VBBxqzvUXRO8AsLtBqpdAK3zXAcMZZlAZQlRE=
+	t=1719221106; cv=none; b=Xbrd/bCXbx6cDKnVje9b/KBPv5uY3kQYfsGfokz38FdTEwAvNKOOe0bnQFE4cNqaRHjLT/1L8G4mUe/UXirxyejKLwRmZHDeJTL3BDhrUmsFMHyhUU1sw/DGd9DzMdAVpDKInuXetR43ZeqUDu4YanmBB2MhyGN6UfMQWM1p0mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719220995; c=relaxed/simple;
-	bh=8cAgcwTvBnAla3NrneIEz71Zv7i1DEghBD644/nbOXc=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fbLmx51oFXO5KcZlI4v+kiiDaVw4Kpx7QtAyOYAcn6LEx3RrpfNaWajQXxeqkgAQbo+oWFQphoastGJIwj7FvAP71EMCpcUZqsUH9Kgbx42uR3zc77TYAYThs1jK4oldd3v7AxEo/yFbEZeYMF3z0NksYJpChusSfmTJyIcdYfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h+PiHUrA; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45O8ZB9T024767;
-	Mon, 24 Jun 2024 09:23:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+wnsSYuLmoebBtSjmfB0yze6OSKIloZRMvRN0fi5T0s=; b=h+PiHUrAmGhcV+lI
-	y8KpHRlsRFhjfmWDdl3M7LYMOzXg740dObohaRstgPPZmiV4JQXwEArgfS0uwXgQ
-	Z/rFMHQdH6smuw2YL8kl76SnHuXCWlU/9hkEdYFfOBmzwGnKZGB5MIPIXAczPPNt
-	pkAs7lnUec3mtWQa1VI1JXyUaLe1jIr21lbLrVMni8Zw83x8HYQML4Dv0Y2WSpT6
-	7mRak2wR9uyyRD+DqGKEVyMvVLpdryNlb4d08fVFGtzm1TK4eyY9ZSCoLA5yNRYV
-	sf64aXUHjUM3ehtm+K7UOzbggY1m1JW4Asnn36s95+5ma2r+LUEfvd0wrJSoLFh9
-	PkKE9g==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqshk570-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Jun 2024 09:23:10 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45O9N93i028388
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Jun 2024 09:23:10 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 24 Jun 2024 02:23:04 -0700
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <djakov@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-        <quic_sibis@quicinc.com>, <conor+dt@kernel.org>,
-        <abel.vesa@linaro.org>
-Subject: [PATCH V3 4/4] arm64: dts: qcom: x1e80100: Add BWMONs
-Date: Mon, 24 Jun 2024 14:52:14 +0530
-Message-ID: <20240624092214.146935-5-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240624092214.146935-1-quic_sibis@quicinc.com>
-References: <20240624092214.146935-1-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1719221106; c=relaxed/simple;
+	bh=lkvZ2sbx3Ysd6SxUkZL7FvgxTkogAYM4Ga6zUcZmzpQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DF9h+GeRbhaJr41vDRBt7IxSpGsbiuWfK+ZMBvW11eM3otpqEn7sheFUZJhSRCfwGl/pDeHCghdscoZjr4we351SXZhy7aN+w8/lXHh0V67LRsYNq6dGbndO0zpeyiwARAhf0zJStXc59fkB0FrXzYue35y3XADZWh1i1xL4B9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n+0JPqbf; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52ce01403f6so1431505e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 02:25:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719221103; x=1719825903; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jFXpXAOFLFRkozZpZH9Ka9dd/aYYOjDsel8dYMvfjJY=;
+        b=n+0JPqbf0M2tDBwkuk6LZKZ5pT5bBFqRLdbJYolZB6JKj940YllPtdDV8tM4tBCvHc
+         Q74vO2d9V5GFYpx9uUKqhF/IPU3TV85RgJQfoSS67YIKiRzlOo4hf+73gMkrFL9xhgbw
+         R/AbgLSSkcezSGpKPLGeqRpJMrQVtCe9qnWv77Ue98v+xAPe7j5HL2PhUt1/k8Z7PR6E
+         tiYaMnJ89Uf4RsPABEx7joKKrnAo7M2DrbnD41sGLhUmeg11Kjx3vUk71n69IBPB83dj
+         c/kHtqTQWH11DTa60UKCfIjphHTOonUJZBh+LZy22ErxoFk80nDeqEmJ+JO/9q2jOIrR
+         z+mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719221103; x=1719825903;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jFXpXAOFLFRkozZpZH9Ka9dd/aYYOjDsel8dYMvfjJY=;
+        b=eXQ5nukoL/jbdSK9RChUvx8Ju16PhVxFywnkd7mIivjLog1IBjLPjPAa/Vbv48qsv/
+         k/T6hy+OuA2K8EMZrEQDa9gjlvhtrM5R/flEYmlBnsyOelIDb/kdhkgLlWQQEOvA1p+c
+         m9fHpH74+DzEpEjgu/PbOw+lVm1kcqb7ZOaPGyfq5xeq4ubz1dzg4kmWKWEO3tFOV+96
+         TS9OcEvNcywsKIx4aTFvLtFHGkhb2Lb3PXo1J9/AP7pNT3lsicOm1ZXUtfnLdx/8mvZn
+         CXWLFmQnQ8+L1X+froC92kYCisj/lhDUw0jDKtuujvHKPPLMe72GR2NVwu5bzVBGEFJs
+         8ONw==
+X-Forwarded-Encrypted: i=1; AJvYcCWX9XsDtnabyS+zTUCnIcfxidotok9WPaI4KAcme9DrLL2zCscgV1beC6UqL8OYRcxVXR5iu9zNaPnGo3jmgpkzRs+vwOMt0oZCwUeEDQ==
+X-Gm-Message-State: AOJu0YwnHpDvk3hbi92OfMyBjkembEsqx4UwPKP6Qqz4T2kXVOwZS9Rl
+	DSGfiO4ozdZ6uRFKlku+zDvCqESMx/OsYWwB6wENUFdivWWa+T6zwByxxjhUh7Q=
+X-Google-Smtp-Source: AGHT+IEsUNZH4vfpWCGa8E8IbieWBtTQDbUwbXJdyweNBlz6fQAG2gGISHmpGNTl6P9+g4zm9jyTLQ==
+X-Received: by 2002:a19:e046:0:b0:52c:e171:ba2 with SMTP id 2adb3069b0e04-52ce1835617mr2053574e87.17.1719221103171;
+        Mon, 24 Jun 2024 02:25:03 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cd63bcee5sm949182e87.73.2024.06.24.02.25.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Jun 2024 02:25:02 -0700 (PDT)
+Date: Mon, 24 Jun 2024 12:25:01 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Taniya Das <quic_tdas@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] clk: qcom: dispcc-sm8650: Park RCG's clk source
+ at XO during disable
+Message-ID: <4skm6zab2xf2e4qgh4l45xzhuncmls7yfw4y77yufb7pvs2zew@rmzcgb6ozamf>
+References: <20240624-topic-sm8650-upstream-fix-dispcc-v2-0-ddaa13f3b207@linaro.org>
+ <20240624-topic-sm8650-upstream-fix-dispcc-v2-1-ddaa13f3b207@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uN-ldSSdi10HSsqLl5M_G7z40Y2iVGHa
-X-Proofpoint-GUID: uN-ldSSdi10HSsqLl5M_G7z40Y2iVGHa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-24_08,2024-06-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- mlxscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406240075
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240624-topic-sm8650-upstream-fix-dispcc-v2-1-ddaa13f3b207@linaro.org>
 
-Add the CPU and LLCC BWMONs on X1E80100 SoCs.
+On Mon, Jun 24, 2024 at 10:05:50AM GMT, Neil Armstrong wrote:
+> The RCG's clk src has to be parked at XO while disabling as per the
+> HW recommendation, hence use clk_rcg2_shared_ops to achieve the same.
+> 
+> It also changes dptx1_aux_clk_src to use the correct ops instead of
+> clk_dp_ops.
+> 
+> Fixes: 9e939f008338 ("clk: qcom: add the SM8650 Display Clock Controller driver")
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/clk/qcom/dispcc-sm8650.c | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/dispcc-sm8650.c b/drivers/clk/qcom/dispcc-sm8650.c
+> index c9d2751f5cb8..360b80377ed6 100644
+> --- a/drivers/clk/qcom/dispcc-sm8650.c
+> +++ b/drivers/clk/qcom/dispcc-sm8650.c
+> @@ -339,7 +339,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx0_aux_clk_src = {
+>  		.parent_data = disp_cc_parent_data_0,
+>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -398,7 +398,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx1_aux_clk_src = {
+>  		.parent_data = disp_cc_parent_data_0,
+>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_dp_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -457,7 +457,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx2_aux_clk_src = {
+>  		.parent_data = disp_cc_parent_data_0,
+>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -516,7 +516,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx3_aux_clk_src = {
+>  		.parent_data = disp_cc_parent_data_0,
+>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
 
-Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
+The only parent for these three clocks is the DT_BI_TCXO. Is this really
+going to work as expected? Also what's the point of parking the
+TCXO-sourced clocks?
 
-v3:
-* Pickup Rb's and Tb's from the list.
-* Add a comment describing which cluster each bwmon instance belongs to. [Konrad]
+>  
+> @@ -560,7 +560,7 @@ static struct clk_rcg2 disp_cc_mdss_esc0_clk_src = {
+>  		.parent_data = disp_cc_parent_data_5,
+>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -575,7 +575,7 @@ static struct clk_rcg2 disp_cc_mdss_esc1_clk_src = {
+>  		.parent_data = disp_cc_parent_data_5,
+>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -647,7 +647,7 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
+>  		.parent_data = disp_cc_parent_data_0,
+>  		.num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> 
+> -- 
+> 2.34.1
+> 
 
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 123 +++++++++++++++++++++++++
- 1 file changed, 123 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 9944c654851e..f9355f616bf5 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -5299,6 +5299,129 @@ frame@1780d000 {
- 			};
- 		};
- 
-+		pmu@24091000 {
-+			compatible = "qcom,x1e80100-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
-+			reg = <0 0x24091000 0 0x1000>;
-+
-+			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interconnects = <&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+
-+			operating-points-v2 = <&llcc_bwmon_opp_table>;
-+
-+			llcc_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-0 {
-+					opp-peak-kBps = <800000>;
-+				};
-+
-+				opp-1 {
-+					opp-peak-kBps = <2188000>;
-+				};
-+
-+				opp-2 {
-+					opp-peak-kBps = <3072000>;
-+				};
-+
-+				opp-3 {
-+					opp-peak-kBps = <6220800>;
-+				};
-+
-+				opp-4 {
-+					opp-peak-kBps = <6835200>;
-+				};
-+
-+				opp-5 {
-+					opp-peak-kBps = <8371200>;
-+				};
-+
-+				opp-6 {
-+					opp-peak-kBps = <10944000>;
-+				};
-+
-+				opp-7 {
-+					opp-peak-kBps = <12748800>;
-+				};
-+
-+				opp-8 {
-+					opp-peak-kBps = <14745600>;
-+				};
-+
-+				opp-9 {
-+					opp-peak-kBps = <16896000>;
-+				};
-+			};
-+		};
-+
-+		/* cluster0 */
-+		pmu@240b3400 {
-+			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
-+			reg = <0 0x240b3400 0 0x600>;
-+
-+			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>;
-+
-+			operating-points-v2 = <&cpu_bwmon_opp_table>;
-+
-+			cpu_bwmon_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-0 {
-+					opp-peak-kBps = <4800000>;
-+				};
-+
-+				opp-1 {
-+					opp-peak-kBps = <7464000>;
-+				};
-+
-+				opp-2 {
-+					opp-peak-kBps = <9600000>;
-+				};
-+
-+				opp-3 {
-+					opp-peak-kBps = <12896000>;
-+				};
-+
-+				opp-4 {
-+					opp-peak-kBps = <14928000>;
-+				};
-+
-+				opp-5 {
-+					opp-peak-kBps = <17064000>;
-+				};
-+			};
-+		};
-+
-+		/* cluster2 */
-+		pmu@240b5400 {
-+			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
-+			reg = <0 0x240b5400 0 0x600>;
-+
-+			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>;
-+
-+			operating-points-v2 = <&cpu_bwmon_opp_table>;
-+		};
-+
-+		/* cluster1 */
-+		pmu@240b6400 {
-+			compatible = "qcom,x1e80100-cpu-bwmon", "qcom,sdm845-bwmon";
-+			reg = <0 0x240b6400 0 0x600>;
-+
-+			interrupts = <GIC_SPI 581 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>;
-+
-+			operating-points-v2 = <&cpu_bwmon_opp_table>;
-+		};
-+
- 		system-cache-controller@25000000 {
- 			compatible = "qcom,x1e80100-llcc";
- 			reg = <0 0x25000000 0 0x200000>,
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
