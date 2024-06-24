@@ -1,120 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-23928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E75BA91495A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:10:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4070914969
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:12:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B1291F246E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 12:10:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 393E2B23BCF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 12:12:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E6A913B586;
-	Mon, 24 Jun 2024 12:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30F6E13B59B;
+	Mon, 24 Jun 2024 12:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CHfor9H/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dwTcRMHm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B7D13A884
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 12:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F347413B58D;
+	Mon, 24 Jun 2024 12:11:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719230997; cv=none; b=Y2dyJ4pia+6dMg/jb1D9Zl2jV3Ke5op8GbdQOh0VVdh25guyY3ss4YRokfi1NyS7ktJR7+uL6Ydn5qzB56DnIR2tBdRg2LRsxE9K/1vYDMxg9rXoSPOAQgLpcXol3NpTchqJjvUMv7GxDHEKgN6pHANop98osVPe9lov98m+C5s=
+	t=1719231120; cv=none; b=J1POy5RL+3m0+wQrG3zNPuClzxEdxIQH58gjLI/n6I4c85JX+zA6bdcH/xS0eBb3Zn8erv51fWltDCseD+q35zWh/Nl/3ciDNRfs+JoFwMpPGykhzNZiPV9jmNkZF4vMuPOH7TrWIvZola65BASx9vqpmNrACJPnQS92LmDIFag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719230997; c=relaxed/simple;
-	bh=xcGf3/iitYzl5ANnd3BgjTG/HZRXCADu/ZHVJGALtRs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j55DALEBFC6Ktiwny7MbyHdNJe2s2/x8caQiC6yZLzZijQMdF9BvzpjorHOfHsid7mavc4KzXgXn/BG418WfMpcgQ1SHNVpYKKKB2MlCgq9MZmo5tP4esPAfXf3GQZYe8UrYmVWOAkqqIlxLuyprsWSJlch3i+dbioCgR1ucOqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CHfor9H/; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ec17eb4493so57882711fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 05:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719230994; x=1719835794; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eIGYlfS+Ua50ZsHWwz1Y48eq+epyebiBLbUECLU3y2I=;
-        b=CHfor9H//rsMIBJrbjuuCqqnpitiy0xtPpLeoSDv7RLdb5AI4RqYNhKvTHTUKJUoTp
-         FwuouNLWBpe3idTbknC9UfTkbDu0VYP+LkuIWfBtTujLfqgp4CZ7HIh2ez4yLKb1whi1
-         88Ye7GIBT/OR5dW0/3fg1GaJIy+mM+mWkg+/sMrR2sd/07RKAwvzrkuu2+Gs4/LpPgeF
-         7N4NDQ8wkZiWwFyO8QRzpJdVErwHmqbXOTWX14IYNTQPhHGhqcf+j/o1zo68I03nt06t
-         obVTnOOpn9dcRnsjomUl+2XswLpRPzkNzVCSCpL51Y5FCJlNCLYmSmuxuREdCnQRLFvv
-         Anng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719230994; x=1719835794;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eIGYlfS+Ua50ZsHWwz1Y48eq+epyebiBLbUECLU3y2I=;
-        b=Smwcg/1SjwxbaDvvseCluQVpT3q3rMIWHako22fSulzeZsHQAP29m7NdPDbpqizU3n
-         jIK/EJTdF2ukFdFNujnRoiOj8sss72xHcrHH/R+poQIXVjtqk/CA/djwr+wgcWIs4/eZ
-         SMM7OjXERbCEsybEE8my+PYoaX1ftbdMU3OG50CjEbKYoqfZ6P15ENfFWahTlrDhl9TT
-         JT+7eQ/YOTNIdq0TcW8SHKqSov6ClXvg5KaajK6IG5RYWMGw3KFtiafYTR2tUsAp/Dbm
-         qazqJzRZwSckTKG5bDbqYXhzfb1GVvAMmB4kjpmfmQzhJcK5sLuhHbCbeNNAK/lc6Amx
-         3ZpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWpp3IRFwhhwTCV4N/CFGbRLDvpMYT7fZ7Twa7HS/F5z5pk1oWRMl1y4ud6tgfn5g0Ec/L0A9WG0W5g/m9sH0itLcnZLZaQc4il8lYy+g==
-X-Gm-Message-State: AOJu0Yyfy4QxO4xMNGi9sZJ/3o7xTaUP347h9HBBtg0In6LLtJPyywRB
-	6NXwYjv4AAFjMzSNxl8hHv/xfQadReKHmIZC5BMcWaiZ9ym38SIeOhzInQ5uQBM=
-X-Google-Smtp-Source: AGHT+IHXlOi6EFr8doW3vP9pcHJHWuVxLfznu4H+Dwe6fvIaCoMcnyH49jvh95vBEblZtxjoWmwI7g==
-X-Received: by 2002:a2e:8242:0:b0:2ec:597f:664 with SMTP id 38308e7fff4ca-2ec5b2c4fa1mr31108131fa.2.1719230993559;
-        Mon, 24 Jun 2024 05:09:53 -0700 (PDT)
-Received: from cymric.caleb.rex.connolly.tech ([2a02:8109:aa0d:be00::52af])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6fcf428c18sm404086966b.24.2024.06.24.05.09.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jun 2024 05:09:53 -0700 (PDT)
-From: Caleb Connolly <caleb.connolly@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+	s=arc-20240116; t=1719231120; c=relaxed/simple;
+	bh=4Ot9tyWAtkoGaWuX0CtgzQSqJ/8GufECRvDvI/p6kFE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ArZUClo3+GvraR+FIA/zUV/eAKOhl2/7F9Tvokml3HwbbYCiWKOhwQyAIqkV0Adcz4HnLlSuePjHOpEs4aBdfFQNCib3ygdNHyxXh4l/3a1X4ObvyHVkeTg0UkFRafSjKkyRMsCOrWZ5MAJLJZmGRpkeNFrEAwZQybzBzbizrAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dwTcRMHm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7395AC2BBFC;
+	Mon, 24 Jun 2024 12:11:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719231119;
+	bh=4Ot9tyWAtkoGaWuX0CtgzQSqJ/8GufECRvDvI/p6kFE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dwTcRMHmDNowzrtF+b41zPBQKJ1E2Ai6fuks7di4uBrIo2bhbjFbsaAYKVsTmf5Bv
+	 k48hJuWaOLlmoaVeWsEuMb8Xbnk2WJgXnKqn9m0C7ZyR3dgYM1Jn+BFGuhgDyfWaMI
+	 bxLp66r6TBNv89+BWjv0u+6XLEUj6Za0mF1FJ8FkJ2gOlxSzL20Fg/fDSbROIc3YTc
+	 jklzhSeuc43dQDENgooKGiA4HaWzawbrSwqGLAME+cfgiX+FHeruN/tNTzxB8yVoQ9
+	 nSaQ6Ud1I1CnVoAm44KXnud641lqsZFTduxqBY1SreRw2GmVzSJ+17PL4ErSI3+uyc
+	 yDQE+H0P6b0bA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sLiYG-000000006Wl-1ZK9;
+	Mon, 24 Jun 2024 14:12:05 +0200
+Date: Mon, 24 Jun 2024 14:12:04 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm6115: add resets for sdhc_1
-Date: Mon, 24 Jun 2024 14:08:36 +0200
-Message-ID: <20240624120849.2550621-2-caleb.connolly@linaro.org>
-X-Mailer: git-send-email 2.45.0
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
+	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: [PATCH v4 7/8] serial: qcom-geni: Fix suspend while active UART
+ xfer
+Message-ID: <ZnlilDj5UrvrVasv@hovoldconsulting.com>
+References: <20240610222515.3023730-1-dianders@chromium.org>
+ <20240610152420.v4.7.I0f81a5baa37d368f291c96ee4830abca337e3c87@changeid>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240610152420.v4.7.I0f81a5baa37d368f291c96ee4830abca337e3c87@changeid>
 
-These are documented and supported everywhere, but not described in DT.
-Add them.
+On Mon, Jun 10, 2024 at 03:24:25PM -0700, Douglas Anderson wrote:
+> On devices using Qualcomm's GENI UART it is possible to get the UART
+> stuck such that it no longer outputs data. Specifically, logging in
+> via an agetty on the debug serial port (which was _not_ used for
+> kernel console) and running:
+>   cat /var/log/messages
+> ...and then (via an SSH session) forcing a few suspend/resume cycles
+> causes the UART to stop transmitting.
 
-Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
----
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Alexey Klimov <alexey.klimov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+An easier way to trigger this old bug is to just run a command like
+dmesg and hit ctrl-s in a serial console to stop tx. Interrupting the
+command or hitting ctrl-q to restart tx then triggers the soft lockup.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 21fbc9f15938..48ccd6fa8a11 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -1087,8 +1087,10 @@ sdhc_1: mmc@4744000 {
- 				 <&rpmcc RPM_SMD_XO_CLK_SRC>,
- 				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
- 			clock-names = "iface", "core", "xo", "ice";
- 
-+			resets = <&gcc GCC_SDCC1_BCR>;
-+
- 			power-domains = <&rpmpd SM6115_VDDCX>;
- 			operating-points-v2 = <&sdhc1_opp_table>;
- 			iommus = <&apps_smmu 0x00c0 0x0>;
- 			interconnects = <&system_noc MASTER_SDCC_1 RPM_ALWAYS_TAG
--- 
-2.45.0
+> The root of the problems was with qcom_geni_serial_stop_tx_fifo()
+> which is called as part of the suspend process. Specific problems with
+> that function:
+> - When an in-progress "tx" command is cancelled it doesn't appear to
+>   fully drain the FIFO. That meant qcom_geni_serial_tx_empty()
+>   continued to report that the FIFO wasn't empty. The
+>   qcom_geni_serial_start_tx_fifo() function didn't re-enable
+>   interrupts in this case so the driver would never start transferring
+>   again.
+> - When the driver cancelled the current "tx" command but it forgot to
+>   zero out "tx_remaining". This confused logic elsewhere in the
+>   driver.
+> - From experimentation, it appears that cancelling the "tx" command
+>   could drop some of the queued up bytes.
+> 
+> While qcom_geni_serial_stop_tx_fifo() could be fixed to drain the FIFO
+> and shut things down properly, stop_tx() isn't supposed to be a slow
+> function. It is run with local interrupts off and is documented to
+> stop transmitting "as soon as possible". Change the function to just
+> stop new bytes from being queued. In order to make this work, change
+> qcom_geni_serial_start_tx_fifo() to remove some conditions. It's
+> always safe to enable the watermark interrupt and the IRQ handler will
+> disable it if it's not needed.
+> 
+> For system suspend the queue still needs to be drained. Failure to do
+> so means that the hardware won't provide new interrupts until a
+> "cancel" command is sent. Add draining logic (fixing the issues noted
+> above) at suspend time.
 
+So I spent the better part of the weekend looking at this driver and
+this is one of the bits I worry about with your approach as relying on
+draining anything won't work with hardware flow control.
+
+Cancelling commands can result stalled TX in a number of ways and
+there's still at least one that you don't handle. If you end up with
+data in in the FIFO, the watermark interrupt may never fire when you try
+to restart tx.
+
+I'm leaning towards fixing the immediate hard lockup regression
+separately and then we can address the older bugs and rework driver
+without having to rush things.
+
+I've prepared a minimal three patch series which fixes most of the
+discussed issues (hard and soft lockup and garbage characters) and that
+should be backportable as well.
+
+Currently, the diffstat is just:
+
+	 drivers/tty/serial/qcom_geni_serial.c | 36 +++++++++++++++++++++++++-----------
+	 1 file changed, 25 insertions(+), 11 deletions(-)
+
+Fixing the hard lockup 6.10-rc1 regression is just a single line.
+
+Johan
 
