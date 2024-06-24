@@ -1,137 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-23889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0E6591447F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 10:19:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88FF9914577
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 10:56:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C1C92849CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 08:19:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B9FD81C21C88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 08:56:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26C474965C;
-	Mon, 24 Jun 2024 08:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F2877F7FB;
+	Mon, 24 Jun 2024 08:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eyAGgcL3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aauhLs3l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5490C54654
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 08:19:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D45F3F9FC;
+	Mon, 24 Jun 2024 08:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719217154; cv=none; b=jIn56IzwZcDf07UF0IS/bY9T/yYGxFVXJVTIp60L8m1fTjijSvms6YwMs29Kp3zJoxpjsYg9+wCxGey79rWHZg8aSaJgcFW3g6lKusENak06ER1q0kkBxwOXKpywkSgJRKYIFTBCLngVJSEPGQwp9V7c/BJ+vxWKVnqlJBo/u+E=
+	t=1719219368; cv=none; b=t/brd+vRxjNC3TmNXawzF6AYL5LnCT7ArbQzGg/B4EwCOWf64+IYNGoESzj16I63pQcjA6DNoL+mOrcJekVokRSOAFRdhPopJPlDrzJ2FAG4tEbR1NupsNc5ZIqnJu0geqVwlN+RlN1O+4PUyCece4FSELscMmNxS2r6cHmKbdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719217154; c=relaxed/simple;
-	bh=hrcbm/Drjw9ypN+HcZfxd5WVucStMi5y/7ez75gjaJM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=AyGevO3uCsvoTMHKh2FYn+nnZAbnp3Dcfq86k7hfZdPe9/Oo6aWIkEQ+bnr5PN7s+0U5qxW0pWbxcOBP9tVqXWNwMY8fURsMnbKCnBueOvS1ud0OaAo2hPe3+VX5SY28c29aQ1a8bR1SOmK2hE33PnIBf12zIkw8/Jid+M824M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eyAGgcL3; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52cdf9f934fso1522460e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 01:19:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719217150; x=1719821950; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jwPwL72m8s93kw/p7VxOEDDmYj0qJsAuA8dl81m3PQc=;
-        b=eyAGgcL3XkMNNMzbIdTO77oSFJndYkR1jhwj751TAxnHHQY0P4I8GDr6DWb+vXojF+
-         tAPdH+W50rezV2u79ZVrZAA2IMCZyxSoiDj/4nGWNAqrmRMvhkhz9lL1m9CpAjek0C4G
-         XRURr4UTrQycQZo1x8Jzcz8/x65tiIKmAfTwwqMZya39JDy9sgxugJ7DkeWzXojJRvCl
-         zXVW2Noq5aDcNv+iuGclzyOVksybTd/QaFY5w0KJgLZ1e42StNZ+F83VPvWZXzRMaqqX
-         HjjPP9QY5W8UeNPrFIXQVzxE3gc3x2bT1XlVU5VqDMOGZmtPttvvzyFCOK8ohrNDnd4S
-         rwEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719217150; x=1719821950;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jwPwL72m8s93kw/p7VxOEDDmYj0qJsAuA8dl81m3PQc=;
-        b=nuLNYbTRvLBUKIJ3hc5Fd4iwsRZV4bZ1UYaazhCQmf/0iyhq84EDtx3MArEqXIXJcz
-         zNm496werjX3otAeu61OqX/l23Jgq9j4TMrhfvkn/v7H07saklb8u4BQ42z5gTSsVCgs
-         UPIttcEgnkDmHw+W4wfFOz9T47YArGgGRtMk+V+KHu8pZtpGDWfFx+dP7eD6WoUYdA+6
-         QkkRSw+NdHOkHIndSh7RdCN1vc6bejyhMWZUtt/8vVn1fou8Fx2eA88qfKQsc8K0HhHU
-         siCQvsE0c+bPzXLazBsvgk+PNf+caKrNYS8M2Zf4oZQZ1NCNAc9ZifBAofcMrhkXLOZE
-         Vcaw==
-X-Gm-Message-State: AOJu0Ywc+CySfP0QlX3wwB8BvtMwolNYGej+cNHSeBK6UHHjWA10/AgV
-	dAvl01bHQnRY+Gk8GwON3q1vnCe2wQVLwF2RNq+S7gvOanFYEYecaX6jTwwlDZ8maBOJ1YfvIUr
-	HjtY=
-X-Google-Smtp-Source: AGHT+IHpL6UH6p0b9w60yb/Nc8u8gfZQbm7Xx++lCO0XJ1GqYWCIG1rZ3OamjznZPFHcsOt+MHvVSQ==
-X-Received: by 2002:a05:6512:78f:b0:52b:bf8e:ffea with SMTP id 2adb3069b0e04-52ce064f62dmr2413777e87.40.1719217150488;
-        Mon, 24 Jun 2024 01:19:10 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cd63bcef1sm923572e87.72.2024.06.24.01.19.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jun 2024 01:19:10 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 24 Jun 2024 11:19:09 +0300
-Subject: [PATCH] MAINTAINERS: CC dri-devel list on Qualcomm FastRPC patches
+	s=arc-20240116; t=1719219368; c=relaxed/simple;
+	bh=+bygkKk1WfkvVMdSDIt61TKr8vEFEVMA5qyD1Gk/ccc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EVDKQqNKCKysR9Dw5n75ITGmTZOTcYkNErWujxLQuRijr0ptBfWS5UpIdtAu0wldV0h/OocC2e4NzjpH0i8Ek43NWVNmdcfmHOO0FP/ZJAcCzWu1+1bkMhxdbR6kDg7DOO3eWZfDYkf0Vx9qe1wc77yA6pcwrHZVS+3x2ASw1MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aauhLs3l; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45O8Yrmf001863;
+	Mon, 24 Jun 2024 08:55:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ym8HMC9nai1QhqIk9+SG/+1uqg1DwzsdgBpOI0EAl8A=; b=aauhLs3lgt9M568Q
+	BnXfgN+jN7UcgDEQjkQO3O+bVbuxn9pVcHMKtOmfZWSdo4kmLdsz3LKOM/pax1u1
+	0ApkCfZOvPpcNUHPZ2hhxbIZM7altSXjnAdvxVaExBPS5jYheP1fxZQoSV8oMl/6
+	LTQ9DfXNAb+mZpc0sj4kxILM/nzQdYU4TOTFoStnGGNUpBcrIkUclz6Shjn9rfK5
+	k2jNPTU8cBbfYsRe1rXQU1nE0bWw6fWvjA0ThSiAjpnGCa0J8IVQF6S9vDOugmGZ
+	DMR06j3aEu60DB+1QFtJ/Fcnag8+hBGY4pqRr5ZU1JDAo43/ajxXyy9T0A9cj0sN
+	vo2kSw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywmaeuarw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Jun 2024 08:55:59 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45O8twa0002217
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Jun 2024 08:55:58 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Jun
+ 2024 01:55:53 -0700
+Message-ID: <ce899bbd-f8df-0a6d-fc8f-bae6423ff8d2@quicinc.com>
+Date: Mon, 24 Jun 2024 14:25:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V2 3/3] arm64: dts: qcom: x1e80100: Add BWMONs
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <djakov@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <srinivas.kandagatla@linaro.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
+        <conor+dt@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <abel.vesa@linaro.org>
+References: <20240618154306.279637-1-quic_sibis@quicinc.com>
+ <20240618154306.279637-4-quic_sibis@quicinc.com>
+ <8cb65123-dec5-4740-b1ff-58f065716887@linaro.org>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <8cb65123-dec5-4740-b1ff-58f065716887@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240624-fastrpc-ml-v1-1-5dad89dce78f@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAPwreWYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDMyMT3bTE4pKigmTd3BxdI5Nk8xTT5DTTVPMkJaCGgqLUtMwKsGHRsbW
- 1AHdoaQFcAAAA
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Amol Maheshwari <amahesh@qti.qualcomm.com>, 
- Sumit Semwal <sumit.semwal@linaro.org>, 
- =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1140;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=hrcbm/Drjw9ypN+HcZfxd5WVucStMi5y/7ez75gjaJM=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmeSv9zpf8H4BgKPlJxOg47IlU6qKet0Gdiy2mb
- lK54d+wY2SJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZnkr/QAKCRCLPIo+Aiko
- 1dokB/9wFHH32XcKFs1rHJdH5p1yiMiZrguW0qbo3/I8qIMjE2YUjFNtbRxgC+rk2TUs6uP6WM6
- YEzuOuCRLhsffQOueT6cNgwHDNALL63lxA6n6sfbctfqzqNr5homT+myfqRZCGkPo1BBtGBPHKJ
- Pr0Pr5QbXvvEvbJXk4ePerGK3kvMg9RbIE05Hah/c8eYVny9s7Q2NvOfuBQhVF/d0Jl8SxM6xfa
- 5PZYnOPJPLEKZ/+O6+8y4U3QsK6aC6k0NzFUirbmtJKknqcmmLb5YiuSwbkpgMuhkwHcKwe4q3a
- l1w+2aJKlNAHjiDSOfSPwcluCidivsn5WvRA/Aa5MLxfp7GY
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: lzwGxvMZigRPaE6z1Ihoo6XicdCmI8LG
+X-Proofpoint-GUID: lzwGxvMZigRPaE6z1Ihoo6XicdCmI8LG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-24_08,2024-06-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ clxscore=1015 mlxscore=0 lowpriorityscore=0 priorityscore=1501
+ mlxlogscore=852 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2406240071
 
-FastRPC is a way to offload method invocation to the DSPs on Qualcomm
-platforms. As the driver uses dma-bufs, add dri-devel mailing list to
-the MAINTAINERS's entry, so that DRM maintainers are notified about the
-uAPI changes. This follows the usual practice established by the "DMA
-BUFFER SHARING FRAMEWORK" entry in the file.
 
-Suggested-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f45881e982d2..26d628c677a8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -18621,6 +18621,7 @@ QUALCOMM FASTRPC DRIVER
- M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
- M:	Amol Maheshwari <amahesh@qti.qualcomm.com>
- L:	linux-arm-msm@vger.kernel.org
-+L:	dri-devel@lists.freedesktop.org
- S:	Maintained
- F:	Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
- F:	drivers/misc/fastrpc.c
+On 6/19/24 01:03, Konrad Dybcio wrote:
+> 
+> 
+> On 6/18/24 17:43, Sibi Sankar wrote:
+>> Add the CPU and LLCC BWMONs on X1E80100 SoCs.
+>>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+> 
+> If you're going to resend, please add a comment like:
+> 
+> /* CPU0-3 */
 
----
-base-commit: 2102cb0d050d34d50b9642a3a50861787527e922
-change-id: 20240624-fastrpc-ml-24c7d5cf5e7b
+Ack, but I'll mention the cluster info directly.
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+-Sibi
 
+> 
+> above the respective monitor nodes
+> 
+> Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
+> Konrad
 
