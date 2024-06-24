@@ -1,90 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-23876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 158439142AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 08:22:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E6C89142FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 08:50:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AAF681F2137E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 06:22:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9C5B2849E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 06:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6489C225D9;
-	Mon, 24 Jun 2024 06:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 165DE2E646;
+	Mon, 24 Jun 2024 06:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fgtNEasX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZVeAko3o"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D652E400;
-	Mon, 24 Jun 2024 06:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F0F3A8C0;
+	Mon, 24 Jun 2024 06:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719210132; cv=none; b=W/34H4sEELjKiWqWZPe2QB/cvXNx0w444OW9GPrrIo5Zw5HkbqKBXF49XW+RWt4ZUMDxg8ypCHucXnO64mSSgGKjM08mu8Ji13cFXEddNhmxoGshgKZmRFNXFDYpJ8jfZVS/NL9Tsbg2n0IUutU3BZVy7iaLFHoTCEEQnBChrB4=
+	t=1719211844; cv=none; b=T9amP9FEhSS9MFX2rvTrE9ITd/OKJeAQy6H3BrUoRrv2ri2S2cDXZ1FJZB35vOVOY+3QU1oSsMzZSc9LQZWh/9u/bRFkBCj2sq6QWsoRxhkn6g9/i9X7p4ZODKyQlM4mxrWZhaK7QXkO6oMoXZXLKZukhfpbIV+eL53KCkwtBWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719210132; c=relaxed/simple;
-	bh=OehhVV1KBD0S5MzdbAomE8iFH0avJWioXXG8XDrbc9c=;
+	s=arc-20240116; t=1719211844; c=relaxed/simple;
+	bh=g5iWYDyt2ZDeg7La5X0LZ/mlaI2yr9c1wbeisWn+Suw=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eteT0MsYIHOfDIuvY3IcNtf1g6xMBeDhZhfYYQf3coQtmwmaWmXGYJSqMKRej3inSP0pB/INhn1YpYXhwxF89m36f5VnhkXcK1c2srVojvdDv7qwfK4uo8aB0X1a1Y+deVwrA9X+xaVjXyI0EPTLqSOK7mTMnWuOFkenMyj5qMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fgtNEasX; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=IulVlm+iABDtADvbEB2zPKZ9iiCRKJvnB8jb9zi7FWWyHcDTrWrGpYeKJSs7zTb/u8qGnsX8uZb/lkRAmwxozfX+SFLjIlWhD1W1nhBfZ16HCO9j+RkAcvilIMkSPx+Qon5fQH3SYyAxyLcprREMjBZWKLF0+MYy1uo+W66AmU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZVeAko3o; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45NMpd1K025140;
-	Mon, 24 Jun 2024 06:21:56 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45NNg425005923;
+	Mon, 24 Jun 2024 06:50:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=78BjC4ZngSF0zZa4ZxItwDC7
-	TOkUvZ5wSfalarQ23zM=; b=fgtNEasX4CeU2QVGVI0PidkxsvZTVx1bqKiNCaU3
-	/R91iNbjSiLQzvWCTNf/vtJ6XI3Kwabx03TcnTxYig9woESA8nMQZHYim/VIzLj5
-	NrAQVKesjy72FI447vVix5NzvdMiIzXHBmGtl6+Ap54DF1KnfLqM5FubtVSu0XUK
-	miqXFh4MLBR8ZTTtyKAuz/pOZU4cvpvPcRWnslGos2RSr0t3gFsJvKTZ9t6cDZ1m
-	Kv25nR3TetyaZiNjerumLIfKpJGI+rVInM2jq9ExaoEqbvANr4faIIffrCw8CLNo
-	mqFN5rsK06byKnN8SoMczeINsZiyzThB3VTD/1/yy4OKBw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywnxgtsf0-1
+	:references:subject:to; s=qcppdkim1; bh=SGEFJta5dbZ7t5J3TYz5Grkh
+	njAOdAZafLPY0ATa1YM=; b=ZVeAko3oSiEa6MMu4vvisbc3KN0ncBP37TrB21Pn
+	UjaBtIwo2nEQs3f2/Fq2HhDhEWMyN9KxUyC5SdTU8atKUDKKVPuHhQbC4+IDLCsj
+	BQyeLYEy72AtikgDIvFdCH5J4BZQ49F7aXTiZ6FYW/5B85R8i3dwaaRfKuA94QD1
+	UBIK0tG78Ixi7n/XuRK6WWcLZbryKhfe7PoBGXfLjd08r8gmcmf5gVbEk9NvbkPU
+	GWVngEKxIpQ5jUA0g8Qzl3QR9OxPTsbynvF8qQ+ZUpDygH6eNlA6NmFAUdtvh8FL
+	HDk0eafPl5CNNHsU1fmwe2JVj/ggQlH0DY7GeX4BnFHsFg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywnxgtty8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Jun 2024 06:21:56 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45O6Lt12025514
+	Mon, 24 Jun 2024 06:50:34 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45O6oOU6008543
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 24 Jun 2024 06:21:55 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Mon, 24 Jun 2024 06:50:24 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 23 Jun 2024 23:21:49 -0700
-Date: Mon, 24 Jun 2024 11:51:45 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Conor Dooley <conor+dt@kernel.org>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Maxime Ripard <mripard@kernel.org>, "Rob
- Herring" <robh@kernel.org>,
-        Sean Paul <sean@poorly.run>, Thomas Zimmermann
-	<tzimmermann@suse.de>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 0/3] Support for Adreno X1-85 GPU
-Message-ID: <20240624062145.nkqlh2szazvjigk7@hu-akhilpo-hyd.qualcomm.com>
-References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
- <26abe6cd-e9da-4db9-9035-76edd5dda614@kernel.org>
+ 15.2.1544.9; Sun, 23 Jun 2024 23:50:17 -0700
+Date: Mon, 24 Jun 2024 12:20:13 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <angelogioacchino.delregno@collabora.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>, <quic_sibis@quicinc.com>,
+        <abel.vesa@linaro.org>, <otto.pflueger@abscue.de>,
+        <quic_rohiagar@quicinc.com>, <luca@z3ntu.xyz>,
+        <quic_ipkumar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v2 0/7] Enable CPR for IPQ9574
+Message-ID: <ZnkXJWXI/mfP/vG+@hu-varada-blr.qualcomm.com>
+References: <20240624050254.2942959-1-quic_varada@quicinc.com>
+ <5xgjszacvtnjftygwvtonb4npspaceutnvnnniebxntii4tmud@xag2c6j2svqa>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,58 +79,73 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <26abe6cd-e9da-4db9-9035-76edd5dda614@kernel.org>
+In-Reply-To: <5xgjszacvtnjftygwvtonb4npspaceutnvnnniebxntii4tmud@xag2c6j2svqa>
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PO8NswSRSU9dBTs6ixM3EjEKZVLtXOKQ
-X-Proofpoint-ORIG-GUID: PO8NswSRSU9dBTs6ixM3EjEKZVLtXOKQ
+X-Proofpoint-GUID: x1_WOr5dCkzGTj0Apzc_k9hYrVjG9NHb
+X-Proofpoint-ORIG-GUID: x1_WOr5dCkzGTj0Apzc_k9hYrVjG9NHb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-24_05,2024-06-21_01,2024-05-17_01
+ definitions=2024-06-24_06,2024-06-21_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
  suspectscore=0 spamscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
- malwarescore=0 priorityscore=1501 mlxlogscore=999 impostorscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=929 impostorscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406240049
+ engine=8.19.0-2406140001 definitions=main-2406240054
 
-On Sun, Jun 23, 2024 at 01:11:48PM +0200, Krzysztof Kozlowski wrote:
-> On 23/06/2024 13:06, Akhil P Oommen wrote:
-> > This series adds support for the Adreno X1-85 GPU found in Qualcomm's
-> > compute series chipset, Snapdragon X1 Elite (x1e80100). In this new
-> > naming scheme for Adreno GPU, 'X' stands for compute series, '1' denotes
-> > 1st generation and '8' & '5' denotes the tier and the SKU which it
-> > belongs.
-> > 
-> > X1-85 has major focus on doubling core clock frequency and bandwidth
-> > throughput. It has a dedicated collapsible Graphics MX rail (gmxc) to
-> > power the memories and double the number of data channels to improve
-> > bandwidth to DDR.
-> > 
-> > Mesa has the necessary bits present already to support this GPU. We are
-> > able to bring up Gnome desktop by hardcoding "0xffff43050a01" as
-> > chipid. Also, verified glxgears and glmark2. We have plans to add the
-> > new chipid support to Mesa in next few weeks, but these patches can go in
-> > right away to get included in v6.11.
-> > 
-> > This series is rebased on top of v6.10-rc4. P3 cherry-picks cleanly on
-> > qcom/for-next.
-> > 
-> > P1 & P2 for Rob, P3 for Bjorn to pick up.
-> 
-> Which Rob?
+On Mon, Jun 24, 2024 at 08:39:55AM +0300, Dmitry Baryshkov wrote:
+> On Mon, Jun 24, 2024 at 10:32:47AM GMT, Varadarajan Narayanan wrote:
+> > This series tries to enable CPR on IPQ9574, that implements
+> > CPRv4. Since [1] is older, faced few minor issues. Those are
+> > addressed in [2].
+> >
+> > dt_binding_check and dtbs_check passed.
+> >
+> > Depends:
+> > 	[1] https://lore.kernel.org/lkml/20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org/T/
+> > 	[2] https://github.com/quic-varada/cpr/commits/konrad/
+>
+> Please include [2] into your patchset.
 
-Sorry for the confusion! I meant Rob Clark whom I had added in the "To:"
-list.
+Did not include them because Konrad has agreed to post them this week.
+And, I don't have an MSM8998 target to test those changes.
 
--Akhil
+Thanks
+Varada
 
-> 
-> Why bindings cannot go as usual way - via the subsystem?
-> 
-> Best regards,
-> Krzysztof
-> 
-> 
+> >
+> > v2: Fix Signed-off-by order in 2 patches
+> >     Update constraints in qcom,cpr3.yaml
+> >     Add rbcpr_clk_src registration
+> >     Add Reviewed-by to one of the patches
+> >     Not adding Acked-by as the file has changed
+> >
+> > Varadarajan Narayanan (7):
+> >   dt-bindings: power: rpmpd: Add IPQ9574 power domains
+> >   dt-bindings: soc: qcom: cpr3: Add bindings for IPQ9574
+> >   pmdomain: qcom: rpmpd: Add IPQ9574 power domains
+> >   dt-bindings: clock: Add CPR clock defines for IPQ9574
+> >   clk: qcom: gcc-ipq9574: Add CPR clock definition
+> >   soc: qcom: cpr3: Add IPQ9574 definitions
+> >   dts: arm64: qcom: ipq9574: Enable CPR
+> >
+> >  .../devicetree/bindings/power/qcom,rpmpd.yaml |   1 +
+> >  .../bindings/soc/qcom/qcom,cpr3.yaml          |  35 +++
+> >  arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 269 ++++++++++++++++--
+> >  drivers/clk/qcom/gcc-ipq9574.c                |  39 +++
+> >  drivers/pmdomain/qcom/cpr3.c                  | 137 +++++++++
+> >  drivers/pmdomain/qcom/rpmpd.c                 |  19 ++
+> >  include/dt-bindings/clock/qcom,ipq9574-gcc.h  |   2 +
+> >  include/dt-bindings/power/qcom-rpmpd.h        |   3 +
+> >  8 files changed, 488 insertions(+), 17 deletions(-)
+> >
+> > --
+> > 2.34.1
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
