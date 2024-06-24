@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCC4B915021
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 16:39:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBCD2915025
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 16:40:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 15CA8B20521
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:39:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 702571F22E24
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:40:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C910D19CD1C;
-	Mon, 24 Jun 2024 14:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 073BF19AD5B;
+	Mon, 24 Jun 2024 14:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pJwZ1dMT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XzQH4TdT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9479819CD12;
-	Mon, 24 Jun 2024 14:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C4119AA7E;
+	Mon, 24 Jun 2024 14:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719239892; cv=none; b=qbsB6Mp1xoCOOlyfDZuwaxwSQyUvus8mkJ3mVfdgKBdCV7Qz7uga4GuJ+rAQKl+WS0AtTwvMLrrtk+cRtobAHfF3OlyBCeVoc5gZavLfScoVvCUVFrmtdb1v3UH8Cq/OeglVIJT8FOKo9l80ZYwIHPZXM6bo27I6VfP7UekDWzk=
+	t=1719239974; cv=none; b=LtA0EYVqbgT1Fg3kI6VSq0hb3LuOM3kOGaqvXTC0Si51TfxViUOkpjzYzEXYPALZCNHqGR5+wbzauKwMUMHtYNoeJBLdiDk7VEEPAZRqodykgsrfblHxEYFTtDTd4heTOnXeszm3/JPfvp/FL6jYFdQijtl9QFcpGPhsiOUgoHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719239892; c=relaxed/simple;
-	bh=6N04oReBSNGcXT8RvWlMnkgFlIgW+zDsiQskdOqixuQ=;
+	s=arc-20240116; t=1719239974; c=relaxed/simple;
+	bh=yqojWMvD3PQYAqHtjhcIXooze5R4D0SvOLJU2DGSjrY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cQrYpFn+lWsXhzUU/9hs6fjZYZpExujTZ5ya19q9O8H0b0s+1o2LB3n0kPWYpLNqxTxOo62MNuzNalqmUkRg6+66U3OTm0OIOOxHS0sHPk7zIegTsCcmvaVlYiIiL8fwlot3rtiggL7jJh9BuOwp0osRP/o59rOFEvY5UeE9uGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pJwZ1dMT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C62FC2BBFC;
-	Mon, 24 Jun 2024 14:38:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=A02j5QuqMQm4Rl3aaTZ/iHDVrTfIMdm2PE5EL5eajqm1pGaq3KHiIkGuELJwfHRPPKBKvkCZpId14Sw2sF/C/4MYXR3POkhaDTwZugPMsla+lSrugaaSKEeKdPenGxC8TDhzuHiLy/WaVcEyF2oU9FH5zDM5Th/WiP2Ja+ZqI4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XzQH4TdT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13D6C2BBFC;
+	Mon, 24 Jun 2024 14:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719239892;
-	bh=6N04oReBSNGcXT8RvWlMnkgFlIgW+zDsiQskdOqixuQ=;
+	s=k20201202; t=1719239974;
+	bh=yqojWMvD3PQYAqHtjhcIXooze5R4D0SvOLJU2DGSjrY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pJwZ1dMTVutMSKBjWOKtAuh08NdO3hT6+aU/0z/Ld19pAKQW1kF7eW/3J4lTD1ztM
-	 1rbSbdfcpszxOG2tsgbc8A01/X8uM6YkTDz8MqMv1lvFJmV/ZTJvdi0Cq9cbF8NeWB
-	 gGNT72i5LdqsgzgnSfuXVx3Gh7f5eKZXurZXLOm+Ycc2iI0XJAJpHh8+yfHGfe4Fhu
-	 oK2FnfOx0x2shx6OTG93fVLRj4UWC29oFOLznPXlsg2csxdvu5PwV3cZZGTYSXiMBV
-	 nt9wjR17TzBlBHBMioHZxavTLZXTMZCyMQFRQ5Jm42h8vuMpFsfVMmiAd4POKnJf+M
-	 w0KJz4AOLk/Sg==
-Message-ID: <3bb6bf45-2a3e-4ed8-86f3-f0480af622d5@kernel.org>
-Date: Mon, 24 Jun 2024 16:38:07 +0200
+	b=XzQH4TdT4uWdnzvtyO+GKfFhxgo8+PblswAnN7VjY2oUJv3GNMqfD16TCczhOpKod
+	 GOKKjk7R/L9I4krquS43mByrRIMTsNQjK/s4s+ImaDeEakztDfQMcw0tv3zJ8Yc0aC
+	 iFO8SxN69zlP5oRqCPao2Y8kFhkrU79VJxFtricJRSTiC/QL9TZ6PIFd8hX0GquSg4
+	 TeKgJZKUAwNonhMjIqbt8Nx+JbCr8Un2wiVxOPYqdYVUbwdAsYkpm8sNEE9MM9RgqS
+	 f+UcgRgEZ3FoTSu4NzbO3AjROuRHTReUj/lgTfX+Zihx+ED61Yz/zTPddea2y4W0Yf
+	 GCcVTmajaXBvg==
+Message-ID: <d52ebb17-a8c2-438a-a3fb-dfb3419de743@kernel.org>
+Date: Mon, 24 Jun 2024 16:39:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: clock: Add x1e80100 LPASS AUDIOCC
- reset controller
+Subject: Re: [PATCH v2 2/3] dt-bindings: clock: Add x1e80100 LPASSCC reset
+ controller
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -61,7 +61,7 @@ To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240624-x1e-swr-reset-v2-0-8bc677fcfa64@linaro.org>
- <20240624-x1e-swr-reset-v2-1-8bc677fcfa64@linaro.org>
+ <20240624-x1e-swr-reset-v2-2-8bc677fcfa64@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,50 +107,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240624-x1e-swr-reset-v2-1-8bc677fcfa64@linaro.org>
+In-Reply-To: <20240624-x1e-swr-reset-v2-2-8bc677fcfa64@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 24/06/2024 15:32, Srinivas Kandagatla wrote:
-> X1E80100 LPASS (Low Power Audio Subsystem) Audio clock controller
-> provides reset support when it is under the control of Q6DSP.
+> X1E80100 LPASS (Low Power Audio Subsystem) clock controller provides reset
+> support when it is under the control of Q6DSP.
 > 
 > Add x1e80100 compatible to the existing sc8280xp as these reset
 > controllers have same reg layout and compatible.
 > 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
->  .../devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml      | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
-> index 3326dcd6766c..c33bf4c5af7d 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
-> @@ -18,10 +18,13 @@ description: |
->  
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,sc8280xp-lpassaudiocc
-> -      - qcom,sc8280xp-lpasscc
-> -
-> +    oneOf:
-> +      - enum:
-> +          - qcom,sc8280xp-lpassaudiocc
-> +          - qcom,sc8280xp-lpasscc
-> +      - items:
-> +          - const: qcom,x1e80100-lpassaudiocc
-> +          - const: qcom,sc8280xp-lpassaudiocc
 
-Please keep here blank line. With this:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
->    reg:
->      maxItems: 1
->  
-> 
 
 Best regards,
 Krzysztof
