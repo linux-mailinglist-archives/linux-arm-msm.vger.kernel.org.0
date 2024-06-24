@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 741A191473D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 12:20:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 447F091474F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 12:21:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1DF141F24FEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 10:20:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF377282625
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 10:21:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84F2912AAE2;
-	Mon, 24 Jun 2024 10:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CF41136669;
+	Mon, 24 Jun 2024 10:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gdUPq14d"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DoFBCp5i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0823C17;
-	Mon, 24 Jun 2024 10:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFD240BF5;
+	Mon, 24 Jun 2024 10:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719224404; cv=none; b=N8BnONbCKFDi76qlu3lsEINPN2Rn+++oEXDVb/rsBFVoWWAopMK82WzcMZVblgu7uS0PXrQNPA0rYXsLoWOfoA6nGyDW7f9o+41qtm/8iwJDVP9Z0iZqoLWoHTmvYzL6lbEGsHRT2BCDIN3Jma8UbWYZzhmJfJGscwA1++P/RWo=
+	t=1719224474; cv=none; b=juAlQxKZo267NFaCuz0W9/Grrdq0LfjHdJj53qiJaE3VO52SCeHPV7GlPAPfckmqONlfXFy0wHgo8o/Qns2KPzzlRjjJFCGKOFyRdYNoRwL2ejamorvH1ZytzviMleyYZRsDFLgrbSZ3lNfBOewAMFJWNoB2Deaf+OcdUFsjwxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719224404; c=relaxed/simple;
-	bh=jq6Mv4lkpau3wBmKiQ1Vfg594K3wkoTAbr19xM4Qf1I=;
+	s=arc-20240116; t=1719224474; c=relaxed/simple;
+	bh=d2YrsSBn2K0x3bECoxvDN/YNrSq3fNttW/m9Lsn58vw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A1BVY6BJ8MRoPRSJo3YPzjs1pFeNbplsnBOZIOHIVd4wol4aR3D7Db8ioJDEPEBWkNXBrftodLohyEvQmA5n0htSnUr53wNNPaMaemRFWL4sxXbQLEoh41m7gZSaITpyPyt4dypLkyiQVaritjZ6CFdhDOkRLsR9nx+EE/YLNes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gdUPq14d; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6177C32781;
-	Mon, 24 Jun 2024 10:19:58 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Q82Jw9PnG+WTQRZWxULULxoY0E+Qr6qSADWJDHt+08cD/pD4mkQU6siEQkJ/Q1mCKqgcnXsPvvXFV9L7tsMk5L2Z8ygybBRBfxxT/5TGG51xTkXIC6iZDafNWCMTena3SQJt4N9wPPXSQLdkDQFGK1UsEZr6rfdIrBL8K3KPVng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DoFBCp5i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 440BFC2BBFC;
+	Mon, 24 Jun 2024 10:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719224403;
-	bh=jq6Mv4lkpau3wBmKiQ1Vfg594K3wkoTAbr19xM4Qf1I=;
+	s=k20201202; t=1719224473;
+	bh=d2YrsSBn2K0x3bECoxvDN/YNrSq3fNttW/m9Lsn58vw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gdUPq14dnGG8QUBDcBFXgBaYPEUKP0QK7UqxydijKoDD/aPlpZgkuSie7KNfuSGm9
-	 1XmQhS/qWUXGYRm6x7zpUYM98ddTyEobgLbUG+kb+DzxBpSqZvBc3Rz42+pNifxqfg
-	 dRHVr8kRWPvAxriXd4W8bmFm74j8mne7jII4aAenYET+biP5PxUqDdxwd7udyjY5lr
-	 Ok/FdsPsD3O4oT2TXL9pOl4sxERHNew91VMlEqAfO+9Shw97yDvqr022Umx/vdaF8I
-	 03sp5tGcHqGM1Y2D6duZUomSvqS9G7FT5cHCZKnaFWH9XdZOc1uLNmDK5TlVQ1Ezv+
-	 Ccj2shP/tORWA==
-Message-ID: <76783b25-89cd-4bd2-a333-7ed2a6be065a@kernel.org>
-Date: Mon, 24 Jun 2024 12:19:56 +0200
+	b=DoFBCp5i3OM5Rbd0YGSHr8ygAjfO9fByxu/Ym0XlUjsVRltgfJNxN60IsZfOQ1/OV
+	 EujyVykAtlMcmNKrpGjpK+fWKtvDE2Fv+GGwGig1OR9rfEuUA2LggQPsIH4SaVBf++
+	 sfzWzHmVt2YIRusn52vVKY/RDUxn7W4TPUEujbJiRNaafLB/758mY0ol4rlkPaxn6T
+	 5lI5o/2qlBqsLYGMyH0/gBxcP49FiLO/pn72SbzC7z3xujLLZvZPddDsmCBWfA5GAV
+	 R0/TURBDOKoDY7lVMCOLWoVMY6oOG2cLm3VBfBOJVAlFpo+KW9J7EI27bHzULjZ87v
+	 +FTCHl+WYegfA==
+Message-ID: <6c06238b-14ce-4e7d-b0fd-33749c62213c@kernel.org>
+Date: Mon, 24 Jun 2024 12:21:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] Add debug log info to msm_csid_subdev_init
- function
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, gchan9527@gmail.com,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+Subject: Re: [PATCH v1 0/3] Support for Adreno X1-85 GPU
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: freedreno <freedreno@lists.freedesktop.org>,
+ dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Rob Clark <robdclark@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Conor Dooley
+ <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+ David Airlie <airlied@gmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Maxime Ripard <mripard@kernel.org>, Rob Herring <robh@kernel.org>,
+ Sean Paul <sean@poorly.run>, Thomas Zimmermann <tzimmermann@suse.de>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240624-b4-sc7180-camss-v2-0-0dfecdc50073@gmail.com>
- <20240624-b4-sc7180-camss-v2-6-0dfecdc50073@gmail.com>
- <6e643b88-2fbf-4bd1-b7a9-1af9e93f1916@linaro.org>
+References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
+ <26abe6cd-e9da-4db9-9035-76edd5dda614@kernel.org>
+ <20240624062145.nkqlh2szazvjigk7@hu-akhilpo-hyd.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,21 +114,41 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <6e643b88-2fbf-4bd1-b7a9-1af9e93f1916@linaro.org>
+In-Reply-To: <20240624062145.nkqlh2szazvjigk7@hu-akhilpo-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/06/2024 12:08, Bryan O'Donoghue wrote:
-> On 24/06/2024 00:22, George Chan via B4 Relay wrote:
->> +			dev_err(dev, "missing clk %s", res->clock[i]);
+On 24/06/2024 08:21, Akhil P Oommen wrote:
+> On Sun, Jun 23, 2024 at 01:11:48PM +0200, Krzysztof Kozlowski wrote:
+>> On 23/06/2024 13:06, Akhil P Oommen wrote:
+>>> This series adds support for the Adreno X1-85 GPU found in Qualcomm's
+>>> compute series chipset, Snapdragon X1 Elite (x1e80100). In this new
+>>> naming scheme for Adreno GPU, 'X' stands for compute series, '1' denotes
+>>> 1st generation and '8' & '5' denotes the tier and the SKU which it
+>>> belongs.
+>>>
+>>> X1-85 has major focus on doubling core clock frequency and bandwidth
+>>> throughput. It has a dedicated collapsible Graphics MX rail (gmxc) to
+>>> power the memories and double the number of data channels to improve
+>>> bandwidth to DDR.
+>>>
+>>> Mesa has the necessary bits present already to support this GPU. We are
+>>> able to bring up Gnome desktop by hardcoding "0xffff43050a01" as
+>>> chipid. Also, verified glxgears and glmark2. We have plans to add the
+>>> new chipid support to Mesa in next few weeks, but these patches can go in
+>>> right away to get included in v6.11.
+>>>
+>>> This series is rebased on top of v6.10-rc4. P3 cherry-picks cleanly on
+>>> qcom/for-next.
+>>>
+>>> P1 & P2 for Rob, P3 for Bjorn to pick up.
+>>
+>> Which Rob?
 > 
-> Please don't abbreviate - the other error message says "clock" here we 
-> say "clk"
-> 
+> Sorry for the confusion! I meant Rob Clark whom I had added in the "To:"
+> list.
 
-Is it a probe path? If yes, then this should be dev_err_probe. If not,
-then are you sure that non-probe paths should acquire resources? How
-does it handle deferred probe in such case?
+OK, thanks for confirming, it is correct.
 
 Best regards,
 Krzysztof
