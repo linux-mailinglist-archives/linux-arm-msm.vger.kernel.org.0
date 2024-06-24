@@ -1,115 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-23993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE4E9915146
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 17:03:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB48B915150
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 17:04:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B8FA1C22200
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 15:03:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 527AD1F2506D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 15:04:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80F7619ADB5;
-	Mon, 24 Jun 2024 15:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9386019B3FB;
+	Mon, 24 Jun 2024 15:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOUgyQWA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fKdA2bs4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4CF1DFD1;
-	Mon, 24 Jun 2024 15:03:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32EF19B3EC;
+	Mon, 24 Jun 2024 15:04:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719241403; cv=none; b=AdMS9AOq2lMvz9EMjxw5UdKiaMViSaXwyOrzUFazBoV/hNDM//TGiyBB3yQ7EfORQrm5KgHD3G63nfXBPi85AL47DMuC/UZe8Qrc4LEHvXWpPpeBJm7TE/kH0dyGAIFM8rkCHzXXaxlgjdaE6D9wxr5xEQursNMGWtOVNmffKHI=
+	t=1719241464; cv=none; b=lwKvUie+HficMtF4790Fb0Kzihh0j0m9CIz2rnfHwg2yUAPRMQZbgSKYjU0jpFnc1ywP00LE6FzEeo8wxHm4h0HyzGTkjCZ3u9zkBYhQhetFekOsTcdYDtj+YcbckVLnm6S4gmOlhyxhpJRks9j2Nw+1YCToBQrZ18nvLWGoYVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719241403; c=relaxed/simple;
-	bh=B8JMyvMWFHz61nSn2gsE6oSBp9URmvYN5iI30R/r1T4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P738pdoyAx9YYlQ6o6jfgzxNfMXPBXixu1R/qckW5KBpaxdTTjZmEOqnU5Eji+GHvG51LoGSkqjROt1Zb0v1f4ttREI8EWFHaWYGEORuwN/9IljvbOmtJoXRJCFJxcFdRAoztqQm+nJICkA5b2zwTDKX3pL8p5zZaAbkYhZNxDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZOUgyQWA; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52ce09b76e0so1444905e87.0;
-        Mon, 24 Jun 2024 08:03:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719241400; x=1719846200; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B8JMyvMWFHz61nSn2gsE6oSBp9URmvYN5iI30R/r1T4=;
-        b=ZOUgyQWAdJ7bcDjAztdI0ofJJvTnCukXoetsM/JNvnyPzRHxxaIYCD0tMcQMCQlyad
-         YqOysd7Fz6P/OE5nZ6c1WNNJhXBDyJy11X7aQ2gfgYorrcGxV8wlyw4Ceblkx3Yfi9+X
-         XRyf+i82XdqcMY1ChnZacHsqvUbWjjMsXy/Jl6ZHksu3ZP7jv6DRJ0puHWL8AjtFIFY6
-         XPjzbr1U+9r08WJQJekhqQyQ4toCC7twKe2UQ7gmFaelSw7/gSmVcDgeLXMLHLFlOO0j
-         s2PDGQff1V5/nTVNrWq2ZPmLVy5KzhM7oangDS8Odcy6ZEqWcnhwQ53s3p4XZxcx5NtU
-         yiAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719241400; x=1719846200;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B8JMyvMWFHz61nSn2gsE6oSBp9URmvYN5iI30R/r1T4=;
-        b=Zu/pGwe9xOdpAWjEiCkccK1YCZCNEdH73rDM/v1biRfGQHBkQAKBrpQkV/0+AOMoso
-         rq4Al5Q6Rv5G0URGjSzPa9PnsqWSramebaqBCon2xwbbVluGmDH/4ct3H0SIZtYCbOmb
-         22HJRbnGA5d6EmnoaIIS2yt67+lzkXa4bjAdt6/ud93TKNrqI+JGaXD/s2fYGiFnUyV9
-         4AX/Brxe1xMCrXRNxUgH1Pi0wprTbiPfVj6Qq1Mis4NF51n/KfFpzvhwOtiuO7YkVmp5
-         3jweWJb2OArO93pKL9oMiF0h3116mudNjKsQe+cExLy20gQ7zgLuj1etve8BbiJe7OU6
-         1LOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW7F8Fi50RPP/YcAnDBEHkPi3d+48Ocz+dKSiON0hxVonK5KuA8mSUmniBQkp6fOf3SkfL9NakbBCyAsjx/690eVlGXxc8qwyBCtGFyqB4Gxjesw5fUqqbzqzf5AFeevBQGDMKN46mu37TIhzXEVzRGzBYpyPxU9NKzHrEOnaqRWK0fFfJekvmNgNi5UUNKLSDKeM2nSMW7BrCrE8IY4yumY6qAmQ==
-X-Gm-Message-State: AOJu0YxNKpIFnverLt2FAWU450seVXz+nsrFBE1rfuigGJKbY83WKmjZ
-	q3EjXowtzE3l+p0HfWSyCqTJuBR5f82+vR5YnbjaxAwHMs/L2sa3x9rEQaXc3h+bGUR9qvx5/H6
-	FIXETBO8tXFUESs/1EMKesZRv1uU=
-X-Google-Smtp-Source: AGHT+IGqfNPcAOIVjP63+QUUs0vjEMIhNqbBTC8yUZQsIbF7fBla7dK4hdC7TYVqp6tIqXdyqsHsFxxmquuTJDKpl4A=
-X-Received: by 2002:a19:9118:0:b0:52c:81ba:aeba with SMTP id
- 2adb3069b0e04-52cdf344b79mr1667460e87.14.1719241399821; Mon, 24 Jun 2024
- 08:03:19 -0700 (PDT)
+	s=arc-20240116; t=1719241464; c=relaxed/simple;
+	bh=kZGBVDGJ8A6VbUq6CV4On0a5ZATppp4xByM0cnBSgV0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D5v0zbQOMwHve2Zpn8V4w7aj50jGZ/aLDlOBXZbEwcIS7Pzi19wTC8YUqLR2lBzEuioZoeIuhwBjMwr9wRpMj5OPqNNZSF+8e1kHvXZj2L0Jvf956qAaX8lEXHpYSCzIQvrGqsfgyqqoubyHThUDJpSadBKcMZuQmc+qSgYjwLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fKdA2bs4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45O8Ys0L009082;
+	Mon, 24 Jun 2024 15:04:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=3BGl5wNav3AbcG3aFGo2GYAv
+	3QE8C8WHv4bGgxvYjHw=; b=fKdA2bs47fqM/dOaVp367W56+zbY2KGPDfQesTHJ
+	qZS1Lea1O8f/zCzHMDnozMeVVN+Q1Se9GQ9ws3X54UmYCinKoLa1eTQfhzpT1vud
+	A4hTvK+0YtDNMAByIr1OotnZjPsgibdNRdF22asOvya9iRGMUzNifEuXt2YiMmmP
+	i69EQw0yuqUgsVjCUgsDRRT50Hhzql7bvvQR1wsk2wuIRXRFUwZCNlHAQUzLvC69
+	zx+aD7FeFT9hLoMG5Ulenzz5Tb7ZG39eWlcj28Yh8HPGV3I/AdRfEpETx6CevtLW
+	igdLNVKq4I4C4tHO6lDiemon0r/5NtXUGDXvo4QjgOf8qQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqcebxwb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Jun 2024 15:04:18 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45OF4IqM015863
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 24 Jun 2024 15:04:18 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 24 Jun 2024 08:04:16 -0700
+Date: Mon, 24 Jun 2024 20:34:12 +0530
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>
+CC: <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2] firmware: qcom_scm: Add a padded page to ensure DMA
+ memory from lower 4GB
+Message-ID: <ZnmK7Nc50gM3HbVI@hu-mojha-hyd.qualcomm.com>
+References: <1716564705-9929-1-git-send-email-quic_mojha@quicinc.com>
+ <h6omxqre7pod3ztn7x3sckjbgcg32u4btfmtxwn2rkjw7uwsgd@ncdmu5ed4gm3>
+ <d85bf913-b6dc-e9fd-7c54-fe52b79c2593@quicinc.com>
+ <jcvu2irnung4u6v6ticafrqze73kqenpqpy6le6du2q6ag734u@jeqxv5y7pumm>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240624-b4-sc7180-camss-v3-0-89ece6471431@gmail.com> <4d2f4a52-826e-44be-b242-55b50708692d@linaro.org>
-In-Reply-To: <4d2f4a52-826e-44be-b242-55b50708692d@linaro.org>
-From: george chan <gchan9527@gmail.com>
-Date: Mon, 24 Jun 2024 23:03:07 +0800
-Message-ID: <CADgMGSt2sRecrrYrG3t4RtgGn8QJzr1N+iRSWFKQVPgA6Pk8tw@mail.gmail.com>
-Subject: Re: [PATCH RFT v3 0/5] Add sc7180 camss subsys support
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <jcvu2irnung4u6v6ticafrqze73kqenpqpy6le6du2q6ag734u@jeqxv5y7pumm>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EW54NpJhSkWIwx-NTQFR95zGMGtkfh84
+X-Proofpoint-ORIG-GUID: EW54NpJhSkWIwx-NTQFR95zGMGtkfh84
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-24_11,2024-06-24_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ mlxscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 spamscore=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=993
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406240121
 
-On Mon, Jun 24, 2024 at 9:50=E2=80=AFPM Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> On 24/06/2024 13:13, George Chan via B4 Relay wrote:
-> > - Add RFT tag to all patches, since no tested-by at all.
->
-> Have you not tested this updated series ?
->
-> ---
-> bod
+On Sun, Jun 23, 2024 at 07:25:23PM -0500, Bjorn Andersson wrote:
+> On Wed, May 29, 2024 at 05:24:29PM GMT, Mukesh Ojha wrote:
+> > 
+> > 
+> > On 5/27/2024 2:16 AM, Bjorn Andersson wrote:
+> > > On Fri, May 24, 2024 at 09:01:45PM GMT, Mukesh Ojha wrote:
+> > > > For SCM protection, memory allocation should be physically contiguous,
+> > > > 4K aligned, and non-cacheable to avoid XPU violations. This granularity
+> > > > of protection applies from the secure world. Additionally, it's possible
+> > > > that a 32-bit secure peripheral will access memory in SoCs like
+> > > > sm8{4|5|6}50 for some remote processors. Therefore, memory allocation
+> > > > needs to be done in the lower 4 GB range. To achieve this, Linux's CMA
+> > > > pool can be used with dma_alloc APIs.
+> > > > 
+> > > > However, dma_alloc APIs will fall back to the buddy pool if the requested
+> > > > size is less than or equal to PAGE_SIZE. It's also possible that the remote
+> > > > processor's metadata blob size is less than a PAGE_SIZE. Even though the
+> > > > DMA APIs align the requested memory size to PAGE_SIZE, they can still fall
+> > > > back to the buddy allocator, which may fail if `CONFIG_ZONE_{DMA|DMA32}`
+> > > > is disabled.
+> > > 
+> > > Does "fail" here mean that the buddy heap returns a failure - in some
+> > > case where dma_alloc would have succeeded, or that it does give you
+> > > a PAGE_SIZE allocation which doesn't meeting your requirements?
+> > 
+> > Yes, buddy will also try to allocate memory and may not get PAGE_SIZE memory
+> > in lower 4GB(for 32bit capable device) if CONFIG_ZONE_{DMA|DMA32} is
+> > disabled.
+> 
+> Is that -ENOMEM or does "not get" mean that the buddy fallback will
+> provide an allocation above 4GB?
 
-Do you wanna add my tested-by too? It just feels weird to add my
-tested-by that way.
+dma_alloc_coherent() returns NULL in that situation.
 
-Tested:
-Linus tree 5f583a3162ffd9f7999af76b8ab634ce2dac9f90 +
-20240522154659.510-1-quic_grosikop@quicinc.com with mine patches
+https://elixir.bootlin.com/linux/v6.10-rc5/source/kernel/dma/direct.c#L142
 
-Not test:
-linux-next + 20240522154659.510-1-quic_grosikop@quicinc.com + mine
+-Mukesh
 
-Just for reference, last month i pushed grosikop's patch with mine to below=
-:
-https://github.com/99degree/linux/tree/camss-working
+> 
+> Regards,
+> Bjorn
+> 
+> > However, DMA memory would have successful such case if
+> > padding is added to size to cross > PAGE_SIZE.
+> > 
+> > > 
+> > >  From this I do find the behavior of dma_alloc unintuitive, do we know if
+> > > there's a reason for the "equal to PAGE_SIZE" case you describe here?
+> > 
+> > I am not a memory expert but the reason i can think of could be, <=
+> > PAGE_SIZE can anyway possible to be requested outside DMA coherent api's
+> > with kmalloc and friends api and that could be the reason it is falling
+> > back to buddy pool in DMA api.
+> > 
+> > -Mukesh
 
