@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-23973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBCD2915025
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 16:40:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E520B91502F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 16:41:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 702571F22E24
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:40:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4472FB2391E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:41:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 073BF19AD5B;
-	Mon, 24 Jun 2024 14:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 806F719B59B;
+	Mon, 24 Jun 2024 14:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XzQH4TdT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kthgy1mr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C4119AA7E;
-	Mon, 24 Jun 2024 14:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EA819B3CE;
+	Mon, 24 Jun 2024 14:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719239974; cv=none; b=LtA0EYVqbgT1Fg3kI6VSq0hb3LuOM3kOGaqvXTC0Si51TfxViUOkpjzYzEXYPALZCNHqGR5+wbzauKwMUMHtYNoeJBLdiDk7VEEPAZRqodykgsrfblHxEYFTtDTd4heTOnXeszm3/JPfvp/FL6jYFdQijtl9QFcpGPhsiOUgoHI=
+	t=1719240023; cv=none; b=mQI9JvlkF01xhj7a5KSTqvpk0ygb2LZbMKla7+acC8Vflq/EBlt3veBq8UTrUl1G5ACyX8Mo3XhazcFfMTBQSOH4OreBXtZgIviWLClv7ZXs8qsLNs6Y/YRtOUZIDj8maJgYz2iNvc+7rVwtjkktVFcPfA5yomCfanZeT9bSOnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719239974; c=relaxed/simple;
-	bh=yqojWMvD3PQYAqHtjhcIXooze5R4D0SvOLJU2DGSjrY=;
+	s=arc-20240116; t=1719240023; c=relaxed/simple;
+	bh=LghOPF/jBzOKdRQhWCjLMPt9wHaq5KBkLu8Li8xh22Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A02j5QuqMQm4Rl3aaTZ/iHDVrTfIMdm2PE5EL5eajqm1pGaq3KHiIkGuELJwfHRPPKBKvkCZpId14Sw2sF/C/4MYXR3POkhaDTwZugPMsla+lSrugaaSKEeKdPenGxC8TDhzuHiLy/WaVcEyF2oU9FH5zDM5Th/WiP2Ja+ZqI4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XzQH4TdT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13D6C2BBFC;
-	Mon, 24 Jun 2024 14:39:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QXCrdn40JjOH7KIFwjDHo8yRcPSMG86vmBYyNCbHzd8PICg/4gUwGRLumz+MxNgdubzJynwxY6ZdaC/UZgjx9vW0pqQUDT2E5w++fza4Nf64GoEWI6A8ceDt5MQNFyDsyoeAfZlFQ98sIQkOvxsKh3sZ6GzN0+c4y5WQT2iwkiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kthgy1mr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9B3C2BBFC;
+	Mon, 24 Jun 2024 14:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719239974;
-	bh=yqojWMvD3PQYAqHtjhcIXooze5R4D0SvOLJU2DGSjrY=;
+	s=k20201202; t=1719240022;
+	bh=LghOPF/jBzOKdRQhWCjLMPt9wHaq5KBkLu8Li8xh22Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XzQH4TdT4uWdnzvtyO+GKfFhxgo8+PblswAnN7VjY2oUJv3GNMqfD16TCczhOpKod
-	 GOKKjk7R/L9I4krquS43mByrRIMTsNQjK/s4s+ImaDeEakztDfQMcw0tv3zJ8Yc0aC
-	 iFO8SxN69zlP5oRqCPao2Y8kFhkrU79VJxFtricJRSTiC/QL9TZ6PIFd8hX0GquSg4
-	 TeKgJZKUAwNonhMjIqbt8Nx+JbCr8Un2wiVxOPYqdYVUbwdAsYkpm8sNEE9MM9RgqS
-	 f+UcgRgEZ3FoTSu4NzbO3AjROuRHTReUj/lgTfX+Zihx+ED61Yz/zTPddea2y4W0Yf
-	 GCcVTmajaXBvg==
-Message-ID: <d52ebb17-a8c2-438a-a3fb-dfb3419de743@kernel.org>
-Date: Mon, 24 Jun 2024 16:39:28 +0200
+	b=Kthgy1mraYMHo8kgPH0n4nZR6eKlPkAHwYrXrCDtoyJ7FWDddIlZwy/7doXrfOqoR
+	 KiYt9yqzQYfK20z1ZHivh2fuGEtJMemdboUsRe6sTcJ9RH5dddOS7oxxeSC4kgni22
+	 no5d82UomUaGW5+PjLI9/BBEQE/Vzq05QpvkWOfBUUOKEWKetLllRjrH6aFm7OB1FK
+	 1Rp0WiZOuuzLdG86HCZxtiuhzS0tLysPFq85s9h1JgdjX5ys36dtQjXhWI+bzdr6Au
+	 XPdF06+uqR4sR0VTLdxC2tXKvpg74NkHF6zYcI9VgJJ3sCWXvLj07jny8TXz6xbp10
+	 W/4oUA87sAawA==
+Message-ID: <7466d857-5ed0-433b-bf3d-525b40939b78@kernel.org>
+Date: Mon, 24 Jun 2024 16:40:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] dt-bindings: clock: Add x1e80100 LPASSCC reset
- controller
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: x1e80100: add soundwire
+ controller resets
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -61,7 +61,7 @@ To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240624-x1e-swr-reset-v2-0-8bc677fcfa64@linaro.org>
- <20240624-x1e-swr-reset-v2-2-8bc677fcfa64@linaro.org>
+ <20240624-x1e-swr-reset-v2-3-8bc677fcfa64@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,18 +107,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240624-x1e-swr-reset-v2-2-8bc677fcfa64@linaro.org>
+In-Reply-To: <20240624-x1e-swr-reset-v2-3-8bc677fcfa64@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 24/06/2024 15:32, Srinivas Kandagatla wrote:
-> X1E80100 LPASS (Low Power Audio Subsystem) clock controller provides reset
-> support when it is under the control of Q6DSP.
+> Soundwire controllers (WSA, WSA2, RX, TX) require reset lines to enable
+> switching clock control from hardware to software.
 > 
-> Add x1e80100 compatible to the existing sc8280xp as these reset
-> controllers have same reg layout and compatible.
+> Add them along with the reset control providers.
 > 
-
+> Without this reset we might hit fifo under/over run when we try to write to
+> soundwire device registers.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
