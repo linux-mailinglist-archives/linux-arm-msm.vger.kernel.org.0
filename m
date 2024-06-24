@@ -1,75 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-24029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D38F91587F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 23:13:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E70D091587B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 23:13:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C3EF1C21D49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 21:13:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C83EB23229
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 21:13:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E80951A08D3;
-	Mon, 24 Jun 2024 21:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3E361A08C9;
+	Mon, 24 Jun 2024 21:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xcyu5aVL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ojaK+v0H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F1519AD93
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA9919F48D
 	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 21:13:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719263631; cv=none; b=VQc1IGEuFtTOcz5Ozx74BoLo4RcImnN/IfOs3J9bg82A22MXc+r87YG70eAvS1NiOHXveqEBvmBCGGS88lb/Rm+vlyesUL9JAmp3641kZrL9qxbwXJFAMpUnKMbs1DhwhFRRHPV8RzyASfQkPvTgGTfOUhEiz/6Rvk1NGAJsoaY=
+	t=1719263630; cv=none; b=LjGY1MsB0cp1uDSlHKrkyQfHvCfe9DkQ2Fsac4oM41koXweOFp2XmGjdJn4Va41crcOmk/p2CBHjZJDpE25PWZWQQRJx6BkgC4EGx0mY3IF977xJOufFRNigYZQMhqVQ5jyjwKBbJ/4pMdEqrRX6R5H78gf7EvxlYjTEcodwJDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719263631; c=relaxed/simple;
-	bh=UZZ7KSs7CWwTZIZFzb5yNp2b/so4xjaqpHcSLMMe4Mk=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cor4CNaNkQ+KEGN1eB5r/uHm06NvHqPIIETx6HzGlnGkiNj70yVUVrXukFnYcETKgfONl6bOdkAL9hxitt0wQFVwui5GI4KiYnsVGWawZouSgQ7Q/p37xK9dgMf06KoMkbqRYBXXyZqJ+uZlVKH0acUjURgYEGk+xUk/CCV04Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xcyu5aVL; arc=none smtp.client-ip=209.85.167.51
+	s=arc-20240116; t=1719263630; c=relaxed/simple;
+	bh=CRnQPNrk6tMn0RWlkSywOwQLtsZdvuYbpLeYPQfOvOQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=PxI6o2qP+468MKDEUWqLzM3WZtbpdNroSvvYA9t2geXuQLNeR/B8V2CXlES+sH0uoG8bnV+priPOS8GBA7SivF6NryJfqdZT9F3owm7oT7zv7CitmFux5gBu0VfEB44xX3rTd7S0ESj7E1KAO88jvC6RlRriwSjuLfOT75gYGK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ojaK+v0H; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52ce655ff5bso1450756e87.3
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52cdebf9f53so2189045e87.2
         for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 14:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719263626; x=1719868426; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=urZQV+y3QNxwreYOcv1wFUORMtdQQg7g7j8r664owVY=;
-        b=Xcyu5aVLe9nmC/+AQ42E9go6ctRYuZ8EXrlx1vZV6Zh5nTykIzRM/jwHJ0KQXEAw+3
-         I0jUT2OtHTzHeU2+pYc/HDizQDvGbuvQgEmZxEnfQRGsQuDF3rjOTOmMRksvbpq2sGKv
-         NajplOVVXY9PJHrA4QoMUwRkVM0A4DPEpPck4I2jlCVrSjM6+IWZJyJrSfQRbirxCTnW
-         0vsfn8SPUIog//ZOUgJU3WmVCyYkMEPF/CVhBOqTJYsti3GrcQq906wdn1utklKWZBVG
-         Ni8Q6pggGhP1r1ZsCznarvxY8QXPm7dx9Gq3zhHFtqknz06dTnrmpU+0oCgTR+1GVhXh
-         MLSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719263626; x=1719868426;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1719263627; x=1719868427; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=urZQV+y3QNxwreYOcv1wFUORMtdQQg7g7j8r664owVY=;
-        b=FqBEzAxHt7Sk8lWz4q7NY2LwSYN8sWzBhhh0Q8LvnpiuzDLpT8sTHYeYv0A8hEFTVp
-         HSadAtyiHpCBRLYrvKSAWDtPyclCXU6usXL18hxx15ci5MwVzuZf3n/32szTU8yuNkMf
-         tDIfossHDhPRYLQVJSLnDc3yDMHMfH7NPcHeAnLcBIBxew84QteWbMaVjeyuzNkoMiCg
-         K9LWB2SCKr3ywB7UUp3HGz8doC6Ip8NG4j9LXFpRH2dBvsdn21baSCTpizK+Uj6G1F+6
-         mMYcF7wgycNF96WTup918QW5PkH8dHtAVuurBJLMSKGLORtItF4BD+pCls/V5gyD0cCA
-         8W/A==
-X-Forwarded-Encrypted: i=1; AJvYcCVk7oEveeA5wINCdBmo0N3Mniv37R6MD4xnaxNu87ETUU8sGXYFVWE8+p7Osdx3X2fo/AB/7qZDyoyvj1VuHKLbc+fwhrQjI9hrk4rxfQ==
-X-Gm-Message-State: AOJu0YxLnWVBEnn7Th0AzksnmaLIoyPWNJy8r4oDqLplIDbFk3GLRCWU
-	12k631eRUBnI0Zdsme6aNpbQsnnv6VhRhFVQv01SXpGaU7opcdEjUbYALtMwXVVcrZwPgU+yOCK
-	LPss=
-X-Google-Smtp-Source: AGHT+IHEDQNwz07UQQxJde+XyM3nCFYemupYzmdTTNO3MLuVFsO+9LInnRA1VbjWSUeWS6C4YYunpQ==
-X-Received: by 2002:a05:6512:3e1c:b0:52c:e084:bb1e with SMTP id 2adb3069b0e04-52ce084bc12mr5970691e87.13.1719263626404;
-        Mon, 24 Jun 2024 14:13:46 -0700 (PDT)
+        bh=QnAQMhTqxkoTHi2sUlyi5iGRZ0J/13FG1QGdqL66JnI=;
+        b=ojaK+v0HmTAKIh1gFul2pRyyPzon07n3/b5HeWRl6l2A42n4MU1eQoHQ2c9sxCewIz
+         kxOC28g6L9QP6mFYuZKfDLrQAq63m3V3XDWAK3D3kVnfmkaXIsf7WWbH9sp/gMeVi6Zd
+         LK4rRnplTtIrTmfRWI700gyCxMWCChRhcEjBwr9LuqS2PVuiH4U1DOcI3J10ae9XZy7X
+         guuENLfY3edE8h88SzQQ2ygEvGsjDNaPGcOxtUZ1Rs60SgHzgQL13puz/WfyZX8DpCHe
+         fW2yxOtvfefRL7KCzS4rh6A91JG3nNGa+CdlpouZFw0/YIUY+jzLrH/1lQgEeqk6Hvab
+         xMBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719263627; x=1719868427;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QnAQMhTqxkoTHi2sUlyi5iGRZ0J/13FG1QGdqL66JnI=;
+        b=a3Qg4DrXktI7LKpHjhSg2YNhJA+2+Hz+fVONcJZ493AY4keSDuSxsNBulzkriqVTmF
+         ehscsC/6MehfpLaHbfzWFkZzvfcu0ckY2HcZnM8RUnzE5Qq4bcVPvXkXAiUUWceslmPy
+         bWwZNViIh/OXBZcKnW81TIub3P2B1OBIbSq1IlLpnnHzpEsPEjwMYWqF409INxbq/Zos
+         uwcirWXa/UdnMLeogUuNDS2OwmftcgYU3ZXdqy4KYt03Ai+ZlxlB1GMWh4gLpRyLe3q1
+         65hx873Lw+uGb2F9rJiGq7bBmVkcXMfcyHkeLKf1P70Tma5XHSrx5/huBkiAc/RjTN1v
+         h37w==
+X-Forwarded-Encrypted: i=1; AJvYcCVvc9B8zdYVSC8WZIemgA9a2mMIYwtpUvCvhhqXM15sV9eZUZh30KpaefGqi5gYDbVajUR0JDf6MZqdlB7tcr29wzj0Jc6PmXeJk3VtMA==
+X-Gm-Message-State: AOJu0Yy86wBffGNdiMdWdSSaSjaBmf6pfX71ZMO+BBZyEU+ryYsPFYUW
+	zPotPSIsDrSiHi1cPP3vgflBbhPWLpM9iTbcxYidGWxrd8F5BwqdTqxRjPNfFP/xAkZPeH5DM/+
+	0fjI=
+X-Google-Smtp-Source: AGHT+IEdpZ5JYDr7V8Znxppu0fFUyD+kco0q7CJPmsFD4ZDNHTS3te8ASnZiqa38kdut6xCS5YBoLA==
+X-Received: by 2002:ac2:54b3:0:b0:52c:c6a0:575c with SMTP id 2adb3069b0e04-52ce064e939mr3488507e87.33.1719263627046;
+        Mon, 24 Jun 2024 14:13:47 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cd63b49f2sm1057512e87.56.2024.06.24.14.13.45
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cd63b49f2sm1057512e87.56.2024.06.24.14.13.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jun 2024 14:13:45 -0700 (PDT)
+        Mon, 24 Jun 2024 14:13:46 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v5 00/16] drm/msm/dpu: be more friendly to X.org
-Date: Tue, 25 Jun 2024 00:13:40 +0300
-Message-Id: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
+Date: Tue, 25 Jun 2024 00:13:41 +0300
+Subject: [PATCH v5 01/16] drm/msm/dpu: cleanup FB if
+ dpu_format_populate_layout fails
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,11 +80,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAITheWYC/3XOTQrCMBAF4KtI1kaSSRMbV95DXKT5aQe0kVSrU
- np304KoSJdvmPfNDKTzCX1HdquBJN9jh7HNQa5XxDamrT1FlzMBBgUTvKTucqPn6Dy1sQ1Y0zu
- 6a0MVKCfs1jgJhuTuJfmAj9k9HHNusLvG9JzP9HyavkW9IPacMupY8KoKJa8C35+wNSluYqrJR
- PbwYRQTSwxkhisTJDC5lUb9MeKL4cUSIzID2tu8pK3W1R9TfDGwyBTTN0yUlgtnhJE/zDiOLw1
- YQB6QAQAA
+Message-Id: <20240625-dpu-mode-config-width-v5-1-501d984d634f@linaro.org>
+References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
+In-Reply-To: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
  Marijn Suijten <marijn.suijten@somainline.org>, 
@@ -92,89 +92,74 @@ Cc: Abel Vesa <abel.vesa@linaro.org>,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3580;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2033;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=UZZ7KSs7CWwTZIZFzb5yNp2b/so4xjaqpHcSLMMe4Mk=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmeeGGwgmYMknmUybrPk3kTGNITMSptLTS/oH3R
- y6LQ76WZESJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZnnhhgAKCRCLPIo+Aiko
- 1anUB/47qdUTX+IoDyXInMRwcX5RkVGqrniKcYZra1SYJUayxAtb6CkwnO6JTo2PKi91i0Cd8Kh
- iwWOoV3EwIcNvrYm1ahhB1Ss9NJy6R+PqlwFoRf3Stuj8sw31Iwm7jvzzQLkr1hz9DHaCDUv9ES
- 3a5+W2uSeiwbn2xoUstoDB2x5PuVn9v+VdDgEZVvGwSm1GGakDLTY17R1LFtTKYAGq4o2XahHPx
- NXjDuHQfXhWYt4D0JpQYq/BkhzJ7X/KrM0wlWsmmvMr2KrUlLUz8N02jShK/Z8NSlcFO/2HOGJZ
- YABLYnQeNnFtUlmSMAaQRJ/UXa+N8t6d0DYwNmtZEivYc50V
+ bh=CRnQPNrk6tMn0RWlkSywOwQLtsZdvuYbpLeYPQfOvOQ=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmeeGHkTKUSFhd/esJT4kU4yqcOeXPY/1aZhwhY
+ ouCUfW6jveJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZnnhhwAKCRCLPIo+Aiko
+ 1dHEB/4lCSfYAUpyuj9p97n0YydfifdA+CLqgrCwyumcCOIrtmqy/DjWUSMdZpNrUqoUVziJ5cF
+ 97Cy3Mkr6RVsi3TUv4Z1ZlHOFuLar3WeXhdnncJ0L56qv4HlBfafsZ9wjYbsF2itRhQoEgT7LzV
+ 6e8jnQRkDXI6YXZiQBazKSE1GOK9nvy/0swaShEgrWrXsVm8vY29MXK5zCCYSyNlRHNhHV/v++p
+ b4PxUXta9So50jIrejN+9NxvhwCQLD3gpfhcbHXkGhWkmQI8ieVdo84VfJDas8gFeqZ3C8dcRaT
+ ZuYbZ7L04qdfRC5QXnM+EG7unCb24AQpNEc/IrW6ZjSEztDO
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Unlike other compositors X.org allocates a single framebuffer covering
-the whole screen space. This is not an issue with the single screens,
-but with the multi-monitor setup 5120x4096 becomes a limiting factor.
-Check the hardware-bound limitations and lift the FB max size to
-16383x16383.
+If the dpu_format_populate_layout() fails, then FB is prepared, but not
+cleaned up. This ends up leaking the pin_count on the GEM object and
+causes a splat during DRM file closure:
 
+msm_obj->pin_count
+WARNING: CPU: 2 PID: 569 at drivers/gpu/drm/msm/msm_gem.c:121 update_lru_locked+0xc4/0xcc
+[...]
+Call trace:
+ update_lru_locked+0xc4/0xcc
+ put_pages+0xac/0x100
+ msm_gem_free_object+0x138/0x180
+ drm_gem_object_free+0x1c/0x30
+ drm_gem_object_handle_put_unlocked+0x108/0x10c
+ drm_gem_object_release_handle+0x58/0x70
+ idr_for_each+0x68/0xec
+ drm_gem_release+0x28/0x40
+ drm_file_free+0x174/0x234
+ drm_release+0xb0/0x160
+ __fput+0xc0/0x2c8
+ __fput_sync+0x50/0x5c
+ __arm64_sys_close+0x38/0x7c
+ invoke_syscall+0x48/0x118
+ el0_svc_common.constprop.0+0x40/0xe0
+ do_el0_svc+0x1c/0x28
+ el0_svc+0x4c/0x120
+ el0t_64_sync_handler+0x100/0x12c
+ el0t_64_sync+0x190/0x194
+irq event stamp: 129818
+hardirqs last  enabled at (129817): [<ffffa5f6d953fcc0>] console_unlock+0x118/0x124
+hardirqs last disabled at (129818): [<ffffa5f6da7dcf04>] el1_dbg+0x24/0x8c
+softirqs last  enabled at (129808): [<ffffa5f6d94afc18>] handle_softirqs+0x4c8/0x4e8
+softirqs last disabled at (129785): [<ffffa5f6d94105e4>] __do_softirq+0x14/0x20
+
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v5:
-- Fix crash in the writeback code.
-- Link to v4: https://lore.kernel.org/r/20240624-dpu-mode-config-width-v4-0-1038c13da3a5@linaro.org
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Changes in v4:
-- Fix handling of the not visible planes with the FB being set, as
-  detected via the kms_cursor_edge_walk test.
-- Link to v3: https://lore.kernel.org/r/20240614-dpu-mode-config-width-v3-0-29ec4069c99b@linaro.org
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 1c3a2657450c..eabc4813c649 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -680,6 +680,9 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
+ 			new_state->fb, &layout);
+ 	if (ret) {
+ 		DPU_ERROR_PLANE(pdpu, "failed to get format layout, %d\n", ret);
++		if (pstate->aspace)
++			msm_framebuffer_cleanup(new_state->fb, pstate->aspace,
++						pstate->needs_dirtyfb);
+ 		return ret;
+ 	}
+ 
 
-Changes in v3:
-- Reoder the functions to pull up a fix to the start of the patchset
-  (Abhinav)
-- Rename the _dpu_crtc_setup_lm_bounds() to
-  _dpu_crtc_check_and_setup_lm_bounds() (Abhinav)
-- Make dpu_crtc_mode_valid() static.
-- Link to v2: https://lore.kernel.org/r/20240603-dpu-mode-config-width-v2-0-16af520575a6@linaro.org
-
-Changes in v2:
-- Added dpu_crtc_valid() to verify that 2*lm_width limit is enforced
-  (Abhinav)
-- Link to v1: https://lore.kernel.org/r/20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org
-
----
-Dmitry Baryshkov (16):
-      drm/msm/dpu: cleanup FB if dpu_format_populate_layout fails
-      drm/msm/dpu: fix error condition in dpu_encoder_virt_atomic_mode_set
-      drm/msm/dpu: move CRTC resource assignment to dpu_encoder_virt_atomic_mode_set
-      drm/msm/dpu: check for overflow in _dpu_crtc_setup_lm_bounds()
-      drm/msm/dpu: drop dpu_format_check_modified_format
-      drm/msm/dpu: drop dpu_format_populate_layout from dpu_plane_sspp_atomic_update
-      drm/msm/dpu: drop extra aspace checks in dpu_formats
-      drm/msm/dpu: drop msm_format from struct dpu_hw_fmt_layout
-      drm/msm/dpu: pass drm_framebuffer to _dpu_format_get_plane_sizes()
-      drm/msm/dpu: move pitch check to _dpu_format_get_plane_sizes_linear()
-      drm/msm/dpu: split dpu_format_populate_layout
-      drm/msm/dpu: make dpu_format_populate_addrs return void
-      drm/msm/dpu: move layout setup population out of dpu_plane_prepare_fb()
-      drm/msm/dpu: check for the plane pitch overflow
-      drm/msm/dpu: merge MAX_IMG_WIDTH/HEIGHT with DPU_MAX_IMG_WIDTH/HEIGHT
-      drm/msm/dpu: sync mode_config limits to the FB limits in dpu_plane.c
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  35 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  62 ++++--
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  37 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c        | 243 +++++++--------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h        |  30 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   2 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h          |   3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  10 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |  47 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h          |   3 +
- drivers/gpu/drm/msm/msm_kms.h                      |   6 -
- 14 files changed, 200 insertions(+), 288 deletions(-)
----
-base-commit: 5c522ecead93987bcb0459f0160d8625e46d78d2
-change-id: 20240318-dpu-mode-config-width-626d3c7ad52a
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
