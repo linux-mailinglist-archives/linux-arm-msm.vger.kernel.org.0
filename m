@@ -1,116 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-24020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3E719156E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 21:06:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30D0D91572D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 21:32:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C6A51F2524F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 19:06:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEB8B281C69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 19:32:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A348819EEC8;
-	Mon, 24 Jun 2024 19:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DBDA19FA6F;
+	Mon, 24 Jun 2024 19:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="hQ6wXJH3"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="f2mQW5BI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EB2107A0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 19:06:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D50E22313;
+	Mon, 24 Jun 2024 19:31:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719255986; cv=none; b=Ty15R1rUn7kBuTj6A94fSvTv6VzmYdfG9l0QvZZTIJhWOGlUPP8ZR4YDzPR+Kj5k05kEhdCgAxVE8VGqyfUQKqpDvL8SPl0tBv3lQeUAcOzQo6AoEGTeV6IJSFQnHp+sBZLVIVT7AZkR5UqyQWvTjYKM4Dhx0KwMkZwL6WHbGRM=
+	t=1719257516; cv=none; b=d/bZriHUU4mdZYBhWqNVkNvha90BjuDbHyid3fsKODdKXPs67Cy12MrNiJaPeHjq4gdxWtqIx/jbODkEr8xUsGrWW6oj77eVGSAfUnuHDvih+uMcVyGmWOcy+GYP5EgfjSiDxjxAyLUPuNU2AMUVaJ+f0wMK+0KQ/h1Sr6nBIwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719255986; c=relaxed/simple;
-	bh=1dLFH1BN3fCMPMV4hZ8XzTSy79RRF8rKOFlO83dhJ70=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZF1YsxHn2MW3aYaAqZciVPb18RfR/EKJknyiUPHcKoh6w/7H+UAVu3El/0fSOGfiXypKHUZ7UHfLcK9qKxPyqDA55d7VsDa1icH6u6lMU2ib+h//phclg9PT5A7cRws1T47G4U8xp1GFwTsXIWqxjN3iGDgx37OXgJ19RCFIEbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=hQ6wXJH3; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-421757d217aso51663655e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 12:06:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1719255982; x=1719860782; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jtibGmNRXCXDZFzGLSqXKj8dY1qUNsegYw3njVNk31c=;
-        b=hQ6wXJH3aB5twnsjaO1MXFppybEYqv2tu/vaQqYxfFrEEHDGBqk0x7jztf2QjFFzXO
-         Ba/CAm6CVVNZsyZ5XRvpYO99y+fW0OqbpETCHox3pI3RTTMYRJ9VJCdtYLN0AwA0A16g
-         wxRt2mqpzQmV8ZOYhMufhbT4592F/xlLnwO8Rovk/Z33BOnIeFD5MzTaHVoGl8u9Y0CT
-         XRURe5ZM315qZu90B9+MUrQlh4ybTgoSP/NEl5esA8EceiOcVDzyyr+aJvv90nz/UEpc
-         wje2r6+qlpWP+MnJEPyBhI0o/5cnmY14R2XBUuz33TPUpl5pyWuucVmJl7/PB3E8CJgF
-         HIwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719255982; x=1719860782;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jtibGmNRXCXDZFzGLSqXKj8dY1qUNsegYw3njVNk31c=;
-        b=pBxNQX6sKizWGdrXOlkzj6jQFENw3HC3x+TQlX124w8RtvObxIGs0dQY6YwFBp/NDN
-         yMAXY8ukJvyyYTdWZvJ/9m80xz24RfnwHVIxuyUL/eKNeHljpZXR05Ss/z5dZYdfmckp
-         m9oGftVYqqPN8b+IVrWobiUht1HxSwuce9QFy9ixXp+VRdIYXxHtH33kqvHzGa2zCJQj
-         dyqCfRX+loEfbv5XmLtvYSv9Y6FH8wdwWhcCn1ck5OJhAJZ/0ESrtSS+gc2zGIo5hjIv
-         XtjDlzqUnZ64taet8TMiULKEsqIzM1AsKiL6BuJg4q5a3a5e0Ras2132CTfUTvmqPmhB
-         ayRg==
-X-Gm-Message-State: AOJu0YyJkur8CIqxaidokT81G0kMjsNRlE0RMT6w1aZ8D4Kr+tHcPwGb
-	DrkYV6G+bpR4Ucm83vaKgqL6IPZlONNbzfvjyB2Kd8ijx4KE10OctCP7mqO/H1w=
-X-Google-Smtp-Source: AGHT+IFLpYq7oL+k6nqRubCfnJ1jZVdzNTvXaNtfeVafAGEmCMonKcUlI3do5gX5sPMGu+O0/embTw==
-X-Received: by 2002:a05:600c:42c7:b0:422:902b:73bc with SMTP id 5b1f17b1804b1-4248cc27201mr49942765e9.13.1719255982146;
-        Mon, 24 Jun 2024 12:06:22 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:b80e:a46a:7fb3:4e3a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366383f667dsm10770383f8f.16.2024.06.24.12.06.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jun 2024 12:06:21 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Elliot Berman <quic_eberman@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH] firmware: qcom: tzmem: export devm_qcom_tzmem_pool_new()
-Date: Mon, 24 Jun 2024 21:06:14 +0200
-Message-ID: <20240624190615.36282-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1719257516; c=relaxed/simple;
+	bh=WO5bItYsgm4x9pwloWwGJ++ymNZPqAykTIN55gh+o5Q=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=JXCwUX0lSQxbs2Nx0qc2pMibTJM456cPQhuME7uD552ExiAs9gnO3JPcKSy+SQ6l9/J4HN7txyfdI01But+ewB0jIutz5XZgv01MrXX+45TeQtSH5VX2sJ4SC2AOcmNZI5LSi1rnJMe5vyUtPSxVE+BMs8e9UYLNOfX1s3LS7CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=f2mQW5BI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F22EC2BBFC;
+	Mon, 24 Jun 2024 19:31:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
+	s=korg; t=1719257515;
+	bh=WO5bItYsgm4x9pwloWwGJ++ymNZPqAykTIN55gh+o5Q=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=f2mQW5BI1BXSMdaSW0V2Eg2aSozyjzN8w5GvF3HdsotTv/seex9KXpqX7pSSkiX6Z
+	 gJ6urvSNN9CsZd1fS3AXc/JIbrrRicuswhDOGtkBkdqAmy4NteCbmm0KqgjQn3CyyA
+	 6cywjTV53TQt5Q+7hM/QEsbSNjWjDSYqgoXyhPq4=
+Date: Mon, 24 Jun 2024 12:31:54 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: kernel test robot <lkp@intel.com>
+Cc: Linux Memory Management List <linux-mm@kvack.org>,
+ amd-gfx@lists.freedesktop.org, imx@lists.linux.dev,
+ intel-xe@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-mtd@lists.infradead.org,
+ linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org, Mark Brown
+ <broonie@kernel.org>, Baolin Wang <baolin.wang@linux.alibaba.com>
+Subject: Re: [linux-next:master] BUILD REGRESSION
+ f76698bd9a8ca01d3581236082d786e9a6b72bb7
+Message-Id: <20240624123154.4c3125c3093636de35b407dd@linux-foundation.org>
+In-Reply-To: <202406230716.DQbMBKh0-lkp@intel.com>
+References: <202406230716.DQbMBKh0-lkp@intel.com>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Sun, 23 Jun 2024 07:11:24 +0800 kernel test robot <lkp@intel.com> wrote:
 
-EXPORT_SYMBOL_GPL() is missing for devm_qcom_tzmem_pool_new() which
-causes build failures with randconfig. Add it and fix the issue.
+> tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+> branch HEAD: f76698bd9a8ca01d3581236082d786e9a6b72bb7  Add linux-next specific files for 20240621
+> 
+> Error/Warning reports:
+> 
+> https://lore.kernel.org/oe-kbuild-all/202406220536.JnAncjqz-lkp@intel.com
+> https://lore.kernel.org/oe-kbuild-all/202406220754.evK8Hrjw-lkp@intel.com
+> 
+> Error/Warning: (recently discovered and may have been fixed)
+> 
+> drivers/soc/qcom/smsm.c:(.text.qcom_smsm_remove+0x70): undefined reference to `mbox_free_channel'
+> 
+> Unverified Error/Warning (likely false positive, please contact us if interested):
+> 
+> include/linux/container_of.h:20:54: error: invalid use of undefined type 'struct thpsize'
+> include/linux/list.h:645:25: error: invalid use of undefined type 'struct thpsize'
+> include/linux/stddef.h:16:33: error: invalid use of undefined type 'struct thpsize'
+> mm/huge_memory.c:455:21: error: implicit declaration of function 'to_thpsize'; did you mean 'thp_size'? [-Werror=implicit-function-declaration]
+> mm/huge_memory.c:455:37: error: invalid type argument of '->' (have 'int')
+> mm/huge_memory.c:558:35: error: 'MTHP_STAT_FILE_ALLOC' undeclared (first use in this function); did you mean 'THP_FILE_ALLOC'?
+> mm/huge_memory.c:559:38: error: 'MTHP_STAT_FILE_FALLBACK' undeclared (first use in this function); did you mean 'THP_FILE_FALLBACK'?
+> mm/huge_memory.c:560:45: error: 'MTHP_STAT_FILE_FALLBACK_CHARGE' undeclared (first use in this function); did you mean 'THP_FILE_FALLBACK_CHARGE'?
+> mm/huge_memory.c:579:17: warning: assignment to 'struct thpsize *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+> mm/huge_memory.c:579:33: error: invalid application of 'sizeof' to incomplete type 'struct thpsize'
+> mm/huge_memory.c:583:44: error: invalid use of undefined type 'struct thpsize'
+> mm/huge_memory.c:608:15: warning: passing argument 1 of 'kfree' makes pointer from integer without a cast [-Wint-conversion]
+> 
+>
+> ...
+>
+>
+> |-- x86_64-randconfig-014-20240202
+> |   |-- include-linux-container_of.h:error:invalid-use-of-undefined-type-struct-thpsize
+> |   |-- include-linux-list.h:error:invalid-use-of-undefined-type-struct-thpsize
+> |   |-- include-linux-stddef.h:error:invalid-use-of-undefined-type-struct-thpsize
+> |   |-- mm-huge_memory.c:error:MTHP_STAT_FILE_ALLOC-undeclared-(first-use-in-this-function)
+> |   |-- mm-huge_memory.c:error:MTHP_STAT_FILE_FALLBACK-undeclared-(first-use-in-this-function)
+> |   |-- mm-huge_memory.c:error:MTHP_STAT_FILE_FALLBACK_CHARGE-undeclared-(first-use-in-this-function)
+> |   |-- mm-huge_memory.c:error:implicit-declaration-of-function-to_thpsize
+> |   |-- mm-huge_memory.c:error:invalid-application-of-sizeof-to-incomplete-type-struct-thpsize
+> |   |-- mm-huge_memory.c:error:invalid-type-argument-of-(have-int-)
+> |   |-- mm-huge_memory.c:error:invalid-use-of-undefined-type-struct-thpsize
+> |   |-- mm-huge_memory.c:warning:assignment-to-struct-thpsize-from-int-makes-pointer-from-integer-without-a-cast
+> |   `-- mm-huge_memory.c:warning:passing-argument-of-kfree-makes-pointer-from-integer-without-a-cast
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406250127.8Pl2kqFp-lkp@intel.com
-Fixes: 84f5a7b67b61 ("firmware: qcom: add a dedicated TrustZone buffer allocator")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/firmware/qcom/qcom_tzmem.c | 1 +
- 1 file changed, 1 insertion(+)
+Is there a way for us to obtain that config file?
 
-diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-index aab6376cade5..5d526753183d 100644
---- a/drivers/firmware/qcom/qcom_tzmem.c
-+++ b/drivers/firmware/qcom/qcom_tzmem.c
-@@ -324,6 +324,7 @@ devm_qcom_tzmem_pool_new(struct device *dev,
- 
- 	return pool;
- }
-+EXPORT_SYMBOL_GPL(devm_qcom_tzmem_pool_new);
- 
- static bool qcom_tzmem_try_grow_pool(struct qcom_tzmem_pool *pool,
- 				     size_t requested, gfp_t gfp)
--- 
-2.43.0
+"mm: shmem: add multi-size THP sysfs interface for anonymous shmem"
+moved things into mm_tytpes.h but didn't include it so perhaps this
+will fix:
+
+--- a/mm/huge_memory.c~mm-shmem-add-multi-size-thp-sysfs-interface-for-anonymous-shmem-fix-4
++++ a/mm/huge_memory.c
+@@ -20,6 +20,7 @@
+ #include <linux/swapops.h>
+ #include <linux/backing-dev.h>
+ #include <linux/dax.h>
++#include <linux/mm_types.h>
+ #include <linux/khugepaged.h>
+ #include <linux/freezer.h>
+ #include <linux/pfn_t.h>
+_
 
 
