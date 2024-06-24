@@ -1,146 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-23971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28AC9915013
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 16:37:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCC4B915021
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 16:39:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B5271C20E88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:37:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 15CA8B20521
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:39:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0FB619AD92;
-	Mon, 24 Jun 2024 14:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C910D19CD1C;
+	Mon, 24 Jun 2024 14:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dd05fnfT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pJwZ1dMT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B95119AD80
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 14:37:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9479819CD12;
+	Mon, 24 Jun 2024 14:38:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719239840; cv=none; b=NiRdUOajLATal82wopB3s5DKkkrsTx9hib8NVwU2XC/CMEmK2BcuYIMUFpLpom8NO71ywk+oElV3Kku9JuzVpHHDk3QtyyXveQHiPbU2oTDLfaL0DpzX53X5tp8s9uV/hi33BCzZLlK5DudNzR1lCPag+6H3Tx+tsEyrwn67lFk=
+	t=1719239892; cv=none; b=qbsB6Mp1xoCOOlyfDZuwaxwSQyUvus8mkJ3mVfdgKBdCV7Qz7uga4GuJ+rAQKl+WS0AtTwvMLrrtk+cRtobAHfF3OlyBCeVoc5gZavLfScoVvCUVFrmtdb1v3UH8Cq/OeglVIJT8FOKo9l80ZYwIHPZXM6bo27I6VfP7UekDWzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719239840; c=relaxed/simple;
-	bh=IPjzzjFT2d6gGvqkLDQRAXKFQR/gwOcRz1Sr/BoYqw0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Dv3NDjkNNRgrqHdP69dIpWb2esVURPcNTVvX4+doc91BZwlsNQC9t2Dj/MIE1H3o+Jo8gkXKICDQwZ8c4j3W4inPGRGPFtV+2FTNBJDKmVqXpAjqTo+4UrVE1O68g0FXzQ1N8oIt84llHBphJ1JDOv/FFYrUclgPAZC8CtboYpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dd05fnfT; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-645808a3294so6510057b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 07:37:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719239838; x=1719844638; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kNxj2+eciL79c7ow++tEl7n5O2NiqPQ3eb3DTJmQ8vU=;
-        b=dd05fnfTUZjUG2dpY3BTfuzkIPXFEIudTNhvv/9m6S0sUryPh6dwZF2an7T9+4Jc2/
-         MQgdQdk6m9Lv5MTbW/2GeRdt33eXV5uSiU0i8/lUALllQVvjq0MLOoz8Ndoz5zSS6Fn3
-         AtwgITHp4xbsJLUM/b36vSF/GKmX7ro8OTvni3soEO/dNozhw69iKmt06HQVAiW4OKG6
-         ds2gqWnkbJy4ehk52GQ+TtLMFgoyzXfs4h1/88VFMMIemUcl64OnFjYH7EQ5+R1n3aEO
-         SrIbJjKXS5V/+OywqVvsB2+rXIQG9Ao8uQNXxrPYtF0bVlZ1sMmC2Dzh3E0LZqDCGFMI
-         7p8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719239838; x=1719844638;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kNxj2+eciL79c7ow++tEl7n5O2NiqPQ3eb3DTJmQ8vU=;
-        b=KmX262snO3ao04eYCbkj0sDdwW4t4otG/dZ/6vBJNTlXNTZI9yfmzKrEGkUURrvxyc
-         JlxkG8jr/OcamYjPpAyjwkZuGeTMmROf2yb/p3Pdcq4qn8GFg2He9XH6gmL2jamkuhsp
-         9B8XiLY35Tyu/8iUGmToej5Ujb1D8eKmfOTg1RNPaVO33Ya5YTx61iQhuM5own+nZ+rr
-         uUODZ+i3VmRGDZLWU8uEWH7ukVVRkHm+n7xKv6dslocIxNYkgia0EnthxFSB6cNST/H7
-         UMBfCKPMxKy9o2VuOOXXKjPeyaiEnhVkfUWNAE0noQ7/R9KAN5EY/31z9kP8C5boaZX6
-         S+Aw==
-X-Forwarded-Encrypted: i=1; AJvYcCUmBITwhZ+EgMe5BH/N45z8kXc865KLP3Km8wHPaL9MP+FStSbBwKE9Ve+zvf1rOa0cHlntVJnZ+vCBbkadHbSMuuHIHyXB6OMBB0ZQeA==
-X-Gm-Message-State: AOJu0YzCBafb2jODO5bWj22DAZyALwIBUthACZtRi9pNeeMR6PZD6oY3
-	PzubfU0rGiYDJRmbxLp0P6TMtGPEeIVkxf0U/fjNHd+c/QB6JkRZspmsrbiixNVVXC9pxcq9y3M
-	loixrDkq59Ae0qmgdDgi5zDAECml//2T7PJ/WNw==
-X-Google-Smtp-Source: AGHT+IF+sGE/evhSAqjM6Wm0LvOAAGz+dKOVItg6rmaDICqHlPY4MY9o2H21baQpedhJD3M2EixIu6TdGsSKPaLLKn0=
-X-Received: by 2002:a05:690c:6606:b0:630:de2f:79b8 with SMTP id
- 00721157ae682-6433dd746bdmr54389477b3.13.1719239837877; Mon, 24 Jun 2024
- 07:37:17 -0700 (PDT)
+	s=arc-20240116; t=1719239892; c=relaxed/simple;
+	bh=6N04oReBSNGcXT8RvWlMnkgFlIgW+zDsiQskdOqixuQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cQrYpFn+lWsXhzUU/9hs6fjZYZpExujTZ5ya19q9O8H0b0s+1o2LB3n0kPWYpLNqxTxOo62MNuzNalqmUkRg6+66U3OTm0OIOOxHS0sHPk7zIegTsCcmvaVlYiIiL8fwlot3rtiggL7jJh9BuOwp0osRP/o59rOFEvY5UeE9uGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pJwZ1dMT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C62FC2BBFC;
+	Mon, 24 Jun 2024 14:38:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719239892;
+	bh=6N04oReBSNGcXT8RvWlMnkgFlIgW+zDsiQskdOqixuQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=pJwZ1dMTVutMSKBjWOKtAuh08NdO3hT6+aU/0z/Ld19pAKQW1kF7eW/3J4lTD1ztM
+	 1rbSbdfcpszxOG2tsgbc8A01/X8uM6YkTDz8MqMv1lvFJmV/ZTJvdi0Cq9cbF8NeWB
+	 gGNT72i5LdqsgzgnSfuXVx3Gh7f5eKZXurZXLOm+Ycc2iI0XJAJpHh8+yfHGfe4Fhu
+	 oK2FnfOx0x2shx6OTG93fVLRj4UWC29oFOLznPXlsg2csxdvu5PwV3cZZGTYSXiMBV
+	 nt9wjR17TzBlBHBMioHZxavTLZXTMZCyMQFRQ5Jm42h8vuMpFsfVMmiAd4POKnJf+M
+	 w0KJz4AOLk/Sg==
+Message-ID: <3bb6bf45-2a3e-4ed8-86f3-f0480af622d5@kernel.org>
+Date: Mon, 24 Jun 2024 16:38:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240621-ucsi-yoga-ec-driver-v8-1-e03f3536b8c6@linaro.org> <2024062411-neutron-striving-f16c@gregkh>
-In-Reply-To: <2024062411-neutron-striving-f16c@gregkh>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 24 Jun 2024 17:37:05 +0300
-Message-ID: <CAA8EJppDtmNxfjc-f9MA1Za=jvZFqahKtM+FA66jG6Dg=zp1Cw@mail.gmail.com>
-Subject: Re: [PATCH v8] usb: typec: ucsi: add Lenovo Yoga C630 glue driver
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
-	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Nikita Travkin <nikita@trvn.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: Add x1e80100 LPASS AUDIOCC
+ reset controller
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240624-x1e-swr-reset-v2-0-8bc677fcfa64@linaro.org>
+ <20240624-x1e-swr-reset-v2-1-8bc677fcfa64@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240624-x1e-swr-reset-v2-1-8bc677fcfa64@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, 24 Jun 2024 at 17:25, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Fri, Jun 21, 2024 at 01:21:26AM +0300, Dmitry Baryshkov wrote:
-> > The Lenovo Yoga C630 WOS laptop provides implements UCSI interface in
-> > the onboard EC. Add glue driver to interface the platform's UCSI
-> > implementation.
-> >
-> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> > Reviewed-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Add driver for the UCSI on the Lenovo Yoga C630 laptop, as implemented
-> > by the Embedded Controlller of the laptop.
-> >
-> > Support for this EC was implemented by Bjorn, who later could not work
-> > on this driver. I've picked this patchset up and updated it following
-> > the pending review comments.
-> >
-> > NOTE: the patch depends on the header from the platform driver. Ilpo
-> > J=C3=A4rvinen has created an immutable branch based on v6.10-rc1, pleas=
-e pull
-> > it before merging the patches:
-> >
-> >   https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-driver=
-s-x86.git tags/platform-drivers-x86-ib-lenovo-c630-v6.11
-> >
-> >   platform: arm64: add Lenovo Yoga C630 WOS EC driver (2024-06-14 12:51=
-:30 +0300)
->
-> I have that branch, yet when building this driver as a module I get the
-> following errors:
-> ERROR: modpost: "yoga_c630_ec_unregister_notify" [drivers/usb/typec/ucsi/=
-ucsi_yoga_c630.ko] undefined!
-> ERROR: modpost: "yoga_c630_ec_ucsi_get_version" [drivers/usb/typec/ucsi/u=
-csi_yoga_c630.ko] undefined!
-> ERROR: modpost: "yoga_c630_ec_register_notify" [drivers/usb/typec/ucsi/uc=
-si_yoga_c630.ko] undefined!
-> ERROR: modpost: "yoga_c630_ec_ucsi_write" [drivers/usb/typec/ucsi/ucsi_yo=
-ga_c630.ko] undefined!
-> ERROR: modpost: "yoga_c630_ec_ucsi_read" [drivers/usb/typec/ucsi/ucsi_yog=
-a_c630.ko] undefined!
->
-> So something went wrong :(
->
-> I'll unwind that branch pull now as well and wait for a fixed up version
-> to be sent.
+On 24/06/2024 15:32, Srinivas Kandagatla wrote:
+> X1E80100 LPASS (Low Power Audio Subsystem) Audio clock controller
+> provides reset support when it is under the control of Q6DSP.
+> 
+> Add x1e80100 compatible to the existing sc8280xp as these reset
+> controllers have same reg layout and compatible.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml      | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
+> index 3326dcd6766c..c33bf4c5af7d 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
+> @@ -18,10 +18,13 @@ description: |
+>  
+>  properties:
+>    compatible:
+> -    enum:
+> -      - qcom,sc8280xp-lpassaudiocc
+> -      - qcom,sc8280xp-lpasscc
+> -
+> +    oneOf:
+> +      - enum:
+> +          - qcom,sc8280xp-lpassaudiocc
+> +          - qcom,sc8280xp-lpasscc
+> +      - items:
+> +          - const: qcom,x1e80100-lpassaudiocc
+> +          - const: qcom,sc8280xp-lpassaudiocc
 
-Could you please share your .config? I could not reproduce the issue
-here. The EC driver has all the necessary EXPORT_SYMBOL_GPL()
-declarations.
+Please keep here blank line. With this:
 
---=20
-With best wishes
-Dmitry
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+>    reg:
+>      maxItems: 1
+>  
+> 
+
+Best regards,
+Krzysztof
+
 
