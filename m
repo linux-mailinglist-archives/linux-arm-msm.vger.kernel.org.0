@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-23880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FA339143ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 09:55:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E9269143FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 09:56:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B829D281ED2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 07:55:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 806AC1C214A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 07:56:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D96F947F5F;
-	Mon, 24 Jun 2024 07:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62B049627;
+	Mon, 24 Jun 2024 07:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M9Dzyolz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MTYUAtWI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98C6481AB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 07:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C4647F6C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 07:56:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719215702; cv=none; b=URAsy4ZhILvUsi3ULgvZh3Jn4F52P2s50DoUxd5+1kis5q9GTKQgUuALF8UMmo15fVt5eF95haKi7HhyC1j68cbKCeaUePWFw5S99k69/t6bxB8vL1g6YUkXEGmFahvGdrRetdSgLH305DQkrOoTDOA9VIG8C9VeGSMKGSQKDl4=
+	t=1719215799; cv=none; b=ONcsH1VFEs3vPYztXPQpOZxm05Q62r7c8dOnOC8IE2h0up6QHgsuNqWSG8rUjwMRCbTKFv79YRBS/6mPYz1uRpvpQ6ZX6nEG7LH254BqVc8y+lmcnYSqEjuHkWoTUxz88Gzmjb9o78qYUyUOxMegK7efgJT312L9jStoY97d2OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719215702; c=relaxed/simple;
-	bh=Qh9MDcKwCyw7Mbi/hRWrwIu3PlGij2ziUEdnM+Dsxec=;
+	s=arc-20240116; t=1719215799; c=relaxed/simple;
+	bh=ZhGDo8cXsdmWgdlNHJfJ8MACqMu6lnyLvjl4GWo+aNo=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=HJ9TNPwIvzDSSxzxyUM4MARWeVkgklXugWB7CisP55dcXhpOJ3jo1DBabXi4SCgewD3K9BJ139g03aVT6Hs/S/Pd+I6ZrodstMFMEr7JBh0Ib81+NpI6DSp8Qh1Rs1S2/NEQxB4WzDC4kSeG4urpRsxXcB8Z0MxnjKPC+nwUQxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=M9Dzyolz; arc=none smtp.client-ip=209.85.128.43
+	 In-Reply-To:Content-Type; b=reddC55G49XRmdEg1kMwBY8rvYiiNkBUup+Y2+NayVfTJdFJUafnSztQQdqPt5zNyDhapAFYyxRQyZs8Lz6vqJy4IDNoMDwFbi+bcbViuWhJN96ImARlNAq2m6/jGkZjBkSevBqUjcSs4FjUm/j2EVKE2QNnltqLxZZ9OMwj/KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MTYUAtWI; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-42278f3aea4so33433805e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 00:55:00 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3627ef1fc07so2975567f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 00:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719215699; x=1719820499; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719215795; x=1719820595; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TS9goykDVpDmGN1AqSF2YehuqmY4k81SgI4Za/Eo4xI=;
-        b=M9Dzyolz1ok4Fsa5vGFLHSgdr0lsBkGsaGEp+RG11+7S3UHebM7+wYTWOOwY11Zg6N
-         +Ms6Pzv+hlM/3DBAcR2S2zDPv2uoZ5DN5pjLedcgTiRgW7NzpbL4vto3wO2p2oSZhFuX
-         QpzHtv1z7jwIynIjMjiZCcxvrsCEylpPyeVn/VbZSmD6+Im/IPeDoL+TIgUNpxRa53PK
-         1z7kUMQkSTN6qZgeHPStfhaP+fWh2YHQuTQglQYA7rBAsShn260WWZaxBZH4VsIuAgTl
-         cNXw3tlC2jv59bd9g0sLlw8jzrDQ42PyzLPHDIFlNWxeIDnQqjCO1cOZf8lChgx6D2Fu
-         Q+Yw==
+        bh=bkAZCoR1EAxHYyMUSyL77CxZBsg/gsiAFxg+O7Lf1wE=;
+        b=MTYUAtWIZPkdidfXhufsPevB+toBMVMAJ8EmkzzUfZEDOwuAcuWj3+yItCi2V5RNIM
+         8nlHspmnbkuomP0GwMWvQyCLPKHIdTxbdTX3IFxZ8vhRaEFuIsM4dTDm73U7PIMn1WJH
+         1vv+gisIRdupyJ79Vl44L+fen6au4TpyjgowDgBgDDEbbK5v0QrvVTYJAG/eS2Wx+miK
+         eLBF1Q/xWeR3Qw2JQ6M+A+fmIxb6Ley4gW6ydYOgXkfDgpTMXHcclkbbEkbJG3GgEUv2
+         Wcd1lWdzrmWkA2958OPniUfQJ+oLlPqOFAJJ04eg2qdO1Jz12pxQHoF+aQULcGa9xk8P
+         pexQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719215699; x=1719820499;
+        d=1e100.net; s=20230601; t=1719215795; x=1719820595;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=TS9goykDVpDmGN1AqSF2YehuqmY4k81SgI4Za/Eo4xI=;
-        b=cFyr/LpM/1K/5wWCmTFSdyvJiz1tdaGuAR1Ip2deUtq+Ws3VSc72cvmBUI/DXY1x0y
-         fdp4+VuCe2q/tVE9JAkQ5DkmMYWoWdy4J7Qh6097g6D+PihVcjKk7VVqAHmop49xsi8C
-         QURslYTrv4LPTlBpejC+j6HJj+JXNH62E6gqt5YSdkA7OVAxGjDzSKVYNplqEO6gLPgw
-         hZ0VOe1T0PA6dIhOuo1J8zSvcUV/BOus4JNMod1vLf8G4xnoUtca2UgBmqlDaqr4i/4N
-         6BX32QUHVnp+UqJixi5i4hxA4jkdDzA3avwJIM52Jj+Q5i8CwLcvrd1+SC4G62plQ+44
-         tu7g==
-X-Gm-Message-State: AOJu0Ywu8wp8Cow3dnG6Uc19OGTtWvB8BTSpwBeeqwuvy62alIa2xCO9
-	7bKznJqvaWIZQhzHzxrBHsbqC1A6CPly7x82lFhpHnAyTP6kO8UTTXsRo0I3TSM=
-X-Google-Smtp-Source: AGHT+IHC2Ujuq/ZCIG4kG2fhD2t0jCwNd1zVk1svp1kygq3tIeFIHGU6D3120PBJnDcNJlkBLJnskQ==
-X-Received: by 2002:a05:600c:4f94:b0:424:90f4:309e with SMTP id 5b1f17b1804b1-42490f43132mr14515415e9.6.1719215698891;
-        Mon, 24 Jun 2024 00:54:58 -0700 (PDT)
+        bh=bkAZCoR1EAxHYyMUSyL77CxZBsg/gsiAFxg+O7Lf1wE=;
+        b=h0zqsEI0HfAJ5QanX9jUP6usABlU70qBn1hntVCOu7J7xFNlAX0mofP78Lkn3otpGl
+         T1XWzH13gcBkmsCm5ByyC2e5TbAVQ+GPyU2G5AubWNUaXBZ5Srx/7DpmfSjeIEuJ9Q/D
+         Q1DaSl1JfWXbwNdDJSaYjWXX3nN9Td3QdlFk2mPfED6D61Tp7EpC+hDy3C9RPHNuFduO
+         Hu9HEmHaLRasE+ZIlQ+TINx3fRWEuRa9yo/IA2yLyBZSrMtWmpXngr0GtmLmLcoz8Qd6
+         GWQhrC9dA+X5HgwznFLspxe4GdQ/+ee0q+hebjz5p9QU8sFNvyWPBRp2fSDjiXZgSGGn
+         VBkA==
+X-Gm-Message-State: AOJu0YxxDEZClsck5jBkerfqcklNlhqZVHwojiCzOiOUwqdEv1kTn48J
+	vNPSrqdqn39FCpZLazp54vVARV6SOT+hOJxGzmuz5v4Yw0vHfLpDFAhkYEO59Ig=
+X-Google-Smtp-Source: AGHT+IH5j/Ekjx/L85BTArhDYmuRCO9srSTxGbIrLpKT2Z6tyiKEDWQFgTXYpWagliPQeNJVMGiszg==
+X-Received: by 2002:a05:6000:1f88:b0:366:ec79:661f with SMTP id ffacd0b85a97d-366ec79679amr2370670f8f.48.1719215794728;
+        Mon, 24 Jun 2024 00:56:34 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:cf01:774b:55fd:ab74? ([2a01:e0a:982:cbb0:cf01:774b:55fd:ab74])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-424819224d9sm130305585e9.45.2024.06.24.00.54.58
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d0bea05sm163671825e9.18.2024.06.24.00.56.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jun 2024 00:54:58 -0700 (PDT)
-Message-ID: <c59a50e1-5d06-4d8c-98ab-4a86c7b821de@linaro.org>
-Date: Mon, 24 Jun 2024 09:54:57 +0200
+        Mon, 24 Jun 2024 00:56:34 -0700 (PDT)
+Message-ID: <754a6ad5-f093-4426-9d68-3556978e1d2a@linaro.org>
+Date: Mon, 24 Jun 2024 09:56:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,16 +79,17 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 1/5] clk: qcom: dispcc-sm8650: Park RCG's clk source at XO
- during disable
-To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 3/5] clk: qcom: dispcc-sm8650: drop TCXO from table when
+ using rcg2_shared_ops
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240621-topic-sm8650-upstream-fix-dispcc-v1-0-7b297dd9fcc1@linaro.org>
- <20240621-topic-sm8650-upstream-fix-dispcc-v1-1-7b297dd9fcc1@linaro.org>
- <7a5dd5a7-b9ad-4ae7-8267-8dc4c221fef2@quicinc.com>
+ <20240621-topic-sm8650-upstream-fix-dispcc-v1-3-7b297dd9fcc1@linaro.org>
+ <d508f8e5-8303-4f84-83d4-d63f6c612a02@linaro.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -115,103 +116,30 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <7a5dd5a7-b9ad-4ae7-8267-8dc4c221fef2@quicinc.com>
+In-Reply-To: <d508f8e5-8303-4f84-83d4-d63f6c612a02@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 21/06/2024 18:56, Taniya Das wrote:
-> 
-> 
-> On 6/21/2024 7:31 PM, Neil Armstrong wrote:
->> The RCG's clk src has to be parked at XO while disabling as per the
->> HW recommendation, hence use clk_rcg2_shared_ops to achieve the same.
+On 22/06/2024 13:01, Konrad Dybcio wrote:
+> On 21.06.2024 4:01 PM, Neil Armstrong wrote:
+>> Since those clocks are using rcg2_shared_ops to park on TCXO
+>> instead of disable, no need to have TCXO in the frequency table.
 >>
 >> Fixes: 9e939f008338 ("clk: qcom: add the SM8650 Display Clock Controller driver")
 >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
->>   drivers/clk/qcom/dispcc-sm8650.c | 16 ++++++++--------
->>   1 file changed, 8 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/clk/qcom/dispcc-sm8650.c b/drivers/clk/qcom/dispcc-sm8650.c
->> index c9d2751f5cb8..31c82f791b44 100644
->> --- a/drivers/clk/qcom/dispcc-sm8650.c
->> +++ b/drivers/clk/qcom/dispcc-sm8650.c
->> @@ -339,7 +339,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx0_aux_clk_src = {
->>           .parent_data = disp_cc_parent_data_0,
->>           .num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
->>           .flags = CLK_SET_RATE_PARENT,
->> -        .ops = &clk_rcg2_ops,
->> +        .ops = &clk_rcg2_shared_ops,
->>       },
->>   };
->> @@ -457,7 +457,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx2_aux_clk_src = {
->>           .parent_data = disp_cc_parent_data_0,
->>           .num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
->>           .flags = CLK_SET_RATE_PARENT,
->> -        .ops = &clk_rcg2_ops,
->> +        .ops = &clk_rcg2_shared_ops,
->>       },
->>   };
->> @@ -516,7 +516,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx3_aux_clk_src = {
->>           .parent_data = disp_cc_parent_data_0,
->>           .num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
->>           .flags = CLK_SET_RATE_PARENT,
->> -        .ops = &clk_rcg2_ops,
->> +        .ops = &clk_rcg2_shared_ops,
->>       },
->>   };
->> @@ -560,7 +560,7 @@ static struct clk_rcg2 disp_cc_mdss_esc0_clk_src = {
->>           .parent_data = disp_cc_parent_data_5,
->>           .num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
->>           .flags = CLK_SET_RATE_PARENT,
->> -        .ops = &clk_rcg2_ops,
->> +        .ops = &clk_rcg2_shared_ops,
->>       },
->>   };
->> @@ -575,7 +575,7 @@ static struct clk_rcg2 disp_cc_mdss_esc1_clk_src = {
->>           .parent_data = disp_cc_parent_data_5,
->>           .num_parents = ARRAY_SIZE(disp_cc_parent_data_5),
->>           .flags = CLK_SET_RATE_PARENT,
->> -        .ops = &clk_rcg2_ops,
->> +        .ops = &clk_rcg2_shared_ops,
->>       },
->>   };
->> @@ -647,7 +647,7 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
->>           .parent_data = disp_cc_parent_data_0,
->>           .num_parents = ARRAY_SIZE(disp_cc_parent_data_0),
->>           .flags = CLK_SET_RATE_PARENT,
->> -        .ops = &clk_rcg2_ops,
->> +        .ops = &clk_rcg2_shared_ops,
->>       },
->>   };
->> @@ -667,7 +667,7 @@ static struct clk_rcg2 disp_cc_sleep_clk_src = {
->>           .parent_data = disp_cc_parent_data_9,
->>           .num_parents = ARRAY_SIZE(disp_cc_parent_data_9),
->>           .flags = CLK_SET_RATE_PARENT,
->> -        .ops = &clk_rcg2_ops,
->> +        .ops = &clk_rcg2_shared_ops,
->>       },
-> Technically not required for this RCG as the source is sleep clock.
+> 
+> I don't think that's correct.. some hardware can still run with the
+> core clock @ 19.2 / 38.4 MHz
 
-Ack
+I agree, but the same table on other dispcc drivers don't have this TCXO entries,
+and the OPP table in DT neither...
 
->>   };
->> @@ -682,7 +682,7 @@ static struct clk_rcg2 disp_cc_xo_clk_src = {
->>           .parent_data = disp_cc_parent_data_0_ao,
->>           .num_parents = ARRAY_SIZE(disp_cc_parent_data_0_ao),
->>           .flags = CLK_SET_RATE_PARENT,
->> -        .ops = &clk_rcg2_ops,
->> +        .ops = &clk_rcg2_shared_ops,
->>       },
->>   };
-> This RCG supports only XO frequency and can be ignored.
+I'll drop this, but at some point we should align ourselves.
 
-Ack,
-
-Thx,
 Neil
 
->>
 > 
+> Konrad
 
 
