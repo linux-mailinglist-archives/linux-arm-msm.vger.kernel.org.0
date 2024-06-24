@@ -1,205 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-24003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 149DC91529C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 17:37:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A18769152B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 17:42:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF6A01F20FDD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 15:37:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D29A51C211EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 15:42:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDBC019CCE4;
-	Mon, 24 Jun 2024 15:37:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DqoG4rq0"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEE6D19CD0B;
+	Mon, 24 Jun 2024 15:41:50 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A10C1EB48;
-	Mon, 24 Jun 2024 15:37:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2F9719D077;
+	Mon, 24 Jun 2024 15:41:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719243461; cv=none; b=RsVy+QF5DuyVseqGKDAvbnIWLK19h7n6cam5AhcpnmGAsp+nyFyl9OT56FmxqT7hWFkfH4RL1SIzsyMzurPGZqc7XbqOKoLJRIHWQlWEwARJws7zs9eOWMoB/o/1yg+wo7wrHRiPex0jXQ96+2gI9Zi2i+ejVNxHHGP6Q423pgc=
+	t=1719243710; cv=none; b=eIv2j73BcB/zsLuGJ3xvS3Z1+cXDNkU26u6Z/PYZPDJhOVpEmyKQjHBU8KCJ9W0jXX0j95FElRXMtI18EQja6azrxFJTNPGBRJ5V6Flab0PDzhV1yIHNW94/QzdTHungAKSCTSY0E4SYuDx515QHtI7eRBAuFVTNq0J4nf4ffS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719243461; c=relaxed/simple;
-	bh=Z36F+leuCU/otTunzaT4BJQLU9anN/d01xVBaiT1ZT0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nR+HBWbVvk9yZcT2aXeeAjKIfDDXbssgo1bfD3nBMLHZ/Jh30RSMjOBdyRyXEV40d0eKTgrInAPJLWQdw5F8Hmvbe7s7BUCTKIw8a5P4bxnBvGvf+qIj8l20htRiM6WG5ki9wiR0aIcbsXkRDPUpoYoSwYnrlK656fM9n9DEw9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DqoG4rq0; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-57cc1c00b97so4275783a12.0;
-        Mon, 24 Jun 2024 08:37:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719243458; x=1719848258; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jQc+e+I6ia7/ogMpB2OJkI6aQ1tlYzw7cUiWzpvi62U=;
-        b=DqoG4rq0HE/klKgn+fesYF+6UdKdDf8ce9R4vH3nvH8sm3f+aCroHiL8c96F8lv4UN
-         7ZN50dbGhweikJ9VeJWITLgNnMfJ7gZnB9aI2Ur1Cctt2OpR4fjlBCgWf6DgIHaOl3Q7
-         33MgHSKXMiTd/CfWf+xeo4I8lDJDtFxTgKmSBPxz7d/os9IP/IkvB3i508s3WH2WAjK3
-         Z7YXNqIEYVorsvDhXWh/A8FlK2HpzctC+DkyhhFE+zrFCWJYczLuapoHwAetFuKLSnli
-         b3D1tSsETNERQbeqVQ7S281qxzhX/QFtSdHNxeQ3RT1rstb6iLRf7JIdeC/8WkBR5Ov9
-         5qIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719243458; x=1719848258;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jQc+e+I6ia7/ogMpB2OJkI6aQ1tlYzw7cUiWzpvi62U=;
-        b=OnkvKWLYtl8n2dO/4+GIOGgbXTnS7tH7GdKRjPnvKOYdYr3ifFdg7149U/gWR5mWBv
-         oK9spmxj8XUx3hMYIfhVMZtGkYtUq6QEDDm6IyLxZIMWpOm3fpUvNU2SdXpRE8xMCR/Z
-         3bgRPTap4ZE5gHmLoZRHhSStk/HnWsiQj5rEPwoy06RUf2NW5dXHNYVb1tvDTD3eoj+X
-         434AXp2iMC+aWw5te2n7jl1tjWo25EY2mtcLZk+TKklLZJ+0UESdeP/Td3bW5iT2rr6q
-         5E0qHnan/0XVKAQ6KxapyOGVm1JFpmMrMyIfS3R5E3USMQ60fQrifzn9ztKslegLsLs4
-         SePA==
-X-Forwarded-Encrypted: i=1; AJvYcCWTRE9Gr+hipht6ieyzaLlBvEZCoC4hcK4n804U23Zfm+tv5/ZAm7r3niB8ANoT6PJdeXZ+8DX33mkcbPs8tUBvvEsY3HGPwiAMrk/JjpiXUkDnCr2hmsS/uPPA7y1vLpHl96nXHY1QDZoTlw==
-X-Gm-Message-State: AOJu0YxM/2/OEK9uzPSUjppes3NZn3D3f2LUkdQ3rBA7+k3Bo91qP+I9
-	uMR2n5UTouuGxAEcsHHHpcG8Agf8UlwDXF3j6VbrwR5e5TN/D/nunMz4wUu43zQRZp/9/ki42Q7
-	X+Lz0/CJqDE5P0cxi5zxdZJ+mjn0=
-X-Google-Smtp-Source: AGHT+IHEEQxmIHCl7aQptuGI+5uw01VLWA2AyOiSUHqCVl//O6JanrQFmlogbqjX9PEO1AhYjBS3Z5mQrF25LbmaeRY=
-X-Received: by 2002:a50:931a:0:b0:57d:2db9:15e8 with SMTP id
- 4fb4d7f45d1cf-57d4bdcb3bfmr2974167a12.34.1719243458252; Mon, 24 Jun 2024
- 08:37:38 -0700 (PDT)
+	s=arc-20240116; t=1719243710; c=relaxed/simple;
+	bh=3dz1GFXIvgH5i6DZjwGNKWeBzYGIWxh02+vy/2Ekez0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kpvdlEZdkdz7Qe71SRdi/2q+uVAcKAQ4qisRuHD8tTLkKsSNFjAIFTUhEbXh/3hvVmmKVqlBFTuGZ10NTaKcr31OXcrqLjW1Z2NzI6bnRvHEsQTvAfzBZT479tq2mN5+egFulauqiolx8qaAZf8+1Bf2pz5ky6ss2OIX1fudrzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1A71DDA7;
+	Mon, 24 Jun 2024 08:42:12 -0700 (PDT)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9DD2D3F73B;
+	Mon, 24 Jun 2024 08:41:44 -0700 (PDT)
+Date: Mon, 24 Jun 2024 16:41:42 +0100
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Sebastian Reichel <sre@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	"Mark Rutland" <mark.rutland@arm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	Shivendra Pratap <quic_spratap@quicinc.com>,
+	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	<linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
+Message-ID: <ZnmTtmZB8epgbUTN@bogus>
+References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
+ <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
+ <20240619135143.kr2tx4ynxayc5v3a@bogus>
+ <20240619080933071-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <20240620162547309-0700.eberman@hu-eberman-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240523175227.117984-1-robdclark@gmail.com> <20240523175227.117984-2-robdclark@gmail.com>
- <20240624151401.GB8706@willie-the-truck>
-In-Reply-To: <20240624151401.GB8706@willie-the-truck>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 24 Jun 2024 08:37:26 -0700
-Message-ID: <CAF6AEGttkHPOsO+NSHZeRXiZBxU_26HZyGMjOZ3-Y8NZUgz0gA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] iommu/io-pgtable-arm: Add way to debug pgtable walk
-To: Will Deacon <will@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Boris Brezillon <boris.brezillon@collabora.com>, Kevin Tian <kevin.tian@intel.com>, 
-	Joao Martins <joao.m.martins@oracle.com>, 
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	"open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240620162547309-0700.eberman@hu-eberman-lv.qualcomm.com>
 
-On Mon, Jun 24, 2024 at 8:14=E2=80=AFAM Will Deacon <will@kernel.org> wrote=
-:
->
-> On Thu, May 23, 2024 at 10:52:21AM -0700, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Add an io-pgtable method to walk the pgtable returning the raw PTEs tha=
-t
-> > would be traversed for a given iova access.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/iommu/io-pgtable-arm.c | 51 ++++++++++++++++++++++++++++------
-> >  include/linux/io-pgtable.h     |  4 +++
-> >  2 files changed, 46 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-=
-arm.c
-> > index f7828a7aad41..f47a0e64bb35 100644
-> > --- a/drivers/iommu/io-pgtable-arm.c
-> > +++ b/drivers/iommu/io-pgtable-arm.c
-> > @@ -693,17 +693,19 @@ static size_t arm_lpae_unmap_pages(struct io_pgta=
-ble_ops *ops, unsigned long iov
-> >                               data->start_level, ptep);
-> >  }
-> >
-> > -static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> > -                                      unsigned long iova)
-> > +static int arm_lpae_pgtable_walk(struct io_pgtable_ops *ops, unsigned =
-long iova,
-> > +                     int (*cb)(void *cb_data, void *pte, int level),
-> > +                     void *cb_data)
-> >  {
-> >       struct arm_lpae_io_pgtable *data =3D io_pgtable_ops_to_data(ops);
-> >       arm_lpae_iopte pte, *ptep =3D data->pgd;
-> >       int lvl =3D data->start_level;
-> > +     int ret;
-> >
-> >       do {
-> >               /* Valid IOPTE pointer? */
-> >               if (!ptep)
-> > -                     return 0;
-> > +                     return -EFAULT;
->
-> nit: -ENOENT might be a little better, as we're only checking against a
-> NULL entry rather than strictly any faulting entry.
->
-> >               /* Grab the IOPTE we're interested in */
-> >               ptep +=3D ARM_LPAE_LVL_IDX(iova, lvl, data);
-> > @@ -711,22 +713,52 @@ static phys_addr_t arm_lpae_iova_to_phys(struct i=
-o_pgtable_ops *ops,
-> >
-> >               /* Valid entry? */
-> >               if (!pte)
-> > -                     return 0;
-> > +                     return -EFAULT;
->
-> Same here (and at the end of the function).
->
-> > +
-> > +             ret =3D cb(cb_data, &pte, lvl);
->
-> Since pte is on the stack, rather than pointing into the actual pgtable,
-> I think it would be clearer to pass it by value to the callback.
+On Thu, Jun 20, 2024 at 04:37:09PM -0700, Elliot Berman wrote:
+> Hi Sudeep and Sebastian,
+> 
+> On Wed, Jun 19, 2024 at 08:28:06AM -0700, Elliot Berman wrote:
+> > On Wed, Jun 19, 2024 at 02:51:43PM +0100, Sudeep Holla wrote:
+> > > On Mon, Jun 17, 2024 at 10:18:09AM -0700, Elliot Berman wrote:
+> > > > SoC vendors have different types of resets and are controlled through
+> > > > various registers. For instance, Qualcomm chipsets can reboot to a
+> > > > "download mode" that allows a RAM dump to be collected. Another example
+> > > > is they also support writing a cookie that can be read by bootloader
+> > > > during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
+> > > > vendor reset types to be implemented without requiring drivers for every
+> > > > register/cookie.
+> > > > 
+> > > > Add support in PSCI to statically map reboot mode commands from
+> > > > userspace to a vendor reset and cookie value using the device tree.
+> > > > 
+> > > > A separate initcall is needed to parse the devicetree, instead of using
+> > > > psci_dt_init because mm isn't sufficiently set up to allocate memory.
+> > > > 
+> > > > Reboot mode framework is close but doesn't quite fit with the
+> > > > design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
+> > > > be solved but doesn't seem reasonable in sum:
+> > > >  1. reboot mode registers against the reboot_notifier_list, which is too
+> > > >     early to call SYSTEM_RESET2. PSCI would need to remember the reset
+> > > >     type from the reboot-mode framework callback and use it
+> > > >     psci_sys_reset.
+> > > >  2. reboot mode assumes only one cookie/parameter is described in the
+> > > >     device tree. SYSTEM_RESET2 uses 2: one for the type and one for
+> > > >     cookie.
+> > > >  3. psci cpuidle driver already registers a driver against the
+> > > >     arm,psci-1.0 compatible. Refactoring would be needed to have both a
+> > > >     cpuidle and reboot-mode driver.
+> > > >
+> > > 
+> > > I need to think through it but when you first introduced the generic
+> > > Documentation/devicetree/bindings/power/reset/reboot-mode.yaml bindings
+> > > I also looked at drivers/power/reset/reboot-mode.c
+> > > 
+> > > I assumed this extension to that binding would reuse the same and
+> > > PSCI would just do reboot_mode_register(). I didn't expect to see these
+> > > changes. I might have missing something but since the bindings is still
+> > > quite generic with additional cells that act as additional cookie for
+> > > reboot call, I still think that should be possible.
+> > > 
+> > > What am I missing here then ?
+> > > 
+> > 
+> > Right, if that was only thing to "solve" to make it easy to use
+> > reboot-mode framework, I agree we should update reboot mode framework to
+> > work with the additional cells. There are a few other issues I mention
+> > above which, when combined, make me feel that PSCI is different enough
+> > from how reboot mode framework works that we shouldn't try to make PSCI
+> > work with the framework. Issues #1 and #2 are pretty easy to solve
+> > (whether they should be solved is different); I'm not sure a good
+> > approach to issue #3.
+> > 
+> 
+> Does the reasoning I mention in the commit text make sense why PSCI should
+> avoid using the reboot-mode.c framework?
 
-fwiw, I passed it as a void* to avoid the pte size.. although I guess
-it could be a union of all the possible pte types
+Sorry, I completely missed to see that you had already answered those
+in your commit message. As mentioned earlier I haven't looked at the
+reboot mode framework completely yet, so I can't comment on it yet.
 
-BR,
--R
+I don't want to be blocker though if others are happy with this.
 
->
-> > +             if (ret)
-> > +                     return ret;
-> >
-> > -             /* Leaf entry? */
-> > +             /* Leaf entry?  If so, we've found the translation */
-> >               if (iopte_leaf(pte, lvl, data->iop.fmt))
-> > -                     goto found_translation;
-> > +                     return 0;
-> >
-> >               /* Take it to the next level */
-> >               ptep =3D iopte_deref(pte, data);
-> >       } while (++lvl < ARM_LPAE_MAX_LEVELS);
-> >
-> >       /* Ran out of page tables to walk */
-> > +     return -EFAULT;
-> > +}
-> > +
-> > +struct iova_to_phys_walk_data {
-> > +     arm_lpae_iopte pte;
-> > +     int level;
-> > +};
->
-> Expanding a little on Robin's suggestion, why don't we drop this structur=
-e
-> in favour of something more generic:
->
->         struct arm_lpae_walk_data {
->                 arm_lpae_iopte ptes[ARM_LPAE_MAX_LEVELS];
->         };
->
-> and then do something in the walker like:
->
->         if (cb && !cb(pte, lvl))
->                 walk_data->ptes[lvl] =3D pte;
->
-> which could return the physical address at the end, if it reaches a leaf
-> entry. That way arm_lpae_iova_to_phys() is just passing a NULL callback
-> to the walker and your debug callback just needs to return 0 (i.e. the
-> callback is basically just saying whether or not to continue the walk).
->
-> Will
+--
+Regards,
+Sudeep
 
