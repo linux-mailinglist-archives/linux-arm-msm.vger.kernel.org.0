@@ -1,104 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-23936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44437914996
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:15:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A1B89149B8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 14:23:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 006522812ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 12:15:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CC201C220CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 12:23:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2FD913B7BC;
-	Mon, 24 Jun 2024 12:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4671313BAC3;
+	Mon, 24 Jun 2024 12:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cP4mIub4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XemWGzD9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CDC13BC1E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 12:14:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810D313A878
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 12:23:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719231285; cv=none; b=Z5YxUm0CizXmGT0v+VfU+yKbAnhmn+iN/UgGVKPq/oaKSMIpKB3Naw/eyhxZJkxXpGUwUoFMh/xSiMB12pMnNzW0bfD98fG1LtBhPB1AcuQghyrF6N6OzIpraBXXSEcLZu7Xd18GD9bU9YKotUPdj1zHMsl//r7yjgqCQ+ehSbA=
+	t=1719231829; cv=none; b=b3FE7Wgd51yhNCGyigln6DKiR6C/ogMvcDu91LvQorvRHzx+uENOIIoAgLaiFxuckoBU9VchOuymCK+438phtDjsBiQJe9L//ZAip8J2GYFKA6cFu3RyM7M6tvJnHel6/5OTFS8YMm5nDv5JolBfRzfqgiBQy/oWjxVl99swPgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719231285; c=relaxed/simple;
-	bh=Gxw2i4Bpr72gUzRUH2vzyv7nhpA9aEHobxKpIugQ5rs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FJLSaA1Tu/V6ngjlDSstsjD8FWSakl9OCuJvISPlQCRrIxHjw2wcifdBdCWYGjvlfI7WbWcK8+OuVvSJ1SuwiFW8K/XrT8w7U54ErteWBFAClGADlahZ4F01WxjOgpVDBb10HE0lAWXWNWz+K992ZW/7WYQq5UvMZ/C/5NSKbfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cP4mIub4; arc=none smtp.client-ip=209.85.128.170
+	s=arc-20240116; t=1719231829; c=relaxed/simple;
+	bh=nwe0JbEQAeUAP0BTZ+wS2amLU9j+G2W0CktghYoVRCM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ltLDX54heRPcDz9EjBuz3egI0STOMVRpnkVBPHiN+hmbANob//PNGzZiFVGwGiu8s4riZSBa8aI0zqFBenf9PAWQzKZ+KMN2p2v3T5FQU79PHHkVxAXQM4yc1m4J2p9Z5PR/w7BMGtPeyxbZdt+4jGK8nGaf3z4K+N9XPsB2rzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XemWGzD9; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-643efaf0786so10416567b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 05:14:42 -0700 (PDT)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-57ccd1111b0so2294032a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 05:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719231282; x=1719836082; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=O6E+NAhE24Vj48sHTkPAWal2XlcL94IcwqY5bFeQzKs=;
-        b=cP4mIub408806pBH2sxYcAfwmuOH1nSgoD0fY8zlYItZ5JEgpMnXAT1AS0lK89Z9OR
-         vcIU672cAgxYBedP4URuGMzu57+V7V+uYL62BvD6KU82IYws4OiA0fve1D9q32u/UhvM
-         EDu03/BhW6UUQiHPko38SJLPcvmiNx9Ccf6oScquWR8LG0q7i1EHrBpK9kFWm3pkOflC
-         WjsLkzzELnpX+lAbz5mzzNZL1V2aQQIWF4rREs6U7Omy323C3i3duNOllrWJHrBOOaxp
-         XkOzPmNiO6Mr1oH2nTfeSSLLa8z1J58/p8v5ZzFlvgrgD5AlXhPD662i5lt6POcBL7SR
-         fwpQ==
+        d=linaro.org; s=google; t=1719231826; x=1719836626; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wSZE7wf/yd4vOrQ1gWWaEIjdsxjJ6hIagbVZFMYi44E=;
+        b=XemWGzD9dJB1w5Ah7FV72w7MRdNNPDvzsGT/qHRjIvv+1HMAIbXBNjibT5VrvAh4fx
+         QDZ/PIo299ruJT24fdxu6nfBMku5i4Td/mSwUfkVFWZi9KAWiYQLrxZdYVnp+00dpOL/
+         EBzcke5KdAewYw1Wnlq4ArT5k3TRdFGH5Ezdh5ExA3wfseI8SI0/sBygj2ohespUtI/W
+         7kOD+N9yWsYDp2krG8S054uoguIy0U/yYWwSWTOTE5nvqyNFREiYlTnWvoN2+auoFqB3
+         MvMSI0Tq2WHqj++CJHKl2er0jygjT37Xrcu/HVeFySmTOBwtCnEHbIpnq6OyG9ZyRPiN
+         dukA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719231282; x=1719836082;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1719231826; x=1719836626;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=O6E+NAhE24Vj48sHTkPAWal2XlcL94IcwqY5bFeQzKs=;
-        b=C3f86NQUi4lIcYTHeKHysIUsO8v1uXUQPC6xolslBDBcW8cUfY8VBG+777QpE0webK
-         oqlD8JjWKIswGSUagW/JBIcrLpgtKy4n/FqaGKZPbLeU3w/jShqYud6ABNh7kRx8ANEx
-         mMelQBu5qFQ8SSTfyjGh2IUwlUtOrhqsRDK3ZNSad53ftXrV9jz3/lk9sow79lAKlBC1
-         o30/4woG1yjsU+jp/Kms7emLtNPtvpRDBajwHlWkgfQR1CkDprBUWBAzpK801dvDJRLm
-         OxN7NhPffujSDt5Nz5eOVZUUqphADzDvyAkhpdedqMY/Rwxf78Cz6EehGVU5AodR5B4q
-         9Ovw==
-X-Forwarded-Encrypted: i=1; AJvYcCXvWL/z5FwNAoDr4blXl6SYZZySA+imeXpZmRM9HWVo8HM3op7R5eqod7FU47D/0ni49qPcLS3bdhLjl+DqviC/H6bWg9XWZfTjzNDt3Q==
-X-Gm-Message-State: AOJu0Yyz/Ktd/uMzJKvDtXcx4afxlnlcpuwDBwMVQmO8OPhbkSmZiULK
-	iBUyObZtnjnuUR0GpKpqImlC0Qpm4JdACf+p926G9RJ3SgzBWt4z5yf5kTkUbqBdJzZ0jy8FsQO
-	7XSvRC7PD2BbOI4rS6kqvJ51O6PtrzqO0rp0l6w==
-X-Google-Smtp-Source: AGHT+IGQBENYbZC777XGeY3LRTT13xLRxI3cxE38AzllJFwU6q6lBrNDEero0nGMghNsKnGC0bcbVv2XlJykDr+2mZA=
-X-Received: by 2002:a81:a803:0:b0:632:7161:d16c with SMTP id
- 00721157ae682-643409d7f16mr38317587b3.28.1719231282038; Mon, 24 Jun 2024
- 05:14:42 -0700 (PDT)
+        bh=wSZE7wf/yd4vOrQ1gWWaEIjdsxjJ6hIagbVZFMYi44E=;
+        b=Z7tnruVGQDyEtBniVxohyybZiFRNJFap/IsO6Kne7ESV7rujX0tHMZHuFhAO6c0Y/T
+         540XkiTrKlv//TWZOL6k5l/Fybc79THNh7efW1t4+PNkMpJthhc9+FTfNWTKsS8BIdsj
+         W/TzdAC+vAhEXig3jFIdkSpg9H741PEhl3XoUNjE5dv55rVYhLNvEjaPbIjMoVNPQdW5
+         S2LjRQ4ADG7Iy+DDrHLdQIEQ4/qqiAFwNxjvzH/OB4XsaEX5ekHYN621jYt8/OvTwmBO
+         hSfP6rAd4ZGerhEuvdaw5ywZ07ClUt3w/fA/sCIbYDJ5E4j6VuJy0s7jZ0UNApPnm2J0
+         sDtg==
+X-Gm-Message-State: AOJu0YxM+tc2f9sT4Qi1xQiV4WfmjTvhM13Sh62QhFaV6Bseb4H1HNJk
+	bw8NOH/tW82YkCgZ954MePZo7rE3m7UmwTKQS1jiZBObmI2DkJ+aSQPDU09BV3ijRPLFrgOKEoJ
+	ZEDs=
+X-Google-Smtp-Source: AGHT+IHNguip5UnHxzgyJ2YCA6WTa6ffyCb+h4kkD0q7OpO2ZBoe0LgFjUOdKen2ozQ0+3xKFutRdA==
+X-Received: by 2002:a50:99dd:0:b0:57c:5874:4f5c with SMTP id 4fb4d7f45d1cf-57d4bdcad82mr3349529a12.32.1719231825814;
+        Mon, 24 Jun 2024 05:23:45 -0700 (PDT)
+Received: from [192.168.0.113] ([2a02:8109:aa0d:be00::52af])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d45496336sm2946824a12.22.2024.06.24.05.23.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Jun 2024 05:23:45 -0700 (PDT)
+From: Caleb Connolly <caleb.connolly@linaro.org>
+Subject: [PATCH 0/3] arm64: dts: qcom: make dev boards prefer usb host mode
+Date: Mon, 24 Jun 2024 14:23:41 +0200
+Message-Id: <20240624-b4-rb2-fixes-v1-0-8d763ee4e42e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240624120849.2550621-2-caleb.connolly@linaro.org>
-In-Reply-To: <20240624120849.2550621-2-caleb.connolly@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 24 Jun 2024 15:14:29 +0300
-Message-ID: <CAA8EJpp-qCFtPiSVe-+UbYB2BDKH5U3=x+qS_Xb1zn=Pesxmxw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sm6115: add resets for sdhc_1
-To: Caleb Connolly <caleb.connolly@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAE5leWYC/x3LTQqAIBBA4avErBuwUQq6SrTwZ6zZWChEIN49a
+ fnxeBUKZ+EC61Ah8yNFrtQxjQP406aDUUI3kCKjZjLoDGZHGOXlgpMNWvuwUNQW+nJn/kM/tr2
+ 1Dyo2zEBeAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Caleb Connolly <caleb.connolly@linaro.org>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1863;
+ i=caleb.connolly@linaro.org; h=from:subject:message-id;
+ bh=nwe0JbEQAeUAP0BTZ+wS2amLU9j+G2W0CktghYoVRCM=;
+ b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBmeWVQCnjyuO8VCm5WfhtTubPOjl7BdTfG4jQl3
+ hWD203mDqSJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZnllUAAKCRAFgzErGV9k
+ to93EACVxbBPHfha/yfNAUYVr5EI+1I1iQuue2m85MHLjPw/k4fsqES94gnGW/HV5jYyC+SUHnE
+ Bpj+fwUCkD0+3bxDFyBvW/rTR8dfncYkvfrN7RM0DZ242acs/QayvUrtI4pXRak/fBPBcFo4JqA
+ E+TnXMjI+IUvrCa5HbybZt/4d64WrVccXyk1XnVC+BvHskaV1dcv80z8RPzNlGnoQ5oXrTgDXj6
+ WGM6WgaShbJpM1jZxvaOy3aVX+IxXnF1TIkSmn3/6cQFV3fDMxVxZDAfGDH0gVnVpoocDohJSOh
+ kLxl9idwbUiti7Oi8gemu6puYme8m+1pKzIzXx4CiyNnfzJA2rcYzz0u8L26aQQfGXXfjD3jBR5
+ +nif7y6n7R+3O/Ry5MQ+jLq85BNB/+5XRu0oerJ4PD4vvRwwEn8fT3ZBcZMJKWA+IJkE9dYKzmt
+ F0VQV4fQrylGIImW6B9iuMd1owHJ/+lDe3gOQQAWYzrdzM1U2xkwXMmRyicjrOPVSQ/EhJKRIi5
+ 088r9krmMVA/SFB7yJNDuwZTZb6OVm86dQ6miPXfEHPAeCJ2vrryBqTqRYg0NlMTGxx4WOOwv/r
+ pJ1KTVhIh1IkiqpSnwJiZT1Ve94tloqnaiMA4KQp1oC8tpWznqAa5LP0+btTYYhXug9NUwIZJVk
+ 1OjK6+EvFvTnczg==
+X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
+ fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
 
-On Mon, 24 Jun 2024 at 15:09, Caleb Connolly <caleb.connolly@linaro.org> wrote:
->
-> These are documented and supported everywhere, but not described in DT.
-> Add them.
->
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Alexey Klimov <alexey.klimov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
+Many of the Qualcomm development boards feature DRD capable
+type-c ports. However these boards differ from smartphones in their
+usage, and it's generally preferred that they would enter host mode by
+default when given the choice.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This doesn't affect connection to a host-only PC, since the controller
+is still DRD capable.
 
--- 
-With best wishes
-Dmitry
+The RB1/2 are a special case, since they feature an on-board USB hub and
+a manual dip switch to toggle between it and the type-c port. Preferring
+host mode offers a useful hint to the software if it doesn't feature a
+fully DRD capable USB controller driver, it can just use the default
+mode (rather than defaulting to peripheral mode unconditionally).
+
+---
+Caleb Connolly (3):
+      arm64: dts: qcom: sm8650: move usb-role-switch to sm8650.dtsi
+      arm64: dts: qcom: sm8350: move usb-role-switch to sm8350.dtsi
+      arm64: dts: qcom: prefer host mode on dev boards
+
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 1 +
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts     | 4 ++++
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts     | 4 ++++
+ arch/arm64/boot/dts/qcom/sm8150-hdk.dts      | 1 +
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts      | 3 +--
+ arch/arm64/boot/dts/qcom/sm8350.dtsi         | 1 +
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts      | 1 +
+ arch/arm64/boot/dts/qcom/sm8550-hdk.dts      | 4 ++++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts      | 4 ++++
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts      | 4 ++++
+ arch/arm64/boot/dts/qcom/sm8650-hdk.dts      | 3 +--
+ arch/arm64/boot/dts/qcom/sm8650-mtp.dts      | 3 +--
+ arch/arm64/boot/dts/qcom/sm8650-qrd.dts      | 3 +--
+ arch/arm64/boot/dts/qcom/sm8650.dtsi         | 1 +
+ 14 files changed, 29 insertions(+), 8 deletions(-)
+---
+change-id: 20240624-b4-rb2-fixes-1ad33cd72f3a
+base-commit: f76698bd9a8ca01d3581236082d786e9a6b72bb7
+
+// Caleb (they/them)
+
 
