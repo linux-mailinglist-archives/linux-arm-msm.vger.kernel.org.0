@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-23870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-23871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E9F69141E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 07:21:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51CAB9141F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 07:31:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E76152809DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 05:21:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 747A21C2118D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 05:31:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA7EE175AB;
-	Mon, 24 Jun 2024 05:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4244E8827;
+	Mon, 24 Jun 2024 05:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZQsdcnfB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hdkbigkC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AD411713
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 05:21:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438661401B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 05:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719206484; cv=none; b=fUJqqvab34dxMidL143JvAZrUyeKhhp9VsrbYwRy4kuZ3J7Lkv7C55cRNdOJnyYq9nbxYG2EHSEjft0TiXbodhsMsIk7wCiwFN6VOdUW5e+hYr0OaDKgleuIn18b8ivNoxLdKoV8kF5muHz3qs4AX0TD3uCnY/Wm0xmSglSv+jE=
+	t=1719207084; cv=none; b=OL0CDlBrvzNbCJuI69z+t77DpmndMfQED3g607p1MVSj3yEbmPAO6l5MyhD48UT/TnXBvO+mEqlclfqRhSMZHrp0ZhokMF07bxHXf9NqDzo3Lhw5a+2RFYxTQMQBaFLr5M0uN+W8c1ij3e1IiKkAz0QlwznIAwztfwJAr6Gm8GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719206484; c=relaxed/simple;
-	bh=JiRbCTrVtsSCGPNd6tmirF5cOqSpGwp1bx+HJw156uE=;
+	s=arc-20240116; t=1719207084; c=relaxed/simple;
+	bh=mC6YmdP6iUZsMpkTlQTL5Lttmys4aoXQHGhQ9fwz4Bo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LFOAVapkoqUeurLAxbq1M/KZq+WOJrYfhMAAwQOru8lEBfaZgZAPYWygzzyjHTU3IA6xsS2k8y+9aVVqXSOaeIUKkB5DGM4cfPOmlAl4sTltGuVrmxFM3C2sQwZZ0kXkFddLIc3LOwOmqAkdrVyvzG9o8ioyP7VCPww5tPHiGOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZQsdcnfB; arc=none smtp.client-ip=209.85.208.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=UD6sLaMG1H5KmBZgnMfnA/tZa3d7mFMHz7g3geu57ORxy0byPUQ9X+kiQdqPbjjBTxVowmPu8hP7vhYg0vhH3VdCItsVu5iSd5OyTTTCJSTjstcSZ6YCEZHqs96joPFd+STC0Txip+jV/FSRWBdNkIi388Ztj/xsfmSOjTGQ8BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hdkbigkC; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ec59193468so9148291fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 22:21:22 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52cd87277d8so2288663e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 23 Jun 2024 22:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719206481; x=1719811281; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719207080; x=1719811880; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2MGm9hgBQiIaonwYDgBJ0aXBhWFo2f3cLhGxXka39iM=;
-        b=ZQsdcnfBwd4N1kAEKfAFOU/fNUOfJ7vQ7b8QbgSdSk951y8D/I7JxuLP+yppvhY9is
-         eM1nSBnfDkhYzIUspiX96aHuc1JzhmXPEe+bQJCvFuHBKGAOFosNMOkSjJr9YiTUDNfg
-         UY5vmLKyw1z+9SrehMhvYsShqUS3eCC2ZHFeMIpc1bxSzrYQCafHwSde/SjVysNpU8Qy
-         F+lEZLLcJ4bi+16hBiHVClaEYwh1ru0JITszAZxbRphKp73+MP9ioRWmusHzLHQ8GrWZ
-         xDO8Y7w69kQ0h/4AODoZ22QcT5FAf2NH0l5IydYOQaEWR15k7HueFk/Kx6boGLLHHCK9
-         YXBA==
+        bh=oEeMqLzWPtuHbd7DMdLxKIfGpNKakGZfL/lhpzQLB6U=;
+        b=hdkbigkCrZQHwPxv77Co/+CRs2dOzi8OLAaMYGGP8Jzv4Z/ZGhI3TFTPYgqfTDe2cw
+         VOH/wTl9DgD9FuyJ/WtsRSFPVkyPaIJKIT4EQ3QY6+QUbeb/R3jPesAEVImJvWfZ9IJA
+         lJXEGSDEX2MMcXdhWnAZLePGYQ8xlDrXfiAx8GIAcRGVDwZJl9YKMA4aJ0UgfecUB2LV
+         +lTXFMIirsRRGnOAzQI/4PV9lMOty3V8ailkKpAomA+VxHj8vR/fz+bjhLRwacV6++hq
+         NpuH6LBfvWdL515CvKyIghjEjEemFg1FhHqPDEFJEZJRdsIQd9lctvBnWa85EXuj0/sd
+         2Cig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719206481; x=1719811281;
+        d=1e100.net; s=20230601; t=1719207080; x=1719811880;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2MGm9hgBQiIaonwYDgBJ0aXBhWFo2f3cLhGxXka39iM=;
-        b=AMm+9aQi+QXtus3eIlwm2mp/yJRlXfdPiK5OwcjRVdjQV67upO+eWl4C31YkOPd9qd
-         YNdWngpJkk/IPWGFDaKHXOHl5jD/Gchu4YM/jrson80eRm6JkOx9mqvOiwHe30EX+wqI
-         7a+ojXLGP8zHsxeBjxnu1lpPnvSkA45W7OwkAeupEVq6ReoS+lPPy3lRh5McO5s9kaei
-         2BEyCUSwE+5pFR9wkz8VQN7hoE0YLgP09VPD9/vwevqy6eb2915WZiNT76W8BsJbbkpv
-         huQAPzm6NeHvyNyNEIOy+Ht/0gpkjMqDYpflbEwqP1oa5zscKVlQnqELz+coo76BGvDK
-         HwqA==
-X-Forwarded-Encrypted: i=1; AJvYcCUDsksXGVwAaZdUuxp30HgzpYcJlVFG3ohodcwVAsQj+Of2uIcp87VmUkt7wrGvYpfYeDlauoc88x24uXJeQh5Ktku5u4aKHq2xcfaSLA==
-X-Gm-Message-State: AOJu0Ywi03SezyDB7B5rwk9HRrrCwPO4XJCu7sWjNjQ1ees72N59yAOA
-	0jp/sZcjIijNPRsNbH14O1gItf2j7ToWr/cHC2N3vrm0U3SsO+aJQgoi+c1xxF4=
-X-Google-Smtp-Source: AGHT+IH+EF6ZVxgix/33CGJs1LcRlM58jSDEP6hH4S/kepamdqtcu83VYx7sjlT8qvi+UsLClCqQ1A==
-X-Received: by 2002:a2e:9f08:0:b0:2ec:3c7e:3b3d with SMTP id 38308e7fff4ca-2ec56be6b08mr10787131fa.26.1719206481012;
-        Sun, 23 Jun 2024 22:21:21 -0700 (PDT)
+        bh=oEeMqLzWPtuHbd7DMdLxKIfGpNKakGZfL/lhpzQLB6U=;
+        b=cyO4g+G0pTHM57x1UU4vu1Qyx/gHbSiLR6Xv4UaObo/miN1gZz2fUJkmaW0uREOG/4
+         mELca0TvqytqgEnr1fx5G8znZ8EpaJgQcN8ikuVzT6oJwlRPVzZpo7sxBV/J9uWk08S8
+         kqgfbdXBhJJ6dKqnUYNXyflRygOlzfHTq5H+UXjpP+YyTUAukkwgx+5ppj6mqif3VYBQ
+         G1qxbjfPrBoX4ZIHhfwVXU0/H9xhwaR50rCr9ltIP3JVLMD5QdwaSTxP3ciJ1ZQ+IlO2
+         HqSUuPCm7bRCAUNsY3qfK/XRou26TBPKBgi6Vyyx8bTG0YPtdbrhGXAWqZFXvsjyzeCr
+         rnTg==
+X-Forwarded-Encrypted: i=1; AJvYcCWD/PF++OAoOSa+58YXu8QyJA6IM/XT3o1KeGV1pcrhmQN58V3LTGT8OfZlasrQjr6gJRqDQ5B0E/kfvJnj0sYbSfNvrpXXvhcJMWwhDg==
+X-Gm-Message-State: AOJu0YwUa40I1PizSc4N8mRVThVgam3vQZd2lSbvsuDi+oZpBKXPNquo
+	18AdN/oLTzOu6Zaxiu5K+wmgyvACyCoxUCl0R7FQMqUEHk9K7PKr9j9sIm/UQ38=
+X-Google-Smtp-Source: AGHT+IGDR4WXp3BrtdW/oZ54TDqH52mJ/FrYWjDaLO9Oi22YZv6nU3DEUmhIjwPYW7xV1aybF8+z8Q==
+X-Received: by 2002:ac2:5e83:0:b0:52c:e41a:b666 with SMTP id 2adb3069b0e04-52ce41ab71fmr1575041e87.7.1719207080428;
+        Sun, 23 Jun 2024 22:31:20 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ec4d7e7906sm8868841fa.121.2024.06.23.22.21.20
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cd810d633sm864075e87.165.2024.06.23.22.31.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Jun 2024 22:21:20 -0700 (PDT)
-Date: Mon, 24 Jun 2024 08:21:19 +0300
+        Sun, 23 Jun 2024 22:31:19 -0700 (PDT)
+Date: Mon, 24 Jun 2024 08:31:18 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Caleb Connolly <caleb@postmarketos.org>
 Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
@@ -79,10 +79,10 @@ Cc: Neil Armstrong <neil.armstrong@linaro.org>,
 	Henrik Rydberg <rydberg@bitmath.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
 	linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
 	~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 4/7] drm: mipi: add mipi_dsi_generic_write_multi_type()
-Message-ID: <jbxk6uo3q2ddwthtc5et6gquiofgywnwh6e5kwpqe7pvglgbfg@k3djx6owef2t>
+Subject: Re: [PATCH 5/7] drm/panel: add driver for samsung amb655x
+Message-ID: <mnxpybk4nqdyp2xo22dxbprtxt5v6spr2ax4p3vrpwafqcbonv@ga4o2xxtkkov>
 References: <20240624-oneplus8-v1-0-388eecf2dff7@postmarketos.org>
- <20240624-oneplus8-v1-4-388eecf2dff7@postmarketos.org>
+ <20240624-oneplus8-v1-5-388eecf2dff7@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,126 +91,196 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240624-oneplus8-v1-4-388eecf2dff7@postmarketos.org>
+In-Reply-To: <20240624-oneplus8-v1-5-388eecf2dff7@postmarketos.org>
 
-On Mon, Jun 24, 2024 at 03:30:28AM GMT, Caleb Connolly wrote:
-> Some panels like the Samsung AMB655X use long write commands for all
-> non-standard messages and do not work when trying to use the appropriate
-> command type.
-> 
-> Support these panels by introducing a new helper to send commands of a
-> specific type, overriding the normal rules.
-> 
+On Mon, Jun 24, 2024 at 03:30:29AM GMT, Caleb Connolly wrote:
+> This is a 1080x2400 120hz panel used on the OnePlus 8T. It uses DSC but
+> uses non-standard DCS commands.
+
+Please add a note regarding the panel using long packets for all the
+commands.
+
+Also the cover letter had a mention of the panel not fully comming up
+after being reset, is that still true? If so, it should be mentioned in
+the commit message too.
+
 > Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
 > ---
->  drivers/gpu/drm/drm_mipi_dsi.c | 40 ++++++++++++++++++++++++++++++++++++++++
->  include/drm/drm_mipi_dsi.h     | 16 ++++++++++++++++
->  2 files changed, 56 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-> index a471c46f5ca6..d0fee0498d91 100644
-> --- a/drivers/gpu/drm/drm_mipi_dsi.c
-> +++ b/drivers/gpu/drm/drm_mipi_dsi.c
-> @@ -819,8 +819,48 @@ void mipi_dsi_generic_write_multi(struct mipi_dsi_multi_context *ctx,
->  	}
->  }
->  EXPORT_SYMBOL(mipi_dsi_generic_write_multi);
->  
-> +/**
-> + * mipi_dsi_generic_write_type() - transmit data using a generic write packet of
+>  MAINTAINERS                                   |   7 +
+>  drivers/gpu/drm/panel/Kconfig                 |   9 +
+>  drivers/gpu/drm/panel/Makefile                |   1 +
+>  drivers/gpu/drm/panel/panel-samsung-amb655x.c | 420 ++++++++++++++++++++++++++
+>  4 files changed, 437 insertions(+)
 
-This doesn't match the name of the function.
 
-> + * a specific type
-> + * @dsi: DSI peripheral device
-> + * @type: data type of the packet
-> + * @payload: buffer containing the payload
-> + * @size: size of payload buffer
-> + *
-> + * This function will automatically choose the right data type depending on
-> + * the payload length.
-> + *
-> + * Return: The number of bytes transmitted on success or a negative error code
-> + * on failure.
-> + */
-> +ssize_t mipi_dsi_generic_write_multi_type(struct mipi_dsi_multi_context *ctx,
-> +					  u8 type, const void *payload, size_t size)
 
-write_type_multi. Or maybe write_raw_multi.
-
+> +static int samsung_amb655x_on(struct samsung_amb655x *amb655x)
 > +{
-> +	struct mipi_dsi_device *dsi = ctx->dsi;
-> +	struct mipi_dsi_msg msg = {
-> +		.channel = dsi->channel,
-> +		.tx_buf = payload,
-> +		.tx_len = size,
-> +		.type = type,
-> +	};
-> +	ssize_t ret;
+> +	struct drm_dsc_picture_parameter_set pps;
+> +	struct mipi_dsi_device *dsi = amb655x->dsi;
+> +	struct mipi_dsi_multi_context ctx = { .dsi = dsi };
+> +	struct device *dev = &dsi->dev;
+> +	int ret;
 > +
-> +	if (ctx->accum_err)
-> +		return 0;
+> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
 > +
-> +	ret = mipi_dsi_device_transfer(dsi, &msg);
+> +	drm_dsc_pps_payload_pack(&pps, &amb655x->dsc);
+> +
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0x5a, 0x5a);
+> +	mipi_dsi_dcs_write_buffer_multi(&ctx, &pps, sizeof(pps));
+> +	mipi_dsi_dcs_write_long(&ctx, 0x9d, 0x01);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0xa5, 0xa5);
+> +
+> +	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+
+_multi. Shouldn't it be a long package too?
+
 > +	if (ret < 0) {
-> +		ctx->accum_err = ret;
-> +		dev_err(&dsi->dev, "sending generic data %*ph failed: %zd\n",
-> +			(int)size, payload, ret);
+> +		dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
+> +		return ret;
+> +	}
+> +	usleep_range(11000, 12000);
+
+mipi_dsi_msleep() or add mipi_dsi_usleep_range().
+
+> +	ret = mipi_dsi_dcs_set_column_address(dsi, 0x0000, 1080 - 1);
+
+_multi, adding the function as required
+
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to set column address: %d\n", ret);
+> +		return ret;
 > +	}
 > +
-> +	return ret;
+> +	ret = mipi_dsi_dcs_set_page_address(dsi, 0x0000, 2400 - 1);
+
+_multi
+
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to set page address: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	/* FD Setting */
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0x5a, 0x5a);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xd5, 0x8d);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xb0, 0x0a);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xd5, 0x05);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0xa5, 0xa5);
+> +
+> +	/* FFC Function */
+> +	mipi_dsi_dcs_write_long(&ctx, 0xfc, 0x5a, 0x5a);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xb0, 0x01);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xe4, 0xa6, 0x75, 0xa3);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xe9,
+> +			       0x11, 0x75, 0xa6, 0x75, 0xa3, 0x4b, 0x17, 0xac,
+> +			       0x4b, 0x17, 0xac, 0x00, 0x19, 0x19);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xfc, 0xa5, 0xa5);
+> +	msleep(61);
+
+mipi_dsi_msleep
+
+> +
+> +	/* Dimming Setting */
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0x5a, 0x5a);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xb0, 0x06);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xb7, 0x01);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xb0, 0x05);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xb7, 0x13);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xb0, 0x01);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xb7, 0x4c);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0xa5, 0xa5);
+> +
+> +	mipi_dsi_dcs_write_long(&ctx, MIPI_DCS_WRITE_CONTROL_DISPLAY, 0x20);
+> +
+> +	/* refresh rate Transition */
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0x5a, 0x5a);
+> +	/* 60 Hz */
+> +	//mipi_dsi_dcs_write_long(&ctx, 0x60, 0x00);
+> +	/* 120 Hz */
+> +	mipi_dsi_dcs_write_long(&ctx, 0x60, 0x10);
+> +
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0xa5, 0xa5);
+> +
+> +	/* ACL Mode */
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0x5a, 0x5a);
+> +	mipi_dsi_dcs_write_long(&ctx, MIPI_DCS_WRITE_POWER_SAVE, 0x00);
+> +	mipi_dsi_dcs_write_long(&ctx, 0xf0, 0xa5, 0xa5);
+> +	mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY, 0x20);
+
+_multi
+
+> +	msleep(110);
+
+mipi_dsi_msleep()
+
+> +
+> +	/* Enable backlight */
+> +	mipi_dsi_dcs_write_long(&ctx, 0x9F, 0x5A, 0x5A);
+> +	mipi_dsi_dcs_set_display_on(dsi);
+
+_multi
+
+> +	mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_ENTER_NORMAL_MODE);
+
+_multi
+
+> +	mipi_dsi_dcs_write_long(&ctx, 0x9F, 0xA5, 0xA5);
+> +
+> +	return ctx.accum_err;
 > +}
-> +EXPORT_SYMBOL(mipi_dsi_generic_write_multi_type);
 > +
->  /**
->   * mipi_dsi_generic_read() - receive data using a generic read packet
->   * @dsi: DSI peripheral device
->   * @params: buffer containing the request parameters
-> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-> index 71d121aeef24..a5d949e695d4 100644
-> --- a/include/drm/drm_mipi_dsi.h
-> +++ b/include/drm/drm_mipi_dsi.h
-> @@ -287,8 +287,10 @@ ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
->  int mipi_dsi_generic_write_chatty(struct mipi_dsi_device *dsi,
->  				  const void *payload, size_t size);
->  void mipi_dsi_generic_write_multi(struct mipi_dsi_multi_context *ctx,
->  				  const void *payload, size_t size);
-> +ssize_t mipi_dsi_generic_write_multi_type(struct mipi_dsi_multi_context *ctx, u8 type,
-> +				    const void *payload, size_t size);
->  ssize_t mipi_dsi_generic_read(struct mipi_dsi_device *dsi, const void *params,
->  			      size_t num_params, void *data, size_t size);
->  
->  #define mipi_dsi_msleep(ctx, delay)	\
-> @@ -432,8 +434,22 @@ void mipi_dsi_dcs_set_tear_on_multi(struct mipi_dsi_multi_context *ctx,
->  		static const u8 d[] = { cmd, seq };                     \
->  		mipi_dsi_dcs_write_buffer_multi(ctx, d, ARRAY_SIZE(d)); \
->  	} while (0)
->  
-> +/**
-> + * mipi_dsi_dcs_write_long - transmit a DCS long command with payload
-> + * @dsi: DSI peripheral device
-> + * @cmd: Commands
-> + * @seq: buffer containing data to be transmitted
-> + */
-> +#define mipi_dsi_dcs_write_long(ctx, cmd, seq...)                          \
-
-foo_multi
-
-> +	do {                                                               \
-> +		static const u8 d[] = { cmd, seq };                        \
-> +		mipi_dsi_generic_write_multi_type(ctx,                     \
-> +						  MIPI_DSI_DCS_LONG_WRITE, \
-> +						  d, ARRAY_SIZE(d));       \
-> +	} while (0)
+> +static int samsung_amb655x_off(struct samsung_amb655x *amb655x)
+> +{
+> +	struct mipi_dsi_device *dsi = amb655x->dsi;
+> +	struct mipi_dsi_multi_context ctx = { .dsi = dsi };
+> +	struct device *dev = &dsi->dev;
+> +	int ret;
 > +
->  /**
->   * struct mipi_dsi_driver - DSI driver
->   * @driver: device driver model driver
->   * @probe: callback for device binding
-> 
-> -- 
-> 2.45.0
-> 
+> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> +
+> +	mipi_dsi_dcs_write_long(&ctx, 0x9f, 0x5a, 0x5a);
+> +
+> +	ret = mipi_dsi_dcs_set_display_on(dsi);
+
+_multi
+
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to set display on: %d\n", ret);
+> +		return ret;
+> +	}
+> +	msleep(20);
+
+mipi_dsi_msleep
+
+> +
+> +	ret = mipi_dsi_dcs_set_display_off(dsi);
+
+_multi
+
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to set display off: %d\n", ret);
+> +		return ret;
+> +	}
+> +	msleep(20);
+
+mipi_dsi_msleep
+> +
+> +	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
+
+_multi
+
+> +	if (ret < 0) {
+> +		dev_err(dev, "Failed to enter sleep mode: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	mipi_dsi_dcs_write_long(&ctx, 0x9f, 0xa5, 0xa5);
+> +	msleep(150);
+> +
+> +	return ctx.accum_err;
+> +}
+> +
 
 -- 
 With best wishes
