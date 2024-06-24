@@ -1,120 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-24008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B867A9153B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 18:27:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C3AA9153CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 18:28:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6EDC21F24C62
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 16:27:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E8C51C2348D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 16:28:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53F0E19DF80;
-	Mon, 24 Jun 2024 16:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 182CF19E7ED;
+	Mon, 24 Jun 2024 16:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LIXSY2SU"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eF8/XYVU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B201E19DF5D;
-	Mon, 24 Jun 2024 16:27:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CEA19E7E1;
+	Mon, 24 Jun 2024 16:28:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719246471; cv=none; b=jiRpsq/kD5RTLHeRweXgk01rsmG7VvsxRHxel3TAZ7aJQ0K6GSd7w4D4bHif9bNDcTnbtvaDjbnQIeL5DrThYKVGdcTIm9ClymAVJtTW4cgjK4XZa0m8o5D42KSl5efUmveiHxbb0vv1mD+HX0qDJITWLb6K4pVTK2vlwFlkhaI=
+	t=1719246491; cv=none; b=oH5yo2g32hTAaW2JFO12TDB3nS430gFU1dymcft9fynqpJVF3OgxhhqLHzycZzUeLbBPCwVEqWrkjtH5v6lGRvjYzBbVtd8N0J3WS+5S4hLqvcGoYZciIscqnlxkwCGxa4FsCVxv6JwjeEWwnyt91wlNJ4VAazTx9hb4MRVyc7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719246471; c=relaxed/simple;
-	bh=YjtWJQm9QqPK9v0wi70UmdCLPRdILJAl2N3WIxmkRgw=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=W0eTg2wemkVzDJSwE9dsq6z98HqmCRKs89ZNBKWc13WwO8KTsEgHIIjRj6JaJRwxUfHK/BGJWPuo3WER6ph9aihL3GUwkAUO8kG9WaR0LRtgS2kgE3TFwFbWMXOymst2lQ9RY3itm8viAsjVYwWNPgLN7kU/TrOjuQ67TTJbuIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LIXSY2SU; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1719246470; x=1750782470;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=YjtWJQm9QqPK9v0wi70UmdCLPRdILJAl2N3WIxmkRgw=;
-  b=LIXSY2SUSl6v4Bquvyqm8/LpIChFRiDcgllVb59BrkXiZxTwR+clq6Do
-   OnT14PnISDzRc+ogcCZH5lEHoK43TqFXA3Cm6a/sy8GrRknsTgoTPEbYD
-   YqcHgOab2kZTxvqgXtGFbHp3fEvGI060H+7WDVvEUyJuqpmLIFYD2R1pr
-   fzau30SLordJfVIXRAMcKaqNRR62vmi3VbjtRNcqpH2qCnhzJ8tgi0L3Z
-   eZLD25i4gQdnuy5xhDAeX07BPG8yizYDUVWxYFGuj0E96nBAdMGluWFzQ
-   5Rge3+X6QV+HlQt4GP4oGcqtdga28iWpmvczsZQBCDLBO3GG9sWXljVA1
-   Q==;
-X-CSE-ConnectionGUID: /kPfGTUjQd6Dx6LSJi/N7w==
-X-CSE-MsgGUID: e5Gj7rO1Txa/sKNsraMztQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11113"; a="16356859"
-X-IronPort-AV: E=Sophos;i="6.08,262,1712646000"; 
-   d="scan'208";a="16356859"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2024 09:27:49 -0700
-X-CSE-ConnectionGUID: sV4ipX9bQmGll7jRK377kA==
-X-CSE-MsgGUID: 9Xmm6K/BS7C9/MoeqSa4Hw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,262,1712646000"; 
-   d="scan'208";a="74578186"
-Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.247.61])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2024 09:27:45 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 24 Jun 2024 19:27:41 +0300 (EEST)
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-cc: Bjorn Andersson <andersson@kernel.org>, 
-    Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-    Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-    Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-    Konrad Dybcio <konrad.dybcio@linaro.org>, 
-    LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
-    linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-    Nikita Travkin <nikita@trvn.ru>
-Subject: Re: [PATCH v9 1/2] platform/arm64: build drivers even on non-ARM64
- platforms
-In-Reply-To: <20240624-ucsi-yoga-ec-driver-v9-1-53af411a9bd6@linaro.org>
-Message-ID: <645b8ae6-10ad-11f9-eb18-a931f258bfd2@linux.intel.com>
-References: <20240624-ucsi-yoga-ec-driver-v9-0-53af411a9bd6@linaro.org> <20240624-ucsi-yoga-ec-driver-v9-1-53af411a9bd6@linaro.org>
+	s=arc-20240116; t=1719246491; c=relaxed/simple;
+	bh=JXedkQbeFM/RywiYZABiZ6G9sfYpi6PxI3HPVYh8h1A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W9tIF5eN4Vn/Bvcc7yvyk1ik8yeW9IoI8gG9d1QtVAGqpY0fqbsN4hmU5kMrES7/VkviQjwwUpTFsKPu2UedXYXm4WVBZUV8lynIk2R/p6LFpUxooT2G2ZyVkKeVePbhOQ+tfB2wcvk/zXc2LpKhl3Nxt4qhxb/CHmf3HEXlM9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eF8/XYVU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC48C32789;
+	Mon, 24 Jun 2024 16:28:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1719246490;
+	bh=JXedkQbeFM/RywiYZABiZ6G9sfYpi6PxI3HPVYh8h1A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eF8/XYVUaZoFZJVATYQd2GfE67L+AtFCAA7fytVcaX2+4ZY+AAj17xhHxHrMlVxXb
+	 6uc+vHFXB6irM411OPvS9BZxcOtJjrAs2Ys/IGR5h7TWAjrRVH84QjuEBnYfkDSrxH
+	 z6nyhf15bacVbR2KMc1GZNKGwr+eKKhPyncAlsAc=
+Date: Mon, 24 Jun 2024 18:28:07 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sebastian Reichel <sre@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [GIT PULL RESEND] Immutable branch between pdx86 lenovo c630
+ branch, power/supply and USB
+Message-ID: <2024062440-guide-knoll-94d0@gregkh>
+References: <e42fb2e9-81d4-4e40-ff3a-f9d6a46d03f9@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e42fb2e9-81d4-4e40-ff3a-f9d6a46d03f9@linux.intel.com>
 
-On Mon, 24 Jun 2024, Dmitry Baryshkov wrote:
-
-> The Kconfig for platforms/arm64 has 'depends on ARM64 || COMPILE_TEST'.
-> However due to Makefile having just obj-$(CONFIG_ARM64) the subdir will
-> not be descended for !ARM64 platforms and thus the drivers won't get
-> built. This breaks modular builds of other driver drivers which depend
-> on arm64 platform drivers.
+On Mon, Jun 24, 2024 at 07:24:55PM +0300, Ilpo Järvinen wrote:
+> Hi,
 > 
-> Reported-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Fixes: 363c8aea2572 ("platform: Add ARM64 platform directory")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/platform/Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> This is v2 of the lenovo c630 IB branch with the build fix for non-ARM64 
+> platforms (built on top of the commits in the previous IB PR). Resent with 
+> full Subject line.
 > 
-> diff --git a/drivers/platform/Makefile b/drivers/platform/Makefile
-> index fbbe4f77aa5d..837202842a6f 100644
-> --- a/drivers/platform/Makefile
-> +++ b/drivers/platform/Makefile
-> @@ -11,4 +11,4 @@ obj-$(CONFIG_OLPC_EC)		+= olpc/
->  obj-$(CONFIG_GOLDFISH)		+= goldfish/
->  obj-$(CONFIG_CHROME_PLATFORMS)	+= chrome/
->  obj-$(CONFIG_SURFACE_PLATFORMS)	+= surface/
-> -obj-$(CONFIG_ARM64)		+= arm64/
-> +obj-$(CONFIG_ARM64_PLATFORM_DEVICES)	+= arm64/
+> The following changes since commit 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0:
+> 
+>   Linux 6.10-rc1 (2024-05-26 15:20:12 -0700)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git tags/platform-drivers-x86-ib-lenovo-c630-v6.11-2
+> 
+> for you to fetch changes up to 13bbe1c83bc401c2538c758228d27b4042b08341:
+> 
+>   platform/arm64: build drivers even on non-ARM64 platforms (2024-06-24 18:22:15 +0300)
 
-I made a second ib tag with this patch.
+So was the first one rewritten?  Or is this just the second patch on
+top of the previous one?
 
-I'm a bit disappointed that LKP didn't catch this in the patch stage, it 
-feels almost as if it never built any of the versions.
+confused,
 
-
--- 
- i.
-
+greg k-h
 
