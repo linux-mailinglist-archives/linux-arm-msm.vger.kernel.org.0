@@ -1,197 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-24044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AB469158AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 23:15:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6B1F9158CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 23:24:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02D2C284C41
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 21:15:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C1E4285389
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Jun 2024 21:24:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24AF949656;
-	Mon, 24 Jun 2024 21:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CE971A08D3;
+	Mon, 24 Jun 2024 21:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="NWZbaPg3"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kDNZt61U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78147364A1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 21:15:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63FF1A0702
+	for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 21:24:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719263725; cv=none; b=W2cqAQXuKlGrUnnX08QY7gzeDPpq1W/DJUY/z8OJGOB2zdMKvBR3XOoL5ZvptkjqXV36SM4rFCeU7Ib/xOyPzxRrfpQ7gBi3pz8f4JgKACl+G32c7FsQu6WVCb1Eo689XkIcy0CvDS+n2F9Ma1oB572g6Fu9hflJk6H9jqCHQLg=
+	t=1719264253; cv=none; b=CotVQnndWPf/bnZQokzeKv2FnQSBj3Ep4E4a2DBzRJ4FDnqHrYiGHB/s/hWdvuicV83QZn7Ssw5uuPX3ATe+AkVkFKVHJ5H66S+q0clQ7GuOk7NqEByFisbyjG3CmLHGUG5166B8J5SVAZqJS33QZ3wYkhBGI2R9J9Vo9T1dVEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719263725; c=relaxed/simple;
-	bh=1aS1C8+rNiEE9y97Tf7/4pGGQHLNNIZeCB3/TynbVHY=;
+	s=arc-20240116; t=1719264253; c=relaxed/simple;
+	bh=IFZr6MV4AR6r14kqmLG6qUlrfX6va9/24Y1lP+Gq/00=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ni95T2YhQ/xzF9hwrWapRXs6ejaj+gs5PMWcrexbBmzi0Q6M8zAsNp/ixaLRzX7LCzg64rj0XDhEyfREGYCBkqCt5hssgePhXsWjdp3L0iFuhyFHUf+EfEjx2vZUyOdvmHe2bBM3a61Z5mDzYdbVf0CI9rh/L4jY32vI8JWEFPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=NWZbaPg3; arc=none smtp.client-ip=209.85.222.177
+	 To:Cc:Content-Type; b=hsRIbSeq6ZN8OZHYMoeZAik+Shd2u8J+E0kYgdPmkc3tG2AQnYV8by6kYgxOe51ihJpZ4ca3Nr2cZiPwXywRNum8rYVByd3fPiu3YrvdTIXxsZYsvGaD6nsmxxr0dsEExhsrtkrrVYGsrdE+JTjbvPkB9aUED3xKeRQcmuu2szo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=kDNZt61U; arc=none smtp.client-ip=209.85.167.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7961fb2d1cfso378679085a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 14:15:23 -0700 (PDT)
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3c9d70d93dbso3241436b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 14:24:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1719263721; x=1719868521; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1719264248; x=1719869048; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=F/CQWIetOrwwmsDk4Xx3Bzc7g2Sp+y6oh+LBYo/o6no=;
-        b=NWZbaPg3jObOWzclWE+RbSuJ7UUwQkliNvdYe8/U+lJ57bQKKbnUEpTP70yooYRQN1
-         90J83zHg5m0zbDTCAA7VQSxCU4IdbLJD09AqqnFgLq/a920aYb47H2Bdk6b3SuB+F8FI
-         /44NxOahwCkba799Jymtzuc9SYZzdzLXW6wZA=
+        bh=1JOTUT9twe9eD9jXfuDuG0OciOCniJECQvgGWn276Tc=;
+        b=kDNZt61UVaPfgB+JV8yoAvwIn6c1tSD91QszRvvzy8GzFti2r9PfhumRND6D7SsDnP
+         gnZecWiDFXsNbMikWj2S2WQY2eIhzNRRIHOEnBz7sHtaXJyDNAfFxivDticcmn4CzpG0
+         IXYO8c0UqW6upmhfaxGkP04x1vyN9fZPeQIFw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719263721; x=1719868521;
+        d=1e100.net; s=20230601; t=1719264248; x=1719869048;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=F/CQWIetOrwwmsDk4Xx3Bzc7g2Sp+y6oh+LBYo/o6no=;
-        b=kqfJ5S1Oz2jsurJGbdA3Qvqhs9aCMaKP6JPKBCZoOz2WyM+Bvfs8T8P6k5WCMb8x3Z
-         k6YfqH45UG+lrBBm1GB+0XuxggnxR+6l53Ia5RiCaq/nx3UNuaIzgtS+xdk2gHrQHmLY
-         yI9Eu8y/ntHJp2Oi/q3EkShoOZ12vzSUnfV+5g7mOgzVnf1dhuavPVQj0N1KSLMD/hqU
-         3iCVozUyI7KTDPNhCWdwrZ7xAgjhMUvfJziaDbe9MnZbJZIs5Sz32ASrCU4KpVIGA0Cc
-         ujY9B6A5CWdx2UWDJRJJFZwTSdeU/ONp8dpnZAS5jfn72l2sD8CcxwTOQcN6ILKtyqcn
-         TMIw==
-X-Forwarded-Encrypted: i=1; AJvYcCVhvLGLpZw8m6Vs2miq3zu3lyXPdSQ8qrEuK+l9/fElv5uQZcCwahi7fWeI1THPTn6U4oGCN9Bd+RzR9aokpQTvatESlNhaWmNXEyxYXQ==
-X-Gm-Message-State: AOJu0YwqPqjwBoeDqxzX2LuE6Vh1d8jGa7Jgyqcjw7Ih2/U3jaHOzxDX
-	yPuKTTIWhdm+eK0YBMAJRvfak4dZb+Kg44qyIjhZDMRX3xAKoH9I9pf9IOyou1K9ApWfhdMGs5A
+        bh=1JOTUT9twe9eD9jXfuDuG0OciOCniJECQvgGWn276Tc=;
+        b=w5c1WcZSneulp0BCVVykHYZDhXlK062IDSxa8tbMBioucwEvwskDbcBUl/F+Jn1Hg2
+         pa+A+vra795vlmD/s2uigD5e80fzdtu6tGiH0VHiwxYPME3aqdiA0NrCPkv54qZ9gKpv
+         p9QomZ3RMYLvf38LI9nlTLVNTWe8YeBcNkGcXbx4aivUFQBRGJWdpkkn2og9qrMbsn61
+         Zeqpil7O1ZbRyGCCbv0vcMl8MbDhSYbGnNWifhExBTLesNaoD26iWdbth7O72yaIKHL7
+         E9vS5Ud37JWW+Ua0/dseIhcdtKAcTMh1f59yYtXYtyn3ufrd0UmB/PDZeLst3AOX+kzs
+         fFsg==
+X-Forwarded-Encrypted: i=1; AJvYcCVl48SOzeuknqhMVCaNiuscZ+o0uxrXpeYwughn60YS/yU+FaGbtHsMyw13lla6c9keL4ly64T4qt7JDAL4GAs4xXfrJkl3MkBNDccm1g==
+X-Gm-Message-State: AOJu0YyIzg5Thz/ExbQgkK8es0tQppXkTSYZJWMDL6FZixytGGTwCScB
+	YhYmKcTIiAcNsTuA0HMGy13AYfyjiUI8viVNITk8pGQPupHAwBEtxbEu8kQe6OAHVWct/OPxK5U
 	=
-X-Google-Smtp-Source: AGHT+IGb7qO4CnoxaMx823K2Dx7n0TY6j6CgTK5fm57tQ/4G+GN/pkYLjBOXdXcKOCbpqOCdP8mrZA==
-X-Received: by 2002:a05:620a:4549:b0:797:db7a:bc2 with SMTP id af79cd13be357-79be6f13d66mr655554485a.57.1719263720909;
-        Mon, 24 Jun 2024 14:15:20 -0700 (PDT)
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com. [209.85.160.177])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-79bce942edasm347430985a.128.2024.06.24.14.15.19
+X-Google-Smtp-Source: AGHT+IH1nnHSu33EsxgYnNkIoBMvq+hTXyQ/JPBdKuGftmsJdQc+PIdvpOhV31FagibhhqReMgsF9w==
+X-Received: by 2002:a05:6808:1a05:b0:3d2:277e:45d7 with SMTP id 5614622812f47-3d54596a512mr8056389b6e.13.1719264247676;
+        Mon, 24 Jun 2024 14:24:07 -0700 (PDT)
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com. [209.85.160.172])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-444f0ef4d51sm3557861cf.76.2024.06.24.14.24.04
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jun 2024 14:15:20 -0700 (PDT)
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-44056f72257so33071cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 14:15:19 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWvcBvrPs2HCgftRDqbxOjcEaNb4FuvQZAj/TUdmV+9mS1eKWEXsHVkjUEyOWt8C4n6IByW1MX+fjm4JCqA6SjH5DyJWVCvXrR1UjD1lA==
-X-Received: by 2002:a05:622a:1981:b0:441:4920:1fc4 with SMTP id
- d75a77b69052e-444f256621dmr960771cf.28.1719263719282; Mon, 24 Jun 2024
- 14:15:19 -0700 (PDT)
+        Mon, 24 Jun 2024 14:24:04 -0700 (PDT)
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-443580f290dso30541cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 14:24:04 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXJoBAsRYwp6+CgtqnUMA65WqkwtnhZMA0UTXQywM54IljaMsQpuu91FFBa+B5YvnTqy8hqZnrB9JED9MlDk9KTTSt8z5cUd+IDi+RHPw==
+X-Received: by 2002:ac8:7fc6:0:b0:444:b755:2aa1 with SMTP id
+ d75a77b69052e-444f368e55amr295621cf.17.1719264244099; Mon, 24 Jun 2024
+ 14:24:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240610222515.3023730-1-dianders@chromium.org>
- <20240610152420.v4.8.I1af05e555c42a9c98435bb7aee0ee60e3dcd015e@changeid> <Znlp1_F1u-70D3QQ@hovoldconsulting.com>
-In-Reply-To: <Znlp1_F1u-70D3QQ@hovoldconsulting.com>
+References: <20240624133135.7445-1-johan+linaro@kernel.org> <20240624133135.7445-3-johan+linaro@kernel.org>
+In-Reply-To: <20240624133135.7445-3-johan+linaro@kernel.org>
 From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 24 Jun 2024 14:15:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XmuKUKvCq7gG+wM-jAAgHLHnYw4NteFEKz5Fmczd=U7g@mail.gmail.com>
-Message-ID: <CAD=FV=XmuKUKvCq7gG+wM-jAAgHLHnYw4NteFEKz5Fmczd=U7g@mail.gmail.com>
-Subject: Re: [PATCH v4 8/8] serial: qcom-geni: Rework TX in FIFO mode to fix hangs/lockups
-To: Johan Hovold <johan@kernel.org>
+Date: Mon, 24 Jun 2024 14:23:52 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UauWffRM45FsU2SHoKtkVaOEf=Adno+jV+Ashf7NFHuA@mail.gmail.com>
+Message-ID: <CAD=FV=UauWffRM45FsU2SHoKtkVaOEf=Adno+jV+Ashf7NFHuA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] serial: qcom-geni: fix soft lockup on sw flow control
+ and suspend
+To: Johan Hovold <johan+linaro@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Yicong Yang <yangyicong@hisilicon.com>, Tony Lindgren <tony@atomide.com>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Johan Hovold <johan+linaro@kernel.org>, 
-	John Ogness <john.ogness@linutronix.de>, linux-arm-msm@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
-	Rob Herring <robh@kernel.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Mon, Jun 24, 2024 at 5:43=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
-te:
+On Mon, Jun 24, 2024 at 6:31=E2=80=AFAM Johan Hovold <johan+linaro@kernel.o=
+rg> wrote:
 >
-> On Mon, Jun 10, 2024 at 03:24:26PM -0700, Douglas Anderson wrote:
-> > The fact that the Qualcomm GENI hardware interface is based around
-> > "packets" is really awkward to fit into Linux's UART design.
-> > Specifically, in order to send bytes you need to start up a new
-> > "command" saying how many bytes you want to send and then you need to
-> > send all those bytes. Once you've committed to sending that number of
-> > bytes it's very awkward to change your mind and send fewer, especially
-> > if you want to do so without dropping bytes on the ground.
-> >
-> > There may be a few cases where you might want to send fewer bytes than
-> > you originally expected:
-> > 1. You might want to interrupt the transfer with something higher
-> >    priority, like the kernel console or kdb.
-> > 2. You might want to enter system suspend.
-> > 3. The user might have killed the program that had queued bytes for
-> >    sending over the UART.
-> >
-> > Despite this awkwardness the Linux driver has still tried to send
-> > bytes using large transfers. Whenever the driver started a new
-> > transfer it would look at the number of bytes in the OS's queue and
-> > start a transfer for that many. The idea of using larger transfers is
-> > that it should be more efficient. When you're in the middle of a large
-> > transfer you can get interrupted when the hardware FIFO is close to
-> > empty and add more bytes in. Whenever you get to the end of a transfer
-> > you have to wait until the transfer is totally done before you can add
-> > more bytes and, depending on interrupt latency, that can cause the
-> > UART to idle a bit.
+> The stop_tx() callback is used to implement software flow control and
+> must not discard data as the Qualcomm GENI driver is currently doing
+> when there is an active TX command.
 >
-> As I mentioned last week, the slowdown from this is quite noticeable
-> (e.g. 25% slowdown at @115200), but this may be the price we need to pay
-> for correctness, at least temporarily.
+> Cancelling an active command can also leave data in the hardware FIFO,
+> which prevents the watermark interrupt from being enabled when TX is
+> later restarted. This results in a soft lockup and is easily triggered
+> by stopping TX using software flow control in a serial console but this
+> can also happen after suspend.
 >
-> An alternative might be to switch to using a 16 byte fifo. This should
-> reduce console latency even further, and may be able avoid the idling
-> UART penalty by continuing to use the watermark interrupt for refilling
-> the FIFO.
+> Fix this by only stopping any active command, and effectively clearing
+> the hardware fifo, when shutting down the port. Make sure to temporarily
+> raise the watermark level so that the interrupt fires when TX is
+> restarted.
 
-I'm a bit confused. Right now we're using (effectively) a 64-byte
-FIFO. The FIFO is 16-words deep and we have 4 bytes per word. ...so
-I'm not sure what you mean by switching to a 16-byte FIFO. Do you mean
-to make less use of the FIFO, or something else?
+Nice! I did quite a few experiments, but it sounds like you found
+something that I wasn't able to find. Specifically once I cancelled an
+ongoing command I could never manage to get it started back up, but it
+must have just been that data was still in the FIFO and thus the
+watermark never fired again.
 
-Overall the big problem I found in all my testing was that I needed to
-wait for a "command done" before kicking off a new command. When the
-"command done" arrives then the UART has stopped transmitting and
-you've got to suffer an interrupt latency before you can start
-transferring again. Essentially:
-
-1. Pick a transfer size.
-2. You can keep sending bytes / using the FIFO efficiently as long as
-there are still bytes left in the transfer.
-3. When you get to the end of the transfer, you have to wait for the
-UART to stop, report that it's done, and then suffer an interrupt
-latency to start a new transfer.
-
-So to be efficient you want to pick a big transfer size but if there's
-any chance that you might not need to transfer that many bytes then
-you need to figure out what to do. If you can handle that properly
-then that's great. If not then we have to make sure we never kick off
-a transfer that we might not finish.
-
-I'd also mention that, as talked about in my response to your other
-patch [1], I'm not seeing a 25% slowdown. I tested both with my simple
-proposal and with this whole series applied and my slowdown is less
-than 2%. I guess there must be something different with your setup?
-Trying to think about what kind of slowdown would be reasonable for my
-patch series at 115200:
-
-a) We send 64 bytes efficiently, which takes 5.6ms (64 * 1000 / 11520)
-
-b) We stop transferring and wait for an interrupt.
-
-c) We start transferring 64 bytes again.
-
-Let's say that your interrupt latency is 1 ms, which would be really
-terrible. In that case you'll essentially transfer 64 bytes in 6.6ms
-instead of 5.6 ms, right? That would be an 18% hit. Let's imagine
-something more sensible and say that most of the time you can handle
-an interrupt in 100 ms. That would be about a 1.7% slowdown, which
-actually matches what I was seeing. For reference, even an old arm32
-rk3288-veyron device I worked with years ago could usually handle
-interrupts in ~100-200 ms since dwc2 needs you to handle at least one
-(sometimes more) interrupt per USB uFrame (250ms).
-
-...so I'm confused about where your 25% number is coming from...
+When I was experimenting, I also swore that there were cases where
+geni would sometimes fully drop bytes when I tried to "cancel" a
+command, but maybe I was mistaken. Everything I figured out was
+essentially by running experiments and I could easily have had a bug
+in my experiment.
 
 
-[1] https://lore.kernel.org/r/CAD=3DFV=3DUwyzA614tDoq7BntW1DWmic=3DDOszr+iR=
-JVafVEYrXhpw@mail.gmail.com
+> Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver sup=
+port for GENI based QUP")
+> Cc: stable@vger.kernel.org      # 4.17
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/tty/serial/qcom_geni_serial.c | 28 +++++++++++++++++----------
+>  1 file changed, 18 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/q=
+com_geni_serial.c
+> index 1d5d6045879a..72addeb9f461 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -651,13 +651,8 @@ static void qcom_geni_serial_start_tx_fifo(struct ua=
+rt_port *uport)
+>  {
+>         u32 irq_en;
+>
+> -       if (qcom_geni_serial_main_active(uport) ||
+> -           !qcom_geni_serial_tx_empty(uport))
+> -               return;
+> -
+>         irq_en =3D readl(uport->membase + SE_GENI_M_IRQ_EN);
+>         irq_en |=3D M_TX_FIFO_WATERMARK_EN | M_CMD_DONE_EN;
+> -
+>         writel(DEF_TX_WM, uport->membase + SE_GENI_TX_WATERMARK_REG);
+>         writel(irq_en, uport->membase + SE_GENI_M_IRQ_EN);
+>  }
+> @@ -665,16 +660,28 @@ static void qcom_geni_serial_start_tx_fifo(struct u=
+art_port *uport)
+>  static void qcom_geni_serial_stop_tx_fifo(struct uart_port *uport)
+>  {
+>         u32 irq_en;
+> -       struct qcom_geni_serial_port *port =3D to_dev_port(uport);
+>
+>         irq_en =3D readl(uport->membase + SE_GENI_M_IRQ_EN);
+>         irq_en &=3D ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN);
+>         writel(0, uport->membase + SE_GENI_TX_WATERMARK_REG);
+>         writel(irq_en, uport->membase + SE_GENI_M_IRQ_EN);
+> -       /* Possible stop tx is called multiple times. */
+
+If qcom_geni_serial_stop_tx_fifo() is supposed to be used for UART
+flow control and you have a way to stop the transfer immediately
+without losing data (by using geni_se_cancel_m_cmd), maybe we should
+do that? If the other side wants us to stop transferring data and we
+can stop it right away that would be ideal...
+
+
+> +}
+> +
+> +static void qcom_geni_serial_clear_tx_fifo(struct uart_port *uport)
+> +{
+> +       struct qcom_geni_serial_port *port =3D to_dev_port(uport);
+> +
+>         if (!qcom_geni_serial_main_active(uport))
+>                 return;
+>
+> +       /*
+> +        * Increase watermark level so that TX can be restarted and wait =
+for
+> +        * sequencer to start to prevent lockups.
+> +        */
+> +       writel(port->tx_fifo_depth, uport->membase + SE_GENI_TX_WATERMARK=
+_REG);
+> +       qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
+> +                                       M_TX_FIFO_WATERMARK_EN, true);
+
+Oh, maybe this "wait for sequencer to start to prevent lockups." is
+the part that I was missing? Can you explain more about what's going
+on here? Why does waiting for the watermark interrupt to fire prevent
+lockups? I would have imagined that the watermark interrupt would be
+part of the geni hardware and have nothing to do with the firmware
+running on the other end, so I'm not sure why it firing somehow would
+prevent a lockup. Was this just by trial and error?
+
+
+> @@ -684,6 +691,8 @@ static void qcom_geni_serial_stop_tx_fifo(struct uart=
+_port *uport)
+>                 writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLE=
+AR);
+>         }
+>         writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+> +
+> +       port->tx_remaining =3D 0;
+>  }
+>
+>  static void qcom_geni_serial_handle_rx_fifo(struct uart_port *uport, boo=
+l drop)
+> @@ -1069,11 +1078,10 @@ static void qcom_geni_serial_shutdown(struct uart=
+_port *uport)
+>  {
+>         disable_irq(uport->irq);
+>
+> -       if (uart_console(uport))
+> -               return;
+
+Can you explain this part of the patch? I'm not saying it's wrong to
+remove this special case since this driver seems to have lots of
+needless special cases that are already handled by the core or by
+other parts of the driver, but this change seems unrelated to the rest
+of the patch. Could it be a separate patch?
 
