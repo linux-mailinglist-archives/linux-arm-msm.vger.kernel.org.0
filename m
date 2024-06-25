@@ -1,128 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-24130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77F15916E8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 18:54:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44614916E96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 18:57:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 243D41F22680
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 16:54:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F0218282281
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 16:57:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F48C176239;
-	Tue, 25 Jun 2024 16:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3ED1176245;
+	Tue, 25 Jun 2024 16:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kq8sKJQ0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gXDzwZtS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922B416C696;
-	Tue, 25 Jun 2024 16:53:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B125176231
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 16:57:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719334437; cv=none; b=M0FgmcvDDdb3D5WH+esgaDg/4qu0B0EI9+C+JQdIh3a1XaGbsdEWPntbwvNcNbtV3F4kJs1qy2Ms9HZ4gPVRyFEQdnoyT4U2nWJejU3h1qF4wKS/rmilOeZ4TyMmcBCE/faXu+1C56RPzjzW37eIMJCMkpar/xXWOfhqXk6VQYE=
+	t=1719334638; cv=none; b=GhmbvFjM8ythP7yhC6AV0bp1jAIzyJh38jf2Qc6uENP7hVi4SMlXWyYHHotKEWEATW0yNknBg98gILo1FsZg2t3hQZDa9WUHhTQdBI7auPxiWpRCD0AsukEfm11NLGQp/d15Xnof7MGB8T5Tplp0ocQHyFKcC1L5ZfOzEu05BCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719334437; c=relaxed/simple;
-	bh=DwpWLBHt1XJLYjaG/1fFg0b5XgL2jy/41pZOj0cmR+Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=UrDCaeANMryMRFzShGjHGtgwUc18RZtPz+b6ux8UKHI+hQootNoG8kUYv7KNTO4K8blfeQAJBg8A/5SJyI+D4FSwDMdAgBHIjPk1ZWvkR2RMvVS2rnuP+bzPq42U5Dksb1g+jTQyP1j6O+uRMGDxmDMAAj4IHN0RWxlxVNcL++I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kq8sKJQ0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45P8P6jg008959;
-	Tue, 25 Jun 2024 16:53:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=++wbgQplAJePZM1ke3wMP8
-	45KHLDRhZef8Xj8nHEiTg=; b=Kq8sKJQ0D/dNYtnnpmCm+NZNk5BzzxYqysqpRS
-	jCy1kKV128PNSXoZsRFxCsKBSEPNFdovwnqpnisdyz99fRxaXUw3Xp0YqDPeQgdO
-	bNgDvZAeZXESWt2kVAjeBwwAyTuNejKctw/FPKvEyIX0uMhmdPRUlxjU9jsmTOKm
-	5ZRjTCeeVxuYK5t1AAZGZeks2dp39EDUf6t5ACd4C4amtsM5DkpEqb7qmDArxOp6
-	5N6gowT2LdkZf5hL0BjZj4D9m9h+TmZGdoNQe+viT45W0Z1ATw0kQt/yg3i+OiFG
-	NDr15zFAmem9su14jTfQDVVyu0vHpJcZbgmkZLDxiHoY7AXw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqcef8fd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 16:53:48 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45PGrkLT007460
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 16:53:46 GMT
-Received: from [169.254.0.1] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 25 Jun
- 2024 09:53:45 -0700
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-Date: Tue, 25 Jun 2024 09:53:45 -0700
-Subject: [PATCH v2] scsi: ufs: qcom: add missing MODULE_DESCRIPTION() macro
+	s=arc-20240116; t=1719334638; c=relaxed/simple;
+	bh=ViXV1kPswix0J35HLiKFDe8jBpLL6y3ypB12PwwOk8k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ysy+39kMDvg5G9/z2Od4vftrHsh0OsAKfKUf2wHorlGOUv4UtKyQFRWSp8FQpIemKSYQyW3kJe4BNCq63WWyw+fO9JFzzJzmFsHiOVtqUpHeKueSULAnWmjYWY/62LoaugM3G3N1Yd5tnFl3SzevaedXdVGvCle2tdQ6NggsS3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gXDzwZtS; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-57d280e2d5dso5937069a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 09:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719334635; x=1719939435; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xth4dCILpG8dE7FnnQ4D4p9NybR2xmH7T6YVVVI9ib4=;
+        b=gXDzwZtSG/ssbXuSbeGWzLWDz63XCYjjNif0PPyO8Tt36dkN2MKeJSvAU4Tih+ltl/
+         eUbjNpBFazR5/7no/uWINfAltrnbzbcZDfdP+wddmJmJwXI+mjtpDqJ873coTHOVjvPX
+         H8QX6oyJyC7S0jmSQruEK8Ox+KznF6sCnljGcmFw/TKy4WiZH4bPa1U97NQEs4qEXeI2
+         v3JBvSITZBlt7PWOcdADOdKwdLhcfuC6OOAkguzy2QPuRbGJ3l9K/cuf1aA2ASuM0ax+
+         HyevrcCG6PuD+9BfbFYdOyejC4R7uz2/F8jB2qfuvriYhNGv0rmo8x3KJaK2v4W1L4j3
+         VRhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719334635; x=1719939435;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Xth4dCILpG8dE7FnnQ4D4p9NybR2xmH7T6YVVVI9ib4=;
+        b=bOWB00pPqCYWMBJXIS3P3BCbTEjD4Kk1W3z4eyiXT3jcmXz6RYVd4b1EaCvq6bTArx
+         WdVVKpo0zwq0kdxh8QFXAIV7AMZfsbZuyN+vWzdDxC95yYgXwDXIL9ZaxU/p0JLutoZ8
+         axYv8d9OT4NVdAenjmSfpanHLx2U/0C3QpC2US52z3T9OxYNcSbsi5/ViDz1kv1MGXLj
+         XoLiw00OHgEM8WpnCOA2155/evKjAi6fbpNV6pv4zRYS7pN5sA2l0N+rBl+jSxh7l61J
+         jPy4gPW2YznBq1HRwEY4qWwmdmU/4gRZ59jlLPyHW9n6Obm+Ai4voi0gp5EMSQHl51HN
+         y1BQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU6OnZIkkKZTQ1j2UvW7+FJtKHVdrerImH6j5ZE+iqwE/qfpnpWV9a/Itb5HgNKinXc8Y7RYQ+h2ec1qGXFAKqKYsCMBIwnN/lg5zmgTg==
+X-Gm-Message-State: AOJu0Yx80Vvfm7JUZKD8C8mjMxpxv4vevsW9h0lV63mTF9uU39bGk9jR
+	H5dNatj/PnZGOzM6CUUeZoU6C2M+ia1vCNcnbqB2dGLm9XIlg43FeoHBU+KAmDk=
+X-Google-Smtp-Source: AGHT+IH9nN9J/VVPyTaK93YPTsCr4iprjddEnQX2J9iS6Etxp73p+h0eYh/uLJv0ibb5oGnozoqqIw==
+X-Received: by 2002:a17:907:118c:b0:a6f:e50c:334e with SMTP id a640c23a62f3a-a7245ccdd60mr401113466b.23.1719334635183;
+        Tue, 25 Jun 2024 09:57:15 -0700 (PDT)
+Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7247895dddsm312129366b.108.2024.06.25.09.57.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Jun 2024 09:57:14 -0700 (PDT)
+Message-ID: <a06505c7-fd8e-4135-94d3-d05d9b4dc90d@linaro.org>
+Date: Tue, 25 Jun 2024 18:57:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240625-md-drivers-ufs-host-v2-1-59a56974b05a@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIABj2emYC/32OSw6CMBRFt0I69plSPgFH7sMwKP3Yl0irfdBgC
- Hu3sACHJ7n33LsxMhENsVuxsWgSEgafQVwKppz0TwOoMzPBRc3bUsCkQUdMJhIslsAFmkF2kku
- pm6q3nOXmOxqL62l9DJlHSQbGKL1yh+uFfllhkjSbeMQd0hzi9/yQyqP0fy6VUIK2VdOLuu2as
- bt/FlTo1VWFiQ37vv8AurvH4tcAAAA=
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "James E.J.
- Bottomley" <James.Bottomley@HansenPartnership.com>,
-        "Martin K. Petersen"
-	<martin.petersen@oracle.com>,
-        Bart Van Assche <bvanassche@acm.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        "Jeff
- Johnson" <quic_jjohnson@quicinc.com>
-X-Mailer: b4 0.14.0
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: --qJxBrSpJ1iy7VdyhUHWRYogLSiiCFb
-X-Proofpoint-ORIG-GUID: --qJxBrSpJ1iy7VdyhUHWRYogLSiiCFb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-25_12,2024-06-25_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- mlxscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 spamscore=0
- suspectscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=962
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406250124
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFT v3 0/5] Add sc7180 camss subsys support
+To: george chan <gchan9527@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Bjorn Andersson <andersson@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240624-b4-sc7180-camss-v3-0-89ece6471431@gmail.com>
+ <4d2f4a52-826e-44be-b242-55b50708692d@linaro.org>
+ <CADgMGSt2sRecrrYrG3t4RtgGn8QJzr1N+iRSWFKQVPgA6Pk8tw@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <CADgMGSt2sRecrrYrG3t4RtgGn8QJzr1N+iRSWFKQVPgA6Pk8tw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-With ARCH=arm64, make allmodconfig && make W=1 C=1 reports:
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/ufs/host/ufs-qcom.o
+On 24.06.2024 5:03 PM, george chan wrote:
+> On Mon, Jun 24, 2024 at 9:50 PM Bryan O'Donoghue
+> <bryan.odonoghue@linaro.org> wrote:
+>>
+>> On 24/06/2024 13:13, George Chan via B4 Relay wrote:
+>>> - Add RFT tag to all patches, since no tested-by at all.
+>>
+>> Have you not tested this updated series ?
+>>
+>> ---
+>> bod
+> 
+> Do you wanna add my tested-by too? It just feels weird to add my
+> tested-by that way.
 
-Add the missing invocation of the MODULE_DESCRIPTION() macro.
+"RFT" means "I didn't actually test this" or "please provide more testing",
+not "there have not been tested-by's from others"
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
----
-Changes in v2:
-- Updated the description per Bart Van Assche
-- Link to v1: https://lore.kernel.org/r/20240612-md-drivers-ufs-host-v1-1-df35924685b8@quicinc.com
----
- drivers/ufs/host/ufs-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index cca190d1c577..c12004030b50 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1883,4 +1883,5 @@ static struct platform_driver ufs_qcom_pltform = {
- };
- module_platform_driver(ufs_qcom_pltform);
- 
-+MODULE_DESCRIPTION("Qualcomm UFS host controller driver");
- MODULE_LICENSE("GPL v2");
-
----
-base-commit: 83a7eefedc9b56fe7bfeff13b6c7356688ffa670
-change-id: 20240612-md-drivers-ufs-host-a8a0aad539f0
-
+Konrad
 
