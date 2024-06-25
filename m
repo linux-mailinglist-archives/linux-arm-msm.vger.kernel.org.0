@@ -1,124 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-24090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAE00916196
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 10:47:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D98E9161AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 10:52:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 323A5B24D41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 08:47:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80A611C22197
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 08:52:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FD9E149C4C;
-	Tue, 25 Jun 2024 08:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 428C8148838;
+	Tue, 25 Jun 2024 08:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="utoHYsjX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HlYQVlrM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7D5146587;
-	Tue, 25 Jun 2024 08:46:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD61143C67;
+	Tue, 25 Jun 2024 08:52:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719305187; cv=none; b=qjINeJR4rXlN8ps+Nyeo8kYpeO8C+eM/fDg9TOwCJ8+hPMhQ1Jxv3iV741CLMliozUcfECGGvgvIpFlmT70KBq9PWPdvGB5Mj5vs7q0XLhLMvTioWQbJ9AdJrUhh634iovlqPf7mUgeMLlFIFpYx1KCp0Va9DeCerlHaRVAdjNQ=
+	t=1719305558; cv=none; b=qQOkvrywvdLvKpgKu9uzBRD63vBjXaOzxMv4ph43r7Q+BsfvSncQn4k8hW2dfLoxtdB1ysWJG54EZHzRvLJTBNhoI685DPu3BFeLz61C966X5aRAHLmjjkNJI7UwNr5O923B8/SERYeSe9YOGkY9+MZE00XvYM3n6AJxzLPcImo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719305187; c=relaxed/simple;
-	bh=io+YsU06PfnGMLgZdDSi+i1wl+f5UWTu++sK/jgkxBQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UEy+2lN5Qr/8zpmtqSlPX5dZCH7hiUp0pXKerAq4Ysif5ANCUgjMPYuXvjiw5n2Ja1/c6nPU1Tla49KO2gUXAxzwPfVoG8A3ieVG1NsvZLCfPmz45/TtJfX6XpLSv/fFN24MkQrPr/0h/AGLij6mWougkF9367rprdvnvNSesRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=utoHYsjX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFE9C32786;
-	Tue, 25 Jun 2024 08:46:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719305186;
-	bh=io+YsU06PfnGMLgZdDSi+i1wl+f5UWTu++sK/jgkxBQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=utoHYsjX6B17GPU9bmbscNnPG2m3iCvktmccxfRIjsYuJ800o4hUu/rRux0nLWYAj
-	 9YOTYBAwPdmfzWqvkKk5A8ohSNCGfx36FobavrpeDrBW5B8ikaJc23rBrJx3BIxkda
-	 XHaCBxnksbQxhJFz0vetUvGB9ouEkVhYaHFDHdbXXovx/h6vLpRkMEBaOtng7YNQrT
-	 d4NWQ+hQpZl8UUAQ5q4juhACDdfEdfo6IkYwksegU1ME+yTqQ/YJ+8fWEK9Xin4aea
-	 G8zn8M77C+/YARQ7iZ+NpFCnkA6dnBKIJCMKYyRnX8urKwCT36BUfpDdgVJ9MYW2vh
-	 d09u2I40rd6uA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sM1ov-000000005yW-0F2h;
-	Tue, 25 Jun 2024 10:46:33 +0200
-Date: Tue, 25 Jun 2024 10:46:33 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Doug Anderson <dianders@chromium.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	John Ogness <john.ogness@linutronix.de>,
-	linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
-	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH v4 7/8] serial: qcom-geni: Fix suspend while active UART
- xfer
-Message-ID: <ZnqD6ZFxfU6P5yN5@hovoldconsulting.com>
-References: <20240610222515.3023730-1-dianders@chromium.org>
- <20240610152420.v4.7.I0f81a5baa37d368f291c96ee4830abca337e3c87@changeid>
- <ZnlilDj5UrvrVasv@hovoldconsulting.com>
- <CAD=FV=U=C+Myrb4cpGyV-J=RHn39C2aF1WT_Xt5M2vczbZ-AbA@mail.gmail.com>
+	s=arc-20240116; t=1719305558; c=relaxed/simple;
+	bh=LeL2ZBvNN6fSKmhvt3tkSZdZTbUOY78GVVrpbWdhQ2Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=RoPYmEm8m7c4qFSBPzYhCVq6VYJkNkCQMPxVi7MPRzdjLKlEYLMB4EAXD2pnay2VTuGDTl1lPMBVsFYEGNZs+TA2tcDhRerLiAqh8yH3BHAlizMM1LkIjRiZ6arqJcg2jt5zcNjRTVI6GOl3JxSZRjlLK/uZxV8/H+JqdgP6+dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HlYQVlrM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45P7l9BT001878;
+	Tue, 25 Jun 2024 08:52:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	a8mBQLoMwN6dzzV3j6uU5C/gA7BwB05rooHWBcbWMeQ=; b=HlYQVlrMdbt4sroZ
+	E29rHop2UGFVgLSK6WC9KHslINWDCZj5mWKSyPRlKv9mjobm31ki3xSp4cUSJPvh
+	GztNCZFKM98STHZxkYy8KV0B+Sts5uUjmMZKRPPRFHuSTe5VO/uNalV8Y6w5cYbb
+	H06hyBcG9cG8f2q2YXDZ1BP9WNO7zZgbu/F3WTJzO/EXZayVo5nfgREfa/a1OvMz
+	LO/6RzHDVpuVlEi1y0ObOwAtA56fAza4MXB2j/mq3I0gt/DnUMNfQydPMCFV3o2v
+	KfPBKZuoBoFqMhCgIk7XQ8V5B5U49hvLWEwJ72TPGm35jFXTXk072ZSL4WX2AHnE
+	tgDU2A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywmaexapq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Jun 2024 08:52:29 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45P8qSKE017099
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Jun 2024 08:52:28 GMT
+Received: from [10.251.44.181] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 25 Jun
+ 2024 01:52:24 -0700
+Message-ID: <0f04511c-033b-4d23-a6e9-e4060f97b39d@quicinc.com>
+Date: Tue, 25 Jun 2024 11:52:22 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/8] media: qcom: camss: Split testgen, RDI and RX for
+ CSID 170
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        kernel test robot
+	<lkp@intel.com>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mchehab@kernel.org>
+CC: <oe-kbuild-all@lists.linux.dev>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <laurent.pinchart@ideasonboard.com>, <hverkuil-cisco@xs4all.nl>,
+        <quic_hariramp@quicinc.com>
+References: <20240522154659.510-7-quic_grosikop@quicinc.com>
+ <202405232059.8lLokYw2-lkp@intel.com>
+ <b0785dc2-aa91-4b81-9d5b-f49bb1ab6fb6@linaro.org>
+Content-Language: en-US
+From: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>
+In-Reply-To: <b0785dc2-aa91-4b81-9d5b-f49bb1ab6fb6@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=U=C+Myrb4cpGyV-J=RHn39C2aF1WT_Xt5M2vczbZ-AbA@mail.gmail.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hzQ8GEiNQS1G2-FyLIbJCXhFCQ7GQky8
+X-Proofpoint-GUID: hzQ8GEiNQS1G2-FyLIbJCXhFCQ7GQky8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-25_04,2024-06-24_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ clxscore=1011 mlxscore=0 lowpriorityscore=0 priorityscore=1501
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2406250064
 
-On Mon, Jun 24, 2024 at 01:58:34PM -0700, Doug Anderson wrote:
-> On Mon, Jun 24, 2024 at 5:12 AM Johan Hovold <johan@kernel.org> wrote:
+Hi Bryan,
 
-> > I'm leaning towards fixing the immediate hard lockup regression
-> > separately and then we can address the older bugs and rework driver
-> > without having to rush things.
+
+On 6/21/2024 6:09 PM, Bryan O'Donoghue wrote:
+> On 23/05/2024 13:59, kernel test robot wrote:
+>> Hi Gjorgji,
+>>
+>> kernel test robot noticed the following build warnings:
+>>
+>> [auto build test WARNING on media-tree/master]
+>> [also build test WARNING on linus/master next-20240523]
+>> [cannot apply to v6.9]
+>> [If your patch is applied to the wrong git tree, kindly drop us a note.
+>> And when submitting patch, we suggest to use '--base' as documented in
+>> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+>>
+>> url:https://github.com/intel-lab-lkp/linux/commits/Gjorgji-Rosikopulos/media-qcom-camss-Add-per-sub-device-type-resources/20240522-235220
+>> base:   git://linuxtv.org/media_tree.git master
+>> patch
+>> link:https://lore.kernel.org/r/20240522154659.510-7-quic_grosikop%40quicinc.com
+>> patch subject: [PATCH v4 6/8] media: qcom: camss: Split testgen, RDI
+>> and RX for CSID 170
+>> config: arm64-defconfig
+>> (https://download.01.org/0day-ci/archive/20240523/202405232059.8lLokYw2-lkp@intel.com/config)
+>> compiler: aarch64-linux-gcc (GCC) 13.2.0
+>> reproduce (this is a W=1 build):
+>> (https://download.01.org/0day-ci/archive/20240523/202405232059.8lLokYw2-lkp@intel.com/reproduce)
+>>
+>> If you fix the issue in a separate patch/commit (i.e. not just a new
+>> version of
+>> the same patch/commit), kindly add following tags
+>> | Reported-by: kernel test robot<lkp@intel.com>
+>> |
+>> Closes:https://lore.kernel.org/oe-kbuild-all/202405232059.8lLokYw2-lkp@intel.com/
+>>
+>> All warnings (new ones prefixed by >>):
+>>
+>>     drivers/media/platform/qcom/camss/camss-csid-gen2.c: In function
+>> '__csid_configure_rdi_stream':
+>>>> drivers/media/platform/qcom/camss/camss-csid-gen2.c:265:13: warning:
+>>>> variable 'phy_sel' set but not used [-Wunused-but-set-variable]
+>>       265 |         u32 phy_sel = 0;
+>>           |             ^~~~~~~
 > 
-> Yeah, that's fair. I've responded to your patch with a
-> counter-proposal to fix the hard lockup regression, but I agree that
-> should take priority.
+> Gjorgji.
 > 
-> > I've prepared a minimal three patch series which fixes most of the
-> > discussed issues (hard and soft lockup and garbage characters) and that
-> > should be backportable as well.
-> >
-> > Currently, the diffstat is just:
-> >
-> >          drivers/tty/serial/qcom_geni_serial.c | 36 +++++++++++++++++++++++++-----------
-> >          1 file changed, 25 insertions(+), 11 deletions(-)
+> This appears to be a dead variable now.
 > 
-> I'll respond more in dept to your patches, but I suspect that your
-> patch series won't fix the issues that Nícolas reported [1]. I also
-> tested and your patch series doesn't fix the kdb issue talked about in
-> my patch #8. Part of my reworking of stuff also changed the way that
-> the console and the polling commands worked since they were pretty
-> broken. Your series doesn't touch them.
+> I don't see a need to respin this series but, could you send a
+> supplementary patch to fix this up ?
 
-Right, I never claimed to fix all the issues, only some of the most
-obvious and severe ones. 
+Yes i will send supplementary patch for fixing this. My mistake for
+ignoring this warning...
 
-> We'll probably need something in-between taking advantage of some of
-> the stuff you figured out with "cancel" but also doing a bigger rework
-> than you did.
+~Gjorgji
 
-Quite likely. My intention was to try to find minimal fixes for
-individual issues, which could also be backported, before doing a larger
-rework if that turns out to be necessary (and which can also be done in
-more than way, e.g. using 16-byte fifos).
 
-Johan
+> 
+> ---
+> bod
 
