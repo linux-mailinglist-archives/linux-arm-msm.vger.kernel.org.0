@@ -1,113 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-24112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B3E8916AC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 16:41:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D55C916AC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 16:41:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ACFE91C21A7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 14:41:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EDEF328BDE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 14:41:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A95116D338;
-	Tue, 25 Jun 2024 14:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3CC6170825;
+	Tue, 25 Jun 2024 14:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oHNJh8ki"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1Cx91a6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C7216DEBA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 14:40:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20AF16EBF3;
+	Tue, 25 Jun 2024 14:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719326427; cv=none; b=tTK64wLmaen3HVWD8SiaBI5xOpXVpuX5lopB30jV11dvd0qPXJIiYp1kiHI2VwleZX6nDfHqr39pd7n5XQnHrfm/q9BAf/5qjORaYopz94O1zxw6xFl6p/xZHpfsBecjHj0GB61mKQ21YPfCbLor9M8TWVSkzI02ie3YFgvLn1s=
+	t=1719326429; cv=none; b=BUizyJJphZvkdfyoCMCv3R63RVyB4dmyD+M+zifYujqpXrvvgwuxRZFxYiKQrL0gGhVCucX0VprFN3nywv/IxIGXj65pHzABNa6p2gAwSxBBZWMh9djnxUEMgZUrfILPpS2AK8Y0hB3rO2Mr6+3go28qlMA5ptFxxhL3nNOrAww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719326427; c=relaxed/simple;
-	bh=trALs8KdLx6VhITV+c8+7FsleAuPSHSH71GZILSGCq8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=OYXnsx/jljWrhUNzfQwJlJQDzIyltNCCYY03FogDqWlKEtIZH+t01RfBBn1ZoiavgfI0WcmC0Tr7SopM3wyfep8FFaEBO/vwFAzVK9Vjv/8T8rAYRTPwF8hUIwdQm9QoLcpsA5MV+Ouhuu9LZuRaeqZyckBau0e+oV+GwkSnvS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oHNJh8ki; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-421bb51d81aso46757435e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 07:40:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719326424; x=1719931224; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qSANmUbEh6D7VW1j/tL/xnWMrzPKUXm5bDXQ8ewTync=;
-        b=oHNJh8kikWXt3JTsg9SRimjq6SKmnkmH2Ag4dH5nl5IJvby0LErFjtGTsskBk5Ezhq
-         X3+CFvqZUI1IN1fzTYY5Njd1kL4dneyw2O8U8Q3zKIg1SHgwF0YcK1fa5Rd3A5LJ01eZ
-         DYmv/78x+qzw3o7zPxSZ93wF6jA76JtPKy+fYw4Ux1Mfrm/qnm4BGxmgV6bB/4iMivQe
-         g9YCM3g1RzbK2N9yzdHEXbUlae1rakkBPFWrXJvkPkiEFJ9rMIG6GrZYyLfscrCWukBM
-         HBTwK4/WckrR26ctoXz+27yJ102WZd/nz5sW5Ph6c7+UKVDVvrCSnvztkKHSfhH8VxRF
-         m4Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719326424; x=1719931224;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qSANmUbEh6D7VW1j/tL/xnWMrzPKUXm5bDXQ8ewTync=;
-        b=L5HhTyn51mMR5DSAR4/wRNwqYffm+D5O7klC2cladjpxRVlZFilvAO8tTtUVgiupqZ
-         jlqiIzkJo4QsjyB1+KeYuv/nrCXLBa6t29ieG3q2gjJ5F+Tk8x7tjTwQTgsZ4tsUKVCy
-         F+o332XsmH0A0YN3XQqfnM4+lmNf/NcFrDp9KvTuH0IBpN0PVoEhOqBcopcNdcE2ublK
-         ks3UNRaFkvTqwSiI+mZhF4iKwXhS/tDAmuXylzITc55WWp58ZkIaz54qDoklYh54oQam
-         RD/G1albHZ4rTyiLA3V9F58zwkJfr70skJpJfVJ5z+xbD7JjtpPHpsZ6ve+QITgTo+fo
-         DDBA==
-X-Gm-Message-State: AOJu0Yw5zUYf3Oglf1/foguXfgpwMBXp8Onahw3fUiuV0dsjZfPDW+9Y
-	VWNPT7GWqu+vzbvBFr9+YSJcqu0UscLavrXukr8r+W7Bel9cZarxqUB+agdnDJU=
-X-Google-Smtp-Source: AGHT+IHETM2J/do/2SDqnSnmgKYgYsfQ586CEBVmGuu5NWFMEzbLBxusn/KmGl6Yk1pyNmCJDNWl4g==
-X-Received: by 2002:a7b:c3c1:0:b0:421:2b13:e9cf with SMTP id 5b1f17b1804b1-4248cc66b18mr53553185e9.36.1719326424339;
-        Tue, 25 Jun 2024 07:40:24 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4247d208b3dsm218556165e9.34.2024.06.25.07.40.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 07:40:23 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-To: Amol Maheshwari <amahesh@qti.qualcomm.com>, 
- Sumit Semwal <sumit.semwal@linaro.org>, 
- =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20240624-fastrpc-ml-v1-1-5dad89dce78f@linaro.org>
-References: <20240624-fastrpc-ml-v1-1-5dad89dce78f@linaro.org>
-Subject: Re: [PATCH] MAINTAINERS: CC dri-devel list on Qualcomm FastRPC
- patches
-Message-Id: <171932642324.352395.16698786992801289835.b4-ty@linaro.org>
-Date: Tue, 25 Jun 2024 15:40:23 +0100
+	s=arc-20240116; t=1719326429; c=relaxed/simple;
+	bh=B9p+xj8WkV5gF2jbO0kCXf4FZuZEXTqiO02bHf2cNys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MiJv1+SYK36l4pbMEytCJrB9vBHZk5n81As31d4J2oOiPUGCEJv0VP6EQk6uBRoSyOrnbGRVqiE1lhyTu9r92dBGXKR+0F6HrQ3/T20rG7IfxMXOcmdj/EgVfKgFTyOsrNcb0PyGrb5oL5TRrPzowZHyKEiqe8kucRi8dgjpoY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1Cx91a6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA07C4AF07;
+	Tue, 25 Jun 2024 14:40:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719326429;
+	bh=B9p+xj8WkV5gF2jbO0kCXf4FZuZEXTqiO02bHf2cNys=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Q1Cx91a6SX8BZC+5EolSHcI2xhRca4IfRWNkvM+csGeSBMjciNq04eGhrGe7qvc4x
+	 UtsWE2AjRTojXL9xM1O//bnrnAuSGBQ/vAV5Hh8k1upVDWSzrTgAiSMF+uCautkzEF
+	 C6ydb4gAMOyHeBTKj28Th2HoHxD1rWrGPDubku6kVpKGStapgsdJgYJ5uu8BcAcjWB
+	 zzwnBtdfKV7xSaE+d4hp6t0eKYooju3Xl0lFpAmRKiKwJWaB3MlpLw7u4MX3sqYo4d
+	 4gq69HNwMnJTieFmzcAaflHBhUxvLDTv0ZzpuU6wB7GrnMKmeCed24IGzPTxWj0z96
+	 fTMdkgm4Jp56A==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sM7LY-000000004WG-3hZC;
+	Tue, 25 Jun 2024 16:40:37 +0200
+Date: Tue, 25 Jun 2024 16:40:36 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Doug Anderson <dianders@chromium.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] serial: qcom-geni: fix hard lockup on buffer flush
+Message-ID: <ZnrW5EcGKGYzS8qf@hovoldconsulting.com>
+References: <20240624133135.7445-1-johan+linaro@kernel.org>
+ <20240624133135.7445-2-johan+linaro@kernel.org>
+ <CAD=FV=VZXnnbwTNc6dSqZvyCUc0=Wjg9mvBYsA1FJK3xR6bDEg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=VZXnnbwTNc6dSqZvyCUc0=Wjg9mvBYsA1FJK3xR6bDEg@mail.gmail.com>
 
-
-On Mon, 24 Jun 2024 11:19:09 +0300, Dmitry Baryshkov wrote:
-> FastRPC is a way to offload method invocation to the DSPs on Qualcomm
-> platforms. As the driver uses dma-bufs, add dri-devel mailing list to
-> the MAINTAINERS's entry, so that DRM maintainers are notified about the
-> uAPI changes. This follows the usual practice established by the "DMA
-> BUFFER SHARING FRAMEWORK" entry in the file.
+On Mon, Jun 24, 2024 at 10:39:07AM -0700, Doug Anderson wrote:
+> On Mon, Jun 24, 2024 at 6:31 AM Johan Hovold <johan+linaro@kernel.org> wrote:
+> >
+> > The Qualcomm GENI serial driver does not handle buffer flushing and used
+> > to print garbage characters when the circular buffer was cleared. Since
+> > commit 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo") this
+> > instead results in a lockup due to qcom_geni_serial_send_chunk_fifo()
+> > spinning indefinitely in the interrupt handler.
+> >
+> > This is easily triggered by interrupting a command such as dmesg in a
+> > serial console but can also happen when stopping a serial getty on
+> > reboot.
+> >
+> > Fix the immediate issue by printing NUL characters until the current TX
+> > command has been completed.
+> >
+> > Fixes: 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
+> > Reported-by: Douglas Anderson <dianders@chromium.org>
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  drivers/tty/serial/qcom_geni_serial.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> 
-> [...]
+> I don't love this, though it's better than a hard lockup. I will note
+> that it doesn't exactly restore the old behavior which would have
+> (most likely) continued to output data that had previously been in the
+> FIFO but that had been cancelled.
 
-Applied, thanks!
+Ah, yes, you're right. I went back and compared with 6.9 and the effect
+was indeed (often) that the machine felt sluggish when you hit ctrl-c to
+interrupt something like dmesg and the driver would continue to print up
+to 4k characters after that (e.g. 350 ms at 115200).
 
-[1/1] MAINTAINERS: CC dri-devel list on Qualcomm FastRPC patches
-      commit: 47bf4198bf386018e99673c1ce5dbd8e5eda293e
+The idea here was to fix the lockup regression separately and then have
+the third patch address the buffer flush failure, which could also be
+backported without depending on the kfifo conversion.
 
-Best regards,
--- 
-Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+But running with this series since yesterday, I realise there are still
+some unresolved interaction with the console code, which can now trigger
+a soft (instead of hard) lockup on reboot...
 
+> ...actually, if we're looking for a short term fix that mimics the old
+> behavior more closely, what would you think about having a
+> driver-local buffer that we fill when we kick off the transfer. Then
+> the data can't go away from underneath us. It's an extra copy, but
+> it's just a memory-to-memory copy which is much faster than the MMIO
+> copy we'll eventually need to do anyway... This local buffer would
+> essentially act as a larger FIFO.
+
+The idea did cross my mind, three levels of fifo...
+
+> You could choose the local buffer size to balance being able to cancel
+> quickly vs. using the FIFO efficiently.
+
+Yeah, perhaps adding a smaller driver kfifo would work, but not sure how
+clean it would be to implement.
+
+Johan
 
