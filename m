@@ -1,73 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-24104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E5859168B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 15:19:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7704916922
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 15:38:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5EA3F1C20916
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 13:19:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F030EB23ABD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 13:38:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F1CC1509A2;
-	Tue, 25 Jun 2024 13:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 042A91662F1;
+	Tue, 25 Jun 2024 13:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DATyc/Za"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sLWPwpj3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0AA157A6C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 13:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C699415F3FF;
+	Tue, 25 Jun 2024 13:37:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719321549; cv=none; b=VBGIOXD5DXhqKEoSwnUO0N+/ePMopHUbUI6oD70j2dBlG2KMorDmCoI2WGq3OvkTDQmOgl1i+0Zh5KGUJMKecaykqN66EFBHPNsMX6AeRYniMUsHQg6RH2R+w4hkVJ/Fneu/qYITxlRfXls9nfnCvVaF8GYYirGc5LHSGjKbK6I=
+	t=1719322668; cv=none; b=YnMzUlZmWFGSOoaUca5TDdTl9hGjTb2xqWTBs1VQypy/ae5YqT86EAv2Sxftxm3K8gPdMGGNEVph0YTQUJcrlV3p+EB5mo+Np59gieZJWQtLMlTj5fZ14n8L6thOZXuqWx78SZh45fSMy+3bbF9hk7shXfbbhP9k6odhHt1ukbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719321549; c=relaxed/simple;
-	bh=vWS/mnVp4hFq6wVXe1g8Jr8pTNH980df7zMzurqUdHo=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=n7yn+YAn6gczeqoul6o5mKsOcwZJKnMTRvOwaWQehg0NpGYWGaOAgRBs2Gf8IIHDDdu3sLtjAVuukktTayZ/VrpHTspZ2K6Y63jBSFeW69Yd02YTc41Ncl6P11AU/SEBUfJ/Svk7sF3Fqj4ZV3+AyoBf4MV1Ela1PHZkPifkl88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DATyc/Za; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52bbf73f334so4234964e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 06:19:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719321546; x=1719926346; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vWS/mnVp4hFq6wVXe1g8Jr8pTNH980df7zMzurqUdHo=;
-        b=DATyc/ZaX+RpdeCP0S6AQ1E6TCNk7HvWdhbDDyqafOHxIynEG2jYnBSBh6dX67kvfp
-         UKbDEVWNFdEwa8Zok+AgYJeObK2llOQZd3xPmu483guKXEAk/PH/cVy8q2bCXq/elY7R
-         /Bxr9bWh6uH/IG/tlEQ9wp7QbLvcCJ+uB0CqLXZ7J6DaiTUu3j8hVU+T5FHCsfnh6V/5
-         vezn6uNd29f6/vun5coASmiKKMUHVQLB3o/34QIhRNUFcN+vZdtRwZhJjQLzK5oiH7wh
-         pSoy568GX+LmfC4n7zbGKsH5mxGVnKIEyt2vy3ZpOuLR4oKNI8ex8laBeJkKhYrdZ0e0
-         5hwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719321546; x=1719926346;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vWS/mnVp4hFq6wVXe1g8Jr8pTNH980df7zMzurqUdHo=;
-        b=H0kT/438C98imCpe5dcnEO8CRGcEpHNrQGYNNkkWZYu8tCNvSNODTPxZIPGi38OySy
-         qAtChQmULBJDs1cAEexVvt0bc0mczFirVqcgVLFRYmwCnMZX/UcdG/5TqjeQZQmbTzHC
-         bqSYYJ8YZhlQYOhcC3lCTIYHIaW648o1YxI6r1XhCY4IJKDNZSBWN1nFamyOkuJvJHcu
-         2ktuZicy+OOHTPJfFJnbBSjH+PIe3Ld+7fq46ovzkFeFiUZvlMnWA7F/r+tly0cx1flY
-         1kPjmYaGhhS4nRz/LJ7m9ehGE81XNP1huOZIMbNgfNPsU0l0Mp4oDPCm4SuYWzCZTveL
-         93Bg==
-X-Gm-Message-State: AOJu0YxVR/Zkd2BRGJOhVtDAgCjAcYNmptfnCC5B27AvcmeAUlHNO9uO
-	lt7VrKoqcSEdesSQ4I8PVp90p+LvFAAxOIHl/4gShpWbc4rZOkk+Tc638FKS
-X-Google-Smtp-Source: AGHT+IEtomCa4jRiitqGCnxyjj33kQVSZlGkdazOLdHHGplnNE8uJ+Nso09r9FAeUnE+RRLWGtYUFw==
-X-Received: by 2002:a19:2d55:0:b0:52c:cda0:18b9 with SMTP id 2adb3069b0e04-52cdf825734mr5651083e87.59.1719321545674;
-        Tue, 25 Jun 2024 06:19:05 -0700 (PDT)
-Received: from [192.168.86.250] ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-366383f6717sm13087756f8f.9.2024.06.25.06.19.05
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jun 2024 06:19:05 -0700 (PDT)
-Message-ID: <1e77e3d4-9286-4eba-a623-6bbf5290e52c@gmail.com>
-Date: Tue, 25 Jun 2024 14:19:04 +0100
+	s=arc-20240116; t=1719322668; c=relaxed/simple;
+	bh=Fi8mYtRnhR/Ud4l97BJTFhMif+IBWlqAwv9EXERNImI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Z52arMVYOzjcCt0jwokrnhJl5ttjPpe5fJ2tPotX+X/D1FtVoEnw2DvFyJ0BK5gUYJ/ToxQ2wt178Qn2vJIy5MVVaXBG+weXLK7VApPbtQFERpKiT3TZvLCinI4qu0IlPZq8tpAIv4xgxm8nmQXWPa6wQaIJ19jh4jUVzU5b5P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sLWPwpj3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1794DC32781;
+	Tue, 25 Jun 2024 13:37:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719322668;
+	bh=Fi8mYtRnhR/Ud4l97BJTFhMif+IBWlqAwv9EXERNImI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=sLWPwpj3ED5nvvgdTel1Wy/40yCx6Vv7QvwYBmOuZV/IbJ+vP9ngA9d9ullCfbFXV
+	 Lt8QYVPGUsZU3mFwJmhzKFhazWROyLd5DPrtbaBPhqcR/s/3UUV5GSFzACI/AvVrsp
+	 WB3I0Ke+UCvQWVmcvXjvj2BjHcL1IJevJosy4tS7IX4Pm61FhzcW3cG8dODkQCdAqF
+	 J84l4jatihTK17qvLcN4DX/AmkfNUTMuF7FqlwxreGjHDs0/RoRnAiaOqsTyBW4BuK
+	 RGetmWu65kZ5xaXCEXvbNKz8+dCb2uSXUhWL23sIdN9vVC4vH0FBCFRbxbLmgFX7de
+	 dxtUwFxXG5DFw==
+Message-ID: <83ea0718-362a-47e1-a311-58c8b3ef39dc@kernel.org>
+Date: Tue, 25 Jun 2024 16:37:42 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,15 +50,69 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: sc7280: Add clocks for QOS
+ configuration
+To: Odelu Kukatla <quic_okukatla@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>, cros-qcom-dts-watchers@chromium.org,
+ "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org, quic_rlaggysh@quicinc.com,
+ quic_mdtipton@quicinc.com
+References: <20240607173927.26321-1-quic_okukatla@quicinc.com>
+ <20240607173927.26321-5-quic_okukatla@quicinc.com>
 Content-Language: en-US
-To: linux-arm-msm@vger.kernel.org
-From: Neha Giri <neharajendra.giri@gmail.com>
-Subject: Subscribe
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20240607173927.26321-5-quic_okukatla@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Subscribe linux-arm-msm
+On 7.06.24 20:39, Odelu Kukatla wrote:
+> Add clocks which need to be enbaled for configuring
+> QoS on sc7280.
+> 
 
-end
+Nit: s/enbaled/enabled/
+
+> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+
+In any case:
+Acked-by: Georgi Djakov <djakov@kernel.org>
+
+Bjorn, the dt-binding change is available in my icc-rpmh-qos branch
+in case you want to make the dtbs checker happy when you apply this.
+
+BR,
+Georgi
+
+> ---
+>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index ba43fba2c551..a3c640d394e9 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2130,6 +2130,8 @@
+>   			reg = <0 0x016e0000 0 0x1c080>;
+>   			#interconnect-cells = <2>;
+>   			qcom,bcm-voters = <&apps_bcm_voter>;
+> +			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
+>   		};
+>   
+>   		aggre2_noc: interconnect@1700000 {
+> @@ -2137,6 +2139,7 @@
+>   			compatible = "qcom,sc7280-aggre2-noc";
+>   			#interconnect-cells = <2>;
+>   			qcom,bcm-voters = <&apps_bcm_voter>;
+> +			clocks = <&rpmhcc RPMH_IPA_CLK>;
+>   		};
+>   
+>   		mmss_noc: interconnect@1740000 {
 
 
