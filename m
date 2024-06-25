@@ -1,63 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-24067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA9AA915E37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 07:37:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33184915E6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 07:53:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18321B221C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 05:37:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61B6CB22093
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 05:52:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90635145A17;
-	Tue, 25 Jun 2024 05:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 672F6145B3B;
+	Tue, 25 Jun 2024 05:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DRw8OwgA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dtp/XUFM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41CA2D600;
-	Tue, 25 Jun 2024 05:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB712145B1B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 05:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719293849; cv=none; b=f6qIJSAwjxPIP6abvUe4/VK5jjfRWUKG4jbFYX6FpnmVKT3vugTF8VbIZNELpvi3EbEFqXd0TqDvqEmjFdUUIVbO+GzfQc5mylzvyzK85rM2wGsO/2iJWGzAepazqI19LkZFQd2aIpIltVZnw1UCWwVr3E01F+3hkVYBxdD0DaM=
+	t=1719294772; cv=none; b=KZu0QF6YN4iZqJaGx+UtJJekTQ59Ptr5EekNukCIhuHABHvSFu8Roctti6gjON4JatKW3gY3OheABCs51X0Flt0Xb3nVV14c7XJd1mRfLAQjyL4p/T/wV5ljawh5ojUBciHehJuqfdJ0fLR8ZyC29A1e0l4rnixrv4ID4ymyuaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719293849; c=relaxed/simple;
-	bh=cauvOpeOY7unR2tmunCYMVLbA/ysI24kHKGPp6WVlZY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oeW6jbrKNKBSxGBmNdIKZtcjwxpeddPBzsBMpg8Y0wVROf/15ICASdnzr/g1ADRKGOVoBeNjREQwtCsiUH4V5ICiO9qCJuTlgPjBZQRFLaOUc+LabJDuGl+W51MOPI3NuE2EpZLVw9NKLyB84xwYR4BIiRC7wEKgLsOFMwtdB6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DRw8OwgA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45OIflgE029121;
-	Tue, 25 Jun 2024 05:36:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BexPgGDf9tJcoYbSBZCn4jDSoJkFnKshV1VCnWPxvKo=; b=DRw8OwgAEefdoy9y
-	g6k7PfKR6IzZmqP3kY4/rdQCMoEQQEEVJ2tscYweeLuCx+o0lMg02sQpigCwOru1
-	/mKzHa5ddOO8lPJ/QJME6Qhyb+njN97W3zQ65xuuFgYzPibxwshKBe+s4ha3xdbo
-	HHCSaLSvQMYd/NPJHEM80Zj5gGfjJx7UsAHxtZaTt5HH6tJdYsWIRuY9yeI5sZb1
-	kNte9BI0pfF0i1yV3TBQC8uZks4hAOX3TCbh4S9aqK4p9r2Vd56jTZdhEgQoyNBf
-	GyNlPVTMopsf82JwOsVHkRHWYkQL6yaUb2NeOAWMZR3IZCcekXaJ1FNJrS8BU4mx
-	fQG7Gg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywq075e2m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 05:36:46 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45P5aj55003688
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 05:36:45 GMT
-Received: from [10.152.201.37] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Jun
- 2024 22:36:40 -0700
-Message-ID: <b664d24b-79b7-4ba2-8d93-22ef481b52cd@quicinc.com>
-Date: Tue, 25 Jun 2024 11:06:37 +0530
+	s=arc-20240116; t=1719294772; c=relaxed/simple;
+	bh=Qj9IKhMA0/wwmFMgPX+l6UqLB8/KodT2yxMUMDf8mk0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RrSv1ts4oGURTUVTE9eR74CXXPGNTiBMIVLD6W4w3rgX943/mAXTnRUfmOhgb4CNGQjnvKa27xJDH9Wh6OFI4Qbc4S9YBnEWjBRqSC3AIFJi3S8hADh5vnwx+E2LXMrfYut/TqKMoQhTxHYO7WaJHRZi1ieh1NvxEtvyCJsQVBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Dtp/XUFM; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4217c7eb6b4so42038865e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 22:52:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719294768; x=1719899568; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=YIDrX20OzjaKHjvC95us0K1KzbowB+kgtLsXgZQw4qM=;
+        b=Dtp/XUFMlRUBGX6k3sRpEtO7uAbTUXExTrSqaqNSOcva8mvFY05rs+Y0/l70iyx6tU
+         T6D9w1ShE/sIMMEU3TVA/Y88YY1pPYPAwGPpl1pxNPmXJ3TjtzdG2UPIr/Psy2U4h2jV
+         e5ZgzpaGeh/NMtWgAisfx6ed32iLZgNTOC28rM4NFSCCx5XWhVYgDkqCM+gwKuvz8Wz5
+         vsNg2iqNIM9LerxSwTR8PbdDWwGD4FXJuOBcE9NrG1YdhEL9kEVLUshrsuy8GDn0DR7w
+         ecCTiaMynWg70TUc8YJSBzPqmyk4/hcVuZ5rxeJTHzxsSGNP32IiRFbMncZVtM2aAWSg
+         noTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719294768; x=1719899568;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YIDrX20OzjaKHjvC95us0K1KzbowB+kgtLsXgZQw4qM=;
+        b=TowNNYxl6CbN4t4L73zdZmu28nAfiEh1maWWH4NiNU6wa0UtP9xT7kkYNX1xftPe1v
+         2KxB+8ox8i/u/N6J0H4+r1eQ1BhMYx07LOurd8BDx5GpNkv2jeoUiQkknJkDXFdSH/xe
+         TWWmwdN5OJfotVHEdQ8N1JmToA9e/NoGtiTzLRUitS0TyAnux2TKDVYyfrG8mW7VGdp2
+         ttwwCc9USpQBJ772cFmO3guHB2vb55p4ssEAIOqXMB/l99DcYVJ8KfsJdFq8hHfn/5Xr
+         Gb1cJcs7WE18IMuhvkityUpYCCk9XTATl1hxVkq1ZlKK7gu/LfT0nFzf3gTTNESKwTzL
+         R/uQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCNnRgzUmb4vvZB0cLMuL2BPy2CloFUQF5toK37pkRbHCgye1pGf/eAWoZHrMdHNHTEdivhh2+1JvwNquKzzmt3CTq6me0CzfEW/Pkfw==
+X-Gm-Message-State: AOJu0YwlHbLrUUfsdlKbao+pusoXOLXH4zoj08Qh3bHD62EhbYjakMP/
+	NJuX09L1YRtGCr9m0r9a8uajSRUGwQ5zhkfW3Fe3tXWRPNSCWB+uWhWID5dSMp8=
+X-Google-Smtp-Source: AGHT+IEXuVPsxal+TPkcqDUnBS+OzaUJiUH0yU/0q+oknlibq7zaPATlkK0TsCn3+FR7VmeKr5PSMg==
+X-Received: by 2002:a05:600c:2908:b0:422:6407:5caa with SMTP id 5b1f17b1804b1-4248cc66ca6mr36958235e9.33.1719294768148;
+        Mon, 24 Jun 2024 22:52:48 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3663a2f6bd2sm11830586f8f.66.2024.06.24.22.52.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Jun 2024 22:52:47 -0700 (PDT)
+Message-ID: <3e8f1d94-211c-40a9-b451-6c5e575330c7@linaro.org>
+Date: Tue, 25 Jun 2024 07:52:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,196 +77,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/8] remoteproc: qcom: Add secure PIL support
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <sboyd@kernel.org>, <andersson@kernel.org>, <bjorn.andersson@linaro.org>,
-        <david.brown@linaro.org>, <devicetree@vger.kernel.org>,
-        <jassisinghbrar@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <mark.rutland@arm.com>,
-        <mturquette@baylibre.com>, <ohad@wizery.com>, <robh@kernel.org>,
-        <sricharan@codeaurora.org>, <gokulsri@codeaurora.org>
-References: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
- <20240621114659.2958170-3-quic_gokulsri@quicinc.com>
- <mew7kifravbescnenvstmebfxkbpwdnarmagh6v4a2hqnbrxc6@cepyqz4vgum6>
+Subject: Re: [PATCH V3 1/4] dt-bindings: interconnect: qcom,msm8998-bwmon:
+ Remove opp-table from the required list
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, djakov@kernel.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
+ srinivas.kandagatla@linaro.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+ quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
+ abel.vesa@linaro.org
+References: <20240624092214.146935-1-quic_sibis@quicinc.com>
+ <20240624092214.146935-2-quic_sibis@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-From: Gokul Sriram P <quic_gokulsri@quicinc.com>
-In-Reply-To: <mew7kifravbescnenvstmebfxkbpwdnarmagh6v4a2hqnbrxc6@cepyqz4vgum6>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nO58bK77J79TQiWeULGJPV1f2fZrDPgO
-X-Proofpoint-GUID: nO58bK77J79TQiWeULGJPV1f2fZrDPgO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-25_02,2024-06-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
- mlxscore=0 spamscore=0 mlxlogscore=999 adultscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406250042
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240624092214.146935-2-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 24/06/2024 11:22, Sibi Sankar wrote:
+> Remove opp-table from the required list as the bindings shouldn't care
+> where the OPP tables (referenced by the operating-points-v2 property)
+> comes from.
+> 
+> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
 
-On 6/22/2024 2:47 AM, Dmitry Baryshkov wrote:
-> On Fri, Jun 21, 2024 at 05:16:53PM GMT, Gokul Sriram Palanisamy wrote:
->> IPQ8074 uses secure PIL. Hence, adding the support for the same.
-> See Documentation/process/submitting-patches.rst
-   Thanks. Will add detailed description.
->> Signed-off-by: Nikhil Prakash V <quic_nprakash@quicinc.com>
->> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
->> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
->> ---
->>   drivers/remoteproc/qcom_q6v5_wcss.c | 43 +++++++++++++++++++++++++++--
->>   1 file changed, 40 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
->> index 366b19cbd994..e45e79d80238 100644
->> --- a/drivers/remoteproc/qcom_q6v5_wcss.c
->> +++ b/drivers/remoteproc/qcom_q6v5_wcss.c
->> @@ -18,6 +18,7 @@
->>   #include <linux/regulator/consumer.h>
->>   #include <linux/reset.h>
->>   #include <linux/soc/qcom/mdt_loader.h>
->> +#include <linux/firmware/qcom/qcom_scm.h>
->>   #include "qcom_common.h"
->>   #include "qcom_pil_info.h"
->>   #include "qcom_q6v5.h"
->> @@ -86,6 +87,9 @@
->>   #define TCSR_WCSS_CLK_ENABLE	0x14
->>   
->>   #define MAX_HALT_REG		3
->> +
->> +#define WCNSS_PAS_ID		6
->> +
->>   enum {
->>   	WCSS_IPQ8074,
->>   	WCSS_QCS404,
->> @@ -134,6 +138,7 @@ struct q6v5_wcss {
->>   	unsigned int crash_reason_smem;
->>   	u32 version;
->>   	bool requires_force_stop;
->> +	bool need_mem_protection;
-> needs
->
->>   
->>   	struct qcom_rproc_glink glink_subdev;
->>   	struct qcom_rproc_ssr ssr_subdev;
->> @@ -152,6 +157,7 @@ struct wcss_data {
->>   	int ssctl_id;
->>   	const struct rproc_ops *ops;
->>   	bool requires_force_stop;
->> +	bool need_mem_protection;
-> needs
-   Thanks. Will update.
->>   };
->>   
->>   static int q6v5_wcss_reset(struct q6v5_wcss *wcss)
->> @@ -251,6 +257,15 @@ static int q6v5_wcss_start(struct rproc *rproc)
->>   
->>   	qcom_q6v5_prepare(&wcss->q6v5);
->>   
->> +	if (wcss->need_mem_protection) {
->> +		ret = qcom_scm_pas_auth_and_reset(WCNSS_PAS_ID);
->> +		if (ret) {
->> +			dev_err(wcss->dev, "wcss_reset failed\n");
->> +			return ret;
->> +		}
->> +		goto wait_for_reset;
->> +	}
-> Use if/else instead of a goto.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-   sure. Will update.
+Best regards,
+Krzysztof
 
->
->> +
->>   	/* Release Q6 and WCSS reset */
->>   	ret = reset_control_deassert(wcss->wcss_reset);
->>   	if (ret) {
->> @@ -285,6 +300,7 @@ static int q6v5_wcss_start(struct rproc *rproc)
->>   	if (ret)
->>   		goto wcss_q6_reset;
->>   
->> +wait_for_reset:
-> This is more like wait_for_start
-   yes, this looks more appropriate. Will update. Thanks.
->>   	ret = qcom_q6v5_wait_for_start(&wcss->q6v5, 5 * HZ);
->>   	if (ret == -ETIMEDOUT)
->>   		dev_err(wcss->dev, "start timed out\n");
->> @@ -718,6 +734,15 @@ static int q6v5_wcss_stop(struct rproc *rproc)
->>   	struct q6v5_wcss *wcss = rproc->priv;
->>   	int ret;
->>   
->> +	if (wcss->need_mem_protection) {
->> +		ret = qcom_scm_pas_shutdown(WCNSS_PAS_ID);
->> +		if (ret) {
->> +			dev_err(wcss->dev, "not able to shutdown\n");
->> +			return ret;
->> +		}
->> +		goto pas_done;
->> +	}
-> if/else. Or abstract this to functions.
-   sure. Will update appropriately.
->> +
->>   	/* WCSS powerdown */
->>   	if (wcss->requires_force_stop) {
->>   		ret = qcom_q6v5_request_stop(&wcss->q6v5, NULL);
->> @@ -742,6 +767,7 @@ static int q6v5_wcss_stop(struct rproc *rproc)
->>   			return ret;
->>   	}
->>   
->> +pas_done:
->>   	clk_disable_unprepare(wcss->prng_clk);
->>   	qcom_q6v5_unprepare(&wcss->q6v5);
->>   
->> @@ -765,9 +791,15 @@ static int q6v5_wcss_load(struct rproc *rproc, const struct firmware *fw)
->>   	struct q6v5_wcss *wcss = rproc->priv;
->>   	int ret;
->>   
->> -	ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
->> -				    0, wcss->mem_region, wcss->mem_phys,
->> -				    wcss->mem_size, &wcss->mem_reloc);
->> +	if (wcss->need_mem_protection)
->> +		ret = qcom_mdt_load(wcss->dev, fw, rproc->firmware,
->> +				    WCNSS_PAS_ID, wcss->mem_region,
->> +				    wcss->mem_phys, wcss->mem_size,
->> +				    &wcss->mem_reloc);
->> +	else
->> +		ret = qcom_mdt_load_no_init(wcss->dev, fw, rproc->firmware,
->> +					    0, wcss->mem_region, wcss->mem_phys,
->> +					    wcss->mem_size, &wcss->mem_reloc);
->>   	if (ret)
->>   		return ret;
->>   
->> @@ -1035,6 +1067,9 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
->>   	if (!desc)
->>   		return -EINVAL;
->>   
->> +	if (desc->need_mem_protection && !qcom_scm_is_available())
->> +		return -EPROBE_DEFER;
->> +
->>   	rproc = devm_rproc_alloc(&pdev->dev, pdev->name, desc->ops,
->>   				 desc->firmware_name, sizeof(*wcss));
->>   	if (!rproc) {
->> @@ -1048,6 +1083,7 @@ static int q6v5_wcss_probe(struct platform_device *pdev)
->>   
->>   	wcss->version = desc->version;
->>   	wcss->requires_force_stop = desc->requires_force_stop;
->> +	wcss->need_mem_protection = desc->need_mem_protection;
->>   
->>   	ret = q6v5_wcss_init_mmio(wcss, pdev);
->>   	if (ret)
->> @@ -1111,6 +1147,7 @@ static const struct wcss_data wcss_ipq8074_res_init = {
->>   	.wcss_q6_reset_required = true,
->>   	.ops = &q6v5_wcss_ipq8074_ops,
->>   	.requires_force_stop = true,
->> +	.need_mem_protection = true,
->>   };
->>   
->>   static const struct wcss_data wcss_qcs404_res_init = {
->> -- 
->> 2.34.1
->>
 
