@@ -1,148 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-24172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0996A9173A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 23:44:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C4139173DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 23:56:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF6B41F257E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 21:44:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEA011C211F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 21:56:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AAB017E44D;
-	Tue, 25 Jun 2024 21:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14D7517F4F1;
+	Tue, 25 Jun 2024 21:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A7jeQAPc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qa1EKwMJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com [209.85.128.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CE117DE2C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 21:43:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE37217E8EC;
+	Tue, 25 Jun 2024 21:56:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719351820; cv=none; b=pkVhrWsBMtJ6m+zd/42Zeadh3PTJ0MERdbZGXry1BE07x7nYKYD1yy3WMddRFCb4bblSi9BdzK35x963ok2RDLgV8m2RHqN+9hya9WCWrS5Up57UF+wXPo9AJQz30fJ8kSs6HKdoADq/1BUq0pn0e/1bN1WkmYbQc9TYPLuwKd8=
+	t=1719352572; cv=none; b=EDVlxe6apCZK+T7xrlTN7RytsOa3NqXMA3xGsHa1rSdg7mNCGeMZRwHdCd22uG5GrL4+kBesG43RNLxdPmPZ3OIWLB/MqOEHX3cBBr5313ADN10dNJliy5UfWAxvL+hrU/2x3T15P9R9oxIC8KWqZHYrJVA+/+IEN0xHrMlsDN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719351820; c=relaxed/simple;
-	bh=eK8jnNsLrrwlG3hHsRnPuKUXreDbP+T+9J+d/Ndtgz8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fFTJ0IVdM5PJ9wLM1bAF3jki72B0Jq7jgp+XNEQEFXJ3vB/9XoCM0v0XbLGKvCxgyTgWYqzvfHlL5xJ1KS85Z7aSKdtKk/V/hkOGlFS1ZxmxD2qeSbEApdpb962fvZZOz1/I2cbJU9jE3V63z1pp4A92HfVnZGUwZxJC1kfiJR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A7jeQAPc; arc=none smtp.client-ip=209.85.128.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f68.google.com with SMTP id 5b1f17b1804b1-4217d451f69so51496225e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 14:43:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719351817; x=1719956617; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gXpVGAgwaXGnHWzmK/3ybQ7VK229d1+vDFY8MfYFxcQ=;
-        b=A7jeQAPcNwVJVN03cHHTA+ib/0Rh74RUxy3c5xV7upsOUU6kNrQlmekPCZT/cPpbBI
-         FmMVumGKy2gMbrQnPYNkPCdmYXnWJHtH/1LgE0+qAwqp+r/ZFLvxk4Av9Cj/5NUN0R+Y
-         xgZiDJ143Cb/Je9f8SLmZzWG7aTlFxm79o/wPycH6bNrJ6K1qZSAbCXTvui1acxMC77d
-         8yfzlDhNtp/V7kZikGETMulGCbFzr7XylaOr51qMMxTZeQiAPpyhFhiigYAnnyD6kq1A
-         gBmeiEqsYV/zkOGBvLhVdZ+trE3DoergrVA9Hyx3cgLo/pw8e6mQ3JzL2IluepoiIAE/
-         beYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719351817; x=1719956617;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gXpVGAgwaXGnHWzmK/3ybQ7VK229d1+vDFY8MfYFxcQ=;
-        b=Ga8/xoQl2K7NSwv2B4RFST/uPqa6B5beIzXqNh/ayvKVB2E1mbhFqPw4Vic7D0Huxe
-         CfxIniQIlL/CiUVwNm2TfCFCmFR/M0yvEsADNHDzv3o/l9Lrki5fvSDqDbbEG2UWJKyQ
-         5iYtTE0MaA3lznDZzn7unr+HxoXSqVkYQJ6imRCpiL/VfciysXKH8gMr2SXFro6Vbf8g
-         smujwnrgqKvSWvVeD5DJejST9tzWupcXanqRCWwPPBzhYoz0z/hMAhWbgHDfM0GUPvTp
-         QmN6YuHfvk9YMFPS11DwEPV2v+yWuNvqAlFZ7xZFShxdbiaou2jntHHb/ZAAABDhDErS
-         Erxg==
-X-Gm-Message-State: AOJu0YzWEsoyB6RUC1jvHBeShU4D88ulajnMBlLM/LOdGn+jQZaKr8Au
-	mpy90TTGeQLF2COctg3ZCV3YiFbMF5LUG0w0XodWmMjOiGrqfh9H3jlfN7HcmooHUwr+6QSIdeN
-	owks6AdGU
-X-Google-Smtp-Source: AGHT+IGSc2wgdCJSQ2IQbEeJTeTHpxgUkGGoqpZteI2TbE3JWwvNoFt8wgeJm4phRg+xVk17xHRjjA==
-X-Received: by 2002:a05:600c:5686:b0:424:798a:f7f6 with SMTP id 5b1f17b1804b1-4248cc1838dmr67897875e9.8.1719351816915;
-        Tue, 25 Jun 2024 14:43:36 -0700 (PDT)
-Received: from [192.168.0.3] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3667c2fd7fbsm13663529f8f.89.2024.06.25.14.43.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jun 2024 14:43:36 -0700 (PDT)
-Message-ID: <1ba23d2b-473b-41e4-99dd-fa6a489c5af3@linaro.org>
-Date: Tue, 25 Jun 2024 22:43:35 +0100
+	s=arc-20240116; t=1719352572; c=relaxed/simple;
+	bh=K11oj0mpuiJIpnSwm951vDCz0rxmDAGitZS/Kht8+BI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S701NPLOgKRXX2TgwGqPps4VBar4xnO51JMeSrdgtve/PledlzyrkgH2ut91YJ/n6/Gox12wUZFVRksoygwCbJytzAvsKDeEKnCl1caIn2QXWD3f67oWXzzMUZK6yoqEBiIL6rQCeJT1uKVx42fllG52Q45mtyb791L1LVZbk/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qa1EKwMJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2FEC32781;
+	Tue, 25 Jun 2024 21:56:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719352571;
+	bh=K11oj0mpuiJIpnSwm951vDCz0rxmDAGitZS/Kht8+BI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=qa1EKwMJcV/aUJojPxmYqAbh2FsUSFrsVTAGePBLcNRsVgU6LOmgyD4/sUPB0nXX/
+	 kSVZAQTdoZlRL7O0SOSayMt+FYQXENyZABcqPkkX05YJRsYBVPxZVme7CGcSisP0zI
+	 oiaZHsGiztbVzbbtEF4eN/uGl//4QJjUgJiahuNDCKVg8mez7WBudax3owXTUtOlSw
+	 F8AB/TtNqQMqY/XzZzkM0MRUI6zUCbHR/ma+HbkkkLzc1yhu4y5OvC06cwuVeedDJP
+	 jLzIIFhR8lFrmIvR/1bcXrl8tOvgglPIeh+ZiAjWpleMny0ipv/77yds55NlH9ka5s
+	 HpfFk8QvXbX8Q==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-mtd@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: mtd: qcom,nandc: Define properties at top-level
+Date: Tue, 25 Jun 2024 15:56:05 -0600
+Message-ID: <20240625215605.192260-1-robh@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: pm8916: add temp-alarm thermal zone
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240625-pm8916-tz-v1-1-a4c1f61e92dd@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240625-pm8916-tz-v1-1-a4c1f61e92dd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 25/06/2024 21:16, Dmitry Baryshkov wrote:
-> Define the themal zones using the temperature values in stage1 for this
-> platform so that the spmi-temp-alarm driver becomes active.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/pm8916.dtsi | 31 ++++++++++++++++++++++++++++++-
->   1 file changed, 30 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> index 4b2e8fb47d2d..2def48f2d101 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> @@ -4,8 +4,37 @@
->   #include <dt-bindings/interrupt-controller/irq.h>
->   #include <dt-bindings/spmi/spmi.h>
->   
-> -&spmi_bus {
-> +/ {
-> +	thermal-zones {
-> +		pm8150-thermal {
-> +			polling-delay-passive = <100>;
-> +
-> +			thermal-sensors = <&pm8916_temp>;
-> +
-> +			trips {
-> +				trip0 {
-> +					temperature = <105000>;
-> +					hysteresis = <0>;
-> +					type = "passive";
-> +				};
-> +
-> +				trip1 {
-> +					temperature = <125000>;
-> +					hysteresis = <0>;
-> +					type = "hot";
-> +				};
-> +
-> +				trip2 {
-> +					temperature = <145000>;
-> +					hysteresis = <0>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +	};
-> +};
-145 c seemed amazingly hot to me but apparently this is the more 
-conservative of the possible set.
+Convention is DT schemas should define all properties at the top-level
+and not inside of if/then schemas. That minimizes the if/then schemas
+and is more future proof.
 
-https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.2.9.c26/Documentation/devicetree/bindings/thermal/qpnp-temp-alarm.txt?ref_type=heads#L28
+There were 2 "if" schemas for "qcom,ipq806x-nand" and the
+"qcom,boot-partitions: true" unnecessary, so the conditional schemas
+can be simplified a bit.
 
-Heating up even typing this email..
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+---
+ .../devicetree/bindings/mtd/qcom,nandc.yaml   | 38 +++++++------------
+ 1 file changed, 14 insertions(+), 24 deletions(-)
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+diff --git a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+index 4ada60fbf81d..35b4206ea918 100644
+--- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
++++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+@@ -31,6 +31,18 @@ properties:
+       - const: core
+       - const: aon
+ 
++  qcom,cmd-crci:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description:
++      Must contain the ADM command type CRCI block instance number specified for
++      the NAND controller on the given platform
++
++  qcom,data-crci:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description:
++      Must contain the ADM data type CRCI block instance number specified for
++      the NAND controller on the given platform
++
+ patternProperties:
+   "^nand@[a-f0-9]$":
+     type: object
+@@ -83,18 +95,6 @@ allOf:
+           items:
+             - const: rxtx
+ 
+-        qcom,cmd-crci:
+-          $ref: /schemas/types.yaml#/definitions/uint32
+-          description:
+-            Must contain the ADM command type CRCI block instance number
+-            specified for the NAND controller on the given platform
+-
+-        qcom,data-crci:
+-          $ref: /schemas/types.yaml#/definitions/uint32
+-          description:
+-            Must contain the ADM data type CRCI block instance number
+-            specified for the NAND controller on the given platform
+-
+   - if:
+       properties:
+         compatible:
+@@ -119,19 +119,9 @@ allOf:
+             - const: rx
+             - const: cmd
+ 
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,ipq806x-nand
++        qcom,cmd-crci: false
++        qcom,data-crci: false
+ 
+-    then:
+-      patternProperties:
+-        "^nand@[a-f0-9]$":
+-          properties:
+-            qcom,boot-partitions: true
+-    else:
+       patternProperties:
+         "^nand@[a-f0-9]$":
+           properties:
+-- 
+2.43.0
+
 
