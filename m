@@ -1,152 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-24094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B26F091640B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 11:53:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C18C091660F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 13:21:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61059284FAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 09:53:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 003181C21BDB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 11:21:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A812114A090;
-	Tue, 25 Jun 2024 09:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41E911494A0;
+	Tue, 25 Jun 2024 11:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="i07AcjVU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qfmEArOl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30849147C7F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 09:53:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1555817BCC;
+	Tue, 25 Jun 2024 11:21:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719309196; cv=none; b=NDZ4LZ6GoJ+3F/vlojYxG+bxe5jeeU97TkRST5HThc4RRZiaR0mB5TddpBvbegwH2NvgJMfz5t3q+RX1mDi1BeetHJe++QuIlKtz+1kegjCfvZXHCfnN5v6ifn/VEeXHAp+nsNROMWKgZ1u6M20ehp2EpID/2X83D9eRVp9sTJQ=
+	t=1719314465; cv=none; b=VJ2Zao6T6sQc2zF6qXTbWXCd2igsZPh1RdT0bK85y33kW8krug6tAYaiKmPbA2lijosRk4B0U022WSAHGHEEpo0OYldNXunaHrfVd2aeKMA0do2J3KA0cFNIVk8+UoyHlc3At2qCIy3k7Zvx56CTDhPoTy0xR+kA58uP4lp0FdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719309196; c=relaxed/simple;
-	bh=5fOsMfA//a10gbMrFTNNN7q0nF/8Yis07sAIUeCpLTw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MRHcc9txWZ4bnKEKrBGmTwWYsNu+41+2QDijkJ7c3wQrbZgx6gJO8YIeTzBRWcEcu0tBt0ZMOEFkpAXyMP+SAFIT+TNbzIKyXn46Uj3SdnvCewECmDKkrAO8IpPm3d8VWKRe6TY5q7hGjJ/JGAd9TsQfnRPRd1LFxTil69gS7Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=i07AcjVU; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52bbf73f334so4031659e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 02:53:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1719309192; x=1719913992; darn=vger.kernel.org;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9RqUVVAOM1tDnUN3dY9Htp5pIdnqRxsviToP8WQQNb8=;
-        b=i07AcjVUs1neguNqZa0t2Uk+lRdQUR12OZIMEny1LnLpwJNQSVAQKDtmpOG53FOZAb
-         5vVOyxDAFEqR8icqhSjV6nQBJdZBN8XULJEDO2QkOL0YFhB9AEGMOKr20FHxrNkYGgYE
-         390iWRbr5Z8iqutVqaMPutTZQTuZQr7fV6GVLpQzkA3MdHiax9X8PXF9QP1nw2i6nTLG
-         q0qnilEDcE3v0O7DBgg4DM34KAIoe7WyK35iolAD/v7D1IpgKplxTM4IElxtfSJ1PP26
-         cLYo3ZSAkYnOjYdHgSa17uX75+I6JEXRT9uzi5mMSMncFDMOqENf4S8NRXbZwaDsYHuT
-         1hnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719309192; x=1719913992;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9RqUVVAOM1tDnUN3dY9Htp5pIdnqRxsviToP8WQQNb8=;
-        b=RE1qU2iltXButH/OZYOA+SVu33PDwwFHy6ZcIex7UcBzJwI+r9iXsW8f1wVE7iroxd
-         C3mEYQ3R+sA8Pi1NOBjla0UB7Ga23fbU9K+s3AeJ5RP7qB9eq2OV0z/IMCmfWwNEFFDv
-         3qUWHhmRFjIRUE9hJzB44kXsJPhWt2LoloI+CqI5nCY68lazaVruMcmyeolaFbZ5dZA/
-         +6Wg/o6n3dRDa5oUEt1isvUxAx/pW1E9gjtgQ2/tAoUczxgp47Z1OIyaqRfGm3gqpTby
-         7GzM0tWRx7V5E7kVwVweH60ipJDZaegUvX6WXvw2mbRFQnFwaOHno4VDINEHw80cpwYw
-         FO6A==
-X-Forwarded-Encrypted: i=1; AJvYcCVeWpov9QxXrbHn7Yqyg4q0ao+eIotixe5WAxLGEYTDmX1hlLrybt39GmWKWH8yxfTnVmylMCgHIi7Dufvim59NzVlhlIF395GObUjMQg==
-X-Gm-Message-State: AOJu0Yw/abFBh0yKXyjJAo4x9LNviIPZ2ugNhWUEvTeQsfIE+Gn6xJl9
-	2eO1c1bncj/TGN8u+b9gCBMbtzYo6g0CFY1Yun/IsZbD1AjDYajtmz9dW+kBMmDjdWJDtRAmBTD
-	dxbc=
-X-Google-Smtp-Source: AGHT+IHpM8BunwwPdvPiWNmjKmtzMLfC9/Piq1T7ZczlkFsx69QObhWgnzrhF+eLaMHFOp00zaHOrA==
-X-Received: by 2002:a05:6512:2399:b0:52c:e36f:369b with SMTP id 2adb3069b0e04-52ce36f3750mr4669582e87.17.1719309192280;
-        Tue, 25 Jun 2024 02:53:12 -0700 (PDT)
-Received: from localhost ([2a01:e0a:3c5:5fb1:1b57:b4a1:3d50:32a2])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4248179d8e0sm174183925e9.3.2024.06.25.02.53.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 02:53:11 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Jonathan Cameron <jic23@kernel.org>,  Lars-Peter Clausen
- <lars@metafoo.de>,  Kevin Hilman <khilman@baylibre.com>,
-  linux-kernel@vger.kernel.org,  linux-amlogic@lists.infradead.org,
-  linux-iio@vger.kernel.org,  Rob Herring <robh@kernel.org>,  Krzysztof
- Kozlowski <krzk+dt@kernel.org>,  Conor Dooley <conor+dt@kernel.org>,
-  linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 0/2] iio: frequency: add iio support for Amlogic clock
- measure
-In-Reply-To: <52fab9b5-2b44-49c0-8b90-cb2a74eb6633@linaro.org> (Neil
-	Armstrong's message of "Tue, 25 Jun 2024 11:38:44 +0200")
-References: <20240624173105.909554-1-jbrunet@baylibre.com>
-	<52fab9b5-2b44-49c0-8b90-cb2a74eb6633@linaro.org>
-Date: Tue, 25 Jun 2024 11:53:11 +0200
-Message-ID: <1jzfr9gxh4.fsf@starbuckisacylon.baylibre.com>
+	s=arc-20240116; t=1719314465; c=relaxed/simple;
+	bh=qOGaxfsfM5iSyfa788L/8bzOZXv6TrPtFFQKAZc4E4A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d9DbiRgpRIXp/hAPFEC1adZaKBIo19YKskbPhq8y+zcQp8UfMlFMs6bZVvlMqjWAGOWZb9NL9EM6n0tvUGzJ3Hs3Ujl+3VUqLeK3jidEa6myyGLKBDRNyUJZ1VDAd19i1O95q/rWGdE0zdxjEA00dLgZ0W1TB6UHqFD0TuPNcVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qfmEArOl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D13CC32781;
+	Tue, 25 Jun 2024 11:21:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719314464;
+	bh=qOGaxfsfM5iSyfa788L/8bzOZXv6TrPtFFQKAZc4E4A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qfmEArOlYEgMbTlry56ebv1Pl5/Rz4cwO95FE0Q+i+xziu88qSGFhizZkAXQ0SV3X
+	 EvJiKaquyr6X5N1emlau22G9eOgsIx30bserkZ8EN9dVYjdBpLBs/2gZYNJS0t8LE+
+	 RQkDGSEwbHf/JwaD+4lLUCfsE2cRura+HaaQbnLB8lQ99NGgBYL0v7zNMw/gg5gVU3
+	 +EPbIFW2nzM4fsRza0qSdIOBSDIvKaDdu7N+ZdJHlMJenoucs81voATqBqfOxLRil4
+	 UI9SBmTEe7COieYPoLHIB6FiLDzabc5GUvm0mvGpHL0UMAJ7s3PWeIERXZbYsi/c/c
+	 yY+2VIafdUO+Q==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sM4Ea-000000002rA-0j0F;
+	Tue, 25 Jun 2024 13:21:12 +0200
+Date: Tue, 25 Jun 2024 13:21:12 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Doug Anderson <dianders@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
+	Stephen Boyd <swboyd@chromium.org>, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v4 8/8] serial: qcom-geni: Rework TX in FIFO mode to fix
+ hangs/lockups
+Message-ID: <ZnqoKDnUMxqf7QRy@hovoldconsulting.com>
+References: <20240610222515.3023730-1-dianders@chromium.org>
+ <20240610152420.v4.8.I1af05e555c42a9c98435bb7aee0ee60e3dcd015e@changeid>
+ <Znlp1_F1u-70D3QQ@hovoldconsulting.com>
+ <CAD=FV=XmuKUKvCq7gG+wM-jAAgHLHnYw4NteFEKz5Fmczd=U7g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=XmuKUKvCq7gG+wM-jAAgHLHnYw4NteFEKz5Fmczd=U7g@mail.gmail.com>
 
-On Tue 25 Jun 2024 at 11:38, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+On Mon, Jun 24, 2024 at 02:15:07PM -0700, Doug Anderson wrote:
+> On Mon, Jun 24, 2024 at 5:43 AM Johan Hovold <johan@kernel.org> wrote:
 
-> Hi,
->
-> [+cc people from linux-msm]
->
-> On 24/06/2024 19:31, Jerome Brunet wrote:
->> Add support for the HW found in most Amlogic SoC dedicated to measure
->> system clocks.
->> This drivers aims to replace the one found in
->> drivers/soc/amlogic/meson-clk-measure.c with following improvements:
->> * Access to the measurements through the IIO API:
->>    Easier re-use of the results in userspace and other drivers
->> * Controllable scale with raw measurements
->> * Higher precision with processed measurements
->> Jerome Brunet (2):
->>    dt-bindings: iio: frequency: add clock measure support
->>    iio: frequency: add amlogic clock measure support
->>   .../iio/frequency/amlogic,clk-msr-io.yaml     |  50 ++
->>   drivers/iio/frequency/Kconfig                 |  15 +
->>   drivers/iio/frequency/Makefile                |   1 +
->>   drivers/iio/frequency/amlogic-clk-msr-io.c    | 802 ++++++++++++++++++
->>   4 files changed, 868 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/iio/frequency/amlogic,clk-msr-io.yaml
->>   create mode 100644 drivers/iio/frequency/amlogic-clk-msr-io.c
->> 
->
-> While I really appreciate the effort, and the code looks cool, the clkmsr is really
-> a debug tool, and I'm not sure IIO is the right place for such debug tool ?
+> > As I mentioned last week, the slowdown from this is quite noticeable
+> > (e.g. 25% slowdown at @115200), but this may be the price we need to pay
+> > for correctness, at least temporarily.
+> >
+> > An alternative might be to switch to using a 16 byte fifo. This should
+> > reduce console latency even further, and may be able avoid the idling
+> > UART penalty by continuing to use the watermark interrupt for refilling
+> > the FIFO.
+> 
+> I'm a bit confused. Right now we're using (effectively) a 64-byte
+> FIFO. The FIFO is 16-words deep and we have 4 bytes per word. ...so
+> I'm not sure what you mean by switching to a 16-byte FIFO. Do you mean
+> to make less use of the FIFO, or something else?
 
-The reason why I went through the trouble of doing an IIO port is
-because I need that for other purposes than debug. I need to to be able
-to check a frequency from another driver. I don't see a reason to invent
-another API when IIO provide a perfectly good one.
+I meant switching to using one-byte words so that we end up with a
+16-byte FIFO where we don't have the issue of adding more data when the
+last word is not a full four-byte one.
 
-The HW does measurements. IIO seems like the best place for it.
+> Overall the big problem I found in all my testing was that I needed to
+> wait for a "command done" before kicking off a new command. When the
+> "command done" arrives then the UART has stopped transmitting and
+> you've got to suffer an interrupt latency before you can start
+> transferring again. Essentially:
+> 
+> 1. Pick a transfer size.
+> 2. You can keep sending bytes / using the FIFO efficiently as long as
+> there are still bytes left in the transfer.
+> 3. When you get to the end of the transfer, you have to wait for the
+> UART to stop, report that it's done, and then suffer an interrupt
+> latency to start a new transfer.
+> 
+> So to be efficient you want to pick a big transfer size but if there's
+> any chance that you might not need to transfer that many bytes then
+> you need to figure out what to do. If you can handle that properly
+> then that's great. If not then we have to make sure we never kick off
+> a transfer that we might not finish.
 
-For the record, I need this for a eARC support.
-eARC has a PLL that locks on incoming stream. eARC registers show wether
-the PLL is locked or not, but not at which rate. That information is
-needed in ASoC. Fortunately the eARC PLL is one of measured clock, which
-is a life saver in that case.
+Right. But with a 16 1-byte word FIFO, we may be able to kick of a
+really long transfer and just keep it running until it needs to be
+kicked again (cf. enabling TX). The console code can easily insert
+characters in the FIFO while the transfer is running (and would only
+have to wait for 16 characters to drain in the worst case).
 
-Everything that was available through the old driver still is, with more
-precision and more control.
+Effectively, most of the identified issues would just go away, as
+there's basically never any need to cancel anything except at port
+shutdown.
 
->
-> There's almost the same interface on qcom SoCs (https://github.com/linux-msm/debugcc) but
-> they chose to keep it in userspace until we find an appropriate way to expose
-> this from the kernel the right way.
->
-> If it enabled us to monitor a frequency input for a product use-case, IIO would be
-> the appropriate interface, but AFAIK it's only internal clocks and thus I'm worried
-> it's not the best way to expose those clocks.
->
-> Neil
+> I'd also mention that, as talked about in my response to your other
+> patch [1], I'm not seeing a 25% slowdown. I tested both with my simple
+> proposal and with this whole series applied and my slowdown is less
+> than 2%. I guess there must be something different with your setup?
+> Trying to think about what kind of slowdown would be reasonable for my
+> patch series at 115200:
+> 
+> a) We send 64 bytes efficiently, which takes 5.6ms (64 * 1000 / 11520)
+> 
+> b) We stop transferring and wait for an interrupt.
+> 
+> c) We start transferring 64 bytes again.
+> 
+> Let's say that your interrupt latency is 1 ms, which would be really
+> terrible. In that case you'll essentially transfer 64 bytes in 6.6ms
+> instead of 5.6 ms, right? That would be an 18% hit. Let's imagine
+> something more sensible and say that most of the time you can handle
+> an interrupt in 100 ms. That would be about a 1.7% slowdown, which
+> actually matches what I was seeing. For reference, even an old arm32
+> rk3288-veyron device I worked with years ago could usually handle
+> interrupts in ~100-200 ms since dwc2 needs you to handle at least one
+> (sometimes more) interrupt per USB uFrame (250ms).
+> 
+> ...so I'm confused about where your 25% number is coming from...
 
--- 
-Jerome
+I didn't do an in-depth analysis of the slowdown, but I did rerun the
+tests now and I'm still seeing a 22-24% slowdown on x1e80100 with rc5.
+This is a new platform so I compared with sc8280xp, which shows similar
+numbers even if it's slightly faster to begin with:
+
+					sc8280xp	x1e80100
+
+	rc5 full series			61 s		67 s
+	rc5 last patch reverted		50 s		54 s
+
+I have a getty running and cat a 10x dmesg file of 543950 bytes to
+/dev/ttyMSM0 from an ssh session (just catting in a serial console gives
+similar numbers). 
+
+Johan
 
