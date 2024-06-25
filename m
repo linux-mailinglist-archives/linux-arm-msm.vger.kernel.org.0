@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-24105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7704916922
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 15:38:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04C7D91694C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 15:47:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F030EB23ABD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 13:38:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A42811F24017
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 13:47:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 042A91662F1;
-	Tue, 25 Jun 2024 13:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0DF815F3F9;
+	Tue, 25 Jun 2024 13:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sLWPwpj3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dyDTq8fh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C699415F3FF;
-	Tue, 25 Jun 2024 13:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9987E14F9E0;
+	Tue, 25 Jun 2024 13:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719322668; cv=none; b=YnMzUlZmWFGSOoaUca5TDdTl9hGjTb2xqWTBs1VQypy/ae5YqT86EAv2Sxftxm3K8gPdMGGNEVph0YTQUJcrlV3p+EB5mo+Np59gieZJWQtLMlTj5fZ14n8L6thOZXuqWx78SZh45fSMy+3bbF9hk7shXfbbhP9k6odhHt1ukbE=
+	t=1719323260; cv=none; b=IL9za8/CNtsYLG6PGAwuaH9u4YOuryKStVG8uovfsvMFiRXYyrw778FaAhcLPy4rl/pyyXZ57cU2smAs+vGVjndVn8UIJKGX0CgguBtVNkS4TTsGL6edfCTSY2jTSvsoDOHChOxEHmfeQeSstlRHCKPH7cM5Q2e/Y4b/9q6/RJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719322668; c=relaxed/simple;
-	bh=Fi8mYtRnhR/Ud4l97BJTFhMif+IBWlqAwv9EXERNImI=;
+	s=arc-20240116; t=1719323260; c=relaxed/simple;
+	bh=b5bQuGXklfY8sLk02p3wUGhDJpODn0sWZF1HuKoUfWo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z52arMVYOzjcCt0jwokrnhJl5ttjPpe5fJ2tPotX+X/D1FtVoEnw2DvFyJ0BK5gUYJ/ToxQ2wt178Qn2vJIy5MVVaXBG+weXLK7VApPbtQFERpKiT3TZvLCinI4qu0IlPZq8tpAIv4xgxm8nmQXWPa6wQaIJ19jh4jUVzU5b5P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sLWPwpj3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1794DC32781;
-	Tue, 25 Jun 2024 13:37:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=CRa7v9EbCgbrVloIZsEfrsa9BxzVlxS3+xV9FDtCDeu526/lfl4Vvr5X+NnzCK6ks+j8rrpaeQjNYdBpfqvtuwBP/gB/gyXX0Aidryb26Zx4Mr/DQW00QBKwsUD6mw4SqfsqdeB9//nXJQyoNd4CrxxtoomYcI90NmQO2mO/Eb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dyDTq8fh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC60C32781;
+	Tue, 25 Jun 2024 13:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719322668;
-	bh=Fi8mYtRnhR/Ud4l97BJTFhMif+IBWlqAwv9EXERNImI=;
+	s=k20201202; t=1719323260;
+	bh=b5bQuGXklfY8sLk02p3wUGhDJpODn0sWZF1HuKoUfWo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sLWPwpj3ED5nvvgdTel1Wy/40yCx6Vv7QvwYBmOuZV/IbJ+vP9ngA9d9ullCfbFXV
-	 Lt8QYVPGUsZU3mFwJmhzKFhazWROyLd5DPrtbaBPhqcR/s/3UUV5GSFzACI/AvVrsp
-	 WB3I0Ke+UCvQWVmcvXjvj2BjHcL1IJevJosy4tS7IX4Pm61FhzcW3cG8dODkQCdAqF
-	 J84l4jatihTK17qvLcN4DX/AmkfNUTMuF7FqlwxreGjHDs0/RoRnAiaOqsTyBW4BuK
-	 RGetmWu65kZ5xaXCEXvbNKz8+dCb2uSXUhWL23sIdN9vVC4vH0FBCFRbxbLmgFX7de
-	 dxtUwFxXG5DFw==
-Message-ID: <83ea0718-362a-47e1-a311-58c8b3ef39dc@kernel.org>
-Date: Tue, 25 Jun 2024 16:37:42 +0300
+	b=dyDTq8fhq+PeJuFomMNte/WwU8kiBcnStzb9DDQvEygH//GiYOAmpRrC0eG9StExJ
+	 NDybtJWhT8fEhzgvuzsRaR6F2t4aSEK4XRhPWIM0PiugiVRJtFukwOkqHOlwy46TLR
+	 FbWHXREiU8vPY/5LVJW8fQJB/4gRfZvNHziUqOPoik9qFXUVFX3vig/mWdAv3L7Dqu
+	 1a/bW/5Qtcn0zcSjWxtofJ3T29GDVjVARn0qtZX/mCO20DDT27ifbcWeSlh6vkQqDc
+	 NlkrnBQp1EwroLdSbSnV79RgIFqNdTKJLLYXdihVoeCzKXDjCJr30p7Cs90nvdbjn8
+	 gsVk79O6UmbZw==
+Message-ID: <772d65a6-9d89-4e65-8fc4-f60040a91f24@kernel.org>
+Date: Tue, 25 Jun 2024 16:47:34 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,69 +50,53 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: sc7280: Add clocks for QOS
- configuration
-To: Odelu Kukatla <quic_okukatla@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Kees Cook <keescook@chromium.org>, cros-qcom-dts-watchers@chromium.org,
- "Gustavo A . R . Silva" <gustavoars@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org, quic_rlaggysh@quicinc.com,
- quic_mdtipton@quicinc.com
-References: <20240607173927.26321-1-quic_okukatla@quicinc.com>
- <20240607173927.26321-5-quic_okukatla@quicinc.com>
+Subject: Re: [PATCH V3 1/4] dt-bindings: interconnect: qcom,msm8998-bwmon:
+ Remove opp-table from the required list
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org,
+ srinivas.kandagatla@linaro.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+ quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
+ abel.vesa@linaro.org
+References: <20240624092214.146935-1-quic_sibis@quicinc.com>
+ <20240624092214.146935-2-quic_sibis@quicinc.com>
 Content-Language: en-US
 From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20240607173927.26321-5-quic_okukatla@quicinc.com>
+In-Reply-To: <20240624092214.146935-2-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7.06.24 20:39, Odelu Kukatla wrote:
-> Add clocks which need to be enbaled for configuring
-> QoS on sc7280.
+On 24.06.24 12:22, Sibi Sankar wrote:
+> Remove opp-table from the required list as the bindings shouldn't care
+> where the OPP tables (referenced by the operating-points-v2 property)
+> comes from.
 > 
+> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 
-Nit: s/enbaled/enabled/
-
-> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
-
-In any case:
 Acked-by: Georgi Djakov <djakov@kernel.org>
 
-Bjorn, the dt-binding change is available in my icc-rpmh-qos branch
-in case you want to make the dtbs checker happy when you apply this.
-
-BR,
-Georgi
-
 > ---
->   arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
->   1 file changed, 3 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index ba43fba2c551..a3c640d394e9 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2130,6 +2130,8 @@
->   			reg = <0 0x016e0000 0 0x1c080>;
->   			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
-> +			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>;
->   		};
+> v3:
+> * Drop OPP table from the required property list. [Konrad/Krzysztof]
+> 
+>   .../devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml     | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+> index 05067e197abe..9c248e1eabe2 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+> @@ -72,7 +72,6 @@ required:
+>     - interconnects
+>     - interrupts
+>     - operating-points-v2
+> -  - opp-table
+>     - reg
 >   
->   		aggre2_noc: interconnect@1700000 {
-> @@ -2137,6 +2139,7 @@
->   			compatible = "qcom,sc7280-aggre2-noc";
->   			#interconnect-cells = <2>;
->   			qcom,bcm-voters = <&apps_bcm_voter>;
-> +			clocks = <&rpmhcc RPMH_IPA_CLK>;
->   		};
->   
->   		mmss_noc: interconnect@1740000 {
+>   additionalProperties: false
 
 
