@@ -1,142 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-24096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAE03916627
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 13:27:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67385916764
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 14:17:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75A2528135B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 11:27:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B96A1F25802
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 12:17:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98AA314A604;
-	Tue, 25 Jun 2024 11:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27E0E1552EE;
+	Tue, 25 Jun 2024 12:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vLSaoF5j"
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="UC8g5foE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C150149C4C;
-	Tue, 25 Jun 2024 11:27:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CFEE14D6FB;
+	Tue, 25 Jun 2024 12:15:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719314830; cv=none; b=m4A1fYpZnmMBwF3mBlNali30zb+9FjDbuFfKqBY+2fOTVbaZnQQnP7lh67zUrD2CAS+N0gc/eFQwPtUfPMKQ4atG/thLt3G6+QPFcgXC+rLpqGFMQhDDm6zorFiTySqESx5yYc6wNmMb6ovhpclwJ2RiZ0EhcWqv1nM4ChSaBq8=
+	t=1719317741; cv=none; b=LPDfQzHjPHQYMhqMICeC/svR1FecxUjQHQPcz9INR/FMjBkjv5KZB5tYApZw9spjGJmCDn2vmuKzZAOxyHYmYDkjpOi5VHDNE5FWoKBgkAMJF2nuSTZ1IG45FgZ51z22IIi3L9Rtr5oDQvXVxrB6omt9XpS3WSeK4iu6l+M+guA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719314830; c=relaxed/simple;
-	bh=zzrLgFHfkFUFx4FQA7l293B59+LWvaKIkSGrLRG/HoQ=;
+	s=arc-20240116; t=1719317741; c=relaxed/simple;
+	bh=wQ0Hy1Iyom2IEtqGIwpWSkIQCooAFwOuo7Hz0l3BwUo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F2PAExDx/4PqVKpR5P76pNkePESdpEAKrbdLgqRGWJk/QptCLixl24+Fr443Vxq969gdEpGYsxRmQK8Z0SsY9N3/G62nbtX1IlPMeJtcJAfxI42dV9y0Sw4ja7ocqWYsauehdSlnaMJ3VZwqx7Q9IRZg2luILmCdXS3nFcH58FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vLSaoF5j; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8153FC32781;
-	Tue, 25 Jun 2024 11:27:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719314830;
-	bh=zzrLgFHfkFUFx4FQA7l293B59+LWvaKIkSGrLRG/HoQ=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=rqXXQtyRfCY3KlgDfjkhcnG2F049tsdflWKIUPB4OwWNFsDN9KBEIldpl+7f9l5moCk1DHcfe3BtO8Z00QqGDxL/96N/F3T56Az6HCOsQ6KseWNC6eXkUf8t0haK9SpJUr2lt4ftbNhYqU6vZ8Fh5Vjao4ySKMzQqsHm0HcSJj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=UC8g5foE; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
+Received: from 8bytes.org (p200300f6af01e500c6341f51fa179db0.dip0.t-ipconnect.de [IPv6:2003:f6:af01:e500:c634:1f51:fa17:9db0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 7D2F01C7B21;
+	Tue, 25 Jun 2024 14:15:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1719317738;
+	bh=wQ0Hy1Iyom2IEtqGIwpWSkIQCooAFwOuo7Hz0l3BwUo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vLSaoF5j3kRrpHLLGQOBjKAy8fabqTMjHscooWo+Cf0qVlm97HWZ4lcUHD2ltKPKr
-	 kVuMSIOGw7aaRJiXZG4t++d6Lz5tkAkMhuwK1MvbhK5yryIewBLyc2YJiwGWNnMol+
-	 K0cnvR7u7zNUhuTLY8P7SLGHuq13WRfUCGJyymzVdHfN+0s9MllWZ2HDBmYI/ARd2n
-	 AV2qttBwbzZGzK5Pl39knyr0JpHaASLq9cOF1NuSWNGwwzNQQWdeowXbIEE7cc0ENz
-	 q0Jh+K1YcITaJ5Yg3cfKWHqbKIlM+CZ0Yacw8HhAz0aTucwFaE8AoF5RMLSCOUMlHf
-	 OaNOFFDWlcy5g==
-Date: Tue, 25 Jun 2024 12:27:04 +0100
-From: Will Deacon <will@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
-	"open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 1/2] iommu/io-pgtable-arm: Add way to debug pgtable
- walk
-Message-ID: <20240625112703.GA10175@willie-the-truck>
-References: <20240523175227.117984-1-robdclark@gmail.com>
- <20240523175227.117984-2-robdclark@gmail.com>
- <20240624151401.GB8706@willie-the-truck>
- <CAF6AEGttkHPOsO+NSHZeRXiZBxU_26HZyGMjOZ3-Y8NZUgz0gA@mail.gmail.com>
+	b=UC8g5foEUzJspXBOKG0hqkXQiZIJIcdKoDuEkbLoA35oqBOx9SQoACrwKENubqR6F
+	 nnbqVs69XVM3AxV+/CIRXZmBecoIIIpg2jbtWoR8MBUpnUoWe//fA/++gFGU38Lb54
+	 jsXUHy31NN5mUA/Kh093dUMwPBfCm7KdwD6uilNIsAaVLpKIroibTPOwIBG6MtHzjy
+	 rvTY4/BKHnJyzmMVS/CsXscK1OFvJNGQxwdie/nEfNX6KaS+sN0T1dYqSODygrcQsv
+	 GoYKEhkB5Hdej6GBq5jR/rq/xFkVvfWhgxEmFsdTVvcFjsl06PbtjyGaN1OTvcpAoo
+	 sYZnrzfWcg8qQ==
+Date: Tue, 25 Jun 2024 14:15:37 +0200
+From: Joerg Roedel <joro@8bytes.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2] dt-bindings: iommu: qcom,iommu: Add MSM8953 GPU IOMMU
+ to SMMUv2 compatibles
+Message-ID: <Znq06eg_UBXEImGL@8bytes.org>
+References: <20240606-topic-sm8953-upstream-smmu-gpu-v2-1-67be88007d87@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGttkHPOsO+NSHZeRXiZBxU_26HZyGMjOZ3-Y8NZUgz0gA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20240606-topic-sm8953-upstream-smmu-gpu-v2-1-67be88007d87@linaro.org>
 
-On Mon, Jun 24, 2024 at 08:37:26AM -0700, Rob Clark wrote:
-> On Mon, Jun 24, 2024 at 8:14 AM Will Deacon <will@kernel.org> wrote:
-> >
-> > On Thu, May 23, 2024 at 10:52:21AM -0700, Rob Clark wrote:
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > Add an io-pgtable method to walk the pgtable returning the raw PTEs that
-> > > would be traversed for a given iova access.
-> > >
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > ---
-> > >  drivers/iommu/io-pgtable-arm.c | 51 ++++++++++++++++++++++++++++------
-> > >  include/linux/io-pgtable.h     |  4 +++
-> > >  2 files changed, 46 insertions(+), 9 deletions(-)
-> > >
-> > > diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> > > index f7828a7aad41..f47a0e64bb35 100644
-> > > --- a/drivers/iommu/io-pgtable-arm.c
-> > > +++ b/drivers/iommu/io-pgtable-arm.c
-> > > @@ -693,17 +693,19 @@ static size_t arm_lpae_unmap_pages(struct io_pgtable_ops *ops, unsigned long iov
-> > >                               data->start_level, ptep);
-> > >  }
-> > >
-> > > -static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> > > -                                      unsigned long iova)
-> > > +static int arm_lpae_pgtable_walk(struct io_pgtable_ops *ops, unsigned long iova,
-> > > +                     int (*cb)(void *cb_data, void *pte, int level),
-> > > +                     void *cb_data)
-> > >  {
-> > >       struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> > >       arm_lpae_iopte pte, *ptep = data->pgd;
-> > >       int lvl = data->start_level;
-> > > +     int ret;
-> > >
-> > >       do {
-> > >               /* Valid IOPTE pointer? */
-> > >               if (!ptep)
-> > > -                     return 0;
-> > > +                     return -EFAULT;
-> >
-> > nit: -ENOENT might be a little better, as we're only checking against a
-> > NULL entry rather than strictly any faulting entry.
-> >
-> > >               /* Grab the IOPTE we're interested in */
-> > >               ptep += ARM_LPAE_LVL_IDX(iova, lvl, data);
-> > > @@ -711,22 +713,52 @@ static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> > >
-> > >               /* Valid entry? */
-> > >               if (!pte)
-> > > -                     return 0;
-> > > +                     return -EFAULT;
-> >
-> > Same here (and at the end of the function).
-> >
-> > > +
-> > > +             ret = cb(cb_data, &pte, lvl);
-> >
-> > Since pte is on the stack, rather than pointing into the actual pgtable,
-> > I think it would be clearer to pass it by value to the callback.
-> 
-> fwiw, I passed it as a void* to avoid the pte size.. although I guess
-> it could be a union of all the possible pte types
+On Thu, Jun 06, 2024 at 03:15:12PM +0200, Neil Armstrong wrote:
+>  Documentation/devicetree/bindings/iommu/qcom,iommu.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-Can you just get away with a u64?
-
-Will
+Applied, thanks.
 
