@@ -1,329 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-24070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 192CE915E85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 07:59:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F381915F0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 08:47:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5F41280EEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 05:59:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3904A282DE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 06:47:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33EAA13C672;
-	Tue, 25 Jun 2024 05:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59B29146583;
+	Tue, 25 Jun 2024 06:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r0a/wpd7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F7hE66ck"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784D4145B20
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 05:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F95414600C;
+	Tue, 25 Jun 2024 06:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719295137; cv=none; b=gEoEY8biNPSgPC7p7xPgpqTNrDM6UCX1KRPV0eoflwQVAEhAZ6gfGinx/RK22/giRTcdQTYpwMYLX6gHXc07u5hStiBnq7ftheganNQT7yWf8g28ueUtVPhuSa2znr8hpwgZH/c2dfroPJpppygyqZzIQn+TJb0Pl/+W7Mf3FyQ=
+	t=1719298043; cv=none; b=nNDSQrH1t67j0HkViH8fhzP9043bg2B7QLo0oA1ykt0qLMAx0tHDRa6nIxiU7RgPlkMrUcGw2i7mjJ2VkIRh2q0ZJCggOJ4OuInHoG+imDRRbxowyNy2mMyI7h+t6cIyDEowfgUEYLprFuZu0uvOsaF7FWxJDdbQAtlDTUyo9kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719295137; c=relaxed/simple;
-	bh=XQCmf27Ylxkt/CeNjMw9wYOcCNe/zvY4fjCovTUwlhg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TLA/QOO+7ZV+ltJiviUmKHvXprDCDGoGdNzQRHVzSj9WJjCcY84X+EVc0TrR/o6Qpo20MnW7rmDw6Gc3UP8zW1ThlCb+eJAQrVTZb7pFmUzrRBH5MsmCD1pLZJ6pCyfsJ+avfbyC+1mKVhEfkZKKIlFAJdGc8Kyrp/mQWkTvYBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r0a/wpd7; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42108856c33so35782225e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Jun 2024 22:58:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719295133; x=1719899933; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MEh/17Aqb0CF0XY9Y7f3T5FZpR/u2UEtrCW8T4woPmU=;
-        b=r0a/wpd7SN0MxdFR2oZPhcOSe3U/YvAuJ0aBrjaE+i/P8KfQd6hlwGFjCpIyNrcIAs
-         qP3mlKHv1LvNctxvJBq+rqldUT8M1Fc8/53lPuUe7keeHkYoX/0DHpKTh655gL/BMkJs
-         o/sRJlgwUC2GNbZVYZpRgacpobxjmB1GDKmI54TyRxvAYESQ5SBdFmjN2iOtPvZKC4Ti
-         +qE6y+Ja/R0Nw6QGSrIceu9y8HHJMbkE7A0D6M/FXCh8EzC8yhnC07jcdV2VnSx5Y2eM
-         pASl/g7hwj2J2IJDbv8a0kvZSrkG+LkVhSIffCBmeZH+pbM4MGybGGtNYS5TL/o+nKfX
-         GJiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719295133; x=1719899933;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MEh/17Aqb0CF0XY9Y7f3T5FZpR/u2UEtrCW8T4woPmU=;
-        b=KLy+BPDcXL9s7M6HtA0q1voH0giQCPfW/K7RrZhsHvEIKgPzuIsXzEmfkKoVpChS4Z
-         8oKoSA4ttHRpoCX5Qcn4bAsYrSekKeULDwXAFp843agjNybJ0Uq/lm7rwqvZttsXwgoj
-         e9e4fMqXHjt3NRvIXbY7BGewT1dZs94gWJ/lEfcnjqFOqXt6n+RWtBfLWSy+7eHbRUta
-         abw2uUphz4S6LWz05G8H1LcR6YueNOP9VeImgef8cfw6j084iN1vN+xYnMZTB++W33FL
-         a43om/fgCzsJLHBF5f6PL7LJA8jDNFycHhh70IL6MHdn6MARiy+EDANCy2ynItmadgoi
-         16rg==
-X-Forwarded-Encrypted: i=1; AJvYcCXmQ/WxtbBo1OflvoOeWgjU2fSc5NY1yo/j88GVRKUWXq4A5Ng2KVekcK5C0q3/PVTcGK+At0EplheqBDKbysodfwu15f6NvobiltRikA==
-X-Gm-Message-State: AOJu0Ywi9GNQj29lNGHV7QnMiuzLeMa8z/RC8P/u4eETm13T9EqFRdFA
-	wmX8wyoRFC/va+8IUKEqntGh7Sim9kBGYODR4NxMPAwLsPUOlV2ny4/0SA92eCg=
-X-Google-Smtp-Source: AGHT+IFJxOVQ6z/UnneNaFNFir8Cu23IX66luADI6AV5R2+EvI6fqlxEn0zeZSz/k+uUdK2EqMLxRA==
-X-Received: by 2002:a5d:63c5:0:b0:366:dee6:a9ea with SMTP id ffacd0b85a97d-366e32f6c82mr5877092f8f.26.1719295132720;
-        Mon, 24 Jun 2024 22:58:52 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-366389b861bsm11819109f8f.29.2024.06.24.22.58.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Jun 2024 22:58:52 -0700 (PDT)
-Message-ID: <0bfcbf2e-9082-4287-9821-acd85a7024b9@linaro.org>
-Date: Tue, 25 Jun 2024 06:58:50 +0100
+	s=arc-20240116; t=1719298043; c=relaxed/simple;
+	bh=pJJu5s9KBxupbvcL1lu1+U5fHpLZ++eVwWUD05uzpPs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I7NxSDMnCNxFAlDnKwv/UnXzs9Op90Qc5XQcTKQvTsu6+L35H5Dq4PjFc1qbIEMELNSjexxSP5cL4xLKuPoxzwD+UsL/ySIEEDX3z5A0VfYDLGhFlfFfKNeMnrQYAqWvqKSZdcgWU9t9zqk1uQEuQY2b/3FxyFM1yiovN8YdkZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F7hE66ck; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FDAC32781;
+	Tue, 25 Jun 2024 06:47:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719298042;
+	bh=pJJu5s9KBxupbvcL1lu1+U5fHpLZ++eVwWUD05uzpPs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=F7hE66ckoIiNZDCC/BKpdORZyZ1F8SNYkxPHAs62E7ZzqtjWc3vUgNK5qodSyTktz
+	 sF+vVkvwAs5vCg4puoKPidU8+M4B9A7cmR8a1d8Je/6fKZLew2cEA3BRTwP4v5ami0
+	 GHHk1ybDEUctvr8faom0P1IGGUwMBKulUeGeea/+hBD5fykd5KyEL2n2BzRWl7lXUT
+	 qkfYt+cOSuHTRaNFgRabcSyV6TgxMpkacyqQPUxgvcib/F825ihOkaWROgK8c3rBBQ
+	 8ltpBPkGZWHekBvobIfeUAMUKMzn2H4ul1JECtfBbxYL3WLy5bwDrYWxMhCuRjlJuq
+	 9AKgHzD8B8Nmw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sLzxh-000000008Oq-47Ci;
+	Tue, 25 Jun 2024 08:47:30 +0200
+Date: Tue, 25 Jun 2024 08:47:29 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	"vkoul@kernel.org" <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Lockdep broken on x1e80100 (was: Re: [PATCH v5 0/7] sm8550: Add
+ support for eUSB2 repeater)
+Message-ID: <ZnpoAVGJMG4Zu-Jw@hovoldconsulting.com>
+References: <20230208190200.2966723-1-abel.vesa@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 v4 2/2] pinctrl: qcom: Introduce SM4250 LPI pinctrl
- driver
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20240612-sm4250-lpi-v4-0-a0342e47e21b@linaro.org>
- <20240612-sm4250-lpi-v4-2-a0342e47e21b@linaro.org>
- <CANgGJDqJZ-qUB4XOTEhRQrzim_-ecf6evbM=zz4SiEKMSBObzQ@mail.gmail.com>
-Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <CANgGJDqJZ-qUB4XOTEhRQrzim_-ecf6evbM=zz4SiEKMSBObzQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230208190200.2966723-1-abel.vesa@linaro.org>
 
-Thanks Alexey,
+On Wed, Feb 08, 2023 at 09:01:53PM +0200, Abel Vesa wrote:
+> This patchset adds support for the eUSB2 repeater found in pmic PM8550B,
+> used along with SM8550. Since there is no dedicated generic framework
+> for eUSB2 repeaters, the most appropriate subsystem to model it is the
+> generic phy. This patchset also adds support for such repeater to the
+> eUSB2 PHY found in SM8550. Basically, the eUSB2 PHY will have its own
+> "phy" which is actually a repeater.
 
-On 24/06/2024 22:36, Alexey Klimov wrote:
-> Hi Srini,
-> 
-> On Sat, 22 Jun 2024 at 17:49, Srinivas Kandagatla
-> <srinivas.kandagatla@linaro.org> wrote:
->>
->> Add support for the pin controller block on SM4250 Low Power Island.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   drivers/pinctrl/qcom/Kconfig                    |   9 +
->>   drivers/pinctrl/qcom/Makefile                   |   1 +
->>   drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c | 236 ++++++++++++++++++++++++
->>   3 files changed, 246 insertions(+)
->>
->> diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
->> index 24619e80b2cc..dd9bbe8f3e11 100644
->> --- a/drivers/pinctrl/qcom/Kconfig
->> +++ b/drivers/pinctrl/qcom/Kconfig
->> @@ -68,6 +68,15 @@ config PINCTRL_SC7280_LPASS_LPI
->>            Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
->>            (Low Power Island) found on the Qualcomm Technologies Inc SC7280 platform.
->>
->> +config PINCTRL_SM4250_LPASS_LPI
->> +       tristate "Qualcomm Technologies Inc SM4250 LPASS LPI pin controller driver"
->> +       depends on ARM64 || COMPILE_TEST
->> +       depends on PINCTRL_LPASS_LPI
->> +       help
->> +         This is the pinctrl, pinmux, pinconf and gpiolib driver for the
->> +         Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
->> +         (Low Power Island) found on the Qualcomm Technologies Inc SM4250 platform.
->> +
->>   config PINCTRL_SM6115_LPASS_LPI
->>          tristate "Qualcomm Technologies Inc SM6115 LPASS LPI pin controller driver"
->>          depends on ARM64 || COMPILE_TEST
->> diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
->> index e2e76071d268..eb04297b6388 100644
->> --- a/drivers/pinctrl/qcom/Makefile
->> +++ b/drivers/pinctrl/qcom/Makefile
->> @@ -43,6 +43,7 @@ obj-$(CONFIG_PINCTRL_SDM845) += pinctrl-sdm845.o
->>   obj-$(CONFIG_PINCTRL_SDX55) += pinctrl-sdx55.o
->>   obj-$(CONFIG_PINCTRL_SDX65) += pinctrl-sdx65.o
->>   obj-$(CONFIG_PINCTRL_SDX75) += pinctrl-sdx75.o
->> +obj-$(CONFIG_PINCTRL_SM4250_LPASS_LPI) += pinctrl-sm4250-lpass-lpi.o
->>   obj-$(CONFIG_PINCTRL_SM4450) += pinctrl-sm4450.o
->>   obj-$(CONFIG_PINCTRL_SM6115) += pinctrl-sm6115.o
->>   obj-$(CONFIG_PINCTRL_SM6115_LPASS_LPI) += pinctrl-sm6115-lpass-lpi.o
->> diff --git a/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c
->> new file mode 100644
->> index 000000000000..2d2c636a3e20
->> --- /dev/null
->> +++ b/drivers/pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c
->> @@ -0,0 +1,236 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2020, 2023 Linaro Ltd.
->> + */
->> +
->> +#include <linux/gpio/driver.h>
->> +#include <linux/module.h>
->> +#include <linux/platform_device.h>
->> +
->> +#include "pinctrl-lpass-lpi.h"
->> +
->> +enum lpass_lpi_functions {
->> +       LPI_MUX_dmic01_clk,
->> +       LPI_MUX_dmic01_data,
->> +       LPI_MUX_dmic23_clk,
->> +       LPI_MUX_dmic23_data,
->> +       LPI_MUX_dmic4_clk,
->> +       LPI_MUX_dmic4_data,
->> +       LPI_MUX_ext_mclk0_a,
->> +       LPI_MUX_ext_mclk0_b,
->> +       LPI_MUX_ext_mclk1_a,
->> +       LPI_MUX_ext_mclk1_b,
->> +       LPI_MUX_ext_mclk1_c,
->> +       LPI_MUX_i2s1_clk,
->> +       LPI_MUX_i2s1_data,
->> +       LPI_MUX_i2s1_ws,
->> +       LPI_MUX_i2s2_clk,
->> +       LPI_MUX_i2s2_data,
->> +       LPI_MUX_i2s2_ws,
->> +       LPI_MUX_i2s3_clk,
->> +       LPI_MUX_i2s3_data,
->> +       LPI_MUX_i2s3_ws,
->> +       LPI_MUX_qup_io_00,
->> +       LPI_MUX_qup_io_01,
->> +       LPI_MUX_qup_io_05,
->> +       LPI_MUX_qup_io_10,
->> +       LPI_MUX_qup_io_11,
->> +       LPI_MUX_qup_io_25,
->> +       LPI_MUX_qup_io_21,
->> +       LPI_MUX_qup_io_26,
->> +       LPI_MUX_qup_io_31,
->> +       LPI_MUX_qup_io_36,
->> +       LPI_MUX_qua_mi2s_data,
->> +       LPI_MUX_qua_mi2s_sclk,
->> +       LPI_MUX_qua_mi2s_ws,
->> +       LPI_MUX_slim_clk,
->> +       LPI_MUX_slim_data,
->> +       LPI_MUX_sync_out,
->> +       LPI_MUX_swr_rx_clk,
->> +       LPI_MUX_swr_rx_data,
->> +       LPI_MUX_swr_tx_clk,
->> +       LPI_MUX_swr_tx_data,
->> +       LPI_MUX_swr_wsa_clk,
->> +       LPI_MUX_swr_wsa_data,
->> +       LPI_MUX_gpio,
->> +       LPI_MUX__,
->> +};
->> +
->> +static const struct pinctrl_pin_desc sm4250_lpi_pins[] = {
->> +       PINCTRL_PIN(0, "gpio0"),
->> +       PINCTRL_PIN(1, "gpio1"),
->> +       PINCTRL_PIN(2, "gpio2"),
->> +       PINCTRL_PIN(3, "gpio3"),
->> +       PINCTRL_PIN(4, "gpio4"),
->> +       PINCTRL_PIN(5, "gpio5"),
->> +       PINCTRL_PIN(6, "gpio6"),
->> +       PINCTRL_PIN(7, "gpio7"),
->> +       PINCTRL_PIN(8, "gpio8"),
->> +       PINCTRL_PIN(9, "gpio9"),
->> +       PINCTRL_PIN(10, "gpio10"),
->> +       PINCTRL_PIN(11, "gpio11"),
->> +       PINCTRL_PIN(12, "gpio12"),
->> +       PINCTRL_PIN(13, "gpio13"),
->> +       PINCTRL_PIN(14, "gpio14"),
->> +       PINCTRL_PIN(15, "gpio15"),
->> +       PINCTRL_PIN(16, "gpio16"),
->> +       PINCTRL_PIN(17, "gpio17"),
->> +       PINCTRL_PIN(18, "gpio18"),
->> +       PINCTRL_PIN(19, "gpio19"),
->> +       PINCTRL_PIN(20, "gpio20"),
->> +       PINCTRL_PIN(21, "gpio21"),
->> +       PINCTRL_PIN(22, "gpio22"),
->> +       PINCTRL_PIN(23, "gpio23"),
->> +       PINCTRL_PIN(24, "gpio24"),
->> +       PINCTRL_PIN(25, "gpio25"),
->> +       PINCTRL_PIN(26, "gpio26"),
->> +};
-> 
-> This doesn't probe() on qrb4210 RB2 for me with the following trace:
-> 
-> [   10.709014] ------------[ cut here ]------------
-> [   10.719085] WARNING: CPU: 1 PID: 56 at
-> drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:446
-> lpi_pinctrl_probe+0x308/0x388 [pinctrl_lpass_lpi]
-> [   10.719108] Modules linked in: btqca qrtr btbcm qcom_q6v5_pas
-> libarc4 qcom_pil_info llcc_qcom bluetooth snd_soc_sm8250 ocmem
-> qcom_q6v5 snd_soc_qcom_sdw cfg80211 drm_exec qcom_sysmon
-> snd_soc_qcom_common gpu_sched crct10dif_ce qcom_common soundwire_bus
-> ecdh_generic qcom_glink_smem pinctrl_sm4250_lpass_lpi qcom_pmic_tcpm
-> drm_dp_aux_bus ecc mdt_loader qcom_wdt pinctrl_lpass_lpi
-> drm_display_helper qmi_helpers tcpm dispcc_sm6115 rfkill gpucc_sm6115
-> aux_hpd_bridge qcom_usb_vbus_regulator nvmem_qcom_spmi_sdam
-> qcom_spmi_temp_alarm qcom_pbs qcom_pon qcom_spmi_adc5 qcom_vadc_common
-> spi_geni_qcom gpi qcom_stats icc_bwmon qcom_rng qcrypto authenc
-> phy_qcom_qmp_usbc display_connector rpmsg_ctrl libdes typec rpmsg_char
-> phy_qcom_qusb2 drm_kms_helper rmtfs_mem socinfo i2c_gpio fuse drm
-> backlight dm_mod ip_tables x_tables ipv6
-> [   10.719238] CPU: 1 PID: 56 Comm: kworker/u33:0 Not tainted
-> 6.10.0-rc2-00012-ge45ddb1f8d34-dirty #7
-> [   10.719245] Hardware name: Qualcomm Technologies, Inc. QRB4210 RB2 (DT)
-> [   10.719250] Workqueue: events_unbound deferred_probe_work_func
-> [   10.719265] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [   10.719271] pc : lpi_pinctrl_probe+0x308/0x388 [pinctrl_lpass_lpi]
-> [   10.719278] lr : lpi_pinctrl_probe+0x44/0x388 [pinctrl_lpass_lpi]
-> [   10.719284] sp : ffff80008035bb40
-> [   10.719286] x29: ffff80008035bb40 x28: 0000000000000000 x27: 0000000000000000
-> [   10.719294] x26: ffff7eea83029428 x25: ffffa0c480a67510 x24: ffff7eea83be5800
-> [   10.719301] x23: ffff7eea83be5810 x22: 0000000000000000 x21: ffffa0c480a64030
-> [   10.719308] x20: ffff7eea83be5810 x19: ffff7eea89e59880 x18: ffffffffffffffff
-> [   10.719315] x17: 0000000000000000 x16: ffffa0c4f34949a4 x15: ffff80008035b7f0
-> [   10.719321] x14: ffffffffffffffff x13: 006c7274636e6970 x12: 2e30303030633761
-> [   10.719329] x11: 0101010101010101 x10: ffffa0c4f4b28ff2 x9 : 0000000000000008
-> [   10.719335] x8 : 0000000000000008 x7 : ffffa0c4f3cfa640 x6 : 0000000000000020
-> [   10.719342] x5 : 0000000000000020 x4 : 0000000000000000 x3 : ffffa0c480a67448
-> [   10.719348] x2 : ffffa0c480a67468 x1 : ffff7eea838b8000 x0 : 000000000000001b
-> [   10.719357] Call trace:
-> [   10.719361]  lpi_pinctrl_probe+0x308/0x388 [pinctrl_lpass_lpi]
+The decision to model the repeater as a PHY unfortunately breaks lockdep
+as you now have functions like phy_init() calling phy_init() for a
+second PHY (the repeater, see splat below).
+
+As long as the locks are always taken in the same order there should be
+no risk for a deadlock, but can you please verify that and add the
+missing lockdep annotation so that lockdep can be used on platforms like
+x1e80100 (e.g. to prevent further locking issues from being introduced)?
+
+Johan
 
 
-For some reason the common library seems to have a bit mask of 23 which 
-is why we are seeing this error.
+[    8.613248] ============================================
+[    8.669073] WARNING: possible recursive locking detected
+[    8.669074] 6.10.0-rc5 #122 Not tainted
+[    8.669075] --------------------------------------------
+[    8.669075] kworker/u50:0/77 is trying to acquire lock:
+[    8.669076] ffff5cae8733ecf8 (&phy->mutex){+.+.}-{3:3}, at: phy_init+0x4c/0x12c
+[    8.669087]
+               but task is already holding lock:
+[    8.669088] ffff5cae8a056cf8 (&phy->mutex){+.+.}-{3:3}, at: phy_init+0x4c/0x12c
+[    8.669092]
+               other info that might help us debug this:
+[    8.669092]  Possible unsafe locking scenario:
 
-Can you try this change,
+[    8.669093]        CPU0
+[    8.669093]        ----
+[    8.669094]   lock(&phy->mutex);
+[    8.669095]   lock(&phy->mutex);
+[    8.669097]
+                *** DEADLOCK ***
 
---------------------------------------->cut<-------------------------------
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c 
-b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index 0d98008e33ee..7366aba5a199 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -20,7 +20,7 @@
+[    8.669097]  May be due to missing lock nesting notation
 
-  #include "pinctrl-lpass-lpi.h"
-
--#define MAX_NR_GPIO            23
-+#define MAX_NR_GPIO            32
-  #define GPIO_FUNC              0
-  #define MAX_LPI_NUM_CLKS       2
-
---------------------------------------->cut<-------------------------------
-
-> [   10.719369]  platform_probe+0x68/0xc4
-> [   10.719378]  really_probe+0xbc/0x29c
-> [   10.719384]  __driver_probe_device+0x78/0x12c
-> [   10.719390]  driver_probe_device+0xd8/0x15c
-> [   10.719395]  __device_attach_driver+0xb8/0x134
-> [   10.719401]  bus_for_each_drv+0x88/0xe8
-> [   10.719407]  __device_attach+0xa0/0x190
-> [   10.719412]  device_initial_probe+0x14/0x20
-> [   10.719418]  bus_probe_device+0xac/0xb0
-> [   10.719423]  deferred_probe_work_func+0x88/0xc0
-> [   10.719429]  process_one_work+0x150/0x294
-> [   10.719439]  worker_thread+0x2f8/0x408
-> [   10.719445]  kthread+0x110/0x114
-> [   10.719452]  ret_from_fork+0x10/0x20
-> [   10.719459] ---[ end trace 0000000000000000 ]---
-> [   10.719589] qcom-sm4250-lpass-lpi-pinctrl a7c0000.pinctrl: probe
-> with driver qcom-sm4250-lpass-lpi-pinctrl failed with error -22
-> 
-> 
-> [...]
-> 
-> Thanks,
-> Alexey
+[    8.669097] 4 locks held by kworker/u50:0/77:
+[    8.669099]  #0: ffff5cae80010948 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work+0x1a4/0x638
+[    8.669108]  #1: ffff800080333de0 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work+0x1cc/0x638
+[    8.669112]  #2: ffff5cae854038f8 (&dev->mutex){....}-{3:3}, at: __device_attach+0x38/0x1d4
+[    8.669117]  #3: ffff5cae8a056cf8 (&phy->mutex){+.+.}-{3:3}, at: phy_init+0x4c/0x12c
+[    8.669121]
+               stack backtrace:
+[    8.669122] CPU: 9 PID: 77 Comm: kworker/u50:0 Not tainted 6.10.0-rc5 #122
+[    8.669124] Hardware name: Qualcomm CRD, BIOS 6.0.231221.BOOT.MXF.2.4-00348.1-HAMOA-1 12/21/2023
+[    8.669125] Workqueue: events_unbound deferred_probe_work_func
+[    8.669128] Call trace:
+[    8.669129]  dump_backtrace+0x9c/0x11c
+[    8.870384]  show_stack+0x18/0x24
+[    8.870386]  dump_stack_lvl+0x90/0xd0
+[    8.870391]  dump_stack+0x18/0x24
+[    8.870393]  print_deadlock_bug+0x25c/0x348
+[    8.870396]  __lock_acquire+0x10a4/0x2064
+[    8.870399]  lock_acquire.part.0+0xc8/0x20c
+[    8.870401]  lock_acquire+0x68/0x84
+[    8.870403]  __mutex_lock+0x98/0x428
+[    8.870407]  mutex_lock_nested+0x24/0x30
+[    8.870410]  phy_init+0x4c/0x12c
+[    8.870412]  qcom_snps_eusb2_hsphy_init+0x54/0x420 [phy_qcom_snps_eusb2]
+[    8.870416]  phy_init+0xe0/0x12c
+[    8.870418]  dwc3_core_init+0x484/0x1214
+[    8.870421]  dwc3_probe+0xe54/0x171c
+[    8.870424]  platform_probe+0x68/0xd8
+[    8.870426]  really_probe+0xc0/0x388
+[    8.870427]  __driver_probe_device+0x7c/0x160
+[    8.870429]  driver_probe_device+0x40/0x114
+[    8.870430]  __device_attach_driver+0xbc/0x158
+[    8.870432]  bus_for_each_drv+0x84/0xe0
+[    8.870433]  __device_attach+0xa8/0x1d4
+[    8.870435]  device_initial_probe+0x14/0x20
+[    8.870436]  bus_probe_device+0xb0/0xb4
+[    8.870437]  deferred_probe_work_func+0xa0/0xf4
+[    8.870439]  process_one_work+0x224/0x638
+[    8.870441]  worker_thread+0x268/0x3a8
+[    8.870442]  kthread+0x124/0x128
+[    8.870443]  ret_from_fork+0x10/0x20
 
