@@ -1,162 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-24091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D98E9161AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 10:52:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FF90916242
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 11:23:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80A611C22197
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 08:52:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF0141F25BB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 09:23:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 428C8148838;
-	Tue, 25 Jun 2024 08:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EA2E1494D9;
+	Tue, 25 Jun 2024 09:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HlYQVlrM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V41gf9nu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD61143C67;
-	Tue, 25 Jun 2024 08:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53C41494C8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 09:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719305558; cv=none; b=qQOkvrywvdLvKpgKu9uzBRD63vBjXaOzxMv4ph43r7Q+BsfvSncQn4k8hW2dfLoxtdB1ysWJG54EZHzRvLJTBNhoI685DPu3BFeLz61C966X5aRAHLmjjkNJI7UwNr5O923B8/SERYeSe9YOGkY9+MZE00XvYM3n6AJxzLPcImo=
+	t=1719307422; cv=none; b=qmsiVrpjbY8f0W9rjMgR3kAskI0RWVtDC8RSXv0Xz0Zxf/hGeWLz1msRDm900idullidBm/I08K0qsX7cKPsWn/UCIefKkyPBefdw6SCaWppbtRZrH/a8lk/AN8P2ahG1xgQTT5EloF/b7x3rSID+6VIjfSyZcFvCvEwhXujGZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719305558; c=relaxed/simple;
-	bh=LeL2ZBvNN6fSKmhvt3tkSZdZTbUOY78GVVrpbWdhQ2Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=RoPYmEm8m7c4qFSBPzYhCVq6VYJkNkCQMPxVi7MPRzdjLKlEYLMB4EAXD2pnay2VTuGDTl1lPMBVsFYEGNZs+TA2tcDhRerLiAqh8yH3BHAlizMM1LkIjRiZ6arqJcg2jt5zcNjRTVI6GOl3JxSZRjlLK/uZxV8/H+JqdgP6+dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HlYQVlrM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45P7l9BT001878;
-	Tue, 25 Jun 2024 08:52:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	a8mBQLoMwN6dzzV3j6uU5C/gA7BwB05rooHWBcbWMeQ=; b=HlYQVlrMdbt4sroZ
-	E29rHop2UGFVgLSK6WC9KHslINWDCZj5mWKSyPRlKv9mjobm31ki3xSp4cUSJPvh
-	GztNCZFKM98STHZxkYy8KV0B+Sts5uUjmMZKRPPRFHuSTe5VO/uNalV8Y6w5cYbb
-	H06hyBcG9cG8f2q2YXDZ1BP9WNO7zZgbu/F3WTJzO/EXZayVo5nfgREfa/a1OvMz
-	LO/6RzHDVpuVlEi1y0ObOwAtA56fAza4MXB2j/mq3I0gt/DnUMNfQydPMCFV3o2v
-	KfPBKZuoBoFqMhCgIk7XQ8V5B5U49hvLWEwJ72TPGm35jFXTXk072ZSL4WX2AHnE
-	tgDU2A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywmaexapq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 08:52:29 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45P8qSKE017099
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 08:52:28 GMT
-Received: from [10.251.44.181] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 25 Jun
- 2024 01:52:24 -0700
-Message-ID: <0f04511c-033b-4d23-a6e9-e4060f97b39d@quicinc.com>
-Date: Tue, 25 Jun 2024 11:52:22 +0300
+	s=arc-20240116; t=1719307422; c=relaxed/simple;
+	bh=rOUdR4UXlPv0HMOIols1rL3X/KRjDi1uSyCL6yzW3zY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oU+u0ChYGbrVQgOA1NTXAOIjpEeeZeQQVGdi+nCUTfhcYK7pHSTAFyHRjQBoOkOVaZnHW9YgG1VwUFHpTAFCDhpWpnxXrYHu11nz+eUYrovK37/w2faFkRGQ3bJME0kabcC8Ux87eWohIrl4FJv9i6UNPnJN+fnkW6a5D/+PAds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V41gf9nu; arc=none smtp.client-ip=209.85.167.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3d229baccc4so2809960b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 02:23:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719307420; x=1719912220; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uVGzFd5q8l7ZZf1kAdLFB+K/N7ZL5du4NsuCLhAw664=;
+        b=V41gf9nugabNO+AK/QGfHKZ6xhPj+Y0p2xXMAZgj52sM92QHcMwoJg8cfJtzffZYNm
+         vhuqeTUKT2Jfuq+KGcx5ie4jdsF8WyYID4t2hIaNSzh3R7YvmXMBW9efwx39z+uWkZPZ
+         Rjw/welp8xSz34CKQWnGJygi4mGCbwrezXupNQgRU98UmnFA9cFTOeecKDYD7+ksvlDG
+         Xovi5GEHo3keUuLbfnsuHX6D+lUq7MNam1vICile/RODSD/GAtAErV8pMO3+BjvXt9Fw
+         JYoUMqQiYAtLGccrkXpOoyzvJlmbxYlQjARvPbygglEW4W/KufzjaJumpuNkP5Mnw3ZD
+         xrAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719307420; x=1719912220;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uVGzFd5q8l7ZZf1kAdLFB+K/N7ZL5du4NsuCLhAw664=;
+        b=kbELF6mWm7zdpAHuOYrcsR91RePSGyNlTRE+CbTAquFvobJEzipCQiOFOkM012krJH
+         uhZvDuKVxOT3vZEKRtwbPJSoYYix5BlB60pzCFa+d2xdTklI6aAVTvlH9GviU2klVM1t
+         U6t2bmwk4wjUVHkTlz/BZuZ0eWkxs2gmi+d6z7dbr1jESwJdLuy50QM7DcMU6eyyuYmF
+         RvQd3DJCqxvrIYbXIusBrU3/H2yffWjTIuKHtFYh+iIMbz7sMta7D5LMcpRt7kEuXlul
+         T4ACGszVfuQZQZ44BBTkf0e6C5FYVIzUrNIeEVcMX5oM0e/KEKp8Fhii1njUnMC1yeBv
+         HWXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX+ZTCL5ToGHBTn2xvSRByu8GuY3MNmaYpJjcbj4bbDwFNNvGXx6c7jfwcA6dB50UNExAh7cpr/o0DoOVnshhmtqlRATe4PooxRNPxhKQ==
+X-Gm-Message-State: AOJu0YwzUC+7nDXyH0wd2g9W1gq8sBBtcV7ZRQTRQXoHftwxhLFD1dKE
+	wii3Q2RMXLmFBFIysj5Z637YGHHNArj4HIHrLPU8Vr2UC2Uz9gjjKei1SErDcg==
+X-Google-Smtp-Source: AGHT+IF/TD8QJ6PBiGj+PIp+ZPQnfxQrPZRAsnw7JmWE9Cx2usjPK36heD0+jTYNL7QGRrft9W9G1Q==
+X-Received: by 2002:a05:6808:17a2:b0:3d2:3e31:6cd9 with SMTP id 5614622812f47-3d54599437dmr8266510b6e.26.1719307419614;
+        Tue, 25 Jun 2024 02:23:39 -0700 (PDT)
+Received: from thinkpad ([117.193.213.113])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7065129b9edsm7840159b3a.148.2024.06.25.02.23.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jun 2024 02:23:38 -0700 (PDT)
+Date: Tue, 25 Jun 2024 14:53:32 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Slark Xiao <slark_xiao@163.com>
+Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Loic Poulain <loic.poulain@linaro.org>, ryazanov.s.a@gmail.com,
+	johannes@sipsolutions.net, netdev@vger.kernel.org,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: Re: Re: Re: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
+Message-ID: <20240625092332.GE2642@thinkpad>
+References: <20240612094609.GA58302@thinkpad>
+ <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
+ <20240612145147.GB58302@thinkpad>
+ <CAMZdPi-6GPWkj-wu4_mRucRBWXR03eYXu4vgbjtcns6mr0Yk9A@mail.gmail.com>
+ <c275ee49-ac59-058c-7482-c8a92338e7a2@quicinc.com>
+ <5055db15.37d8.19038cc602c.Coremail.slark_xiao@163.com>
+ <20240623134430.GD58184@thinkpad>
+ <6365d9b8.265a.1904d287cfa.Coremail.slark_xiao@163.com>
+ <20240625074449.GB2642@thinkpad>
+ <6dfe6dac.89aa.1904e82ae8c.Coremail.slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/8] media: qcom: camss: Split testgen, RDI and RX for
- CSID 170
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        kernel test robot
-	<lkp@intel.com>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mchehab@kernel.org>
-CC: <oe-kbuild-all@lists.linux.dev>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <laurent.pinchart@ideasonboard.com>, <hverkuil-cisco@xs4all.nl>,
-        <quic_hariramp@quicinc.com>
-References: <20240522154659.510-7-quic_grosikop@quicinc.com>
- <202405232059.8lLokYw2-lkp@intel.com>
- <b0785dc2-aa91-4b81-9d5b-f49bb1ab6fb6@linaro.org>
-Content-Language: en-US
-From: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>
-In-Reply-To: <b0785dc2-aa91-4b81-9d5b-f49bb1ab6fb6@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hzQ8GEiNQS1G2-FyLIbJCXhFCQ7GQky8
-X-Proofpoint-GUID: hzQ8GEiNQS1G2-FyLIbJCXhFCQ7GQky8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-25_04,2024-06-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
- clxscore=1011 mlxscore=0 lowpriorityscore=0 priorityscore=1501
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2406140001 definitions=main-2406250064
+In-Reply-To: <6dfe6dac.89aa.1904e82ae8c.Coremail.slark_xiao@163.com>
 
-Hi Bryan,
+On Tue, Jun 25, 2024 at 04:28:25PM +0800, Slark Xiao wrote:
 
+[...]
 
-On 6/21/2024 6:09 PM, Bryan O'Donoghue wrote:
-> On 23/05/2024 13:59, kernel test robot wrote:
->> Hi Gjorgji,
->>
->> kernel test robot noticed the following build warnings:
->>
->> [auto build test WARNING on media-tree/master]
->> [also build test WARNING on linus/master next-20240523]
->> [cannot apply to v6.9]
->> [If your patch is applied to the wrong git tree, kindly drop us a note.
->> And when submitting patch, we suggest to use '--base' as documented in
->> https://git-scm.com/docs/git-format-patch#_base_tree_information]
->>
->> url:https://github.com/intel-lab-lkp/linux/commits/Gjorgji-Rosikopulos/media-qcom-camss-Add-per-sub-device-type-resources/20240522-235220
->> base:   git://linuxtv.org/media_tree.git master
->> patch
->> link:https://lore.kernel.org/r/20240522154659.510-7-quic_grosikop%40quicinc.com
->> patch subject: [PATCH v4 6/8] media: qcom: camss: Split testgen, RDI
->> and RX for CSID 170
->> config: arm64-defconfig
->> (https://download.01.org/0day-ci/archive/20240523/202405232059.8lLokYw2-lkp@intel.com/config)
->> compiler: aarch64-linux-gcc (GCC) 13.2.0
->> reproduce (this is a W=1 build):
->> (https://download.01.org/0day-ci/archive/20240523/202405232059.8lLokYw2-lkp@intel.com/reproduce)
->>
->> If you fix the issue in a separate patch/commit (i.e. not just a new
->> version of
->> the same patch/commit), kindly add following tags
->> | Reported-by: kernel test robot<lkp@intel.com>
->> |
->> Closes:https://lore.kernel.org/oe-kbuild-all/202405232059.8lLokYw2-lkp@intel.com/
->>
->> All warnings (new ones prefixed by >>):
->>
->>     drivers/media/platform/qcom/camss/camss-csid-gen2.c: In function
->> '__csid_configure_rdi_stream':
->>>> drivers/media/platform/qcom/camss/camss-csid-gen2.c:265:13: warning:
->>>> variable 'phy_sel' set but not used [-Wunused-but-set-variable]
->>       265 |         u32 phy_sel = 0;
->>           |             ^~~~~~~
+> >Hmm, sadly we shouldn't have used the same controller config for all these
+> >devices across different product families. I didn't really paid attention to the
+> >device name which is supposed to be unique (that's my bad).
+> >
+> >For instance, because of the controller config reuse, your SDX62 modem would
+> >print:
+> >
+> >"MHI PCI device found: foxconn-sdx65"
+> >
+> >which clearly is misleading the users...
+> >
+> >I've submitted a patch that uses unique product name across the product families
+> >[1]. Please take a look. After this patch, you can use the modem name to
+> >differentiate in client drivers.
+> >
+> >- Mani
+> >
+> >[1] https://lore.kernel.org/mhi/20240625074148.7412-1-manivannan.sadhasivam@linaro.org/
+> >
+> >-- 
+> >மணிவண்ணன் சதாசிவம்
+> For same chip platform, I don't think it's necessary to separate into different parts.
+> Like t99w368 and DW5932e, all things are same except the 'name'. For previous
+> mux_id settings, we would like to add it for sdx72/sdx75 platforms, but shall
+> no difference on T99W515 and DW5934e. 
+> Otherwise, we must to update both mhi and wwan side if we have a new foxconn
+> SDX72 device support since the name is different with foxconn-t99w515 or
+> foxconn-dw5934e.
 > 
-> Gjorgji.
-> 
-> This appears to be a dead variable now.
-> 
-> I don't see a need to respin this series but, could you send a
-> supplementary patch to fix this up ?
 
-Yes i will send supplementary patch for fixing this. My mistake for
-ignoring this warning...
+Name is an important factor for an end user. Because, even though both products
+are same in functionality, they are marketed as different products. So the users
+should be provided with the actual product name, not baseline.
 
-~Gjorgji
+Even though it requires an update to the pci_generic driver, it ought to happen
+for correctness.
 
+- Mani
 
-> 
-> ---
-> bod
+-- 
+மணிவண்ணன் சதாசிவம்
 
