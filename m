@@ -1,182 +1,307 @@
-Return-Path: <linux-arm-msm+bounces-24145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CD4F916FB7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 20:02:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F432916FBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 20:04:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80B9D1F23167
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 18:02:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 095302812DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 18:04:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F4239158D84;
-	Tue, 25 Jun 2024 18:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEB63176AA9;
+	Tue, 25 Jun 2024 18:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BEoG71qU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ee8+jbAe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53689144D2D;
-	Tue, 25 Jun 2024 18:02:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF0F1459E2;
+	Tue, 25 Jun 2024 18:03:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719338564; cv=none; b=blJ2qYnVE/jevAMDI2z/fPVPMp1MxleAZTSelj5LoKk+RyPfLWdc/ytTj8EsGDd4klZKhCNjsiVQg2h8cEKCZ/Nyrhh0JY98HtTXWWMSQBil8A+uMm1cZYRB7er/Bkvshkny2a9yEryRFbQZVOI7SqFR4vd3Tj86LzDTm5yvxIA=
+	t=1719338637; cv=none; b=hI0X5wnxqZTNLlt2oceUvDIowtpPKaDMCc0fUpUNL5GZ8tM4toRoiHQz6CJ7IwHmsO8oPjLeXwdj9yWdAYdKrZ8o2bQZYNzhG6wGNPGuut7S5oiEhNdbUm7KhZTlQ5ylyTG6fCqD+eswLgXxVB2Zdcn1Wuwu5DA62n/cfAeR4Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719338564; c=relaxed/simple;
-	bh=T6+v41gWS5oq7/6CrgXpyFIGDlb8js0/a6DLDjVa6E8=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S5Ql+auF3UICjB2eCUWLbSCIbZOkc1DniQAvouUrGHITqHJWzmHSR2eNKcn8WFIk83Dw6F8E184H5JiBwOF1XL237ECppzh3FLTXCWE5AZCEM9PJcxnuRx6HUxFQHzRrRIyxJ3Nn27XqheKKDuA0VeaOkn81yfpS2rRZxjn4UWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BEoG71qU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45P8Y91o029121;
-	Tue, 25 Jun 2024 18:02:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=/RGL8NHTH4b3pQ/JYRu7flha
-	7u7/6/xKUKZWPQ+3m4M=; b=BEoG71qUjvpyRoZd0w7HjKyJ1LHWBjBUdEjIASpR
-	/4GPse2pp7gXQzkj+r8opQOr7dblYFwQZHxUILhooZirupGEunwrtvFcrFKR3mRn
-	kfTVEMfk92gZHjBPHMXLYTvC68/J0qYJjQ3Ynw73wsf2YYT1+MobOjjtuEkzV6UL
-	+urLU+n9lMzZU5wi/r1iqM305jiuVDTmd8qzTg3MjTxmjCWkOByPD7IWbhc0LunJ
-	aMfX7Ww/MxPDq/BWgKgTG+nY5MQtm+Cveo7fHUX7VGH3DkZ2LyOnycosPKhwwzF3
-	/2tWEV/ZInsPLIpZO8WI0q242W3xm4rIntsTKzGoqlXrTA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywq077bqa-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 18:02:31 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45PI2UGc005996
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 18:02:30 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 25 Jun 2024 11:02:25 -0700
-Date: Tue, 25 Jun 2024 23:32:21 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Will Deacon <will@kernel.org>
-CC: Andrew Halaney <ahalaney@redhat.com>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul
-	<sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] drm/msm/adreno: De-spaghettify the use of memory barriers
-Message-ID: <20240625180221.irtao4s6i7xurzsx@hu-akhilpo-hyd.qualcomm.com>
-References: <20240508-topic-adreno-v1-1-1babd05c119d@linaro.org>
- <20240514183849.6lpyplifero5u35r@hu-akhilpo-hyd.qualcomm.com>
- <ae4a77wt3kc73ejshptldqx6ugzrqguyq7etbbu54y4avhbdlt@qyt4r6gma7ev>
- <20240516145005.gdksmvxp35m45ifh@hu-akhilpo-hyd.qualcomm.com>
- <5vyrmxvkurdstqfiatxfqcqljwyiswda2vpkea27ighb2eqbav@n24yzdykbc23>
- <20240604144055.GE20384@willie-the-truck>
- <20240618161158.qpqbv77tqveo5g6l@hu-akhilpo-hyd.qualcomm.com>
- <20240620130400.GA4750@willie-the-truck>
+	s=arc-20240116; t=1719338637; c=relaxed/simple;
+	bh=4eZEqFRWoipG4zTd9GOuhMs3kNAWsvxhedyQHEcVKDo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lSn8LYZKV0Ef8B6ljArLyRnejsUHlR5GevTxGevQQcxej5llMqn1UTkP01Nwu7Hy8mJtSFtzO+LsFZESm5vrVvysKBBMdr+oEVvLnwDU6cP9izTcGbbKxLmTeOFp96M+l0pNqYHK2SrOZHSYcQZCENKGolo5/4WXX3wY+HT4WUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ee8+jbAe; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57ccd1111aeso7226772a12.0;
+        Tue, 25 Jun 2024 11:03:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719338634; x=1719943434; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6601RBK+eocJf2ba8P+FLfSKXpn6mR5woMfwy6PoMIA=;
+        b=ee8+jbAevXE+j22jA359Yr+7/YJ8WhMBgDPuSPYlEHIHjXWLRlCCQcH0dps+9Osan8
+         mL+v3oFNifXOJn1aDbh5nnOXer73U/WzgvZFYhmcGYu8Is1i9nRZTyZTDQI2ABBLXKPe
+         dJgTzqM4oyVdzhyHypLgULEI7AWdhdHSsaCqbVJWgWhOQdkPtEjCtYL44JLxAcctNYir
+         4wsmwVfqRqELvUAF6Ds+lPdzr9q4GqrscNGEX7AxvZfCPFdlRI4HYjInKxahvOiURPTU
+         JaCSmewKJHbgO1qdJUyaQjqSibpCibXqFfc7tvYu9JyflSBYs/vsXeV4AUgCKWkzaymu
+         cKIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719338634; x=1719943434;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6601RBK+eocJf2ba8P+FLfSKXpn6mR5woMfwy6PoMIA=;
+        b=Wodfk7xe8NY5G30ptOOCYktMgWUuuTpTDIBvhA7o5D2VoO5RMKcZstb2gdP/mBOu23
+         b6heJ4t+fyw7SAtOxw8CeUHHLBjJ1E0x/Caa4z1UoiEIM1OWXBV3PBjCKNHA34pOhLwK
+         IDTcaMzTZNpv1Z3b0TMJgjDaPwdy26Rsnqo8do8xgcD4NLPpRz/xFwbGu9DcpkY1dMb/
+         2gFu7ER2x3oNknxiIvFQcJKOu15faF8F6oryR66dm3MCfPBEdK3M6rtO7936RppulzQu
+         EYwVpoM1VLh23ijOTKhn094IBne940LujwQ7Sqv9Rs5tV2ttjNI3NuzuT7/MRMIHVo5f
+         BYzg==
+X-Forwarded-Encrypted: i=1; AJvYcCXlc8QUMX4BwRYY8HwKvQLxmO8ki1kQQUfHJ/rnG5dcIKgV4ra93tdc16N6xg9fa7lbsg7YPcel/W55pyo9ionavUWTUgxhdaxKeM/orQ/JNmb3/B2WYFtf0MEr8B35gBShoCFDLRKXL6EP2A==
+X-Gm-Message-State: AOJu0YyZWDu6WOCDnEbneQi6Ns7lS5SevLggSMM0RpD0HLPvA9mBEVWL
+	xiSA9tWBippazVJNEWqt1MODWKNa159jpDNRhGHAS+X5IOT2oI3JI4tujS5uDBYy6V4i4QHxVTj
+	xRYaE/3YYIFjGLKbDoTEIh6f9aZ0=
+X-Google-Smtp-Source: AGHT+IHJedgwbLU61bzST1zWFY1JoWUlU7S5Qb8p5ldwdp6EHIf6sUA+bXFFcjhLptnoC+wGuGdU73R+N1AbZw60oSo=
+X-Received: by 2002:a05:6402:1d52:b0:57d:5e33:371a with SMTP id
+ 4fb4d7f45d1cf-57d5e3337cfmr6987032a12.39.1719338634304; Tue, 25 Jun 2024
+ 11:03:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240620130400.GA4750@willie-the-truck>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2BZn3DZ19cIqEV4hBiPANomJNl1XlAs1
-X-Proofpoint-GUID: 2BZn3DZ19cIqEV4hBiPANomJNl1XlAs1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-25_13,2024-06-25_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
- mlxscore=0 spamscore=0 mlxlogscore=999 adultscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406250132
+References: <20240608-adreno-v1-1-2e470480eee7@gmail.com> <CAF6AEGsd6jfDqV-EOWr+oMjPpVr2S+71VYmp1JoY8xU51eeEEw@mail.gmail.com>
+ <20240625175926.4xyzwjyx7oxcwnzx@hu-akhilpo-hyd.qualcomm.com>
+In-Reply-To: <20240625175926.4xyzwjyx7oxcwnzx@hu-akhilpo-hyd.qualcomm.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 25 Jun 2024 11:03:42 -0700
+Message-ID: <CAF6AEGt5=bcni0K1ysot3-hVj9gWECJ5qP=M-sEDkRrAmEHFGg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/a6xx: request memory region
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Kiarash Hajian <kiarash8112hajian@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 20, 2024 at 02:04:01PM +0100, Will Deacon wrote:
-> On Tue, Jun 18, 2024 at 09:41:58PM +0530, Akhil P Oommen wrote:
-> > On Tue, Jun 04, 2024 at 03:40:56PM +0100, Will Deacon wrote:
-> > > On Thu, May 16, 2024 at 01:55:26PM -0500, Andrew Halaney wrote:
-> > > > On Thu, May 16, 2024 at 08:20:05PM GMT, Akhil P Oommen wrote:
-> > > > > On Thu, May 16, 2024 at 08:15:34AM -0500, Andrew Halaney wrote:
-> > > > > > If I understand correctly, you don't need any memory barrier.
-> > > > > > writel()/readl()'s are ordered to the same endpoint. That goes for all
-> > > > > > the reordering/barrier comments mentioned below too.
-> > > > > > 
-> > > > > > device-io.rst:
-> > > > > > 
-> > > > > >     The read and write functions are defined to be ordered. That is the
-> > > > > >     compiler is not permitted to reorder the I/O sequence. When the ordering
-> > > > > >     can be compiler optimised, you can use __readb() and friends to
-> > > > > >     indicate the relaxed ordering. Use this with care.
-> > > > > > 
-> > > > > > memory-barriers.txt:
-> > > > > > 
-> > > > > >      (*) readX(), writeX():
-> > > > > > 
-> > > > > > 	    The readX() and writeX() MMIO accessors take a pointer to the
-> > > > > > 	    peripheral being accessed as an __iomem * parameter. For pointers
-> > > > > > 	    mapped with the default I/O attributes (e.g. those returned by
-> > > > > > 	    ioremap()), the ordering guarantees are as follows:
-> > > > > > 
-> > > > > > 	    1. All readX() and writeX() accesses to the same peripheral are ordered
-> > > > > > 	       with respect to each other. This ensures that MMIO register accesses
-> > > > > > 	       by the same CPU thread to a particular device will arrive in program
-> > > > > > 	       order.
-> > > > > > 
-> > > > > 
-> > > > > In arm64, a writel followed by readl translates to roughly the following
-> > > > > sequence: dmb_wmb(), __raw_writel(), __raw_readl(), dmb_rmb(). I am not
-> > > > > sure what is stopping compiler from reordering  __raw_writel() and __raw_readl()
-> > > > > above? I am assuming iomem cookie is ignored during compilation.
-> > > > 
-> > > > It seems to me that is due to some usage of volatile there in
-> > > > __raw_writel() etc, but to be honest after reading about volatile and
-> > > > some threads from gcc mailing lists, I don't have a confident answer :)
-> > > > 
-> > > > > 
-> > > > > Added Will to this thread if he can throw some light on this.
-> > > > 
-> > > > Hopefully Will can school us.
-> > > 
-> > > The ordering in this case is ensured by the memory attributes used for
-> > > ioremap(). When an MMIO region is mapped using Device-nGnRE attributes
-> > > (as it the case for ioremap()), the "nR" part means "no reordering", so
-> > > readX() and writeX() to that region are ordered wrt each other.
-> > 
-> > But that avoids only HW reordering, doesn't it? What about *compiler reordering* in the
-> > case of a writel following by a readl which translates to:
-> > 	1: dmb_wmb()
-> > 	2: __raw_writel() -> roughly "asm volatile('str')
-> > 	3: __raw_readl() -> roughly "asm volatile('ldr')
-> > 	4: dmb_rmb()
-> > 
-> > Is the 'volatile' keyword sufficient to avoid reordering between (2) and (3)? Or
-> > do we need a "memory" clobber to inhibit reordering?
-> > 
-> > This is still not clear to me even after going through some compiler documentions.
-> 
-> I don't think the compiler should reorder volatile asm blocks wrt each
-> other.
-> 
+On Tue, Jun 25, 2024 at 10:59=E2=80=AFAM Akhil P Oommen
+<quic_akhilpo@quicinc.com> wrote:
+>
+> On Fri, Jun 21, 2024 at 02:09:58PM -0700, Rob Clark wrote:
+> > On Sat, Jun 8, 2024 at 8:44=E2=80=AFAM Kiarash Hajian
+> > <kiarash8112hajian@gmail.com> wrote:
+> > >
+> > > The driver's memory regions are currently just ioremap()ed, but not
+> > > reserved through a request. That's not a bug, but having the request =
+is
+> > > a little more robust.
+> > >
+> > > Implement the region-request through the corresponding managed
+> > > devres-function.
+> > >
+> > > Signed-off-by: Kiarash Hajian <kiarash8112hajian@gmail.com>
+> > > ---
+> > > Changes in v6:
+> > >     -Fix compile error
+> > >     -Link to v5: https://lore.kernel.org/all/20240607-memory-v1-1-866=
+4f52fc2a1@gmail.com
+> > >
+> > > Changes in v5:
+> > >     - Fix error hanlding problems.
+> > >     - Link to v4: https://lore.kernel.org/r/20240512-msm-adreno-memor=
+y-region-v4-1-3881a64088e6@gmail.com
+> > >
+> > > Changes in v4:
+> > >     - Combine v3 commits into a singel commit
+> > >     - Link to v3: https://lore.kernel.org/r/20240512-msm-adreno-memor=
+y-region-v3-0-0a728ad45010@gmail.com
+> > >
+> > > Changes in v3:
+> > >     - Remove redundant devm_iounmap calls, relying on devres for auto=
+matic resource cleanup.
+> > >
+> > > Changes in v2:
+> > >     - update the subject prefix to "drm/msm/a6xx:", to match the majo=
+rity of other changes to this file.
+> > > ---
+> > >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 33 +++++++++++--------------=
+--------
+> > >  1 file changed, 11 insertions(+), 22 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/=
+msm/adreno/a6xx_gmu.c
+> > > index 8bea8ef26f77..d26cc6254ef9 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > @@ -525,7 +525,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *g=
+mu)
+> > >         bool pdc_in_aop =3D false;
+> > >
+> > >         if (IS_ERR(pdcptr))
+> > > -               goto err;
+> > > +               return;
+> > >
+> > >         if (adreno_is_a650(adreno_gpu) ||
+> > >             adreno_is_a660_family(adreno_gpu) ||
+> > > @@ -541,7 +541,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *g=
+mu)
+> > >         if (!pdc_in_aop) {
+> > >                 seqptr =3D a6xx_gmu_get_mmio(pdev, "gmu_pdc_seq");
+> > >                 if (IS_ERR(seqptr))
+> > > -                       goto err;
+> > > +                       return;
+> > >         }
+> > >
+> > >         /* Disable SDE clock gating */
+> > > @@ -633,12 +633,6 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *=
+gmu)
+> > >         wmb();
+> > >
+> > >         a6xx_rpmh_stop(gmu);
+> > > -
+> > > -err:
+> > > -       if (!IS_ERR_OR_NULL(pdcptr))
+> > > -               iounmap(pdcptr);
+> > > -       if (!IS_ERR_OR_NULL(seqptr))
+> > > -               iounmap(seqptr);
+> > >  }
+> > >
+> > >  /*
+> > > @@ -1503,7 +1497,7 @@ static void __iomem *a6xx_gmu_get_mmio(struct p=
+latform_device *pdev,
+> > >                 return ERR_PTR(-EINVAL);
+> > >         }
+> > >
+> > > -       ret =3D ioremap(res->start, resource_size(res));
+> > > +       ret =3D devm_ioremap_resource(&pdev->dev, res);
+> >
+> > So, this doesn't actually work, failing in __request_region_locked(),
+> > because the gmu region partially overlaps with the gpucc region (which
+> > is busy).  I think this is intentional, since gmu is controlling the
+> > gpu clocks, etc.  In particular REG_A6XX_GPU_CC_GX_GDSCR is in this
+> > overlapping region.  Maybe Akhil knows more about GMU.
+>
+> We don't really need to map gpucc region from driver on behalf of gmu.
+> Since we don't access any gpucc register from drm-msm driver, we can
+> update the range size to correct this. But due to backward compatibility
+> requirement with older dt, can we still enable region locking? I prefer
+> it if that is possible.
 
-Thanks Will for confirmation.
+Actually, when I reduced the region size to not overlap with gpucc,
+the region is smaller than REG_A6XX_GPU_CC_GX_GDSCR * 4.
 
--Akhil.
+So I guess that register is actually part of gpucc?
 
-> Will
+BR,
+-R
+
+> FYI, kgsl accesses gpucc registers to ensure gdsc has collapsed. So
+> gpucc region has to be mapped by kgsl and that is reflected in the kgsl
+> device tree.
+>
+> -Akhil
+>
+> >
+> > BR,
+> > -R
+> >
+> > >         if (!ret) {
+> > >                 DRM_DEV_ERROR(&pdev->dev, "Unable to map the %s regis=
+ters\n", name);
+> > >                 return ERR_PTR(-EINVAL);
+> > > @@ -1613,13 +1607,13 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6=
+xx_gpu, struct device_node *node)
+> > >         gmu->mmio =3D a6xx_gmu_get_mmio(pdev, "gmu");
+> > >         if (IS_ERR(gmu->mmio)) {
+> > >                 ret =3D PTR_ERR(gmu->mmio);
+> > > -               goto err_mmio;
+> > > +               goto err_cleanup;
+> > >         }
+> > >
+> > >         gmu->cxpd =3D dev_pm_domain_attach_by_name(gmu->dev, "cx");
+> > >         if (IS_ERR(gmu->cxpd)) {
+> > >                 ret =3D PTR_ERR(gmu->cxpd);
+> > > -               goto err_mmio;
+> > > +               goto err_cleanup;
+> > >         }
+> > >
+> > >         if (!device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME)=
+) {
+> > > @@ -1635,7 +1629,7 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx=
+_gpu, struct device_node *node)
+> > >         gmu->gxpd =3D dev_pm_domain_attach_by_name(gmu->dev, "gx");
+> > >         if (IS_ERR(gmu->gxpd)) {
+> > >                 ret =3D PTR_ERR(gmu->gxpd);
+> > > -               goto err_mmio;
+> > > +               goto err_cleanup;
+> > >         }
+> > >
+> > >         gmu->initialized =3D true;
+> > > @@ -1645,9 +1639,7 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx=
+_gpu, struct device_node *node)
+> > >  detach_cxpd:
+> > >         dev_pm_domain_detach(gmu->cxpd, false);
+> > >
+> > > -err_mmio:
+> > > -       iounmap(gmu->mmio);
+> > > -
+> > > +err_cleanup:
+> > >         /* Drop reference taken in of_find_device_by_node */
+> > >         put_device(gmu->dev);
+> > >
+> > > @@ -1762,7 +1754,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, st=
+ruct device_node *node)
+> > >                 gmu->rscc =3D a6xx_gmu_get_mmio(pdev, "rscc");
+> > >                 if (IS_ERR(gmu->rscc)) {
+> > >                         ret =3D -ENODEV;
+> > > -                       goto err_mmio;
+> > > +                       goto err_cleanup;
+> > >                 }
+> > >         } else {
+> > >                 gmu->rscc =3D gmu->mmio + 0x23000;
+> > > @@ -1774,13 +1766,13 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, =
+struct device_node *node)
+> > >
+> > >         if (gmu->hfi_irq < 0 || gmu->gmu_irq < 0) {
+> > >                 ret =3D -ENODEV;
+> > > -               goto err_mmio;
+> > > +               goto err_cleanup;
+> > >         }
+> > >
+> > >         gmu->cxpd =3D dev_pm_domain_attach_by_name(gmu->dev, "cx");
+> > >         if (IS_ERR(gmu->cxpd)) {
+> > >                 ret =3D PTR_ERR(gmu->cxpd);
+> > > -               goto err_mmio;
+> > > +               goto err_cleanup;
+> > >         }
+> > >
+> > >         link =3D device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNT=
+IME);
+> > > @@ -1824,10 +1816,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, s=
+truct device_node *node)
+> > >  detach_cxpd:
+> > >         dev_pm_domain_detach(gmu->cxpd, false);
+> > >
+> > > -err_mmio:
+> > > -       iounmap(gmu->mmio);
+> > > -       if (platform_get_resource_byname(pdev, IORESOURCE_MEM, "rscc"=
+))
+> > > -               iounmap(gmu->rscc);
+> > > +err_cleanup:
+> > >         free_irq(gmu->gmu_irq, gmu);
+> > >         free_irq(gmu->hfi_irq, gmu);
+> > >
+> > >
+> > > ---
+> > > base-commit: 1b294a1f35616977caddaddf3e9d28e576a1adbc
+> > > change-id: 20240608-adreno-98c412bfdc03
+> > >
+> > > Best regards,
+> > > --
+> > > Kiarash Hajian <kiarash8112hajian@gmail.com>
+> > >
 
