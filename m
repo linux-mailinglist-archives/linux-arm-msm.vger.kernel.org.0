@@ -1,243 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-24083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDABE916032
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 09:42:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A1F291603C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 09:45:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B9EF1C21552
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 07:42:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC2131C219C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 07:45:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86E79146A97;
-	Tue, 25 Jun 2024 07:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EBA2148309;
+	Tue, 25 Jun 2024 07:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MIUfrfl9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WmF5d0L1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C319B1369AE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 07:42:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3820146D6A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 07:44:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719301327; cv=none; b=llgObUOnSqSiuv9ZT3jYTY0VOpJ74Z5/WWrrWdavN6qIQE+rCgZraDueZt7SMraaFmE2mV8PFB7y0eHzxfHgDzuiB8G8IGJfbIfn67RMKQz9UepgMdVLUWIgJXQnFnWxqT0lxiTcmxVT9+aJdS1wJKJr4abJx4KYHmmtaG8AnDs=
+	t=1719301500; cv=none; b=CZ3yZxEOcj8lS55CNwkfxwV+dO78ctPQqwds5ktasTCDIu2jQnMI6qeLM2OfX3rtJ4onB7MfyaTlrQz8ygCSXw128DiuD8k+VaMN/+StOWyT9KCa+dX3nbpsl33D82djpU2cAIETa+Y/jt5XUKNVEC/HleU78/nu1TiqSxxxpBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719301327; c=relaxed/simple;
-	bh=GmkimFcFtFK8mMsCi0jj7QEksDlg26Utvz9AR83r6Qc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RAntmCkRUDTHvgUQlImcr2Tgh+76VP0iI5U1YTNPh7x6kzQYXP7IINVQ2MMHdY0GGQodOJtzu0BLLzT48xHelAIKfFrx6pq443RGsx5hDvokKMvtFE4B6iUuELkBDRlsnkXIg1nZDiK12+SOANVxnu8/8vxvQfRIHIOGV+G+fsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MIUfrfl9; arc=none smtp.client-ip=209.85.161.53
+	s=arc-20240116; t=1719301500; c=relaxed/simple;
+	bh=BrE/avNcFCb2c2ZQ1R91zUzHnGcGEXFHrlren9ImfBY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LMaKS1QTSZSoO07o0XqaoghXAyfy5PBCbQ9EHfBQFL3Tiw3mV5mY/4IGK+KFcuIpVPVHaJs/52STzbLCLsqGu8DN742ZQYqO3rD/j3NUjxlVDVhLFccdIpffZSgioD2qkPAIcvM/DGXQELcs7hcM50p07629ut/jFm37uqKDFPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WmF5d0L1; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5c2011716a3so693373eaf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 00:42:05 -0700 (PDT)
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f480624d0fso40690415ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 00:44:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719301325; x=1719906125; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RRB38DCEZO7cOWwaamoDCIbRbW1WGzcG4rzbWV+0pOM=;
-        b=MIUfrfl9q0X89T4BztDoQ0m8pgzLDhZbtTgUanDZnlQiBtYydmJNNzyC1EcYX8Hwfi
-         kJxukzhej1d3kXCslioNkllwEjCxORP2BxGF++sezP9E67qt0jIaGkDoLG1+s03od1CY
-         CMIee5k1Enuc/3WCX6B0y2WB/rUhKddmPy3Y9uc4PhSx/NX6YOJ3h/8w6CWIIQudTyKY
-         vwqIQtLC23dZ1IWD8TOaQA2rIlpV+9Lb+Qmym8Wl97+vputIgNAhJ3wxIDEDCWgjWQ38
-         9RJWXyCuQhq5brjANv89niBJ0qev1XrSuJcO3rKidxgvjYgu6eaYWX49H1e4gY7gIM4f
-         ZTVw==
+        d=linaro.org; s=google; t=1719301497; x=1719906297; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=At0Xj8xgcIEkjWgNW//ghCMG7rYUOwOX+xhLiCV7+BQ=;
+        b=WmF5d0L1a4TdGGNaj553/xx+lV3LByw/CLr0izWG4Etrraw3XDT38JUuH9Gg4kftVu
+         9n4JtbEKRdgOl0Ucs/Dwgm1JB4Td3xq7pEeMAjiV5CCLhd9wn1+z/s5SjNXpn2Onzfcu
+         FvihjoNUykqUswpReDG2DqUAzX58XnyyQgn/AfGDN2D3f08UhSNJ8iIpteoPZgn6S6Lz
+         FdQzkvy0akZ7pVeZjyiu1G3j3AWlEyYscW+q5ZI1Kf6sWocdKSOf8Vsf/d9zU8x0etRs
+         9v/04EY+Q282tsvEz+O1YDVYrPG1C7kdiZehex1MSZ2Vy2E6j7YuzTtXC3g5qZAF1nPS
+         Oy0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719301325; x=1719906125;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RRB38DCEZO7cOWwaamoDCIbRbW1WGzcG4rzbWV+0pOM=;
-        b=brOSwnvk/KjVHjTBGXSa0npSis7SJxQKQzVw6x3MvMLfgdaRpIYJJpsGrkQw5PY3BU
-         QffYXOKOR4AqLVcGHHSThJjZ2pBS9xgqDd+6+WPtNUwYoAkV2RkG3xc2XxSM60so+Xfs
-         LXQ5yh3euHdAkAFomQHXfZTH7kU7BiiLQA+Zzqz1t1v6GQ9vy0HS8NUGsvfFaKTGrg93
-         QY+OczGfM3jEJ5c89RnZ71IppnZ+Kuy22TML62qC04NuqQUp/MVOIyfkz+JPlGqHaezW
-         I2zeEoPlJhFZI69FcamL1nDM1RIgE5qG0RLCpAuSK3SL0fdmwm0Nc8smGZP7YWOSpkTr
-         qCpw==
-X-Gm-Message-State: AOJu0Yy+DbGprNjblUOUmLzu4jNegGywYlXWJEyfPSA5hrlKaBv+tCL1
-	W1uM8fKzdJHRNfEPDso5jAnw6EZ6tyHvYM0l2tesdK8yJm167JeUK+vr0GBztw==
-X-Google-Smtp-Source: AGHT+IGUI/YebZZksQQBqBp3qcWWB8sVkfkJcd0UugX2LPBmEhL8Cml8W3OQr90aRqjoLDLmk2VB4Q==
-X-Received: by 2002:a05:6870:148e:b0:259:31ad:b566 with SMTP id 586e51a60fabf-25d06e55cf3mr6658652fac.42.1719301324649;
-        Tue, 25 Jun 2024 00:42:04 -0700 (PDT)
-Received: from localhost.localdomain ([117.193.213.113])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7065126d0b0sm7404416b3a.103.2024.06.25.00.42.02
+        d=1e100.net; s=20230601; t=1719301497; x=1719906297;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=At0Xj8xgcIEkjWgNW//ghCMG7rYUOwOX+xhLiCV7+BQ=;
+        b=TsE6kANMLuN6Ee6jkNEAZqk/WZbUejX3cE1yVBd2kPWdK9jK7yu+HiRNRbKDqVT3ns
+         XCHVad0d8Jl3biuITcyUhNUaFbUhsSKzs/d54zjyIPL6IVgg9evSH2hah+2TehzByXCj
+         8PaPqsS3grI/zD/qwj7Y7P29FAorrX1UMY4nSacTpbWgUiLKeIZa8HtT/hR5Mgios5FV
+         mYwcvNMex0xC97rqCWQpJ4kE2AmLw+TX9/K7k9vfcDZkstZ1RCRkfIo/BU8AsbR59Jq2
+         9BWWvIKyIYko0ZOV8eGu1WTSeUn4EiEcbxx+0a7v8r2Zc41Uj09D1I91VkVh4K0iW6OV
+         GKhA==
+X-Forwarded-Encrypted: i=1; AJvYcCXM9wq8OBKfWPUj1KM7wzLb9NOCOHAf/o1mTdXZLdV6Wdg4j+i29zeiEXEGEKdRFKBci48eQbJQZdSMpsPE0eaHcnTje41Dd7C0PXvVUA==
+X-Gm-Message-State: AOJu0YwSVY8kSmWwCqn1iSUG7Lmezw+u5yLJKFObnuo16WD6oKi4XlIp
+	SnNoD8IrDaDLCWrtHDqodVOyTdkMbm0d7YgLtdxurtjRljjkqa/CI1L9l2b65g==
+X-Google-Smtp-Source: AGHT+IFY7szsQuaT9s//WTBj2OWQzMRGSJ0i3bT9pBac299YWlDXDVeWQlC+gbq6bn7v8RBl0LeVWA==
+X-Received: by 2002:a17:902:d501:b0:1f9:c6e8:2797 with SMTP id d9443c01a7336-1fa2401bdf6mr62806515ad.37.1719301497113;
+        Tue, 25 Jun 2024 00:44:57 -0700 (PDT)
+Received: from thinkpad ([117.193.213.113])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f9ebbb2909sm74615435ad.257.2024.06.25.00.44.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 00:42:04 -0700 (PDT)
+        Tue, 25 Jun 2024 00:44:56 -0700 (PDT)
+Date: Tue, 25 Jun 2024 13:14:49 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: mhi@lists.linux.dev
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Slark Xiao <slark_xiao@163.com>
-Subject: [PATCH] bus: mhi: host: pci_generic: Use unique 'mhi_pci_dev_info' for product families
-Date: Tue, 25 Jun 2024 13:11:48 +0530
-Message-Id: <20240625074148.7412-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+To: Slark Xiao <slark_xiao@163.com>
+Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Loic Poulain <loic.poulain@linaro.org>, ryazanov.s.a@gmail.com,
+	johannes@sipsolutions.net, netdev@vger.kernel.org,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: Re: Re: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
+Message-ID: <20240625074449.GB2642@thinkpad>
+References: <20240612093842.359805-1-slark_xiao@163.com>
+ <20240612094609.GA58302@thinkpad>
+ <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
+ <20240612145147.GB58302@thinkpad>
+ <CAMZdPi-6GPWkj-wu4_mRucRBWXR03eYXu4vgbjtcns6mr0Yk9A@mail.gmail.com>
+ <c275ee49-ac59-058c-7482-c8a92338e7a2@quicinc.com>
+ <5055db15.37d8.19038cc602c.Coremail.slark_xiao@163.com>
+ <20240623134430.GD58184@thinkpad>
+ <6365d9b8.265a.1904d287cfa.Coremail.slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <6365d9b8.265a.1904d287cfa.Coremail.slark_xiao@163.com>
 
-Currently, a single 'mhi_pci_dev_info' is shared across different product
-families. Even though it makes the device functional, it misleads the users
-by sharing the common product name.
+On Tue, Jun 25, 2024 at 10:10:17AM +0800, Slark Xiao wrote:
+> At 2024-06-23 21:44:30, "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org> wrote:
+> >On Fri, Jun 21, 2024 at 11:17:16AM +0800, Slark Xiao wrote:
+> >> 
+> >> At 2024-06-14 22:31:03, "Jeffrey Hugo" <quic_jhugo@quicinc.com> wrote:
+> >> >On 6/14/2024 4:17 AM, Loic Poulain wrote:
+> >> >> On Wed, 12 Jun 2024 at 16:51, Manivannan Sadhasivam
+> >> >> <manivannan.sadhasivam@linaro.org> wrote:
+> >> >>>
+> >> >>> On Wed, Jun 12, 2024 at 08:19:13AM -0600, Jeffrey Hugo wrote:
+> >> >>>> On 6/12/2024 3:46 AM, Manivannan Sadhasivam wrote:
+> >> >>>>> On Wed, Jun 12, 2024 at 05:38:42PM +0800, Slark Xiao wrote:
+> >> >>>>>
+> >> >>>>> Subject could be improved:
+> >> >>>>>
+> >> >>>>> bus: mhi: host: Add configurable mux_id for MBIM mode
+> >> >>>>>
+> >> >>>>>> For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
+> >> >>>>>> This would lead to device can't ping outside successfully.
+> >> >>>>>> Also MBIM side would report "bad packet session (112)".
+> >> >>>>>> So we add a default mux_id value for SDX72. And this value
+> >> >>>>>> would be transferred to wwan mbim side.
+> >> >>>>>>
+> >> >>>>>> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> >> >>>>>> ---
+> >> >>>>>>    drivers/bus/mhi/host/pci_generic.c | 3 +++
+> >> >>>>>>    include/linux/mhi.h                | 2 ++
+> >> >>>>>>    2 files changed, 5 insertions(+)
+> >> >>>>>>
+> >> >>>>>> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> >> >>>>>> index 0b483c7c76a1..9e9adf8320d2 100644
+> >> >>>>>> --- a/drivers/bus/mhi/host/pci_generic.c
+> >> >>>>>> +++ b/drivers/bus/mhi/host/pci_generic.c
+> >> >>>>>> @@ -53,6 +53,7 @@ struct mhi_pci_dev_info {
+> >> >>>>>>            unsigned int dma_data_width;
+> >> >>>>>>            unsigned int mru_default;
+> >> >>>>>>            bool sideband_wake;
+> >> >>>>>> + unsigned int mux_id;
+> >> >>>>>>    };
+> >> >>>>>>    #define MHI_CHANNEL_CONFIG_UL(ch_num, ch_name, el_count, ev_ring) \
+> >> >>>>>> @@ -469,6 +470,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx72_info = {
+> >> >>>>>>            .dma_data_width = 32,
+> >> >>>>>>            .mru_default = 32768,
+> >> >>>>>>            .sideband_wake = false,
+> >> >>>>>> + .mux_id = 112,
+> >> >>>>>>    };
+> >> >>>>>>    static const struct mhi_channel_config mhi_mv3x_channels[] = {
+> >> >>>>>> @@ -1035,6 +1037,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+> >> >>>>>>            mhi_cntrl->runtime_get = mhi_pci_runtime_get;
+> >> >>>>>>            mhi_cntrl->runtime_put = mhi_pci_runtime_put;
+> >> >>>>>>            mhi_cntrl->mru = info->mru_default;
+> >> >>>>>> + mhi_cntrl->link_id = info->mux_id;
+> >> >>>>>
+> >> >>>>> Again, 'link_id' is just a WWAN term. Use 'mux_id' here also.
+> >> >>>>
+> >> >>>> Does this really belong in MHI?  If this was DT, I don't think we would put
+> >> >>>> this value in DT, but rather have the driver (MBIM) detect the device and
+> >> >>>> code in the required value.
+> >> >>>>
+> >> >>>
+> >> >>> I believe this is a modem value rather than MHI. But I was OK with keeping it in
+> >> >>> MHI driver since we kind of keep modem specific config.
+> >> >>>
+> >> >>> But if WWAN can detect the device and apply the config, I'm all over it.
+> >> >> 
+> >> >> That would require at least some information from the MHI bus for the
+> >> >> MBIM driver
+> >> >> to make a decision, such as a generic device ID, or quirk flags...
+> >> >
+> >> >I don't see why.
+> >> >
+> >> >The "simple" way to do it would be to have the controller define a 
+> >> >different channel name, and then have the MBIM driver probe on that. 
+> >> >The MBIM driver could attach driver data saying that it needs to have a 
+> >> >specific mux_id.
+> >> >
+> >> >Or, with zero MHI/Controller changes, the MBIM driver could parse the 
+> >> >mhi_device struct, get to the struct device, for the underlying device, 
+> >> >and extract the PCIe Device ID and match that to a white list of known 
+> >> >devices that need this property.
+> >> >
+> >> >I guess if the controller could attach a private void * to the 
+> >> >mhi_device that is opaque to MHI, but allows MBIM to make a decision, 
+> >> >that would be ok.  Such a mechanism would be generic, and extensible to 
+> >> >other usecases of the same "class".
+> >> >
+> >> >-Jeff
+> >> 
+> >> Hi guys,
+> >> This patch mainly refer to the feature of mru setting between mhi and wwan side.
+> >> We ransfer this value to wwan side if we define it in mhi side, otherwise a default
+> >> value would be used in wwan side. Why don't we just align with that?
+> >> 
+> >
+> >Well, the problem is that MRU has nothing to do with MHI. I initially thought
+> >that it could fit inside the controller config, but thinking more I agree with
+> >Jeff that this doesn't belong to MHI at all.
+> >
+> >At the same time, I also do not want to extract the PCI info from the client
+> >drivers since the underlying transport could change with MHI. So the best
+> >solution I can think of is exposing the modem name in 'mhi_controller_config' so
+> >that the client drivers can do a match.
+> >
+> >Please try to implement that.
+> >
+> >- Mani
+> >
+> >-- 
+> >மணிவண்ணன் சதாசிவம்
+> Hi Mani,
+> Currently there are many products share a same mhi_controller_config
+> settings. For example, all foxconn device use modem_foxconn_sdx55_config.
+> But my device may be a SDX24, or SDX72, or even SDX65.  Any other idea?
+> 
 
-For instance, below message will be printed for Foxconn SDX62 modem during
-boot:
+Hmm, sadly we shouldn't have used the same controller config for all these
+devices across different product families. I didn't really paid attention to the
+device name which is supposed to be unique (that's my bad).
+
+For instance, because of the controller config reuse, your SDX62 modem would
+print:
 
 "MHI PCI device found: foxconn-sdx65"
 
-But this is quite misleading to the users since the actual modem plugged in
-could be 'T99W373' which is based on SDX62.
+which clearly is misleading the users...
 
-So fix this issue by using a unique 'mhi_pci_dev_info' for product
-families. This allows us to specify a unique product name for each product
-family. Also, once this name is exposed to client drivers, they may use
-this name to identify the modems and use any modem specific configuration.
+I've submitted a patch that uses unique product name across the product families
+[1]. Please take a look. After this patch, you can use the modem name to
+differentiate in client drivers.
 
-Modems of unknown product families are not impacted by this change.
+- Mani
 
-CC: Slark Xiao <slark_xiao@163.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/host/pci_generic.c | 76 +++++++++++++++++++++++-------
- 1 file changed, 58 insertions(+), 18 deletions(-)
+[1] https://lore.kernel.org/mhi/20240625074148.7412-1-manivannan.sadhasivam@linaro.org/
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 08844ee79654..25113b87b780 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -419,8 +419,10 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
- 	.event_cfg = mhi_foxconn_sdx55_events,
- };
- 
--static const struct mhi_pci_dev_info mhi_foxconn_sdx24_info = {
--	.name = "foxconn-sdx24",
-+static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
-+	.name = "foxconn-sdx55",
-+	.fw = "qcom/sdx55m/sbl1.mbn",
-+	.edl = "qcom/sdx55m/edl.mbn",
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -428,8 +430,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx24_info = {
- 	.sideband_wake = false,
- };
- 
--static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
--	.name = "foxconn-sdx55",
-+static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
-+	.name = "foxconn-t99w175",
- 	.fw = "qcom/sdx55m/sbl1.mbn",
- 	.edl = "qcom/sdx55m/edl.mbn",
- 	.config = &modem_foxconn_sdx55_config,
-@@ -439,8 +441,46 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
- 	.sideband_wake = false,
- };
- 
--static const struct mhi_pci_dev_info mhi_foxconn_sdx65_info = {
--	.name = "foxconn-sdx65",
-+static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
-+	.name = "foxconn-dw5930e",
-+	.fw = "qcom/sdx55m/sbl1.mbn",
-+	.edl = "qcom/sdx55m/edl.mbn",
-+	.config = &modem_foxconn_sdx55_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+	.sideband_wake = false,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
-+	.name = "foxconn-t99w368",
-+	.config = &modem_foxconn_sdx55_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+	.sideband_wake = false,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
-+	.name = "foxconn-t99w373",
-+	.config = &modem_foxconn_sdx55_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+	.sideband_wake = false,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
-+	.name = "foxconn-t99w510",
-+	.config = &modem_foxconn_sdx55_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.mru_default = 32768,
-+	.sideband_wake = false,
-+};
-+
-+static const struct mhi_pci_dev_info mhi_foxconn_dw5932e_info = {
-+	.name = "foxconn-dw5932e",
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -646,40 +686,40 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0ab),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w175_info },
- 	/* DW5930e (sdx55), With eSIM, It's also T99W175 */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b0),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_dw5930e_info },
- 	/* DW5930e (sdx55), Non-eSIM, It's also T99W175 */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0b1),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_dw5930e_info },
- 	/* T99W175 (sdx55), Based on Qualcomm new baseline */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0bf),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w175_info },
- 	/* T99W175 (sdx55) */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0c3),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx55_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w175_info },
- 	/* T99W368 (sdx65) */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0d8),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w368_info },
- 	/* T99W373 (sdx62) */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0d9),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w373_info },
- 	/* T99W510 (sdx24), variant 1 */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f0),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w510_info },
- 	/* T99W510 (sdx24), variant 2 */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f1),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w510_info },
- 	/* T99W510 (sdx24), variant 3 */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f2),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w510_info },
- 	/* DW5932e-eSIM (sdx62), With eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f5),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_dw5932e_info },
- 	/* DW5932e (sdx62), Non-eSIM */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f9),
--		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
-+		.driver_data = (kernel_ulong_t) &mhi_foxconn_dw5932e_info },
- 	/* MV31-W (Cinterion) */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b3),
- 		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
 
