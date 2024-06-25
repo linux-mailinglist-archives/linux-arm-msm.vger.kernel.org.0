@@ -1,173 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-24133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92589916E9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 18:57:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04EB3916EA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 18:58:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 213181F2266F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 16:57:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A24F41F22C10
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 16:58:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99E0D176252;
-	Tue, 25 Jun 2024 16:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4913175567;
+	Tue, 25 Jun 2024 16:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hZXrZg/p"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Df3iGoIj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB34C1487C4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 16:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2AA176234
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 16:57:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719334665; cv=none; b=hGtEFpwUgBJleWADRcHyLgwWnxZijUwu71V+r/KcEv9ELxxG8sraIDzvbJ6VPpcGaeRZBokMNV+1pHWnzqpmOb6tL4aiCzxifIe7hodjrV+3ER6U8A/JHxzSwWQQo3WnW10r1Mv3Y43p4JBn4CWrDHdE6oKNrMX2INkYKQgHqsY=
+	t=1719334674; cv=none; b=PcseY/m2oLOmhy0ahT6i2HMEbxJq772UbLPRrJ+JASPs4hMm0ydKcYcp4hyasUGCwHzHR4Qbq3JssufK0KsONC123DNSVOqdW/uDChOxdTVFt9Ps+zFrkZP34z11ujU7ZLC8e18dop+H1hAWdhgzo/2MXT23F9vLeJ3/W+1UcxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719334665; c=relaxed/simple;
-	bh=IgGwHrHuFpbFHTEvgUPbclMeTRgHKAPJp73FYsZVpTQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/4gda3JnNt8YihXQYwFJfr2XubKj2dGFOG4JJcUI3mwFVv953nCcDIzrHMo9Yy1qxsYgOKkJFyNRzoWQuHaTVvVVPdsTXfYe8fNwe5jZXEF5ECG0W6j8XafxIJRiLJQ+Ecq75hTVeeWhAECv+7X1AQxIok1AIWcFAnB/bwEfY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hZXrZg/p; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1719334674; c=relaxed/simple;
+	bh=XTKwc6WsHqDFL2V3ZkDy5nradEps2Vi9RgsZOcLaSJ8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sMZBmUdOp4GjuLt8CqCY4d8g0rzDbA7mc9tVsC5UtPTSOY9umCNvO4Y8HjUNIit/Y+hOpirtJ49uogk9Es1ZKweTXNKJsFomAAEvcjPzMEtXngTUdBvmuMoJvxRIwEPZXt2/NelDswam2m1bWPMVG1QyoCpNDPI+8Mct3661hLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Df3iGoIj; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4217136a74dso46802105e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 09:57:43 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52cd717ec07so4896181e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 09:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719334662; x=1719939462; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719334671; x=1719939471; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LRIDFf691thT58ox/N/VuEZHKFWQnoUZUCRyx39jn5s=;
-        b=hZXrZg/pdIKKxoEUltbP7CANhXKQRlx4s1Kj5LgrIHRQLyhtvnP8iO+3viyePNWUP7
-         wPPf5CrFqEyONBLpBjPGyLFn1C3JpeFKEfCzykPXqd5WC7Tn62Lj/GgGcncjGtv8uOQd
-         migK/HetNmmRWUA0Ch3diSs7fdqoFxE3qCdtkf2DFr18adJaFLB5WjfigomIYremaF7r
-         yjeMVK/XSm5P0STK0YGpSYCNV1l4LXDd6bgoZwRViyDtmFHFz9iPaB3VHCYvvrMY1NhE
-         0NDGugDEAZVHaFTLr0hf63jgVPnx+LWijrACa+i/olK+6vsmwAdRkrvfKsxgD0aPb3GO
-         buog==
+        bh=JyVXj4bWgaYvRknSa5lJyMkjZU/JIisl8Ay4LG2mAhw=;
+        b=Df3iGoIjnw4+MHExiIWctqE5Ex08iFa10kzLlOUQqo6a7aefN7kOYeoEYBdP8g7gOC
+         lKLL/e5e4cCJyF0EmDa9/Qsg5sAcnX8hytDFTMWxEMFb56y9xZePSKcTEQ8kqyJ4o04x
+         M8MaUSeFCA+0vPz33WvJdSUwlnvUiUB6p87/qyM5+FRtTgdtIrA2Dw5jJh5DUaEaYM9F
+         hI6isbTf/7ijzf8zhLZLh9wJaUWSn+pOempm2My5UchcQj8GDUHZ9Fv4Rf/neHzRFsCc
+         b0GmdUf4T9rFjAtpFmy1ehQS9kxmPT+xempId0M6umwx4nyrlOQAqOliuIrwCVg4COZJ
+         9Czw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719334662; x=1719939462;
+        d=1e100.net; s=20230601; t=1719334671; x=1719939471;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LRIDFf691thT58ox/N/VuEZHKFWQnoUZUCRyx39jn5s=;
-        b=bmk9vwHrz7j80osXgIenVoBc7+ZGWHJKiXw14v9dzIwGIWlxlB1ZXMbJTd1JBLQ/zR
-         yOGVVVesXFygiimSQJoIc2Qa73JtXyJjJERsNLVUWGEMvPwdcImWCSYaTqjJ7apg/sSS
-         yx1z3t5usQSe6+zj6rqDcVFPAXOJGUpNuzC9m1jRPsSo0X743LgmGaPm/Zr89o097Ac2
-         ekWkBKZsEM1Hyjtj3tkAIvK+xxEBmpxlW7TGQSNlvJdLjqQOZR2efi9l7N3GPZfAcbqK
-         cBgon+jGuSqvkRjRIuLDRcSbPXmLXolU4mOAN1I221ygUG7qH5gEtbHWbaP/5hdUmdCw
-         x2Zg==
-X-Forwarded-Encrypted: i=1; AJvYcCWuC7ZG5YtGsLkm0GPSPZXyyG4QQGXRH3/rfJr/QXAZxgaFyNeDaAWOe2pk1C2mznZGuUFsBrr1BdBgq8KpHlGMFwLcyW+9ec6nUpS45Q==
-X-Gm-Message-State: AOJu0Yyfy1FJQp+XcDgjErpebRHK1HgfjtjnpEa0GSTqfxTQZLJik4tx
-	ypci52rz1DuvCNtoBk4BYKO98W4Vi2Qpgt42Imnfmd5BB8pSukodNSFxJj3D/Bw=
-X-Google-Smtp-Source: AGHT+IE/O1fv/lIki0Fwzrt9YYS/r8AY/7+8D+IqPaAgKoFLSWyy9JqVUr3ddgb2fUcIuTZSME2ZbA==
-X-Received: by 2002:a5d:46c2:0:b0:360:9cf4:58ce with SMTP id ffacd0b85a97d-366e96b22damr4696741f8f.46.1719334662267;
-        Tue, 25 Jun 2024 09:57:42 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3663a8cb6d2sm13360519f8f.111.2024.06.25.09.57.41
+        bh=JyVXj4bWgaYvRknSa5lJyMkjZU/JIisl8Ay4LG2mAhw=;
+        b=aH8HMdKsNCMxsnZ1uwwK3hlanUxfWy7s54F0dyHtOLDfw+nnF4ewBzGPP1PQo2cxD5
+         KKU4TP8/PymJZEVf/5aKegDOoX+svYQalEOVug6ZwIq6QaxzUmQpYglzeCpnfaQ+69QL
+         ay85bQSL3FPuR85pzhMknbjsqI5pRFAZ+rpncwE7zqaKsswoD8w2d8vaC2wvp7O7Z4PO
+         uP1Y8XQvIHo7H4XJ3A3L4PFYzxKwSFjpYFFkrLDThxJ3a5pCKE25/OPhWzCDl2vGzXSq
+         7D0d9unx9YLDZXyTy/Aw3ndeisSxvY1kbhB5xR1OKiBunquXwiiZBChDBQTeAJgC033k
+         uLUA==
+X-Gm-Message-State: AOJu0YxwXA5oaeAthzlFYneZwQC36CNFxHZBCUpvorIbAwUq8D2g8bSt
+	aCVciD0HpsJuB4OMLIlWzgr55pGbaWWETiNKMw/hdNJYIh/D27nTUoSOoJc/8sI=
+X-Google-Smtp-Source: AGHT+IGTV29hsOIqeDCHH2orasV8fV1XlLYvRt5g7BFjuE7tm9jJmD/m1TAz3dbQze32DSkd4dHSKg==
+X-Received: by 2002:a05:6512:158f:b0:52c:d9a3:58af with SMTP id 2adb3069b0e04-52ce185cf66mr5892393e87.49.1719334671344;
+        Tue, 25 Jun 2024 09:57:51 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cf1918e14sm215392e87.235.2024.06.25.09.57.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 09:57:41 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	linux-sound@vger.kernel.org,
+        Tue, 25 Jun 2024 09:57:50 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] ASoC: codecs: lpass-macro: Use enum for handling codec version
-Date: Tue, 25 Jun 2024 18:57:36 +0200
-Message-ID: <20240625165736.722106-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240625165736.722106-1-krzysztof.kozlowski@linaro.org>
-References: <20240625165736.722106-1-krzysztof.kozlowski@linaro.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Conor Dooley <conor@kernel.org>
+Subject: Re: [PATCH v2 0/4] dt-bindings: display/msm/gpu: few cleanups
+Date: Tue, 25 Jun 2024 19:57:50 +0300
+Message-Id: <171933466183.1441256.5006913345206572060.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240623-qcom-adreno-dts-bindings-driver-v2-0-9496410de992@linaro.org>
+References: <20240623-qcom-adreno-dts-bindings-driver-v2-0-9496410de992@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Replace 'int' with proper 'enum lpass_codec_version' in every place
-which handles the parsed codec version (not raw register values!) to be
-explicit about contents of the variable.  This makes code easier to read
-and compilers could check missing switch cases.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- sound/soc/codecs/lpass-macro-common.c | 8 ++++----
- sound/soc/codecs/lpass-macro-common.h | 4 ++--
- sound/soc/codecs/lpass-rx-macro.c     | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+On Sun, 23 Jun 2024 22:02:59 +0200, Krzysztof Kozlowski wrote:
+> Changes since v1:
+> 1. Add tags
+> 2. New patches #3 and #4
+> 3. Drop previous patch "dt-bindings: display/msm/gpu: constrain
+>    reg/reg-names per variant", because I need to investigate more.
+> 
+> v1: dt-bindings: display/msm/gpu: constrain reg/reg-names per variant
+> 
+> [...]
 
-diff --git a/sound/soc/codecs/lpass-macro-common.c b/sound/soc/codecs/lpass-macro-common.c
-index 8b038a99a8f9..6e3b8d0897dd 100644
---- a/sound/soc/codecs/lpass-macro-common.c
-+++ b/sound/soc/codecs/lpass-macro-common.c
-@@ -12,7 +12,7 @@
- #include "lpass-macro-common.h"
- 
- static DEFINE_MUTEX(lpass_codec_mutex);
--static int lpass_codec_version;
-+static enum lpass_codec_version lpass_codec_version;
- 
- struct lpass_macro *lpass_macro_pds_init(struct device *dev)
- {
-@@ -69,7 +69,7 @@ void lpass_macro_pds_exit(struct lpass_macro *pds)
- }
- EXPORT_SYMBOL_GPL(lpass_macro_pds_exit);
- 
--void lpass_macro_set_codec_version(int version)
-+void lpass_macro_set_codec_version(enum lpass_codec_version version)
- {
- 	mutex_lock(&lpass_codec_mutex);
- 	lpass_codec_version = version;
-@@ -77,9 +77,9 @@ void lpass_macro_set_codec_version(int version)
- }
- EXPORT_SYMBOL_GPL(lpass_macro_set_codec_version);
- 
--int lpass_macro_get_codec_version(void)
-+enum lpass_codec_version lpass_macro_get_codec_version(void)
- {
--	int ver;
-+	enum lpass_codec_version ver;
- 
- 	mutex_lock(&lpass_codec_mutex);
- 	ver = lpass_codec_version;
-diff --git a/sound/soc/codecs/lpass-macro-common.h b/sound/soc/codecs/lpass-macro-common.h
-index 94697d0ba8c9..3aa9737f2737 100644
---- a/sound/soc/codecs/lpass-macro-common.h
-+++ b/sound/soc/codecs/lpass-macro-common.h
-@@ -38,8 +38,8 @@ struct lpass_macro {
- 
- struct lpass_macro *lpass_macro_pds_init(struct device *dev);
- void lpass_macro_pds_exit(struct lpass_macro *pds);
--void lpass_macro_set_codec_version(int version);
--int lpass_macro_get_codec_version(void);
-+void lpass_macro_set_codec_version(enum lpass_codec_version version);
-+enum lpass_codec_version lpass_macro_get_codec_version(void);
- 
- static inline const char *lpass_macro_get_codec_version_string(int version)
- {
-diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-index 1c3429f004ed..320e3261c151 100644
---- a/sound/soc/codecs/lpass-rx-macro.c
-+++ b/sound/soc/codecs/lpass-rx-macro.c
-@@ -642,7 +642,7 @@ struct rx_macro {
- 	int rx_mclk_users;
- 	int clsh_users;
- 	int rx_mclk_cnt;
--	int codec_version;
-+	enum lpass_codec_version codec_version;
- 	int rxn_reg_stride;
- 	bool is_ear_mode_on;
- 	bool hph_pwr_mode;
+Applied, thanks!
+
+[1/4] dt-bindings: display/msm/gpu: constrain clocks in top-level
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/d6c7c411be78
+[2/4] dt-bindings: display/msm/gpu: define reg-names in top-level
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/c808ece19640
+[3/4] dt-bindings: display/msm/gpu: simplify compatible regex
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/6d69f8d37c85
+[4/4] dt-bindings: display/msm/gpu: fix the schema being not applied
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/399af57ccca2
+
+Best regards,
 -- 
-2.43.0
-
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
