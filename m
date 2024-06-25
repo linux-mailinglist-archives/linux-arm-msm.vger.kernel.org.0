@@ -1,200 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-24088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BD38916127
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 10:29:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CFC7916134
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 10:30:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 383251C2107D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 08:29:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D889283FFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 08:30:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B17A14830F;
-	Tue, 25 Jun 2024 08:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 620F2148FEC;
+	Tue, 25 Jun 2024 08:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="KWS9BLE8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NHu4xP1f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A552B1474AE;
-	Tue, 25 Jun 2024 08:28:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.3
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEA2148853;
+	Tue, 25 Jun 2024 08:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719304141; cv=none; b=EMZq6bvvqMQHRw7sZckAOpeH7b0xaFVHePfjIZ4tiMmOaGtzdFVbXsC58HwqBhXJWAeuSD/ssVLulEdjm7tGxD/twYUyXHwn3OC/fFyRHL4uLU/uQoAuKcCjoFb/UVaK2HTKnK7/fpAafcK2iC2DSavlhfLJbq9DtDewCc4ZfZI=
+	t=1719304183; cv=none; b=U3/DoiKu5oAWlruGsdw/amEwNX/eX8pm2H/YujmO7thiCMGJ9WWcFidlqDc8aptR70MHnXoLhPOfdGzx1hXxN8ggJ454B46elAVvkLOJdBpV1er3m4ty2J/dZVm1Nr00CHgh8J/suWweC+N2iGkkL2uPv1hmg+BLrqyR490Hzp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719304141; c=relaxed/simple;
-	bh=wrzOsAIt1eQ57gxV2B7/eMt+sHA4pDv4XHBILa+mIsc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=ULTIP8wZolsxQw8rz/fbWXDkbqM48fbUQm4wk95xPQdJlCXA4HBsK5JzL2y6BGH+qPFV9LQJW+MF4l4ZZ5CajMVjhyF9KxZg3LKkAFH3ScRZWIdkSswsIMumAIM6QKvpKg9BQ10IS63DvW/CbRtHfTZra1Oz+c5BPrvNRjKJYb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=KWS9BLE8 reason="signature verification failed"; arc=none smtp.client-ip=117.135.210.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=/XOUBLuDMmhpRuGM5gN4caxqNtNVvYQWHwHrUExSlaY=; b=K
-	WS9BLE8UO/X4M0+Y1BegP12HzgNfc24+2L5R/6UOMMs2GpFKTTpsfW3umnPMV6xu
-	NWrFaglkkrvX7UKgDaUovrHsa6DMm2x+AyALzKuZriq7STPBS8xyAwfVl5XKiCoi
-	idTMQE4XySRj4XM/3CiyNXHMinouGaBUaZJc/zjyIk=
-Received: from slark_xiao$163.com ( [112.97.56.123] ) by
- ajax-webmail-wmsvr-40-111 (Coremail) ; Tue, 25 Jun 2024 16:28:25 +0800
- (CST)
-Date: Tue, 25 Jun 2024 16:28:25 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
-Cc: "Jeffrey Hugo" <quic_jhugo@quicinc.com>, 
-	"Loic Poulain" <loic.poulain@linaro.org>, ryazanov.s.a@gmail.com, 
-	johannes@sipsolutions.net, netdev@vger.kernel.org, 
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re:Re: Re: Re: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <20240625074449.GB2642@thinkpad>
-References: <20240612093842.359805-1-slark_xiao@163.com>
- <20240612094609.GA58302@thinkpad>
- <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
- <20240612145147.GB58302@thinkpad>
- <CAMZdPi-6GPWkj-wu4_mRucRBWXR03eYXu4vgbjtcns6mr0Yk9A@mail.gmail.com>
- <c275ee49-ac59-058c-7482-c8a92338e7a2@quicinc.com>
- <5055db15.37d8.19038cc602c.Coremail.slark_xiao@163.com>
- <20240623134430.GD58184@thinkpad>
- <6365d9b8.265a.1904d287cfa.Coremail.slark_xiao@163.com>
- <20240625074449.GB2642@thinkpad>
-X-NTES-SC: AL_Qu2aC/+bu0kr4yWfbOkfmk8Sg+84W8K3v/0v1YVQOpF8jDjp1hw8TERlMl7GyvKtBRyGjT6xdD11w897ZK5jX60S2GpYQOCVS5lXkeAtJLFFHw==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1719304183; c=relaxed/simple;
+	bh=jmxYxe636/BiZ693P1S0stgdVUD6CUIUfhLFVMiJmcU=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=Be3xx6esbYXGenoePu+ldbTCsG+4FXv+N9aKAifHwyATnfIbtcKfc9uVFjR6az/3Cq1K2s4m+3V1WBcVIIJ+cxvbWUdUjB2iTsVGQfT0pfOdtBMr67sSrO+c8Y/n3lpQd4TQ8q/KeD31HXok1HkFgIV0VjC2jCHHMgcGIgOO1l8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NHu4xP1f; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DD2C32786;
+	Tue, 25 Jun 2024 08:29:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719304182;
+	bh=jmxYxe636/BiZ693P1S0stgdVUD6CUIUfhLFVMiJmcU=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=NHu4xP1fAgOTkdA/COgPuAKfp6H2M4ONNfdDc0gJNUxYQFrM8Tv+INxOmFSkbiNwh
+	 /nEmidwPX313K/bndn2W7jE/9wf8PIUmD7FlW4K4ffHchE6cZguETn0z60BLyj1b/N
+	 sztUFPE4wJBfznr1yY2r+3nZD/6FVTWjABw4k9iMsXblmeZylo7k/BuM5YtDBeWLZq
+	 VBmTvMFOOcnsbjZhiZH6o8MUlFi/y7Thy23/+fsTssXI/fWROnpacThyTZlqYOn5Dm
+	 8WNVZ/yqFHzpaMSrh2CYVyqH5QNarGfV5CjgyMp0Nuh5xnG5CVoX1ztMyZqJALcwSz
+	 V+q5waUulGulQ==
+Date: Tue, 25 Jun 2024 02:29:41 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <6dfe6dac.89aa.1904e82ae8c.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3P6qpf3pm6CoFAA--.7689W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiJRQJZGVOB3+dhwAFsQ
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Devi Priya <quic_devipriy@quicinc.com>
+Cc: dmitry.baryshkov@linaro.org, netdev@vger.kernel.org, arnd@arndb.de, 
+ krzk+dt@kernel.org, nfraprado@collabora.com, m.szyprowski@samsung.com, 
+ neil.armstrong@linaro.org, konrad.dybcio@linaro.org, 
+ linux-arm-msm@vger.kernel.org, conor+dt@kernel.org, sboyd@kernel.org, 
+ linux-arm-kernel@lists.infradead.org, geert+renesas@glider.be, 
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org, will@kernel.org, 
+ andersson@kernel.org, mturquette@baylibre.com, u-kumar1@ti.com, 
+ catalin.marinas@arm.com, richardcochran@gmail.com, 
+ linux-kernel@vger.kernel.org, p.zabel@pengutronix.de
+In-Reply-To: <20240625070536.3043630-5-quic_devipriy@quicinc.com>
+References: <20240625070536.3043630-1-quic_devipriy@quicinc.com>
+ <20240625070536.3043630-5-quic_devipriy@quicinc.com>
+Message-Id: <171930418133.2076741.5571224940926459410.robh@kernel.org>
+Subject: Re: [PATCH V4 4/7] dt-bindings: clock: Add ipq9574 NSSCC clock and
+ reset definitions
 
-QXQgMjAyNC0wNi0yNSAxNTo0NDo0OSwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbml2YW5u
-YW4uc2FkaGFzaXZhbUBsaW5hcm8ub3JnPiB3cm90ZToKPk9uIFR1ZSwgSnVuIDI1LCAyMDI0IGF0
-IDEwOjEwOjE3QU0gKzA4MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IEF0IDIwMjQtMDYtMjMgMjE6
-NDQ6MzAsICJNYW5pdmFubmFuIFNhZGhhc2l2YW0iIDxtYW5pdmFubmFuLnNhZGhhc2l2YW1AbGlu
-YXJvLm9yZz4gd3JvdGU6Cj4+ID5PbiBGcmksIEp1biAyMSwgMjAyNCBhdCAxMToxNzoxNkFNICsw
-ODAwLCBTbGFyayBYaWFvIHdyb3RlOgo+PiA+PiAKPj4gPj4gQXQgMjAyNC0wNi0xNCAyMjozMTow
-MywgIkplZmZyZXkgSHVnbyIgPHF1aWNfamh1Z29AcXVpY2luYy5jb20+IHdyb3RlOgo+PiA+PiA+
-T24gNi8xNC8yMDI0IDQ6MTcgQU0sIExvaWMgUG91bGFpbiB3cm90ZToKPj4gPj4gPj4gT24gV2Vk
-LCAxMiBKdW4gMjAyNCBhdCAxNjo1MSwgTWFuaXZhbm5hbiBTYWRoYXNpdmFtCj4+ID4+ID4+IDxt
-YW5pdmFubmFuLnNhZGhhc2l2YW1AbGluYXJvLm9yZz4gd3JvdGU6Cj4+ID4+ID4+Pgo+PiA+PiA+
-Pj4gT24gV2VkLCBKdW4gMTIsIDIwMjQgYXQgMDg6MTk6MTNBTSAtMDYwMCwgSmVmZnJleSBIdWdv
-IHdyb3RlOgo+PiA+PiA+Pj4+IE9uIDYvMTIvMjAyNCAzOjQ2IEFNLCBNYW5pdmFubmFuIFNhZGhh
-c2l2YW0gd3JvdGU6Cj4+ID4+ID4+Pj4+IE9uIFdlZCwgSnVuIDEyLCAyMDI0IGF0IDA1OjM4OjQy
-UE0gKzA4MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+ID4+ID4+Pj4+Cj4+ID4+ID4+Pj4+IFN1Ympl
-Y3QgY291bGQgYmUgaW1wcm92ZWQ6Cj4+ID4+ID4+Pj4+Cj4+ID4+ID4+Pj4+IGJ1czogbWhpOiBo
-b3N0OiBBZGQgY29uZmlndXJhYmxlIG11eF9pZCBmb3IgTUJJTSBtb2RlCj4+ID4+ID4+Pj4+Cj4+
-ID4+ID4+Pj4+PiBGb3IgU0RYNzIgTUJJTSBtb2RlLCBpdCBzdGFydHMgZGF0YSBtdXggaWQgZnJv
-bSAxMTIgaW5zdGVhZCBvZiAwLgo+PiA+PiA+Pj4+Pj4gVGhpcyB3b3VsZCBsZWFkIHRvIGRldmlj
-ZSBjYW4ndCBwaW5nIG91dHNpZGUgc3VjY2Vzc2Z1bGx5Lgo+PiA+PiA+Pj4+Pj4gQWxzbyBNQklN
-IHNpZGUgd291bGQgcmVwb3J0ICJiYWQgcGFja2V0IHNlc3Npb24gKDExMikiLgo+PiA+PiA+Pj4+
-Pj4gU28gd2UgYWRkIGEgZGVmYXVsdCBtdXhfaWQgdmFsdWUgZm9yIFNEWDcyLiBBbmQgdGhpcyB2
-YWx1ZQo+PiA+PiA+Pj4+Pj4gd291bGQgYmUgdHJhbnNmZXJyZWQgdG8gd3dhbiBtYmltIHNpZGUu
-Cj4+ID4+ID4+Pj4+Pgo+PiA+PiA+Pj4+Pj4gU2lnbmVkLW9mZi1ieTogU2xhcmsgWGlhbyA8c2xh
-cmtfeGlhb0AxNjMuY29tPgo+PiA+PiA+Pj4+Pj4gLS0tCj4+ID4+ID4+Pj4+PiAgICBkcml2ZXJz
-L2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jIHwgMyArKysKPj4gPj4gPj4+Pj4+ICAgIGluY2x1
-ZGUvbGludXgvbWhpLmggICAgICAgICAgICAgICAgfCAyICsrCj4+ID4+ID4+Pj4+PiAgICAyIGZp
-bGVzIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQo+PiA+PiA+Pj4+Pj4KPj4gPj4gPj4+Pj4+IGRp
-ZmYgLS1naXQgYS9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jIGIvZHJpdmVycy9i
-dXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYwo+PiA+PiA+Pj4+Pj4gaW5kZXggMGI0ODNjN2M3NmEx
-Li45ZTlhZGY4MzIwZDIgMTAwNjQ0Cj4+ID4+ID4+Pj4+PiAtLS0gYS9kcml2ZXJzL2J1cy9taGkv
-aG9zdC9wY2lfZ2VuZXJpYy5jCj4+ID4+ID4+Pj4+PiArKysgYi9kcml2ZXJzL2J1cy9taGkvaG9z
-dC9wY2lfZ2VuZXJpYy5jCj4+ID4+ID4+Pj4+PiBAQCAtNTMsNiArNTMsNyBAQCBzdHJ1Y3QgbWhp
-X3BjaV9kZXZfaW5mbyB7Cj4+ID4+ID4+Pj4+PiAgICAgICAgICAgIHVuc2lnbmVkIGludCBkbWFf
-ZGF0YV93aWR0aDsKPj4gPj4gPj4+Pj4+ICAgICAgICAgICAgdW5zaWduZWQgaW50IG1ydV9kZWZh
-dWx0Owo+PiA+PiA+Pj4+Pj4gICAgICAgICAgICBib29sIHNpZGViYW5kX3dha2U7Cj4+ID4+ID4+
-Pj4+PiArIHVuc2lnbmVkIGludCBtdXhfaWQ7Cj4+ID4+ID4+Pj4+PiAgICB9Owo+PiA+PiA+Pj4+
-Pj4gICAgI2RlZmluZSBNSElfQ0hBTk5FTF9DT05GSUdfVUwoY2hfbnVtLCBjaF9uYW1lLCBlbF9j
-b3VudCwgZXZfcmluZykgXAo+PiA+PiA+Pj4+Pj4gQEAgLTQ2OSw2ICs0NzAsNyBAQCBzdGF0aWMg
-Y29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5fc2R4NzJfaW5mbyA9IHsK
-Pj4gPj4gPj4+Pj4+ICAgICAgICAgICAgLmRtYV9kYXRhX3dpZHRoID0gMzIsCj4+ID4+ID4+Pj4+
-PiAgICAgICAgICAgIC5tcnVfZGVmYXVsdCA9IDMyNzY4LAo+PiA+PiA+Pj4+Pj4gICAgICAgICAg
-ICAuc2lkZWJhbmRfd2FrZSA9IGZhbHNlLAo+PiA+PiA+Pj4+Pj4gKyAubXV4X2lkID0gMTEyLAo+
-PiA+PiA+Pj4+Pj4gICAgfTsKPj4gPj4gPj4+Pj4+ICAgIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhp
-X2NoYW5uZWxfY29uZmlnIG1oaV9tdjN4X2NoYW5uZWxzW10gPSB7Cj4+ID4+ID4+Pj4+PiBAQCAt
-MTAzNSw2ICsxMDM3LDcgQEAgc3RhdGljIGludCBtaGlfcGNpX3Byb2JlKHN0cnVjdCBwY2lfZGV2
-ICpwZGV2LCBjb25zdCBzdHJ1Y3QgcGNpX2RldmljZV9pZCAqaWQpCj4+ID4+ID4+Pj4+PiAgICAg
-ICAgICAgIG1oaV9jbnRybC0+cnVudGltZV9nZXQgPSBtaGlfcGNpX3J1bnRpbWVfZ2V0Owo+PiA+
-PiA+Pj4+Pj4gICAgICAgICAgICBtaGlfY250cmwtPnJ1bnRpbWVfcHV0ID0gbWhpX3BjaV9ydW50
-aW1lX3B1dDsKPj4gPj4gPj4+Pj4+ICAgICAgICAgICAgbWhpX2NudHJsLT5tcnUgPSBpbmZvLT5t
-cnVfZGVmYXVsdDsKPj4gPj4gPj4+Pj4+ICsgbWhpX2NudHJsLT5saW5rX2lkID0gaW5mby0+bXV4
-X2lkOwo+PiA+PiA+Pj4+Pgo+PiA+PiA+Pj4+PiBBZ2FpbiwgJ2xpbmtfaWQnIGlzIGp1c3QgYSBX
-V0FOIHRlcm0uIFVzZSAnbXV4X2lkJyBoZXJlIGFsc28uCj4+ID4+ID4+Pj4KPj4gPj4gPj4+PiBE
-b2VzIHRoaXMgcmVhbGx5IGJlbG9uZyBpbiBNSEk/ICBJZiB0aGlzIHdhcyBEVCwgSSBkb24ndCB0
-aGluayB3ZSB3b3VsZCBwdXQKPj4gPj4gPj4+PiB0aGlzIHZhbHVlIGluIERULCBidXQgcmF0aGVy
-IGhhdmUgdGhlIGRyaXZlciAoTUJJTSkgZGV0ZWN0IHRoZSBkZXZpY2UgYW5kCj4+ID4+ID4+Pj4g
-Y29kZSBpbiB0aGUgcmVxdWlyZWQgdmFsdWUuCj4+ID4+ID4+Pj4KPj4gPj4gPj4+Cj4+ID4+ID4+
-PiBJIGJlbGlldmUgdGhpcyBpcyBhIG1vZGVtIHZhbHVlIHJhdGhlciB0aGFuIE1ISS4gQnV0IEkg
-d2FzIE9LIHdpdGgga2VlcGluZyBpdCBpbgo+PiA+PiA+Pj4gTUhJIGRyaXZlciBzaW5jZSB3ZSBr
-aW5kIG9mIGtlZXAgbW9kZW0gc3BlY2lmaWMgY29uZmlnLgo+PiA+PiA+Pj4KPj4gPj4gPj4+IEJ1
-dCBpZiBXV0FOIGNhbiBkZXRlY3QgdGhlIGRldmljZSBhbmQgYXBwbHkgdGhlIGNvbmZpZywgSSdt
-IGFsbCBvdmVyIGl0Lgo+PiA+PiA+PiAKPj4gPj4gPj4gVGhhdCB3b3VsZCByZXF1aXJlIGF0IGxl
-YXN0IHNvbWUgaW5mb3JtYXRpb24gZnJvbSB0aGUgTUhJIGJ1cyBmb3IgdGhlCj4+ID4+ID4+IE1C
-SU0gZHJpdmVyCj4+ID4+ID4+IHRvIG1ha2UgYSBkZWNpc2lvbiwgc3VjaCBhcyBhIGdlbmVyaWMg
-ZGV2aWNlIElELCBvciBxdWlyayBmbGFncy4uLgo+PiA+PiA+Cj4+ID4+ID5JIGRvbid0IHNlZSB3
-aHkuCj4+ID4+ID4KPj4gPj4gPlRoZSAic2ltcGxlIiB3YXkgdG8gZG8gaXQgd291bGQgYmUgdG8g
-aGF2ZSB0aGUgY29udHJvbGxlciBkZWZpbmUgYSAKPj4gPj4gPmRpZmZlcmVudCBjaGFubmVsIG5h
-bWUsIGFuZCB0aGVuIGhhdmUgdGhlIE1CSU0gZHJpdmVyIHByb2JlIG9uIHRoYXQuIAo+PiA+PiA+
-VGhlIE1CSU0gZHJpdmVyIGNvdWxkIGF0dGFjaCBkcml2ZXIgZGF0YSBzYXlpbmcgdGhhdCBpdCBu
-ZWVkcyB0byBoYXZlIGEgCj4+ID4+ID5zcGVjaWZpYyBtdXhfaWQuCj4+ID4+ID4KPj4gPj4gPk9y
-LCB3aXRoIHplcm8gTUhJL0NvbnRyb2xsZXIgY2hhbmdlcywgdGhlIE1CSU0gZHJpdmVyIGNvdWxk
-IHBhcnNlIHRoZSAKPj4gPj4gPm1oaV9kZXZpY2Ugc3RydWN0LCBnZXQgdG8gdGhlIHN0cnVjdCBk
-ZXZpY2UsIGZvciB0aGUgdW5kZXJseWluZyBkZXZpY2UsIAo+PiA+PiA+YW5kIGV4dHJhY3QgdGhl
-IFBDSWUgRGV2aWNlIElEIGFuZCBtYXRjaCB0aGF0IHRvIGEgd2hpdGUgbGlzdCBvZiBrbm93biAK
-Pj4gPj4gPmRldmljZXMgdGhhdCBuZWVkIHRoaXMgcHJvcGVydHkuCj4+ID4+ID4KPj4gPj4gPkkg
-Z3Vlc3MgaWYgdGhlIGNvbnRyb2xsZXIgY291bGQgYXR0YWNoIGEgcHJpdmF0ZSB2b2lkICogdG8g
-dGhlIAo+PiA+PiA+bWhpX2RldmljZSB0aGF0IGlzIG9wYXF1ZSB0byBNSEksIGJ1dCBhbGxvd3Mg
-TUJJTSB0byBtYWtlIGEgZGVjaXNpb24sIAo+PiA+PiA+dGhhdCB3b3VsZCBiZSBvay4gIFN1Y2gg
-YSBtZWNoYW5pc20gd291bGQgYmUgZ2VuZXJpYywgYW5kIGV4dGVuc2libGUgdG8gCj4+ID4+ID5v
-dGhlciB1c2VjYXNlcyBvZiB0aGUgc2FtZSAiY2xhc3MiLgo+PiA+PiA+Cj4+ID4+ID4tSmVmZgo+
-PiA+PiAKPj4gPj4gSGkgZ3V5cywKPj4gPj4gVGhpcyBwYXRjaCBtYWlubHkgcmVmZXIgdG8gdGhl
-IGZlYXR1cmUgb2YgbXJ1IHNldHRpbmcgYmV0d2VlbiBtaGkgYW5kIHd3YW4gc2lkZS4KPj4gPj4g
-V2UgcmFuc2ZlciB0aGlzIHZhbHVlIHRvIHd3YW4gc2lkZSBpZiB3ZSBkZWZpbmUgaXQgaW4gbWhp
-IHNpZGUsIG90aGVyd2lzZSBhIGRlZmF1bHQKPj4gPj4gdmFsdWUgd291bGQgYmUgdXNlZCBpbiB3
-d2FuIHNpZGUuIFdoeSBkb24ndCB3ZSBqdXN0IGFsaWduIHdpdGggdGhhdD8KPj4gPj4gCj4+ID4K
-Pj4gPldlbGwsIHRoZSBwcm9ibGVtIGlzIHRoYXQgTVJVIGhhcyBub3RoaW5nIHRvIGRvIHdpdGgg
-TUhJLiBJIGluaXRpYWxseSB0aG91Z2h0Cj4+ID50aGF0IGl0IGNvdWxkIGZpdCBpbnNpZGUgdGhl
-IGNvbnRyb2xsZXIgY29uZmlnLCBidXQgdGhpbmtpbmcgbW9yZSBJIGFncmVlIHdpdGgKPj4gPkpl
-ZmYgdGhhdCB0aGlzIGRvZXNuJ3QgYmVsb25nIHRvIE1ISSBhdCBhbGwuCj4+ID4KPj4gPkF0IHRo
-ZSBzYW1lIHRpbWUsIEkgYWxzbyBkbyBub3Qgd2FudCB0byBleHRyYWN0IHRoZSBQQ0kgaW5mbyBm
-cm9tIHRoZSBjbGllbnQKPj4gPmRyaXZlcnMgc2luY2UgdGhlIHVuZGVybHlpbmcgdHJhbnNwb3J0
-IGNvdWxkIGNoYW5nZSB3aXRoIE1ISS4gU28gdGhlIGJlc3QKPj4gPnNvbHV0aW9uIEkgY2FuIHRo
-aW5rIG9mIGlzIGV4cG9zaW5nIHRoZSBtb2RlbSBuYW1lIGluICdtaGlfY29udHJvbGxlcl9jb25m
-aWcnIHNvCj4+ID50aGF0IHRoZSBjbGllbnQgZHJpdmVycyBjYW4gZG8gYSBtYXRjaC4KPj4gPgo+
-PiA+UGxlYXNlIHRyeSB0byBpbXBsZW1lbnQgdGhhdC4KPj4gPgo+PiA+LSBNYW5pCj4+ID4KPj4g
-Pi0tIAo+PiA+4K6u4K6j4K6/4K614K6j4K+N4K6j4K6p4K+NIOCumuCupOCuvuCumuCuv+CuteCu
-ruCvjQo+PiBIaSBNYW5pLAo+PiBDdXJyZW50bHkgdGhlcmUgYXJlIG1hbnkgcHJvZHVjdHMgc2hh
-cmUgYSBzYW1lIG1oaV9jb250cm9sbGVyX2NvbmZpZwo+PiBzZXR0aW5ncy4gRm9yIGV4YW1wbGUs
-IGFsbCBmb3hjb25uIGRldmljZSB1c2UgbW9kZW1fZm94Y29ubl9zZHg1NV9jb25maWcuCj4+IEJ1
-dCBteSBkZXZpY2UgbWF5IGJlIGEgU0RYMjQsIG9yIFNEWDcyLCBvciBldmVuIFNEWDY1LiAgQW55
-IG90aGVyIGlkZWE/Cj4+IAo+Cj5IbW0sIHNhZGx5IHdlIHNob3VsZG4ndCBoYXZlIHVzZWQgdGhl
-IHNhbWUgY29udHJvbGxlciBjb25maWcgZm9yIGFsbCB0aGVzZQo+ZGV2aWNlcyBhY3Jvc3MgZGlm
-ZmVyZW50IHByb2R1Y3QgZmFtaWxpZXMuIEkgZGlkbid0IHJlYWxseSBwYWlkIGF0dGVudGlvbiB0
-byB0aGUKPmRldmljZSBuYW1lIHdoaWNoIGlzIHN1cHBvc2VkIHRvIGJlIHVuaXF1ZSAodGhhdCdz
-IG15IGJhZCkuCj4KPkZvciBpbnN0YW5jZSwgYmVjYXVzZSBvZiB0aGUgY29udHJvbGxlciBjb25m
-aWcgcmV1c2UsIHlvdXIgU0RYNjIgbW9kZW0gd291bGQKPnByaW50Ogo+Cj4iTUhJIFBDSSBkZXZp
-Y2UgZm91bmQ6IGZveGNvbm4tc2R4NjUiCj4KPndoaWNoIGNsZWFybHkgaXMgbWlzbGVhZGluZyB0
-aGUgdXNlcnMuLi4KPgo+SSd2ZSBzdWJtaXR0ZWQgYSBwYXRjaCB0aGF0IHVzZXMgdW5pcXVlIHBy
-b2R1Y3QgbmFtZSBhY3Jvc3MgdGhlIHByb2R1Y3QgZmFtaWxpZXMKPlsxXS4gUGxlYXNlIHRha2Ug
-YSBsb29rLiBBZnRlciB0aGlzIHBhdGNoLCB5b3UgY2FuIHVzZSB0aGUgbW9kZW0gbmFtZSB0bwo+
-ZGlmZmVyZW50aWF0ZSBpbiBjbGllbnQgZHJpdmVycy4KPgo+LSBNYW5pCj4KPlsxXSBodHRwczov
-L2xvcmUua2VybmVsLm9yZy9taGkvMjAyNDA2MjUwNzQxNDguNzQxMi0xLW1hbml2YW5uYW4uc2Fk
-aGFzaXZhbUBsaW5hcm8ub3JnLwo+Cj4tLSAKPuCuruCuo+Cuv+CuteCuo+CvjeCuo+CuqeCvjSDg
-rprgrqTgrr7grprgrr/grrXgrq7gr40KRm9yIHNhbWUgY2hpcCBwbGF0Zm9ybSwgSSBkb24ndCB0
-aGluayBpdCdzIG5lY2Vzc2FyeSB0byBzZXBhcmF0ZSBpbnRvIGRpZmZlcmVudCBwYXJ0cy4KTGlr
-ZSB0OTl3MzY4IGFuZCBEVzU5MzJlLCBhbGwgdGhpbmdzIGFyZSBzYW1lIGV4Y2VwdCB0aGUgJ25h
-bWUnLiBGb3IgcHJldmlvdXMKbXV4X2lkIHNldHRpbmdzLCB3ZSB3b3VsZCBsaWtlIHRvIGFkZCBp
-dCBmb3Igc2R4NzIvc2R4NzUgcGxhdGZvcm1zLCBidXQgc2hhbGwKbm8gZGlmZmVyZW5jZSBvbiBU
-OTlXNTE1IGFuZCBEVzU5MzRlLiAKT3RoZXJ3aXNlLCB3ZSBtdXN0IHRvIHVwZGF0ZSBib3RoIG1o
-aSBhbmQgd3dhbiBzaWRlIGlmIHdlIGhhdmUgYSBuZXcgZm94Y29ubgpTRFg3MiBkZXZpY2Ugc3Vw
-cG9ydCBzaW5jZSB0aGUgbmFtZSBpcyBkaWZmZXJlbnQgd2l0aCBmb3hjb25uLXQ5OXc1MTUgb3IK
-Zm94Y29ubi1kdzU5MzRlLgoKVGhhbmtzLg==
+
+On Tue, 25 Jun 2024 12:35:33 +0530, Devi Priya wrote:
+> Add NSSCC clock and reset definitions for ipq9574.
+> 
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Changes in V4:
+> 	- Added GCC_NSSCC_CLK source to the clocks
+> 	- Added support for interconnects and interconnect-names as the NoC
+> 	  clocks are being enabled via interconnect.
+> 
+>  .../bindings/clock/qcom,ipq9574-nsscc.yaml    |  75 +++++++++
+>  .../dt-bindings/clock/qcom,ipq9574-nsscc.h    | 152 ++++++++++++++++++
+>  .../dt-bindings/reset/qcom,ipq9574-nsscc.h    | 134 +++++++++++++++
+>  3 files changed, 361 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
+>  create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
+> 
+
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dts:26.26-27 syntax error
+FATAL ERROR: Unable to parse input tree
+make[2]: *** [scripts/Makefile.lib:427: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1430: dt_binding_check] Error 2
+make: *** [Makefile:240: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240625070536.3043630-5-quic_devipriy@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
