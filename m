@@ -1,182 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-24126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2743916E0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 18:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A699916E1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 18:27:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C7A11F28056
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 16:26:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D94CF1F27F9D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 16:27:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45EFC173324;
-	Tue, 25 Jun 2024 16:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69B8017333E;
+	Tue, 25 Jun 2024 16:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="BehKRk/4"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kr5ItlXs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6ED016F0E2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 16:25:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE177171E41
+	for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 16:27:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719332752; cv=none; b=NjC3+oSw8611Wb+vcQjixL2MU38+Qq72AQov6DPHgov/mOjbmNb/zGj7yiIo0igqwNYM72bhRDVbDzpdo3qKc/+A1DJwMITiRHMp0Xrcr2nRkDUOJt5dbK7s0PKbP8twOFmgTNLYR/RzszoTxzA9cXRLuV5gKhGp/wMyyYrn8q0=
+	t=1719332843; cv=none; b=F4tHQZkOnfHzW9Xp32hQXZL05yddheRXrv0V67vKyVnH7a/NO1MShOvlWtLFQMRwS367Etrj+cuPpym3I4/5jmQqndqE3h4EpCgjIRKvwt2ObF1P/45qmR6RvQdcDX537zN3IlYZnvMGXc4fwyxEJzCAHtrkZkxUmSTUy8ak7l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719332752; c=relaxed/simple;
-	bh=B2YDtkHg6fs4L+dcYvgZ3sVe0CW9/lPIvU9kwWcZ9V0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=n7AR4dIv7gvwezp65eEdWnRZke9h8o1BuA+S9wUT1HSS3MZgk8gnpy3zMPxsccySTYN41KDZ4JsILDUSSHJ15Mb2X+7vDU/TBFWP8k5q3DMYiKmaMo57cknANN8sy3qMkptwDCVTQGmfxYcUPBl4pko+M9YXN+c/6Jmkafs6EKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=BehKRk/4; arc=none smtp.client-ip=209.85.210.172
+	s=arc-20240116; t=1719332843; c=relaxed/simple;
+	bh=FBgM8X7N6EV6X8VIVrL7KoXestIzzEPz81jUwgaNSTc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=obs54zi8bLB/KojP2XzRGwxv/mUXqzNcj67Np+rCdJ9TNlGIfqLznDUiaTerE9qo3/be9FtqYzU+KoXGmH9sp6ChwMSuIzF2iTOlAm+0bZJ0W1m/zvwANcJwn5/W1WwfoHfIhZpCXhRfIga81lt4nTR4Cn+1wcuNRGv/7XPwBiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=kr5ItlXs; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-70677422857so1790109b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 09:25:50 -0700 (PDT)
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-79c11e92afaso473285a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 09:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1719332750; x=1719937550; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=V5Tt7Lc2+N1dSi7KU9Dntd7EOp1nzs8phsS0Ld5X6so=;
-        b=BehKRk/4Fg9+4rrmw24bAdsawNF6eS9ayOo0Rt8dBrauNCgXgqFdAkg3avorEC7mrc
-         2e9dRSltimTOxUTIpSd/BLg6FfbinxbMjlnAipEqjmJELB5zfOrnqm76rwcGtuQWUveu
-         NMCUxp3w2z1pb/uDNwTEu8kDR96aJw3I0SrNg=
+        d=chromium.org; s=google; t=1719332839; x=1719937639; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Kd5y9hhIUx6r9hI0VhGrF9yxcbBN+8LVyQQ2ESHR5Ew=;
+        b=kr5ItlXssd5XHeMY3sR1Gp0Eay0spKkS7xHUCx9FGrGtfco4rexAN4zQYVzqDowoBG
+         iUWcsXjztqDDRQ2qFRDMdOwQKUuyVoaxWPp0O8yq1aZeT3MW9kpvrt2xeZYjl8IiFhPd
+         ROOyNnP990NW/ELwJLehH+2lpVlpdSBR970Co=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719332750; x=1719937550;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V5Tt7Lc2+N1dSi7KU9Dntd7EOp1nzs8phsS0Ld5X6so=;
-        b=iJjo5Y063oJHefKqfx4gtVuT7351xtp1X41EaXCqqszuhHBpgPwPLav/D5WyxLSZGA
-         ++Otu9G2iq5KwU2YtFDxkzWQK+ftnBDAhNkPCsCuFbwaMUU9gM2D60mbnHskuDlTc697
-         UuFxQX8IHb6PrpOiAzQ8GpIRe+71YjhJOgeH+nh5FJ7yimuWFCsgv1qefUaEZGBK2WZ5
-         4PpZHO4C+JXAiC/kskw3drTxtNF/W2UgnnbBV011gD/eBCk9qMATkAauJIN5evNg7+Z4
-         XPqAC2seEytn2FgQeS7UG5TtBr2UK8l06WJ9hGTWrWGOy6dr05jNcaK9M0U4EGjlZCQN
-         mOMw==
-X-Forwarded-Encrypted: i=1; AJvYcCU3f9ll/Ef9tXdARmXKSdcX6cCyOVKts1ioZcs15k0xbA5G0e1CIOoyQ+6ydzQmb9YjtC9QJmvrgpEN4JBUFuoQq+JYjKw+q6NIVZ3NnA==
-X-Gm-Message-State: AOJu0YyVYHunfNkWb8+9ASQGU+LQWVE0nVeDb+8sXz0iz9+vnknTwc9I
-	8icvZzra+rtsMHOsjnwZhyDeZ6FqXWY/JvWwx1n0K8Rt36c1nJuMCkdDwAi0NA==
-X-Google-Smtp-Source: AGHT+IEhsjk6aekAxj8P+vBahLkJqDcR0bi6Msxsp/13kv2NwnQagIIUi6/qZFjte+RAGbc4YnBoNg==
-X-Received: by 2002:aa7:8611:0:b0:706:375e:220d with SMTP id d2e1a72fcca58-706746fa56cmr7358170b3a.30.1719332749891;
-        Tue, 25 Jun 2024 09:25:49 -0700 (PDT)
-Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:3491:3ec9:c533:e23])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7068a63c8bfsm3535919b3a.27.2024.06.25.09.25.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 09:25:49 -0700 (PDT)
-From: Douglas Anderson <dianders@chromium.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>
-Cc: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Tony Lindgren <tony@atomide.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	linux-serial@vger.kernel.org,
-	=?UTF-8?q?N=C3=ADcolas=20F=20=2E=20R=20=2E=20A=20=2E=20Prado?= <nfraprado@collabora.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	linux-kernel@vger.kernel.org,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Rob Herring <robh@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Subject: [PATCH] serial: qcom-geni: Avoid hard lockup if bytes are dropped
-Date: Tue, 25 Jun 2024 09:24:44 -0700
-Message-ID: <20240625092440.1.Icf914852be911b95aefa9d798b6f1cd1a180f985@changeid>
-X-Mailer: git-send-email 2.45.2.741.gdbec12cfda-goog
+        d=1e100.net; s=20230601; t=1719332839; x=1719937639;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Kd5y9hhIUx6r9hI0VhGrF9yxcbBN+8LVyQQ2ESHR5Ew=;
+        b=HVW119BbW+/3TPMuS+eAVwZrI0KjMbKjEHzG4IZyXZPjkzFCVPC/qKuGE2mttl9VKe
+         W8ODD5a2BzSFkrbUBUVoVOSNDjee1WW0oWwehNWSbHHl10PczkowpNzEtmuiiwoiYgDn
+         YzHdilAOjg6pw3CXf3qtRWZxq33T8DcmW5cS+Zp6HCkF1Ti+f88b02lBPFhfFjXwVnLX
+         +nRp00K/xHARaJaP6n24W/zDXsoPVnqOg2eKxDtGNBsCzJDZjh62vLgl3A84MNPPgWbp
+         fqiIv1gmfSYKEHgqMndVxUlatAmj/TpVwFEd+vwXrYLQR5Ug3me3x0HnwwsIZib9Lo3v
+         cRlw==
+X-Forwarded-Encrypted: i=1; AJvYcCVONgXUJxn4sDR/IAoExkOFZnUh52yrQ0T1OgChN4cg+2y3FFRcBYKxh46NHddc4HPMf73gs+I3mcsTjNDNW4UcOJDJ/Mmc+1xcUrzwMw==
+X-Gm-Message-State: AOJu0YydsCQ0z2nPAOQAQnfHbtoMnvnLk2m+XB+octvgkf84ZyzJPdBJ
+	jdnoq8WI9iJUjqGA8kZOASC2dzn2ZwW8IfO2wqGnnWO8VUUidY/xu57nV6ToLlW4jr/fNxmf3x0
+	=
+X-Google-Smtp-Source: AGHT+IHCG7ESlthrbo80gTP5PWzBlREcPHqzVY+J7I41FV1CzAFhFInrOjSyjXWxwT0mCOuRTGlHIA==
+X-Received: by 2002:a05:6214:12c6:b0:6b5:148:736a with SMTP id 6a1803df08f44-6b540cee64emr78190756d6.57.1719332839211;
+        Tue, 25 Jun 2024 09:27:19 -0700 (PDT)
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com. [209.85.160.181])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b51ef678ebsm46304096d6.132.2024.06.25.09.27.18
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Jun 2024 09:27:18 -0700 (PDT)
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-445022f78e1so109261cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 09:27:18 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVOVR+UFvleOrU0EkTwzR/t5MMJlyXEX+vsovLtHTL3gCFtHm0ChxTeyaLtRN1v3pUQ/MwyYrNcrvHj+eg0bKqo6cCB6Uz+G0vkJBDWuA==
+X-Received: by 2002:a05:622a:2a1a:b0:444:fe9d:7bc9 with SMTP id
+ d75a77b69052e-444fe9d7f9amr1978871cf.8.1719332837590; Tue, 25 Jun 2024
+ 09:27:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240624133135.7445-1-johan+linaro@kernel.org>
+ <20240624133135.7445-2-johan+linaro@kernel.org> <CAD=FV=VZXnnbwTNc6dSqZvyCUc0=Wjg9mvBYsA1FJK3xR6bDEg@mail.gmail.com>
+ <CAD=FV=UwyzA614tDoq7BntW1DWmic=DOszr+iRJVafVEYrXhpw@mail.gmail.com> <ZnraAlR9QeYhd628@hovoldconsulting.com>
+In-Reply-To: <ZnraAlR9QeYhd628@hovoldconsulting.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 25 Jun 2024 09:27:01 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U+D34mkDoFkmEXUm9fCAhC_RKbHnKXHsDZFQPxDaPmtg@mail.gmail.com>
+Message-ID: <CAD=FV=U+D34mkDoFkmEXUm9fCAhC_RKbHnKXHsDZFQPxDaPmtg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] serial: qcom-geni: fix hard lockup on buffer flush
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-If you start sending a large chunk of text over the UART (like `cat
-/var/log/messages`) and then hit Ctrl-C to stop it then, as of commit
-1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo"), you'll
-get a hard lockup. Specifically, the driver ends up looping in
-qcom_geni_serial_send_chunk_fifo(). uart_fifo_out() will return 0
-bytes were transferred and the loop will never make progress.
+Hi,
 
-Avoid the hard lockup by making sure we never kick off a transfer that
-is larger than we can queue up immediately.
+On Tue, Jun 25, 2024 at 7:53=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
+>
+> On Mon, Jun 24, 2024 at 01:45:17PM -0700, Doug Anderson wrote:
+>
+> > Also: if we're looking at quick/easy to land and just fix the hard
+> > lockup, I'd vote for this (I can send a real patch, though I'm about
+> > to go on vacation):
+> >
+> > --
+> >
+> > @@ -904,8 +904,8 @@ static void qcom_geni_serial_handle_tx_fifo(struct
+> > uart_port *uport,
+> >                 goto out_write_wakeup;
+> >
+> >         if (!port->tx_remaining) {
+> > -               qcom_geni_serial_setup_tx(uport, pending);
+> > -               port->tx_remaining =3D pending;
+> > +               port->tx_remaining =3D min(avail, pending);
+> > +               qcom_geni_serial_setup_tx(uport, port->tx_remaining);
+> >
+> >                 irq_en =3D readl(uport->membase + SE_GENI_M_IRQ_EN);
+> >                 if (!(irq_en & M_TX_FIFO_WATERMARK_EN))
+> >
+> > --
+> >
+> > That will fix the hard lockup, is short and sweet, and also doesn't
+> > end up outputting NUL bytes.
+>
+> Yeah, this might be a good stop gap even if performance suffers.
 
-The issue stems from the fact that the geni serial driver tried to be
-more efficient by kicking off large transfers. It tried to do this
-because the design of geni means that whenever we get to the end of a
-transfer there is a period of time where the line goes idle while we
-wait for an interrupt to start a new transfer.
+I've officially posted this as:
 
-The geni serial driver kicked off large transfers by peeking into the
-Linux software FIFO and kicking off a transfer based on the number of
-bytes there. While that worked (mostly), there was an unhandled corner
-case when the Linux software FIFO shrank, as happens when you kill a
-process that had queued up lots of data to send.
+https://lore.kernel.org/r/20240625092440.1.Icf914852be911b95aefa9d798b6f1cd=
+1a180f985@changeid
 
-Prior to the recent kfifo change, the geni driver would keep sending
-data that had been "removed" from the Linux software FIFO. While
-definitely wrong, this didn't feel too terrible. In the above instance
-of hitting Ctrl-C while catting a large file you'd see the file keep
-spewing out to the console for a few hundred milliseconds after the
-process died. As mentioned above, after the kfifo change we get a hard
-lockup.
+I realized that I didn't need to re-calculate "chunk" so the patch is
+very slightly different than I posted above but should be effectively
+the same.
 
-Digging into the geni serial driver shows a whole pile of issues and
-those should be fixed. One patch series attempting to fix the issue
-has had positive testing/reviews [1] but it's a fairly large change.
-While debating / researching the right long term solution, this small
-patch at least prevents the hard lockup.
-
-NOTE: this change does have performance impacts. On my sc7180-trogdor
-device I measured something like a 2% slowdown. Others has seen
-something more like a 20-25% slowdown [2]. However, correctness trumps
-performance so landing this makes sense while better solutions are
-devised.
-
-[1] https://lore.kernel.org/r/20240610222515.3023730-1-dianders@chromium.org
-[2] https://lore.kernel.org/r/ZnraAlR9QeYhd628@hovoldconsulting.com
-
-Fixes: 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-As discussed with Johan [3], this probably makes sense to land as a
-stopgap while we come to agreement on how to solve the larger issues.
-
-NOTE: I'll be away from my work computer for the next 1.5 weeks.
-Hopefully this can land in the meantime. If it needs spinning /
-reworking I wouldn't object to someone else taking it on.
-
-I've removed all "Tested-by" tags here since the code is pretty
-different and it only solves a subset of the issues of the larger
-series.
-
-[3] https://lore.kernel.org/r/ZnraAlR9QeYhd628@hovoldconsulting.com
-
- drivers/tty/serial/qcom_geni_serial.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 2bd25afe0d92..fc202233a3ee 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -904,8 +904,8 @@ static void qcom_geni_serial_handle_tx_fifo(struct uart_port *uport,
- 		goto out_write_wakeup;
- 
- 	if (!port->tx_remaining) {
--		qcom_geni_serial_setup_tx(uport, pending);
--		port->tx_remaining = pending;
-+		qcom_geni_serial_setup_tx(uport, chunk);
-+		port->tx_remaining = chunk;
- 
- 		irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
- 		if (!(irq_en & M_TX_FIFO_WATERMARK_EN))
--- 
-2.45.2.741.gdbec12cfda-goog
-
+-Doug
 
