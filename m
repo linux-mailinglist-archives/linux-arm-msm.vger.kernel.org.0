@@ -1,336 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-24058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82247915BC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 03:39:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69C60915C0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 04:11:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E63E3B20EBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 01:39:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D82E81F21E89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Jun 2024 02:11:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A542B182D8;
-	Tue, 25 Jun 2024 01:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8855E2E403;
+	Tue, 25 Jun 2024 02:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cNwEjtrG"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="dVChevC7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC65E1805A;
-	Tue, 25 Jun 2024 01:39:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F6EA25774;
+	Tue, 25 Jun 2024 02:10:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719279565; cv=none; b=bc631Wc5SaqQQG2XtbUr2qJdUGrb3nFSniASPRygL8wgjmWX13rtEt6G9bEVRGraKG9jT0AtBtcmsKpK0WASmWdzpHJe1PaVipP8H3S9HA/a7fRorAr8vVUEkmFwYr8U160iBjUCqFtXoOX2UUE4cIBogBIR2EsVN4S152mZ9F0=
+	t=1719281460; cv=none; b=SpN02QPEoI2aXa8/9fwdkTgiGfhAcCSa/emgJBNTOmx1jS2KxpLdHWloUsaLax6ITUW1lHuLtIqV5oPk4qwH3EtSYWXMByr4Ofa/5rtTYv693R+epnaHup9vmHmXWQsfzxdj87IVo9jq2pQezFfCIUuRWtYsxH8osPjbcVHGRfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719279565; c=relaxed/simple;
-	bh=79qEk3704LHIIswmaBCVRUzAWY9W/iAD4N/6FIpXWHU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LkFzaVEyT3x5ppSSsAmgFdT83ncG66hfnAG8FvsBti/3/48rx13/b/VO5aL+WXCy1hMnH1BL6Uox/u8PeW0/jf/7tAEnS+EcX88oR/usRbx2BEyuxjgWgtHEmDPuPy043u6H2xvjkRB42W+RlVjJuYKR/WmzKp8R7pgbjw6FMiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cNwEjtrG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45OIflN1031388;
-	Tue, 25 Jun 2024 01:39:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	V64VIrn8zmRYN5m23RAwWQvDPO2+pSQOEmxV/BgwgkI=; b=cNwEjtrGhHacKhV3
-	C+l+p12yAwYE89TKGZVCrLxGqmoBeGsI9wBWCke5I/yyP1A6ufiJel/GRNpooDVu
-	UzTv3Oq8aNNoWUkzrGhJv6pbadZ8cLyUpkZTy21H9TXx7K9U0mxAm0OtFrMNZYrT
-	1tVr91ItLUR8kxa+7HVCf9acu9RkMykbWzS1AqzmDG86rySaJP04x13w16+N26JF
-	gGTsiOz/C5nlTbsJDFpliV0+JLpfT46kc6Bc1Fw2mZ6sYBHcyIdBhLWzfeWvHGe7
-	DPRaWGTZbJVrKnvW5nweh6ypF9ESpbpPS7z7AfZXTPeUmDDimVrKqC1Q8WEcRbST
-	gAFJKQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywppv51qh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 01:39:11 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45P1d9xt007813
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 25 Jun 2024 01:39:09 GMT
-Received: from [10.110.106.13] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 24 Jun
- 2024 18:39:08 -0700
-Message-ID: <bbdb8f56-4948-b0dd-55bd-ca59b78ed559@quicinc.com>
-Date: Mon, 24 Jun 2024 18:39:08 -0700
+	s=arc-20240116; t=1719281460; c=relaxed/simple;
+	bh=t2OvzFUVLxTJ7w29qrGVplPqAY0SWMZYR1K7WFcvN2k=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=tfufzLi4V1IaYls4ipEFSjEuSOG1aH4H+yaiYWLACaDy123TaOWbj3SF1X3OHiwj3V95CdVBMVVXjkOM96iRFuUWYY0GVXQNf3VLciWindN3EdUU5rsjq7/AYcKOUmGoyBRaSl1TrMXwuidzaPUo42KrbRHbHTUofgo4y7+JzJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=dVChevC7 reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=OGX+wfw0o56RZ3xuMOBQdw4f3IcXXKU/20rzcEL1bCA=; b=d
+	VChevC70rrRbLo4orhH5OAtYwhb1tbIOI/w3miweTK2AL/m7WiDhWC3OAgykm1Ve
+	8aRfILjK3ZFfqn2GzIH5EOZfu31jo8h+zssqofyDJ9AATTmw8LnJlTkTk3Ce//y7
+	z/cx+nflS5BPzMwcUjMcE7zPcfzTnoIFKxRWEVJDhs=
+Received: from slark_xiao$163.com ( [223.104.68.32] ) by
+ ajax-webmail-wmsvr-40-111 (Coremail) ; Tue, 25 Jun 2024 10:10:17 +0800
+ (CST)
+Date: Tue, 25 Jun 2024 10:10:17 +0800 (CST)
+From: "Slark Xiao" <slark_xiao@163.com>
+To: "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
+Cc: "Jeffrey Hugo" <quic_jhugo@quicinc.com>, 
+	"Loic Poulain" <loic.poulain@linaro.org>, ryazanov.s.a@gmail.com, 
+	johannes@sipsolutions.net, netdev@vger.kernel.org, 
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re:Re: Re: [PATCH v2 1/2] bus: mhi: host: Import mux_id item
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <20240623134430.GD58184@thinkpad>
+References: <20240612093842.359805-1-slark_xiao@163.com>
+ <20240612094609.GA58302@thinkpad>
+ <87aecf24-cdbb-70d2-a3d1-8d1cacf18401@quicinc.com>
+ <20240612145147.GB58302@thinkpad>
+ <CAMZdPi-6GPWkj-wu4_mRucRBWXR03eYXu4vgbjtcns6mr0Yk9A@mail.gmail.com>
+ <c275ee49-ac59-058c-7482-c8a92338e7a2@quicinc.com>
+ <5055db15.37d8.19038cc602c.Coremail.slark_xiao@163.com>
+ <20240623134430.GD58184@thinkpad>
+X-NTES-SC: AL_Qu2aC/6Tvkwq4SSdY+kfmk8Sg+84W8K3v/0v1YVQOpF8jDjp1hw8TERlMl7GyvKtBRyGjT6xdD11w897ZK5jX60SKttW4jR1Ts7r1fg139C9GQ==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH RFC v2] drm/msm/dpu: Configure DP INTF/PHY selector
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: Bjorn Andersson <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240613-dp-phy-sel-v2-1-99af348c9bae@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240613-dp-phy-sel-v2-1-99af348c9bae@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CHHwm6T6di2oIGbc70qwmJawoqFEfkBg
-X-Proofpoint-ORIG-GUID: CHHwm6T6di2oIGbc70qwmJawoqFEfkBg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-24_22,2024-06-24_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- clxscore=1015 priorityscore=1501 mlxlogscore=999 mlxscore=0 adultscore=0
- lowpriorityscore=0 phishscore=0 suspectscore=0 impostorscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406250011
+Message-ID: <6365d9b8.265a.1904d287cfa.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wDXP6gJJ3pmRFoFAA--.32161W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiJQ0IZGVOB3NBkQACsJ
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-
-
-On 6/13/2024 4:17 AM, Dmitry Baryshkov wrote:
-> From: Bjorn Andersson <andersson@kernel.org>
-> 
-> Some platforms provides a mechanism for configuring the mapping between
-> (one or two) DisplayPort intfs and their PHYs.
-> 
-> In particular SC8180X provides this functionality, without a default
-> configuration, resulting in no connection between its two external
-> DisplayPort controllers and any PHYs.
-> 
-
-I have to cross-check internally about what makes it mandatory to 
-program this only for sc8180xp. We were not programming this so far for 
-any chipset and this register is present all the way from sm8150 till 
-xe10100 and all the chipsets do not have a correct default value which 
-makes me think whether this is required to be programmed.
-
-Will update this thread once I do.
-
-> The change implements the logic for optionally configuring which PHY
-> each of the DP INTFs should be connected to and marks the SC8180X DPU to
-> program 2 entries.
-> 
-> For now the request is simply to program the mapping 1:1, any support
-> for alternative mappings is left until the use case arrise.
-> 
-> Note that e.g. msm-4.14 unconditionally maps INTF 0 to PHY 0 on all
-> rlatforms, so perhaps this is needed in order to get DisplayPort working
-> on some other platforms as well.
-> 
-> Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-> Co-developed-by: Bjorn Andersson <andersson@kernel.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes in v2:
-> - Removed entry from the catalog.
-> - Reworked the interface of dpu_hw_dp_phy_intf_sel(). Pass two entries
->    for the PHYs instead of three entries.
-> - It seems the register isn't present on sdm845, enabled the callback
->    only for DPU >= 5.x
-> - Added a comment regarding the data being platform-specific.
-> - Link to v1: https://lore.kernel.org/r/20230612221047.1886709-1-quic_bjorande@quicinc.com
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c | 39 +++++++++++++++++++++++++++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h | 18 ++++++++++++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h   |  7 ++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c    | 11 ++++++++-
->   4 files changed, 69 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> index 05e48cf4ec1d..a11fdbefc8d2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> @@ -231,8 +231,38 @@ static void dpu_hw_intf_audio_select(struct dpu_hw_mdp *mdp)
->   	DPU_REG_WRITE(c, HDMI_DP_CORE_SELECT, 0x1);
->   }
->   
-> +static void dpu_hw_dp_phy_intf_sel(struct dpu_hw_mdp *mdp,
-> +				   enum dpu_dp_phy_sel phys[2])
-> +{
-> +	struct dpu_hw_blk_reg_map *c = &mdp->hw;
-> +	unsigned int intf;
-> +	u32 sel = 0;
-> +
-> +	sel |= FIELD_PREP(MDP_DP_PHY_INTF_SEL_INTF0, phys[0]);
-> +	sel |= FIELD_PREP(MDP_DP_PHY_INTF_SEL_INTF1, phys[1]);
-> +
-> +	for (intf = 0; intf < 2; intf++) {
-
-I wonder if ARRAY_SIZE(phys) is better here.
-
-> +		switch (phys[intf]) {
-> +		case DPU_DP_PHY_0:
-> +			sel |= FIELD_PREP(MDP_DP_PHY_INTF_SEL_PHY0, intf + 1);
-> +			break;
-> +		case DPU_DP_PHY_1:
-> +			sel |= FIELD_PREP(MDP_DP_PHY_INTF_SEL_PHY1, intf + 1);
-> +			break;
-> +		case DPU_DP_PHY_2:
-> +			sel |= FIELD_PREP(MDP_DP_PHY_INTF_SEL_PHY2, intf + 1);
-> +			break;
-> +		default:
-> +			/* ignore */
-> +			break;
-> +		}
-> +	}
-> +
-> +	DPU_REG_WRITE(c, MDP_DP_PHY_INTF_SEL, sel);
-> +}
-> +
->   static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
-> -		unsigned long cap)
-> +		unsigned long cap, const struct dpu_mdss_version *mdss_rev)
->   {
->   	ops->setup_split_pipe = dpu_hw_setup_split_pipe;
->   	ops->setup_clk_force_ctrl = dpu_hw_setup_clk_force_ctrl;
-> @@ -245,6 +275,9 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
->   
->   	ops->get_safe_status = dpu_hw_get_safe_status;
->   
-> +	if (mdss_rev->core_major_ver >= 5)
-> +		ops->dp_phy_intf_sel = dpu_hw_dp_phy_intf_sel;
-> +
->   	if (cap & BIT(DPU_MDP_AUDIO_SELECT))
->   		ops->intf_audio_select = dpu_hw_intf_audio_select;
->   }
-> @@ -252,7 +285,7 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
->   struct dpu_hw_mdp *dpu_hw_mdptop_init(struct drm_device *dev,
->   				      const struct dpu_mdp_cfg *cfg,
->   				      void __iomem *addr,
-> -				      const struct dpu_mdss_cfg *m)
-> +				      const struct dpu_mdss_version *mdss_rev)
->   {
->   	struct dpu_hw_mdp *mdp;
->   
-> @@ -270,7 +303,7 @@ struct dpu_hw_mdp *dpu_hw_mdptop_init(struct drm_device *dev,
->   	 * Assign ops
->   	 */
->   	mdp->caps = cfg;
-> -	_setup_mdp_ops(&mdp->ops, mdp->caps->features);
-> +	_setup_mdp_ops(&mdp->ops, mdp->caps->features, mdss_rev);
->   
->   	return mdp;
->   }
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> index 6f3dc98087df..3a17e63b851c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> @@ -67,6 +67,13 @@ struct dpu_vsync_source_cfg {
->   	u32 vsync_source;
->   };
->   
-> +enum dpu_dp_phy_sel {
-> +	DPU_DP_PHY_NONE,
-> +	DPU_DP_PHY_0,
-> +	DPU_DP_PHY_1,
-> +	DPU_DP_PHY_2,
-> +};
-> +
->   /**
->    * struct dpu_hw_mdp_ops - interface to the MDP TOP Hw driver functions
->    * Assumption is these functions will be called after clocks are enabled.
-> @@ -125,6 +132,13 @@ struct dpu_hw_mdp_ops {
->   	void (*get_safe_status)(struct dpu_hw_mdp *mdp,
->   			struct dpu_danger_safe_status *status);
->   
-> +	/**
-> +	 * dp_phy_intf_sel - configure intf to phy mapping
-> +	 * @mdp: mdp top context driver
-> +	 * @phys: list of phys the DP interfaces should be connected to. 0 disables the INTF.
-> +	 */
-> +	void (*dp_phy_intf_sel)(struct dpu_hw_mdp *mdp, enum dpu_dp_phy_sel phys[2]);
-> +
->   	/**
->   	 * intf_audio_select - select the external interface for audio
->   	 * @mdp: mdp top context driver
-> @@ -148,12 +162,12 @@ struct dpu_hw_mdp {
->    * @dev:  Corresponding device for devres management
->    * @cfg:  MDP TOP configuration from catalog
->    * @addr: Mapped register io address of MDP
-> - * @m:    Pointer to mdss catalog data
-> + * @mdss_rev: dpu core's major and minor versions
->    */
->   struct dpu_hw_mdp *dpu_hw_mdptop_init(struct drm_device *dev,
->   				      const struct dpu_mdp_cfg *cfg,
->   				      void __iomem *addr,
-> -				      const struct dpu_mdss_cfg *m);
-> +				      const struct dpu_mdss_version *mdss_rev);
->   
->   void dpu_hw_mdp_destroy(struct dpu_hw_mdp *mdp);
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> index 5acd5683d25a..f1acc04089af 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> @@ -60,6 +60,13 @@
->   #define MDP_WD_TIMER_4_LOAD_VALUE       0x448
->   #define DCE_SEL                         0x450
->   
-> +#define MDP_DP_PHY_INTF_SEL             0x460
-> +#define MDP_DP_PHY_INTF_SEL_INTF0		GENMASK(3, 0)
-> +#define MDP_DP_PHY_INTF_SEL_INTF1		GENMASK(6, 3)
-> +#define MDP_DP_PHY_INTF_SEL_PHY0		GENMASK(9, 6)
-> +#define MDP_DP_PHY_INTF_SEL_PHY1		GENMASK(12, 9)
-> +#define MDP_DP_PHY_INTF_SEL_PHY2		GENMASK(15, 12)
-
-These masks do not match the docs, the below ones are what I see:
-
-#define MDP_DP_PHY_INTF_SEL_INTF0		GENMASK(2, 0)
-#define MDP_DP_PHY_INTF_SEL_INTF1		GENMASK(5, 3)
-#define MDP_DP_PHY_INTF_SEL_PHY0		GENMASK(8, 6)
-#define MDP_DP_PHY_INTF_SEL_PHY1		GENMASK(11, 9)
-#define MDP_DP_PHY_INTF_SEL_PHY2		GENMASK(14, 12)
-
-> +
->   #define MDP_PERIPH_TOP0			MDP_WD_TIMER_0_CTL
->   #define MDP_PERIPH_TOP0_END		CLK_CTRL3
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 1955848b1b78..9db5a784c92f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -1102,7 +1102,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->   	dpu_kms->hw_mdp = dpu_hw_mdptop_init(dev,
->   					     dpu_kms->catalog->mdp,
->   					     dpu_kms->mmio,
-> -					     dpu_kms->catalog);
-> +					     dpu_kms->catalog->mdss_ver);
->   	if (IS_ERR(dpu_kms->hw_mdp)) {
->   		rc = PTR_ERR(dpu_kms->hw_mdp);
->   		DPU_ERROR("failed to get hw_mdp: %d\n", rc);
-> @@ -1137,6 +1137,15 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->   		goto err_pm_put;
->   	}
->   
-> +	/*
-> +	 * We need to program DP <-> PHY relationship only for SC8180X.  If any
-> +	 * other platform requires the same kind of programming, or if the INTF
-> +	 * <->DP relationship isn't static anymore, this needs to be configured
-> +	 * through the DT.
-> +	 */
-> +	if (of_device_is_compatible(dpu_kms->pdev->dev.of_node, "qcom,sc8180x-dpu"))
-> +		dpu_kms->hw_mdp->ops.dp_phy_intf_sel(dpu_kms->hw_mdp, (unsigned int[]){ 1, 2, });
-> +
->   	dpu_kms->hw_intr = dpu_hw_intr_init(dev, dpu_kms->mmio, dpu_kms->catalog);
->   	if (IS_ERR(dpu_kms->hw_intr)) {
->   		rc = PTR_ERR(dpu_kms->hw_intr);
-> 
-> ---
-> base-commit: 03d44168cbd7fc57d5de56a3730427db758fc7f6
-> change-id: 20240613-dp-phy-sel-1b06dc48ed73
-> 
-> Best regards,
+QXQgMjAyNC0wNi0yMyAyMTo0NDozMCwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbml2YW5u
+YW4uc2FkaGFzaXZhbUBsaW5hcm8ub3JnPiB3cm90ZToKPk9uIEZyaSwgSnVuIDIxLCAyMDI0IGF0
+IDExOjE3OjE2QU0gKzA4MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IAo+PiBBdCAyMDI0LTA2LTE0
+IDIyOjMxOjAzLCAiSmVmZnJleSBIdWdvIiA8cXVpY19qaHVnb0BxdWljaW5jLmNvbT4gd3JvdGU6
+Cj4+ID5PbiA2LzE0LzIwMjQgNDoxNyBBTSwgTG9pYyBQb3VsYWluIHdyb3RlOgo+PiA+PiBPbiBX
+ZWQsIDEyIEp1biAyMDI0IGF0IDE2OjUxLCBNYW5pdmFubmFuIFNhZGhhc2l2YW0KPj4gPj4gPG1h
+bml2YW5uYW4uc2FkaGFzaXZhbUBsaW5hcm8ub3JnPiB3cm90ZToKPj4gPj4+Cj4+ID4+PiBPbiBX
+ZWQsIEp1biAxMiwgMjAyNCBhdCAwODoxOToxM0FNIC0wNjAwLCBKZWZmcmV5IEh1Z28gd3JvdGU6
+Cj4+ID4+Pj4gT24gNi8xMi8yMDI0IDM6NDYgQU0sIE1hbml2YW5uYW4gU2FkaGFzaXZhbSB3cm90
+ZToKPj4gPj4+Pj4gT24gV2VkLCBKdW4gMTIsIDIwMjQgYXQgMDU6Mzg6NDJQTSArMDgwMCwgU2xh
+cmsgWGlhbyB3cm90ZToKPj4gPj4+Pj4KPj4gPj4+Pj4gU3ViamVjdCBjb3VsZCBiZSBpbXByb3Zl
+ZDoKPj4gPj4+Pj4KPj4gPj4+Pj4gYnVzOiBtaGk6IGhvc3Q6IEFkZCBjb25maWd1cmFibGUgbXV4
+X2lkIGZvciBNQklNIG1vZGUKPj4gPj4+Pj4KPj4gPj4+Pj4+IEZvciBTRFg3MiBNQklNIG1vZGUs
+IGl0IHN0YXJ0cyBkYXRhIG11eCBpZCBmcm9tIDExMiBpbnN0ZWFkIG9mIDAuCj4+ID4+Pj4+PiBU
+aGlzIHdvdWxkIGxlYWQgdG8gZGV2aWNlIGNhbid0IHBpbmcgb3V0c2lkZSBzdWNjZXNzZnVsbHku
+Cj4+ID4+Pj4+PiBBbHNvIE1CSU0gc2lkZSB3b3VsZCByZXBvcnQgImJhZCBwYWNrZXQgc2Vzc2lv
+biAoMTEyKSIuCj4+ID4+Pj4+PiBTbyB3ZSBhZGQgYSBkZWZhdWx0IG11eF9pZCB2YWx1ZSBmb3Ig
+U0RYNzIuIEFuZCB0aGlzIHZhbHVlCj4+ID4+Pj4+PiB3b3VsZCBiZSB0cmFuc2ZlcnJlZCB0byB3
+d2FuIG1iaW0gc2lkZS4KPj4gPj4+Pj4+Cj4+ID4+Pj4+PiBTaWduZWQtb2ZmLWJ5OiBTbGFyayBY
+aWFvIDxzbGFya194aWFvQDE2My5jb20+Cj4+ID4+Pj4+PiAtLS0KPj4gPj4+Pj4+ICAgIGRyaXZl
+cnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMgfCAzICsrKwo+PiA+Pj4+Pj4gICAgaW5jbHVk
+ZS9saW51eC9taGkuaCAgICAgICAgICAgICAgICB8IDIgKysKPj4gPj4+Pj4+ICAgIDIgZmlsZXMg
+Y2hhbmdlZCwgNSBpbnNlcnRpb25zKCspCj4+ID4+Pj4+Pgo+PiA+Pj4+Pj4gZGlmZiAtLWdpdCBh
+L2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMgYi9kcml2ZXJzL2J1cy9taGkvaG9z
+dC9wY2lfZ2VuZXJpYy5jCj4+ID4+Pj4+PiBpbmRleCAwYjQ4M2M3Yzc2YTEuLjllOWFkZjgzMjBk
+MiAxMDA2NDQKPj4gPj4+Pj4+IC0tLSBhL2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmlj
+LmMKPj4gPj4+Pj4+ICsrKyBiL2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMKPj4g
+Pj4+Pj4+IEBAIC01Myw2ICs1Myw3IEBAIHN0cnVjdCBtaGlfcGNpX2Rldl9pbmZvIHsKPj4gPj4+
+Pj4+ICAgICAgICAgICAgdW5zaWduZWQgaW50IGRtYV9kYXRhX3dpZHRoOwo+PiA+Pj4+Pj4gICAg
+ICAgICAgICB1bnNpZ25lZCBpbnQgbXJ1X2RlZmF1bHQ7Cj4+ID4+Pj4+PiAgICAgICAgICAgIGJv
+b2wgc2lkZWJhbmRfd2FrZTsKPj4gPj4+Pj4+ICsgdW5zaWduZWQgaW50IG11eF9pZDsKPj4gPj4+
+Pj4+ICAgIH07Cj4+ID4+Pj4+PiAgICAjZGVmaW5lIE1ISV9DSEFOTkVMX0NPTkZJR19VTChjaF9u
+dW0sIGNoX25hbWUsIGVsX2NvdW50LCBldl9yaW5nKSBcCj4+ID4+Pj4+PiBAQCAtNDY5LDYgKzQ3
+MCw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94Y29ubl9z
+ZHg3Ml9pbmZvID0gewo+PiA+Pj4+Pj4gICAgICAgICAgICAuZG1hX2RhdGFfd2lkdGggPSAzMiwK
+Pj4gPj4+Pj4+ICAgICAgICAgICAgLm1ydV9kZWZhdWx0ID0gMzI3NjgsCj4+ID4+Pj4+PiAgICAg
+ICAgICAgIC5zaWRlYmFuZF93YWtlID0gZmFsc2UsCj4+ID4+Pj4+PiArIC5tdXhfaWQgPSAxMTIs
+Cj4+ID4+Pj4+PiAgICB9Owo+PiA+Pj4+Pj4gICAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfY2hh
+bm5lbF9jb25maWcgbWhpX212M3hfY2hhbm5lbHNbXSA9IHsKPj4gPj4+Pj4+IEBAIC0xMDM1LDYg
+KzEwMzcsNyBAQCBzdGF0aWMgaW50IG1oaV9wY2lfcHJvYmUoc3RydWN0IHBjaV9kZXYgKnBkZXYs
+IGNvbnN0IHN0cnVjdCBwY2lfZGV2aWNlX2lkICppZCkKPj4gPj4+Pj4+ICAgICAgICAgICAgbWhp
+X2NudHJsLT5ydW50aW1lX2dldCA9IG1oaV9wY2lfcnVudGltZV9nZXQ7Cj4+ID4+Pj4+PiAgICAg
+ICAgICAgIG1oaV9jbnRybC0+cnVudGltZV9wdXQgPSBtaGlfcGNpX3J1bnRpbWVfcHV0Owo+PiA+
+Pj4+Pj4gICAgICAgICAgICBtaGlfY250cmwtPm1ydSA9IGluZm8tPm1ydV9kZWZhdWx0Owo+PiA+
+Pj4+Pj4gKyBtaGlfY250cmwtPmxpbmtfaWQgPSBpbmZvLT5tdXhfaWQ7Cj4+ID4+Pj4+Cj4+ID4+
+Pj4+IEFnYWluLCAnbGlua19pZCcgaXMganVzdCBhIFdXQU4gdGVybS4gVXNlICdtdXhfaWQnIGhl
+cmUgYWxzby4KPj4gPj4+Pgo+PiA+Pj4+IERvZXMgdGhpcyByZWFsbHkgYmVsb25nIGluIE1IST8g
+IElmIHRoaXMgd2FzIERULCBJIGRvbid0IHRoaW5rIHdlIHdvdWxkIHB1dAo+PiA+Pj4+IHRoaXMg
+dmFsdWUgaW4gRFQsIGJ1dCByYXRoZXIgaGF2ZSB0aGUgZHJpdmVyIChNQklNKSBkZXRlY3QgdGhl
+IGRldmljZSBhbmQKPj4gPj4+PiBjb2RlIGluIHRoZSByZXF1aXJlZCB2YWx1ZS4KPj4gPj4+Pgo+
+PiA+Pj4KPj4gPj4+IEkgYmVsaWV2ZSB0aGlzIGlzIGEgbW9kZW0gdmFsdWUgcmF0aGVyIHRoYW4g
+TUhJLiBCdXQgSSB3YXMgT0sgd2l0aCBrZWVwaW5nIGl0IGluCj4+ID4+PiBNSEkgZHJpdmVyIHNp
+bmNlIHdlIGtpbmQgb2Yga2VlcCBtb2RlbSBzcGVjaWZpYyBjb25maWcuCj4+ID4+Pgo+PiA+Pj4g
+QnV0IGlmIFdXQU4gY2FuIGRldGVjdCB0aGUgZGV2aWNlIGFuZCBhcHBseSB0aGUgY29uZmlnLCBJ
+J20gYWxsIG92ZXIgaXQuCj4+ID4+IAo+PiA+PiBUaGF0IHdvdWxkIHJlcXVpcmUgYXQgbGVhc3Qg
+c29tZSBpbmZvcm1hdGlvbiBmcm9tIHRoZSBNSEkgYnVzIGZvciB0aGUKPj4gPj4gTUJJTSBkcml2
+ZXIKPj4gPj4gdG8gbWFrZSBhIGRlY2lzaW9uLCBzdWNoIGFzIGEgZ2VuZXJpYyBkZXZpY2UgSUQs
+IG9yIHF1aXJrIGZsYWdzLi4uCj4+ID4KPj4gPkkgZG9uJ3Qgc2VlIHdoeS4KPj4gPgo+PiA+VGhl
+ICJzaW1wbGUiIHdheSB0byBkbyBpdCB3b3VsZCBiZSB0byBoYXZlIHRoZSBjb250cm9sbGVyIGRl
+ZmluZSBhIAo+PiA+ZGlmZmVyZW50IGNoYW5uZWwgbmFtZSwgYW5kIHRoZW4gaGF2ZSB0aGUgTUJJ
+TSBkcml2ZXIgcHJvYmUgb24gdGhhdC4gCj4+ID5UaGUgTUJJTSBkcml2ZXIgY291bGQgYXR0YWNo
+IGRyaXZlciBkYXRhIHNheWluZyB0aGF0IGl0IG5lZWRzIHRvIGhhdmUgYSAKPj4gPnNwZWNpZmlj
+IG11eF9pZC4KPj4gPgo+PiA+T3IsIHdpdGggemVybyBNSEkvQ29udHJvbGxlciBjaGFuZ2VzLCB0
+aGUgTUJJTSBkcml2ZXIgY291bGQgcGFyc2UgdGhlIAo+PiA+bWhpX2RldmljZSBzdHJ1Y3QsIGdl
+dCB0byB0aGUgc3RydWN0IGRldmljZSwgZm9yIHRoZSB1bmRlcmx5aW5nIGRldmljZSwgCj4+ID5h
+bmQgZXh0cmFjdCB0aGUgUENJZSBEZXZpY2UgSUQgYW5kIG1hdGNoIHRoYXQgdG8gYSB3aGl0ZSBs
+aXN0IG9mIGtub3duIAo+PiA+ZGV2aWNlcyB0aGF0IG5lZWQgdGhpcyBwcm9wZXJ0eS4KPj4gPgo+
+PiA+SSBndWVzcyBpZiB0aGUgY29udHJvbGxlciBjb3VsZCBhdHRhY2ggYSBwcml2YXRlIHZvaWQg
+KiB0byB0aGUgCj4+ID5taGlfZGV2aWNlIHRoYXQgaXMgb3BhcXVlIHRvIE1ISSwgYnV0IGFsbG93
+cyBNQklNIHRvIG1ha2UgYSBkZWNpc2lvbiwgCj4+ID50aGF0IHdvdWxkIGJlIG9rLiAgU3VjaCBh
+IG1lY2hhbmlzbSB3b3VsZCBiZSBnZW5lcmljLCBhbmQgZXh0ZW5zaWJsZSB0byAKPj4gPm90aGVy
+IHVzZWNhc2VzIG9mIHRoZSBzYW1lICJjbGFzcyIuCj4+ID4KPj4gPi1KZWZmCj4+IAo+PiBIaSBn
+dXlzLAo+PiBUaGlzIHBhdGNoIG1haW5seSByZWZlciB0byB0aGUgZmVhdHVyZSBvZiBtcnUgc2V0
+dGluZyBiZXR3ZWVuIG1oaSBhbmQgd3dhbiBzaWRlLgo+PiBXZSByYW5zZmVyIHRoaXMgdmFsdWUg
+dG8gd3dhbiBzaWRlIGlmIHdlIGRlZmluZSBpdCBpbiBtaGkgc2lkZSwgb3RoZXJ3aXNlIGEgZGVm
+YXVsdAo+PiB2YWx1ZSB3b3VsZCBiZSB1c2VkIGluIHd3YW4gc2lkZS4gV2h5IGRvbid0IHdlIGp1
+c3QgYWxpZ24gd2l0aCB0aGF0Pwo+PiAKPgo+V2VsbCwgdGhlIHByb2JsZW0gaXMgdGhhdCBNUlUg
+aGFzIG5vdGhpbmcgdG8gZG8gd2l0aCBNSEkuIEkgaW5pdGlhbGx5IHRob3VnaHQKPnRoYXQgaXQg
+Y291bGQgZml0IGluc2lkZSB0aGUgY29udHJvbGxlciBjb25maWcsIGJ1dCB0aGlua2luZyBtb3Jl
+IEkgYWdyZWUgd2l0aAo+SmVmZiB0aGF0IHRoaXMgZG9lc24ndCBiZWxvbmcgdG8gTUhJIGF0IGFs
+bC4KPgo+QXQgdGhlIHNhbWUgdGltZSwgSSBhbHNvIGRvIG5vdCB3YW50IHRvIGV4dHJhY3QgdGhl
+IFBDSSBpbmZvIGZyb20gdGhlIGNsaWVudAo+ZHJpdmVycyBzaW5jZSB0aGUgdW5kZXJseWluZyB0
+cmFuc3BvcnQgY291bGQgY2hhbmdlIHdpdGggTUhJLiBTbyB0aGUgYmVzdAo+c29sdXRpb24gSSBj
+YW4gdGhpbmsgb2YgaXMgZXhwb3NpbmcgdGhlIG1vZGVtIG5hbWUgaW4gJ21oaV9jb250cm9sbGVy
+X2NvbmZpZycgc28KPnRoYXQgdGhlIGNsaWVudCBkcml2ZXJzIGNhbiBkbyBhIG1hdGNoLgo+Cj5Q
+bGVhc2UgdHJ5IHRvIGltcGxlbWVudCB0aGF0Lgo+Cj4tIE1hbmkKPgo+LS0gCj7grq7grqPgrr/g
+rrXgrqPgr43grqPgrqngr40g4K6a4K6k4K6+4K6a4K6/4K614K6u4K+NCkhpIE1hbmksCkN1cnJl
+bnRseSB0aGVyZSBhcmUgbWFueSBwcm9kdWN0cyBzaGFyZSBhIHNhbWUgbWhpX2NvbnRyb2xsZXJf
+Y29uZmlnCnNldHRpbmdzLiBGb3IgZXhhbXBsZSwgYWxsIGZveGNvbm4gZGV2aWNlIHVzZSBtb2Rl
+bV9mb3hjb25uX3NkeDU1X2NvbmZpZy4KQnV0IG15IGRldmljZSBtYXkgYmUgYSBTRFgyNCwgb3Ig
+U0RYNzIsIG9yIGV2ZW4gU0RYNjUuICBBbnkgb3RoZXIgaWRlYT8KClRoYW5rcw==
 
