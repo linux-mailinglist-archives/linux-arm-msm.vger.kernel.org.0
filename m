@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-24323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2427891860E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:39:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7FB6918614
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:39:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02817B20F43
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:37:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 06AA91C218D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:39:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBB7118C338;
-	Wed, 26 Jun 2024 15:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B526B18C35A;
+	Wed, 26 Jun 2024 15:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zpd9IUO2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JfoPqh2e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CD91849FB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 15:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE7418C358
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 15:39:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719416246; cv=none; b=Ijh9sgLxKJjOspFIgOXu5pVNX+luVOtLn61L7p6/g0cd1JNZ2hIkMVV+U7xkvps0T6U4/Z2hUGbpc+tUGDIt9MU5KubVwhMpdXAluH9A9AWfTGmnPhk6qTXslF2GBRm1czWOcdftazOG+zteNOfsh6kK3SWjkm070H60Amx9QZc=
+	t=1719416378; cv=none; b=RFPux0M+1vPFWvWJa7Hzml34eBqAuigM+wi3xcQ6/vEMqxLsn63H6vmfHkQmrVnrnmhUppxKqvNlqaToxR7A5VIyIY1VAuF/3AaTkm9DhrE9pUbu4RTTkSYz2HSVtStcsXZ01lJWSvNtiiSkQ87cjC4hhRqNvfZ3EyRVdyZ1u24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719416246; c=relaxed/simple;
-	bh=678pGV40+eNWwnUvVfwueDmC3NvGqTCmHbiiJ4Q2GF0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WZxV4JmgDX7IE/bFLaaNa7QmPfuTJAYG4U+zPci3BQ+QF7dzFo/zQmfA+TmQ8jNZBMODil9vwWI0yon5An1PuhstvycsYQRoc/dMQkbW9jhg49+Zb9hC98aIBpPc9taTPFWLP0p8yDnyzhCEW2TVnqvSmuRTXHpIDpPqrksUL40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zpd9IUO2; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1719416378; c=relaxed/simple;
+	bh=PBmsA3dp7WOzVuKoikoPlIqgP7yl2wLUkbDd8Z333GU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=m59oK0BOPbMaD9MA6VtEwxbrzPPBUPFn1c9EKxf4e3ssDwYkg7LpV+qXthx3Eal/i+PbE7si/vQvWOz+mT8kpAGztcrnGsm0baGFQdYLEs7iDY7TEd+4m3y0SYfy/gv2GzCwmOj/nOdmv0UECKCPm+FV7ptLT6wiR7NcuUR2Q1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JfoPqh2e; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-57cbc66a0a6so656585a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 08:37:24 -0700 (PDT)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a725282b926so508007066b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 08:39:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719416243; x=1720021043; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719416374; x=1720021174; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/M8ZGHQaunzKdqcWije298Gp484PNbRhdghRixdYcfI=;
-        b=zpd9IUO2Ee4u0v1D0JmKCUYJz0vl59GDx2CSQ6N97yVh4IOyngm4F8L5wRaS6Z5pjP
-         QHaffQgLAiQ1vre1BKmD7H1XId/HdEbevDwOzhUk4B+f74rtRqEW+K2BEiL6XlEDejrI
-         +9BxxLxbiMulCY2YhVXu2VlrUMn7/G/nead6H6w/A914JBhAZHMYTMxMp/eDjJvuQxOK
-         CPGXdeYINNiuvsAG7b7n5QZrHUd+DiHSJjAtM27Cxus9YvsFvb3rVfAdDkqwhpT28RFl
-         fVAp7pmyiwOhEsvG8oT4mlewo2ZWyeRzwoGq6G+87rEv8CPfWUq3zdNNta6H7WB8/g9G
-         d4Og==
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=0bkJu/bkE4YATT5DotU3XkvD4f0O0B8V67eM7kRZPuY=;
+        b=JfoPqh2eQAYjUP4y7GDbPKgMFiul/C+ssUC+eCVuEtj1+iYn7aICkEQ9D5/96fS9Fy
+         8exdo9A0SEvigm66cZYoh+XOlqx/ZBc0Stltxd5oE+kOzEEQpnE1+japUV2/463FRfHt
+         WjEYkT3kn2VAwyobGKds2sZTE4euon+S1tqiL5jlqQd+L5jaAH0vkncnmWlTnGE+h45d
+         E+JnqgpTg6TUzhkC56S7MlM2xeNWkHyGOVq2XODeuZiu01fBDZoJJSJqY8O3zxKD/t0U
+         yXO72J9PBkF+KMNT0rOY1RsDkwYqzHJ2b10mhExLER2qi8rs7AEEtmd/1oAiuWYpP+hb
+         qixQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719416243; x=1720021043;
+        d=1e100.net; s=20230601; t=1719416374; x=1720021174;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/M8ZGHQaunzKdqcWije298Gp484PNbRhdghRixdYcfI=;
-        b=bwJu2hM4FnRPrO5VtP+qD/lqdGopgC7z6jyP4LS5bHzpgvPahyI5OE3v/c2URNs+G2
-         TGL6OOUs2brNTYtkqRCsagZhWwY/G4n7II37Piqw6wYKIW5xGMeMFY+RuMdWwJvpeav8
-         ROktT97TG50XoTuLlh29XGsMVQlqAuwWdjdnLI5yH+UgKlk1m2q2iCXRBC4stTtGQWDg
-         dl7/LKw1B2rZa1StUXOpnMAnTL2LRtm/LWzUhuvlYk0+Zw0ApTbvzFP+JFQn+jB52T4N
-         M69SzfjQFanPeC6hHg9V1AYJTo9jHyC1rwf4L/WFccDYclElvNzzV27/O0HXZJTlN0/O
-         EIRA==
-X-Forwarded-Encrypted: i=1; AJvYcCXhvr+ofKOca9ngFJVhFVTSt3s8RLra2k1rCTEy/3MQYV/ByzEXua8QryjHJ4pR0YiEiB4pJLJRG80veEhs1bq7n6SBGJ7696Apmj/abA==
-X-Gm-Message-State: AOJu0Yw6oKk0mS/04VTkWCte2Aj1U5IGEhdp/fG720UGZHhRpBrlQZm7
-	drG5Y+/pF0zwoLV7TuZJlMQAtQ2E+prfe0cfSfSS5EiSUNydxUSHaPZwhzD3tCM=
-X-Google-Smtp-Source: AGHT+IEqQeAazDOngYL3KT5BxpGqqJf5DSXST78jR3z4Ny3CbZ3jxLYwqV0Iiwe/FZ4+iYRvfmlsNQ==
-X-Received: by 2002:a50:c004:0:b0:57d:3ef8:614d with SMTP id 4fb4d7f45d1cf-5847c38c72cmr3776a12.20.1719416243091;
-        Wed, 26 Jun 2024 08:37:23 -0700 (PDT)
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0bkJu/bkE4YATT5DotU3XkvD4f0O0B8V67eM7kRZPuY=;
+        b=JwEvdkl8lEYrNnUePKnTZWaGA/GMnXGhtbaRQUsSCxGydXg2+08EiLc8Sr0g7/koZl
+         OM4L5xDAK9bhhO6gFsyyQY5O3c0yz+wCHtpVKwAOgG1Vs+29gPeKErks+qeCdo/yqWA9
+         /+Aq1Pb6zj82QROMOPq4fy6JuMbqijOJqnBglc67Jo2f9aA+OvD1q1UDO1n445aAULlV
+         Z9RD5OJq/0UY/YXtiHDdyLV9n63wZkpVHkiQIZrTECnQ9JGmJpdmiSSrnoCloACHTbYz
+         n/siE8EjPRuQbSSHb4yrf56dM+kL6DQ6yHXH7BAIgxULx7Qt85VYXuUDXydbLwTOcy6t
+         UIlw==
+X-Forwarded-Encrypted: i=1; AJvYcCV9Z0PHSnQLIhS/WMY6H3AHwv/EzOMbitpXxRK9g+ln6rKFFezSQy9pmgLEx8aij4P4rQt7Bi0FJvSm9zc4MR1F8OwRS78dov1EbOm+rw==
+X-Gm-Message-State: AOJu0Yzu53+wkK0UX0sJyOpfC7oP/gwbN2CqFNVZdaT3fteRHp8/HAuE
+	ZYvbC5Kiqo+eYuIndKTanSBUi/zNZ59O4ftHp7tgHgUDjnwqzT2aRVnX51kWAjY=
+X-Google-Smtp-Source: AGHT+IG/rHUrDCvGY9wJr8ucozPZKf0rO73NUY5HSWLeuYxtBLnN/cI1iFrL9wx3/pOzGPv/gbUI7w==
+X-Received: by 2002:a17:907:c242:b0:a72:8296:ca12 with SMTP id a640c23a62f3a-a728296d192mr290301866b.36.1719416373600;
+        Wed, 26 Jun 2024 08:39:33 -0700 (PDT)
 Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d3040f3e0sm7280865a12.25.2024.06.26.08.37.20
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a724ebbc1a5sm367452366b.213.2024.06.26.08.39.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jun 2024 08:37:22 -0700 (PDT)
-Message-ID: <0b60cd30-3337-46a0-87ca-4c75b7f1ef29@linaro.org>
-Date: Wed, 26 Jun 2024 17:37:19 +0200
+        Wed, 26 Jun 2024 08:39:33 -0700 (PDT)
+Message-ID: <e678339b-356f-4aa4-aa04-e6e54d8e554c@linaro.org>
+Date: Wed, 26 Jun 2024 17:39:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,22 +77,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 7/7] pci: pwrctl: Add power control driver for qps615
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
- Bartosz Golaszewski <brgl@bgdev.pl>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Jingoo Han <jingoohan1@gmail.com>
-Cc: quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
- quic_nitegupt@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com>
- <20240626-qps615-v1-7-2ade7bd91e02@quicinc.com>
+Subject: Re: [PATCH V5 5/7] clk: qcom: Add NSS clock Controller driver for
+ IPQ9574
+To: Devi Priya <quic_devipriy@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, catalin.marinas@arm.com,
+ will@kernel.org, p.zabel@pengutronix.de, richardcochran@gmail.com,
+ geert+renesas@glider.be, dmitry.baryshkov@linaro.org,
+ neil.armstrong@linaro.org, arnd@arndb.de, m.szyprowski@samsung.com,
+ nfraprado@collabora.com, u-kumar1@ti.com, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ netdev@vger.kernel.org
+References: <20240626143302.810632-1-quic_devipriy@quicinc.com>
+ <20240626143302.810632-6-quic_devipriy@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -130,55 +128,35 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240626-qps615-v1-7-2ade7bd91e02@quicinc.com>
+In-Reply-To: <20240626143302.810632-6-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26.06.2024 2:37 PM, Krishna chaitanya chundru wrote:
-> QPS615 switch needs to configured after powering on and before
-> PCIe link was up.
+On 26.06.2024 4:33 PM, Devi Priya wrote:
+> Add Networking Sub System Clock Controller(NSSCC) driver for ipq9574 based
+> devices.
 > 
-> As the PCIe controller driver already enables the PCIe link training
-> at the host side, stop the link training.
-> Otherwise the moment we turn on the switch it will participate in
-> the link training and link may come before switch is configured through
-> i2c.
-> 
-> The switch can be configured different ways like changing de-emphasis
-> settings of the switch, disabling unused ports etc and these settings
-> can vary from board to board, for that reason the sequence is taken
-> from the firmware file which contains the address of the slave, to address
-> and data to be written to the switch. The driver reads the firmware file
-> and parses them to apply those configurations to the switch.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> Tested-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
 > ---
 
 [...]
 
-> +static int qcom_qps615_pwrctl_init(struct qcom_qps615_pwrctl_ctx *ctx)
-> +{
-> +	struct device *dev = ctx->pwrctl.dev;
-> +	struct qcom_qps615_pwrctl_i2c_setting *set;
-> +	const struct firmware *fw;
-> +	const u8 *pos, *eof;
+> +	struct regmap *regmap;
+> +	struct qcom_cc_desc nsscc_ipq9574_desc = nss_cc_ipq9574_desc;
+> +	struct clk *nsscc_clk;
+> +	struct device_node *np = (&pdev->dev)->of_node;
 > +	int ret;
-> +	u32 val;
 > +
-> +	ret = request_firmware(&fw, "qcom/qps615.bin", dev);
-
-Is this driver only going to serve one model of the device, that will use
-this specific firmware file, ever?
-
-In other words, is QPS615 super special and no other chip like it will be
-ever made?
-
-[...]
-
+> +	nsscc_clk = of_clk_get(np, 11);
+> +	if (IS_ERR(nsscc_clk))
+> +		return PTR_ERR(nsscc_clk);
 > +
-> +	bridge->ops->stop_link(bus);
+> +	ret = clk_prepare_enable(nsscc_clk);
+> +	if (ret)
+> +		clk_disable_unprepare(nsscc_clk);
 
-This is turbo intrusive. What if there are more devices on this bus?
+No changes to be seen..
 
 Konrad
 
