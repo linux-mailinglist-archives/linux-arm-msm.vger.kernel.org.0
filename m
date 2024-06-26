@@ -1,128 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-24266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92F05917EDE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 12:51:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CFA4917F15
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 13:02:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C96028B81A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 10:51:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22D3F1C21563
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 11:02:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F7C017BB19;
-	Wed, 26 Jun 2024 10:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB25217D356;
+	Wed, 26 Jun 2024 11:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RoTanZ/j"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="DJkv4B8W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6CC13A26F;
-	Wed, 26 Jun 2024 10:50:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E597617A924
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 11:02:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719399041; cv=none; b=urKntrAi7TKoMNLybwxWrliumKz18vr1CYZJeuOj6EYMILK9+KLMY6GQFOjc4hukBnqmAd00tMfvlMOl2IbPX1L9s+qcC4kunDgknDL1KGZeXlow9WQ8Cp5HEzrcyq63YQv4a+ktFEsQ2Wx8QmHWEpbs0bds1MZPhGNokWTDyTM=
+	t=1719399748; cv=none; b=WHhh/WlOBbU5jyvRuqm13bRWbb6LZLAM3vEdzsp4x9GoLC+zM2tZmtzHBDut2f8gKfeqGJw1YybV0ec1rkNDE1wjNrvxLj4FzSPQJdrPIOi/gag+Qm+1f3UtzFGT357kJGvVFUSb8c8PfrZsOrZJzTKcCIWSBcOGuzS5+wCDypg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719399041; c=relaxed/simple;
-	bh=Nhxq8J22maEd7Tggpjfv1hTvgHfsAmvbZS82KOa+e/k=;
+	s=arc-20240116; t=1719399748; c=relaxed/simple;
+	bh=iHKo5jSf/IdRTguJc6dSMvj0EoFBMTutpyv41hTOCGs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=o2NS2z5lRYjGQkP+LuRZ3yf6hAn7naRtybcCXwutA0AhrcTzYb4W/SZIll6mB+lzKaNtYy2092Eu5+SflCQhysmkj4TNKLQKeps9wgixVmN1fa53vlY7TP4sPK992n2lHQ9SeN26abC2wgprqoXJvR5RxqNTQoOTnzfdlPYnWC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RoTanZ/j; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ebeefb9a7fso79844741fa.0;
-        Wed, 26 Jun 2024 03:50:39 -0700 (PDT)
+	 To:Cc:Content-Type; b=i9s0YUH7S9M3J9qXctJWeXg6kU1Af+sJlboLobXT2XyrtDR1gyvPj73VGzvzqIGr+s/8Vqm+XZW2YmBOYAkpObTmZxRaW8yFo4G0L4XzReDEu+mT49KZjY69l5W37Wm56IkWT7qGXXOzZv4JLbpRk/hwovGscf5mQcuWhqeOU0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=DJkv4B8W; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ec595d0acbso44740681fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 04:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719399038; x=1720003838; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1719399745; x=1720004545; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Nhxq8J22maEd7Tggpjfv1hTvgHfsAmvbZS82KOa+e/k=;
-        b=RoTanZ/jyd30r9jBjmJfdpAiKPA1CgxjjOwh+GV91OqFH4qjK92+2BV4819rVaxDEP
-         AUXNl3+OjwvifhaiNqkOC7x0qdQBySpbn9winJ5kO0wCU8d4EnUD3qy7h5fOnFsUl2+a
-         3jZRGJyKXW+A4z+QIQ5TVz88cPoCmM0nSJrYwvjub0VBlHq5XCvPQZbJfIImKaLj1X72
-         DGK2TC9nqwbUZUpne0paOvRSRa0HM1kYBo3u2r30e31Eb1scdZikxpcfWKaiBZne0B5M
-         w8+zS/04mxTGUj6BF8/fc1DdmuehTJcl0B9onm0JwZfOibkpYLcjiHAUSS974r0RwvE4
-         N8Og==
+        bh=VDswRBBP2Qt3ekSLsvBri2VGbmBXgiH4bSSikEURQGY=;
+        b=DJkv4B8WUXXrUF4H/7lGJ7vjZ5dUtnQxDPWzL1BunBARWdnw0PHNMyRIvrRhQeJBZc
+         aZyoN8AusIj5ad67RN8kfG2yoASZaTEh2Dt+vpZFI1KPodR1RBiq2sDU1W3Fei6YJHpX
+         SDPENyRLpsYH/LCFoaFuOPauO0g8ApJ1SUfBTbfDl7zZ7esNKvR6LBTLMrWBGWKWgyal
+         55EZ2qCpdwbenMRWOPKlQhM0IjuXiVSGClcL5ay0O/43GH0BO3txKgvO6Zdl3Vn8mkJh
+         BBOtJ3hmeoXU2W9XMteA23v952u9Pba03qqCo8UyYzXQXIX8LHYLO53BXCW4VxnR+VWF
+         ifWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719399038; x=1720003838;
+        d=1e100.net; s=20230601; t=1719399745; x=1720004545;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Nhxq8J22maEd7Tggpjfv1hTvgHfsAmvbZS82KOa+e/k=;
-        b=PcREWWLQNLLA4u7BBGTV1+7dFJAYiH+e3kRONC0lRYSK37if2vsl6zTN4JEU0QxCEM
-         WIW4nCcK/NV1rnZemb404zHZnuKlTWTnnLgHyQ5fob374sZyVeN674jgTI4xAByvFggK
-         C2Oz8K4z0B4669f0nfUykOQjFibUX4nL39YJOcZUvICH7avpC8Wx1yIrFNNOek1x535w
-         J/wATTWrcG3zizQhtMkNR4DnOJTbv7AIgyYqTT1u/mUVT3XSfuSOeLUHVmnSPqvmhbfB
-         Sgu6QofA/Qw85ryuo/lXDvR01cnfW+eSp7FzPNh2BlbTRaJpDDI42VckN7hHQ7OnW9+D
-         xRaA==
-X-Forwarded-Encrypted: i=1; AJvYcCWPzQ/fVLKVV3Pr2u8K24Rp+DQ31WQLSUa4N9yKYANwvwbWuMifjrWEQbVWIhu7gMNkx2isEUAnUW1CaEiyqHnhW5CY8uV7fsu+CuIb/rktzl1c1m9la+Cb49c713Ye/kKnA74xCE/KEifh4qvzylxM4oDga1zWBGDs8BXF6JxWIvsg1R2HrXyXISFGcA7vCk9Zoy8onCgQgPRB0NlOT8QxUgElVA==
-X-Gm-Message-State: AOJu0YyQTsLGOv1JW85M7JdfkFjjVYm5xRCPhV7Cn2mOnrCwnL11GDvI
-	A51iS0Of7DqVKtnDGF6fSY9qExwJnRmmQzd50hmEsZZz/uwoJoKCxMO0Qo7PMU3oMFYS38P+6c2
-	02w3mvHPW7FPAmZex/yda6ZV0hZA=
-X-Google-Smtp-Source: AGHT+IEzpWzUx+9sNDvROX+c/vTLDyxb0PHt0OT6ZaCeex1LDL7R1aTIDHu9u7EiPMNnUygtmqVi0YGK9vKN4DrqFlo=
-X-Received: by 2002:a2e:9bca:0:b0:2eb:e634:fee6 with SMTP id
- 38308e7fff4ca-2ec5797a56emr69286531fa.18.1719399037471; Wed, 26 Jun 2024
- 03:50:37 -0700 (PDT)
+        bh=VDswRBBP2Qt3ekSLsvBri2VGbmBXgiH4bSSikEURQGY=;
+        b=dmP5hBHGdBYFfnyo0RFiWGDxmDetrGY7bO/EYsV+C7ckgd7AzH6Pd5+UvtwpIJNIgF
+         3CPin8f7nk1hBYoh+pSgkmtGiULZrKS3jtrnkrBb2hZjyNUbWp0FMJYaRMedvL7Gk1hH
+         TEOBk30gOtWMNlT7msBxpKdBvIYfN+1k+Yw6RgAQnqgW7Dh+kf+kZzBt3Pne7LgCLs/9
+         NaTe7ryJk2WvO4Uw1tttsiYFjKKYx4EhS+DysDu/44F8u7tCZ0inFnxZ5zlMOu5izEmE
+         MDSGpWCHk3WpjLAjjxgq2nT5inRI+YToVHdzk8MyKkTOFUhm5K2okyL8/Pgpptlr0qPn
+         guwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXxSVzj1f13QnJMU3SxW21PdcR1+6SAyCyeVTOe0BjLCbn/P76Zl6/o1UdCc7qDJ2JAMPitD43b+sJRLEJbJHUxT2HZbHa0P3y6k3gVjQ==
+X-Gm-Message-State: AOJu0YwXxpHHJfJEIIF84v0WSkr3JqZvMuCIJcC9q9L8rFW+q0x6u1+i
+	HpikNygTTbaGCUai3q7L6kiGgkV25k1uas8GnIjfwVNwfqnG+tIoP9eluN38GNYnkwt6khZFCNI
+	y/rSfvA7MPkOgpahBV3zBA9OS5YKFYxCCRDy7cw==
+X-Google-Smtp-Source: AGHT+IHOZFXD0xS4qZO808BfSHcTBiGzJgw7SoL1DC7zM8qFILuyWWKJM3LJtdXgtfsaOsNad2MuzEsyatICH5an/Aw=
+X-Received: by 2002:a2e:854f:0:b0:2ec:49b5:50d5 with SMTP id
+ 38308e7fff4ca-2ec5b357a00mr72949841fa.41.1719399744869; Wed, 26 Jun 2024
+ 04:02:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240624-b4-sc7180-camss-v3-0-89ece6471431@gmail.com>
- <20240624-b4-sc7180-camss-v3-5-89ece6471431@gmail.com> <47997e61-26e5-4643-ac69-17db09be9bb1@linaro.org>
- <6a8b1bd1-8413-41f7-8889-7f4d42ce0d6d@linaro.org> <CADgMGSt0NiJAHSneYS8AXvDqKHsscvxW50tdxAYYOofpEgeofA@mail.gmail.com>
-In-Reply-To: <CADgMGSt0NiJAHSneYS8AXvDqKHsscvxW50tdxAYYOofpEgeofA@mail.gmail.com>
-From: george chan <gchan9527@gmail.com>
-Date: Wed, 26 Jun 2024 18:50:24 +0800
-Message-ID: <CADgMGSuqUCrA4+yt1yLGACDPVARpavWUSGV2f1MGrv5rn_Xavg@mail.gmail.com>
-Subject: Re: [PATCH RFT v3 5/5] arm64: dts: qcom: sc7180: camss: Add CAMSS
- block definition
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org, 
+References: <20240625151430.34024-1-brgl@bgdev.pl> <20240625151430.34024-2-brgl@bgdev.pl>
+ <f4e055e6-8903-4bd0-96da-b5247678ad84@kernel.org>
+In-Reply-To: <f4e055e6-8903-4bd0-96da-b5247678ad84@kernel.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 26 Jun 2024 13:02:13 +0200
+Message-ID: <CAMRc=Mc5TX=bRpSDpAaMdcbR8rXgFi+aoWCWSn-co3tHeVb3rg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: arm: qcom: add sa8775p-ride Rev 3
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 26, 2024 at 1:53=E2=80=AFPM george chan <gchan9527@gmail.com> w=
-rote:
+On Wed, Jun 26, 2024 at 11:00=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.o=
+rg> wrote:
 >
-> On Wed, Jun 26, 2024 at 7:52=E2=80=AFAM Bryan O'Donoghue
-> <bryan.odonoghue@linaro.org> wrote:
+> On 25/06/2024 17:14, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > >
-> > On 26/06/2024 00:49, Bryan O'Donoghue wrote:
-> > > Where is the CCI and sensor stuff - could you post a link to your
-> > > working kernel tree in your next cover letter ?
+> > Document the compatible for revision 3 of the sa8775p-ride board.
 > >
-> > Found it
-> >
-> > https://github.com/torvalds/linux/commit/441ebc3a8948e03a1115dc6710e951=
-9a2594d0ae#diff-4b55839d42d3ffb773ac6d1babc9aa66dc2b9b11b346caea5d2d3ffb6ee=
-900e5
-> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > > ---
-> > bod
-> Ah, i found that camss branch is overridden by clean patches on the
-> last commit, let me re-add the camera board dts too.
+> >  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Document=
+ation/devicetree/bindings/arm/qcom.yaml
+> > index ec1c10a12470..000037f4a712 100644
+> > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> > @@ -895,6 +895,7 @@ properties:
+> >        - items:
+> >            - enum:
+> >                - qcom,sa8775p-ride
+> > +              - qcom,sa8775p-ride-r3
+>
+> The board is not compatible with earlier revision?
+>
 
-Hi dev,
+In what way? Can you run the same DTB on both? Sure. Will ethernet
+work in both cases? No.
 
-Here is an all-in-one merged work tree. github action compiles fine.
-https://github.com/99degree/linux/tree/next-20240626
-
-My test phone is nearly EOL mainly due to the battery expanding risk.
-Interested developers please find the above tree useful. Feel free to
-let me know if there is any missing info.
-
-Good luck and thx guys for delivering a world class kernel for us..
-
-Best regards,
-George
+Bart
 
