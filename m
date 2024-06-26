@@ -1,62 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-24331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89CD491892B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 19:11:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EE0B918A0F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 19:27:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3CED11F211DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:11:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE502285C97
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:27:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5A2B18F2F5;
-	Wed, 26 Jun 2024 17:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0057819004D;
+	Wed, 26 Jun 2024 17:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S49eW3O4"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="THZBAYg6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B12913AA4C;
-	Wed, 26 Jun 2024 17:11:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3724F18FDD4;
+	Wed, 26 Jun 2024 17:26:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719421881; cv=none; b=oQqXPHT3Lyv9coJY6XhWiOO4h2XX23Dv/15uphjDSSwOPsN1NmybtpW+MrZ1VQzH3zgl7SZ6cCY06plvgQMdDcYVtnviOSXCrPuGHmb6cHRt4p5vfZWzQC2DHRaxoHy09W5qhdWh6lGamuZL26XXa09mW2p4uOWcYk+EioFZxYQ=
+	t=1719422810; cv=none; b=mccflGDDJDeV+Aa/HeQu3Nx4ylkXx0QClJSZPaunid6XgSLMzMTZe+DZsJ6wIUGupKEUUS8fJhwYpTCZQgKo6RD1ZeEsafOumMEQ6Rszy85+OUoruydgZqTcYqzFR4wh7EZoIrkUxBR4SeG6XsThKUb+XehFMXoBw2zLr50G7EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719421881; c=relaxed/simple;
-	bh=VETDa7WGPPP0WRkkjP/Fo+N4DNsrXTJSc+J9H4gVkbQ=;
+	s=arc-20240116; t=1719422810; c=relaxed/simple;
+	bh=0yMnKGY439ZJXOuVIw2kqCCYUMshb58EVAHnlZdiX8E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dsWigSDN19URFVnlrGhdSnO3oSuAgl3nr79Er56y8aQmrNQcNyfkpDncuMdRD6qT7JNcSmnzywNA/3FqdTMTpUuudTcpuIOsK7rLa3RKsUPWusgaXw33S37sJLQY32f4rhLvrNEGtyZVaZBIvHTRDl3c2aCvA9YgJqoXoVCWOhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S49eW3O4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32E3C4AF09;
-	Wed, 26 Jun 2024 17:11:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719421881;
-	bh=VETDa7WGPPP0WRkkjP/Fo+N4DNsrXTJSc+J9H4gVkbQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=S49eW3O4mxG51Uk8cltbhcBzHUi6HSxpdpSaP6HqrPV2X3QIzpe0n24OsFa++bM4S
-	 aVL05SNzpOS/QQu8B91fv8OP0DxMrbeNesRJ+SrVkerf6QPmtYlHKFWKktZUqcmA0M
-	 HdY7HJjMTLDNG4vAPR6QHTrDlQXlTY5KeOB7r6w+hpereXaC5rhrNDEPn23USTqdOJ
-	 /bNxoy+8ajurCwE02jNqIQAomfueuXXEQtFtEJqK1+R0OaM6/9sQtzan7BCUSay9jU
-	 gITnnalinQbTLg1r7Cvboj3ANkf8nY2XjOxI9DGocS0KC8iJ+Bqw70PZIqRg5dzQK8
-	 uei85S1kaz2Qg==
-Date: Wed, 26 Jun 2024 12:11:11 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com, quic_skananth@quicinc.com, 
-	quic_nitegupt@quicinc.com, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 2/7] arm64: dts: qcom: qcs6490-rb3gen2: Add qps615
- node
-Message-ID: <7ntqpz2saju2wwgndnc5sykibrfiystqh4e7fabfwkkcyko5tp@vhorsxlyvgf6>
-References: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com>
- <20240626-qps615-v1-2-2ade7bd91e02@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=c3b93M8aGfLuNllf+WRBbV0x+t8DzPsyLUoUkBgJTErUu4QY0KZezUVdOhBNhY1AydBPH/o6OPXTt5XaRobLzdSukVQxqbUHFhA220BhB4Rv6zRhxCNxjQIe2yssO49AO7BmVeU7p0I0nLRszmpwvlS8EkrhCdMI/QRBIJa86jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=THZBAYg6; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=shjrQOgLm3XfFHmcQBDx0vYvLb6ShIsh3+fZWsScilM=; b=THZBAYg6BuxoU53DcDGfN8IP6l
+	R451SX0J+E/Sz4UUSDzM2ZH7F5hIBbxe0MTCREd0Rn5JG5lStHz/nyw7AhE8BKOFAWT2hvH4yHqyW
+	T+XexreCT2bQVOJqVc7bg05rkbA7LZliRwMTgVjYbA3U9zct4QBhOX3QjEHzjoJIzEEI=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1sMWPg-0013pv-6T; Wed, 26 Jun 2024 19:26:32 +0200
+Date: Wed, 26 Jun 2024 19:26:32 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Devi Priya <quic_devipriy@quicinc.com>
+Cc: Devi Priya <quic_devipriy@quicinc.com>, catalin.marinas@arm.com,
+	u-kumar1@ti.com, linux-arm-kernel@lists.infradead.org,
+	krzk+dt@kernel.org, geert+renesas@glider.be,
+	neil.armstrong@linaro.org, nfraprado@collabora.com,
+	mturquette@baylibre.com, linux-kernel@vger.kernel.org,
+	dmitry.baryshkov@linaro.org, netdev@vger.kernel.org,
+	konrad.dybcio@linaro.org, m.szyprowski@samsung.com, arnd@arndb.de,
+	richardcochran@gmail.com, will@kernel.org, sboyd@kernel.org,
+	andersson@kernel.org, p.zabel@pengutronix.de,
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V5 4/7] dt-bindings: clock: Add ipq9574 NSSCC clock and
+ reset definitions
+Message-ID: <eeea33c7-02bd-4ea4-a53f-fd6af839ca90@lunn.ch>
+References: <20240626143302.810632-1-quic_devipriy@quicinc.com>
+ <20240626143302.810632-5-quic_devipriy@quicinc.com>
+ <171941612020.3280624.794530163562164163.robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,122 +70,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240626-qps615-v1-2-2ade7bd91e02@quicinc.com>
+In-Reply-To: <171941612020.3280624.794530163562164163.robh@kernel.org>
 
-On Wed, Jun 26, 2024 at 06:07:50PM GMT, Krishna chaitanya chundru wrote:
-> QPS615 switch power is controlled by GPIO's. Once the GPIO's are
-> enabled, switch power will be on.
+On Wed, Jun 26, 2024 at 09:35:20AM -0600, Rob Herring (Arm) wrote:
 > 
-> Make all GPIO's as fixed regulators and inter link them so that
-> enabling the regulator will enable power to the switch by enabling
-> GPIO's.
+> On Wed, 26 Jun 2024 20:02:59 +0530, Devi Priya wrote:
+> > Add NSSCC clock and reset definitions for ipq9574.
+> > 
+> > Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> >  Changes in V5:
+> > 	- Dropped interconnects and added interconnect-cells to NSS
+> > 	  clock provider so that it can be  used as icc provider.
+> > 
+> >  .../bindings/clock/qcom,ipq9574-nsscc.yaml    |  74 +++++++++
+> >  .../dt-bindings/clock/qcom,ipq9574-nsscc.h    | 152 ++++++++++++++++++
+> >  .../dt-bindings/reset/qcom,ipq9574-nsscc.h    | 134 +++++++++++++++
+> >  3 files changed, 360 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+> >  create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
+> >  create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
+> > 
 > 
-> Enable i2c0 which is required to configure the switch.
+> My bot found errors running 'make dt_binding_check' on your patch:
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 55 ++++++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
+> yamllint warnings/errors:
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> index a085ff5b5fb2..5b453896a6c9 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -511,6 +511,61 @@ vreg_bob_3p296: bob {
->  			regulator-max-microvolt = <3960000>;
->  		};
->  	};
-> +
-> +	qps615_0p9_vreg: qps615-0p9-vreg {
+> dtschema/dtc warnings/errors:
+> Error: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dts:26.26-27 syntax error
+> FATAL ERROR: Unable to parse input tree
 
-Keep nodes sorted by address, node name, then label.
+Hi Devi
 
-Perhaps name the nodes "regulator-<name>" to group static regulators
-together.
+Version 4 of these patches had the same exact problem. There was not
+an email explaining it is a false positive etc, so i have to assume it
+is a real error. So why has it not been fixed?
 
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "qps615_0p9_vreg";
+Qualcomm patches are under a microscope at the moment because of how
+bad things went a couple of months ago with patches. You cannot ignore
+things like this, because the damage to Qualcomm reputation is going
+to make it impossible to get patches merged soon.
 
-Is this the name used for the output of the regulator in the schematics?
-
-> +		gpio = <&pm8350c_gpios 2 0>;
-
-Replace that 0 with GPIO_ACTIVE_HIGH.
-
-> +		regulator-min-microvolt = <1000000>;
-> +		regulator-max-microvolt = <1000000>;
-> +		enable-active-high;
-> +		regulator-enable-ramp-delay = <4300>;
-> +	};
-> +
-> +	qps615_1p8_vreg: qps615-1p8-vreg {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "qps615_1p8_vreg";
-> +		gpio = <&pm8350c_gpios 3 0>;
-> +		vin-supply = <&qps615_0p9_vreg>;
-
-This makes me curious, &qps615_0p9_vreg provides 1V, which we feed into
-another regulator (which typically would be an LDO) to provide 1.8V...
-
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		enable-active-high;
-> +		regulator-enable-ramp-delay = <10000>;
-> +	};
-> +
-> +	qps615_rsex_vreg: qps615-rsex-vreg {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "qps615_rsex_vreg";
-> +		gpio = <&pm8350c_gpios 1 0>;
-> +		vin-supply = <&qps615_1p8_vreg>;
-
-...which is then fed to another LDO(?) which provides 1.8V.
-
-Please double check the schematics and make sure this represents what's
-on the board. Feel free to ping me offline and I can help review the
-schematics.
-
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		enable-active-high;
-> +		regulator-enable-ramp-delay = <10000>;
-> +	};
-> +};
-> +
-> +&i2c0 {
-> +	clock-frequency = <100000>;
-> +	status = "okay";
-> +};
-> +
-> +&pcie1 {
-> +	pcie@0 {
-> +		device_type = "pci";
-> +		reg = <0x0 0x0 0x0 0x0 0x0>;
-> +		#address-cells = <3>;
-> +		#size-cells = <2>;
-> +
-> +		bus-range = <0x01 0xff>;
-> +
-> +		qps615@0 {
-> +			compatible = "pci1179,0623";
-> +			reg = <0x1000 0x0 0x0 0x0 0x0>;
-> +			vdda-supply = <&qps615_rsex_vreg>;
-
-I presume you didn't "make qcom/qcs6490-rb3gen2.dtb CHECK_DTBS=1" this,
-as "vdda-supply" is not listed as a valid supply in the binding (also
-the driver is looking for vdd-supply...)
-
-Regards,
-Bjorn
-
-> +			switch-i2c-cntrl = <&i2c0>;
-> +		};
-> +	};
->  };
->  
->  &gcc {
-> 
-> -- 
-> 2.42.0
-> 
+	Andrew
 
