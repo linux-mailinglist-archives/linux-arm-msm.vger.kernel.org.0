@@ -1,61 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-24194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE9C29176DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 05:36:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 54E24917714
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 06:03:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6579E1F23EA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 03:36:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A3F01F22CFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 04:03:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0351E6BFD2;
-	Wed, 26 Jun 2024 03:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 673EE12FF6A;
+	Wed, 26 Jun 2024 04:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FnWUG+7v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OyPiX2vA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69822AD39;
-	Wed, 26 Jun 2024 03:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BDA335C0;
+	Wed, 26 Jun 2024 04:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719373006; cv=none; b=n8//1bb7ywSw3CCsLtl/F1km1seZBGITSrJ2E0OVg7nL3WpoiMdF0BP33+LrRnH6OceinI3jMav9TuIB50+gTt/VSNg0/UBk1Ko2gFb2OL0jGvd1HfqyWxPBo7ATz/m1TZWUmrO+y6jW9sqiVCrFT6CL3cxer2jl910MB8kH8IY=
+	t=1719374620; cv=none; b=ZYfDNJRSwgfFy7HU10XCiLMxoW37GT8jBjYdvdWXpCmEKwsshBjZBd6vQ6+mL23dH3WfSaUedqMXtQ9YORq+63zDTnaEzmmXsxiJGYBNLvsC1GSltmeMWlQPTalgwtIth9tb3nigppvr8DkwP67wadt8wI3/wslUdkWQDJEFsBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719373006; c=relaxed/simple;
-	bh=Xe8TNf7d1vs0pD5qG46NvcUmG1EC+DhVUbm5EpXaVTY=;
+	s=arc-20240116; t=1719374620; c=relaxed/simple;
+	bh=E2nMg9UKWmP9KFaSZW6EtBkPMMSpI4G2E9huRAIIjRM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lEhLRrDBhr8wo/umbZfNxNfZ99nyAXb0m9eoYE6Lc/pSB+AFhBpMD5vIp0G9Uw3VanmFykHSBOkY1PAQKfK+OYC//Wtb0j8Bae2PzzY8DfYsAlOpLNbtYHuK3IgZsAzFsjdEQDyY6XkY0g5XQ5+uhLYXD9wHFljHZrg3ECQK3VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FnWUG+7v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3CBC32781;
-	Wed, 26 Jun 2024 03:36:45 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=c7T6MWJDphOsEn/7OUkM13AWgeeWViJInsDC5aEXOtHqRpiR95ZYJ0J9n9M3S280AbUk+BY1Jj+BejCwMNZWfGsdpaOuUtdgfT2gqV8BdMUhbeySvKuakML6Ok2InHW0i67fIz9MbG3EnCIMSeN6CYaH3sFa+O46kMhDOoeebbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OyPiX2vA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00007C2BD10;
+	Wed, 26 Jun 2024 04:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719373006;
-	bh=Xe8TNf7d1vs0pD5qG46NvcUmG1EC+DhVUbm5EpXaVTY=;
+	s=k20201202; t=1719374619;
+	bh=E2nMg9UKWmP9KFaSZW6EtBkPMMSpI4G2E9huRAIIjRM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FnWUG+7vFI5v6wyU9ue+37h/DvknNmndX0WkqYUuudK9moC+UyZhdLnkTVVTyU6OI
-	 lEgwMAm8O9oQX6+aHbSy7DJybDCYkp/OfvcXMAZETdFAAHtJJb5/Mq8MQ77EmJEWVi
-	 PzFEwPVUmB2j+nsnAdKCgaY604O9RqhUb6UNOL+/pW1BJFaGi3hVJpMrza6r4G9E+t
-	 +bIpuTAF+gCtnxeJktP5TwGNd8saG7IZpRhL0RuHkIQchOGRzmHsewqpM48fy3XXWq
-	 prmeZqdFCRnVLxuA1gaXS4idwAIpgzWjiX67BzhUv4f4Bh5BipS+wZJqPO23N4+7TX
-	 WZeFtgYptCU8A==
-Date: Tue, 25 Jun 2024 22:36:43 -0500
+	b=OyPiX2vA74BdnluyeC6nQjPRiCh+HY5i+/Jnt7ika2mrTLxT1NhMgFEhCfLhWuG5i
+	 1q2P05rMq6zoLWQF4S0AM7C/shWBMkCz8rBDPyn0rMBd0YPRsohLQ1Y6L81ucEyJfn
+	 KdxiNXXF4O13BHSV6pSYvWAEww/63ULp8TpwEnZf0K35SQAFE1ewiu2VF7aku75m88
+	 FsZSaOi6dh6M4vdFl3Tm4Hevgd016HzDqw94xerpUD/3USXlPReWjpqcaTLxO2aNUt
+	 rihsq9uRWBc4orjC3dqOwEDQdrTL7yfW/7GNqrtcV2mDItbnqVHgbmXA4D7reA5Jpb
+	 25Bv0YHUZ6kbQ==
+Date: Tue, 25 Jun 2024 23:03:36 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
-	Andi Shyti <andi.shyti@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-i2c@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: qcom-cci: Document sm8550
- compatible
-Message-ID: <glda7ssote475kihs5c2wuff6k4slklzjb532uxiatxi5mdlfr@aiywubn3kert>
-References: <20240612215835.1149199-1-vladimir.zapolskiy@linaro.org>
- <20240612215835.1149199-2-vladimir.zapolskiy@linaro.org>
+To: Robert Marko <robimarko@gmail.com>
+Cc: Chukun Pan <amadeus@jmu.edu.cn>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v6 1/2] clk: qcom: gcc-ipq6018: update sdcc max clock
+ frequency
+Message-ID: <byjfbjwizdxbdyft5duxgkxxfvopi3usufcx26k65ekz4qgiuw@qdd67ebh4a4z>
+References: <20240620150122.1406631-1-amadeus@jmu.edu.cn>
+ <20240620150122.1406631-2-amadeus@jmu.edu.cn>
+ <e3ad7b57-65dc-4262-b523-8bb81b60892b@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,63 +62,53 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240612215835.1149199-2-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <e3ad7b57-65dc-4262-b523-8bb81b60892b@gmail.com>
 
-On Thu, Jun 13, 2024 at 12:58:32AM GMT, Vladimir Zapolskiy wrote:
-> Add sm8550 compatible consistent with CAMSS CCI interfaces, the list of
-> clocks is reduced by removing "slow_ahb_src" clock, which is derived
-> from "cpas_ahb" clock.
+On Sat, Jun 22, 2024 at 04:36:20PM GMT, Robert Marko wrote:
 > 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> On 20. 06. 2024. 17:01, Chukun Pan wrote:
+> > The mmc controller of the IPQ6018 does not support HS400 mode.
+> > So adjust the maximum clock frequency of sdcc to 200 MHz (HS200).
+> > 
+> > Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+> > ---
+> >   drivers/clk/qcom/gcc-ipq6018.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+> > index 7e69de34c310..6c764e3e2665 100644
+> > --- a/drivers/clk/qcom/gcc-ipq6018.c
+> > +++ b/drivers/clk/qcom/gcc-ipq6018.c
+> > @@ -1617,7 +1617,7 @@ static const struct freq_tbl ftbl_sdcc_apps_clk_src[] = {
+> >   	F(96000000, P_GPLL2, 12, 0, 0),
+> >   	F(177777778, P_GPLL0, 4.5, 0, 0),
+> >   	F(192000000, P_GPLL2, 6, 0, 0),
+> > -	F(384000000, P_GPLL2, 3, 0, 0),
+> > +	F(200000000, P_GPLL0, 4, 0, 0),
+> 
+> Hi,
+> Are you sure that 200MHz is even valid of a frequency, cause all IPQ SoC-s
+> use 192MHz for the HS200 mode instead.
+> 
 
-Andi, could you please take the two binding patches from this series
-(patch 1 and 2) through your tree, so that I can take the dts changes
-through the Qualcomm DeviceTree tree?
+If I'm parsing the docs correctly, 192MHz, 200MHz and 384MHz are a valid
+frequencies for the clock output, but the SDCC expects to receive 200MHz.
+
+> I would just drop the 384MHz frequency as datasheet clearly states that
+> HS400
+> is not supported.
+> 
+
+I'll pick this patch as suggested. Please don't hesitate to send a
+follow up patch according to this suggestion if it turns out to be a
+better choice.
 
 Regards,
 Bjorn
 
-> ---
->  .../devicetree/bindings/i2c/qcom,i2c-cci.yaml  | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+> Regards,
+> Robert
 > 
-> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-> index daf4e71b8e7f..e5c4b20446b6 100644
-> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
-> @@ -31,6 +31,7 @@ properties:
->                - qcom,sm6350-cci
->                - qcom,sm8250-cci
->                - qcom,sm8450-cci
-> +              - qcom,sm8550-cci
->            - const: qcom,msm8996-cci # CCI v2
->  
->    "#address-cells":
-> @@ -195,6 +196,23 @@ allOf:
->              - const: cpas_ahb
->              - const: cci
->  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sm8550-cci
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 3
-> +          maxItems: 3
-> +        clock-names:
-> +          items:
-> +            - const: camnoc_axi
-> +            - const: cpas_ahb
-> +            - const: cci
-> +
->  additionalProperties: false
->  
->  examples:
-> -- 
-> 2.33.0
-> 
+> >   	{ }
+> >   };
 
