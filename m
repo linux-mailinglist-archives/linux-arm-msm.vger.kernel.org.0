@@ -1,232 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-24363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFA95919959
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 22:45:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 211E991996E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 22:49:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3AC3D1F213DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 20:45:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9DE381F221A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 20:49:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29EF7194AD4;
-	Wed, 26 Jun 2024 20:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1818161314;
+	Wed, 26 Jun 2024 20:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KJj7yWQU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dLg/E4PS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC14183083;
-	Wed, 26 Jun 2024 20:40:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BD21E886;
+	Wed, 26 Jun 2024 20:49:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719434449; cv=none; b=RdUSZBWeSCD/dbARY0ea0lw0qri31G5lUuaxRtSMC3Lz8KEBKLeBmaMK7M0O8NFx8vnIIxHVs7e/AlxBdlmXOrdixND45otXYGme7T/EHekAsShimlJOO/CsZyStyc4EBiTwk5gziRfg3xhhnhEZu+vso0MYk8AAgR2U8JfJViY=
+	t=1719434973; cv=none; b=AZzC2cdIhDep3aQ0nKhh4Th5IHy+7T3aGb4zsGream36naoLMGzS9Pxebmp6z7VQrpRIx1FugHxVEHOW1L68lsZoDnHVX8aB8pUyAPYA27OydHFnPXYwmETyMKaNDQs5vxKo2q8LRhWRQ6Qr10KiSKd3y3SuGG5/8SCGH36oZTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719434449; c=relaxed/simple;
-	bh=R1J6u0WL/5rijyfbWPCld6jkHM5mRIc5qDfbPUKjx6o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+9q4LICFoLAHiwL/dl5J+mbUGQ4cN2XuG7aOvYgImZcKe0lGqutSZxYiDmH1cAjJQh21UMU36jkCaV5UyzbH7CgCHTlGrfugYPaxLgbbt8m4P9C54MYwoxTW16WVmr4jBND4G+iB74K1xz/XI2zrQA9HufJ9VLby0VMd6+qHGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KJj7yWQU; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7066463c841so3605426b3a.1;
-        Wed, 26 Jun 2024 13:40:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719434446; x=1720039246; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uaTg9/B23waOI9zVmutPgK2+FneQd1nJivbxDxQ8kVQ=;
-        b=KJj7yWQUcDlXcWoQzW+f92esWwk1mbK4/5ir/RU/i1vWFGxNOumcd+letOz5Gk382+
-         GTpPpQlOGOnlcKq3DBVr8qbQed78Z+MPG3RKcUZwI9DRsoZhkjM3d1X1a6+5l2frV6yk
-         m0sFw/njH51qEw2AWhLfpbex8xdG4S/5YJXvjlUDrQYwx11YBizoNGTyUNpqDuKSUzT5
-         vwMMkAvvRHS5ayPn3T5U9bsguhs9kJRRCCM76xQDr2sGwJC4oqHgcwqINinAOlBWg8+R
-         4ECoq/o8OLf6nbQTWGQECB2PE77iTtkgbiL2oGQqPwPnsxslW3NgGwB7JP7NRlka3l8m
-         1YLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719434446; x=1720039246;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uaTg9/B23waOI9zVmutPgK2+FneQd1nJivbxDxQ8kVQ=;
-        b=fAoGvs8fk/TAxfgn//piZSuAoFMBGJ7UDMgQGfYsjdPFfpyoP9uuWWPHmdr4KWE4Zu
-         ryeNDRPRRPPlqIE+hzCpxITMJX1E94E0Afx+x4Q/z5ZSyIch63Mpc2eawwA6Ff766bv7
-         ANfOwBr7Ry+tpQS1nJPdnoZN8sd3OBJCVorfZaDFoWB7ISVOOFMzNi2T6a3Qombq2LWl
-         DkcRvbYi+k8uzfTchxQnWIMzwZNNvcGigi4O4Pn2/u3jp6hTaZxOHVYPywNkufgxzQ6d
-         NrGTMLKuGYgEi8MEQFnS/RhvvhlrQtqXbms9GcoN/EuVv1EJkS3CW4rY7/U1GPzzbQlD
-         YDkg==
-X-Forwarded-Encrypted: i=1; AJvYcCUna8OAVSjkgU8Y9wLJPo0UJdJo0g8C56rR+679LTq4lH1bzkVpMfx+YMxEsvzP8oshdv6T4oiOZ4UUKiRA5NDQpkaZQX33q/5M4Mh2
-X-Gm-Message-State: AOJu0Yx0HBf1bO1HZ8RJFeopRM4RBjY+/qoARsHkQgZjixKBQSaiGa4B
-	LtF1zK9ROayiEGHMyYTmXNFpdSbchv5/pNXDfq9/7HMEHcUBYENm
-X-Google-Smtp-Source: AGHT+IF1OWXRmVAc7P/t2mo7Vtey9dDgaSNQaluXlN5oULC7q6DlJRy1fKAenx9cbqHNm6YYfgPHbA==
-X-Received: by 2002:a05:6a20:214a:b0:1be:c5f5:589 with SMTP id adf61e73a8af0-1bec5f50ae7mr1535396637.55.1719434445944;
-        Wed, 26 Jun 2024 13:40:45 -0700 (PDT)
-Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fa1f39695bsm75150625ad.278.2024.06.26.13.40.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jun 2024 13:40:45 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: iommu@lists.linux.dev
-Cc: linux-arm-msm@vger.kernel.org,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org (open list:DRM DRIVER for Qualcomm Adreno GPUs),
-	freedreno@lists.freedesktop.org (open list:DRM DRIVER for Qualcomm Adreno GPUs),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v5 2/2] drm/msm: Extend gpu devcore dumps with pgtbl info
-Date: Wed, 26 Jun 2024 13:40:27 -0700
-Message-ID: <20240626204033.255813-3-robdclark@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240626204033.255813-1-robdclark@gmail.com>
-References: <20240626204033.255813-1-robdclark@gmail.com>
+	s=arc-20240116; t=1719434973; c=relaxed/simple;
+	bh=wWb9kUAUpMUgiTMDpj5nR7GeDNsbgIC3R8zpeL4fBHU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tQq/L1tOxnUcom68SgxzxJm/ZSOSdaNoh+3Ug3zbMZ2lW/AR9Ho7RGQVZYVtCT7Rw0dcGnCKJlvjSiPCXBTn5xY/7mWGeNXlBgDw0QXm6zyWWcCDuzlORoXU2Dy3Ys3OMdYPZxRrgIZaB9dUt2Xexdcr0liv37vwe6TUT5SEOf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dLg/E4PS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45QAfUMc015158;
+	Wed, 26 Jun 2024 20:49:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	evGl2tcr1dvkk1qa91C6U4dM0I2bvN+WaR516gSfmaw=; b=dLg/E4PSuFj5PYJ5
+	Ovojqw5F8i1fsRcvqR7kAEQNn5x6usGYQxu1W89LchdpZ9dtpb9IJdMVkx30UWOl
+	Rd+sJ913wJQ074AK6l0p2oU+DNX8NXFVfo00Qies27eHl5reVC2x8vTA5OIshyAV
+	20Ids6piHjDOFnhsIRuCdGvzJOtdrulrgNqHfDfP4zgqfpsnNTilOjg8OhuPgYpi
+	TirssHkNrhBVVynJokmKsO64FyUFOoKo7jM62OlizWcp2emoBQdzLkJgzC97hefX
+	0BwR5pA6wiJ8HAX1/N/sPouPEF5QQFv1HHl0o4kU4R2UyBo62j/gEaYmopW3NG2L
+	OeGefw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqshtqsy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Jun 2024 20:49:16 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45QKnEdx032069
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Jun 2024 20:49:14 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 26 Jun 2024 13:49:10 -0700
+Date: Thu, 27 Jun 2024 02:19:06 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Rob Clark <robdclark@gmail.com>
+CC: freedreno <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 2/3] drm/msm/adreno: Add support for X185 GPU
+Message-ID: <20240626204906.kgvtf7xo4dqepvpz@hu-akhilpo-hyd.qualcomm.com>
+References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
+ <20240623110753.141400-3-quic_akhilpo@quicinc.com>
+ <CAF6AEGti-Qibmb0YCgWypx7S1sVmtu3287a1reMnUgYqMzTKsw@mail.gmail.com>
+ <CAF6AEGvWFUOk-N8oRxZZYm-EWGV61yiLfjZAUSjHdmy9RhDiAA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGvWFUOk-N8oRxZZYm-EWGV61yiLfjZAUSjHdmy9RhDiAA@mail.gmail.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: KdsScLsstl_09i2H5-gf0p7wWdbFYmpu
+X-Proofpoint-GUID: KdsScLsstl_09i2H5-gf0p7wWdbFYmpu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-26_13,2024-06-25_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ mlxscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2406260152
 
-From: Rob Clark <robdclark@chromium.org>
+On Mon, Jun 24, 2024 at 07:28:06AM -0700, Rob Clark wrote:
+> On Mon, Jun 24, 2024 at 7:25 AM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Sun, Jun 23, 2024 at 4:08 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> > >
+> > > Add support in drm/msm driver for the Adreno X185 gpu found in
+> > > Snapdragon X1 Elite chipset.
+> > >
+> > > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> > > ---
+> > >
+> > >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 19 +++++++++++++++----
+> > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |  6 ++----
+> > >  drivers/gpu/drm/msm/adreno/adreno_device.c | 14 ++++++++++++++
+> > >  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++++
+> > >  4 files changed, 36 insertions(+), 8 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > index 0e3dfd4c2bc8..168a4bddfaf2 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > @@ -830,8 +830,10 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+> > >          */
+> > >         gmu_write(gmu, REG_A6XX_GMU_CM3_CFG, 0x4052);
+> > >
+> > > +       if (adreno_is_x185(adreno_gpu)) {
+> > > +               chipid = 0x7050001;
+> > >         /* NOTE: A730 may also fall in this if-condition with a future GMU fw update. */
+> > > -       if (adreno_is_a7xx(adreno_gpu) && !adreno_is_a730(adreno_gpu)) {
+> > > +       } else if (adreno_is_a7xx(adreno_gpu) && !adreno_is_a730(adreno_gpu)) {
+> > >                 /* A7xx GPUs have obfuscated chip IDs. Use constant maj = 7 */
+> > >                 chipid = FIELD_PREP(GENMASK(31, 24), 0x7);
+> > >
+> > > @@ -1329,9 +1331,18 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
+> > >         if (!pri_count)
+> > >                 return -EINVAL;
+> > >
+> > > -       sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
+> > > -       if (IS_ERR(sec))
+> > > -               return PTR_ERR(sec);
+> > > +       /*
+> > > +        * Some targets have a separate gfx mxc rail. So try to read that first and then fall back
+> > > +        * to regular mx rail if it is missing
+> > > +        */
+> > > +       sec = cmd_db_read_aux_data("gmxc.lvl", &sec_count);
+> > > +       if (PTR_ERR_OR_ZERO(sec) == -EPROBE_DEFER) {
+> > > +               return -EPROBE_DEFER;
+> > > +       } else if (IS_ERR(sec)) {
+> > > +               sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
+> > > +               if (IS_ERR(sec))
+> > > +                       return PTR_ERR(sec);
+> > > +       }
+> > >
+> > >         sec_count >>= 1;
+> > >         if (!sec_count)
+> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > index 973872ad0474..97837f7f2a40 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > @@ -1319,9 +1319,7 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
+> > >                 count = ARRAY_SIZE(a660_protect);
+> > >                 count_max = 48;
+> > >                 BUILD_BUG_ON(ARRAY_SIZE(a660_protect) > 48);
+> > > -       } else if (adreno_is_a730(adreno_gpu) ||
+> > > -                  adreno_is_a740(adreno_gpu) ||
+> > > -                  adreno_is_a750(adreno_gpu)) {
+> > > +       } else if (adreno_is_a7xx(adreno_gpu)) {
+> > >                 regs = a730_protect;
+> > >                 count = ARRAY_SIZE(a730_protect);
+> > >                 count_max = 48;
+> > > @@ -1891,7 +1889,7 @@ static int hw_init(struct msm_gpu *gpu)
+> > >         gpu_write(gpu, REG_A6XX_UCHE_CLIENT_PF, BIT(7) | 0x1);
+> > >
+> > >         /* Set weights for bicubic filtering */
+> > > -       if (adreno_is_a650_family(adreno_gpu)) {
+> > > +       if (adreno_is_a650_family(adreno_gpu) || adreno_is_x185(adreno_gpu)) {
+> > >                 gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_0, 0);
+> > >                 gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_1,
+> > >                         0x3fe05ff4);
+> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > index c3703a51287b..139c7d828749 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > @@ -568,6 +568,20 @@ static const struct adreno_info gpulist[] = {
+> > >                 .zapfw = "a740_zap.mdt",
+> > >                 .hwcg = a740_hwcg,
+> > >                 .address_space_size = SZ_16G,
+> > > +       }, {
+> > > +               .chip_ids = ADRENO_CHIP_IDS(0x43050c01), /* "C512v2" */
+> > > +               .family = ADRENO_7XX_GEN2,
+> > > +               .fw = {
+> > > +                       [ADRENO_FW_SQE] = "gen70500_sqe.fw",
+> > > +                       [ADRENO_FW_GMU] = "gen70500_gmu.bin",
+> > > +               },
+> > > +               .gmem = 3 * SZ_1M,
+> > > +               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> > > +               .quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+> > > +                         ADRENO_QUIRK_HAS_HW_APRIV,
+> > > +               .init = a6xx_gpu_init,
+> > > +               .hwcg = a740_hwcg,
+> > > +               .address_space_size = SZ_16G,
+> >
+> > I'm kinda thinking we should drop the address_space_size and add
+> > instead ADRENO_QUIRK_4G or something along those lines, since there
+> > are devices with 32 or 64G
+> 
+> or alternatively put in a correct address_space_size (I guess 2^^48 or 2^^56 ?)
 
-In the case of iova fault triggered devcore dumps, include additional
-debug information based on what we think is the current page tables,
-including the TTBR0 value (which should match what we have in
-adreno_smmu_fault_info unless things have gone horribly wrong), and
-the pagetable entries traversed in the process of resolving the
-faulting iova.
+Although I don't see any reason why the end address couldn't be the
+'ttbr0/1 split address', we can keep 256GB as AS size for now. I will
+check this further and see if we can have a general logic for non-a630_family.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 10 ++++++++++
- drivers/gpu/drm/msm/msm_gpu.c           |  9 +++++++++
- drivers/gpu/drm/msm/msm_gpu.h           |  8 ++++++++
- drivers/gpu/drm/msm/msm_iommu.c         | 25 +++++++++++++++++++++++++
- drivers/gpu/drm/msm/msm_mmu.h           |  3 ++-
- 5 files changed, 54 insertions(+), 1 deletion(-)
+-Akhil
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 99661af8d941..422dae873b6b 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -861,6 +861,16 @@ void adreno_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
- 		drm_printf(p, "  - dir=%s\n", info->flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ");
- 		drm_printf(p, "  - type=%s\n", info->type);
- 		drm_printf(p, "  - source=%s\n", info->block);
-+
-+		/* Information extracted from what we think are the current
-+		 * pgtables.  Hopefully the TTBR0 matches what we've extracted
-+		 * from the SMMU registers in smmu_info!
-+		 */
-+		drm_puts(p, "pgtable-fault-info:\n");
-+		drm_printf(p, "  - ttbr0: %.16llx\n", (u64)info->pgtbl_ttbr0);
-+		drm_printf(p, "  - asid: %d\n", info->asid);
-+		drm_printf(p, "  - ptes: %.16llx %.16llx %.16llx %.16llx\n",
-+			   info->ptes[0], info->ptes[1], info->ptes[2], info->ptes[3]);
- 	}
- 
- 	drm_printf(p, "rbbm-status: 0x%08x\n", state->rbbm_status);
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 3666b42b4ecd..bf2f8b2a7ccc 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -281,6 +281,15 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
- 	if (submit) {
- 		int i;
- 
-+		if (state->fault_info.ttbr0) {
-+			struct msm_gpu_fault_info *info = &state->fault_info;
-+			struct msm_mmu *mmu = submit->aspace->mmu;
-+
-+			msm_iommu_pagetable_params(mmu, &info->pgtbl_ttbr0,
-+						   &info->asid);
-+			msm_iommu_pagetable_walk(mmu, info->iova, info->ptes);
-+		}
-+
- 		state->bos = kcalloc(submit->nr_bos,
- 			sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
- 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 1f02bb9956be..82e838ba8c80 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -101,6 +101,14 @@ struct msm_gpu_fault_info {
- 	int flags;
- 	const char *type;
- 	const char *block;
-+
-+	/* Information about what we think/expect is the current SMMU state,
-+	 * for example expected_ttbr0 should match smmu_info.ttbr0 which
-+	 * was read back from SMMU registers.
-+	 */
-+	phys_addr_t pgtbl_ttbr0;
-+	u64 ptes[4];
-+	int asid;
- };
- 
- /**
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index d5512037c38b..a235b0d0afb5 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -195,6 +195,31 @@ struct iommu_domain_geometry *msm_iommu_get_geometry(struct msm_mmu *mmu)
- 	return &iommu->domain->geometry;
- }
- 
-+int
-+msm_iommu_pagetable_walk(struct msm_mmu *mmu, unsigned long iova, uint64_t ptes[4])
-+{
-+	struct msm_iommu_pagetable *pagetable;
-+	struct io_pgtable_walk_data wd = {};
-+	int ret;
-+
-+	if (mmu->type != MSM_MMU_IOMMU_PAGETABLE)
-+		return -EINVAL;
-+
-+	pagetable = to_pagetable(mmu);
-+
-+	if (!pagetable->pgtbl_ops->pgtable_walk)
-+		return -EINVAL;
-+
-+	ret = pagetable->pgtbl_ops->pgtable_walk(pagetable->pgtbl_ops, iova, &wd);
-+	if (ret)
-+		return ret;
-+
-+	for (int i = 0; i < ARRAY_SIZE(wd.ptes); i++)
-+		ptes[i] = wd.ptes[i];
-+
-+	return 0;
-+}
-+
- static const struct msm_mmu_funcs pagetable_funcs = {
- 		.map = msm_iommu_pagetable_map,
- 		.unmap = msm_iommu_pagetable_unmap,
-diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mmu.h
-index 88af4f490881..96e509bd96a6 100644
---- a/drivers/gpu/drm/msm/msm_mmu.h
-+++ b/drivers/gpu/drm/msm/msm_mmu.h
-@@ -53,7 +53,8 @@ static inline void msm_mmu_set_fault_handler(struct msm_mmu *mmu, void *arg,
- struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent);
- 
- int msm_iommu_pagetable_params(struct msm_mmu *mmu, phys_addr_t *ttbr,
--		int *asid);
-+			       int *asid);
-+int msm_iommu_pagetable_walk(struct msm_mmu *mmu, unsigned long iova, uint64_t ptes[4]);
- struct iommu_domain_geometry *msm_iommu_get_geometry(struct msm_mmu *mmu);
- 
- #endif /* __MSM_MMU_H__ */
--- 
-2.45.2
-
+> 
+> BR,
+> -R
+> 
+> > (a690 is incorrect in this way too)
+> >
+> > BR,
+> > -R
+> >
+> > >         }, {
+> > >                 .chip_ids = ADRENO_CHIP_IDS(0x43051401), /* "C520v2" */
+> > >                 .family = ADRENO_7XX_GEN3,
+> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > index 77526892eb8c..d9ea8e0f6ad5 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > @@ -448,6 +448,11 @@ static inline int adreno_is_a750(struct adreno_gpu *gpu)
+> > >         return gpu->info->chip_ids[0] == 0x43051401;
+> > >  }
+> > >
+> > > +static inline int adreno_is_x185(struct adreno_gpu *gpu)
+> > > +{
+> > > +       return gpu->info->chip_ids[0] == 0x43050c01;
+> > > +}
+> > > +
+> > >  static inline int adreno_is_a740_family(struct adreno_gpu *gpu)
+> > >  {
+> > >         if (WARN_ON_ONCE(!gpu->info))
+> > > --
+> > > 2.45.1
+> > >
 
