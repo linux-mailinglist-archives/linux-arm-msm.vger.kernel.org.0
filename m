@@ -1,164 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-24389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71636919A4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 00:00:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61097919A55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 00:05:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D568C1F23674
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 22:00:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CE301C21C54
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 22:05:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C47581922D5;
-	Wed, 26 Jun 2024 22:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741AC193079;
+	Wed, 26 Jun 2024 22:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TarhnWxt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kc2BX4hm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC6416DECE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 22:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCAF1922C7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 22:05:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719439244; cv=none; b=r0frLi3lK3+CsC6bdG+pv86Ol/E6qtzIfbmfPfltNpWhS+damycJ3fQUHVEmosSQpADTlxILfsNEjV0vCWy9iIbEwY+9A60TthAVhYrEnTEfCLa8MtiCkX0Ls68gkLnXvVBfyGpYx67XDvOnFRhf+3kBryJ6Gt+Qa7IgBsJT5bI=
+	t=1719439504; cv=none; b=c7eIYddaVwo9BEjyM2KKKAxhFJ8aX67h0oe+ViUVvjm/RxD/iDHCWRQUZhEtFB4icZZL2s3XQDVG03VVTjL+brpw1zIKmOCb+1YmpFk24XLSBpHRYUx0vI9dIzi6fnDXwsf/IzmZSNPpNQRPFMYacQ8Ul2u1dqu3gRVNJqr/3vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719439244; c=relaxed/simple;
-	bh=gvmC1346MmDk0t3iSMJUF+N7dqvo1b3jn0ulpMyO8V0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lRslpMzyHPm5ZxhgZaBbXLYf2lBOczaNWcVPrhQlynhxYCL5nrpUdwDGT0t614Voaj21R2R6JV6SwEAAtBfO6Nf4FaKbL3TbPOV5UZhRCWw0+l9v5HaXA/nqbSUwUBg8BO/nINYVM0j0I99IE9yLOi2ighRAMn2T+qOeL8BXVzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TarhnWxt; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1719439504; c=relaxed/simple;
+	bh=GeidpkMqfXnmhd9aqbxghNPfqBZwUJOe5/GqBI/3L1k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kLsBf+WXVDtJbIkfoYrpsL+JO4QBVHMzaykCGhf42j44DQUZOxbXxHmGSPIM0uIM4lxoYV70bj0PZgLXAa8I9zibqKhv/LsprQ3ooVeASpdGZSNDp20WbiZR5OCPGFndaUBbdKU9Yj99tO2o3sBSf7zJVUjQy/h1yCmm5aUNRBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kc2BX4hm; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52cdebf9f53so4741539e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 15:00:42 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52ce674da85so4173911e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 15:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719439241; x=1720044041; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pj/nWr9R0o1AMKMsYJRQq0ZEmOgyeZ/JY1dSLu0yeL0=;
-        b=TarhnWxtEcfmjysr7J/TmjI1WW4qcLJU/R9m7+1MgCSU9673NwetTzvJdunJXeQSw7
-         80lbTGrjiqgPOnIzvrJGShYyp0AZ0+kVjWWgwxgYfJzCSuBE2xETPtjmQFINNKjKCyW9
-         vj3RJeKhHNzTV2Y7Augub8zhAenN6bWuVyq30qpayheCix4+mKKuW0vJ4clJ75PwMbJi
-         DHkEN/YJ6LMz0xS9jCdka9Qkyo1u49lg0b+jdaT2fcDC6f1wVMqumuXPtogdy7X3IQKl
-         FZ8UWEjytg903UVWr1ohIpq7bLaoXQcDYF5FtvalcSOln1MbTUb6fqrWObzK+munKl2Y
-         whnQ==
+        d=linaro.org; s=google; t=1719439501; x=1720044301; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=siK38QYXuo8QNnveIrzt0+xpEIskBwlCTEZPBZd1FIQ=;
+        b=kc2BX4hmsOTKEkgczm3lHq/1kHbGrttyfAb/h1u0h7kiNJdWZQuEhWp6lrP9Boilwp
+         YsK/goR5UKvhZsYIKJ4w7YG613G1cF1uHf7B/ql319L7RD7mJ6d9moxcY8T8Hb7hQZrw
+         0+cOPwa9O2tXoa24/xdL7gxaDkaJxpkOmSS4Mms8V1LzIWvi4ppM677kwn47ntg4IsuU
+         2cxLavqZOXW5OedIT8pR/N/vaujYQSKGXetC6JIeBNyoTRqyE5/ICHP1xLoXrgXrJrU3
+         F2/zNcQK+73965GPYFBZZqv/OtM6toW7UZLC3bKsWF/k6ovXNSa/gD28c/LYM4ycQKXg
+         CTqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719439241; x=1720044041;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1719439501; x=1720044301;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Pj/nWr9R0o1AMKMsYJRQq0ZEmOgyeZ/JY1dSLu0yeL0=;
-        b=NwD1qKzomY0ExeW9pZLvShi3nnqUUXscvsI4w+DJIFU3gl6/p2FwqJQcPqzQTmewGp
-         /GXI/ak2UxVns+ZGK0QNuYk1cEojG0gdAEqBRbl7hPn0zBQx4lsvo82eT828YWeZq8dD
-         SrIqgan1YOmfgHCTff4UaQWYa7NKt+6efAtoFftSx+mlMlaRIAjUVLMn4lozeHfj6T5I
-         Tux+Y7TFdGs3I2YvFRrA9d1IJVDAih0lF/neJFeo6uJnC/OauIGwGZPBjZ2Mf8/UyqgA
-         ZC2Je5UfMAICOnxdPhSe+jT0wqkHyS1OScz69wd/e23SS9QiU8jQaaAtsGD9IqjQ+JXQ
-         i13Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVVGxqpZn35jJwBt6t2xUN4VLgn+PujsIhIfeP32YIR4rgEcxEB1eUBfjHBDsy+3ym5R5FPxlTJZOutQ4aAsNPPfFbF4MITGigcDN8mZQ==
-X-Gm-Message-State: AOJu0YzekOm8o1ghbMsac5kBx0tWf0iWVLPb+0pNLsyVtv4iM4oUGAcc
-	NjvgfWXdnRGhV4ILxl4xeCsWWGzCz5xRcNYhaoaLBOnXRgCwKU7pbldF4gSu6Oc=
-X-Google-Smtp-Source: AGHT+IEzkEwlSn3wePny4O5r6XyYn9tUWSErcLZK7yJB3IGNMgVAot+DNy6F2E0jNVxUeXN93S5R8Q==
-X-Received: by 2002:ac2:5617:0:b0:52c:b606:2b2 with SMTP id 2adb3069b0e04-52ce0673b84mr6942987e87.46.1719439238957;
-        Wed, 26 Jun 2024 15:00:38 -0700 (PDT)
-Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a725cc93794sm304031666b.170.2024.06.26.15.00.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jun 2024 15:00:38 -0700 (PDT)
-Message-ID: <9938a67b-1f6b-4955-b4c0-a9f78c55f276@linaro.org>
-Date: Thu, 27 Jun 2024 00:00:35 +0200
+        bh=siK38QYXuo8QNnveIrzt0+xpEIskBwlCTEZPBZd1FIQ=;
+        b=GkZPNntslgQvxIB55/MV3YCFxPe3+7xM0PH5Vdpc3AB94n+te3mH8XMFi8IqDiN2iY
+         UuGMIqyP5QPhTrFid70CKtIop+uNwyywt0Bq3FubTXHy1+ql3S82gX3oJeuDI1G31VNR
+         PNzvHOFB3df8EwfeG0yl8shI+99M6iieN5bLWHMjU6HUuqvRMYjxaZILZfp8UNFFeZz+
+         u5t8BYxXznqlJGYXJ+fRIM8VUHez/DH867jjuUZTQyVmFds1Bd29AUjK77Zs2RoAZ9gB
+         0tzvcIIqERIWe5X9i4CnqWNszlcv1h9i/wJBE9jbuzW9vmlOgf0vdU2vxXIeF+0emORv
+         D+/A==
+X-Forwarded-Encrypted: i=1; AJvYcCXuq5BBRuFWXm6sy6dmsJTB80KKi5yPc4vDTkKw82Evw6rvIirtqLJxY+PLJhXQOMQHMqWUq633tdw5566+Yth+q8TPtM66ZB2EVe3H4A==
+X-Gm-Message-State: AOJu0YyOzTKjTrh9ndnaEncHVNbc3Rca/Z8Xg/+XNfpRIv7mCNoQayB1
+	Ldk6Oj3rePx2Ou0d58Y5dhxPYfGLVbdrD7jEpo4TxmeycCToi0IsL6VdvizSn5k=
+X-Google-Smtp-Source: AGHT+IEwz/vaLu2uYxfyNR2muYajgJEh9jDVu49ZK0TTgw/DHg5lzlZe+ZG9e4AsahaK9vSkvoqmxQ==
+X-Received: by 2002:a05:6512:220c:b0:52c:d70d:5ff8 with SMTP id 2adb3069b0e04-52ce1832692mr11205312e87.1.1719439500695;
+        Wed, 26 Jun 2024 15:05:00 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cf2e734aesm643291e87.18.2024.06.26.15.04.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jun 2024 15:05:00 -0700 (PDT)
+Date: Thu, 27 Jun 2024 01:04:58 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Kiarash Hajian <kiarash8112hajian@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/a6xx: request memory region
+Message-ID: <btcidskycmlkylupz6qup7z4yyh4obzibcjy2ii2biqu64vqw2@5ellx6lt6m2k>
+References: <20240608-adreno-v1-1-2e470480eee7@gmail.com>
+ <CAF6AEGsd6jfDqV-EOWr+oMjPpVr2S+71VYmp1JoY8xU51eeEEw@mail.gmail.com>
+ <20240625175926.4xyzwjyx7oxcwnzx@hu-akhilpo-hyd.qualcomm.com>
+ <CAF6AEGt5=bcni0K1ysot3-hVj9gWECJ5qP=M-sEDkRrAmEHFGg@mail.gmail.com>
+ <20240625202308.prg72urp4mvtxzax@hu-akhilpo-hyd.qualcomm.com>
+ <CAF6AEGs4i4mM9dpD3weG8GunHHfM0JESkzgX1Wd4PBDYatbQqg@mail.gmail.com>
+ <20240626215218.pnbzy25c74c7a22a@hu-akhilpo-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 6/6] arm64: dts: qcom: ipq9574: Add icc provider
- ability to gcc
-To: Varadarajan Narayanan <quic_varada@quicinc.com>,
- Georgi Djakov <djakov@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, quic_anusha@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <ZjshR0ekcn0gxwOa@hu-varada-blr.qualcomm.com>
- <CAA8EJpqENsojPQmCbma_nQLEZq8nK1fz1K0JdtvLd=kPrH_DBw@mail.gmail.com>
- <1a08ef42-b52f-4c97-90d7-e7fdee7725b4@linaro.org>
- <Zmgb+OjdBNw71sC1@hu-varada-blr.qualcomm.com>
- <176137e5-6312-4d46-97b6-c4494bc1c61b@kernel.org>
- <ZmlAdETV0+6Md8HC@hu-varada-blr.qualcomm.com>
- <e24cfd23-6f77-46a0-b020-9cb3daef6930@kernel.org>
- <Zml4RQ5R5s3mVMnI@hu-varada-blr.qualcomm.com>
- <8e32a8be-dbbf-49ca-92a1-2fe3c8bfb571@kernel.org>
- <ZmpsOdsl9AMTSH88@hu-varada-blr.qualcomm.com>
- <ZnKKjomRQtJS2ZgL@hu-varada-blr.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ZnKKjomRQtJS2ZgL@hu-varada-blr.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240626215218.pnbzy25c74c7a22a@hu-akhilpo-hyd.qualcomm.com>
 
-On 19.06.2024 9:36 AM, Varadarajan Narayanan wrote:
-
-[...]
-
-
-> Tested the patches with both gcc and nsscc providers having
-> 'sync_state' set to icc_sync_state.
+On Thu, Jun 27, 2024 at 03:22:18AM GMT, Akhil P Oommen wrote:
+> << snip >>
 > 
-> 	# dmesg | grep synced
-> 	[    3.029820] qcom,gcc-ipq9574 1800000.clock-controller: interconnect provider is in synced state
-> 	[    3.470106] qcom,nsscc-ipq9574 39b00000.clock-controller: interconnect provider is in synced state
+> > > > > > > @@ -1503,7 +1497,7 @@ static void __iomem *a6xx_gmu_get_mmio(struct platform_device *pdev,
+> > > > > > >                 return ERR_PTR(-EINVAL);
+> > > > > > >         }
+> > > > > > >
+> > > > > > > -       ret = ioremap(res->start, resource_size(res));
+> > > > > > > +       ret = devm_ioremap_resource(&pdev->dev, res);
+> > > > > >
+> > > > > > So, this doesn't actually work, failing in __request_region_locked(),
+> > > > > > because the gmu region partially overlaps with the gpucc region (which
+> > > > > > is busy).  I think this is intentional, since gmu is controlling the
+> > > > > > gpu clocks, etc.  In particular REG_A6XX_GPU_CC_GX_GDSCR is in this
+> > > > > > overlapping region.  Maybe Akhil knows more about GMU.
+> > > > >
+> > > > > We don't really need to map gpucc region from driver on behalf of gmu.
+> > > > > Since we don't access any gpucc register from drm-msm driver, we can
+> > > > > update the range size to correct this. But due to backward compatibility
+> > > > > requirement with older dt, can we still enable region locking? I prefer
+> > > > > it if that is possible.
+> > > >
+> > > > Actually, when I reduced the region size to not overlap with gpucc,
+> > > > the region is smaller than REG_A6XX_GPU_CC_GX_GDSCR * 4.
+> > > >
+> > > > So I guess that register is actually part of gpucc?
+> > >
+> > > Yes. It has *GPU_CC* in its name. :P
+> > >
+> > > I just saw that we program this register on legacy a6xx targets to
+> > > ensure retention is really ON before collapsing gdsc. So we can't
+> > > avoid mapping gpucc region in legacy a6xx GPUs. That is unfortunate!
+> > 
+> > I guess we could still use devm_ioremap().. idk if there is a better
+> > way to solve this
 > 
-> I can see that icc_sync_state is getting called and clocks
-> related to paths with zero bandwidth are getting disabled.
+> Can we do it without breaking backward compatibility with dt?
+
+I think a proper way would be to use devm_ioremap in the gpucc driver,
+then the GPU driver can use devm_platform_ioremap_resource().
+
+I'll take a look at sketching the gpucc patches in one of the next few
+days.
+
 > 
-> Will post the NSSCC patches to get the full picture.
+> -Akhil
+> 
+> > 
+> > BR,
+> > -R
+> > 
+> > > -Akhil.
+> > >
+> > > >
+> > > > BR,
+> > > > -R
 
-Going back to the original question, does removing interconnects = from
-things like PCIe now make them not work / crash the device, which would
-indicate the NoC clocks were indeed gated?
-
-Konrad
+-- 
+With best wishes
+Dmitry
 
