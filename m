@@ -1,157 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-24232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F18C917A36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 09:54:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBBDC917A4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 09:59:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0B081F248B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 07:54:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49347B23948
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 07:59:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01A1815F3EF;
-	Wed, 26 Jun 2024 07:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E77015ECF1;
+	Wed, 26 Jun 2024 07:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NgTcvQuf"
+	dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b="LTiBrCW+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C360F1FBB;
-	Wed, 26 Jun 2024 07:54:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA0614532F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 07:59:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719388471; cv=none; b=ooUvd7hqyiBzyz5iq9vUz25Dddvih2rZ7MayAmYFYdbLc5KXRQHmxNYX12cZnXgyZl7YyGL3RQ4M5cLWLwcu/Ps/ix2ICQ+DhojXyfVVBO91eGIsnLUrSSjNxPw8h78YbJCrV0HwaEK3JCVOyq1kgtwqjm/3+eryVZ9mmJV7ZqI=
+	t=1719388785; cv=none; b=V38/NACb+CerMQbK66XOuBkLrINt24SDli6wgimABNpJ3VHFX2LeCD5hRTzzeBJUDPKI8YZW+OLn1MtSyPrmoatjS7QV7MwGnPPaGihJe/cO4UQCxnC7sAXXWtqMWvl+nFwTN302TO++R5zFsiluIfZEmrVpTcxNBIEDjMz4Rxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719388471; c=relaxed/simple;
-	bh=SbtxvcursYPrSDJUEzv8uDtSs383JJZUnvYrA/hF/4k=;
+	s=arc-20240116; t=1719388785; c=relaxed/simple;
+	bh=UFcACGqxiuT8v7X+3Me/nx5E98iD5BFlwqaiy2cJxEg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZFbMd9Mo+TnhMIaQ/MOCsZrKE51a9tg2fOMDtxF/13H6UPTeQl9wGEU/rlNOiN2h38djAGBrqSDoNjkiNZR9FlMQmEHETDGoFf261GoeXf/a2QYolA++IvHWDE08AuIgnqXLokko0DYdU2MJkQ5+fCpAr/b44TVPrMbcSThm08s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NgTcvQuf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC22FC4AF0B;
-	Wed, 26 Jun 2024 07:54:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719388470;
-	bh=SbtxvcursYPrSDJUEzv8uDtSs383JJZUnvYrA/hF/4k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NgTcvQufTogBwZufUbCJXr2yc/1vPoRkdHFeGnYJY8ySQj3TD7HgjAALfFMVVoxqq
-	 DusZlvg+ACiJuMUuqPhWYFVSTFJfLT6iImeTXdK/cGyPk4c8enuKMY06YeO10IwX0B
-	 A3e+BWH0VqwyM1s4f1yfv1baYlUbGl+zOTMByjdfcvxGfC8fdtcuwmrnWtQ4PCCQZ9
-	 0O4oX09quJh7KtFuLRz7oYNQUAJHIGQnbDqy+2UOb7fFcUckcmZHeOdddOxu2r/E9j
-	 Hcor/tKZZ8lZV2YcS61nRuUTOXSQseEGXnMENVDnAnbdQz3uPOXXh2lkoQZl0g1gnR
-	 g+HjSVatDOmlA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sMNUG-000000007vt-0yGY;
-	Wed, 26 Jun 2024 09:54:40 +0200
-Date: Wed, 26 Jun 2024 09:54:40 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Doug Anderson <dianders@chromium.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 2/3] serial: qcom-geni: fix soft lockup on sw flow
- control and suspend
-Message-ID: <ZnvJQDX6NkyRCA8y@hovoldconsulting.com>
-References: <20240624133135.7445-1-johan+linaro@kernel.org>
- <20240624133135.7445-3-johan+linaro@kernel.org>
- <CAD=FV=UauWffRM45FsU2SHoKtkVaOEf=Adno+jV+Ashf7NFHuA@mail.gmail.com>
- <CAD=FV=XPKqjMcWhqk4OKxSOPgDKh-VM4J4oMEdQtgpFBw8WSXA@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=b9Z8qtiK9xPyB7RgIVL+QUPt03tnXUPsmkPSZc0qGsus4DbQdAXAb+CvHMZDJOAF3Jssh6VSYaqt5LwJiZ0Y5Em781EEFQ3/nNZXhWoj7s8GwcpKEiJ/KYMXKZRitkjCAdmYq/V39sX9aHZqLc5u1k1tTPyQrOm2oFaGfP4v8Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch; spf=none smtp.mailfrom=ffwll.ch; dkim=pass (1024-bit key) header.d=ffwll.ch header.i=@ffwll.ch header.b=LTiBrCW+; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ffwll.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ffwll.ch
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-42111cf2706so8086415e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 00:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1719388782; x=1719993582; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YKC9JWwz9mDZFJPWKIzZ35FYqwpsv8ltyyUAlB5rNg4=;
+        b=LTiBrCW+GXlJeS/TpkF5cRN7slPn+qwJo0SxZ22Fgw++VhfznTkxYXft4D6ZMOitql
+         r0ahvzWLCSjEodG9cDqTRvL8AQm39GYDtKLnNk1P52WbC8GP2dSlji9nnO7nI7fC2/uH
+         SFLcQOFWCEMQy7ZH01d4JoT7QJC3K/Hvn9lAM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719388782; x=1719993582;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YKC9JWwz9mDZFJPWKIzZ35FYqwpsv8ltyyUAlB5rNg4=;
+        b=QlHFMH1IBoO3vzfVhBXg37+34XHmns8T/+t8ycUYqAEzb0UhQMIutYlWeHu+3fnsLl
+         iHIEJDoXFZZ9rq7TnUtQYm2TMfvmo+h/okrWLWf4Xd7NWJI+7mm5zfU4YpRYqLrHQ2P9
+         nbXyB0nvQc4bxdYi0nfI1koaaWJjqbi8VM3/goGhHaRL62h+G50PjOWBUa4T4Z81PQL7
+         v2O1ui8f2+z2anW2kz4YsaOqFlA98sXIPcR6R/54JeAwcOxpLDcDbh1DO7FqZY7eCCwa
+         5OOaIWCtqEzUrjlBdF7Nxv7hV1DNzIvEjjjAuIzl3EhSe4HM/pGy82wiX3LOJUt88prH
+         qnwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVGzlmCtHbfbE58Q1puvNZCgcFi1OMECxTYWD1QfvVVo9Mkuhk4eJgjMTiC17thq3wzN4TO4bMQX/1U/9QbKUzd9gY/olejy6TSrzJ4gw==
+X-Gm-Message-State: AOJu0YyzZEKLoKfisKqwh/RFXNocXrjP3oO8e3E2/yyxT29Hh/Xy0KrT
+	2jfchQ8dAtrmUWwcMoGWsZBrV4flEm0M5fpQWz5wV3EIEbypD6CBMXh/wYLq0Jg=
+X-Google-Smtp-Source: AGHT+IG4EVOkrn1Y0XT/ql2oK40G3v2KP3e4L4gODD12bYa8V2Qg23ovSXufw0iA+4BOJcA67yWlig==
+X-Received: by 2002:a5d:6d8f:0:b0:366:eb60:bcf2 with SMTP id ffacd0b85a97d-366eb60bd9amr6081538f8f.4.1719388781876;
+        Wed, 26 Jun 2024 00:59:41 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36638d9c158sm15120701f8f.56.2024.06.26.00.59.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jun 2024 00:59:41 -0700 (PDT)
+Date: Wed, 26 Jun 2024 09:59:39 +0200
+From: Daniel Vetter <daniel@ffwll.ch>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>
+Subject: Re: [PATCH v2 1/2] drm/msm/adreno: De-spaghettify the use of memory
+ barriers
+Message-ID: <ZnvKa29EceUyZ62U@phenom.ffwll.local>
+Mail-Followup-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	David Airlie <airlied@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>
+References: <20240625-adreno_barriers-v2-0-c01f2ef4b62a@linaro.org>
+ <20240625-adreno_barriers-v2-1-c01f2ef4b62a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=XPKqjMcWhqk4OKxSOPgDKh-VM4J4oMEdQtgpFBw8WSXA@mail.gmail.com>
+In-Reply-To: <20240625-adreno_barriers-v2-1-c01f2ef4b62a@linaro.org>
+X-Operating-System: Linux phenom 6.8.9-amd64 
 
-On Mon, Jun 24, 2024 at 02:58:39PM -0700, Doug Anderson wrote:
-> On Mon, Jun 24, 2024 at 2:23 PM Doug Anderson <dianders@chromium.org> wrote:
-> > On Mon, Jun 24, 2024 at 6:31 AM Johan Hovold <johan+linaro@kernel.org> wrote:
-
-> > > +static void qcom_geni_serial_clear_tx_fifo(struct uart_port *uport)
-> > > +{
-> > > +       struct qcom_geni_serial_port *port = to_dev_port(uport);
-> > > +
-> > >         if (!qcom_geni_serial_main_active(uport))
-> > >                 return;
-> > >
-> > > +       /*
-> > > +        * Increase watermark level so that TX can be restarted and wait for
-> > > +        * sequencer to start to prevent lockups.
-> > > +        */
-> > > +       writel(port->tx_fifo_depth, uport->membase + SE_GENI_TX_WATERMARK_REG);
-> > > +       qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
-> > > +                                       M_TX_FIFO_WATERMARK_EN, true);
-> >
-> > Oh, maybe this "wait for sequencer to start to prevent lockups." is
-> > the part that I was missing? Can you explain more about what's going
-> > on here? Why does waiting for the watermark interrupt to fire prevent
-> > lockups? I would have imagined that the watermark interrupt would be
-> > part of the geni hardware and have nothing to do with the firmware
-> > running on the other end, so I'm not sure why it firing somehow would
-> > prevent a lockup. Was this just by trial and error?
+On Tue, Jun 25, 2024 at 08:54:41PM +0200, Konrad Dybcio wrote:
+> Memory barriers help ensure instruction ordering, NOT time and order
+> of actual write arrival at other observers (e.g. memory-mapped IP).
+> On architectures employing weak memory ordering, the latter can be a
+> giant pain point, and it has been as part of this driver.
 > 
-> Actually, the more I look at it the more confused I am about your
-> qcom_geni_serial_clear_tx_fifo(). Can you explain and maybe add some
-> inline comments in the function since it's not obvious? Specifically,
-> things I'm confused about with your patch:
+> Moreover, the gpu_/gmu_ accessors already use non-relaxed versions of
+> readl/writel, which include r/w (respectively) barriers.
 > 
-> 1. The function is named qcom_geni_serial_clear_tx_fifo() which
-> implies that when it finishes that the hardware FIFO will have nothing
-> in it. ...but how does your code ensure this?
+> Replace the barriers with a readback (or drop altogether where possible)
+> that ensures the previous writes have exited the write buffer (as the CPU
+> must flush the write to the register it's trying to read back).
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Yeah, I realised after I sent out the series that this may not be the
-case. I was under the impression that cancelling a command would discard
-the data in the FIFO (e.g. when starting the next command) but that was
-probably an error in my mental model.
+Some in pci these readbacks are actually part of the spec and called
+posting reads. I'd very much recommend drivers create a small wrapper
+function for these cases with a void return value, because it makes the
+code so much more legible and easier to understand.
+-Sima
 
-Do you see any way to discard the FIFO in the docs you have access to?
- 
-> 2. If the function is really clearing the FIFOs then why do we need to
-> adjust the watermark level? The fact that you need to adjust the
-> watermark levels implies (to me) that there are things stuck in the
-> FIFO still. ...but then what happens to those characters? When are
-> they sent?
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  4 +---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 10 ++++++----
+>  2 files changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 0e3dfd4c2bc8..09d640165b18 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -466,9 +466,7 @@ static int a6xx_rpmh_start(struct a6xx_gmu *gmu)
+>  	int ret;
+>  	u32 val;
+>  
+> -	gmu_write(gmu, REG_A6XX_GMU_RSCC_CONTROL_REQ, 1 << 1);
+> -	/* Wait for the register to finish posting */
+> -	wmb();
+> +	gmu_write(gmu, REG_A6XX_GMU_RSCC_CONTROL_REQ, BIT(1));
+>  
+>  	ret = gmu_poll_timeout(gmu, REG_A6XX_GMU_RSCC_CONTROL_ACK, val,
+>  		val & (1 << 1), 100, 10000);
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index c98cdb1e9326..4083d0cad782 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -855,14 +855,16 @@ static int hw_init(struct msm_gpu *gpu)
+>  	/* Clear GBIF halt in case GX domain was not collapsed */
+>  	if (adreno_is_a619_holi(adreno_gpu)) {
+>  		gpu_write(gpu, REG_A6XX_GBIF_HALT, 0);
+> +		gpu_read(gpu, REG_A6XX_GBIF_HALT);
+> +
+>  		gpu_write(gpu, REG_A6XX_RBBM_GPR0_CNTL, 0);
+> -		/* Let's make extra sure that the GPU can access the memory.. */
+> -		mb();
+> +		gpu_read(gpu, REG_A6XX_RBBM_GPR0_CNTL);
+>  	} else if (a6xx_has_gbif(adreno_gpu)) {
+>  		gpu_write(gpu, REG_A6XX_GBIF_HALT, 0);
+> +		gpu_read(gpu, REG_A6XX_GBIF_HALT);
+> +
+>  		gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 0);
+> -		/* Let's make extra sure that the GPU can access the memory.. */
+> -		mb();
+> +		gpu_read(gpu, REG_A6XX_RBBM_GBIF_HALT);
+>  	}
+>  
+>  	/* Some GPUs are stubborn and take their sweet time to unhalt GBIF! */
+> 
+> -- 
+> 2.45.2
+> 
 
-Exactly, there is data there according to the FIFO status, but I
-erroneously interpreted it as a it would be discarded (e.g. when
-starting the next command).
-
-> 3. On my hardware you're setting the FIFO level to 16 here. The docs I
-> have say that if the FIFO level is "less than" the value you set here
-> then the interrupt will go off and further clarifies that if you set
-> the register to 1 here then you'll get interrupted when the FIFO is
-> empty. So what happens with your solution if the FIFO is completely
-> full? In that case you'd have to set this to 17, right? ...but then I
-> could believe that might confuse the interrupt handler which would get
-> told to start transmitting when there is no room for anything.
-
-Indeed. I may implicitly be relying on the absence of hardware flow
-control as well so that waiting for one character to be sent is what
-makes this work.
-
-> Maybe something is missing in my mental model here and testing your
-> patch and hitting Ctrl-C seems to work, but I don't really understand
-> why so hopefully you can clarify! :-)
-
-I spent too much time trying to reverse engineer this hw over the
-weekend and wanted to get this out as a counter proposal as it indicated
-that we may be able to find a smaller fix. The series addresses the
-serial getty issues, but as I mentioned yesterday there is some
-interaction with the console left to be resolved before this can be an
-alternative.
-
-If it wasn't for the hard lockup I would have sent the whole thing as
-an RFC.
-
-Johan
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
 
