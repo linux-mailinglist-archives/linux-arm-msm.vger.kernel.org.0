@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-24284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD74F91824B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:25:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9EFA918273
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:31:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7ADE22829DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 13:25:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED54D1C23C4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 13:31:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD0D41836E4;
-	Wed, 26 Jun 2024 13:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD1591836E7;
+	Wed, 26 Jun 2024 13:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EXyXNWNo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KKqfU17f"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A841822F3;
-	Wed, 26 Jun 2024 13:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865B6183098;
+	Wed, 26 Jun 2024 13:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719408316; cv=none; b=ZccrZgGIk4McNaMSuQs9Dx4WlIrebeBQlFZTVSa72oujB3/6KZgIFmgfVjvrNqNu4TxwdnM30E5brLB6LbNBVwib3A52THmaKmGXHSvuFp37SQ9H3IMv2+svtT2EeNEh27QdSBRlVgZqi0CG9ND7HHP16oqNiQl78NBsIdGZOzE=
+	t=1719408692; cv=none; b=U3K7Za04c5MBpiEC3Ta9KtGn7BoO3g8qHc7XMa0jyP7J+wZRyIr24pEkNWVzgCEz2dMGzeVj1LFmuVhAh/2NfIugrPGveIa1qf5adFx3L7FLixISoRdg+Z+VZjJnM8RXoka6edXyyqDszvAg0ETb8qNde+oEjYMkihprei6DHow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719408316; c=relaxed/simple;
-	bh=EGit2F4HKLGhDNiVHa9AMMoIirVo0tUW+pFwmlWOOG4=;
+	s=arc-20240116; t=1719408692; c=relaxed/simple;
+	bh=IooSaIwKO+iI7jZmr49oMzicKBnlZBk7V8h98yUmyXY=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=awx8+TCQl5Jm9LhKJ3vecgwTW7WafqYBbs9uU55nHYtS4GHs6tibpRlp4zeZAu3COdbMYEHnI6oOxn4OoK9AMwx1Eu/D67qv/9cz+RfkrV5xr3vy4l7v7YNG7thY8Ae4jvsGxkQ4Zo73QAmZfwk9vWgp3RSlW2vxr3bHgcqMXvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EXyXNWNo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1B5C2BD10;
-	Wed, 26 Jun 2024 13:25:15 +0000 (UTC)
+	 Message-Id:Subject; b=Q7MStfv0AdOje2yQ3SofcT60LjxsAcIUxHfV08BdZdBfU63D67qc5u9p6gSc3hiQUd250x8gfCzylvu3vt62hXNM58u01Blou7FW5mbs9eDGds/ZQFRhUuUA3SVRvT9KwApjUP+NntZDtii18y6g52fz/MB5377wpPL5rRbtVz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KKqfU17f; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1419C4AF0E;
+	Wed, 26 Jun 2024 13:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719408316;
-	bh=EGit2F4HKLGhDNiVHa9AMMoIirVo0tUW+pFwmlWOOG4=;
+	s=k20201202; t=1719408692;
+	bh=IooSaIwKO+iI7jZmr49oMzicKBnlZBk7V8h98yUmyXY=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=EXyXNWNod6EqpAqfmrmiFgNdiuCFX/Pgutt4Tgsm4VOJYzoh2p7naEqWVArXxbU64
-	 iVyB7J/NDaoqaLm65W2gPcnStDTzZe4vVoFbNlhmCw8fNxvwEwfesOraQvfJ29Byl4
-	 rxsE7imU4Ie9lDENJzZWClHQJuLcH4K2YH3Q4sWQV3o0NGZ/+1hw6rQHT8gn5u+ZWY
-	 01C4eilyiokLcDmFAbMVF8No3KXyqule+Uus9tg9i7x2Bzyhrdsdcyf/YWrewWB+c3
-	 M+HOtjSAj/sZckt2hxV4uFgOYDFFP3pQRywH+uTY+lE8k7oRqRmqf1nceYSrMp/xa8
-	 +wFrY8lw6wdVw==
-Date: Wed, 26 Jun 2024 07:25:14 -0600
+	b=KKqfU17fsaqgBUMVf1eUssHRd9mD4xRECUuuMHga6n+hid24nUZwl8smcC64mRi7F
+	 KlxqYlqJXH8zxQ3ym+BZzUQVFJjnAflfH8qqaJfhbru8hbiCNsAVyTwKgTqiHtdUP+
+	 SNOUTacMQJk+uzfTgIz42ewuoqT+fdER0ItJvSMlk81TgIZZY/w9ZsmIRSbdZo6HQF
+	 LRc8/fB0Eye9y+ApMNosvwbpphNjiF49j75sX/q1KG0ZnU0ebis8T7bB+nwrWOCVeh
+	 djTjbx5U3TP6fooeAuwwxU004UwxeJTsZkMxC4Jey4n9NVl1SYJU2R0iLDG7io9jtx
+	 tH1xE1P4usN0g==
+Date: Wed, 26 Jun 2024 07:31:30 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,52 +51,47 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Nikita Travkin <nikita@trvn.ru>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org, 
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: netdev@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  Conor Dooley <conor+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
- phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Anton Bambura <jenneron@postmarketos.org>, 
- Cristian Cozzolino <cristian_ci@protonmail.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-In-Reply-To: <20240623-msm8916-lg-initial-v1-0-6fbcf714d69b@trvn.ru>
-References: <20240623-msm8916-lg-initial-v1-0-6fbcf714d69b@trvn.ru>
-Message-Id: <171940791013.2950956.14057690637549910661.robh@kernel.org>
-Subject: Re: [PATCH 0/3] Introduce msm8916 based LG devices
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20240625151430.34024-1-brgl@bgdev.pl>
+References: <20240625151430.34024-1-brgl@bgdev.pl>
+Message-Id: <171940832800.2961357.8252372269434038796.robh@kernel.org>
+Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: sa8775p-ride: support both
+ board variants
 
 
-On Sun, 23 Jun 2024 14:26:29 +0500, Nikita Travkin wrote:
-> This series introduces two msm8916-based LG devices:
+On Tue, 25 Jun 2024 17:14:27 +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> - LG Leon LTE (c50)
-> - LG LG K10 (m216)
+> Split the current .dts into two: the existing one keeps the name and
+> supports revision 2 of the board while patch 2 adds a .dts for revision 3.
 > 
-> The devices only have basic support for now.
+> Changes since v1:
+> - add a new compatible for Rev3
 > 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
-> Anton Bambura (1):
->       arm64: dts: qcom: msm8916-lg-c50: add initial dts for LG Leon LTE
+> Bartosz Golaszewski (3):
+>   dt-bindings: arm: qcom: add sa8775p-ride Rev 3
+>   arm64: dts: qcom: move common parts for sa8775p-ride variants into a
+>     .dtsi
+>   arm64: dts: qcom: sa8775p-ride-r3: add new board file
 > 
-> Cristian Cozzolino (1):
->       arm64: dts: qcom: msm8916-lg-m216: Add initial device tree
+>  .../devicetree/bindings/arm/qcom.yaml         |   1 +
+>  arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>  arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts  |  47 +
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts     | 836 +-----------------
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi    | 814 +++++++++++++++++
+>  5 files changed, 885 insertions(+), 814 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
 > 
-> Nikita Travkin (1):
->       dt-bindings: arm: qcom: Add msm8916 based LG devices
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml |   2 +
->  arch/arm64/boot/dts/qcom/Makefile               |   2 +
->  arch/arm64/boot/dts/qcom/msm8916-lg-c50.dts     | 140 +++++++++++++
->  arch/arm64/boot/dts/qcom/msm8916-lg-m216.dts    | 251 ++++++++++++++++++++++++
->  4 files changed, 395 insertions(+)
-> ---
-> base-commit: f76698bd9a8ca01d3581236082d786e9a6b72bb7
-> change-id: 20240621-msm8916-lg-initial-8d4a399ec3c2
-> 
-> Best regards,
 > --
-> Nikita Travkin <nikita@trvn.ru>
+> 2.43.0
 > 
 > 
 > 
@@ -116,19 +111,36 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/msm8916-lg-c50.dtb qcom/msm8916-lg-m216.dtb' for 20240623-msm8916-lg-initial-v1-0-6fbcf714d69b@trvn.ru:
+New warnings running 'make CHECK_DTBS=y qcom/sa8775p-ride-r3.dtb qcom/sa8775p-ride.dtb' for 20240625151430.34024-1-brgl@bgdev.pl:
 
-arch/arm64/boot/dts/qcom/msm8916-lg-c50.dtb: /soc@0/audio-codec@771c000: failed to match any schema with compatible: ['qcom,msm8916-wcd-digital-codec']
-arch/arm64/boot/dts/qcom/msm8916-lg-m216.dtb: /soc@0/audio-codec@771c000: failed to match any schema with compatible: ['qcom,msm8916-wcd-digital-codec']
-arch/arm64/boot/dts/qcom/msm8916-lg-m216.dtb: /soc@0/i2c@78b9000/touchscreen@34: failed to match any schema with compatible: ['melfas,mip4_ts']
-arch/arm64/boot/dts/qcom/msm8916-lg-c50.dtb: /soc@0/power-manager@b088000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-lg-c50.dtb: /soc@0/power-manager@b098000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-lg-c50.dtb: /soc@0/power-manager@b0a8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-lg-c50.dtb: /soc@0/power-manager@b0b8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-lg-m216.dtb: /soc@0/power-manager@b088000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-lg-m216.dtb: /soc@0/power-manager@b098000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-lg-m216.dtb: /soc@0/power-manager@b0a8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-lg-m216.dtb: /soc@0/power-manager@b0b8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: usb@a4f8800: interrupt-names: ['pwr_event', 'hs_phy_irq', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: rsc@18200000: 'power-domains' is a required property
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23000000: tx-queues-config: 'snps,tx-sched-sp' does not match any of the regexes: '^queue[0-9]$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23000000: phy-mode:0: 'ocsgmii' is not one of ['internal', 'mii', 'gmii', 'sgmii', 'psgmii', 'qsgmii', 'qusgmii', 'tbi', 'rev-mii', 'rmii', 'rev-rmii', 'moca', 'rgmii', 'rgmii-id', 'rgmii-rxid', 'rgmii-txid', 'rtbi', 'smii', 'xgmii', 'trgmii', '1000base-x', '2500base-x', '5gbase-r', 'rxaui', 'xaui', '10gbase-kr', 'usxgmii', '10gbase-r', '25gbase-r', '10g-qxgmii']
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23000000: snps,pbl: [32] is not of type 'integer'
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23000000: snps,pbl: [32] is not one of [1, 2, 4, 8, 16, 32]
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23000000: Unevaluated properties are not allowed ('phy-handle', 'phy-mode', 'power-domains', 'rx-fifo-depth', 'rx-queues-config', 'snps,mtl-rx-config', 'snps,mtl-tx-config', 'snps,pbl', 'snps,ps-speed', 'snps,tso', 'tx-fifo-depth', 'tx-queues-config' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23000000: phy-mode:0: 'ocsgmii' is not one of ['internal', 'mii', 'gmii', 'sgmii', 'psgmii', 'qsgmii', 'qusgmii', 'tbi', 'rev-mii', 'rmii', 'rev-rmii', 'moca', 'rgmii', 'rgmii-id', 'rgmii-rxid', 'rgmii-txid', 'rtbi', 'smii', 'xgmii', 'trgmii', '1000base-x', '2500base-x', '5gbase-r', 'rxaui', 'xaui', '10gbase-kr', 'usxgmii', '10gbase-r', '25gbase-r', '10g-qxgmii']
+	from schema $id: http://devicetree.org/schemas/net/ethernet-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23040000: tx-queues-config: 'snps,tx-sched-sp' does not match any of the regexes: '^queue[0-9]$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23040000: phy-mode:0: 'ocsgmii' is not one of ['internal', 'mii', 'gmii', 'sgmii', 'psgmii', 'qsgmii', 'qusgmii', 'tbi', 'rev-mii', 'rmii', 'rev-rmii', 'moca', 'rgmii', 'rgmii-id', 'rgmii-rxid', 'rgmii-txid', 'rtbi', 'smii', 'xgmii', 'trgmii', '1000base-x', '2500base-x', '5gbase-r', 'rxaui', 'xaui', '10gbase-kr', 'usxgmii', '10gbase-r', '25gbase-r', '10g-qxgmii']
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23040000: snps,pbl: [32] is not of type 'integer'
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23040000: snps,pbl: [32] is not one of [1, 2, 4, 8, 16, 32]
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23040000: Unevaluated properties are not allowed ('mdio', 'phy-handle', 'phy-mode', 'power-domains', 'rx-fifo-depth', 'rx-queues-config', 'snps,mtl-rx-config', 'snps,mtl-tx-config', 'snps,pbl', 'snps,ps-speed', 'snps,tso', 'tx-fifo-depth', 'tx-queues-config' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: ethernet@23040000: phy-mode:0: 'ocsgmii' is not one of ['internal', 'mii', 'gmii', 'sgmii', 'psgmii', 'qsgmii', 'qusgmii', 'tbi', 'rev-mii', 'rmii', 'rev-rmii', 'moca', 'rgmii', 'rgmii-id', 'rgmii-rxid', 'rgmii-txid', 'rtbi', 'smii', 'xgmii', 'trgmii', '1000base-x', '2500base-x', '5gbase-r', 'rxaui', 'xaui', '10gbase-kr', 'usxgmii', '10gbase-r', '25gbase-r', '10g-qxgmii']
+	from schema $id: http://devicetree.org/schemas/net/ethernet-controller.yaml#
 
 
 
