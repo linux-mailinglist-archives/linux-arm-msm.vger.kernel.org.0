@@ -1,133 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-24190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60A8E9176C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 05:26:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8A5E9176CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 05:31:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E32DB28495C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 03:26:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D86FB1C212A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 03:31:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE02E65E20;
-	Wed, 26 Jun 2024 03:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF5455EE97;
+	Wed, 26 Jun 2024 03:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Aq5WqAcd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eWzzE6M6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB8461FCA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 03:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46182AD39;
+	Wed, 26 Jun 2024 03:31:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719372391; cv=none; b=Zjgn1UJ9xTOtC0L34D1eaU0SzwPKCmKELCYx1qKnc/kdHVf28/aEMPYf5QgpQWHj0gdT9/yo9aqrV8MxlBtrOUoroxccP6QvwFq0Zuov8hJzC+h4nbjTt+1Ej2uJxgJRp0imnFnAC4TyQ1si+ysNzQxDLXf5mB54ca76omEc/dw=
+	t=1719372666; cv=none; b=tIJDNsx5qkVQZqrBSloWT6JxfLn7WhZuDmakJLHnJijPO4GhOVZnmCIWpQBamY0m1rwGXcoRx2k5LiGPHb0USg2BRop+lRlqhi5j1lGMt2CdZVO2raCJwYfhVfN3QdXxg7u2ZGh152PlvNXNNrKz3UJXSf3KR1D8hHU5hyLv7Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719372391; c=relaxed/simple;
-	bh=63egUJJNOzc7ULqxlyzXKuMsOAc/Yy9oVuqv19NoQ6c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mRbS4OhjVKSLpl3KWoeH+MlK12aG6C1X2wY66pzYXwoxL8KaRDyaIJ75Gv+8WUwpWUTY4ZApiZ8aEJ7qMwNc7KcD4TrwbpfzuANAEeefWGnQkobfNpIAuGTeILXSPcJOkMPt+rPS4in0qeAiNJcl5zJdBgJghAf5ponUwexSBrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Aq5WqAcd; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5295eb47b48so7326324e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 20:26:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719372388; x=1719977188; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RyN0rZQwEcI5e6F6tYsAlaLHqq1tMMcihqh2iO9zsDs=;
-        b=Aq5WqAcdxE+mq5Ba1xfHDjolVuAW7Qi8LGUF1APBMYd6iw/jVsjMyXQ9ysHn95PoXu
-         QmbqZvaagTFSLLkq5Q9lPSbBHizGP8CWFGccgkzT1qZ9m6Z/gfQHriUbkBqat3tYSYTa
-         jUbGvORfy5Gk+FZ/llS1FWAkkCbWf5a39Ef6OzIwTz4Yll1QVOYBppPvrowcMeFFT4yb
-         dUqnulBcsLKErSoZn6iYH+E19QyoPZttFa+PQ/B+3WxHh1t2nfOChBt1IrIGxPXZd4xQ
-         ROZOIKKuT41/rZfxKAVjhBpjIsYD7cZVpf+IlrKu99EbOid6FR9ECuk7BwFISZN/XshW
-         MNrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719372388; x=1719977188;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RyN0rZQwEcI5e6F6tYsAlaLHqq1tMMcihqh2iO9zsDs=;
-        b=ATuYIpqiD5+0HWLxajoMJyuj3gDB4n2SptBz4osgPo4h0UKrdDNv9oHkeeQYoN3YvT
-         yH9rPBnCE6BF91ng9ltVAU+OOBDch87ahAUCR4c3ok9RX2T3N/kUrDyyqkCe6MIOdnsB
-         3iMfpt+ajVnRto1OhPwrjLYE+HlNVfOV6AB6f+BB+bSuaR6OABfMnoSlILHX4QAgCQxH
-         CPqkFX1HRKsmhbC5+VxA73R8CNFZAXReqCoFC6YP1cMBHnwVD/mTqtmrtO6r3tg1C/+N
-         45qbSQta4LYOp4AMoBuY9vJ5MSQF56n/Bi9E/UMWiowVMA/xIoWfFOXm3SIQITCyzspn
-         oamg==
-X-Forwarded-Encrypted: i=1; AJvYcCUPHF3PgSZOQ7ZhqtIi5XMn2XdRBYm4XeHQ9NsxfCr4W7xbYe97+0LyXx1OHeD22kF3nuV9T3Mhxm3QlkqZvZkAGyA723WfC4OxnFLsdA==
-X-Gm-Message-State: AOJu0YwThYHu8vFFgBFKLxWgQUc4UNmpE2G2MjaehWrjQUSSXfAUP99I
-	1vMfhIfoxXAlw+JYAHRzyilUm7wBwPOuvur9cvFWe2iQV7SPlbrzvc4uEpkIgA8=
-X-Google-Smtp-Source: AGHT+IFeKU9VOswRuPtvhmxTIl0T82P/NFnpvo6QyBNYyIaqAs8SgYtqqGJf28Wd3K7qnLeDS4YjBQ==
-X-Received: by 2002:a05:6512:398f:b0:52e:6d71:e8f0 with SMTP id 2adb3069b0e04-52e6d71e974mr3183e87.8.1719372387987;
-        Tue, 25 Jun 2024 20:26:27 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cd63b4790sm1396626e87.30.2024.06.25.20.26.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jun 2024 20:26:27 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 26 Jun 2024 06:26:26 +0300
-Subject: [PATCH] platform: arm64: lenovo-yoga-c630: select AUXILIARY_BUS
+	s=arc-20240116; t=1719372666; c=relaxed/simple;
+	bh=6zbvQH3G+ruOCuRpo3Arqc1ag5666BmgxVBvGZhzlXc=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uaE64nrzneO9dTI9Qg0BMx9YPfe+HGs9i0EAhuQnu4uYw3vgpSdHLkp0EKqMutLmVLBRa9MJx8xqoLPrrlBlGeOKSw3Xa0iwfphwftmleiSIDHPSPB0zTE1ton//xXyVpe3+eOBm/0npZuJHWtOYpEavfw4pkX9ev7cjRXbcWLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eWzzE6M6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45PHUXCk029197;
+	Wed, 26 Jun 2024 03:30:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=f57S2Jg0q4U4QCGjqyXkezeP
+	W4aooHDMsb3rzUeUJc4=; b=eWzzE6M6FOzus8otdszEo24Tk0b/jD2Nw0kyQ0Pv
+	dlw/XWHmDg1zZtq0KMUDDSOv+KrvpJbK+4xXv+CB+lVEvkbFh4HQf8yiL/y1CGUt
+	BWT33qoR70xrvixA7RXqN+Ot/Z1paRDYnYFy+M+j7ZKeguE2FMkIQoVvVnmpoYfc
+	nbXppHnKdEged8NmxT7McsHxx5FrYu4S1P3Iwfaw3KH3Ge8LKIofsDulIkMAqBsx
+	JqurPv+K1ktCFLGXHBt3rQEyv4th102b8RcCCFZOxY+RWW6+2cAlIPTQ0/K+a9os
+	x5nwC162194HL6ZseRi06nNeJQufo5CuJkDT5IsWwH/HhQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywq078974-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Jun 2024 03:30:42 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45Q3UfS8029137
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Jun 2024 03:30:41 GMT
+Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 25 Jun 2024 20:30:34 -0700
+Date: Wed, 26 Jun 2024 11:30:29 +0800
+From: JieGan <quic_jiegan@quicinc.com>
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC: Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Song Chai
+	<quic_songchai@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>,
+        <quic_yijiyang@quicinc.com>, <quic_yuanjiey@quicinc.com>,
+        <quic_liuxin@quicinc.com>, <quic_yanzl@quicinc.com>,
+        <quic_xinlon@quicinc.com>, <quic_xueqnie@quicinc.com>,
+        <quic_sijiwu@quicinc.com>
+Subject: Re: [PATCH 1/2] Coresight: Set correct cs_mode for TPDM to fix
+ disable issue
+Message-ID: <ZnuLVTP7XLWy0gDz@jiegan-gv.ap.qualcomm.com>
+References: <20240626022537.1887219-1-quic_jiegan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240626-yoga-fix-aux-v1-1-6aaf9099b18e@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAGGKe2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDMyMz3cr89ETdtMwK3cTSCl1zCxOLlBRzU0PTJBMloJaColSgFNi46Nj
- aWgAHzkLsXgAAAA==
-To: Hans de Goede <hdegoede@redhat.com>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: platform-driver-x86@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1056;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=63egUJJNOzc7ULqxlyzXKuMsOAc/Yy9oVuqv19NoQ6c=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBme4piepMvH2YWMUsX2OVcFOLmCG+js79Pv7rGB
- 3m0AhXC8cWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZnuKYgAKCRCLPIo+Aiko
- 1REiB/9iRUfzIzqgz7xYxNrtI0TQTkUPKn5rlZjr5sVlaXbu1xaSadQzpcA+YbsUROd9Cb2spE0
- ZXz43+J9hrksOaIH+DcciIxBrqihG+ukB/e2jw8EvKCy7VetDstbL62kcVz7RRp2gIls2kCKRob
- CnQWrE4NYUwkE4YT80EcZBkajbOIDTfNYYVbH1NDSdIkea0PJYZnpEi+E+8RTVZ/4n9AnOonwIS
- hFwlOTLpyMPkN65/yu2VIMb76CNo2Ah4lfOY8/wQXgCuwiiDAtZ6xLJy0SmVd5LNKUK48k+/Wez
- MvecntEac3RcyW6QSuvd28j+zdPxpG9riVB6PEWrgnapSGcU
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240626022537.1887219-1-quic_jiegan@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CYSPRwJ5xcPOjlNChzpzy6eJni_JAhYH
+X-Proofpoint-GUID: CYSPRwJ5xcPOjlNChzpzy6eJni_JAhYH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-26_01,2024-06-25_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
+ mlxscore=0 spamscore=0 mlxlogscore=999 adultscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406260026
 
-Add missing selection of AUXILIARY_BUS as the driver uses aux bus to
-create subdevices.
+On Wed, Jun 26, 2024 at 10:25:36AM +0800, Jie Gan wrote:
+> The coresight_disable_source_sysfs function should verify the
+> mode of the coresight device before disabling the source.
+> 
+> However, the mode for the TPDM device is always set to
+> CS_MODE_DISABLED, resulting in the check consistently failing.
+> As a result, TPDM cannot be properly disabled.
+> 
+> Configure CS_MODE_SYSFS/CS_MODE_PERF during the enablement.
+> Configure CS_MODE_DISABLED during the disablement.
+> 
+> Fixes: b3c71626a933 ("Coresight: Add coresight TPDM source driver")
+> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+> ---
+>  drivers/hwtracing/coresight/coresight-tpdm.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index a9708ab0d488..90a5105f6199 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -449,6 +449,11 @@ static int tpdm_enable(struct coresight_device *csdev, struct perf_event *event,
+>  		return -EBUSY;
+>  	}
+>  
+> +	if (!coresight_take_mode(csdev, mode)) {
+> +		spin_unlock(&drvdata->spinlock);
+> +		return -EBUSY;
+> +	}
+> +
+>  	__tpdm_enable(drvdata);
+>  	drvdata->enable = true;
+>  	spin_unlock(&drvdata->spinlock);
+> @@ -506,6 +511,7 @@ static void tpdm_disable(struct coresight_device *csdev,
+>  	}
+>  
+>  	__tpdm_disable(drvdata);
+> +	coresight_set_mode(csdev, CS_MODE_DISABLED);
+>  	drvdata->enable = false;
+>  	spin_unlock(&drvdata->spinlock);
+>  
+> -- 
+> 2.34.1
+>
+Please ignore this patch. This patch should be included by an independent email.
+I will correct it and send it later.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406260704.roVRkyPi-lkp@intel.com/
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/platform/arm64/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
-index 8c103b3150d1..e612cbe06aec 100644
---- a/drivers/platform/arm64/Kconfig
-+++ b/drivers/platform/arm64/Kconfig
-@@ -35,6 +35,7 @@ config EC_ACER_ASPIRE1
- config EC_LENOVO_YOGA_C630
- 	tristate "Lenovo Yoga C630 Embedded Controller driver"
- 	depends on I2C
-+	select AUXILIARY_BUS
- 	help
- 	  Driver for the Embedded Controller in the Qualcomm Snapdragon-based
- 	  Lenovo Yoga C630, which provides battery and power adapter
-
----
-base-commit: 62c97045b8f720c2eac807a5f38e26c9ed512371
-change-id: 20240626-yoga-fix-aux-7848dd7515b4
-
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+Thanks
+Jie
+>
+ 
 
