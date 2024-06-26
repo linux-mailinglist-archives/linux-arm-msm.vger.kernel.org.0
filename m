@@ -1,130 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-24314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B378918547
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:07:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E5CC918559
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:09:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F76B1F2858B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:07:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 32F64B2D116
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:09:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F66018A94D;
-	Wed, 26 Jun 2024 15:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26EA618A925;
+	Wed, 26 Jun 2024 15:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="1CFGL6q/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pB7G2YQm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321231891BA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 15:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2F418A921
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 15:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719414445; cv=none; b=PzraHLD+JZzzOEL8EcLc+Aig/NyHGIxABPmNxsB/tXF5K4EfkahFru+Fa8hJiCPloMT8yal+7SH6FcKxP6t5gXUS9On+BZSkucFweT6XZWfhAW3wpHxcnKjrPohTc3zgfOEikrDCTp+NzpXLqlyhhAEBW2t48wJpUsRDViqhiJ8=
+	t=1719414524; cv=none; b=ZqCR0rCuLYNahlMM/wwL2CWtCk3+QG+JheHqvhp2QMoLcIJWiF4G1NUeR1u9lpXENQTfSzAefidsgP9PspIIYTsGjtjjZ8OlmsjBnMMJIq1aggWR6z6BDvue5NhLtEvzntxJMxEUuNyNKzYAN/VoNAAp4dDm9SQjWcLOAytT9Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719414445; c=relaxed/simple;
-	bh=wXPMzNtNlpsPJeeERAGhiFsCceMNMb3huYtSRM1DPwA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QOVOsxYOCzLzL1T7VA6h5eWojoUFOW1Ub4dUFTHcPvCYdZC5ZclUgxLwTpgZRN8f1Dkhv9HY7hTRsTuZdjz2FXUToM3DDF9aPMPK2oLciCDEHVgP/1syQETk03P28R9uVV56wV3zBdXvq2XArZkRHfqnAzXIOYhHzz+0kgbqj5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=1CFGL6q/; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ebed33cb65so76805461fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 08:07:22 -0700 (PDT)
+	s=arc-20240116; t=1719414524; c=relaxed/simple;
+	bh=enLq/onZb7hpyLStnZonwYHVb03OWDqXdiz6aRtQof8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZisOHUvY2rq7r8kG7MV2FKFEeIGML+npJKgZBka7qw/GCrIwIG3uTdqaiUB5S151m+G66LKloB2mS3qyZlsLchOQox/Sm2CfYVljC/y6yYbDLvtVDa92iaENdCfAyCDO8pltjprs9SVIU8AFOMk4BSE3HR55wr8bc6h8NIjTo8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pB7G2YQm; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-57d15b85a34so446927a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 08:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1719414441; x=1720019241; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KPxOJfkJIWCY4sqntkOf7FIbvrW1HVZyYX7BT4XYMJ8=;
-        b=1CFGL6q/2aGvnWYJoCUN9Ar1l28aj+2En5Px8PWW+ij3f5viv8qy+/fFR+X0jO2yCm
-         r5xKYAtR4LGz5U8Gntx7YRB52OuwsZmhrkvQyK1+bkM993ny10m03o/BcCC/4f70/kZ1
-         SOv7bvPypXzBq8XZcaK7Ch2EgIxLKWukydROY5MUs42nSz64/VMwp4nNm32uNV8z8LSt
-         o8JXBdXJhQfkj9pkbeNPAbp0qokI5L7Tx4UwOej3Bn+4lkZPuTzKbd+E9FEqx2G0LM6J
-         CWqOmwHd9LwauHu5N47AZXc8s6AAKgn0qrRQ1DTYs6yWR7Hmalfy22zD9lOlv5EAsACw
-         ZuMw==
+        d=linaro.org; s=google; t=1719414521; x=1720019321; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=x7Hy9QTHXmYMuN0eMENR5NDyBbKmXanQwl/PTc6g1Dw=;
+        b=pB7G2YQmdjSuW3oLECX5lmPgnhgiaOuE1cFeThOSUf9B7FGGKdPcm7KlKdjb6rQOAr
+         Ej6y6nr98Ix7fCeqrazJLclhTJ8Mu4SGIFHUqaYMjnljfw3TT3TTXJHkQHTtXbAXBSvy
+         8SG9MCBsQakXiS7OW7OlerPpz6pboB/3AWRuTJGem5ll3rV9HfTcZsTwRVKAU1jEF9Z+
+         oNCiKDtbYdWZ2Zy+KpYBUgC62YfnZq9Y6H+pqcm2QLpcvEriGWLoF65OI9wmh6KMFKLE
+         ZiKrk50gHI1SJNYlc5tPGXwlcOQRYJ5Pv8Qm2EETLhmgdNpbJcOhE0wC/ZX2msZiNjmv
+         AFhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719414441; x=1720019241;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KPxOJfkJIWCY4sqntkOf7FIbvrW1HVZyYX7BT4XYMJ8=;
-        b=eWbhtAPP4hDdo9igOU5TkRbqnFm4QDiTtZaPlH9bfckzHeRNrJU+dwezpMzxXGQpKy
-         cTqviunNwtZBaMCnm1aDWUPyleCgbSCuoQi8R94hbw5noCVzC8z24y9sQcq3suxeguYD
-         Uns6kQFscVJ9Jo1CrOcR3bnoqpFmqlz1gMKxsJ4YH17B8k70f8DMTuLba0mwWsNwPNKt
-         5CbS4a75VN/vSTQzG8u0aa1C147buNBXsV9v++nb+JBhqLLvkcYFomUKe2jYQLD989As
-         CIddfWNtX37rW0dD++V51vA27ZYw8hIm35pz4XKKCvObg2FzVx71cCdwCTVWpBnPnZ2n
-         PsLg==
-X-Forwarded-Encrypted: i=1; AJvYcCVSWSHqnyYp1XUWnAg023MmTN1F1VuMuvJl1sS0bT43KZjJWltl3ZRZfFROvMN7TuT8OcRid+OkalQqajEjJ0gjGE6rjmEX9Ag6dWRWFg==
-X-Gm-Message-State: AOJu0Yw3dd7adNY74QnrOMrMrcMX2YZHvz6Uvi73EsK9YvfMwOb19R9s
-	sSvXbQTud0DTPd/Wf/1cFL7QgUOm7tTbwNit7FGyy4kNWaY/tG0GgJv9IgCYHrd9Iaev3/2l6Z6
-	x5F7/CaYkl7iQnWtlanpMcYs8K5gX3LfGC1qdKQ==
-X-Google-Smtp-Source: AGHT+IEUkNjLlmTxavRfhMndMCySdn3PbAFz1s6PnS1Bxg+VsA4owIRUUH76BL6HCSdoGMnwFnx4HSaROo7ZAfFCFEQ=
-X-Received: by 2002:a2e:9f10:0:b0:2eb:fc08:5d83 with SMTP id
- 38308e7fff4ca-2ec59389fffmr76705281fa.44.1719414441210; Wed, 26 Jun 2024
- 08:07:21 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719414521; x=1720019321;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=x7Hy9QTHXmYMuN0eMENR5NDyBbKmXanQwl/PTc6g1Dw=;
+        b=w0A9gvWuTdOxkaHblS01rc0AqyZkk0wDoVspfdIcmBJCoWo9AD0DDw9+8oDk6Rh5Gs
+         HfsAk/e/ySjcaGr79A/Umz9PggCCUexrMIQTRT+s2iJWUBC79jeQ9NMtSBlCyYhGpFi4
+         6CXVGxU0l+G2dCTFpK2XK9lcEMA2XsXvEp4KADVXzL9vsnjRaFlWdwBSp8KRnRNh19Hg
+         vtf627YrcrkRpal+Ivx5LNLAz7Sc6/UhYpubo3oktmedDuxtn1XGnv6shBukBXJ4/BEd
+         Q9kVHWl/C5O5HbXkdybxlPtRDAMdnWeGafi9gF/QoyXzysea3cAYs5tOfoW4Hrx/FWFD
+         SB9w==
+X-Gm-Message-State: AOJu0Ywa8atl3SoZ0hRUZF1/8s3fZ/DToBNqaK+o7MUCODWWlPeWENer
+	P8cuynciByJB8JNydz06f7AZVpGZe+NoQprLlzLq54TwP5xMz+SBMBnAJKaNBjE=
+X-Google-Smtp-Source: AGHT+IFlRNmteJG7znYLvgPQ5w2kIx8XgJ208bdBwHJGXk7Kkq7i0LhG1MeixWMJRf5mZmrHhGKs1w==
+X-Received: by 2002:a50:955e:0:b0:57c:aab2:7319 with SMTP id 4fb4d7f45d1cf-57d457803dfmr8192398a12.4.1719414520345;
+        Wed, 26 Jun 2024 08:08:40 -0700 (PDT)
+Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d30563440sm7293302a12.84.2024.06.26.08.08.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jun 2024 08:08:40 -0700 (PDT)
+Message-ID: <5d0489e4-d04e-4ade-8fb4-b70ed5099d92@linaro.org>
+Date: Wed, 26 Jun 2024 17:08:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com> <20240626-qps615-v1-4-2ade7bd91e02@quicinc.com>
-In-Reply-To: <20240626-qps615-v1-4-2ade7bd91e02@quicinc.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 26 Jun 2024 17:07:09 +0200
-Message-ID: <CAMRc=MeAz8yT_-YR8dSW+hZrezbhsTcc+oSdCO=+sZ84M=fkmA@mail.gmail.com>
-Subject: Re: [PATCH RFC 4/7] pci: Add new start_link() & stop_link function ops
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com, quic_skananth@quicinc.com, 
-	quic_nitegupt@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sa8775p-ride-r3: add new board
+ file
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240625151430.34024-1-brgl@bgdev.pl>
+ <20240625151430.34024-4-brgl@bgdev.pl>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240625151430.34024-4-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 26, 2024 at 2:38=E2=80=AFPM Krishna chaitanya chundru
-<quic_krichai@quicinc.com> wrote:
->
-> Certain devices like QPS615 which uses PCI pwrctl framework
-> needs to stop link training before configuring the PCIe device.
->
-> As controller driver already enables link training, we need to
-> stop the link training by using stop_link and enable them back after
-> device is configured by using start_link.
->
-> The stop_link() & start_link() be used to keep the link in D3cold &
-> D0 before turning off the power of the device.
->
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+On 25.06.2024 5:14 PM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Revision 3 of the sa8775p-ride board uses a different PHY for the two
+> ethernet ports and supports 2.5G speed. Create a new file for the board
+> reflecting the changes.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  include/linux/pci.h | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/include/linux/pci.h b/include/linux/pci.h
-> index fb004fd4e889..3892ff7fd536 100644
-> --- a/include/linux/pci.h
-> +++ b/include/linux/pci.h
-> @@ -803,6 +803,8 @@ struct pci_ops {
->         void __iomem *(*map_bus)(struct pci_bus *bus, unsigned int devfn,=
- int where);
->         int (*read)(struct pci_bus *bus, unsigned int devfn, int where, i=
-nt size, u32 *val);
->         int (*write)(struct pci_bus *bus, unsigned int devfn, int where, =
-int size, u32 val);
-> +       int (*start_link)(struct pci_bus *bus);
-> +       int (*stop_link)(struct pci_bus *bus);
->  };
->
 
-IMO stop_link() should return void.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Bart
+Konrad
 
