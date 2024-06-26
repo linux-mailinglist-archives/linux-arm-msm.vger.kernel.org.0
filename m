@@ -1,171 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-24238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B2C4917ADD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 10:25:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CB7C917B1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 10:39:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 019DB2881D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 08:25:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C01461C23610
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 08:39:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5230915FA8F;
-	Wed, 26 Jun 2024 08:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D813A161935;
+	Wed, 26 Jun 2024 08:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hfSaTGka"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PRGZL1rb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB91115FA60;
-	Wed, 26 Jun 2024 08:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3145213B78F;
+	Wed, 26 Jun 2024 08:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719390283; cv=none; b=hjfmg/jXaeKiEsV8La2rIgl5HUU/+02E8VPek9kZKFtSD1mkwaLyGB2p5q8YKSEvHDEz1foShsnVJZSCmNv4PwNw7ZmAJ7hB5KUfaXB1InAXFIeCqS5j+n2FTnCGUEfz1GYV5EXKXZJC6JFNsAYP/iT26wqGMRoFIUuxIY0p2QY=
+	t=1719391143; cv=none; b=s5LaJnsutxwKDeO9J9qfl/C7cqIVTHzCYbkqGrI3wS/KEYMX/DMquQJlbbey8cEwPHF9lQVDYVM7xe0txQcp9eoJp6biKXyy2/pGGPyQdjde3MHchmER3Jhjvc8rZX1iwHfiC4j/1n5xTr/DVYr9UmIEPBfAUzX3IcaZEfRgqbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719390283; c=relaxed/simple;
-	bh=XTfMFOjhrpXWnfLenLQuZUUyczASGHoAIUDYR7Zyu24=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mLgCUeW1B0IaQKEPYZD6Q6sw9m/97V5QwXxR2EIKdWQ0jRHT8a6lc344sE/FZTd2QstpEPGI1HLbRUChX2Y2uelQcoek0IllwwE8xcDggxnCjv0C9pdhLJ5XWo2biSAmW8iXjA47UbLxGUvYnvl7eD6x250GVgCmu81eKUBOW6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hfSaTGka; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45PHXAx0007822;
-	Wed, 26 Jun 2024 08:24:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=ntNa58qOLqwph9C6e84LSq9z
-	sVILNoDqg4IK9f2f1yk=; b=hfSaTGkaWrUg/x7iB1Oi79/TCffwSuU0nPatrsYs
-	HZDhCqc5Zb+uPamx4jqTuSco/ZwzYp9wkqMv/NhOE7Mk+RGIDAQRGaT24/Ihj5cJ
-	lN/cMa+khxv7sP/bIuz/QlPY/a1cquXsD/FYTvmaMFzy05jbwRvr4nbVTUy5mAxE
-	NrDgQ77kM5OMAG9rAJ1MeNXAWy2C0u850XW7+6+n6cu5UGdRjhZpZhKY1hnNLuvK
-	wIf6x07vlhA4Gnj/FKM6PPlbk+vuS6zYgHoVG3pEa3xY3E2d/3ZRyMq3dqye7tTT
-	pet6ltg+WxPSrPVqnhC+0w5KeZaKF1go3LxMNxgVa3fQZA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywnjs0rmt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Jun 2024 08:24:31 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45Q8OUOI027363
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Jun 2024 08:24:30 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 26 Jun 2024 01:24:25 -0700
-Date: Wed, 26 Jun 2024 13:54:22 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>, David Airlie
-	<airlied@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Marijn
- Suijten" <marijn.suijten@somainline.org>,
-        Sean Paul <sean@poorly.run>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 2/3] drm/msm/adreno: Add support for X185 GPU
-Message-ID: <20240626082422.zcsari27yoskayuo@hu-akhilpo-hyd.qualcomm.com>
-References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
- <20240623110753.141400-3-quic_akhilpo@quicinc.com>
- <5947559d-30dd-4da1-93cc-a15dc65cb77d@linaro.org>
+	s=arc-20240116; t=1719391143; c=relaxed/simple;
+	bh=eQ7DYSWRsKYuWOqaM71snLYfv7LNhzAnFyoiCIARR44=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TTkP/+rB7VsZRqnn8Am+1z6vHySeX8zwudOzrNJWrOdeAr6Y1t+h1R3NlFDij0zp2Ct65SB0Z/xG3VrHuc32ulPHDRJb83H42PmjTs1swGQlx6GaoZqAvF8gEjvscXfPQcUA7jP5QVm/7el2t0nUdljTr9Nf8G6OaWvO84q3xt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PRGZL1rb; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ebe0a81dc8so84903921fa.2;
+        Wed, 26 Jun 2024 01:39:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719391140; x=1719995940; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WGLAE0d0WBAYFA6fR6mw4wvQZZ2LgjwEPVknt+snP7o=;
+        b=PRGZL1rbAc2f+l1SmG+B/xGH9gsjKg2wtSQqFWqStPihuF3fzOu5hqvALEar1j87Ul
+         gm2GzxaG1447zHVCoMUnSF3V3FB97xeQhNevmodSUQYBcqYWgMFnHPndpeEMqeG/4QqM
+         kuRbtvO0Vv72jxLqGM2KegxiGuRBk+PpDyWaaeE12JS7xyPNGIdi+SPU0mgGAX6QL7qw
+         nPlF4GaIq7wp0yD0ZKArzy6o2MFAbzRf/jmmCDhCg26IiMIueNR/tOIwLecJP+QAzCKw
+         851z5xchiezbcIc+0QS/b539ci9so3dbZ3phl9vHW27GasEnIeZaWhew05madzKnYwYc
+         Eh0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719391140; x=1719995940;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WGLAE0d0WBAYFA6fR6mw4wvQZZ2LgjwEPVknt+snP7o=;
+        b=bXf8vIW+g/TgrXbgZAJ8Q2xCD9hMcHwP3ZZXKsaT1KPe99Dh6qbAeJ36q1R+YcrIYt
+         BAH/tk241HXh9IsAp74nUQ9pKAl32Q3B8hfctAA/oTa+cwAQPEDGmGQPR8uRUZHcnYD5
+         4K1f1rXbGUSsp1XTmxHGwZAVroDd9kK6NOTzT/0+43bEkEXdRXMcG+YfzxcPO2rfNPBx
+         Q/p1aUFs7px9gEhKGxqeCzcxNO6o0ySrokNU5tdL7rAPdueajsnyZoaVsLpwmZMTbWIW
+         7KoXgKaiw6mK2BLnzddg8F3VIm5YaGYWOuq2tK1jedAgu5MaMuUUUGUSjpaTxYI1WQX/
+         tr2w==
+X-Forwarded-Encrypted: i=1; AJvYcCWtD9n+qpRU8LjHvuVRijwCHzcal6b/E27un+1zsscNOKUHtzAQQMo/m9Jk43dLpX4sWJ66JP/D8QpIxzMPM8MAd7WoulLSQkt2Lvs6T3fu5jqw2a8qIBkWobmEs9SGYBHHmRKceYzzxQsMAM8DiBiDpXKKv/3eUYWIO9we7Jto4AKwxbPEH+AI1k1KPPM4CU35GXfyM9C43Qf/c2eIqZkMwdViEA==
+X-Gm-Message-State: AOJu0YyrBlb9Lk2DrQdWZZD0o1lsT9sd7AY9nTlYFxhNNxw1nP0vNmpg
+	rJBBWsqXG1xlBZXmfYWMBjvRckchYseGW67hdU4B4yKEt7QlmUgjq9iaJvWNaZadxUdShRspgLg
+	svMws8r07OrvNtCRSBWsx2KvgQ3U=
+X-Google-Smtp-Source: AGHT+IFmzqdhWA4H/PFBpAsMCQ7oBjaNqKmMkRUMmk/443vBy5nciueE4td8WvvWnEiPZVl/uR6rjE5UTFEojjBaap8=
+X-Received: by 2002:a2e:7a0a:0:b0:2ec:63f:fe91 with SMTP id
+ 38308e7fff4ca-2ec5b357921mr68729601fa.38.1719391140191; Wed, 26 Jun 2024
+ 01:39:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <5947559d-30dd-4da1-93cc-a15dc65cb77d@linaro.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Nwfdb4rI7TxzPm4fruaVERsR57W1zsBh
-X-Proofpoint-ORIG-GUID: Nwfdb4rI7TxzPm4fruaVERsR57W1zsBh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-26_03,2024-06-25_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 mlxscore=0 suspectscore=0 adultscore=0 mlxlogscore=999
- impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406260062
+References: <20240624-b4-sc7180-camss-v3-0-89ece6471431@gmail.com>
+ <20240624-b4-sc7180-camss-v3-1-89ece6471431@gmail.com> <c33dde93-2c3a-4a00-93ee-e4de303c9057@kernel.org>
+ <CADgMGSvN=uAW7z1dpETGVRewzDG=K2MAtzOkhK7xAcskU_oeZg@mail.gmail.com>
+ <0a35f0bd-ceec-487f-b9fd-ae9698b74048@kernel.org> <CADgMGSt9Hu5Ciq=ndMTaVK23Y_ixTVtTuSfy4hJkJooFH2uv9Q@mail.gmail.com>
+In-Reply-To: <CADgMGSt9Hu5Ciq=ndMTaVK23Y_ixTVtTuSfy4hJkJooFH2uv9Q@mail.gmail.com>
+From: george chan <gchan9527@gmail.com>
+Date: Wed, 26 Jun 2024 16:38:48 +0800
+Message-ID: <CADgMGSv+x2Z9FsWTHW0auttvpdfNDnOPxiJhXnUaW3yQczN_Ag@mail.gmail.com>
+Subject: Re: [PATCH RFT v3 1/5] dt-bindings: media: camss: Add qcom,sc7180-camss
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 24, 2024 at 03:53:48PM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 6/23/24 13:06, Akhil P Oommen wrote:
-> > Add support in drm/msm driver for the Adreno X185 gpu found in
-> > Snapdragon X1 Elite chipset.
-> > 
-> > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> > ---
-> > 
-> >   drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 19 +++++++++++++++----
-> >   drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |  6 ++----
-> >   drivers/gpu/drm/msm/adreno/adreno_device.c | 14 ++++++++++++++
-> >   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++++
-> >   4 files changed, 36 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > index 0e3dfd4c2bc8..168a4bddfaf2 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > @@ -830,8 +830,10 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
-> >   	 */
-> >   	gmu_write(gmu, REG_A6XX_GMU_CM3_CFG, 0x4052);
-> > +	if (adreno_is_x185(adreno_gpu)) {
-> > +		chipid = 0x7050001;
-> 
-> What's wrong with using the logic below?
+On Wed, Jun 26, 2024 at 4:17=E2=80=AFPM george chan <gchan9527@gmail.com> w=
+rote:
+>
+> On Wed, Jun 26, 2024 at 3:15=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.=
+org> wrote:
+> > Keep the list in "required:" in the same order as the list in "properti=
+es:".
+>
+> ok gotcha
+btw, i checked  "required:" and "properties:" are aligned, both of
+them are in ascending order. I am wondering if you are talking about
+two things, 1st one is to align both property, and 2nd is having the
+ordering like below. Plz confirm.
 
-patchid is BITS(7, 0), not (15, 8) in the case of x185. Due to the
-changes in the chipid scheme within the a7x family, this is a bit
-confusing. I will try to improve here in another series.
+required:
+  - compatible
+  - reg
+  - reg-names
+  - interrupt-names
+  - interrupts
+  - clock-names
+  - clocks
+  - iommus
+  - power-domains
+  - power-domain-names
+  - vdda-phy-supply
+  - vdda-pll-supply
 
-> 
-> >   	/* NOTE: A730 may also fall in this if-condition with a future GMU fw update. */
-> > -	if (adreno_is_a7xx(adreno_gpu) && !adreno_is_a730(adreno_gpu)) {
-> > +	} else if (adreno_is_a7xx(adreno_gpu) && !adreno_is_a730(adreno_gpu)) {
-> >   		/* A7xx GPUs have obfuscated chip IDs. Use constant maj = 7 */
-> >   		chipid = FIELD_PREP(GENMASK(31, 24), 0x7);
-> > @@ -1329,9 +1331,18 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
-> >   	if (!pri_count)
-> >   		return -EINVAL;
-> > -	sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
-> > -	if (IS_ERR(sec))
-> > -		return PTR_ERR(sec);
-> > +	/*
-> > +	 * Some targets have a separate gfx mxc rail. So try to read that first and then fall back
-> > +	 * to regular mx rail if it is missing
-> > +	 */
-> > +	sec = cmd_db_read_aux_data("gmxc.lvl", &sec_count);
-> > +	if (PTR_ERR_OR_ZERO(sec) == -EPROBE_DEFER) {
-> > +		return -EPROBE_DEFER;
-> > +	} else if (IS_ERR(sec)) {
-> > +		sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
-> > +		if (IS_ERR(sec))
-> > +			return PTR_ERR(sec);
-> > +	}
-> 
-> I assume GMXC would always be used if present, although please use the
-> approach Dmitry suggested
-
-Correct.
-
--Akhil
-> 
-> 
-> The rest looks good!
-> 
-> Konrad
+> > >> BTW, I asked for subject to keep only one, first "media" prefix:
+> > >>         "Subject: just one media (first). "
+> > >> but you kept the second "media".
+> > >
+> > > Sorry I can't get it. Could you choose one?
+> > >
+> > > _ORIGINAL_
+> > > dt-bindings: media: camss: Add qcom,sc7180-camss
+> >
+> > No, original was different. Go back to your first posting. I asked to
+> > remove one media and keep only one - the first. I did not ask to
+> > re-shuffle the prefixes.
+> Yes, let me sum it up
+>
+> v1 title is w.r.t
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20240222-b4-cams=
+s-sc8280xp-v6-1-0e0e6a2f8962@linaro.org/
+> then extra "camss" pre-fix keyword and "binding" post-fix is not needed.
+> v2 wrongly remove all prefixes and correctly removed post-fix
+> v3 added correct prefix, removed redundancy "camss" prefixes but
+> changelog still refer to old sc8280xp style
+>
+> The title now should be fine. So I will modify the changelog only.
+>
+> So there are 2 todo items as above. Other than above, all review items
+> are addressed. Plz confirm.
 
