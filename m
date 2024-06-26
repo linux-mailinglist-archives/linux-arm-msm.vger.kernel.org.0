@@ -1,326 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-24297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91E8F91844B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 16:34:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C69391845B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 16:35:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B534C1C23023
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 14:34:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 167771F285BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 14:35:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA117186E26;
-	Wed, 26 Jun 2024 14:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA2CA188CCB;
+	Wed, 26 Jun 2024 14:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oRDCTMYN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oJTHQzoj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6C3176FA5;
-	Wed, 26 Jun 2024 14:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA3B187323;
+	Wed, 26 Jun 2024 14:33:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719412372; cv=none; b=eSNuH46R1fkz2Whcn+hDheZoG1JIu5zFsDZOrAAK11cwFnrrH6AtLUZ9AQCTvnZJcPh2gkoHgQEYjHe53LZMVqXYMfhR3vsUi6YX5fAljRdacFO7/YHCWIYT2kzXG6GWJW7RAmg5Z9n/eeJnu17MKc8eu4pevvZIwIEDAnAVOp8=
+	t=1719412414; cv=none; b=HzVfsq5glpHEzI4xGTz7En7Ep4GkPxhR+bIBFB8+SCvWAv8ISGlnGC6D3JiB2POuWYVWoakLVBH0gdeiZKyY/CwyKJU4EgFqgJS/7OqzMMI8olcDoathYLHwZ3cTMM1dG5exNW5tgH8SZ5mv8bL8BUWluR+jN0Gr5f7u+whjkMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719412372; c=relaxed/simple;
-	bh=3UAAGIdFQAKH63yiI3sjxjK8fwrSmEbZub1vx0sUm98=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O7qi9p/4UmjmAu/bYIlWO2zy4oJhu5REIZh80bEsg6jkVrqoqXobptu3a/l7GMJ4Uf3KZ5/nXpeDdB6iJ3Q3f1ftNM/2UqNQ4uFloOlsefIgwl0mUaZGPeHlT7GnkQ0l9MMIsQfJxIvyH5kdC4TSCUHlLdy7zj4bpYlYsnYC++A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oRDCTMYN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466CDC116B1;
-	Wed, 26 Jun 2024 14:32:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719412372;
-	bh=3UAAGIdFQAKH63yiI3sjxjK8fwrSmEbZub1vx0sUm98=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oRDCTMYNgyDZgEHHPlz+iPqlM22zSaSIzJ9a5bZs3tK3NGkCyNKzSB4CfP1N4jygX
-	 9y/rWt6QNj3/iPw1Fksd2hrhnbKpz7f8d6kU3VruLAjCqt99NCrGrCp6LK9ZkrmYgN
-	 KDVxwHK/51CWoq2lJfbq3VNo/7d2bK8wMDL6MQGzNjPnpW+jB9kWcSPs+j5C9Y9sGc
-	 K5L328oExf1BDyu5Ken4gj2dvQD/XadvT5pEcJoQdlKNnk4LtBqyIeJ1OscqwVP1Qg
-	 WfJfVm2UoNTWEo+k43Z1PyjQxvF4He8zNTIQ9Fx311wCyq1HmLeH4nkOUVNV4zVajS
-	 9tmY4mys+MOpQ==
-Date: Wed, 26 Jun 2024 09:31:55 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com, quic_skananth@quicinc.com, 
-	quic_nitegupt@quicinc.com, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 6/7] pci: qcom: Add support for start_link() &
- stop_link()
-Message-ID: <wcxyba2xxpsfgffa5ds7ctgekt5fanp6udeivh3kf7x7pr6cw4@3i27f7etqqt3>
-References: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com>
- <20240626-qps615-v1-6-2ade7bd91e02@quicinc.com>
+	s=arc-20240116; t=1719412414; c=relaxed/simple;
+	bh=+53iBaNneJUrnJLXQopSACioG062JSDnqGOyOiIkLoA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=JtKWHi3xWP/x0u4IvOKjwmHOkJi7JrGm66vqWOlIDPbLA5E6Mc8fCdgficnu9M+fWtLTWwZ1SGWwKuNzeHlClsS5OvN30BX4CNgr2gdpocR7X02wdtlRXShA4BtZWoQ4KJyjlVKINgXHQ25H0y62PBKaw2xpwTHPTTk1ZPksv7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oJTHQzoj; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45QAfODj022641;
+	Wed, 26 Jun 2024 14:33:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=nQIsFrxbQIhS4BAJsQwJzwW+7/FvXlB51hL
+	xw1bN31o=; b=oJTHQzojjOYH4Zfzx126Ph1KVREOS7FdeMOgzUGWZb9+D/TfZrC
+	dtY6ThEda+TNkf06tmgD1jt/nFfqAQJx8KqGxuyIqMkAkARM+7PS5BZDHse8TrZy
+	dWyZUDa6pc/jVIpjD4uKPent5X0p/kLENvlyeoGj7hl4v3MnMPDBc0SyjWnBxjou
+	wKj2dXklTbv/31JxzRI6UrRYLxzzPP7lyv98eHNfvAECk4OOGe8vn/QxNl5Uu/Io
+	v83UrxDCHUqf4XVELVB7HuxOlwe2ZXEvDDY4sES4OKNJw43wnqFu0NVDBy71Nm33
+	kLUlj9yFG73c3vDypmC+75oAh/0gIipH68A==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqw9hcgg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Jun 2024 14:33:08 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTP id 45QEUA8O023377;
+	Wed, 26 Jun 2024 14:33:04 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3ywqpkv29c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Jun 2024 14:33:03 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 45QEX3Qf025794;
+	Wed, 26 Jun 2024 14:33:03 GMT
+Received: from hu-devc-blr-u22-a.qualcomm.com (hu-devipriy-blr.qualcomm.com [10.131.37.37])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 45QEX3fr025793
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 26 Jun 2024 14:33:03 +0000
+Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 4059087)
+	id 8295340FB3; Wed, 26 Jun 2024 20:03:02 +0530 (+0530)
+From: Devi Priya <quic_devipriy@quicinc.com>
+To: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, catalin.marinas@arm.com, will@kernel.org,
+        p.zabel@pengutronix.de, richardcochran@gmail.com,
+        geert+renesas@glider.be, dmitry.baryshkov@linaro.org,
+        neil.armstrong@linaro.org, arnd@arndb.de, m.szyprowski@samsung.com,
+        nfraprado@collabora.com, u-kumar1@ti.com,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org
+Cc: quic_devipriy@quicinc.com
+Subject: [PATCH V5 0/7] Add NSS clock controller support for IPQ9574
+Date: Wed, 26 Jun 2024 20:02:55 +0530
+Message-Id: <20240626143302.810632-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240626-qps615-v1-6-2ade7bd91e02@quicinc.com>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bfMj7uiVpEwpqRE50g9WKrvhGYSPU_r0
+X-Proofpoint-GUID: bfMj7uiVpEwpqRE50g9WKrvhGYSPU_r0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-26_07,2024-06-25_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=896 phishscore=0 bulkscore=0
+ adultscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2406260107
 
-On Wed, Jun 26, 2024 at 06:07:54PM GMT, Krishna chaitanya chundru wrote:
+Add bindings, driver and devicetree node for networking sub system clock 
+controller on IPQ9574. Also add support for NSS Huayra type alpha PLL and
+add support for gpll0_out_aux clock which serves as the parent for 
+some nss clocks.
 
-Please start your commit message with a description of the problem that
-you're solving, then followed by the technical description of your
-solution (which you have here).
+This series depends on the below patch series which adds support for
+Interconnect driver
+https://lore.kernel.org/linux-arm-msm/20240430064214.2030013-1-quic_varada@quicinc.com/
 
-Also, uppercase "PCI:" in your subject prefix.
+Changes in V5:
+	- Detailed change logs are added to the respective patches.
 
-> In the stop_link() if the PCIe link is not up, disable LTSSM enable
-> bit to stop link training otherwise keep the link in D3cold.
-> And in the start_link() the enable LTSSM bit if the resources are
-> turned on other wise do the all the initialization and then start
-> the link.
-> 
-> Introduce ltssm_disable function op to stop the link training.
-> 
-> Use a flag 'pci_pwrctl_turned_off" to indicate the resources are
-> turned off by the pci pwrctl framework.
-> 
-> If the link is stopped using the stop_link() then just return with
-> doing anything in suspend and resume.
+V4 can be found at:
+https://lore.kernel.org/linux-arm-msm/20240625070536.3043630-1-quic_devipriy@quicinc.com/
 
-And an empty line between commit message and the tags.
+V3 can be found at:
+https://lore.kernel.org/linux-arm-msm/20240129051104.1855487-1-quic_devipriy@quicinc.com/
 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 108 +++++++++++++++++++++++++++++----
->  1 file changed, 97 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 14772edcf0d3..1ab3ffdb3914 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -37,6 +37,7 @@
->  /* PARF registers */
->  #define PARF_SYS_CTRL				0x00
->  #define PARF_PM_CTRL				0x20
-> +#define PARF_PM_STTS				0x24
->  #define PARF_PCS_DEEMPH				0x34
->  #define PARF_PCS_SWING				0x38
->  #define PARF_PHY_CTRL				0x40
-> @@ -83,6 +84,9 @@
->  /* PARF_PM_CTRL register fields */
->  #define REQ_NOT_ENTR_L1				BIT(5)
->  
-> +/* PARF_PM_STTS register fields */
-> +#define PM_ENTER_L23				BIT(5)
-> +
->  /* PARF_PCS_DEEMPH register fields */
->  #define PCS_DEEMPH_TX_DEEMPH_GEN1(x)		FIELD_PREP(GENMASK(21, 16), x)
->  #define PCS_DEEMPH_TX_DEEMPH_GEN2_3_5DB(x)	FIELD_PREP(GENMASK(13, 8), x)
-> @@ -126,6 +130,7 @@
->  
->  /* ELBI_SYS_CTRL register fields */
->  #define ELBI_SYS_CTRL_LT_ENABLE			BIT(0)
-> +#define ELBI_SYS_CTRL_PME_TURNOFF_MSG		BIT(4)
->  
->  /* AXI_MSTR_RESP_COMP_CTRL0 register fields */
->  #define CFG_REMOTE_RD_REQ_BRIDGE_SIZE_2K	0x4
-> @@ -228,6 +233,7 @@ struct qcom_pcie_ops {
->  	void (*host_post_init)(struct qcom_pcie *pcie);
->  	void (*deinit)(struct qcom_pcie *pcie);
->  	void (*ltssm_enable)(struct qcom_pcie *pcie);
-> +	void (*ltssm_disable)(struct qcom_pcie *pcie);
->  	int (*config_sid)(struct qcom_pcie *pcie);
->  };
->  
-> @@ -248,10 +254,13 @@ struct qcom_pcie {
->  	const struct qcom_pcie_cfg *cfg;
->  	struct dentry *debugfs;
->  	bool suspended;
-> +	bool pci_pwrctl_turned_off;
->  };
->  
->  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
->  
-> +static void qcom_pcie_icc_update(struct qcom_pcie *pcie);
-> +
->  static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
->  {
->  	gpiod_set_value_cansleep(pcie->reset, 1);
-> @@ -266,17 +275,6 @@ static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
->  	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
->  }
->  
-> -static int qcom_pcie_start_link(struct dw_pcie *pci)
-> -{
-> -	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> -
-> -	/* Enable Link Training state machine */
-> -	if (pcie->cfg->ops->ltssm_enable)
-> -		pcie->cfg->ops->ltssm_enable(pcie);
-> -
-> -	return 0;
-> -}
-> -
->  static void qcom_pcie_clear_aspm_l0s(struct dw_pcie *pci)
->  {
->  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> @@ -556,6 +554,15 @@ static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
->  	return 0;
->  }
->  
-> +static void qcom_pcie_2_3_2_ltssm_disable(struct qcom_pcie *pcie)
-> +{
-> +	u32 val;
-> +
-> +	val = readl(pcie->parf + PARF_LTSSM);
-> +	val &= ~LTSSM_EN;
-> +	writel(val, pcie->parf + PARF_LTSSM);
-> +}
-> +
->  static void qcom_pcie_2_3_2_ltssm_enable(struct qcom_pcie *pcie)
->  {
->  	u32 val;
-> @@ -1336,6 +1343,7 @@ static const struct qcom_pcie_ops ops_2_7_0 = {
->  	.post_init = qcom_pcie_post_init_2_7_0,
->  	.deinit = qcom_pcie_deinit_2_7_0,
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
-> +	.ltssm_disable = qcom_pcie_2_3_2_ltssm_disable,
->  };
->  
->  /* Qcom IP rev.: 1.9.0 */
-> @@ -1346,6 +1354,7 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
->  	.host_post_init = qcom_pcie_host_post_init_2_7_0,
->  	.deinit = qcom_pcie_deinit_2_7_0,
->  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
-> +	.ltssm_disable = qcom_pcie_2_3_2_ltssm_disable,
->  	.config_sid = qcom_pcie_config_sid_1_9_0,
->  };
->  
-> @@ -1395,9 +1404,81 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
->  	.no_l0s = true,
->  };
->  
-> +static int qcom_pcie_turnoff_link(struct dw_pcie *pci)
-> +{
-> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> +	u32 ret_l23, val, ret;
-> +
-> +	if (!dw_pcie_link_up(pcie->pci)) {
-> +		if (pcie->cfg->ops->ltssm_disable)
-> +			pcie->cfg->ops->ltssm_disable(pcie);
-> +	} else {
-> +		writel(ELBI_SYS_CTRL_PME_TURNOFF_MSG, pcie->elbi + ELBI_SYS_CTRL);
-> +
-> +		ret_l23 = readl_poll_timeout(pcie->parf + PARF_PM_STTS, val,
-> +					     val & PM_ENTER_L23, 10000, 100000);
-> +		if (ret_l23) {
-> +			dev_err(pci->dev, "Failed to enter L2/L3\n");
-> +			return -ETIMEDOUT;
-> +		}
-> +
-> +		qcom_pcie_host_deinit(&pcie->pci->pp);
-> +
-> +		ret = icc_disable(pcie->icc_mem);
-> +		if (ret)
-> +			dev_err(pci->dev, "Failed to disable PCIe-MEM interconnect path: %d\n",
-> +				ret);
-> +
-> +		pcie->pci_pwrctl_turned_off = true;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_pcie_turnon_link(struct dw_pcie *pci)
-> +{
-> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> +
-> +	if (pcie->pci_pwrctl_turned_off) {
-> +		qcom_pcie_host_init(&pcie->pci->pp);
-> +
-> +		dw_pcie_setup_rc(&pcie->pci->pp);
-> +	}
-> +
-> +	if (pcie->cfg->ops->ltssm_enable)
-> +		pcie->cfg->ops->ltssm_enable(pcie);
-> +
-> +	/* Ignore the retval, the devices may come up later. */
-> +	dw_pcie_wait_for_link(pcie->pci);
-> +
-> +	qcom_pcie_icc_update(pcie);
-> +
-> +	pcie->pci_pwrctl_turned_off = false;
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_pcie_start_link(struct dw_pcie *pci)
-> +{
-> +	return qcom_pcie_turnon_link(pci);
+V2 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230825091234.32713-1-quic_devipriy@quicinc.com/
 
-If you inline qcom_pcie_turnon_link() here, you don't need to have two
-different words for "start"/"turnon".
+Devi Priya (7):
+  clk: qcom: clk-alpha-pll: Add NSS HUAYRA ALPHA PLL support for ipq9574
+  dt-bindings: clock: gcc-ipq9574: Add definition for GPLL0_OUT_AUX
+  clk: qcom: gcc-ipq9574: Add support for gpll0_out_aux clock
+  dt-bindings: clock: Add ipq9574 NSSCC clock and reset definitions
+  clk: qcom: Add NSS clock Controller driver for IPQ9574
+  arm64: dts: qcom: ipq9574: Add support for nsscc node
+  arm64: defconfig: Build NSS Clock Controller driver for IPQ9574
 
-> +}
-> +
-> +static void qcom_pcie_stop_link(struct dw_pcie *pci)
-> +{
-> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> +
-> +	if (!dw_pcie_link_up(pcie->pci))  {
+ .../bindings/clock/qcom,ipq9574-nsscc.yaml    |   74 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |   41 +
+ arch/arm64/configs/defconfig                  |    1 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-alpha-pll.c              |   11 +
+ drivers/clk/qcom/clk-alpha-pll.h              |    1 +
+ drivers/clk/qcom/gcc-ipq9574.c                |   15 +
+ drivers/clk/qcom/nsscc-ipq9574.c              | 3096 +++++++++++++++++
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h  |    1 +
+ .../dt-bindings/clock/qcom,ipq9574-nsscc.h    |  152 +
+ .../dt-bindings/reset/qcom,ipq9574-nsscc.h    |  134 +
+ 12 files changed, 3534 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+ create mode 100644 drivers/clk/qcom/nsscc-ipq9574.c
+ create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
+ create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
 
-Unless I'm reading it wrong, qcom_pcie_turnoff_link() has exactly the
-same prologue, so you should be able to just inline
-qcom_pcie_turnoff_link() in this function and avoid the "stop"/"turnoff"
-naming.
+-- 
+2.34.1
 
-> +		if (pcie->cfg->ops->ltssm_disable)
-> +			pcie->cfg->ops->ltssm_disable(pcie);
-> +	} else {
-> +		qcom_pcie_turnoff_link(pci);
-> +	}
-> +}
-> +
->  static const struct dw_pcie_ops dw_pcie_ops = {
->  	.link_up = qcom_pcie_link_up,
->  	.start_link = qcom_pcie_start_link,
-> +	.stop_link = qcom_pcie_stop_link,
->  };
->  
->  static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
-> @@ -1604,6 +1685,8 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
->  	struct qcom_pcie *pcie = dev_get_drvdata(dev);
->  	int ret;
->  
-
-This deserves a comment.
-
-> +	if (pcie->pci_pwrctl_turned_off)
-> +		return 0;
->  	/*
->  	 * Set minimum bandwidth required to keep data path functional during
->  	 * suspend.
-> @@ -1642,6 +1725,9 @@ static int qcom_pcie_resume_noirq(struct device *dev)
->  	struct qcom_pcie *pcie = dev_get_drvdata(dev);
->  	int ret;
->  
-
-Ditto.
-
-> +	if (pcie->pci_pwrctl_turned_off)
-> +		return 0;
-> +
-
-Regards,
-Bjorn
-
->  	if (pcie->suspended) {
->  		ret = qcom_pcie_host_init(&pcie->pci->pp);
->  		if (ret)
-> 
-> -- 
-> 2.42.0
-> 
 
