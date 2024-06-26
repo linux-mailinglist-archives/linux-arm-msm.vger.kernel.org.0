@@ -1,121 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-24322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B20C9185EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:35:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2427891860E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:39:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB4561C212F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:35:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02817B20F43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:37:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5972B18A95F;
-	Wed, 26 Jun 2024 15:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBB7118C338;
+	Wed, 26 Jun 2024 15:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EhCUvS4w"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zpd9IUO2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D46CA92F;
-	Wed, 26 Jun 2024 15:35:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CD91849FB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 15:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719416122; cv=none; b=IpYZIdnrO4F/lMJCF8ur62wXnrTCiRweqX61PqNJKJiHw7xfk1rizH1OkSZJo4p84pDSmuayEeViU87K8O8A+A/CkiFVTUsukUlr5X02gmE2gPMJ8baGE94xjUrt/JGLkqA9t18sBwrPLX/D88eho8qzXrO3D42Vhn2u2w0Wbgw=
+	t=1719416246; cv=none; b=Ijh9sgLxKJjOspFIgOXu5pVNX+luVOtLn61L7p6/g0cd1JNZ2hIkMVV+U7xkvps0T6U4/Z2hUGbpc+tUGDIt9MU5KubVwhMpdXAluH9A9AWfTGmnPhk6qTXslF2GBRm1czWOcdftazOG+zteNOfsh6kK3SWjkm070H60Amx9QZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719416122; c=relaxed/simple;
-	bh=1Kcr3jofdArjh6InWFIdRnfWmP3d7iP++Ac3f1l/fwQ=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=mgQPq54HdBDiZfIN/odhdPoKD59Ae5IYlxUwljDUmThxIZq5GVSteUr1SNaTmXHknAHu3oHX+duJ9XhAfiQy8BI9rieWc1C6YH/m9AUuS0muJ3wd59kl9zhPu7CeI2Ax19Te/Qt4Cz6XJjeacksjoJynVel+CpFFkpe6AWvod7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EhCUvS4w; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE8FC116B1;
-	Wed, 26 Jun 2024 15:35:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719416121;
-	bh=1Kcr3jofdArjh6InWFIdRnfWmP3d7iP++Ac3f1l/fwQ=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=EhCUvS4wltsz2P5ZyUiB69APAxgoqAtE/IcvwXQdxdEpETk8H013mdfGKcvFUiLdB
-	 giiSdPkNiHIAESerlBkaXWCvQnFBJ9lvZQ9wLkxyPGldmIWeAGLDhA2OiL9ZuwSAHg
-	 c0ezz8n3h1PWIHJQHiPfPA8sJX0lB0B/JXR0LFcTXueub69S9wW/gVrd8az1NrmNgL
-	 XR0AOkUsuBpuPnxlbxi/LWKLD2m3fLp7aVe6Prqhjc8kAYxmjns3zBsnIUTE034xxN
-	 HVx61Vq+ACCaSQ2eMH3Sy076jJVVIvZ/EI2jT0Etk5dJwT/TJFqYwQKpol66llpCGM
-	 vlMxR++QCO5AQ==
-Date: Wed, 26 Jun 2024 09:35:20 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1719416246; c=relaxed/simple;
+	bh=678pGV40+eNWwnUvVfwueDmC3NvGqTCmHbiiJ4Q2GF0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WZxV4JmgDX7IE/bFLaaNa7QmPfuTJAYG4U+zPci3BQ+QF7dzFo/zQmfA+TmQ8jNZBMODil9vwWI0yon5An1PuhstvycsYQRoc/dMQkbW9jhg49+Zb9hC98aIBpPc9taTPFWLP0p8yDnyzhCEW2TVnqvSmuRTXHpIDpPqrksUL40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zpd9IUO2; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-57cbc66a0a6so656585a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 08:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719416243; x=1720021043; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/M8ZGHQaunzKdqcWije298Gp484PNbRhdghRixdYcfI=;
+        b=zpd9IUO2Ee4u0v1D0JmKCUYJz0vl59GDx2CSQ6N97yVh4IOyngm4F8L5wRaS6Z5pjP
+         QHaffQgLAiQ1vre1BKmD7H1XId/HdEbevDwOzhUk4B+f74rtRqEW+K2BEiL6XlEDejrI
+         +9BxxLxbiMulCY2YhVXu2VlrUMn7/G/nead6H6w/A914JBhAZHMYTMxMp/eDjJvuQxOK
+         CPGXdeYINNiuvsAG7b7n5QZrHUd+DiHSJjAtM27Cxus9YvsFvb3rVfAdDkqwhpT28RFl
+         fVAp7pmyiwOhEsvG8oT4mlewo2ZWyeRzwoGq6G+87rEv8CPfWUq3zdNNta6H7WB8/g9G
+         d4Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719416243; x=1720021043;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/M8ZGHQaunzKdqcWije298Gp484PNbRhdghRixdYcfI=;
+        b=bwJu2hM4FnRPrO5VtP+qD/lqdGopgC7z6jyP4LS5bHzpgvPahyI5OE3v/c2URNs+G2
+         TGL6OOUs2brNTYtkqRCsagZhWwY/G4n7II37Piqw6wYKIW5xGMeMFY+RuMdWwJvpeav8
+         ROktT97TG50XoTuLlh29XGsMVQlqAuwWdjdnLI5yH+UgKlk1m2q2iCXRBC4stTtGQWDg
+         dl7/LKw1B2rZa1StUXOpnMAnTL2LRtm/LWzUhuvlYk0+Zw0ApTbvzFP+JFQn+jB52T4N
+         M69SzfjQFanPeC6hHg9V1AYJTo9jHyC1rwf4L/WFccDYclElvNzzV27/O0HXZJTlN0/O
+         EIRA==
+X-Forwarded-Encrypted: i=1; AJvYcCXhvr+ofKOca9ngFJVhFVTSt3s8RLra2k1rCTEy/3MQYV/ByzEXua8QryjHJ4pR0YiEiB4pJLJRG80veEhs1bq7n6SBGJ7696Apmj/abA==
+X-Gm-Message-State: AOJu0Yw6oKk0mS/04VTkWCte2Aj1U5IGEhdp/fG720UGZHhRpBrlQZm7
+	drG5Y+/pF0zwoLV7TuZJlMQAtQ2E+prfe0cfSfSS5EiSUNydxUSHaPZwhzD3tCM=
+X-Google-Smtp-Source: AGHT+IEqQeAazDOngYL3KT5BxpGqqJf5DSXST78jR3z4Ny3CbZ3jxLYwqV0Iiwe/FZ4+iYRvfmlsNQ==
+X-Received: by 2002:a50:c004:0:b0:57d:3ef8:614d with SMTP id 4fb4d7f45d1cf-5847c38c72cmr3776a12.20.1719416243091;
+        Wed, 26 Jun 2024 08:37:23 -0700 (PDT)
+Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d3040f3e0sm7280865a12.25.2024.06.26.08.37.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jun 2024 08:37:22 -0700 (PDT)
+Message-ID: <0b60cd30-3337-46a0-87ca-4c75b7f1ef29@linaro.org>
+Date: Wed, 26 Jun 2024 17:37:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Devi Priya <quic_devipriy@quicinc.com>
-Cc: catalin.marinas@arm.com, u-kumar1@ti.com, 
- linux-arm-kernel@lists.infradead.org, krzk+dt@kernel.org, 
- geert+renesas@glider.be, neil.armstrong@linaro.org, nfraprado@collabora.com, 
- mturquette@baylibre.com, linux-kernel@vger.kernel.org, 
- dmitry.baryshkov@linaro.org, netdev@vger.kernel.org, 
- konrad.dybcio@linaro.org, m.szyprowski@samsung.com, arnd@arndb.de, 
- richardcochran@gmail.com, will@kernel.org, sboyd@kernel.org, 
- andersson@kernel.org, p.zabel@pengutronix.de, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, conor+dt@kernel.org, 
- linux-arm-msm@vger.kernel.org
-In-Reply-To: <20240626143302.810632-5-quic_devipriy@quicinc.com>
-References: <20240626143302.810632-1-quic_devipriy@quicinc.com>
- <20240626143302.810632-5-quic_devipriy@quicinc.com>
-Message-Id: <171941612020.3280624.794530163562164163.robh@kernel.org>
-Subject: Re: [PATCH V5 4/7] dt-bindings: clock: Add ipq9574 NSSCC clock and
- reset definitions
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 7/7] pci: pwrctl: Add power control driver for qps615
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+ Bartosz Golaszewski <brgl@bgdev.pl>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Jingoo Han <jingoohan1@gmail.com>
+Cc: quic_vbadigan@quicinc.com, quic_skananth@quicinc.com,
+ quic_nitegupt@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com>
+ <20240626-qps615-v1-7-2ade7bd91e02@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240626-qps615-v1-7-2ade7bd91e02@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-On Wed, 26 Jun 2024 20:02:59 +0530, Devi Priya wrote:
-> Add NSSCC clock and reset definitions for ipq9574.
+On 26.06.2024 2:37 PM, Krishna chaitanya chundru wrote:
+> QPS615 switch needs to configured after powering on and before
+> PCIe link was up.
 > 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> As the PCIe controller driver already enables the PCIe link training
+> at the host side, stop the link training.
+> Otherwise the moment we turn on the switch it will participate in
+> the link training and link may come before switch is configured through
+> i2c.
+> 
+> The switch can be configured different ways like changing de-emphasis
+> settings of the switch, disabling unused ports etc and these settings
+> can vary from board to board, for that reason the sequence is taken
+> from the firmware file which contains the address of the slave, to address
+> and data to be written to the switch. The driver reads the firmware file
+> and parses them to apply those configurations to the switch.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
->  Changes in V5:
-> 	- Dropped interconnects and added interconnect-cells to NSS
-> 	  clock provider so that it can be  used as icc provider.
-> 
->  .../bindings/clock/qcom,ipq9574-nsscc.yaml    |  74 +++++++++
->  .../dt-bindings/clock/qcom,ipq9574-nsscc.h    | 152 ++++++++++++++++++
->  .../dt-bindings/reset/qcom,ipq9574-nsscc.h    | 134 +++++++++++++++
->  3 files changed, 360 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
->  create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
-> 
 
-My bot found errors running 'make dt_binding_check' on your patch:
+[...]
 
-yamllint warnings/errors:
+> +static int qcom_qps615_pwrctl_init(struct qcom_qps615_pwrctl_ctx *ctx)
+> +{
+> +	struct device *dev = ctx->pwrctl.dev;
+> +	struct qcom_qps615_pwrctl_i2c_setting *set;
+> +	const struct firmware *fw;
+> +	const u8 *pos, *eof;
+> +	int ret;
+> +	u32 val;
+> +
+> +	ret = request_firmware(&fw, "qcom/qps615.bin", dev);
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dts:26.26-27 syntax error
-FATAL ERROR: Unable to parse input tree
-make[2]: *** [scripts/Makefile.lib:427: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1430: dt_binding_check] Error 2
-make: *** [Makefile:240: __sub-make] Error 2
+Is this driver only going to serve one model of the device, that will use
+this specific firmware file, ever?
 
-doc reference errors (make refcheckdocs):
+In other words, is QPS615 super special and no other chip like it will be
+ever made?
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240626143302.810632-5-quic_devipriy@quicinc.com
+[...]
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+> +
+> +	bridge->ops->stop_link(bus);
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+This is turbo intrusive. What if there are more devices on this bus?
 
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Konrad
 
