@@ -1,82 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-24364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 211E991996E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 22:49:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 824A6919979
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 22:52:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9DE381F221A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 20:49:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B35881C2111B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 20:52:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1818161314;
-	Wed, 26 Jun 2024 20:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EB32161320;
+	Wed, 26 Jun 2024 20:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dLg/E4PS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="epT5xGp5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BD21E886;
-	Wed, 26 Jun 2024 20:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F788F47;
+	Wed, 26 Jun 2024 20:52:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719434973; cv=none; b=AZzC2cdIhDep3aQ0nKhh4Th5IHy+7T3aGb4zsGream36naoLMGzS9Pxebmp6z7VQrpRIx1FugHxVEHOW1L68lsZoDnHVX8aB8pUyAPYA27OydHFnPXYwmETyMKaNDQs5vxKo2q8LRhWRQ6Qr10KiSKd3y3SuGG5/8SCGH36oZTw=
+	t=1719435175; cv=none; b=GUekiYOkYATqHG6vEvR6qqLwBh2n91yOlOXAIN+Iuz1yoGsE/TT8b9wLtovTCOtRuTHhKQMLfN5wzbEeBARx2/eKwCrCMglJP22e0lriSxSfOqPA4Ge7muN5xxYPUN5j6g768j8uU1JPsn3oZkPvb7gaw63NHXXgAH/ATM94OpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719434973; c=relaxed/simple;
-	bh=wWb9kUAUpMUgiTMDpj5nR7GeDNsbgIC3R8zpeL4fBHU=;
+	s=arc-20240116; t=1719435175; c=relaxed/simple;
+	bh=M3qHpf4iVPXVh15eCHqETHhNkN+rpttNxIHmasSMw3k=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tQq/L1tOxnUcom68SgxzxJm/ZSOSdaNoh+3Ug3zbMZ2lW/AR9Ho7RGQVZYVtCT7Rw0dcGnCKJlvjSiPCXBTn5xY/7mWGeNXlBgDw0QXm6zyWWcCDuzlORoXU2Dy3Ys3OMdYPZxRrgIZaB9dUt2Xexdcr0liv37vwe6TUT5SEOf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dLg/E4PS; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=WAbCSeGjRQEX3SQh9boNWftRbxpw1TvWcfiA4nFdkFIVhNeKw5mNTW9+lSPMatxlGwKGQFTdNf05vxBQ5iW17KcjtOoGsOnNIK23Rlq4D7JqgMxQ+pSx/nSh1ZkwwuXvTSpBuoMQgB7WCH90MHssaDdkrHmACkZxLDINE3GwA74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=epT5xGp5; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45QAfUMc015158;
-	Wed, 26 Jun 2024 20:49:17 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45QAfgXO029319;
+	Wed, 26 Jun 2024 20:52:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	evGl2tcr1dvkk1qa91C6U4dM0I2bvN+WaR516gSfmaw=; b=dLg/E4PSuFj5PYJ5
-	Ovojqw5F8i1fsRcvqR7kAEQNn5x6usGYQxu1W89LchdpZ9dtpb9IJdMVkx30UWOl
-	Rd+sJ913wJQ074AK6l0p2oU+DNX8NXFVfo00Qies27eHl5reVC2x8vTA5OIshyAV
-	20Ids6piHjDOFnhsIRuCdGvzJOtdrulrgNqHfDfP4zgqfpsnNTilOjg8OhuPgYpi
-	TirssHkNrhBVVynJokmKsO64FyUFOoKo7jM62OlizWcp2emoBQdzLkJgzC97hefX
-	0BwR5pA6wiJ8HAX1/N/sPouPEF5QQFv1HHl0o4kU4R2UyBo62j/gEaYmopW3NG2L
-	OeGefw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqshtqsy-1
+	qRITUhAyP+sP5Tf2h+Medc9XwsxQyzmKc1jB2x02owo=; b=epT5xGp5DuIHXMME
+	qxk2yLNM6zrW+bfcgpp8CyUg8Mv26imkowANcDrP75boDCcKo7fSPb8ZCMzL0naW
+	/iRPMYTCDTKseUud7KaAgRDAhBQV2a/4r2HvtN5hc9wlkHtXLhqEh/TTEDyVxr0B
+	mRcZSWitmR/Zpbsuc0x2n2GVWV2P2Vdt8KqYWKqnvm5/gRlaiRGgZC6ajZIZ3tGJ
+	0g+Hjd5Yaci8tFCcUqvk8Nl8wu9SGpxYIGJHXHwXclEOXbEv8MloKKscsaUaeMh8
+	XvdIAJV0iJydlnOCfAJfMBqCHW1UYlDCdxHQJ9epO0VZs/XiDTci9Sf1KSoZbwEZ
+	TdKtGA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywnm6t9fx-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Jun 2024 20:49:16 +0000 (GMT)
+	Wed, 26 Jun 2024 20:52:44 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45QKnEdx032069
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45QKqgaW003646
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 26 Jun 2024 20:49:14 GMT
+	Wed, 26 Jun 2024 20:52:42 GMT
 Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 26 Jun 2024 13:49:10 -0700
-Date: Thu, 27 Jun 2024 02:19:06 +0530
+ 15.2.1544.9; Wed, 26 Jun 2024 13:52:38 -0700
+Date: Thu, 27 Jun 2024 02:22:34 +0530
 From: Akhil P Oommen <quic_akhilpo@quicinc.com>
 To: Rob Clark <robdclark@gmail.com>
-CC: freedreno <freedreno@lists.freedesktop.org>,
+CC: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        freedreno
+	<freedreno@lists.freedesktop.org>,
         <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
         Sean Paul <sean@poorly.run>, <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v1 2/3] drm/msm/adreno: Add support for X185 GPU
-Message-ID: <20240626204906.kgvtf7xo4dqepvpz@hu-akhilpo-hyd.qualcomm.com>
+Message-ID: <20240626205234.ivk5xszi375sl6fe@hu-akhilpo-hyd.qualcomm.com>
 References: <20240623110753.141400-1-quic_akhilpo@quicinc.com>
  <20240623110753.141400-3-quic_akhilpo@quicinc.com>
- <CAF6AEGti-Qibmb0YCgWypx7S1sVmtu3287a1reMnUgYqMzTKsw@mail.gmail.com>
- <CAF6AEGvWFUOk-N8oRxZZYm-EWGV61yiLfjZAUSjHdmy9RhDiAA@mail.gmail.com>
+ <5947559d-30dd-4da1-93cc-a15dc65cb77d@linaro.org>
+ <20240626082422.zcsari27yoskayuo@hu-akhilpo-hyd.qualcomm.com>
+ <CAF6AEGvCaGq8ukxra_bzc=4pUf8y5NndKRagQspD0=uCZdBfoA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,165 +87,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGvWFUOk-N8oRxZZYm-EWGV61yiLfjZAUSjHdmy9RhDiAA@mail.gmail.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+In-Reply-To: <CAF6AEGvCaGq8ukxra_bzc=4pUf8y5NndKRagQspD0=uCZdBfoA@mail.gmail.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KdsScLsstl_09i2H5-gf0p7wWdbFYmpu
-X-Proofpoint-GUID: KdsScLsstl_09i2H5-gf0p7wWdbFYmpu
+X-Proofpoint-GUID: 95c7s-hD7U8wy0ZsVDXB6prpZ7IdIWWB
+X-Proofpoint-ORIG-GUID: 95c7s-hD7U8wy0ZsVDXB6prpZ7IdIWWB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-26_13,2024-06-25_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- mlxscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406260152
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015 spamscore=0
+ mlxscore=0 malwarescore=0 mlxlogscore=999 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2406260153
 
-On Mon, Jun 24, 2024 at 07:28:06AM -0700, Rob Clark wrote:
-> On Mon, Jun 24, 2024 at 7:25 AM Rob Clark <robdclark@gmail.com> wrote:
+On Wed, Jun 26, 2024 at 11:43:08AM -0700, Rob Clark wrote:
+> On Wed, Jun 26, 2024 at 1:24 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
 > >
-> > On Sun, Jun 23, 2024 at 4:08 AM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> > On Mon, Jun 24, 2024 at 03:53:48PM +0200, Konrad Dybcio wrote:
 > > >
-> > > Add support in drm/msm driver for the Adreno X185 gpu found in
-> > > Snapdragon X1 Elite chipset.
 > > >
-> > > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> > > ---
+> > > On 6/23/24 13:06, Akhil P Oommen wrote:
+> > > > Add support in drm/msm driver for the Adreno X185 gpu found in
+> > > > Snapdragon X1 Elite chipset.
+> > > >
+> > > > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> > > > ---
+> > > >
+> > > >   drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 19 +++++++++++++++----
+> > > >   drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |  6 ++----
+> > > >   drivers/gpu/drm/msm/adreno/adreno_device.c | 14 ++++++++++++++
+> > > >   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++++
+> > > >   4 files changed, 36 insertions(+), 8 deletions(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > > index 0e3dfd4c2bc8..168a4bddfaf2 100644
+> > > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> > > > @@ -830,8 +830,10 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+> > > >      */
+> > > >     gmu_write(gmu, REG_A6XX_GMU_CM3_CFG, 0x4052);
+> > > > +   if (adreno_is_x185(adreno_gpu)) {
+> > > > +           chipid = 0x7050001;
 > > >
-> > >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 19 +++++++++++++++----
-> > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |  6 ++----
-> > >  drivers/gpu/drm/msm/adreno/adreno_device.c | 14 ++++++++++++++
-> > >  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++++
-> > >  4 files changed, 36 insertions(+), 8 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > > index 0e3dfd4c2bc8..168a4bddfaf2 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> > > @@ -830,8 +830,10 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
-> > >          */
-> > >         gmu_write(gmu, REG_A6XX_GMU_CM3_CFG, 0x4052);
-> > >
-> > > +       if (adreno_is_x185(adreno_gpu)) {
-> > > +               chipid = 0x7050001;
-> > >         /* NOTE: A730 may also fall in this if-condition with a future GMU fw update. */
-> > > -       if (adreno_is_a7xx(adreno_gpu) && !adreno_is_a730(adreno_gpu)) {
-> > > +       } else if (adreno_is_a7xx(adreno_gpu) && !adreno_is_a730(adreno_gpu)) {
-> > >                 /* A7xx GPUs have obfuscated chip IDs. Use constant maj = 7 */
-> > >                 chipid = FIELD_PREP(GENMASK(31, 24), 0x7);
-> > >
-> > > @@ -1329,9 +1331,18 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
-> > >         if (!pri_count)
-> > >                 return -EINVAL;
-> > >
-> > > -       sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
-> > > -       if (IS_ERR(sec))
-> > > -               return PTR_ERR(sec);
-> > > +       /*
-> > > +        * Some targets have a separate gfx mxc rail. So try to read that first and then fall back
-> > > +        * to regular mx rail if it is missing
-> > > +        */
-> > > +       sec = cmd_db_read_aux_data("gmxc.lvl", &sec_count);
-> > > +       if (PTR_ERR_OR_ZERO(sec) == -EPROBE_DEFER) {
-> > > +               return -EPROBE_DEFER;
-> > > +       } else if (IS_ERR(sec)) {
-> > > +               sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
-> > > +               if (IS_ERR(sec))
-> > > +                       return PTR_ERR(sec);
-> > > +       }
-> > >
-> > >         sec_count >>= 1;
-> > >         if (!sec_count)
-> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > index 973872ad0474..97837f7f2a40 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > > @@ -1319,9 +1319,7 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
-> > >                 count = ARRAY_SIZE(a660_protect);
-> > >                 count_max = 48;
-> > >                 BUILD_BUG_ON(ARRAY_SIZE(a660_protect) > 48);
-> > > -       } else if (adreno_is_a730(adreno_gpu) ||
-> > > -                  adreno_is_a740(adreno_gpu) ||
-> > > -                  adreno_is_a750(adreno_gpu)) {
-> > > +       } else if (adreno_is_a7xx(adreno_gpu)) {
-> > >                 regs = a730_protect;
-> > >                 count = ARRAY_SIZE(a730_protect);
-> > >                 count_max = 48;
-> > > @@ -1891,7 +1889,7 @@ static int hw_init(struct msm_gpu *gpu)
-> > >         gpu_write(gpu, REG_A6XX_UCHE_CLIENT_PF, BIT(7) | 0x1);
-> > >
-> > >         /* Set weights for bicubic filtering */
-> > > -       if (adreno_is_a650_family(adreno_gpu)) {
-> > > +       if (adreno_is_a650_family(adreno_gpu) || adreno_is_x185(adreno_gpu)) {
-> > >                 gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_0, 0);
-> > >                 gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_1,
-> > >                         0x3fe05ff4);
-> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > index c3703a51287b..139c7d828749 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> > > @@ -568,6 +568,20 @@ static const struct adreno_info gpulist[] = {
-> > >                 .zapfw = "a740_zap.mdt",
-> > >                 .hwcg = a740_hwcg,
-> > >                 .address_space_size = SZ_16G,
-> > > +       }, {
-> > > +               .chip_ids = ADRENO_CHIP_IDS(0x43050c01), /* "C512v2" */
-> > > +               .family = ADRENO_7XX_GEN2,
-> > > +               .fw = {
-> > > +                       [ADRENO_FW_SQE] = "gen70500_sqe.fw",
-> > > +                       [ADRENO_FW_GMU] = "gen70500_gmu.bin",
-> > > +               },
-> > > +               .gmem = 3 * SZ_1M,
-> > > +               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
-> > > +               .quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-> > > +                         ADRENO_QUIRK_HAS_HW_APRIV,
-> > > +               .init = a6xx_gpu_init,
-> > > +               .hwcg = a740_hwcg,
-> > > +               .address_space_size = SZ_16G,
+> > > What's wrong with using the logic below?
 > >
-> > I'm kinda thinking we should drop the address_space_size and add
-> > instead ADRENO_QUIRK_4G or something along those lines, since there
-> > are devices with 32 or 64G
+> > patchid is BITS(7, 0), not (15, 8) in the case of x185. Due to the
+> > changes in the chipid scheme within the a7x family, this is a bit
+> > confusing. I will try to improve here in another series.
 > 
-> or alternatively put in a correct address_space_size (I guess 2^^48 or 2^^56 ?)
+> I'm thinking we should just add gmu_chipid to struct a6xx_info, tbh
+> 
+> Maybe to start with, we can fall back to the existing logic if
+> a6xx_info::gmu_chipid is zero so we don't have to add it for _every_
+> a6xx/a7xx
 
-Although I don't see any reason why the end address couldn't be the
-'ttbr0/1 split address', we can keep 256GB as AS size for now. I will
-check this further and see if we can have a general logic for non-a630_family.
+Agree, I was thinking the same.
 
--Akhil
-
+-Akhil.
 > 
 > BR,
 > -R
 > 
-> > (a690 is incorrect in this way too)
-> >
-> > BR,
-> > -R
-> >
-> > >         }, {
-> > >                 .chip_ids = ADRENO_CHIP_IDS(0x43051401), /* "C520v2" */
-> > >                 .family = ADRENO_7XX_GEN3,
-> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > > index 77526892eb8c..d9ea8e0f6ad5 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> > > @@ -448,6 +448,11 @@ static inline int adreno_is_a750(struct adreno_gpu *gpu)
-> > >         return gpu->info->chip_ids[0] == 0x43051401;
-> > >  }
 > > >
-> > > +static inline int adreno_is_x185(struct adreno_gpu *gpu)
-> > > +{
-> > > +       return gpu->info->chip_ids[0] == 0x43050c01;
-> > > +}
-> > > +
-> > >  static inline int adreno_is_a740_family(struct adreno_gpu *gpu)
-> > >  {
-> > >         if (WARN_ON_ONCE(!gpu->info))
-> > > --
-> > > 2.45.1
+> > > >     /* NOTE: A730 may also fall in this if-condition with a future GMU fw update. */
+> > > > -   if (adreno_is_a7xx(adreno_gpu) && !adreno_is_a730(adreno_gpu)) {
+> > > > +   } else if (adreno_is_a7xx(adreno_gpu) && !adreno_is_a730(adreno_gpu)) {
+> > > >             /* A7xx GPUs have obfuscated chip IDs. Use constant maj = 7 */
+> > > >             chipid = FIELD_PREP(GENMASK(31, 24), 0x7);
+> > > > @@ -1329,9 +1331,18 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
+> > > >     if (!pri_count)
+> > > >             return -EINVAL;
+> > > > -   sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
+> > > > -   if (IS_ERR(sec))
+> > > > -           return PTR_ERR(sec);
+> > > > +   /*
+> > > > +    * Some targets have a separate gfx mxc rail. So try to read that first and then fall back
+> > > > +    * to regular mx rail if it is missing
+> > > > +    */
+> > > > +   sec = cmd_db_read_aux_data("gmxc.lvl", &sec_count);
+> > > > +   if (PTR_ERR_OR_ZERO(sec) == -EPROBE_DEFER) {
+> > > > +           return -EPROBE_DEFER;
+> > > > +   } else if (IS_ERR(sec)) {
+> > > > +           sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
+> > > > +           if (IS_ERR(sec))
+> > > > +                   return PTR_ERR(sec);
+> > > > +   }
 > > >
+> > > I assume GMXC would always be used if present, although please use the
+> > > approach Dmitry suggested
+> >
+> > Correct.
+> >
+> > -Akhil
+> > >
+> > >
+> > > The rest looks good!
+> > >
+> > > Konrad
 
