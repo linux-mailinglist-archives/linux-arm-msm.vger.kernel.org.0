@@ -1,208 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-24189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 954809176B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 05:19:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60A8E9176C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 05:26:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4AC22281B10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 03:19:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E32DB28495C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 03:26:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2FCA61FD6;
-	Wed, 26 Jun 2024 03:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE02E65E20;
+	Wed, 26 Jun 2024 03:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1e4lL8ER"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Aq5WqAcd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E742054907
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 03:19:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB8461FCA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 03:26:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719371969; cv=none; b=e/Su13vI154NhBh35iKVNf/lRWGxkL/sAYgGUGfnrucya26n0MJvrbdM9FEGJr1gti/awHnBW9Gh0tXK2f6idprOHzTefBh1NWyWC+V+lNsJm7zd8j9qsWVfcbtXW7QTF+X1JK3MLywf+KvKT79ELjz4RN5MxPnqH6gPQK2aWmA=
+	t=1719372391; cv=none; b=Zjgn1UJ9xTOtC0L34D1eaU0SzwPKCmKELCYx1qKnc/kdHVf28/aEMPYf5QgpQWHj0gdT9/yo9aqrV8MxlBtrOUoroxccP6QvwFq0Zuov8hJzC+h4nbjTt+1Ej2uJxgJRp0imnFnAC4TyQ1si+ysNzQxDLXf5mB54ca76omEc/dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719371969; c=relaxed/simple;
-	bh=hUXgHF51lPNU1tjmMUrpwQio6r+zn/EwEX1X4j6f3tI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lKNx0c+OCBBMBI4lpq/k5FyymH+aObUOaX3Af62518lQ2Mho0DX8Y5NY3YPewQMiYeVQ2TF8Sz72rc0VvLepkHfQiFex5G6Jx04nO3QVbufFgptNGkA80rs3SvLXAaku3KXLsZEomjhPMP2fvOWwdu9hUC5qSpu3yK+BXj2Zah4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1e4lL8ER; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a6fe118805dso402522566b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 20:19:27 -0700 (PDT)
+	s=arc-20240116; t=1719372391; c=relaxed/simple;
+	bh=63egUJJNOzc7ULqxlyzXKuMsOAc/Yy9oVuqv19NoQ6c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mRbS4OhjVKSLpl3KWoeH+MlK12aG6C1X2wY66pzYXwoxL8KaRDyaIJ75Gv+8WUwpWUTY4ZApiZ8aEJ7qMwNc7KcD4TrwbpfzuANAEeefWGnQkobfNpIAuGTeILXSPcJOkMPt+rPS4in0qeAiNJcl5zJdBgJghAf5ponUwexSBrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Aq5WqAcd; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5295eb47b48so7326324e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Jun 2024 20:26:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1719371966; x=1719976766; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qcEpi9Xsu+1gTxbES0/HeqU1vgappATrnUAd8kYmA4U=;
-        b=1e4lL8ERjSSWLxbphXZaS5DK9ZdqdrG/L9uwfr9tHN2t0G3X+oNY2KabB+uaE6niqb
-         6oMvtv58lMEiIDkeObKvjRRRscpbumOer1XZZkCvibHGT4wg7PmTVDpNTGrHu1+2HHfQ
-         mJNUz+AXCUCLoHSe3TMw/YtaFxH0L4TQRpJvBwlxtOBGZO/mvJzTeSTvsDaETYzc7qeQ
-         F48qY0vRjJV9PdkqAvRml1Z1vwuf68jwxDBQDrDpeLguN/yZ7uyiHy0HP38Zthdiilhv
-         5JY5yB6riHFog7A7BKgHkUVjH3nCBtzcNoRLlGtCDSTSLm2i9S7y/+cinMfSOJewCRwH
-         kelg==
+        d=linaro.org; s=google; t=1719372388; x=1719977188; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RyN0rZQwEcI5e6F6tYsAlaLHqq1tMMcihqh2iO9zsDs=;
+        b=Aq5WqAcdxE+mq5Ba1xfHDjolVuAW7Qi8LGUF1APBMYd6iw/jVsjMyXQ9ysHn95PoXu
+         QmbqZvaagTFSLLkq5Q9lPSbBHizGP8CWFGccgkzT1qZ9m6Z/gfQHriUbkBqat3tYSYTa
+         jUbGvORfy5Gk+FZ/llS1FWAkkCbWf5a39Ef6OzIwTz4Yll1QVOYBppPvrowcMeFFT4yb
+         dUqnulBcsLKErSoZn6iYH+E19QyoPZttFa+PQ/B+3WxHh1t2nfOChBt1IrIGxPXZd4xQ
+         ROZOIKKuT41/rZfxKAVjhBpjIsYD7cZVpf+IlrKu99EbOid6FR9ECuk7BwFISZN/XshW
+         MNrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719371966; x=1719976766;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qcEpi9Xsu+1gTxbES0/HeqU1vgappATrnUAd8kYmA4U=;
-        b=EEGm22GXGYoJObMCgHIg9rzscqEFMsldZg/VEGBZ40K7QPDDi0rZj/V4TxyTEOPQwt
-         K1FhgrdpBWsbgyLZUxu/EjRLqOwIKf2oTDjDBQgfqy/azNLBp4SuC1n+P3Sel19HgiGx
-         zhpX4RCNEVdfq6wegeJyDDRv7k+RJc/+9vwBR0A0eYDYe+yv+AbYVGJlw/sSIGOTkLct
-         YmKMJNbXnE4I5ZG7hVjgsnL+8YL+qiDDq6bnyCJLNEdqcTxE0j8sZuyUW3oRHrGO5Lxi
-         Z++IN80OP04uK+tnrRIU6qVkqwqfeW3jY0kfOfpOOnapR0VIPpfISM/fatxDpAK8aP2R
-         Q1/A==
-X-Forwarded-Encrypted: i=1; AJvYcCWSXgsrxq1ClEjt2IHnujysWBxNJq+aQ3I8digSaldZmIBp8zkUVfX13CmKS6ahcXLBIC9CVFCNj9YntgztM1WioMPA6ljyrcyoKLIleQ==
-X-Gm-Message-State: AOJu0YxzEMCWJ1TyY5haEmAEnbyxkmG5GztjDZC0J/ByZPN4GdSpP0cz
-	hoYmjUAtJFI+NR6cg1elsRAaMdEHHRXjWTYeMCNoMuM0f4zgeILZ51yNsgm3Io3uauSJwhuAu04
-	YDC4WwPB4lANhbxzctifxmAYfiDBRfdx8C/sj
-X-Google-Smtp-Source: AGHT+IFLY2qZ3ScXikR8P0OWMEtmq1PJfSmSw962tpdr7XOdzhTxVacIeRIFA9/1ZPYRAeIb5P9js56rVkdjLokuTK4=
-X-Received: by 2002:a17:906:af97:b0:a6f:5609:9552 with SMTP id
- a640c23a62f3a-a7245c85b6amr586678266b.10.1719371965815; Tue, 25 Jun 2024
- 20:19:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719372388; x=1719977188;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RyN0rZQwEcI5e6F6tYsAlaLHqq1tMMcihqh2iO9zsDs=;
+        b=ATuYIpqiD5+0HWLxajoMJyuj3gDB4n2SptBz4osgPo4h0UKrdDNv9oHkeeQYoN3YvT
+         yH9rPBnCE6BF91ng9ltVAU+OOBDch87ahAUCR4c3ok9RX2T3N/kUrDyyqkCe6MIOdnsB
+         3iMfpt+ajVnRto1OhPwrjLYE+HlNVfOV6AB6f+BB+bSuaR6OABfMnoSlILHX4QAgCQxH
+         CPqkFX1HRKsmhbC5+VxA73R8CNFZAXReqCoFC6YP1cMBHnwVD/mTqtmrtO6r3tg1C/+N
+         45qbSQta4LYOp4AMoBuY9vJ5MSQF56n/Bi9E/UMWiowVMA/xIoWfFOXm3SIQITCyzspn
+         oamg==
+X-Forwarded-Encrypted: i=1; AJvYcCUPHF3PgSZOQ7ZhqtIi5XMn2XdRBYm4XeHQ9NsxfCr4W7xbYe97+0LyXx1OHeD22kF3nuV9T3Mhxm3QlkqZvZkAGyA723WfC4OxnFLsdA==
+X-Gm-Message-State: AOJu0YwThYHu8vFFgBFKLxWgQUc4UNmpE2G2MjaehWrjQUSSXfAUP99I
+	1vMfhIfoxXAlw+JYAHRzyilUm7wBwPOuvur9cvFWe2iQV7SPlbrzvc4uEpkIgA8=
+X-Google-Smtp-Source: AGHT+IFeKU9VOswRuPtvhmxTIl0T82P/NFnpvo6QyBNYyIaqAs8SgYtqqGJf28Wd3K7qnLeDS4YjBQ==
+X-Received: by 2002:a05:6512:398f:b0:52e:6d71:e8f0 with SMTP id 2adb3069b0e04-52e6d71e974mr3183e87.8.1719372387987;
+        Tue, 25 Jun 2024 20:26:27 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52cd63b4790sm1396626e87.30.2024.06.25.20.26.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jun 2024 20:26:27 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 26 Jun 2024 06:26:26 +0300
+Subject: [PATCH] platform: arm64: lenovo-yoga-c630: select AUXILIARY_BUS
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+EHjTxWWEHfjZ9LJqZy+VCk43qd3SMKiPF7uvAwmDdPeVhrvQ@mail.gmail.com>
- <20240619115135.GE2494510@nvidia.com> <CA+EHjTz_=J+bDpqciaMnNja4uz1Njcpg5NVh_GW2tya-suA7kQ@mail.gmail.com>
- <ZnRMn1ObU8TFrms3@google.com> <CA+EHjTxvOyCqWRMTS3mXHznQtAJzDJLgqdS0Er2GA9FGdxd1vA@mail.gmail.com>
- <4c8b81a0-3a76-4802-875f-f26ff1844955@redhat.com> <CA+EHjTzvjsc4DKsNFA6LVT44YR_1C5A2JhpVSPG=R9ottfu70A@mail.gmail.com>
- <8e9436f2-6ebb-4ce1-a44f-2a941d354e2a@redhat.com> <CA+EHjTzj9nDEG_ANMM3z90b08YRHegiX5ZqgvLihYS2bSyw1KA@mail.gmail.com>
- <20240621095319587-0700.eberman@hu-eberman-lv.qualcomm.com>
- <ZnnC6eh-zl16Cxn3@google.com> <5e14ebf6-2a7f-3828-c3f6-5155026d59ae@google.com>
-In-Reply-To: <5e14ebf6-2a7f-3828-c3f6-5155026d59ae@google.com>
-From: Vishal Annapurve <vannapurve@google.com>
-Date: Tue, 25 Jun 2024 20:19:12 -0700
-Message-ID: <CAGtprH8VT6B6efy0dC=6cQEf6mpz3dfh2q4gGp2S-m+wNJn5ew@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-To: David Rientjes <rientjes@google.com>
-Cc: Sean Christopherson <seanjc@google.com>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Fuad Tabba <tabba@google.com>, David Hildenbrand <david@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>, 
-	John Hubbard <jhubbard@nvidia.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Shuah Khan <shuah@kernel.org>, Matthew Wilcox <willy@infradead.org>, maz@kernel.org, 
-	kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240626-yoga-fix-aux-v1-1-6aaf9099b18e@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGGKe2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDMyMz3cr89ETdtMwK3cTSCl1zCxOLlBRzU0PTJBMloJaColSgFNi46Nj
+ aWgAHzkLsXgAAAA==
+To: Hans de Goede <hdegoede@redhat.com>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: platform-driver-x86@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1056;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=63egUJJNOzc7ULqxlyzXKuMsOAc/Yy9oVuqv19NoQ6c=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBme4piepMvH2YWMUsX2OVcFOLmCG+js79Pv7rGB
+ 3m0AhXC8cWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZnuKYgAKCRCLPIo+Aiko
+ 1REiB/9iRUfzIzqgz7xYxNrtI0TQTkUPKn5rlZjr5sVlaXbu1xaSadQzpcA+YbsUROd9Cb2spE0
+ ZXz43+J9hrksOaIH+DcciIxBrqihG+ukB/e2jw8EvKCy7VetDstbL62kcVz7RRp2gIls2kCKRob
+ CnQWrE4NYUwkE4YT80EcZBkajbOIDTfNYYVbH1NDSdIkea0PJYZnpEi+E+8RTVZ/4n9AnOonwIS
+ hFwlOTLpyMPkN65/yu2VIMb76CNo2Ah4lfOY8/wQXgCuwiiDAtZ6xLJy0SmVd5LNKUK48k+/Wez
+ MvecntEac3RcyW6QSuvd28j+zdPxpG9riVB6PEWrgnapSGcU
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Mon, Jun 24, 2024 at 2:50=E2=80=AFPM David Rientjes <rientjes@google.com=
-> wrote:
->
-> On Mon, 24 Jun 2024, Sean Christopherson wrote:
->
-> > On Fri, Jun 21, 2024, Elliot Berman wrote:
-> > > On Fri, Jun 21, 2024 at 11:16:31AM +0100, Fuad Tabba wrote:
-> > > > On Fri, Jun 21, 2024 at 10:10=E2=80=AFAM David Hildenbrand <david@r=
-edhat.com> wrote:
-> > > > > On 21.06.24 10:54, Fuad Tabba wrote:
-> > > > > > On Fri, Jun 21, 2024 at 9:44=E2=80=AFAM David Hildenbrand <davi=
-d@redhat.com> wrote:
-> > > > > >>
-> > > > > >>>> Again from that thread, one of most important aspects guest_=
-memfd is that VMAs
-> > > > > >>>> are not required.  Stating the obvious, lack of VMAs makes i=
-t really hard to drive
-> > > > > >>>> swap, reclaim, migration, etc. from code that fundamentally =
-operates on VMAs.
-> > > > > >>>>
-> > > > > >>>>    : More broadly, no VMAs are required.  The lack of stage-=
-1 page tables are nice to
-> > > > > >>>>    : have; the lack of VMAs means that guest_memfd isn't pla=
-ying second fiddle, e.g.
-> > > > > >>>>    : it's not subject to VMA protections, isn't restricted t=
-o host mapping size, etc.
-> > > > > >>>>
-> > > > > >>>> [1] https://lore.kernel.org/all/Zfmpby6i3PfBEcCV@google.com
-> > > > > >>>> [2] https://lore.kernel.org/all/Zg3xF7dTtx6hbmZj@google.com
-> > > > > >>>
-> > > > > >>> I wonder if it might be more productive to also discuss this =
-in one of
-> > > > > >>> the PUCKs, ahead of LPC, in addition to trying to go over thi=
-s in LPC.
-> > > > > >>
-> > > > > >> I don't know in  which context you usually discuss that, but I=
- could
-> > > > > >> propose that as a topic in the bi-weekly MM meeting.
-> > > > > >>
-> > > > > >> This would, of course, be focused on the bigger MM picture: ho=
-w to mmap,
-> > > > > >> how how to support huge pages, interaction with page pinning, =
-... So
-> > > > > >> obviously more MM focused once we are in agreement that we wan=
-t to
-> > > > > >> support shared memory in guest_memfd and how to make that work=
- with core-mm.
-> > > > > >>
-> > > > > >> Discussing if we want shared memory in guest_memfd might be be=
-tetr
-> > > > > >> suited for a different, more CC/KVM specific meeting (likely t=
-he "PUCKs"
-> > > > > >> mentioned here?).
-> > > > > >
-> > > > > > Sorry, I should have given more context on what a PUCK* is :) I=
-t's a
-> > > > > > periodic (almost weekly) upstream call for KVM.
-> > > > > >
-> > > > > > [*] https://lore.kernel.org/all/20230512231026.799267-1-seanjc@=
-google.com/
-> > > > > >
-> > > > > > But yes, having a discussion in one of the mm meetings ahead of=
- LPC
-> > > > > > would also be great. When do these meetings usually take place,=
- to try
-> > > > > > to coordinate across timezones.
-> >
-> > Let's do the MM meeting.  As evidenced by the responses, it'll be easie=
-r to get
-> > KVM folks to join the MM meeting as opposed to other way around.
-> >
-> > > > > It's Wednesday, 9:00 - 10:00am PDT (GMT-7) every second week.
-> > > > >
-> > > > > If we're in agreement, we could (assuming there are no other plan=
-ned
-> > > > > topics) either use the slot next week (June 26) or the following =
-one
-> > > > > (July 10).
-> > > > >
-> > > > > Selfish as I am, I would prefer July 10, because I'll be on vacat=
-ion
-> > > > > next week and there would be little time to prepare.
-> > > > >
-> > > > > @David R., heads up that this might become a topic ("shared and p=
-rivate
-> > > > > memory in guest_memfd: mmap, pinning and huge pages"), if people =
-here
-> > > > > agree that this is a direction worth heading.
-> > > >
-> > > > Thanks for the invite! Tentatively July 10th works for me, but I'd
-> > > > like to talk to the others who might be interested (pKVM, Gunyah, a=
-nd
-> > > > others) to see if that works for them. I'll get back to you shortly=
-.
-> > > >
-> > >
-> > > I'd like to join too, July 10th at that time works for me.
-> >
-> > July 10th works for me too.
-> >
->
-> Thanks all, and David H for the topic suggestion.  Let's tentatively
-> pencil this in for the Wednesday, July 10th instance at 9am PDT and I'll
-> follow-up offlist with those will be needed to lead the discussion to mak=
-e
-> sure we're on track.
+Add missing selection of AUXILIARY_BUS as the driver uses aux bus to
+create subdevices.
 
-I would like to join the call too.
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202406260704.roVRkyPi-lkp@intel.com/
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/platform/arm64/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-Regards,
-Vishal
+diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
+index 8c103b3150d1..e612cbe06aec 100644
+--- a/drivers/platform/arm64/Kconfig
++++ b/drivers/platform/arm64/Kconfig
+@@ -35,6 +35,7 @@ config EC_ACER_ASPIRE1
+ config EC_LENOVO_YOGA_C630
+ 	tristate "Lenovo Yoga C630 Embedded Controller driver"
+ 	depends on I2C
++	select AUXILIARY_BUS
+ 	help
+ 	  Driver for the Embedded Controller in the Qualcomm Snapdragon-based
+ 	  Lenovo Yoga C630, which provides battery and power adapter
+
+---
+base-commit: 62c97045b8f720c2eac807a5f38e26c9ed512371
+change-id: 20240626-yoga-fix-aux-7848dd7515b4
+
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
