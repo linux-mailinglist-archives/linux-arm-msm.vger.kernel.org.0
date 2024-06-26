@@ -1,148 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-24239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CB7C917B1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 10:39:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6386917B39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 10:45:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C01461C23610
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 08:39:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 819AB281AB4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 08:45:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D813A161935;
-	Wed, 26 Jun 2024 08:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 788FA1607BF;
+	Wed, 26 Jun 2024 08:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PRGZL1rb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jaBCE6ue"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3145213B78F;
-	Wed, 26 Jun 2024 08:39:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963A6166301
+	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 08:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719391143; cv=none; b=s5LaJnsutxwKDeO9J9qfl/C7cqIVTHzCYbkqGrI3wS/KEYMX/DMquQJlbbey8cEwPHF9lQVDYVM7xe0txQcp9eoJp6biKXyy2/pGGPyQdjde3MHchmER3Jhjvc8rZX1iwHfiC4j/1n5xTr/DVYr9UmIEPBfAUzX3IcaZEfRgqbQ=
+	t=1719391513; cv=none; b=D2IhKTvCu0Dh7Ai+Md3koIot0AJwqK12qU21keINo0jLgwgXyJrIs1t2wRosqyIyRwdQIFZm8FmHCvy4mk3aYh82mV/oxgMNpekpcekqgQCrBE6xPF7gz6lRNJEuw67vuN/HgwlhtjeknXO+426YXVhd8T7h/01SlKkLMuE2XI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719391143; c=relaxed/simple;
-	bh=eQ7DYSWRsKYuWOqaM71snLYfv7LNhzAnFyoiCIARR44=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TTkP/+rB7VsZRqnn8Am+1z6vHySeX8zwudOzrNJWrOdeAr6Y1t+h1R3NlFDij0zp2Ct65SB0Z/xG3VrHuc32ulPHDRJb83H42PmjTs1swGQlx6GaoZqAvF8gEjvscXfPQcUA7jP5QVm/7el2t0nUdljTr9Nf8G6OaWvO84q3xt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PRGZL1rb; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ebe0a81dc8so84903921fa.2;
-        Wed, 26 Jun 2024 01:39:01 -0700 (PDT)
+	s=arc-20240116; t=1719391513; c=relaxed/simple;
+	bh=4TqMgPchaSgkEnGussyG2ZGIP6a6Rnch6g+F0GYql/Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ReyTHctu4ENyo6GOtb4Jo1IbQIsP9IhhKN3kXwIQbymaV4u/VN1yW4Tozfn+9C3tRD8aWUOAGNhuWBDgd+rL3uIr54x6ppsJ6y/Dc18C2oOXZsqrg+ZopyaVlhtNHwT1Ws61DeBKjQGewq4UMVCdRe3OGsJd89Sv8Aujx8DVny8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jaBCE6ue; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52bbf73f334so5088970e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 01:45:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719391140; x=1719995940; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WGLAE0d0WBAYFA6fR6mw4wvQZZ2LgjwEPVknt+snP7o=;
-        b=PRGZL1rbAc2f+l1SmG+B/xGH9gsjKg2wtSQqFWqStPihuF3fzOu5hqvALEar1j87Ul
-         gm2GzxaG1447zHVCoMUnSF3V3FB97xeQhNevmodSUQYBcqYWgMFnHPndpeEMqeG/4QqM
-         kuRbtvO0Vv72jxLqGM2KegxiGuRBk+PpDyWaaeE12JS7xyPNGIdi+SPU0mgGAX6QL7qw
-         nPlF4GaIq7wp0yD0ZKArzy6o2MFAbzRf/jmmCDhCg26IiMIueNR/tOIwLecJP+QAzCKw
-         851z5xchiezbcIc+0QS/b539ci9so3dbZ3phl9vHW27GasEnIeZaWhew05madzKnYwYc
-         Eh0g==
+        d=linaro.org; s=google; t=1719391510; x=1719996310; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hzxdCXT91751HJvUEbEVilPPM8qkMSIeAMEqqDe5ss4=;
+        b=jaBCE6uet1C3xlqnIbvRXwb73kgI7MffLkWNyc0wQ/G/5U4DI6VSZIbQGizoq4bCdu
+         7sIOScL4eGZB58CZvF4y9t76CabNdNey9gyVVhakQSkw62V1pAoGThI+lkTUgbWIy0IS
+         E4lQzBCwJHENDzxTMvZkRfsVfuztbBqhT3QSNEpy/yDEZMNHK+3/Ztu7F5OusDSYurZN
+         fYy0Lj7Bozm+bBcDzqo2eWXkYOSNwHoiJuXDNmorIghnH989rObweyNaDAAw2zXNu0dC
+         12VinN3Ai5l4LzQ+qbbK26wkdvpaRSxZSeejewY7U+4lih9Baw4VyfpSSDT4ExKmf/So
+         Micg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719391140; x=1719995940;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WGLAE0d0WBAYFA6fR6mw4wvQZZ2LgjwEPVknt+snP7o=;
-        b=bXf8vIW+g/TgrXbgZAJ8Q2xCD9hMcHwP3ZZXKsaT1KPe99Dh6qbAeJ36q1R+YcrIYt
-         BAH/tk241HXh9IsAp74nUQ9pKAl32Q3B8hfctAA/oTa+cwAQPEDGmGQPR8uRUZHcnYD5
-         4K1f1rXbGUSsp1XTmxHGwZAVroDd9kK6NOTzT/0+43bEkEXdRXMcG+YfzxcPO2rfNPBx
-         Q/p1aUFs7px9gEhKGxqeCzcxNO6o0ySrokNU5tdL7rAPdueajsnyZoaVsLpwmZMTbWIW
-         7KoXgKaiw6mK2BLnzddg8F3VIm5YaGYWOuq2tK1jedAgu5MaMuUUUGUSjpaTxYI1WQX/
-         tr2w==
-X-Forwarded-Encrypted: i=1; AJvYcCWtD9n+qpRU8LjHvuVRijwCHzcal6b/E27un+1zsscNOKUHtzAQQMo/m9Jk43dLpX4sWJ66JP/D8QpIxzMPM8MAd7WoulLSQkt2Lvs6T3fu5jqw2a8qIBkWobmEs9SGYBHHmRKceYzzxQsMAM8DiBiDpXKKv/3eUYWIO9we7Jto4AKwxbPEH+AI1k1KPPM4CU35GXfyM9C43Qf/c2eIqZkMwdViEA==
-X-Gm-Message-State: AOJu0YyrBlb9Lk2DrQdWZZD0o1lsT9sd7AY9nTlYFxhNNxw1nP0vNmpg
-	rJBBWsqXG1xlBZXmfYWMBjvRckchYseGW67hdU4B4yKEt7QlmUgjq9iaJvWNaZadxUdShRspgLg
-	svMws8r07OrvNtCRSBWsx2KvgQ3U=
-X-Google-Smtp-Source: AGHT+IFmzqdhWA4H/PFBpAsMCQ7oBjaNqKmMkRUMmk/443vBy5nciueE4td8WvvWnEiPZVl/uR6rjE5UTFEojjBaap8=
-X-Received: by 2002:a2e:7a0a:0:b0:2ec:63f:fe91 with SMTP id
- 38308e7fff4ca-2ec5b357921mr68729601fa.38.1719391140191; Wed, 26 Jun 2024
- 01:39:00 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719391510; x=1719996310;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hzxdCXT91751HJvUEbEVilPPM8qkMSIeAMEqqDe5ss4=;
+        b=BD66Dtn1OZuI7pUuQMi4TyQERjfbzecbWadV3Gi2+O9QsdPGbZWolFkQHAy+/4mj6m
+         Y141N67Y3gQzZ+gHkBpRXwRt1FIM6LzQtKhlWVKdDI1GSSYHZL2XY4dEEZnxZdAHSiXN
+         hTxe7Z7TUkj1xmiDHmg2z4vb74unES5zyNkChOGttmudzAyNVmZNl3Qg1KvzvPSwKx8O
+         08eQPxTkd1NNsRkglIB7QKtnJfH5KJtiGkmFoQTj4Rrf/OXINFxTmxM4VPrpy+updCbE
+         SoxpC1XEYY0ar4POyI2hfjhp1BYjtxuv+mxavd/mF+KrqxcYAkoFpQ9fSBB9YyIX8oM+
+         rU0g==
+X-Forwarded-Encrypted: i=1; AJvYcCWmunyLS1bMuqnwY4MslB0+haCwP/9ykvdksmCBpN129USohXMVy7Hjk9xnIjMAi0wEAetFYFgBQwbQRPYrBghzRH7cyoFN0vZ0KDhFXA==
+X-Gm-Message-State: AOJu0YwCs6Lrq315ZeHrmbwhChCzatOlucx/09gArBC8vOFp7zyYasQ3
+	Gpcc54lNSS7RINkE7OsJs8/JlEtSH2t97wROFBrfyF0nMC90l1sRvfXpiP9xM0I=
+X-Google-Smtp-Source: AGHT+IEfNnaYv5wFcwXGDonyXMCAQRs6U5hhIUgaupgn52qc7BZELI6S6uPQT6f7cTlAU8Kn7qOOxA==
+X-Received: by 2002:ac2:5f63:0:b0:52c:a002:1afc with SMTP id 2adb3069b0e04-52cdf7f66f2mr6580219e87.34.1719391509740;
+        Wed, 26 Jun 2024 01:45:09 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52db1a5b45esm180539e87.46.2024.06.26.01.45.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jun 2024 01:45:09 -0700 (PDT)
+Date: Wed, 26 Jun 2024 11:45:07 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Rob Clark <robdclark@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/adreno: fix a7xx gpu init
+Message-ID: <yrhlsznrz3zt72kjizwfoit7st3qtdpug2lgruzpjditik5kh2@a7yu6in37kvo>
+References: <20240626-topic-sm8x50-upstream-fix-a7xx-gpu-init-v1-1-ff0a0b7c778d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240624-b4-sc7180-camss-v3-0-89ece6471431@gmail.com>
- <20240624-b4-sc7180-camss-v3-1-89ece6471431@gmail.com> <c33dde93-2c3a-4a00-93ee-e4de303c9057@kernel.org>
- <CADgMGSvN=uAW7z1dpETGVRewzDG=K2MAtzOkhK7xAcskU_oeZg@mail.gmail.com>
- <0a35f0bd-ceec-487f-b9fd-ae9698b74048@kernel.org> <CADgMGSt9Hu5Ciq=ndMTaVK23Y_ixTVtTuSfy4hJkJooFH2uv9Q@mail.gmail.com>
-In-Reply-To: <CADgMGSt9Hu5Ciq=ndMTaVK23Y_ixTVtTuSfy4hJkJooFH2uv9Q@mail.gmail.com>
-From: george chan <gchan9527@gmail.com>
-Date: Wed, 26 Jun 2024 16:38:48 +0800
-Message-ID: <CADgMGSv+x2Z9FsWTHW0auttvpdfNDnOPxiJhXnUaW3yQczN_Ag@mail.gmail.com>
-Subject: Re: [PATCH RFT v3 1/5] dt-bindings: media: camss: Add qcom,sc7180-camss
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240626-topic-sm8x50-upstream-fix-a7xx-gpu-init-v1-1-ff0a0b7c778d@linaro.org>
 
-On Wed, Jun 26, 2024 at 4:17=E2=80=AFPM george chan <gchan9527@gmail.com> w=
-rote:
->
-> On Wed, Jun 26, 2024 at 3:15=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.=
-org> wrote:
-> > Keep the list in "required:" in the same order as the list in "properti=
-es:".
->
-> ok gotcha
-btw, i checked  "required:" and "properties:" are aligned, both of
-them are in ascending order. I am wondering if you are talking about
-two things, 1st one is to align both property, and 2nd is having the
-ordering like below. Plz confirm.
+On Wed, Jun 26, 2024 at 09:53:16AM GMT, Neil Armstrong wrote:
+> The gpulist has twice the a6xx gpulist, replace the second one
+> with the a7xx gpulist.
+> 
+> Solves:
+> msm_dpu ae01000.display-controller: Unknown GPU revision: 7.3.0.1
+> msm_dpu ae01000.display-controller: Unknown GPU revision: 67.5.10.1
+> msm_dpu ae01000.display-controller: Unknown GPU revision: 67.5.20.1
+> 
+> on SM8450, SM8550 & SM8560.
+> 
+> Fixes: 8ed322f632a9 ("drm/msm/adreno: Split up giant device table")
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-required:
-  - compatible
-  - reg
-  - reg-names
-  - interrupt-names
-  - interrupts
-  - clock-names
-  - clocks
-  - iommus
-  - power-domains
-  - power-domain-names
-  - vdda-phy-supply
-  - vdda-pll-supply
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> > >> BTW, I asked for subject to keep only one, first "media" prefix:
-> > >>         "Subject: just one media (first). "
-> > >> but you kept the second "media".
-> > >
-> > > Sorry I can't get it. Could you choose one?
-> > >
-> > > _ORIGINAL_
-> > > dt-bindings: media: camss: Add qcom,sc7180-camss
-> >
-> > No, original was different. Go back to your first posting. I asked to
-> > remove one media and keep only one - the first. I did not ask to
-> > re-shuffle the prefixes.
-> Yes, let me sum it up
->
-> v1 title is w.r.t
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/20240222-b4-cams=
-s-sc8280xp-v6-1-0e0e6a2f8962@linaro.org/
-> then extra "camss" pre-fix keyword and "binding" post-fix is not needed.
-> v2 wrongly remove all prefixes and correctly removed post-fix
-> v3 added correct prefix, removed redundancy "camss" prefixes but
-> changelog still refer to old sc8280xp style
->
-> The title now should be fine. So I will modify the changelog only.
->
-> So there are 2 todo items as above. Other than above, all review items
-> are addressed. Plz confirm.
+
+-- 
+With best wishes
+Dmitry
 
