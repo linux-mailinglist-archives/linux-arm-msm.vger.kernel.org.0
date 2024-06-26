@@ -1,167 +1,375 @@
-Return-Path: <linux-arm-msm+bounces-24325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA0B291861B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:42:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACFB89186B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 18:06:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8058C281F9E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:42:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 373FE1F21060
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 16:06:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24BAD18E757;
-	Wed, 26 Jun 2024 15:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 262EB18E766;
+	Wed, 26 Jun 2024 16:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BisweaEA"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mMNWZ6g1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17ECF18C359
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 15:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719416548; cv=none; b=YlVvQuAguaq3z5YN+KogkL2yNYVCSQ5RURbdJQ9kxvKDMarNp3nrtEDKmIms+8EOAg3AH8STPPIxAb/8aE+tNqHuj3vUrd84UaXC7o2nC3U0rhhOtMwWLlq5HMDfDG9fOidkQUkVCih04jcOH5fbtMc1xcth31B1vy+9Lca5kIo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719416548; c=relaxed/simple;
-	bh=XRowxFSkrysMUs9XyN0Exv9sB2feFYzAvaPvT89v0go=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cqhh2ZZJxVYCZqOjuv7pB+8pKzWpkdqRY32lRzBdPeJh475rPfed/HeDiRczJOpWUpgiztr+qggCfgqri9acMQYlSYDjykRLH7OW63B2waCKkJWKjtU9tNqS9ZGZRRx7u+e3+g5Vg/cs6LcWsvgvCCIGBJxFensjYXmmBD5LGts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BisweaEA; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57ccd1111aeso581202a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 08:42:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719416543; x=1720021343; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sz4Tt/Ks/Na1pwZwDOP6Ac4gN9u4dueDw72ykvSRJ3c=;
-        b=BisweaEAztHt03VNrk88j42Xe8Y50NPt+yWiUoVLjRz9u2gLcEVyquP5U5YRDGMzDY
-         6GflCg1jcFoCJIQ8CzeLdvIVvlfDOFRH9x5wp5DzcqtNBRR7jBIliaZsER0FfM/y9Ffe
-         UMLDqKuujBu11mq1E3E4q1Q3N1JXcCeTAV0+ayJcaEP8RjMG0mz9dzSAbzAFSRxnQklp
-         rSyVpEC0RT8E0G/Lyi3qKT06prUp5lt57MOgkGYgCa66y7SJjcAv23BqYEgbVvjUr5lP
-         4i5wA5NF9G28fmEy6kpgTILi7J+7u58PFwkfsJWcrspGjZTDiHZn1IWyA9CEcng+Ibew
-         CzWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719416543; x=1720021343;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Sz4Tt/Ks/Na1pwZwDOP6Ac4gN9u4dueDw72ykvSRJ3c=;
-        b=bxWLgq98okQffXpz2ID7vgn8haBpFJ7pYdSYroSCbR3llGDgvzbSnieJSFWV5Lsbcr
-         Fmr1d+Mpc4+oHU/v93QvjeFn9o22B8uUSFZ1I4ZdvgVN6hGUwotzOw7jkMI35mXQcskg
-         VMdqedOXCmyHX7HM0IVXhDK+WSYPMCl49NXTkQClSwzVKNMSxGGeVluyZIB5hVysP89w
-         Z9PKewYQq5pfc8yySrskirAxigcL5IuxbAPeKTAZKc3IaeH03zzE0KJe3JNHF+6Njuak
-         1PXAIbhbHjkHEyd/VB1g3OxvSuMwWp2JKV366NcML0/fIY+CJT8ALrlKJ5xQ5U88wFaM
-         BCCA==
-X-Gm-Message-State: AOJu0Yz2kVBllaXzLdrSPSfcRznrWUPbu2q7BGrbQOPLERg43Q3bYZuI
-	b28aaV4Cvml0ynYDTF/55aC/wSSzpsRq6Tu0FOuxjXxAhAIXLFB7BaQwflOCyXY=
-X-Google-Smtp-Source: AGHT+IFZgo0qywXUrbYFvzsX7j5NG3UwUTK5YD3F6ShNKbFTpBUUBLsG6g1DyGpehW77M6FgbbubwA==
-X-Received: by 2002:aa7:cb50:0:b0:57d:4b56:da11 with SMTP id 4fb4d7f45d1cf-57d4b56da8emr10735227a12.11.1719416543275;
-        Wed, 26 Jun 2024 08:42:23 -0700 (PDT)
-Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d303da2b5sm7362066a12.6.2024.06.26.08.42.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jun 2024 08:42:22 -0700 (PDT)
-Message-ID: <45c95955-51a7-489f-993e-252e8bd63dbd@linaro.org>
-Date: Wed, 26 Jun 2024 17:42:20 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4E818E764;
+	Wed, 26 Jun 2024 16:01:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.21
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1719417710; cv=fail; b=cQN4hilSadM6AB5YS6jqXbUjSkzn378JMmzr3bTj1M5GnPl9l2grBp3u1uUhGkNOWjiOwSD94ZnjY6VrgoqfzdrmsO4d+IPVfBMdvVei3XMBW5vt5NZIGdNwL/Lw/3Ttfv7h3NeX3/zt6hNND+vW3rOGQbbB+OIfCUE+JKcbYsc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1719417710; c=relaxed/simple;
+	bh=XRBVYeDPQIwLupUlrKT7pzIs8ydrTMHXfs34B3Fj97w=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=VojoN4aRTjcIongdavrgXcNzPHKRB+JnOn7e7MHzm8BdwYUlzB7U/JDFCl3fZLpHJXfpybQ+K7ANK6+WcmPZb9buwUJ57rjoToXvZ1xcfRoB7+nwzs+647gz2MPXqPmQd5y880CGFEM2iHuYDdKtKyPYwCVzFerUqGph+fLbrBE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mMNWZ6g1; arc=fail smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1719417708; x=1750953708;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=XRBVYeDPQIwLupUlrKT7pzIs8ydrTMHXfs34B3Fj97w=;
+  b=mMNWZ6g1zjL8qCD4O2E7uNwpCPEFZD5wq2/G2Z6wolrq7aLpDVOdKJAy
+   /fSedO5r+nIaWlzlnJi9usUovVpDr9/2RZVbPEw7X/RmOGyBHu9BmUy6C
+   T/e5Ln0hHSPp/RabJi+WT2WOq2aHdwzwQXhNnekFIYKRic3NxXeb3VQF6
+   i1/HVf6Nbu4Zsj8BOQoiNTO7wfCgNkCIo6Gba6wQ4XgMGneXPzgr42F3y
+   0EOv+M8et86xygrURqQlr6Zv68g1J5i4KS2DfrJ8einWud/Hi0JhavLpU
+   RCJsFPV7I4nqCmXHSr+aEKUsI9XKUwm6rbiY+WXT0avJAhx0FsYEMNgvC
+   w==;
+X-CSE-ConnectionGUID: m4+E4m8dSoKeZQ0OC0pB2A==
+X-CSE-MsgGUID: z4/EisftRDm+EJo7Upl7fg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11115"; a="16461459"
+X-IronPort-AV: E=Sophos;i="6.08,267,1712646000"; 
+   d="scan'208";a="16461459"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2024 09:01:46 -0700
+X-CSE-ConnectionGUID: ZYyoq7RgSru0wxoRM8XiTQ==
+X-CSE-MsgGUID: pf7lIPBiTAeijgjukl5Arg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,267,1712646000"; 
+   d="scan'208";a="44766293"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by orviesa008.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 26 Jun 2024 09:01:42 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 26 Jun 2024 09:01:41 -0700
+Received: from fmsmsx602.amr.corp.intel.com (10.18.126.82) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 26 Jun 2024 09:01:41 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Wed, 26 Jun 2024 09:01:41 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 26 Jun 2024 09:01:40 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=B1hfAl0aZxeteTNNYJ5hS7sJKF3YBpXaaKaCbTEqf2BlRVrrKdZa85L0k5eS5Xrklpgo01Yb7pa22s2oHFedDGyK2bsggXId9cb2TGBK5oz+u/itiL8A9ChlfrLMmyjie9m7qpzbhDW+vhskXV3inu5mlaDBtFCH8s14LkUcP/uUgbfUGcvrbuLSFvp6ClqD1omZLrb2K1Wd8+Lx9PkQp03uQpbSKRQlVdCF3gWAAoA8zndIStRlSNEN3MRkMrJnOi7+vhVfEmwGDMBc4VFuCpgDksexjcWHrV47Xo0fn7bMCyv3ElDL9vQh3JjkNd1dSuD4kqJFQrVhW4wvXn8pLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6y7QGVA1GjCnJS6YEMX9kD3b9fAEiXQb9LPQmQDGF6c=;
+ b=L2rETJLvy5drO4CvhCyHqQKKOeB8X1cB4fNaxaw33HN29PMCjP6Nw/tVUu71LsvQvHf1R0Rsdu4giv/zZ24vQydtLZ2B44Sq+ind/9hORQs//iW/1LTa/b0TBzBPQqttusOYZFNYHhzUVYMsUb+NgvXtmxLOai/yApfns0uIyNg/m1hazuLnrUYFI8wrqyA9yAikRZQ7xKa4/aZF3efwAiWDfwVzoJuHyVHtfbu+71XVJMSYCnzH1tXouW9doUAHr0DtKZwuCEbTA/4e7AtF10v2Q7uaDHbiMwPzt3sO0sS900CM8VGRZ1VNpa5TpU659GpVoifsS4Ygnm9bWNK1gg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BYAPR11MB2854.namprd11.prod.outlook.com (2603:10b6:a02:c9::12)
+ by DM4PR11MB6237.namprd11.prod.outlook.com (2603:10b6:8:a9::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.28; Wed, 26 Jun
+ 2024 16:01:37 +0000
+Received: from BYAPR11MB2854.namprd11.prod.outlook.com
+ ([fe80::8a98:4745:7147:ed42]) by BYAPR11MB2854.namprd11.prod.outlook.com
+ ([fe80::8a98:4745:7147:ed42%5]) with mapi id 15.20.7698.025; Wed, 26 Jun 2024
+ 16:01:37 +0000
+Date: Wed, 26 Jun 2024 12:01:29 -0400
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Alex Deucher <alexander.deucher@amd.com>, Christian
+ =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>, David Airlie
+	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>, Jani Nikula
+	<jani.nikula@linux.intel.com>, Joonas Lahtinen
+	<joonas.lahtinen@linux.intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>, Rob
+ Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean
+ Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Neil
+ Armstrong <neil.armstrong@linaro.org>, Jessica Zhang
+	<quic_jesszhan@quicinc.com>, <amd-gfx@lists.freedesktop.org>,
+	<dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+	<intel-gfx@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+	<freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH v5] drm/display: split DSC helpers from DP helpers
+Message-ID: <Znw7WYxcW_iKE4B7@intel.com>
+References: <20240623-panel-sw43408-fix-v5-1-5401ab61e738@linaro.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240623-panel-sw43408-fix-v5-1-5401ab61e738@linaro.org>
+X-ClientProxiedBy: SJ0PR05CA0204.namprd05.prod.outlook.com
+ (2603:10b6:a03:330::29) To BYAPR11MB2854.namprd11.prod.outlook.com
+ (2603:10b6:a02:c9::12)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] arm64: dts: qcom: sdx75: update reserved memory
- regions for mpss
-To: Naina Mehta <quic_nainmeht@quicinc.com>, andersson@kernel.org,
- mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, manivannan.sadhasivam@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240618131342.103995-1-quic_nainmeht@quicinc.com>
- <20240618131342.103995-4-quic_nainmeht@quicinc.com>
- <e5b7a888-8ca3-463a-a2de-cf719e58d7a0@linaro.org>
- <c186bd2e-a132-fbe6-2212-dcdb93a6c14a@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <c186bd2e-a132-fbe6-2212-dcdb93a6c14a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR11MB2854:EE_|DM4PR11MB6237:EE_
+X-MS-Office365-Filtering-Correlation-Id: 67e39589-c4c3-436b-cab9-08dc95f94246
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230038|366014|376012|7416012|1800799022;
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?jqsdiZ9Mo/oy1ktij0aixgR2BvJHCjasQvYRBr5OaUx/mzJo9hfhEZNOPA?=
+ =?iso-8859-1?Q?EH3jRPT0FRbpfVeJjY+G3Kx6MXrlFJdUqhNn9oiExWJIRVVk91OeCc70tZ?=
+ =?iso-8859-1?Q?obM4+VPDrQAv/6J3MGHWJIFlh98IrBRIivP0/jh+NuhAiHMUfZODkmY06K?=
+ =?iso-8859-1?Q?BrA/Y37cwssFWksMACyCq8lHVXB/v56+8hS1eLEWT+HkcDaCcPWolJmdq1?=
+ =?iso-8859-1?Q?EBmJV0FV/VsN5N5YW3Eo4Ew7IHvzxysLA22fH/2k90FOt13sqqRq5No5CP?=
+ =?iso-8859-1?Q?4BwM5zs3GtU2e9x2BF//Sxn60b/Q8qQCWPgVpnnauwcTRUrz+3lN9BWPLx?=
+ =?iso-8859-1?Q?KfEnCKV1gTzbLiraea9JBiOgVh7cRKALz0repzznaRwzAiJoEldnoSR602?=
+ =?iso-8859-1?Q?uimDSpPNArmqtAQzGX8tboevXaDtxNu+dp3gobAWsJipbLoqtZuAvObIP9?=
+ =?iso-8859-1?Q?P/k1JFxSj+yU6kb/uwDTKvqfeab/obS347v67lVOrVvB4IRTwundwP8Pcb?=
+ =?iso-8859-1?Q?cqpEeX3IW5vfVBV1IuRYV6OEnYC54R9hcIRibq76/bwmKoSc8UmpdrlPMg?=
+ =?iso-8859-1?Q?iVnD8gCtff6inbj7ZNOhw4aw6fYH8Py0DfFXlk89StIXvkEMpdNU5J6fcQ?=
+ =?iso-8859-1?Q?xLSSo2O4A4zKS972adFgygaA3hFUwV00hXU0uq/QOSaftFwQgrGLAbtQD7?=
+ =?iso-8859-1?Q?aZNF419JT8PNMRpHz4LZmBCzCWDz2lHb3/YT24oMxllpeQj5VkmA7KfYGG?=
+ =?iso-8859-1?Q?xUuXFLRIOt0PjKXXopXJoK/UuxQ+Iulpbz8DS3I95tgq52ztP0CdCc82xh?=
+ =?iso-8859-1?Q?zTW2FV1pspajFUb0dVz3Bh1WWMXmumGGsHl8WVVJisdD/S0rczisu5BUwp?=
+ =?iso-8859-1?Q?k7JNhDfplGkdab0S0BrQ58xAprB+lMetFSqt3+tBNzhDPzUqFNHRv2w86w?=
+ =?iso-8859-1?Q?hJwUMpUqx/9iQ57bGMcodL0RLy0JNzVi0XmcSA4sxx4JLfjj8wZOhhmtqI?=
+ =?iso-8859-1?Q?Arle/rZ/HBNM8DfEUWJkqmb6zYfCWScHwupZ55aj4HZea0TT0Y2kfaZaKV?=
+ =?iso-8859-1?Q?IVccn20gTDKzLcWZUUoH2S0m7y9MZldexbrblWRY3VKHhHhMqe4yQRZuiO?=
+ =?iso-8859-1?Q?tge0b0swOK8YDJshwMosglSBPXdfKnMR/3S6S+2kn2dFvIvh9PrXKS4O63?=
+ =?iso-8859-1?Q?cNM2dq1qJy06QVUI5JAd2G530i9N881xqlgrC+1EDXiQ55bw5kiyOPe44z?=
+ =?iso-8859-1?Q?sZTgNydJP4OmnUlmyTPjXaBlH7cTh67IV867SaI6gdZ3xAVh0B948/hHSP?=
+ =?iso-8859-1?Q?rUQM?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB2854.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230038)(366014)(376012)(7416012)(1800799022);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?mP+n6ubT218sRiPMFRebtea7Re4iKCs69abWpIzOsQtnFhfpCZhCK36Bcc?=
+ =?iso-8859-1?Q?fcKJ3X5LL6tTIKzK+PXrVTilbGxOU7P4psl1JGwEzmHZfyfROgcwjA6aut?=
+ =?iso-8859-1?Q?DCT4HgDg36AhG5KUr3jgHgeRtCtB9+RXeKARYdrhQTFzL7MDmyhIgSIVbD?=
+ =?iso-8859-1?Q?PzRTsaFXoH+IhzlP7IdcTyR9F3g3pf5SOaGbnAj3gCB7GhwbWFw6sXsHrk?=
+ =?iso-8859-1?Q?UY7JagzHU65IWCaTkbAQXjbrHbuICYSJSjosa4R8o4yeNPg52mTVVws8Xr?=
+ =?iso-8859-1?Q?8Xr2GugfVee/ZqYxsrNjeeCxi1qlpB/+mWkpvojo520unVOgF4xZg0mOcC?=
+ =?iso-8859-1?Q?Dp5aU7JTUa5ZC34kVNeGCB3K/8IfCmHbDvZP/PsK3ZiJJyBsr36359g7to?=
+ =?iso-8859-1?Q?Eir2dcIsnHc6/K7qowuZ0M1GjiG80VppwCtsk+PzejIYXVY3XQEOarp62C?=
+ =?iso-8859-1?Q?I50lpYhb8gEFdxKabHBiSzb3Gx1vQhwJdJIv+wWRTkGUI0Q9Opbzwdm5tD?=
+ =?iso-8859-1?Q?aNikdXIRNbBfjnBWhBkSV7dODeOkpBts5tYFAEKH6Kpsw75cG6fPI5izy1?=
+ =?iso-8859-1?Q?U6FHdfquFjvb27t6hPdJVeDAaeJ0USlfLNOXKg3RlYlIcBEwkKP+4Bfs6W?=
+ =?iso-8859-1?Q?6NRWRF4asTNgW7e7mtcstxgF7QyOrJCD9iTECr6PMGz44ZmXmV3iJYWqm0?=
+ =?iso-8859-1?Q?OSZSZ1KYl+SVK9i3CPqgKYinhM+yZJFWPsHxTqdZDn0r0sDS3f+OxNP/SM?=
+ =?iso-8859-1?Q?eZ4k2VO9fdV64H82+fiFf9uQj6nhO2kjpz+2mRGOUmJfRT+iEmQY0N9QLT?=
+ =?iso-8859-1?Q?JaqauONs1EqqLWR/OFMpRkmtqr5oin6mYq5XPJrLcOHavxie3x496xIAUS?=
+ =?iso-8859-1?Q?dYBN9aRMxgqk8PconWI8I+N6oA9Y+4yYBhaghP47nwGt6yinMblt76HHqc?=
+ =?iso-8859-1?Q?QiinAtLwd/9VfsJoghwCeT6J8T1ziHp5nRsuX3BF+h8SYgK2HlAR3iRwK2?=
+ =?iso-8859-1?Q?QMZ6m4j1eyW6TnCzc/oyvKlh1TYPB+GlIX5+AdOaafbXG7DHjkK4wvt3V/?=
+ =?iso-8859-1?Q?s8hlQB9cX/wJFnxG+srMk2QiGhhGw2P0dKniSwfKhTQPgRRhk+405Oeae3?=
+ =?iso-8859-1?Q?BfoCrgJaaLDTiScErdj9dFq0JoePgNU5jADwbAQaa8O4qUlubQhbx94LvZ?=
+ =?iso-8859-1?Q?QCM3LRewDpoyHFjcln+kwq99PyTVj7nB2+P+b3yO29S7FziMXrD6LryeI2?=
+ =?iso-8859-1?Q?QOC1PpQfXnGO3RRdr8Mk4HLULoZuutCBw+XG1cNgmqUjM6gviSkzC0xjTG?=
+ =?iso-8859-1?Q?4RL6lxxpBwvqinoPfk3eKQHbMVugif31Rk2cxpyOgu772PEyUAkajfbCO6?=
+ =?iso-8859-1?Q?Dow52OifdGk+6bgvsp3DWFYAGjHZZYDOsONsIdamHWs2wHZ0kfCduSpNJG?=
+ =?iso-8859-1?Q?QeAI56PSgwDO5EFVG2qZ9xkQ7PvXpRicMfwWk/Std+azBw7oDesz3tNYrN?=
+ =?iso-8859-1?Q?tXtAd+QPfCqZP7BFoej1OsX6wmSyhAidU6mOjH2FkqbiaDL+F0wOLAPfvC?=
+ =?iso-8859-1?Q?fQRGdjghDSGHeuxVO2RIepoIb2Jv5yynXkuBvOTHS2RApkAWYhAhCZbd9K?=
+ =?iso-8859-1?Q?mO628q5PTIbW6jOgo7DvK9iZwNbbr8rBJ2?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 67e39589-c4c3-436b-cab9-08dc95f94246
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB2854.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2024 16:01:37.3442
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RQoDfpKWlhgx1VXhqjII4HIyUpHqEV/pkVE/aCNY1RngaRncgCnYY3BJF6MZJeD4TkNKDuFEjfjp4jshBdzzNw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6237
+X-OriginatorOrg: intel.com
 
-On 24.06.2024 1:21 PM, Naina Mehta wrote:
+On Sun, Jun 23, 2024 at 01:44:19AM +0300, Dmitry Baryshkov wrote:
+> Currently the DRM DSC functions are selected by the
+> DRM_DISPLAY_DP_HELPER Kconfig symbol. This is not optimal, since the DSI
+> code (both panel and host drivers) end up selecting the seemingly
+> irrelevant DP helpers. Split the DSC code to be guarded by the separate
+> DRM_DISPLAY_DSC_HELPER Kconfig symbol.
 > 
+> Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> To: Alex Deucher <alexander.deucher@amd.com>
+> To: Christian König <christian.koenig@amd.com>
+> To: Pan, Xinhui <Xinhui.Pan@amd.com>
+> To: David Airlie <airlied@gmail.com>
+> To: Daniel Vetter <daniel@ffwll.ch>
+> To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+> To: Maxime Ripard <mripard@kernel.org>
+> To: Thomas Zimmermann <tzimmermann@suse.de>
+> To: Jani Nikula <jani.nikula@linux.intel.com>
+> To: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+> To: Rodrigo Vivi <rodrigo.vivi@intel.com>
+> To: Tvrtko Ursulin <tursulin@ursulin.net>
+> To: Rob Clark <robdclark@gmail.com>
+> To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> To: Sean Paul <sean@poorly.run>
+> To: Marijn Suijten <marijn.suijten@somainline.org>
+> To: Neil Armstrong <neil.armstrong@linaro.org>
+> To: Jessica Zhang <quic_jesszhan@quicinc.com>
+> Cc: amd-gfx@lists.freedesktop.org
+> Cc: dri-devel@lists.freedesktop.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: intel-gfx@lists.freedesktop.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> On 6/18/2024 7:08 PM, Konrad Dybcio wrote:
->>
->>
->> On 6/18/24 15:13, Naina Mehta wrote:
->>> Rename qdss@88800000 memory region as qlink_logging memory region
->>> and add qdss_mem memory region at address of 0x88500000.
->>> Split mpss_dsmharq_mem region into 2 separate regions and
->>> reduce the size of mpssadsp_mem region.
->>>
->>> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
->>> ---
->>
->> Alright, we're getting somewhere. The commit message should however motivate
->> why such changes are necessary. For all we know, the splitting in two is
->> currently done for no reason, as qdss_mem and qlink_logging_mem are contiguous
->> - does the firmware have some expectations about them being separate?
->>
+> Changes in v5:
+> - Drop applied patches
+> - Link to v4: https://lore.kernel.org/r/20240528-panel-sw43408-fix-v4-0-330b42445bcc@linaro.org
 > 
-> Since different DSM region size is required for different modem firmware, mpss_dsmharq_mem region being split into 2 separate regions.
-> This would provide the flexibility to remove the region which is
-> not required for a particular platform.
-> qlink_logging is being added at the memory region at the address of
-> 0x88800000 as the region is being used by modem firmware.
+> Changes in v4:
+> - Reoder patches so that fixes come first, to be able to land them to
+>   drm-misc-fixes
+> - Link to v3: https://lore.kernel.org/r/20240522-panel-sw43408-fix-v3-0-6902285adcc0@linaro.org
+> 
+> Changes in v3:
+> - Split DRM_DISPLAY_DSC_HELPER from DRM_DISPLAY_DP_HELPER
+> - Added missing Fixes tags
+> - Link to v2: https://lore.kernel.org/r/20240510-panel-sw43408-fix-v2-0-d1ef91ee1b7d@linaro.org
+> 
+> Changes in v2:
+> - use SELECT instead of DEPEND to follow the reverted Kconfig changes
+> - Link to v1: https://lore.kernel.org/r/20240420-panel-sw43408-fix-v1-0-b282ff725242@linaro.org
+> ---
+>  drivers/gpu/drm/amd/amdgpu/Kconfig | 1 +
+>  drivers/gpu/drm/display/Kconfig    | 6 ++++++
+>  drivers/gpu/drm/display/Makefile   | 3 ++-
+>  drivers/gpu/drm/i915/Kconfig       | 1 +
+>  drivers/gpu/drm/msm/Kconfig        | 1 +
+>  drivers/gpu/drm/panel/Kconfig      | 6 +++---
+>  6 files changed, 14 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/amd/amdgpu/Kconfig b/drivers/gpu/drm/amd/amdgpu/Kconfig
+> index 4232ab27f990..5933ca8c6b96 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/Kconfig
+> +++ b/drivers/gpu/drm/amd/amdgpu/Kconfig
+> @@ -6,6 +6,7 @@ config DRM_AMDGPU
+>  	depends on !UML
+>  	select FW_LOADER
+>  	select DRM_DISPLAY_DP_HELPER
+> +	select DRM_DISPLAY_DSC_HELPER
+>  	select DRM_DISPLAY_HDMI_HELPER
+>  	select DRM_DISPLAY_HDCP_HELPER
+>  	select DRM_DISPLAY_HELPER
+> diff --git a/drivers/gpu/drm/display/Kconfig b/drivers/gpu/drm/display/Kconfig
+> index 479e62690d75..a2e42014ffe0 100644
+> --- a/drivers/gpu/drm/display/Kconfig
+> +++ b/drivers/gpu/drm/display/Kconfig
+> @@ -59,6 +59,12 @@ config DRM_DISPLAY_DP_TUNNEL_STATE_DEBUG
+>  
+>  	  If in doubt, say "N".
+>  
+> +config DRM_DISPLAY_DSC_HELPER
+> +	bool
+> +	depends on DRM_DISPLAY_HELPER
+> +	help
+> +	  DRM display helpers for VESA DSC (used by DSI and DisplayPort).
+> +
+>  config DRM_DISPLAY_HDCP_HELPER
+>  	bool
+>  	depends on DRM_DISPLAY_HELPER
+> diff --git a/drivers/gpu/drm/display/Makefile b/drivers/gpu/drm/display/Makefile
+> index 629df2f4d322..df8f22c7e916 100644
+> --- a/drivers/gpu/drm/display/Makefile
+> +++ b/drivers/gpu/drm/display/Makefile
+> @@ -6,7 +6,8 @@ drm_display_helper-y := drm_display_helper_mod.o
+>  drm_display_helper-$(CONFIG_DRM_DISPLAY_DP_HELPER) += \
+>  	drm_dp_dual_mode_helper.o \
+>  	drm_dp_helper.o \
+> -	drm_dp_mst_topology.o \
+> +	drm_dp_mst_topology.o
+> +drm_display_helper-$(CONFIG_DRM_DISPLAY_DSC_HELPER) += \
+>  	drm_dsc_helper.o
+>  drm_display_helper-$(CONFIG_DRM_DISPLAY_DP_TUNNEL) += \
+>  	drm_dp_tunnel.o
+> diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
+> index faa253b27664..db400aad88fa 100644
+> --- a/drivers/gpu/drm/i915/Kconfig
+> +++ b/drivers/gpu/drm/i915/Kconfig
+> @@ -11,6 +11,7 @@ config DRM_I915
+>  	select SHMEM
+>  	select TMPFS
+>  	select DRM_DISPLAY_DP_HELPER
+> +	select DRM_DISPLAY_DSC_HELPER
 
-Ok, now put that in the commit message :)
+Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com> #i915
 
-And I suppose:
-
-"This would provide the flexibility to remove the region which is not
-required for a particular platform." - but you still pass both to the
-remoteproc in patch 4. Are these regions mutually exclusive?
-
-Konrad
+>  	select DRM_DISPLAY_HDCP_HELPER
+>  	select DRM_DISPLAY_HDMI_HELPER
+>  	select DRM_DISPLAY_HELPER
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index 1931ecf73e32..6dcd26180611 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -111,6 +111,7 @@ config DRM_MSM_DSI
+>  	depends on DRM_MSM
+>  	select DRM_PANEL
+>  	select DRM_MIPI_DSI
+> +	select DRM_DISPLAY_DSC_HELPER
+>  	default y
+>  	help
+>  	  Choose this option if you have a need for MIPI DSI connector
+> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+> index bf4eadfe21cb..afae8b130e9a 100644
+> --- a/drivers/gpu/drm/panel/Kconfig
+> +++ b/drivers/gpu/drm/panel/Kconfig
+> @@ -349,7 +349,7 @@ config DRM_PANEL_LG_SW43408
+>  	depends on OF
+>  	depends on DRM_MIPI_DSI
+>  	depends on BACKLIGHT_CLASS_DEVICE
+> -	select DRM_DISPLAY_DP_HELPER
+> +	select DRM_DISPLAY_DSC_HELPER
+>  	select DRM_DISPLAY_HELPER
+>  	help
+>  	  Say Y here if you want to enable support for LG sw43408 panel.
+> @@ -558,7 +558,7 @@ config DRM_PANEL_RAYDIUM_RM692E5
+>  	depends on OF
+>  	depends on DRM_MIPI_DSI
+>  	depends on BACKLIGHT_CLASS_DEVICE
+> -	select DRM_DISPLAY_DP_HELPER
+> +	select DRM_DISPLAY_DSC_HELPER
+>  	select DRM_DISPLAY_HELPER
+>  	help
+>  	  Say Y here if you want to enable support for Raydium RM692E5-based
+> @@ -916,7 +916,7 @@ config DRM_PANEL_VISIONOX_R66451
+>  	depends on OF
+>  	depends on DRM_MIPI_DSI
+>  	depends on BACKLIGHT_CLASS_DEVICE
+> -	select DRM_DISPLAY_DP_HELPER
+> +	select DRM_DISPLAY_DSC_HELPER
+>  	select DRM_DISPLAY_HELPER
+>  	help
+>  	  Say Y here if you want to enable support for Visionox
+> 
+> ---
+> base-commit: 2102cb0d050d34d50b9642a3a50861787527e922
+> change-id: 20240420-panel-sw43408-fix-ff6549c121be
+> 
+> Best regards,
+> -- 
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
 
