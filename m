@@ -1,148 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-24231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 078DB917A2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 09:53:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F18C917A36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 09:54:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1BB5286900
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 07:53:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0B081F248B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 07:54:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C2CE15EFC0;
-	Wed, 26 Jun 2024 07:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01A1815F3EF;
+	Wed, 26 Jun 2024 07:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k6niCmol"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NgTcvQuf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCB515CD63
-	for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 07:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C360F1FBB;
+	Wed, 26 Jun 2024 07:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719388402; cv=none; b=DC2poUj7L+jOahay2JePMd3UkNIkCDU/WEd+pK1PT5H9PfvQLcGEkhQfxuvXPOXAe6I0mDObDWj73wmfS2H1GyJ88xBFfzoYjpaJ9NHx/866A1waSuGlukK803srv4NxbK8TtXe97P2cdxb2lUyUMMqBmbRyJWGtCAVCL8pgkcw=
+	t=1719388471; cv=none; b=ooUvd7hqyiBzyz5iq9vUz25Dddvih2rZ7MayAmYFYdbLc5KXRQHmxNYX12cZnXgyZl7YyGL3RQ4M5cLWLwcu/Ps/ix2ICQ+DhojXyfVVBO91eGIsnLUrSSjNxPw8h78YbJCrV0HwaEK3JCVOyq1kgtwqjm/3+eryVZ9mmJV7ZqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719388402; c=relaxed/simple;
-	bh=bUFnBCaoWkPM+lGdjHQoFsITf35bWEg8TZpL0ja8QGc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=l3wiFgF2+vNG4eQBNa4t7p//rzwoFKP2AZHPBygb4m/OIu8ntwEfLSYxtJr0RspSzEQRyERWgJB7H8u5fMMDurYUVEdo3OilrGUyi6Rniq9rFk1cFeeSOvlFcJFh3oXp6A949e0fr6ymU/uP6pn9DQSa/cnU9Vrh5d5lK48dp/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k6niCmol; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42499b98d4cso13922535e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Jun 2024 00:53:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719388398; x=1719993198; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=T1area+MaFWUDermRoLera9+4OUrjSIeeXP24Yb/vWo=;
-        b=k6niCmoltEvwMZ/G1X+5pgrQ1CA3GA6qsMYx4uOz7QnZ3bpXfVSVQ6qZCx58cUenq9
-         yQMnJXgXcOljTWlvjO+Q483RsZJNDuBeaZWW9bS8DuKlUYegcKOANb81EuRYYfbz4fOt
-         tYdqBAxmWLQdn5RQ4yXFeTMm3vg2DCp5iL5CVrhc/tEemvbPahe2FQHzCGAgiRxW4NUM
-         EdvcW06TXw+ibb1uDtHs/B7LxHnlXuCUyi0hRzDJWXiHyz3y49YwQqSiKfgiPm/6qj4F
-         yuIRQUIl2geKkSlF1XvOvnEIdLU3Vz75ZDFwET980z8VUcuzasPEc9rap0ncfUVm8Gp7
-         sfyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719388398; x=1719993198;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T1area+MaFWUDermRoLera9+4OUrjSIeeXP24Yb/vWo=;
-        b=HW4h4+Pr8X/WkQL266uj4G+6AGKXz3WC96Qxq6H6S1Rrt/liizWrQXH91h+V+xVnlQ
-         yPW8yW+ZVjzWa2sNkiVJcTMZXYSdpHxNtF+0a2dGhGVmYGWAhjI/X9cmdVKhbs8A5ir8
-         JZwE6LTT8sKm3IHSg8yT/NOCsC0ukR0dVMIAkupKhq/wdp8kloyAAbIkEFX05+2WgaJi
-         aOgLUnSQ/9oR9aTpvL7x2cLavqbavfFSyjuxId/9t6dR1t1zy5/qN140rCLq/W+umGYf
-         739LAx+4+z0rLGRYpIXbwSmc7YOPJUPsYsqP9pEXpq6OWvaplC77WwyAQ57rax9P0LOZ
-         nYBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWPUA2lTnF8hHPtlLeLkfzxVjY3lXvgz9iBAyubBigbO+dHNq34WdsTr+NgNo29y7D0JExEsi+0Za6YdNCCLAqRoQJOXhFAP3D6sICxZQ==
-X-Gm-Message-State: AOJu0YyYfqHbUbhFQDMc0GMmZEsd3KF91FxI+ke8l94ahMcqilugJsvc
-	N23WV03dYOgwsGxNTYydUgqjHPnl1AZ2kMu5sMDXUvWcicd7AosZaHr27XqPQ+4=
-X-Google-Smtp-Source: AGHT+IEKkrz0XZ/FGEkp/KPMY67ejxiTdOZ2Rr+AaQrnwx9g/w+KQHYoLnBiwYIQALSatGlYPyNnbA==
-X-Received: by 2002:a05:600c:54e1:b0:424:9024:d45e with SMTP id 5b1f17b1804b1-4249024d4c3mr52628185e9.4.1719388398204;
-        Wed, 26 Jun 2024 00:53:18 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-424c846a8f0sm15220405e9.42.2024.06.26.00.53.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jun 2024 00:53:17 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 26 Jun 2024 09:53:16 +0200
-Subject: [PATCH] drm/msm/adreno: fix a7xx gpu init
+	s=arc-20240116; t=1719388471; c=relaxed/simple;
+	bh=SbtxvcursYPrSDJUEzv8uDtSs383JJZUnvYrA/hF/4k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZFbMd9Mo+TnhMIaQ/MOCsZrKE51a9tg2fOMDtxF/13H6UPTeQl9wGEU/rlNOiN2h38djAGBrqSDoNjkiNZR9FlMQmEHETDGoFf261GoeXf/a2QYolA++IvHWDE08AuIgnqXLokko0DYdU2MJkQ5+fCpAr/b44TVPrMbcSThm08s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NgTcvQuf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC22FC4AF0B;
+	Wed, 26 Jun 2024 07:54:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719388470;
+	bh=SbtxvcursYPrSDJUEzv8uDtSs383JJZUnvYrA/hF/4k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NgTcvQufTogBwZufUbCJXr2yc/1vPoRkdHFeGnYJY8ySQj3TD7HgjAALfFMVVoxqq
+	 DusZlvg+ACiJuMUuqPhWYFVSTFJfLT6iImeTXdK/cGyPk4c8enuKMY06YeO10IwX0B
+	 A3e+BWH0VqwyM1s4f1yfv1baYlUbGl+zOTMByjdfcvxGfC8fdtcuwmrnWtQ4PCCQZ9
+	 0O4oX09quJh7KtFuLRz7oYNQUAJHIGQnbDqy+2UOb7fFcUckcmZHeOdddOxu2r/E9j
+	 Hcor/tKZZ8lZV2YcS61nRuUTOXSQseEGXnMENVDnAnbdQz3uPOXXh2lkoQZl0g1gnR
+	 g+HjSVatDOmlA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sMNUG-000000007vt-0yGY;
+	Wed, 26 Jun 2024 09:54:40 +0200
+Date: Wed, 26 Jun 2024 09:54:40 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Doug Anderson <dianders@chromium.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 2/3] serial: qcom-geni: fix soft lockup on sw flow
+ control and suspend
+Message-ID: <ZnvJQDX6NkyRCA8y@hovoldconsulting.com>
+References: <20240624133135.7445-1-johan+linaro@kernel.org>
+ <20240624133135.7445-3-johan+linaro@kernel.org>
+ <CAD=FV=UauWffRM45FsU2SHoKtkVaOEf=Adno+jV+Ashf7NFHuA@mail.gmail.com>
+ <CAD=FV=XPKqjMcWhqk4OKxSOPgDKh-VM4J4oMEdQtgpFBw8WSXA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240626-topic-sm8x50-upstream-fix-a7xx-gpu-init-v1-1-ff0a0b7c778d@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAOvIe2YC/x2NQQqDMBAAvyJ77kKa2qT2K6WHNV3tHowhG0tA/
- Luhx4FhZgflLKzw7HbI/BOVNTa4XjoIX4ozo3wagzW2N846LGuSgLo86t3glrRkpgUnqUi+Vpz
- ThhKl4DAFGnzvRvI3aLWUuUn/0+t9HCcYzCoBeQAAAA==
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1250;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=bUFnBCaoWkPM+lGdjHQoFsITf35bWEg8TZpL0ja8QGc=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBme8jssCMYsrSvaqz+TTf5G43VRs8w40xKxUjTe1ob
- Oi2BEbKJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZnvI7AAKCRB33NvayMhJ0Rl8EA
- CTLPfyc5SoiA/wMMY88mBc4/bIBJu7jvcEe9ZWRP2vZij3UYKZ8m3vriQasDVE5InlydLVkg6NPDya
- x9k0G9sB4fUth9fcDSkLPwYRNd/boSaBKHdMVE21RYmI6Ey6j5c0l3Y3ImR8qk+pUsaWThoXD77zaW
- FS6C7W6uBc2kANexdq5RzGjmKsD18q8GFrUA8e7sS1q0FODY5NmLoCWt/R25Xb2V/CcRkvXuZpbdQ3
- vTtoHxb6D+BhciasoGg5vxGDaSjDboUT8pGIUGE7rK29NDz1GLCqDWkIQZ7xG5uOqJ4BENhwwDHCSb
- ibaklVDg9H4cCZNguEoeEaFezXp4PAExiQocS93ubxtyqbYl+fxn2NZLZ29s5TYmfElTEaN4k11XIc
- l6c/Z7TYgDKfgwte0OGXaRP/cEln/0NJddsOnAqHEJMnIPoD9jbEtr2HfaaJ6Z3W1XPIyHwDY76P5y
- SMAPFgdVKK59j5ySK9ykgRqnr0AHXgEfhcMCx9Vm7dJA3skalFaIKirgQwUYCpsXugXZRurkoiF8h8
- 0q0jccQYhyd8OxbW3ONfn39pO/JcDEkbyRIDy9H2TKxQSOLuvJ9XX/86OLlHtcHqFH+4vlz1qsNupc
- xb3qT/JL4cSCDqcqT3oDtgXeAovGoZ2fN+62prqnqdZOSjhjaUECz4L1rgVA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAD=FV=XPKqjMcWhqk4OKxSOPgDKh-VM4J4oMEdQtgpFBw8WSXA@mail.gmail.com>
 
-The gpulist has twice the a6xx gpulist, replace the second one
-with the a7xx gpulist.
+On Mon, Jun 24, 2024 at 02:58:39PM -0700, Doug Anderson wrote:
+> On Mon, Jun 24, 2024 at 2:23 PM Doug Anderson <dianders@chromium.org> wrote:
+> > On Mon, Jun 24, 2024 at 6:31 AM Johan Hovold <johan+linaro@kernel.org> wrote:
 
-Solves:
-msm_dpu ae01000.display-controller: Unknown GPU revision: 7.3.0.1
-msm_dpu ae01000.display-controller: Unknown GPU revision: 67.5.10.1
-msm_dpu ae01000.display-controller: Unknown GPU revision: 67.5.20.1
+> > > +static void qcom_geni_serial_clear_tx_fifo(struct uart_port *uport)
+> > > +{
+> > > +       struct qcom_geni_serial_port *port = to_dev_port(uport);
+> > > +
+> > >         if (!qcom_geni_serial_main_active(uport))
+> > >                 return;
+> > >
+> > > +       /*
+> > > +        * Increase watermark level so that TX can be restarted and wait for
+> > > +        * sequencer to start to prevent lockups.
+> > > +        */
+> > > +       writel(port->tx_fifo_depth, uport->membase + SE_GENI_TX_WATERMARK_REG);
+> > > +       qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
+> > > +                                       M_TX_FIFO_WATERMARK_EN, true);
+> >
+> > Oh, maybe this "wait for sequencer to start to prevent lockups." is
+> > the part that I was missing? Can you explain more about what's going
+> > on here? Why does waiting for the watermark interrupt to fire prevent
+> > lockups? I would have imagined that the watermark interrupt would be
+> > part of the geni hardware and have nothing to do with the firmware
+> > running on the other end, so I'm not sure why it firing somehow would
+> > prevent a lockup. Was this just by trial and error?
+> 
+> Actually, the more I look at it the more confused I am about your
+> qcom_geni_serial_clear_tx_fifo(). Can you explain and maybe add some
+> inline comments in the function since it's not obvious? Specifically,
+> things I'm confused about with your patch:
+> 
+> 1. The function is named qcom_geni_serial_clear_tx_fifo() which
+> implies that when it finishes that the hardware FIFO will have nothing
+> in it. ...but how does your code ensure this?
 
-on SM8450, SM8550 & SM8560.
+Yeah, I realised after I sent out the series that this may not be the
+case. I was under the impression that cancelling a command would discard
+the data in the FIFO (e.g. when starting the next command) but that was
+probably an error in my mental model.
 
-Fixes: 8ed322f632a9 ("drm/msm/adreno: Split up giant device table")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 1e789ff6945e..cfc74a9e2646 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -33,7 +33,7 @@ static const struct adreno_gpulist *gpulists[] = {
- 	&a4xx_gpulist,
- 	&a5xx_gpulist,
- 	&a6xx_gpulist,
--	&a6xx_gpulist,
-+	&a7xx_gpulist,
- };
+Do you see any way to discard the FIFO in the docs you have access to?
  
- static const struct adreno_info *adreno_info(uint32_t chip_id)
+> 2. If the function is really clearing the FIFOs then why do we need to
+> adjust the watermark level? The fact that you need to adjust the
+> watermark levels implies (to me) that there are things stuck in the
+> FIFO still. ...but then what happens to those characters? When are
+> they sent?
 
----
-base-commit: 62c97045b8f720c2eac807a5f38e26c9ed512371
-change-id: 20240626-topic-sm8x50-upstream-fix-a7xx-gpu-init-9fca9746ba73
+Exactly, there is data there according to the FIFO status, but I
+erroneously interpreted it as a it would be discarded (e.g. when
+starting the next command).
 
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
+> 3. On my hardware you're setting the FIFO level to 16 here. The docs I
+> have say that if the FIFO level is "less than" the value you set here
+> then the interrupt will go off and further clarifies that if you set
+> the register to 1 here then you'll get interrupted when the FIFO is
+> empty. So what happens with your solution if the FIFO is completely
+> full? In that case you'd have to set this to 17, right? ...but then I
+> could believe that might confuse the interrupt handler which would get
+> told to start transmitting when there is no room for anything.
 
+Indeed. I may implicitly be relying on the absence of hardware flow
+control as well so that waiting for one character to be sent is what
+makes this work.
+
+> Maybe something is missing in my mental model here and testing your
+> patch and hitting Ctrl-C seems to work, but I don't really understand
+> why so hopefully you can clarify! :-)
+
+I spent too much time trying to reverse engineer this hw over the
+weekend and wanted to get this out as a counter proposal as it indicated
+that we may be able to find a smaller fix. The series addresses the
+serial getty issues, but as I mentioned yesterday there is some
+interaction with the console left to be resolved before this can be an
+alternative.
+
+If it wasn't for the hard lockup I would have sent the whole thing as
+an RFC.
+
+Johan
 
