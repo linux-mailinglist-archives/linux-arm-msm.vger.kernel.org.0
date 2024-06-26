@@ -1,86 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-24321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A43C99185D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:30:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B20C9185EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 17:35:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D6BE288BCD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:30:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB4561C212F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Jun 2024 15:35:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5849418C329;
-	Wed, 26 Jun 2024 15:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5972B18A95F;
+	Wed, 26 Jun 2024 15:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hgjI3B92"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EhCUvS4w"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2837418A95A;
-	Wed, 26 Jun 2024 15:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D46CA92F;
+	Wed, 26 Jun 2024 15:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719415774; cv=none; b=MNoJqAvDmCKMLL2p1WwOtFF6MlrqJBIW06+ifX7CwX7FUPgVhG+iG0eyfz5v8y0TZphrWa7QnXw4oNKzsKymp9R8S3gvcnooUOyJhlZ7n5fD6FodGlnQV15q0GYavz92XNdGaP27dGz4luRbQAGw1rsUEYfmFYypuk4OX8/lUug=
+	t=1719416122; cv=none; b=IpYZIdnrO4F/lMJCF8ur62wXnrTCiRweqX61PqNJKJiHw7xfk1rizH1OkSZJo4p84pDSmuayEeViU87K8O8A+A/CkiFVTUsukUlr5X02gmE2gPMJ8baGE94xjUrt/JGLkqA9t18sBwrPLX/D88eho8qzXrO3D42Vhn2u2w0Wbgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719415774; c=relaxed/simple;
-	bh=tn+0wc0SWf+K7ShAbsHDVu8PM/PzdESvEuUAgQX5AYE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=Vr1zW1JlWt+nvLBaiTIzdiicOPMjqpCGlUktFsm7d+3EbDa5a5cRcwmRanJ5695TjEW5lfKp0btH9SYUOZjRGwjU3EF76RKvekL4Pz3Qf8iymBF+18QPcq2gM9XssLeFiRljLWdsXeDT0lnICNVQyC+YaFhYwT/30fO0j3XSZOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hgjI3B92; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703C5C116B1;
-	Wed, 26 Jun 2024 15:29:33 +0000 (UTC)
+	s=arc-20240116; t=1719416122; c=relaxed/simple;
+	bh=1Kcr3jofdArjh6InWFIdRnfWmP3d7iP++Ac3f1l/fwQ=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=mgQPq54HdBDiZfIN/odhdPoKD59Ae5IYlxUwljDUmThxIZq5GVSteUr1SNaTmXHknAHu3oHX+duJ9XhAfiQy8BI9rieWc1C6YH/m9AUuS0muJ3wd59kl9zhPu7CeI2Ax19Te/Qt4Cz6XJjeacksjoJynVel+CpFFkpe6AWvod7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EhCUvS4w; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE8FC116B1;
+	Wed, 26 Jun 2024 15:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719415773;
-	bh=tn+0wc0SWf+K7ShAbsHDVu8PM/PzdESvEuUAgQX5AYE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=hgjI3B927W4sKIv97HF4xJVonGiMTt++c17owxPWvBYRP253LM63PZugPYSfouOl4
-	 ya6CUFpx4gSUZR8CWHXU/DTcnwbBaF8/sQCiHgAg0qkM0r+v1gMRW9qHqi7AVnb93t
-	 oRjGcGjT58tu8bXFy7PiDO9hc9K7itrZzrWTznatV+9WngMKSeLB7R5xll7RW4BA63
-	 j3zgwNJiYxY3qDvbVn7Bl0JPPx2o6b6MPrPKHKIG6hYbtlSYwOl6K5K0HuG0lCWqQC
-	 McQLUc8XmCPqouXXgxBhjJLyqEbz7dJEkguy/lkylXAJ2c1JY0s9TIkOhQV3HfQE3s
-	 IpZNCBBBd+A9w==
-Date: Wed, 26 Jun 2024 10:29:31 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com,
-	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 0/7] PCI: enable Power and configure the QPS615 PCIe
- switch
-Message-ID: <20240626152931.GA1467524@bhelgaas>
+	s=k20201202; t=1719416121;
+	bh=1Kcr3jofdArjh6InWFIdRnfWmP3d7iP++Ac3f1l/fwQ=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=EhCUvS4wltsz2P5ZyUiB69APAxgoqAtE/IcvwXQdxdEpETk8H013mdfGKcvFUiLdB
+	 giiSdPkNiHIAESerlBkaXWCvQnFBJ9lvZQ9wLkxyPGldmIWeAGLDhA2OiL9ZuwSAHg
+	 c0ezz8n3h1PWIHJQHiPfPA8sJX0lB0B/JXR0LFcTXueub69S9wW/gVrd8az1NrmNgL
+	 XR0AOkUsuBpuPnxlbxi/LWKLD2m3fLp7aVe6Prqhjc8kAYxmjns3zBsnIUTE034xxN
+	 HVx61Vq+ACCaSQ2eMH3Sy076jJVVIvZ/EI2jT0Etk5dJwT/TJFqYwQKpol66llpCGM
+	 vlMxR++QCO5AQ==
+Date: Wed, 26 Jun 2024 09:35:20 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Devi Priya <quic_devipriy@quicinc.com>
+Cc: catalin.marinas@arm.com, u-kumar1@ti.com, 
+ linux-arm-kernel@lists.infradead.org, krzk+dt@kernel.org, 
+ geert+renesas@glider.be, neil.armstrong@linaro.org, nfraprado@collabora.com, 
+ mturquette@baylibre.com, linux-kernel@vger.kernel.org, 
+ dmitry.baryshkov@linaro.org, netdev@vger.kernel.org, 
+ konrad.dybcio@linaro.org, m.szyprowski@samsung.com, arnd@arndb.de, 
+ richardcochran@gmail.com, will@kernel.org, sboyd@kernel.org, 
+ andersson@kernel.org, p.zabel@pengutronix.de, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, conor+dt@kernel.org, 
+ linux-arm-msm@vger.kernel.org
+In-Reply-To: <20240626143302.810632-5-quic_devipriy@quicinc.com>
+References: <20240626143302.810632-1-quic_devipriy@quicinc.com>
+ <20240626143302.810632-5-quic_devipriy@quicinc.com>
+Message-Id: <171941612020.3280624.794530163562164163.robh@kernel.org>
+Subject: Re: [PATCH V5 4/7] dt-bindings: clock: Add ipq9574 NSSCC clock and
+ reset definitions
 
-On Wed, Jun 26, 2024 at 06:07:48PM +0530, Krishna chaitanya chundru wrote:
 
-> Krishna chaitanya chundru (7):
->       dt: bindings: add qcom,qps615.yaml
->       arm64: dts: qcom: qcs6490-rb3gen2: Add qps615 node
->       pci: Change the parent of the platform devices for child OF nodes
->       pci: Add new start_link() & stop_link function ops
->       pci: dwc: Add support for new pci function op
->       pci: qcom: Add support for start_link() & stop_link()
->       pci: pwrctl: Add power control driver for qps615
+On Wed, 26 Jun 2024 20:02:59 +0530, Devi Priya wrote:
+> Add NSSCC clock and reset definitions for ipq9574.
+> 
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  Changes in V5:
+> 	- Dropped interconnects and added interconnect-cells to NSS
+> 	  clock provider so that it can be  used as icc provider.
+> 
+>  .../bindings/clock/qcom,ipq9574-nsscc.yaml    |  74 +++++++++
+>  .../dt-bindings/clock/qcom,ipq9574-nsscc.h    | 152 ++++++++++++++++++
+>  .../dt-bindings/reset/qcom,ipq9574-nsscc.h    | 134 +++++++++++++++
+>  3 files changed, 360 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
+>  create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
+> 
 
-Take a look at the git history of the files you update and match the
-style.  s/pci/PCI/, for instance.
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dts:26.26-27 syntax error
+FATAL ERROR: Unable to parse input tree
+make[2]: *** [scripts/Makefile.lib:427: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1430: dt_binding_check] Error 2
+make: *** [Makefile:240: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240626143302.810632-5-quic_devipriy@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
