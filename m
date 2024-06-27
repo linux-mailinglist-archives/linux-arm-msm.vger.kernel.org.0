@@ -1,97 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-24523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8A4C91AF98
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 21:24:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0A5491AFB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 21:31:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 25B581C22A1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 19:24:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4B897B2531F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 19:31:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08C1819B3D8;
-	Thu, 27 Jun 2024 19:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B71F446D1;
+	Thu, 27 Jun 2024 19:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="jqZY+usY"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="Ir1xUpDt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEBF200DE;
-	Thu, 27 Jun 2024 19:24:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10EE2E62D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 19:30:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719516278; cv=none; b=Cfc9C6a+M70G4BBKVlv2c//+OvM+sEbxB2GB2DF9/9lEbxaNqJaYanEAB7Lb/sF48yBPg53wlaAiu9XW8LlYku/gQZOU9e2ZJRICHpxi3GFxuqB+NAGlxNXXs2rlNaN/SzRrFklIWQT8VNozcj4QRp3GrdVQ8QRM8tKlJkHGWa4=
+	t=1719516653; cv=none; b=pG/1MCuCwsdk85WgC+lgFkzOunIfcbTBMIb3HFihTs2AfI3oooWKXO6tVQaAiLbG6bGpErQ79e5akMn4X3jxRUmjoQxuqx6KtE9Bz4Ksp3RURgLNBP2WF5ly8AL0fIIl9J9berls+X8EZbjtCm1lPtI3RapeHHNYfYsqjAMQf6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719516278; c=relaxed/simple;
-	bh=ByWy07f9rUggWN9DLwEaBmr1GuYoIk8YDAPbU9bHcps=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WzXdQCxF3Dphn0II1YU8VJOevIF9QtANQHG8TPQ5QEI9SssSOFMfEPJxhat87y+7SPDeW5ckLQmCMDwLUglZsZqp6AG6KdBRR5CtmDkK5waQoebjXrT0anfVJ9+JeVymBLQNX1LW/Da8w2VsgTTR1th7gQ52E34xW818Y+V1OQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=jqZY+usY; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=MIJerN91KOAahfx//F9cleyCTP+2uS5vcbZ0p363Ojc=; b=jqZY+usY9iPuJpXu55zsW+kvaJ
-	ikF+PmQHCkXwNKbFueAJfrQ/SJ/gbKnlDTRECR6vCQevb2rChvhqfEJ3mUgspq5VOpBsPjCEJx0T2
-	jdin0vKrxJ5BxL1twXhIqC6OwVgALQbDDiE7ts5FUZa31S9yAx9bs+FM8B6VKp9GdKGk=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1sMujE-001CdD-L2; Thu, 27 Jun 2024 21:24:20 +0200
-Date: Thu, 27 Jun 2024 21:24:20 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Andrew Halaney <ahalaney@redhat.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Vinod Koul <vkoul@kernel.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 net-next 2/2] net: stmmac: qcom-ethqos: add a
- DMA-reset quirk for sa8775p-ride
-Message-ID: <4f642463-3a8c-4412-a007-42fb65c4276e@lunn.ch>
-References: <20240627113948.25358-1-brgl@bgdev.pl>
- <20240627113948.25358-3-brgl@bgdev.pl>
- <td5jbseo7gtu6d4xai6q2zkfmxw4ijimyiromrf52he5hze3w3@fd3kayixf4lw>
+	s=arc-20240116; t=1719516653; c=relaxed/simple;
+	bh=jdGZZuUjU6IKdN0QMbYKEeaNSzN3j5RR+CNHFENctXg=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=XCA9kr5Cf1qMSdzsdbUOurQvCZ+vYpYetTrzj7y8DYsJtyaJMa2PLXfqUOlTrUNRtxdxnQBOm1DPEvnBIGhtzsw40UmTADL//wst9JFJq2tXZGdaI5korUCK+oqPPABZ7N887QNEA+KXHxZMbGayfijIkesQWbm0RQellAwPWsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=Ir1xUpDt; arc=none smtp.client-ip=188.165.51.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1719516636; x=1719775836;
+	bh=RU8R7UnTgn6eP1AZKbglvITXdxEQ2SMjUq+6xyiXaQs=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=Ir1xUpDtQL7CxvRvCG1Owj2g79oEAUR18FcZ6bqaPgB2n7M8VxgekDU2xl/mmkAy5
+	 44aaauqztYdNqQXJ357N0sPd+AomUWvljKmKhJ60nmlAyly4cSjK4AH1DUy91QAcrC
+	 9SOdGYpkTdilQMMZ5hiphJg7HtqxtZx7czy3Db0ZNbCxx5icUv/AYCLI3xfFSTn1xV
+	 rp97KmWW9fE8vGpoap6pY4vX3QWXSZKECWqEeuK4xLjukQAWPNTS7bxrhuQpoo4YPt
+	 plGjcNZBYerNsYjr9yw4SSlGxZvpNQpMaQAOQBCqCbv8Ww9H6pQ/r19oTfxLR9lqQn
+	 TCBUb++pzOx7A==
+Date: Thu, 27 Jun 2024 19:30:30 +0000
+To: linux-kernel@vger.kernel.org
+From: Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH v2 0/2] ARM: dts: qcom-msm8226-samsung-ms013g: Add initial device tree
+Message-ID: <20240627193013.1800-1-raymondhackley@protonmail.com>
+Feedback-ID: 49437091:user:proton
+X-Pm-Message-ID: bb4aba257863566582ee4be550506691c60cfa84
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <td5jbseo7gtu6d4xai6q2zkfmxw4ijimyiromrf52he5hze3w3@fd3kayixf4lw>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Its not clear to me though if the "2500basex" mentioned here supports
-> any in-band signalling from a Qualcomm SoC POV (not just the Aquantia
-> phy its attached to, but in general). So maybe in that case its not a
-> concern?
+Samsung Galaxy Grand 2 is a phone based on MSM8226. It's similar to the
+other Samsung devices based on MSM8226 with only a few minor differences.
 
-True 2500BaseX does have inband signalling, for the results of pause
-negotiation.
+The device trees contain initial support with:
+ - GPIO keys
+ - Regulator haptic
+ - SDHCI (internal and external storage)
+ - UART (on USB connector via the TI TSU6721 MUIC)
+ - Regulators
+ - Touchscreen
+ - Accelerometer
 
-However, in this case, this is not true 2500BaseX, but a hacked SGMII
-overclocked to 2.5GHz. There is no inband signalling, because SGMII
-signalling makes no sense when over clocked. So out of band signalling
-will be used.
+---
+v2: Adjust l3, l15, l22 and l27 regulator voltages. Sort nodes.
+    Set regulator-allow-set-load for vqmmc supplies.
 
-My understanding is that both ends of this link are not using true
-2500BaseX, and this Qualcomm SoC is incapable of true 2500BaseX. So we
-don't need to worry about it in the Qualcomm glue code.
-
-However, what these patches should not block is some other vendors SoC
-with true 2500BaseX from working correctly.
-
-     Andrew
 
 
