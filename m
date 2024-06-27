@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-24477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 674D291A903
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 16:18:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B019491A906
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 16:18:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D1E71F2212B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 14:18:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E145F1C21782
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 14:18:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A07CA195B2E;
-	Thu, 27 Jun 2024 14:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1903A195803;
+	Thu, 27 Jun 2024 14:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uNz0GeG+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C/Bpy0qo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734CA19580A;
-	Thu, 27 Jun 2024 14:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CFE1946BA;
+	Thu, 27 Jun 2024 14:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719497880; cv=none; b=UDQXw/hDb8io+IMSD8EHwj3P/Gyu9TuHwDggjmZe0Y9y805ZB8nzhNYJYacxs8JX+rzF9vmTxeS2CzXi995trp5CwXQy1yU7pVzAkJ/SyiBB4fi8frz0wGWnQWHhKglJH2QdhLLUjQgqwckFUr4/aUYZTsBH7xZMj9E3r8Ee/TA=
+	t=1719497893; cv=none; b=aFqoUf4K1pHwK+TQc8WlTpNbfvSv4ZJNjHKBAj6fVb854XtinypHIJja6X7mr/lkOoPVJ02n05I/v+3RMvD9jYDR6Ye/+BS9n8F8OlqfQct2RVOrEAxhDC2TjbJHvPZDyOJzbSSFnj5WR8RIiiPetVR8sVFXRRSEGSRLIVNcjcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719497880; c=relaxed/simple;
-	bh=XNnyFcoQgMDDX/PxDX53Ynh7kN7H7W+RKXPFoaWvh2c=;
+	s=arc-20240116; t=1719497893; c=relaxed/simple;
+	bh=MgHKOk7vDjLm95Nr7YxE807aQmruCnh5K6bwqvD8+8s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BnlExTclLNuoTuWXlpETddBkOG49YSabzPY3x1jETXE5H1p2FfI+KHJOH6lLFMnzK8BWaKn4XsEzWZA+LXYD+jyC8/0AAepgdClQKd9U6L/m3B1xzGPjJvpmpdzEoCae0uXv/wXSktGu3gd3Y0aHIQC1L4hylews4mFusoby9/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uNz0GeG+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359E1C2BBFC;
-	Thu, 27 Jun 2024 14:17:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=fb69ehlG0rGU50JipnV49rocjA6S6c0+a+n2WvfSZPZBE9R3cs98rDY427bxXcEUocXQKIlz+YThdsT91aS2FAg6im6DGCKW1qrflkXH9JzPFxtLnkHg6RhKqtU/gYjBbMUJq3K4sD9IAYgSeHBJyKm2/i/16KgtvUDJi2X/77Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C/Bpy0qo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE4CC2BBFC;
+	Thu, 27 Jun 2024 14:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719497880;
-	bh=XNnyFcoQgMDDX/PxDX53Ynh7kN7H7W+RKXPFoaWvh2c=;
+	s=k20201202; t=1719497892;
+	bh=MgHKOk7vDjLm95Nr7YxE807aQmruCnh5K6bwqvD8+8s=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uNz0GeG+CkJIChbnrCah4SXBi/bF2hmqNsgJySfdZVKjjW03Y1vS4ZwSnvktND7SP
-	 9/Ul4qzKyZUxaZkCcgR4a+1Slc01z+tgfyakPccJEjzjO1wAxldFLV2IsCN5WwrdJg
-	 yp35kMOs+PU+FgZ+DRE+2+J7LEc4GXy/gwm2wP8Wttlu5voFwOgvfXR4evimzmfFKI
-	 EVRTfW+WCx/WaMbwgtSqyi45DIi+9uHqzFqBiNugPnAitvKdt0habIOig7sOLC3MPM
-	 yNfQhAmqyaL3Yz3EtSqUyk1U0GG2MPoy/47LUOMImr8cVXwDTCvu4ucOOMk7Q8+CBP
-	 t58zzRHTk6Nsw==
-Message-ID: <a5f75057-470c-4983-91ea-d0f8c246a3d9@kernel.org>
-Date: Thu, 27 Jun 2024 16:17:54 +0200
+	b=C/Bpy0qov75NK3kkuM3nQ2rOeSmaW8A6NJCj1FkTRxnXZoUKNiVivKwqchMlXx1Ok
+	 IqZOcR3BJEruhnMGCo1PHHKoeRzWHmA48RJ+Htk6OJU6wRDNSg0y9XBKgpCr8yG2c9
+	 Zjrt2W8RwBXR/2ISR4wpjsk9jIgh3Crc7T6EUeGZ59dQ0iTzw/zWKQn6yxFYFt8h5d
+	 geV/DAmFEVHnJP/LJA0f023qafuuSLjBGT0LNCrKq41I+U+gJZD47sWne02YYrgD9H
+	 tL+BI2rimwE9LYxx8nFaiq9lkcNNpOoTk4gVdmoqUkfDYOosYIEgo/AIDGFn5jIDFx
+	 nyYDxDYyM8PNw==
+Message-ID: <313ccce4-415a-40ac-8974-78e30f2cf011@kernel.org>
+Date: Thu, 27 Jun 2024 16:18:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8650-hdk: add port mapping to
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8650-mtp: add port mapping to
  speakers
 To: Neil Armstrong <neil.armstrong@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -59,7 +59,7 @@ To: Neil Armstrong <neil.armstrong@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240627-topic-sm8650-upstream-was-port-mapping-v1-0-4700bcc2489a@linaro.org>
- <20240627-topic-sm8650-upstream-was-port-mapping-v1-1-4700bcc2489a@linaro.org>
+ <20240627-topic-sm8650-upstream-was-port-mapping-v1-2-4700bcc2489a@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,7 +105,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240627-topic-sm8650-upstream-was-port-mapping-v1-1-4700bcc2489a@linaro.org>
+In-Reply-To: <20240627-topic-sm8650-upstream-was-port-mapping-v1-2-4700bcc2489a@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -114,7 +114,7 @@ On 27/06/2024 14:57, Neil Armstrong wrote:
 > to correctly map the Speaker ports to the WSA macro ports.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
+
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
