@@ -1,66 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-24502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E988C91ABB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 17:44:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EAB091ABBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 17:46:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EEB5AB285D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 15:31:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 74DAEB24569
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 15:39:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC50D198E90;
-	Thu, 27 Jun 2024 15:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6EAE1990A5;
+	Thu, 27 Jun 2024 15:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JU13wlmS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P6OWiUW1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F06198E71;
-	Thu, 27 Jun 2024 15:31:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6491990C8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 15:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719502287; cv=none; b=YyILKoaAEPtCp4a3V6ZFXtZi+LD7pbzIGl4gAuHuLRTtUF7RXBrvFxTLLItevk394gQKpt1gePqkRn8s6z6/v7ZjIhRw568jY/P44SEfrDthYsYBsvDN34IbXvIRVfbVeEGIxi6PbiHwZ4qNLl2VKJvy99lY+vOZbUG0ch+EpWA=
+	t=1719502738; cv=none; b=ZmVTBXrzZflWNIvqnJmyQ8T1RIFNuFYNnJubYFBTvy44s+4sUD3SoSlweQ6rAf4eHRXqF5uhf8nDbP/pkOJBRWOBDD8+ZVlpMyK2mnMJevggUo+iAiYRj7E3KzKRBo9H5Y9Fpk07oAioxGy4LQE6CoVut6AUSq0n95O73wXHl3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719502287; c=relaxed/simple;
-	bh=wxLzTDpEy7fEUqTDhRZsA8Ui7D8BuLYyJagL/PF5qUo=;
+	s=arc-20240116; t=1719502738; c=relaxed/simple;
+	bh=X+89KQ9khlo9ksL828oIZjSyJeeMnEedqGr/xgPUG9Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j1YlaZvhylbORHR12W/3FO85Lm9b/PwGPc77J1pcUx2D5mMmhQ6cQvNK34lSD1GgITTt+id0Li1knAi8luTvmpMC0KXxzeRfB2oQ4LX/4RsIXkFC4ZwkFDwLo/fjWX3ardVF/6Z4UALWLh6EiUH8IKpgvIYmco7/P/32h276TZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JU13wlmS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE721C2BBFC;
-	Thu, 27 Jun 2024 15:31:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719502287;
-	bh=wxLzTDpEy7fEUqTDhRZsA8Ui7D8BuLYyJagL/PF5qUo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JU13wlmSWUBHxHsfZ97TRsc/9fMuDshO44IMPpp5wIVEhfFOk/NTH1Qv/qetpmluT
-	 1kx1VpMufyQFVyxfq1WQuVE9lZW25YRoetH8leXKF5od+/O+UgJv8Tnw0CVI5eQhZf
-	 nqnpTt4O/bMpKPv6lfKtapMytVnhDUEqGxLG/EyVZ6wF/J/5ljxC+Hv96l9BM1lVX8
-	 7wXTLZJKwecarQF0i6EbEXHpIyC3GLT8tyS3AMfsqbs1XUMYwrcdlbRSsD8nUpWJWD
-	 rcPf8bYAV9FZXEBBA/3EZxi6rkyLp29xghivlitweBUQJObhUj1gn+iK82E3j6SIxh
-	 YTrEH/BDjxzFQ==
-Date: Thu, 27 Jun 2024 09:31:25 -0600
-From: Rob Herring <robh@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com,
-	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 1/7] dt: bindings: add qcom,qps615.yaml
-Message-ID: <20240627153125.GA3469266-robh@kernel.org>
-References: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com>
- <20240626-qps615-v1-1-2ade7bd91e02@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=VvXWRy/rP7pFYJk1UDzUXmu9x2w20ZRuDsG150xil6wYQTh+WVhQcVE8LVXxlnrBWzTIGu2vCiMcaU6UsCN7YolqxMu2JEOJo+f6Mc1hFiRhV/vtkmOYw5hSb9+BHdB03dfDMYYjjm8daWQzorisd5X+lt0C28Dy3yY35zHBx0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P6OWiUW1; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2eaea28868dso109331871fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 08:38:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719502735; x=1720107535; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yOY+M7D7TFw/QBtM2TODmhCDgoUDeHoix9fanh2mF/g=;
+        b=P6OWiUW1b/zwXdD7JsuwVh9BYBkgOB/Ot4rGyFyBHL8SVU6q4PoZ7B87I+pPls29kH
+         AJ/VO+D8xw57Nz2LKJoAyvEx4hoMJHxs5+Aln70I/JpU5iLdSPHUoufNN3L2vjsiMMfl
+         TaHhy5NYajcSmkw3lEqg8jdVJZpzAH9URQW022EKBkiC2WbaDMB0SfXRYSwaVUUXtfp2
+         6oQtBRpUd3E1kLbsepPrN7TSTbCj1sHttCV+CZpLxlnjSlusolyZlyATd7Vs0RPJu8Je
+         ht0mHfbFdiSRwZ92Oc3kqKfioyNqtxrzAc/nqJ5qcqtTEDrzHCybLH9NhPluumhF31Fg
+         I7kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719502735; x=1720107535;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yOY+M7D7TFw/QBtM2TODmhCDgoUDeHoix9fanh2mF/g=;
+        b=DyNPKCZrbpfA7wrRo2JkgomNRZsZWSew4EsjaGtwDE7gERM7RR7C4FjfpIO4NI+Kqn
+         OrWfiFCdLsWTvruvqBs2Zk2urLqGaJJ91bAuhPCKwnKeaxNkSimZVN1fO7/BuGTtrOHN
+         PzSqSqdMpJHrPX8r1LJCsV0ewwaZ2GXJEMMR/KpjwGt+dNZxANkcfeurCSqp7VzHNKvJ
+         RwiZ1GIdDmlpx6D0VfE6gvA11ZzGmakFflrNGZ6gTosaMEeCYZ5RpE9hNy8CFCJ4xSZ3
+         RYlEC5AERJ4hpXAnu7huiwmsIfscS7328xE6m4KIuXihMBkPBBdU+bXjHGEeLVEszu6h
+         E0Jg==
+X-Forwarded-Encrypted: i=1; AJvYcCVWNMT0/ollDFmkNVoC+G0Gq/v6MUK9sFb7joQ91mdMVFibh7pI6zgBcpkmoT66sWMfshbCOLcrTGwqnSo2ZZ04Jt1AyREu0JhIS3zLTw==
+X-Gm-Message-State: AOJu0Yz8CLtmA1s7USC/stYSXFSOM5hxszXgo8mjThLkVzN+CLShWVG8
+	xbOg61pHVjKIqqkAnJufr+Om2Um7HBHeyQprGHr2YqgSgqoAfQjh8fBS9TXlWsA=
+X-Google-Smtp-Source: AGHT+IGh9tIqwf+68EbyFwi8dvXoQz1bfiDDI0e0sR4vsZ9a1n5GcilbLLPWizzzclE/jI0PC8DApw==
+X-Received: by 2002:a2e:9302:0:b0:2ee:4dc6:fe21 with SMTP id 38308e7fff4ca-2ee4dc70073mr10088211fa.3.1719502735341;
+        Thu, 27 Jun 2024 08:38:55 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee4a344081sm2886641fa.26.2024.06.27.08.38.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jun 2024 08:38:54 -0700 (PDT)
+Date: Thu, 27 Jun 2024 18:38:53 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Banajit Goswami <bgoswami@quicinc.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
+	alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 2/6] ASoC: codecs: wsa883x: parse port-mapping
+ information
+Message-ID: <grtvmbccqbwwaxftfjg2bh3naumjrsmkd22vjqxwev6vmmgr6y@op5z3i4o2non>
+References: <20240626-port-map-v2-0-6cc1c5608cdd@linaro.org>
+ <20240626-port-map-v2-2-6cc1c5608cdd@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,110 +90,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240626-qps615-v1-1-2ade7bd91e02@quicinc.com>
+In-Reply-To: <20240626-port-map-v2-2-6cc1c5608cdd@linaro.org>
 
-On Wed, Jun 26, 2024 at 06:07:49PM +0530, Krishna chaitanya chundru wrote:
-> qps615 is a driver for Qualcomm PCIe switch driver which controls
-> power & configuration of the hardware.
-> Add a bindings document for the driver.
+On Thu, Jun 27, 2024 at 03:44:39PM GMT, Srinivas Kandagatla wrote:
+> Add support to parse static master port map information from device tree.
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > ---
->  .../devicetree/bindings/pci/qcom,qps615.yaml       | 73 ++++++++++++++++++++++
->  1 file changed, 73 insertions(+)
+>  sound/soc/codecs/wsa883x.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
-> new file mode 100644
-> index 000000000000..f090683f9e2f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
-> @@ -0,0 +1,73 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pci/qcom,pcie-qps615.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm QPS615 PCIe switch
-> +
-> +maintainers:
-> +  - Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> +
-> +description: |
-> +  Qualcomm QPS615 PCIe switch has one upstream and three downstream
-> +  ports. One of the downstream ports is used as endpoint device of
-> +  Ethernet MAC. Other two downstream ports are supposed to connect
-> +  to external device.
-> +
-> +  The power controlled by the GPIO's, if we enable the GPIO's the
-> +  power to the switch will be on.
-> +
-> +  The QPS615 PCIe switch is configured through I2C interface before
-> +  PCIe link is established.
+> diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+> index a2e86ef7d18f..5443a5c4100c 100644
+> --- a/sound/soc/codecs/wsa883x.c
+> +++ b/sound/soc/codecs/wsa883x.c
+> @@ -1399,6 +1399,14 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+>  	wsa883x->sconfig.direction = SDW_DATA_DIR_RX;
+>  	wsa883x->sconfig.type = SDW_STREAM_PDM;
+>  
+> +	/**
+> +	 * Port map index starts with 0, however the data port for this codec
+> +	 * are from index 1
+> +	 */
+> +	if (of_property_read_u32_array(dev->of_node, "qcom,port-mapping", &pdev->m_port_map[1],
+> +					WSA883X_MAX_SWR_PORTS))
+> +		dev_dbg(dev, "Static Port mapping not specified\n");
 > +
 
-As a PCI device and implementing a PCI bus, you need to reference 
-pci-pci-bridge.yaml. And you'll need to fix your example when you add 
-that.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - pci1179,0623
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  vdd-supply:
-> +    description: |
-> +      Phandle to the vdd input voltage which are fixed regulators which
-> +      in are mapped to the GPIO's.
-> +
-> +  switch-i2c-cntrl:
-> +    description: |
-> +      phandle to i2c controller which is used to configure the PCIe
-> +      switch.
 
-There's a somewhat standard property for this purpose: i2c-bus
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - vdd-supply
-> +  - switch-i2c-cntrl
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    pcie {
-> +        #address-cells = <3>;
-> +        #size-cells = <2>;
-> +
-> +        pcie@0 {
-> +            device_type = "pci";
-> +            reg = <0x0 0x0 0x0 0x0 0x0>;
-> +            #address-cells = <3>;
-> +            #size-cells = <2>;
-> +            ranges;
-> +
-> +            bus-range = <0x01 0xff>;
-
-Unless there's a h/w limitation, you don't need this.
-
-> +
-> +            qps615@0 {
-> +                compatible = "pci1179,0623";
-> +                reg = <0x10000 0x0 0x0 0x0 0x0>;
-> +
-> +                vdd-supply = <&vdd>;
-> +		switch-i2c-cntrl = <&foo>;
-> +            };
-> +        };
-> +    };
+>  	pdev->prop.sink_ports = GENMASK(WSA883X_MAX_SWR_PORTS, 0);
+>  	pdev->prop.simple_clk_stop_capable = true;
+>  	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
 > 
 > -- 
-> 2.42.0
+> 2.25.1
 > 
+
+-- 
+With best wishes
+Dmitry
 
