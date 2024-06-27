@@ -1,106 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-24481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24482-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 496B591A919
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 16:22:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67A3C91A945
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 16:34:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C04ECB24A42
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 14:22:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CEA11F23ACB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 14:34:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E647195F1B;
-	Thu, 27 Jun 2024 14:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D79A7197A61;
+	Thu, 27 Jun 2024 14:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIGnU2zY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qCqzf9+j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DCD1946BA;
-	Thu, 27 Jun 2024 14:22:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E4E195FEA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 14:34:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719498156; cv=none; b=YIyXaqSpGoTpmz9WXbKpGgtZ6DUkR3x3eTuQfrLQe5E8GBQGiStCybWwVdfmILb+5VTnqV8lwSAQ8U/RIPTFxgYh1pWEoE3elygAJrCjIeWKZSeKhxwlYWAdlJpOQ7xvq22RPEa8O408aWdj+XPmNR9Yu5G9fuOZr1w9P/gA0So=
+	t=1719498864; cv=none; b=MizATKkpg/7KZ2kC+Nimi8Xg55WoHFoIou0NAAONBuIW72bCiVJ/+nytR18NW/g8D4z/eEFWVPAaSgmi4jZxIPMWkMd7XP51FWokM2a0h6ElAA51/46o1tl0BLH/c/H2qYnvADbdyAX6uK3pu3slurSDl4y6+c67grhvpt/k4wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719498156; c=relaxed/simple;
-	bh=9xrRxnIRm7GTZ2539gbpxCSlGii5etL2gkmbrgIrNQ4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=APfuDgZ6zDUHlgAUZzvfO/C/OTWeIAom0JIHQl7BQNF0lYlczTzYQwkqgKVFEIQvDP9Uw+NOBLHlmE6siK4OZEhXU9q7gsOgV1nuSUaPxHBt5hayZ3+x1gOtXkx+N/AZR9jdHhFfRRBAH1wi9vsygFcvNGVi4qEZRfyNfZ4WrFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIGnU2zY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD43C2BBFC;
-	Thu, 27 Jun 2024 14:22:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719498155;
-	bh=9xrRxnIRm7GTZ2539gbpxCSlGii5etL2gkmbrgIrNQ4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WIGnU2zYTIa2aISUmSCGZaR9Zy7OkpGWVYyZ/bghHv3cWF+ETvXpyTdohzSSZi56g
-	 PiAiivQXV5n1iNgBw30v4N8R7R7TPHmLe39M8N7mVGbJY186QYRXeMGBCdIrAB0g4f
-	 KdD/+Ad0wsi9CyfpVpAirlVrbJoeaa/cEV6IL6S0=
-Date: Thu, 27 Jun 2024 16:22:32 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sebastian Reichel <sre@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [GIT PULL RESEND] Immutable branch between pdx86 lenovo c630
- branch, power/supply and USB
-Message-ID: <2024062722-sadness-tiger-a040@gregkh>
-References: <e42fb2e9-81d4-4e40-ff3a-f9d6a46d03f9@linux.intel.com>
- <2024062440-guide-knoll-94d0@gregkh>
- <948b6f71-7a72-d03d-c36f-ff4f08987f0d@linux.intel.com>
+	s=arc-20240116; t=1719498864; c=relaxed/simple;
+	bh=ghjiOzeJJ4xUTV3c9CgXH0R3rvayw7UkOWVIgVtMIPs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sbpj8gxZHgjxx/OZf3FJ7Fq8odGh7D6x+i+Ye0WbqesdK8nWY3Ml9TD9TEZvV3aRhxPsEDwYmoQ9OYLCrx+p9tPH/wsaPf5nOL4b7Q0ei7oOWQ2hJnJ2jFfY34/b2NgS7vCv2goz04l2tqR4kIxd1OL+90qGUt49CV62o9y7j7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qCqzf9+j; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ebec2f11b7so89944651fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 07:34:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719498861; x=1720103661; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=P6WlQhzaEQCr3M9aJ4AKzbvoi4K+rnc7BXOCfJ1sz2M=;
+        b=qCqzf9+jKzTMyF4T3D6ci7AKsVRpvaFCJ1RQIwt4OmtiDbuSuRubfcjMs0r0yis6DW
+         avF0QM0RZi6slwZIC1/sPc+FCp8ASoBAmwYSmSgGdOQKAnH0AKmxq7E4UkgAKAw74QE1
+         YU4dHY9jFs4kNGDQeuzcVqVuoebTs/JoDlZh4SOkExDuqjCisvomSJqInAvN4nyhmOQb
+         AYY5GbEb5LzvVonacr0AnPDGTT941QSenS252c4Dt5/fla9AqKETUu/G4RUxTcTNzxb4
+         F7ydsbLPq/+BdhGFJkCqSQicFfoPOkyxmqfwUmsPx2SFx1AeF6rTXR4zAsCnAQg3qZSZ
+         oMvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719498861; x=1720103661;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=P6WlQhzaEQCr3M9aJ4AKzbvoi4K+rnc7BXOCfJ1sz2M=;
+        b=pfvHPXUCctRxmtXqMikeMFthfR+kRkpXSJeKE+DTRadnaa4oBlFkJo3HZrjCOP6B7f
+         /BrTmKbsRBRubaDKFSFbrb/cZ54PEuaY3i6Ltoy/MX/4b2m/6VBhA6mB8z3omA5aJaFj
+         lXOThokpSIPI4ao0jyhxpDmBciw3pNeWOFSLEtFIUUgWg7IgSVSCkVpCs/rKPmm5UEoL
+         hl5C9xVe4/e/eLRvnUXxxxDmQ6zjMRXAHJtskLKIDkNAQ6rR1DCUboYZqajToStpKARF
+         oKWWqA4YSmqOW6Vf6ZwZoQfHW0MRbonSS6K1mwFyHrfPxlzzjnDxXbJ6IVHeyheFhvUX
+         inFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUaTUmg2TjTmqfiNGuYGJKi1N9jAF/kBT91OBXFOcsUeHAzmR7twAy4DUTZauZkjbUp1+GTBXh8a91VthS6R9PVZCeVwzgZDt0GpILn8Q==
+X-Gm-Message-State: AOJu0Yw/klr7A1SzqZ/kftV+EtOSXcXzYZ1n/keVBIYaN5WIIQGVhPJL
+	oK23uHvFpDPWInjKdEwyJETX5/0e0dAZpJSjMuAZ7cixBkZ/leSaRfInck3lnoI=
+X-Google-Smtp-Source: AGHT+IFxKe4Cm33uzN1eEWdat5RzDVQ5k0Z6h4cYZ9qjbu7vikAxnG0ORLLkLC8mWQsd1fnj31WW1g==
+X-Received: by 2002:a2e:7a0a:0:b0:2ec:5277:e5b3 with SMTP id 38308e7fff4ca-2ec5b38840dmr90808491fa.36.1719498861291;
+        Thu, 27 Jun 2024 07:34:21 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-425692761a1sm3161575e9.10.2024.06.27.07.34.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jun 2024 07:34:20 -0700 (PDT)
+Message-ID: <da3e3b46-d8fd-4938-baa3-a7f95ec19d95@linaro.org>
+Date: Thu, 27 Jun 2024 15:34:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <948b6f71-7a72-d03d-c36f-ff4f08987f0d@linux.intel.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/6] ASoC: codecs: wsa884x: parse port-mapping information
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Banajit Goswami <bgoswami@quicinc.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
+ Neil Armstrong <neil.armstrong@linaro.org>, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20240626-port-map-v1-0-bd8987d2b332@linaro.org>
+ <20240626-port-map-v1-4-bd8987d2b332@linaro.org>
+ <tlaykv4bx6uizimz3jnprevwbuvygitvacbbdixzrwq4llaz6e@6qpswvidl4iq>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <tlaykv4bx6uizimz3jnprevwbuvygitvacbbdixzrwq4llaz6e@6qpswvidl4iq>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 24, 2024 at 07:44:26PM +0300, Ilpo Järvinen wrote:
-> On Mon, 24 Jun 2024, Greg Kroah-Hartman wrote:
+
+
+On 27/06/2024 14:38, Dmitry Baryshkov wrote:
+> On Thu, Jun 27, 2024 at 12:55:20PM GMT, Srinivas Kandagatla wrote:
+>> Add support to parse static master port map information from device tree.
+>> This is required for correct port mapping between soundwire device and
+>> master ports.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   sound/soc/codecs/wsa884x.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
+>> index a9767ef0e39d..72ff71bfb827 100644
+>> --- a/sound/soc/codecs/wsa884x.c
+>> +++ b/sound/soc/codecs/wsa884x.c
+>> @@ -1887,6 +1887,14 @@ static int wsa884x_probe(struct sdw_slave *pdev,
+>>   	wsa884x->sconfig.direction = SDW_DATA_DIR_RX;
+>>   	wsa884x->sconfig.type = SDW_STREAM_PDM;
+>>   
+>> +	/**
+>> +	 * Port map index starts with 0, however the data port for this codec
+>> +	 * are from index 1
+>> +	 */
+>> +	if (of_property_read_u32_array(dev->of_node, "qcom,port-mapping", &pdev->m_port_map[1],
+>> +					WSA884X_MAX_SWR_PORTS))
+>> +		dev_info(dev, "Static Port mapping not specified\n");
 > 
-> > On Mon, Jun 24, 2024 at 07:24:55PM +0300, Ilpo Järvinen wrote:
-> > > Hi,
-> > > 
-> > > This is v2 of the lenovo c630 IB branch with the build fix for non-ARM64 
-> > > platforms (built on top of the commits in the previous IB PR). Resent with 
-> > > full Subject line.
-> > > 
-> > > The following changes since commit 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0:
-> > > 
-> > >   Linux 6.10-rc1 (2024-05-26 15:20:12 -0700)
-> > > 
-> > > are available in the Git repository at:
-> > > 
-> > >   https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git tags/platform-drivers-x86-ib-lenovo-c630-v6.11-2
-> > > 
-> > > for you to fetch changes up to 13bbe1c83bc401c2538c758228d27b4042b08341:
-> > > 
-> > >   platform/arm64: build drivers even on non-ARM64 platforms (2024-06-24 18:22:15 +0300)
-> >
-> > So was the first one rewritten?  Or is this just the second patch on
-> > top of the previous one?
+> Same comment. Either dev_warn (if it's something to warn about) or
+> dev_info.
 > 
-> Nothing was rewritten, just one patch added on top of the previous PR. The 
-> previous PR had only 2 of these 3 commits:
+> Or, as your commit message mentions that it is required, it should be an
+> error if the port mapping is not specified.
 
-Now pulled into my tree too, thanks.
+This is an optional property for older SoCs which have 1:1 port map 
+between device and master.
 
-greg k-h
+
+--srini
+> 
+>> +
+>>   	pdev->prop.sink_ports = GENMASK(WSA884X_MAX_SWR_PORTS, 0);
+>>   	pdev->prop.simple_clk_stop_capable = true;
+>>   	pdev->prop.sink_dpn_prop = wsa884x_sink_dpn_prop;
+>>
+>> -- 
+>> 2.25.1
+>>
+> 
 
