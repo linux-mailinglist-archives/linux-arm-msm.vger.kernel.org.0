@@ -1,133 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-24459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD2D191A6BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 14:43:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74C0991A6F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 14:52:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 836171F237D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 12:43:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A07881C2200A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 12:52:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0CB715EFC2;
-	Thu, 27 Jun 2024 12:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03BFF178CE7;
+	Thu, 27 Jun 2024 12:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ixL28et/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L31l/y1Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C7415ECEF;
-	Thu, 27 Jun 2024 12:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF38178392
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 12:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719492210; cv=none; b=CZnuv/w2EF5TtssFPSqyCF8AcmqnVjSIxpTf3YxM69XXN2NHujZVvsOwVKGGMm2kgv7pVReQjEDuMkemfjZ/ld/x6oY0vQehrTYaaWqhjJD9tWmvMKlbXWAz7OlP0BJ3dRv2ZXpBmBNWHsXPHtpULjOPn+bWnHyiiWBDuDaZMu0=
+	t=1719492716; cv=none; b=JL+jKl353vaqBdXjcY5PyNsY9vn5os11Pj5tXbM+4zF59sS9X3dfRtZA75N5G9jrIVS13xEIqrgs0P1it8NZZzZyjfUm4nwmtUo9ysyfLO5WEsPjYvSI3989LPTJQGCBK5S3N0VeDUx+RN7RDxFZzdfhM5d1pqohpbNoJ6ZuR2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719492210; c=relaxed/simple;
-	bh=MIa5UbAwdN0MQZHDYIq4AocxOOiHJlQicygyyMYL9aU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lRF8Ul9G/vrjynbzR/FRX5lXRpyU0mGoGVk9aLgFdM7Q7TXQQC0Z9RUHpUnDtsEEw+rxyVfzs8Y6rKRRoqNh9hGvGXFHP3/2LhqEZ3yBqiPCdd6gJSuKIvkvXoahwcfYCf5zuI8GlANxUyUZ98CrP7Ty/Y42CuoBRpipr3smpXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ixL28et/; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1719492209; x=1751028209;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=MIa5UbAwdN0MQZHDYIq4AocxOOiHJlQicygyyMYL9aU=;
-  b=ixL28et/Cx921ZfyPz+SP9YS/Y8zAk8A0q/s2f/2/vx1Wq3FTTpTIKay
-   kLr1gw93kqlWb43HPx3YNg9tmp3z2f0clxiQGfZtt7FGMQ0RFVyjZnHwP
-   yNbSxr6A7XUyY1AY6slsmmVxQCBwzBoTb4iAhjQIBa8lWUSuPcKWmWlbI
-   orvV8wyNCb8IZv0QlzNSifGmHayLXqZ5LkOk7N5Kx4AdRpg6SOMBjRKY6
-   WVpWA4Hw4dlBOmAhQl2J06gCo3eBhfyJ2xIpp6HBX//gsc996jGri2hRv
-   EaeK+6+ftL+HtbmYBGmU2nkr4moG3tPKF1b97dv814D+xT4d5UySe+lj3
-   A==;
-X-CSE-ConnectionGUID: HXSwzJDbR3C8+M9dPg5xTw==
-X-CSE-MsgGUID: XEjtTFj6RhWK4/4+/+5I2g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11115"; a="20435161"
-X-IronPort-AV: E=Sophos;i="6.09,166,1716274800"; 
-   d="scan'208";a="20435161"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2024 05:43:27 -0700
-X-CSE-ConnectionGUID: wtTd6FqOQ+SyMrQRmMdeLg==
-X-CSE-MsgGUID: TxNoo/aqRMu0POgQB/IcaA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,166,1716274800"; 
-   d="scan'208";a="45022904"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by orviesa007.jf.intel.com with ESMTP; 27 Jun 2024 05:43:23 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sMoTA-000GCo-17;
-	Thu, 27 Jun 2024 12:43:20 +0000
-Date: Thu, 27 Jun 2024 20:42:29 +0800
-From: kernel test robot <lkp@intel.com>
-To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, sboyd@kernel.org,
-	andersson@kernel.org, bjorn.andersson@linaro.org,
-	david.brown@linaro.org, devicetree@vger.kernel.org,
-	jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org, mark.rutland@arm.com,
-	mturquette@baylibre.com, ohad@wizery.com, robh@kernel.org,
-	sricharan@codeaurora.org
-Cc: oe-kbuild-all@lists.linux.dev, gokulsri@codeaurora.org
-Subject: Re: [PATCH v9 8/8] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-Message-ID: <202406272012.krpg0wbC-lkp@intel.com>
-References: <20240621114659.2958170-9-quic_gokulsri@quicinc.com>
+	s=arc-20240116; t=1719492716; c=relaxed/simple;
+	bh=XtdvjmExmK9D2dS6fGUdUIVDepbUx+JmHx/WT1CKyFQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ngX5NDO7R+vz/qGkqxDeAt9x1/K8qSkPIP3g+uFEzYCZWQ0RZIklSCyYsWBmYzKvd40xqLS4iznw0vyxRw6zr0u0yimnYdy+Us4urw5FCKFCe8mn4FjtgproAGmAkxzqeY0bFjsppqXC+SEzoINV80wMdS1tdJN+KnnXRU54BNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L31l/y1Q; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3674e1931b7so276963f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 05:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719492714; x=1720097514; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fnYEn+08jqkRCijrF6N5I7CtgtXywXX5Pko+EhFcF/E=;
+        b=L31l/y1QDiu8q1GXO/OT/ybb//9oV1hJpaOHdLo7fjbsv+0FqcpD2H0GTWlDbwzlKT
+         vR7GdlC8P4iwMt4qMfDx+d4SgwONRnYtnfg1A2Wh/4gug3psmH27YrsQaLLr5DB3m/Ny
+         CLV+Ax2MRYyioVSEfzCIQwF1KYWezhB38JXBk5BJ69UW/z9ic7gD4bVS/xLk5G66WyQv
+         vHgrMGS4PRdUWO6HwwWMDYHP1PhYQpCqQj6QcJmuVqCzvaDbdP7kWmWu4LbMiRGhX0pY
+         FlVuUt4EXjMhLZZHWkcY7MN7GHMDsI9S6CXrbZRmg4JeTGe6caOxryt0sJ6D1KGhD/dK
+         5gyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719492714; x=1720097514;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fnYEn+08jqkRCijrF6N5I7CtgtXywXX5Pko+EhFcF/E=;
+        b=sJNOrzN4aTFTkJ3DDkufb/uox9BuEQuc6SrO7siJlmB28ECdW1FWMcavUSIXdKpQ1E
+         WHHRhrYXRdBDDVgKRgvCr46QzZPBVzFwCsjTNQzTgJ+lAnfME3jeyur257tH7B7m2hTK
+         vN7heXCe6SJmN48Asb8KhNYEeAZN+v0T9ZfVL3TNQ3/UnDNgw88xsENR8Po9W5HO0sTG
+         LUWAGvCjcjEjnqAcqLWhx+w6QzVL2JpqjCYC5YI3r651KIYVpmY3A4wlytJB5Xh/WbiA
+         Cn1jofaVzoeLAkSS361O4EyhgoiebVNuzBK/Siz+Kbj1Rahm7p3joytU78q2Zdp0VhN+
+         oVlQ==
+X-Gm-Message-State: AOJu0YzZejpRsSRMuPCx/DALcCXpHYsELnT1NoEfVIGOJ1bxzSFDNQEi
+	MUSJ+Cc/I5yNVhpxmcp2NV7GuWrF1O7z+SeYjefsOUiAl9XbnIYBIinZfUJzSkg=
+X-Google-Smtp-Source: AGHT+IEdepWeFKby2pWGXn4ajKkwBMT3yEWL/Z2uvHjUQvfydEqGgmbC1o+puPl/54j5hAOcRfQ47w==
+X-Received: by 2002:adf:ec43:0:b0:366:eaa7:1133 with SMTP id ffacd0b85a97d-366eaa711damr8511782f8f.46.1719492713031;
+        Thu, 27 Jun 2024 05:51:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:feeb:faed:66fa:9e6a? ([2a01:e0a:982:cbb0:feeb:faed:66fa:9e6a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3674357ff28sm1774577f8f.47.2024.06.27.05.51.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jun 2024 05:51:52 -0700 (PDT)
+Message-ID: <c71feb6b-4da5-4181-8b4a-2f5dac195135@linaro.org>
+Date: Thu, 27 Jun 2024 14:51:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240621114659.2958170-9-quic_gokulsri@quicinc.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 0/6] ASoC: codecs: wsa88xx: add support for static port
+ mapping.
+To: srinivas.kandagatla@linaro.org, Banajit Goswami <bgoswami@quicinc.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Manikantan R <quic_manrav@quicinc.com>
+References: <20240626-port-map-v1-0-bd8987d2b332@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20240626-port-map-v1-0-bd8987d2b332@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Gokul,
+On 27/06/2024 13:55, srinivas.kandagatla@linaro.org wrote:
+> Existing way of allocating soundwire master ports on Qualcommm platforms is
+> dynamic, and in linear order starting from 1 to MAX_PORTS.
+> This will work as long as soundwire device ports are 1:1 mapped
+> linearly. However on most Qcom SoCs like SM8550, SM8650, x1e80100, these
+> are NOT mapped in that order.
+> 
+> The result of this is that only one speaker among the pair of speakers
+> is always silent, With recent changes for WSA codec to support codec
+> versions and along with these patches we are able to get all speakers
+> working on these SoCs.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+> Manikantan R (1):
+>        ASoC: dt-bindings: wsa883x: Document port mapping property
+> 
+> Srinivas Kandagatla (5):
+>        ASoC: codecs: wsa883x: parse port-mapping information
+>        ASoC: dt-bindings: wsa8840: Document port mapping property
+>        ASoC: codecs: wsa884x: parse port-mapping information
+>        arm64: dts: x1e80100-crd: fix wsa soundwire port mapping
+>        arm64: dts: x1e80100-qcp: fix wsa soundwire port mapping
+> 
+>   Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml | 8 ++++++++
+>   Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml | 8 ++++++++
+>   arch/arm64/boot/dts/qcom/x1e80100-crd.dts                 | 4 ++++
+>   arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                 | 2 ++
+>   sound/soc/codecs/wsa883x.c                                | 8 ++++++++
+>   sound/soc/codecs/wsa884x.c                                | 8 ++++++++
+>   6 files changed, 38 insertions(+)
+> ---
+> base-commit: 9935be184a55dd84fc3275094f2df095491f6ea1
+> change-id: 20240626-port-map-ef50c3304d4a
+> 
+> Best regards,
 
-kernel test robot noticed the following build warnings:
+I now have both speakers working !
 
-[auto build test WARNING on remoteproc/rproc-next]
-[also build test WARNING on clk/clk-next robh/for-next linus/master v6.10-rc5 next-20240626]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Gokul-Sriram-Palanisamy/remoteproc-qcom-Add-PRNG-proxy-clock/20240625-162317
-base:   git://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git rproc-next
-patch link:    https://lore.kernel.org/r/20240621114659.2958170-9-quic_gokulsri%40quicinc.com
-patch subject: [PATCH v9 8/8] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
-config: arm64-randconfig-051-20240627 (https://download.01.org/0day-ci/archive/20240627/202406272012.krpg0wbC-lkp@intel.com/config)
-compiler: clang version 19.0.0git (https://github.com/llvm/llvm-project ad79a14c9e5ec4a369eed4adf567c22cc029863f)
-dtschema version: 2024.6.dev1+g833054f
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240627/202406272012.krpg0wbC-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202406272012.krpg0wbC-lkp@intel.com/
-
-dtcheck warnings: (new ones prefixed by >>)
-   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@59000: 'vdda-pll-supply' is a required property
-   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
-   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@59000: 'vdda-phy-dpdm-supply' is a required property
-   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
-   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@79000: 'vdd-supply' is a required property
-   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
-   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@79000: 'vdda-pll-supply' is a required property
-   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
-   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@79000: 'vdda-phy-dpdm-supply' is a required property
-   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
->> arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: /soc@0/remoteproc@cd00000: failed to match any schema with compatible: ['qcom,ipq8074-wcss-pil']
---
->> arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dtb: /soc@0/remoteproc@cd00000: failed to match any schema with compatible: ['qcom,ipq8074-wcss-pil']
---
->> arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dtb: /soc@0/remoteproc@cd00000: failed to match any schema with compatible: ['qcom,ipq8074-wcss-pil']
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Thanks!
+Neil
 
