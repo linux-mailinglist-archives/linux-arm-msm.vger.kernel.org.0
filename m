@@ -1,176 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-24439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D97691A58A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:43:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 084AE91A5C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:56:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18C892879AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 11:43:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C0E81C21860
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 11:56:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D031D153512;
-	Thu, 27 Jun 2024 11:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3620714F12D;
+	Thu, 27 Jun 2024 11:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="GVfJ7Xx9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CyMoeFw5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A6D14D439
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 11:42:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5273B14C58E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 11:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719488556; cv=none; b=N4h1vyuIii4KPyCQqLzeYA8MiPUdRb2yADauYh44KHD+C+wcPN/B17y8CpriI6xjSUbwzVF2jlT0Ov8xwePVTlWJRADZkaR5BFHs7XoZ5IgBu0faSqnCH3SMcj1J2vdLhYPNanv6qPkpz1eNOKJwop23a6XGf2UjACOBftS5x/4=
+	t=1719489362; cv=none; b=Wto0OOj2ZKYoR+dKrioNkdeaAMm8wpq3G+p1obcVKAwn417zWUMZCj6EXEtwcUhHoPDborZgTEtGaM8Ly04ITDifi9SFrJEs/XZq7qAwBmR/SdX4b7vJE/nESiTUBM/QIX0akLfPwon3WteMVKNajDj100c4O8fuHgSmPZQBK4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719488556; c=relaxed/simple;
-	bh=Cp32Pu1b4qdvwG4MqaQJjhA91oKfXkdPNuaQC8YNSYY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWaSSdNtn+vuA4QoaldUAShrKSUYZj8GAWogIF2SwjZMWWuOXEsjxbQwkT/CCbpmR87+UwB3Lob+SDQdpDcKYCv95JkrFICqCxVYPZQv367K2bQazO/12+ecD+l+ZkV7tURGoUTrFY1B48LNM7l86VKcqUx6iSyV6aW6B1eBcs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=GVfJ7Xx9; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42562fde108so8950695e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 04:42:35 -0700 (PDT)
+	s=arc-20240116; t=1719489362; c=relaxed/simple;
+	bh=Y6a+CFWgHPXv6qT5Hp7vM6uhEG/AZf1fZ0Ct7WBiP/4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=lx/tu+2EUQ06SisIT+2hkwNGqIA3Yt2BClnTIvEVu5ieHdrcPBAnxpZfE7mGlON98UFjCLNZy6ubWnNeYdM82xebaBRIb4SDEiqyIvkZX9H+I++9MFZ7nupHnuqfWeMNl8aZojKdtk5MfNkMATYTCLUBkF16XVUfgF+QZqsbsm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CyMoeFw5; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3636c572257so6322132f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 04:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1719488554; x=1720093354; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Utu62SipIuGJMuPgvDsQSrOMyAYgRR9Y4Q5dZdj1qKs=;
-        b=GVfJ7Xx9m+lLkplnoSK6ha+2aeQE8xL2CUoJZ1oTjzbgYfQoymmoHAhLgjAAvecYcY
-         i1gojht6LZYTsQ/MklHPxh4H3OZiVfUtNQb3+H0/1lkfnjEiM1Ijm9WYgaAkY1xPsZBK
-         HMQ8w3s3chsA+xaAmWlHKWCTY+O8bsXK5nR0wlKDXI4IlBD9RMEHUVFRoxiX69TSW1BG
-         BEISXWCoab1qDvkv8gi02LHQ19ZOD8o3DuRLLsuO7u9y6RXMm8SjAh/bWKA5DdNeOkOy
-         UptSlrV9pGYvJio4wmpgjshTkYWPvgoFYqD15XSFaqg7RFwmT2Fe15SaYXW4WQHqh9qj
-         n4tQ==
+        d=linaro.org; s=google; t=1719489359; x=1720094159; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9YnmAO3MDDhvSz55Ee35ZPJLjBLn/4qKkbnLt4Qs0cQ=;
+        b=CyMoeFw5y3JjPWidmTQzu27i2lq1V0p4cVkRxy7TRnh3WdoxxJ08Gr5YSwloJgReMS
+         79lYjJZsXdMCuum2R3or0pQ5bXP9nwOOopKNWCOz8v+t4JNS+SNqsdKsusKNhvN/QOu/
+         VpvRcOliMLSm+YzN4AcvOwb3RU0hwOdumMDIL4GWaufLjk3Iy/ZyvHJUC4z+rKc0yqQw
+         P4++n2UfIojk0WAWhaZZxvNB7hf4yLpbWHTJNFVU8J5b3p9ewoRYItTxmzdj/E/L+gs2
+         t761/kX3mG47kGtNUgJFKUQT3v7jS29KHjgfloLGnmo4kr1wlyrmvcbfzVnXpK0FI57Q
+         Tg3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719488554; x=1720093354;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Utu62SipIuGJMuPgvDsQSrOMyAYgRR9Y4Q5dZdj1qKs=;
-        b=CIPXW9uJI9Bu5l9UqCaF5zADu9PbK51csHPBgCRSSzx+e6lOtrStJchWkJY09jglLa
-         i9p0oMIXUIYba3G9nfGblCtbjDn0u9/BlegIkd9/sKkYZU8lFQGnbaf69XKdEp25dC8i
-         IXwKZ2dn3+G7tYghc50n37WrAeBPCKyde+3kmznWKp/mfNfLPMpPhrmsujVrjU1eKKiG
-         yaQ59a5aOdUDAnV09Z/R4H9F/7GOufVgygl/jM+N1FS/0+001vmAq4CMslcVBT+dccrp
-         EIq2WqQXe+izZQ26HsGn+BP2OmoGG8Ak1uyf4JiTc70mT9cBDmqsd2Ayp8Ua+14Rcr5c
-         qhUg==
-X-Gm-Message-State: AOJu0Yy8zxCnePpwyCJ4t381L+5KTcWsuhGcKy7d9kEN/I9zeDMcbdKQ
-	sUPmr/aAEuj1fycEHy78QNPmIbZg8ao0QdMHjn+LB9DOym4muLvZre//QlO9SjI=
-X-Google-Smtp-Source: AGHT+IF8YHiS2tWoyurxK/8FcnUpN/pdGQ/FxdIdmrzhm6Hnznyd2lXDWq+qrtt7fdmt8eKX4v9HTw==
-X-Received: by 2002:a05:600c:4fcb:b0:421:c211:a57e with SMTP id 5b1f17b1804b1-4248cc6673emr83042835e9.35.1719488553848;
-        Thu, 27 Jun 2024 04:42:33 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:7fe5:47e9:28c5:7f25])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36743585276sm1554749f8f.62.2024.06.27.04.42.30
+        d=1e100.net; s=20230601; t=1719489359; x=1720094159;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9YnmAO3MDDhvSz55Ee35ZPJLjBLn/4qKkbnLt4Qs0cQ=;
+        b=q6IWWq4LSS1nIWO8x7IY9uvKUQrqpXEmcdzo1IOfKKfh7tVX0u8p1H3oJ4nypnR9KY
+         2aRnFFFB+E9As16AplqglgzsuG6o3nHNV29wJGlMYUSDHdwGB2HYTdSo6xX6kp6gj+ow
+         lSCeVCvd/Qp6om9pyMoDCDiQ7JXhOkfdHl+O7VOagWYX2T3JvPwi/qpCLfvSN7W54BLH
+         YP8Hcf3HwRFSWJPfG04JBt/9wiO9Wgn9XfCq8bqIfXmNmhx7qnETnko4i8ypSTL5SUIf
+         XpH7/7HZDZ8fp6OlbEaqghKmXUG/wzUnxUpQoIcCAPMDYXA6Oq2tlTohLQMLYSCxBW8h
+         tz3g==
+X-Gm-Message-State: AOJu0YwRsvsrTZ/zvJOZWXvZkrV/a4KBWuN4JKsPuWV9G115CmNrduvh
+	NIXMlUVH19SulAyxJvw9sPQBY15VWL540jcfqwiaDph9jMw3B8toZNkpFxXxF8A=
+X-Google-Smtp-Source: AGHT+IFCcsrDv77XmQBH18HYnTVf9w5zIC4CEAbu4wPpEDmsx0NRwUNfy6dTe2MXhewFcCnLX56l3w==
+X-Received: by 2002:a05:6000:4594:b0:362:c7b3:7649 with SMTP id ffacd0b85a97d-366e95eaeedmr10169584f8f.56.1719489358695;
+        Thu, 27 Jun 2024 04:55:58 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3674369980asm1597552f8f.80.2024.06.27.04.55.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jun 2024 04:42:30 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v3 3/3] arm64: dts: qcom: sa8775p-ride-r3: add new board file
-Date: Thu, 27 Jun 2024 13:42:12 +0200
-Message-ID: <20240627114212.25400-4-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240627114212.25400-1-brgl@bgdev.pl>
-References: <20240627114212.25400-1-brgl@bgdev.pl>
+        Thu, 27 Jun 2024 04:55:58 -0700 (PDT)
+From: srinivas.kandagatla@linaro.org
+Subject: [PATCH 0/6] ASoC: codecs: wsa88xx: add support for static port
+ mapping.
+Date: Thu, 27 Jun 2024 12:55:16 +0100
+Message-Id: <20240626-port-map-v1-0-bd8987d2b332@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACRTfWYC/x2NQQ6DMAwEv4J8xlIIKYd+peJgglN8IAkOQkiIv
+ zf0ONpZzQWFVbjAu7lA+ZAiKVbo2gb8QvHLKHNlsMY6M9gBc9IdV8rI4WV83xs3O4KqT1QYJ6X
+ ol+ew+bRiSIqRz/3Zs3KQ85/6jPf9A60tv1p6AAAA
+To: Banajit Goswami <bgoswami@quicinc.com>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>, alsa-devel@alsa-project.org, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Manikantan R <quic_manrav@quicinc.com>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1696;
+ i=srinivas.kandagatla@linaro.org; h=from:subject:message-id;
+ bh=Y6a+CFWgHPXv6qT5Hp7vM6uhEG/AZf1fZ0Ct7WBiP/4=;
+ b=owEBbQGS/pANAwAKAXqh/VnHNFU3AcsmYgBmfVNNbQVTHgiekg0lErk4gt5ZWmMGBmysToq7S
+ t48/kIo622JATMEAAEKAB0WIQQi509axvzi9vce3Y16of1ZxzRVNwUCZn1TTQAKCRB6of1ZxzRV
+ N6V/B/9AkRh3hlZAiigVdic/fNvxeVo66fZnqgO/Q8IAgdIpjMxo7qSFqoMZFmordGgniBjUHUS
+ kfY3HrEHUV6I6pPpVzVn2AFmv/OXXzHO2qN7UEYWyF4CfTxpjwEVMjMHZTUOOF9l9E8ppfCzjoc
+ jc9KYXFGb3TREZx/wLZ+7Q5kMHnhmYnrGZv3Ch7vLjN3dVaZ3OYWOQF71+08qwJrlg5oaflKgwL
+ bk1YKD9vzdOO56TkEI5Gycsec2yaWwUmHDsSxW859bUdeUQTLPCxw4+vyRqOMGIuyEP9W615rKM
+ UJSgbtUu4Jt296ZnPZS4OVbCgHyU444GWLGHdEbdx3igEKRT
+X-Developer-Key: i=srinivas.kandagatla@linaro.org; a=openpgp;
+ fpr=ED6472765AB36EC43B3EF97AD77E3FC0562560D6
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Existing way of allocating soundwire master ports on Qualcommm platforms is
+dynamic, and in linear order starting from 1 to MAX_PORTS.
+This will work as long as soundwire device ports are 1:1 mapped
+linearly. However on most Qcom SoCs like SM8550, SM8650, x1e80100, these
+are NOT mapped in that order.
 
-Revision 3 of the sa8775p-ride board uses a different PHY for the two
-ethernet ports and supports 2.5G speed. Create a new file for the board
-reflecting the changes.
+The result of this is that only one speaker among the pair of speakers
+is always silent, With recent changes for WSA codec to support codec
+versions and along with these patches we are able to get all speakers
+working on these SoCs.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile            |  1 +
- arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts | 47 ++++++++++++++++++++
- 2 files changed, 48 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
+Manikantan R (1):
+      ASoC: dt-bindings: wsa883x: Document port mapping property
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 5576c7d6ea06..8b7a81b82213 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -113,6 +113,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sa8540p-ride.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sa8775p-ride-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-acer-aspire1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc7180-trogdor-coachz-r1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
-new file mode 100644
-index 000000000000..ae065ae92478
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dts
-@@ -0,0 +1,47 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include "sa8775p-ride.dtsi"
-+
-+/ {
-+	model = "Qualcomm SA8775P Ride Rev3";
-+	compatible = "qcom,sa8775p-ride-r3", "qcom,sa8775p";
-+};
-+
-+&ethernet0 {
-+	phy-mode = "2500base-x";
-+};
-+
-+&ethernet1 {
-+	phy-mode = "2500base-x";
-+};
-+
-+&mdio {
-+	compatible = "snps,dwmac-mdio";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	sgmii_phy0: phy@8 {
-+		compatible = "ethernet-phy-id31c3.1c33";
-+		reg = <0x8>;
-+		device_type = "ethernet-phy";
-+		interrupts-extended = <&tlmm 7 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
-+		reset-assert-us = <11000>;
-+		reset-deassert-us = <70000>;
-+	};
-+
-+	sgmii_phy1: phy@0 {
-+		compatible = "ethernet-phy-id31c3.1c33";
-+		reg = <0x0>;
-+		device_type = "ethernet-phy";
-+		interrupts-extended = <&tlmm 26 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
-+		reset-assert-us = <11000>;
-+		reset-deassert-us = <70000>;
-+	};
-+};
+Srinivas Kandagatla (5):
+      ASoC: codecs: wsa883x: parse port-mapping information
+      ASoC: dt-bindings: wsa8840: Document port mapping property
+      ASoC: codecs: wsa884x: parse port-mapping information
+      arm64: dts: x1e80100-crd: fix wsa soundwire port mapping
+      arm64: dts: x1e80100-qcp: fix wsa soundwire port mapping
+
+ Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml | 8 ++++++++
+ Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml | 8 ++++++++
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts                 | 4 ++++
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                 | 2 ++
+ sound/soc/codecs/wsa883x.c                                | 8 ++++++++
+ sound/soc/codecs/wsa884x.c                                | 8 ++++++++
+ 6 files changed, 38 insertions(+)
+---
+base-commit: 9935be184a55dd84fc3275094f2df095491f6ea1
+change-id: 20240626-port-map-ef50c3304d4a
+
+Best regards,
 -- 
-2.43.0
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
 
