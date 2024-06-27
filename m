@@ -1,151 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-24467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E88FC91A7F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 15:35:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 383FA91A7FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 15:36:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2CC69B242E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:35:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E696B288A02
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:36:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B95EC19415D;
-	Thu, 27 Jun 2024 13:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C463F1946B1;
+	Thu, 27 Jun 2024 13:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZUsRIpzK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jqqdAR5z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53CF186E59
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 13:35:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090841940AA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 13:36:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719495342; cv=none; b=bZkj8IK8Y5duVy778f5QTgVtwd5lcnauhDpW+0x+76ljYe6lSiGCh61OFv1bJ93WU2pf57wIKxzICYo3A7+gB4Zqm7bUUd5MXcyVDdvIrnA62BGEzSgZMCNxLpeVj3eV1PQSk7rMapEWJS2msON+3aKfD9VNqaUMCooJzqGOx6U=
+	t=1719495393; cv=none; b=NBv7qWDP1UqVyxC7yUHSEYJTAcIyqj9VCPy26hw0CFlreWgPkp4LPwSeUHGgX1bytDIONd5RcfOSdVrwQSck6RYlZcBw75CezVrcrmG068Q5CmhCENFRxi26+MGl4vAgsg1sXlZeL1jD6NiEt/hvc/l2hI6wa8Ca13niOQ2Dfik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719495342; c=relaxed/simple;
-	bh=ECkLSbvH8iNObOSfLRnRBRh9gep68lBkVwbXIQFEdNY=;
+	s=arc-20240116; t=1719495393; c=relaxed/simple;
+	bh=jrJYPSTr+kFC6rNqtUiTcC2Ht6Y5ui2Su1TvOnzxGV8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Uox21UG2AT94wOVV+cEx7pyeTh5Y5Y89jLbBCDCxvLKgc2az+8tCH+PntB7sd6Iz4qyzz6t+omH4agf7+EKf5TY1xVB0SC6ay9m5KNTMYmvx0mwBZRx12mw6XgFN2i5yucbPNsIQkL1tJrqXJ/7QoQNb7lkrbgCQZRS4A1+++7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZUsRIpzK; arc=none smtp.client-ip=209.85.167.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=rnNdcgu1ArFR6C2kPWUCRWgVQvciTY7pUof72IWBACV8lj4KFJWVyUutBY6Czb46JZlNKM4EOEdvaWxr2oX4BUf+nqgZpfP1k6SYrfFxkcK6D0E6QjsZ59NrfAx4Utlsli0Wnejpal35DmeBS+uU4Q5mNRc+v5+EoLSyfXxsmZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jqqdAR5z; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52cdf4bc083so8387165e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 06:35:40 -0700 (PDT)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52cdbc20faeso7682724e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 06:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719495339; x=1720100139; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZTpZBZTgTtJPGy1DDYqfUaipYcevWqb53smMmBjlmaU=;
-        b=ZUsRIpzKPmFLPjWeWauv/NVMjwoq9m8ioZB6Bo5/Ne2iHUKVbZHNJ4EIKW36J601+O
-         m6mNUnZDJFcV9Eb/Cl1ODUxfjm7Ge3iJ8HL1vWJS878JOiFpWH1rkExKu8UGyTZlztNi
-         9bL1RR3Kvr20X+KHGwK+FDpG6RWcHmY4odD18fSPUSVb2BZfu74GrIeu9pcxxBdl0+KM
-         5uihcUVa06TU/KvJ+569GUh9Qs5nIsIlhWhOL9JgbA7aNm0cjMZw7kR0rY7tX3zrunMG
-         xVVUHn2V8I2D+dOlKgy95PG96nyqL/j5fRegIDQDcWt+jtGBVhpa+3oxkOlBmaDQaRtq
-         DWBg==
+        d=linaro.org; s=google; t=1719495390; x=1720100190; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=k1OXb7hatY4Mkr6yC8g71Li7XpW45pDJLNXcPT5PB5o=;
+        b=jqqdAR5z1A30dqwKb86648/w88Fte3dd72x9JW7AACLuGKhhIEyzZPXr+wgcknwJVn
+         SS4G2e49DzqoYSWChui25WwqYp6xQXUGKtDfsP2OuSHEZSVNyUoUWlyFW+NHC0shpHji
+         fjsPnpfPIQBqGrF1FyRM21Fqw4neWGHZsxNmvfG4WjAtfHneFzFHC8Iypee85iMmSbwo
+         vG89CwvCUlPtt1wTxa8152MCE5fxvF4N+FLnFSCbI0888rdskEjN6LYCeXweQUOxzger
+         GdgkifOFXZGtVisAspAe7UjKZtBhCj/G4Rv/CZFVhllwJpyaqTGOY/XTKbRinoDMFqEz
+         LJnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719495339; x=1720100139;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZTpZBZTgTtJPGy1DDYqfUaipYcevWqb53smMmBjlmaU=;
-        b=I+YI7waVilYm1yBgzGwfpHuHXWQkIhXc/APcYwIVIhy9+ubi+T5pYjD1OmXph98PIS
-         fAOjVe3qyR2SOejkCTpAUN0y+mfiKmJaDv7vJyOYjPz2xKE/Tu7SCDeOKYWYjDsPUgLo
-         5hPdOldMF/vtQlalFLW4EIXOFqVuWT7soFpcAdS9sNu3sXp+AAXmujXQfi/M7eOG0puR
-         RmE1wtMkLkoZV2EqJC/ahmrXS5IlaQQg6t9pXgD8VrhuMShkz1z5eyzVeW4iQuT7Q6Qu
-         eIFRjXgOgV/+9G2wB6ufXDnL85/C5Q3G0ZXqyZgaU7b9Ikh86uI23iEQSyJ/CTg/tgjx
-         OENg==
-X-Forwarded-Encrypted: i=1; AJvYcCVgBNk1IoFqE5pFF4ez9u8ssODEi4Tn4n1OaT80dpvZJya6arL4pZFfIPjgUECZLgvXlA43Hw6W0mpHEezhoGun98Q47AlYrzy6rEWicw==
-X-Gm-Message-State: AOJu0Yx5ankp8CHmJnLxcBkvHSKCdEI2RatWwXCxIzyzO9VPQ1kS8JZz
-	hHMMQi7/XANxdey/ap/znD4dsw0hDjd119qYsthV+J7wGw8n0DWC4Y0QrtzLrlQ=
-X-Google-Smtp-Source: AGHT+IGu+u7lilJ/SxexYfMDvtjObFRCTV7LJmuSqktWIcvggXQyFmIyf0BupY2gXWdHAQKjaV1txQ==
-X-Received: by 2002:a05:6512:556:b0:52c:df5f:7b4e with SMTP id 2adb3069b0e04-52ce0620086mr10409184e87.38.1719495339003;
-        Thu, 27 Jun 2024 06:35:39 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719495390; x=1720100190;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k1OXb7hatY4Mkr6yC8g71Li7XpW45pDJLNXcPT5PB5o=;
+        b=UKe382Bjgimh+MNv8xkAWtiZvL6UkqHs7FGvblL+GnKGIkBia8D9Lz2gkD6htIz0rY
+         ixob1pCSBS0MFMadMD8ELypRz3J9zRwxoWmyoJwH1FywRq0pW521EGj5ZyXArhPn4C+L
+         fMkwPS5W/4jGHweNhrPsbqxRJDYqOTad3Wx0OUwDTGJlmboyyUx+NWdh2NLJRShX1uFB
+         FdkinPmFQX3f6ZjorPQTuN8juirBo9Ix6Gl6DIjsq5fbUnqnl/QFcaO3NEvPbFz2F8eb
+         BT8X7KgIIb2tPKIzNmNHRSdL3L8swrOz+ZJAJWWbkzTueNoIAslyagYorz5q55suyB8C
+         2A9w==
+X-Forwarded-Encrypted: i=1; AJvYcCUStj5SKbkpNi97fRaCEhJ6XuRveKVyYbWlAvbuMwoJB1pcs7zI5C7VclbDoNCYuyMHgl6XGgDYEu5OAc5qDeuTTS1qSi3MAk2J2/62NA==
+X-Gm-Message-State: AOJu0YyVvJX6KDFHVJ8keR/suSwk+dQDQkaZ4AkrzKLjLmAOPHy3TATz
+	0rVq8UhpCDLaF80xfSthgjX0/CkRnkyGvrUfy9GmpfNs78m+EKXQBMc6nyPX0JA=
+X-Google-Smtp-Source: AGHT+IEntGnW3r885rD535krGu3gOxLvLpYzJ1lI50RGmo2x6rQxE9vDmBzx8zivqRScd/qzBnU23w==
+X-Received: by 2002:a05:6512:2813:b0:52c:dfe6:70e2 with SMTP id 2adb3069b0e04-52ce185f9efmr10637532e87.47.1719495390235;
+        Thu, 27 Jun 2024 06:36:30 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e71305ebbsm207295e87.126.2024.06.27.06.35.38
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e76427d7dsm62272e87.156.2024.06.27.06.36.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jun 2024 06:35:38 -0700 (PDT)
-Date: Thu, 27 Jun 2024 16:35:37 +0300
+        Thu, 27 Jun 2024 06:36:29 -0700 (PDT)
+Date: Thu, 27 Jun 2024 16:36:28 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Gokul Sriram P <quic_gokulsri@quicinc.com>
-Cc: sboyd@kernel.org, andersson@kernel.org, bjorn.andersson@linaro.org, 
-	david.brown@linaro.org, devicetree@vger.kernel.org, jassisinghbrar@gmail.com, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com, 
-	robh@kernel.org, sricharan@codeaurora.org, gokulsri@codeaurora.org
-Subject: Re: [PATCH v9 1/8] remoteproc: qcom: Add PRNG proxy clock
-Message-ID: <ybcxapxxq7ieguql3lxebxpgd7mt2hsvjoaohaynhyymrbjgyl@visloguhac4d>
-References: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
- <20240621114659.2958170-2-quic_gokulsri@quicinc.com>
- <chi3pzh5ss3mivnhs3qeoen5hsecfcgzaj6qnrgxantvinrri2@bxsbmpufuqpe>
- <73cb638e-4982-49a2-ba79-0e78402b59ad@quicinc.com>
- <ga5kczcyn3dqoky4525c74rr7dct5uizun2smvyx3p3u6z6vtm@5vshoozpttod>
- <2617940e-72ad-4214-be26-7a5b15374609@quicinc.com>
- <dyh3vxosjjfztgwgpb5jtoqhzfyf5jyfndaujqoslepzvbet4o@kx6xaotzazcs>
- <2ba4b368-d706-4723-a0aa-f1579600db23@quicinc.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Banajit Goswami <bgoswami@quicinc.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
+	alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 2/6] ASoC: codecs: wsa883x: parse port-mapping information
+Message-ID: <z7wmi55kimskgfcon2difo6agc5nwkssehao72w3mtq3u2ig4f@msmv2on6mw62>
+References: <20240626-port-map-v1-0-bd8987d2b332@linaro.org>
+ <20240626-port-map-v1-2-bd8987d2b332@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2ba4b368-d706-4723-a0aa-f1579600db23@quicinc.com>
+In-Reply-To: <20240626-port-map-v1-2-bd8987d2b332@linaro.org>
 
-On Thu, Jun 27, 2024 at 04:59:38PM GMT, Gokul Sriram P wrote:
+On Thu, Jun 27, 2024 at 12:55:18PM GMT, Srinivas Kandagatla wrote:
+> Add support to parse static master port map information from device tree.
 > 
-> On 6/27/2024 4:38 PM, Dmitry Baryshkov wrote:
-> > On Thu, Jun 27, 2024 at 03:31:01PM GMT, Gokul Sriram P wrote:
-> > > On 6/27/2024 12:47 AM, Dmitry Baryshkov wrote:
-> > > > On Tue, Jun 25, 2024 at 11:03:30AM GMT, Gokul Sriram P wrote:
-> > > > > On 6/22/2024 2:38 AM, Dmitry Baryshkov wrote:
-> > > > > > On Fri, Jun 21, 2024 at 05:16:52PM GMT, Gokul Sriram Palanisamy wrote:
-> > > > > > > PRNG clock is needed by the secure PIL, support for the same
-> > > > > > > is added in subsequent patches.
-> > > > > > Which 'same'?
-> > > > > > What is 'secure PIL'?
-> > > > >     will elaborate in the updated version.
-> > > > >     To answer your question, secure PIL is signed PIL image which only
-> > > > > TrustZone can authenticate and load.
-> > > > Fine. So, the current driver can not load WCSS firmware on IPQ8074, is
-> > > > that correct? Or was there some kind of firmware interface change? The
-> > > > driver was added in 2018, so I can only hope that at that point it
-> > > > worked. Could you please explain, what happened?
-> > > The existing wcss driver can load unsigned PIL images without the
-> > > involvement of TrustZone. That works even now.
-> > > With the current change, we are trying to add signed PIL as an option based
-> > > on "wcss->need_mem_protection" if set. For signed PIL alone, we send a PAS
-> > > request to TrustZone to authenticate and load.
-> > I see that you are enabling it unconditionally for IPQ8074. How is it
-> > going to work?
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
+>  sound/soc/codecs/wsa883x.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> Correct Dmitry. In this change, it is forcing secure PIL. With a separate
-> driver for secure PIL, this will be sorted right?
+> diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+> index a2e86ef7d18f..43156d39480f 100644
+> --- a/sound/soc/codecs/wsa883x.c
+> +++ b/sound/soc/codecs/wsa883x.c
+> @@ -1399,6 +1399,14 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+>  	wsa883x->sconfig.direction = SDW_DATA_DIR_RX;
+>  	wsa883x->sconfig.type = SDW_STREAM_PDM;
+>  
+> +	/**
+> +	 * Port map index starts with 0, however the data port for this codec
+> +	 * are from index 1
+> +	 */
+> +	if (of_property_read_u32_array(dev->of_node, "qcom,port-mapping", &pdev->m_port_map[1],
+> +					WSA883X_MAX_SWR_PORTS))
+> +		dev_info(dev, "Static Port mapping not specified\n");
 
-That depends. How will the running system decide, which driver to use?
-It can not be a compile-time decision.
+dev_info looks strange. It should be either dev_warn or dev_dbg.
 
+> +
+>  	pdev->prop.sink_ports = GENMASK(WSA883X_MAX_SWR_PORTS, 0);
+>  	pdev->prop.simple_clk_stop_capable = true;
+>  	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
 > 
-> Regards,
+> -- 
+> 2.25.1
 > 
-> Gokul
-> 
-> > > I also just noticed that Bjorn had suggested to submit a new driver for the
-> > > PAS based IPQ WCSS instead of overloading this driver. Will also address
-> > > that and post a new driver in updated revision.
-> > > 
-> > > Regards,
-> > > Gokul
-> > > > > > > Signed-off-by: Nikhil Prakash V <quic_nprakash@quicinc.com>
-> > > > > > > Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> > > > > > > Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-> > > > > > > ---
-> > > > > > >     drivers/remoteproc/qcom_q6v5_wcss.c | 65 +++++++++++++++++++++--------
-> > > > > > >     1 file changed, 47 insertions(+), 18 deletions(-)
 
 -- 
 With best wishes
