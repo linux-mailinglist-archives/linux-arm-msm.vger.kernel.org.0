@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-24406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06BB591A09E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 09:42:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC77F91A0D5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 09:52:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B19C81F21C5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 07:42:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78F611F21C62
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 07:52:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C3875589A;
-	Thu, 27 Jun 2024 07:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C7686BFBA;
+	Thu, 27 Jun 2024 07:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="opCS1+a2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T0BJLXhi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1898153364;
-	Thu, 27 Jun 2024 07:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C30F757FC;
+	Thu, 27 Jun 2024 07:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719474158; cv=none; b=WzhCDeHhjqCRVK4NysnYM3ElOkLXBXhWXJ8odeZDKEBII/BNCcLif5AZ1do/hG6TmS6lfenFLq/pCuldQMSH4dqOcexdRCwlQB19JqeISrJFMgL5sPyldSYldbkSdF++IOSaU8bRz1ZX/UBgBrdHcS4DHVk14AwihxbrSiFDIfk=
+	t=1719474730; cv=none; b=O3HoZlpPD5Rbs5dCqjWvAjDh8Oc1eU6KxXz3QB7AJQD5n7bFY9tlYfSayL5g0FXVmX+bylZmNfo+7bVUwTgnabzhzttY4qoUQnXPlevb4gI0rN7Vo6Hjs5U0F7ajN37c7obgouP/h/Z13Le+GI2JhiRFBxflu8OYyWAQG/WpLTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719474158; c=relaxed/simple;
-	bh=+6/2eiODOce3fiw5XiGEEaZr7L+CuCqnH8p7dDX7VA8=;
+	s=arc-20240116; t=1719474730; c=relaxed/simple;
+	bh=r5Ora7NJm4b3J7GjnuLYbXtVWjEwJaLXHlU1alQnOjI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OM997M2ZAQNaIeHdIPn/16zvWzuvCEsl9rZaKy4wgmdQxJ0wKbhxjUfljIOZimotZVkK36QtwknBJ7Xbj2cZAGxtDGnkJD6OmvOf/IDx+Rrurt0u0uXXaZLMb/Fh0lZJa12wRkqPCUVhLRg1xNND56iyNmx1gmkLFk52k9qxbuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=opCS1+a2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F42C4AF09;
-	Thu, 27 Jun 2024 07:42:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=mVyG9MZxMUKU1W0nM+QLdu8sjeSAxZFYnYMwohb7BT5pQ2Ab16QFUHXwjySwHmrVnd6NwMaUazm4nNVEdT1vSbeDtcHoq3SccNMq1TfaYZqWc9Ruq9lQt+4e71m4QpYRk3mH7W2CBB2PdMEenjYZubmR+ocZK3Jh0Rv/trcBnhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T0BJLXhi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED32C2BBFC;
+	Thu, 27 Jun 2024 07:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719474158;
-	bh=+6/2eiODOce3fiw5XiGEEaZr7L+CuCqnH8p7dDX7VA8=;
+	s=k20201202; t=1719474729;
+	bh=r5Ora7NJm4b3J7GjnuLYbXtVWjEwJaLXHlU1alQnOjI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=opCS1+a2JVdpqvYfM7Z+r2tDEyViU982n3s9/OA+XP05WjM8GGP+ySvzgOwbG2/qS
-	 tKufkazc/J3RGw8hloKGATgasDNtTYkQ+d1BArS/J4GqKGTS1kjjxhpWbXv1CsYK6D
-	 H4D3gOhkTZrDSBQoYDdypyZ+nfgymi6BRBU/oAP/3xY9SqJ3r3eqxYHFPmQFC3CI0r
-	 wUMJCJM6TtOImjAxdjJSXGRreebOC1CImMeVAP35qu9afzesHPJsP3hWxSaQsngaN6
-	 UbUtJsSRO4GIX97ABaQzzuqE3Pxh4P4j07VU2S/Cy+HLN7a8p44xIx+oJ+gPJXT16k
-	 J0ReQOdEDb7FA==
-Message-ID: <bf87c34e-a4ff-4e03-9d6a-dc365fec06a5@kernel.org>
-Date: Thu, 27 Jun 2024 09:42:28 +0200
+	b=T0BJLXhiXRb9DbrbTspDGsQjO0PI7KosIa+rz25J0sUmCsZzEo3OgvT+CrMDyUZXe
+	 JvO2Ef7TABX/cK6J5zj3ko4HGJNK0TWy8j+F9wIngUnVgcApPu9YkPZm2HPmYCYwrH
+	 nqzdhq50eTqD5G06GOdDWjLCVGj3HpK4IFanAuh179oDpWXLqtHHJoLuX9MKHE3tN0
+	 R4yuBaSLWLSG1RKqiSLE+8JwvRM/CT4vAaiJzEnRQ7eJgV1OzAJnrtHcqbRN2NNntz
+	 yoL0vIJztIaDKJ9s7PebElUX8NrxiC9ByzIdJl7aDkPnypPZ8oxj+x5O4EQ8LV2VId
+	 mOh14BuSVoVUg==
+Message-ID: <ea14d6d0-e31e-48fc-a568-126178f82390@kernel.org>
+Date: Thu, 27 Jun 2024 09:52:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,26 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 4/7] dt-bindings: clock: Add ipq9574 NSSCC clock and
- reset definitions
-To: Devi Priya <quic_devipriy@quicinc.com>, Andrew Lunn <andrew@lunn.ch>
-Cc: catalin.marinas@arm.com, u-kumar1@ti.com,
- linux-arm-kernel@lists.infradead.org, krzk+dt@kernel.org,
- geert+renesas@glider.be, neil.armstrong@linaro.org, nfraprado@collabora.com,
- mturquette@baylibre.com, linux-kernel@vger.kernel.org,
- dmitry.baryshkov@linaro.org, netdev@vger.kernel.org,
- konrad.dybcio@linaro.org, m.szyprowski@samsung.com, arnd@arndb.de,
- richardcochran@gmail.com, will@kernel.org, sboyd@kernel.org,
- andersson@kernel.org, p.zabel@pengutronix.de, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240626143302.810632-1-quic_devipriy@quicinc.com>
- <20240626143302.810632-5-quic_devipriy@quicinc.com>
- <171941612020.3280624.794530163562164163.robh@kernel.org>
- <eeea33c7-02bd-4ea4-a53f-fd6af839ca90@lunn.ch>
- <4bf9dff9-3cb4-4276-8d21-697850e01170@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: qcom: Add Qualcomm MSM8953
+ NoC
+To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ Vladimir Lypak <vladimir.lypak@gmail.com>
+References: <20240626-msm8953-interconnect-v1-0-eeb31a2231b0@mainlining.org>
+ <20240626-msm8953-interconnect-v1-1-eeb31a2231b0@mainlining.org>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -113,66 +105,97 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <4bf9dff9-3cb4-4276-8d21-697850e01170@quicinc.com>
+In-Reply-To: <20240626-msm8953-interconnect-v1-1-eeb31a2231b0@mainlining.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 27/06/2024 07:25, Devi Priya wrote:
+On 26/06/2024 22:35, Barnabás Czémán wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
 > 
+> Add the device-tree bindings for interconnect providers
+> used on MSM8953 platform.
 > 
-> On 6/26/2024 10:56 PM, Andrew Lunn wrote:
->> On Wed, Jun 26, 2024 at 09:35:20AM -0600, Rob Herring (Arm) wrote:
->>>
->>> On Wed, 26 Jun 2024 20:02:59 +0530, Devi Priya wrote:
->>>> Add NSSCC clock and reset definitions for ipq9574.
->>>>
->>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> ---
->>>>   Changes in V5:
->>>> 	- Dropped interconnects and added interconnect-cells to NSS
->>>> 	  clock provider so that it can be  used as icc provider.
->>>>
->>>>   .../bindings/clock/qcom,ipq9574-nsscc.yaml    |  74 +++++++++
->>>>   .../dt-bindings/clock/qcom,ipq9574-nsscc.h    | 152 ++++++++++++++++++
->>>>   .../dt-bindings/reset/qcom,ipq9574-nsscc.h    | 134 +++++++++++++++
->>>>   3 files changed, 360 insertions(+)
->>>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
->>>>   create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
->>>>   create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
->>>>
->>>
->>> My bot found errors running 'make dt_binding_check' on your patch:
->>>
->>> yamllint warnings/errors:
->>>
->>> dtschema/dtc warnings/errors:
->>> Error: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dts:26.26-27 syntax error
->>> FATAL ERROR: Unable to parse input tree
->>
->> Hi Devi
->>
->> Version 4 of these patches had the same exact problem. There was not
->> an email explaining it is a false positive etc, so i have to assume it
->> is a real error. So why has it not been fixed?
->>
->> Qualcomm patches are under a microscope at the moment because of how
->> bad things went a couple of months ago with patches. You cannot ignore
->> things like this, because the damage to Qualcomm reputation is going
->> to make it impossible to get patches merged soon.
->>
-> Hi Andrew,
-> Very sorry for the inconvenience.
-> I had run dt_binding_check locally on V4 patches and did not face any
-> errors. I somehow missed to notice the binding check error that was
-> reported on V4. Thus I went ahead and posted the same in V5.
-> Will ensure such things are not repeated henceforth.
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+>  .../bindings/interconnect/qcom,msm8953.yaml        | 100 +++++++++++++++++++++
+>  include/dt-bindings/interconnect/qcom,msm8953.h    |  93 +++++++++++++++++++
+>  2 files changed, 193 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8953.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8953.yaml
+> new file mode 100644
+> index 000000000000..c24339f37233
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8953.yaml
+> @@ -0,0 +1,100 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,msm8953.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm MSM8953 Network-On-Chip interconnect
+> +
+> +maintainers:
+> +  - Barnabas Czeman <barnabas.czeman@mainlining.org>
+> +
+> +description: |
+> +  The Qualcomm MSM8953 interconnect providers support adjusting the
+> +  bandwidth requirements between the various NoC fabrics.
+> +
+> +  See also:
+> +  - dt-bindings/interconnect/qcom,msm8953.h
+> +
+> +allOf:
 
-If the warning is expected, e.g. due to missing patches, it's beneficial
-to mention this in the changelog (---). Otherwise all maintainers my
-ignore your patch because you have issues reported by automation.
+Please move this entire "allOf:" after "required:" block.
 
-Anyway, up to you.
+> +  - $ref: qcom,rpm-common.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          const: qcom,msm8953-pcnoc
+> +
+> +    then:
+> +      properties:
+> +        clocks:
+> +          items:
+> +            - description: PCNOC USB3 AXI Clock.
+> +
+> +        clock-names:
+> +          const: pcnoc_usb3_axi
+> +
+> +      required:
+> +        - compatible
+
+Drop
+
+> +        - reg
+
+Drop
+
+> +        - clocks
+> +        - clock-names
+> +        - '#interconnect-cells'
+
+Drop
+
+
+    else:
+      properties:
+        clocks: false
+        clocks-names: false
+
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,msm8953-bimc
+> +      - qcom,msm8953-pcnoc
+> +      - qcom,msm8953-snoc
+> +
+
+> 
 
 Best regards,
 Krzysztof
