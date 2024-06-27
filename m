@@ -1,140 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-24505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03FE391AB9F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 17:40:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 445E091ABF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 17:54:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8829728724C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 15:40:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ED801B2189B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 15:54:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B69651991A5;
-	Thu, 27 Jun 2024 15:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CCmXA9At"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C17C1991BE;
+	Thu, 27 Jun 2024 15:54:14 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ns.iliad.fr (ns.iliad.fr [212.27.33.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2051990BE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 15:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97580198E69;
+	Thu, 27 Jun 2024 15:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.33.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719502829; cv=none; b=XCZZrbKSQQRurhzW7REOf5LuAZhVi7vX3ZTKfUYN7/lZmwcTsk/OaICl1gZMafr2F7Zv//ZxnjcauRfgceL65akXawSSIM9gjWDwUTzUf3jGyeSlqbt7H/pldXju0tsZPC4Vzgf9dTMvxELt2OlEykzTN0B5f/Lg7fy/Q9NOT0Q=
+	t=1719503654; cv=none; b=Cf8NObjHW29WcdX+wc2rAXXjyb254jbPzsp4AK/Q45zYcfJSg2bu2UR1sjOneOtEC52wBaBnVuc24vP4xQWzeO1fy3ASNyg6s0Ghw2mDKX7NM6Vp6deZ65iZBYVTPO7WrpGlfmXD4R/xwhm9bxQmuIInJpjhPaytBNIlJnGvAAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719502829; c=relaxed/simple;
-	bh=lHbeknsk/AtZkJcJkKNcSrP1o/ibCob0V2JnFNWEmR4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NNp8TeJIJQMzRwq3gb71SrQd2HL+9mKS/kThoz1pz2rZhTm2qF5jxlUg5BlM1WVEaA2KL9A9QGtBb22oJ5xuW8d7a+5F7P5u2AIm5PD/KiehXfMRzzEZEUZZJRpt7DuZYrr8T8ZGb4R4fxXVWOjkQlkvtIUObALyZfVKQpLM8W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CCmXA9At; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-366edce6493so3315989f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 08:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719502827; x=1720107627; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M//oCRkOjcE/cm0/TJO4zvrkYG5iR1NNF7GP7xwS6pI=;
-        b=CCmXA9AtI6dF2sPgJv3LCaLKpbCsUlEcaCAWhJoyT5++R3xqPKnO2NhCENfG+Ur2kD
-         vb8mRqrWixHtEneVC5ATFtbivilRc7BuRitCUC5GX/CGxHHGjb4Tn1XgAvl7hAEjZeBh
-         m+5QtosDAxhzbHQRyvGeCBIi9sIA3nGXLbGkpXeZ/oD5PBqky99rQa4Dvx40bUpUivgB
-         TLh/jX075Kh0DWEPwXhyVD7xEnPVTwaxRS1ZtbIxanYKGP7MnyfZ9cgmCwYOSu3c1en4
-         amkYRiLqqNwYEtEzRQYzuUC87KBzIU/Ie4RS8ypWxcDkiGmciph9EMkMzPTPJvZW/aXg
-         y/iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719502827; x=1720107627;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M//oCRkOjcE/cm0/TJO4zvrkYG5iR1NNF7GP7xwS6pI=;
-        b=E1Nt8txI29Suym+nxHNBNopmNdrMFFQtR3ayKNj8oayszS0EfKWvVp8cZlIH48fddm
-         JVNj+bLZK+EcFhv2X45L/8VSs/b7OIC9GjHFbVcTh9NovW5QjK31CO6PjgDwH+zE2iQ/
-         nF96AlbdoQH8sP4Q+kESXVHgywatgnt7MpWzNEX9b/0J8M9v5KcCEWUWpLEGaT6ehj8w
-         z7qh0j2LxUIk0T1YcmlyN/zOsyqrD8KX6EyocNSIihTmc17uklw+F4PVS5kcaUicgMkM
-         nLzo53PvS01yMFXCZ0yonWKPmwoWj/d+cEnp1mA5JpsS6zkyfsKT+UZujioLAJalLQLg
-         69TQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUQmGqOOGK9WZ7k2Gqr2YYXYyrKyKhzQ68Q1RJDppEMvOYDzubS2bYiuI5Sc+dUYnieAH+0hpIHR+cxmZcAYQWhh4jW8bbGujaDVNsCNA==
-X-Gm-Message-State: AOJu0Yy5bF0+RjfI30y4uCAepvzKTDkkM5okLqAkLLfznEeFlobPMNt3
-	/nIzoXOINb/T6jArrQHYh2VX4tUBOeeZrC85u7EZ2YJix1MR9XYbVfi3//A5nGI=
-X-Google-Smtp-Source: AGHT+IF2Wv34A+wK39TJbi5KABfsyjk15f088Qkbe7kjp7UKxS7jYKRmHLxGe+TCukAeElAkjB3rHA==
-X-Received: by 2002:a5d:5f90:0:b0:35f:fb4:fc7d with SMTP id ffacd0b85a97d-366fb8dd6e1mr8917504f8f.31.1719502826657;
-        Thu, 27 Jun 2024 08:40:26 -0700 (PDT)
-Received: from [192.168.0.3] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3674357c207sm2253742f8f.1.2024.06.27.08.40.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jun 2024 08:40:26 -0700 (PDT)
-Message-ID: <7ea5890e-5c74-447c-903c-9d3e9aabb7e4@linaro.org>
-Date: Thu, 27 Jun 2024 16:40:24 +0100
+	s=arc-20240116; t=1719503654; c=relaxed/simple;
+	bh=edLA1x05gzWZiSye+nZLCGaJq9BZZHT2KZN4I60BwBA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hfj4kUPDJGKo5YrT1/79l7L4+rkpGv6BcEslvm9MDDYDTx+I+yaAYF2uFQvZIlZnG3aGePQ1Xqwz4eUU/wZoBu8xHxkvYyf2RaYh69IU/1orl9UHB4J+jLapTjqBCVL/bVo6fg9EkE49/qRAloiGe/tHbd3KZp7/slh7zQ0upOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=srs.iliad.fr; arc=none smtp.client-ip=212.27.33.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=srs.iliad.fr
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+	by ns.iliad.fr (Postfix) with ESMTP id 9B647208AC;
+	Thu, 27 Jun 2024 17:54:08 +0200 (CEST)
+Received: from [127.0.1.1] (freebox.vlq16.iliad.fr [213.36.7.13])
+	by ns.iliad.fr (Postfix) with ESMTP id 80972205DE;
+	Thu, 27 Jun 2024 17:54:08 +0200 (CEST)
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+Subject: [PATCH v5 0/4] HDMI TX support in msm8998
+Date: Thu, 27 Jun 2024 17:53:58 +0200
+Message-Id: <20240627-hdmi-tx-v5-0-355d5c1fbc3c@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFT v3 1/5] dt-bindings: media: camss: Add
- qcom,sc7180-camss
-To: george chan <gchan9527@gmail.com>, Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240624-b4-sc7180-camss-v3-0-89ece6471431@gmail.com>
- <20240624-b4-sc7180-camss-v3-1-89ece6471431@gmail.com>
- <c33dde93-2c3a-4a00-93ee-e4de303c9057@kernel.org>
- <CADgMGSvN=uAW7z1dpETGVRewzDG=K2MAtzOkhK7xAcskU_oeZg@mail.gmail.com>
- <0a35f0bd-ceec-487f-b9fd-ae9698b74048@kernel.org>
- <CADgMGSt9Hu5Ciq=ndMTaVK23Y_ixTVtTuSfy4hJkJooFH2uv9Q@mail.gmail.com>
- <CADgMGSv+x2Z9FsWTHW0auttvpdfNDnOPxiJhXnUaW3yQczN_Ag@mail.gmail.com>
- <a7306019-9f19-4619-875f-e6b71add5607@kernel.org>
- <CADgMGStvxkaj_LxXLuwEUtm5dPT-MCr6aKp_DKZngHsRPTjmng@mail.gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <CADgMGStvxkaj_LxXLuwEUtm5dPT-MCr6aKp_DKZngHsRPTjmng@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABeLfWYC/2WOyw6CMBBFf4V07Zi+GKgr/8O4aOlUukBMIQRD+
+ HcLGzEuT3LPyV3YQCnSwC7FwhJNcYj9M0N5KljT2ueDIPrMTHKpOXKE1ncRxhk4J6qp8t7ZhuX
+ 1K1GI81663TOH1Hcwtons7lvZOCENB0NcgBYKwZRGQkNaGSe4QYfXkIhcP59D2optHMY+vfdrk
+ 9q6/y8mBTnpq0AOvUJdHRvbjUkfRKG+os6itkFUpLFGY37EdV0/CDwMKxoBAAA=
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>, 
+ Pierre-Hugues Husson <phhusson@freebox.fr>, 
+ Jeffrey Hugo <quic_jhugo@quicinc.com>, Marc Gonzalez <mgonzalez@freebox.fr>, 
+ Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.13.0
 
-On 26/06/2024 10:04, george chan wrote:
-> On Wed, Jun 26, 2024 at 4:58 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>
->> On 26/06/2024 10:38, george chan wrote:
->>> On Wed, Jun 26, 2024 at 4:17 PM george chan <gchan9527@gmail.com> wrote:
->>>>
->>>> On Wed, Jun 26, 2024 at 3:15 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>>>> Keep the list in "required:" in the same order as the list in "properties:".
->>>>
->>>> ok gotcha
->>> btw, i checked  "required:" and "properties:" are aligned, both of
->>
->> No, they are not.
->>
->> Which is the first entry in "properties"?
->>
->> Which is the first entry in "required"?
->>
->> Please stop wasting reviewers time by disagreeing on every little piece
->> of this. The feedback was quite clear but somehow you do not read it and
->> respond with some inaccurate statements.
->>
->> Best regards,
->> Krzysztof
->>
-> 
-> Then my apology. I might take a break here. Appreciated if some
-> developer is willing to take over it too.
-
-George are you resending this with Krzysztof's comments addressed ?
-
-I'm trying to figure out what we are targeting for merge.
+DT bits required for HDMI TX support in APQ8098 (msm8998 cousin)
 
 ---
-bod
+Changes in v5:
+- Fix property & property-names for TX pinctrl in DTSI (Konrad)
+- NOT CHANGED: clock trees for TX & PHY based on Dmitry & Jeffrey's remarks
+- Link to v4: https://lore.kernel.org/r/20240613-hdmi-tx-v4-0-4af17e468699@freebox.fr
+
+Changes in v4:
+- Collect tags since v3
+- Reword patch 1 subject (Vinod)
+- Link to v3: https://lore.kernel.org/r/20240606-hdmi-tx-v3-0-9d7feb6d3647@freebox.fr
+
+Changes in v3
+- Address Rob's comments on patch 2:
+  - 'maxItems: 5' for clocks in the 8996 if/then schema
+  - match the order of 8996 for the clock-names in common
+
+---
+Arnaud Vrac (1):
+      arm64: dts: qcom: add HDMI nodes for msm8998
+
+Marc Gonzalez (3):
+      dt-bindings: phy: add qcom,hdmi-phy-8998
+      dt-bindings: display/msm: hdmi: add qcom,hdmi-tx-8998
+      arm64: dts: qcom: msm8998: add HDMI GPIOs
+
+ .../devicetree/bindings/display/msm/hdmi.yaml      |  28 ++++-
+ .../devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml |   1 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              | 128 ++++++++++++++++++++-
+ 3 files changed, 154 insertions(+), 3 deletions(-)
+---
+base-commit: 0169018354b9a9a2ef5d4972da3c4644ab2a73b2
+change-id: 20240606-hdmi-tx-00ee8e7ddbac
+
+Best regards,
+-- 
+Marc Gonzalez <mgonzalez@freebox.fr>
+
 
